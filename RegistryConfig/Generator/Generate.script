@@ -1,0 +1,57 @@
+﻿#script 1.0
+#license MITLicense
+#pclass RegistryConfig GenerateCS
+
+#% DateTime GenerateTime = DateTime.UtcNow;
+
+
+
+#method Generate ConfigItems ConfigItems
+#% ConfigItems.Normalize();
+// Generated on #{GenerateTime}
+using System;
+using System.Collections.Generic;
+using System.IO;
+
+#foreach (var Entry in ConfigItems.Top)
+#switchcast ConfigItemsType Entry
+#casecast Class Class
+
+namespace #{Class.Namespace}  {
+	
+    /// <summary>
+    /// Convenience class creating accessors for registry 'Class.Id'
+    /// </summary>
+	public partial class #{Class.Id} : Goedel.Mesh.ConfigRegistry {
+
+        /// <summary>
+        /// Construct a new empty instance.
+        /// </summary>
+		public #{Class.Id} () : base ("#{Class.Id}") {
+			}
+
+        /// <summary>
+        /// Construct a new instance from the specified file
+        /// </summary>
+        /// <param name="FileName">The file to read</param>/// 
+		public #{Class.Id} (string FileName) : base ("#{Class.Id}", FileName) {
+            }
+
+#foreach (var Field in Class.Fields)
+		
+        /// <summary>
+        /// Accessor for key "Field.Key" of type #{Field.RegistryType}
+        /// </summary>
+		public virtual #{Field.CType} #{Field.Id} {
+			get { return Get#{Field.RegistryType} ("#{Field.Key}"); }
+			set { Set ("#{Field.Key}", value); }
+			}
+#end foreach
+
+		}
+	}
+#end switchcast
+#end foreach
+
+#end method
+#end pclass

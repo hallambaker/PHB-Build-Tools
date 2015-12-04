@@ -1,0 +1,28 @@
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandLine\Shell\bin\Debug\CommandParse.exe
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandLine\Shell\bin\Debug\CommandParse.pdb
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandLine\Shell\bin\Debug\CommandLineLibrary.dll
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandLine\Shell\bin\Debug\CommandLineLibrary.pdb
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandLine\Shell\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandLine\Shell\obj\x86\Debug\CommandParse.exe
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandLine\Shell\obj\x86\Debug\CommandParse.pdb
+C:\Users\Phillip\Code\Generators\CommandLine\Shell\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Phillip\Code\Generators\CommandLine\Shell\bin\Debug\CommandLineLibrary.dll
+C:\Users\Phillip\Code\Generators\CommandLine\Shell\bin\Debug\Goedel.Registry.dll
+C:\Users\Phillip\Code\Generators\CommandLine\Shell\bin\Debug\CommandLineLibrary.pdb
+C:\Users\Phillip\Code\Generators\CommandLine\Shell\bin\Debug\CommandParse.exe.config
+C:\Users\Phillip\Code\Generators\CommandLine\Shell\bin\Debug\CommandParse.exe
+C:\Users\Phillip\Code\Generators\CommandLine\Shell\bin\Debug\CommandParse.pdb
+C:\Users\Phillip\Code\Generators\CommandLine\Shell\obj\x86\Debug\CommandParse.exe
+C:\Users\Phillip\Code\Generators\CommandLine\Shell\obj\x86\Debug\CommandParse.pdb
+C:\Users\Phillip\Code\Goedel\CommandLine\Shell\bin\Debug\CommandParse.exe.config
+C:\Users\Phillip\Code\Goedel\CommandLine\Shell\bin\Debug\CommandParse.exe
+C:\Users\Phillip\Code\Goedel\CommandLine\Shell\bin\Debug\CommandParse.pdb
+C:\Users\Phillip\Code\Goedel\CommandLine\Shell\bin\Debug\CommandLineLibrary.dll
+C:\Users\Phillip\Code\Goedel\CommandLine\Shell\bin\Debug\Goedel.Registry.dll
+C:\Users\Phillip\Code\Goedel\CommandLine\Shell\bin\Debug\CommandLineLibrary.pdb
+C:\Users\Phillip\Code\Goedel\CommandLine\Shell\obj\x86\Debug\CommandParse.exe
+C:\Users\Phillip\Code\Goedel\CommandLine\Shell\obj\x86\Debug\CommandParse.pdb
+C:\Users\Phillip\Code\Goedel\CommandLine\Shell\obj\x86\Debug\ShellGenerator.csprojResolveAssemblyReference.cache
+C:\Users\Phillip\Code\Goedel\Template\Shell\bin\Debug\CommandParse.exe.config
+C:\Users\Phillip\Code\Goedel\Template\Shell\obj\x86\Debug\CommandParse.exe
+C:\Users\Phillip\Code\Goedel\Template\Shell\obj\x86\Debug\CommandParse.pdb

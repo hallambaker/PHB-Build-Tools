@@ -1,0 +1,5 @@
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandParse\bin\Release\CommandParse.exe
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandParse\bin\Release\CommandParse.pdb
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandParse\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandParse\obj\x86\Release\CommandParse.exe
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandParse\obj\x86\Release\CommandParse.pdb

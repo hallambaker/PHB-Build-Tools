@@ -1,0 +1,6 @@
+C:\Users\Phillip\Work\buildtools\RegistryConfig\Generator\bin\Debug\Goedel.Registry.dll
+C:\Users\Phillip\Work\buildtools\RegistryConfig\Generator\bin\Debug\LibRegistryConfig.dll
+C:\Users\Phillip\Work\buildtools\RegistryConfig\Generator\bin\Debug\LibRegistryConfig.pdb
+C:\Users\Phillip\Work\buildtools\RegistryConfig\Generator\obj\Debug\LibRegistryConfig.dll
+C:\Users\Phillip\Work\buildtools\RegistryConfig\Generator\obj\Debug\LibRegistryConfig.pdb
+C:\Users\Phillip\Work\buildtools\RegistryConfig\Generator\obj\Debug\LibRegistryConfig.csprojResolveAssemblyReference.cache

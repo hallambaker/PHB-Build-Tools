@@ -1,0 +1,17 @@
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandParse\bin\Debug\CommandParse.exe
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandParse\bin\Debug\CommandParse.pdb
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandParse\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandParse\obj\x86\Debug\CommandParse.exe
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandParse\obj\x86\Debug\CommandParse.pdb
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandParse\bin\Debug\Registry.dll
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandParse\bin\Debug\Registry.pdb
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandParse\bin\Debug\CommandPlugin.dll
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandParse\bin\Debug\CommandPlugin.pdb
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandLine\Shell\bin\Debug\CommandParse.exe
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandLine\Shell\bin\Debug\CommandParse.pdb
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandLine\Shell\bin\Debug\CommandPlugin.dll
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandLine\Shell\bin\Debug\CommandPlugin.pdb
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandLine\Shell\bin\Debug\Registry.pdb
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandLine\Shell\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandLine\Shell\obj\x86\Debug\CommandParse.exe
+C:\Users\Phillip\Visual Studio 2010\Projects\CommandLine\Shell\obj\x86\Debug\CommandParse.pdb

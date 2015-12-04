@@ -1,0 +1,10 @@
+C:\Users\Phillip\Code\Goedel\Template\Generator\bin\Debug\CommandLineLibrary.dll
+C:\Users\Phillip\Code\Goedel\Template\Generator\bin\Debug\CommandLineLibrary.pdb
+C:\Users\Phillip\Code\Goedel\Template\Generator\bin\Debug\Goedel.Protocol.dll
+C:\Users\Phillip\Code\Goedel\Template\Generator\bin\Debug\Goedel.Registry.dll
+C:\Users\Phillip\Code\Goedel\Template\Generator\obj\Debug\CommandLineLibrary.dll
+C:\Users\Phillip\Code\Goedel\Template\Generator\obj\Debug\CommandLineLibrary.pdb
+C:\Users\Phillip\Work\buildtools\RegistryConfig\Generator\obj\Debug\CommandLineLibrary.dll
+C:\Users\Phillip\Work\buildtools\RegistryConfig\Generator\obj\Debug\CommandLineLibrary.pdb
+C:\Users\Phillip\Work\buildtools\RegistryConfig\Generator\bin\Debug\CommandLineLibrary.dll
+C:\Users\Phillip\Work\buildtools\RegistryConfig\Generator\bin\Debug\CommandLineLibrary.pdb
