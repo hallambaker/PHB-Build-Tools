@@ -1,0 +1,4 @@
+C:\Users\Phillip\Code\Applications\PrismProof\ASNLibrary\bin\Release\ASNLibrary.dll
+C:\Users\Phillip\Code\Applications\PrismProof\ASNLibrary\bin\Release\ASNLibrary.pdb
+C:\Users\Phillip\Code\Applications\PrismProof\ASNLibrary\obj\Release\ASNLibrary.dll
+C:\Users\Phillip\Code\Applications\PrismProof\ASNLibrary\obj\Release\ASNLibrary.pdb

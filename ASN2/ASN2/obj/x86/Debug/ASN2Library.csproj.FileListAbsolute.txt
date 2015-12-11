@@ -1,0 +1,16 @@
+C:\Users\Phillip\Code\Applications\PrismProof\ASN2\bin\Debug\ASN2Library.dll
+C:\Users\Phillip\Code\Applications\PrismProof\ASN2\bin\Debug\ASN2Library.pdb
+C:\Users\Phillip\Code\Applications\PrismProof\ASN2\bin\Debug\Goedel.Registry.dll
+C:\Users\Phillip\Code\Applications\PrismProof\ASN2\obj\x86\Debug\ASN2Library.dll
+C:\Users\Phillip\Code\Applications\PrismProof\ASN2\obj\x86\Debug\ASN2Library.pdb
+C:\Users\Phillip\Code\Applications\PrismProof\ASN2\bin\Debug\ASNLibrary.dll
+C:\Users\Phillip\Code\Applications\PrismProof\ASN2\bin\Debug\ASNLibrary.pdb
+C:\Users\Phillip\Code\Applications\PrismProof\ASN2\obj\x86\Debug\ASN2Library.csprojResolveAssemblyReference.cache
+C:\Users\Phillip\Work\buildtools\ASN2\ASN2\obj\x86\Debug\ASN2Library.csprojResolveAssemblyReference.cache
+C:\Users\Phillip\Work\buildtools\ASN2\ASN2\obj\x86\Debug\ASN2Library.dll
+C:\Users\Phillip\Work\buildtools\ASN2\ASN2\obj\x86\Debug\ASN2Library.pdb
+C:\Users\Phillip\Work\buildtools\ASN2\ASN2\bin\Debug\ASN2Library.dll
+C:\Users\Phillip\Work\buildtools\ASN2\ASN2\bin\Debug\ASN2Library.pdb
+C:\Users\Phillip\Work\buildtools\ASN2\ASN2\bin\Debug\ASNLibrary.dll
+C:\Users\Phillip\Work\buildtools\ASN2\ASN2\bin\Debug\ASNLibrary.pdb
+C:\Users\Phillip\Work\buildtools\ASN2\ASN2\bin\Debug\Goedel.Registry.dll
