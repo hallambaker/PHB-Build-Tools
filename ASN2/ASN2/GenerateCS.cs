@@ -29,7 +29,7 @@ using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
 namespace Goedel.ASN {
-	public partial class Generate : Goedel.Registry.Script {
+	public partial class Generate : global::Goedel.Registry.Script {
 		public Generate () : base () {
 			}
 		public Generate (TextWriter Output) : base (Output) {

@@ -39,6 +39,14 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Goedel.Registry, Version=1.0.5582.26697, Culture=neutral, PublicKeyToken=d2b0f210455cec67, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -53,13 +61,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Asn2.cs" />
+    <Compile Include="Asn2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Asn2.gdl</DependentUpon>
+    </Compile>
     <Compile Include="AsnPlus.cs" />
     <Compile Include="GenerateCS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Asn2.gdl" />
+    <None Include="Asn2.gdl">
+      <Generator>goedel3</Generator>
+      <LastGenOutput>Asn2.cs</LastGenOutput>
+    </None>
     <None Include="GenerateCS.script" />
     <None Include="PreBuild.bat" />
   </ItemGroup>

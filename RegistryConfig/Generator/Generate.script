@@ -4,8 +4,6 @@
 
 #% DateTime GenerateTime = DateTime.UtcNow;
 
-
-
 #method Generate ConfigItems ConfigItems
 #% ConfigItems.Normalize();
 // Generated on #{GenerateTime}

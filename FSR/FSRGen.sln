@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSRGen", "FSRGen\FSRGen.csproj", "{BC6A5895-0F98-4116-985B-29D2F705349B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{67736D2B-132C-45A5-9C00-B07ABB9F0809} = {67736D2B-132C-45A5-9C00-B07ABB9F0809}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSRGenLib", "FSRGenLib\FSRGenLib.csproj", "{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSGeneratorCS", "VSGeneratorCS\VSGeneratorCS.csproj", "{67736D2B-132C-45A5-9C00-B07ABB9F0809}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC6A5895-0F98-4116-985B-29D2F705349B}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{BC6A5895-0F98-4116-985B-29D2F705349B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BC6A5895-0F98-4116-985B-29D2F705349B}.Debug|x86.Build.0 = Debug|Any CPU
+		{BC6A5895-0F98-4116-985B-29D2F705349B}.Release|Any CPU.ActiveCfg = Release|x86
+		{BC6A5895-0F98-4116-985B-29D2F705349B}.Release|x86.ActiveCfg = Release|x86
+		{BC6A5895-0F98-4116-985B-29D2F705349B}.Release|x86.Build.0 = Release|x86
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.Debug|x86.Build.0 = Debug|Any CPU
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.Release|Any CPU.ActiveCfg = Release|x86
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.Release|x86.ActiveCfg = Release|x86
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.Release|x86.Build.0 = Release|x86
+		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Debug|x86.Build.0 = Debug|Any CPU
+		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Release|x86.ActiveCfg = Release|Any CPU
+		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

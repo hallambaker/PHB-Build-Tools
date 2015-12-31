@@ -1,0 +1,43 @@
+﻿Class FSRGen FSRStruct
+    TopType FSR
+        Id		ID	Top
+        Prefix	ID  PrefixT
+        Entries List Choice
+			Charset
+			State
+			Token
+
+	Type Charset
+		Id		ID	tCharset
+		First	String
+		Last	String
+
+
+	Type State
+		Id		ID		tState
+		Action	Token	tAction
+		Token	Token	tToken	
+		Entries List Entry
+		
+	Type Entry
+		Is		ChoiceREF tCharset
+			On
+			Any
+		Action Choice
+			Return
+			GoTo
+
+	Type On
+		Match String	
+
+	Type Any
+
+	Type Return
+		Emit	Token	tToken
+
+	Type GoTo
+		Next	REF tState
+
+	Type Token
+		Id		ID tToken
+

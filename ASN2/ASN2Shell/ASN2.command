@@ -1,4 +1,4 @@
-﻿Class ASN2Shell
+﻿Class ASN2Shell ASN2Shell
 	Brief		"ASN2 Encoder/Decoder"
 
 	Type NewFile			"file"
