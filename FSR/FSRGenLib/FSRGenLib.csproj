@@ -44,6 +44,12 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>TestCodeSigningKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Goedel.Registry">
       <HintPath>..\..\..\Tools\Library\Goedel.Registry.dll</HintPath>
@@ -84,6 +90,7 @@
       <Generator>GoedelScript</Generator>
       <LastGenOutput>GenerateC.cs</LastGenOutput>
     </None>
+    <None Include="TestCodeSigningKey.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

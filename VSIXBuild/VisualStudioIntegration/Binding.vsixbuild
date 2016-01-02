@@ -1,0 +1,7 @@
+﻿Microsoft.Demo.SimpleFileGenerator: Namespace
+	SimpleGenerator: Generator ".cs"
+		GUID "1263af09-d434-4a54-8c86-4d4000c394ab"
+		Projects
+			CSharp VisualBasic
+		Parser ASN ASN2
+		Generator ASN.Generate GenerateCS

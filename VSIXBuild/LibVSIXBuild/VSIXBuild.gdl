@@ -1,0 +1,36 @@
+﻿Class Goedel.VSIXBuild VSIXBuild
+	
+	TopType		Namespace
+		Name		Token		IDName
+		Entries		List Member
+
+	Type		Member
+		Name		ID			ItemType
+		Is Choice
+			Generator
+
+	Type		Generator
+		Extension	String
+		Options Options
+			GUID		GUID		Single
+			Project 	Project		Multiple
+			Parser		Parser		Single
+			Script		Script	Single
+			Description	Description Single
+
+	Type		GUID
+		Value		String
+
+	Type		Project
+		Value		Token ProjectType
+
+	Type		Parser
+		Name		Token IDName	
+					
+	Type		Script
+		Class		Token IDName	
+		Method		Token IDName	
+
+	Type		Description
+		Text		Text
+

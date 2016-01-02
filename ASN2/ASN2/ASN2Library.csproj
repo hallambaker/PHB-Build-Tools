@@ -47,6 +47,12 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>TestCodeSigningKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Goedel.Registry, Version=1.0.5582.26697, Culture=neutral, PublicKeyToken=d2b0f210455cec67, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -67,7 +73,11 @@
       <DependentUpon>Asn2.gdl</DependentUpon>
     </Compile>
     <Compile Include="AsnPlus.cs" />
-    <Compile Include="GenerateCS.cs" />
+    <Compile Include="GenerateCS.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GenerateCS.script</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -75,8 +85,12 @@
       <Generator>goedel3</Generator>
       <LastGenOutput>Asn2.cs</LastGenOutput>
     </None>
-    <None Include="GenerateCS.script" />
+    <None Include="GenerateCS.script">
+      <Generator>GoedelScript</Generator>
+      <LastGenOutput>GenerateCS.cs</LastGenOutput>
+    </None>
     <None Include="PreBuild.bat" />
+    <None Include="TestCodeSigningKey.snk" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Design.htm" />

@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASN2Shell", "ASN2Shell\ASN2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASNLibrary", "ASNLibrary\ASNLibrary.csproj", "{1867378F-B442-4D27-9749-6183A7F1EF7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSGeneratorCS", "VSGeneratorCS\VSGeneratorCS.csproj", "{67736D2B-132C-45A5-9C00-B07ABB9F0809}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,18 +53,6 @@ Global
 		{1867378F-B442-4D27-9749-6183A7F1EF7E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1867378F-B442-4D27-9749-6183A7F1EF7E}.Release|x86.ActiveCfg = Release|Any CPU
 		{1867378F-B442-4D27-9749-6183A7F1EF7E}.Release|x86.Build.0 = Release|Any CPU
-		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Debug|x86.Build.0 = Debug|Any CPU
-		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
-		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
-		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
-		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.RaspberryPi|x86.Build.0 = Release|Any CPU
-		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Release|Any CPU.Build.0 = Release|Any CPU
-		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Release|x86.ActiveCfg = Release|Any CPU
-		{67736D2B-132C-45A5-9C00-B07ABB9F0809}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

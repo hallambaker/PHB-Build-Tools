@@ -1,0 +1,104 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSIXIntegration", "VSIXIntegration.csproj", "{8B1E0410-E61A-4973-9E64-A0CF2C494F21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASN2Library", "..\ASN2\ASN2\ASN2Library.csproj", "{D252E267-BB98-474B-A1E2-D9E5FE7873A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSRGenLib", "..\FSR\FSRGenLib\FSRGenLib.csproj", "{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibRegistryConfig", "..\RegistryConfig\Generator\LibRegistryConfig.csproj", "{FAD27739-EFF1-4D5E-BC80-BC43A62707C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSIXBuildLibrary", "..\VSIXBuild\LibVSIXBuild\VSIXBuildLibrary.csproj", "{88E55204-D54C-438D-BD47-9D33CCB2580B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASNLibrary", "..\ASN2\ASNLibrary\ASNLibrary.csproj", "{1867378F-B442-4D27-9749-6183A7F1EF7E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		RaspberryPi|Any CPU = RaspberryPi|Any CPU
+		RaspberryPi|x86 = RaspberryPi|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B1E0410-E61A-4973-9E64-A0CF2C494F21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B1E0410-E61A-4973-9E64-A0CF2C494F21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B1E0410-E61A-4973-9E64-A0CF2C494F21}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8B1E0410-E61A-4973-9E64-A0CF2C494F21}.Debug|x86.Build.0 = Debug|Any CPU
+		{8B1E0410-E61A-4973-9E64-A0CF2C494F21}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{8B1E0410-E61A-4973-9E64-A0CF2C494F21}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{8B1E0410-E61A-4973-9E64-A0CF2C494F21}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
+		{8B1E0410-E61A-4973-9E64-A0CF2C494F21}.RaspberryPi|x86.Build.0 = Release|Any CPU
+		{8B1E0410-E61A-4973-9E64-A0CF2C494F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B1E0410-E61A-4973-9E64-A0CF2C494F21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B1E0410-E61A-4973-9E64-A0CF2C494F21}.Release|x86.ActiveCfg = Release|Any CPU
+		{8B1E0410-E61A-4973-9E64-A0CF2C494F21}.Release|x86.Build.0 = Release|Any CPU
+		{D252E267-BB98-474B-A1E2-D9E5FE7873A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D252E267-BB98-474B-A1E2-D9E5FE7873A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D252E267-BB98-474B-A1E2-D9E5FE7873A6}.Debug|x86.ActiveCfg = Debug|x86
+		{D252E267-BB98-474B-A1E2-D9E5FE7873A6}.Debug|x86.Build.0 = Debug|x86
+		{D252E267-BB98-474B-A1E2-D9E5FE7873A6}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{D252E267-BB98-474B-A1E2-D9E5FE7873A6}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{D252E267-BB98-474B-A1E2-D9E5FE7873A6}.RaspberryPi|x86.ActiveCfg = Release|x86
+		{D252E267-BB98-474B-A1E2-D9E5FE7873A6}.RaspberryPi|x86.Build.0 = Release|x86
+		{D252E267-BB98-474B-A1E2-D9E5FE7873A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D252E267-BB98-474B-A1E2-D9E5FE7873A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D252E267-BB98-474B-A1E2-D9E5FE7873A6}.Release|x86.ActiveCfg = Release|x86
+		{D252E267-BB98-474B-A1E2-D9E5FE7873A6}.Release|x86.Build.0 = Release|x86
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.Debug|x86.ActiveCfg = Debug|x86
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.Debug|x86.Build.0 = Debug|x86
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.RaspberryPi|x86.ActiveCfg = Release|x86
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.RaspberryPi|x86.Build.0 = Release|x86
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.Release|x86.ActiveCfg = Release|x86
+		{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}.Release|x86.Build.0 = Release|x86
+		{FAD27739-EFF1-4D5E-BC80-BC43A62707C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAD27739-EFF1-4D5E-BC80-BC43A62707C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAD27739-EFF1-4D5E-BC80-BC43A62707C1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FAD27739-EFF1-4D5E-BC80-BC43A62707C1}.Debug|x86.Build.0 = Debug|Any CPU
+		{FAD27739-EFF1-4D5E-BC80-BC43A62707C1}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{FAD27739-EFF1-4D5E-BC80-BC43A62707C1}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{FAD27739-EFF1-4D5E-BC80-BC43A62707C1}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
+		{FAD27739-EFF1-4D5E-BC80-BC43A62707C1}.RaspberryPi|x86.Build.0 = Release|Any CPU
+		{FAD27739-EFF1-4D5E-BC80-BC43A62707C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAD27739-EFF1-4D5E-BC80-BC43A62707C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAD27739-EFF1-4D5E-BC80-BC43A62707C1}.Release|x86.ActiveCfg = Release|Any CPU
+		{FAD27739-EFF1-4D5E-BC80-BC43A62707C1}.Release|x86.Build.0 = Release|Any CPU
+		{88E55204-D54C-438D-BD47-9D33CCB2580B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88E55204-D54C-438D-BD47-9D33CCB2580B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88E55204-D54C-438D-BD47-9D33CCB2580B}.Debug|x86.ActiveCfg = Debug|x86
+		{88E55204-D54C-438D-BD47-9D33CCB2580B}.Debug|x86.Build.0 = Debug|x86
+		{88E55204-D54C-438D-BD47-9D33CCB2580B}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{88E55204-D54C-438D-BD47-9D33CCB2580B}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{88E55204-D54C-438D-BD47-9D33CCB2580B}.RaspberryPi|x86.ActiveCfg = Release|x86
+		{88E55204-D54C-438D-BD47-9D33CCB2580B}.RaspberryPi|x86.Build.0 = Release|x86
+		{88E55204-D54C-438D-BD47-9D33CCB2580B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88E55204-D54C-438D-BD47-9D33CCB2580B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88E55204-D54C-438D-BD47-9D33CCB2580B}.Release|x86.ActiveCfg = Release|x86
+		{88E55204-D54C-438D-BD47-9D33CCB2580B}.Release|x86.Build.0 = Release|x86
+		{1867378F-B442-4D27-9749-6183A7F1EF7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1867378F-B442-4D27-9749-6183A7F1EF7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1867378F-B442-4D27-9749-6183A7F1EF7E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1867378F-B442-4D27-9749-6183A7F1EF7E}.Debug|x86.Build.0 = Debug|Any CPU
+		{1867378F-B442-4D27-9749-6183A7F1EF7E}.RaspberryPi|Any CPU.ActiveCfg = RaspberryPi|Any CPU
+		{1867378F-B442-4D27-9749-6183A7F1EF7E}.RaspberryPi|Any CPU.Build.0 = RaspberryPi|Any CPU
+		{1867378F-B442-4D27-9749-6183A7F1EF7E}.RaspberryPi|x86.ActiveCfg = RaspberryPi|Any CPU
+		{1867378F-B442-4D27-9749-6183A7F1EF7E}.RaspberryPi|x86.Build.0 = RaspberryPi|Any CPU
+		{1867378F-B442-4D27-9749-6183A7F1EF7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1867378F-B442-4D27-9749-6183A7F1EF7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1867378F-B442-4D27-9749-6183A7F1EF7E}.Release|x86.ActiveCfg = Release|Any CPU
+		{1867378F-B442-4D27-9749-6183A7F1EF7E}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

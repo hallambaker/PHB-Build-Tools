@@ -1,0 +1,42 @@
+﻿Namespace Goedel.ASN.VSIX
+
+	ASN2CS Generator ".cs"
+		GUID "21DBBD9C-ACCB-4E74-90C0-E5D06AA47792"
+		Project CSharp
+		Project VisualBasic
+		Parser Goedel.ASN.ASN2
+		Script Goedel.ASN.Generate GenerateCS
+		Description
+			|Tool for generating ASN1 parser code without the hassle of Assinine.One
+			|Why trust a tool whose name is '1.NSA' backwards?
+
+	FSRCS Generator ".cs"
+		GUID "83A2D491-F2C5-407F-B1A6-1D4FC9B4C053"
+		Project CSharp
+		Project VisualBasic
+		Parser FSRGen.FSRStruct
+		Script FSRGen.Generate GenerateCS
+		Description
+			|Tool for generating code to implement a Finite State Recognizer from
+			|a set of state transitions. Mostly useful for implementing Lexical
+			|analysers.
+
+	RegistryCS Generator ".cs"
+		GUID "D8BAE8E4-14C0-4D17-B8F2-5DC8C8670894"
+		Project CSharp
+		Project VisualBasic
+		Parser RegistryConfig.ConfigItems
+		Script RegistryConfig.GenerateCS Generate
+		Description
+			|Tool for generating code to map a data structure to Windows registry
+			|keys.
+
+	VSIXBuild Generator ".cs"
+		GUID "B955047C-52BB-4E7F-8F5D-74A9E010591C"
+		Project CSharp
+		Project VisualBasic
+		Parser Goedel.VSIXBuild.VSIXBuild
+		Script Goedel.VSIXBuild.Generate GenerateCS
+		Description
+			|Tool for generating VSIX manifests for code generators built using
+			|Goedel and other tools
