@@ -48,6 +48,10 @@ namespace #{Cast.Name} {
 	// NB The name of the Guid field MUST match the VSIX package generator
 	// naming convention. Otherwise it doesn't work.
 
+	// Or maybe not, getting this thing to work is hit and miss. Sometime you just
+	// have to restart the system and it all works. Problem seems to be that Visual Studio 
+	// can only handle so many module loads and unloads without a reset.
+
     static partial class GuidList {
         public const string guid#{Extension.Name}GeneratorString = "#{Generator.GUID.Value}";
         public static readonly Guid guid#{Extension.Name}Generator = new Guid(guid#{Extension.Name}GeneratorString);
@@ -65,17 +69,14 @@ namespace #{Cast.Name} {
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
 #end if
 #end foreach
-    public class #{Extension.Name} : IVsSingleFileGenerator, IObjectWithSite {
+    public class #{Extension.Name} : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
         private CodeDomProvider codeDomProvider = null;
         private ServiceProvider serviceProvider = null;
 
-        private CodeDomProvider CodeProvider
-            {
-            get
-                {
-                if (codeDomProvider == null)
-                    {
+        private CodeDomProvider CodeProvider {
+            get {
+                if (codeDomProvider == null) {
                     IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);
                     if (provider != null)
                         codeDomProvider = (CodeDomProvider)provider.CodeDomProvider;
@@ -84,18 +85,46 @@ namespace #{Cast.Name} {
                 }
             }
 
-        private ServiceProvider SiteServiceProvider
-            {
-            get
-                {
-                if (serviceProvider == null)
-                    {
+        private ServiceProvider SiteServiceProvider {
+            get {
+                if (serviceProvider == null) {
                     IOleServiceProvider oleServiceProvider = site as IOleServiceProvider;
                     serviceProvider = new ServiceProvider(oleServiceProvider);
                     }
                 return serviceProvider;
                 }
             }
+
+        ##region IDisposable
+
+        bool _disposed;
+
+        public void Dispose() {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+            }
+
+        ~#{Extension.Name} () {
+            Dispose(false);
+            }
+
+        protected virtual void Dispose(bool disposing)  {
+            if (_disposed)
+                return;
+
+            if (disposing) {
+                if (serviceProvider != null) {
+					serviceProvider.Dispose();
+					}
+                }
+
+            // release any unmanaged objects
+            // set the object references to null
+
+            _disposed = true;
+            }
+
+        ##endregion IDisposable
 
         ##region IVsSingleFileGenerator
 
@@ -117,11 +146,17 @@ namespace #{Cast.Name} {
             var Writer = new StringWriter();
 
             // Process the data
-            var Parse = new #{Generator.Parser.Name}();
+#if (Generator.Process.Class != null)
+            var Script = new global::#{Generator.Process.Class}();
+            Script.#{Generator.Process.Method} (wszInputFilePath, Reader, Writer);
+#elseif (Generator.Parser != null)
+            var Parse = new global::#{Generator.Parser.Name}();
             var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
-            var Script = new #{Generator.Script.Class}(Writer);
+
+            var Script = new global::#{Generator.Script.Class}(Writer);
             Script.#{Generator.Script.Method}(Parse);
+#end if
 
             // Convert writer data to a string and then a byte array
             var Text = Writer.ToString();

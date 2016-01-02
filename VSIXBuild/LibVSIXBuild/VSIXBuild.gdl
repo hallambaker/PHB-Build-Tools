@@ -15,7 +15,8 @@
 			GUID		GUID		Single
 			Project 	Project		Multiple
 			Parser		Parser		Single
-			Script		Script	Single
+			Script		Script		Single
+			Process		Process		Single
 			Description	Description Single
 
 	Type		GUID
@@ -28,6 +29,10 @@
 		Name		Token IDName	
 					
 	Type		Script
+		Class		Token IDName	
+		Method		Token IDName	
+
+	Type		Process
 		Class		Token IDName	
 		Method		Token IDName	
 

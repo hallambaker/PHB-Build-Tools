@@ -37,10 +37,6 @@
     <AssemblyOriginatorKeyFile>TestCodeSigningKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Registry, Version=1.0.5582.26697, Culture=neutral, PublicKeyToken=d2b0f210455cec67, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Code\Tools\Library\Goedel.Registry.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,7 +44,6 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Annotate.cs" />
     <Compile Include="Generate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -72,6 +67,12 @@
       <LastGenOutput>Generate.cs</LastGenOutput>
     </None>
     <None Include="TestCodeSigningKey.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Goedel.Registry\Goedel.Registry.csproj">
+      <Project>{f2a1f8ea-18e2-4f3a-aeaf-3983cea19fe0}</Project>
+      <Name>Goedel.Registry</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

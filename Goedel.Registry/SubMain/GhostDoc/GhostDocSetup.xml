@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<GhostDocSetup>
+  <VisualStudioIntegration>
+    <VS2005 integration="no" timestamp="" />
+    <VS2008 integration="no" timestamp="" />
+    <VS2010 integration="yes" timestamp="20110624104434" />
+  </VisualStudioIntegration>
+</GhostDocSetup>

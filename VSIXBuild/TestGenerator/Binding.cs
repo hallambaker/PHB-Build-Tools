@@ -67,9 +67,36 @@ namespace Microsoft.Demo.SimpleFileGenerator {
                 }
             }
 
-        #region IVsSingleFileGenerator
+        bool _disposed;
 
-        public int DefaultExtension(out string pbstrDefaultExtension) {
+        public void Dispose() {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+            }
+
+        ~SimpleGenerator() {
+            Dispose(false);
+            }
+
+        protected virtual void Dispose(bool disposing)  {
+            if (_disposed)
+                return;
+
+            if (disposing)
+                {
+                SiteServiceProvider.Dispose();
+                }
+
+            // release any unmanaged objects
+            // set the object references to null
+
+            _disposed = true;
+            }
+
+
+    #region IVsSingleFileGenerator
+
+    public int DefaultExtension(out string pbstrDefaultExtension) {
             pbstrDefaultExtension = "." + CodeProvider.FileExtension;
             return VSConstants.S_OK;
             }

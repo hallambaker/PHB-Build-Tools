@@ -40,6 +40,7 @@ using Goedel.Registry;
 //       Project
 //       Parser
 //       Script
+//       Process
 //       Description
 //       Value
 //       Class
@@ -62,6 +63,7 @@ namespace Goedel.VSIXBuild {
         Project,
         Parser,
         Script,
+        Process,
         Description,
 
         _Label,
@@ -131,6 +133,7 @@ namespace Goedel.VSIXBuild {
 		public List<Project>  Project = new  List <Project> ();
 		public Parser  Parser = new  Parser();
 		public Script  Script = new  Script();
+		public Process  Process = new  Process();
 		public Description  Description = new  Description();
 
         public override VSIXBuildType _Tag () {
@@ -154,6 +157,8 @@ namespace Goedel.VSIXBuild {
 			Parser.Serialize (Output, true);
 		// public Script  Script = new  Script();
 			Script.Serialize (Output, true);
+		// public Process  Process = new  Process();
+			Process.Serialize (Output, true);
 		// public Description  Description = new  Description();
 			Description.Serialize (Output, true);
 			Output.EndList ("");
@@ -245,6 +250,28 @@ namespace Goedel.VSIXBuild {
 			}
 		}
 
+    public partial class Process : _Choice {
+        public TOKEN<_Choice>			Class;
+        public TOKEN<_Choice>			Method;
+
+        public override VSIXBuildType _Tag () {
+            return VSIXBuildType.Process;
+            }
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Process");
+				}
+
+	        Output.WriteId ("Class", Class.ToString());
+	        Output.WriteId ("Method", Method.ToString());
+			if (tag) {
+				Output.EndElement ("Process");
+				}			
+			}
+		}
+
     public partial class Description : _Choice {
 		public List <System.String>			Text = new List <System.String> (); 
 
@@ -311,6 +338,9 @@ namespace Goedel.VSIXBuild {
 		Script_Start,
 		Script__Class,				
 		Script__Method,				
+		Process_Start,
+		Process__Class,				
+		Process__Method,				
 		Description_Start,
 		Description__Text,				
         }
@@ -386,6 +416,7 @@ namespace Goedel.VSIXBuild {
                 case "Project": return NewProject();
                 case "Parser": return NewParser();
                 case "Script": return NewScript();
+                case "Process": return NewProcess();
                 case "Description": return NewDescription();
 
 				}
@@ -450,6 +481,14 @@ namespace Goedel.VSIXBuild {
             }
 
 
+        private Goedel.VSIXBuild.Process NewProcess() {
+            Goedel.VSIXBuild.Process result = new Goedel.VSIXBuild.Process();
+            Push (result);
+            State = StateCode.Process_Start;
+            return result;
+            }
+
+
         private Goedel.VSIXBuild.Description NewDescription() {
             Goedel.VSIXBuild.Description result = new Goedel.VSIXBuild.Description();
             Push (result);
@@ -468,6 +507,7 @@ namespace Goedel.VSIXBuild {
                 case "Project": return Goedel.VSIXBuild.VSIXBuildType.Project;
                 case "Parser": return Goedel.VSIXBuild.VSIXBuildType.Parser;
                 case "Script": return Goedel.VSIXBuild.VSIXBuildType.Script;
+                case "Process": return Goedel.VSIXBuild.VSIXBuildType.Process;
                 case "Description": return Goedel.VSIXBuild.VSIXBuildType.Description;
 
                 }
@@ -683,6 +723,12 @@ namespace Goedel.VSIXBuild {
 									Current_Cast.Script = NewScript ();
 									break;
 									}
+								case Goedel.VSIXBuild.VSIXBuildType.Process : {
+
+									// Process  Process
+									Current_Cast.Process = NewProcess ();
+									break;
+									}
 								case Goedel.VSIXBuild.VSIXBuildType.Description : {
 
 									// Description  Description
@@ -690,7 +736,7 @@ namespace Goedel.VSIXBuild {
 									break;
 									}
 								default : {
-									throw new System.Exception("Parser Error Expected [GUID Project Parser Script Description ]");
+									throw new System.Exception("Parser Error Expected [GUID Project Parser Script Process Description ]");
 									}
 								}
 							}
@@ -754,6 +800,28 @@ namespace Goedel.VSIXBuild {
                         throw new System.Exception("Expected LABEL or LITERAL");
 
                     case StateCode.Script__Method:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Process_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.VSIXBuild.Process Current_Cast = (Goedel.VSIXBuild.Process)Current;
+                            Current_Cast.Class = Registry.TOKEN(Position, Text, TYPE__IDName, Current_Cast);
+                            State = StateCode.Process__Class;
+                            break;
+                            }
+                        throw new System.Exception("Expected LABEL or LITERAL");
+
+                    case StateCode.Process__Class:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.VSIXBuild.Process Current_Cast = (Goedel.VSIXBuild.Process)Current;
+                            Current_Cast.Method = Registry.TOKEN(Position, Text, TYPE__IDName, Current_Cast);
+                            State = StateCode.Process__Method;
+                            break;
+                            }
+                        throw new System.Exception("Expected LABEL or LITERAL");
+
+                    case StateCode.Process__Method:
                         Pop ();
                         Represent = true; 
                         break;

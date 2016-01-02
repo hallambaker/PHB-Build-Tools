@@ -40,3 +40,31 @@
 		Description
 			|Tool for generating VSIX manifests for code generators built using
 			|Goedel and other tools
+
+	CommandCS Generator ".cs"
+		GUID "8D382331-6F20-4C3C-A83B-7EEA39FA03AB"
+		Project CSharp
+		Project VisualBasic
+		Parser CommandP.CommandParse
+		Script CommandP.GenerateCS Generate
+		Description
+			|Tool for generating Command Line tool parser from description file.
+
+
+	Exceptional Generator ".cs"
+		GUID "7F47F99D-A484-4628-8AE4-0D866F7F7C43"
+		Project CSharp
+		Project VisualBasic
+		Parser Exceptional.Exceptions
+		Script Exceptional.Generate GenerateCSX
+		Description
+			|Tool for generating Command Line tool parser from description file.
+
+	GScript Generator ".cs"
+		GUID "038C7FC8-029C-4511-8AEB-B7FC0741C463"
+		Project CSharp
+		Project VisualBasic
+		Process Goedel.Script.Script Process
+		Description
+			|Scripting tool, converts a file containing scripting commands to
+			|C# code that implements the commands.

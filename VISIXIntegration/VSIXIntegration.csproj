@@ -9,8 +9,8 @@
     <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.Demo.SimpleFileGenerator</RootNamespace>
-    <AssemblyName>SimpleFileGenerator</AssemblyName>
+    <RootNamespace>PHBBuildTools</RootNamespace>
+    <AssemblyName>PHBBuildTools</AssemblyName>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>TestCodeSigningKey.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
@@ -58,9 +58,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Registry">
-      <HintPath>..\..\..\..\Code\Tools\Library\Goedel.Registry.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.Designer.Interfaces, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -141,11 +138,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Binding.cs" />
-    <Compile Include="SimpleFileGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Binding.vsixbuild" />
+    <None Include="Binding.vsixbuild">
+      <Generator>VSIXBuild</Generator>
+    </None>
     <None Include="packages.config" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
@@ -176,19 +174,57 @@
     <ProjectReference Include="..\ASN2\ASN2\ASN2Library.csproj">
       <Project>{d252e267-bb98-474b-a1e2-d9e5fe7873a6}</Project>
       <Name>ASN2Library</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\ASN2\ASNLibrary\ASNLibrary.csproj">
+      <Project>{1867378F-B442-4D27-9749-6183A7F1EF7E}</Project>
+      <Name>ASNLibrary</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\CommandLine\LibCommand\LibCommand.csproj">
+      <Project>{40104bff-96c2-4f70-ab22-68aefb023740}</Project>
+      <Name>LibCommand</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Exceptional\ExceptionalLibrary\ExceptionalLibrary.csproj">
+      <Project>{9c9c300a-f6b6-440d-82a7-df457e607fb2}</Project>
+      <Name>ExceptionalLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\FSR\FSRGenLib\FSRGenLib.csproj">
       <Project>{8cad8afc-c92f-4cb4-af2c-79933362a63e}</Project>
       <Name>FSRGenLib</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Registry\Goedel.Registry.csproj">
+      <Project>{f2a1f8ea-18e2-4f3a-aeaf-3983cea19fe0}</Project>
+      <Name>Goedel.Registry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GScript\Goedel.Script\Goedel.Script.csproj">
+      <Project>{75D3ED83-2AE6-47BF-A280-3E82983C975E}</Project>
+      <Name>Goedel.Script</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
     <ProjectReference Include="..\RegistryConfig\Generator\LibRegistryConfig.csproj">
       <Project>{fad27739-eff1-4d5e-bc80-bc43a62707c1}</Project>
       <Name>LibRegistryConfig</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
     <ProjectReference Include="..\VSIXBuild\LibVSIXBuild\VSIXBuildLibrary.csproj">
       <Project>{88e55204-d54c-438d-bd47-9d33ccb2580b}</Project>
       <Name>VSIXBuildLibrary</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="License.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>

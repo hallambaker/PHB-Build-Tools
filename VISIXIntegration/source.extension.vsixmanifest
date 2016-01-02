@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"
+                 xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="21DBBD9C-ACCB-4E74-90C0-E5D06AA47792" Version="1.0" Language="en-US" Publisher="Phillip Hallam-Baker" />
+    <Identity Id="D93BF07A-0921-43F0-B959-7C7AC4CC72F6" Version="1.0" Language="en-US" Publisher="Phillip Hallam-Baker" />
     <DisplayName>PHB Code Generation Tools</DisplayName>
     <Description xml:space="preserve">Phill Hallam-Baker's code generation tools.
 
@@ -15,12 +16,23 @@ Note, this version of the tools does not support syntax shading.</Description>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[10.0]" />
+    <InstallationTarget Version="[14.0,15.0)" Id="Microsoft.VisualStudio.Community" />
+    <InstallationTarget Version="[14.0,15.0)" Id="Microsoft.VisualStudio.Enterprise" />
+    <InstallationTarget Version="[14.0,15.0)" Id="Microsoft.VisualStudio.IntegratedShell" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
   </Dependencies>
   <Assets>
     <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="ASN2Library" Path="|ASN2Library|" AssemblyName="|ASN2Library;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="ASNLibrary" Path="|ASNLibrary|" AssemblyName="|ASNLibrary;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="FSRGenLib" Path="|FSRGenLib|" AssemblyName="|FSRGenLib;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="LibRegistryConfig" Path="|LibRegistryConfig|" AssemblyName="|LibRegistryConfig;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Registry" Path="|Goedel.Registry|" AssemblyName="|Goedel.Registry;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="LibCommand" Path="|LibCommand|" AssemblyName="|LibCommand;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Script" Path="|Goedel.Script|" AssemblyName="|Goedel.Script;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="VSIXBuildLibrary" Path="|VSIXBuildLibrary|" AssemblyName="|VSIXBuildLibrary;AssemblyName|" />
   </Assets>
 </PackageManifest>
 

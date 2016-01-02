@@ -2,7 +2,7 @@
 // Script Syntax Version:  1.0
 // #license MITLicense 
 
-//  Copyright ©  2015 by 
+//  Copyright ©  2011 by Default Deny Security Inc.
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -141,6 +141,14 @@ namespace Goedel.VSIXBuild {
 			_Output.Write ("	// naming convention. Otherwise it doesn't work.\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
+			// 	// Or maybe not, getting this thing to work is hit and miss. Sometime you just 
+			_Output.Write ("	// Or maybe not, getting this thing to work is hit and miss. Sometime you just\n{0}", _Indent);
+			// 	// have to restart the system and it all works. Problem seems to be that Visual Studio  
+			_Output.Write ("	// have to restart the system and it all works. Problem seems to be that Visual Studio \n{0}", _Indent);
+			// 	// can only handle so many module loads and unloads without a reset. 
+			_Output.Write ("	// can only handle so many module loads and unloads without a reset.\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
 			//     static partial class GuidList { 
 			_Output.Write ("    static partial class GuidList {{\n{0}", _Indent);
 			//         public const string guid#{Extension.Name}GeneratorString = "#{Generator.GUID.Value}"; 
@@ -175,8 +183,8 @@ namespace Goedel.VSIXBuild {
 					}
 				// #end foreach 
 				}
-			//     public class #{Extension.Name} : IVsSingleFileGenerator, IObjectWithSite { 
-			_Output.Write ("    public class {1} : IVsSingleFileGenerator, IObjectWithSite {{\n{0}", _Indent, Extension.Name);
+			//     public class #{Extension.Name} : IVsSingleFileGenerator, IObjectWithSite, IDisposable { 
+			_Output.Write ("    public class {1} : IVsSingleFileGenerator, IObjectWithSite, IDisposable {{\n{0}", _Indent, Extension.Name);
 			//         private object site = null; 
 			_Output.Write ("        private object site = null;\n{0}", _Indent);
 			//         private CodeDomProvider codeDomProvider = null; 
@@ -185,18 +193,12 @@ namespace Goedel.VSIXBuild {
 			_Output.Write ("        private ServiceProvider serviceProvider = null;\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
-			//         private CodeDomProvider CodeProvider 
-			_Output.Write ("        private CodeDomProvider CodeProvider\n{0}", _Indent);
-			//             { 
-			_Output.Write ("            {{\n{0}", _Indent);
-			//             get 
-			_Output.Write ("            get\n{0}", _Indent);
-			//                 { 
-			_Output.Write ("                {{\n{0}", _Indent);
-			//                 if (codeDomProvider == null) 
-			_Output.Write ("                if (codeDomProvider == null)\n{0}", _Indent);
-			//                     { 
-			_Output.Write ("                    {{\n{0}", _Indent);
+			//         private CodeDomProvider CodeProvider { 
+			_Output.Write ("        private CodeDomProvider CodeProvider {{\n{0}", _Indent);
+			//             get { 
+			_Output.Write ("            get {{\n{0}", _Indent);
+			//                 if (codeDomProvider == null) { 
+			_Output.Write ("                if (codeDomProvider == null) {{\n{0}", _Indent);
 			//                     IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID); 
 			_Output.Write ("                    IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);\n{0}", _Indent);
 			//                     if (provider != null) 
@@ -213,18 +215,12 @@ namespace Goedel.VSIXBuild {
 			_Output.Write ("            }}\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
-			//         private ServiceProvider SiteServiceProvider 
-			_Output.Write ("        private ServiceProvider SiteServiceProvider\n{0}", _Indent);
-			//             { 
-			_Output.Write ("            {{\n{0}", _Indent);
-			//             get 
-			_Output.Write ("            get\n{0}", _Indent);
-			//                 { 
-			_Output.Write ("                {{\n{0}", _Indent);
-			//                 if (serviceProvider == null) 
-			_Output.Write ("                if (serviceProvider == null)\n{0}", _Indent);
-			//                     { 
-			_Output.Write ("                    {{\n{0}", _Indent);
+			//         private ServiceProvider SiteServiceProvider { 
+			_Output.Write ("        private ServiceProvider SiteServiceProvider {{\n{0}", _Indent);
+			//             get { 
+			_Output.Write ("            get {{\n{0}", _Indent);
+			//                 if (serviceProvider == null) { 
+			_Output.Write ("                if (serviceProvider == null) {{\n{0}", _Indent);
 			//                     IOleServiceProvider oleServiceProvider = site as IOleServiceProvider; 
 			_Output.Write ("                    IOleServiceProvider oleServiceProvider = site as IOleServiceProvider;\n{0}", _Indent);
 			//                     serviceProvider = new ServiceProvider(oleServiceProvider); 
@@ -237,6 +233,68 @@ namespace Goedel.VSIXBuild {
 			_Output.Write ("                }}\n{0}", _Indent);
 			//             } 
 			_Output.Write ("            }}\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			//         ##region IDisposable 
+			_Output.Write ("        #region IDisposable\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			//         bool _disposed; 
+			_Output.Write ("        bool _disposed;\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			//         public void Dispose() { 
+			_Output.Write ("        public void Dispose() {{\n{0}", _Indent);
+			//             Dispose(true); 
+			_Output.Write ("            Dispose(true);\n{0}", _Indent);
+			//             GC.SuppressFinalize(this); 
+			_Output.Write ("            GC.SuppressFinalize(this);\n{0}", _Indent);
+			//             } 
+			_Output.Write ("            }}\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			//         ~#{Extension.Name} () { 
+			_Output.Write ("        ~{1} () {{\n{0}", _Indent, Extension.Name);
+			//             Dispose(false); 
+			_Output.Write ("            Dispose(false);\n{0}", _Indent);
+			//             } 
+			_Output.Write ("            }}\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			//         protected virtual void Dispose(bool disposing)  { 
+			_Output.Write ("        protected virtual void Dispose(bool disposing)  {{\n{0}", _Indent);
+			//             if (_disposed) 
+			_Output.Write ("            if (_disposed)\n{0}", _Indent);
+			//                 return; 
+			_Output.Write ("                return;\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			//             if (disposing) { 
+			_Output.Write ("            if (disposing) {{\n{0}", _Indent);
+			//                 if (serviceProvider != null) { 
+			_Output.Write ("                if (serviceProvider != null) {{\n{0}", _Indent);
+			// 					serviceProvider.Dispose(); 
+			_Output.Write ("					serviceProvider.Dispose();\n{0}", _Indent);
+			// 					} 
+			_Output.Write ("					}}\n{0}", _Indent);
+			//                 } 
+			_Output.Write ("                }}\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			//             // release any unmanaged objects 
+			_Output.Write ("            // release any unmanaged objects\n{0}", _Indent);
+			//             // set the object references to null 
+			_Output.Write ("            // set the object references to null\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			//             _disposed = true; 
+			_Output.Write ("            _disposed = true;\n{0}", _Indent);
+			//             } 
+			_Output.Write ("            }}\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			//         ##endregion IDisposable 
+			_Output.Write ("        #endregion IDisposable\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			//         ##region IVsSingleFileGenerator 
@@ -279,16 +337,28 @@ namespace Goedel.VSIXBuild {
 			_Output.Write ("\n{0}", _Indent);
 			//             // Process the data 
 			_Output.Write ("            // Process the data\n{0}", _Indent);
-			//             var Parse = new #{Generator.Parser.Name}(); 
-			_Output.Write ("            var Parse = new {1}();\n{0}", _Indent, Generator.Parser.Name);
-			//             var Schema = new Lexer(wszInputFilePath); 
-			_Output.Write ("            var Schema = new Lexer(wszInputFilePath);\n{0}", _Indent);
-			//             Schema.Process(Reader, Parse); 
-			_Output.Write ("            Schema.Process(Reader, Parse);\n{0}", _Indent);
-			//             var Script = new #{Generator.Script.Class}(Writer); 
-			_Output.Write ("            var Script = new {1}(Writer);\n{0}", _Indent, Generator.Script.Class);
-			//             Script.#{Generator.Script.Method}(Parse); 
-			_Output.Write ("            Script.{1}(Parse);\n{0}", _Indent, Generator.Script.Method);
+			// #if (Generator.Process.Class != null) 
+			if (  (Generator.Process.Class != null) ) {
+				//             var Script = new global::#{Generator.Process.Class}(); 
+				_Output.Write ("            var Script = new global::{1}();\n{0}", _Indent, Generator.Process.Class);
+				//             Script.#{Generator.Process.Method} (wszInputFilePath, Reader, Writer); 
+				_Output.Write ("            Script.{1} (wszInputFilePath, Reader, Writer);\n{0}", _Indent, Generator.Process.Method);
+				// #elseif (Generator.Parser != null) 
+				} else if (  (Generator.Parser != null)) {
+				//             var Parse = new global::#{Generator.Parser.Name}(); 
+				_Output.Write ("            var Parse = new global::{1}();\n{0}", _Indent, Generator.Parser.Name);
+				//             var Schema = new Lexer(wszInputFilePath); 
+				_Output.Write ("            var Schema = new Lexer(wszInputFilePath);\n{0}", _Indent);
+				//             Schema.Process(Reader, Parse); 
+				_Output.Write ("            Schema.Process(Reader, Parse);\n{0}", _Indent);
+				//  
+				_Output.Write ("\n{0}", _Indent);
+				//             var Script = new global::#{Generator.Script.Class}(Writer); 
+				_Output.Write ("            var Script = new global::{1}(Writer);\n{0}", _Indent, Generator.Script.Class);
+				//             Script.#{Generator.Script.Method}(Parse); 
+				_Output.Write ("            Script.{1}(Parse);\n{0}", _Indent, Generator.Script.Method);
+				// #end if 
+				}
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			//             // Convert writer data to a string and then a byte array 

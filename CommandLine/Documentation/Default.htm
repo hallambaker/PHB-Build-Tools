@@ -1,0 +1,392 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Command Line Parser Generator</title>
+</head>
+<body>
+<h1>Command Line Parser Generator</h1>
+<p>A tool that generates a command line interface tool from an abstract definition.</p>
+
+<p>To implement a command line interface in C# we simply:</p>
+
+<ol>
+<li>Write a command definition file</li>
+<li>Use the tool to convert it to code</li>
+<li>Compile the code</li>
+<li>Test interface</li>
+<li>Write dispatch routines to invoke the implementation code</li>
+<li>Test application</li>
+</ol>
+
+<p>
+Future versions of the tool may support additional languages, for example Java or C. 
+</p>
+
+<p>
+Implementing a command line interface isn't very hard but implementing it well can take
+quite a while. Defaulting file extensions, checking to see if files exist, setting
+the default values of flags and so on all take a little bit of time and effort and those
+little bits add up.
+</p>
+
+<p>
+Using the command line tool ensures a correct and consistent implementation with 
+properly documented help.
+</p>
+
+<h2>Example: Goedel Code Generator</h2>
+
+<p>The Goedel tool generation tool is used to convert script files and schema files 
+into C, C# or Java code. </p>
+
+<p>
+Invoking the generated program on a Windows platform without any parameters on
+a windows platform produces a familiar help display listing the command options:
+</p>
+
+<pre>
+$ CommandEcho
+No command specified
+Goedel meta-code generation tool
+
+/script [input] [/[no]line] [/[no]link] [/cs value] [/c value] [/java value]
+    Convert a Goedel script file to code
+/schema [input] [/[no]dlexer] [/[no]dparser] [/[no]dstack] [/cs value] [/c value] [/java value]
+    Convert a Goedel schema file to code
+</pre>
+
+<p>
+Executing the same code on a UNIX platform results in a similar display but with
+minus signs in place of slash characters. Code running on both platforms will accept 
+both input formats but display the default format for their particular platform.
+</p>
+
+<h3>Command Definition File</h3>
+
+
+<p>
+The preamble declares the C# namespace or java package name to be used by 
+the code generator and gives a brief, one line description for display in the help 
+mode:
+</p>
+
+<pre>
+Class Command
+	Brief		"Goedel meta-code generation tool"
+</pre>
+
+<p>
+As with all Goedel tools, block structure is denoted by indenting and there is no
+end of statement character.
+</p>
+
+<p>
+Options and Parameters may take arguments. All arguments must be of a declared type.
+Type declarations may occur anywhere in the definition file. The Goedel tool uses
+five types, NewFile, ExistingFile, String, Integer and Flag. These map to the 
+implementation language types "file", "string", "int" and "flag" as follows:
+</p>
+
+<pre>
+	Type NewFile			"file"
+	Type ExistingFile		"file"
+	Type String				"string"
+	Type Integer			"int"
+	Type Flag				"flag
+</pre>
+
+<p>
+Defining separate types for New and Existing files allows separate parsing and
+validation methods to be defined for each. The NewFile method will accept a file 
+name whether the file already exists or not. The ExistingFile method will only accept
+the name of a file that already exists.
+</p>
+
+<p>The script command converts a script file to code. The input file must exist
+already exist and default extension is .script. The output file(s) are specified 
+later in the 'Languages' Option Set. The command has two additional options, 
+CommentLine and Directive which control the format of the generated code.</p>
+
+<pre>
+	Command Script "script"
+		Brief	"Convert a Goedel script file to code"
+		Parameter InputFile "input" SourceFile
+			Default "script"
+		Include Languages
+		Option  CommentLine		"line"		Flag
+			Brief "If set, include source in generated as comments"
+		Option	Directive		"link"		Flag
+			Brief "If set, link generated code to source"
+</pre>
+
+<p>
+The parameter descriptions are currently unused by might be used in a future 
+version of the tool to create more detailed help information or user documentation.
+</p>
+
+
+<p>
+The schema command is similar except that the default extension is .gdl and the 
+option flags control output of debuging information that is sometimes helpful
+when debugging a generator.
+</p>
+
+<pre>
+	Command Schema "schema"
+		Brief	"Convert a Goedel schema file to code"
+		Parameter InputFile "input" SourceFile
+			Default "gdl"
+		Include Languages
+		Option	DebugLexer		"dlexer"    Flag
+		Option	DebugParser		"dparser"	Flag
+		Option	DebugStack		"dstack"	Flag
+</pre>
+
+<p>
+The Option Set 'Languages' defines options that are common to both commands. The
+first three are the /c, /cs and /java options used to request an output file to 
+be generated for each format. When set, the /lazy option specifies that the generator
+should not run unless either the source file or the generator executable is 
+more recent than the output file. 
+</p>
+
+<pre>
+	OptionSet Languages
+		Option	CSharp			"cs"		NewFile
+			Default "cs"
+			Brief "Generate C# code"
+		Option	C				"c"			NewFile
+			Default "c"
+			Brief "Generate C code"
+		Option	Java			"java"		NewFile
+			Default "java"
+			Brief "Generate java code"
+		Option  Lazy			"lazy"		Flag
+			Brief "Only generate code if source or generator have changed"
+</pre>
+
+<h3>
+Application code (C#)
+</h3>
+
+<p>
+By default, the generator creates a class _Main with a method Main that parses the 
+input parameters and if correct invokes either the method Schema (Schema Options)
+or Script (Script Options) depending on whether the /schema or /script command
+was invoked.
+</p>
+    <p>
+        If the /nomain option is selected, the generator names the method MainMethod 
+        instead. Using this option allows the command line parser to be called from a 
+        user specified main().</p>
+
+<p>
+The generated class Script is used to pass the parsed parameter values to the dispatch routine:
+</p>
+
+<pre>
+    public class _Script : Dispatch {
+		public SourceFile		InputFile = new SourceFile (&quot;script&quot;);
+		public Flag			    CommentLine = new  Flag ();
+		public Flag			    Directive = new  Flag ();
+		public NewFile			CSharp = new  NewFile (&quot;cs&quot;);
+		public NewFile			C = new  NewFile (&quot;c&quot;);
+		public NewFile			Java = new  NewFile (&quot;java&quot;);
+		public Flag			    Lazy = new  Flag ();
+		}
+
+    public partial class Script : _Script {
+        } // class Script
+</pre>
+
+<p>
+Instead of generating the Script class directly, the generator creates a parent class
+_Script and a partial class Script that inherits from it. This approach allows the 
+Script class to be extended with additional features if desired.
+</p>
+
+<p>
+The same technique is used to create an abstract class _Command with default
+dispatch methods defined for Script(Script Options) and Schema(Schema Options).
+To implement a command we simply override the default method with out 
+implementation:
+</p>
+
+<pre>
+using System;
+
+namespace Command {
+    public partial class Command {
+		public override void Schema (Schema Options) {
+			
+			Console.WriteLine ("schema");
+			Console.WriteLine ("Read Input file {0}", Options.InputFile.Text);
+            
+            // Code would go here
+			}
+
+        } // class _Command
+    }
+</pre>
+
+<h3>User Defined Types</h3>
+
+<p>
+The default classes created by the generator manage all parameter types as strings.
+The types themselves are defined in a partial class that inherits from the default 
+class. This allows the default behavior to be overriden.
+</p>
+
+<p>
+If the /builtins flag is set when the code is generated, the generator will include
+code to implement the default types Flags, NewFile and SourceFile. 
+</p>
+
+<p>
+These defaults 
+should be sufficient for 90% of cases. If additional types are required, these may be
+implemented by implementing the following methods in the partial class:
+</p>
+
+<dl>
+    <dt>void  Register(string Tag, Registry Registry, int Index)</dt>
+        <dd>This method is called once for each declared option during 
+        initialization
+        and allows the method to register itself to handle one or
+        more tags by calling the Registry.Register method.
+        </dd>
+        <dd>
+        Overriding this class allows a Type to register itself for multiple 
+        tags. For example the Flag option 'silent' needs to register the 
+        tags 'silent' and 'nosilent'. The tag 'silent' sets the flag and the
+        tag 'nosilent' clears it.
+        </dd>
+    <dt>int Tag(string Tag)</dt>
+        <dd>This method is invoked when the tag is encountered and and 
+        returns the number of required parameters. The parser will generate
+        an error if fewer parameters are returned.</dd>
+    <dt>void Parameter(string Text)</dt>
+        <dd>This method is called once for each parameter value that 
+        is encountered.</dd>
+    <dt>string Usage (string Tag, string Value, char Usage)</dt>
+        <dd>This method is called during the compilation of the 
+        'Usage Command [options ..] report." </dd>
+</dl>
+
+<p>
+The following class implements the Flag type by overriding the base class _Flag:
+</p>
+
+<pre>
+namespace CommandShell {
+
+    public partial class  Flag : _Flag {
+        public bool         IsSet;
+
+        public override void  Register(string Tag, Registry Registry, int Index) {
+            Registry.Register (Tag, Index);
+            Registry.Register ("no" + Tag, Index);
+            }
+
+        public override int Tag(string Tag) {
+            if ((Tag.Length > 2) && Tag[0] == 'n' && Tag[1] == 'o') {
+                IsSet = false;
+                }
+            else {
+                IsSet = true;
+                }
+            return 0; // number of required parameters is 0
+            }
+
+        public override void Parameter(string Text) {
+            switch (Text.ToLower()) {
+                case "true":
+                case "1":
+                    IsSet = true;
+                    break;
+                case "false":
+                case "0":
+                    IsSet = false;
+                    break;
+                default :
+                    throw new Exception ("Flag value not recognized" + Text);
+                }
+            }
+
+        public override string ToString() {
+            return IsSet ? "true" : "false";
+            }
+
+		public override string Usage (string Tag, string Value, char Usage) {
+			return Usage + "[no]" + Tag;
+			}
+        } 
+    }
+
+</pre>
+
+<h2>
+Example: Command Line Shell
+</h2>
+
+<p>
+The Command Line generator is used to generate its own interface. The command definition
+file is:
+</p>
+
+<pre>
+Class CommandShell
+	Brief "Command Line Parser Generator"
+
+	Type NewFile			"file"
+	Type ExistingFile		"file"
+	Type Flag				"flag"
+
+	Command Generate "generate"
+		Brief "Generate a command line inteface parser"
+		DefaultCommand
+		Parameter InputFile "input" ExistingFile
+			Default "command"
+		Parameter OutputFile "output" NewFile
+			Default "cs"
+		Option Main				"main" Flag
+			Default "true"
+			Brief	"If set, generate a main class"
+		Option Builtins			"builtins"	Flag
+			Default "true"
+			Brief	"If set, include the built in types NewFile, ExistingFile and Flags"
+		Option  Lazy			"lazy"		Flag
+			Brief "Only generate code if source or generator have changed"
+			Default "false"
+</pre>
+
+<p>
+The original Main loop began:
+</p>
+
+<pre>
+namespace Command {
+    class Program {
+        static void Main(string[] args) {
+
+            string inputfile = args[0];
+            string outputfile = args[1];
+</pre>
+
+<p>
+After converting the code to use the generated interface, the code became:
+</p>
+
+<pre>
+namespace CommandShell {
+    public partial class CommandShell {
+            public override void  Generate(Generate Options) {
+
+            string inputfile = Options.InputFile.Text;
+            string outputfile = Options.OutputFile.Text;
+</pre>
+
+
+
+</body>
+</html>

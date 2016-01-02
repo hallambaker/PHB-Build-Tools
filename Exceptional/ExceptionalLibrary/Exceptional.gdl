@@ -1,0 +1,23 @@
+﻿Copyright "2012" "Default Deny Security Inc." MITLicense
+
+Class Exceptional Exceptions
+    TopType Namespace
+        Id ID NamespaceT
+		Options List Choice
+			Parent
+
+    Type Parent
+        Id  ID ExceptionT
+		Exceptions List Choice
+			Exception
+
+    Type Exception
+        Id  ID ExceptionT
+        Options List Choice
+			Console
+			Description
+
+    Type Console
+		Message		String 
+	Type Description
+		Text		Text
