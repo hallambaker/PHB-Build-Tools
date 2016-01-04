@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MakeRFC", "MakeRFC\MakeRFC.csproj", "{9FD72649-B35B-48E0-AA01-BD8810566EDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibBootMaker", "LibBootMaker\LibBootMaker.csproj", "{BA3E686D-8404-46B3-B06D-048E6367E4EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibBridge", "LibBridge\LibBridge.csproj", "{EFEFBAB6-A3B4-42DC-AF30-FA14F2A9FF16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibRFCTool", "LibRFCTool\LibRFCTool.csproj", "{53284D1C-9B9F-4A44-ADDE-306606F8F0E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibOpenXML", "LibOpenXML\LibOpenXML.csproj", "{CF4F9F67-550F-494C-88C8-51AB0CB552CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Registry", "..\Goedel.Registry\Goedel.Registry.csproj", "{F2A1F8EA-18E2-4F3A-AEAF-3983CEA19FE0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9FD72649-B35B-48E0-AA01-BD8810566EDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FD72649-B35B-48E0-AA01-BD8810566EDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FD72649-B35B-48E0-AA01-BD8810566EDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FD72649-B35B-48E0-AA01-BD8810566EDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA3E686D-8404-46B3-B06D-048E6367E4EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA3E686D-8404-46B3-B06D-048E6367E4EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA3E686D-8404-46B3-B06D-048E6367E4EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA3E686D-8404-46B3-B06D-048E6367E4EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFEFBAB6-A3B4-42DC-AF30-FA14F2A9FF16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFEFBAB6-A3B4-42DC-AF30-FA14F2A9FF16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFEFBAB6-A3B4-42DC-AF30-FA14F2A9FF16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFEFBAB6-A3B4-42DC-AF30-FA14F2A9FF16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53284D1C-9B9F-4A44-ADDE-306606F8F0E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53284D1C-9B9F-4A44-ADDE-306606F8F0E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53284D1C-9B9F-4A44-ADDE-306606F8F0E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53284D1C-9B9F-4A44-ADDE-306606F8F0E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF4F9F67-550F-494C-88C8-51AB0CB552CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF4F9F67-550F-494C-88C8-51AB0CB552CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF4F9F67-550F-494C-88C8-51AB0CB552CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF4F9F67-550F-494C-88C8-51AB0CB552CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2A1F8EA-18E2-4F3A-AEAF-3983CEA19FE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2A1F8EA-18E2-4F3A-AEAF-3983CEA19FE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2A1F8EA-18E2-4F3A-AEAF-3983CEA19FE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2A1F8EA-18E2-4F3A-AEAF-3983CEA19FE0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

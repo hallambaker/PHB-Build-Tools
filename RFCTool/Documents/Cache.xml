@@ -1,0 +1,1417 @@
+﻿<!-- RFC2119 Added Tue, 18 Mar 2014 15:28:59 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml -->
+
+
+<reference anchor='RFC2119'>
+
+<front>
+<title abbrev='RFC Key Words'>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author initials='S.' surname='Bradner' fullname='Scott Bradner'>
+<organization>Harvard University</organization>
+<address>
+<postal>
+<street>1350 Mass. Ave.</street>
+<street>Cambridge</street>
+<street>MA 02138</street></postal>
+<phone>- +1 617 495 3864</phone>
+<email>sob@harvard.edu</email></address></author>
+<date year='1997' month='March' />
+<area>General</area>
+<keyword>keyword</keyword>
+<abstract>
+<t>
+   In many standards track documents several words are used to signify
+   the requirements in the specification.  These words are often
+   capitalized.  This document defines these words as they should be
+   interpreted in IETF documents.  Authors who follow these guidelines
+   should incorporate this phrase near the beginning of their document:
+
+<list>
+<t>
+      The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+      NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and
+      "OPTIONAL" in this document are to be interpreted as described in
+      RFC 2119.
+</t></list></t>
+<t>
+   Note that the force of these words is modified by the requirement
+   level of the document in which they are used.
+</t></abstract></front>
+
+<seriesInfo name='BCP' value='14' />
+<seriesInfo name='RFC' value='2119' />
+<format type='TXT' octets='4723' target='http://www.rfc-editor.org/rfc/rfc2119.txt' />
+<format type='HTML' octets='17970' target='http://xml.resource.org/public/rfc/html/rfc2119.html' />
+<format type='XML' octets='5777' target='http://xml.resource.org/public/rfc/xml/rfc2119.xml' />
+</reference>
+
+<!-- RFC2616 Added Tue, 18 Mar 2014 15:28:59 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.2616.xml -->
+
+
+<reference anchor='RFC2616'>
+
+<front>
+<title abbrev='HTTP/1.1'>Hypertext Transfer Protocol -- HTTP/1.1</title>
+<author initials='R.' surname='Fielding' fullname='Roy T. Fielding'>
+<organization abbrev='UC Irvine'>Department of Information and Computer Science</organization>
+<address>
+<postal>
+<street>University of California, Irvine</street>
+<city>Irvine</city>
+<region>CA</region>
+<code>92697-3425</code></postal>
+<facsimile>+1(949)824-1715</facsimile>
+<email>fielding@ics.uci.edu</email></address></author>
+<author initials='J.' surname='Gettys' fullname='James Gettys'>
+<organization abbrev='Compaq/W3C'>World Wide Web Consortium</organization>
+<address>
+<postal>
+<street>MIT Laboratory for Computer Science, NE43-356</street>
+<street>545 Technology Square</street>
+<city>Cambridge</city>
+<region>MA</region>
+<code>02139</code></postal>
+<facsimile>+1(617)258-8682</facsimile>
+<email>jg@w3.org</email></address></author>
+<author initials='J.' surname='Mogul' fullname='Jeffrey C. Mogul'>
+<organization abbrev='Compaq'>Compaq Computer Corporation</organization>
+<address>
+<postal>
+<street>Western Research Laboratory</street>
+<street>250 University Avenue</street>
+<city>Palo Alto</city>
+<region>CA</region>
+<code>94305</code></postal>
+<email>mogul@wrl.dec.com</email></address></author>
+<author initials='H.' surname='Frystyk' fullname='Henrik Frystyk Nielsen'>
+<organization abbrev='W3C/MIT'>World Wide Web Consortium</organization>
+<address>
+<postal>
+<street>MIT Laboratory for Computer Science, NE43-356</street>
+<street>545 Technology Square</street>
+<city>Cambridge</city>
+<region>MA</region>
+<code>02139</code></postal>
+<facsimile>+1(617)258-8682</facsimile>
+<email>frystyk@w3.org</email></address></author>
+<author initials='L.' surname='Masinter' fullname='Larry Masinter'>
+<organization abbrev='Xerox'>Xerox Corporation</organization>
+<address>
+<postal>
+<street>MIT Laboratory for Computer Science, NE43-356</street>
+<street>3333 Coyote Hill Road</street>
+<city>Palo Alto</city>
+<region>CA</region>
+<code>94034</code></postal>
+<email>masinter@parc.xerox.com</email></address></author>
+<author initials='P.' surname='Leach' fullname='Paul J. Leach'>
+<organization abbrev='Microsoft'>Microsoft Corporation</organization>
+<address>
+<postal>
+<street>1 Microsoft Way</street>
+<city>Redmond</city>
+<region>WA</region>
+<code>98052</code></postal>
+<email>paulle@microsoft.com</email></address></author>
+<author initials='T.' surname='Berners-Lee' fullname='Tim Berners-Lee'>
+<organization abbrev='W3C/MIT'>World Wide Web Consortium</organization>
+<address>
+<postal>
+<street>MIT Laboratory for Computer Science, NE43-356</street>
+<street>545 Technology Square</street>
+<city>Cambridge</city>
+<region>MA</region>
+<code>02139</code></postal>
+<facsimile>+1(617)258-8682</facsimile>
+<email>timbl@w3.org</email></address></author>
+<date year='1999' month='June' />
+<abstract>
+<t>
+   The Hypertext Transfer Protocol (HTTP) is an application-level
+   protocol for distributed, collaborative, hypermedia information
+   systems. It is a generic, stateless, protocol which can be used for
+   many tasks beyond its use for hypertext, such as name servers and
+   distributed object management systems, through extension of its
+   request methods, error codes and headers . A feature of HTTP is
+   the typing and negotiation of data representation, allowing systems
+   to be built independently of the data being transferred.
+</t>
+<t>
+   HTTP has been in use by the World-Wide Web global information
+   initiative since 1990. This specification defines the protocol
+   referred to as "HTTP/1.1", and is an update to RFC 2068 .
+</t></abstract></front>
+
+<seriesInfo name='RFC' value='2616' />
+<format type='TXT' octets='422317' target='http://www.rfc-editor.org/rfc/rfc2616.txt' />
+<format type='PS' octets='5529857' target='http://www.rfc-editor.org/rfc/rfc2616.ps' />
+<format type='PDF' octets='550558' target='http://www.rfc-editor.org/rfc/rfc2616.pdf' />
+<format type='HTML' octets='637302' target='http://xml.resource.org/public/rfc/html/rfc2616.html' />
+<format type='XML' octets='493420' target='http://xml.resource.org/public/rfc/xml/rfc2616.xml' />
+</reference>
+
+<!-- I-D.hallambaker-httpsession Added Tue, 18 Mar 2014 15:28:59 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml3/reference.I-D.hallambaker-httpsession.xml -->
+
+
+<reference anchor='I-D.hallambaker-httpsession'>
+<front>
+<title>HTTP Session Management</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='January' day='21' year='2014' />
+
+<abstract><t>The HTTP Session Management Mechanism provides a mean of securely establishing a persistent authentication session between a HTTP client and server that does not rely on the presentation of a confidential bearer token.  The Session Management Mechanism is intended to provide a replacement for the existing HTTP State Management Mechanism (Cookies) for this purpose.  This document defines the HTTP Accept-Session, Set-Session and Session headers and specifies their use to establish symmetric authentication keys and their use to authenticate and verify specific parts of an HTTP message.  Other means by which keys used to authenticate the messages are established are outside the scope of this document.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-httpsession-02' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-httpsession-02.txt' />
+<format type='PDF'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-httpsession-02.pdf' />
+</reference>
+
+<!-- RFC4627 Added Tue, 18 Mar 2014 15:28:59 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.4627.xml -->
+
+
+<reference anchor='RFC4627'>
+
+<front>
+<title>The application/json Media Type for JavaScript Object Notation (JSON)</title>
+<author initials='D.' surname='Crockford' fullname='D. Crockford'>
+<organization /></author>
+<date year='2006' month='July' />
+<abstract>
+<t>JavaScript Object Notation (JSON) is a lightweight, text-based, language-independent data interchange format.  It was derived from the ECMAScript Programming Language Standard.  JSON defines a small set of formatting rules for the portable representation of structured data.  This memo provides information for the Internet community.</t></abstract></front>
+
+<seriesInfo name='RFC' value='4627' />
+<format type='TXT' octets='16319' target='http://www.rfc-editor.org/rfc/rfc4627.txt' />
+</reference>
+
+<!-- I-D.hallambaker-jsonbcd Added Tue, 18 Mar 2014 15:28:59 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml3/reference.I-D.hallambaker-jsonbcd.xml -->
+
+
+<reference anchor='I-D.hallambaker-jsonbcd'>
+<front>
+<title>Binary Encodings for JavaScript Object Notation: JSON-B, JSON-C, JSON-D</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='January' day='21' year='2014' />
+
+<abstract><t>Three binary encodings for JavaScript Object Notation (JSON) are presented.  JSON-B (Binary) is a strict superset of the JSON encoding that permits efficient binary encoding of intrinsic JavaScript data types.  JSON-C (Compact) is a strict superset of JSON-B that supports compact representation of repeated data strings with short numeric codes.  JSON-D (Data) supports additional binary data types for integer and floating point representations for use in scientific applications where conversion between binary and decimal representations would cause a loss of precision.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-jsonbcd-01' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-jsonbcd-01.txt' />
+<format type='PDF'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-jsonbcd-01.pdf' />
+</reference>
+
+<!-- RFC5055 Added Tue, 18 Mar 2014 15:28:59 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.5055.xml -->
+
+
+<reference anchor='RFC5055'>
+
+<front>
+<title>Server-Based Certificate Validation Protocol (SCVP)</title>
+<author initials='T.' surname='Freeman' fullname='T. Freeman'>
+<organization /></author>
+<author initials='R.' surname='Housley' fullname='R. Housley'>
+<organization /></author>
+<author initials='A.' surname='Malpani' fullname='A. Malpani'>
+<organization /></author>
+<author initials='D.' surname='Cooper' fullname='D. Cooper'>
+<organization /></author>
+<author initials='W.' surname='Polk' fullname='W. Polk'>
+<organization /></author>
+<date year='2007' month='December' />
+<abstract>
+<t>The Server-Based Certificate Validation Protocol (SCVP) allows a client to delegate certification path construction and certification path validation to a server.  The path construction or validation (e.g., making sure that none of the certificates in the path are revoked) is performed according to a validation policy, which contains one or more trust anchors.  It allows simplification of client implementations and use of a set of predefined validation policies. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='RFC' value='5055' />
+<format type='TXT' octets='198764' target='http://www.rfc-editor.org/rfc/rfc5055.txt' />
+</reference>
+
+<!-- RFC5280 Added Tue, 18 Mar 2014 15:28:59 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.5280.xml -->
+
+
+<reference anchor='RFC5280'>
+
+<front>
+<title>Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile</title>
+<author initials='D.' surname='Cooper' fullname='D. Cooper'>
+<organization /></author>
+<author initials='S.' surname='Santesson' fullname='S. Santesson'>
+<organization /></author>
+<author initials='S.' surname='Farrell' fullname='S. Farrell'>
+<organization /></author>
+<author initials='S.' surname='Boeyen' fullname='S. Boeyen'>
+<organization /></author>
+<author initials='R.' surname='Housley' fullname='R. Housley'>
+<organization /></author>
+<author initials='W.' surname='Polk' fullname='W. Polk'>
+<organization /></author>
+<date year='2008' month='May' />
+<abstract>
+<t>This memo profiles the X.509 v3 certificate and X.509 v2 certificate revocation list (CRL) for use in the Internet.  An overview of this approach and model is provided as an introduction.  The X.509 v3 certificate format is described in detail, with additional information regarding the format and semantics of Internet name forms.  Standard certificate extensions are described and two Internet-specific extensions are defined.  A set of required certificate extensions is specified.  The X.509 v2 CRL format is described in detail along with standard and Internet-specific extensions.  An algorithm for X.509 certification path validation is described.  An ASN.1 module and examples are provided in the appendices. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='RFC' value='5280' />
+<format type='TXT' octets='352580' target='http://www.rfc-editor.org/rfc/rfc5280.txt' />
+</reference>
+
+<!-- RFC6698 Added Tue, 18 Mar 2014 15:28:59 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.6698.xml -->
+
+
+<reference anchor='RFC6698'>
+
+<front>
+<title>The DNS-Based Authentication of Named Entities (DANE) Transport Layer Security (TLS) Protocol: TLSA</title>
+<author initials='P.' surname='Hoffman' fullname='P. Hoffman'>
+<organization /></author>
+<author initials='J.' surname='Schlyter' fullname='J. Schlyter'>
+<organization /></author>
+<date year='2012' month='August' />
+<abstract>
+<t>Encrypted communication on the Internet often uses Transport Layer Security (TLS), which depends on third parties to certify the keys used.  This document improves on that situation by enabling the administrators of domain names to specify the keys used in that domain's TLS servers.  This requires matching improvements in TLS client software, but no change in TLS server software. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='RFC' value='6698' />
+<format type='TXT' octets='84034' target='http://www.rfc-editor.org/rfc/rfc6698.txt' />
+</reference>
+
+<!-- RFC6962 Added Tue, 18 Mar 2014 15:28:59 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.6962.xml -->
+
+
+<reference anchor='RFC6962'>
+
+<front>
+<title>Certificate Transparency</title>
+<author initials='B.' surname='Laurie' fullname='B. Laurie'>
+<organization /></author>
+<author initials='A.' surname='Langley' fullname='A. Langley'>
+<organization /></author>
+<author initials='E.' surname='Kasper' fullname='E. Kasper'>
+<organization /></author>
+<date year='2013' month='June' />
+<abstract>
+<t>This document describes an experimental protocol for publicly logging the existence of Transport Layer Security (TLS) certificates as they are issued or observed, in a manner that allows anyone to audit certificate authority (CA) activity and notice the issuance of suspect certificates as well as to audit the certificate logs themselves. The intent is that eventually clients would refuse to honor certificates that do not appear in a log, effectively forcing CAs to add all issued certificates to the logs.&lt;/t>&lt;t> Logs are network services that implement the protocol operations for submissions and queries that are defined in this document.</t></abstract></front>
+
+<seriesInfo name='RFC' value='6962' />
+<format type='TXT' octets='55048' target='http://www.rfc-editor.org/rfc/rfc6962.txt' />
+</reference>
+
+<!-- RFC4648 Added Tue, 18 Mar 2014 15:28:59 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.4648.xml -->
+
+
+<reference anchor='RFC4648'>
+
+<front>
+<title>The Base16, Base32, and Base64 Data Encodings</title>
+<author initials='S.' surname='Josefsson' fullname='S. Josefsson'>
+<organization /></author>
+<date year='2006' month='October' />
+<abstract>
+<t>This document describes the commonly used base 64, base 32, and base 16 encoding schemes.  It also discusses the use of line-feeds in encoded data, use of padding in encoded data, use of non-alphabet characters in encoded data, use of different encoding alphabets, and canonical encodings. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='RFC' value='4648' />
+<format type='TXT' octets='35491' target='http://www.rfc-editor.org/rfc/rfc4648.txt' />
+</reference>
+
+<!-- RFC3339 Added Tue, 18 Mar 2014 15:28:59 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.3339.xml -->
+
+
+<reference anchor='RFC3339'>
+
+<front>
+<title>Date and Time on the Internet: Timestamps</title>
+<author initials='G.' surname='Klyne' fullname='Graham Klyne' role='editor'>
+<organization>Clearswift Corporation</organization>
+<address>
+<postal>
+<street>1310 Waterside</street>
+<street>Arlington Business Park</street>
+<city>Theale</city>
+<region>Reading</region>
+<code>RG7 4SA</code>
+<country>UK</country></postal>
+<phone>+44 11 8903 8903</phone>
+<facsimile>+44 11 8903 9000</facsimile>
+<email>GK@ACM.ORG</email></address></author>
+<author initials='C.' surname='Newman' fullname='Chris Newman'>
+<organization>Sun Microsystems</organization>
+<address>
+<postal>
+<street>1050 Lakes Drive, Suite 250</street>
+<city>West Covina</city>
+<region>CA</region>
+<code>91790</code>
+<country>USA</country></postal>
+<email>chris.newman@sun.com</email></address></author>
+<date year='2002' month='July' />
+<abstract>
+<t>
+   This document defines a date and time format for use in Internet
+   protocols that is a profile of the ISO 8601 standard for
+   representation of dates and times using the Gregorian calendar.
+     </t></abstract></front>
+
+<seriesInfo name='RFC' value='3339' />
+<format type='TXT' octets='35064' target='http://www.rfc-editor.org/rfc/rfc3339.txt' />
+<format type='HTML' octets='65570' target='http://xml.resource.org/public/rfc/html/rfc3339.html' />
+<format type='XML' octets='37259' target='http://xml.resource.org/public/rfc/xml/rfc3339.xml' />
+</reference>
+
+<!-- RFC3709 Added Tue, 18 Mar 2014 15:29:00 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.3709.xml -->
+
+
+<reference anchor='RFC3709'>
+
+<front>
+<title>Internet X.509 Public Key Infrastructure: Logotypes in X.509 Certificates</title>
+<author initials='S.' surname='Santesson' fullname='S. Santesson'>
+<organization /></author>
+<author initials='R.' surname='Housley' fullname='R. Housley'>
+<organization /></author>
+<author initials='T.' surname='Freeman' fullname='T. Freeman'>
+<organization /></author>
+<date year='2004' month='February' />
+<abstract>
+<t>This document specifies a certificate extension for including logotypes in public key certificates and attribute certificates. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='RFC' value='3709' />
+<format type='TXT' octets='46453' target='http://www.rfc-editor.org/rfc/rfc3709.txt' />
+</reference>
+
+<!-- draft-hallambaker-wsconnect Added Tue, 18 Mar 2014 15:29:01 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml3/reference.I-D.hallambaker-wsconnect.xml -->
+
+
+<reference anchor='I-D.hallambaker-wsconnect'>
+<front>
+<title>JSON Service Connect (JCX) Protocol</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='January' day='21' year='2014' />
+
+<abstract><t>JSON Service Connect (JCX) is a JSON/REST Web Service that may be used to establish and maintain a 'connection binding' of a device to an account held with a Web Service Provider.  Multiple connection bindings may be established under the same account to support multiple devices and/or multiple users of a single device.  A connection binding permits a device to securely connect to one or more services offered by the Web Service Provider with support for protocol and protocol version agilty and fault tollerance.  The protocol is presented as a HTTP/JSON Web Service and uses the HTTP session continuation mechanism for authentication of transaction messages and supports negotiation of a HTTP session continuation mechanism context for the established endpoint connections.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-wsconnect-05' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-wsconnect-05.txt' />
+<format type='PDF'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-wsconnect-05.pdf' />
+</reference>
+
+<!-- draft-hallambaker-wsconnect Added Tue, 18 Mar 2014 15:29:52 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml3/reference.I-D.hallambaker-wsconnect.xml -->
+
+
+<reference anchor='I-D.hallambaker-wsconnect'>
+<front>
+<title>JSON Service Connect (JCX) Protocol</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='January' day='21' year='2014' />
+
+<abstract><t>JSON Service Connect (JCX) is a JSON/REST Web Service that may be used to establish and maintain a 'connection binding' of a device to an account held with a Web Service Provider.  Multiple connection bindings may be established under the same account to support multiple devices and/or multiple users of a single device.  A connection binding permits a device to securely connect to one or more services offered by the Web Service Provider with support for protocol and protocol version agilty and fault tollerance.  The protocol is presented as a HTTP/JSON Web Service and uses the HTTP session continuation mechanism for authentication of transaction messages and supports negotiation of a HTTP session continuation mechanism context for the established endpoint connections.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-wsconnect-05' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-wsconnect-05.txt' />
+<format type='PDF'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-wsconnect-05.pdf' />
+</reference>
+
+<!-- RFC1035 Added Tue, 18 Mar 2014 16:58:33 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.1035.xml -->
+
+
+<reference anchor='RFC1035'>
+
+<front>
+<title abbrev='Domain Implementation and Specification'>Domain names - implementation and specification</title>
+<author initials='P.' surname='Mockapetris' fullname='P. Mockapetris'>
+<organization>USC/ISI</organization>
+<address>
+<postal>
+<street>4676 Admiralty Way</street>
+<city>Marina del Rey</city>
+<region>CA</region>
+<code>90291</code>
+<country>US</country></postal>
+<phone>+1 213 822 1511</phone></address></author>
+<date year='1987' day='1' month='November' /></front>
+
+<seriesInfo name='STD' value='13' />
+<seriesInfo name='RFC' value='1035' />
+<format type='TXT' octets='125626' target='http://www.rfc-editor.org/rfc/rfc1035.txt' />
+</reference>
+
+<!-- RFC4033 Added Tue, 18 Mar 2014 16:58:33 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.4033.xml -->
+
+
+<reference anchor='RFC4033'>
+
+<front>
+<title>DNS Security Introduction and Requirements</title>
+<author initials='R.' surname='Arends' fullname='R. Arends'>
+<organization /></author>
+<author initials='R.' surname='Austein' fullname='R. Austein'>
+<organization /></author>
+<author initials='M.' surname='Larson' fullname='M. Larson'>
+<organization /></author>
+<author initials='D.' surname='Massey' fullname='D. Massey'>
+<organization /></author>
+<author initials='S.' surname='Rose' fullname='S. Rose'>
+<organization /></author>
+<date year='2005' month='March' />
+<abstract>
+<t>The Domain Name System Security Extensions (DNSSEC) add data origin authentication and data integrity to the Domain Name System.  This document introduces these extensions and describes their capabilities and limitations.  This document also discusses the services that the DNS security extensions do and do not provide.  Last, this document describes the interrelationships between the documents that collectively describe DNSSEC. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='RFC' value='4033' />
+<format type='TXT' octets='52445' target='http://www.rfc-editor.org/rfc/rfc4033.txt' />
+</reference>
+
+<!-- I-D.hallambaker-omnibroker Added Wed, 19 Mar 2014 15:56:32 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml3/reference.I-D.hallambaker-omnibroker.xml -->
+
+
+<reference anchor='I-D.hallambaker-omnibroker'>
+<front>
+<title>OmniBroker Protocol</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='January' day='21' year='2014' />
+
+<abstract><t>An Omnibroker is an agent chosen and trusted by an Internet user to provide information such as name and certificate status information that are in general trusted even if they are not trustworthy.  Rather than acting as a mere conduit for information provided by existing services, an Omnibroker is responsible for curating those sources to protect the user.  The Omnibroker Protocol (OBP) provides an aggregated interface to trusted Internet services including DNS, OCSP and various forms of authentication service.  Multiple transport bindings are supported to permit efficient access in virtually every common deployment scenario and ensure access in any deployment scenario in which access is not being purposely denied.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-omnibroker-07' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-omnibroker-07.txt' />
+<format type='PDF'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-omnibroker-07.pdf' />
+</reference>
+
+<!-- RFC5246 Added Fri, 21 Mar 2014 17:00:14 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.5246.xml -->
+
+
+<reference anchor='RFC5246'>
+
+<front>
+<title>The Transport Layer Security (TLS) Protocol Version 1.2</title>
+<author initials='T.' surname='Dierks' fullname='T. Dierks'>
+<organization /></author>
+<author initials='E.' surname='Rescorla' fullname='E. Rescorla'>
+<organization /></author>
+<date year='2008' month='August' />
+<abstract>
+<t>This document specifies Version 1.2 of the Transport Layer Security (TLS) protocol.  The TLS protocol provides communications security over the Internet.  The protocol allows client/server applications to communicate in a way that is designed to prevent eavesdropping, tampering, or message forgery. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='RFC' value='5246' />
+<format type='TXT' octets='222395' target='http://www.rfc-editor.org/rfc/rfc5246.txt' />
+</reference>
+
+<!-- I-D.hallambaker-dnse Added Mon, 24 Mar 2014 15:52:00 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml3/reference.I-D.hallambaker-dnse.xml -->
+
+
+<reference anchor='I-D.hallambaker-dnse'>
+<front>
+<title>Private-DNS</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='March' day='21' year='2014' />
+
+<abstract><t>This document describes DNSE-JX, a transport security mechanism for the DNS protocol. The mechanism may be employed to secure communication between a client and its resolver or between a resolver and an authoritative server.  Service binding including key exchange is effected using the JSON Service Connect (JCX) Protocol. DNS protocol messages are wrapped in a new framing protocol.  Deployment of the new security mechanism compliments DNSSEC.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-dnse-00' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-dnse-00.txt' />
+</reference>
+
+<!-- RFC2782 Added Thu, 27 Mar 2014 17:24:11 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.2782.xml -->
+
+
+<reference anchor='RFC2782'>
+
+<front>
+<title abbrev='DNS SRV RR'>A DNS RR for specifying the location of services (DNS SRV)</title>
+<author initials='A.' surname='Gulbrandsen' fullname='Arnt Gulbrandsen'>
+<organization>Troll Tech</organization>
+<address>
+<postal>
+<street>Waldemar Thranes gate 98B</street>
+<city>Oslo</city>
+<region />
+<code>N-0175</code>
+<country>NO</country></postal>
+<phone>+47 22 806390</phone>
+<facsimile>+47 22 806380</facsimile>
+<email>arnt@troll.no</email></address></author>
+<author initials='P.' surname='Vixie' fullname='Paul Vixie'>
+<organization>Internet Software Consortium</organization>
+<address>
+<postal>
+<street>950 Charter Street</street>
+<city>Redwood City</city>
+<region>CA</region>
+<code>94063</code>
+<country>US</country></postal>
+<phone>+1 650 779 7001</phone></address></author>
+<author initials='L.' surname='Esibov' fullname='Levon Esibov'>
+<organization>Microsoft Corporation</organization>
+<address>
+<postal>
+<street>One Microsoft Way</street>
+<city>Redmond</city>
+<region>WA</region>
+<code>98052</code>
+<country>US</country></postal>
+<email>levone@microsoft.com</email></address></author>
+<date year='2000' month='February' />
+<abstract>
+<t>This document describes a DNS RR which specifies the location of the
+   server(s) for a specific protocol and domain.</t></abstract></front>
+
+<seriesInfo name='RFC' value='2782' />
+<format type='TXT' octets='24013' target='http://www.rfc-editor.org/rfc/rfc2782.txt' />
+</reference>
+
+<!-- RFC5785 Added Thu, 27 Mar 2014 17:24:11 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.5785.xml -->
+
+
+<reference anchor='RFC5785'>
+
+<front>
+<title>Defining Well-Known Uniform Resource Identifiers (URIs)</title>
+<author initials='M.' surname='Nottingham' fullname='M. Nottingham'>
+<organization /></author>
+<author initials='E.' surname='Hammer-Lahav' fullname='E. Hammer-Lahav'>
+<organization /></author>
+<date year='2010' month='April' />
+<abstract>
+<t>This memo defines a path prefix for "well-known locations", "/.well-known/", in selected Uniform Resource Identifier (URI) schemes. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='RFC' value='5785' />
+<format type='TXT' octets='13779' target='http://www.rfc-editor.org/rfc/rfc5785.txt' />
+</reference>
+
+<!-- RFC7159 Added Mon, 05 May 2014 23:32:34 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.7159.xml -->
+
+
+<reference anchor='RFC7159'>
+
+<front>
+<title>The JavaScript Object Notation (JSON) Data Interchange Format</title>
+<author initials='T.' surname='Bray' fullname='T. Bray'>
+<organization /></author>
+<date year='2014' month='March' />
+<abstract>
+<t>JavaScript Object Notation (JSON) is a lightweight, text-based, language-independent data interchange format. It was derived from the ECMAScript Programming Language Standard. JSON defines a small set of formatting rules for the portable representation of structured data.&lt;/t>&lt;t> This document removes inconsistencies with other specifications of JSON, repairs specification errors, and offers experience-based interoperability guidance.</t></abstract></front>
+
+<seriesInfo name='RFC' value='7159' />
+<format type='TXT' octets='27451' target='http://www.rfc-editor.org/rfc/rfc7159.txt' />
+</reference>
+
+<!-- W3C.WD-logfile-960221 Added Tue, 06 May 2014 14:38:45 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml4/reference.W3C.WD-logfile-960221.xml -->
+
+
+<reference anchor='W3C.WD-logfile-960221'>
+<front>
+<title>Extended Log File Format</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip M. Hallam-Baker'>
+    <organization />
+</author>
+
+<author initials='B' surname='Behlendorf' fullname='Brian Behlendorf'>
+    <organization />
+</author>
+
+<date month='February' day='21' year='1996' />
+</front>
+
+<seriesInfo name='W3C NOTE' value='WD-logfile-960221' />
+<format type='HTML' target='http://www.w3.org/TR/WD-logfile-960221' />
+</reference>
+
+<!-- RFC6960 Added Mon, 12 May 2014 16:21:45 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.6960.xml -->
+
+
+<reference anchor='RFC6960'>
+
+<front>
+<title>X.509 Internet Public Key Infrastructure Online Certificate Status Protocol - OCSP</title>
+<author initials='S.' surname='Santesson' fullname='S. Santesson'>
+<organization /></author>
+<author initials='M.' surname='Myers' fullname='M. Myers'>
+<organization /></author>
+<author initials='R.' surname='Ankney' fullname='R. Ankney'>
+<organization /></author>
+<author initials='A.' surname='Malpani' fullname='A. Malpani'>
+<organization /></author>
+<author initials='S.' surname='Galperin' fullname='S. Galperin'>
+<organization /></author>
+<author initials='C.' surname='Adams' fullname='C. Adams'>
+<organization /></author>
+<date year='2013' month='June' />
+<abstract>
+<t>This document specifies a protocol useful in determining the current status of a digital certificate without requiring Certificate Revocation Lists (CRLs).  Additional mechanisms addressing PKIX operational requirements are specified in separate documents.  This document obsoletes RFCs 2560 and 6277.  It also updates RFC 5912.</t></abstract></front>
+
+<seriesInfo name='RFC' value='6960' />
+<format type='TXT' octets='82037' target='http://www.rfc-editor.org/rfc/rfc6960.txt' />
+</reference>
+
+<!-- RFC5019 Added Mon, 12 May 2014 16:21:45 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.5019.xml -->
+
+
+<reference anchor='RFC5019'>
+
+<front>
+<title>The Lightweight Online Certificate Status Protocol (OCSP) Profile for High-Volume Environments</title>
+<author initials='A.' surname='Deacon' fullname='A. Deacon'>
+<organization /></author>
+<author initials='R.' surname='Hurst' fullname='R. Hurst'>
+<organization /></author>
+<date year='2007' month='September' />
+<abstract>
+<t>This specification defines a profile of the Online Certificate Status Protocol (OCSP) that addresses the scalability issues inherent when using OCSP in large scale (high volume) Public Key Infrastructure (PKI) environments and/or in PKI environments that require a lightweight solution to minimize communication bandwidth and client-side processing. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='RFC' value='5019' />
+<format type='TXT' octets='46371' target='http://www.rfc-editor.org/rfc/rfc5019.txt' />
+</reference>
+
+<!-- RFC6066 Added Mon, 12 May 2014 16:21:45 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.6066.xml -->
+
+
+<reference anchor='RFC6066'>
+
+<front>
+<title>Transport Layer Security (TLS) Extensions: Extension Definitions</title>
+<author initials='D.' surname='Eastlake' fullname='D. Eastlake'>
+<organization /></author>
+<date year='2011' month='January' />
+<abstract>
+<t>This document provides specifications for existing TLS extensions.  It is a companion document for RFC 5246, "The Transport Layer Security (TLS) Protocol Version 1.2".  The extensions specified are server_name, max_fragment_length, client_certificate_url, trusted_ca_keys, truncated_hmac, and status_request. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='RFC' value='6066' />
+<format type='TXT' octets='55079' target='http://www.rfc-editor.org/rfc/rfc6066.txt' />
+</reference>
+
+<!-- I-D.hallambaker-privatedns Added Thu, 15 May 2014 13:09:23 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml3/reference.I-D.hallambaker-privatedns.xml -->
+
+
+<reference anchor='I-D.hallambaker-privatedns'>
+<front>
+<title>Private-DNS</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='9' year='2014' />
+
+<abstract><t>This document describes Private DNS, a transport security mechanism for the DNS protocol. The mechanism may be employed to secure communication between a client and its resolver or between a resolver and an authoritative server.  Service binding including key exchange is effected using the JSON Service Connect (JCX) Protocol. DNS protocol messages are wrapped in a new framing protocol.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-privatedns-00' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-privatedns-00.txt' />
+</reference>
+
+<!-- RFC2986 Added Tue, 20 May 2014 14:03:42 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.2986.xml -->
+
+
+<reference anchor='RFC2986'>
+
+<front>
+<title>PKCS #10: Certification Request Syntax Specification Version 1.7</title>
+<author initials='M.' surname='Nystrom' fullname='M. Nystrom'>
+<organization /></author>
+<author initials='B.' surname='Kaliski' fullname='B. Kaliski'>
+<organization /></author>
+<date year='2000' month='November' />
+<abstract>
+<t>This memo represents a republication of PKCS #10 v1.7 from RSA Laboratories' Public-Key Cryptography Standards (PKCS) series, and change control is retained within the PKCS process.  The body of this document, except for the security considerations section, is taken directly from the PKCS #9 v2.0 or the PKCS #10 v1.7 document.  This memo provides information for the Internet community.</t></abstract></front>
+
+<seriesInfo name='RFC' value='2986' />
+<format type='TXT' octets='27794' target='http://www.rfc-editor.org/rfc/rfc2986.txt' />
+</reference>
+
+<!-- RFC2822 Added Tue, 20 May 2014 14:41:54 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.2822.xml -->
+
+
+<reference anchor='RFC2822'>
+
+<front>
+<title>Internet Message Format</title>
+<author initials='P.' surname='Resnick' fullname='P. Resnick'>
+<organization /></author>
+<date year='2001' month='April' />
+<abstract>
+<t>This document specifies a syntax for text messages that are sent between computer users, within the framework of "electronic mail" messages. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='RFC' value='2822' />
+<format type='TXT' octets='110695' target='http://www.rfc-editor.org/rfc/rfc2822.txt' />
+</reference>
+
+<!-- RFC6090 Added Tue, 20 May 2014 14:41:54 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.6090.xml -->
+
+
+<reference anchor='RFC6090'>
+
+<front>
+<title>Fundamental Elliptic Curve Cryptography Algorithms</title>
+<author initials='D.' surname='McGrew' fullname='D. McGrew'>
+<organization /></author>
+<author initials='K.' surname='Igoe' fullname='K. Igoe'>
+<organization /></author>
+<author initials='M.' surname='Salter' fullname='M. Salter'>
+<organization /></author>
+<date year='2011' month='February' />
+<abstract>
+<t>This note describes the fundamental algorithms of Elliptic Curve Cryptography (ECC) as they were defined in some seminal references from 1994 and earlier.  These descriptions may be useful for implementing the fundamental algorithms without using any of the specialized methods that were developed in following years.  Only elliptic curves defined over fields of characteristic greater than three are in scope; these curves are those used in Suite B.  This document is not an Internet Standards Track specification; it is published for informational purposes.</t></abstract></front>
+
+<seriesInfo name='RFC' value='6090' />
+<format type='TXT' octets='75993' target='http://www.rfc-editor.org/rfc/rfc6090.txt' />
+</reference>
+
+<!-- I-D.hallambaker-omnipublish Added Mon, 06 Oct 2014 16:08:53 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml3/reference.I-D.hallambaker-omnipublish.xml -->
+
+
+<reference anchor='I-D.hallambaker-omnipublish'>
+<front>
+<title>OmniBroker Publication Protocol</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='May' day='22' year='2014' />
+
+<abstract><t>OmniPublish is a Web Service that supports server configuration management. The supported transaction set allows a server to obtain and renew necessary cryptographic credentials, publish service discovery statements and obtain network configuration specifications.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-omnipublish-00' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-omnipublish-00.txt' />
+</reference>
+
+<!-- RFC801 Added Tue, 14 Oct 2014 15:24:44 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.0801.xml -->
+
+
+<reference anchor='RFC0801'>
+
+<front>
+<title>NCP/TCP transition plan</title>
+<author initials='J.' surname='Postel' fullname='J. Postel'>
+<organization>University of Southern California (USC)/Information Sciences Institute</organization>
+<address>
+<postal>
+<street>4676 Admiralty Way</street>
+<city>Marina del Rey</city>
+<region>CA</region>
+<code>90291</code>
+<country>US</country></postal>
+<phone>+1 213 822 1511</phone></address></author>
+<date year='1981' day='1' month='November' /></front>
+
+<seriesInfo name='RFC' value='801' />
+<format type='TXT' octets='42041' target='http://www.rfc-editor.org/rfc/rfc801.txt' />
+</reference>
+
+<!-- RFC801 Added Tue, 14 Oct 2014 15:28:46 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.0801.xml -->
+
+
+<reference anchor='RFC0801'>
+
+<front>
+<title>NCP/TCP transition plan</title>
+<author initials='J.' surname='Postel' fullname='J. Postel'>
+<organization>University of Southern California (USC)/Information Sciences Institute</organization>
+<address>
+<postal>
+<street>4676 Admiralty Way</street>
+<city>Marina del Rey</city>
+<region>CA</region>
+<code>90291</code>
+<country>US</country></postal>
+<phone>+1 213 822 1511</phone></address></author>
+<date year='1981' day='1' month='November' /></front>
+
+<seriesInfo name='RFC' value='801' />
+<format type='TXT' octets='42041' target='http://www.rfc-editor.org/rfc/rfc801.txt' />
+</reference>
+
+<!-- RFC801 Added Tue, 14 Oct 2014 15:29:40 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.0801.xml -->
+
+
+<reference anchor='RFC0801'>
+
+<front>
+<title>NCP/TCP transition plan</title>
+<author initials='J.' surname='Postel' fullname='J. Postel'>
+<organization>University of Southern California (USC)/Information Sciences Institute</organization>
+<address>
+<postal>
+<street>4676 Admiralty Way</street>
+<city>Marina del Rey</city>
+<region>CA</region>
+<code>90291</code>
+<country>US</country></postal>
+<phone>+1 213 822 1511</phone></address></author>
+<date year='1981' day='1' month='November' /></front>
+
+<seriesInfo name='RFC' value='801' />
+<format type='TXT' octets='42041' target='http://www.rfc-editor.org/rfc/rfc801.txt' />
+</reference>
+
+<!-- RFC801 Added Tue, 14 Oct 2014 15:30:48 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.0801.xml -->
+
+
+<reference anchor='RFC0801'>
+
+<front>
+<title>NCP/TCP transition plan</title>
+<author initials='J.' surname='Postel' fullname='J. Postel'>
+<organization>University of Southern California (USC)/Information Sciences Institute</organization>
+<address>
+<postal>
+<street>4676 Admiralty Way</street>
+<city>Marina del Rey</city>
+<region>CA</region>
+<code>90291</code>
+<country>US</country></postal>
+<phone>+1 213 822 1511</phone></address></author>
+<date year='1981' day='1' month='November' /></front>
+
+<seriesInfo name='RFC' value='801' />
+<format type='TXT' octets='42041' target='http://www.rfc-editor.org/rfc/rfc801.txt' />
+</reference>
+
+<!-- RFC801 Added Tue, 14 Oct 2014 15:31:42 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.0801.xml -->
+
+
+<reference anchor='RFC0801'>
+
+<front>
+<title>NCP/TCP transition plan</title>
+<author initials='J.' surname='Postel' fullname='J. Postel'>
+<organization>University of Southern California (USC)/Information Sciences Institute</organization>
+<address>
+<postal>
+<street>4676 Admiralty Way</street>
+<city>Marina del Rey</city>
+<region>CA</region>
+<code>90291</code>
+<country>US</country></postal>
+<phone>+1 213 822 1511</phone></address></author>
+<date year='1981' day='1' month='November' /></front>
+
+<seriesInfo name='RFC' value='801' />
+<format type='TXT' octets='42041' target='http://www.rfc-editor.org/rfc/rfc801.txt' />
+</reference>
+
+<!-- RFC801 Added Tue, 14 Oct 2014 15:31:59 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.0801.xml -->
+
+
+<reference anchor='RFC0801'>
+
+<front>
+<title>NCP/TCP transition plan</title>
+<author initials='J.' surname='Postel' fullname='J. Postel'>
+<organization>University of Southern California (USC)/Information Sciences Institute</organization>
+<address>
+<postal>
+<street>4676 Admiralty Way</street>
+<city>Marina del Rey</city>
+<region>CA</region>
+<code>90291</code>
+<country>US</country></postal>
+<phone>+1 213 822 1511</phone></address></author>
+<date year='1981' day='1' month='November' /></front>
+
+<seriesInfo name='RFC' value='801' />
+<format type='TXT' octets='42041' target='http://www.rfc-editor.org/rfc/rfc801.txt' />
+</reference>
+
+<!-- RFC801 Added Tue, 14 Oct 2014 15:36:23 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.0801.xml -->
+
+
+<reference anchor='RFC0801'>
+
+<front>
+<title>NCP/TCP transition plan</title>
+<author initials='J.' surname='Postel' fullname='J. Postel'>
+<organization>University of Southern California (USC)/Information Sciences Institute</organization>
+<address>
+<postal>
+<street>4676 Admiralty Way</street>
+<city>Marina del Rey</city>
+<region>CA</region>
+<code>90291</code>
+<country>US</country></postal>
+<phone>+1 213 822 1511</phone></address></author>
+<date year='1981' day='1' month='November' /></front>
+
+<seriesInfo name='RFC' value='801' />
+<format type='TXT' octets='42041' target='http://www.rfc-editor.org/rfc/rfc801.txt' />
+</reference>
+
+<!-- RFC801 Added Tue, 14 Oct 2014 15:37:21 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.0801.xml -->
+
+
+<reference anchor='RFC0801'>
+
+<front>
+<title>NCP/TCP transition plan</title>
+<author initials='J.' surname='Postel' fullname='J. Postel'>
+<organization>University of Southern California (USC)/Information Sciences Institute</organization>
+<address>
+<postal>
+<street>4676 Admiralty Way</street>
+<city>Marina del Rey</city>
+<region>CA</region>
+<code>90291</code>
+<country>US</country></postal>
+<phone>+1 213 822 1511</phone></address></author>
+<date year='1981' day='1' month='November' /></front>
+
+<seriesInfo name='RFC' value='801' />
+<format type='TXT' octets='42041' target='http://www.rfc-editor.org/rfc/rfc801.txt' />
+</reference>
+
+<!-- RFC801 Added Tue, 14 Oct 2014 15:37:28 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.0801.xml -->
+
+
+<reference anchor='RFC0801'>
+
+<front>
+<title>NCP/TCP transition plan</title>
+<author initials='J.' surname='Postel' fullname='J. Postel'>
+<organization>University of Southern California (USC)/Information Sciences Institute</organization>
+<address>
+<postal>
+<street>4676 Admiralty Way</street>
+<city>Marina del Rey</city>
+<region>CA</region>
+<code>90291</code>
+<country>US</country></postal>
+<phone>+1 213 822 1511</phone></address></author>
+<date year='1981' day='1' month='November' /></front>
+
+<seriesInfo name='RFC' value='801' />
+<format type='TXT' octets='42041' target='http://www.rfc-editor.org/rfc/rfc801.txt' />
+</reference>
+
+<!-- RFC2631 Added Mon, 27 Oct 2014 12:10:31 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.2631.xml -->
+
+
+<reference anchor='RFC2631'>
+
+<front>
+<title>Diffie-Hellman Key Agreement Method</title>
+<author initials='E.' surname='Rescorla' fullname='Eric Rescorla'>
+<organization>RTFM Inc.</organization>
+<address>
+<postal>
+<street>30 Newell Road</street>
+<street>#16</street>
+<city>Palo Alto</city>
+<region>CA</region>
+<code>94303</code>
+<country>US</country></postal>
+<email>ekr@rtfm.com</email></address></author>
+<date year='1999' month='June' />
+<abstract>
+<t>This document standardizes one particular Diffie-Hellman variant,  based on the ANSI X9.42 draft, developed by the ANSI X9F1 working group. Diffie-Hellman is a key agreement algorithm used by two parties to agree on a shared secret. An algorithm for converting the shared secret into an arbitrary amount of keying material is provided. The resulting keying material is used as a symmetric encryption key.  The Diffie-Hellman variant described requires the recipient to have a certificate, but the originator may have a static key pair (with the public key placed in a certificate) or an ephemeral key pair.</t></abstract></front>
+
+<seriesInfo name='RFC' value='2631' />
+<format type='TXT' octets='25932' target='http://www.rfc-editor.org/rfc/rfc2631.txt' />
+</reference>
+
+<!-- RFC6234 Added Mon, 27 Oct 2014 12:10:31 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.6234.xml -->
+
+
+<reference anchor='RFC6234'>
+
+<front>
+<title>US Secure Hash Algorithms (SHA and SHA-based HMAC and HKDF)</title>
+<author initials='D.' surname='Eastlake' fullname='D. Eastlake'>
+<organization /></author>
+<author initials='T.' surname='Hansen' fullname='T. Hansen'>
+<organization /></author>
+<date year='2011' month='May' />
+<abstract>
+<t>Federal Information Processing Standard, FIPS</t></abstract></front>
+
+<seriesInfo name='RFC' value='6234' />
+<format type='TXT' octets='236573' target='http://www.rfc-editor.org/rfc/rfc6234.txt' />
+</reference>
+
+<!-- RFC4868 Added Mon, 27 Oct 2014 12:10:31 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.4868.xml -->
+
+
+<reference anchor='RFC4868'>
+
+<front>
+<title>Using HMAC-SHA-256, HMAC-SHA-384, and HMAC-SHA-512 with IPsec</title>
+<author initials='S.' surname='Kelly' fullname='S. Kelly'>
+<organization /></author>
+<author initials='S.' surname='Frankel' fullname='S. Frankel'>
+<organization /></author>
+<date year='2007' month='May' />
+<abstract>
+<t>This specification describes the use of Hashed Message Authentication Mode (HMAC) in conjunction with the SHA-256, SHA-384, and SHA-512 algorithms in IPsec.  These algorithms may be used as the basis for data origin authentication and integrity verification mechanisms for the Authentication Header (AH), Encapsulating Security Payload (ESP), Internet Key Exchange Protocol (IKE), and IKEv2 protocols, and also as Pseudo-Random Functions (PRFs) for IKE and IKEv2.  Truncated output lengths are specified for the authentication-related variants, with the corresponding algorithms designated as HMAC-SHA-256-128, HMAC-SHA-384-192, and HMAC-SHA-512-256.  The PRF variants are not truncated, and are called PRF-HMAC-SHA-256, PRF-HMAC-SHA-384, and PRF-HMAC-SHA-512. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='RFC' value='4868' />
+<format type='TXT' octets='41432' target='http://www.rfc-editor.org/rfc/rfc4868.txt' />
+</reference>
+
+<!-- RFC3610 Added Mon, 27 Oct 2014 12:10:31 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.3610.xml -->
+
+
+<reference anchor='RFC3610'>
+
+<front>
+<title>Counter with CBC-MAC (CCM)</title>
+<author initials='D.' surname='Whiting' fullname='D. Whiting'>
+<organization /></author>
+<author initials='R.' surname='Housley' fullname='R. Housley'>
+<organization /></author>
+<author initials='N.' surname='Ferguson' fullname='N. Ferguson'>
+<organization /></author>
+<date year='2003' month='September' />
+<abstract>
+<t>Counter with CBC-MAC (CCM) is a generic authenticated encryption block cipher mode.  CCM is defined for use with 128-bit block ciphers, such as the Advanced Encryption Standard (AES).</t></abstract></front>
+
+<seriesInfo name='RFC' value='3610' />
+<format type='TXT' octets='64509' target='http://www.rfc-editor.org/rfc/rfc3610.txt' />
+</reference>
+
+<!-- RFC3447 Added Mon, 27 Oct 2014 12:10:31 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.3447.xml -->
+
+
+<reference anchor='RFC3447'>
+
+<front>
+<title>Public-Key Cryptography Standards (PKCS) #1: RSA Cryptography Specifications Version 2.1</title>
+<author initials='J.' surname='Jonsson' fullname='J. Jonsson'>
+<organization /></author>
+<author initials='B.' surname='Kaliski' fullname='B. Kaliski'>
+<organization /></author>
+<date year='2003' month='February' />
+<abstract>
+<t>This memo represents a republication of PKCS #1 v2.1 from RSA Laboratories' Public-Key Cryptography Standards (PKCS) series, and change control is retained within the PKCS process.  The body of this document is taken directly from the PKCS #1 v2.1 document, with certain corrections made during the publication process.  This memo provides information for the Internet community.</t></abstract></front>
+
+<seriesInfo name='RFC' value='3447' />
+<format type='TXT' octets='143173' target='http://www.rfc-editor.org/rfc/rfc3447.txt' />
+</reference>
+
+<!-- RFC1320 Added Mon, 27 Oct 2014 12:10:31 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.1320.xml -->
+
+
+<reference anchor='RFC1320'>
+
+<front>
+<title abbrev='MD4 Message-Digest Algorithm'>The MD4 Message-Digest Algorithm</title>
+<author initials='R.' surname='Rivest' fullname='Ronald L. Rivest'>
+<organization>Massachusetts Institute of Technology (MIT), Laboratory for Computer Science, RSA Data Security, Inc.</organization>
+<address>
+<postal>
+<street>545 Technology Square</street>
+<street>NE43-324</street>
+<city>Cambridge</city>
+<region>MA</region>
+<code>02139-1986</code>
+<country>US</country></postal>
+<phone>+1 617 253 5880</phone>
+<email>rivest@theory.lcs.mit.edu</email></address></author>
+<date year='1992' month='April' /></front>
+
+<seriesInfo name='RFC' value='1320' />
+<format type='TXT' octets='32407' target='http://www.rfc-editor.org/rfc/rfc1320.txt' />
+</reference>
+
+<!-- RFC1421 Added Mon, 27 Oct 2014 12:26:04 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.1421.xml -->
+
+
+<reference anchor='RFC1421'>
+
+<front>
+<title abbrev='Privacy Enhancement for Electronic Mail'>Privacy Enhancement for Internet Electronic Mail: Part I: Message Encryption and Authentication Procedures</title>
+<author initials='J.' surname='Linn' fullname='John Linn'>
+<organization>Internet Architecture Board (IAB)
+			Internet Research Task Force (IRTF),
+			MIT's Programming Systems Research Group (PSRG),
+			Internet Engineering Task Force (IETF),
+			Privacy Enhanced Mail Work Group (PEM WG)</organization>
+<address>
+<email>104-8456@mcimail.com</email></address></author>
+<date year='1993' month='February' /></front>
+
+<seriesInfo name='RFC' value='1421' />
+<format type='TXT' octets='103894' target='http://www.rfc-editor.org/rfc/rfc1421.txt' />
+</reference>
+
+<!-- RFC5751 Added Mon, 27 Oct 2014 12:26:04 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.5751.xml -->
+
+
+<reference anchor='RFC5751'>
+
+<front>
+<title>Secure/Multipurpose Internet Mail Extensions (S/MIME) Version 3.2 Message Specification</title>
+<author initials='B.' surname='Ramsdell' fullname='B. Ramsdell'>
+<organization /></author>
+<author initials='S.' surname='Turner' fullname='S. Turner'>
+<organization /></author>
+<date year='2010' month='January' />
+<abstract>
+<t>This document defines Secure/Multipurpose Internet Mail Extensions (S/MIME) version 3.2.  S/MIME provides a consistent way to send and receive secure MIME data.  Digital signatures provide authentication, message integrity, and non-repudiation with proof of origin.  Encryption provides data confidentiality.  Compression can be used to reduce data size.  This document obsoletes RFC 3851. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='RFC' value='5751' />
+<format type='TXT' octets='98638' target='http://www.rfc-editor.org/rfc/rfc5751.txt' />
+</reference>
+
+<!-- RFC2440 Added Mon, 27 Oct 2014 12:26:04 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.2440.xml -->
+
+
+<reference anchor='RFC2440'>
+
+<front>
+<title>OpenPGP Message Format</title>
+<author initials='J.' surname='Callas' fullname='Jon Callas'>
+<organization>Network Associates, Inc.</organization>
+<address>
+<postal>
+<street>3965 Freedom Circle</street>
+<street>Santa Clara</street>
+<street>CA 95054</street>
+<country>USA</country></postal>
+<phone>+1 408-346-5860</phone>
+<email>jon@pgp.com</email></address></author>
+<author initials='L.' surname='Donnerhacke' fullname='Lutz Donnerhacke'>
+<organization>IKS GmbH</organization>
+<address>
+<postal>
+<street>Wildenbruchstr. 15</street>
+<street>07745 Jena</street>
+<country>Germany</country></postal>
+<phone>+49-3641-675642</phone>
+<email>lutz@iks-jena.de</email></address></author>
+<author initials='H.' surname='Finney' fullname='Hal Finney'>
+<organization>Network Associates, Inc.</organization>
+<address>
+<postal>
+<street>3965 Freedom Circle</street>
+<street>Santa Clara</street>
+<street>CA 95054</street>
+<country>USA</country></postal>
+<email>hal@pgp.com</email></address></author>
+<author initials='R.' surname='Thayer' fullname='Rodney Thayer'>
+<organization>EIS Corporation</organization>
+<address>
+<postal>
+<street>Clearwater</street>
+<street>FL 33767</street>
+<country>USA</country></postal>
+<email>rodney@unitran.com</email></address></author>
+<date year='1998' month='November' />
+<area>Security</area>
+<keyword>pretty good privacy</keyword>
+<keyword>PGP</keyword>
+<keyword>security</keyword>
+<abstract>
+<t>
+   This document defines many tag values, yet it doesn&apos;t describe a
+   mechanism for adding new tags (for new features).  Traditionally the
+   Internet Assigned Numbers Authority (IANA) handles the allocation of
+   new values for future expansion and RFCs usually define the procedure
+   to be used by the IANA.  However, there are subtle (and not so
+   subtle) interactions that may occur in this protocol between new
+   features and existing features which result in a significant
+   reduction in over all security.  Therefore, this document does not
+   define an extension procedure.  Instead requests to define new tag
+   values (say for new encryption algorithms for example) should be
+   forwarded to the IESG Security Area Directors for consideration or
+   forwarding to the appropriate IETF Working Group for consideration.
+</t>
+<t>
+   This document is maintained in order to publish all necessary
+   information needed to develop interoperable applications based on the
+   OpenPGP format. It is not a step-by-step cookbook for writing an
+   application. It describes only the format and methods needed to read,
+   check, generate, and write conforming packets crossing any network.
+   It does not deal with storage and implementation questions.  It does,
+   however, discuss implementation issues necessary to avoid security
+   flaws.
+</t>
+<t>
+   Open-PGP software uses a combination of strong public-key and
+   symmetric cryptography to provide security services for electronic
+   communications and data storage.  These services include
+   confidentiality, key management, authentication, and digital
+   signatures. This document specifies the message formats used in
+   OpenPGP.
+</t></abstract>
+<note title='IESG Note'>
+<t>
+   This document defines many tag values, yet it doesn&apos;t describe a
+   mechanism for adding new tags (for new features).  Traditionally the
+   Internet Assigned Numbers Authority (IANA) handles the allocation of
+   new values for future expansion and RFCs usually define the procedure
+   to be used by the IANA.  However, there are subtle (and not so
+   subtle) interactions that may occur in this protocol between new
+   features and existing features which result in a significant
+   reduction in over all security.  Therefore, this document does not
+   define an extension procedure.  Instead requests to define new tag
+   values (say for new encryption algorithms for example) should be
+   forwarded to the IESG Security Area Directors for consideration or
+   forwarding to the appropriate IETF Working Group for consideration.
+</t></note></front>
+
+<seriesInfo name='RFC' value='2440' />
+<format type='TXT' octets='141371' target='http://www.rfc-editor.org/rfc/rfc2440.txt' />
+<format type='XML' octets='137322' target='http://xml.resource.org/public/rfc/xml/rfc2440.xml' />
+</reference>
+
+<!-- RFC6376 Added Mon, 27 Oct 2014 12:26:04 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.6376.xml -->
+
+
+<reference anchor='RFC6376'>
+
+<front>
+<title>DomainKeys Identified Mail (DKIM) Signatures</title>
+<author initials='D.' surname='Crocker' fullname='D. Crocker'>
+<organization /></author>
+<author initials='T.' surname='Hansen' fullname='T. Hansen'>
+<organization /></author>
+<author initials='M.' surname='Kucherawy' fullname='M. Kucherawy'>
+<organization /></author>
+<date year='2011' month='September' />
+<abstract>
+<t>DomainKeys Identified Mail (DKIM) permits a person, role, or organization that owns the signing domain to claim some responsibility for a message by associating the domain with the message. This can be an author's organization, an operational relay, or one of their agents. DKIM separates the question of the identity of the Signer of the message from the purported author of the message. Assertion of responsibility is validated through a cryptographic signature and by querying the Signer's domain directly to retrieve the appropriate public key. Message transit from author to recipient is through relays that typically make no substantive change to the message content and thus preserve the DKIM signature.&lt;/t>&lt;t> This memo obsoletes RFC 4871 and RFC 5672. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='STD' value='76' />
+<seriesInfo name='RFC' value='6376' />
+<format type='TXT' octets='176999' target='http://www.rfc-editor.org/rfc/rfc6376.txt' />
+</reference>
+
+<!-- RFC3207 Added Mon, 27 Oct 2014 12:26:04 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.3207.xml -->
+
+
+<reference anchor='RFC3207'>
+
+<front>
+<title>SMTP Service Extension for Secure SMTP over Transport Layer Security</title>
+<author initials='P.' surname='Hoffman' fullname='P. Hoffman'>
+<organization /></author>
+<date year='2002' month='February' />
+<abstract>
+<t>This document describes an extension to the SMTP (Simple Mail Transfer Protocol) service that allows an SMTP server and client to use TLS (Transport Layer Security) to provide private, authenticated communication over the Internet.  This gives SMTP agents the ability to protect some or all of their communications from eavesdroppers and attackers. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='RFC' value='3207' />
+<format type='TXT' octets='18679' target='http://www.rfc-editor.org/rfc/rfc3207.txt' />
+</reference>
+
+<!-- I-D.evans-palmer-key-pinning Added Mon, 27 Oct 2014 12:26:04 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml3/reference.I-D.evans-palmer-key-pinning.xml -->
+
+
+<reference anchor='I-D.evans-palmer-key-pinning'>
+<front>
+<title>Public Key Pinning Extension for HTTP</title>
+
+<author initials='C' surname='Evans' fullname='Chris Evans'>
+    <organization />
+</author>
+
+<author initials='C' surname='Palmer' fullname='Chris Palmer'>
+    <organization />
+</author>
+
+<date month='November' day='14' year='2011' />
+
+<abstract><t>This memo describes an extension to the HTTP protocol allowing web host operators to instruct user agents (UAs) to remember ("pin") the hosts' cryptographic identities for a given period of time.  During that time, UAs will require that the host present a certificate chain including at least one Subject Public Key Info structure whose fingerprint matches one or more of the pinned fingerprints for that host.  By effectively reducing the scope of authorities who can authenticate the domain during the lifetime of the pin, pinning may reduce the incidence of man-in-the-middle attacks due to compromised Certification Authorities and other authentication errors and attacks.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-evans-palmer-key-pinning-00' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-evans-palmer-key-pinning-00.txt' />
+</reference>
+

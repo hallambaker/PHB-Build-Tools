@@ -1,0 +1,1449 @@
+Internet Engineering Task Force (IETF)              Phillip Hallam-Baker
+INTERNET-DRAFT                                         Comodo Group Inc.
+Intended Status: Standards Track                           June 29, 2015
+Expires: December 31, 2015
+
+
+                       Modular Mathematical Mesh
+                    draft-hallambaker-cryptomesh-00
+
+Abstract
+
+   The Magic Mathematical Mesh 'the Mesh' is a security infrastructure 
+   for the Internet that puts individual users in control of their 
+   security. Through large scale redundancy and replication techniques, 
+   mesh users have a high level of assurance that data stored in the 
+   mesh through a mesh gateway node will be available at a later date.
+
+   The mesh does not offer confidentiality guarantees. All data in the 
+   mesh is assumed to be public. Confidential data stored in the mesh 
+   must be protected using strong encryption. The mesh provides a medium
+   that enables the exchange of private key data but never passes 
+   private data of any form in plaintext form.
+
+   The mesh enables use of end-to-end and transport security with mutual
+   authentication in a wide range of client server and peer-peer 
+   applications. These include email, remote access and the Web. Unlike 
+   previous attempts to establish such infrastructures, the password 
+   management application supported by the mesh delivers users with an 
+   immediate benefit that does not rely on adoption by others.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the 
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering 
+   Task Force (IETF).  Note that other groups may also distribute 
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any 
+   time.  It is inappropriate to use Internet-Drafts as reference 
+   material or to cite them other than as "work in progress."
+
+Copyright Notice
+
+   Copyright (c) 2015 IETF Trust and the persons identified as the 
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal 
+   Provisions Relating to IETF Documents 
+   (http://trustee.ietf.org/license-info) in effect on the date of 
+
+
+
+Hallam-Baker               December 31, 2015                    [Page 1]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+   publication of this document. Please review these documents 
+   carefully, as they describe your rights and restrictions with respect
+   to this document. Code Components extracted from this document must 
+   include Simplified BSD License text as described in Section 4.e of 
+   the Trust Legal Provisions and are provided without warranty as 
+   described in the Simplified BSD License.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker               December 31, 2015                    [Page 2]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+Table of Contents
+
+   1.  Definitions  . . . . . . . . . . . . . . . . . . . . . . . . .  5
+      1.1.  Requirements Language . . . . . . . . . . . . . . . . . .  5
+      1.2.  Defined Terms . . . . . . . . . . . . . . . . . . . . . .  5
+   2.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  6
+      2.1.  What does the Mesh do for me? . . . . . . . . . . . . . .  7
+         2.1.1.  User Experience  . . . . . . . . . . . . . . . . . .  8
+         2.1.2.  What else can the Mesh do for me in the future?  . .  9
+      2.2.  No-Password Authentication  . . . . . . . . . . . . . . . 10
+      2.3.  Encrypted Email . . . . . . . . . . . . . . . . . . . . . 10
+      2.4.  WiFi and Networking . . . . . . . . . . . . . . . . . . . 11
+      2.5.  Internet of Things  . . . . . . . . . . . . . . . . . . . 11
+      2.6.  Developer Tools . . . . . . . . . . . . . . . . . . . . . 12
+   3.  Architecture . . . . . . . . . . . . . . . . . . . . . . . . . 12
+      3.1.  Profiles  . . . . . . . . . . . . . . . . . . . . . . . . 13
+         3.1.1.  Personal Profile . . . . . . . . . . . . . . . . . . 13
+         3.1.2.  Device Profile . . . . . . . . . . . . . . . . . . . 15
+      3.2.  Escrow  . . . . . . . . . . . . . . . . . . . . . . . . . 15
+         3.2.1.  Offline Escrow . . . . . . . . . . . . . . . . . . . 16
+      3.3.  Identifiers . . . . . . . . . . . . . . . . . . . . . . . 16
+         3.3.1.  Object Identifiers . . . . . . . . . . . . . . . . . 16
+         3.3.2.  Account Identifier . . . . . . . . . . . . . . . . . 17
+         3.3.3.  Profile Identifier URI . . . . . . . . . . . . . . . 17
+   4.  Application Profiles . . . . . . . . . . . . . . . . . . . . . 18
+      4.1.  Administration  . . . . . . . . . . . . . . . . . . . . . 18
+      4.2.  Escrow  . . . . . . . . . . . . . . . . . . . . . . . . . 18
+      4.3.  Network Connection  . . . . . . . . . . . . . . . . . . . 18
+      4.4.  Password Manager  . . . . . . . . . . . . . . . . . . . . 19
+      4.5.  Authentication  . . . . . . . . . . . . . . . . . . . . . 19
+      4.6.  Email . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+   5.  Mesh Services  . . . . . . . . . . . . . . . . . . . . . . . . 20
+      5.1.  Mesh Log  . . . . . . . . . . . . . . . . . . . . . . . . 21
+      5.2.  Mesh Replication  . . . . . . . . . . . . . . . . . . . . 21
+   6.  Requirements and Recommendations . . . . . . . . . . . . . . . 21
+      6.1.  Requirements  . . . . . . . . . . . . . . . . . . . . . . 21
+      6.2.  Recommendations . . . . . . . . . . . . . . . . . . . . . 22
+   7.  Security Considerations  . . . . . . . . . . . . . . . . . . . 22
+      7.1.  Mesh Integrity  . . . . . . . . . . . . . . . . . . . . . 22
+      7.2.  Mesh Data Confidentiality . . . . . . . . . . . . . . . . 22
+      7.3.  Disclosure of Private Key . . . . . . . . . . . . . . . . 23
+      7.4.  Denial of Service . . . . . . . . . . . . . . . . . . . . 23
+      7.5.  Traffic Analysis  . . . . . . . . . . . . . . . . . . . . 23
+      7.6.  Covert Channels . . . . . . . . . . . . . . . . . . . . . 23
+      7.7.  Data Loss . . . . . . . . . . . . . . . . . . . . . . . . 24
+      7.8.  User Capture  . . . . . . . . . . . . . . . . . . . . . . 24
+   8.  IANA Requirements  . . . . . . . . . . . . . . . . . . . . . . 24
+      8.1.  Registration of mmm URI Scheme (provisional)  . . . . . . 24
+      8.2.  Registration of application/mesh Content Types  . . . . . 24
+   9.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 24
+   Author's Address . . . . . . . . . . . . . . . . . . . . . . . . . 25
+
+
+
+Hallam-Baker               December 31, 2015                    [Page 3]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker               December 31, 2015                    [Page 4]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+1. Definitions
+
+1.1. Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", 
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this 
+   document are to be interpreted as described in RFC 2119 [RFC2119].
+
+1.2. Defined Terms
+
+         Mesh Object
+            A collection of data items stored in the mesh with a unique 
+            and fixed identifier.
+
+         Mesh Entry
+            An entry in the mesh recording the value of a mesh object at
+            a particular instant.
+
+         Profile
+            A mesh object that contains
+
+         Personal Profile
+            A profile that contains a description of a user?s personal 
+            PKI, credentials and connected devices and applications.
+
+         Device Profile
+            A profile that contains a description of a device and its 
+            associated credentials.
+
+         Application Profile
+            A profile that contains a description of the use of an 
+            application by a user
+
+         Enterprise Profile
+            A profile that contains a description of a enterprise?s PKI,
+            credentials and connected devices and applications.
+
+         Mesh Node
+            One or more host machines that provide mesh services under 
+            the same domain name and share the same state.
+
+         Gateway Node
+            A Mesh node that supports services that append data to the 
+            Mesh.
+
+         Distribution Node
+            A Mesh node that supports services that report but do not 
+            change the state of the Mesh.
+
+
+
+
+
+
+Hallam-Baker               December 31, 2015                    [Page 5]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+         Mesh
+            A collection of interlinked Mesh Nodes exchanging data 
+            through the replication protocol so as to present a single 
+            consistent repository for all mesh
+
+         Public Key
+            Non-secret portion of a public key pair.
+
+         Private Key
+            Secret portion of a public key pair.
+
+         Fingerprint
+            The output of a cryptographic digest function presented in a
+            form that facilitates verification that the original data 
+            input is unchanged.
+
+         Public Profile
+            A profile or portion of a profile containing plaintext data.
+
+         Private Profile
+            A profile or portion of a profile containing encrypted data.
+
+2. Introduction
+
+   The Magic Mathematical Mesh 'the Mesh' is a security infrastructure 
+   for the Internet that puts individual users in control of their 
+   security. The Mesh is based on three principles:
+
+         Magic
+            From the point of view of the user, the mesh should appear 
+            to work 'by magic'. Visiting a Web site secured using https 
+            requires no more effort from the user than visiting an 
+            insecure site. That principle of 'security by magic' should 
+            apply to every interaction.
+
+         Mathematical
+            The mesh provides security through the use of cryptography. 
+            Users do not need to understand the mathematics that make 
+            the mesh work but every part of the mathematics supporting 
+            the mesh must be public and fully documented.
+
+         Mesh
+            The mesh itself is a decentralized cloud service similar to 
+            the blockchain that supports BitCoin. Like the services that
+            support the blockchain, every operation on the mesh is 
+            public and the integrity of the mesh is preserved by means 
+            of a hash chain mechanism. The mesh does not store or have 
+            access to any confidential plaintext data of any kind 
+            including private keys. Once information has been replicated
+            across the surface of the mesh, it cannot be deleted without
+            the collusion of every mesh node and without the originator 
+
+
+
+Hallam-Baker               December 31, 2015                    [Page 6]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+            being able to detect the default.
+
+   While constructing such an infrastructure would have been considered 
+   an absurd challenge in 1995, the success of BitCoin provides a 
+   demonstration that deploying infrastructures of this size is now both
+   practical and possible.
+
+   The indexed Web contains over 4.6 billion pages and 5 zettabytes of 
+   data and both are growing at an exponential rate. To serve its 
+   function, the mesh need only store a personal profile of a few tens 
+   of kilobytes for each person on the planet. A single desktop RAID 
+   array could store a personal profile for every one of the three 
+   billion users of the Web today.
+
+2.1. What does the Mesh do for me?
+
+   Today the World Wide Web has thousands of uses from information 
+   retrieval to online banking to turning light switches on and off in 
+   the home. But the original success of the Web at CERN was came from 
+   serving just one function and doing that very well: Providing access 
+   to the CERN phoned directory.
+
+   Today's Internet users have myriad security desires and even greater 
+   needs. They want encrypted mail; they want encrypted documents; they 
+   want encrypted Web sites. But the single biggest security related 
+   aggravation is the need to remember usernames and passwords for 
+   hundreds of individual Web Sites. Attempts to solve this problem to 
+   date have focused on two particular strategies:
+
+         *  Persuade users to store all their passwords in a network 
+            accessible service.
+
+         *  Persuade Web site providers to use an external 'identity 
+            service' to perform account management for them.
+
+   Both approaches have major flaws as the recent breach at LastPass and
+   Google's decision to drop support for OpenID 2.0 demonstrate. If a 
+   Web Site decides to outsource identity management to a third party 
+   they are making their business dependent on that third party 
+   operating their infrastructure securely and continuing to do business
+   in a particular way.
+
+   Storing account credentials in the mesh overcomes the problems 
+   associated with both legacy approaches:
+
+         *  The mesh is not a trusted service. The mesh cannot be 
+            breached because the mesh does not offer any security 
+            guarantees. The security of mesh applications depends on the
+            security of the end points, not the security of the mesh.
+
+
+
+
+
+Hallam-Baker               December 31, 2015                    [Page 7]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+         *  All data stored in the mesh is encrypted, including 
+            usernames and passwords.
+
+         *  Decrypting data stored in the mesh always requires 
+            information stored outside the mesh.
+
+         *  The mesh is not a restricted service. Anyone can set up a 
+            mesh at any time and anyone can distribute an established 
+            public mesh.
+
+         *  Mesh users connect through a mesh gateway. By definition, a 
+            public mesh has multiple gateway providers and can change 
+            their gateway at any time.
+
+         *  Mesh users can always recover the information assets they 
+            stored, either from local storage or from a mesh 
+            distributor.
+
+         *  The only necessary requirement for a mesh gateway is to 
+            impose some form of abuse limiting mechanism to stop denial 
+            of service attack against the mesh by flooding it with bogus
+            data.
+
+   Although the primary purpose of this proposal is to establish a 
+   single cryptomesh as a ubiquitous public infrastructure analogous to 
+   the Internet, DNS and the WebPKI, it is recognized that such 
+   infrastructures are more likely to grow organically rather than 
+   through a top-down approach. Reflecting this approach, the mesh is 
+   conceived as a collection of loosely coupled nodes, each of which is 
+   independently hosted and operated.
+
+   A mesh gateway node may assure users that their data is protected in 
+   the event of a permanent or temporary loss of service at that node by
+   establishing replication agreements with one or more independent 
+   nodes. Such agreements may be reasonably expected to encourage the 
+   emergence of a single public mesh over time.
+
+2.1.1. User Experience
+
+   A personal profile is created using the profile management tool. In 
+   quickstart mode the user need provide nothing more than an account 
+   name for the profile and the domain of a mesh gateway (e.g. 
+   comodo.com). Even the account name is not strictly necessary unless 
+   the user has more than one profile. It just proved easier for users 
+   to ask than making this an option. The second can be given by default
+   with a user override option.
+
+   Whenever a new profile is created, the profile manager reports a 
+   profile fingerprint. This is conceptually similar to an OpenPGP key 
+   but with the important distinction of not being limited to a single 
+   application. Once a profile is generated, its fingerprint never 
+
+
+
+Hallam-Baker               December 31, 2015                    [Page 8]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+   changes. The profile fingerprint is used when connecting new devices 
+   to a profile to ensure that the correct device is being connected and
+   not an impostor. While at present fingerprints are Base32 encoded 
+   alphanumeric strings, other formats such as a sequence of images may 
+   be used for verification.
+
+   Since a new profile does not contain any data at all, the user may 
+   skip the key escrow option. Otherwise the master signature and 
+   decryption keys for the profile are encrypted under a symmetric key 
+   and stored in a private profile. The symmetric key is then split 
+   using Shamir secret sharing and each share presented to the user as 
+   an alphanumeric recovery key and/or QR code. These may be printed and
+   stored in case recovery should be required.
+
+   Once a profile has been established, a mesh enabled application 
+   running on the same device may use it automatically or after 
+   requesting user consent. Thus a mesh enabled password manager might 
+   prompt the user to ask if they wanted to store usernames and 
+   passwords in their mesh profile.
+
+   To make use of an existing profile on a second device, a user starts 
+   the profile manager and gives the account name. The profile manager 
+   displays the profile fingerprint for verification purposes. When the 
+   user runs the profile manager on a machine that has been connected to
+   the profile already and granted administration privileges, it 
+   displays a list of pending connection requests which may be approved 
+   or declined as the user decides. Once the request is approved, the 
+   user will have full access to their passwords stored in the crypto 
+   mesh on the second machine.
+
+   Even though the user experience of a mesh based password manager is 
+   no more complicated than that of a traditional scheme, no 
+   confidential data is ever passed unencrypted through the mesh and all
+   encryption is end to end and uses the strongest level of AES 
+   encryption. The mesh is thus immune to the risk of breach since there
+   is no information to be breached.
+
+   More importantly, once a user has made the effort of installing a 
+   mesh profile manager, they have the tools at their disposal to use 
+   the mesh with any application that is mesh-enabled. By design, the 
+   mesh supports any application that uses cryptographic credentials.
+
+2.1.2. What else can the Mesh do for me in the future?
+
+   Use of the Web at CERN began with the phone book. But that use alone 
+   would not have been enough to justify the effort of developing the 
+   tool. The reason CERN was willing to invest the time and effort 
+   required to build the Web was the understanding that it would one day
+   be capable of doing much more.
+
+
+
+
+
+Hallam-Baker               December 31, 2015                    [Page 9]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+   While the CERN phone book was the 'killer application' of the Web on 
+   CERN main site, the Web itself was originally designed to enable 
+   distribution of research materials. In the same way, secure password 
+   storage represents a 'killer application' that requires no other 
+   party to buy-in or make use of the mesh in order to build out the 
+   infrastructure. But it is sincerely hoped that once that 
+   infrastructure is established it will enable second generation 
+   applications that are far more useful.
+
+   The mesh provides a mechanism for storing and retrieving profiles. In
+   this paper we only consider the profile types relevant to one 
+   particular mesh, the cryptographic mesh (cryptomesh) used to store 
+   cryptographic credentials and other data relevant to enabling use of 
+   applications. Since strong cryptographic keys need only be tens or 
+   hundreds of bytes, such profiles would typically be very small, a few
+   tens or hundreds of kilobytes at most. But given suitable storage 
+   capability, the same technology used to build the cryptomesh could 
+   also be applied to storage of data (aka the datamesh).
+
+2.2. No-Password Authentication
+
+   Making passwords easier to use is good. But the getting rid of them 
+   entirely is better. There is no little irony in the fact that after 
+   rendering the telephone book obsolete, the Internet quickly rendered 
+   the public telephone network obsolete. It would be the greatest 
+   service if the mesh could render passwords obsolete as a network 
+   authentication mechanism.
+
+   There is no shortage of protocols and mechanisms that eliminate the 
+   need for password authentication. The chief deployment obstacle has 
+   been the lack of support infrastructure. Until there is a large 
+   population of Web users equipped with the means to use a password 
+   alternative, there is no incentive for Web sites to accept 
+   alternatives. And until Web sites accept alternatives there is no 
+   incentive for users to change their behavior.
+
+   The mesh provides a mechanism that allows every device a user owns to
+   be provisioned with a public key pair and credential chain. This 
+   allows the use of existing protocols such as SAML and OpenID Connect 
+   to be used to replace passwords completely.
+
+   Instead of being asked to provide a username and password on visiting
+   a Web Site, a user would only need to provide authentication when a 
+   security critical choice was being made. A user should not need to 
+   'log in' to read a newspaper but additional confirmation is certainly
+   required when they decide to make a purchase or transfer funds from 
+   their bank.
+
+
+
+
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 10]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+2.3. Encrypted Email
+
+   Encrypted email was the original purpose for which the mesh 
+   technology was developed under the name 'Prism-Proof email'. By 
+   default, the mesh prototype will automatically configure certain 
+   email clients for the use of encrypted mail. Once a client is 
+   enabled, use of encryption is completely seamless and automatic 
+   provided that an S/MIME capable email client is used.
+
+   While the large deployed base of S/MIME capable clients makes support
+   for this encryption format expedient, the mesh is designed to be 
+   completely technology neutral. A public application profile for email
+   can specify the public encryption keys to be used and the encryption 
+   formats they should be used with. If the user prefers OpenPGP, this 
+   can be offered as an alternative. But rather than perpetuating 
+   unnecessary format wars, the preferred situation would be for the 
+   default to be to support both.
+
+   When using mesh enabled email security, a user may opt to make end-
+   to-end encryption their preferred option for an account. But doing so
+   will of course render any email messages unreadable on devices that 
+   they have not yet connected to their profile. For this reason it is 
+   suggested that early adopters of the email encryption capabilities 
+   should consider creating a secondary account for their mesh email. 
+   For example, alice@example.com might use mesh.alice@example.com to 
+   receive encrypted messages.
+
+   The mesh provides a solution to two of the major challenges of end-
+   to-end encrypted email, distribution of public keys and management of
+   private keys. As described earlier, use of a public profile on the 
+   cryptomesh solves the problem of public key distribution and use of 
+   private profiles allows any device that has been connected to a 
+   profile to access the current decryption key.
+
+2.4. WiFi and Networking
+
+   One of the most tedious chores in administering a home network is 
+   configuring devices to connect to one or more WiFi networks. And once
+   a device has been tediously configured, the work is likely to be 
+   undone for the most trivial of reasons or for no reason at all.
+
+   Once a device is connected to a personal profile, it may be 
+   authorized to use any WiFi network that is managed under that 
+   profile. Alternatively the network owner may authorize a more limited
+   degree of network access. For example, a house guest might be 
+   permitted to access a home WiFi network but only for a limited 
+   period.
+
+
+
+
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 11]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+2.5. Internet of Things
+
+   One of the primary motivations for designing the mesh was the 
+   realization that with 50 IP addresses already assigned on the home 
+   networks and a further 30 non-IP based network devices already 
+   deployed, reducing network administration effort has become a 
+   necessity, not a luxury. An automated home does not reduce effort or 
+   stress if connected devices are perpetually failing or requiring 
+   software upgrades.
+
+   Connecting an Internet of Things device such as a light bulb or a 3D 
+   printer is little different in principle to connecting a computer or 
+   a phone. The chief difference being that such devices may lack a 
+   keyboard or a display of any kind and it may be desirable to limit 
+   the degree of network access allowed. The coffee pot does not need to
+   run a file server or send thousands of emails a second, permitting 
+   such access increases the risk of the device being compromised, 
+   therefore the principle of least privilege demands that such a device
+   not be allowed unrestricted Internet access.
+
+2.6. Developer Tools
+
+   Although the mesh is designed to support the needs of all Web users, 
+   it is to be expected that early most adopters will be among the more 
+   expert users.
+
+   The mesh provides a general purpose infrastructure on which any 
+   application such as SSH or code signing can connect to cryptographic 
+   credentials and resources as required.
+
+3. Architecture
+
+   The foundational principle of the mesh is that the mesh cannot be 
+   breached because the mesh does not offer any security guarantees.
+
+         *  The mesh cannot suffer disclosure breach because all 
+            confidential data stored in the mesh is encrypted end-to-end
+            using strong cryptographic algorithms and keys. This ensures
+            that the confidentiality of the data is protected unless the
+            encryption algorithms are broken or a breach occurs at the 
+            end points where the private keys are stored.
+
+         *  The mesh cannot suffer a permanent denial of service attack 
+            as each mesh profile manager maintains a local copy of all 
+            data stored in the mesh. Even if a mesh ceases operations 
+            completely, a user may provision the same personal 
+            profile(s) to a different mesh to quickly re-establish 
+            service.
+
+
+
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 12]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+         *  Recognizing the advances in computational power since the 
+            original development of PKI in the mid-1990s, cryptographic 
+            hygiene is encouraged through use of separate cryptographic 
+            key material unless there are practical reasons to avoid 
+            this approach.
+
+   A consequence of the last principle is that a Personal PKI for a user
+   with a large number of devices will have a large number of 
+   cryptographic keys. In particular every device has its own keys for 
+   authentication and key distribution and key material SHOULD NOT be 
+   shared between application profiles. For applications such as email 
+   encryption where it is desirable to be able to decrypt messages on 
+   any connected device, a single encryption/decryption keypair MAY be 
+   provisioned to multiple devices. In such circumstances, it is highly 
+   desirable that such keys be rotated on a regular basis and in 
+   particular when a device that has been provisioned with a current 
+   decryption key is being disconnected from a profile.
+
+3.1. Profiles
+
+   Three types of profile are currently defined:
+
+         Personal Profile
+            Each mesh user has one or more personal profiles to which 
+            they may connect devices and applications as they choose.
+
+         Device Profile
+            Contains keys and settings for a device. A device profile 
+            MAY be connected to multiple Personal Profiles at the same 
+            time.
+
+         Application Profile
+            Contains keys and settings for a set of applications. An 
+            application profile can only connect to one personal profile
+            at a time but MAY be transferred from one Personal Profile 
+            to a successor.
+
+   The need for a profile to describe enterprise security configuration 
+   data is acknowledged but not currently addressed.
+
+3.1.1. Personal Profile
+
+   A personal profile consists of:
+
+         *  A Personal PKI. [Public]
+
+         *  A set of masked account identifiers. [Public, Signed]
+
+         *  A set of Device Connection Entries. [Private, Signed]
+
+
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 13]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+         *  A set of profiles describing applications enabled for that 
+            account. [Private, Signed]
+
+   Items marked [Signed] are signed under a current Administration key 
+   and Items marked [Private] are encrypted under the set of current 
+   profile administration keys.
+
+3.1.1.1. Personal PKI
+
+   Each Personal Profile contains a personal PKI hierarchy consisting 
+   of:
+
+         Personal Master Signature Key (PMSK)
+            The root of trust for the Personal PKI, the public key of 
+            the PMSK is presented as a self-signed X.509v3 certificate 
+            with Certificate Signing use enabled. The PMSK is used to 
+            sign certificates for the PMEK, POSK and PKEK keys.
+
+         Personal Master Escrow Key(s) (PMEK)
+            A Personal Profile MAY contain one or more PMEK keys to 
+            enable escrow of private keys used for stored data. Note 
+            that the presence and use of an escrow key are both 
+            optional. A user MAY chose to create a profile without a 
+            PMEK or choose not to use the escrow capability of a profile
+            that has a PMEK specified.
+
+         Personal Online Signature Key (POSK)
+            A Personal profile contains at least one POSK which is used 
+            to sign device administration application keys.
+
+   The private key portions of the PMSK and PMEK are only ever used 
+   during the initial configuration of the Personal PKI and in disaster 
+   recovery situations. If a user loses access to a decryption key, the 
+   PMEK may be used to recover and decrypt an escrowed copy. If a user 
+   loses control over their POSK private key due to a device theft or 
+   other compromise, the PMSK may be used to revoke it and possibly 
+   establish a replacement.
+
+   Due to the importance of and infrequent need for access to the PMSK 
+   and PMEK, profile managers MUST support and SHOULD encourage use of 
+   the offline escrow mechanism described below for these private keys.
+
+   The key fingerprint of the PMSK is used as a unique identifier for 
+   the corresponding profile.
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 14]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+3.1.1.2. Device Connection Entry
+
+   A Device Connection Entry contains:
+
+         *  The fingerprint of the Device Master Signature Key to which 
+            it applies
+
+         *  A set of application profiles connected to the personal 
+            profile that the device is authorized to access
+
+3.1.1.3. Application Profile
+
+   An Application Profile contains credential and network connection 
+   data necessary to use a particular type of application such as 
+   'email' or the password manager.
+
+3.1.2. Device Profile
+
+   Each device that is connected to one or more Personal Profiles 
+   publishes a device profile. A device may be connected to more than 
+   one profile simultaneously. In this case the device MAY have separate
+   device profiles for each Personal Profile it is connected to or use a
+   common profile.
+
+         Device Master Signature Key (DSKK)
+            Used sign certificates for the DAK, DDK and DKEK and device 
+            profiles.
+
+         Device Authentication Key (DAK)
+            Used to authenticate device requests.
+
+         Device Decryption Key (DDK)
+            Used to decrypt private portions of a device profile for 
+            that device. For example, private keys, passwords etc.
+
+3.2. Escrow
+
+   The mesh is a mechanism for managing cryptographic keys. Since the 
+   ability to escrow private keys is an important function of a key 
+   management infrastructure, the mesh provides an escrow mechanism. The
+   allows the mesh to enable applications involving stored data such as 
+   whole disk encryption and end-to-end encrypted email while providing 
+   safeguards against the risk of data loss should a device securing a 
+   decryption key fail.
+
+   Although it is in principle possible to escrow any private key, the 
+   use of an escrow mechanism dilutes the non-repudiation and forward 
+   secrecy assurances that an application might assume. Thus the use of 
+   key escrow is typically limited to:
+
+
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 15]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+         *  Profile Master Keys (the PMSK and PMEKs)
+
+         *  Decryption Keys used for encrypted stored data
+
+   A two tier escrow scheme is supported:
+
+         Online Escrow
+            The private key data is encrypted under a PMEK key described
+            in the Personal Profile.
+
+         Offline Escrow
+            The private key data is encrypted under a symmetric recovery
+            key. The recovery key is typically split using a key sharing
+            mechanism and the shares stored in a non-volatile media such
+            as ink and paper.
+
+            Note that in each case, the encrypted private key data is 
+            typically stored in the mesh. It is only the means to 
+            decrypt the escrow record that is online or offline.
+
+3.2.1. Offline Escrow
+
+   Use of the offline escrow mechanism is typically limited to escrow of
+   the profile master keys (PMSK, PMEK) for which the online escrow 
+   mechanism cannot be used.
+
+   Since the encrypted data will be stored as public data in the mesh, 
+   the process used to generate the recovery key MUST ensure that it 
+   contains at least as much ergodicity as the private key being 
+   protected without disclosing information on the private key itself. 
+   One means of ensuring that this is achieved is to generate a random 
+   nonce value using the best available source and combine it with the 
+   private key being escrowed by means of a secure cryptographic digest.
+
+   In order to minimize the amount of data required to recover escrowed 
+   data, the object identifier of an offline escrow entry is the 
+   fingerprint (i.e. a one way secure digest) of the recovery key.
+
+   Online Escrow
+
+   In the online escrow mechanism, the private key data is encrypted 
+   under the PMEK of the associated profile.
+
+   The object identifier of an online escrow entry is formed by 
+   encrypting the corresponding public key identifier under the PKEK of 
+   the associated profile and taking the fingerprint.
+
+
+
+
+
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 16]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+3.3. Identifiers
+
+3.3.1. Object Identifiers
+
+   Every entry stored in the Mesh has an object identifier. The form of 
+   the identifier is a Uniform Data Fingerprint (UDF). The input data 
+   and precision are chosen to ensure that the object identifier is 
+   globally unique with an acceptably high degree of assurance.
+
+   For the sake of convenience, the prototype mesh uses identifiers with
+   125 bit precision ensuring a negligible probability of two objects 
+   being created with the same identifier until 2^50 (~10^15) entries 
+   have been registered. A mesh gateway MAY chose a different level of 
+   required precision or increase the level of precision required at any
+   time.
+
+3.3.2. Account Identifier
+
+   An account identifier provides a user-friendly means of identifying a
+   mesh profile. A personal profile MAY have multiple account 
+   identifiers but a MESH gateway MUST NOT permit the same account 
+   identifier to be used to identify more than one profile at a time.
+
+   Account identifiers are assigned by a mesh gateway and entered using 
+   the same form as an email address (i.e. @) where  is the domain name 
+   of the mesh gateway that assigned the identifier. This approach 
+   avoids the need to ensure that account identifiers are globally 
+   unique. To avoid enumeration attacks and similar forms of abuse, only
+   the fingerprint of the account identifier is exposed to the Mesh.
+
+   For example, Alice registers her personal profile at example.com 
+   using the account identifiers 'alice' and 'bob'. This prevents Bob 
+   from registering his profile at example.com as 'bob'. Alice then buys
+   a phone, to connect her phone to her Personal Profile, Alice enters 
+   'alice@example.com' as her account identifier in the phone profile 
+   manager. This allows the phone to retrieve Alice's personal profile 
+   from the Mesh and present the fingerprint of the profile to Alice for
+   verification.
+
+   meshid = accountid ["@" domain]
+
+   accountid = username | fingerprint
+
+3.3.3. Profile Identifier URI
+
+   The URI form of the profile identifier is a compact, machine 
+   independent means of identifying a mesh profile. Since a personal 
+   profile provides both a means of specifying an account
+
+
+
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 17]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+   For example, a server configuration file might grant access to Alice 
+   as follows.
+
+   mmm:MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ:alice@cryptomesh.org {RWED}
+
+   Mesh profiles are identified using the mmm URI scheme as follows:
+
+   meshuri = "mmm:" fingerprint [ ":" meshid]
+
+4. Application Profiles
+
+   Application profiles store information for use by a particular class 
+   of application. A Personal Profile MAY contain more than one 
+   application profile of a particular type and a single application 
+   profile MAY describe the use of multiple protocols.
+
+   For example a user with multiple email accounts would require a 
+   separate Email Application Profile for each account each of which 
+   would typically specify connections for SUBMIT and IMAP/POP services 
+   and public and private key sets for S/MIME and OpenPGP.
+
+   Application profiles are exchanged in JSON format. The schemas for 
+   the individual application profiles will be described in a future 
+   document.
+
+4.1. Administration
+
+   The administration application profile is used to administer 
+   connection of devices to a Personal Profile and enable the use of 
+   particular application profiles on particular devices.
+
+   The public portion of the administration profile is the Personal 
+   Profile itself. The private profile contains:
+
+         *  Private Key of the POSK
+
+4.2. Escrow
+
+   The escrow application profile is used to administer escrow of 
+   private keys. The escrow profile contains:
+
+         *  Escrow Public Key
+
+         *  Escrow Identifier Encryption Key
+
+4.3. Network Connection
+
+   A network application profile contains information for configuring a 
+   network connection. This may include:
+
+
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 18]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+         *  Connection data for one or more DNS services
+
+         *  A scope for which the network connection is applied
+
+4.4. Password Manager
+
+   A password manager application profile contains a list of password 
+   entries each containing:
+
+         *  The domain(s) for which the entry is to be used [required]
+
+         *  Username [required]
+
+         *  Password [required]
+
+         *  HTTP strict security policy entry for the site [optional]
+
+         *  HTTP Key Pining Security Policy for the site [optional]
+
+         *  Acceptable authentication mechanisms [optional]
+
+   All the entries in the password manager are private with a decryption
+   blob for the device keys of each authorized device.
+
+4.5. Authentication
+
+   While the password manager application is currently necessary it is 
+   intended that this should be a transitional infrastructure rather 
+   than a permanent one.
+
+         *  The domain(s) for which the entry is to be used [optional]
+
+         *  HTTP strict security policy entry for the site [optional]
+
+         *  HTTP Key Pining Security Policy for the site [optional]
+
+         *  Acceptable authentication mechanisms [optional]
+
+   In addition each device connected to an authentication profile has 
+   the following device specific attributes:
+
+         *  Authentication credential
+
+4.6. Email
+
+   Under normal circumstances an email application profile enables use 
+   of both S/MIME and OpenPGP security formats.
+
+         *  Outbound mail server connection(s) (e.g. SUBMIT)
+
+
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 19]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+         *  Inbound mail server connection(s) (e.g. POP3, IMAP4)
+
+         *  Email encryption key (S/MIME) [Public]
+
+         *  Email encryption key (OpenPGP) [Public]
+
+         *  Email decryption key (S/MIME) [Private]
+
+         *  Email decryption key (OpenPGP) [Private]
+
+   In addition each device connected to an email profile has the 
+   following device specific attributes
+
+         *  Email authentication credentials (OpenPGP)
+
+         *  Email authentication credentials (S/MIME)
+
+5. Mesh Services
+
+   The Mesh supports four separate protocols:
+
+         Mesh Gateway Service [Gateway]
+            Supports operations that create a permanent record in the 
+            Gateway log. These include creation, update and management 
+            of Profiles.
+
+         Mesh Gateway Request Service [Gateway]
+            Supports operations that will only create a permanent record
+            in the Gateway log if confirmed by a properly authorized 
+            administration device.
+
+         Mesh Query Service [Gateway,Distribution]
+            Allows retrieval of information stored in the mesh without 
+            creating a record in the Gateway log.
+
+         Mesh Replication Service [Gateway,Distribution]
+            Manages replication of closed Mesh logs between nodes.
+
+   The distinction between the two gateway services is that actions 
+   performed using the Mesh Gateway Service will be eventually 
+   replicated to every node in the mesh. The choice of Mesh node to 
+   which a request was originally directed makes no difference after the
+   mesh has synchronized. In contrast, actions requested in the Mesh 
+   Gateway Request Service are not permanently recorded or synchronized 
+   to other nodes. It is therefore essential that all the steps 
+   necessary to complete a transaction be directed to the same service.
+
+   The detailed description of the Mesh protocols will be described 
+   separately in a future document.
+
+
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 20]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+5.1. Mesh Log
+
+   Each mesh gateway node maintains an independent, append only log. 
+   Each log is maintained as an incremental sequence of parts. Each part
+   is terminated by a signed record containing a digest over all the 
+   entries in the current log and a chained digest over the digest of 
+   the current log and the chained digest of the previous log.
+
+   Each mesh gateway performs a log rollover operation at frequent 
+   intervals. The gateway begins a new log part which becomes the active
+   part in which all new transactions are recorded. The gateway then 
+   calculates the terminal record for the previously active part and 
+   writes it to the log to complete it.
+
+   Note that while this approach is simple and efficient for the mesh 
+   gateway, it is not optimized for use by readers attempting to quickly
+   verify a single entry in the log. This may be revisited in future 
+   versions of the Mesh if warranted.
+
+5.2. Mesh Replication
+
+   At present the Mesh Replication Service has not been implemented. 
+   Think NNTP in JSON with transaction records for each gateway node 
+   being written to the equivalent of a newsgroup.
+
+   At present mesh services are presented as JSON services over HTTPS.
+
+6. Requirements and Recommendations
+
+   Since the Mesh MAY be used to store keys for use with the highest 
+   security levels supported by standards based cryptography and there 
+   is no means of distinguishing high security keys from lesser keys, 
+   all cryptographic operations employ the highest security level of the
+   available standards based cryptographic algorithms. This means use of
+   256 bit symmetric keys for encryption and MAC operations and 2048 bit
+   RSA. While longer RSA key sizes are available, the security advantage
+   they offer is not sufficient to justify use. A transition to use of 
+   an ECC public key algorithm is preferred.
+
+6.1. Requirements
+
+   A Mesh profile manager MUST support the following algorithms and data
+   formats:
+
+         *  Encryption: AES-256
+
+         *  Digest: SHA-2-512
+
+         *  Public Key Encryption: RSA-2048
+
+
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 21]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+         *  Public Key Signature: RSA-2048
+
+         *  Public Key Agreement: DH-2048
+
+         *  PKIX X.509v3 Certificate
+
+         *  JSON (generate, read), JSON-B (read)
+
+6.2. Recommendations
+
+   A Mesh profile manager SHOULD support the following algorithms and 
+   data formats:
+
+         *  Encryption: None
+
+         *  Digest: SHA-3-512 [Once published by NIST]
+
+         *  Public Key Encryption: CFRG-448 [When published]
+
+         *  Public Key Signature: CFRG-448 [When published]
+
+         *  JSON-B
+
+7. Security Considerations
+
+   Currently the architecture of the Mesh is in a state of rapid change.
+   Users SHOULD not therefore rely on the security considerations set 
+   out in this document without first checking to see if the instance of
+   the mesh they are connecting to follows the version of the mesh 
+   protocols to which they refer.
+
+7.1. Mesh Integrity
+
+   The state of the mesh is fully contained in the append-only logs 
+   maintained by each mesh gateway. The mesh management protocols 
+   require that each gateway sign their append-only log at regular 
+   intervals and validate all data provided by other gateway nodes in 
+   the mesh. Thus a mesh gateway node is the only party that can perform
+   a record insertion attack that another mesh node can be induced to 
+   accept.
+
+   Further, the management of the logs provides complete transparency 
+   for addition of entries by the gateway with continuous auditing by 
+   every other mesh gateway. Thus it is impossible for one mesh gateway 
+   node to defect unless every other gateway node in the mesh is willing
+   to collude in the deception.
+
+
+
+
+
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 22]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+7.2. Mesh Data Confidentiality
+
+   The Mesh does not provide any confidentiality guarantees as all data 
+   stored in the mesh is considered to be public. Thus the mesh cannot 
+   be breached by definition but private data may be breached through 
+   disclosure of the decryption keys or by use of faulty encryption 
+   algorithm.
+
+7.3. Disclosure of Private Key
+
+   Disclosure of the private keys used to secure private data may result
+   in disclosure of confidential data. Unencrypted private keys are only
+   kept at end point devices. Private key disclosure is bad, avoid.
+
+   Trustworthy computing features preventing/making it difficult to 
+   extract keys from a device are highly desirable.
+
+7.4. Denial of Service
+
+   Denial of Service attacks are an important threat that is not 
+   currently addressed in the prototype implementation.
+
+   The use of a combination of proof of work and lightweight 
+   authentication approaches is anticipated to address this 
+   consideration.
+
+7.5. Traffic Analysis
+
+   Mesh transactions SHOULD be considered to be vulnerable to traffic 
+   analysis unless a security analysis of a specific mesh instance has 
+   been performed to provide evidence to the contrary.
+
+7.6. Covert Channels
+
+   The mesh provides a medium for exchange of end-to-end encrypted data.
+   Since the mesh nodes have no means of determining the contents of 
+   profile entries, there is no means of restricting use to those 
+   approved by the operators. The mesh thus represents a ubiquitous and 
+   pervasive covert channel.
+
+   While this situation is not necessarily to be considered a security 
+   concern for mesh operators, the resources consumed by such operations
+   may be a concern. Since all profiles entered into the mesh are 
+   permanently recorded and replicated to every mesh node, use of the 
+   mesh for purposes such as covert transfer of streaming video are 
+   likely to be a concern.
+
+   The use of resource limiting strategies such as CAPTCHAs, profile 
+   size limits and limits on the number of updates individual users are 
+   permitted to make in a short time period SHOULD therefore be 
+   considered.
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 23]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+
+7.7. Data Loss
+
+   The risk of data loss is mitigated through a combination of local 
+   retention, use of the mesh to provide data persistence and key 
+   escrow.
+
+7.8. User Capture
+
+   User capture is the situation where a user of a software service is 
+   unable to change software service providers due to unacceptably high 
+   switching costs. This puts the user of the service at a severe 
+   disadvantage to the provider. While achieving such a circumstance is 
+   frequently the objective of many a business plan, such plans almost 
+   invariably fail.
+
+   Local capture of Mesh data and the planned mesh replication 
+   infrastructure ensure that switching costs for users are never 
+   prohibitive. Thus user capture is avoided.
+
+8. IANA Requirements
+
+8.1. Registration of mmm URI Scheme (provisional)
+
+   TBS
+
+8.2. Registration of application/mesh Content Types
+
+   TBS
+
+9. Acknowledgements
+
+   The mesh builds on much prior art in the field.
+
+   As described above, the mesh deployment model consciously follows the
+   pattern set by the World Wide Web which was in turn based on 
+   observation of the success of earlier innovations such as the micro-
+   computer. The purpose for which the Web was designed was to make the 
+   universe of information accessible, the killer application for the 
+   Web at CERN was the ability to access the telephone directory online.
+
+   The use of append-only logs with chained cryptographic digests was 
+   originally proposed by Harber and Stornetta but only popularized 
+   through the use in the BitCoin blockchain and the Certificate 
+   Transparency log after the patent protection expired.
+
+   The idea of using X.509 to establish a personal PKI hierarchy arose 
+   from discussions with Sir Tim Berners-Lee at CERN in 1994. The use of
+   fingerprints of public keys was introduced by Phil Zimmerman in PGP.
+
+
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 24]
+
+Internet-Draft         Modular Mathematical Mesh               June 2015
+
+Author's Address
+
+   Phillip Hallam-Baker
+   Comodo Group Inc.
+
+   philliph@comodo.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker               December 31, 2015                   [Page 25]
