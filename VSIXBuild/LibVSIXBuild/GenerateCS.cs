@@ -60,6 +60,14 @@ namespace Goedel.VSIXBuild {
 					_Output.Write ("// Install-Package Microsoft.VisualStudio.Shell.14.0\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					// // Here is an article on building templates might be useful 
+					_Output.Write ("// Here is an article on building templates might be useful\n{0}", _Indent);
+					// // http://blogs.msdn.com/b/vsx/archive/2014/06/10/creating-a-vsix-deployable-project-or-item-template-with-custom-wizard-support.aspx 
+					_Output.Write ("// http://blogs.msdn.com/b/vsx/archive/2014/06/10/creating-a-vsix-deployable-project-or-item-template-with-custom-wizard-support.aspx\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
 					// using System; 
 					_Output.Write ("using System;\n{0}", _Indent);
 					// using System.CodeDom.Compiler; 

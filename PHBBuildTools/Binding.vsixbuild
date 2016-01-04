@@ -68,3 +68,57 @@
 		Description
 			|Scripting tool, converts a file containing scripting commands to
 			|C# code that implements the commands.
+
+	ProtoGen Generator ".cs"
+		GUID "E5524E3B-6100-4D23-A047-81815BCFEE27"
+		Project CSharp
+		Project VisualBasic
+		Parser ProtoGen.ProtoStruct
+		Script ProtoGen.Generate GenerateCS
+		Description
+			|Protocol compiler. Generates code for implementing JSON/REST
+			|based Web Services in C# or C.
+
+	Goedel3 Generator ".cs"
+		GUID "446C3603-F595-41BF-8BF3-0FA7C6895F33"
+		Project CSharp
+		Project VisualBasic
+		Parser GoedelSchema.Goedel
+		Script GoedelSchema.GenerateParser GenerateCS
+		Description
+			|Scripting tool, converts a file containing scripting commands to
+			|C# code that implements the commands.
+
+
+
+	RFC2TXT Generator ".txt"
+		GUID "548687B2-6C67-4F1B-86AA-343F7FD0F429"
+		Project CSharp
+		Project VisualBasic
+		Process RFCTool.BindingRFC Process2TXT
+		Description
+			|Convert RFC source in Markdown, XML or HTML to Plaintext format.
+
+	RFC2XML Generator ".xml"
+		GUID "8DACB384-6ABA-40E9-83FB-3DD57A4BA597"
+		Project CSharp
+		Project VisualBasic
+		Process RFCTool.BindingRFC Process2XML
+		Description
+			|Convert RFC source in Markdown, XML or HTML to XML2RFC format.
+
+	RFC2MD Generator ".md"
+		GUID "F2CBE1D3-642A-4348-9CE4-844F11FCDA28"
+		Project CSharp
+		Project VisualBasic
+		Process RFCTool.BindingRFC Process2MD
+		Description
+			|Convert RFC source in Markdown, XML or HTML to MerkDown format.
+
+	RFC2HTML Generator ".html"
+		GUID "EF6FDFE2-6947-4A14-AD41-77C062FC0E67"
+		Project CSharp
+		Project VisualBasic
+		Process RFCTool.BindingRFC Process2HTML
+		Description
+			|Convert RFC source in Markdown, XML or HTML to HTML format.

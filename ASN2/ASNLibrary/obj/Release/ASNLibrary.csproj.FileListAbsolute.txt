@@ -6,4 +6,3 @@ C:\Users\Phillip\Work\buildtools\ASN2\ASNLibrary\bin\Release\ASNLibrary.dll
 C:\Users\Phillip\Work\buildtools\ASN2\ASNLibrary\bin\Release\ASNLibrary.pdb
 C:\Users\Phillip\Work\buildtools\ASN2\ASNLibrary\obj\Release\ASNLibrary.dll
 C:\Users\Phillip\Work\buildtools\ASN2\ASNLibrary\obj\Release\ASNLibrary.pdb
-C:\Users\Phillip\Work\buildtools\ASN2\ASNLibrary\obj\Release\ASNLibrary.csprojResolveAssemblyReference.cache

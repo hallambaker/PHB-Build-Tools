@@ -11,6 +11,10 @@
 // To make this compile, I had to go to the nuget package manager and run"
 // Install-Package Microsoft.VisualStudio.Shell.14.0
 
+
+// Here is an article on building templates might be useful
+// http://blogs.msdn.com/b/vsx/archive/2014/06/10/creating-a-vsix-deployable-project-or-item-template-with-custom-wizard-support.aspx
+
 using System;
 using System.CodeDom.Compiler;
 using System.IO;

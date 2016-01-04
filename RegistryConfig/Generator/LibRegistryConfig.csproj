@@ -63,7 +63,7 @@
       <LastGenOutput>RegistrySchema.cs</LastGenOutput>
     </None>
     <None Include="Generate.script">
-      <Generator>GoedelScript</Generator>
+      <Generator>GScript</Generator>
       <LastGenOutput>Generate.cs</LastGenOutput>
     </None>
     <None Include="TestCodeSigningKey.snk" />

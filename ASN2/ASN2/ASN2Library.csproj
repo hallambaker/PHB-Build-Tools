@@ -82,7 +82,7 @@
       <LastGenOutput>Asn2.cs</LastGenOutput>
     </None>
     <None Include="GenerateCS.script">
-      <Generator>GoedelScript</Generator>
+      <Generator>GScript</Generator>
       <LastGenOutput>GenerateCS.cs</LastGenOutput>
     </None>
     <None Include="PreBuild.bat" />

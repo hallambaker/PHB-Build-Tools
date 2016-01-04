@@ -50,7 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Annotate.cs" />
-    <Compile Include="Command.cs" />
+    <Compile Include="Command.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Command.gdl</DependentUpon>
+    </Compile>
     <Compile Include="Generate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -58,9 +62,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Command.gdl" />
+    <None Include="Command.gdl">
+      <Generator>Goedel3</Generator>
+      <LastGenOutput>Command.cs</LastGenOutput>
+    </None>
     <None Include="Generate.script">
-      <Generator>GoedelScript</Generator>
+      <Generator>GScript</Generator>
       <LastGenOutput>Generate.cs</LastGenOutput>
     </None>
     <None Include="TestCodeSigningKey.snk" />

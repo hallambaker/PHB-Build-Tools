@@ -2,19 +2,23 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"
                  xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="D93BF07A-0921-43F0-B959-7C7AC4CC72F6" Version="1.0" Language="en-US" Publisher="Phillip Hallam-Baker" />
+    <Identity Id="D93BF07A-0921-43F0-B959-7C7AC4CC72F6" Version="1.4" Language="en-US" Publisher="Phillip Hallam-Baker" />
     <DisplayName>PHB Code Generation Tools</DisplayName>
     <Description xml:space="preserve">Phill Hallam-Baker's code generation tools.
 
-Tools currently included: ASN.1 DER encoder, Finite State Recognizer and Registry Configuration tools.
-Tools to be included: ProtoGen protocol compiler, RFCTool
+Tools currently included: ASN.1 DER encoder, Finite State Recognizer and Registry Configuration tools, ProtoGen protocol compiler, Goedel Schema and scripting tools.
+
+Tool to be included in the near future: RFCTool
 
 Note, this version of the tools does not support syntax shading.</Description>
+    <MoreInfo>http://www.prismproof.org/</MoreInfo>
     <License>License.txt</License>
+    <GettingStartedGuide>GettingStarted.txt</GettingStartedGuide>
+    <ReleaseNotes>ReleaseNotes.txt</ReleaseNotes>
     <PreviewImage>ScriptClassifier_Screenshot.png</PreviewImage>
     <Tags>ASN.1, Finite State Recognizer, JSON, RFC, Code Generator</Tags>
   </Metadata>
-  <Installation>
+  <Installation AllUsers="true">
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[10.0]" />
     <InstallationTarget Version="[14.0,15.0)" Id="Microsoft.VisualStudio.Community" />
     <InstallationTarget Version="[14.0,15.0)" Id="Microsoft.VisualStudio.Enterprise" />
@@ -33,6 +37,9 @@ Note, this version of the tools does not support syntax shading.</Description>
     <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="LibCommand" Path="|LibCommand|" AssemblyName="|LibCommand;AssemblyName|" />
     <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Script" Path="|Goedel.Script|" AssemblyName="|Goedel.Script;AssemblyName|" />
     <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="VSIXBuildLibrary" Path="|VSIXBuildLibrary|" AssemblyName="|VSIXBuildLibrary;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="ProtoGenLibrary" Path="|ProtoGenLibrary|" AssemblyName="|ProtoGenLibrary;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Schema" Path="|Goedel.Schema|" AssemblyName="|Goedel.Schema;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="RFCToolBinding" Path="|RFCToolBinding|" AssemblyName="|RFCToolBinding;AssemblyName|" />
   </Assets>
 </PackageManifest>
 

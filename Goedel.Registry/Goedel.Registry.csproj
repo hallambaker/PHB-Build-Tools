@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Headers.script">
-      <Generator>GoedelScript</Generator>
+      <Generator>GScript</Generator>
       <LastGenOutput>Headers.cs</LastGenOutput>
     </None>
     <None Include="TestCodeSigningKey.snk" />
