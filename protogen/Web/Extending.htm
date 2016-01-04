@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <h1>
+        Extending ProtoGen</h1>
+    <p>
+        ProtoGen 1.0 only supports the use of a message authentication codes (MAC) for 
+        authenticating requests and responses. A MAC is the ideal authentication 
+        technique for most purposes as they use a shared secret to calculate the 
+        authentication value which allows them to be calculated quickly with minimal 
+        resources. Using a MAC has a significant drawback in this application however 
+        the enquirer has no proof that the decider accepted the confirmation request.</p>
+    <p>
+        This puts the confirmation broker in a difficult position should a dispute 
+        arise. The broker can confirm any message it likes without contacting the 
+        decider, The enquirer cannot prove to a third party that it was acting on a 
+        confirmation message received from the broker. In order to use the confirmation 
+        service for financial transactions the authentication technique used must 
+        prevent the parties repudiating the messages they sent.</p>
+    <p>
+        Digital signatures provide non-repudiable authentication. Only the holder of the 
+        secret key can sign a message. Anyone with knowledge of the public key can 
+        verify the signature.</p>
+    <p>
+        To prevent the parties repudiating their messages we must make the following 
+        changes to the Enquirer and Decider protocols:</p>
+    <ol>
+        <li>Use Digital Signatures for authentication</li>
+        <li>Maintain archived copies of the signed messages</li>
+    </ol>
+    <p>
+        The second point is critical but often overlooked in protocol designs. Using a 
+        digital signature in place of a MAC requires only a little extra implementation 
+        effort. But keeping track of important signed messages in a reliable fashion is 
+        rather more difficult. This is the main reason that MACs are generally 
+        preferable to digital signatures in Web Services authentication schemes: A 
+        digital signature always requires greater computational effort but only provides 
+        greater security if we are willing to log all the signed messages.</p>
+    <p>
+        To add digital signatures to the decider protocol we use the Authentication 
+        delaration with the &#39;Signature&#39; specifier.</p>
+    <pre>    Message ConfirmationRequest
+        Description
+            |Request a confirmation from a specified user.
+        Authentication Signature
+        String Account
+            Description
+                |The user being asked to provide confirmation.
+            Description
+                |The format of the account identifier is the same as for email,
+                |i.e. &lt;username&gt;@&lt;domain&gt;
+        String Text
+        String Option
+            Multiple</pre>
+    <p>
+        Attempting to generate code now results in an error. The synthesizer does not 
+        implement the Authentication directive. to compile the code we are going to need 
+        to extend the ProtoGen synthesizer.</p>
+    <p>Extending the synthesizer should only be necessary in exceptional cases. In the 
+        case of the confirmation protocol it is necessary because the need to specify 
+        particulare authentication mechanisms in particular circumstances was left out 
+        of the original design. But in the rare cases that extending the synthesizer is 
+        necessary, it is quite easy to do.</p>
+    <p>Before attempting to modify an existing synthesizer, it is a good idea to be 
+        familiar with the process of building one from scratch. this is described in 
+        detail in the Goedel documentation. </p>
+    <p>To extend the ProtoGen synthesizer to 
+        support the authentication declaration we first modify the schema definition 
+        file ProtoGen.gdl:</p>
+    <pre>    Type Message
+        Id		ID	 MessageT		
+        Entries List Choice
+            Description
+            ... [Omitted]
+            Authentication
+
+    Type Authentication
+        Mechanism Label AuthenticationT</pre>
+    <p>
+        ProtoGen will now accept the protocol definition but using the Authentication 
+        declaration does not change the generated code or documentation. To do this we 
+        need to modify the script file Documentation.script.</p>
+    <p>
+        Modifying a script file is rather more complicated than modifying the schema. 
+        Fortunately the tool used to generate the code and documentation is the same 
+        scripting tool used to generate the example documentation described earlier.</p>
+    <p>
+        It is usually best to start by working out what we want the code to look like 
+        and then working out what changes we need to make to the synthesizer to generate 
+        the desired output. In this case we want the class definition for the ConfirmationRequest 
+        message to include a list of Authentication mechanisms.</p>
+
+</body>
+</html>

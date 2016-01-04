@@ -1,0 +1,370 @@
+﻿#script 1.0
+#license MITLicense
+#xclass ProtoGen Generate
+#% string Prefix; 
+#% string LibPrefix = "JSON"; 
+#% string XStructure = null;
+#method GenerateH ProtoStruct ProtoStruct
+
+##pragma once
+//
+// Code generated automatically
+//
+// Really Do not edit!
+
+// 
+
+#foreach (var Item in ProtoStruct.Top)
+#% Item.Normalize ();
+#switchcast ProtoStructType Item
+#casecast Protocol Protocol
+#% Prefix = Protocol.Prefix.ToString ();
+#% string MacroID = "_HEADER_" + Protocol.Id.ToString().Replace ('.', '_');
+
+##ifndef #{MacroID}
+##define #{MacroID} 1
+
+// Protocol:	#{Protocol.Id}
+// Prefix:		#{Prefix}
+
+##include <protogenlib\common.h>
+
+#foreach (Structure Structure in Protocol.Structures)
+// Structure #{Structure.Id}
+
+typedef struct _#{Prefix}_#{Structure.Id} {
+	struct _#{Prefix}_#{Structure.Id}		*_Next;
+	int								_Type;
+	struct _JSON_String				_String;		// Maybe only include if declared to be a FORMAT?
+#call MakeCStructure Structure.AllEntries
+	} #{Prefix}_#{Structure.Id};
+
+#end foreach
+
+// Type tag values
+
+#% int count = 0;
+##define #{Prefix}_TYPE_String  #{count++}
+##define #{Prefix}_TYPE_Binary  #{count++}
+##define #{Prefix}_TYPE_Int64  #{count++}
+##define #{Prefix}_TYPE_Decimal64  #{count++}
+##define #{Prefix}_TYPE_Real64  #{count++}
+##define #{Prefix}_TYPE_Boolean  #{count++}
+##define #{Prefix}_TYPE_DateTime  #{count++}
+##define #{Prefix}_TYPE_URI  #{count++}
+##define #{Prefix}_TYPE_Format  #{count++}
+#foreach (Structure Structure in Protocol.Structures)
+##define #{Prefix}_TYPE_#{Structure.Id}  #{count++}
+#end foreach
+##define #{Prefix}_TYPE__Count #{count++}
+
+// Function Prototype Definitions..
+
+#foreach (Structure Structure in Protocol.Structures)
+// Structure #{Structure.Id}
+int #{Prefix}_Serialize_#{Structure.Id} (
+		#{LibPrefix}_Context *Context, #{Prefix}_#{Structure.Id} *Data);
+int #{Prefix}_Deserialize_#{Structure.Id} (
+		#{LibPrefix}_Context *Context, #{Prefix}_#{Structure.Id} **Data);
+#end foreach
+
+PUBLIC_ENTRY #{Prefix}__Initialize ();
+PUBLIC_ENTRY #{Prefix}_Initialize ();
+PUBLIC_ENTRY #{Prefix}__End ();
+PUBLIC_ENTRY #{Prefix}_End ();
+
+##define #{Prefix}_Initialize #{Prefix}__Initialize
+##define #{Prefix}_End #{Prefix}__End
+
+PUBLIC_ENTRY #{Prefix}_Create (void *parent, long type, void **Result_Out);
+PUBLIC_ENTRY #{Prefix}_Create_Context (JSON_Stream *Stream, JSON_Context **Result_Out);
+PUBLIC_ENTRY #{Prefix}_Free (void *item);
+PUBLIC_ENTRY #{Prefix}_Deserialize_List (JSON_Context *Context, void **Data_out) ;
+PUBLIC_ENTRY #{Prefix}_Deserialize (JSON_Context *Context, void **Data_out) ;
+
+#foreach (Structure Structure in Protocol.Structures)
+PUBLIC_ENTRY #{Prefix}_Create_#{Structure.Id} (void *parent, #{Prefix}_#{Structure.Id} **Result_Out) ;
+#end foreach
+
+##endif // #{MacroID}
+
+#end switchcast
+#end foreach
+
+
+#end method
+
+#method MakeCStructure List<_Choice> Members
+#foreach (_Choice Member in Members)
+#call MakeCStructure Member
+#end foreach
+#end method
+
+#method MakeCStructure _Choice Member
+#if Member.Multiple
+	JSON_Group				#{Member.ID};
+#else 
+#switchcast ProtoStructType Member
+#casecast Struct Cast
+	struct _#{Prefix}_#{Cast.Type}		*#{Member.ID};
+#default
+#if (Member.TypeC != null)
+	#{Member.TypeC}			#{Member.ID};
+#end if
+#end switchcast
+#end if
+#end method
+
+#method GenerateC ProtoStruct ProtoStruct
+#call GenerateH ProtoStruct
+
+
+
+
+#foreach (_Choice Item in ProtoStruct.Top)
+#% Item.Normalize ();
+#switchcast ProtoStructType Item
+#casecast Protocol Protocol
+#% Prefix = Protocol.Prefix.ToString ();
+
+// Protocol:	#{Protocol.Id}
+// Prefix:		#{Prefix}
+
+// Metadata Tables
+
+#foreach (Structure Structure in Protocol.Structures)
+#% XStructure = Structure.ID;
+#if (Structure.CountChildren > 0)
+JSON_Parse _#{Prefix}_Meta_#{Structure.Id} [] = {
+#call MakeCDeserialize Structure.AllEntriesUnsorted
+	} ;
+##define _#{Prefix}_Meta_#{Structure.Id}_C COUNT (_#{Prefix}_Meta_#{Structure.Id})
+#else
+JSON_Parse *_#{Prefix}_Meta_#{Structure.Id} = NULL;
+##define _#{Prefix}_Meta_#{Structure.Id}_C 0
+#end if
+
+#end foreach
+
+#% Int32 Comma = 0;
+#% Object OComma = Comma;
+static JSON_Registry _#{Prefix}_Meta [] = {
+	{"String", sizeof("String")-1},
+	{"Binary", sizeof("Binary")-1},
+	{"Int64", sizeof("Int64")-1},
+	{"Decimal64", sizeof("Decimal64")-1},
+	{"Real64", sizeof("Real64")-1},
+	{"Boolean", sizeof("Boolean")-1},
+	{"DateTime", sizeof("DateTime")-1},	
+	{"URI", sizeof("URI")-1},
+	{"Format", sizeof("Format")-1}#!
+#foreach (Structure Structure in Protocol.Structures)
+,
+	{"#{Structure.Id}", sizeof ("#{Structure.Id}")-1, NULL, _#{Prefix}_Meta_#{Structure.Id}_C, sizeof (#{Prefix}_#{Structure.Id}), 
+		(JSON_Serializer) #{Prefix}_Serialize_#{Structure.Id}, (JSON_Initializer) #{Prefix}_Deserialize_#{Structure.Id}, #!
+(JSON_Initializer) #{Prefix}_Create_#{Structure.Id}} #!
+#end foreach
+};
+
+JSON_Registry *#{Prefix}_Meta =  _#{Prefix}_Meta;
+
+// Function Definitions
+
+
+#foreach (Structure Structure in Protocol.Structures)
+// Structure #{Structure.Id}
+
+
+PUBLIC_ENTRY #{Prefix}_Create_#{Structure.Id} (void *parent, #{Prefix}_#{Structure.Id} **Result_Out) {
+	#{Prefix}_#{Structure.Id} *Result;
+	BEGIN;
+	JSON_Create (parent, #{Prefix}_TYPE_#{Structure.Id}, _#{Prefix}_Meta, (void**) &Result);
+	
+#foreach (_Choice Member in Structure.AllEntries)
+#if Member.Multiple	
+	Result->#{Member.ID}.Count = -1;
+	Result->#{Member.ID}.First = NULL;
+	Result->#{Member.ID}.Last = NULL;
+	Result->#{Member.ID}.Members = NULL;
+#else 
+#switchcast ProtoStructType Member
+#casecast Boolean Cast
+	Result->#{Member.ID} = Boolean_NaN;
+#casecast Integer Cast
+	Result->#{Member.ID} = Int64_NaN;
+#casecast Decimal Cast
+	Result->#{Member.ID} = Decimal64_NaN;
+#casecast Float Cast
+	Result->#{Member.ID} = Real64_NaN;
+#casecast String Cast
+	Result->#{Member.ID}.Data = NULL;
+#casecast Binary Cast
+	Result->#{Member.ID}.Data = NULL;
+#casecast Struct Cast
+	Result->#{Member.ID} = NULL;
+#end switchcast
+#end if
+#end foreach	
+	
+	*Result_Out = Result;
+	END;
+	}
+
+
+int #{Prefix}_Serialize_#{Structure.Id} (#{LibPrefix}_Context *Context, #{Prefix}_#{Structure.Id} *Data) {
+	boolean Comma = false;
+	BEGIN;
+
+	if (Data == NULL) {
+		JSON_Stream_Write_Null (Context->Stream);
+		}
+
+
+	#{LibPrefix}_Begin (Context);
+#call MakeCSerialize Structure.AllEntries
+	#{LibPrefix}_End (Context);
+
+	END;
+	}
+
+int #{Prefix}_Deserialize_#{Structure.Id} (
+		#{LibPrefix}_Context *Context, #{Prefix}_#{Structure.Id} **Data) {
+
+	BEGIN;
+
+	#{Prefix}_Create_#{Structure.Id} (Context, Data);
+
+	return JSON_Deserialize (Context, _#{Prefix}_Meta + #{Prefix}_TYPE_#{Structure.Id}, *Data);
+	
+	END;
+	}
+#end foreach
+
+
+// Totally lame that this is necessary but it is.
+//
+// C requires initializers be literal constants, it is not enough to declare
+// the variable to be of type const
+
+PUBLIC_ENTRY #{Prefix}__Initialize () {
+	BEGIN;
+
+	JSON_Initialize ();
+
+#foreach (Structure Structure in Protocol.Structures)
+	_#{Prefix}_Meta [#{Prefix}_TYPE_#{Structure.Id}].Table = _#{Prefix}_Meta_#{Structure.Id};
+#end foreach
+
+	END;
+	}
+
+PUBLIC_ENTRY #{Prefix}__End () {
+	BEGIN;
+	END;
+	}
+
+PUBLIC_ENTRY #{Prefix}_Create (void *parent, long type, void **Result_Out) {
+	return JSON_Create (parent, type, _#{Prefix}_Meta, Result_Out);
+	}
+
+
+PUBLIC_ENTRY #{Prefix}_Deserialize_List (JSON_Context *Context, void **Data_out) {
+	return JSON_Deserialize_Object (Context, Data_out, FALSE);
+	}
+PUBLIC_ENTRY #{Prefix}_Deserialize (JSON_Context *Context, void **Data_out) {
+	return JSON_Deserialize_Object (Context, Data_out, TRUE);
+	}
+
+
+PUBLIC_ENTRY #{Prefix}_Create_Context (JSON_Stream *Stream, JSON_Context **Result_Out) {
+	JSON_Context		*Result;
+	BEGIN;
+
+	JSON_Create_Context (Stream, &Result);
+	Result->Registry = _#{Prefix}_Meta;
+	Result->Count = COUNT(_#{Prefix}_Meta);
+	*Result_Out = Result;
+
+	END;
+	}
+
+PUBLIC_ENTRY #{Prefix}_Free (void *item) {
+	
+	return JSON_Free (item);
+	}
+
+#foreach (Structure Structure in Protocol.Structures)
+
+
+#end foreach
+
+
+#end switchcast
+#end foreach
+
+#end method
+
+#method MakeCSerialize List<_Choice> Members
+#foreach (_Choice Member in Members)
+#call MakeCSerialize Member
+#end foreach
+#end method
+
+#method MakeCSerialize _Choice Member
+#% string Pointer = Member.ByValue? "" : "&";
+#% string Required = Member.Required ? "TRUE" : "FALSE";
+#if Member.Multiple
+	JSON_Serialize_Group		(Context, "#{Member.ID}", &Data->#{Member.ID}, #{Required}, #{Member.DefaultC}, &Comma);
+#else 
+#switchcast ProtoStructType Member
+#casecast Struct Cast
+#if Member.Required
+	JSON_Serialize_Tag (Context, "#{Member.ID}", &Comma);
+	#{Prefix}_Serialize_#{Cast.Type}		(Context,  #{Pointer}Data->#{Member.ID});
+#else 
+	if (#{Pointer}Data->#{Member.ID} != NULL) {
+		JSON_Serialize_Tag (Context, "#{Member.ID}", &Comma);
+		#{Prefix}_Serialize_#{Cast.Type}		(Context,  #{Pointer}Data->#{Member.ID});
+	}
+#end if
+#default
+#if (Member.TypeC != null)
+	JSON_Serialize_#{Member.TypeJ}		(Context, "#{Member.ID}", #{Pointer}Data->#{Member.ID}, #{Required}, #{Member.DefaultC}, &Comma);
+#end if
+#end switchcast
+#end if
+
+#end method
+
+#method MakeCDeserialize List<_Choice> Members
+#% Int32 Comma = 0;
+#% Object OComma = Comma;
+#foreach (_Choice Member in Members)
+#call MakeComma Comma
+#call MakeCDeserialize Member
+#end foreach
+#end method
+
+#method MakeCDeserialize _Choice Member
+#if Member.ID != null
+#switchcast ProtoStructType Member
+#casecast Struct Cast
+	{"#{Member.ID}", sizeof("#{Member.ID}")-1, OFFSETOF (#{Prefix}_#{XStructure}, #{Member.ID}), #!
+	#{Prefix}_TYPE_#{Cast.Type}, #{Member.RequiredC}, #{Member.DefaultC}, NULL, NULL},
+#default
+	{"#{Member.ID}", sizeof("#{Member.ID}")-1, OFFSETOF (#{Prefix}_#{XStructure}, #{Member.ID}), #!
+	#{Prefix}_TYPE_#{Member.TypeJ}, #{Member.RequiredC}, #{Member.DefaultC}, NULL, NULL},
+#end switchcast
+#end if
+#end method
+
+
+#method MakeComma Object OCount
+#% Int32 Count = (Int32) OCount;
+#if Count >0
+,#!
+#end if
+#%OCount = Count + 1;
+#end method
+
+#end xclass

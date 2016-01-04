@@ -1,0 +1,432 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+
+        .style1
+        {
+            width: 100%;
+        }
+        .style2
+        {
+            height: 26px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Protocol Declaration</h2>
+
+<p>
+A protocol description file contains a list of one or more protocol declarations.
+    Each protocol declaration defines a separate Web Service protocol.
+</p>
+    <p>
+        The syntax of the protocol declaration is: 
+</p>
+
+<pre>
+Protocol &lt;Namespace&gt; &lt;Prefix&gt;
+    &lt;Entries&gt;...</pre>
+    <p>
+       Where:</p>
+<dl>
+<dt>Namespace</dt><dd>For .NET style code APIs specifies the namespace in which the 
+    code will be generated.</dd>
+<dt>Prefix</dt><dd>For C style code APIs specifies a prefix to be prepended to all 
+    global declarations.</dd>
+<dt>Entries</dt>
+    <dd>
+        A list of Transaction, Message, Structure and Description declarations</dd>
+    </dl>
+
+    <p>
+        Example:</p>
+    <pre>Protocol HelloWorld HELLO
+    Description
+        |Demonstration of defining a Web Service using ProtoGen
+
+    ...</pre>
+    <h3>
+        Description Declaration</h3>
+    <p>
+        Many declarations allow a Description declaration to be attached to document the 
+        purpose. The text provided is used to generate documentation for the declaration 
+        to which it is attached.</p>
+    <p>
+        The Protocol declaration example above shows a description declaration being 
+        used to describe the purpose of the HelloWorld Web Service.</p>
+    <h2>
+        Structure Declaration</h2>
+    <p>
+        The Structure declaration defines a structure. In an object oriented language 
+        binding a structure is mapped to the class and methods implementing the 
+        structure. In a non object oriented language, a structure is mapped to a plain 
+        structure. Inheritance may be used in either case however. If the implementation 
+        language does not support inheritance, the synthesizer will expand the 
+        inheritance declarations automatically.</p>
+    <p>
+        Although the primary purpose of ProtoGen is to develop network protocols and 
+        implementations it may be used to just create code to serialize and deserialize 
+        data structures. </p>
+    <p>
+        The syntax of the protocol declaration is: 
+</p>
+
+<pre>
+Protocol &lt;Identifier&gt;
+    &lt;Entries&gt;...</pre>
+    <p>
+       Where:</p>
+<dl>
+<dt>Identifier</dt><dd>Is the name of the structure to be generated.</dd>
+<dt>Entries</dt>
+    <dd>
+        A list of Description, 
+        Abstract, Struct or <em>member</em> declarations</dd>
+    </dl>
+
+    <p>
+        The member types supported in ProtoGen are:</p>
+    <table class="style1">
+        <tr>
+            <td>
+                Declaration</td>
+            <td>
+                Description</td>
+            <td>
+                Parameters</td>
+            <td>
+                C</td>
+            <td>
+                C#</td>
+        </tr>
+        <tr>
+            <td>
+                Boolean</td>
+            <td>
+                &nbsp;</td>
+            <td>
+                &nbsp;</td>
+            <td>
+                bool</td>
+            <td>
+                bool</td>
+        </tr>
+        <tr>
+            <td>
+                Integer</td>
+            <td>
+                &nbsp;</td>
+            <td>
+&nbsp;Maximum, Minimum</td>
+            <td>
+                long</td>
+            <td>
+                long</td>
+        </tr>
+        <tr>
+            <td>
+                Binary</td>
+            <td>
+                &nbsp;</td>
+            <td>
+                &nbsp;</td>
+            <td>
+                byte []</td>
+            <td>
+                byte []</td>
+        </tr>
+        <tr>
+            <td>
+                Label</td>
+            <td>
+                &nbsp;</td>
+            <td>
+                &nbsp;</td>
+            <td>
+                char *</td>
+            <td>
+                string</td>
+        </tr>
+        <tr>
+            <td>
+                Name</td>
+            <td>
+                DNS name</td>
+            <td>
+                &nbsp;</td>
+            <td>
+                char*</td>
+            <td>
+                string</td>
+        </tr>
+        <tr>
+            <td>
+                String</td>
+            <td>
+                UTF8 string</td>
+            <td>
+                &nbsp;</td>
+            <td>
+                char*</td>
+            <td>
+                string</td>
+        </tr>
+        <tr>
+            <td>
+                URI</td>
+            <td>
+                URI</td>
+            <td>
+                &nbsp;</td>
+            <td>
+                char*</td>
+            <td>
+                string</td>
+        </tr>
+        <tr>
+            <td class="style2">
+                DateTime</td>
+            <td class="style2">
+                UTC Date Time</td>
+            <td class="style2">
+                &nbsp;</td>
+            <td class="style2">
+                tm</td>
+            <td class="style2">
+                DateTime</td>
+        </tr>
+    </table>
+    <p>
+        The format of a Type declaration is:</p>
+
+<pre>
+&lt;Type&gt; &lt;Identifier&gt;
+    &lt;Entries&gt;...</pre>
+    <p>
+       Where:</p>
+<dl>
+<dt>Type</dt>
+    <dd>
+        Is Boolean, Integer, Binary, Label, Name, String, URI or DateTime</dd>
+    <dt>Identifier</dt><dd>Is the name of the structure entry</dd>
+<dt>Entries</dt>
+    <dd>
+        May be Description, Multiple, Required or Default declarations</dd>
+    </dl>
+
+    <h3>
+        Abstract Declaration</h3>
+    <p>
+        If a structure is marked Abstract, it can only be used as a parent class from 
+        which other structures inherit. Messages.ages.</p>
+    <h3>
+        Inherit Declaration</h3>
+    <p>
+        The format of an 
+        Inherit declaration is:</p>
+
+<pre>
+Inherit &lt;name&gt;</pre>
+    <p>
+       Where:</p>
+<dl>
+<dt>Name</dt>
+    <dd>
+        Is the name of the Structure or Message to be inherited</dd>
+    </dl>
+
+    <p>
+        The Inherit declaration may be used in either Structure or Message declaration 
+        but structures can only inherit structures and messages can only inherit 
+        messages. </p>
+    <h3>
+   Struct Declaration>
+   Struct Declaration</h3>
+    <p>
+        A struct declaration is used to declare an entry of the specified structure.</p>
+    <h3>
+        Multiple Declaration</h3>
+    <p>
+        In a member declaration, the multiple declaration specifies that the member may 
+        occur multiple times. Such declarations map to lists or arrays in the language 
+        and encoding bindings.</p>
+    <h3>
+        Required Declaration</h3>
+    <p>
+        In a member declaration the Required declaration specifies that the member must 
+        occur at least once.</p>
+    <h3>
+        Default Declaration</h3>
+    <p>
+        The Default declaration specifies a default value for the member entry.
+    </p>
+    <p>
+        The format of a Type declaration is:</p>
+
+<pre>
+Default &quot;&lt;string&gt;&quot;</pre>
+    <p>
+       Where:</p>
+<dl>
+<dt>String</dt>
+    <dd>
+        Is the default value to be used.</dd>
+    </dl>
+
+    <h2>
+
+        Message Declaration</h2> 
+        
+        <p>The Message Declaration is similar to the Structure declaration except that the 
+        synthesizer adds necessary members to the class to support message exchange.</p>
+    <h2>
+        Transaction Declarationationsaction Declarationation</h2>
+    <p>
+        The Transaction declaration defines the API used to interact with a Web Service:</p>
+    <pre>Transaction &lt;Class&gt; &lt;Name&gt; &lt;Request&gt; &lt;Response&gt;
+    &lt;Entries&gt;...</pre>
+    <pre>Where:</pre>
+    <dl>
+        <dt>Class</dt>
+        <dd>
+            Is the name of the class to which the transaction will be a method</dd>
+        <dt>Name</dt>
+        <dd>
+            Is the name of the transaction in the programing API</dd>
+        <dt>Request</dt>
+        <dd>
+            Is the identifer of the request message</dd>
+        <dt>Response</dt>
+        <dd>
+            Is the identifier of the response message</dd>
+<dt>Entries</dt>
+    <dd>
+        A list of 
+        Description and Status declarations (Close and Callback declarations to be 
+        implemented)</dd>
+    </dl>
+    <p>
+        Example</p>
+    <pre>Transaction HelloService Hello HelloRequest HelloResponse
+    Description
+        |The Hello world transaction</pre>
+    <p>
+        Only request/response transactions are supported at present. While there are 
+        some common protocol interactions that do not fit this pattern naturally, almost 
+        all do.</p>
+    <p>Request/Response transactions map conveniently to a simple API in commonly used 
+        programming languages without the need for callbacks or other asynchronous 
+        programming mechanisms on the client side. </p>
+    <p>The blocking C# for the Hello transaction would be the following:</p>
+    <pre>namespace HelloWorld {
+    public partial class HelloService {
+        public HelloResponse Hello (HelloRequest Request) {...}
+        }
+    }</pre>
+    <p>
+        The corresponding interface in C would be:</p>
+    <pre>HELLO_Hello (HelloService Service, HelloRequest *Request, HelloResponse *Response);</pre>
+    <p>
+        The synthesizer could also build a non-blocking API but this turns out to be 
+        much less useful than it might appear since the way that a non-blocking API is 
+        built in most modern programing environments is to use threads. Code that uses a 
+        concealed threaded interface tends to be less efficient than code that uses 
+        threads explicitly and is certainly a lot harder to debug.</p>
+    <h3>
+        Status Declaration</h3>
+    <p>
+        The Status declaration defines a status code that may be returned by the 
+        transaction. At pre</p>
+    <pre>Status &lt;ID&gt;
+    &lt;Entries&gt;...</pre>
+    <p>Where:</p>
+    <dl>
+        <dt>ID</dt>
+        <dd style="margin-left: 40px">
+            Is the API identifier for the status code</dd>
+<dt>Entries</dt>
+    <dd>
+        A list of 
+        Description and Code declarations</dd>
+    </dl> 
+    <h3>
+        Code Declaration</h3>
+    <p>
+        The code declaration permits the use of a particular status code number to be 
+        forced. This may be used to force the use of specific HTTP status codes.</p>
+    <pre>Code &lt;Number&gt;
+    &lt;Entries&gt;...</pre>
+    <p>Where:</p>
+    <dl>
+        <dt>Number</dt>
+        <dd style="margin-left: 40px">
+            Is an integer to be used for the status code value.</dd>
+    </dl> 
+
+    <h2>
+        Connection Declaration</h2>
+    <p>The main type of interaction that is not supported in the Request/Response model 
+        is found in applications like interactive chat where a client connects to a chat 
+        room and receives messages from the chat server at irregular intervals. In 
+        effect the &#39;client&#39; acts as both the initiator and responder and not just as a 
+        responder. </p>
+    <p>This form of communication pattern will be supported in future versions of 
+        ProtoGen using the Connection declaration. A connection is like a transaction 
+        that continues until it is terminated by either the client or the service. A 
+        connection may specify multiple callback declarations, each of which specifies a 
+        message that the client can receive while the transaction is open. The Close 
+        declaration specifies a message that the client can use to request that the 
+        server close the transaction.</p>
+    <pre>Connection &lt;Class&gt; &lt;Name&gt; &lt;Request&gt; &lt;Response&gt; &lt;Close&gt;;Close&gt;
+    &lt;Entries&gt;...</pre>
+    <p>Where:</p>
+    <dl>
+        <dt>Class</dt>
+        <dd>
+            Is the name of the class to which the transaction will be a method.</dd>
+        <dt>Name</dt>
+        <dd>
+            Is the name of the transaction in the programing API.</dd>
+        <dt>Request</dt>
+        <dd>
+            Is the identifer of the request message.</dd>
+        <dt>Response</dt>
+        <dd>
+            Is the identifier of the response message.</dd>
+        <dt>Close</dt>
+        <dd style="margin-left: 40px">
+            Is a message that the client can send to request that the service close the 
+            connection.</dd>
+<dt>Entries</dt>
+    <dd>
+        A list of 
+        Description, Callback and Status declarations</dd>
+    </dl> <p>Example:</p>
+    <pre>Connection HelloService Greet HelloRequest HelloResponse HelloClose
+    Description
+        |The Hello world transaction
+    Callback Reply</pre>
+    <h3>
+        Callback Declaration</h3>
+    <p>
+        The Callback declaration specifies a message that a service may sent to a client 
+        during a connection.
+    </p>
+    <pre>Callback &lt;Message&gt;
+    &lt;Entries&gt;...</pre>
+    <p>Where:</p>
+    <dl>
+        <dt>Message</dt>
+        <dd>
+            Is a message the service may send to the client during a connection.</dd>
+<dt>Entries</dt>
+    <dd>
+        A list of 
+        Description declarations</dd>
+    </dl> 
+    
+</body>
+</html>

@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>JSON Schema Protocol Generator</title>
+    </head>
+<body>
+<h1>ProtoGen Protocol Generator</h1>
+
+<p>The ProtoGen tool converts a description of a Web Service description to code and 
+    documentation.</p>
+    <p>Currently the tool generates code in C# for a HTTP Web Service in a REST style 
+        using JSON for data encoding and generates documentation in the IETF XML2RFC 
+        format. Other languages, transports, encodings and documentations may be added 
+        by extending the ProtoGen tool.</p>
+    <p>ProtoGen allows Web Services to be designed quickly and accurately. An initial 
+        prototype of a new protocol can be developed complete with documentation in a 
+        day or less. Code and documentation are kept in tight synchronization so that 
+        when the design changes, so do the reference sections and examples of the 
+        documentation. </p>
+    <p>Developing standards is the process of making choices that do not matter except 
+        to the extent that a choice must be made. It did not matter what code number the 
+        ASCII standards group chose for the letter A in 1960. The group chose the number 
+        65 but 32 or 45 might have done just as well. What was important was the fact 
+        that everyone agreed to use the same number to represent the letter A and that 
+        could be agreed because it didn&#39;t particularly matter which number was chosen. </p>
+    <p>ProtoGen makes developing standards for network protocols easier because all of 
+        the choices that don&#39;t matter are already taken. The designer does not need to 
+        to consider whether to use JSON or XML because ProtoGen has already made that 
+        choice. There is no need for the designer to reconsider the choice of encoding 
+        unless the have a particular reason to choose XML.</p>
+    <p>Wherever possible, the design choices embedded in ProtoGen represent the existing 
+        consensus among protocol designers. JSON was chosen as the default encoding over 
+        XML or ASN.1 because it is the encoding used in almost all new IETF application 
+        protocols.</p>
+    <p>Leaving the unimportant choices to the tool results in protocol designs that are 
+        more consistent and easier to implement than traditional approaches. This is 
+        particularly important for protocols that are not intended for widespread use 
+        but have important security concerns. Security researchers are more likely to 
+        examine possible vulnerabilities introduced by a tool used to develop multiple 
+        Web Services than any single Web Service standing alone. Use of software tools 
+        offers the security of the herd. </p>
+    <h2>Support Libraries</h2>
+    <p>The ProtoGen support libraries provide commonly used functions including:</p>
+    <ul>
+        <li>Service discovery.</li>
+        <li>Service announcement.</li>
+        <li>User account registration.</li>
+        <li>Credential validation.</li>
+        <li>Message authentication and validation.</li>
+    </ul>
+    <p>
+        By default ProtoGen uses the support functions implemented in the ProtoGen 
+        support libraries but implementations may replace or extend the support 
+        libraries as needed.</p>
+    <p>
+        For example, the ProtoGen support libraries currently use OmniConnect to 
+        establish and mannage user accounts and the HTTP Session management mechanism to 
+        authenticate protocol messages. An implementation that requires support for SAML 
+        or OpenID accounts can add this by extending the support library classes.</p>
+    <p>
+        Factoring out the common protocol requirements into a shared support library 
+        encourages the designer to think in terms of what is different for their 
+        protocol rather than having to re-invent them.</p>
+
+<h2>Using ProtoGen to build a confirmation broker</h2>
+    <p>The best way to understand ProtoGen is to see it in use to develop a Web Service 
+        to meet a real need.</p>
+    <p>Many Web sites send an account holder an email message whenever an action deemed 
+        &#39;high risk&#39; is performed on their account. Most banks will send their customer 
+        an email message when a new payee is added. Brokerages notify the account holder 
+        when stock is bought or sold.</p>
+    <p>Keeping the user informed helps the financial institutions manage risk by giving 
+        the user a chance to detect fraudulent transactions soon after they are made and 
+        alert the bank in time to recover the money. But wouldn&#39;t it be better if 
+        instead of sending a message to the users email after the money is gone, the 
+        financial institution could ask the user if they really want to send $10,000 to 
+        a newly registered payee in Nigeria?</p>
+    <p>A confirmation broker is a Web service that meets this need. Financial 
+        institutions and other parties that the user has previously authorized may send 
+        a request to the confirmation broker asking if the user will confirm or reject a 
+        proposed action. To confirm a transaction, the user uses a device and applicatin 
+        previously registered with the confirmation service. The application is similar 
+        to an email client in that it fetches lists of unanswered confirmation requests 
+        from the confirmation broker and returns the user&#39;s reply.</p>
+    <p>While such a confirmation service could in principle be built on top of email, 
+        there is an important advantage to making a clean start. Since this is a 
+        security service we wish to ensure that every message sent and received is 
+        authenticated using a non repudiable digital signature. Such security 
+        enhancements are an optional extension for legacy email systems. Building from 
+        scratch allows us to insist that they be built in to every client from the 
+        start.</p>
+    <p>The confirmation broker architecture has three parties:</p>
+    <dl>
+        <dt>Enquirer</dt>
+        <dd>
+            The party making the request that an action be confirmed or rejected.</dd>
+        <dt>Decider</dt>
+        <dd>
+            The user making the decision to accept or reject a request</dd>
+        <dt>Broker</dt>
+        <dd>
+            A Web Service that manages the flow of messages between Enquirers and Deciders.</dd>
+    </dl>
+    <p>
+        The confirmation broker supports separate Web Services for Enquirers and 
+        Deciders.
+    </p>
+    <p>
+        The basic Enquirer-Broker protocol has only three messages:</p>
+    <dl>
+        <dt>Confirmation</dt>
+        <dd>
+            Request that the broker forward a confirmation request to a specified user</dd>
+        <dt>Status</dt>
+        <dd>
+            Request the status of a previously sent confirmation request</dd>
+        <dt>Cancel</dt>
+        <dd>
+            Cancel an existing confirmation request</dd>
+    </dl>
+    <p>
+        A ProtoGen protocol definition file for this interface is:</p>
+    <pre>Protocol Confirmation CNF
+
+    Service Enquirer "_owcp-enquire._tcp" "/.well-known/owcp-enquire/"
+	Description
+            |The Enquirer service
+        Status Success
+        Status Refused
+
+    Transaction Enquirer Confirmation ConfirmationRequest ConfirmationResponse
+        Description
+            }Post a request for confirmation to a user.
+        Status UnknownUser
+
+    Message ConfirmationRequest
+        Description
+            |Request a confirmation from a specified user.
+        String Account
+            Description
+                |The user being asked to provide confirmation.
+            Description
+                |The format of the account identifier is the same as for email,
+                |i.e. &amp;lt;username&amp;gt;@&amp;lt;domain&amp;gt;
+        String Text
+        String Option
+            Multiple
+
+    Message ConfirmationResponse
+        Binary	TransactionID
+
+
+    Transaction Enquirer AskStatus StatusRequest StatusResponse
+        Status UnknownSerial
+
+    Message StatusRequest
+        Binary	TransactionID
+
+    Message StatusResponse
+        String Option
+</pre>
+    <p>
+        For conciseness, most of the descriptions of the protocol elements are omitted 
+        at this stage. The Description elements shown will be used to generate the 
+        reference documentation for the protocol.</p>
+    <p>
+        The Enquirer service has a default DNS SRV discovery prefix of "_owcp-enquire._tcp" 
+        and a default service location of "/.well-known/owcp-enquire/". The service has 
+        two transactions &#39;Confirmation&#39; and &#39;AskStatus&#39; which each consist of a request 
+        followed by a response.</p>
+    <p>
+        Having defined our protocol we are now ready to create a client API, server and 
+        documentation:</p>
+    <pre>protogen Confirmation.Protocol /cs Confirmation.cs /xml Confirmation.xml</pre>
+    <p>
+        Neither the design, nor the documentation nor the implementation are complete at 
+        this stage. But we have a set of working code that we can use as a base. To 
+        complete the project we need to:</p>
+    <ul>
+        <li><a href="Documentation.htm">Present the reference documentation in a 
+            specification document </a></li>
+        <li><a href="Server.htm">Implement the server callbacks</a></li>
+        <li><a href="Client.htm">Call the client API from a test program</a></li>
+        <li><a href="Examples.htm">Generate examples for use in the documentation</a></li>
+        <li><a href="Automate.htm">Configure the development environment to automate the 
+            build process</a></li>
+        <li><a href="Testing.htm">Write Unit Tests</a></li>
+    </ul>
+    <p>
+        ProtoGen does not do all the work necessary to implement the protocol but it 
+        does a lot of the heavy lifting and in doing so it allows us to focus on the 
+        design of the protocol rather than implementation.</p>
+    <p>
+        It is very likely that the design will change as the implementation tasks listed 
+        above are completed. Writing documentation often leads to a better understanding 
+        of the design needs. Implementing the client and server components leads to the 
+        realization that&nbsp; additional messages are required. What happens if a user 
+        takes so long to reply to a request that the result has become irrelevant? We 
+        need a transaction to allow the enquirer to cancel the request. This is easily 
+        done:</p>
+    <pre>    Transaction Enquirer Cancel CancelRequest CancelResponse
+        Status Success
+        Status Refused
+        Status UnknownSerial
+
+    Message CancelRequest
+        Binary	TransactionID
+            Required
+
+    Message CancelResponse</pre>
+    <p>
+        In many cases the Enquirer knows ahead of time that a confirmation response will 
+        be irrelevant if it arrives too late. So we might want to add an expiry time 
+        parameter to the ConfirmationRequest message. We might also want to allow the 
+        Enquirer the option of extending the expiry time at a later date in the 
+        AskStatus message.</p>
+    <p>
+        Design is an itterative process and it is natural that a design will evolve 
+        during development and prototype implementation. That is what prototypes are for 
+        after all. In the traditional development approach, each design change comes 
+        with a risk of introducing errors as the code, examples and documentation slide 
+        out of sync. Each revision of the specification must be carefully checked to 
+        make sure that a design change made in the documentation made it to the example 
+        code.
+    </p>
+    <p>
+        Once a ProtoGen project is established, the synthesizer keeps all the elements 
+        of the project in tight synchronization. Changes to the protocol description 
+        file will require changes to the client and server code but these won&#39;t compile 
+        or run until they are made. ProtoGen can&#39;t do all the work necessary to keep the 
+        documentation and code in sync but it can help avoid undetected inconsistencies.</p>
+    <h3>
+        Adding the Decider Service</h3>
+    <p>
+        So far we have a protocol that allows an Enquirer to make a request. To complete 
+        the confirmation service we need a service that allows the decider to:</p>
+    <ul>
+        <li>Determine which requests are outstanding</li>
+        <li>Fetch an outstanding request from the broker</li>
+        <li>Respond to a specific request</li>
+    </ul>
+    <p>
+        At this point we start to discover more shortcomings in our original design. A 
+        confirmation message could be quite detailed, how does the user pick the 
+        confirmation request that interests them out of a long list? Limiting the size 
+        of the confirmation message to a few hundred characters meets the &#39;request 
+        selection&#39; criteria but limits the utility of the service. A better way to meet 
+        this particular requirement is to follow the conventions of email and separate 
+        the confirmation request message into a subject line and a body.</p>
+    <p>
+        Using ProtoGen to develop the protocol encourages the designer to keep focused 
+        on the design problems by performing the bulk of the implementation work for 
+        them.</p>
+    <h3>
+        Extending ProtoGen</h3>
+    <p>
+        At this point we have a confirmation service that allows an enquirer to make a 
+        confirmation request, the decider to answer it and the enquirer to receive the 
+        decider&#39;s response. This meets all our functional requirements but there is an 
+        important security requirement missing: non-repudiation.</p>
+    <p>
+        Extending the protocol to support non-repudiation is straightforward in 
+        principle. Instead of using a Message Authentication Code (MAC) to authenticate 
+        protocol messages we use a digital signature instead but only for the messages 
+        where non-repudiation is a requirement. The DecisionResponse message will almost 
+        always require a digital signature but a MAC is more than sufficient for 
+        authenticating the Cancel message. The need to use one form of authentication in 
+        some places and a different mechanism in others was beyond the capabilities of 
+        the synthesizer.
+    </p>
+    <p>
+        Implementing support for non-repudiation by replacing the generated server code 
+        with custom code would be straightforward but the changes made would have to be 
+        repeated for every future protocol where we decided non-repudiation was 
+        desirable. Extending the synthesizer is a much better way to implement support 
+        for different authentication requirements for different protocol messages. The 
+        process for extending the syntheziser to allow messages to specify the supported 
+        authentication types is <a href="Extending.htm">described separately</a>.</p>
+    <p>
+        Most protocol developers should never need to extend the synthesizer but the 
+        option of extending or modifying the synthesizer if the need arises protects the 
+        developer against the risk of being locked in to an obsolete or abandoned 
+        development tool.</p>
+    <p>
+        The most likely reason for wanting to extend the synthesizer is to support a 
+        different implementation language. ProtoGen 1.0 only supports C# as a target 
+        language. While there are many features of C# that make it an ideal choice as a 
+        target language for a code synthesis system, there are many platforms on which 
+        C# is not the optimal choice. It is likely that future versions of ProtoGen will 
+        support C but even with infinite development resources, no tool can support 
+        every target language that a user might wish or need to use.</p>
+    <h3>
+        Finished design</h3>
+    <p>
+        [Add a link to the finished design when available]</p>
+
+</body>
+</html>

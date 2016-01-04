@@ -1,0 +1,873 @@
+﻿#script 1.0
+#license MITLicense
+#xclass ProtoGen Generate
+
+#!
+#!   Code Generator (C#)
+#!
+#!  
+
+#method GenerateCS ProtoStruct ProtoStruct
+#% ProtoStruct.Complete ();
+#% var GenerateTime =System.DateTime.UtcNow;
+#%// Boilerplate.Header (_Output, "//  ", GenerateTime);
+#% Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + "2014", ".");
+#% var ThisInherits = ": Goedel.Protocol.JSONObject"; // ""
+#% var InheritsOverride = "override"; // "virtual"
+//Header
+// With all fields as properties
+
+using System;
+using System.IO;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using Goedel.Protocol;
+
+
+
+#foreach (var Item in ProtoStruct.Top)
+#switchcast ProtoStructType Item
+#casecast Protocol Protocol
+
+#foreach (var Entry in Protocol.Entries)
+#switchcast ProtoStructType Entry
+#casecast Using Using
+using #{Using.Id};
+#end switchcast
+#end foreach
+
+
+#% DescriptionListC (Protocol.Entries, 0);
+#% Namespace = Protocol.Namespace.ToString ();
+namespace #{Protocol.Namespace} {
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+	public abstract partial class #{Protocol.Prefix} #{ThisInherits} {
+#% CurrentPrefix = Protocol.Prefix.ToString ();
+
+        /// <summary>
+        /// 
+        /// </summary>
+		public #{InheritsOverride} string Tag () {
+			return "#{Protocol.Prefix}";
+			}
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+		public #{Protocol.Prefix} () {
+			_Initialize () ;
+			}
+
+        /// <summary>
+        /// Construct an instance from a JSON encoded stream.
+        /// </summary>
+		public #{Protocol.Prefix} (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			_Initialize () ;
+			}
+
+        /// <summary>
+        /// Construct an instance from a JSON encoded string.
+        /// </summary>
+		public #{Protocol.Prefix} (string _String) {
+			Deserialize (_String);
+			_Initialize () ;
+			}
+
+		/// <summary>
+        /// Construct an instance from the specified tagged JSONReader stream.
+        /// </summary>
+        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
+	
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                Out = null;
+                return;
+                }
+
+			string token = JSONReader.ReadToken ();
+			Out = null;
+
+			switch (token) {
+#foreach (_Choice Entry in Protocol.Entries)
+#switchcast ProtoStructType Entry
+#casecast Message Message
+#% DeserializeCase (Message.Id,Message.ID);
+#casecast Structure Structure
+#% DeserializeCase (Structure.Id,Structure.ID);
+#end switchcast
+#end foreach
+				default : {
+					throw new Exception ("Not supported");
+					}
+				}	
+			JSONReader.EndObject ();
+            }
+		}
+
+
+
+		// Service Dispatch Classes
+#foreach (_Choice Entry in Protocol.Entries)
+#switchcast ProtoStructType Entry
+#casecast Service Service
+
+
+    /// <summary>
+	/// The new base class for the client and service side APIs.
+    /// </summary>		
+    public abstract partial class #{Service.Id} : Goedel.Protocol.JPCInterface {
+		
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public const string WellKnown = "#{Service.WellKnown}";
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public override string GetWellKnown {
+			get {return WellKnown;}
+			}
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public const string Discovery = "#{Service.Discovery}";
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public override string GetDiscovery {
+			get {return Discovery;}
+			}
+
+		JPCSession _JPCSession;
+
+        /// <summary>
+        /// The active JPCSession.
+        /// </summary>		
+		public virtual JPCSession JPCSession {
+			get {return _JPCSession;}
+			set {_JPCSession = value;}
+			}
+
+#foreach (_Choice Entry2 in Protocol.Entries)
+#switchcast ProtoStructType Entry2
+#casecast Transaction Transaction
+
+        /// <summary>
+		/// Base class for implementing the transaction.
+        /// </summary>		
+        public virtual #{Transaction.Response} #{Transaction.Id} (
+                #{Transaction.Request} Request) {
+            return null;
+            }
+#end switchcast
+#end foreach
+
+        }
+
+    /// <summary>
+	/// Client class for #{Service.Id}.
+    /// </summary>		
+    public partial class #{Service.Id}Client : #{Service.Id} {
+ 		
+		JPCRemoteSession JPCRemoteSession;
+        /// <summary>
+        /// The active JPCSession.
+        /// </summary>		
+		public override JPCSession JPCSession {
+			get {return JPCRemoteSession;}
+			set {JPCRemoteSession = value as JPCRemoteSession; }
+			}
+
+
+        /// <summary>
+		/// Create a client connection to the specified service.
+        /// </summary>	
+		public #{Service.Id}Client (JPCRemoteSession JPCRemoteSession) {
+			this.JPCRemoteSession = JPCRemoteSession;
+			}
+
+#foreach (_Choice Entry2 in Protocol.Entries)
+#switchcast ProtoStructType Entry2
+#casecast Transaction Transaction
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        public override #{Transaction.Response} #{Transaction.Id} (
+                #{Transaction.Request} Request) {
+
+            var ResponseData = JPCRemoteSession.Post("#{Transaction.Id}", Request);
+            var Response = #{Transaction.Response}.FromTagged(ResponseData);
+
+            return Response;
+            }
+#end switchcast
+#end foreach
+
+		}
+
+
+    /// <summary>
+	/// Client class for #{Service.Id}.
+    /// </summary>		
+    public partial class #{Service.Id}Provider : Goedel.Protocol.JPCProvider {
+
+		/// <summary>
+		/// Interface object to dispatch requests to.
+		/// </summary>	
+		public #{Service.Id} Service;
+
+
+		/// <summary>
+		/// Dispatch object request in specified authentication context.
+		/// </summary>			
+        /// <param name="Session">The client context.</param>
+        /// <param name="JSONReader">Reader for data object.</param>
+        /// <returns>The response object returned by the corresponding dispatch.</returns>
+		public override Goedel.Protocol.JSONObject Dispatch(JPCSession  Session,  
+								Goedel.Protocol.JSONReader JSONReader) {
+
+			JSONReader.StartObject ();
+			string token = JSONReader.ReadToken ();
+			JSONObject Response = null;
+
+			switch (token) {
+#foreach (_Choice Entry2 in Protocol.Entries)
+#switchcast ProtoStructType Entry2
+#casecast Transaction Transaction
+				case "#{Transaction.Id}" : {
+					var Request = #{Transaction.Request}.FromTagged (JSONReader);
+					Response = Service.#{Transaction.Id} (Request);
+					break;
+					}
+#end switchcast
+#end foreach
+				default : {
+					throw new Goedel.Protocol.UnknownOperation ();
+					}
+				}
+			JSONReader.EndObject ();
+			return Response;
+			}
+
+		}
+
+
+#end switchcast
+#end foreach
+
+
+
+		// Transaction Classes
+#foreach (_Choice Entry in Protocol.Entries)
+#switchcast ProtoStructType Entry
+#casecast Message Message
+#% MakeClass (Message.Id, Message.Entries);
+
+        /// <summary>
+		/// Initialize class from JSONReader stream.
+        /// </summary>		
+		public #{Message.Id} (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary>
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public #{Message.Id} (string _String) {
+			Deserialize (_String);
+			}
+#% var Inherits = HasInherits  (Message.Entries);
+#% MakeSerializers (Message.Id, Message.ID, Message.Entries, Inherits);
+		}
+
+#casecast Structure Structure
+#% MakeClass (Structure.Id, Structure.Entries);
+        /// <summary>
+        /// </summary>		
+		public #{Structure.Id} (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+#% var Inherits = HasInherits  (Structure.Entries);
+#% MakeSerializers (Structure.Id, Structure.ID, Structure.Entries, Inherits);
+		}
+
+#end switchcast
+#end foreach
+	}
+
+#end switchcast
+#end foreach
+#end method
+
+#block 
+#% public bool IsAbstract  (List<_Choice> Entries) {
+#% bool result = false;
+#foreach (_Choice Entry in Entries)
+#switchcast ProtoStructType Entry
+#casecast Abstract Abstract
+#% result = true;
+#end switchcast
+#end foreach
+#% return result;
+#% }
+#end block 
+
+#block 
+#% public bool IsMultiple  (List<_Choice> Entries) {
+#% bool result = false;
+#foreach (_Choice Entry in Entries)
+#switchcast ProtoStructType Entry
+#casecast Multiple Multiple
+#% result = true;
+#end switchcast
+#end foreach
+#% return result;
+#% }
+#end block 
+
+#block 
+#% public bool IsRequired  (List<_Choice> Entries) {
+#% bool result = false;
+#foreach (_Choice Entry in Entries)
+#switchcast ProtoStructType Entry
+#casecast Required Required
+#% result = true;
+#end switchcast
+#end foreach
+#% return result;
+#% }
+#end block 
+
+#block 
+#% public string HasInherits  (List<_Choice> Entries) {
+#% string result = null;
+#foreach (_Choice Entry in Entries)
+#switchcast ProtoStructType Entry
+#casecast Inherits Inherits
+#% result = Inherits.Ref.ToString();
+#casecast External External
+#% result = External.Ref.ToString();
+#end switchcast
+#end foreach
+#% return result;
+#% }
+#end block 
+
+#block 
+#% public void MakeClass  (ID<_Choice> Id, List<_Choice> Entries) {
+#% var Inherits = HasInherits (Entries);
+#!#% string Override;
+#% DescriptionListC (Entries, 1);
+	#!
+#if (IsAbstract (Entries))
+abstract #!
+#end if
+#if (Inherits == null) 
+public partial class #{Id} : #{CurrentPrefix} {
+#else 
+public partial class #{Id} : #{Inherits} {
+#end if
+#call DeclareMembers (Entries)
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "#{Id}";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public #{Id} () {
+			_Initialize ();
+			}
+#% }
+#end block 
+
+
+#block ParameterList
+#% public void DeclareMembers  (List<_Choice> Entries) {
+#foreach (_Choice Entry in Entries)
+#% TOKEN<_Choice> Token = null;
+#% string Type = null; string TType = null;
+#% List<_Choice> Options = null;
+#% bool Nullable;
+#% string Tag;
+#% GetType (Entry, out Token, out Type, out TType, out Options, out Nullable, out Tag);
+#if (Token != null)
+#% bool Multiple = IsMultiple (Options);
+#if Multiple
+		/// <summary>
+        /// 
+        /// </summary>
+		public virtual List<#{Type}>				#{Token} {
+			get {return _#{Token};}			
+			set {_#{Token} = value;}
+			}
+		List<#{Type}>				_#{Token};
+#else
+#if !Nullable
+		bool								__#{Token} = false;
+		private #{Type}						_#{Token};
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual #{Type}						#{Token} {
+			get {return _#{Token};}
+			set {_#{Token} = value; __#{Token} = true; }
+			}
+#else 
+        /// <summary>
+        /// 
+        /// </summary>
+		public virtual #{Type}						#{Token} {
+			get {return _#{Token};}			
+			set {_#{Token} = value;}
+			}
+		#{Type}						_#{Token} ;
+#end if
+#end if
+#end if
+#end foreach
+#% }
+#end block
+
+#block MakeSerializers
+#% public void MakeSerializers  (ID<_Choice> Id, string STag, List<_Choice> Entries, string Inherits) {
+#% string IsOverride = (Id.Object.Superclass == null) ? "virtual " : "virtual ";
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+#if (Inherits != null)
+			((#{Inherits})this).SerializeX(_Writer, false, ref _first);
+#end if
+#foreach (_Choice Entry in Entries)
+#% TOKEN<_Choice> Token = null;
+#% string Type = null; string TType = null;
+#% List<_Choice> Options = null; bool Nullable;
+#% string Tag;
+#% GetType (Entry, out Token, out Type, out TType, out Options, out Nullable, out Tag);
+#if (Token != null)
+#% bool Multiple = IsMultiple (Options);
+#if Multiple
+			if (#{Token} != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("#{Tag}", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in #{Token}) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+#% MakeSerializeArrayEntry (Entry, "_index");
+					}
+				_Writer.WriteArrayEnd ();
+				}
+#else
+#if Nullable
+			if (#{Token} != null) {
+#else
+			if (__#{Token}){
+#end if
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("#{Tag}", 1);
+#% MakeSerializeEntry (Entry, Token.ToString());
+				}
+#end if
+#if Multiple
+
+#end if
+#end if
+#end foreach
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+#if (!IsAbstract (Entries))
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new #{Id} From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new #{Id} From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new #{Id} (JSONReader);
+			}
+#end if
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "#{Id}" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new #{Id} FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "#{Id}" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new #{Id} FromTagged (string _Input) {
+			//#{Id} _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        public static new #{Id}  FromTagged (JSONReader JSONReader) {
+			#{Id} Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+#% MapInheritors (Id, STag);
+				default : {
+					//Ignore the unknown data
+                    //throw new Exception ("Not supported");
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader"></param>
+        /// <param name="Tag"></param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+#foreach (_Choice Entry in Entries)
+#% TOKEN<_Choice> Token = null;
+#% string Type = null; string TType = null;
+#% List<_Choice> Options = null;
+#% bool Nullable;
+#% string Tag;
+#% GetType(Entry, out Token, out Type, out TType, out Options, out Nullable, out Tag);
+#if (Token != null)
+#% bool Multiple = IsMultiple (Options);
+				case "#{Tag}" : {
+#if Multiple
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					#{Token} = new List <#{Type}> ();
+					while (_Going) {
+#if Entry._Tag () == ProtoStructType.Struct
+						// an untagged structure.
+						var _Item = new #{Type} (JSONReader);
+#elseif Entry._Tag () == ProtoStructType.TStruct
+						var _Item = #{Type}.FromTagged (JSONReader); // a tagged structure
+#else
+						#{Type} _Item = JSONReader.Read#{TType} ();
+#end if
+						#{Token}.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+#else
+#if Entry._Tag () == ProtoStructType.Struct
+					// An untagged structure
+					#{Token} = new #{Type} (JSONReader);
+ 
+#elseif Entry._Tag () == ProtoStructType.TStruct
+					#{Token} = #{Type}.FromTagged (JSONReader) ;  // A tagged structure
+#else
+					#{Token} = JSONReader.Read#{TType} ();
+#end if
+#end if
+					break;
+					}
+#end if
+#end foreach
+				default : {
+#if (Inherits != null)
+					base.DeserializeToken(JSONReader, Tag);
+#end if
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+#% }
+#end block
+
+#method2 MakeSerializeEntry _Choice Entry string Tag
+#switchcast ProtoStructType Entry
+#casecast Boolean Param
+					_Writer.WriteBoolean (#{Tag});
+#casecast Integer Param
+					_Writer.WriteInteger32 (#{Tag});
+#casecast Binary Param
+					_Writer.WriteBinary (#{Tag});
+#casecast Struct Param
+					#{Tag}.Serialize (_Writer, false);
+#casecast TStruct Param
+					// expand this to a tagged structure
+					//#{Tag}.Serialize (_Writer, false);
+					{
+						_Writer.WriteObjectStart();
+						_Writer.WriteToken(#{Tag}.Tag(), 1);
+						bool firstinner = true;
+						#{Tag}.Serialize (_Writer, true, ref firstinner);
+						_Writer.WriteObjectEnd();
+						}
+#casecast Label Param
+					_Writer.WriteString (#{Tag});
+#casecast Name Param
+					_Writer.WriteString (#{Tag});
+#casecast String Param
+					_Writer.WriteString (#{Tag});
+#casecast URI Param
+					_Writer.WriteString (#{Tag});
+#casecast DateTime Param
+					_Writer.WriteDateTime (#{Tag});
+#%							break; }
+#% default : {
+
+#end switchcast
+#end method2
+
+#method2 MakeSerializeArrayEntry _Choice Entry string Tag
+#switchcast ProtoStructType Entry
+#casecast Boolean Param
+					_Writer.WriteBoolean (#{Tag});
+#casecast Integer Param
+					_Writer.WriteInteger32 (#{Tag});
+#casecast Binary Param
+					_Writer.WriteBinary (#{Tag});
+#casecast Struct Param
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(#{Tag}.Tag(), 1);
+					bool firstinner = true;
+					#{Tag}.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+#casecast TStruct Param
+                    _Writer.WriteObjectStart();
+                    _Writer.WriteToken(#{Tag}.Tag(), 1);
+					bool firstinner = true;
+					#{Tag}.Serialize (_Writer, true, ref firstinner);
+                    _Writer.WriteObjectEnd();
+#casecast Label Param
+					_Writer.WriteString (#{Tag});
+#casecast Name Param
+					_Writer.WriteString (#{Tag});
+#casecast String Param
+					_Writer.WriteString (#{Tag});
+#casecast URI Param
+					_Writer.WriteString (#{Tag});
+#casecast DateTime Param
+					_Writer.WriteDateTime (#{Tag});
+#%							break; }
+#% default : {
+
+#end switchcast
+#end method2
+
+
+#block
+#% void GetType (_Choice Entry, out TOKEN<_Choice> Token, out string Type, out string TType, 
+#%				out List<_Choice> Options, out bool Nullable, out string Tag) {
+#% Nullable = true;
+#switchcast ProtoStructType Entry
+#casecast Boolean Param
+#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "bool";  Nullable = false;TType = "Boolean";
+#casecast Integer Param
+#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "int"; Nullable = false;TType = "Integer32";
+#casecast Binary Param
+#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "byte[]";TType = "Binary";
+#casecast Label Param
+#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "string";TType = "String";
+#casecast Name Param
+#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "string";TType = "String";
+#casecast String Param
+#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "string";TType = "String";
+#casecast URI Param
+#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "string";TType = "String";
+#casecast DateTime Param
+#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "DateTime"; Nullable = false; TType = "DateTime";
+#casecast Struct Param
+#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = Param.Type.ToString(); TType = Type;
+#casecast TStruct Param
+#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = Param.Type.ToString(); TType = Type;
+#% break; } default : {
+#% Tag = null ; Token = null; Options = null; Type = null; TType = null;
+#end switchcast
+#% }
+#end block
+
+#block
+#% void GetSerializerz (_Choice Entry, out TOKEN<_Choice> Token, out string Type,
+#%				out List<_Choice> Options) {
+#switchcast ProtoStructType Entry
+#casecast Boolean Param
+#% Token = Param.Id; Options = Param.Options; Type = "Boolean";
+#casecast Integer Param
+#% Token = Param.Id; Options = Param.Options; Type = "Integer32";
+#casecast Binary Param
+#% Token = Param.Id; Options = Param.Options; Type = "Binary";
+#casecast Label Param
+#% Token = Param.Id; Options = Param.Options; Type = "String";
+#casecast Name Param
+#% Token = Param.Id; Options = Param.Options; Type = "String";
+#casecast String Param
+#% Token = Param.Id; Options = Param.Options; Type = "String";
+#casecast URI Param
+#% Token = Param.Id; Options = Param.Options; Type = "String";
+#casecast DateTime Param
+#% Token = Param.Id; Options = Param.Options; Type = "DateTime";
+#casecast Struct Param
+#% Token = Param.Id; Options = Param.Options; Type = Param.Type.ToString();
+#casecast TStruct Param
+#% Token = Param.Id; Options = Param.Options; Type = Param.Type.ToString();
+#% break; } default : {
+#% Token = null; Options = null; Type = null;
+#end switchcast
+#% }
+#end block
+
+#block DeserializeCase
+#% void DeserializeCase (ID<_Choice> Id, string Tag) {
+
+				case "#{Id}" : {
+#if Id.Object.IsAbstract
+					Out = null;
+					throw new Exception ("Can't create abstract type");
+#else
+					var Result = new #{Id} ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+#end if
+					}
+
+#%	}
+#end block
+
+#block MapInheritors
+#% void MapInheritors (ID<_Choice> Id, string Tag) {
+				case "#{Id}" : {
+#if Id.Object.IsAbstract
+					Out = null;
+					throw new Exception ("Can't create abstract type");
+#else
+					var Result = new #{Id} ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+#end if
+					}
+
+#foreach (REF<_Choice> Ref in Id.REFs)
+#switchcast ProtoStructType Ref.Object
+#casecast Message Message
+#% MapInheritors (Message.Id, Message.ID);
+#casecast Structure Structure
+#% MapInheritors (Structure.Id, Structure.ID);
+#end switchcast
+#end foreach
+#%	}
+#end block
+
+
+#block DescriptionListC
+#% public void DescriptionListC  (List<_Choice> Entries, int indent) {
+#% Indentify (indent);
+#if (indent > 0) 
+/// <summary>
+#end if
+#% bool first = true;
+#foreach (_Choice Entry in Entries)
+#switchcast ProtoStructType Entry
+#casecast Description Description
+#if first
+#% first = false;
+#elseFstart
+#% Indentify (indent);
+///
+#end if
+#foreach (string s in Description.Text1)
+#for (int i=0; i<indent; i++)
+	#!
+#end for
+/// #{s}
+#end foreach
+#end switchcast
+#end foreach
+#% Indentify (indent);
+#if (indent > 0) 
+/// </summary>
+#end if
+#% }
+#end block
+#end xclass

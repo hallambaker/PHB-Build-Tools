@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <h1>
+        Implementing the server</h1>
+    <p>
+        At this stage the server accepts requests, does nothing and returns an empty 
+        response. To make the server actually userful we need to write methods that 
+        respond to an incomming ConfirmationRequest by adding the request message to a 
+        queue of pending requests.</p>
+    <h2>
+        Starting the Server</h2>
+    <p>
+        The following code starts the 
+        confirmation server:</p>
+    <pre>// Initialize the applicationEnquirer EnquirerServer = new Enquirer ();
+
+    // Code to initialize the Enquirer Service would go here
+
+// Initialize the Server bindinger bindingnfig);
+
+// Initialize the Server binding
+WebServiceWebServiceServer.RegisterService (Enquirer);
+
+// Start the serviceheWebServiceServer.Listener ();</pre>
+    <p>
+        A ProtoGen server has two parts:</p>
+    <ul>
+        <li>At least one application service (e.g. the Enquirer server)t one application sAt least one server binding (e.g. JSON over HTTP)</li>
+    </ul>
+    <p>
+        The first part of the code contains the application service specific 
+        initialization. The second creates the server binding.
+        Dividing the server in this way allows a mix and match approach to services and 
+        bindings.</p>
+    <p>
+        The Confirmation server will eventually need to support at least three different 
+        application services:</p>
+    <ul>
+        <li>The Enquirer service for initiating confirmation requests.quirer service for initiating confirmation requests.</li>
+        <li>The Decider service forThe OmniConnect service for managing the credentials the Deciders and Enquirers 
+            use to authenticate interactions with the service.</li>
+    </ul>
+    <p>
+        If the server was going to be used in a production environment we would probably 
+        want to add in a management interface as well so that the network administrator 
+        can monitor service performance and availability.</p>
+    <p>
+        Separating the application service from the binding allows us to build a single 
+        server that supports all four services as follows:</p>
+    <pre>// Create the application service
+EnquirerServer Enquirer = new EnquirerServer ();
+DeciderServer Decider = new DeciderServer ();
+OmniConnectServer OmniConnect = new OmniConnectServer ();
+
+OmniManageServer OmniManage = new OmniManageServer ();
+OmniManage.Add (Enquirer, Decider, OmniConnect);
+
+// Initialize the Server binding
+WebServiceServer WebServiceServer = new WebServiceServer ();
+WebServiceServer.RegisterService (Enquirer, Decider, OmniConnect, OmniManage);
+
+// Start the service
+WebServiceServer.Listener ();</pre>
+    <p>
+        A server can also support multiple server bindings. There might be circumstances 
+        in which we want a version of the Enquirer interface that used XML message 
+        encoding in place of JSON or a version of the Decider interface that uses a 
+        binary message encoding and the CoAP protocol in place of HTTP.</p>
+    <p>
+        By definition a server binding has no effect on the semantics of a Web Service 
+        but might have an impact on the performance or functions offered. The CoAP 
+        binding is designed for use in constrained environments and only supports 
+        messages that will fit into a single UDP datagram. Attempting to use the CoAP 
+        binding might cause a transaction to be aborted because the message is too long 
+        to fit but should not affect how the service processes the transaction 
+        otherwise.</p>
+    <h2>
+        Implementing Server Functions</h2>
+
+    <p>
+        At this point the server will run and reply to properly formatted requests with 
+        properly formatted but empty responses. To make the service useful it needs to 
+        do something in between the request and the response. To do this we implement a 
+        callback function for each transaction we implement that overrides the default 
+        &#39;do nothing&#39; callback.</p>
+    <p>
+        When implementing a callback function we have two sources of data available:</p>
+    <ul>
+        <li>The information from the transaction request data</li>
+        <li>The service context (e.g. Enquirer)</li>
+    </ul>
+    <p>
+        The transaction request data is local to the callback function but the server 
+        context is shared between all callbacks of the same service. The WeServiceServer 
+        binding accepts and processes multiple transactions concurrently. Transaction 
+        callback methods must use appropriate techniques to prevent conflicts.</p>
+    <p>
+        Which concurrency techniques are appropriate depend on the service being 
+        implemented and in some cases how it is deployed. Many databases offer 
+        concurrent transactions but rather fewer can support concurrent transations 
+        efficiently. It is often be more efficient to force transactions that cause 
+        database updates to perform processing sequentially than to let the databse work 
+        out conflicts and roll back transactions.</p>
+    <p>
+        Using powerful tools like the Linq persistence engine built into the .NET 
+        framework can make program development very fast and convenient. But sometimes 
+        that power comes at the cost of concealling implementation details that can kill 
+        performance if used without understanding what is taking place under the covers.</p>
+    <p>
+        When the Enquirer service recieves a confirmation request it:</p>
+    <ul>
+        <li>Checks to see if the request is authorized</li>
+        <li>If the request is authorized:
+            <ul>
+                <li>Assigns a transaction identifier</li>
+            <li>Queues the confirmation request for the intended recipient</li>
+            </ul>
+        </li>
+    </ul>
+    <p>
+        For For the sake of example, let us assume that we have implemented this function 
+        with the ConfirmationCatalog class and that the Add method adds a new 
+        confirmation request to be added and the Query method returns any associated 
+        responses from the Decider and that this class takes care of all the necessary 
+        signalling between process threads. The service implementation then becomes:</p>
+    <pre>public main () {
+    // Create the application service and attach a new instance of the catalog
+    EnquirerServer Enquirer = new EnquirerServer ();
+    Enquirer.ConfirmationCatalog = new ConfirmationCatalog ();
+
+    // Initialize the Server binding
+    WebServiceServer WebServiceServer = new WebServiceServer ();
+    WebServiceServer.RegisterService (Enquirer);
+
+    // Start the service
+    WebServiceServer.Listener ();
+    }
+
+public partial class EnquirerServer {
+    // Add a member to the Enquirer class to store the catalog
+    public ConfirmationCatalog ConfirmationCatalog;
+
+    // Implement the Confirmation transaction
+    public override Response Confirmation (RequestInfo RequestInfo,
+                  ConfirmationRequest ConfirmationRequest) {
+        TransactionID= MakeTransactionIdentifier ()
+        ConfirmationCatalog.Add (TransactionID, ConfirmationRequest);
+	ConfirmationResponse Response = new ConfirmationResponse ();
+	Response.TransactionID = TransactionID;
+
+        return Response;
+        }
+
+    // Implement the AskStatus transaction
+    public override Response AskStatus(RequestInfo RequestInfo,
+                  StatusRequest Request) {
+	StatusResponse Response = new StatusResponse();
+        Response.Option = ConfirmationCatalog.Query (Request.TransactionID);
+
+        return Response;
+        }
+    }</pre>
+    <p>
+        The RequestInfo object contains information from the server binding such as:</p>
+    <ul>
+        <li>The authentication mechanism(s) used to authenticate the request and the 
+            authenticated sender identity.</li>
+        <li>The date and time at which the request was received.</li>
+        <li>A buffer containing the binary request data.</li>
+    </ul>
+    <h2>
+        Packaging the Server for Production</h2>
+    <p>
+        At this point we have almost but not quite implemented a production quality 
+        service. Two important pieces are missing:</p>
+    <ul>
+        <li>A mechanism to start the service</li>
+        <li>A mechanism to configure service options</li>
+    </ul>
+    <p>
+        Protogen does not provide automated tools for either task but the Goedel toolset 
+        supports both. Commander is a tool that generates a command line interface for a 
+        program from an abstract description file. The Goedel schema tool generates a 
+        parser for a data structure specified in a schema.</p>
+    <p>
+        Both tools are described in their own documentation</p>
+
+</body>
+</html>
