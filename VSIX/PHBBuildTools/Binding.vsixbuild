@@ -1,0 +1,124 @@
+﻿Namespace Goedel.ASN.VSIX
+
+	ASN2CS Generator ".cs"
+		GUID "21DBBD9C-ACCB-4E74-90C0-E5D06AA47792"
+		Project CSharp
+		Project VisualBasic
+		Parser Goedel.ASN.ASN2
+		Script Goedel.ASN.Generate GenerateCS
+		Description
+			|Tool for generating ASN1 parser code without the hassle of Assinine.One
+			|Why trust a tool whose name is '1.NSA' backwards?
+
+	FSRCS Generator ".cs"
+		GUID "83A2D491-F2C5-407F-B1A6-1D4FC9B4C053"
+		Project CSharp
+		Project VisualBasic
+		Parser FSRGen.FSRStruct
+		Script FSRGen.Generate GenerateCS
+		Description
+			|Tool for generating code to implement a Finite State Recognizer from
+			|a set of state transitions. Mostly useful for implementing Lexical
+			|analysers.
+
+	RegistryCS Generator ".cs"
+		GUID "D8BAE8E4-14C0-4D17-B8F2-5DC8C8670894"
+		Project CSharp
+		Project VisualBasic
+		Parser RegistryConfig.ConfigItems
+		Script RegistryConfig.GenerateCS Generate
+		Description
+			|Tool for generating code to map a data structure to Windows registry
+			|keys.
+
+	VSIXBuild Generator ".cs"
+		GUID "B955047C-52BB-4E7F-8F5D-74A9E010591C"
+		Project CSharp
+		Project VisualBasic
+		Parser Goedel.VSIXBuild.VSIXBuild
+		Script Goedel.VSIXBuild.Generate GenerateCS
+		Description
+			|Tool for generating VSIX manifests for code generators built using
+			|Goedel and other tools
+
+	CommandCS Generator ".cs"
+		GUID "8D382331-6F20-4C3C-A83B-7EEA39FA03AB"
+		Project CSharp
+		Project VisualBasic
+		Parser CommandP.CommandParse
+		Script CommandP.GenerateCS Generate
+		Description
+			|Tool for generating Command Line tool parser from description file.
+
+
+	Exceptional Generator ".cs"
+		GUID "7F47F99D-A484-4628-8AE4-0D866F7F7C43"
+		Project CSharp
+		Project VisualBasic
+		Parser Exceptional.Exceptions
+		Script Exceptional.Generate GenerateCSX
+		Description
+			|Tool for generating Command Line tool parser from description file.
+
+	GScript Generator ".cs"
+		GUID "038C7FC8-029C-4511-8AEB-B7FC0741C463"
+		Project CSharp
+		Project VisualBasic
+		Process Goedel.Script.Script Process
+		Description
+			|Scripting tool, converts a file containing scripting commands to
+			|C# code that implements the commands.
+
+	ProtoGen Generator ".cs"
+		GUID "E5524E3B-6100-4D23-A047-81815BCFEE27"
+		Project CSharp
+		Project VisualBasic
+		Parser ProtoGen.ProtoStruct
+		Script ProtoGen.Generate GenerateCS
+		Description
+			|Protocol compiler. Generates code for implementing JSON/REST
+			|based Web Services in C# or C.
+
+	Goedel3 Generator ".cs"
+		GUID "446C3603-F595-41BF-8BF3-0FA7C6895F33"
+		Project CSharp
+		Project VisualBasic
+		Parser GoedelSchema.Goedel
+		Script GoedelSchema.GenerateParser GenerateCS
+		Description
+			|Scripting tool, converts a file containing scripting commands to
+			|C# code that implements the commands.
+
+
+
+	RFC2TXT Generator ".txt"
+		GUID "548687B2-6C67-4F1B-86AA-343F7FD0F429"
+		Project CSharp
+		Project VisualBasic
+		Process RFCTool.BindingRFC Process2TXT
+		Description
+			|Convert RFC source in Markdown, XML or HTML to Plaintext format.
+
+	RFC2XML Generator ".xml"
+		GUID "8DACB384-6ABA-40E9-83FB-3DD57A4BA597"
+		Project CSharp
+		Project VisualBasic
+		Process RFCTool.BindingRFC Process2XML
+		Description
+			|Convert RFC source in Markdown, XML or HTML to XML2RFC format.
+
+	RFC2MD Generator ".md"
+		GUID "F2CBE1D3-642A-4348-9CE4-844F11FCDA28"
+		Project CSharp
+		Project VisualBasic
+		Process RFCTool.BindingRFC Process2MD
+		Description
+			|Convert RFC source in Markdown, XML or HTML to MerkDown format.
+
+	RFC2HTML Generator ".html"
+		GUID "EF6FDFE2-6947-4A14-AD41-77C062FC0E67"
+		Project CSharp
+		Project VisualBasic
+		Process RFCTool.BindingRFC Process2HTML
+		Description
+			|Convert RFC source in Markdown, XML or HTML to HTML format.

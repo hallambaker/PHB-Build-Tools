@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>phbtools</id>
+    <version>1.4.5</version>
+    <title>PHB Build Tools</title>
+    <authors>Phillip Hallam-Baker</authors>
+    <owners>Phillip Hallam-Baker</owners>
+    <description>
+      A long description of the package. This shows up in the right pane of the Add Package Dialog as well as in the Package Manager Console when listing packages using the Get-Package command.
+    </description>
+    <releaseNotes>
+    </releaseNotes>
+    <summary>
+      A short description of the package. If specified, this shows up in the middle pane of the Add Package Dialog. If not specified, a truncated version of the description is used instead.
+    </summary>
+    <language>en-US</language>
+    <projectUrl>https://nuget.org/packages/PHBBuildToolsNuget</projectUrl>
+    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <copyright>Copyright 2016</copyright>
+    <dependencies>
+        <group targetFramework="net46">
+        </group>
+    </dependencies>
+    <references></references>
+    <tags></tags>
+  </metadata>
+  <files>
+    <file src="bin\" target="bin" />
+    <file src="lib\" target="lib" />
+    <file src="tools\" target="tools" />
+    <file src="templates\" target="templates" />    
+    <file src="content\" target="content" />
+    <file src="vsix\" target="vsix" />
+  </files>
+</package>
