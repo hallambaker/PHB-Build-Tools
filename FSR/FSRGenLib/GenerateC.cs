@@ -2,7 +2,7 @@
 // Script Syntax Version:  1.0
 // #license MITLicense 
 
-//  Copyright ©  2015 by 
+//  Copyright ©  2011 by Default Deny Security Inc.
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -33,23 +33,23 @@ namespace FSRGen {
 
 		// #%  public Generate (TextWriter Output) : base (Output) {} 
 		  public Generate (TextWriter Output) : base (Output) {}
-		// #method GenerateH FSRStruct FSRStruct 
+		// #method GenerateH FSRSchema FSRSchema 
 		
 
 		//
 		// GenerateH
 		//
-		public void GenerateH (FSRStruct FSRStruct) {
-			// #% FSRStruct.Complete (); 
-			 FSRStruct.Complete ();
+		public void GenerateH (FSRSchema FSRSchema) {
+			// #% FSRSchema.Complete (); 
+			 FSRSchema.Complete ();
 			//  
 			_Output.Write ("\n{0}", _Indent);
-			// #foreach (_Choice Item in FSRStruct.Top) 
-			foreach  (_Choice Item in FSRStruct.Top) {
-				// #switchcast FSRStructType Item 
+			// #foreach (_Choice Item in FSRSchema.Top) 
+			foreach  (_Choice Item in FSRSchema.Top) {
+				// #switchcast FSRSchemaType Item 
 				switch (Item._Tag ()) {
 					// #casecast FSR FSR 
-					case FSRStructType.FSR: {
+					case FSRSchemaType.FSR: {
 					  FSR FSR = (FSR) Item; 
 					//  
 					_Output.Write ("\n{0}", _Indent);

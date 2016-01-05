@@ -133,6 +133,11 @@ namespace HTML2RFC {
             int Index;
             int LastConsumed = 0;
 
+            if (Source == null) {
+                Source = "";
+                }
+
+
             for (Index = 0; (Index < Source.Length) & Scan; Index++) {
                 char c = Source[Index];
                 if (State == 0) {

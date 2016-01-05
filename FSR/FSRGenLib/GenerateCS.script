@@ -1,16 +1,16 @@
 ﻿#script 1.0
 #license MITLicense
 #xclass FSRGen Generate
-#method GenerateCS FSRStruct FSRStruct
-#% FSRStruct.Complete ();
+#method GenerateCS FSRSchema FSRSchema
+#% FSRSchema.Complete ();
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-#foreach (_Choice Item in FSRStruct.Top)
-#switchcast FSRStructType Item
+#foreach (_Choice Item in FSRSchema.Top)
+#switchcast FSRSchemaType Item
 #casecast FSR FSR
 #% bool first = true;
 

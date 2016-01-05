@@ -89,7 +89,6 @@
       <Generator>CommandCS</Generator>
       <LastGenOutput>Shell.cs</LastGenOutput>
     </None>
-    <None Include="Prebuild.bat" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
@@ -121,10 +120,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>powershell PackAll  Goedel $(TargetPath)  LibRegistryConfig.dll</PostBuildEvent>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll  LibRegistryConfig.dll</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>call "$(ProjectDir)\PreBuild.bat"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

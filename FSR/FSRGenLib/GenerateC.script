@@ -2,11 +2,11 @@
 #license MITLicense
 #xclass FSRGen Generate
 #%  public Generate (TextWriter Output) : base (Output) {}
-#method GenerateH FSRStruct FSRStruct
-#% FSRStruct.Complete ();
+#method GenerateH FSRSchema FSRSchema
+#% FSRSchema.Complete ();
 
-#foreach (_Choice Item in FSRStruct.Top)
-#switchcast FSRStructType Item
+#foreach (_Choice Item in FSRSchema.Top)
+#switchcast FSRSchemaType Item
 #casecast FSR FSR
 
 #foreach (State State in FSR.States)

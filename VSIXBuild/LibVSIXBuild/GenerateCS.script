@@ -133,7 +133,7 @@ namespace #{Cast.Name} {
         ##region IVsSingleFileGenerator
 
         public int DefaultExtension(out string pbstrDefaultExtension) {
-            pbstrDefaultExtension = "." + CodeProvider.FileExtension;
+            pbstrDefaultExtension = "#{Generator.Extension}";
             return VSConstants.S_OK;
             }
 

@@ -14,7 +14,7 @@ using Goedel.Registry;
 
 //
 // Namespace FSRGen
-// Class FSRStruct
+// Class FSRSchema
 //
 
 
@@ -38,7 +38,7 @@ using Goedel.Registry;
 //   NamespaceType
 //       FSRGen
 //   ClassType
-//       FSRStruct
+//       FSRSchema
 //   NameType
 //       Id
 //       Prefix
@@ -57,7 +57,7 @@ using Goedel.Registry;
 namespace FSRGen {
 
 
-    public enum FSRStructType {
+    public enum FSRSchemaType {
         _Top,
 
         FSR,
@@ -76,7 +76,7 @@ namespace FSRGen {
     
 
     public abstract partial class _Choice {
-        abstract public FSRStructType _Tag ();
+        abstract public FSRSchemaType _Tag ();
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
         }
@@ -88,8 +88,8 @@ namespace FSRGen {
         public ID<_Choice>				Prefix; 
         public List <_Choice>           Entries = new List<_Choice> ();
 
-        public override FSRStructType _Tag () {
-            return FSRStructType.FSR;
+        public override FSRSchemaType _Tag () {
+            return FSRSchemaType.FSR;
             }
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -116,8 +116,8 @@ namespace FSRGen {
 		public string					First;
 		public string					Last;
 
-        public override FSRStructType _Tag () {
-            return FSRStructType.Charset;
+        public override FSRSchemaType _Tag () {
+            return FSRSchemaType.Charset;
             }
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -141,8 +141,8 @@ namespace FSRGen {
         public TOKEN<_Choice>			Token;
         public List <Entry>           Entries = new List<Entry> ();
 
-        public override FSRStructType _Tag () {
-            return FSRStructType.State;
+        public override FSRSchemaType _Tag () {
+            return FSRSchemaType.State;
             }
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -169,8 +169,8 @@ namespace FSRGen {
         public _Choice					Is;
         public _Choice					Action;
 
-        public override FSRStructType _Tag () {
-            return FSRStructType.Entry;
+        public override FSRSchemaType _Tag () {
+            return FSRSchemaType.Entry;
             }
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -190,8 +190,8 @@ namespace FSRGen {
     public partial class On : _Choice {
 		public string					Match;
 
-        public override FSRStructType _Tag () {
-            return FSRStructType.On;
+        public override FSRSchemaType _Tag () {
+            return FSRSchemaType.On;
             }
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -209,8 +209,8 @@ namespace FSRGen {
 
     public partial class Any : _Choice {
 
-        public override FSRStructType _Tag () {
-            return FSRStructType.Any;
+        public override FSRSchemaType _Tag () {
+            return FSRSchemaType.Any;
             }
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -228,8 +228,8 @@ namespace FSRGen {
     public partial class Return : _Choice {
         public TOKEN<_Choice>			Emit;
 
-        public override FSRStructType _Tag () {
-            return FSRStructType.Return;
+        public override FSRSchemaType _Tag () {
+            return FSRSchemaType.Return;
             }
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -248,8 +248,8 @@ namespace FSRGen {
     public partial class GoTo : _Choice {
         public REF<_Choice>				Next;
 
-        public override FSRStructType _Tag () {
-            return FSRStructType.GoTo;
+        public override FSRSchemaType _Tag () {
+            return FSRSchemaType.GoTo;
             }
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -268,8 +268,8 @@ namespace FSRGen {
     public partial class Token : _Choice {
         public ID<_Choice>				Id; 
 
-        public override FSRStructType _Tag () {
-            return FSRStructType.Token;
+        public override FSRSchemaType _Tag () {
+            return FSRSchemaType.Token;
             }
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -294,8 +294,8 @@ namespace FSRGen {
             Label = null;
             }
 
-        public override FSRStructType _Tag () {
-            return FSRStructType._Label;
+        public override FSRSchemaType _Tag () {
+            return FSRSchemaType._Label;
             }
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -344,7 +344,7 @@ namespace FSRGen {
         public FSRGen._Choice     Token;
         }
 
-    public partial class FSRStruct : Goedel.Registry.Parser{
+    public partial class FSRSchema : Goedel.Registry.Parser{
         public List <FSRGen._Choice>        Top;
         public Registry	<FSRGen._Choice>	Registry;
 
@@ -364,8 +364,8 @@ namespace FSRGen {
         string									CurrentText;
 
 
-        public static FSRStruct Parse(string File, Goedel.Registry.Dispatch Options) {
-            var Result = new FSRStruct();
+        public static FSRSchema Parse(string File, Goedel.Registry.Dispatch Options) {
+            var Result = new FSRSchema();
             Result.Options = Options;
 
             using (Stream infile =
@@ -378,7 +378,7 @@ namespace FSRGen {
             }
 
 
-        public FSRStruct() {
+        public FSRSchema() {
             Top = new List<FSRGen._Choice> () ;
             Registry = new Registry <FSRGen._Choice> ();
             State = StateCode._Start;
@@ -496,21 +496,21 @@ namespace FSRGen {
             }
 
 
-        static FSRGen.FSRStructType _Reserved(string Label) {
+        static FSRGen.FSRSchemaType _Reserved(string Label) {
             switch (Label) {
 
-                case "FSR": return FSRGen.FSRStructType.FSR;
-                case "Charset": return FSRGen.FSRStructType.Charset;
-                case "State": return FSRGen.FSRStructType.State;
-                case "Entry": return FSRGen.FSRStructType.Entry;
-                case "On": return FSRGen.FSRStructType.On;
-                case "Any": return FSRGen.FSRStructType.Any;
-                case "Return": return FSRGen.FSRStructType.Return;
-                case "GoTo": return FSRGen.FSRStructType.GoTo;
-                case "Token": return FSRGen.FSRStructType.Token;
+                case "FSR": return FSRGen.FSRSchemaType.FSR;
+                case "Charset": return FSRGen.FSRSchemaType.Charset;
+                case "State": return FSRGen.FSRSchemaType.State;
+                case "Entry": return FSRGen.FSRSchemaType.Entry;
+                case "On": return FSRGen.FSRSchemaType.On;
+                case "Any": return FSRGen.FSRSchemaType.Any;
+                case "Return": return FSRGen.FSRSchemaType.Return;
+                case "GoTo": return FSRGen.FSRSchemaType.GoTo;
+                case "Token": return FSRGen.FSRSchemaType.Token;
 
                 }
-            return FSRGen.FSRStructType._Bottom;
+            return FSRGen.FSRSchemaType._Bottom;
             }
 
 
@@ -583,9 +583,9 @@ namespace FSRGen {
 
                     case StateCode._Choice:                //      LABEL Class | END
                         if (Token == TokenType.LABEL) {
-                            FSRGen.FSRStructType LabelType = _Reserved (Text);
+                            FSRGen.FSRSchemaType LabelType = _Reserved (Text);
                             if (false |
-									(LabelType == FSRGen.FSRStructType.FSR)) {
+									(LabelType == FSRGen.FSRSchemaType.FSR)) {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
@@ -640,11 +640,11 @@ namespace FSRGen {
 
                         else if (Token == TokenType.LABEL) {
 							FSRGen.FSR Current_Cast = (FSRGen.FSR)Current;
-                            FSRGen.FSRStructType LabelType = _Reserved (Text);
+                            FSRGen.FSRSchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == FSRGen.FSRStructType.Charset) |
-									(LabelType == FSRGen.FSRStructType.State) |
-									(LabelType == FSRGen.FSRStructType.Token) ) {
+									(LabelType == FSRGen.FSRSchemaType.Charset) |
+									(LabelType == FSRGen.FSRSchemaType.State) |
+									(LabelType == FSRGen.FSRSchemaType.Token) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
@@ -744,10 +744,10 @@ namespace FSRGen {
                     case StateCode.Entry_Start:
                         if (Token == TokenType.LABEL) {
 							FSRGen.Entry Current_Cast = (FSRGen.Entry)Current;
-                            FSRGen.FSRStructType LabelType = _Reserved (Text);
+                            FSRGen.FSRSchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == FSRGen.FSRStructType.On) |
-									(LabelType == FSRGen.FSRStructType.Any) ) {
+									(LabelType == FSRGen.FSRSchemaType.On) |
+									(LabelType == FSRGen.FSRSchemaType.Any) ) {
                                 State = StateCode.Entry__Is;
                                 Current_Cast.Is = New_Choice(Text);
                                 }
@@ -772,10 +772,10 @@ namespace FSRGen {
                     case StateCode.Entry__Is:
                         if (Token == TokenType.LABEL) {
 							FSRGen.Entry Current_Cast = (FSRGen.Entry)Current;
-                            FSRGen.FSRStructType LabelType = _Reserved (Text);
+                            FSRGen.FSRSchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == FSRGen.FSRStructType.Return) |
-									(LabelType == FSRGen.FSRStructType.GoTo) ) {
+									(LabelType == FSRGen.FSRSchemaType.Return) |
+									(LabelType == FSRGen.FSRSchemaType.GoTo) ) {
                                 State = StateCode.Entry__Action;
                                 Current_Cast.Action = New_Choice(Text);
                                 }

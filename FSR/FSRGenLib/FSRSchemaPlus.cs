@@ -7,7 +7,7 @@ using Goedel.Registry;
 namespace FSRGen {
 
 
-    public partial class FSRStruct {
+    public partial class FSRSchema {
         public bool Completed = false;
 
         public virtual void Complete() {
@@ -24,7 +24,7 @@ namespace FSRGen {
     
     public abstract partial class _Choice {
         public bool Completed = false;
-        public FSRStruct Parent = null;
+        public FSRSchema Parent = null;
 
         public virtual void Complete () {
             if (Completed) return; Completed = true;
@@ -79,7 +79,7 @@ namespace FSRGen {
         private void SetState(State State, char c, _Choice Action) {
             int Index = (int) c;
 
-            if (Action._Tag() == FSRStructType.GoTo) {
+            if (Action._Tag() == FSRSchemaType.GoTo) {
                 var GoTo = (GoTo)Action;
                 var Next = (State)GoTo.Next.Definition;
                 //Console.WriteLine ("Fill {0}, {1}", Index, Next.Index);
@@ -137,7 +137,7 @@ namespace FSRGen {
             foreach (var Choice in Entries) {
                 Choice.Complete();
 
-                if (Choice._Tag() == FSRStructType.State) {
+                if (Choice._Tag() == FSRSchemaType.State) {
                     State State = (State)Choice;
                     State.Index = States.Count;
                     States.Add(State);
@@ -177,19 +177,19 @@ namespace FSRGen {
                 //        State.Id.Label, State.Action.Label, State.Token.Label);
 
                 foreach (var Entry in State.Entries) {
-                    if (Entry.Is._Tag() == FSRStructType.On) {
+                    if (Entry.Is._Tag() == FSRSchemaType.On) {
                         var On = (On) Entry.Is;         // is a character in a set
                         foreach (char c in On.Match) {
                             SetState (State, c, Entry.Action);
                             }
                         }
-                    else if (Entry.Is._Tag() == FSRStructType.Any) {
+                    else if (Entry.Is._Tag() == FSRSchemaType.Any) {
                         var Any = (Any) Entry.Is;        // is any character
                         for (int i = 0; i < MaxChar; i++) {
                             SetState (State, (char) i, Entry.Action);
                             }
                         }
-                    else if (Entry.Is._Tag() == FSRStructType._Label) {
+                    else if (Entry.Is._Tag() == FSRSchemaType._Label) {
                         var Label = (_Label) Entry.Is;  // is a reference to a charset
                         var Charset = (Charset) Label.Label.Definition;
                         

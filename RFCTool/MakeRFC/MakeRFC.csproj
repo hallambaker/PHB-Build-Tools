@@ -65,7 +65,6 @@
     </None>
     <None Include="packages.config" />
     <None Include="PostBuild.bat" />
-    <None Include="PreBuild.bat" />
     <None Include="Requirements.md" />
     <None Include="TagDefinitions.mdsd" />
     <None Include="Test.md" />
@@ -103,11 +102,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>call "$(ProjectDir)\Prebuild.bat"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>powershell PackAll  Private $(TargetPath) $(ProjectDir)\Main.cs Goedel.Registry.dll LibBootMaker.dll LibBridge.dll LibOpenXML.dll LibRFCTool.dll DocumentFormat.OpenXml.dll
-call "$(ProjectDir)\Postbuild.bat"</PostBuildEvent>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll LibBootMaker.dll LibBridge.dll LibOpenXML.dll LibRFCTool.dll DocumentFormat.OpenXml.dll
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

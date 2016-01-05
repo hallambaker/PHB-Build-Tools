@@ -311,8 +311,8 @@ namespace Goedel.VSIXBuild {
 			_Output.Write ("\n{0}", _Indent);
 			//         public int DefaultExtension(out string pbstrDefaultExtension) { 
 			_Output.Write ("        public int DefaultExtension(out string pbstrDefaultExtension) {{\n{0}", _Indent);
-			//             pbstrDefaultExtension = "." + CodeProvider.FileExtension; 
-			_Output.Write ("            pbstrDefaultExtension = \".\" + CodeProvider.FileExtension;\n{0}", _Indent);
+			//             pbstrDefaultExtension = "#{Generator.Extension}"; 
+			_Output.Write ("            pbstrDefaultExtension = \"{1}\";\n{0}", _Indent, Generator.Extension);
 			//             return VSConstants.S_OK; 
 			_Output.Write ("            return VSConstants.S_OK;\n{0}", _Indent);
 			//             } 

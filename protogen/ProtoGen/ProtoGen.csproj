@@ -85,7 +85,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Prebuild.bat" />
     <None Include="Commands.command">
       <Generator>CommandCS</Generator>
       <LastGenOutput>Commands.cs</LastGenOutput>
@@ -115,10 +114,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>powershell PackAll  Private $(TargetPath) $(ProjectDir)\Commands.cs Goedel.Registry.dll ProtoGenLibrary.dll</PostBuildEvent>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll ProtoGenLibrary.dll</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>call "$(ProjectDir)\Prebuild.bat"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

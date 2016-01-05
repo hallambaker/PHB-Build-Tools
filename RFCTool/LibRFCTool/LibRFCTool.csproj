@@ -63,8 +63,6 @@
     <Compile Include="Xml2RFCOut.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="PostBuild.bat" />
-    <None Include="PreBuild.bat" />
     <None Include="rfc2629.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -72,10 +70,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>call "$(ProjectDir)\Prebuild.bat"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>MoveToLibrary "$(TargetPath)"</PostBuildEvent>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

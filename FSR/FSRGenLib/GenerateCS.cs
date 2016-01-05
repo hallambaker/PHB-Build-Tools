@@ -31,15 +31,15 @@ using Goedel.Registry;
 namespace FSRGen {
 	public partial class Generate : global::Goedel.Registry.Script {
 
-		// #method GenerateCS FSRStruct FSRStruct 
+		// #method GenerateCS FSRSchema FSRSchema 
 		
 
 		//
 		// GenerateCS
 		//
-		public void GenerateCS (FSRStruct FSRStruct) {
-			// #% FSRStruct.Complete (); 
-			 FSRStruct.Complete ();
+		public void GenerateCS (FSRSchema FSRSchema) {
+			// #% FSRSchema.Complete (); 
+			 FSRSchema.Complete ();
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// using System; 
@@ -52,12 +52,12 @@ namespace FSRGen {
 			_Output.Write ("using System.Text;\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
-			// #foreach (_Choice Item in FSRStruct.Top) 
-			foreach  (_Choice Item in FSRStruct.Top) {
-				// #switchcast FSRStructType Item 
+			// #foreach (_Choice Item in FSRSchema.Top) 
+			foreach  (_Choice Item in FSRSchema.Top) {
+				// #switchcast FSRSchemaType Item 
 				switch (Item._Tag ()) {
 					// #casecast FSR FSR 
-					case FSRStructType.FSR: {
+					case FSRSchemaType.FSR: {
 					  FSR FSR = (FSR) Item; 
 					// #% bool first = true; 
 					

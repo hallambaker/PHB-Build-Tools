@@ -282,7 +282,7 @@ namespace FSRGenShell {
 
 			inputfile = Options.FSRStruct.Text;
 
-            FSRGen.FSRStruct Parse = new FSRGen.FSRStruct();
+            FSRGen.FSRSchema Parse = new FSRGen.FSRSchema();
 
 
 			Parse.Options = Options;

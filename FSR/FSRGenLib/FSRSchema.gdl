@@ -1,4 +1,4 @@
-﻿Class FSRGen FSRStruct
+﻿Class FSRGen FSRSchema
     TopType FSR
         Id		ID	Top
         Prefix	ID  PrefixT
