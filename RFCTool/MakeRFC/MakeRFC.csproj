@@ -37,9 +37,6 @@
       <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Goedel.Registry">
-      <HintPath>..\..\..\..\Code\Tools\Library\Goedel.Registry.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
@@ -72,6 +69,10 @@
     <None Include="WTest.md" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Goedel.Registry\Goedel.Registry.csproj">
+      <Project>{f2a1f8ea-18e2-4f3a-aeaf-3983cea19fe0}</Project>
+      <Name>Goedel.Registry</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LibBootMaker\LibBootMaker.csproj">
       <Project>{ba3e686d-8404-46b3-b06d-048e6367e4eb}</Project>
       <Name>LibBootMaker</Name>

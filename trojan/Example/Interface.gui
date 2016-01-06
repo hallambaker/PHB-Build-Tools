@@ -1,0 +1,216 @@
+﻿
+
+GUI PersonalPrivacyAssistant 
+
+	Wizard AddAccount "Add Account"
+
+
+		Dialog AddAccountStart
+			Heading
+				|Lets get started!
+			Text
+				|First, lets set up your Personal Privacy Environment.
+			Horizontal
+				Action NewAccount "New" NormalorAdvanced
+					Text
+						|Choose this if you have not created a 
+						|Personal Privacy Environment or want to create a new one.
+				Action ConnectAccount "Connect" TBS
+					Text
+						|Choose this if you have already created a Privacy Environment
+						|and it is active on a machine you can connect to.
+				Action  RecoverAccount "Recover" TBS
+					Text
+						|Choose this if you have already created a Privacy Environment
+						|and need to recover it.
+
+		Dialog NormalorAdvanced
+			Heading
+				|Normal or Advanced mode
+			Text
+				|What sort of profile do you want to create?
+			Horizontal
+				Action Normal "Normal" SelectNormal
+					Text
+						|Creates a public profile with security settings recommended 
+                        |for typical personal use.
+				Action Advanced "Advanced" SelectConfiguration
+					Text
+                        |Allows anonymous and private profiles to be created. Use of
+                        |such profiles reduces or eliminates the need to trust third parties
+                        |but require users to understand the consequences of their choices.
+
+		Dialog SelectNormal
+			Heading
+				|Create Public Profile
+			Text
+				|A public profile specifies the name of the person it was created for.
+				|This may be a real name or a pseudonym.
+			Text
+				|You can also specify the name of an email address you wish to secure
+				|with the profile.
+			Vertical
+				Input RealName "Name" 
+				Input AccountName "Email" 
+				Action Next "Next" SelectServices
+
+
+
+		Dialog SelectConfiguration
+			Operations
+				SelectConfiguration SelectServices GenerateMaster
+
+			Heading
+				|Select Configuration
+			Text
+				|Do you want your privacy environment to managed or independent?
+			Horizontal
+				Action Managed "Managed" SelectServices
+					Text
+						|(Recommended)
+					Text
+						|A managed privacy environment is visible to other Internet users. 
+						|This makes it easier to use.
+					
+				Action Independent "Independent" GenerateKeys
+					Text
+						|(Expert)
+					Text
+						|An indpendent privacy environment gives you full control and the 
+						|opportunity to make your own mistakes.
+
+		Dialog SelectServices
+			Heading
+				|Select Key Management Service
+			Text
+				|Choose the service provider to manage your keys. 
+			Vertical
+				Action PrismProof "PrismProof.org" GenerateKeys
+					Text
+						|A free key management service provider offering no-frills service.
+				Action Comodo "Comodo.com" GenerateKeys
+					Text
+						|A full service key management service provider
+						|offering free and for fee Certification Authority services.
+				Action Other "Other" GenerateKeys
+					Text
+						| Select your own key service provider
+					Input  KeyServiceDNS "Service Provider" 
+						Validate CheckDNS
+
+
+
+
+		Dialog GenerateKeys
+			Heading
+				|Generate Master Keys
+			Text
+				|Generating the keys for your Personal Privacy 
+				|Environment (this may take a while).
+
+			Vertical
+				Task GenerateMasterRoot
+					Text
+						|Generating personal master root key
+				Task GenerateIntermediate
+					Text
+						|Generating online intermediate key
+				Task GenerateEscrow
+					Text
+						|Generating personal escrow key
+				Next Escrow
+
+		Dialog Escrow
+			Heading
+				|Backup encrypted keys
+			Text
+				|Backing up your private key allows you to recover it if your machine should stop working.
+			Text
+				|Keys are encrypted using a secret key which you must keep 
+				|secure in case it is needed.
+			Horizontal
+				Action CloudBackup "Cloud" BackingUp
+					Text
+						|(Recommended)
+					Text
+						|Back up encrypted private key to your cloud provider.
+				Action FileBackup "File" BackingUp
+					Text
+						|(Expert)
+					Text
+						|Backup encrypted private key in a local file.
+					Input PrivateKeyFile "Save encrypted private key as:"
+						File 
+				Action Skip "Skip" EnableApplications
+
+		Dialog BackingUp
+			Heading
+				|Saving Private Keys
+			Text
+				|These are your key recovery codes. Keep both in a safe place!
+				|If you lose your private key, use of both recovery codes is the
+				|only way to recover your keys.
+			Vertical
+				Task EscrowKeys
+
+				Output EscrowEncryption1 "Escrow Code #1" 
+				Output EscrowEncryption2 "Escrow Code #2" 
+									
+				Action BackupNext "Next" EnableApplications
+
+		Dialog EnableApplications
+			Heading
+				|Enable applications and accounts
+			Text
+				|[TBS]
+
+
+		Dialog Publish
+			Heading
+				|Publish Keys
+			Vertical
+				Task PublishKeys
+					Text
+						|Publishing key data to the cloud
+				Next Finish
+
+		Dialog Finish
+			Heading
+				|Finished
+			Action NextClose "Next" Finish
+				Close
+
+		Dialog ConnectKey
+			Heading
+				|Request connection to existing account
+			Text
+				|If you have already established a Personal privacy Environment, you
+				|can connect to it.
+			Vertical
+				Input AccountID "Account Id" 
+				Action Connect "Connect" ConnectWait
+
+		Dialog ConnectWait
+			Heading
+				|Waiting for connection request confirmation
+			Text
+				|Confirm connection request on your nominated connection device
+			Vertical
+				Output AccountID "Account Id" 
+				Output ConfirmCode "Confirm Code" 
+
+		Dialog RecoverKey
+			Heading
+				|Request connection to existing account
+			Text
+				|If you have already established a Personal privacy Environment, you
+				|can connect to it.
+			Vertical
+				Input AccountID "Account Id" 
+				Input RecoveryShare1 "First Recovery Share" 
+				Input RecoveryShare2 "Second Recovery Share" 
+				Action Recover "Recover" EnableApplications
+
+		Dialog TBS
+			Heading
+				|Not Yet Implemented!

@@ -42,9 +42,6 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Registry">
-      <HintPath>..\..\..\Tools\Library\Goedel.Registry.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
@@ -64,6 +61,10 @@
     <None Include="JSON.fsr" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Goedel.Registry\Goedel.Registry.csproj">
+      <Project>{f2a1f8ea-18e2-4f3a-aeaf-3983cea19fe0}</Project>
+      <Name>Goedel.Registry</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FSRGenLib\libFSRGen.csproj">
       <Project>{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}</Project>
       <Name>libFSRGen</Name>
@@ -75,7 +76,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll libFSRGen</PostBuildEvent>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll libFSRGen.dll</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

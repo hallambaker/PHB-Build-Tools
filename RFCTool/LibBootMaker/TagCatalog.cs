@@ -198,9 +198,9 @@ namespace Goedel.MarkLib {
         //public CatalogEntry DefaultDefinedTerm;
         //public CatalogEntry DefaultDefinedData;
 
-        public TagCatalog(string SchemaFile) {
+        //public TagCatalog(string SchemaFile) {
 
-            }
+        //    }
 
 
         public TagCatalog(MarkSchema Schema) {

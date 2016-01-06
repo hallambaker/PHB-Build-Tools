@@ -65,11 +65,15 @@
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Goedel.Registry, Version=1.0.5582.26697, Culture=neutral, PublicKeyToken=d2b0f210455cec67, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Code\Tools\Library\Goedel.Registry.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -113,6 +117,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Goedel.Registry\Goedel.Registry.csproj">
+      <Project>{f2a1f8ea-18e2-4f3a-aeaf-3983cea19fe0}</Project>
+      <Name>Goedel.Registry</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Generator\LibRegistryConfig.csproj">
       <Project>{fad27739-eff1-4d5e-bc80-bc43a62707c1}</Project>
       <Name>LibRegistryConfig</Name>

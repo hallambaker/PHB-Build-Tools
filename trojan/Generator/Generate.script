@@ -1,0 +1,474 @@
+﻿#script 1.0
+#license MITLicense
+#using System.Linq
+#pclass Goedel.Trojan GenerateWpf
+#!
+#% DateTime GenerateTime = DateTime.UtcNow;
+
+#method Generate GUISchema GUISchema
+
+The files in this directory have been generated automatically using
+the TROJAN GUI builder.
+
+#end method
+
+
+#method GenerateXAML Dialog Dialog
+#% var Wizard = Dialog.Wizard;
+#% var GUI = Dialog.GUI;
+<Page x:Class="#{GUI.Namespace}.Dialog_#{Dialog.Id}"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+	Title="Dialog_#{Dialog.Id}">
+    <DockPanel>
+        <TextBlock TextWrapping="WrapWithOverflow" FontSize="32" 
+            xml:space="preserve" Margin="25,25,25,0" DockPanel.Dock="Top">#!
+#foreach (var Heading in Dialog.Entries.OfType<Heading>())
+#foreach (var TextString in Heading.Data)
+#{TextString}
+#end foreach
+#end foreach
+</TextBlock>
+        <TextBlock TextWrapping="WrapWithOverflow" FontSize="20" 
+            xml:space="preserve" Margin="25,0,25,25" DockPanel.Dock="Top">#!
+#foreach (var Text in Dialog.Entries.OfType<Text>())
+#foreach (var TextString in Text.Data)
+#{TextString}
+#end foreach
+
+#end foreach
+</TextBlock>
+        <StackPanel>
+#foreach (var Entry in Dialog.Entries)
+#switchcast GUISchemaType Entry
+#casecast Input Input
+            <StackPanel Orientation="Horizontal">
+				<Label FontSize="20"
+					   VerticalAlignment="Top">#{Input.Label}</Label>
+				<TextBox FontSize="20" Name="Input_#{Input.Id}"
+						 VerticalAlignment="Top" TextChanged="Changed_#{Input.XID}" Width="400" 
+						 ></TextBox>
+			</StackPanel>
+#casecast Output Output
+            <StackPanel Orientation="Horizontal">
+				<Label FontSize="20"
+					   VerticalAlignment="Top">#{Output.Label}</Label>
+				<TextBlock FontSize="20" Name="Output_#{Output.Id}"
+						 VerticalAlignment="Top"></TextBlock>
+			</StackPanel>
+#end switchcast
+#end foreach
+
+#foreach (var Horizontal in Dialog.Entries.OfType<Horizontal>())
+#% int Column = 0;
+        <Grid Margin="20,20,20,20">
+            <Grid.ColumnDefinitions>
+#foreach (var Action in Horizontal.Entries.OfType<Action>())
+#if (Column++ > 0)
+                <ColumnDefinition Width="5"/>
+#end if
+                <ColumnDefinition/>
+#end foreach
+            </Grid.ColumnDefinitions>
+#% Column = 0;
+#foreach (var Action in Horizontal.Entries.OfType<Action>())
+			<StackPanel Grid.Column="#{Column}">
+                <Button  FontSize="20" Width="150" Height="30" 
+                         Click="Action_#{Action.Id}">#{Action.Label}</Button>
+#foreach (var Text in Action.Entries.OfType<Text>())
+                <TextBlock TextWrapping="Wrap" FontSize="16"   TextAlignment="Center"
+						VerticalAlignment="Center"  Margin="20,20,20,20">#!
+#foreach (var TextString in Text.Data)
+#{TextString}
+#end foreach
+</TextBlock>
+#end foreach
+            </StackPanel>
+#% Column += 2;
+#end foreach 
+		</Grid>
+#end foreach
+#foreach (var Vertical in Dialog.Entries.OfType<Vertical>())
+#% int Row = 0;
+        <Grid>
+            <Grid.RowDefinitions>
+#foreach (var Entry in Vertical.Entries)
+#switchcast GUISchemaType Entry
+#casecast Action Action
+                <RowDefinition />
+#casecast Task Task
+                <RowDefinition />
+#casecast Input Input
+                <RowDefinition />
+#casecast Output Output
+                <RowDefinition />
+#end switchcast
+#end foreach
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+#foreach (var Entry in Vertical.Entries)
+#switchcast GUISchemaType Entry
+#casecast Action Action
+            <Button   Grid.Row="#{Row}"  Grid.Column="0" Grid.ColumnSpan="2" 
+                      VerticalAlignment="Center" FontSize="20" Width="150" Height="30" 
+                  Click="#{Action.XID}" >#{Action.Label}</Button>
+#% Row ++;
+#casecast Next Next
+#casecast Task Task
+#foreach (var Text in Task.Entries.OfType<Text>())
+            <TextBlock  Grid.Row="#{Row}" Grid.Column="0" TextWrapping="Wrap" FontSize="20"  
+                VerticalAlignment="Center" Margin="20,20,20,20">
+#foreach (var Line in Text.Data)
+				#{Line}
+#end foreach
+				</TextBlock>
+#end foreach
+            <ProgressBar Grid.Row="#{Row}" Grid.Column="1" Height="30" Width="180"
+            VerticalAlignment="Center" HorizontalAlignment="Center" Name="Task_#{Task.Target}"/>
+#% Row ++;
+#casecast Input Input
+            <Label Grid.Row="#{Row}" Grid.Column="0" FontSize="20"
+                   VerticalAlignment="Center">#{Input.Label}</Label>
+            <TextBox Grid.Row="#{Row}" Grid.Column="1" FontSize="20" Name="Input_#{Input.Id}"
+					TextChanged="Changed_#{Input.XID}" Width="400" Height="40"></TextBox>
+#% Row ++;
+#casecast Output Output
+            <Label Grid.Row="#{Row}" Grid.Column="0" FontSize="20"
+                   VerticalAlignment="Center">#{Output.Label}</Label>
+            <TextBlock Grid.Row="#{Row}" Grid.Column="1" FontSize="20" Name="Output_#{Output.Id}"
+					Width="400" Height="40"></TextBlock>
+#% Row ++;
+#end switchcast
+#end foreach
+
+		</Grid>
+
+#end foreach
+
+
+        </StackPanel>
+    </DockPanel>
+</Page>
+#end method
+
+#method GenerateCS Dialog Dialog
+#% var Wizard = Dialog.Wizard;
+#% var GUI = Dialog.GUI;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Threading;
+using Goedel.Trojan;
+
+namespace #{GUI.Namespace} {
+
+    public partial class _Data_#{Dialog.Id} :Goedel.Trojan.Data  {
+		public #{Dialog.XID} Dialog;
+
+		public override Page Page {
+		    get { return Dialog; }
+			}
+
+		protected #{Wizard.Id} _Data;
+		public #{Wizard.Id} Data {
+			get {return _Data;}
+			}
+
+
+		public void Refresh () {
+			if (Dialog != null) {
+				Dialog.Refresh ();
+				}
+			}
+
+//		protected Wizard_#{Wizard.Id}  _Wizard;	
+//		public #{Wizard.XID}  Wizard {
+//				get {return _Wizard;}
+//				}
+//		public #{Wizard.DID}  Data {
+//				get {return Wizard.Data;}
+//				}
+
+		// Input backing variables
+#foreach (var Input in Dialog.Inputs)
+		string _#{Input.XID};
+		public string #{Input.XID} {
+            get { return _#{Input.XID}; }
+            set { _#{Input.XID} = value;  Refresh (); }
+            }
+#end foreach
+
+		// Output backing variables
+#foreach (var Output in Dialog.Outputs)
+		string _#{Output.XID};
+		public string #{Output.XID} {
+            get { return _#{Output.XID}; }
+            set { _#{Output.XID} = value;   Refresh (); #!
+#if (Dialog.Tasks.Count > 0)
+				
+				//if (Dialog != null) { Dialog.UpdateProgress(); } 
+#end if
+}
+            }
+#end foreach
+
+#if (Dialog.Tasks.Count > 0)
+#foreach (var Task in Dialog.Tasks)
+		public int Completion_#{Task.Target} = 0;
+#end foreach
+
+#foreach (var Task in Dialog.Tasks)
+		public virtual void Do_#{Task.Target} () {
+            Completion_#{Task.Target} = -1;
+			Dialog.UpdateProgress ();
+			#{Task.Target} ();
+            Completion_#{Task.Target} = 100;
+			Dialog.UpdateProgress ();
+			}
+
+		public virtual void #{Task.Target} () {
+            Thread.Sleep(2000);
+            Completion_#{Task.Target} = 100;
+			}
+#end foreach
+#end if
+
+
+#foreach (var Action in Dialog.Actions)
+		/// <summary>
+		/// Here goes the action to be overriden
+		/// </summary>
+
+		public virtual bool #{Action.Id} () {
+			return true;
+			}
+
+#end foreach
+
+		}
+
+    public partial class #{Dialog.Id} : _Data_#{Dialog.Id} {
+
+		
+		public #{Dialog.Id} (#{Wizard.Id}  Data) {
+			_Data = Data;
+
+			// NB call to the initializer before we creaate the dialog so the
+			// dialog can display the initialized data.
+			Initialize ();
+			this.Dialog = new #{Dialog.XID} (this);
+			}
+		}
+
+
+    /// <summary>
+	/// This is the code behind for the XAML generated class.
+    /// </summary>
+    public partial class Dialog_#{Dialog.Id} : Page {
+
+		public #{Dialog.Id}  Data;
+
+#if (Dialog.Tasks.Count > 0)
+		public BackgroundWorker BackgroundWorker;
+#end if
+
+		public Dialog_#{Dialog.Id} (#{Dialog.Id} Data) {
+			InitializeComponent();
+			this.Data = Data;
+			Refresh ();
+
+#if (Dialog.Tasks.Count > 0)
+            BackgroundWorker = new BackgroundWorker();
+            BackgroundWorker.WorkerReportsProgress = true;
+            BackgroundWorker.DoWork += new DoWorkEventHandler(DoWork);
+            BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(RunWorkerCompleted);
+            BackgroundWorker.ProgressChanged += new ProgressChangedEventHandler(ProgressChanged);
+            BackgroundWorker.RunWorkerAsync();
+#end if
+			}
+
+#if (Dialog.Tasks.Count > 0)
+        // Should probably move this to the Data class so that it can be inherited
+        public void DoWork(object sender, DoWorkEventArgs e) {
+#foreach (var Task in Dialog.Tasks)
+			Data.Do_#{Task.Target} ();
+#end foreach
+            }
+
+        public void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+#foreach (var Next in Dialog.Nexts)
+			Data.Data.Navigate (Data.Data.Data_#{Next.Target});
+#end foreach
+            }
+
+        public void ProgressChanged(object sender, ProgressChangedEventArgs e) {
+#foreach (var Task in Dialog.Tasks)
+			if (Data.Completion_#{Task.Target} >= 0) {
+				#{Task.XID}.Value = Data.Completion_#{Task.Target};
+				#{Task.XID}.IsIndeterminate = false;
+				}
+			else {
+				#{Task.XID}.IsIndeterminate = true;
+				}
+#end foreach
+			Refresh ();
+            }
+
+		public void UpdateProgress () {
+			BackgroundWorker.ReportProgress(100);
+			} 
+#end if
+		public void Refresh () {
+#foreach (var Input in Dialog.Inputs)
+			#{Input.XID}.Text  = Data.#{Input.XID};
+#end foreach
+#foreach (var Output in Dialog.Outputs)
+			#{Output.XID}.Text  = Data.#{Output.XID};
+#end foreach
+			}
+
+#foreach (var Action in Dialog.Actions)
+#call GenerateCS Action
+#end foreach
+
+#foreach (var Task in Dialog.Tasks)
+#end foreach
+
+#foreach (var Input in Dialog.Inputs)
+		private void Changed_#{Input.XID} (object sender, TextChangedEventArgs e) {
+			Data.#{Input.XID} = #{Input.XID}.Text;
+			}
+#end foreach
+
+		}
+	}
+
+#end method
+
+#method GenerateCS Action Action
+        private void Action_#{Action.Id}(object sender, RoutedEventArgs e) {
+			var Result = Data.#{Action.Id} ();
+			if (Result) {
+				Data.Data.Navigate (Data.Data.Data_#{Action.Target});
+				}
+            }
+#end method
+
+#method GenerateXAML Wizard Wizard
+<Window x:Class="#{Wizard.GUI.Namespace}.Wizard_#{Wizard.Id}"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="#{Wizard.Tag}"
+		Width="800" Height="600">
+
+    <Frame Name="Main" Width="800" Height="600"/>
+
+</Window>
+#end method
+
+#method GenerateCS Wizard Wizard
+#% var GUI = Wizard.GUI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using System.Threading;
+using System.ComponentModel;
+using Goedel.Trojan;
+
+namespace #{GUI.Namespace} {
+
+
+    public partial class #{Wizard.XID} : Window {
+
+        public #{Wizard.Id} Data;
+
+        public #{Wizard.XID}() {
+            InitializeComponent();
+
+            Data = new #{Wizard.Id}(this);
+            }
+
+        }
+
+    public partial class #{Wizard.Id} : Goedel.Trojan.Data {
+        public #{Wizard.XID} Wizard;
+
+#% Dialog StartDialog = null;
+#foreach (var Dialog in Wizard.Entries.OfType<Dialog>())
+#% StartDialog = StartDialog != null ? StartDialog : Dialog; 
+		#{Dialog.Id} _Data_#{Dialog.Id} = null;
+#end foreach
+
+#foreach (var Dialog in Wizard.Entries.OfType<Dialog>())
+		public #{Dialog.Id} Data_#{Dialog.Id} {
+			get { _Data_#{Dialog.Id} = _Data_#{Dialog.Id} != null ? _Data_#{Dialog.Id} : new #{Dialog.Id} (this);
+			return _Data_#{Dialog.Id}; } }
+#end foreach
+
+#foreach (var Dialog in Wizard.Entries.OfType<Dialog>())
+#end foreach
+
+		public #{Wizard.Id} (#{Wizard.XID} Wizard) {
+			this.Wizard = Wizard;
+			Initialize ();
+#if (StartDialog!= null) 
+			if (CurrentDialog == null) {
+				Navigate (Data_#{StartDialog.Id});
+				}
+#end if
+			}
+
+
+		/// <summary>
+		/// The currently active dialog
+		/// </summary>
+		public Goedel.Trojan.Data CurrentDialog = null ;
+
+		/// <summary>
+		/// Navigate to a new dialog.
+		/// </summary>
+		public void Navigate (Goedel.Trojan.Data Dialog) {
+			if (CurrentDialog != null) {
+				CurrentDialog.Exit ();
+				}
+			CurrentDialog = Dialog;
+			CurrentDialog.Enter ();
+
+			Wizard.Main.Navigate (Dialog.Page);
+			}
+
+		}
+	}
+
+#end method
+#end pclass
