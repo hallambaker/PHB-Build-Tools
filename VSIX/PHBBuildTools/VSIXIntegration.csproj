@@ -199,6 +199,10 @@
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
+    <ProjectReference Include="..\..\Domainer\DomainerLibrary\DomainerLibrary.csproj">
+      <Project>{04a6d8be-5072-486d-832d-d6c2c586c72d}</Project>
+      <Name>DomainerLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Exceptional\ExceptionalLibrary\LibExceptional.csproj">
       <Project>{9c9c300a-f6b6-440d-82a7-df457e607fb2}</Project>
       <Name>LibExceptional</Name>

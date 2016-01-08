@@ -121,7 +121,7 @@ namespace Goedel.ASN.VSIX {
 
             // Process the data
             var Parse = new global::Goedel.ASN.ASN2();
-            var Schema = new global::Goedel.Registry.Lexer(wszInputFilePath);
+            var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
             var Script = new global::Goedel.ASN.Generate(Writer);
@@ -274,7 +274,7 @@ namespace Goedel.ASN.VSIX {
 
             // Process the data
             var Parse = new global::FSRGen.FSRSchema();
-            var Schema = new global::Goedel.Registry.Lexer(wszInputFilePath);
+            var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
             var Script = new global::FSRGen.Generate(Writer);
@@ -427,7 +427,7 @@ namespace Goedel.ASN.VSIX {
 
             // Process the data
             var Parse = new global::RegistryConfig.ConfigItems();
-            var Schema = new global::Goedel.Registry.Lexer(wszInputFilePath);
+            var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
             var Script = new global::RegistryConfig.GenerateCS(Writer);
@@ -580,7 +580,7 @@ namespace Goedel.ASN.VSIX {
 
             // Process the data
             var Parse = new global::Goedel.VSIXBuild.VSIXBuild();
-            var Schema = new global::Goedel.Registry.Lexer(wszInputFilePath);
+            var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
             var Script = new global::Goedel.VSIXBuild.Generate(Writer);
@@ -733,7 +733,7 @@ namespace Goedel.ASN.VSIX {
 
             // Process the data
             var Parse = new global::CommandP.CommandParse();
-            var Schema = new global::Goedel.Registry.Lexer(wszInputFilePath);
+            var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
             var Script = new global::CommandP.GenerateCS(Writer);
@@ -886,7 +886,7 @@ namespace Goedel.ASN.VSIX {
 
             // Process the data
             var Parse = new global::Exceptional.Exceptions();
-            var Schema = new global::Goedel.Registry.Lexer(wszInputFilePath);
+            var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
             var Script = new global::Exceptional.Generate(Writer);
@@ -1188,7 +1188,7 @@ namespace Goedel.ASN.VSIX {
 
             // Process the data
             var Parse = new global::ProtoGen.ProtoStruct();
-            var Schema = new global::Goedel.Registry.Lexer(wszInputFilePath);
+            var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
             var Script = new global::ProtoGen.Generate(Writer);
@@ -1341,10 +1341,163 @@ namespace Goedel.ASN.VSIX {
 
             // Process the data
             var Parse = new global::GoedelSchema.Goedel();
-            var Schema = new global::Goedel.Registry.Lexer(wszInputFilePath);
+            var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
             var Script = new global::GoedelSchema.GenerateParser(Writer);
+            Script.GenerateCS(Parse);
+
+            // Convert writer data to a string and then a byte array
+            var Text = Writer.ToString();
+            var Data = Encoding.UTF8.GetBytes(Text);
+
+			// Fill in the Visual Studio return buffer (this memory will be freed by VS)
+            if (Data == null) {
+                rgbOutputFileContents[0] = IntPtr.Zero;
+                pcbOutput = 0;
+                }
+            else {
+				var Length = Data.Length;
+                rgbOutputFileContents[0] = Marshal.AllocCoTaskMem(Length);
+                Marshal.Copy(Data, 0, rgbOutputFileContents[0], Length);
+                pcbOutput = (uint)Length;
+                }
+
+            return VSConstants.S_OK;
+            }
+
+        #endregion IVsSingleFileGenerator
+
+		// The IObjectWithSite interface is not currently required but might be
+		// in the future if we ever get to the point where multiple file generation
+		// is supported.
+
+        #region IObjectWithSite
+
+        public void GetSite(ref Guid riid, out IntPtr ppvSite) {
+            if (site == null)
+                Marshal.ThrowExceptionForHR(VSConstants.E_NOINTERFACE);
+
+            // Query for the interface using the site object initially passed to the generator
+            IntPtr punk = Marshal.GetIUnknownForObject(site);
+            int hr = Marshal.QueryInterface(punk, ref riid, out ppvSite);
+            Marshal.Release(punk);
+            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(hr);
+            }
+
+        public void SetSite(object pUnkSite) {
+            // Save away the site object for later use
+            site = pUnkSite;
+
+            // These are initialized on demand via our private CodeProvider and SiteServiceProvider properties
+            codeDomProvider = null;
+            serviceProvider = null;
+            }
+
+        #endregion IObjectWithSite
+        }
+
+	// NB The name of the Guid field MUST match the VSIX package generator
+	// naming convention. Otherwise it doesn't work.
+
+	// Or maybe not, getting this thing to work is hit and miss. Sometime you just
+	// have to restart the system and it all works. Problem seems to be that Visual Studio 
+	// can only handle so many module loads and unloads without a reset.
+
+    static partial class GuidList {
+        public const string guidDomainerCSGeneratorString = "EE77623F-6882-4ECB-ABC3-70C4A740BD59";
+        public static readonly Guid guidDomainerCSGenerator = new Guid(guidDomainerCSGeneratorString);
+        };
+
+    [ComVisible(true)]
+    [Guid(GuidList.guidDomainerCSGeneratorString)]
+    [ProvideObject(typeof(DomainerCS))]
+    [CodeGeneratorRegistration(typeof(DomainerCS), "DomainerCS", 
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(DomainerCS), "DomainerCS", 
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
+    public class DomainerCS : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
+        private object site = null;
+        private CodeDomProvider codeDomProvider = null;
+        private ServiceProvider serviceProvider = null;
+
+        private CodeDomProvider CodeProvider {
+            get {
+                if (codeDomProvider == null) {
+                    IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);
+                    if (provider != null)
+                        codeDomProvider = (CodeDomProvider)provider.CodeDomProvider;
+                    }
+                return codeDomProvider;
+                }
+            }
+
+        private ServiceProvider SiteServiceProvider {
+            get {
+                if (serviceProvider == null) {
+                    IOleServiceProvider oleServiceProvider = site as IOleServiceProvider;
+                    serviceProvider = new ServiceProvider(oleServiceProvider);
+                    }
+                return serviceProvider;
+                }
+            }
+
+        #region IDisposable
+
+        bool _disposed;
+
+        public void Dispose() {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+            }
+
+        ~DomainerCS () {
+            Dispose(false);
+            }
+
+        protected virtual void Dispose(bool disposing)  {
+            if (_disposed)
+                return;
+
+            if (disposing) {
+                if (serviceProvider != null) {
+					serviceProvider.Dispose();
+					}
+                }
+
+            // release any unmanaged objects
+            // set the object references to null
+
+            _disposed = true;
+            }
+
+        #endregion IDisposable
+
+        #region IVsSingleFileGenerator
+
+        public int DefaultExtension(out string pbstrDefaultExtension) {
+            pbstrDefaultExtension = ".cs";
+            return VSConstants.S_OK;
+            }
+
+        public int Generate(string wszInputFilePath, 
+				string bstrInputFileContents, 
+				string wszDefaultNamespace, 
+				IntPtr[] rgbOutputFileContents, 
+				out uint pcbOutput, 
+				IVsGeneratorProgress pGenerateProgress) {
+            if (bstrInputFileContents == null)
+                throw new ArgumentException(bstrInputFileContents);
+
+            var Reader = new StringReader(bstrInputFileContents);
+            var Writer = new StringWriter();
+
+            // Process the data
+            var Parse = new global::GoedelDomainer.Domainer();
+            var Schema = new Lexer(wszInputFilePath);
+            Schema.Process(Reader, Parse);
+
+            var Script = new global::GoedelDomainer.Generate(Writer);
             Script.GenerateCS(Parse);
 
             // Convert writer data to a string and then a byte array

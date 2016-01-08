@@ -113,7 +113,7 @@ namespace OpenXML {
                             string Tag = "h" + (Level+1).ToString();
                             CatalogEntry = TagCatalog.Find(Tag);
 
-                            Console.WriteLine("[{0} -> {1}]", Style.StyleId, Tag);
+                            //Console.WriteLine("[{0} -> {1}]", Style.StyleId, Tag);
                             }
                         }
                     }
@@ -139,13 +139,13 @@ namespace OpenXML {
             var Paragraph = Child as Paragraph;
             if (Paragraph == null) return;
 
-            Console.WriteLine("Element {0}", Paragraph.InnerText);
+            //Console.WriteLine("Element {0}", Paragraph.InnerText);
             var Properties = Paragraph.ParagraphProperties;
 
             var StyleId = Properties != null ? Properties.ParagraphStyleId : null;
             var StyleVal = StyleId!= null ? StyleId.Val.ToString(): "p";
 
-            Console.WriteLine("   Style {0}", StyleVal);
+            //Console.WriteLine("   Style {0}", StyleVal);
 
             var CatalogEntry = GetCatalogEntry(StyleVal);
 
@@ -236,7 +236,7 @@ namespace OpenXML {
                 }
 
             var Result = StringWriter.ToString();
-            Console.Write(Result);
+            //Console.Write(Result);
             return Result;
             }
 

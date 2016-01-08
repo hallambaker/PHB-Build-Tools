@@ -355,15 +355,15 @@ namespace HTML2RFC {
             string Uri = GetUri(Citation.Label);
             if (Uri == null) return;
 
-            Console.WriteLine("{0}  {1}", Citation.Label, Uri);
+            //Console.WriteLine("{0}  {1}", Citation.Label, Uri);
 
             try {
                 string Result = WebClient.DownloadString(Uri);
                 Citation.Result = StripDeclaration (Result);
                 //Citation.Resolved = Result != null;
                 Citation.Uri = Uri;
-                Console.WriteLine(Result);
-                Console.WriteLine();
+                //Console.WriteLine(Result);
+                //Console.WriteLine();
 
                 // This is horribly hack but will do for now.
                 // Should really rewrite the parser to separate
@@ -378,9 +378,9 @@ namespace HTML2RFC {
                     }
                 }
             catch {
-                Console.WriteLine("$04-Not Found");
+                //Console.WriteLine("$04-Not Found");
                 }
-            Console.WriteLine();
+            //Console.WriteLine();
             }
 
 

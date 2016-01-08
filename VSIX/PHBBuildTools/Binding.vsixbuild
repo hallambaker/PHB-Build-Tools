@@ -89,7 +89,15 @@
 			|Scripting tool, converts a file containing scripting commands to
 			|C# code that implements the commands.
 
-
+	DomainerCS Generator ".cs"
+		GUID "EE77623F-6882-4ECB-ABC3-70C4A740BD59"
+		Project CSharp
+		Project VisualBasic
+		Parser GoedelDomainer.Domainer
+		Script GoedelDomainer.GenerateParser GenerateCS
+		Description
+			|Scripting tool, converts descriptions of DNS resource records to
+			|a class providing scripting, serialization and presentation support.
 
 	RFC2TXT Generator ".txt"
 		GUID "548687B2-6C67-4F1B-86AA-343F7FD0F429"
