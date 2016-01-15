@@ -12,7 +12,7 @@ Class Goedel.MarkLib TagDefinitions
 
 	Meta author
 		Meta firstname
-		Meta lastname
+		Meta surname
 		Meta organization
 		Meta organizationabbrev
 		Meta street

@@ -175,7 +175,6 @@ namespace OpenXML {
         void WriteAuthors(List<HT.Author> Authors) {
             foreach (var Author in Authors) {
                 WriteMeta("author", Author.Name);
-                WriteMeta("fullname", Author.Name, 1);
                 WriteMeta("initials", Author.Initials, 1);
                 WriteMeta("organization", Author.Organization, 1);
                 WriteMeta("surname", Author.Surname, 1);

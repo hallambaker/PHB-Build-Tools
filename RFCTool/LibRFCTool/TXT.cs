@@ -421,7 +421,7 @@ namespace HTML2RFC {
         public void Write(Document Document) {
 
             PageWriter.FooterLeft=Document.FirstAuthor;
-            PageWriter.FooterCenter = Document.Expires;
+            PageWriter.FooterCenter = "Expires " + Document.Expires;
 
             PageWriter.HeaderLeft = "Internet-Draft";
             PageWriter.HeaderCenter = Document.Abrrev;

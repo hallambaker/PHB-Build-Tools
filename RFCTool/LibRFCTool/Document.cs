@@ -263,7 +263,7 @@ namespace HTML2RFC {
         public string                  Name;
         public string Initials;
         public string Surname;
-        public string LastName;
+        public string FirstName;
         public string                  Organization;
         public string                  OrganizationAbbrev;
         public string                  Street;

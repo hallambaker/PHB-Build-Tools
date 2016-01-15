@@ -72,8 +72,8 @@ namespace MakeRFC {
                     // add author attributes here
 
                     FillAuthor(Meta, "initials", ref Author.Initials);
-                    FillAuthor(Meta, "firstname", ref Author.Surname);
-                    FillAuthor(Meta, "lastname", ref Author.LastName);
+                    //FillAuthor(Meta, "fullname", ref Author.Name);
+                    FillAuthor(Meta, "surname", ref Author.Surname);
                     FillAuthor(Meta, "organization", ref Author.Organization);
                     FillAuthor(Meta, "organizationabbrev", ref Author.OrganizationAbbrev);
                     FillAuthor(Meta, "street", ref Author.Street);

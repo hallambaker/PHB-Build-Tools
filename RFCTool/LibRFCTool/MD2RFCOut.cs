@@ -265,7 +265,6 @@ namespace HTML2RFC {
         void WriteAuthors(List<Author> Authors) {
             foreach (Author Author in Authors) {
                 WriteMeta("author", Author.Name);
-                WriteMeta("fullname", Author.Name, 1);
                 WriteMeta("initials", Author.Initials, 1);
                 WriteMeta("organization", Author.Organization, 1);
                 WriteMeta("surname", Author.Surname, 1);

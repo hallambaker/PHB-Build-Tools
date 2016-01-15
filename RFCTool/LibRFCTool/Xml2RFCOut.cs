@@ -206,7 +206,12 @@ namespace HTML2RFC {
 
                         if (TextBlock.GetType() == typeof(PRE)) {
                             PRE PRE = (PRE)TextBlock;
-                            WriteStartTag("figure", "anchor", PRE.ID);
+                            if (PRE.ID != null && PRE.ID != "") {
+                                WriteStartTag("figure", "anchor", PRE.ID);
+                                }
+                            else {
+                                WriteStartTag("figure");
+                                }
                             WriteStartTag("artwork");
 
                             TextWriter.Write("<![CDATA[");
@@ -303,12 +308,32 @@ namespace HTML2RFC {
             TextWriter.WriteLine("<?xml version='1.0'?>");
             TextWriter.WriteLine("<!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>");
 
+            string Category = "info";
+            switch (Document.Category.ToLower()) {
+                case "standards track":
+                case "standard":
+                case "std":
+                    Category = "std"; break;
+                case "informational":
+                case "info":
+                    Category = "info"; break;
+                case "experimental":
+                case "exp":
+                    Category = "exp"; break;
+                case "best current practice":
+                case "bcp":
+                    Category = "bcp"; break;
+                case "historic":
+                    Category = "historic"; break;
+                }
+
+
             WriteStartTag("rfc", 
                 "ipr", Document.Ipr, 
                 "docName", Document.FullDocName,
                 "number", Document.Number,
                 "obsoletes", Document.Obsoletes,
-                "category", Document.Category,
+                "category", Category,
                 "seriesNo", Document.SeriesNumber
                 );
 
