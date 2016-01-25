@@ -33,6 +33,7 @@
 
 	State ElementStart Null Text
 		On "/" GoTo ElementCloseStart
+		On "<" GoTo eText
 		Upper GoTo NewElementTag
 		Lower GoTo NewElementTag
 		Any GoTo ReadText				

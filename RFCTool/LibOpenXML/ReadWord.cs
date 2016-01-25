@@ -146,7 +146,6 @@ namespace OpenXML {
             var StyleVal = StyleId!= null ? StyleId.Val.ToString(): "p";
 
             //Console.WriteLine("   Style {0}", StyleVal);
-
             var CatalogEntry = GetCatalogEntry(StyleVal);
 
             if (CatalogEntry.ElementType == GM.ElementType.Meta) {
@@ -154,7 +153,7 @@ namespace OpenXML {
                 ParseMeta(CatalogEntry, Paragraph.InnerText);
                 }
             else if (CatalogEntry.ElementType == GM.ElementType.Block) {
-                if (StyleVal == "pre") {
+                if (StyleVal.ToLower() == "pre") {
                     ParsePreformatted(Paragraph);
                     }
                 else {

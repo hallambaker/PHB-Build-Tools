@@ -71,6 +71,9 @@ namespace #{Cast.Name} {
 #elseif (Project.Value.ToString() =="VisualBasic") 
     [CodeGeneratorRegistration(typeof(#{Extension.Name}), "#{Extension.Name}", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
+#elseif (Project.Value.ToString() =="Wix") 
+    [CodeGeneratorRegistration(typeof(#{Extension.Name}), "#{Extension.Name}", 
+				    "E0EE8E7D-F498-459E-9E90-2B3D73124AD5", GeneratesDesignTimeSource = true)]
 #end if
 #end foreach
     public class #{Extension.Name} : IVsSingleFileGenerator, IObjectWithSite, IDisposable {

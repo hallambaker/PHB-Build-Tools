@@ -187,6 +187,12 @@ namespace Goedel.VSIXBuild {
 					_Output.Write ("    [CodeGeneratorRegistration(typeof({1}), \"{2}\", \n{0}", _Indent, Extension.Name, Extension.Name);
 					// 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)] 
 					_Output.Write ("					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]\n{0}", _Indent);
+					// #elseif (Project.Value.ToString() =="Wix")  
+					} else if (  (Project.Value.ToString() =="Wix") ) {
+					//     [CodeGeneratorRegistration(typeof(#{Extension.Name}), "#{Extension.Name}",  
+					_Output.Write ("    [CodeGeneratorRegistration(typeof({1}), \"{2}\", \n{0}", _Indent, Extension.Name, Extension.Name);
+					// 				    "E0EE8E7D-F498-459E-9E90-2B3D73124AD5", GeneratesDesignTimeSource = true)] 
+					_Output.Write ("				    \"E0EE8E7D-F498-459E-9E90-2B3D73124AD5\", GeneratesDesignTimeSource = true)]\n{0}", _Indent);
 					// #end if 
 					}
 				// #end foreach 

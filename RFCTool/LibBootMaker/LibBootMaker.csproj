@@ -40,7 +40,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlockParseWord.cs" />
     <Compile Include="Document.cs" />
     <Compile Include="MakeWeb.cs" />
     <Compile Include="MarkDown.cs">

@@ -63,6 +63,9 @@
     <Compile Include="StructureWriter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Goedel.Registry.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Headers.script">
       <Generator>GScript</Generator>
       <LastGenOutput>Headers.cs</LastGenOutput>

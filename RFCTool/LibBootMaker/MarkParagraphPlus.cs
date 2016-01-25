@@ -93,6 +93,19 @@ namespace Goedel.MarkLib {
         public List<TagValue> Attributes;
 
         void ToBuffer(int c) {
+            // Convert stupid quotes to standard ASCII values
+            // These occur at multiple points in the code tables
+            if ((c == 147) | (c == 148) | (c == 8220) | (c == 8221)) {
+                c = '\"';
+                }
+            else if ((c == 145) | (c == 146) | (c == 8216) | (c == 8217)) {
+                c = '\'';
+                }
+
+            if (c > 127) {
+                Console.WriteLine("Outside RFC values");
+                }
+
             if (c != '\r') {
                 Buffer = Buffer + Extra + (char)c;
                 }

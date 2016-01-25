@@ -1,0 +1,39 @@
+﻿Build
+	Package PHBBuildTools "92C31DDB-1D8F-428B-9A40-7882C261D3A7"
+	Company "DefaultDeny" "Default Deny Security Inc."
+	
+	NetFramework "4.6"
+	VSIX "PHBBuildTools.vsix"
+	
+	Icon "App.ico"
+
+	Directory "Mesh Tools"
+		CommandLine "ASN2Shell.exe"
+		CommandLine "Exceptional.exe"
+		CommandLine "FSRGen.exe"
+		CommandLine "goedel3.exe"
+		CommandLine "gscript.exe"
+		CommandLine "Protogen.exe"
+		CommandLine "RegistryConfig.exe"
+		CommandLine "rfctool.exe"
+		CommandLine "Trojan.exe"
+
+		Directory "Documentation"
+			Feature Documentation
+			Documentation hallambaker-rfctools
+			Documentation hallambaker-protogen
+			Documentation hallambaker-goedel
+			Documentation hallambaker-misc
+
+	Localization English_US "en-us" 1252 1033 
+		License			"Eula-en.rtf"
+		OSVersionOld	"This product requires at least Windows Vista / Server 2008."
+		NewerInstalled	"The same or a newer version of this product is already installed."
+		Requirex64		"You need to install the 64-bit version of this product on 64-bit Windows."
+		Requirex32		"You need to install the 32-bit version of this product on 32-bit Windows."
+		FeatureComplete "The complete package."
+		FeatureMain		"The main version including all dependencies."
+
+
+
+		
