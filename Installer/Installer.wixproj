@@ -32,6 +32,7 @@
     <Content Include="BannerTop.bmp" />
     <Content Include="Notes.txt" />
     <Content Include="Product.build" />
+    <Content Include="Strings.html" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <PropertyGroup>
