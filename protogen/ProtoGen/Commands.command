@@ -25,6 +25,7 @@
 		Script  ProtoGen Generate GenerateMD "md"	
 			Brief "Generate documentation in MarkDown format"
 
+
 		Script  ProtoGen Generate GenerateCS		"cs"
 			Brief "Generate C# code"
 

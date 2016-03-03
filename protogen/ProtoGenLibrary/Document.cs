@@ -55,12 +55,20 @@ namespace ProtoGen {
 		 string StartSection2 , MidSection2 , EndSection2;
 		// #% string StartSection3 , MidSection3 , EndSection3; 
 		 string StartSection3 , MidSection3 , EndSection3;
+		// #% string StartSection4 , MidSection4 , EndSection4; 
+		 string StartSection4 , MidSection4 , EndSection4;
 		// #% string CurrentPrefix; 
 		 string CurrentPrefix;
 		// #% string Namespace; 
 		 string Namespace;
 		// #% string StartTransaction, MidTransaction, EndTransaction; 
 		 string StartTransaction, MidTransaction, EndTransaction;
+		// #% 
+		
+		// #% 
+		
+		// #% string [,] Sections;  
+		 string [,] Sections; 
 		// #% bool AddComments = true; 
 		 bool AddComments = true;
 		//  
@@ -93,33 +101,7 @@ namespace ProtoGen {
 			// #end method 
 			}
 		//  
-		// #method2 StartSection int level string title 
-		
-
-		//
-		// StartSection
-		//
-		public void StartSection (int level, string title) {
-			//  
-			_Output.Write ("\n{0}", _Indent);
-			//  
-			_Output.Write ("\n{0}", _Indent);
-			// #end method2 
-			}
 		//  
-		// #method EndSection int level 
-		
-
-		//
-		// EndSection
-		//
-		public void EndSection (int level) {
-			//  
-			_Output.Write ("\n{0}", _Indent);
-			//  
-			_Output.Write ("\n{0}", _Indent);
-			// #end method 
-			}
 		//  
 		// #method GenerateHTML ProtoStruct ProtoStruct 
 		
@@ -168,13 +150,13 @@ namespace ProtoGen {
 			}
 		//  
 		//  
-		// #method GenerateMD ProtoStruct ProtoStruct 
+		// #method GenerateMD2 ProtoStruct ProtoStruct 
 		
 
 		//
-		// GenerateMD
+		// GenerateMD2
 		//
-		public void GenerateMD (ProtoStruct ProtoStruct) {
+		public void GenerateMD2 (ProtoStruct ProtoStruct) {
 			// #% ProtoStruct.Complete (); 
 			 ProtoStruct.Complete ();
 			// #%  StartP = ""; EndP = "\n"; 
@@ -197,6 +179,346 @@ namespace ProtoGen {
 			 AddComments = false;
 			// #call GenerateBody ProtoStruct 
 			GenerateBody (ProtoStruct);
+			// #end method 
+			}
+		//  
+		// #method GenerateMD ProtoStruct ProtoStruct 
+		
+
+		//
+		// GenerateMD
+		//
+		public void GenerateMD (ProtoStruct ProtoStruct) {
+			// #% ProtoStruct.Complete (); 
+			 ProtoStruct.Complete ();
+			// #%  StartP = ""; EndP = "\n"; 
+			  StartP = ""; EndP = "\n";
+			// #%  StartParamList = ""; 
+			  StartParamList = "";
+			// #%  EndParamList = ""; 
+			  EndParamList = "";
+			// #%  StartParam = ""; MidParam = ": "; EndParam = ""; EndParamBlock = ""; 
+			  StartParam = ""; MidParam = ": "; EndParam = ""; EndParamBlock = "";
+			// #%  StartSection1 = "#"; MidSection1 = "\n"; EndSection1 = ""; 
+			  StartSection1 = "#"; MidSection1 = "\n"; EndSection1 = "";
+			// #%  StartSection2 = "##"; MidSection2 = "\n"; EndSection2 = ""; 
+			  StartSection2 = "##"; MidSection2 = "\n"; EndSection2 = "";
+			// #%  StartSection3 = "###"; MidSection3 = "\n"; EndSection3 = ""; 
+			  StartSection3 = "###"; MidSection3 = "\n"; EndSection3 = "";
+			// #%  StartSection4 = "####"; MidSection4 = "\n"; EndSection4 = ""; 
+			  StartSection4 = "####"; MidSection4 = "\n"; EndSection4 = "";
+			// #%  StartTransaction = "*"; MidTransaction = "\n*"; EndTransaction="\n"; 
+			  StartTransaction = "*"; MidTransaction = "\n*"; EndTransaction="\n";
+			// #% Sections = new string [,] { 
+			 Sections = new string [,] {
+			// #%    {StartSection1, MidSection1, EndSection1}, 
+			    {StartSection1, MidSection1, EndSection1},
+			// #%    {StartSection2, MidSection2, EndSection2}, 
+			    {StartSection2, MidSection2, EndSection2},
+			// #%    {StartSection3, MidSection3, EndSection3}, 
+			    {StartSection3, MidSection3, EndSection3},
+			// #%    {StartSection4, MidSection4, EndSection4}}; 
+			    {StartSection4, MidSection4, EndSection4}};
+			// #% AddComments = false; 
+			 AddComments = false;
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// #foreach (var Entry in ProtoStruct.Top) 
+			foreach  (var Entry in ProtoStruct.Top) {
+				// #% Entry.Normalize (); 
+				 Entry.Normalize ();
+				// #end foreach 
+				}
+			// #foreach (var Entry in ProtoStruct.Top) 
+			foreach  (var Entry in ProtoStruct.Top) {
+				// #switchcast ProtoStructType Entry 
+				switch (Entry._Tag ()) {
+					// #casecast Protocol Protocol 
+					case ProtoStructType.Protocol: {
+					  Protocol Protocol = (Protocol) Entry; 
+					// #foreach (var Item in Protocol.Entries) 
+					foreach  (var Item in Protocol.Entries) {
+						// #switchcast ProtoStructType Item 
+						switch (Item._Tag ()) {
+							// #casecast Section Section 
+							case ProtoStructType.Section: {
+							  Section Section = (Section) Item; 
+							// #call SectionHeading Section 
+							
+							SectionHeading (Section);
+							// #casecast Service Service 
+							break; }
+							case ProtoStructType.Service: {
+							  Service Service = (Service) Item; 
+							// #call MakeService Service 
+							
+							MakeService (Service);
+							// #casecast Message Message 
+							break; }
+							case ProtoStructType.Message: {
+							  Message Message = (Message) Item; 
+							// #call MakeMessage Message 
+							
+							MakeMessage (Message);
+							// #casecast Structure Structure 
+							break; }
+							case ProtoStructType.Structure: {
+							  Structure Structure = (Structure) Item; 
+							// #call MakeStructure Structure 
+							
+							MakeStructure (Structure);
+							// #casecast Transaction Transaction 
+							break; }
+							case ProtoStructType.Transaction: {
+							  Transaction Transaction = (Transaction) Item; 
+							// #call MakeTransaction Transaction 
+							
+							MakeTransaction (Transaction);
+							// #casecast Success Success 
+							break; }
+							case ProtoStructType.Success: {
+							  Success Success = (Success) Item; 
+							// #call MakeSuccess Success 
+							
+							MakeSuccess (Success);
+							// #casecast Warning Warning 
+							break; }
+							case ProtoStructType.Warning: {
+							  Warning Warning = (Warning) Item; 
+							// #call MakeWarning Warning 
+							
+							MakeWarning (Warning);
+							// #casecast Error Error 
+							break; }
+							case ProtoStructType.Error: {
+							  Error Error = (Error) Item; 
+							// #call MakeError Error 
+							
+							MakeError (Error);
+							// #end switchcast 
+						break; }
+							}
+						// #end foreach 
+						}
+					// #end switchcast 
+				break; }
+					}
+				// #end foreach 
+				}
+			// #end method 
+			}
+		//  
+		//  
+		//  
+		// #method SectionHeading Section Section 
+		
+
+		//
+		// SectionHeading
+		//
+		public void SectionHeading (Section Section) {
+			// #% var Level = Section.Level; 
+			 var Level = Section.Level;
+			// #% StartSection (Level, Section.Title); 
+			 StartSection (Level, Section.Title);
+			// #call DescriptionList Section.Entries 
+			DescriptionList (Section.Entries);
+			// #call EndSection Level 
+			EndSection (Level);
+			// #end method 
+			}
+		//  
+		// #method2 StartSection int Level string Title 
+		
+
+		//
+		// StartSection
+		//
+		public void StartSection (int Level, string Title) {
+			// #call StartSection Level 
+			StartSection (Level);
+			// #{Title}#! 
+			_Output.Write ("{1}", _Indent, Title);
+			// #call MidSection Level 
+			MidSection (Level);
+			// #end method2 
+			}
+		//  
+		// #method StartSection int Level 
+		
+
+		//
+		// StartSection
+		//
+		public void StartSection (int Level) {
+			// #{Sections[Level-1,0]}#! 
+			_Output.Write ("{1}", _Indent, Sections[Level-1,0]);
+			// #end method 
+			}
+		//  
+		// #method MidSection int Level 
+		
+
+		//
+		// MidSection
+		//
+		public void MidSection (int Level) {
+			// #{Sections[Level-1,1]}#! 
+			_Output.Write ("{1}", _Indent, Sections[Level-1,1]);
+			// #end method 
+			}
+		//  
+		// #method EndSection int Level 
+		
+
+		//
+		// EndSection
+		//
+		public void EndSection (int Level) {
+			// #{Sections[Level-1,2]}#! 
+			_Output.Write ("{1}", _Indent, Sections[Level-1,2]);
+			// #end method 
+			}
+		//  
+		// #method MakeService Service Service 
+		
+
+		//
+		// MakeService
+		//
+		public void MakeService (Service Service) {
+			// SRV Prefix: 
+			_Output.Write ("SRV Prefix:\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// :#{Service.Discovery} 
+			_Output.Write (":{1}\n{0}", _Indent, Service.Discovery);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// HTTP Well Known Service Prefix: 
+			_Output.Write ("HTTP Well Known Service Prefix:\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// :/.well-known/#{Service.WellKnown} 
+			_Output.Write (":/.well-known/{1}\n{0}", _Indent, Service.WellKnown);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// #call DescriptionList Service.Entries 
+			DescriptionList (Service.Entries);
+			// #end method 
+			}
+		//  
+		// #method MakeMessage Message Message 
+		
+
+		//
+		// MakeMessage
+		//
+		public void MakeMessage (Message Message) {
+			// #call StartSection 3 
+			StartSection (3);
+			// Message: #{Message.Id}#! 
+			_Output.Write ("Message: {1}", _Indent, Message.Id);
+			// #call MidSection 3 
+			MidSection (3);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// #call ParameterList Message.Entries 
+			ParameterList (Message.Entries);
+			// #call EndSection 3 
+			EndSection (3);
+			// #end method 
+			}
+		//  
+		// #method MakeStructure Structure Structure 
+		
+
+		//
+		// MakeStructure
+		//
+		public void MakeStructure (Structure Structure) {
+			// #call StartSection 3 
+			StartSection (3);
+			// Structure: #{Structure.Id} 
+			_Output.Write ("Structure: {1}\n{0}", _Indent, Structure.Id);
+			// #call MidSection 3 
+			MidSection (3);
+			// #call ParameterList Structure.Entries 
+			ParameterList (Structure.Entries);
+			// #call EndSection 3 
+			EndSection (3);
+			// #end method 
+			}
+		//  
+		// #method MakeTransaction Transaction Transaction 
+		
+
+		//
+		// MakeTransaction
+		//
+		public void MakeTransaction (Transaction Transaction) {
+			// #call StartSection 2 
+			StartSection (2);
+			// Transaction: #{Transaction.Id} 
+			_Output.Write ("Transaction: {1}\n{0}", _Indent, Transaction.Id);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// Request: #{Transaction.Request} 
+			_Output.Write ("Request: {1}\n{0}", _Indent, Transaction.Request);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// Response:#{Transaction.Response} 
+			_Output.Write ("Response:{1}\n{0}", _Indent, Transaction.Response);
+			// #call MidSection 2 
+			MidSection (2);
+			// #call DescriptionList Transaction.Entries 
+			DescriptionList (Transaction.Entries);
+			// #call EndSection 2 
+			EndSection (2);
+			// #end method 
+			}
+		//  
+		// #method MakeSuccess Success Success 
+		
+
+		//
+		// MakeSuccess
+		//
+		public void MakeSuccess (Success Success) {
+			// #{Success.Code} #{Success.Id} 
+			_Output.Write ("{1} {2}\n{0}", _Indent, Success.Code, Success.Id);
+			// #call DescriptionListDD Success.Entries 
+			DescriptionListDD (Success.Entries);
+			// #end method 
+			}
+		//  
+		// #method MakeWarning Warning Warning 
+		
+
+		//
+		// MakeWarning
+		//
+		public void MakeWarning (Warning Warning) {
+			// #{Warning.Code} #{Warning.Id} 
+			_Output.Write ("{1} {2}\n{0}", _Indent, Warning.Code, Warning.Id);
+			// #call DescriptionListDD Warning.Entries 
+			DescriptionListDD (Warning.Entries);
+			// #end method 
+			}
+		//  
+		// #method MakeError Error Error 
+		
+
+		//
+		// MakeError
+		//
+		public void MakeError (Error Error) {
+			// #{Error.Code} #{Error.Id} 
+			_Output.Write ("{1} {2}\n{0}", _Indent, Error.Code, Error.Id);
+			// #call DescriptionListDD Error.Entries 
+			DescriptionListDD (Error.Entries);
 			// #end method 
 			}
 		//  
@@ -446,6 +768,53 @@ namespace ProtoGen {
 			// #end method 
 			}
 		//  
+		// #block DescriptionListDD 
+		
+
+		//
+		//  DescriptionListDD
+		//
+
+			// #% public void DescriptionListDD  (List<_Choice> Entries) { 
+			 public void DescriptionListDD  (List<_Choice> Entries) {
+			// #foreach (var Entry in Entries) 
+			foreach  (var Entry in Entries) {
+				// #call DescriptionDD Entry 
+				DescriptionDD (Entry);
+				// #end foreach 
+				}
+			// #% } 
+			 }
+			// #end block 
+		
+		//  
+		// #method DescriptionDD _Choice TEntry 
+		
+
+		//
+		// DescriptionDD
+		//
+		public void DescriptionDD (_Choice TEntry) {
+			// #switchcast ProtoStructType TEntry 
+			switch (TEntry._Tag ()) {
+				// #casecast Description Description 
+				case ProtoStructType.Description: {
+				  Description Description = (Description) TEntry; 
+				// :#! 
+				_Output.Write (":", _Indent);
+				// #foreach (string s in Description.Text1) 
+				foreach  (string s in Description.Text1) {
+					// #{s} 
+					_Output.Write ("{1}\n{0}", _Indent, s);
+					// #end foreach 
+					}
+				// #{EndP}#! 
+				_Output.Write ("{1}", _Indent, EndP);
+				// #end switchcast 
+			break; }
+				}
+			// #end method 
+			}
 		//  
 		//  
 		//  
@@ -517,7 +886,22 @@ namespace ProtoGen {
 				 string Name = null;
 				// #switchcast ProtoStructType Entry 
 				switch (Entry._Tag ()) {
+					// #casecast Inherits Inherits 
+					case ProtoStructType.Inherits: {
+					  Inherits Inherits = (Inherits) Entry; 
+					// * Inherits: #{Inherits.Ref} 
+					_Output.Write ("* Inherits: {1}\n{0}", _Indent, Inherits.Ref);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					// #casecast Description Desc 
+					break; }
+					case ProtoStructType.Description: {
+					  Description Desc = (Description) Entry; 
+					// #call Description Desc 
+					
+					Description (Desc);
 					// #casecast Boolean Param 
+					break; }
 					case ProtoStructType.Boolean: {
 					  Boolean Param = (Boolean) Entry; 
 					// #% Name = Param.Id.ToString (); Options = Param.Options ; Type = "Boolean"; 
@@ -628,8 +1012,10 @@ namespace ProtoGen {
 
 			// #% public void OptionList  (List<_Choice> Entries) { 
 			 public void OptionList  (List<_Choice> Entries) {
-			// #% string min = "0", max = "1", def = ""; 
-			 string min = "0", max = "1", def = "";
+			// #% bool PRequired = false, PMultiple = false; 
+			 bool PRequired = false, PMultiple = false;
+			// #% string def; 
+			 string def;
 			// #foreach (_Choice Entry in Entries) 
 			foreach  (_Choice Entry in Entries) {
 				// #switchcast ProtoStructType Entry 
@@ -637,16 +1023,16 @@ namespace ProtoGen {
 					// #casecast Required Required 
 					case ProtoStructType.Required: {
 					  Required Required = (Required) Entry; 
-					// #% min = "1"; 
+					// #% PRequired = true; 
 					
-					 min = "1";
+					 PRequired = true;
 					// #casecast Multiple Multiple 
 					break; }
 					case ProtoStructType.Multiple: {
 					  Multiple Multiple = (Multiple) Entry; 
-					// #% max = "Many"; 
+					// #% PMultiple = true; 
 					
-					 max = "Many";
+					 PMultiple = true;
 					// #casecast Default Default 
 					break; }
 					case ProtoStructType.Default: {
@@ -659,10 +1045,38 @@ namespace ProtoGen {
 					}
 				// #end foreach 
 				}
-			//  [#{min}..#{max}]  #{def} #{EndParam} 
-			_Output.Write (" [{1}..{2}]  {3} {4}\n{0}", _Indent, min, max, def, EndParam);
-			// #call DescriptionListSkip Entries 
-			DescriptionListSkip (Entries);
+			//  #! 
+			_Output.Write (" ", _Indent);
+			// #if PMultiple 
+			if (  PMultiple ) {
+				// #if PRequired 
+				if (  PRequired ) {
+					// [1..Many] 
+					_Output.Write ("[1..Many]\n{0}", _Indent);
+					// #else 
+					} else {
+					// [0..Many] 
+					_Output.Write ("[0..Many]\n{0}", _Indent);
+					// #end if 
+					}
+				// #else 
+				} else {
+				// #if PRequired 
+				if (  PRequired ) {
+					// (Required) 
+					_Output.Write ("(Required)\n{0}", _Indent);
+					// #else 
+					} else {
+					// (Optional) 
+					_Output.Write ("(Optional)\n{0}", _Indent);
+					// #end if 
+					}
+				// #end if 
+				}
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// #call DescriptionListDD Entries 
+			DescriptionListDD (Entries);
 			// #{EndParamBlock}#! 
 			_Output.Write ("{1}", _Indent, EndParamBlock);
 			// #% } 

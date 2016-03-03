@@ -6,6 +6,7 @@
         Id			ID	Top
         Prefix		Token  PrefixT
         Entries		List Choice
+			Section
 			Service
             Transaction
             Message
@@ -25,6 +26,13 @@
 		Id		ID	 MessageT					// Identifier to be defined in an external file
 		Entries List Choice
             Description
+
+	Type Section
+		Level	Integer
+		Title	String
+		Entries List Choice
+            Description
+
 
 	Type Service
 		Id			ID ClassT

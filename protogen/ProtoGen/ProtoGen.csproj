@@ -99,6 +99,8 @@
       <Generator>CommandCS</Generator>
       <LastGenOutput>Commands.cs</LastGenOutput>
     </None>
+    <None Include="MeshProtocol.md" />
+    <None Include="MeshProtocol.Protocol" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">

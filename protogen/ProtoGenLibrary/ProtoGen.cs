@@ -23,6 +23,7 @@ using Goedel.Registry;
 //       Protocol
 //       Mapping
 //   TypeType
+//       Section
 //       Service
 //       Transaction
 //       Message
@@ -104,6 +105,8 @@ using Goedel.Registry;
 //       Id
 //       Prefix
 //       Entries
+//       Level
+//       Title
 //       Discovery
 //       WellKnown
 //       Request
@@ -141,6 +144,7 @@ namespace ProtoGen {
         Protocol,
         Using,
         Extern,
+        Section,
         Service,
         Transaction,
         Message,
@@ -291,6 +295,34 @@ namespace ProtoGen {
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Extern");
+				}			
+			}
+		}
+
+    public partial class Section : _Choice {
+		public int						Level;
+		public string					Title;
+        public List <_Choice>           Entries = new List<_Choice> ();
+
+        public override ProtoStructType _Tag () {
+            return ProtoStructType.Section;
+            }
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Section");
+				}
+
+			Output.WriteAttribute ("Level", Level);
+			Output.WriteAttribute ("Title", Title);
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("Section");
 				}			
 			}
 		}
@@ -1840,6 +1872,10 @@ namespace ProtoGen {
 		Extern_Start,
 		Extern__Id,				
 		Extern__Entries,				
+		Section_Start,
+		Section__Level,				
+		Section__Title,				
+		Section__Entries,				
 		Service_Start,
 		Service__Id,				
 		Service__Discovery,				
@@ -2122,6 +2158,7 @@ namespace ProtoGen {
                 case "Protocol": return NewProtocol();
                 case "Using": return NewUsing();
                 case "Extern": return NewExtern();
+                case "Section": return NewSection();
                 case "Service": return NewService();
                 case "Transaction": return NewTransaction();
                 case "Message": return NewMessage();
@@ -2213,6 +2250,14 @@ namespace ProtoGen {
             ProtoGen.Extern result = new ProtoGen.Extern();
             Push (result);
             State = StateCode.Extern_Start;
+            return result;
+            }
+
+
+        private ProtoGen.Section NewSection() {
+            ProtoGen.Section result = new ProtoGen.Section();
+            Push (result);
+            State = StateCode.Section_Start;
             return result;
             }
 
@@ -2735,6 +2780,7 @@ namespace ProtoGen {
                 case "Protocol": return ProtoGen.ProtoStructType.Protocol;
                 case "Using": return ProtoGen.ProtoStructType.Using;
                 case "Extern": return ProtoGen.ProtoStructType.Extern;
+                case "Section": return ProtoGen.ProtoStructType.Section;
                 case "Service": return ProtoGen.ProtoStructType.Service;
                 case "Transaction": return ProtoGen.ProtoStructType.Transaction;
                 case "Message": return ProtoGen.ProtoStructType.Message;
@@ -2944,6 +2990,7 @@ namespace ProtoGen {
 							ProtoGen.Protocol Current_Cast = (ProtoGen.Protocol)Current;
                             ProtoGen.ProtoStructType LabelType = _Reserved (Text);
                             if ( false |
+									(LabelType == ProtoGen.ProtoStructType.Section) |
 									(LabelType == ProtoGen.ProtoStructType.Service) |
 									(LabelType == ProtoGen.ProtoStructType.Transaction) |
 									(LabelType == ProtoGen.ProtoStructType.Message) |
@@ -2958,7 +3005,7 @@ namespace ProtoGen {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Service Transaction Message Structure Description Using Extern Enumeration Success Warning Error ]");
+								throw new System.Exception("Parser Error Expected [Section Service Transaction Message Structure Description Using Extern Enumeration Success Warning Error ]");
 								}
 							}
                         break;
@@ -3006,6 +3053,56 @@ namespace ProtoGen {
 
                         else if (Token == TokenType.LABEL) {
 							ProtoGen.Extern Current_Cast = (ProtoGen.Extern)Current;
+                            ProtoGen.ProtoStructType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == ProtoGen.ProtoStructType.Description) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new System.Exception("Parser Error Expected [Description ]");
+								}
+							}
+                        break;
+
+
+                    case StateCode.Section_Start:
+                        if (Token == TokenType.INTEGER) {
+                            ProtoGen.Section Current_Cast = (ProtoGen.Section)Current;
+                            Current_Cast.Level = Convert.ToInt32(Text);
+                            State = StateCode.Section__Level;
+                            break;
+                            }
+                        throw new System.Exception("Expected Integer");
+
+                    case StateCode.Section__Level:
+                        if (Token == TokenType.STRING) {
+                            ProtoGen.Section Current_Cast = (ProtoGen.Section)Current;
+                            Current_Cast.Title = Text;
+                            State = StateCode.Section__Title;
+                            break;
+                            }
+                        throw new System.Exception("Expected String");
+
+                    case StateCode.Section__Title:
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Section__Entries;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.Section__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							ProtoGen.Section Current_Cast = (ProtoGen.Section)Current;
                             ProtoGen.ProtoStructType LabelType = _Reserved (Text);
                             if ( false |
 									(LabelType == ProtoGen.ProtoStructType.Description) ) {

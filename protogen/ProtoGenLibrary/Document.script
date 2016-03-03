@@ -16,9 +16,13 @@
 #% string StartSection1 , MidSection1 , EndSection1;
 #% string StartSection2 , MidSection2 , EndSection2;
 #% string StartSection3 , MidSection3 , EndSection3;
+#% string StartSection4 , MidSection4 , EndSection4;
 #% string CurrentPrefix;
 #% string Namespace;
 #% string StartTransaction, MidTransaction, EndTransaction;
+#%
+#%
+#% string [,] Sections; 
 #% bool AddComments = true;
 
 
@@ -34,15 +38,7 @@
 #call GenerateBody ProtoStruct
 #end method
 
-#method2 StartSection int level string title
 
-
-#end method2
-
-#method EndSection int level
-
-
-#end method
 
 #method GenerateHTML ProtoStruct ProtoStruct
 #% ProtoStruct.Complete ();
@@ -66,7 +62,7 @@
 #end method
 
 
-#method GenerateMD ProtoStruct ProtoStruct
+#method GenerateMD2 ProtoStruct ProtoStruct
 #% ProtoStruct.Complete ();
 #%  StartP = ""; EndP = "\n";
 #%  StartParamList = "";
@@ -78,6 +74,138 @@
 #%  StartTransaction = "*"; MidTransaction = "\n*"; EndTransaction="\n";
 #% AddComments = false;
 #call GenerateBody ProtoStruct
+#end method
+
+#method GenerateMD ProtoStruct ProtoStruct
+#% ProtoStruct.Complete ();
+#%  StartP = ""; EndP = "\n";
+#%  StartParamList = "";
+#%  EndParamList = "";
+#%  StartParam = ""; MidParam = ": "; EndParam = ""; EndParamBlock = "";
+#%  StartSection1 = "#"; MidSection1 = "\n"; EndSection1 = "";
+#%  StartSection2 = "##"; MidSection2 = "\n"; EndSection2 = "";
+#%  StartSection3 = "###"; MidSection3 = "\n"; EndSection3 = "";
+#%  StartSection4 = "####"; MidSection4 = "\n"; EndSection4 = "";
+#%  StartTransaction = "*"; MidTransaction = "\n*"; EndTransaction="\n";
+#% Sections = new string [,] {
+#%    {StartSection1, MidSection1, EndSection1},
+#%    {StartSection2, MidSection2, EndSection2},
+#%    {StartSection3, MidSection3, EndSection3},
+#%    {StartSection4, MidSection4, EndSection4}};
+#% AddComments = false;
+
+
+#foreach (var Entry in ProtoStruct.Top)
+#% Entry.Normalize ();
+#end foreach
+#foreach (var Entry in ProtoStruct.Top)
+#switchcast ProtoStructType Entry
+#casecast Protocol Protocol
+#foreach (var Item in Protocol.Entries)
+#switchcast ProtoStructType Item
+#casecast Section Section
+#call SectionHeading Section
+#casecast Service Service
+#call MakeService Service
+#casecast Message Message
+#call MakeMessage Message
+#casecast Structure Structure
+#call MakeStructure Structure
+#casecast Transaction Transaction
+#call MakeTransaction Transaction
+#casecast Success Success
+#call MakeSuccess Success
+#casecast Warning Warning
+#call MakeWarning Warning
+#casecast Error Error
+#call MakeError Error
+#end switchcast
+#end foreach
+#end switchcast
+#end foreach
+#end method
+
+
+
+#method SectionHeading Section Section
+#% var Level = Section.Level;
+#% StartSection (Level, Section.Title);
+#call DescriptionList Section.Entries
+#call EndSection Level
+#end method
+
+#method2 StartSection int Level string Title
+#call StartSection Level
+#{Title}#!
+#call MidSection Level
+#end method2
+
+#method StartSection int Level
+#{Sections[Level-1,0]}#!
+#end method
+
+#method MidSection int Level
+#{Sections[Level-1,1]}#!
+#end method
+
+#method EndSection int Level
+#{Sections[Level-1,2]}#!
+#end method
+
+#method MakeService Service Service
+SRV Prefix:
+
+:#{Service.Discovery}
+
+HTTP Well Known Service Prefix:
+
+:/.well-known/#{Service.WellKnown}
+
+#call DescriptionList Service.Entries
+#end method
+
+#method MakeMessage Message Message
+#call StartSection 3
+Message: #{Message.Id}#!
+#call MidSection 3
+
+#call ParameterList Message.Entries
+#call EndSection 3
+#end method
+
+#method MakeStructure Structure Structure
+#call StartSection 3
+Structure: #{Structure.Id}
+#call MidSection 3
+#call ParameterList Structure.Entries
+#call EndSection 3
+#end method
+
+#method MakeTransaction Transaction Transaction
+#call StartSection 2
+Transaction: #{Transaction.Id}
+
+Request: #{Transaction.Request}
+
+Response:#{Transaction.Response}
+#call MidSection 2
+#call DescriptionList Transaction.Entries
+#call EndSection 2
+#end method
+
+#method MakeSuccess Success Success
+#{Success.Code} #{Success.Id}
+#call DescriptionListDD Success.Entries
+#end method
+
+#method MakeWarning Warning Warning
+#{Warning.Code} #{Warning.Id}
+#call DescriptionListDD Warning.Entries
+#end method
+
+#method MakeError Error Error
+#{Error.Code} #{Error.Id}
+#call DescriptionListDD Error.Entries
 #end method
 
 #method Comment string Text
@@ -184,6 +312,24 @@
 #end switchcast
 #end method
 
+#block DescriptionListDD
+#% public void DescriptionListDD  (List<_Choice> Entries) {
+#foreach (var Entry in Entries)
+#call DescriptionDD Entry
+#end foreach
+#% }
+#end block
+
+#method DescriptionDD _Choice TEntry
+#switchcast ProtoStructType TEntry
+#casecast Description Description
+:#!
+#foreach (string s in Description.Text1)
+#{s}
+#end foreach
+#{EndP}#!
+#end switchcast
+#end method
 
 
 
@@ -213,6 +359,11 @@
 #% string Type = null; 
 #% string Name = null;
 #switchcast ProtoStructType Entry
+#casecast Inherits Inherits
+* Inherits: #{Inherits.Ref}
+
+#casecast Description Desc
+#call Description Desc
 #casecast Boolean Param
 #% Name = Param.Id.ToString (); Options = Param.Options ; Type = "Boolean";
 #casecast Integer Param
@@ -254,19 +405,34 @@
 
 #block OptionList
 #% public void OptionList  (List<_Choice> Entries) {
-#% string min = "0", max = "1", def = "";
+#% bool PRequired = false, PMultiple = false;
+#% string def;
 #foreach (_Choice Entry in Entries)
 #switchcast ProtoStructType Entry
 #casecast Required Required
-#% min = "1";
+#% PRequired = true;
 #casecast Multiple Multiple
-#% max = "Many";
+#% PMultiple = true;
 #casecast Default Default
 #% def = "Default =" + Default.Value;
 #end switchcast
 #end foreach
- [#{min}..#{max}]  #{def} #{EndParam}
-#call DescriptionListSkip Entries
+ #!
+#if PMultiple
+#if PRequired
+[1..Many]
+#else
+[0..Many]
+#end if
+#else
+#if PRequired
+(Required)
+#else
+(Optional)
+#end if
+#end if
+
+#call DescriptionListDD Entries
 #{EndParamBlock}#!
 #% }
 #end block
