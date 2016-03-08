@@ -1,6 +1,7 @@
 ﻿
 
 #Mesh Portal Service  Reference
+
 SRV Prefix:
 
 :_mmm._tcp
@@ -20,6 +21,7 @@ necessary to perform a Hello transaction prior to
 a ValidateAccount, Publish or any other transaction.
 
 ##Request Messages
+
 A Mesh Portal Service request consists of a payload object
 that inherits from the MeshRequest class. When using the 
 HTTP binding, the request MUST specify the portal DNS
@@ -36,6 +38,7 @@ Portal: String (Optional)
 is directed.
 
 ##Response Messages
+
 A Mesh Portal Service response consists of a payload object that
 inherits from the MeshResponse class. When using the
 HTTP binding, the response SHOULD
@@ -65,6 +68,7 @@ StatusDescription: String (Optional)
 and log file use.
 
 ###Successful Response Codes
+
 The following response codes are returned when a
 transaction has completed successfully.
 
@@ -78,6 +82,7 @@ transaction has completed successfully.
 :Operation completed successfully, data item was updated
 
 ###Warning Response Codes
+
 The following response codes are returned when a
 transaction did not complete because the target
 service has been redirected.
@@ -96,6 +101,7 @@ trustworthy without appropriate authentication.
 :Service has been temporarily moved
 
 ###Error Response Codes
+
 A response code in the range 400-499 is
 returned when the service was able to process the
 transaction but the transaction resulted in an error.
@@ -110,6 +116,7 @@ transaction but the transaction resulted in an error.
 :The requested object already exists.
 
 ###Failure Response Codes
+
 A response code in the range 500-599 is
 returned when the service was unable to process the
 transaction but the transaction due to an internal
@@ -122,10 +129,12 @@ failure.
 :The server cannot handle the request as it is overloaded
 
 ##Imported Objects
+
 The Mesh Service protocol makes use of JSON objects
 defined in the JOSE Signatgure and Encryption specifications.
 
 ##Common Structures
+
 The following common structures are used in the protocol
 messages:
 
@@ -179,6 +188,7 @@ Key: String (Optional)
 Value: String (Optional)
 
 #Transactions
+
 
 
 ##Transaction: Hello

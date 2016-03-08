@@ -323,6 +323,8 @@ namespace ProtoGen {
 			 var Level = Section.Level;
 			// #% StartSection (Level, Section.Title); 
 			 StartSection (Level, Section.Title);
+			//  
+			_Output.Write ("\n{0}", _Indent);
 			// #call DescriptionList Section.Entries 
 			DescriptionList (Section.Entries);
 			// #call EndSection Level 

@@ -130,6 +130,7 @@
 #method SectionHeading Section Section
 #% var Level = Section.Level;
 #% StartSection (Level, Section.Title);
+
 #call DescriptionList Section.Entries
 #call EndSection Level
 #end method
