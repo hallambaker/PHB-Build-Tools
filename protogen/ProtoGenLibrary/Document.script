@@ -195,17 +195,17 @@ Response:#{Transaction.Response}
 #end method
 
 #method MakeSuccess Success Success
-#{Success.Code} #{Success.Id}
+[#{Success.Code}] #{Success.Id}
 #call DescriptionListDD Success.Entries
 #end method
 
 #method MakeWarning Warning Warning
-#{Warning.Code} #{Warning.Id}
+[#{Warning.Code}] #{Warning.Id}
 #call DescriptionListDD Warning.Entries
 #end method
 
 #method MakeError Error Error
-#{Error.Code} #{Error.Id}
+[#{Error.Code}] #{Error.Id}
 #call DescriptionListDD Error.Entries
 #end method
 

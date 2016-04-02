@@ -15,6 +15,10 @@ namespace Goedel.Registry {
         public virtual void Process(
                         TokenType Token, Position Position, string Text) {
             }
+
+        public virtual void Init () {
+            }
+
         }
 
     public abstract class Dispatch {

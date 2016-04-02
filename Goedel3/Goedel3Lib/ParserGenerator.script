@@ -95,6 +95,18 @@ namespace #{Class.Namespace} {
         abstract public #{Class.Name}Type _Tag ();
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
+
+		public virtual void Init (_Choice Parent) {
+			}
+
+		bool _Initialized = false;
+		public virtual void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			if (_Initialized) {
+				return;
+				}
+			_Initialized = true;
+			}
         }
 
 
@@ -119,6 +131,26 @@ namespace #{Class.Namespace} {
         public override #{Class.Name}Type _Tag () {
             return #{Class.Name}Type.#{ID};
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+#foreach (Entry Entry in Entries)
+#switchcast GoedelType Entry.Type
+#casecast Choice Choice
+			#{Entry.Name}._InitChildren (this);
+#casecast ChoiceREF ChoiceREF
+			#{Entry.Name}._InitChildren (this);
+#casecast _Label Label
+			#{Entry.Name}._InitChildren (this);
+#casecast List List
+#if ((List.Type._Tag() == GoedelType._Label) |  (List.Type._Tag() == GoedelType.Choice) | (List.Type._Tag() == GoedelType.ChoiceREF))
+			foreach (var Sub in #{Entry.Name}) {
+				Sub._InitChildren (this);
+				}
+#end if
+#end switchcast
+#end foreach
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -153,9 +185,7 @@ namespace #{Class.Namespace} {
 			Output.WriteId ("ID", Label.ToString());
 			}
         }
-//	}
 
-//namespace Goedel.Registry {
 
     public enum StateCode {  
         _Start,
@@ -216,10 +246,21 @@ namespace #{Class.Namespace} {
                 Lexer Schema = new Lexer(File);
                 Schema.Process(infile, Result);
                 }
+			Result._InitChildren ();
 
             return Result;
             }
 
+		bool _Initialized = false;
+		public virtual void _InitChildren () {
+			if (_Initialized) {
+				return;
+				}
+			_Initialized = true;
+			foreach (var Entry in Top) {
+				Entry._InitChildren (null);
+				}
+			}
 
         public #{Class.Name}() {
             Top = new List<#{Class.Namespace}._Choice> () ;

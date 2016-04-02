@@ -14,7 +14,7 @@
 		GUID "83A2D491-F2C5-407F-B1A6-1D4FC9B4C053"
 		Project CSharp
 		Project VisualBasic
-		Parser FSRGen.FSRStruct
+		Parser FSRGen.FSRSchema
 		Script FSRGen.Generate GenerateCS
 		Description
 			|Tool for generating code to implement a Finite State Recognizer from
@@ -94,7 +94,7 @@
 		Project CSharp
 		Project VisualBasic
 		Parser GoedelDomainer.Domainer
-		Script GoedelDomainer.GenerateParser GenerateCS
+		Script GoedelDomainer.Generate GenerateCS
 		Description
 			|Scripting tool, converts descriptions of DNS resource records to
 			|a class providing scripting, serialization and presentation support.
@@ -130,3 +130,12 @@
 		Process RFCTool.BindingRFC Process2HTML
 		Description
 			|Convert RFC source in Markdown, XML or HTML to HTML format.
+
+	TrojanGTK Generator ".cs"
+		GUID "B78A37AF-CFC6-44DC-ADAD-D5EA7CFAADCC"
+		Project CSharp
+		Project VisualBasic
+		Parser Goedel.Trojan.Script.GUISchema
+		Script Goedel.Trojan.Script.GenerateGTK GenerateCS
+		Description
+			|Tool for generating GUI interface using GTK#

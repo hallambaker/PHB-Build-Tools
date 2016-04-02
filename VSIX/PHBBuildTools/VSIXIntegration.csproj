@@ -261,6 +261,10 @@
       <Project>{53284d1c-9b9f-4a44-adde-306606f8f0e7}</Project>
       <Name>LibRFCTool</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Trojan3\Goedel.Trojan.Script\Goedel.Trojan.Script.csproj">
+      <Project>{343b6836-1c87-4717-ba6f-611e38bccc82}</Project>
+      <Name>Goedel.Trojan.Script</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\VSIXBuild\LibVSIXBuild\VSIXBuildLibrary.csproj">
       <Project>{88e55204-d54c-438d-bd47-9d33ccb2580b}</Project>
       <Name>VSIXBuildLibrary</Name>

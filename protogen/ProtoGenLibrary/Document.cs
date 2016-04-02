@@ -489,8 +489,8 @@ namespace ProtoGen {
 		// MakeSuccess
 		//
 		public void MakeSuccess (Success Success) {
-			// #{Success.Code} #{Success.Id} 
-			_Output.Write ("{1} {2}\n{0}", _Indent, Success.Code, Success.Id);
+			// [#{Success.Code}] #{Success.Id} 
+			_Output.Write ("[{1}] {2}\n{0}", _Indent, Success.Code, Success.Id);
 			// #call DescriptionListDD Success.Entries 
 			DescriptionListDD (Success.Entries);
 			// #end method 
@@ -503,8 +503,8 @@ namespace ProtoGen {
 		// MakeWarning
 		//
 		public void MakeWarning (Warning Warning) {
-			// #{Warning.Code} #{Warning.Id} 
-			_Output.Write ("{1} {2}\n{0}", _Indent, Warning.Code, Warning.Id);
+			// [#{Warning.Code}] #{Warning.Id} 
+			_Output.Write ("[{1}] {2}\n{0}", _Indent, Warning.Code, Warning.Id);
 			// #call DescriptionListDD Warning.Entries 
 			DescriptionListDD (Warning.Entries);
 			// #end method 
@@ -517,8 +517,8 @@ namespace ProtoGen {
 		// MakeError
 		//
 		public void MakeError (Error Error) {
-			// #{Error.Code} #{Error.Id} 
-			_Output.Write ("{1} {2}\n{0}", _Indent, Error.Code, Error.Id);
+			// [#{Error.Code}] #{Error.Id} 
+			_Output.Write ("[{1}] {2}\n{0}", _Indent, Error.Code, Error.Id);
 			// #call DescriptionListDD Error.Entries 
 			DescriptionListDD (Error.Entries);
 			// #end method 

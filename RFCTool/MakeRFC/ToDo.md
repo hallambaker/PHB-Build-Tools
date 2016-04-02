@@ -1,16 +1,23 @@
 ﻿Bugs
 ====
 
+XML output - generate processing instructions.
+
+Short documentation card
+
+Installer
+
+
 Word Parser
 
-* Bug in handling of metadate - trim trailing \r
 * No tables
-* Convert smart quotes to regular quotes
+* Do figures for SVG output
 
 MarkDown Parser
 
 * Handle include files
 * Switch to Carsten's markup
+* In particular DT/DD as /: not :/::
 
 Markdown Output
 

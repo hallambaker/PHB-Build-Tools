@@ -104,7 +104,7 @@ namespace HTML2RFC {
             AddSource("RFC", "http://xml.resource.org/public/rfc/bibxml/reference.RFC.#D4#.xml");
             AddSource("DRAFT-", "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-#.xml");
             AddSource("draft-", "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-#.xml");
-            AddSource("draft-", "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.#.xml");
+            //AddSource("draft-", "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.#.xml");
             AddSource("I-D.", "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.#.xml");
             AddSource("W3C.", "http://xml.resource.org/public/rfc/bibxml4/reference.W3C.#.xml");
             AddSource("XEP-", "http://xmpp.org/extensions/refs/reference.XSF.XEP-#D4#.xml");
@@ -355,15 +355,15 @@ namespace HTML2RFC {
             string Uri = GetUri(Citation.Label);
             if (Uri == null) return;
 
-            //Console.WriteLine("{0}  {1}", Citation.Label, Uri);
+            Console.WriteLine("{0}  {1}", Citation.Label, Uri);
 
             try {
                 string Result = WebClient.DownloadString(Uri);
                 Citation.Result = StripDeclaration (Result);
                 //Citation.Resolved = Result != null;
                 Citation.Uri = Uri;
-                //Console.WriteLine(Result);
-                //Console.WriteLine();
+                Console.WriteLine(Result);
+                Console.WriteLine();
 
                 // This is horribly hack but will do for now.
                 // Should really rewrite the parser to separate
@@ -378,7 +378,7 @@ namespace HTML2RFC {
                     }
                 }
             catch {
-                //Console.WriteLine("$04-Not Found");
+                Console.WriteLine("$04-Not Found");
                 }
             //Console.WriteLine();
             }

@@ -2,7 +2,7 @@
 // Script Syntax Version:  1.0
 // #license MITLicense 
 
-//  Copyright ©  2015 by 
+//  Copyright ©  2011 by Default Deny Security Inc.
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -251,6 +251,30 @@ namespace GoedelSchema {
 			_Output.Write ("\n{0}", _Indent);
 			// 		public abstract void Serialize (StructureWriter Output, bool tag); 
 			_Output.Write ("		public abstract void Serialize (StructureWriter Output, bool tag);\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// 		public virtual void Init (_Choice Parent) { 
+			_Output.Write ("		public virtual void Init (_Choice Parent) {{\n{0}", _Indent);
+			// 			} 
+			_Output.Write ("			}}\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// 		bool _Initialized = false; 
+			_Output.Write ("		bool _Initialized = false;\n{0}", _Indent);
+			// 		public virtual void _InitChildren (_Choice Parent) { 
+			_Output.Write ("		public virtual void _InitChildren (_Choice Parent) {{\n{0}", _Indent);
+			// 			Init (Parent); 
+			_Output.Write ("			Init (Parent);\n{0}", _Indent);
+			// 			if (_Initialized) { 
+			_Output.Write ("			if (_Initialized) {{\n{0}", _Indent);
+			// 				return; 
+			_Output.Write ("				return;\n{0}", _Indent);
+			// 				} 
+			_Output.Write ("				}}\n{0}", _Indent);
+			// 			_Initialized = true; 
+			_Output.Write ("			_Initialized = true;\n{0}", _Indent);
+			// 			} 
+			_Output.Write ("			}}\n{0}", _Indent);
 			//         } 
 			_Output.Write ("        }}\n{0}", _Indent);
 			//  
@@ -299,6 +323,54 @@ namespace GoedelSchema {
 				_Output.Write ("            return {1}Type.{2};\n{0}", _Indent, Class.Name, ID);
 				//             } 
 				_Output.Write ("            }}\n{0}", _Indent);
+				//  
+				_Output.Write ("\n{0}", _Indent);
+				// 		public override void _InitChildren (_Choice Parent) { 
+				_Output.Write ("		public override void _InitChildren (_Choice Parent) {{\n{0}", _Indent);
+				// 			Init (Parent); 
+				_Output.Write ("			Init (Parent);\n{0}", _Indent);
+				// #foreach (Entry Entry in Entries) 
+				foreach  (Entry Entry in Entries) {
+					// #switchcast GoedelType Entry.Type 
+					switch (Entry.Type._Tag ()) {
+						// #casecast Choice Choice 
+						case GoedelType.Choice: {
+						  Choice Choice = (Choice) Entry.Type; 
+						// 			#{Entry.Name}._InitChildren (this); 
+						_Output.Write ("			{1}._InitChildren (this);\n{0}", _Indent, Entry.Name);
+						// #casecast ChoiceREF ChoiceREF 
+						break; }
+						case GoedelType.ChoiceREF: {
+						  ChoiceREF ChoiceREF = (ChoiceREF) Entry.Type; 
+						// 			#{Entry.Name}._InitChildren (this); 
+						_Output.Write ("			{1}._InitChildren (this);\n{0}", _Indent, Entry.Name);
+						// #casecast _Label Label 
+						break; }
+						case GoedelType._Label: {
+						  _Label Label = (_Label) Entry.Type; 
+						// 			#{Entry.Name}._InitChildren (this); 
+						_Output.Write ("			{1}._InitChildren (this);\n{0}", _Indent, Entry.Name);
+						// #casecast List List 
+						break; }
+						case GoedelType.List: {
+						  List List = (List) Entry.Type; 
+						// #if ((List.Type._Tag() == GoedelType._Label) |  (List.Type._Tag() == GoedelType.Choice) | (List.Type._Tag() == GoedelType.ChoiceREF)) 
+						if (  ((List.Type._Tag() == GoedelType._Label) |  (List.Type._Tag() == GoedelType.Choice) | (List.Type._Tag() == GoedelType.ChoiceREF)) ) {
+							// 			foreach (var Sub in #{Entry.Name}) { 
+							_Output.Write ("			foreach (var Sub in {1}) {{\n{0}", _Indent, Entry.Name);
+							// 				Sub._InitChildren (this); 
+							_Output.Write ("				Sub._InitChildren (this);\n{0}", _Indent);
+							// 				} 
+							_Output.Write ("				}}\n{0}", _Indent);
+							// #end if 
+							}
+						// #end switchcast 
+					break; }
+						}
+					// #end foreach 
+					}
+				// 			} 
+				_Output.Write ("			}}\n{0}", _Indent);
 				//  
 				_Output.Write ("\n{0}", _Indent);
 				// 		public override void Serialize (StructureWriter Output, bool tag) { 
@@ -367,12 +439,8 @@ namespace GoedelSchema {
 			_Output.Write ("			}}\n{0}", _Indent);
 			//         } 
 			_Output.Write ("        }}\n{0}", _Indent);
-			// //	} 
-			_Output.Write ("//	}}\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
-			// //namespace Goedel.Registry { 
-			_Output.Write ("//namespace Goedel.Registry {{\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			//     public enum StateCode {   
@@ -493,6 +561,8 @@ namespace GoedelSchema {
 			_Output.Write ("                Schema.Process(infile, Result);\n{0}", _Indent);
 			//                 } 
 			_Output.Write ("                }}\n{0}", _Indent);
+			// 			Result._InitChildren (); 
+			_Output.Write ("			Result._InitChildren ();\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			//             return Result; 
@@ -501,6 +571,26 @@ namespace GoedelSchema {
 			_Output.Write ("            }}\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
+			// 		bool _Initialized = false; 
+			_Output.Write ("		bool _Initialized = false;\n{0}", _Indent);
+			// 		public virtual void _InitChildren () { 
+			_Output.Write ("		public virtual void _InitChildren () {{\n{0}", _Indent);
+			// 			if (_Initialized) { 
+			_Output.Write ("			if (_Initialized) {{\n{0}", _Indent);
+			// 				return; 
+			_Output.Write ("				return;\n{0}", _Indent);
+			// 				} 
+			_Output.Write ("				}}\n{0}", _Indent);
+			// 			_Initialized = true; 
+			_Output.Write ("			_Initialized = true;\n{0}", _Indent);
+			// 			foreach (var Entry in Top) { 
+			_Output.Write ("			foreach (var Entry in Top) {{\n{0}", _Indent);
+			// 				Entry._InitChildren (null); 
+			_Output.Write ("				Entry._InitChildren (null);\n{0}", _Indent);
+			// 				} 
+			_Output.Write ("				}}\n{0}", _Indent);
+			// 			} 
+			_Output.Write ("			}}\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			//         public #{Class.Name}() { 

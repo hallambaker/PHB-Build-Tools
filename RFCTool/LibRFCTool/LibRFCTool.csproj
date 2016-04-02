@@ -67,6 +67,7 @@
     <None Include="rfc2629.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="RFC2HTML.x" />
     <None Include="TestCodeSigningKey.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
