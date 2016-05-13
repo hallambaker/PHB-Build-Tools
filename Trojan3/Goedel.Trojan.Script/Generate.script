@@ -1,0 +1,390 @@
+﻿#script 1.0
+#license MITLicense
+#using System.Linq
+#pclass Goedel.Trojan.Script GenerateGTK
+#!
+#% System.DateTime GenerateTime = System.DateTime.UtcNow;
+#% string GoedelNamespace = "Goedel.Trojan";
+#% string TitleField = "Title";
+#% Separator Separator;
+#method GenerateCS GUISchema GUISchema
+#% GUISchema._InitChildren ();
+
+//This file was generated automatically.
+
+using System;
+using System.Collections.Generic;
+using Goedel.Registry;
+using Goedel.Trojan;
+
+#foreach (var GUI in GUISchema.GUIs)
+
+namespace #{GUI.Namespace} {
+
+	// Make extensible partial classes for all the toplevel classes
+	// This allows an implementation to decorate any class at will.
+	public abstract partial class Object:  #{GoedelNamespace}.Object {
+		}
+	public abstract partial class Menu:  #{GoedelNamespace}.Menu {
+		}
+	public abstract partial class Window:  #{GoedelNamespace}.Window {
+		}
+	public abstract partial class Wizard:  #{GoedelNamespace}.Wizard {
+		}
+	public abstract partial class Model:  #{GoedelNamespace}.Model {
+		}
+
+	//The main declarations
+	public partial class #{GUI.Id} : _#{GUI.Id} {
+		}
+
+
+	public partial class _#{GUI.Id} : Model {
+
+        public _#{GUI.Id}() {
+            _About = new About(this) {
+#if GUI.About != null
+				Name = "#{GUI.About.Title}"
+#end if
+				};
+            }
+
+
+
+
+#foreach (var Command in GUI.Commands) 
+		public virtual void #{Command.Id} (#!
+#if (Command.Parameter != null) 
+#{Command.Parameter} #{Command.Parameter}#!
+#end if		
+) {
+			}
+
+#end foreach
+
+#foreach (var Object in GUI.Objects) 
+		protected #{Object.Id} Selected_#{Object.Id} = null ;
+#end foreach
+
+        public override void  Dispach(string Command) {
+            switch (Command) {
+#foreach (var Command in GUI.Commands) 
+#if (Command.Parameter != null) 
+                case "#{Command.Id}_#{Command.Parameter}": {
+                        #{Command.Id}(Selected_#{Command.Parameter});
+#else	
+                case "#{Command.Id}": {
+                        #{Command.Id}();
+#end if
+                        return;
+                        }
+#end foreach
+                }
+            }
+
+        public bool Active(String Command) {
+            switch (Command) {
+#foreach (var Command in GUI.Commands) 
+#if (Command.Parameter != null) 
+                case "#{Command.Id}_#{Command.Parameter}": {
+                        return Selected_#{Command.Parameter}# != null;
+                        }
+#end if	
+#end foreach
+                }
+            return true;
+            }
+		}
+
+	// Windows
+
+#foreach (var Window in GUI.Windows) 
+
+	public partial class #{Window.Id} : _#{Window.Id} {
+
+		string _Title = "#{Window.Tag}";
+		public override string Title {
+			get {return _Title;}
+			set {_Title = value;}
+			}
+
+		public #{Window.Id}  (Model Model, Binding Binding) {
+			// Call backing code to populate the data model
+			Populate ();
+
+			// Initialize the view and controller
+			Initialize (Model, Binding);
+			}
+		}
+
+	public abstract class _#{Window.Id} : Window {
+
+#if (Window.Menu != null)
+		Menu _Menu = new #{Window.Menu.Id} ();
+        public override #{GoedelNamespace}.Menu Menu { get { return _Menu; } }
+#end if		
+		}
+#end foreach
+
+#foreach (var Menu in GUI.Menus) 
+
+	public partial class #{Menu.Id} : _#{Menu.Id} {
+		}
+
+	public partial class _#{Menu.Id} : Menu {
+	
+		public override List<MenuEntry> Entries {
+            get { return _Entries; }
+            set { _Entries = value; }
+            }
+
+#call MakeMenu Menu
+		}
+
+
+#end foreach
+
+	// Wizards
+
+#foreach (var Wizard in GUI.Wizards) 
+
+
+	public partial class #{Wizard.Id} : _#{Wizard.Id} {
+		}
+
+	public partial class _#{Wizard.Id} : Wizard {
+
+        public override string Title => #{Wizard.Tag.Quoted()};
+        public override List<string> Texts => _Texts;
+        public override List<Step> Steps => _Steps;
+
+
+	// #{Wizard.Id}
+		List<string> _Texts = #!
+#call MakeTextList Wizard.Entries
+;
+		List<Step> _Steps = new List<Step> {#!
+#% Separator = new Separator (",");
+#foreach (var Entry in Wizard.Entries)
+#% var Step = Entry as Step;
+#if Step != null
+#{Separator}
+			new Step () {Object = new #{Step.Id} (), 
+				Title = #{Step.Tag.Quoted()}, Description =
+		#!
+#indent
+#indent
+#call MakeTextList Step.Entries
+#outdent
+#outdent
+}#!
+#end if
+#end foreach
+};
+
+
+		}
+
+
+#end foreach
+
+	// Objects
+
+#foreach (var Object in GUI.Objects) 
+	public partial class #{Object.Id} : _#{Object.Id}{
+		}
+
+
+	public class _#{Object.Id} #!
+#if (Object.ParentObject == null)
+: Object #!
+#else
+: #{Object.ParentObject.Id} #!
+#end if	
+{
+
+#call DeclareFields Object.Entries
+
+		public override List<ObjectEntry> Entries {
+            get { return _Entries; }
+            set { _Entries = value; }
+            }
+
+		List<ObjectEntry> _Entries = new List<ObjectEntry> {
+#% Separator =new Separator (",");
+#% MakeWidgets (Object, Separator);
+			} ;
+		}
+
+
+#end foreach
+
+
+#end foreach
+
+	}
+
+#end method
+
+#block MakeTextList
+#% public void MakeTextList (List<_Choice> Entries) {
+#% var Separator = new Separator (",");
+		new List<string> {#!
+#foreach (var Entry in Entries)
+#% var Text = Entry as Text;
+#if Text != null
+#{Separator}
+			#{Text.Data.Quoted()} #!
+#end if
+#end foreach
+
+			}#!
+#% }
+#end block 
+
+
+
+#method MakeMenu Menu Menu
+		List<MenuEntry> _Entries = new List<MenuEntry> {#!
+#% var Separator = new Separator (",");
+#foreach (var Entry in Menu.Entries)
+#switchcast GUISchemaType Entry
+#casecast Menu SubMenu
+#{Separator}
+			new SubMenu ("#{SubMenu.Id}",  "#{SubMenu.Tag}", new #{SubMenu.Id}())#!
+#casecast Command Command
+#{Separator}
+			new MenuEntry ("#{Command.Id}",  "#{Command.Tag}")#!
+#end switchcast
+#end foreach
+};
+#end method
+
+
+#block MakeWidgets
+#% public void MakeWidgets (_Choice Choice, Separator Separator) {
+#% List<_Choice> Entries = null;
+#% var Object = Choice as Object;
+#if (Object != null)
+#% Entries = Object.Entries;
+#if (Object.ParentObject != null)
+#% MakeWidgets (Object.ParentObject, Separator);
+#end if
+#elseif (Choice as Enumerate != null)
+#% var Enumerate = Choice as Enumerate;
+#% Entries = Enumerate.Entries;
+#else
+#% var Option = Choice as Option;
+#% Entries = Option.Entries;
+#end if
+#foreach (var Entry in Entries)
+#if (Entry as Command != null) 
+#{Separator}
+			new ObjectCommand {
+						Id = "#{Entry.FieldName}",  
+						Label = "#{Entry.FieldTag}"}#!
+#elseif (Entry as Inherit != null) 
+#elseif (Entry as Text != null) 
+#% var Text = Entry as Text;
+#{Separator}
+			new ObjectText {
+						Text = "#{Text}"
+						}#!
+#elseif (Entry as Enumerate != null) 
+#% var Enumerate = Entry as Enumerate;
+#{Separator}
+			new ObjectFieldEnumerate {
+						Id = "#{Entry.FieldName}",  
+						Label = "#{Entry.FieldTag}",
+						Entries = new List<ObjectEntry> {#!
+#indent
+#% var SubSeparator = new Separator (",");
+#%  MakeWidgets (Enumerate, SubSeparator);
+#outdent
+
+							}
+						}#!
+#elseif (Entry as Option != null) 
+#% var Option = Entry as Option;
+#{Separator}	
+			new ObjectFieldOption {
+						Id = "#{Entry.FieldName}",  
+						Label = "#{Entry.FieldTag}",
+						Entries = new List<ObjectEntry> {#!
+#indent
+#% var SubSeparator = new Separator (",");
+#%  MakeWidgets (Option, SubSeparator);
+#outdent
+
+							}
+						}#!
+#else 
+#{Separator}
+			new ObjectField#{Entry.WidgetType} {Id = "#{Entry.FieldName}", 
+						Label = "#{Entry.FieldTag}" // #{Entry.FieldIndex}
+					    }#!
+#end if
+#end foreach
+#% }
+#end block
+
+
+
+#method MakeFieldArray Object Object
+#if (Object.ParentObject != null)
+#call MakeFieldArray Object.ParentObject
+#end if
+#foreach (var Entry in Object.Entries)
+#if ((Entry.FieldNumber >= 0))
+#{Separator}
+			new FieldValue#{Entry.WidgetType} ()  /* #{Entry.FieldName} #{Entry.FieldNumber} */ #!
+#end if	
+#end foreach
+#end method
+
+
+#method DeclareFields List<_Choice> Entries
+#foreach (var Entry in Entries)
+#if (Entry.FieldNumber >= 0)
+#if (Entry as Enumerate != null) 
+		public enum #{Entry.FieldType} {#!
+#% Separator = new Separator (",");
+#foreach (var EnumEntry in (Entry as Enumerate).Entries)
+#switchcast GUISchemaType EnumEntry
+#casecast Radio Radio
+#{Separator}
+			#{Radio.Id}  /* #{Radio.Tag} */
+#end switchcast
+#end foreach
+			};
+		public #{Entry.FieldType} #{Entry.FieldName};
+#else
+		/// <summary>
+        /// #{Entry.FieldName}
+        /// </summary>
+		public #{Entry.FieldType} #{Entry.FieldName} {
+			get {
+#if (Entry as Item != null)
+				return (#{Entry.FieldType}) #{Entry.FieldIndex};
+#else
+				return #{Entry.FieldIndex};
+#end if
+				}
+			set {
+				#{Entry.FieldIndex} = value;
+				}
+			}
+			
+#end if
+#end if
+#switchcast GUISchemaType Entry
+#casecast Item Item
+#casecast List List
+#casecast Set Set
+#casecast Option Option
+#call DeclareFields Option.Entries
+#end switchcast
+#end foreach
+#end method
+
+#end pclass

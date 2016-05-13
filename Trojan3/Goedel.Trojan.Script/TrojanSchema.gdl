@@ -1,0 +1,184 @@
+﻿Class Goedel.Trojan.Script GUISchema
+	TopType GUI
+		Namespace	Token	ClassType
+		Id		ID GuiType
+		Entries List Choice
+			About
+
+			Window
+			Menu
+			Object
+			Wizard
+
+	Type About
+		Title		String
+		Entries List Choice
+			Text
+			Copyright
+
+	Type Text
+		Data		Text
+	Type Copyright
+		Data		String
+
+	Type Tip
+		Data		Text
+
+	Type Window
+		Id			ID WidgetType
+		Tag			String	
+		Entries List Choice
+			ThreePane
+
+	Type ThreePane
+		Menu		REF WidgetType
+
+	// All menus should eventually be user cutomizable
+	// This is just to set the defaults
+
+	Type Menu
+		Id			ID WidgetType
+		Tag			String	
+		Entries List Choice
+			Command
+			Menu
+
+	Type Command
+		Id			Token WidgetType
+		Tag			String
+		Entries List Choice
+			Select	
+			Tip
+			Text	
+	
+	// Specify an object type that must be selected for a command.
+	Type Select
+		Id			REF ItemType
+
+
+	// Specify an object type
+	Type Object
+		Id			ID ItemType
+		Tag			String		
+		Entries List Choice
+			Inherit
+			DateTime
+			String
+			Secret
+			Integer
+			Boolean
+			Option
+			Set
+			Command
+			List
+			Chooser
+			Enumerate
+			Text
+			Tip
+			Item
+
+	// References to other types
+	Type Inherit
+		Id			REF ItemType
+
+	Type Item
+		Of			REF ItemType
+		Id			Token FieldType
+		Tag			String	
+
+	Type List
+		Of			REF ItemType
+		Id			Token FieldType
+		Tag			String	
+
+	Type Set
+		Of			REF FieldType
+		Id			Token FieldType
+		Tag			String	
+		Entries List Choice
+			Output
+
+	Type Option
+		Id			Token FieldType
+		Tag			String	
+		Entries List Choice
+			DateTime
+			String
+			Secret
+			Integer
+			Boolean
+			Option
+			Set
+			Command
+			Item
+			List
+			Chooser
+			Text
+			Tip
+
+	// Intrinsic types.
+	Type DateTime
+		Id			Token FieldType
+		Tag			String	
+		Entries List Choice
+			Output
+
+
+	Type Chooser
+		Id			Token FieldType
+		Tag			String	
+		Entries List Choice
+			Output
+
+	Type String
+		Id			Token FieldType
+		Tag			String	
+		Entries List Choice
+			Output
+
+	Type Secret
+		Id			Token FieldType
+		Tag			String	
+		Entries List Choice
+			Output
+
+	Type Integer
+		Id			Token FieldType
+		Tag			String	
+		Entries List Choice
+			Output
+
+	Type Boolean
+		Id			Token FieldType
+		Tag			String	
+		Entries List Choice
+			Output
+
+	Type Output
+
+	Type Enumerate
+		Id			Token FieldType
+		Tag			String
+		Entries List Choice
+			Radio
+			Text
+
+	Type Radio
+		Id			Token FieldType
+		Tag			String	
+
+
+
+	Type Wizard
+		Id			ID  WizardType
+		Tag			String
+		Entries List Choice
+			Step
+			Text
+
+	Type Step 
+		Id			REF  ItemType
+		Tag			String
+
+		Entries List Choice
+			Text

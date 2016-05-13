@@ -204,8 +204,11 @@ namespace Goedel.Script {
         const string OutdentText = "_Indent = _Indent.Remove (0,1);";
 
         const string SwitchCastText = "switch ({1}._Tag ()) {{";  
-        const string CaseCastText = "case {2}.{0}: {{\n{4}  {0} {1} = ({0}) {3}; ";  
+        const string CaseCastText = "case {2}.{0}: {{\n{4}  {0} {1} = ({0}) {3}; ";
 
+
+        const string IfAsText = "if (({0} as {1}) != null) { var {1} {2} = {0} as {1} ;";
+        const string ElseAsText = "} else if (({0} as {1}) != null) { var {1} {2} = {0} as {1} ;";
 
         /// <summary>
         /// The command table state machine. 
@@ -243,7 +246,12 @@ namespace Goedel.Script {
             new ScriptCommand ("switch",	SwitchText,		    	"\t}",	1,		5,		1,		3),
 			new ScriptCommand ("case",		CaseText,	    EndCaseText,	1,		5,		0,		5),
 
-			new ScriptCommand ("switchcast","%10",		            "\t}",	1,		5,		1,		3),
+
+            new ScriptCommand ("ifas",      IfAsText,               "\t}",  3,      7,      1,      3),
+            new ScriptCommand ("elseas",    ElseAsText,              null,  3,      7,      0,      7),
+
+
+            new ScriptCommand ("switchcast","%10",		            "\t}",	1,		5,		1,		3),
 			new ScriptCommand ("casecast",	"%11",	        EndCaseText,	2,		5,		0,		5),
 
 			new ScriptCommand ("default",	DefaultText,	 EndCaseText,	1,		6,		0,		5),
@@ -255,15 +263,16 @@ namespace Goedel.Script {
 			};
 
         static bool[,] AllowedTransitions = {
-			//	0		1		2		3		4		5       6
-			{	true,	true,	true,	true,	true,	true,   true},		// 0 ! always allowed
-			{	false,	true,	false,	false,	false,	false,  false},		// 1 method only allows in class
-			{	false,	true,	true,	true,	true,	true,   true},		// 2 end allowed except before class
-			{	false,	false,	true,	true,	true,	true,   true},		// 3 %, if, for, switch
-			{	false,	false,	false,	true,	false,	false,  false},		// 4 elseif
-			{	false,	false,	false,	false,	false,	true,   false},		// 5 case
-			{	true,	false,	false,	false,	false,	false,  false}		// 6 default
-			};
+			//	0		1		2		3		4		5       6       7
+			{	true,	true,	true,	true,	true,	true,   true,   true},		// 0 ! always allowed
+			{	false,	true,	false,	false,	false,	false,  false,  false},		// 1 method only allows in class
+			{	false,	true,	true,	true,	true,	true,   true,   false},		// 2 end allowed except before class
+			{	false,	false,	true,	true,	true,	true,   true,   true},		// 3 %, if, for, switch
+			{	false,	false,	false,	true,	false,	false,  false,  false},		// 4 elseif
+			{	false,	false,	false,	false,	false,	true,   false,  false},		// 5 case
+			{	true,	false,	false,	false,	false,	false,  false,  false},     // 6 default
+            {   false,  false,  false,  false,  false,  false,  false,  true},		// 7 ifas
+            };
 
         public  string Indent = "";
         public  int state = 0;
