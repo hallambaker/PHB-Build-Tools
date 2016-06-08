@@ -23,6 +23,7 @@ using Goedel.Registry;
 //       GUI
 //   TypeType
 //       About
+//       Command
 //       Window
 //       Menu
 //       Object
@@ -31,7 +32,8 @@ using Goedel.Registry;
 //       Copyright
 //       Tip
 //       ThreePane
-//       Command
+//       Action
+//       Divider
 //       Select
 //       Inherit
 //       DateTime
@@ -83,6 +85,8 @@ namespace Goedel.Trojan.Script {
         Window,
         ThreePane,
         Menu,
+        Divider,
+        Action,
         Command,
         Select,
         Object,
@@ -366,8 +370,63 @@ namespace Goedel.Trojan.Script {
 			}
 		}
 
+    public partial class Divider : _Choice {
+
+        public override GUISchemaType _Tag () {
+            return GUISchemaType.Divider;
+            }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Divider");
+				}
+
+			if (tag) {
+				Output.EndElement ("Divider");
+				}			
+			}
+		}
+
+    public partial class Action : _Choice {
+        public REF<_Choice>				Id;
+        public List <_Choice>           Entries = new List<_Choice> ();
+
+        public override GUISchemaType _Tag () {
+            return GUISchemaType.Action;
+            }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Action");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("Action");
+				}			
+			}
+		}
+
     public partial class Command : _Choice {
-        public TOKEN<_Choice>			Id;
+        public ID<_Choice>				Id; 
 		public string					Tag;
         public List <_Choice>           Entries = new List<_Choice> ();
 
@@ -388,7 +447,7 @@ namespace Goedel.Trojan.Script {
 				Output.StartElement ("Command");
 				}
 
-	        Output.WriteId ("Id", Id.ToString());
+	        Output.WriteId ("Id", Id.ToString()); 
 			Output.WriteAttribute ("Tag", Tag);
 			Output.StartList ("");
 			foreach (_Choice _e in Entries) {
@@ -516,6 +575,7 @@ namespace Goedel.Trojan.Script {
         public REF<_Choice>				Of;
         public TOKEN<_Choice>			Id;
 		public string					Tag;
+        public List <_Choice>           Entries = new List<_Choice> ();
 
         public override GUISchemaType _Tag () {
             return GUISchemaType.List;
@@ -523,6 +583,9 @@ namespace Goedel.Trojan.Script {
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
 			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -534,6 +597,11 @@ namespace Goedel.Trojan.Script {
 	        Output.WriteId ("Of", Of.ToString());
 	        Output.WriteId ("Id", Id.ToString());
 			Output.WriteAttribute ("Tag", Tag);
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("List");
 				}			
@@ -882,6 +950,7 @@ namespace Goedel.Trojan.Script {
     public partial class Radio : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Tag;
+        public List <_Choice>           Entries = new List<_Choice> ();
 
         public override GUISchemaType _Tag () {
             return GUISchemaType.Radio;
@@ -889,6 +958,9 @@ namespace Goedel.Trojan.Script {
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
 			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -899,6 +971,11 @@ namespace Goedel.Trojan.Script {
 
 	        Output.WriteId ("Id", Id.ToString());
 			Output.WriteAttribute ("Tag", Tag);
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Radio");
 				}			
@@ -1022,6 +1099,10 @@ namespace Goedel.Trojan.Script {
 		Menu__Id,				
 		Menu__Tag,				
 		Menu__Entries,				
+		Divider_Start,
+		Action_Start,
+		Action__Id,				
+		Action__Entries,				
 		Command_Start,
 		Command__Id,				
 		Command__Tag,				
@@ -1042,6 +1123,7 @@ namespace Goedel.Trojan.Script {
 		List__Of,				
 		List__Id,				
 		List__Tag,				
+		List__Entries,				
 		Set_Start,
 		Set__Of,				
 		Set__Id,				
@@ -1083,6 +1165,7 @@ namespace Goedel.Trojan.Script {
 		Radio_Start,
 		Radio__Id,				
 		Radio__Tag,				
+		Radio__Entries,				
 		Wizard_Start,
 		Wizard__Id,				
 		Wizard__Tag,				
@@ -1182,6 +1265,8 @@ namespace Goedel.Trojan.Script {
                 case "Window": return NewWindow();
                 case "ThreePane": return NewThreePane();
                 case "Menu": return NewMenu();
+                case "Divider": return NewDivider();
+                case "Action": return NewAction();
                 case "Command": return NewCommand();
                 case "Select": return NewSelect();
                 case "Object": return NewObject();
@@ -1268,6 +1353,22 @@ namespace Goedel.Trojan.Script {
             Goedel.Trojan.Script.Menu result = new Goedel.Trojan.Script.Menu();
             Push (result);
             State = StateCode.Menu_Start;
+            return result;
+            }
+
+
+        private Goedel.Trojan.Script.Divider NewDivider() {
+            Goedel.Trojan.Script.Divider result = new Goedel.Trojan.Script.Divider();
+            Push (result);
+            State = StateCode.Divider_Start;
+            return result;
+            }
+
+
+        private Goedel.Trojan.Script.Action NewAction() {
+            Goedel.Trojan.Script.Action result = new Goedel.Trojan.Script.Action();
+            Push (result);
+            State = StateCode.Action_Start;
             return result;
             }
 
@@ -1435,6 +1536,8 @@ namespace Goedel.Trojan.Script {
                 case "Window": return Goedel.Trojan.Script.GUISchemaType.Window;
                 case "ThreePane": return Goedel.Trojan.Script.GUISchemaType.ThreePane;
                 case "Menu": return Goedel.Trojan.Script.GUISchemaType.Menu;
+                case "Divider": return Goedel.Trojan.Script.GUISchemaType.Divider;
+                case "Action": return Goedel.Trojan.Script.GUISchemaType.Action;
                 case "Command": return Goedel.Trojan.Script.GUISchemaType.Command;
                 case "Select": return Goedel.Trojan.Script.GUISchemaType.Select;
                 case "Object": return Goedel.Trojan.Script.GUISchemaType.Object;
@@ -1589,6 +1692,7 @@ namespace Goedel.Trojan.Script {
                             Goedel.Trojan.Script.GUISchemaType LabelType = _Reserved (Text);
                             if ( false |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.About) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Command) |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Window) |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Menu) |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Object) |
@@ -1596,7 +1700,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [About Window Menu Object Wizard ]");
+								throw new System.Exception("Parser Error Expected [About Command Window Menu Object Wizard ]");
 								}
 							}
                         break;
@@ -1806,12 +1910,58 @@ namespace Goedel.Trojan.Script {
 							Goedel.Trojan.Script.Menu Current_Cast = (Goedel.Trojan.Script.Menu)Current;
                             Goedel.Trojan.Script.GUISchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.Trojan.Script.GUISchemaType.Command) |
-									(LabelType == Goedel.Trojan.Script.GUISchemaType.Menu) ) {
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Action) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Menu) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Divider) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Command Menu ]");
+								throw new System.Exception("Parser Error Expected [Action Menu Divider ]");
+								}
+							}
+                        break;
+
+
+                    case StateCode.Divider_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Action_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Trojan.Script.Action Current_Cast = (Goedel.Trojan.Script.Action)Current;
+                            Current_Cast.Id = Registry.REF(Position, Text, TYPE__WidgetType, Current_Cast);
+                            State = StateCode.Action__Id;
+                            break;
+                            }
+                        throw new System.Exception("Expected LABEL or LITERAL");
+
+                    case StateCode.Action__Id:
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Action__Entries;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.Action__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Trojan.Script.Action Current_Cast = (Goedel.Trojan.Script.Action)Current;
+                            Goedel.Trojan.Script.GUISchemaType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Text) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new System.Exception("Parser Error Expected [Text ]");
 								}
 							}
                         break;
@@ -1820,7 +1970,7 @@ namespace Goedel.Trojan.Script {
                     case StateCode.Command_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Trojan.Script.Command Current_Cast = (Goedel.Trojan.Script.Command)Current;
-                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__WidgetType, Current_Cast);
+                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__WidgetType, Current_Cast);
                             State = StateCode.Command__Id;
                             break;
                             }
@@ -1930,7 +2080,7 @@ namespace Goedel.Trojan.Script {
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Boolean) |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Option) |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Set) |
-									(LabelType == Goedel.Trojan.Script.GUISchemaType.Command) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Action) |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.List) |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Chooser) |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Enumerate) |
@@ -1940,7 +2090,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Inherit DateTime String Secret Integer Boolean Option Set Command List Chooser Enumerate Text Tip Item ]");
+								throw new System.Exception("Parser Error Expected [Inherit DateTime String Secret Integer Boolean Option Set Action List Chooser Enumerate Text Tip Item ]");
 								}
 							}
                         break;
@@ -2018,9 +2168,39 @@ namespace Goedel.Trojan.Script {
                         throw new System.Exception("Expected String");
 
                     case StateCode.List__Tag:
-                        Pop ();
-                        Represent = true; 
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.List__Entries;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
                         break;
+                    case StateCode.List__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Trojan.Script.List Current_Cast = (Goedel.Trojan.Script.List)Current;
+                            Goedel.Trojan.Script.GUISchemaType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Action) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new System.Exception("Parser Error Expected [Output Action Tip ]");
+								}
+							}
+                        break;
+
+
                     case StateCode.Set_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Trojan.Script.Set Current_Cast = (Goedel.Trojan.Script.Set)Current;
@@ -2070,11 +2250,13 @@ namespace Goedel.Trojan.Script {
 							Goedel.Trojan.Script.Set Current_Cast = (Goedel.Trojan.Script.Set)Current;
                             Goedel.Trojan.Script.GUISchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) ) {
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Action) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output ]");
+								throw new System.Exception("Parser Error Expected [Output Action Tip ]");
 								}
 							}
                         break;
@@ -2127,7 +2309,7 @@ namespace Goedel.Trojan.Script {
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Boolean) |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Option) |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Set) |
-									(LabelType == Goedel.Trojan.Script.GUISchemaType.Command) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Action) |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Item) |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.List) |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Chooser) |
@@ -2136,7 +2318,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [DateTime String Secret Integer Boolean Option Set Command Item List Chooser Text Tip ]");
+								throw new System.Exception("Parser Error Expected [DateTime String Secret Integer Boolean Option Set Action Item List Chooser Text Tip ]");
 								}
 							}
                         break;
@@ -2182,11 +2364,12 @@ namespace Goedel.Trojan.Script {
 							Goedel.Trojan.Script.DateTime Current_Cast = (Goedel.Trojan.Script.DateTime)Current;
                             Goedel.Trojan.Script.GUISchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) ) {
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output ]");
+								throw new System.Exception("Parser Error Expected [Output Tip ]");
 								}
 							}
                         break;
@@ -2232,11 +2415,12 @@ namespace Goedel.Trojan.Script {
 							Goedel.Trojan.Script.Chooser Current_Cast = (Goedel.Trojan.Script.Chooser)Current;
                             Goedel.Trojan.Script.GUISchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) ) {
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output ]");
+								throw new System.Exception("Parser Error Expected [Output Tip ]");
 								}
 							}
                         break;
@@ -2282,11 +2466,12 @@ namespace Goedel.Trojan.Script {
 							Goedel.Trojan.Script.String Current_Cast = (Goedel.Trojan.Script.String)Current;
                             Goedel.Trojan.Script.GUISchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) ) {
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output ]");
+								throw new System.Exception("Parser Error Expected [Output Tip ]");
 								}
 							}
                         break;
@@ -2382,11 +2567,12 @@ namespace Goedel.Trojan.Script {
 							Goedel.Trojan.Script.Integer Current_Cast = (Goedel.Trojan.Script.Integer)Current;
                             Goedel.Trojan.Script.GUISchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) ) {
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output ]");
+								throw new System.Exception("Parser Error Expected [Output Tip ]");
 								}
 							}
                         break;
@@ -2432,11 +2618,12 @@ namespace Goedel.Trojan.Script {
 							Goedel.Trojan.Script.Boolean Current_Cast = (Goedel.Trojan.Script.Boolean)Current;
                             Goedel.Trojan.Script.GUISchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) ) {
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output ]");
+								throw new System.Exception("Parser Error Expected [Output Tip ]");
 								}
 							}
                         break;
@@ -2487,11 +2674,12 @@ namespace Goedel.Trojan.Script {
                             Goedel.Trojan.Script.GUISchemaType LabelType = _Reserved (Text);
                             if ( false |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Radio) |
-									(LabelType == Goedel.Trojan.Script.GUISchemaType.Text) ) {
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Text) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Radio Text ]");
+								throw new System.Exception("Parser Error Expected [Radio Text Tip ]");
 								}
 							}
                         break;
@@ -2516,9 +2704,37 @@ namespace Goedel.Trojan.Script {
                         throw new System.Exception("Expected String");
 
                     case StateCode.Radio__Tag:
-                        Pop ();
-                        Represent = true; 
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Radio__Entries;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
                         break;
+                    case StateCode.Radio__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Trojan.Script.Radio Current_Cast = (Goedel.Trojan.Script.Radio)Current;
+                            Goedel.Trojan.Script.GUISchemaType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new System.Exception("Parser Error Expected [Tip ]");
+								}
+							}
+                        break;
+
+
                     case StateCode.Wizard_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Trojan.Script.Wizard Current_Cast = (Goedel.Trojan.Script.Wizard)Current;
@@ -2610,11 +2826,12 @@ namespace Goedel.Trojan.Script {
 							Goedel.Trojan.Script.Step Current_Cast = (Goedel.Trojan.Script.Step)Current;
                             Goedel.Trojan.Script.GUISchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.Trojan.Script.GUISchemaType.Text) ) {
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Text) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Text ]");
+								throw new System.Exception("Parser Error Expected [Text Tip ]");
 								}
 							}
                         break;

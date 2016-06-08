@@ -16,6 +16,7 @@ namespace Goedel.Trojan.Script {
     partial class _Choice {
         public GUI GUI;
 
+        public string CommentSummary = "TBS";
 
         public string Accessor = null;
 
@@ -25,6 +26,8 @@ namespace Goedel.Trojan.Script {
         public string FieldTag = null;
 
         public bool Output = false;
+        public List<string> Tip = null;
+        public List<string> Text = null;
 
         public int FieldNumber = -1;
         public int SubFieldNumber = -1;
@@ -34,15 +37,38 @@ namespace Goedel.Trojan.Script {
 
         public _Choice Parent;
         public Object ParentObject = null;
+        public Wizard ParentWizard = null;
+
+
+
+        /// <summary>
+        /// Set the properties from the entries list.
+        /// </summary>
+        /// <param name="Parent"></param>
+        /// <param name="Entries"></param>
+
         protected void SetFieldEntries(_Choice Parent, List <_Choice> Entries) {
 
             SetEntries(Parent);
             SimpleField = true;
+
+            foreach (var Entry in Entries) {
+                if (Entry as Output != null) {
+                    Output = true;
+                    }
+                if (Entry as Tip != null) {
+                    this.Tip = (Entry as Tip).Data;
+                    }
+                }
             }
 
         protected void SetEntries(_Choice Parent) {
             this.Parent = Parent;
             ParentObject = Parent as Object;
+
+            if (Parent as Wizard != null) {
+                return; // Ignore text entries in a Wizard.
+                }
 
             if (ParentObject == null) {
                 // we are a sub list
@@ -62,6 +88,20 @@ namespace Goedel.Trojan.Script {
                     FieldNumber.ToString() + "])";
                 }
 
+
+            FieldIndex = Accessor ;
+            }
+
+        protected void SetStepEntries(_Choice Parent) {
+            this.Parent = Parent;
+            ParentWizard = Parent as Wizard;
+
+
+            // bare accessor
+            FieldNumber = ++ParentWizard.FieldNumber;
+
+            Accessor = "Steps[" +
+                FieldNumber.ToString() + "]";
 
             FieldIndex = Accessor + ".Value";
             }
@@ -157,6 +197,42 @@ namespace Goedel.Trojan.Script {
                     var Select = Choice as Select;
                     Parameter = Select.Id.ToString();
                     }
+                }
+
+            CommentSummary = "Stub method for " + FieldName + "command." +
+                    "Override with application implementation." ;
+            }
+
+        }
+
+    partial class Action {
+        public string Parameter = null;
+        public string Tag = "";
+        public Command Definition;
+
+        public override void Init(_Choice Parent) {
+            Definition = Id.Definition as Command;
+            if (Definition as Command != null) {
+                Tag = Definition.Tag;
+                }
+
+            GUI = Parent.GUI;
+
+            FieldTag = "none";
+            FieldName = Id.ToString();
+
+            foreach (var Entry in Entries) {
+                if (Entry as Tip != null) {
+                    this.Tip = (Entry as Tip).Data;
+                    }
+                if (Entry as Text != null) {
+                    this.Text = (Entry as Text).Data;
+                    }
+                }
+
+            if (Parent as Object != null) {
+                ParentObject = Parent as Object;
+                Parameter = ParentObject.Id.ToString();
                 }
             }
 
@@ -305,8 +381,24 @@ namespace Goedel.Trojan.Script {
             }
         }
 
+    partial class Step {
+        public override void Init(_Choice Parent) {
+            FieldTag = Tag;
+            FieldName = Id.ToString();
+            FieldType = Id.ToString();
+            WidgetType = null;
+            SetStepEntries(Parent);
+            }
+        }
+
 
     partial class Text {
+
+        public override void Init(_Choice Parent) {
+            FieldType = null;
+            SetEntries(Parent);
+            }
+
         public override string ToString() {
             var Buffer = new StringBuilder();
             var Space = false;

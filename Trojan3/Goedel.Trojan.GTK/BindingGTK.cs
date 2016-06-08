@@ -38,7 +38,16 @@ namespace Goedel.Trojan.GTK {
                 InitializeColors();
                 }
 
+            var  handler = new GLib.UnhandledExceptionHandler(OnException);
+            GLib.ExceptionManager.UnhandledException += handler;
+
             Application.Init();
+            }
+
+
+        void OnException(GLib.UnhandledExceptionArgs args) {
+
+            args.ExitApplication = false;
             }
 
 
@@ -89,14 +98,19 @@ namespace Goedel.Trojan.GTK {
 
             // Create columns [View]
             Gtk.TreeViewColumn TreeViewColumTitle = new Gtk.TreeViewColumn();
-            TreeViewColumTitle.Title = "Profile";
-            Gtk.CellRendererText NameCellTitle = new Gtk.CellRendererText();
+            //TreeViewColumTitle.Title = "Profile";
+            var NameCellTitle = new Gtk.CellRendererText();
+
             TreeViewColumTitle.PackStart(NameCellTitle, true);
             TreeViewColumTitle.SetCellDataFunc(NameCellTitle, new Gtk.TreeCellDataFunc(RenderTitle));
-            //NameCellTitle.AddNotification(SelectorObjectNotify);
 
+            var NameCellIcon = new Gtk.CellRendererPixbuf();
+            TreeViewColumTitle.PackStart(NameCellIcon, true);
+            TreeViewColumTitle.SetCellDataFunc(NameCellIcon, new Gtk.TreeCellDataFunc(RenderExpander));
 
             NameCellTitle.Mode = CellRendererMode.Activatable;
+
+
 
             // Populate the model
             // Note that we could dispense with this step if we generated an ITreeModel
@@ -106,6 +120,10 @@ namespace Goedel.Trojan.GTK {
             // Attach everything to the pane
             TreeView.Model = GTKModel;
             TreeView.AppendColumn(TreeViewColumTitle);
+            TreeView.ShowExpanders = true;
+            TreeView.ExpanderColumn.Visible = true;
+            //TreeView.ExpanderColumn.Button.
+
 
             GTKPaneMain.Add1(TreeView);
 
@@ -123,6 +141,17 @@ namespace Goedel.Trojan.GTK {
                 var BindingData = new BindingDataGTK(this, Object);
                 BindingData.Iter = GTKModel.AppendValues(Object);
                 Object.BindingData = BindingData;
+                BindChildren(GTKModel, BindingData);
+                }
+            }
+
+        private void BindChildren(TreeStore TreeStore, BindingDataGTK ObjectBinding) {
+
+            foreach (var Child in ObjectBinding.Object) {
+                var BindingData = new BindingDataGTK(this, Child);
+                BindingData.Iter = TreeStore.AppendValues(ObjectBinding.Iter, Child);
+                Child.BindingData = BindingData;
+                BindChildren(TreeStore, BindingData);
                 }
             }
 
@@ -131,10 +160,27 @@ namespace Goedel.Trojan.GTK {
                             Gtk.ITreeModel GTKModel, Gtk.TreeIter Iter) {
             Object Object = (Object)GTKModel.GetValue(Iter, 0);
             (Cell as Gtk.CellRendererText).Text = Object.Title;
+
+
+            Console.WriteLine("Render {0}", Object.Title);
             }
 
-        //Gtk.Table GTKTable = null; 
+        private void RenderExpander(Gtk.TreeViewColumn Column, Gtk.CellRenderer Cell,
+                            Gtk.ITreeModel GTKModel, Gtk.TreeIter Iter) {
+            Object Object = (Object)GTKModel.GetValue(Iter, 0);
 
+
+
+            var Image = new Image(Stock.Open, IconSize.Button);
+
+            var Pixbuf = TreeView.RenderIconPixbuf(Stock.Open, IconSize.Button);
+
+            (Cell as Gtk.CellRendererPixbuf).Pixbuf = Pixbuf;
+            (Cell as Gtk.CellRendererPixbuf).PixbufExpanderOpen = Pixbuf;
+            (Cell as Gtk.CellRendererPixbuf).PixbufExpanderClosed = Pixbuf;
+
+            Console.WriteLine("Render {0}", Object.Title);
+            }
 
         EntryForm EntryForm = null;
         private void SetWorkObject(Object Object) {
@@ -146,35 +192,11 @@ namespace Goedel.Trojan.GTK {
                 }
             EntryForm = new EntryForm(Object);
             GTKFrameWork.Add(EntryForm);
-            //EntryForm.Show();
             EntryForm.ShowAll();
                      
 
             }
 
-        private Gtk.Widget MakeFieldWidget(Object Object, ObjectEntry Entry) {
-            var ObjectField = Entry as ObjectField;
-            if (ObjectField == null) return null;
-
-            //switch (ObjectField.Type) {
-            //    case WidgetType.String: {
-            //        var Value = Object.GetField(ObjectField.Index) as string;
-            //        var Field = new Gtk.Entry(Value);
-            //        Field.IsEditable = false;
-            //        return Field;
-            //        }
-            //    case WidgetType.Integer: {
-            //        var Field = new Gtk.Entry("666");
-            //        return Field;
-            //        }
-            //    case WidgetType.Secret: {
-            //        var Field = new Gtk.Entry("Initial Text");
-            //        Field.Visibility = false;
-            //        return Field;
-            //        }
-                //}
-            return null;
-            }
 
         // Events ...
         void SelectorActivated(object Sender, RowActivatedArgs args) {
@@ -193,8 +215,19 @@ namespace Goedel.Trojan.GTK {
 
             }
 
-        static void SelectorSelected(object obj, EventArgs args) {
+        void SelectorSelected(object obj, EventArgs args) {
             Console.WriteLine("Selected!");
+
+            var TreeSelection = obj as TreeSelection;
+            if (obj == null) return;
+
+            TreeIter Iter;
+            if (TreeSelection.GetSelected(out Iter)) {
+
+
+                var Object = (Object)TreeSelection.TreeView.Model.GetValue(Iter, 0);
+                SetWorkObject(Object);
+                }
             }
 
 
@@ -227,22 +260,31 @@ namespace Goedel.Trojan.GTK {
             return MenuBar;
             }
 
-
         private Gtk.Menu MakeMenu(Menu Menu) {
+            return MakeMenu(Menu.Entries);
+            }
+
+        private Gtk.Menu MakeMenu(List<MenuEntry> Entries) {
             var Result = new Gtk.Menu();
 
-            foreach (var Entry in Menu.Entries) {
+            foreach (var Entry in Entries) {
                 var MenuEntry = Entry as MenuEntry;
                 if (MenuEntry != null) {
-                    MenuItem MenuItem = new MenuItem(Model, MenuEntry);
-
-                    // Process the submenus
-                    var SubMenu = MenuEntry as SubMenu;
-                    if (SubMenu != null) {
-                        MenuItem.Submenu = MakeMenu(SubMenu.Sub);
+                    if (MenuEntry as MenuDivider != null) {
+                        var Separator = new SeparatorMenuItem();
+                        Result.Append(Separator);
                         }
+                    else {
+                        MenuItem MenuItem = new MenuItem(Model, MenuEntry);
 
-                    Result.Append(MenuItem);
+                        // Process the sub-menus
+                        var SubMenu = MenuEntry as SubMenu;
+                        if (SubMenu != null) {
+                            MenuItem.Submenu = MakeMenu(SubMenu.Sub);
+                            }
+
+                        Result.Append(MenuItem);
+                        }
                     }
                 }
 
@@ -256,8 +298,6 @@ namespace Goedel.Trojan.GTK {
             Application.Run();
             }
 
-
-
         /// <summary>
         /// Callback to terminate control by GTK GUI.
         /// </summary>
@@ -267,9 +307,13 @@ namespace Goedel.Trojan.GTK {
 
         public override void Wizard(Wizard Wizard) {
             var GTKWizard = new GTKWizard(Wizard);
-
             }
 
+        public override bool Dialog(Object Object) {
+            var GTKWizard = new GTKDialog(Object);
+
+            return false;
+            }
 
         public override void About(About About) {
 
@@ -290,8 +334,8 @@ namespace Goedel.Trojan.GTK {
 
 
     public class BindingDataGTK : BindingData {
-        BindingGTK Binding;
-        Object Object;
+        public BindingGTK Binding;
+        public Object Object;
 
         /// <summary>
         /// The Tree iterator element
@@ -323,7 +367,7 @@ namespace Goedel.Trojan.GTK {
             }
 
         void OnActivated(object Sender, EventArgs Args) {
-            Model.Dispach(MenuEntry.Id);
+            Model.Dispatch(MenuEntry.Id);
             }
 
         }

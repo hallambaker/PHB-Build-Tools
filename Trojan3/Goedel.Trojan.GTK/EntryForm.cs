@@ -25,7 +25,7 @@ namespace Goedel.Trojan.GTK {
     ///    3) Update / Cancel Buttons
     /// </summary>
 
-    public class EntryForm : Gtk.Grid, IFormWidget {
+    public class EntryForm : Gtk.Grid{
 
         public static uint PaddingFieldX = 20;
         public static uint PaddingFieldY = 5;
@@ -82,8 +82,8 @@ namespace Goedel.Trojan.GTK {
             AttachNextTo(ActionBox, FieldsGrid, Gtk.PositionType.Bottom, 1, 1);
             }
 
-        public void Test() {
-            FieldsGrid.Test();
+        public bool Valid() {
+            return FieldsGrid.Valid();
             }
 
         public void Apply() {

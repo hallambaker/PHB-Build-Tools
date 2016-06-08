@@ -5,8 +5,8 @@
 #!
 #% System.DateTime GenerateTime = System.DateTime.UtcNow;
 #% string GoedelNamespace = "Goedel.Trojan";
-#% string TitleField = "Title";
 #% Separator Separator;
+#% public bool FALSE = false;
 #method GenerateCS GUISchema GUISchema
 #% GUISchema._InitChildren ();
 
@@ -29,18 +29,25 @@ namespace #{GUI.Namespace} {
 		}
 	public abstract partial class Window:  #{GoedelNamespace}.Window {
 		}
-	public abstract partial class Wizard:  #{GoedelNamespace}.Wizard {
-		}
-	public abstract partial class Model:  #{GoedelNamespace}.Model {
-		}
 
-	//The main declarations
+
+	/// <summary>
+    /// The application data model. This inherits the field declarations and
+	/// stub callback methods from the template. The stub callbacks should be
+	/// overwritten by the user's code. 
+    /// </summary>
 	public partial class #{GUI.Id} : _#{GUI.Id} {
 		}
 
+	/// <summary>
+    /// The template data model  constructed from the specification.
+	/// Contains stub methods for each callback.
+    /// </summary>
+	public abstract class _#{GUI.Id} : #{GoedelNamespace}.Model {
 
-	public partial class _#{GUI.Id} : Model {
-
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public _#{GUI.Id}() {
             _About = new About(this) {
 #if GUI.About != null
@@ -52,26 +59,29 @@ namespace #{GUI.Namespace} {
 
 
 
-#foreach (var Command in GUI.Commands) 
+#foreach (var Command in GUI.Commands)
+#{CommentSummary(8, Command.CommentSummary)} #!
 		public virtual void #{Command.Id} (#!
 #if (Command.Parameter != null) 
-#{Command.Parameter} #{Command.Parameter}#!
+Object Object #!
 #end if		
 ) {
 			}
 
 #end foreach
 
-#foreach (var Object in GUI.Objects) 
-		protected #{Object.Id} Selected_#{Object.Id} = null ;
-#end foreach
+#!foreach (var Object in GUI.Objects) 
+#!		protected #{Object.Id} Selected_#{Object.Id} = null ;
+#!end foreach
 
-        public override void  Dispach(string Command) {
+
+#{CommentSummary(8, "Dispatch command callback with required parameters.")} #!
+        public override void  Dispatch(string Command) {
             switch (Command) {
 #foreach (var Command in GUI.Commands) 
 #if (Command.Parameter != null) 
-                case "#{Command.Id}_#{Command.Parameter}": {
-                        #{Command.Id}(Selected_#{Command.Parameter});
+                case "#{Command.Id}": {
+                        #{Command.Id}(Selected as Object);
 #else	
                 case "#{Command.Id}": {
                         #{Command.Id}();
@@ -82,24 +92,33 @@ namespace #{GUI.Namespace} {
                 }
             }
 
+#if FALSE
+#{CommentSummary(8, "Report if selection criteria for specified command are met.")} #!
         public bool Active(String Command) {
             switch (Command) {
 #foreach (var Command in GUI.Commands) 
 #if (Command.Parameter != null) 
                 case "#{Command.Id}_#{Command.Parameter}": {
-                        return Selected_#{Command.Parameter}# != null;
+						// NYI here make a list of all the possibilities
+                        //return Selected_#{Command.Parameter}# != null;
+						return true;
                         }
 #end if	
 #end foreach
                 }
             return true;
             }
+#end if
 		}
+
 
 	// Windows
 
+	/*
+	* Window declarations
+	*/
 #foreach (var Window in GUI.Windows) 
-
+#{CommentSummary(8, Window.CommentSummary)} #!
 	public partial class #{Window.Id} : _#{Window.Id} {
 
 		string _Title = "#{Window.Tag}";
@@ -108,7 +127,7 @@ namespace #{GUI.Namespace} {
 			set {_Title = value;}
 			}
 
-		public #{Window.Id}  (Model Model, Binding Binding) {
+		public #{Window.Id}  (#{GoedelNamespace}.Model Model, Binding Binding) {
 			// Call backing code to populate the data model
 			Populate ();
 
@@ -126,12 +145,13 @@ namespace #{GUI.Namespace} {
 		}
 #end foreach
 
+	/*
+	* Menu declarations
+	*/
 #foreach (var Menu in GUI.Menus) 
 
-	public partial class #{Menu.Id} : _#{Menu.Id} {
-		}
-
-	public partial class _#{Menu.Id} : Menu {
+#{CommentSummary(8, Menu.CommentSummary)} #!
+	public partial class #{Menu.Id} : Menu {
 	
 		public override List<MenuEntry> Entries {
             get { return _Entries; }
@@ -144,22 +164,44 @@ namespace #{GUI.Namespace} {
 
 #end foreach
 
-	// Wizards
+	/*
+	* Wizard declarations
+	*/
 
 #foreach (var Wizard in GUI.Wizards) 
 
+	/// <summary>
+    /// Wizard callback class.
+    /// </summary>
 
 	public partial class #{Wizard.Id} : _#{Wizard.Id} {
 		}
 
+
+	/// <summary>
+    /// Template class for wizard. The application programmer implements
+	/// the wizard by overriding wizard methods. Note that since the user 
+	/// may backtrack when implementing a method, callbacks MUST tolerate
+	/// being called multiple times. It is also permitted for a user to 
+	/// cancel a wizard before the final commit.
+    /// </summary>
 	public partial class _#{Wizard.Id} : Wizard {
 
         public override string Title => #{Wizard.Tag.Quoted()};
         public override List<string> Texts => _Texts;
         public override List<Step> Steps => _Steps;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="Model">Model to bind to</param>
+        public _#{Wizard.Id}(Model Model) : base(Model) {
+            }
 
-	// #{Wizard.Id}
+
+#call DeclareFields Wizard.Entries
+
+		// #{Wizard.Id}
 		List<string> _Texts = #!
 #call MakeTextList Wizard.Entries
 ;
@@ -169,7 +211,7 @@ namespace #{GUI.Namespace} {
 #% var Step = Entry as Step;
 #if Step != null
 #{Separator}
-			new Step () {Object = new #{Step.Id} (), 
+			new Step () {Value = new #{Step.Id} (), 
 				Title = #{Step.Tag.Quoted()}, Description =
 		#!
 #indent
@@ -183,19 +225,30 @@ namespace #{GUI.Namespace} {
 };
 
 
+		public override bool Dispatch (int Step) {
+
+			switch (Step) {
+#% int StepNumber = 0;
+#foreach (var Entry in Wizard.Entries)
+#% var Step = Entry as Step;
+#if Step != null
+				case #{StepNumber++} : return #{Step.Id.Label()}.Dispatch(this);
+#end if
+#end foreach
+				}
+			return false;
+			}
+
 		}
 
 
 #end foreach
 
-	// Objects
-
+	/*
+	* Backing object class declarations
+	*/
 #foreach (var Object in GUI.Objects) 
-	public partial class #{Object.Id} : _#{Object.Id}{
-		}
-
-
-	public class _#{Object.Id} #!
+	public partial class #{Object.Id} #!
 #if (Object.ParentObject == null)
 : Object #!
 #else
@@ -214,6 +267,39 @@ namespace #{GUI.Namespace} {
 #% Separator =new Separator (",");
 #% MakeWidgets (Object, Separator);
 			} ;
+
+
+        /// <summary>
+        /// Create a list containing all the current children.
+        /// </summary>
+        /// <returns></returns>
+        public override List<Goedel.Trojan.Object> GetChildren() {
+#if (Object.ParentObject == null)
+			var Result = base.GetChildren();
+#else 
+            var Result = new List<Goedel.Trojan.Object>();
+#end if
+#foreach (var Entry in Object.Entries)
+#switchcast GUISchemaType Entry
+#casecast List List
+			if (#{List.FieldName}.Value != null) {
+				foreach (var Entry in #{List.FieldName}.Value) {
+					Result.Add (Entry);
+					}
+				}
+#casecast Set Set
+			if (#{Set.FieldName}.Value != null) {
+				foreach (var Entry in #{Set.FieldName}.Value) {
+					Result.Add (Entry);
+					}
+				}
+#end switchcast				
+#end foreach
+
+			return Result;
+            }
+
+
 		}
 
 
@@ -251,10 +337,18 @@ namespace #{GUI.Namespace} {
 #switchcast GUISchemaType Entry
 #casecast Menu SubMenu
 #{Separator}
-			new SubMenu ("#{SubMenu.Id}",  "#{SubMenu.Tag}", new #{SubMenu.Id}())#!
-#casecast Command Command
+			new SubMenu () {
+				Id ="#{SubMenu.Id}",  
+				Label = "#{SubMenu.Tag}", 
+				Sub = new #{SubMenu.Id}() }#!
+#casecast Action Action
 #{Separator}
-			new MenuEntry ("#{Command.Id}",  "#{Command.Tag}")#!
+			new MenuEntry () { 
+				Id ="#{Action.Id}",  
+				Label = "#{Action.Tag}" }#!
+#casecast Divider Divider
+#{Separator}
+			new MenuDivider () #!
 #end switchcast
 #end foreach
 };
@@ -282,8 +376,17 @@ namespace #{GUI.Namespace} {
 #{Separator}
 			new ObjectCommand {
 						Id = "#{Entry.FieldName}",  
-						Label = "#{Entry.FieldTag}"}#!
+						Label = #{Entry.FieldTag.Quoted()}}#!
 #elseif (Entry as Inherit != null) 
+#elseif (Entry as Action != null) 
+#% var Action = Entry as Action;
+#{Separator}
+			new ObjectAction {
+						Id = "#{Entry.FieldName}",  
+#if (Entry.Text != null)
+						Text = #{Entry.Text.Quoted()},
+#end if
+						Label = #{Action.Tag.Quoted()}}#!
 #elseif (Entry as Text != null) 
 #% var Text = Entry as Text;
 #{Separator}
@@ -297,13 +400,23 @@ namespace #{GUI.Namespace} {
 						Id = "#{Entry.FieldName}",  
 						Label = "#{Entry.FieldTag}",
 						Entries = new List<ObjectEntry> {#!
-#indent
 #% var SubSeparator = new Separator (",");
-#%  MakeWidgets (Enumerate, SubSeparator);
-#outdent
-
+#foreach (var RadioEntry in (Entry as Enumerate).Entries)
+#{SubSeparator}
+				new ObjectFieldRadio {
+						Id = "#{RadioEntry.FieldName}",  
+						Label = "#{RadioEntry.FieldTag}",
+						SelectionValue = (int) Enum#{Entry.FieldName}.#{RadioEntry.FieldName}  } #!
+#end foreach
 							}
 						}#!
+#elseif (Entry as Item != null) 
+#% var Item = Entry as Item;
+#{Separator}
+			new ObjectFieldItem {
+						Id = "#{Entry.FieldName}",  
+						Label = "#{Entry.FieldTag}",
+						Value = new #{Entry.FieldType} () }#!
 #elseif (Entry as Option != null) 
 #% var Option = Entry as Option;
 #{Separator}	
@@ -321,6 +434,12 @@ namespace #{GUI.Namespace} {
 #else 
 #{Separator}
 			new ObjectField#{Entry.WidgetType} {Id = "#{Entry.FieldName}", 
+#if (Entry.Output)
+						ReadOnly = true,
+#end if
+#if (Entry.Tip != null)
+						Tip = #{Entry.Tip.Quoted()},
+#end if
 						Label = "#{Entry.FieldTag}" // #{Entry.FieldIndex}
 					    }#!
 #end if
@@ -345,7 +464,7 @@ namespace #{GUI.Namespace} {
 
 #method DeclareFields List<_Choice> Entries
 #foreach (var Entry in Entries)
-#if (Entry.FieldNumber >= 0)
+#if (Entry.FieldType != null)
 #if (Entry as Enumerate != null) 
 		public enum #{Entry.FieldType} {#!
 #% Separator = new Separator (",");
@@ -357,22 +476,32 @@ namespace #{GUI.Namespace} {
 #end switchcast
 #end foreach
 			};
-		public #{Entry.FieldType} #{Entry.FieldName};
+		public ObjectFieldEnumerate #{Entry.FieldName}  {
+			get {
+				return #{Entry.FieldIndex};
+				}
+			}
 #else
 		/// <summary>
         /// #{Entry.FieldName}
         /// </summary>
+#if (Entry as Item != null)
 		public #{Entry.FieldType} #{Entry.FieldName} {
 			get {
-#if (Entry as Item != null)
+				return (#{Entry.FieldType}) (#{Entry.FieldIndex}).Value;
+				}
+#elseif (Entry as Step != null)
+		public #{Entry.FieldType} #{Entry.FieldName} {
+			get {
 				return (#{Entry.FieldType}) #{Entry.FieldIndex};
+				}
 #else
+		public ObjectField#{Entry.WidgetType} #{Entry.FieldName} {
+			get {
 				return #{Entry.FieldIndex};
+				}
 #end if
-				}
-			set {
-				#{Entry.FieldIndex} = value;
-				}
+
 			}
 			
 #end if

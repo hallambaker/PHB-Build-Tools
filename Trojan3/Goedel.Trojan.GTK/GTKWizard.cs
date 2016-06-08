@@ -10,21 +10,20 @@ namespace Goedel.Trojan.GTK {
         public Grid GridProgress = null;
         public Grid GridDescription = null;
         public Grid GridNavigate = null;
-        public Grid GridField = null;
+        public GridForm GridField = null;
 
 
         List<BreadCrumb> BreadCrumbs = new List<BreadCrumb>();
 
         Wizard Wizard;
-        int _StepIndex = -1;
 
         public int StepIndex {
             get {
-                return _StepIndex;
+                return Wizard.StepIndex;
                 }
 
             set {
-                _StepIndex = value;
+                Wizard.StepIndex = value;
                 Render();
                 }
             }
@@ -74,17 +73,20 @@ namespace Goedel.Trojan.GTK {
 
             Render();
 
-
-
-
-
-
             }
 
         void Render () {
             // Delete the old description grid.
-            if (GridDescription != null) GridDescription.Destroy();
-            if (GridNavigate != null) GridNavigate.Destroy();
+            if (GridDescription != null) {
+                GridMain.Remove(GridDescription);
+                GridDescription.Destroy();
+                GridDescription = null;
+                }
+            if (GridNavigate != null) {
+                GridMain.Remove(GridNavigate);
+                GridNavigate.Destroy();
+                GridNavigate = null;
+                }
 
             if (StepIndex < 0) {
                 RenderSplash();
@@ -115,7 +117,11 @@ namespace Goedel.Trojan.GTK {
             TextGrid.Render(ref GridDescription, Step.Title, Step.Description);
             GridMain.Attach(GridDescription, 0, 1, 1, 1);
 
-            GridField = new GridForm (Step.Object, Step.Object.Entries);
+            if (GridField != null) {
+                GridField.Destroy();
+                }
+
+            GridField = new GridForm (Step.Value, Step.Value.Entries);
             GridMain.Attach(GridField, 0, 2, 1, 1);
             }
 
@@ -166,16 +172,23 @@ namespace Goedel.Trojan.GTK {
 
                 Attach(LabelTitle, 0, 0, 1, 1);
 
-                Widget Last = LabelTitle;
+                int Row = 1;
                 foreach (var Text in Texts) {
                     var Label = new Label(Text);
-                    Label.Wrap = true;
+                    Label.Xalign = 0;
+                    Label.LineWrap = true;
+                    Label.Justify = Justification.Left;
                     Label.Halign = Align.Start;
                     Label.Valign = Align.Start;
-                    AttachNextTo(Label, Last, PositionType.Bottom, 1, 1);
+                    Label.MarginLeft = 10;
+                    Label.MarginRight = 10;
+                    Label.MarginTop = 10;
+                    Label.MarginBottom = 10;
+                    Attach(Label, 0, Row++, 1, 1);
+
                     TextLabels.Add(Label);
-                    Last = Label;
                     }
+
                 }
 
             /// <summary>
@@ -214,21 +227,21 @@ namespace Goedel.Trojan.GTK {
                 this.StepIndex = StepIndex;
 
                 if (StepIndex < 0) {
-                    Next = new NavigateButton(GTKWizard, DialogText.WizardButtonStart, 0);
+                    Next = new NavigateButtonNext(GTKWizard, DialogText.WizardButtonStart, 0);
                     Next.Valign = Align.End;
                     Next.Halign = Align.End;
                     Attach(Next, 0, 0, 1, 1);
                     }
 
                 else {
-                    Previous = new NavigateButton(GTKWizard, DialogText.WizardButtonBack, StepIndex-1);
+                    Previous = new NavigateButtonPrev(GTKWizard, DialogText.WizardButtonBack, StepIndex-1);
                     Previous.Valign = Align.End;
                     Previous.Halign = Align.End;
                     Attach(Previous, 0, 0, 1, 1);
 
                     var PreviousString = StepIndex + 1 == StepCount ? 
                             DialogText.WizardButtonFinish : DialogText.WizardButtonNext;
-                    Next = new NavigateButton(GTKWizard, PreviousString, StepIndex+1);
+                    Next = new NavigateButtonNext(GTKWizard, PreviousString, StepIndex+1);
                     Next.Valign = Align.End;
                     Next.Halign = Align.End;
                     Attach(Next, 1, 0, 1, 1);
@@ -238,12 +251,12 @@ namespace Goedel.Trojan.GTK {
 
             }
 
-        public class NavigateButton : Button {
+        public class NavigateButtonPrev : Button {
 
             int Step;
             GTKWizard GTKWizard;
 
-            public NavigateButton(GTKWizard GTKWizard, string Text, int Step) : base (Text) {
+            public NavigateButtonPrev(GTKWizard GTKWizard, string Text, int Step) : base (Text) {
                 this.Step = Step;
                 this.GTKWizard = GTKWizard;
                 Clicked += OnClick;
@@ -256,6 +269,46 @@ namespace Goedel.Trojan.GTK {
 
 
             }
+
+        public class NavigateButtonNext : Button {
+
+            int Step;
+            GTKWizard GTKWizard;
+
+            public NavigateButtonNext(GTKWizard GTKWizard, string Text, int Step) : base(Text) {
+                this.Step = Step;
+                this.GTKWizard = GTKWizard;
+                Clicked += OnClick;
+                }
+
+
+            public void OnClick(object sender, EventArgs args) {
+                var Wizard = GTKWizard.Wizard;
+                if (Step <= 0) {
+                    GTKWizard.StepIndex = 0;
+                    return;
+                    }
+
+                var Valid = GTKWizard.GridField.Valid();
+
+                if (Valid) {
+                    Wizard.CurrentStep.Value.Dispatch(Wizard);
+
+                    if (Step < Wizard.Steps.Count) {
+
+                        GTKWizard.StepIndex = Step;
+                        }
+                    else {
+                        Wizard.Dispatch();
+                        GTKWizard.Destroy();
+                        }
+                    }
+                }
+
+
+            }
+
+
 
         }
     }

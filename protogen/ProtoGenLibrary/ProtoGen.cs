@@ -219,6 +219,18 @@ namespace ProtoGen {
         abstract public ProtoStructType _Tag ();
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
+
+		public virtual void Init (_Choice Parent) {
+			}
+
+		bool _Initialized = false;
+		public virtual void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			if (_Initialized) {
+				return;
+				}
+			_Initialized = true;
+			}
         }
 
 
@@ -232,6 +244,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Protocol;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -260,6 +279,10 @@ namespace ProtoGen {
             return ProtoStructType.Using;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -280,6 +303,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Extern;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -307,6 +337,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Section;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -338,6 +375,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Service;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -372,6 +416,13 @@ namespace ProtoGen {
             return ProtoStructType.Transaction;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -401,6 +452,13 @@ namespace ProtoGen {
             return ProtoStructType.Message;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -426,6 +484,10 @@ namespace ProtoGen {
             return ProtoStructType.Authentication;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -446,6 +508,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Structure;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -472,6 +541,10 @@ namespace ProtoGen {
             return ProtoStructType.Description;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -494,6 +567,10 @@ namespace ProtoGen {
             return ProtoStructType.ABNF;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -515,6 +592,10 @@ namespace ProtoGen {
             return ProtoStructType.Abstract;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -533,6 +614,10 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Inherits;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -554,6 +639,10 @@ namespace ProtoGen {
             return ProtoStructType.Request;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -573,6 +662,10 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Response;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -594,6 +687,10 @@ namespace ProtoGen {
             return ProtoStructType.External;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -613,6 +710,10 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Tag;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -634,6 +735,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Boolean;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -661,6 +769,13 @@ namespace ProtoGen {
             return ProtoStructType.Integer;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -686,6 +801,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Decimal;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -713,6 +835,13 @@ namespace ProtoGen {
             return ProtoStructType.Float;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -738,6 +867,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Binary;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -765,6 +901,13 @@ namespace ProtoGen {
             return ProtoStructType.Label;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -790,6 +933,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Name;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -817,6 +967,13 @@ namespace ProtoGen {
             return ProtoStructType.String;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -842,6 +999,10 @@ namespace ProtoGen {
             return ProtoStructType.Constraint;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -862,6 +1023,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.URI;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -889,6 +1057,13 @@ namespace ProtoGen {
             return ProtoStructType.DateTime;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -915,6 +1090,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.TStruct;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -944,6 +1126,13 @@ namespace ProtoGen {
             return ProtoStructType.Struct;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -971,6 +1160,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Enum;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1000,6 +1196,13 @@ namespace ProtoGen {
             return ProtoStructType.Select;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1027,6 +1230,10 @@ namespace ProtoGen {
             return ProtoStructType.TaggedType;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1048,6 +1255,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Format;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1076,6 +1290,13 @@ namespace ProtoGen {
             return ProtoStructType.Tagged;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1101,6 +1322,10 @@ namespace ProtoGen {
             return ProtoStructType.Required;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1118,6 +1343,10 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Multiple;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1137,6 +1366,10 @@ namespace ProtoGen {
             return ProtoStructType.Quoted;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1155,6 +1388,10 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Require;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1176,6 +1413,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Class;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1204,6 +1448,13 @@ namespace ProtoGen {
             return ProtoStructType.Command;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1230,6 +1481,10 @@ namespace ProtoGen {
             return ProtoStructType.Brief;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1251,6 +1506,10 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Parameter;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1274,6 +1533,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Status;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1301,6 +1567,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Success;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1330,6 +1603,13 @@ namespace ProtoGen {
             return ProtoStructType.Error;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1357,6 +1637,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Warning;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1386,6 +1673,10 @@ namespace ProtoGen {
             return ProtoStructType.Option;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1408,6 +1699,10 @@ namespace ProtoGen {
             return ProtoStructType.Include;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1428,6 +1723,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.OptionSet;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1455,6 +1757,13 @@ namespace ProtoGen {
             return ProtoStructType.Enumerate;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1481,6 +1790,10 @@ namespace ProtoGen {
             return ProtoStructType.Case;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1503,6 +1816,10 @@ namespace ProtoGen {
             return ProtoStructType.Type;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1524,6 +1841,10 @@ namespace ProtoGen {
             return ProtoStructType.Default;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1543,6 +1864,10 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Maximum;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1564,6 +1889,10 @@ namespace ProtoGen {
             return ProtoStructType.Minimum;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1584,6 +1913,10 @@ namespace ProtoGen {
             return ProtoStructType.LengthBits;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1603,6 +1936,10 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.LengthFixed;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1625,6 +1962,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Enumeration;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1653,6 +1997,10 @@ namespace ProtoGen {
             return ProtoStructType.EnumerationEntry;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1675,6 +2023,12 @@ namespace ProtoGen {
             return ProtoStructType.Mapping;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			Id._InitChildren (this);
+			MappingType._InitChildren (this);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1694,6 +2048,10 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Root;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1715,6 +2073,11 @@ namespace ProtoGen {
             return ProtoStructType.Language;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			For._InitChildren (this);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1734,6 +2097,13 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.C;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1759,6 +2129,13 @@ namespace ProtoGen {
             return ProtoStructType.CS;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1782,6 +2159,10 @@ namespace ProtoGen {
             return ProtoStructType.Stubs;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -1800,6 +2181,10 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Prefix;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1821,6 +2206,11 @@ namespace ProtoGen {
         public override ProtoStructType _Tag () {
             return ProtoStructType.Binding;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			Type._InitChildren (this);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -1853,9 +2243,7 @@ namespace ProtoGen {
 			Output.WriteId ("ID", Label.ToString());
 			}
         }
-//	}
 
-//namespace Goedel.Registry {
 
     public enum StateCode {  
         _Start,
@@ -2092,10 +2480,21 @@ namespace ProtoGen {
                 Lexer Schema = new Lexer(File);
                 Schema.Process(infile, Result);
                 }
+			Result._InitChildren ();
 
             return Result;
             }
 
+		bool _Initialized = false;
+		public virtual void _InitChildren () {
+			if (_Initialized) {
+				return;
+				}
+			_Initialized = true;
+			foreach (var Entry in Top) {
+				Entry._InitChildren (null);
+				}
+			}
 
         public ProtoStruct() {
             Top = new List<ProtoGen._Choice> () ;

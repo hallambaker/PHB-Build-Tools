@@ -7,7 +7,7 @@ using System.Reflection;
 
 
 namespace Goedel.Registry {
-    public class Script {
+    public partial class Script {
 		public TextWriter _Output = null;
 		public string _Indent = "";
         public string _Filename = null;
@@ -189,6 +189,33 @@ namespace Goedel.Registry {
             return ZoneTime.ToString(Format);
             }
 
+        /// <summary>
+        /// Build an indented comment string at the current position
+        /// for the currently selected language.
+        /// </summary>
+        /// <param name="Text"></param>
+        /// <returns></returns>
+        public string CommentSummary(int Spaces, string Text) {
+            var Indent = _Indent + new string(' ', Spaces);
+            var Builder = new StringBuilder();
+
+            Builder.Append (Indent);
+            Builder.Append("/// <summary>\n");
+
+            var Split = Text.Split('\n');
+
+            foreach (var Part in Split) {
+                Builder.Append(Indent);
+                Builder.Append("///");
+                Builder.Append(Part);
+                Builder.Append("\n");
+                }
+
+            Builder.Append(Indent);
+            Builder.Append("/// </summary>\n");
+
+            return Builder.ToString();
+            }
 
         ////
         //// Header

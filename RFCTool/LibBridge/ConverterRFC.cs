@@ -103,7 +103,7 @@ namespace MakeRFC {
             Section CurrentSection = null;
 
             foreach (var Block in Source.Blocks) {
-                Console.WriteLine("Block {0}", Block.BlockType);
+                //Console.WriteLine("Block {0}", Block.BlockType);
 
 
                 if ((Block.GetType() == typeof(Goedel.MarkLib.Layout)) |

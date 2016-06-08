@@ -43,10 +43,10 @@ namespace Goedel.Trojan.Script {
 		 System.DateTime GenerateTime = System.DateTime.UtcNow;
 		// #% string GoedelNamespace = "Goedel.Trojan"; 
 		 string GoedelNamespace = "Goedel.Trojan";
-		// #% string TitleField = "Title"; 
-		 string TitleField = "Title";
 		// #% Separator Separator; 
 		 Separator Separator;
+		// #% public bool FALSE = false; 
+		 public bool FALSE = false;
 		// #method GenerateCS GUISchema GUISchema 
 		
 
@@ -96,30 +96,44 @@ namespace Goedel.Trojan.Script {
 				_Output.Write ("	public abstract partial class Window:  {1}.Window {{\n{0}", _Indent, GoedelNamespace);
 				// 		} 
 				_Output.Write ("		}}\n{0}", _Indent);
-				// 	public abstract partial class Wizard:  #{GoedelNamespace}.Wizard { 
-				_Output.Write ("	public abstract partial class Wizard:  {1}.Wizard {{\n{0}", _Indent, GoedelNamespace);
-				// 		} 
-				_Output.Write ("		}}\n{0}", _Indent);
-				// 	public abstract partial class Model:  #{GoedelNamespace}.Model { 
-				_Output.Write ("	public abstract partial class Model:  {1}.Model {{\n{0}", _Indent, GoedelNamespace);
-				// 		} 
-				_Output.Write ("		}}\n{0}", _Indent);
 				//  
 				_Output.Write ("\n{0}", _Indent);
-				// 	//The main declarations 
-				_Output.Write ("	//The main declarations\n{0}", _Indent);
+				//  
+				_Output.Write ("\n{0}", _Indent);
+				// 	/// <summary> 
+				_Output.Write ("	/// <summary>\n{0}", _Indent);
+				//     /// The application data model. This inherits the field declarations and 
+				_Output.Write ("    /// The application data model. This inherits the field declarations and\n{0}", _Indent);
+				// 	/// stub callback methods from the template. The stub callbacks should be 
+				_Output.Write ("	/// stub callback methods from the template. The stub callbacks should be\n{0}", _Indent);
+				// 	/// overwritten by the user's code.  
+				_Output.Write ("	/// overwritten by the user's code. \n{0}", _Indent);
+				//     /// </summary> 
+				_Output.Write ("    /// </summary>\n{0}", _Indent);
 				// 	public partial class #{GUI.Id} : _#{GUI.Id} { 
 				_Output.Write ("	public partial class {1} : _{2} {{\n{0}", _Indent, GUI.Id, GUI.Id);
 				// 		} 
 				_Output.Write ("		}}\n{0}", _Indent);
 				//  
 				_Output.Write ("\n{0}", _Indent);
+				// 	/// <summary> 
+				_Output.Write ("	/// <summary>\n{0}", _Indent);
+				//     /// The template data model  constructed from the specification. 
+				_Output.Write ("    /// The template data model  constructed from the specification.\n{0}", _Indent);
+				// 	/// Contains stub methods for each callback. 
+				_Output.Write ("	/// Contains stub methods for each callback.\n{0}", _Indent);
+				//     /// </summary> 
+				_Output.Write ("    /// </summary>\n{0}", _Indent);
+				// 	public abstract class _#{GUI.Id} : #{GoedelNamespace}.Model { 
+				_Output.Write ("	public abstract class _{1} : {2}.Model {{\n{0}", _Indent, GUI.Id, GoedelNamespace);
 				//  
 				_Output.Write ("\n{0}", _Indent);
-				// 	public partial class _#{GUI.Id} : Model { 
-				_Output.Write ("	public partial class _{1} : Model {{\n{0}", _Indent, GUI.Id);
-				//  
-				_Output.Write ("\n{0}", _Indent);
+				//         /// <summary> 
+				_Output.Write ("        /// <summary>\n{0}", _Indent);
+				//         /// Default constructor. 
+				_Output.Write ("        /// Default constructor.\n{0}", _Indent);
+				//         /// </summary> 
+				_Output.Write ("        /// </summary>\n{0}", _Indent);
 				//         public _#{GUI.Id}() { 
 				_Output.Write ("        public _{1}() {{\n{0}", _Indent, GUI.Id);
 				//             _About = new About(this) { 
@@ -142,14 +156,16 @@ namespace Goedel.Trojan.Script {
 				_Output.Write ("\n{0}", _Indent);
 				//  
 				_Output.Write ("\n{0}", _Indent);
-				// #foreach (var Command in GUI.Commands)  
-				foreach  (var Command in GUI.Commands)  {
+				// #foreach (var Command in GUI.Commands) 
+				foreach  (var Command in GUI.Commands) {
+					// #{CommentSummary(8, Command.CommentSummary)} #! 
+					_Output.Write ("{1} ", _Indent, CommentSummary(8, Command.CommentSummary));
 					// 		public virtual void #{Command.Id} (#! 
 					_Output.Write ("		public virtual void {1} (", _Indent, Command.Id);
 					// #if (Command.Parameter != null)  
 					if (  (Command.Parameter != null)  ) {
-						// #{Command.Parameter} #{Command.Parameter}#! 
-						_Output.Write ("{1} {2}", _Indent, Command.Parameter, Command.Parameter);
+						// Object Object #! 
+						_Output.Write ("Object Object ", _Indent);
 						// #end if		 
 						}
 					// ) { 
@@ -162,26 +178,28 @@ namespace Goedel.Trojan.Script {
 					}
 				//  
 				_Output.Write ("\n{0}", _Indent);
-				// #foreach (var Object in GUI.Objects)  
-				foreach  (var Object in GUI.Objects)  {
-					// 		protected #{Object.Id} Selected_#{Object.Id} = null ; 
-					_Output.Write ("		protected {1} Selected_{2} = null ;\n{0}", _Indent, Object.Id, Object.Id);
-					// #end foreach 
-					}
+				// #!foreach (var Object in GUI.Objects)  
+				// #!		protected #{Object.Id} Selected_#{Object.Id} = null ; 
+				//		protected #{Object.Id} Selected_#{Object.Id} = null ;
+				// #!end foreach 
 				//  
 				_Output.Write ("\n{0}", _Indent);
-				//         public override void  Dispach(string Command) { 
-				_Output.Write ("        public override void  Dispach(string Command) {{\n{0}", _Indent);
+				//  
+				_Output.Write ("\n{0}", _Indent);
+				// #{CommentSummary(8, "Dispatch command callback with required parameters.")} #! 
+				_Output.Write ("{1} ", _Indent, CommentSummary(8, "Dispatch command callback with required parameters."));
+				//         public override void  Dispatch(string Command) { 
+				_Output.Write ("        public override void  Dispatch(string Command) {{\n{0}", _Indent);
 				//             switch (Command) { 
 				_Output.Write ("            switch (Command) {{\n{0}", _Indent);
 				// #foreach (var Command in GUI.Commands)  
 				foreach  (var Command in GUI.Commands)  {
 					// #if (Command.Parameter != null)  
 					if (  (Command.Parameter != null)  ) {
-						//                 case "#{Command.Id}_#{Command.Parameter}": { 
-						_Output.Write ("                case \"{1}_{2}\": {{\n{0}", _Indent, Command.Id, Command.Parameter);
-						//                         #{Command.Id}(Selected_#{Command.Parameter}); 
-						_Output.Write ("                        {1}(Selected_{2});\n{0}", _Indent, Command.Id, Command.Parameter);
+						//                 case "#{Command.Id}": { 
+						_Output.Write ("                case \"{1}\": {{\n{0}", _Indent, Command.Id);
+						//                         #{Command.Id}(Selected as Object); 
+						_Output.Write ("                        {1}(Selected as Object);\n{0}", _Indent, Command.Id);
 						// #else	 
 						} else {
 						//                 case "#{Command.Id}": { 
@@ -202,42 +220,60 @@ namespace Goedel.Trojan.Script {
 				_Output.Write ("            }}\n{0}", _Indent);
 				//  
 				_Output.Write ("\n{0}", _Indent);
-				//         public bool Active(String Command) { 
-				_Output.Write ("        public bool Active(String Command) {{\n{0}", _Indent);
-				//             switch (Command) { 
-				_Output.Write ("            switch (Command) {{\n{0}", _Indent);
-				// #foreach (var Command in GUI.Commands)  
-				foreach  (var Command in GUI.Commands)  {
-					// #if (Command.Parameter != null)  
-					if (  (Command.Parameter != null)  ) {
-						//                 case "#{Command.Id}_#{Command.Parameter}": { 
-						_Output.Write ("                case \"{1}_{2}\": {{\n{0}", _Indent, Command.Id, Command.Parameter);
-						//                         return Selected_#{Command.Parameter}# != null; 
-						_Output.Write ("                        return Selected_{1} != null;\n{0}", _Indent, Command.Parameter);
-						//                         } 
-						_Output.Write ("                        }}\n{0}", _Indent);
-						// #end if	 
+				// #if FALSE 
+				if (  FALSE ) {
+					// #{CommentSummary(8, "Report if selection criteria for specified command are met.")} #! 
+					_Output.Write ("{1} ", _Indent, CommentSummary(8, "Report if selection criteria for specified command are met."));
+					//         public bool Active(String Command) { 
+					_Output.Write ("        public bool Active(String Command) {{\n{0}", _Indent);
+					//             switch (Command) { 
+					_Output.Write ("            switch (Command) {{\n{0}", _Indent);
+					// #foreach (var Command in GUI.Commands)  
+					foreach  (var Command in GUI.Commands)  {
+						// #if (Command.Parameter != null)  
+						if (  (Command.Parameter != null)  ) {
+							//                 case "#{Command.Id}_#{Command.Parameter}": { 
+							_Output.Write ("                case \"{1}_{2}\": {{\n{0}", _Indent, Command.Id, Command.Parameter);
+							// 						// NYI here make a list of all the possibilities 
+							_Output.Write ("						// NYI here make a list of all the possibilities\n{0}", _Indent);
+							//                         //return Selected_#{Command.Parameter}# != null; 
+							_Output.Write ("                        //return Selected_{1} != null;\n{0}", _Indent, Command.Parameter);
+							// 						return true; 
+							_Output.Write ("						return true;\n{0}", _Indent);
+							//                         } 
+							_Output.Write ("                        }}\n{0}", _Indent);
+							// #end if	 
+							}
+						// #end foreach 
 						}
-					// #end foreach 
+					//                 } 
+					_Output.Write ("                }}\n{0}", _Indent);
+					//             return true; 
+					_Output.Write ("            return true;\n{0}", _Indent);
+					//             } 
+					_Output.Write ("            }}\n{0}", _Indent);
+					// #end if 
 					}
-				//                 } 
-				_Output.Write ("                }}\n{0}", _Indent);
-				//             return true; 
-				_Output.Write ("            return true;\n{0}", _Indent);
-				//             } 
-				_Output.Write ("            }}\n{0}", _Indent);
 				// 		} 
 				_Output.Write ("		}}\n{0}", _Indent);
+				//  
+				_Output.Write ("\n{0}", _Indent);
 				//  
 				_Output.Write ("\n{0}", _Indent);
 				// 	// Windows 
 				_Output.Write ("	// Windows\n{0}", _Indent);
 				//  
 				_Output.Write ("\n{0}", _Indent);
+				// 	/* 
+				_Output.Write ("	/*\n{0}", _Indent);
+				// 	* Window declarations 
+				_Output.Write ("	* Window declarations\n{0}", _Indent);
+				// 	*/ 
+				_Output.Write ("	*/\n{0}", _Indent);
 				// #foreach (var Window in GUI.Windows)  
 				foreach  (var Window in GUI.Windows)  {
-					//  
-					_Output.Write ("\n{0}", _Indent);
+					// #{CommentSummary(8, Window.CommentSummary)} #! 
+					_Output.Write ("{1} ", _Indent, CommentSummary(8, Window.CommentSummary));
 					// 	public partial class #{Window.Id} : _#{Window.Id} { 
 					_Output.Write ("	public partial class {1} : _{2} {{\n{0}", _Indent, Window.Id, Window.Id);
 					//  
@@ -254,8 +290,8 @@ namespace Goedel.Trojan.Script {
 					_Output.Write ("			}}\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
-					// 		public #{Window.Id}  (Model Model, Binding Binding) { 
-					_Output.Write ("		public {1}  (Model Model, Binding Binding) {{\n{0}", _Indent, Window.Id);
+					// 		public #{Window.Id}  (#{GoedelNamespace}.Model Model, Binding Binding) { 
+					_Output.Write ("		public {1}  ({2}.Model Model, Binding Binding) {{\n{0}", _Indent, Window.Id, GoedelNamespace);
 					// 			// Call backing code to populate the data model 
 					_Output.Write ("			// Call backing code to populate the data model\n{0}", _Indent);
 					// 			Populate (); 
@@ -290,18 +326,20 @@ namespace Goedel.Trojan.Script {
 					}
 				//  
 				_Output.Write ("\n{0}", _Indent);
+				// 	/* 
+				_Output.Write ("	/*\n{0}", _Indent);
+				// 	* Menu declarations 
+				_Output.Write ("	* Menu declarations\n{0}", _Indent);
+				// 	*/ 
+				_Output.Write ("	*/\n{0}", _Indent);
 				// #foreach (var Menu in GUI.Menus)  
 				foreach  (var Menu in GUI.Menus)  {
 					//  
 					_Output.Write ("\n{0}", _Indent);
-					// 	public partial class #{Menu.Id} : _#{Menu.Id} { 
-					_Output.Write ("	public partial class {1} : _{2} {{\n{0}", _Indent, Menu.Id, Menu.Id);
-					// 		} 
-					_Output.Write ("		}}\n{0}", _Indent);
-					//  
-					_Output.Write ("\n{0}", _Indent);
-					// 	public partial class _#{Menu.Id} : Menu { 
-					_Output.Write ("	public partial class _{1} : Menu {{\n{0}", _Indent, Menu.Id);
+					// #{CommentSummary(8, Menu.CommentSummary)} #! 
+					_Output.Write ("{1} ", _Indent, CommentSummary(8, Menu.CommentSummary));
+					// 	public partial class #{Menu.Id} : Menu { 
+					_Output.Write ("	public partial class {1} : Menu {{\n{0}", _Indent, Menu.Id);
 					// 	 
 					_Output.Write ("	\n{0}", _Indent);
 					// 		public override List<MenuEntry> Entries { 
@@ -326,14 +364,24 @@ namespace Goedel.Trojan.Script {
 					}
 				//  
 				_Output.Write ("\n{0}", _Indent);
-				// 	// Wizards 
-				_Output.Write ("	// Wizards\n{0}", _Indent);
+				// 	/* 
+				_Output.Write ("	/*\n{0}", _Indent);
+				// 	* Wizard declarations 
+				_Output.Write ("	* Wizard declarations\n{0}", _Indent);
+				// 	*/ 
+				_Output.Write ("	*/\n{0}", _Indent);
 				//  
 				_Output.Write ("\n{0}", _Indent);
 				// #foreach (var Wizard in GUI.Wizards)  
 				foreach  (var Wizard in GUI.Wizards)  {
 					//  
 					_Output.Write ("\n{0}", _Indent);
+					// 	/// <summary> 
+					_Output.Write ("	/// <summary>\n{0}", _Indent);
+					//     /// Wizard callback class. 
+					_Output.Write ("    /// Wizard callback class.\n{0}", _Indent);
+					//     /// </summary> 
+					_Output.Write ("    /// </summary>\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
 					// 	public partial class #{Wizard.Id} : _#{Wizard.Id} { 
@@ -342,6 +390,22 @@ namespace Goedel.Trojan.Script {
 					_Output.Write ("		}}\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					// 	/// <summary> 
+					_Output.Write ("	/// <summary>\n{0}", _Indent);
+					//     /// Template class for wizard. The application programmer implements 
+					_Output.Write ("    /// Template class for wizard. The application programmer implements\n{0}", _Indent);
+					// 	/// the wizard by overriding wizard methods. Note that since the user  
+					_Output.Write ("	/// the wizard by overriding wizard methods. Note that since the user \n{0}", _Indent);
+					// 	/// may backtrack when implementing a method, callbacks MUST tolerate 
+					_Output.Write ("	/// may backtrack when implementing a method, callbacks MUST tolerate\n{0}", _Indent);
+					// 	/// being called multiple times. It is also permitted for a user to  
+					_Output.Write ("	/// being called multiple times. It is also permitted for a user to \n{0}", _Indent);
+					// 	/// cancel a wizard before the final commit. 
+					_Output.Write ("	/// cancel a wizard before the final commit.\n{0}", _Indent);
+					//     /// </summary> 
+					_Output.Write ("    /// </summary>\n{0}", _Indent);
 					// 	public partial class _#{Wizard.Id} : Wizard { 
 					_Output.Write ("	public partial class _{1} : Wizard {{\n{0}", _Indent, Wizard.Id);
 					//  
@@ -354,10 +418,28 @@ namespace Goedel.Trojan.Script {
 					_Output.Write ("        public override List<Step> Steps => _Steps;\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
+					//         /// <summary> 
+					_Output.Write ("        /// <summary>\n{0}", _Indent);
+					//         /// Default constructor 
+					_Output.Write ("        /// Default constructor\n{0}", _Indent);
+					//         /// </summary> 
+					_Output.Write ("        /// </summary>\n{0}", _Indent);
+					//         /// <param name="Model">Model to bind to</param> 
+					_Output.Write ("        /// <param name=\"Model\">Model to bind to</param>\n{0}", _Indent);
+					//         public _#{Wizard.Id}(Model Model) : base(Model) { 
+					_Output.Write ("        public _{1}(Model Model) : base(Model) {{\n{0}", _Indent, Wizard.Id);
+					//             } 
+					_Output.Write ("            }}\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
-					// 	// #{Wizard.Id} 
-					_Output.Write ("	// {1}\n{0}", _Indent, Wizard.Id);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					// #call DeclareFields Wizard.Entries 
+					DeclareFields (Wizard.Entries);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					// 		// #{Wizard.Id} 
+					_Output.Write ("		// {1}\n{0}", _Indent, Wizard.Id);
 					// 		List<string> _Texts = #! 
 					_Output.Write ("		List<string> _Texts = ", _Indent);
 					// #call MakeTextList Wizard.Entries 
@@ -376,8 +458,8 @@ namespace Goedel.Trojan.Script {
 						if (  Step != null ) {
 							// #{Separator} 
 							_Output.Write ("{1}\n{0}", _Indent, Separator);
-							// 			new Step () {Object = new #{Step.Id} (),  
-							_Output.Write ("			new Step () {{Object = new {1} (), \n{0}", _Indent, Step.Id);
+							// 			new Step () {Value = new #{Step.Id} (),  
+							_Output.Write ("			new Step () {{Value = new {1} (), \n{0}", _Indent, Step.Id);
 							// 				Title = #{Step.Tag.Quoted()}, Description = 
 							_Output.Write ("				Title = {1}, Description =\n{0}", _Indent, Step.Tag.Quoted());
 							// 		#! 
@@ -404,6 +486,34 @@ namespace Goedel.Trojan.Script {
 					_Output.Write ("\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
+					// 		public override bool Dispatch (int Step) { 
+					_Output.Write ("		public override bool Dispatch (int Step) {{\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					// 			switch (Step) { 
+					_Output.Write ("			switch (Step) {{\n{0}", _Indent);
+					// #% int StepNumber = 0; 
+					 int StepNumber = 0;
+					// #foreach (var Entry in Wizard.Entries) 
+					foreach  (var Entry in Wizard.Entries) {
+						// #% var Step = Entry as Step; 
+						 var Step = Entry as Step;
+						// #if Step != null 
+						if (  Step != null ) {
+							// 				case #{StepNumber++} : return #{Step.Id.Label()}.Dispatch(this); 
+							_Output.Write ("				case {1} : return {2}.Dispatch(this);\n{0}", _Indent, StepNumber++, Step.Id.Label());
+							// #end if 
+							}
+						// #end foreach 
+						}
+					// 				} 
+					_Output.Write ("				}}\n{0}", _Indent);
+					// 			return false; 
+					_Output.Write ("			return false;\n{0}", _Indent);
+					// 			} 
+					_Output.Write ("			}}\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
 					// 		} 
 					_Output.Write ("		}}\n{0}", _Indent);
 					//  
@@ -414,22 +524,16 @@ namespace Goedel.Trojan.Script {
 					}
 				//  
 				_Output.Write ("\n{0}", _Indent);
-				// 	// Objects 
-				_Output.Write ("	// Objects\n{0}", _Indent);
-				//  
-				_Output.Write ("\n{0}", _Indent);
+				// 	/* 
+				_Output.Write ("	/*\n{0}", _Indent);
+				// 	* Backing object class declarations 
+				_Output.Write ("	* Backing object class declarations\n{0}", _Indent);
+				// 	*/ 
+				_Output.Write ("	*/\n{0}", _Indent);
 				// #foreach (var Object in GUI.Objects)  
 				foreach  (var Object in GUI.Objects)  {
-					// 	public partial class #{Object.Id} : _#{Object.Id}{ 
-					_Output.Write ("	public partial class {1} : _{2}{{\n{0}", _Indent, Object.Id, Object.Id);
-					// 		} 
-					_Output.Write ("		}}\n{0}", _Indent);
-					//  
-					_Output.Write ("\n{0}", _Indent);
-					//  
-					_Output.Write ("\n{0}", _Indent);
-					// 	public class _#{Object.Id} #! 
-					_Output.Write ("	public class _{1} ", _Indent, Object.Id);
+					// 	public partial class #{Object.Id} #! 
+					_Output.Write ("	public partial class {1} ", _Indent, Object.Id);
 					// #if (Object.ParentObject == null) 
 					if (  (Object.ParentObject == null) ) {
 						// : Object #! 
@@ -466,6 +570,76 @@ namespace Goedel.Trojan.Script {
 					 MakeWidgets (Object, Separator);
 					// 			} ; 
 					_Output.Write ("			}} ;\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					//         /// <summary> 
+					_Output.Write ("        /// <summary>\n{0}", _Indent);
+					//         /// Create a list containing all the current children. 
+					_Output.Write ("        /// Create a list containing all the current children.\n{0}", _Indent);
+					//         /// </summary> 
+					_Output.Write ("        /// </summary>\n{0}", _Indent);
+					//         /// <returns></returns> 
+					_Output.Write ("        /// <returns></returns>\n{0}", _Indent);
+					//         public override List<Goedel.Trojan.Object> GetChildren() { 
+					_Output.Write ("        public override List<Goedel.Trojan.Object> GetChildren() {{\n{0}", _Indent);
+					// #if (Object.ParentObject == null) 
+					if (  (Object.ParentObject == null) ) {
+						// 			var Result = base.GetChildren(); 
+						_Output.Write ("			var Result = base.GetChildren();\n{0}", _Indent);
+						// #else  
+						} else {
+						//             var Result = new List<Goedel.Trojan.Object>(); 
+						_Output.Write ("            var Result = new List<Goedel.Trojan.Object>();\n{0}", _Indent);
+						// #end if 
+						}
+					// #foreach (var Entry in Object.Entries) 
+					foreach  (var Entry in Object.Entries) {
+						// #switchcast GUISchemaType Entry 
+						switch (Entry._Tag ()) {
+							// #casecast List List 
+							case GUISchemaType.List: {
+							  List List = (List) Entry; 
+							// 			if (#{List.FieldName}.Value != null) { 
+							_Output.Write ("			if ({1}.Value != null) {{\n{0}", _Indent, List.FieldName);
+							// 				foreach (var Entry in #{List.FieldName}.Value) { 
+							_Output.Write ("				foreach (var Entry in {1}.Value) {{\n{0}", _Indent, List.FieldName);
+							// 					Result.Add (Entry); 
+							_Output.Write ("					Result.Add (Entry);\n{0}", _Indent);
+							// 					} 
+							_Output.Write ("					}}\n{0}", _Indent);
+							// 				} 
+							_Output.Write ("				}}\n{0}", _Indent);
+							// #casecast Set Set 
+							break; }
+							case GUISchemaType.Set: {
+							  Set Set = (Set) Entry; 
+							// 			if (#{Set.FieldName}.Value != null) { 
+							_Output.Write ("			if ({1}.Value != null) {{\n{0}", _Indent, Set.FieldName);
+							// 				foreach (var Entry in #{Set.FieldName}.Value) { 
+							_Output.Write ("				foreach (var Entry in {1}.Value) {{\n{0}", _Indent, Set.FieldName);
+							// 					Result.Add (Entry); 
+							_Output.Write ("					Result.Add (Entry);\n{0}", _Indent);
+							// 					} 
+							_Output.Write ("					}}\n{0}", _Indent);
+							// 				} 
+							_Output.Write ("				}}\n{0}", _Indent);
+							// #end switchcast				 
+						break; }
+							}
+						// #end foreach 
+						}
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					// 			return Result; 
+					_Output.Write ("			return Result;\n{0}", _Indent);
+					//             } 
+					_Output.Write ("            }}\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
 					// 		} 
 					_Output.Write ("		}}\n{0}", _Indent);
 					//  
@@ -547,16 +721,34 @@ namespace Goedel.Trojan.Script {
 					  Menu SubMenu = (Menu) Entry; 
 					// #{Separator} 
 					_Output.Write ("{1}\n{0}", _Indent, Separator);
-					// 			new SubMenu ("#{SubMenu.Id}",  "#{SubMenu.Tag}", new #{SubMenu.Id}())#! 
-					_Output.Write ("			new SubMenu (\"{1}\",  \"{2}\", new {3}())", _Indent, SubMenu.Id, SubMenu.Tag, SubMenu.Id);
-					// #casecast Command Command 
+					// 			new SubMenu () { 
+					_Output.Write ("			new SubMenu () {{\n{0}", _Indent);
+					// 				Id ="#{SubMenu.Id}",   
+					_Output.Write ("				Id =\"{1}\",  \n{0}", _Indent, SubMenu.Id);
+					// 				Label = "#{SubMenu.Tag}",  
+					_Output.Write ("				Label = \"{1}\", \n{0}", _Indent, SubMenu.Tag);
+					// 				Sub = new #{SubMenu.Id}() }#! 
+					_Output.Write ("				Sub = new {1}() }}", _Indent, SubMenu.Id);
+					// #casecast Action Action 
 					break; }
-					case GUISchemaType.Command: {
-					  Command Command = (Command) Entry; 
+					case GUISchemaType.Action: {
+					  Action Action = (Action) Entry; 
 					// #{Separator} 
 					_Output.Write ("{1}\n{0}", _Indent, Separator);
-					// 			new MenuEntry ("#{Command.Id}",  "#{Command.Tag}")#! 
-					_Output.Write ("			new MenuEntry (\"{1}\",  \"{2}\")", _Indent, Command.Id, Command.Tag);
+					// 			new MenuEntry () {  
+					_Output.Write ("			new MenuEntry () {{ \n{0}", _Indent);
+					// 				Id ="#{Action.Id}",   
+					_Output.Write ("				Id =\"{1}\",  \n{0}", _Indent, Action.Id);
+					// 				Label = "#{Action.Tag}" }#! 
+					_Output.Write ("				Label = \"{1}\" }}", _Indent, Action.Tag);
+					// #casecast Divider Divider 
+					break; }
+					case GUISchemaType.Divider: {
+					  Divider Divider = (Divider) Entry; 
+					// #{Separator} 
+					_Output.Write ("{1}\n{0}", _Indent, Separator);
+					// 			new MenuDivider () #! 
+					_Output.Write ("			new MenuDivider () ", _Indent);
 					// #end switchcast 
 				break; }
 					}
@@ -615,10 +807,28 @@ namespace Goedel.Trojan.Script {
 					_Output.Write ("			new ObjectCommand {{\n{0}", _Indent);
 					// 						Id = "#{Entry.FieldName}",   
 					_Output.Write ("						Id = \"{1}\",  \n{0}", _Indent, Entry.FieldName);
-					// 						Label = "#{Entry.FieldTag}"}#! 
-					_Output.Write ("						Label = \"{1}\"}}", _Indent, Entry.FieldTag);
+					// 						Label = #{Entry.FieldTag.Quoted()}}#! 
+					_Output.Write ("						Label = {1}}}", _Indent, Entry.FieldTag.Quoted());
 					// #elseif (Entry as Inherit != null)  
 					} else if (  (Entry as Inherit != null) ) {
+					// #elseif (Entry as Action != null)  
+					} else if (  (Entry as Action != null) ) {
+					// #% var Action = Entry as Action; 
+					 var Action = Entry as Action;
+					// #{Separator} 
+					_Output.Write ("{1}\n{0}", _Indent, Separator);
+					// 			new ObjectAction { 
+					_Output.Write ("			new ObjectAction {{\n{0}", _Indent);
+					// 						Id = "#{Entry.FieldName}",   
+					_Output.Write ("						Id = \"{1}\",  \n{0}", _Indent, Entry.FieldName);
+					// #if (Entry.Text != null) 
+					if (  (Entry.Text != null) ) {
+						// 						Text = #{Entry.Text.Quoted()}, 
+						_Output.Write ("						Text = {1},\n{0}", _Indent, Entry.Text.Quoted());
+						// #end if 
+						}
+					// 						Label = #{Action.Tag.Quoted()}}#! 
+					_Output.Write ("						Label = {1}}}", _Indent, Action.Tag.Quoted());
 					// #elseif (Entry as Text != null)  
 					} else if (  (Entry as Text != null) ) {
 					// #% var Text = Entry as Text; 
@@ -645,20 +855,40 @@ namespace Goedel.Trojan.Script {
 					_Output.Write ("						Label = \"{1}\",\n{0}", _Indent, Entry.FieldTag);
 					// 						Entries = new List<ObjectEntry> {#! 
 					_Output.Write ("						Entries = new List<ObjectEntry> {{", _Indent);
-					// #indent 
-					_Indent = _Indent + "\t";
 					// #% var SubSeparator = new Separator (","); 
 					 var SubSeparator = new Separator (",");
-					// #%  MakeWidgets (Enumerate, SubSeparator); 
-					  MakeWidgets (Enumerate, SubSeparator);
-					// #outdent 
-					_Indent = _Indent.Remove (0,1);
-					//  
-					_Output.Write ("\n{0}", _Indent);
+					// #foreach (var RadioEntry in (Entry as Enumerate).Entries) 
+					foreach  (var RadioEntry in (Entry as Enumerate).Entries) {
+						// #{SubSeparator} 
+						_Output.Write ("{1}\n{0}", _Indent, SubSeparator);
+						// 				new ObjectFieldRadio { 
+						_Output.Write ("				new ObjectFieldRadio {{\n{0}", _Indent);
+						// 						Id = "#{RadioEntry.FieldName}",   
+						_Output.Write ("						Id = \"{1}\",  \n{0}", _Indent, RadioEntry.FieldName);
+						// 						Label = "#{RadioEntry.FieldTag}", 
+						_Output.Write ("						Label = \"{1}\",\n{0}", _Indent, RadioEntry.FieldTag);
+						// 						SelectionValue = (int) Enum#{Entry.FieldName}.#{RadioEntry.FieldName}  } #! 
+						_Output.Write ("						SelectionValue = (int) Enum{1}.{2}  }} ", _Indent, Entry.FieldName, RadioEntry.FieldName);
+						// #end foreach 
+						}
 					// 							} 
 					_Output.Write ("							}}\n{0}", _Indent);
 					// 						}#! 
 					_Output.Write ("						}}", _Indent);
+					// #elseif (Entry as Item != null)  
+					} else if (  (Entry as Item != null) ) {
+					// #% var Item = Entry as Item; 
+					 var Item = Entry as Item;
+					// #{Separator} 
+					_Output.Write ("{1}\n{0}", _Indent, Separator);
+					// 			new ObjectFieldItem { 
+					_Output.Write ("			new ObjectFieldItem {{\n{0}", _Indent);
+					// 						Id = "#{Entry.FieldName}",   
+					_Output.Write ("						Id = \"{1}\",  \n{0}", _Indent, Entry.FieldName);
+					// 						Label = "#{Entry.FieldTag}", 
+					_Output.Write ("						Label = \"{1}\",\n{0}", _Indent, Entry.FieldTag);
+					// 						Value = new #{Entry.FieldType} () }#! 
+					_Output.Write ("						Value = new {1} () }}", _Indent, Entry.FieldType);
 					// #elseif (Entry as Option != null)  
 					} else if (  (Entry as Option != null) ) {
 					// #% var Option = Entry as Option; 
@@ -693,6 +923,18 @@ namespace Goedel.Trojan.Script {
 					_Output.Write ("{1}\n{0}", _Indent, Separator);
 					// 			new ObjectField#{Entry.WidgetType} {Id = "#{Entry.FieldName}",  
 					_Output.Write ("			new ObjectField{1} {{Id = \"{2}\", \n{0}", _Indent, Entry.WidgetType, Entry.FieldName);
+					// #if (Entry.Output) 
+					if (  (Entry.Output) ) {
+						// 						ReadOnly = true, 
+						_Output.Write ("						ReadOnly = true,\n{0}", _Indent);
+						// #end if 
+						}
+					// #if (Entry.Tip != null) 
+					if (  (Entry.Tip != null) ) {
+						// 						Tip = #{Entry.Tip.Quoted()}, 
+						_Output.Write ("						Tip = {1},\n{0}", _Indent, Entry.Tip.Quoted());
+						// #end if 
+						}
 					// 						Label = "#{Entry.FieldTag}" // #{Entry.FieldIndex} 
 					_Output.Write ("						Label = \"{1}\" // {2}\n{0}", _Indent, Entry.FieldTag, Entry.FieldIndex);
 					// 					    }#! 
@@ -746,8 +988,8 @@ namespace Goedel.Trojan.Script {
 		public void DeclareFields (List<_Choice> Entries) {
 			// #foreach (var Entry in Entries) 
 			foreach  (var Entry in Entries) {
-				// #if (Entry.FieldNumber >= 0) 
-				if (  (Entry.FieldNumber >= 0) ) {
+				// #if (Entry.FieldType != null) 
+				if (  (Entry.FieldType != null) ) {
 					// #if (Entry as Enumerate != null)  
 					if (  (Entry as Enumerate != null)  ) {
 						// 		public enum #{Entry.FieldType} {#! 
@@ -772,8 +1014,16 @@ namespace Goedel.Trojan.Script {
 							}
 						// 			}; 
 						_Output.Write ("			}};\n{0}", _Indent);
-						// 		public #{Entry.FieldType} #{Entry.FieldName}; 
-						_Output.Write ("		public {1} {2};\n{0}", _Indent, Entry.FieldType, Entry.FieldName);
+						// 		public ObjectFieldEnumerate #{Entry.FieldName}  { 
+						_Output.Write ("		public ObjectFieldEnumerate {1}  {{\n{0}", _Indent, Entry.FieldName);
+						// 			get { 
+						_Output.Write ("			get {{\n{0}", _Indent);
+						// 				return #{Entry.FieldIndex}; 
+						_Output.Write ("				return {1};\n{0}", _Indent, Entry.FieldIndex);
+						// 				} 
+						_Output.Write ("				}}\n{0}", _Indent);
+						// 			} 
+						_Output.Write ("			}}\n{0}", _Indent);
 						// #else 
 						} else {
 						// 		/// <summary> 
@@ -782,28 +1032,40 @@ namespace Goedel.Trojan.Script {
 						_Output.Write ("        /// {1}\n{0}", _Indent, Entry.FieldName);
 						//         /// </summary> 
 						_Output.Write ("        /// </summary>\n{0}", _Indent);
-						// 		public #{Entry.FieldType} #{Entry.FieldName} { 
-						_Output.Write ("		public {1} {2} {{\n{0}", _Indent, Entry.FieldType, Entry.FieldName);
-						// 			get { 
-						_Output.Write ("			get {{\n{0}", _Indent);
 						// #if (Entry as Item != null) 
 						if (  (Entry as Item != null) ) {
+							// 		public #{Entry.FieldType} #{Entry.FieldName} { 
+							_Output.Write ("		public {1} {2} {{\n{0}", _Indent, Entry.FieldType, Entry.FieldName);
+							// 			get { 
+							_Output.Write ("			get {{\n{0}", _Indent);
+							// 				return (#{Entry.FieldType}) (#{Entry.FieldIndex}).Value; 
+							_Output.Write ("				return ({1}) ({2}).Value;\n{0}", _Indent, Entry.FieldType, Entry.FieldIndex);
+							// 				} 
+							_Output.Write ("				}}\n{0}", _Indent);
+							// #elseif (Entry as Step != null) 
+							} else if (  (Entry as Step != null)) {
+							// 		public #{Entry.FieldType} #{Entry.FieldName} { 
+							_Output.Write ("		public {1} {2} {{\n{0}", _Indent, Entry.FieldType, Entry.FieldName);
+							// 			get { 
+							_Output.Write ("			get {{\n{0}", _Indent);
 							// 				return (#{Entry.FieldType}) #{Entry.FieldIndex}; 
 							_Output.Write ("				return ({1}) {2};\n{0}", _Indent, Entry.FieldType, Entry.FieldIndex);
+							// 				} 
+							_Output.Write ("				}}\n{0}", _Indent);
 							// #else 
 							} else {
+							// 		public ObjectField#{Entry.WidgetType} #{Entry.FieldName} { 
+							_Output.Write ("		public ObjectField{1} {2} {{\n{0}", _Indent, Entry.WidgetType, Entry.FieldName);
+							// 			get { 
+							_Output.Write ("			get {{\n{0}", _Indent);
 							// 				return #{Entry.FieldIndex}; 
 							_Output.Write ("				return {1};\n{0}", _Indent, Entry.FieldIndex);
+							// 				} 
+							_Output.Write ("				}}\n{0}", _Indent);
 							// #end if 
 							}
-						// 				} 
-						_Output.Write ("				}}\n{0}", _Indent);
-						// 			set { 
-						_Output.Write ("			set {{\n{0}", _Indent);
-						// 				#{Entry.FieldIndex} = value; 
-						_Output.Write ("				{1} = value;\n{0}", _Indent, Entry.FieldIndex);
-						// 				} 
-						_Output.Write ("				}}\n{0}", _Indent);
+						//  
+						_Output.Write ("\n{0}", _Indent);
 						// 			} 
 						_Output.Write ("			}}\n{0}", _Indent);
 						// 			 

@@ -4,7 +4,7 @@
 		Id		ID GuiType
 		Entries List Choice
 			About
-
+			Command
 			Window
 			Menu
 			Object
@@ -33,18 +33,27 @@
 	Type ThreePane
 		Menu		REF WidgetType
 
-	// All menus should eventually be user cutomizable
+	// All menus should eventually be user customizable
 	// This is just to set the defaults
 
 	Type Menu
 		Id			ID WidgetType
 		Tag			String	
 		Entries List Choice
-			Command
+			Action
 			Menu
+			Divider
+
+	Type Divider
+
+
+	Type Action
+		Id			REF WidgetType
+		Entries List Choice
+			Text	
 
 	Type Command
-		Id			Token WidgetType
+		Id			ID WidgetType
 		Tag			String
 		Entries List Choice
 			Select	
@@ -69,7 +78,7 @@
 			Boolean
 			Option
 			Set
-			Command
+			Action
 			List
 			Chooser
 			Enumerate
@@ -90,6 +99,10 @@
 		Of			REF ItemType
 		Id			Token FieldType
 		Tag			String	
+		Entries List Choice
+			Output
+			Action
+			Tip
 
 	Type Set
 		Of			REF FieldType
@@ -97,6 +110,8 @@
 		Tag			String	
 		Entries List Choice
 			Output
+			Action
+			Tip
 
 	Type Option
 		Id			Token FieldType
@@ -109,7 +124,7 @@
 			Boolean
 			Option
 			Set
-			Command
+			Action
 			Item
 			List
 			Chooser
@@ -122,6 +137,7 @@
 		Tag			String	
 		Entries List Choice
 			Output
+			Tip
 
 
 	Type Chooser
@@ -129,12 +145,14 @@
 		Tag			String	
 		Entries List Choice
 			Output
+			Tip
 
 	Type String
 		Id			Token FieldType
 		Tag			String	
 		Entries List Choice
 			Output
+			Tip
 
 	Type Secret
 		Id			Token FieldType
@@ -147,12 +165,14 @@
 		Tag			String	
 		Entries List Choice
 			Output
+			Tip
 
 	Type Boolean
 		Id			Token FieldType
 		Tag			String	
 		Entries List Choice
 			Output
+			Tip
 
 	Type Output
 
@@ -162,11 +182,13 @@
 		Entries List Choice
 			Radio
 			Text
+			Tip
 
 	Type Radio
 		Id			Token FieldType
 		Tag			String	
-
+		Entries List Choice
+			Tip
 
 
 	Type Wizard
@@ -182,3 +204,4 @@
 
 		Entries List Choice
 			Text
+			Tip

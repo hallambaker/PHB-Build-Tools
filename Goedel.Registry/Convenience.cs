@@ -65,6 +65,8 @@ namespace Goedel.Registry {
             }
 
         public static string Quoted(this List<string> Base) {
+            if (Base == null) return "\"\"";
+
             var StringBuilder = new StringBuilder();
             StringBuilder.Append("\"");
             bool Space = false;
@@ -94,6 +96,7 @@ namespace Goedel.Registry {
                 }
             }
 
+
         }
 
 
@@ -119,7 +122,7 @@ namespace Goedel.Registry {
         public bool IsFirst = true;
 
         /// <summary>
-        /// Create a separactor class.
+        /// Create a separator class.
         /// </summary>
         /// <param name="First">String to return on the first call to ToString()</param>
         /// <param name="Next">String to return after the first call to ToString()</param>
