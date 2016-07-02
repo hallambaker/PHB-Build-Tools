@@ -2,7 +2,7 @@
 // Script Syntax Version:  1.0
 // #license MITLicense 
 
-//   by 
+//  Copyright ©  2011 by Default Deny Security Inc.
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -639,11 +639,13 @@ namespace ProtoGen {
 							break; }
 							case ProtoStructType.Structure: {
 							  Structure Structure = (Structure) Entry; 
-							// #% MakeClass (Structure.Id, Structure.Entries); 
+							// #% MakeClass (Structure.Id, Structure.Entries, Structure.Parameterized); 
 							
-							 MakeClass (Structure.Id, Structure.Entries);
+							 MakeClass (Structure.Id, Structure.Entries, Structure.Parameterized);
 							//         /// <summary> 
 							_Output.Write ("        /// <summary>\n{0}", _Indent);
+							// 		/// Initialize class from JSONReader stream. 
+							_Output.Write ("		/// Initialize class from JSONReader stream.\n{0}", _Indent);
 							//         /// </summary>		 
 							_Output.Write ("        /// </summary>		\n{0}", _Indent);
 							// 		public #{Structure.Id} (JSONReader JSONReader) { 
@@ -652,6 +654,22 @@ namespace ProtoGen {
 							_Output.Write ("			Deserialize (JSONReader);\n{0}", _Indent);
 							// 			} 
 							_Output.Write ("			}}\n{0}", _Indent);
+							//  
+							_Output.Write ("\n{0}", _Indent);
+							//         /// <summary>  
+							_Output.Write ("        /// <summary> \n{0}", _Indent);
+							// 		/// Initialize class from a JSON encoded class. 
+							_Output.Write ("		/// Initialize class from a JSON encoded class.\n{0}", _Indent);
+							//         /// </summary>		 
+							_Output.Write ("        /// </summary>		\n{0}", _Indent);
+							// 		public #{Structure.Id} (string _String) { 
+							_Output.Write ("		public {1} (string _String) {{\n{0}", _Indent, Structure.Id);
+							// 			Deserialize (_String); 
+							_Output.Write ("			Deserialize (_String);\n{0}", _Indent);
+							// 			} 
+							_Output.Write ("			}}\n{0}", _Indent);
+							//  
+							_Output.Write ("\n{0}", _Indent);
 							// #% var Inherits = HasInherits  (Structure.Entries); 
 							
 							 var Inherits = HasInherits  (Structure.Entries);
@@ -848,6 +866,76 @@ namespace ProtoGen {
 				} else {
 				// public partial class #{Id} : #{Inherits} { 
 				_Output.Write ("public partial class {1} : {2} {{\n{0}", _Indent, Id, Inherits);
+				// #end if 
+				}
+			// #call DeclareMembers (Entries) 
+			DeclareMembers ((Entries));
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			//         /// <summary> 
+			_Output.Write ("        /// <summary>\n{0}", _Indent);
+			//         /// Tag identifying this class. 
+			_Output.Write ("        /// Tag identifying this class.\n{0}", _Indent);
+			//         /// </summary> 
+			_Output.Write ("        /// </summary>\n{0}", _Indent);
+			//         /// <returns>The tag</returns> 
+			_Output.Write ("        /// <returns>The tag</returns>\n{0}", _Indent);
+			// 		public override string Tag () { 
+			_Output.Write ("		public override string Tag () {{\n{0}", _Indent);
+			// 			return "#{Id}"; 
+			_Output.Write ("			return \"{1}\";\n{0}", _Indent, Id);
+			// 			} 
+			_Output.Write ("			}}\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			//         /// <summary> 
+			_Output.Write ("        /// <summary>\n{0}", _Indent);
+			//         /// Default Constructor 
+			_Output.Write ("        /// Default Constructor\n{0}", _Indent);
+			//         /// </summary> 
+			_Output.Write ("        /// </summary>\n{0}", _Indent);
+			// 		public #{Id} () { 
+			_Output.Write ("		public {1} () {{\n{0}", _Indent, Id);
+			// 			_Initialize (); 
+			_Output.Write ("			_Initialize ();\n{0}", _Indent);
+			// 			} 
+			_Output.Write ("			}}\n{0}", _Indent);
+			// #% } 
+			 }
+			// #end block  
+		
+		//  
+		//  
+		// #block  
+		
+
+		//
+		//  
+		//
+
+			// #% public void MakeClass  (ID<_Choice> Id, List<_Choice> Entries, bool Param) { 
+			 public void MakeClass  (ID<_Choice> Id, List<_Choice> Entries, bool Param) {
+			// #% var Inherits = HasInherits (Entries); 
+			 var Inherits = HasInherits (Entries);
+			// #!#% string Override; 
+			// #% DescriptionListC (Entries, 1); 
+			 DescriptionListC (Entries, 1);
+			// 	#! 
+			_Output.Write ("	", _Indent);
+			// #if (IsAbstract (Entries)) 
+			if (  (IsAbstract (Entries)) ) {
+				// abstract #! 
+				_Output.Write ("abstract ", _Indent);
+				// #end if 
+				}
+			// #if (Inherits == null)  
+			if (  (Inherits == null)  ) {
+				// public partial class #{Id}#{Param.If("<T>")} : #{CurrentPrefix} { 
+				_Output.Write ("public partial class {1}{2} : {3} {{\n{0}", _Indent, Id, Param.If("<T>"), CurrentPrefix);
+				// #else  
+				} else {
+				// public partial class #{Id}#{Param.If("<T>")} : #{Inherits} { 
+				_Output.Write ("public partial class {1}{2} : {3} {{\n{0}", _Indent, Id, Param.If("<T>"), Inherits);
 				// #end if 
 				}
 			// #call DeclareMembers (Entries) 

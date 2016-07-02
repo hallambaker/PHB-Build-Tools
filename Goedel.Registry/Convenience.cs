@@ -96,6 +96,14 @@ namespace Goedel.Registry {
                 }
             }
 
+        public static string If(this bool Value, string True) {
+            return If(Value, True, "");
+            }
+
+        public static string If(this bool Value, string True, string False) {
+
+            return Value ? True : False;
+            }
 
         }
 

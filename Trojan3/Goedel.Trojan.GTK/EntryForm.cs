@@ -20,7 +20,7 @@ namespace Goedel.Trojan.GTK {
 
     /// <summary>
     /// A form contains the following widgets:
-    ///    1) An edit toggle. If selected, this permits the work area to be editer
+    ///    1) An edit toggle. If selected, this permits the work area to be edited
     ///    2) The work area
     ///    3) Update / Cancel Buttons
     /// </summary>
@@ -33,15 +33,11 @@ namespace Goedel.Trojan.GTK {
 
         Gtk.CheckButton Editable;
         //Gtk.Table Table;
-        Gtk.HButtonBox ActionBox;
+        Gtk.HButtonBox _ActionBox = null;
         Gtk.Button BConfirm;
         Gtk.Button BApply;
         Gtk.Button BCancel;
-        //List<FormField> FormFields = new List<FormField>();
 
-
-
-        //Gtk.Grid MainGrid;
         GridForm FieldsGrid;
 
 
@@ -55,20 +51,15 @@ namespace Goedel.Trojan.GTK {
                 }
             }
 
+        bool ActionBoxVisible = false;
 
         public EntryForm(Object Object) {
             Editable = new Gtk.CheckButton();
+            Editable.Active = false;
+            Editable.Toggled += SetEditable;
 
             FieldsGrid = new GridForm (Object, Object.Entries);
 
-            BConfirm = new ButtonConfirm(this);
-            BApply = new ButtonApply(this);
-            BCancel = new ButtonCancel(this);
-
-            ActionBox = new Gtk.HButtonBox();
-            ActionBox.Add(BConfirm);
-            ActionBox.Add(BApply);
-            ActionBox.Add(BCancel);
 
 
             //MainGrid = new Gtk.Grid();
@@ -76,11 +67,48 @@ namespace Goedel.Trojan.GTK {
             Attach(Editable, 0, 0, 1, 1);
 
             FieldsGrid.SetAlignment(Gtk.Align.Start, Gtk.Align.Start);
-            AttachNextTo(FieldsGrid, Editable, Gtk.PositionType.Bottom, 1, 1);
+            Attach(FieldsGrid, 0, 1, 1, 1);
 
-            ActionBox.SetAlignment(Gtk.Align.Center, Gtk.Align.Start);
-            AttachNextTo(ActionBox, FieldsGrid, Gtk.PositionType.Bottom, 1, 1);
+            SetEditable();
             }
+
+        void SetEditable (object Sender, EventArgs args) {
+            SetEditable();
+            }
+
+        void SetEditable() {
+            if (Editable.Active) {
+                if (!ActionBoxVisible) {
+                    Attach(ActionBox, 0, 2, 1, 1);
+                    ActionBoxVisible = true;
+                    }
+                }
+            else {
+                if (ActionBoxVisible) {
+                    Remove(ActionBox);
+                    ActionBoxVisible = false;
+                    }
+                }
+            ShowAll();
+            }
+
+        Gtk.HButtonBox ActionBox {
+            get {
+                if (_ActionBox == null) {
+                    _ActionBox = new Gtk.HButtonBox();
+                    BConfirm = new ButtonConfirm(this);
+                    BApply = new ButtonApply(this);
+                    BCancel = new ButtonCancel(this);
+                    _ActionBox.Add(BConfirm);
+                    _ActionBox.Add(BApply);
+                    _ActionBox.Add(BCancel);
+                    _ActionBox.SetAlignment(Gtk.Align.Center, Gtk.Align.Start);
+                    }
+                return _ActionBox;
+                }
+            }
+
+
 
         public bool Valid() {
             return FieldsGrid.Valid();

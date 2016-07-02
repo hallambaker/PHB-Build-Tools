@@ -56,6 +56,7 @@ namespace Goedel.Trojan.GTK {
             ColorPaper.Parse ("white");
             ColorInk = new Gdk.RGBA();
             ColorInk.Parse("black");
+            ColorInk.Alpha = 1.0;
             ColorHighlight = new Gdk.RGBA();
             ColorHighlight.Parse("blue");
             ColorHighlightInk = new Gdk.RGBA();
@@ -98,7 +99,7 @@ namespace Goedel.Trojan.GTK {
 
             // Create columns [View]
             Gtk.TreeViewColumn TreeViewColumTitle = new Gtk.TreeViewColumn();
-            //TreeViewColumTitle.Title = "Profile";
+            TreeViewColumTitle.Title = "Profile";
             var NameCellTitle = new Gtk.CellRendererText();
 
             TreeViewColumTitle.PackStart(NameCellTitle, true);
@@ -160,7 +161,6 @@ namespace Goedel.Trojan.GTK {
                             Gtk.ITreeModel GTKModel, Gtk.TreeIter Iter) {
             Object Object = (Object)GTKModel.GetValue(Iter, 0);
             (Cell as Gtk.CellRendererText).Text = Object.Title;
-
 
             Console.WriteLine("Render {0}", Object.Title);
             }

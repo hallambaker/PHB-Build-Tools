@@ -41,7 +41,7 @@ namespace Goedel.Trojan {
         /// <summary>
         /// The value of the field after validity checking.
         /// </summary>
-        public int Value;
+        public int Value = 0;
 
         /// <summary>
         /// The value of the field on which validity checks are made.
@@ -57,7 +57,11 @@ namespace Goedel.Trojan {
 
         public int Maximum = Int32.MaxValue;
         public int Minimum = Int32.MinValue;
-        public FieldModeInteger Mode;
+        public int Step = 1;
+        public int Digits = 0;
+        public int Length = 12;
+
+        public FieldModeInteger Mode = FieldModeInteger.Entry;
         public bool IsValid = true;
 
 
@@ -83,7 +87,7 @@ namespace Goedel.Trojan {
             }
 
         public int LengthMaximum = Int32.MaxValue;
-        public int LengthTypical = 32;
+        public int Length = 32;
         public FieldModeString Mode ;
 
         }
@@ -154,6 +158,8 @@ namespace Goedel.Trojan {
         }
 
     public class ObjectFieldList : ObjectField {
+        public Object Prototype;
+
         /// <summary>
         /// The value of the field after validity checking.
         /// </summary>

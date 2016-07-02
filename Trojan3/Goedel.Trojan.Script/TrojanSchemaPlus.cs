@@ -40,6 +40,10 @@ namespace Goedel.Trojan.Script {
         public Wizard ParentWizard = null;
 
 
+        public bool IsSlider = false;
+        public int? Length = null;
+        public Range Range = null;
+        public string Template;
 
         /// <summary>
         /// Set the properties from the entries list.
@@ -59,6 +63,18 @@ namespace Goedel.Trojan.Script {
                 if (Entry as Tip != null) {
                     this.Tip = (Entry as Tip).Data;
                     }
+                if (Entry as Slider != null) {
+                    IsSlider = true;
+                    }
+                if (Entry as Range != null) {
+                    Range = Entry as Range;
+                    }
+                if (Entry as Length != null) {
+                    Length = ((Entry as Length).Data);
+                    }
+                if (Entry as Template != null) {
+                    Template = (Entry as Template).Data;
+                    }
                 }
             }
 
@@ -74,7 +90,7 @@ namespace Goedel.Trojan.Script {
                 // we are a sub list
 
                 ParentObject = Parent.ParentObject;
-                FieldNumber = ++ParentObject.SubFieldNumber;
+                FieldNumber = ++Parent.SubFieldNumber;
 
                 Accessor = "((ObjectField" + WidgetType + ")"+
                     Parent.Accessor + ".Entries[" + FieldNumber.ToString() + "])";

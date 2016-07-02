@@ -153,6 +153,11 @@
 		Entries List Choice
 			Output
 			Tip
+			Length
+			Template
+	
+	Type Template
+		Data	String
 
 	Type Secret
 		Id			Token FieldType
@@ -166,6 +171,18 @@
 		Entries List Choice
 			Output
 			Tip
+			Length
+			Slider
+			Range
+
+	Type Slider 
+	Type Length
+		Data		Integer
+
+	Type Range
+		Lower		Integer
+		Upper		Integer
+		Step		Integer
 
 	Type Boolean
 		Id			Token FieldType

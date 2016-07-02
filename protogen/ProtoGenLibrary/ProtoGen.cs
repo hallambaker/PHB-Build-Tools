@@ -54,6 +54,8 @@ using Goedel.Registry;
 //       Authentication
 //       Format
 //       Decimal
+//       Funct
+//       Param
 //       Select
 //       ABNF
 //       Tag
@@ -117,6 +119,8 @@ using Goedel.Registry;
 //       Ref
 //       Text
 //       Options
+//       Outer
+//       Inner
 //       Type
 //       Code
 //       Value
@@ -169,6 +173,8 @@ namespace ProtoGen {
         Constraint,
         URI,
         DateTime,
+        Param,
+        Funct,
         TStruct,
         Struct,
         Enum,
@@ -1078,6 +1084,56 @@ namespace ProtoGen {
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("DateTime");
+				}			
+			}
+		}
+
+    public partial class Param : _Choice {
+        public TOKEN<_Choice>			Id;
+
+        public override ProtoStructType _Tag () {
+            return ProtoStructType.Param;
+            }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Param");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			if (tag) {
+				Output.EndElement ("Param");
+				}			
+			}
+		}
+
+    public partial class Funct : _Choice {
+        public REF<_Choice>				Outer;
+        public REF<_Choice>				Inner;
+
+        public override ProtoStructType _Tag () {
+            return ProtoStructType.Funct;
+            }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Funct");
+				}
+
+	        Output.WriteId ("Outer", Outer.ToString());
+	        Output.WriteId ("Inner", Inner.ToString());
+			if (tag) {
+				Output.EndElement ("Funct");
 				}			
 			}
 		}
@@ -2332,6 +2388,11 @@ namespace ProtoGen {
 		DateTime_Start,
 		DateTime__Id,				
 		DateTime__Options,				
+		Param_Start,
+		Param__Id,				
+		Funct_Start,
+		Funct__Outer,				
+		Funct__Inner,				
 		TStruct_Start,
 		TStruct__Type,				
 		TStruct__Id,				
@@ -2582,6 +2643,8 @@ namespace ProtoGen {
                 case "Constraint": return NewConstraint();
                 case "URI": return NewURI();
                 case "DateTime": return NewDateTime();
+                case "Param": return NewParam();
+                case "Funct": return NewFunct();
                 case "TStruct": return NewTStruct();
                 case "Struct": return NewStruct();
                 case "Enum": return NewEnum();
@@ -2849,6 +2912,22 @@ namespace ProtoGen {
             ProtoGen.DateTime result = new ProtoGen.DateTime();
             Push (result);
             State = StateCode.DateTime_Start;
+            return result;
+            }
+
+
+        private ProtoGen.Param NewParam() {
+            ProtoGen.Param result = new ProtoGen.Param();
+            Push (result);
+            State = StateCode.Param_Start;
+            return result;
+            }
+
+
+        private ProtoGen.Funct NewFunct() {
+            ProtoGen.Funct result = new ProtoGen.Funct();
+            Push (result);
+            State = StateCode.Funct_Start;
             return result;
             }
 
@@ -3204,6 +3283,8 @@ namespace ProtoGen {
                 case "Constraint": return ProtoGen.ProtoStructType.Constraint;
                 case "URI": return ProtoGen.ProtoStructType.URI;
                 case "DateTime": return ProtoGen.ProtoStructType.DateTime;
+                case "Param": return ProtoGen.ProtoStructType.Param;
+                case "Funct": return ProtoGen.ProtoStructType.Funct;
                 case "TStruct": return ProtoGen.ProtoStructType.TStruct;
                 case "Struct": return ProtoGen.ProtoStructType.Struct;
                 case "Enum": return ProtoGen.ProtoStructType.Enum;
@@ -3711,11 +3792,13 @@ namespace ProtoGen {
 									(LabelType == ProtoGen.ProtoStructType.Status) |
 									(LabelType == ProtoGen.ProtoStructType.Authentication) |
 									(LabelType == ProtoGen.ProtoStructType.Format) |
-									(LabelType == ProtoGen.ProtoStructType.Decimal) ) {
+									(LabelType == ProtoGen.ProtoStructType.Decimal) |
+									(LabelType == ProtoGen.ProtoStructType.Funct) |
+									(LabelType == ProtoGen.ProtoStructType.Param) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Description Abstract Inherits External Boolean Integer Binary Float Label Name String URI DateTime Struct TStruct Enum Status Authentication Format Decimal ]");
+								throw new System.Exception("Parser Error Expected [Description Abstract Inherits External Boolean Integer Binary Float Label Name String URI DateTime Struct TStruct Enum Status Authentication Format Decimal Funct Param ]");
 								}
 							}
                         break;
@@ -3783,11 +3866,13 @@ namespace ProtoGen {
 									(LabelType == ProtoGen.ProtoStructType.Enum) |
 									(LabelType == ProtoGen.ProtoStructType.Format) |
 									(LabelType == ProtoGen.ProtoStructType.Decimal) |
-									(LabelType == ProtoGen.ProtoStructType.Select) ) {
+									(LabelType == ProtoGen.ProtoStructType.Select) |
+									(LabelType == ProtoGen.ProtoStructType.Funct) |
+									(LabelType == ProtoGen.ProtoStructType.Param) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Description Abstract Inherits External Boolean Integer Binary Float Label Name String URI DateTime Struct TStruct Enum Format Decimal Select ]");
+								throw new System.Exception("Parser Error Expected [Description Abstract Inherits External Boolean Integer Binary Float Label Name String URI DateTime Struct TStruct Enum Format Decimal Select Funct Param ]");
 								}
 							}
                         break;
@@ -4375,6 +4460,41 @@ namespace ProtoGen {
                         break;
 
 
+                    case StateCode.Param_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            ProtoGen.Param Current_Cast = (ProtoGen.Param)Current;
+                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__Variable, Current_Cast);
+                            State = StateCode.Param__Id;
+                            break;
+                            }
+                        throw new System.Exception("Expected LABEL or LITERAL");
+
+                    case StateCode.Param__Id:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Funct_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            ProtoGen.Funct Current_Cast = (ProtoGen.Funct)Current;
+                            Current_Cast.Outer = Registry.REF(Position, Text, TYPE__StructureT, Current_Cast);
+                            State = StateCode.Funct__Outer;
+                            break;
+                            }
+                        throw new System.Exception("Expected LABEL or LITERAL");
+
+                    case StateCode.Funct__Outer:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            ProtoGen.Funct Current_Cast = (ProtoGen.Funct)Current;
+                            Current_Cast.Inner = Registry.REF(Position, Text, TYPE__StructureT, Current_Cast);
+                            State = StateCode.Funct__Inner;
+                            break;
+                            }
+                        throw new System.Exception("Expected LABEL or LITERAL");
+
+                    case StateCode.Funct__Inner:
+                        Pop ();
+                        Represent = true; 
+                        break;
                     case StateCode.TStruct_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             ProtoGen.TStruct Current_Cast = (ProtoGen.TStruct)Current;

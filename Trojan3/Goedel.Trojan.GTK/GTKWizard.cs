@@ -122,6 +122,10 @@ namespace Goedel.Trojan.GTK {
                 }
 
             GridField = new GridForm (Step.Value, Step.Value.Entries);
+
+            var Value = Step.Value;
+
+            Value.Initialize(Wizard.Model);
             GridMain.Attach(GridField, 0, 2, 1, 1);
             }
 

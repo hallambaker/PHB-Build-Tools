@@ -76,6 +76,8 @@
             Authentication
 			Format
 			Decimal
+			Funct
+			Param
 
     Type Authentication
         Mechanism Token AuthenticationT
@@ -103,6 +105,8 @@
 			Format
 			Decimal
 			Select
+			Funct
+			Param
 
     Type Description
         Text1	Text
@@ -225,6 +229,13 @@
             Default
 			Tag
 
+
+	Type Param
+		Id		Token Variable
+
+	Type Funct
+        Outer	REF StructureT
+        Inner	REF StructureT
 
     Type TStruct
         Type	REF StructureT

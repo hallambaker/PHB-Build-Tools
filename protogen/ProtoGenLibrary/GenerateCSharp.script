@@ -291,12 +291,21 @@ namespace #{Protocol.Namespace} {
 		}
 
 #casecast Structure Structure
-#% MakeClass (Structure.Id, Structure.Entries);
+#% MakeClass (Structure.Id, Structure.Entries, Structure.Parameterized);
         /// <summary>
+		/// Initialize class from JSONReader stream.
         /// </summary>		
 		public #{Structure.Id} (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+		public #{Structure.Id} (string _String) {
+			Deserialize (_String);
+			}
+
 #% var Inherits = HasInherits  (Structure.Entries);
 #% MakeSerializers (Structure.Id, Structure.ID, Structure.Entries, Inherits);
 		}
@@ -376,6 +385,40 @@ abstract #!
 public partial class #{Id} : #{CurrentPrefix} {
 #else 
 public partial class #{Id} : #{Inherits} {
+#end if
+#call DeclareMembers (Entries)
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "#{Id}";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public #{Id} () {
+			_Initialize ();
+			}
+#% }
+#end block 
+
+
+#block 
+#% public void MakeClass  (ID<_Choice> Id, List<_Choice> Entries, bool Param) {
+#% var Inherits = HasInherits (Entries);
+#!#% string Override;
+#% DescriptionListC (Entries, 1);
+	#!
+#if (IsAbstract (Entries))
+abstract #!
+#end if
+#if (Inherits == null) 
+public partial class #{Id}#{Param.If("<T>")} : #{CurrentPrefix} {
+#else 
+public partial class #{Id}#{Param.If("<T>")} : #{Inherits} {
 #end if
 #call DeclareMembers (Entries)
 

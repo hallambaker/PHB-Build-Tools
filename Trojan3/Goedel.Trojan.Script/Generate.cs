@@ -887,8 +887,10 @@ namespace Goedel.Trojan.Script {
 					_Output.Write ("						Id = \"{1}\",  \n{0}", _Indent, Entry.FieldName);
 					// 						Label = "#{Entry.FieldTag}", 
 					_Output.Write ("						Label = \"{1}\",\n{0}", _Indent, Entry.FieldTag);
-					// 						Value = new #{Entry.FieldType} () }#! 
-					_Output.Write ("						Value = new {1} () }}", _Indent, Entry.FieldType);
+					// 						Value = new #{Entry.FieldType} ()  
+					_Output.Write ("						Value = new {1} () \n{0}", _Indent, Entry.FieldType);
+					// 						}#! 
+					_Output.Write ("						}}", _Indent);
 					// #elseif (Entry as Option != null)  
 					} else if (  (Entry as Option != null) ) {
 					// #% var Option = Entry as Option; 
@@ -923,6 +925,14 @@ namespace Goedel.Trojan.Script {
 					_Output.Write ("{1}\n{0}", _Indent, Separator);
 					// 			new ObjectField#{Entry.WidgetType} {Id = "#{Entry.FieldName}",  
 					_Output.Write ("			new ObjectField{1} {{Id = \"{2}\", \n{0}", _Indent, Entry.WidgetType, Entry.FieldName);
+					// #! Do not need to check if these are permitted here as Goedel syntax check does that. 
+					// Do not need to check if these are permitted here as Goedel syntax check does that.
+					// #if (Entry as List != null) 
+					if (  (Entry as List != null) ) {
+						// 						Prototype = new #{(Entry as List).Of} (), 
+						_Output.Write ("						Prototype = new {1} (),\n{0}", _Indent, (Entry as List).Of);
+						// #end if 
+						}
 					// #if (Entry.Output) 
 					if (  (Entry.Output) ) {
 						// 						ReadOnly = true, 
@@ -933,6 +943,28 @@ namespace Goedel.Trojan.Script {
 					if (  (Entry.Tip != null) ) {
 						// 						Tip = #{Entry.Tip.Quoted()}, 
 						_Output.Write ("						Tip = {1},\n{0}", _Indent, Entry.Tip.Quoted());
+						// #end if 
+						}
+					// #if (Entry.IsSlider) 
+					if (  (Entry.IsSlider) ) {
+						// 						Mode = FieldModeInteger.Slider, 
+						_Output.Write ("						Mode = FieldModeInteger.Slider,\n{0}", _Indent);
+						// #end if 
+						}
+					// #if (Entry.Range != null) 
+					if (  (Entry.Range != null) ) {
+						// 						Minimum = #{Entry.Range.Lower}, 
+						_Output.Write ("						Minimum = {1},\n{0}", _Indent, Entry.Range.Lower);
+						// 						Maximum = #{Entry.Range.Upper}, 
+						_Output.Write ("						Maximum = {1},\n{0}", _Indent, Entry.Range.Upper);
+						// 						Step = #{Entry.Range.Step}, 
+						_Output.Write ("						Step = {1},\n{0}", _Indent, Entry.Range.Step);
+						// #end if 
+						}
+					// #if (Entry.Length != null) 
+					if (  (Entry.Length != null) ) {
+						// 						Length = #{Entry.Length}, 
+						_Output.Write ("						Length = {1},\n{0}", _Indent, Entry.Length);
 						// #end if 
 						}
 					// 						Label = "#{Entry.FieldTag}" // #{Entry.FieldIndex} 

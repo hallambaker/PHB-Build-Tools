@@ -24,6 +24,9 @@ namespace ProtoGen {
         public string TypeJ = null;
         public bool ByValue = true;
 
+        public bool Parameterized = false;
+
+
         // Classes that don't inherit internally are children of JSONObject
         // by default.
         public string ExternParent = "JSONObject";
@@ -71,6 +74,7 @@ namespace ProtoGen {
                     var Extern = Entry as Extern;
                     Entry.ExternParent = Extern.ToString();
                     }
+
                 }
 
             foreach (_Choice Entry in Input) {
@@ -138,6 +142,7 @@ namespace ProtoGen {
                     var Tag = Entry as Tag;
                     ID = Tag.Text;
                     }
+
                 }
             }
 
@@ -179,6 +184,10 @@ namespace ProtoGen {
             foreach (_Choice Entry in AllEntries) {
                 if (Entry.TypeC != null) {
                     CountChildren++;
+
+                    }
+                if (Entry.GetType() == typeof(Param)) {
+                    Parameterized = true;
                     }
                 }
 
@@ -213,6 +222,9 @@ namespace ProtoGen {
             foreach (_Choice Entry in AllEntries) {
                 if (Entry.TypeC != null) {
                     CountChildren++;
+                    }
+                if (Entry.GetType() == typeof(Param)) {
+                    //Parameterized = true;
                     }
                 }
 

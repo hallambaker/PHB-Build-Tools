@@ -12,7 +12,7 @@
 #% System.DateTime GenerateTime = System.DateTime.UtcNow;
 #% string StartP , EndP ;
 #% string StartParamList , EndParamList ;
-#% string StartParam , MidParam , EndParamBlock;
+#% string StartParam , MidParam , EndParam, EndParamBlock;
 #% string StartSection1 , MidSection1 , EndSection1;
 #% string StartSection2 , MidSection2 , EndSection2;
 #% string StartSection3 , MidSection3 , EndSection3;

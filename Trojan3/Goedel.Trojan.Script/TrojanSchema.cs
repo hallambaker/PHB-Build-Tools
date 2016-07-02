@@ -48,8 +48,11 @@ using Goedel.Registry;
 //       Enumerate
 //       Item
 //       Output
+//       Length
+//       Template
+//       Slider
+//       Range
 //       Radio
-//       Step
 //   IdType
 //       GuiType
 //       WidgetType
@@ -67,6 +70,9 @@ using Goedel.Registry;
 //       Data
 //       Tag
 //       Of
+//       Lower
+//       Upper
+//       Step
 //   TokenType
 //       ClassType
 //       FieldType
@@ -98,8 +104,12 @@ namespace Goedel.Trojan.Script {
         DateTime,
         Chooser,
         String,
+        Template,
         Secret,
         Integer,
+        Slider,
+        Length,
+        Range,
         Boolean,
         Output,
         Enumerate,
@@ -785,6 +795,30 @@ namespace Goedel.Trojan.Script {
 			}
 		}
 
+    public partial class Template : _Choice {
+		public string					Data;
+
+        public override GUISchemaType _Tag () {
+            return GUISchemaType.Template;
+            }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Template");
+				}
+
+			Output.WriteAttribute ("Data", Data);
+			if (tag) {
+				Output.EndElement ("Template");
+				}			
+			}
+		}
+
     public partial class Secret : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Tag;
@@ -851,6 +885,80 @@ namespace Goedel.Trojan.Script {
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Integer");
+				}			
+			}
+		}
+
+    public partial class Slider : _Choice {
+
+        public override GUISchemaType _Tag () {
+            return GUISchemaType.Slider;
+            }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Slider");
+				}
+
+			if (tag) {
+				Output.EndElement ("Slider");
+				}			
+			}
+		}
+
+    public partial class Length : _Choice {
+		public int						Data;
+
+        public override GUISchemaType _Tag () {
+            return GUISchemaType.Length;
+            }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Length");
+				}
+
+			Output.WriteAttribute ("Data", Data);
+			if (tag) {
+				Output.EndElement ("Length");
+				}			
+			}
+		}
+
+    public partial class Range : _Choice {
+		public int						Lower;
+		public int						Upper;
+		public int						Step;
+
+        public override GUISchemaType _Tag () {
+            return GUISchemaType.Range;
+            }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Range");
+				}
+
+			Output.WriteAttribute ("Lower", Lower);
+			Output.WriteAttribute ("Upper", Upper);
+			Output.WriteAttribute ("Step", Step);
+			if (tag) {
+				Output.EndElement ("Range");
 				}			
 			}
 		}
@@ -1145,6 +1253,8 @@ namespace Goedel.Trojan.Script {
 		String__Id,				
 		String__Tag,				
 		String__Entries,				
+		Template_Start,
+		Template__Data,				
 		Secret_Start,
 		Secret__Id,				
 		Secret__Tag,				
@@ -1153,6 +1263,13 @@ namespace Goedel.Trojan.Script {
 		Integer__Id,				
 		Integer__Tag,				
 		Integer__Entries,				
+		Slider_Start,
+		Length_Start,
+		Length__Data,				
+		Range_Start,
+		Range__Lower,				
+		Range__Upper,				
+		Range__Step,				
 		Boolean_Start,
 		Boolean__Id,				
 		Boolean__Tag,				
@@ -1278,8 +1395,12 @@ namespace Goedel.Trojan.Script {
                 case "DateTime": return NewDateTime();
                 case "Chooser": return NewChooser();
                 case "String": return NewString();
+                case "Template": return NewTemplate();
                 case "Secret": return NewSecret();
                 case "Integer": return NewInteger();
+                case "Slider": return NewSlider();
+                case "Length": return NewLength();
+                case "Range": return NewRange();
                 case "Boolean": return NewBoolean();
                 case "Output": return NewOutput();
                 case "Enumerate": return NewEnumerate();
@@ -1461,6 +1582,14 @@ namespace Goedel.Trojan.Script {
             }
 
 
+        private Goedel.Trojan.Script.Template NewTemplate() {
+            Goedel.Trojan.Script.Template result = new Goedel.Trojan.Script.Template();
+            Push (result);
+            State = StateCode.Template_Start;
+            return result;
+            }
+
+
         private Goedel.Trojan.Script.Secret NewSecret() {
             Goedel.Trojan.Script.Secret result = new Goedel.Trojan.Script.Secret();
             Push (result);
@@ -1473,6 +1602,30 @@ namespace Goedel.Trojan.Script {
             Goedel.Trojan.Script.Integer result = new Goedel.Trojan.Script.Integer();
             Push (result);
             State = StateCode.Integer_Start;
+            return result;
+            }
+
+
+        private Goedel.Trojan.Script.Slider NewSlider() {
+            Goedel.Trojan.Script.Slider result = new Goedel.Trojan.Script.Slider();
+            Push (result);
+            State = StateCode.Slider_Start;
+            return result;
+            }
+
+
+        private Goedel.Trojan.Script.Length NewLength() {
+            Goedel.Trojan.Script.Length result = new Goedel.Trojan.Script.Length();
+            Push (result);
+            State = StateCode.Length_Start;
+            return result;
+            }
+
+
+        private Goedel.Trojan.Script.Range NewRange() {
+            Goedel.Trojan.Script.Range result = new Goedel.Trojan.Script.Range();
+            Push (result);
+            State = StateCode.Range_Start;
             return result;
             }
 
@@ -1549,8 +1702,12 @@ namespace Goedel.Trojan.Script {
                 case "DateTime": return Goedel.Trojan.Script.GUISchemaType.DateTime;
                 case "Chooser": return Goedel.Trojan.Script.GUISchemaType.Chooser;
                 case "String": return Goedel.Trojan.Script.GUISchemaType.String;
+                case "Template": return Goedel.Trojan.Script.GUISchemaType.Template;
                 case "Secret": return Goedel.Trojan.Script.GUISchemaType.Secret;
                 case "Integer": return Goedel.Trojan.Script.GUISchemaType.Integer;
+                case "Slider": return Goedel.Trojan.Script.GUISchemaType.Slider;
+                case "Length": return Goedel.Trojan.Script.GUISchemaType.Length;
+                case "Range": return Goedel.Trojan.Script.GUISchemaType.Range;
                 case "Boolean": return Goedel.Trojan.Script.GUISchemaType.Boolean;
                 case "Output": return Goedel.Trojan.Script.GUISchemaType.Output;
                 case "Enumerate": return Goedel.Trojan.Script.GUISchemaType.Enumerate;
@@ -2467,16 +2624,31 @@ namespace Goedel.Trojan.Script {
                             Goedel.Trojan.Script.GUISchemaType LabelType = _Reserved (Text);
                             if ( false |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) |
-									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) ) {
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Length) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Template) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output Tip ]");
+								throw new System.Exception("Parser Error Expected [Output Tip Length Template ]");
 								}
 							}
                         break;
 
 
+                    case StateCode.Template_Start:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Trojan.Script.Template Current_Cast = (Goedel.Trojan.Script.Template)Current;
+                            Current_Cast.Data = Text;
+                            State = StateCode.Template__Data;
+                            break;
+                            }
+                        throw new System.Exception("Expected String");
+
+                    case StateCode.Template__Data:
+                        Pop ();
+                        Represent = true; 
+                        break;
                     case StateCode.Secret_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Trojan.Script.Secret Current_Cast = (Goedel.Trojan.Script.Secret)Current;
@@ -2568,16 +2740,67 @@ namespace Goedel.Trojan.Script {
                             Goedel.Trojan.Script.GUISchemaType LabelType = _Reserved (Text);
                             if ( false |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) |
-									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) ) {
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Length) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Slider) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Range) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output Tip ]");
+								throw new System.Exception("Parser Error Expected [Output Tip Length Slider Range ]");
 								}
 							}
                         break;
 
 
+                    case StateCode.Slider_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Length_Start:
+                        if (Token == TokenType.INTEGER) {
+                            Goedel.Trojan.Script.Length Current_Cast = (Goedel.Trojan.Script.Length)Current;
+                            Current_Cast.Data = Convert.ToInt32(Text);
+                            State = StateCode.Length__Data;
+                            break;
+                            }
+                        throw new System.Exception("Expected Integer");
+
+                    case StateCode.Length__Data:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Range_Start:
+                        if (Token == TokenType.INTEGER) {
+                            Goedel.Trojan.Script.Range Current_Cast = (Goedel.Trojan.Script.Range)Current;
+                            Current_Cast.Lower = Convert.ToInt32(Text);
+                            State = StateCode.Range__Lower;
+                            break;
+                            }
+                        throw new System.Exception("Expected Integer");
+
+                    case StateCode.Range__Lower:
+                        if (Token == TokenType.INTEGER) {
+                            Goedel.Trojan.Script.Range Current_Cast = (Goedel.Trojan.Script.Range)Current;
+                            Current_Cast.Upper = Convert.ToInt32(Text);
+                            State = StateCode.Range__Upper;
+                            break;
+                            }
+                        throw new System.Exception("Expected Integer");
+
+                    case StateCode.Range__Upper:
+                        if (Token == TokenType.INTEGER) {
+                            Goedel.Trojan.Script.Range Current_Cast = (Goedel.Trojan.Script.Range)Current;
+                            Current_Cast.Step = Convert.ToInt32(Text);
+                            State = StateCode.Range__Step;
+                            break;
+                            }
+                        throw new System.Exception("Expected Integer");
+
+                    case StateCode.Range__Step:
+                        Pop ();
+                        Represent = true; 
+                        break;
                     case StateCode.Boolean_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Trojan.Script.Boolean Current_Cast = (Goedel.Trojan.Script.Boolean)Current;

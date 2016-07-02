@@ -37,7 +37,7 @@ namespace Goedel.Trojan.GTK {
         /// Apply CSS with DefaultProvider and DefaultPriority
         /// </summary>
         /// <param name="Widget">The widget to which the CSS parameters are to be applied</param>
-        public static void ApplyCss(this Widget Widget) {
+        public static void ApplyCss(this Gtk.Widget Widget) {
             Widget.ApplyCss(DefaultProvider, DefaultPriority);
             }
 
@@ -47,7 +47,7 @@ namespace Goedel.Trojan.GTK {
         /// <param name="Widget">The widget to which the CSS parameters are to be applied</param>
         /// <param name="Provider">Provider to apply.</param>
         /// <param name="Priority">Priority of provider.</param>
-        public static void ApplyCss(this Widget Widget, CssProvider Provider, uint Priority) {
+        public static void ApplyCss(this Gtk.Widget Widget, CssProvider Provider, uint Priority) {
             Widget.StyleContext.AddProvider(Provider, Priority);
             var Container = Widget as Container;
             if (Container != null) {

@@ -66,17 +66,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingGTK.cs" />
+    <Compile Include="CSSProvider.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="FormWidgetAction.cs" />
-    <Compile Include="FormWidgetGrid.cs" />
-    <Compile Include="FormWidgetGroup.cs" />
-    <Compile Include="FormWidgetMixins.cs" />
-    <Compile Include="FormWidgets.cs" />
-    <Compile Include="FormWidgetsModal.cs" />
+    <Compile Include="ListStore.cs" />
+    <Compile Include="WidgetsAction.cs" />
+    <Compile Include="WidgetsGrid.cs" />
+    <Compile Include="WidgetsGroup.cs" />
+    <Compile Include="WidgetsBasic.cs" />
+    <Compile Include="WidgetsModal.cs" />
     <Compile Include="GTKDialog.cs" />
     <Compile Include="GTKWizard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntryForm.cs" />
+    <Compile Include="Widgets.cs" />
+    <Compile Include="WidgetsMultiple.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Trojan\Goedel.Trojan.csproj">

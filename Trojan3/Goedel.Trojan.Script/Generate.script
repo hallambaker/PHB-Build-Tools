@@ -416,7 +416,8 @@ Object Object #!
 			new ObjectFieldItem {
 						Id = "#{Entry.FieldName}",  
 						Label = "#{Entry.FieldTag}",
-						Value = new #{Entry.FieldType} () }#!
+						Value = new #{Entry.FieldType} () 
+						}#!
 #elseif (Entry as Option != null) 
 #% var Option = Entry as Option;
 #{Separator}	
@@ -434,11 +435,26 @@ Object Object #!
 #else 
 #{Separator}
 			new ObjectField#{Entry.WidgetType} {Id = "#{Entry.FieldName}", 
+#! Do not need to check if these are permitted here as Goedel syntax check does that.
+#if (Entry as List != null)
+						Prototype = new #{(Entry as List).Of} (),
+#end if
 #if (Entry.Output)
 						ReadOnly = true,
 #end if
 #if (Entry.Tip != null)
 						Tip = #{Entry.Tip.Quoted()},
+#end if
+#if (Entry.IsSlider)
+						Mode = FieldModeInteger.Slider,
+#end if
+#if (Entry.Range != null)
+						Minimum = #{Entry.Range.Lower},
+						Maximum = #{Entry.Range.Upper},
+						Step = #{Entry.Range.Step},
+#end if
+#if (Entry.Length != null)
+						Length = #{Entry.Length},
 #end if
 						Label = "#{Entry.FieldTag}" // #{Entry.FieldIndex}
 					    }#!
