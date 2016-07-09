@@ -243,10 +243,21 @@ namespace Goedel.Trojan.GTK {
         /// result from Object.Valid.
         /// </summary>
         /// <returns></returns>
-        public virtual bool Valid() {
+        public virtual void Test () {
             foreach (var Entry in Widgets) {
                 Entry.Test();
                 }
+
+
+            }
+
+        /// <summary>
+        /// Copy entry widget values into Values[1] and return the
+        /// result from Object.Valid.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool Valid() {
+            Test();
 
             return Object.Valid();
             }

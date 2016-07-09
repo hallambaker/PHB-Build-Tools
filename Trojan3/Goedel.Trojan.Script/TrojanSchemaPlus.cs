@@ -373,6 +373,12 @@ namespace Goedel.Trojan.Script {
             FieldType = "bool";
             WidgetType = "Option";
             SetEntries(Parent);
+
+            foreach (var Entry in Entries) {
+                if (Entry as Output != null) {
+                    Output = true;
+                    }
+                }
             }
         }
 

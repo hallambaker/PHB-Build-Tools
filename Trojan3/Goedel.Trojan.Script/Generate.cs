@@ -903,6 +903,12 @@ namespace Goedel.Trojan.Script {
 					_Output.Write ("						Id = \"{1}\",  \n{0}", _Indent, Entry.FieldName);
 					// 						Label = "#{Entry.FieldTag}", 
 					_Output.Write ("						Label = \"{1}\",\n{0}", _Indent, Entry.FieldTag);
+					// #if (Entry.Output) 
+					if (  (Entry.Output) ) {
+						// 						ReadOnly = true, 
+						_Output.Write ("						ReadOnly = true,\n{0}", _Indent);
+						// #end if 
+						}
 					// 						Entries = new List<ObjectEntry> {#! 
 					_Output.Write ("						Entries = new List<ObjectEntry> {{", _Indent);
 					// #indent 
@@ -919,6 +925,8 @@ namespace Goedel.Trojan.Script {
 					_Output.Write ("							}}\n{0}", _Indent);
 					// 						}#! 
 					_Output.Write ("						}}", _Indent);
+					// #elseif (Entry as Output != null)  
+					} else if (  (Entry as Output != null) ) {
 					// #else  
 					} else {
 					// #{Separator} 

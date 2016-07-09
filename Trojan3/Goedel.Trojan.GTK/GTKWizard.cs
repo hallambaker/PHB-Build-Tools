@@ -238,14 +238,16 @@ namespace Goedel.Trojan.GTK {
                     }
 
                 else {
-                    Previous = new NavigateButtonPrev(GTKWizard, DialogText.WizardButtonBack, StepIndex-1);
-                    Previous.Valign = Align.End;
-                    Previous.Halign = Align.End;
-                    Attach(Previous, 0, 0, 1, 1);
+                    if (StepIndex + 1 < StepCount) {
+                        Previous = new NavigateButtonPrev(GTKWizard, DialogText.WizardButtonBack, StepIndex - 1);
+                        Previous.Valign = Align.End;
+                        Previous.Halign = Align.End;
+                        Attach(Previous, 0, 0, 1, 1);
+                        }
 
-                    var PreviousString = StepIndex + 1 == StepCount ? 
+                    var NextString = StepIndex + 1 == StepCount ?
                             DialogText.WizardButtonFinish : DialogText.WizardButtonNext;
-                    Next = new NavigateButtonNext(GTKWizard, PreviousString, StepIndex+1);
+                    Next = new NavigateButtonNext(GTKWizard, NextString, StepIndex + 1);
                     Next.Valign = Align.End;
                     Next.Halign = Align.End;
                     Attach(Next, 1, 0, 1, 1);

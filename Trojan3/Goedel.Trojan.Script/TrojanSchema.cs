@@ -2471,11 +2471,12 @@ namespace Goedel.Trojan.Script {
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.List) |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Chooser) |
 									(LabelType == Goedel.Trojan.Script.GUISchemaType.Text) |
-									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) ) {
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Tip) |
+									(LabelType == Goedel.Trojan.Script.GUISchemaType.Output) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [DateTime String Secret Integer Boolean Option Set Action Item List Chooser Text Tip ]");
+								throw new System.Exception("Parser Error Expected [DateTime String Secret Integer Boolean Option Set Action Item List Chooser Text Tip Output ]");
 								}
 							}
                         break;

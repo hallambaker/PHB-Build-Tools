@@ -424,6 +424,9 @@ Object Object #!
 			new ObjectFieldOption {
 						Id = "#{Entry.FieldName}",  
 						Label = "#{Entry.FieldTag}",
+#if (Entry.Output)
+						ReadOnly = true,
+#end if
 						Entries = new List<ObjectEntry> {#!
 #indent
 #% var SubSeparator = new Separator (",");
@@ -432,6 +435,7 @@ Object Object #!
 
 							}
 						}#!
+#elseif (Entry as Output != null) 
 #else 
 #{Separator}
 			new ObjectField#{Entry.WidgetType} {Id = "#{Entry.FieldName}", 

@@ -311,6 +311,7 @@ namespace Goedel.Trojan {
         public virtual bool ReadOnly {
             get { return _ReadOnly; }
             set {
+                _ReadOnly = value;
                 if (FieldBindings != null) {
                     foreach (var Binding in FieldBindings) {
                         Binding.ReadOnly = value;

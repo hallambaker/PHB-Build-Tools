@@ -32,14 +32,14 @@ namespace Goedel.Trojan.GTK {
         public FormWidgetOption(Object Object, ObjectFieldOption ObjectEntry,
                     GridForm GridForm) {
             this.ObjectEntry = ObjectEntry;
-            Current = new Gtk.CheckButton();
+            Current = new MyCheckButton(this, ObjectEntry.Value);
+            WidgetsAll.Add(Current);
 
             Grid = new GridForm();
             Grid.Attach(Object, ObjectEntry.Entries);
 
-            Current.Active = ObjectEntry.Value;
-            Current.Toggled += ChangedEvent;
 
+        
             Fill();
             this.GridForm = GridForm;
             Row = GridForm.AttachCheckboxGrid(this, ObjectEntry, Current, Grid);
@@ -63,17 +63,31 @@ namespace Goedel.Trojan.GTK {
                 }
             }
 
+        private class MyCheckButton : Gtk.CheckButton {
+            FormWidgetOption FormWidgetOption;
 
-        private static void ChangedEvent(object Sender, EventArgs E) {
-            var FormWidgetOption = Sender as FormWidgetOption;
+            public MyCheckButton(FormWidgetOption FormWidgetOption, bool Value) {
+                this.FormWidgetOption = FormWidgetOption;
+                Active = Value;
+                Toggled += ChangedEvent;
+                }
 
-            if (FormWidgetOption == null) return;
 
-            Console.WriteLine("Toggle!!!");
+            private static void ChangedEvent(object Sender, EventArgs E) {
+                var Widget = Sender as MyCheckButton;
+                var FormWidgetOption = Widget.FormWidgetOption;
 
-            FormWidgetOption.ShowOrHide();
-            FormWidgetOption.UserChangedValue = true;
+                if (FormWidgetOption == null) return;
+
+                Console.WriteLine("Toggle!!!");
+
+                FormWidgetOption.ShowOrHide();
+                FormWidgetOption.UserChangedValue = true;
+                }
+
+
             }
+
 
 
         /// <summary>
@@ -81,6 +95,7 @@ namespace Goedel.Trojan.GTK {
         /// </summary>
         public override void Test() {
             ObjectEntry.Test = Current.Active;
+            Grid.Test(); // recurse
             }
 
         /// <summary>

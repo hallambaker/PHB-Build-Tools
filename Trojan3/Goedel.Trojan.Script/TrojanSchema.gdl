@@ -130,6 +130,7 @@
 			Chooser
 			Text
 			Tip
+			Output
 
 	// Intrinsic types.
 	Type DateTime
