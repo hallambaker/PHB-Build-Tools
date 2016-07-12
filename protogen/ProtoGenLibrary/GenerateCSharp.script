@@ -415,10 +415,11 @@ public partial class #{Id} : #{Inherits} {
 #if (IsAbstract (Entries))
 abstract #!
 #end if
+#% var TTT = Param ? "<T>" : "";
 #if (Inherits == null) 
-public partial class #{Id}#{Param.If("<T>")} : #{CurrentPrefix} {
+public partial class #{Id}#{TTT} : #{CurrentPrefix} {
 #else 
-public partial class #{Id}#{Param.If("<T>")} : #{Inherits} {
+public partial class #{Id}#{TTT} : #{Inherits} {
 #end if
 #call DeclareMembers (Entries)
 
@@ -427,7 +428,7 @@ public partial class #{Id}#{Param.If("<T>")} : #{Inherits} {
         /// </summary>
         /// <returns>The tag</returns>
 		public override string Tag () {
-			return "#{Id}";
+			return "#{Id}"
 			}
 
         /// <summary>

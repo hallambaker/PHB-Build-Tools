@@ -928,14 +928,16 @@ namespace ProtoGen {
 				_Output.Write ("abstract ", _Indent);
 				// #end if 
 				}
+			// #% var TTT = Param ? "<T>" : ""; 
+			 var TTT = Param ? "<T>" : "";
 			// #if (Inherits == null)  
 			if (  (Inherits == null)  ) {
-				// public partial class #{Id}#{Param.If("<T>")} : #{CurrentPrefix} { 
-				_Output.Write ("public partial class {1}{2} : {3} {{\n{0}", _Indent, Id, Param.If("<T>"), CurrentPrefix);
+				// public partial class #{Id}#{TTT} : #{CurrentPrefix} { 
+				_Output.Write ("public partial class {1}{2} : {3} {{\n{0}", _Indent, Id, TTT, CurrentPrefix);
 				// #else  
 				} else {
-				// public partial class #{Id}#{Param.If("<T>")} : #{Inherits} { 
-				_Output.Write ("public partial class {1}{2} : {3} {{\n{0}", _Indent, Id, Param.If("<T>"), Inherits);
+				// public partial class #{Id}#{TTT} : #{Inherits} { 
+				_Output.Write ("public partial class {1}{2} : {3} {{\n{0}", _Indent, Id, TTT, Inherits);
 				// #end if 
 				}
 			// #call DeclareMembers (Entries) 
@@ -952,8 +954,8 @@ namespace ProtoGen {
 			_Output.Write ("        /// <returns>The tag</returns>\n{0}", _Indent);
 			// 		public override string Tag () { 
 			_Output.Write ("		public override string Tag () {{\n{0}", _Indent);
-			// 			return "#{Id}"; 
-			_Output.Write ("			return \"{1}\";\n{0}", _Indent, Id);
+			// 			return "#{Id}" 
+			_Output.Write ("			return \"{1}\"\n{0}", _Indent, Id);
 			// 			} 
 			_Output.Write ("			}}\n{0}", _Indent);
 			//  

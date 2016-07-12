@@ -48,7 +48,7 @@ namespace ProtoGen {
 		// #% string StartParamList , EndParamList ; 
 		 string StartParamList , EndParamList ;
 		// #% string StartParam , MidParam , EndParam, EndParamBlock; 
-		 string StartParam , MidParam , EndParam, EndParamBlock;
+		 public string StartParam , MidParam , EndParam, EndParamBlock;
 		// #% string StartSection1 , MidSection1 , EndSection1; 
 		 string StartSection1 , MidSection1 , EndSection1;
 		// #% string StartSection2 , MidSection2 , EndSection2; 
