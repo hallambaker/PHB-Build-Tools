@@ -50,10 +50,11 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>TestCodeSigningKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -71,6 +72,7 @@
       <DependentUpon>Asn2.gdl</DependentUpon>
     </Compile>
     <Compile Include="AsnPlus.cs" />
+    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="GenerateCS.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -87,7 +89,6 @@
       <Generator>GScript</Generator>
       <LastGenOutput>GenerateCS.cs</LastGenOutput>
     </None>
-    <None Include="TestCodeSigningKey.snk" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Design.htm" />
@@ -97,9 +98,9 @@
       <Project>{f2a1f8ea-18e2-4f3a-aeaf-3983cea19fe0}</Project>
       <Name>Goedel.Registry</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ASNLibrary\LibAsn.csproj">
+    <ProjectReference Include="..\ASNLibrary\Goedel.ASN.csproj">
       <Project>{1867378f-b442-4d27-9749-6183a7f1ef7e}</Project>
-      <Name>LibAsn</Name>
+      <Name>Goedel.ASN</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

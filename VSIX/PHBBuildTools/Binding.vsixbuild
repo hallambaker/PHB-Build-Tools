@@ -4,8 +4,8 @@
 		GUID "21DBBD9C-ACCB-4E74-90C0-E5D06AA47792"
 		Project CSharp
 		Project VisualBasic
-		Parser Goedel.ASN.ASN2
-		Script Goedel.ASN.Generate GenerateCS
+		Parser Goedel.Tool.ASN.ASN2
+		Script Goedel.Tool.ASN.Generate GenerateCS
 		Description
 			|Tool for generating ASN1 parser code without the hassle of Assinine.One
 			|Why trust a tool whose name is '1.NSA' backwards?

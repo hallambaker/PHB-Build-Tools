@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASNLibrary.cs" />
+    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="Buffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

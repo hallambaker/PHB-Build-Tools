@@ -120,11 +120,11 @@ namespace Goedel.ASN.VSIX {
             var Writer = new StringWriter();
 
             // Process the data
-            var Parse = new global::Goedel.ASN.ASN2();
+            var Parse = new global::Goedel.Tool.ASN.ASN2();
             var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
-            var Script = new global::Goedel.ASN.Generate(Writer);
+            var Script = new global::Goedel.Tool.ASN.Generate(Writer);
             Script.GenerateCS(Parse);
 
             // Convert writer data to a string and then a byte array

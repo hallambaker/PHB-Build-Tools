@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="Commands.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

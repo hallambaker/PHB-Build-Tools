@@ -45,16 +45,18 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>TestCodeSigningKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="FSRSchema.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -86,7 +88,6 @@
       <Generator>GScript</Generator>
       <LastGenOutput>GenerateC.cs</LastGenOutput>
     </None>
-    <None Include="TestCodeSigningKey.snk" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Goedel.Registry\Goedel.Registry.csproj">

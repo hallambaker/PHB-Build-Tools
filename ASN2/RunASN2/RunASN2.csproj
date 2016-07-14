@@ -78,6 +78,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ASN2.command</DependentUpon>
     </Compile>
+    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -94,13 +95,13 @@
       <Project>{f2a1f8ea-18e2-4f3a-aeaf-3983cea19fe0}</Project>
       <Name>Goedel.Registry</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ASN2\LibAsn2.csproj">
+    <ProjectReference Include="..\ASN2\Goedel.Tool.ASN.csproj">
       <Project>{D252E267-BB98-474B-A1E2-D9E5FE7873A6}</Project>
-      <Name>LibAsn2</Name>
+      <Name>Goedel.Tool.ASN</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ASNLibrary\LibAsn.csproj">
+    <ProjectReference Include="..\ASNLibrary\Goedel.ASN.csproj">
       <Project>{1867378f-b442-4d27-9749-6183a7f1ef7e}</Project>
-      <Name>LibAsn</Name>
+      <Name>Goedel.ASN</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

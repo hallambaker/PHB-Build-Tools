@@ -13,7 +13,7 @@ using Goedel.Registry;
 
 
 //
-// Namespace Goedel.ASN
+// Namespace Goedel.Tool.ASN
 // Class ASN2
 //
 
@@ -55,7 +55,7 @@ using Goedel.Registry;
 //   IdType
 //       ArcName
 //   NamespaceType
-//       Goedel.ASN
+//       Goedel.Tool.ASN
 //   ClassType
 //       ASN2
 //   NameType
@@ -68,7 +68,7 @@ using Goedel.Registry;
 //   TokenType
 //       IDName
 
-namespace Goedel.ASN {
+namespace Goedel.Tool.ASN {
 
 
     public enum ASN2Type {
@@ -115,6 +115,18 @@ namespace Goedel.ASN {
         abstract public ASN2Type _Tag ();
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
+
+		public virtual void Init (_Choice Parent) {
+			}
+
+		bool _Initialized = false;
+		public virtual void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			if (_Initialized) {
+				return;
+				}
+			_Initialized = true;
+			}
         }
 
 
@@ -125,6 +137,10 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.Namespace;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -146,6 +162,13 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.ROOT;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -173,6 +196,10 @@ namespace Goedel.ASN {
             return ASN2Type.Entry;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -196,6 +223,10 @@ namespace Goedel.ASN {
             return ASN2Type.OID;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -218,6 +249,13 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.Class;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -245,6 +283,13 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.Object;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -274,6 +319,13 @@ namespace Goedel.ASN {
             return ASN2Type.SingularObject;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -302,6 +354,14 @@ namespace Goedel.ASN {
             return ASN2Type.Member;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			Spec._InitChildren (this);
+			foreach (var Sub in Qualifiers) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -327,6 +387,10 @@ namespace Goedel.ASN {
             return ASN2Type.OIDRef;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -344,6 +408,10 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.Any;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -363,6 +431,10 @@ namespace Goedel.ASN {
             return ASN2Type.Bits;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -380,6 +452,10 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.VBits;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -399,6 +475,10 @@ namespace Goedel.ASN {
             return ASN2Type.Octets;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -416,6 +496,10 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.Integer;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -435,6 +519,10 @@ namespace Goedel.ASN {
             return ASN2Type.BigInteger;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -452,6 +540,10 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.Boolean;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -471,6 +563,10 @@ namespace Goedel.ASN {
             return ASN2Type.Time;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -489,6 +585,11 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.List;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			Spec._InitChildren (this);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -510,6 +611,11 @@ namespace Goedel.ASN {
             return ASN2Type.Set;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			Spec._InitChildren (this);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -529,6 +635,13 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.Choice;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -553,6 +666,10 @@ namespace Goedel.ASN {
             return ASN2Type.IA5String;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -570,6 +687,10 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.BMPString;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -589,6 +710,10 @@ namespace Goedel.ASN {
             return ASN2Type.UTF8String;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -606,6 +731,10 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.PrintableString;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -625,6 +754,11 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.Qualifier;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			Entry._InitChildren (this);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -646,6 +780,10 @@ namespace Goedel.ASN {
             return ASN2Type.Code;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -665,6 +803,10 @@ namespace Goedel.ASN {
             return ASN2Type.Implicit;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -682,6 +824,10 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.Explicit;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -701,6 +847,10 @@ namespace Goedel.ASN {
             return ASN2Type.Context;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -718,6 +868,10 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.Optional;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -737,6 +891,10 @@ namespace Goedel.ASN {
         public override ASN2Type _Tag () {
             return ASN2Type.Default;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -768,9 +926,7 @@ namespace Goedel.ASN {
 			Output.WriteId ("ID", Label.ToString());
 			}
         }
-//	}
 
-//namespace Goedel.Registry {
 
     public enum StateCode {  
         _Start,
@@ -838,12 +994,12 @@ namespace Goedel.ASN {
 
     struct _StackItem {
         public StateCode   State;
-        public Goedel.ASN._Choice     Token;
+        public Goedel.Tool.ASN._Choice     Token;
         }
 
     public partial class ASN2 : Goedel.Registry.Parser{
-        public List <Goedel.ASN._Choice>        Top;
-        public Registry	<Goedel.ASN._Choice>	Registry;
+        public List <Goedel.Tool.ASN._Choice>        Top;
+        public Registry	<Goedel.Tool.ASN._Choice>	Registry;
 
 
 
@@ -854,7 +1010,7 @@ namespace Goedel.ASN {
             }
 
         StateCode								State;
-        Goedel.ASN._Choice				Current;
+        Goedel.Tool.ASN._Choice				Current;
         List <_StackItem>						Stack;
         TokenType								CurrentToken;
         Position								CurrentPosition;
@@ -870,14 +1026,25 @@ namespace Goedel.ASN {
                 Lexer Schema = new Lexer(File);
                 Schema.Process(infile, Result);
                 }
+			Result._InitChildren ();
 
             return Result;
             }
 
+		bool _Initialized = false;
+		public virtual void _InitChildren () {
+			if (_Initialized) {
+				return;
+				}
+			_Initialized = true;
+			foreach (var Entry in Top) {
+				Entry._InitChildren (null);
+				}
+			}
 
         public ASN2() {
-            Top = new List<Goedel.ASN._Choice> () ;
-            Registry = new Registry <Goedel.ASN._Choice> ();
+            Top = new List<Goedel.Tool.ASN._Choice> () ;
+            Registry = new Registry <Goedel.Tool.ASN._Choice> ();
             State = StateCode._Start;
             Stack = new List <_StackItem> ();
             _StartOfEntry = true;
@@ -891,10 +1058,10 @@ namespace Goedel.ASN {
 
 
 
-        public TYPE<Goedel.ASN._Choice> TYPE__ArcName ;
-        public TYPE<Goedel.ASN._Choice> TYPE__IDName ;
+        public TYPE<Goedel.Tool.ASN._Choice> TYPE__ArcName ;
+        public TYPE<Goedel.Tool.ASN._Choice> TYPE__IDName ;
 
-        private Goedel.ASN._Choice New_Choice(string Label) {
+        private Goedel.Tool.ASN._Choice New_Choice(string Label) {
             switch (Label) {
 
                 case "Namespace": return NewNamespace();
@@ -935,291 +1102,291 @@ namespace Goedel.ASN {
 
 
 
-        private Goedel.ASN.Namespace NewNamespace() {
-            Goedel.ASN.Namespace result = new Goedel.ASN.Namespace();
+        private Goedel.Tool.ASN.Namespace NewNamespace() {
+            Goedel.Tool.ASN.Namespace result = new Goedel.Tool.ASN.Namespace();
             Push (result);
             State = StateCode.Namespace_Start;
             return result;
             }
 
 
-        private Goedel.ASN.ROOT NewROOT() {
-            Goedel.ASN.ROOT result = new Goedel.ASN.ROOT();
+        private Goedel.Tool.ASN.ROOT NewROOT() {
+            Goedel.Tool.ASN.ROOT result = new Goedel.Tool.ASN.ROOT();
             Push (result);
             State = StateCode.ROOT_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Entry NewEntry() {
-            Goedel.ASN.Entry result = new Goedel.ASN.Entry();
+        private Goedel.Tool.ASN.Entry NewEntry() {
+            Goedel.Tool.ASN.Entry result = new Goedel.Tool.ASN.Entry();
             Push (result);
             State = StateCode.Entry_Start;
             return result;
             }
 
 
-        private Goedel.ASN.OID NewOID() {
-            Goedel.ASN.OID result = new Goedel.ASN.OID();
+        private Goedel.Tool.ASN.OID NewOID() {
+            Goedel.Tool.ASN.OID result = new Goedel.Tool.ASN.OID();
             Push (result);
             State = StateCode.OID_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Class NewClass() {
-            Goedel.ASN.Class result = new Goedel.ASN.Class();
+        private Goedel.Tool.ASN.Class NewClass() {
+            Goedel.Tool.ASN.Class result = new Goedel.Tool.ASN.Class();
             Push (result);
             State = StateCode.Class_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Object NewObject() {
-            Goedel.ASN.Object result = new Goedel.ASN.Object();
+        private Goedel.Tool.ASN.Object NewObject() {
+            Goedel.Tool.ASN.Object result = new Goedel.Tool.ASN.Object();
             Push (result);
             State = StateCode.Object_Start;
             return result;
             }
 
 
-        private Goedel.ASN.SingularObject NewSingularObject() {
-            Goedel.ASN.SingularObject result = new Goedel.ASN.SingularObject();
+        private Goedel.Tool.ASN.SingularObject NewSingularObject() {
+            Goedel.Tool.ASN.SingularObject result = new Goedel.Tool.ASN.SingularObject();
             Push (result);
             State = StateCode.SingularObject_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Member NewMember() {
-            Goedel.ASN.Member result = new Goedel.ASN.Member();
+        private Goedel.Tool.ASN.Member NewMember() {
+            Goedel.Tool.ASN.Member result = new Goedel.Tool.ASN.Member();
             Push (result);
             State = StateCode.Member_Start;
             return result;
             }
 
 
-        private Goedel.ASN.OIDRef NewOIDRef() {
-            Goedel.ASN.OIDRef result = new Goedel.ASN.OIDRef();
+        private Goedel.Tool.ASN.OIDRef NewOIDRef() {
+            Goedel.Tool.ASN.OIDRef result = new Goedel.Tool.ASN.OIDRef();
             Push (result);
             State = StateCode.OIDRef_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Any NewAny() {
-            Goedel.ASN.Any result = new Goedel.ASN.Any();
+        private Goedel.Tool.ASN.Any NewAny() {
+            Goedel.Tool.ASN.Any result = new Goedel.Tool.ASN.Any();
             Push (result);
             State = StateCode.Any_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Bits NewBits() {
-            Goedel.ASN.Bits result = new Goedel.ASN.Bits();
+        private Goedel.Tool.ASN.Bits NewBits() {
+            Goedel.Tool.ASN.Bits result = new Goedel.Tool.ASN.Bits();
             Push (result);
             State = StateCode.Bits_Start;
             return result;
             }
 
 
-        private Goedel.ASN.VBits NewVBits() {
-            Goedel.ASN.VBits result = new Goedel.ASN.VBits();
+        private Goedel.Tool.ASN.VBits NewVBits() {
+            Goedel.Tool.ASN.VBits result = new Goedel.Tool.ASN.VBits();
             Push (result);
             State = StateCode.VBits_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Octets NewOctets() {
-            Goedel.ASN.Octets result = new Goedel.ASN.Octets();
+        private Goedel.Tool.ASN.Octets NewOctets() {
+            Goedel.Tool.ASN.Octets result = new Goedel.Tool.ASN.Octets();
             Push (result);
             State = StateCode.Octets_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Integer NewInteger() {
-            Goedel.ASN.Integer result = new Goedel.ASN.Integer();
+        private Goedel.Tool.ASN.Integer NewInteger() {
+            Goedel.Tool.ASN.Integer result = new Goedel.Tool.ASN.Integer();
             Push (result);
             State = StateCode.Integer_Start;
             return result;
             }
 
 
-        private Goedel.ASN.BigInteger NewBigInteger() {
-            Goedel.ASN.BigInteger result = new Goedel.ASN.BigInteger();
+        private Goedel.Tool.ASN.BigInteger NewBigInteger() {
+            Goedel.Tool.ASN.BigInteger result = new Goedel.Tool.ASN.BigInteger();
             Push (result);
             State = StateCode.BigInteger_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Boolean NewBoolean() {
-            Goedel.ASN.Boolean result = new Goedel.ASN.Boolean();
+        private Goedel.Tool.ASN.Boolean NewBoolean() {
+            Goedel.Tool.ASN.Boolean result = new Goedel.Tool.ASN.Boolean();
             Push (result);
             State = StateCode.Boolean_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Time NewTime() {
-            Goedel.ASN.Time result = new Goedel.ASN.Time();
+        private Goedel.Tool.ASN.Time NewTime() {
+            Goedel.Tool.ASN.Time result = new Goedel.Tool.ASN.Time();
             Push (result);
             State = StateCode.Time_Start;
             return result;
             }
 
 
-        private Goedel.ASN.List NewList() {
-            Goedel.ASN.List result = new Goedel.ASN.List();
+        private Goedel.Tool.ASN.List NewList() {
+            Goedel.Tool.ASN.List result = new Goedel.Tool.ASN.List();
             Push (result);
             State = StateCode.List_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Set NewSet() {
-            Goedel.ASN.Set result = new Goedel.ASN.Set();
+        private Goedel.Tool.ASN.Set NewSet() {
+            Goedel.Tool.ASN.Set result = new Goedel.Tool.ASN.Set();
             Push (result);
             State = StateCode.Set_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Choice NewChoice() {
-            Goedel.ASN.Choice result = new Goedel.ASN.Choice();
+        private Goedel.Tool.ASN.Choice NewChoice() {
+            Goedel.Tool.ASN.Choice result = new Goedel.Tool.ASN.Choice();
             Push (result);
             State = StateCode.Choice_Start;
             return result;
             }
 
 
-        private Goedel.ASN.IA5String NewIA5String() {
-            Goedel.ASN.IA5String result = new Goedel.ASN.IA5String();
+        private Goedel.Tool.ASN.IA5String NewIA5String() {
+            Goedel.Tool.ASN.IA5String result = new Goedel.Tool.ASN.IA5String();
             Push (result);
             State = StateCode.IA5String_Start;
             return result;
             }
 
 
-        private Goedel.ASN.BMPString NewBMPString() {
-            Goedel.ASN.BMPString result = new Goedel.ASN.BMPString();
+        private Goedel.Tool.ASN.BMPString NewBMPString() {
+            Goedel.Tool.ASN.BMPString result = new Goedel.Tool.ASN.BMPString();
             Push (result);
             State = StateCode.BMPString_Start;
             return result;
             }
 
 
-        private Goedel.ASN.UTF8String NewUTF8String() {
-            Goedel.ASN.UTF8String result = new Goedel.ASN.UTF8String();
+        private Goedel.Tool.ASN.UTF8String NewUTF8String() {
+            Goedel.Tool.ASN.UTF8String result = new Goedel.Tool.ASN.UTF8String();
             Push (result);
             State = StateCode.UTF8String_Start;
             return result;
             }
 
 
-        private Goedel.ASN.PrintableString NewPrintableString() {
-            Goedel.ASN.PrintableString result = new Goedel.ASN.PrintableString();
+        private Goedel.Tool.ASN.PrintableString NewPrintableString() {
+            Goedel.Tool.ASN.PrintableString result = new Goedel.Tool.ASN.PrintableString();
             Push (result);
             State = StateCode.PrintableString_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Qualifier NewQualifier() {
-            Goedel.ASN.Qualifier result = new Goedel.ASN.Qualifier();
+        private Goedel.Tool.ASN.Qualifier NewQualifier() {
+            Goedel.Tool.ASN.Qualifier result = new Goedel.Tool.ASN.Qualifier();
             Push (result);
             State = StateCode.Qualifier_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Code NewCode() {
-            Goedel.ASN.Code result = new Goedel.ASN.Code();
+        private Goedel.Tool.ASN.Code NewCode() {
+            Goedel.Tool.ASN.Code result = new Goedel.Tool.ASN.Code();
             Push (result);
             State = StateCode.Code_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Implicit NewImplicit() {
-            Goedel.ASN.Implicit result = new Goedel.ASN.Implicit();
+        private Goedel.Tool.ASN.Implicit NewImplicit() {
+            Goedel.Tool.ASN.Implicit result = new Goedel.Tool.ASN.Implicit();
             Push (result);
             State = StateCode.Implicit_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Explicit NewExplicit() {
-            Goedel.ASN.Explicit result = new Goedel.ASN.Explicit();
+        private Goedel.Tool.ASN.Explicit NewExplicit() {
+            Goedel.Tool.ASN.Explicit result = new Goedel.Tool.ASN.Explicit();
             Push (result);
             State = StateCode.Explicit_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Context NewContext() {
-            Goedel.ASN.Context result = new Goedel.ASN.Context();
+        private Goedel.Tool.ASN.Context NewContext() {
+            Goedel.Tool.ASN.Context result = new Goedel.Tool.ASN.Context();
             Push (result);
             State = StateCode.Context_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Optional NewOptional() {
-            Goedel.ASN.Optional result = new Goedel.ASN.Optional();
+        private Goedel.Tool.ASN.Optional NewOptional() {
+            Goedel.Tool.ASN.Optional result = new Goedel.Tool.ASN.Optional();
             Push (result);
             State = StateCode.Optional_Start;
             return result;
             }
 
 
-        private Goedel.ASN.Default NewDefault() {
-            Goedel.ASN.Default result = new Goedel.ASN.Default();
+        private Goedel.Tool.ASN.Default NewDefault() {
+            Goedel.Tool.ASN.Default result = new Goedel.Tool.ASN.Default();
             Push (result);
             State = StateCode.Default_Start;
             return result;
             }
 
 
-        static Goedel.ASN.ASN2Type _Reserved(string Label) {
+        static Goedel.Tool.ASN.ASN2Type _Reserved(string Label) {
             switch (Label) {
 
-                case "Namespace": return Goedel.ASN.ASN2Type.Namespace;
-                case "ROOT": return Goedel.ASN.ASN2Type.ROOT;
-                case "Entry": return Goedel.ASN.ASN2Type.Entry;
-                case "OID": return Goedel.ASN.ASN2Type.OID;
-                case "Class": return Goedel.ASN.ASN2Type.Class;
-                case "Object": return Goedel.ASN.ASN2Type.Object;
-                case "SingularObject": return Goedel.ASN.ASN2Type.SingularObject;
-                case "Member": return Goedel.ASN.ASN2Type.Member;
-                case "OIDRef": return Goedel.ASN.ASN2Type.OIDRef;
-                case "Any": return Goedel.ASN.ASN2Type.Any;
-                case "Bits": return Goedel.ASN.ASN2Type.Bits;
-                case "VBits": return Goedel.ASN.ASN2Type.VBits;
-                case "Octets": return Goedel.ASN.ASN2Type.Octets;
-                case "Integer": return Goedel.ASN.ASN2Type.Integer;
-                case "BigInteger": return Goedel.ASN.ASN2Type.BigInteger;
-                case "Boolean": return Goedel.ASN.ASN2Type.Boolean;
-                case "Time": return Goedel.ASN.ASN2Type.Time;
-                case "List": return Goedel.ASN.ASN2Type.List;
-                case "Set": return Goedel.ASN.ASN2Type.Set;
-                case "Choice": return Goedel.ASN.ASN2Type.Choice;
-                case "IA5String": return Goedel.ASN.ASN2Type.IA5String;
-                case "BMPString": return Goedel.ASN.ASN2Type.BMPString;
-                case "UTF8String": return Goedel.ASN.ASN2Type.UTF8String;
-                case "PrintableString": return Goedel.ASN.ASN2Type.PrintableString;
-                case "Qualifier": return Goedel.ASN.ASN2Type.Qualifier;
-                case "Code": return Goedel.ASN.ASN2Type.Code;
-                case "Implicit": return Goedel.ASN.ASN2Type.Implicit;
-                case "Explicit": return Goedel.ASN.ASN2Type.Explicit;
-                case "Context": return Goedel.ASN.ASN2Type.Context;
-                case "Optional": return Goedel.ASN.ASN2Type.Optional;
-                case "Default": return Goedel.ASN.ASN2Type.Default;
+                case "Namespace": return Goedel.Tool.ASN.ASN2Type.Namespace;
+                case "ROOT": return Goedel.Tool.ASN.ASN2Type.ROOT;
+                case "Entry": return Goedel.Tool.ASN.ASN2Type.Entry;
+                case "OID": return Goedel.Tool.ASN.ASN2Type.OID;
+                case "Class": return Goedel.Tool.ASN.ASN2Type.Class;
+                case "Object": return Goedel.Tool.ASN.ASN2Type.Object;
+                case "SingularObject": return Goedel.Tool.ASN.ASN2Type.SingularObject;
+                case "Member": return Goedel.Tool.ASN.ASN2Type.Member;
+                case "OIDRef": return Goedel.Tool.ASN.ASN2Type.OIDRef;
+                case "Any": return Goedel.Tool.ASN.ASN2Type.Any;
+                case "Bits": return Goedel.Tool.ASN.ASN2Type.Bits;
+                case "VBits": return Goedel.Tool.ASN.ASN2Type.VBits;
+                case "Octets": return Goedel.Tool.ASN.ASN2Type.Octets;
+                case "Integer": return Goedel.Tool.ASN.ASN2Type.Integer;
+                case "BigInteger": return Goedel.Tool.ASN.ASN2Type.BigInteger;
+                case "Boolean": return Goedel.Tool.ASN.ASN2Type.Boolean;
+                case "Time": return Goedel.Tool.ASN.ASN2Type.Time;
+                case "List": return Goedel.Tool.ASN.ASN2Type.List;
+                case "Set": return Goedel.Tool.ASN.ASN2Type.Set;
+                case "Choice": return Goedel.Tool.ASN.ASN2Type.Choice;
+                case "IA5String": return Goedel.Tool.ASN.ASN2Type.IA5String;
+                case "BMPString": return Goedel.Tool.ASN.ASN2Type.BMPString;
+                case "UTF8String": return Goedel.Tool.ASN.ASN2Type.UTF8String;
+                case "PrintableString": return Goedel.Tool.ASN.ASN2Type.PrintableString;
+                case "Qualifier": return Goedel.Tool.ASN.ASN2Type.Qualifier;
+                case "Code": return Goedel.Tool.ASN.ASN2Type.Code;
+                case "Implicit": return Goedel.Tool.ASN.ASN2Type.Implicit;
+                case "Explicit": return Goedel.Tool.ASN.ASN2Type.Explicit;
+                case "Context": return Goedel.Tool.ASN.ASN2Type.Context;
+                case "Optional": return Goedel.Tool.ASN.ASN2Type.Optional;
+                case "Default": return Goedel.Tool.ASN.ASN2Type.Default;
 
                 }
-            return Goedel.ASN.ASN2Type._Bottom;
+            return Goedel.Tool.ASN.ASN2Type._Bottom;
             }
 
 
@@ -1231,14 +1398,14 @@ namespace Goedel.ASN {
 
 			StructureWriter StructureWriter = StructureWriter.GetStructureWriter (Output, OutputFormat);
 			StructureWriter.StartDocument ();
-			foreach (Goedel.ASN._Choice Entry in Top) {
+			foreach (Goedel.Tool.ASN._Choice Entry in Top) {
 				Entry.Serialize (StructureWriter, true);
 				}
 			StructureWriter.EndDocument ();
 			}
 
 
-        void Push (Goedel.ASN._Choice Token) {
+        void Push (Goedel.Tool.ASN._Choice Token) {
             _StackItem Item = new _StackItem ();
             Item.State = State;
             Item.Token = Current;
@@ -1292,14 +1459,14 @@ namespace Goedel.ASN {
 
                     case StateCode._Choice:                //      LABEL Class | END
                         if (Token == TokenType.LABEL) {
-                            Goedel.ASN.ASN2Type LabelType = _Reserved (Text);
+                            Goedel.Tool.ASN.ASN2Type LabelType = _Reserved (Text);
                             if (false |
-									(LabelType == Goedel.ASN.ASN2Type.Namespace) |
-									(LabelType == Goedel.ASN.ASN2Type.ROOT) |
-									(LabelType == Goedel.ASN.ASN2Type.OID) |
-									(LabelType == Goedel.ASN.ASN2Type.Class) |
-									(LabelType == Goedel.ASN.ASN2Type.Object) |
-									(LabelType == Goedel.ASN.ASN2Type.SingularObject)) {
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Namespace) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.ROOT) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.OID) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Class) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Object) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.SingularObject)) {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
@@ -1318,7 +1485,7 @@ namespace Goedel.ASN {
 
                     case StateCode.Namespace_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.ASN.Namespace Current_Cast = (Goedel.ASN.Namespace)Current;
+                            Goedel.Tool.ASN.Namespace Current_Cast = (Goedel.Tool.ASN.Namespace)Current;
                             Current_Cast.Name = Registry.TOKEN(Position, Text, TYPE__IDName, Current_Cast);
                             State = StateCode.Namespace__Name;
                             break;
@@ -1331,7 +1498,7 @@ namespace Goedel.ASN {
                         break;
                     case StateCode.ROOT_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.ASN.ROOT Current_Cast = (Goedel.ASN.ROOT)Current;
+                            Goedel.Tool.ASN.ROOT Current_Cast = (Goedel.Tool.ASN.ROOT)Current;
                             Current_Cast.Name = Registry.ID(Position, Text, TYPE__ArcName, Current_Cast);
                             State = StateCode.ROOT__Name;
                             break;
@@ -1359,7 +1526,7 @@ namespace Goedel.ASN {
 
 						/// Label
                         else {
-                            Goedel.ASN.ROOT Current_Cast = (Goedel.ASN.ROOT)Current;
+                            Goedel.Tool.ASN.ROOT Current_Cast = (Goedel.Tool.ASN.ROOT)Current;
                             Current_Cast.Entries.Add (NewEntry ());
                             Represent = true;
                             }
@@ -1369,7 +1536,7 @@ namespace Goedel.ASN {
 
                     case StateCode.Entry_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.ASN.Entry Current_Cast = (Goedel.ASN.Entry)Current;
+                            Goedel.Tool.ASN.Entry Current_Cast = (Goedel.Tool.ASN.Entry)Current;
                             Current_Cast.Name = Registry.TOKEN(Position, Text, TYPE__ArcName, Current_Cast);
                             State = StateCode.Entry__Name;
                             break;
@@ -1378,7 +1545,7 @@ namespace Goedel.ASN {
 
                     case StateCode.Entry__Name:
                         if (Token == TokenType.INTEGER) {
-                            Goedel.ASN.Entry Current_Cast = (Goedel.ASN.Entry)Current;
+                            Goedel.Tool.ASN.Entry Current_Cast = (Goedel.Tool.ASN.Entry)Current;
                             Current_Cast.Value = Convert.ToInt32(Text);
                             State = StateCode.Entry__Value;
                             break;
@@ -1391,7 +1558,7 @@ namespace Goedel.ASN {
                         break;
                     case StateCode.OID_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.ASN.OID Current_Cast = (Goedel.ASN.OID)Current;
+                            Goedel.Tool.ASN.OID Current_Cast = (Goedel.Tool.ASN.OID)Current;
                             Current_Cast.Name = Registry.ID(Position, Text, TYPE__ArcName, Current_Cast);
                             State = StateCode.OID__Name;
                             break;
@@ -1400,7 +1567,7 @@ namespace Goedel.ASN {
 
                     case StateCode.OID__Name:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.ASN.OID Current_Cast = (Goedel.ASN.OID)Current;
+                            Goedel.Tool.ASN.OID Current_Cast = (Goedel.Tool.ASN.OID)Current;
                             Current_Cast.Root = Registry.REF(Position, Text, TYPE__ArcName, Current_Cast);
                             State = StateCode.OID__Root;
                             break;
@@ -1409,7 +1576,7 @@ namespace Goedel.ASN {
 
                     case StateCode.OID__Root:
                         if (Token == TokenType.INTEGER) {
-                            Goedel.ASN.OID Current_Cast = (Goedel.ASN.OID)Current;
+                            Goedel.Tool.ASN.OID Current_Cast = (Goedel.Tool.ASN.OID)Current;
                             Current_Cast.Value = Convert.ToInt32(Text);
                             State = StateCode.OID__Value;
                             break;
@@ -1422,7 +1589,7 @@ namespace Goedel.ASN {
                         break;
                     case StateCode.Class_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.ASN.Class Current_Cast = (Goedel.ASN.Class)Current;
+                            Goedel.Tool.ASN.Class Current_Cast = (Goedel.Tool.ASN.Class)Current;
                             Current_Cast.Name = Registry.ID(Position, Text, TYPE__IDName, Current_Cast);
                             State = StateCode.Class__Name;
                             break;
@@ -1450,7 +1617,7 @@ namespace Goedel.ASN {
 
 						/// Label
                         else {
-                            Goedel.ASN.Class Current_Cast = (Goedel.ASN.Class)Current;
+                            Goedel.Tool.ASN.Class Current_Cast = (Goedel.Tool.ASN.Class)Current;
                             Current_Cast.Entries.Add (NewMember ());
                             Represent = true;
                             }
@@ -1460,7 +1627,7 @@ namespace Goedel.ASN {
 
                     case StateCode.Object_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.ASN.Object Current_Cast = (Goedel.ASN.Object)Current;
+                            Goedel.Tool.ASN.Object Current_Cast = (Goedel.Tool.ASN.Object)Current;
                             Current_Cast.Name = Registry.ID(Position, Text, TYPE__IDName, Current_Cast);
                             State = StateCode.Object__Name;
                             break;
@@ -1469,7 +1636,7 @@ namespace Goedel.ASN {
 
                     case StateCode.Object__Name:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.ASN.Object Current_Cast = (Goedel.ASN.Object)Current;
+                            Goedel.Tool.ASN.Object Current_Cast = (Goedel.Tool.ASN.Object)Current;
                             Current_Cast.OID = Registry.REF(Position, Text, TYPE__ArcName, Current_Cast);
                             State = StateCode.Object__OID;
                             break;
@@ -1497,7 +1664,7 @@ namespace Goedel.ASN {
 
 						/// Label
                         else {
-                            Goedel.ASN.Object Current_Cast = (Goedel.ASN.Object)Current;
+                            Goedel.Tool.ASN.Object Current_Cast = (Goedel.Tool.ASN.Object)Current;
                             Current_Cast.Entries.Add (NewMember ());
                             Represent = true;
                             }
@@ -1507,7 +1674,7 @@ namespace Goedel.ASN {
 
                     case StateCode.SingularObject_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.ASN.SingularObject Current_Cast = (Goedel.ASN.SingularObject)Current;
+                            Goedel.Tool.ASN.SingularObject Current_Cast = (Goedel.Tool.ASN.SingularObject)Current;
                             Current_Cast.Name = Registry.ID(Position, Text, TYPE__IDName, Current_Cast);
                             State = StateCode.SingularObject__Name;
                             break;
@@ -1516,7 +1683,7 @@ namespace Goedel.ASN {
 
                     case StateCode.SingularObject__Name:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.ASN.SingularObject Current_Cast = (Goedel.ASN.SingularObject)Current;
+                            Goedel.Tool.ASN.SingularObject Current_Cast = (Goedel.Tool.ASN.SingularObject)Current;
                             Current_Cast.OID = Registry.REF(Position, Text, TYPE__ArcName, Current_Cast);
                             State = StateCode.SingularObject__OID;
                             break;
@@ -1544,7 +1711,7 @@ namespace Goedel.ASN {
 
 						/// Label
                         else {
-                            Goedel.ASN.SingularObject Current_Cast = (Goedel.ASN.SingularObject)Current;
+                            Goedel.Tool.ASN.SingularObject Current_Cast = (Goedel.Tool.ASN.SingularObject)Current;
                             Current_Cast.Entries.Add (NewMember ());
                             Represent = true;
                             }
@@ -1554,7 +1721,7 @@ namespace Goedel.ASN {
 
                     case StateCode.Member_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.ASN.Member Current_Cast = (Goedel.ASN.Member)Current;
+                            Goedel.Tool.ASN.Member Current_Cast = (Goedel.Tool.ASN.Member)Current;
                             Current_Cast.Name = Registry.TOKEN(Position, Text, TYPE__IDName, Current_Cast);
                             State = StateCode.Member__Name;
                             break;
@@ -1563,30 +1730,30 @@ namespace Goedel.ASN {
 
                     case StateCode.Member__Name:
                         if (Token == TokenType.LABEL) {
-							Goedel.ASN.Member Current_Cast = (Goedel.ASN.Member)Current;
-                            Goedel.ASN.ASN2Type LabelType = _Reserved (Text);
+							Goedel.Tool.ASN.Member Current_Cast = (Goedel.Tool.ASN.Member)Current;
+                            Goedel.Tool.ASN.ASN2Type LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.ASN.ASN2Type.OIDRef) |
-									(LabelType == Goedel.ASN.ASN2Type.Any) |
-									(LabelType == Goedel.ASN.ASN2Type.Bits) |
-									(LabelType == Goedel.ASN.ASN2Type.VBits) |
-									(LabelType == Goedel.ASN.ASN2Type.Octets) |
-									(LabelType == Goedel.ASN.ASN2Type.Integer) |
-									(LabelType == Goedel.ASN.ASN2Type.BigInteger) |
-									(LabelType == Goedel.ASN.ASN2Type.Boolean) |
-									(LabelType == Goedel.ASN.ASN2Type.Time) |
-									(LabelType == Goedel.ASN.ASN2Type.List) |
-									(LabelType == Goedel.ASN.ASN2Type.Set) |
-									(LabelType == Goedel.ASN.ASN2Type.Choice) |
-									(LabelType == Goedel.ASN.ASN2Type.IA5String) |
-									(LabelType == Goedel.ASN.ASN2Type.BMPString) |
-									(LabelType == Goedel.ASN.ASN2Type.UTF8String) |
-									(LabelType == Goedel.ASN.ASN2Type.PrintableString) ) {
+									(LabelType == Goedel.Tool.ASN.ASN2Type.OIDRef) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Any) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Bits) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.VBits) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Octets) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Integer) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.BigInteger) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Boolean) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Time) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.List) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Set) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Choice) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.IA5String) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.BMPString) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.UTF8String) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.PrintableString) ) {
                                 State = StateCode.Member__Spec;
                                 Current_Cast.Spec = New_Choice(Text);
                                 }
                             else {
-                                Goedel.ASN._Label result = new Goedel.ASN._Label();
+                                Goedel.Tool.ASN._Label result = new Goedel.Tool.ASN._Label();
                                 result.Label = Registry.REF(Position, Text, TYPE__IDName, Current_Cast);
                                 Current_Cast.Spec = result;
                                 State = StateCode.Member__Spec;
@@ -1594,8 +1761,8 @@ namespace Goedel.ASN {
                             break;
                             }
                         else if (Token == TokenType.LITERAL) {
-                            Goedel.ASN._Label result = new Goedel.ASN._Label();
-                            Goedel.ASN.Member Current_Cast = (Goedel.ASN.Member)Current;
+                            Goedel.Tool.ASN._Label result = new Goedel.Tool.ASN._Label();
+                            Goedel.Tool.ASN.Member Current_Cast = (Goedel.Tool.ASN.Member)Current;
                             result.Label = Registry.REF(Position, Text, TYPE__IDName, Current_Cast);
                             Current_Cast.Spec = result;
                             State = StateCode.Member__Spec;
@@ -1624,7 +1791,7 @@ namespace Goedel.ASN {
 
 						/// Label
                         else {
-                            Goedel.ASN.Member Current_Cast = (Goedel.ASN.Member)Current;
+                            Goedel.Tool.ASN.Member Current_Cast = (Goedel.Tool.ASN.Member)Current;
                             Current_Cast.Qualifiers.Add (NewQualifier ());
                             Represent = true;
                             }
@@ -1670,30 +1837,30 @@ namespace Goedel.ASN {
                         break;
                     case StateCode.List_Start:
                         if (Token == TokenType.LABEL) {
-							Goedel.ASN.List Current_Cast = (Goedel.ASN.List)Current;
-                            Goedel.ASN.ASN2Type LabelType = _Reserved (Text);
+							Goedel.Tool.ASN.List Current_Cast = (Goedel.Tool.ASN.List)Current;
+                            Goedel.Tool.ASN.ASN2Type LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.ASN.ASN2Type.OIDRef) |
-									(LabelType == Goedel.ASN.ASN2Type.Any) |
-									(LabelType == Goedel.ASN.ASN2Type.Bits) |
-									(LabelType == Goedel.ASN.ASN2Type.VBits) |
-									(LabelType == Goedel.ASN.ASN2Type.Octets) |
-									(LabelType == Goedel.ASN.ASN2Type.Integer) |
-									(LabelType == Goedel.ASN.ASN2Type.BigInteger) |
-									(LabelType == Goedel.ASN.ASN2Type.Boolean) |
-									(LabelType == Goedel.ASN.ASN2Type.Time) |
-									(LabelType == Goedel.ASN.ASN2Type.List) |
-									(LabelType == Goedel.ASN.ASN2Type.Set) |
-									(LabelType == Goedel.ASN.ASN2Type.Choice) |
-									(LabelType == Goedel.ASN.ASN2Type.IA5String) |
-									(LabelType == Goedel.ASN.ASN2Type.BMPString) |
-									(LabelType == Goedel.ASN.ASN2Type.UTF8String) |
-									(LabelType == Goedel.ASN.ASN2Type.PrintableString) ) {
+									(LabelType == Goedel.Tool.ASN.ASN2Type.OIDRef) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Any) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Bits) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.VBits) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Octets) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Integer) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.BigInteger) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Boolean) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Time) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.List) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Set) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Choice) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.IA5String) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.BMPString) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.UTF8String) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.PrintableString) ) {
                                 State = StateCode.List__Spec;
                                 Current_Cast.Spec = New_Choice(Text);
                                 }
                             else {
-                                Goedel.ASN._Label result = new Goedel.ASN._Label();
+                                Goedel.Tool.ASN._Label result = new Goedel.Tool.ASN._Label();
                                 result.Label = Registry.REF(Position, Text, TYPE__IDName, Current_Cast);
                                 Current_Cast.Spec = result;
                                 State = StateCode.List__Spec;
@@ -1701,8 +1868,8 @@ namespace Goedel.ASN {
                             break;
                             }
                         else if (Token == TokenType.LITERAL) {
-                            Goedel.ASN._Label result = new Goedel.ASN._Label();
-                            Goedel.ASN.List Current_Cast = (Goedel.ASN.List)Current;
+                            Goedel.Tool.ASN._Label result = new Goedel.Tool.ASN._Label();
+                            Goedel.Tool.ASN.List Current_Cast = (Goedel.Tool.ASN.List)Current;
                             result.Label = Registry.REF(Position, Text, TYPE__IDName, Current_Cast);
                             Current_Cast.Spec = result;
                             State = StateCode.List__Spec;
@@ -1716,30 +1883,30 @@ namespace Goedel.ASN {
                         break;
                     case StateCode.Set_Start:
                         if (Token == TokenType.LABEL) {
-							Goedel.ASN.Set Current_Cast = (Goedel.ASN.Set)Current;
-                            Goedel.ASN.ASN2Type LabelType = _Reserved (Text);
+							Goedel.Tool.ASN.Set Current_Cast = (Goedel.Tool.ASN.Set)Current;
+                            Goedel.Tool.ASN.ASN2Type LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.ASN.ASN2Type.OIDRef) |
-									(LabelType == Goedel.ASN.ASN2Type.Any) |
-									(LabelType == Goedel.ASN.ASN2Type.Bits) |
-									(LabelType == Goedel.ASN.ASN2Type.VBits) |
-									(LabelType == Goedel.ASN.ASN2Type.Octets) |
-									(LabelType == Goedel.ASN.ASN2Type.Integer) |
-									(LabelType == Goedel.ASN.ASN2Type.BigInteger) |
-									(LabelType == Goedel.ASN.ASN2Type.Boolean) |
-									(LabelType == Goedel.ASN.ASN2Type.Time) |
-									(LabelType == Goedel.ASN.ASN2Type.List) |
-									(LabelType == Goedel.ASN.ASN2Type.Set) |
-									(LabelType == Goedel.ASN.ASN2Type.Choice) |
-									(LabelType == Goedel.ASN.ASN2Type.IA5String) |
-									(LabelType == Goedel.ASN.ASN2Type.BMPString) |
-									(LabelType == Goedel.ASN.ASN2Type.UTF8String) |
-									(LabelType == Goedel.ASN.ASN2Type.PrintableString) ) {
+									(LabelType == Goedel.Tool.ASN.ASN2Type.OIDRef) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Any) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Bits) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.VBits) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Octets) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Integer) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.BigInteger) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Boolean) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Time) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.List) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Set) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Choice) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.IA5String) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.BMPString) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.UTF8String) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.PrintableString) ) {
                                 State = StateCode.Set__Spec;
                                 Current_Cast.Spec = New_Choice(Text);
                                 }
                             else {
-                                Goedel.ASN._Label result = new Goedel.ASN._Label();
+                                Goedel.Tool.ASN._Label result = new Goedel.Tool.ASN._Label();
                                 result.Label = Registry.REF(Position, Text, TYPE__IDName, Current_Cast);
                                 Current_Cast.Spec = result;
                                 State = StateCode.Set__Spec;
@@ -1747,8 +1914,8 @@ namespace Goedel.ASN {
                             break;
                             }
                         else if (Token == TokenType.LITERAL) {
-                            Goedel.ASN._Label result = new Goedel.ASN._Label();
-                            Goedel.ASN.Set Current_Cast = (Goedel.ASN.Set)Current;
+                            Goedel.Tool.ASN._Label result = new Goedel.Tool.ASN._Label();
+                            Goedel.Tool.ASN.Set Current_Cast = (Goedel.Tool.ASN.Set)Current;
                             result.Label = Registry.REF(Position, Text, TYPE__IDName, Current_Cast);
                             Current_Cast.Spec = result;
                             State = StateCode.Set__Spec;
@@ -1781,7 +1948,7 @@ namespace Goedel.ASN {
 
 						/// Label
                         else {
-                            Goedel.ASN.Choice Current_Cast = (Goedel.ASN.Choice)Current;
+                            Goedel.Tool.ASN.Choice Current_Cast = (Goedel.Tool.ASN.Choice)Current;
                             Current_Cast.Entries.Add (NewMember ());
                             Represent = true;
                             }
@@ -1807,15 +1974,15 @@ namespace Goedel.ASN {
                         break;
                     case StateCode.Qualifier_Start:
                         if (Token == TokenType.LABEL) {
-							Goedel.ASN.Qualifier Current_Cast = (Goedel.ASN.Qualifier)Current;
-                            Goedel.ASN.ASN2Type LabelType = _Reserved (Text);
+							Goedel.Tool.ASN.Qualifier Current_Cast = (Goedel.Tool.ASN.Qualifier)Current;
+                            Goedel.Tool.ASN.ASN2Type LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.ASN.ASN2Type.Code) |
-									(LabelType == Goedel.ASN.ASN2Type.Implicit) |
-									(LabelType == Goedel.ASN.ASN2Type.Explicit) |
-									(LabelType == Goedel.ASN.ASN2Type.Optional) |
-									(LabelType == Goedel.ASN.ASN2Type.Default) |
-									(LabelType == Goedel.ASN.ASN2Type.Context) ) {
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Code) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Implicit) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Explicit) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Optional) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Default) |
+									(LabelType == Goedel.Tool.ASN.ASN2Type.Context) ) {
                                 State = StateCode.Qualifier__Entry;
                                 Current_Cast.Entry = New_Choice(Text);
                                 }
@@ -1832,7 +1999,7 @@ namespace Goedel.ASN {
                         break;
                     case StateCode.Code_Start:
                         if (Token == TokenType.INTEGER) {
-                            Goedel.ASN.Code Current_Cast = (Goedel.ASN.Code)Current;
+                            Goedel.Tool.ASN.Code Current_Cast = (Goedel.Tool.ASN.Code)Current;
                             Current_Cast.Value = Convert.ToInt32(Text);
                             State = StateCode.Code__Value;
                             break;
@@ -1861,7 +2028,7 @@ namespace Goedel.ASN {
                         break;
                     case StateCode.Default_Start:
                         if (Token == TokenType.STRING) {
-                            Goedel.ASN.Default Current_Cast = (Goedel.ASN.Default)Current;
+                            Goedel.Tool.ASN.Default Current_Cast = (Goedel.Tool.ASN.Default)Current;
                             Current_Cast.Value = Text;
                             State = StateCode.Default__Value;
                             break;

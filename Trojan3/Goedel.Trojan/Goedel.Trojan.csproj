@@ -41,6 +41,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="Binding.cs" />
     <Compile Include="FieldValue.cs" />
     <Compile Include="Menu.cs" />

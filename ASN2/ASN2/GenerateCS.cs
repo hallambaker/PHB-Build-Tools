@@ -23,12 +23,12 @@
 //  THE SOFTWARE.
 //  
 //  
-// #pclass Goedel.ASN Generate 
+// #pclass Goedel.Tool.ASN Generate 
 using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace Goedel.ASN {
+namespace Goedel.Tool.ASN {
 	public partial class Generate : global::Goedel.Registry.Script {
 		public Generate () : base () {
 			}

@@ -1,6 +1,6 @@
 ﻿#script 1.0
 #license MITLicense
-#pclass Goedel.ASN Generate
+#pclass Goedel.Tool.ASN Generate
 #% DateTime GenerateTime = DateTime.UtcNow;
 #% string Namespace = "Goedel.ASN";
 

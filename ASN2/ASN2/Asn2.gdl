@@ -1,4 +1,4 @@
-﻿Class Goedel.ASN ASN2
+﻿Class Goedel.Tool.ASN ASN2
 
 	TopType		Namespace
 		Name		Token		IDName

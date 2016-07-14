@@ -268,7 +268,7 @@ namespace ASN2Shell {
 
 			inputfile = Options.ASN2.Text;
 
-            var Parse = new Goedel.ASN.ASN2();
+            var Parse = new Goedel.Tool.ASN.ASN2();
 
 
 			Parse.Options = Options;
@@ -294,7 +294,7 @@ namespace ASN2Shell {
 							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
 					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
 
-						var Script = new Goedel.ASN.Generate (OutputWriter);
+						var Script = new Goedel.Tool.ASN.Generate (OutputWriter);
 
 						Script.GenerateCS (Parse);
 						}

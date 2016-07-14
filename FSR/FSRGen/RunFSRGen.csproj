@@ -46,6 +46,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="FSRGen.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

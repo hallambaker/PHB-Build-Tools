@@ -65,6 +65,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="BindingGTK.cs" />
     <Compile Include="CSSProvider.cs" />
     <Compile Include="ExtensionMethods.cs" />

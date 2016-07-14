@@ -92,6 +92,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptClassifier.cs" />
     <Compile Include="ScriptClassifierProvider.cs" />

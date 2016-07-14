@@ -41,6 +41,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="main.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

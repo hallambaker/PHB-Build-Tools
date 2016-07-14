@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Registry;
+using Goedel.ASN;
 
-namespace Goedel.ASN {
+namespace Goedel.Tool.ASN {
     public partial class ASN2 : Parser {
         bool HaveRun = false;
 

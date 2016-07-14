@@ -31,15 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>TestCodeSigningKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="Document.cs" />
     <Compile Include="MakeWeb.cs" />
     <Compile Include="MarkDown.cs">
@@ -86,7 +88,6 @@
       <LastGenOutput>Schema.cs</LastGenOutput>
     </None>
     <None Include="TagDefinitions.mdsd" />
-    <None Include="TestCodeSigningKey.snk" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Goedel.Registry\Goedel.Registry.csproj">
