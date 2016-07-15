@@ -127,9 +127,9 @@
       <Project>{f2a1f8ea-18e2-4f3a-aeaf-3983cea19fe0}</Project>
       <Name>Goedel.Registry</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\RegistryConfig\Generator\LibRegistryConfig.csproj">
+    <ProjectReference Include="..\..\RegistryConfig\Goedel.Tool.RegistryConfig\Goedel.Tool.RegistryConfig.csproj">
       <Project>{fad27739-eff1-4d5e-bc80-bc43a62707c1}</Project>
-      <Name>LibRegistryConfig</Name>
+      <Name>Goedel.Tool.RegistryConfig</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Trojan.Script\Goedel.Trojan.Script.csproj">
       <Project>{343b6836-1c87-4717-ba6f-611e38bccc82}</Project>

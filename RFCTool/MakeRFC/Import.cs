@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using HTML2RFC;
+using Goedel.Tool.RFCTool;
 using GM=Goedel.MarkLib;
 using GW=Goedel.WordLib;
 using Goedel.Registry;
@@ -29,7 +29,7 @@ namespace MakeRFC {
             }
 
 
-        public void MDParse(string File, HTML2RFC.Document Target) {
+        public void MDParse(string File, Goedel.Tool.RFCTool.Document Target) {
             //var FileInfo = new FileInfo(File);
 
             //// Here we put in the call to parse using the MarkDown  parser...
@@ -43,7 +43,7 @@ namespace MakeRFC {
             ConverterRFC.Convert(Source, Target);
             }
 
-        public void WordParse(string File, HTML2RFC.Document Target) {
+        public void WordParse(string File, Goedel.Tool.RFCTool.Document Target) {
             //ReadWord.Create(File, Target);
 
             //// Here we put in the call to parse using the Word parser...

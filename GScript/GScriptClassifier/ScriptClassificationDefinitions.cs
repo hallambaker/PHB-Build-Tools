@@ -3,7 +3,7 @@ using System.Windows.Media;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Goedel.Script.Classifier {
+namespace Goedel.ToolScript.Classifier {
     internal static class ScriptClassificationDefinitions {
         #region Content Type and File Extension Definitions
 

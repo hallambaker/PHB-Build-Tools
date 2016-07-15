@@ -55,9 +55,9 @@
       <Project>{ba3e686d-8404-46b3-b06d-048e6367e4eb}</Project>
       <Name>LibBootMaker</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibRFCTool\LibRFCTool.csproj">
+    <ProjectReference Include="..\Goedel.Tool.RFCTool\Goedel.Tool.RFCTool.csproj">
       <Project>{53284d1c-9b9f-4a44-adde-306606f8f0e7}</Project>
-      <Name>LibRFCTool</Name>
+      <Name>Goedel.Tool.RFCTool</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

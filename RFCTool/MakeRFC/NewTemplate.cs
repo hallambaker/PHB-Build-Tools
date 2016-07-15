@@ -3,7 +3,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using Goedel.Registry;
-using HTML2RFC;
+using Goedel.Tool.RFCTool;
 using MakeRFC;
 using BridgeLib;
 using GM = Goedel.MarkLib;

@@ -3,7 +3,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using Goedel.Registry;
-using HTML2RFC;
+using Goedel.Tool.RFCTool;
 using MakeRFC;
 using OpenXML;
 using GM=Goedel.MarkLib;
@@ -89,10 +89,10 @@ namespace MakeRFC {
 
             Document.MakeAutomatics();
 
-            if (htmlfile!= null) HTML2RFC.HTML2RFC.WriteHTML (htmlfile, Document);
-            if (xmlfile!= null) HTML2RFC.HTML2RFC.WriteXML (xmlfile, Document);
-            if (txtfile!= null) HTML2RFC.HTML2RFC.WriteTXT (txtfile, Document);
-            if (mdfile != null) HTML2RFC.HTML2RFC.WriteMD(mdfile, Document);
+            if (htmlfile!= null) Goedel.Tool.RFCTool.HTML2RFC.WriteHTML (htmlfile, Document);
+            if (xmlfile!= null) Goedel.Tool.RFCTool.HTML2RFC.WriteXML (xmlfile, Document);
+            if (txtfile!= null) Goedel.Tool.RFCTool.HTML2RFC.WriteTXT (txtfile, Document);
+            if (mdfile != null) Goedel.Tool.RFCTool.HTML2RFC.WriteMD(mdfile, Document);
             if (docfile != null) OpenXML.MakeWord.FromHTML2RFC(docfile, Document);
             }
 
@@ -106,10 +106,10 @@ namespace MakeRFC {
 
             var Document = NewTemplate.Fill(ID);
 
-            if (htmlfile != null) HTML2RFC.HTML2RFC.WriteHTML(htmlfile, Document);
-            if (xmlfile != null) HTML2RFC.HTML2RFC.WriteXML(xmlfile, Document);
+            if (htmlfile != null) Goedel.Tool.RFCTool.HTML2RFC.WriteHTML(htmlfile, Document);
+            if (xmlfile != null) Goedel.Tool.RFCTool.HTML2RFC.WriteXML(xmlfile, Document);
             if (docfile != null) OpenXML.MakeWord.FromHTML2RFC(docfile, Document);
-            if (mdfile != null) HTML2RFC.HTML2RFC.WriteMD(mdfile, Document);
+            if (mdfile != null) Goedel.Tool.RFCTool.HTML2RFC.WriteMD(mdfile, Document);
             }
         }
     }

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using HTML2RFC;
+using Goedel.Tool.RFCTool;
 using GM = Goedel.MarkLib;
 using Goedel.Registry;
 
 namespace MakeRFC {
     public class ConverterRFC {
         GM.Document Source;
-        HTML2RFC.Document Target;
+        Goedel.Tool.RFCTool.Document Target;
 
         enum BlockState {
             Title,
@@ -20,12 +20,12 @@ namespace MakeRFC {
         BlockState State = BlockState.Title;
 
         // Convenience routine as a static function
-        public static void Convert(GM.Document Source, HTML2RFC.Document Target) {
+        public static void Convert(GM.Document Source, Goedel.Tool.RFCTool.Document Target) {
             var Converter = new ConverterRFC(Source, Target);
             }
 
         // Create a converter
-        public ConverterRFC(GM.Document Source, HTML2RFC.Document Target) {
+        public ConverterRFC(GM.Document Source, Goedel.Tool.RFCTool.Document Target) {
             this.Source = Source;
             this.Target = Target;
             Convert();
@@ -67,7 +67,7 @@ namespace MakeRFC {
             var HaveAuthors = Source.MetaDataLookup("author", out Metas);
             if (HaveAuthors) {
                 foreach (var Meta in Metas) {
-                    var Author = new HTML2RFC.Author();
+                    var Author = new Goedel.Tool.RFCTool.Author();
                     Author.Name = Meta.Text;
                     // add author attributes here
 
@@ -140,33 +140,33 @@ namespace MakeRFC {
 
                     switch (Block.CatalogEntry.Key) {
                         case "li": {
-                            var TextBlock = new HTML2RFC.LI(FilteredText, "", ListItem.Symbol, 1);
+                            var TextBlock = new Goedel.Tool.RFCTool.LI(FilteredText, "", ListItem.Symbol, 1);
                             CurrentText.Add(TextBlock);
                             break;
                             }
                         case "nli": 
                         case "ni" : {
-                            var TextBlock = new HTML2RFC.LI(FilteredText, "", ListItem.Ordered, 1);
+                            var TextBlock = new Goedel.Tool.RFCTool.LI(FilteredText, "", ListItem.Ordered, 1);
                             CurrentText.Add(TextBlock);
                             break;
                             }
                         case "dt": {
-                            var TextBlock = new HTML2RFC.LI(FilteredText, "", ListItem.Term, 1);
+                            var TextBlock = new Goedel.Tool.RFCTool.LI(FilteredText, "", ListItem.Term, 1);
                             CurrentText.Add(TextBlock);
                             break;
                             }
                         case "dd": {
-                            var TextBlock = new HTML2RFC.LI(FilteredText, "", ListItem.Data, 1);
+                            var TextBlock = new Goedel.Tool.RFCTool.LI(FilteredText, "", ListItem.Data, 1);
                             CurrentText.Add(TextBlock);
                             break;
                             }
                         case "pre": {
-                            var TextBlock = new HTML2RFC.PRE(Preformat(Block.Text), "");
+                            var TextBlock = new Goedel.Tool.RFCTool.PRE(Preformat(Block.Text), "");
                             CurrentText.Add(TextBlock);
                             break;
                             }
                         default: {
-                            var TextBlock = new HTML2RFC.P(FilteredText, "");
+                            var TextBlock = new Goedel.Tool.RFCTool.P(FilteredText, "");
                             CurrentText.Add(TextBlock);
                             break;
                             }

@@ -1,0 +1,102 @@
+﻿
+
+Class GoedelSchema GoedelSchema
+
+	TopType Copyright
+		Date		String
+		Holder		String
+		License		Choice
+			MITLicense
+			BSD2License
+			BSD3License
+			ISCLicense
+			Apache2License
+			OtherLicense
+
+	Type MITLicense
+	Type BSD2License
+	Type BSD3License
+	Type ISCLicense
+	Type Apache2License
+	Type OtherLicense
+		Text		Text
+
+	TopType Class
+		
+		Namespace	Token NamespaceType
+		Name		Token ClassType
+		Entries		List Choice 
+			TopType
+			Type
+
+	Type TopType
+		Id			ID	TopTypeType
+		Entries		List Entry
+
+	Type Type
+		Id			ID	TypeType
+		Entries		List Entry
+
+	Type Entry
+		Name		Token	NameType
+		Type		ChoiceREF TypeType 
+			List
+			Choice
+			ID
+			REF
+			Token
+			String
+			Text
+			Integer
+			Boolean
+			ChoiceREF
+			Options
+			Remark
+
+    Type Remark
+        Text    Text
+
+	Type Options
+		Entries		List OptionEntry
+
+	Type OptionEntry
+		Name		Token NameType
+		Type		REF TypeType
+		Occurs	Choice
+			Single
+			Multiple
+
+	Type Single
+	Type Multiple
+
+	Type List
+		Type		ChoiceREF TypeType
+			Choice
+			ID
+			REF
+			Token
+			String
+			Text
+			Integer
+
+	Type Choice
+		Entries		List REF TypeType
+
+	Type ChoiceREF
+		ID			REF TypeType
+		Entries		List REF TypeType
+
+	Type ID
+		Type	REF IdType
+		
+	Type REF
+		Type	REF IdType
+
+	Type Token
+		Type	Token TokenType
+
+	Type String
+	Type Integer
+	Type Text
+
+	Type Boolean

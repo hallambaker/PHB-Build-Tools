@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Goedel.Script.Classifier {
+namespace Goedel.ToolScript.Classifier {
 
 
     [Export(typeof(IClassifierProvider))]

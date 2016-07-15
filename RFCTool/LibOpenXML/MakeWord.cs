@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using HT = HTML2RFC;
+using HT = Goedel.Tool.RFCTool;
 
 namespace OpenXML {
     public partial class MakeWord { 
@@ -32,7 +32,7 @@ namespace OpenXML {
         const string StyleID_li = "li";
         const string StyleID_ni = "ni";
 
-        HTML2RFC.Document Source;
+        Goedel.Tool.RFCTool.Document Source;
 
         private void DumpNumber (StyleParagraphProperties st1) {
             if (st1 == null) return;
@@ -47,7 +47,7 @@ namespace OpenXML {
 
 
 
-        private MakeWord(string Filename, HTML2RFC.Document Source) {
+        private MakeWord(string Filename, Goedel.Tool.RFCTool.Document Source) {
             this.Source = Source;
 
             //ReadTest();
@@ -60,7 +60,7 @@ namespace OpenXML {
                 }
             }
         
-        public static void FromHTML2RFC (string Filename, HTML2RFC.Document Source) {
+        public static void FromHTML2RFC (string Filename, Goedel.Tool.RFCTool.Document Source) {
             var MakeWord = new MakeWord(Filename, Source);
             }
 

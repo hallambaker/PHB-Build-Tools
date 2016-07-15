@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Classification;
 
-namespace Goedel.Script.Classifier {
+namespace Goedel.ToolScript.Classifier {
 
 
     public class ScriptClassifier : IClassifier {

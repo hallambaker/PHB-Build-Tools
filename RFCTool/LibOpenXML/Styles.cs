@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using HT = HTML2RFC;
+using HT = Goedel.Tool.RFCTool;
 
 namespace OpenXML {
     public partial class MakeWord {

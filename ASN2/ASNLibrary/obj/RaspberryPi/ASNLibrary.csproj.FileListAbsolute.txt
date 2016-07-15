@@ -1,3 +1,0 @@
-C:\Users\Phillip\Code\Applications\PrismProof\ASNLibrary\bin\RaspberryPi\ASNLibrary.dll
-C:\Users\Phillip\Code\Applications\PrismProof\ASNLibrary\obj\RaspberryPi\ASNLibrary.dll
-C:\Users\Phillip\Code\Applications\PrismProof\ASNLibrary\obj\RaspberryPi\ASNLibrary.csprojResolveAssemblyReference.cache
