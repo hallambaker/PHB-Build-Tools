@@ -7,8 +7,8 @@
     <ProjectGuid>{DC03AB95-92B7-4143-9333-F5CE74BCB124}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Goedel.Tool.RFCTool</RootNamespace>
-    <AssemblyName>Goedel.Tool.RFCTool</AssemblyName>
+    <RootNamespace>Goedel.Tool.RFCToolBinding</RootNamespace>
+    <AssemblyName>Goedel.Tool.RFCToolBinding</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

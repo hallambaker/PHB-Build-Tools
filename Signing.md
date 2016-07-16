@@ -40,8 +40,25 @@ sn -i SigningKeyDeveloper.snk SigningKeyDeveloper
 del SigningKeyDeveloper.snk
 ~~~~
 
+==Setting permissions on the key
+
+This last piece is serious stupid. By default, Visual Studio uses machine
+keys. The keys themselves persist after a reboot but the access credential
+does not.
+
+So you need to go into the key store, work out which of the files has the keys 
+you just created (creation date) and change the permissions to grant 
+yourself access rights.
+
+C:\ProgramData\Microsoft\Crypto\RSA\MachineKeys
+
+http://stackoverflow.com/questions/32745415/why-do-i-lose-my-key-container-when-i-reboot
+
+
 ==Note Well
 
 It is essential that the key be exactly 2048 bits, no more, no less. This
 is because we are going to be using the resigning feature to generate 
 release builds.
+
+
