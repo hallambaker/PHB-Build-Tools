@@ -142,7 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyKeyName.cs" />
-    <Compile Include="Binding.cs">
+    <Compile Include="Binding1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Binding.vsixbuild</DependentUpon>
@@ -152,8 +152,8 @@
   <ItemGroup>
     <None Include="Binding - Copy.vsixbuild" />
     <None Include="Binding.vsixbuild">
+      <LastGenOutput>Binding1.cs</LastGenOutput>
       <Generator>VSIXBuild</Generator>
-      <LastGenOutput>Binding.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="source.extension.vsixmanifest">
@@ -222,6 +222,8 @@
     <ProjectReference Include="..\..\Goedel.Registry\Goedel.Registry.csproj">
       <Project>{f2a1f8ea-18e2-4f3a-aeaf-3983cea19fe0}</Project>
       <Name>Goedel.Registry</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
     <ProjectReference Include="..\..\Goedel3\Goedel.Tool.Schema\Goedel.Tool.Schema.csproj">
       <Project>{7D41544E-CC2E-436E-9C2F-937B4D516C92}</Project>

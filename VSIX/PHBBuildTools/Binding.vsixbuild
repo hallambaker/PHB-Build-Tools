@@ -1,4 +1,6 @@
-﻿Namespace Goedel.VSIX.Binding
+﻿
+
+Namespace Goedel.VSIX.Binding
 
 	ASN2CS Generator ".cs"
 		GUID "21DBBD9C-ACCB-4E74-90C0-E5D06AA47792"
@@ -69,7 +71,7 @@
 		Parser Goedel.Tool.Exceptional.Exceptions
 		Script Goedel.Tool.Exceptional.Generate GenerateCSX
 		Description
-			|Tool for generating Command Line tool parser from description file.
+			|Tool for generating exception declarations from description file.
 
 	GScript Generator ".cs"
 		GUID "038C7FC8-029C-4511-8AEB-B7FC0741C463"

@@ -100,6 +100,7 @@
       <LastGenOutput>Main.cs</LastGenOutput>
     </None>
     <None Include="Properties\app.manifest" />
+    <None Include="Test.Exceptional" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

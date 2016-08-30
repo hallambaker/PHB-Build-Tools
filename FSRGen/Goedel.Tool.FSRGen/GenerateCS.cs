@@ -50,6 +50,8 @@ namespace Goedel.Tool.FSRGen {
 			_Output.Write ("using System.IO;\n{0}", _Indent);
 			// using System.Text; 
 			_Output.Write ("using System.Text;\n{0}", _Indent);
+			// using Goedel.FSR; 
+			_Output.Write ("using Goedel.FSR;\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// #foreach (_Choice Item in FSRSchema.Top) 
@@ -66,8 +68,10 @@ namespace Goedel.Tool.FSRGen {
 					_Output.Write ("\n{0}", _Indent);
 					// // #{FSR.Id} 
 					_Output.Write ("// {1}\n{0}", _Indent, FSR.Id);
-					// namespace #{FSR.Id} { 
-					_Output.Write ("namespace {1} {{\n{0}", _Indent, FSR.Id);
+					// namespace #{FSR.Id}{ 
+					_Output.Write ("namespace {1}{{\n{0}", _Indent, FSR.Id);
+					//  
+					_Output.Write ("\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
 					// 	// Prototypes for the actions. These must be implemented in  
@@ -94,12 +98,130 @@ namespace Goedel.Tool.FSRGen {
 					_Output.Write ("	*/\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
-					// 	public partial class #{FSR.Prefix} { 
-					_Output.Write ("	public partial class {1} {{\n{0}", _Indent, FSR.Prefix);
+					// 	public partial class #{FSR.Prefix} : global::Goedel.FSR.Lexer { 
+					_Output.Write ("	public partial class {1} : global::Goedel.FSR.Lexer {{\n{0}", _Indent, FSR.Prefix);
+					//        /// <summary> 
+					_Output.Write ("       /// <summary>\n{0}", _Indent);
+					//         /// Create and initialize a lexical analyzer. 
+					_Output.Write ("        /// Create and initialize a lexical analyzer.\n{0}", _Indent);
+					//         /// </summary> 
+					_Output.Write ("        /// </summary>\n{0}", _Indent);
+					//         /// <param name="Reader">The input source.</param> 
+					_Output.Write ("        /// <param name=\"Reader\">The input source.</param>\n{0}", _Indent);
+					//         public  #{FSR.Prefix}(LexReader Reader) : base (Reader) { 
+					_Output.Write ("        public  {1}(LexReader Reader) : base (Reader) {{\n{0}", _Indent, FSR.Prefix);
+					//             } 
+					_Output.Write ("            }}\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
-					// 		public delegate void Action (int c); 
-					_Output.Write ("		public delegate void Action (int c);\n{0}", _Indent);
+					//         /// <summary> 
+					_Output.Write ("        /// <summary>\n{0}", _Indent);
+					//         /// Create and initialize a lexical analyzer. 
+					_Output.Write ("        /// Create and initialize a lexical analyzer.\n{0}", _Indent);
+					//         /// </summary> 
+					_Output.Write ("        /// </summary>\n{0}", _Indent);
+					//         /// <param name="FileInfo">The input source.</param> 
+					_Output.Write ("        /// <param name=\"FileInfo\">The input source.</param>\n{0}", _Indent);
+					//         public  #{FSR.Prefix}(FileInfo FileInfo) : base (new LexReader (FileInfo)) { 
+					_Output.Write ("        public  {1}(FileInfo FileInfo) : base (new LexReader (FileInfo)) {{\n{0}", _Indent, FSR.Prefix);
+					//             } 
+					_Output.Write ("            }}\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					//         /// <summary> 
+					_Output.Write ("        /// <summary>\n{0}", _Indent);
+					//         /// Create and initialize a lexical analyzer. 
+					_Output.Write ("        /// Create and initialize a lexical analyzer.\n{0}", _Indent);
+					//         /// </summary> 
+					_Output.Write ("        /// </summary>\n{0}", _Indent);
+					//         /// <param name="FilePath">The input source.</param> 
+					_Output.Write ("        /// <param name=\"FilePath\">The input source.</param>\n{0}", _Indent);
+					//         public  #{FSR.Prefix}(string FilePath) : base(new LexReader(FilePath)) { 
+					_Output.Write ("        public  {1}(string FilePath) : base(new LexReader(FilePath)) {{\n{0}", _Indent, FSR.Prefix);
+					//             } 
+					_Output.Write ("            }}\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					//         /// <summary> 
+					_Output.Write ("        /// <summary>\n{0}", _Indent);
+					//         /// Create and initialize a lexical analyzer. 
+					_Output.Write ("        /// Create and initialize a lexical analyzer.\n{0}", _Indent);
+					//         /// </summary> 
+					_Output.Write ("        /// </summary>\n{0}", _Indent);
+					//         /// <param name="Stream">The input source.</param> 
+					_Output.Write ("        /// <param name=\"Stream\">The input source.</param>\n{0}", _Indent);
+					//         public  #{FSR.Prefix}(Stream Stream) : base(new LexReader(Stream)) { 
+					_Output.Write ("        public  {1}(Stream Stream) : base(new LexReader(Stream)) {{\n{0}", _Indent, FSR.Prefix);
+					//             } 
+					_Output.Write ("            }}\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					//         /// <summary> 
+					_Output.Write ("        /// <summary>\n{0}", _Indent);
+					//         /// Create and initialize a lexical analyzer. 
+					_Output.Write ("        /// Create and initialize a lexical analyzer.\n{0}", _Indent);
+					//         /// </summary> 
+					_Output.Write ("        /// </summary>\n{0}", _Indent);
+					//         /// <param name="TextReader">The input source.</param> 
+					_Output.Write ("        /// <param name=\"TextReader\">The input source.</param>\n{0}", _Indent);
+					//         public  #{FSR.Prefix}(TextReader TextReader) : base(new LexReader(TextReader)) { 
+					_Output.Write ("        public  {1}(TextReader TextReader) : base(new LexReader(TextReader)) {{\n{0}", _Indent, FSR.Prefix);
+					//             } 
+					_Output.Write ("            }}\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					//         /// <summary> 
+					_Output.Write ("        /// <summary>\n{0}", _Indent);
+					//         /// Maps characters to character sets 
+					_Output.Write ("        /// Maps characters to character sets\n{0}", _Indent);
+					//         /// </summary> 
+					_Output.Write ("        /// </summary>\n{0}", _Indent);
+					//         public override byte[] CharacterMappings { get { return Character_Mapping; }  } 
+					_Output.Write ("        public override byte[] CharacterMappings {{ get {{ return Character_Mapping; }}  }}\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					//         /// <summary> 
+					_Output.Write ("        /// <summary>\n{0}", _Indent);
+					//         /// State transitions in response to character set 
+					_Output.Write ("        /// State transitions in response to character set\n{0}", _Indent);
+					//         /// </summary> 
+					_Output.Write ("        /// </summary>\n{0}", _Indent);
+					//         public override short[,] CompressedTransitions { get { return Compressed_Transitions; } } 
+					_Output.Write ("        public override short[,] CompressedTransitions {{ get {{ return Compressed_Transitions; }} }}\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					//         /// <summary> 
+					_Output.Write ("        /// <summary>\n{0}", _Indent);
+					//         /// Get the next token from the stream 
+					_Output.Write ("        /// Get the next token from the stream\n{0}", _Indent);
+					//         /// </summary> 
+					_Output.Write ("        /// </summary>\n{0}", _Indent);
+					//         /// <param name="StartState">The initial starting state</param> 
+					_Output.Write ("        /// <param name=\"StartState\">The initial starting state</param>\n{0}", _Indent);
+					//         /// <returns>The token detected or -1 if an error occurred</returns> 
+					_Output.Write ("        /// <returns>The token detected or -1 if an error occurred</returns>\n{0}", _Indent);
+					//         public Token GetToken(State StartState) { 
+					_Output.Write ("        public Token GetToken(State StartState) {{\n{0}", _Indent);
+					//             return Tokens [GetTokenInt((int)StartState)]; 
+					_Output.Write ("            return Tokens [GetTokenInt((int)StartState)];\n{0}", _Indent);
+					//             } 
+					_Output.Write ("            }}\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					//         /// <summary> 
+					_Output.Write ("        /// <summary>\n{0}", _Indent);
+					//         /// Get the next token from the stream 
+					_Output.Write ("        /// Get the next token from the stream\n{0}", _Indent);
+					//         /// </summary> 
+					_Output.Write ("        /// </summary>\n{0}", _Indent);
+					//         /// <returns>The token detected or -1 if an error occurred</returns> 
+					_Output.Write ("        /// <returns>The token detected or -1 if an error occurred</returns>\n{0}", _Indent);
+					//         public Token GetToken () { 
+					_Output.Write ("        public Token GetToken () {{\n{0}", _Indent);
+					//             return GetToken (0); 
+					_Output.Write ("            return GetToken (0);\n{0}", _Indent);
+					//             } 
+					_Output.Write ("            }}\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
 					// 		public enum State { 
@@ -255,10 +377,8 @@ namespace Goedel.Tool.FSRGen {
 					_Output.Write ("			}};\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
-					//         public Action[] Actions; 
-					_Output.Write ("        public Action[] Actions;\n{0}", _Indent);
-					//         public void Init () { 
-					_Output.Write ("        public void Init () {{\n{0}", _Indent);
+					//         public override void Init () { 
+					_Output.Write ("        public override void Init () {{\n{0}", _Indent);
 					//             Actions = new Action[] { 
 					_Output.Write ("            Actions = new Action[] {{\n{0}", _Indent);
 					// #%  comma = false; 

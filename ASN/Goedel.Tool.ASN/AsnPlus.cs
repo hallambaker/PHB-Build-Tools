@@ -35,6 +35,13 @@ namespace Goedel.Tool.ASN {
         virtual public void MakeBinary() {
             }
 
+
+        protected List<Member> Reverse (List<Member> In ) {
+            var Array = In.ToArray();
+            var List2 = new List<Member>(Array);
+            List2.Reverse();
+            return List2;
+            }
         }
 
 
@@ -135,11 +142,15 @@ namespace Goedel.Tool.ASN {
         }
 
 
+    
+
     public partial class Class {
         bool Once = true;
+        public List<Member> ReversedEntries;
+
         public override void Complete() {
             if (Once) {
-                Entries.Reverse();
+                ReversedEntries = Reverse(Entries);
                 foreach (Member Member in Entries) {
                     Member.Complete();
                     }
@@ -150,9 +161,11 @@ namespace Goedel.Tool.ASN {
 
     public partial class Object {
         bool Once = true;
+        public List<Member> ReversedEntries;
+
         public override void Complete() {
             if (Once) {
-                Entries.Reverse();
+                ReversedEntries = Reverse(Entries);
                 foreach (Member Member in Entries) {
                     Member.Complete();
                     }
@@ -163,9 +176,11 @@ namespace Goedel.Tool.ASN {
 
     public partial class SingularObject {
         bool Once = true;
+        public List<Member> ReversedEntries;
+
         public override void Complete() {
             if (Once) {
-                Entries.Reverse();
+                ReversedEntries = Reverse(Entries);
                 foreach (Member Member in Entries) {
                     Member.Complete();
                     }

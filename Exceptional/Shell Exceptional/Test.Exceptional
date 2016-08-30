@@ -1,0 +1,8 @@
+﻿Namespace DepartmentApp
+    Parent DepartmentException
+        Exception InvalidDepartmentException
+            Console "The department code had invalid syntax"
+			Description
+				|Thrown when a bad identifier is encountered
+        Exception UnknownDepartmentException
+            Console "The department code specified does not exist"

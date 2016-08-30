@@ -337,6 +337,13 @@ namespace Goedel.Tool.RFCTool {
                 "seriesNo", Document.SeriesNumber
                 );
 
+            // The default set of processing instructions
+            TextWriter.WriteLine(@"<?rfc toc=""yes""?>  ");
+            TextWriter.WriteLine(@"<?rfc symrefs=""yes""?>  ");
+            TextWriter.WriteLine(@"<?rfc sortrefs=""yes""?>  ");
+            TextWriter.WriteLine(@"<?rfc compact=""yes""?>  ");
+            TextWriter.WriteLine(@"<?rfc subcompact=""no""?>  ");
+
             WriteStartTag("front");
             WriteValueTag("title", Document.Title, "abbrev", Document.Abrrev);
             WriteAuthors(Document.Authors);

@@ -68,7 +68,7 @@ namespace #{Cast.Name} {
     /// <summary>
 	/// #{Class.Name} 
     /// </summary>
-	public partial class #{Class.Name} : Goedel.ASN.Root {
+	public partial class #{Class.Name} : Goedel.ASN1.Root {
 
 #foreach (Member Member in Class.Entries)
 #% EntryDeclaration (Member);
@@ -80,22 +80,37 @@ namespace #{Cast.Name} {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
-#foreach (Member Member in Class.Entries)
-#! Encode (Member.Name.ToString(), Member.Spec, Member.Flags, Member.Code);
+#foreach (Member Member in Class.ReversedEntries)
 #% Encode (Member);
 			Buffer.Debug ("#{Member.Name}");
 #end foreach
 			Buffer.Encode__Sequence_End (Position);
             }
 
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+#foreach (Member Member in Class.Entries)
+#% Decode (Member);
+			Buffer.Debug ("#{Member.Name}");
+#end foreach
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
 #casecast Object Object
     /// <summary>
 	/// #{Object.Name} 
     /// </summary>
-	public partial class #{Object.Name} : Goedel.ASN.Root {
+	public partial class #{Object.Name} : Goedel.ASN1.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
@@ -112,14 +127,29 @@ namespace #{Cast.Name} {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
-#foreach (Member Member in Object.Entries)
-#! Encode (Member.Name.ToString(), Member.Spec, Member.Flags, Member.Code);
+#foreach (Member Member in Object.ReversedEntries)
 #% Encode (Member);
 #end foreach
 			Buffer.Encode__Sequence_End (Position);
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+#foreach (Member Member in Object.Entries)
+#% Decode (Member);
+			Buffer.Debug ("#{Member.Name}");
+#end foreach
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
 		}
 
 #casecast SingularObject SingularObject
@@ -128,7 +158,7 @@ namespace #{Cast.Name} {
     /// <summary>
 	/// #{SingularObject.Name} 
     /// </summary>
-	public partial class #{SingularObject.Name} : Goedel.ASN.Root {
+	public partial class #{SingularObject.Name} : Goedel.ASN1.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
@@ -144,12 +174,28 @@ namespace #{Cast.Name} {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
-#foreach (Member Member in SingularObject.Entries)
-#! Encode (Member.Name.ToString(), Member.Spec, Member.Flags, Member.Code);
+        public override void Encode (Goedel.ASN1.Buffer Buffer) {
+#foreach (Member Member in SingularObject.ReversedEntries)
 #% Encode (Member);
 #end foreach
             }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+#foreach (Member Member in SingularObject.Entries)
+#% Decode (Member);
+			Buffer.Debug ("#{Member.Name}");
+#end foreach
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
 		}
 
 #end switchcast
@@ -221,6 +267,11 @@ List <#!
 #method Encode Member Member
 #%  Encode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
 #end method
+
+#method Decode Member Member
+#%  Decode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
+#end method
+
 #block
 #%  public void Encode (String Name, _Choice Spec, int Flags, int Code) {
 #%		Encode (Name, null, Spec, Flags, Code);
@@ -325,6 +376,113 @@ List <#!
 #end if
 #% }
 #end block
+
+
+#block
+#%  public void Decode (String Name, _Choice Spec, int Flags, int Code) {
+#%		Decode (Name, null, Spec, Flags, Code);
+#%		}
+#%  public void Decode (String Name, String Default, _Choice Spec, int Flags, int Code) {
+
+#% bool Call = false;
+#switchcast ASN2Type Spec
+#casecast OIDRef Cast
+			Buffer.Decode__OIDRef #!
+#% Call = true;
+#casecast Any Cast
+			Buffer.Decode__Any #!
+#% Call = true;
+#casecast Integer Cast
+#if (Default != null)
+			// Default is #{Default}
+			if (#{Name} != #{Default}) {
+				Buffer.Decode__Integer (#{Name}, #{Flags}, #{Code});
+				}
+#else 
+			Buffer.Encode__Integer #!
+#% Call = true;
+#end if
+#casecast BigInteger Cast
+			Buffer.Decode__BigInteger #!
+#% Call = true;
+#casecast Boolean Cast
+#if (Default != null)
+			// Default is #{Default}
+			if (#{Name} != #{Default}) {
+				Buffer.Decode__Boolean (#{Name}, #{Flags}, #{Code});
+				}
+#else 
+			Buffer.Decode__Boolean #!
+#% Call = true;
+#end if
+#casecast Time Cast
+			Buffer.EDecode__Time #!
+#% Call = true;
+#casecast Bits Cast
+			Buffer.Decode__Bits #!
+#% Call = true;
+#casecast VBits Cast
+			Buffer.Decode__VBits #!
+#% Call = true;
+#casecast Octets Cast
+			Buffer.Decode__Octets #!
+#% Call = true;
+#casecast IA5String Cast
+			Buffer.Decode__IA5String #!
+#% Call = true;
+#casecast BMPString Cast
+			Buffer.Decode__BMPString #!
+#% Call = true;
+#casecast UTF8String Cast
+			Buffer.Decode__UTF8String #!
+#% Call = true;
+#casecast PrintableString Cast
+			Buffer.Decode__PrintableString #!
+#% Call = true;
+#casecast _Label Case
+			Buffer.Decode__Object (#{Name}, #{Flags}, #{Code});
+#casecast List Cast
+			if (#{Name} == null || #{Name}.Count == 0) {
+				Buffer.Decode__Object (null, #{Flags}, #{Code});
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (#!
+#% TypeDeclaration (Cast.Spec);
+ _Index in #{Name}) {
+		#!
+#% Encode ("_Index", Cast.Spec, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, #{Flags}, #{Code});
+			}
+#casecast Set Cast
+			if (#{Name} == null || #{Name}.Count == 0) {
+				Buffer.Decode__Object (null, #{Flags}, #{Code});
+				}
+			else {
+				int XPosition = Decode.Encode__Set_Start();
+				foreach (#!
+#% TypeDeclaration (Cast.Spec);
+ _Index in #{Name}) {
+		#!
+#% Encode ("_Index", Cast.Spec, 0, 0);
+					}
+				Buffer.Decode__Set_End(XPosition, #{Flags}, #{Code});
+			}
+#casecast Choice Cast
+	// Do Choice
+#foreach (Member ChoiceEntry in Cast.Entries)
+            //
+#! Encode (ChoiceEntry.Name.ToString(), ChoiceEntry.Spec, ChoiceEntry.Flags, ChoiceEntry.Code);
+#% Encode (ChoiceEntry);
+#end foreach
+#end switchcast
+#if Call
+ (#{Name}, #{Flags}, #{Code});
+#end if
+#% }
+#end block
+
 
 
 #method MakeChildren _Choice Element

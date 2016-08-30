@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Goedel.FSR;
 
 #foreach (_Choice Item in FSRSchema.Top)
 #switchcast FSRSchemaType Item
@@ -15,7 +16,8 @@ using System.Text;
 #% bool first = true;
 
 // #{FSR.Id}
-namespace #{FSR.Id} {
+namespace #{FSR.Id}{
+
 
 	// Prototypes for the actions. These must be implemented in 
 	// the plus class
@@ -29,9 +31,68 @@ namespace #{FSR.Id} {
 		}
 	*/
 
-	public partial class #{FSR.Prefix} {
+	public partial class #{FSR.Prefix} : global::Goedel.FSR.Lexer {
+       /// <summary>
+        /// Create and initialize a lexical analyzer.
+        /// </summary>
+        /// <param name="Reader">The input source.</param>
+        public  #{FSR.Prefix}(LexReader Reader) : base (Reader) {
+            }
 
-		public delegate void Action (int c);
+        /// <summary>
+        /// Create and initialize a lexical analyzer.
+        /// </summary>
+        /// <param name="FileInfo">The input source.</param>
+        public  #{FSR.Prefix}(FileInfo FileInfo) : base (new LexReader (FileInfo)) {
+            }
+
+        /// <summary>
+        /// Create and initialize a lexical analyzer.
+        /// </summary>
+        /// <param name="FilePath">The input source.</param>
+        public  #{FSR.Prefix}(string FilePath) : base(new LexReader(FilePath)) {
+            }
+
+        /// <summary>
+        /// Create and initialize a lexical analyzer.
+        /// </summary>
+        /// <param name="Stream">The input source.</param>
+        public  #{FSR.Prefix}(Stream Stream) : base(new LexReader(Stream)) {
+            }
+
+        /// <summary>
+        /// Create and initialize a lexical analyzer.
+        /// </summary>
+        /// <param name="TextReader">The input source.</param>
+        public  #{FSR.Prefix}(TextReader TextReader) : base(new LexReader(TextReader)) {
+            }
+
+        /// <summary>
+        /// Maps characters to character sets
+        /// </summary>
+        public override byte[] CharacterMappings { get { return Character_Mapping; }  }
+
+        /// <summary>
+        /// State transitions in response to character set
+        /// </summary>
+        public override short[,] CompressedTransitions { get { return Compressed_Transitions; } }
+
+        /// <summary>
+        /// Get the next token from the stream
+        /// </summary>
+        /// <param name="StartState">The initial starting state</param>
+        /// <returns>The token detected or -1 if an error occurred</returns>
+        public Token GetToken(State StartState) {
+            return Tokens [GetTokenInt((int)StartState)];
+            }
+
+        /// <summary>
+        /// Get the next token from the stream
+        /// </summary>
+        /// <returns>The token detected or -1 if an error occurred</returns>
+        public Token GetToken () {
+            return GetToken (0);
+            }
 
 		public enum State {
 #foreach (State State in FSR.States)
@@ -109,8 +170,7 @@ namespace #{FSR.Id} {
 
 			};
 
-        public Action[] Actions;
-        public void Init () {
+        public override void Init () {
             Actions = new Action[] {
 #%  comma = false;
 #foreach (var State in FSR.States)

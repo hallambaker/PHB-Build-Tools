@@ -185,8 +185,8 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("	/// {1} \n{0}", _Indent, Class.Name);
 					//     /// </summary> 
 					_Output.Write ("    /// </summary>\n{0}", _Indent);
-					// 	public partial class #{Class.Name} : Goedel.ASN.Root { 
-					_Output.Write ("	public partial class {1} : Goedel.ASN.Root {{\n{0}", _Indent, Class.Name);
+					// 	public partial class #{Class.Name} : Goedel.ASN1.Root { 
+					_Output.Write ("	public partial class {1} : Goedel.ASN1.Root {{\n{0}", _Indent, Class.Name);
 					//  
 					_Output.Write ("\n{0}", _Indent);
 					// #foreach (Member Member in Class.Entries) 
@@ -209,14 +209,12 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
 					// 		/// <param name="Buffer">Output buffer</param> 
 					_Output.Write ("		/// <param name=\"Buffer\">Output buffer</param>\n{0}", _Indent);
-					//         public override void Encode (Goedel.ASN.Buffer Buffer) { 
-					_Output.Write ("        public override void Encode (Goedel.ASN.Buffer Buffer) {{\n{0}", _Indent);
+					//         public override void Encode (Goedel.ASN1.Buffer Buffer) { 
+					_Output.Write ("        public override void Encode (Goedel.ASN1.Buffer Buffer) {{\n{0}", _Indent);
 					// 			int Position = Buffer.Encode__Sequence_Start (); 
 					_Output.Write ("			int Position = Buffer.Encode__Sequence_Start ();\n{0}", _Indent);
-					// #foreach (Member Member in Class.Entries) 
-					foreach  (Member Member in Class.Entries) {
-						// #! Encode (Member.Name.ToString(), Member.Spec, Member.Flags, Member.Code); 
-						// Encode (Member.Name.ToString(), Member.Spec, Member.Flags, Member.Code);
+					// #foreach (Member Member in Class.ReversedEntries) 
+					foreach  (Member Member in Class.ReversedEntries) {
 						// #% Encode (Member); 
 						 Encode (Member);
 						// 			Buffer.Debug ("#{Member.Name}"); 
@@ -227,6 +225,38 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("			Buffer.Encode__Sequence_End (Position);\n{0}", _Indent);
 					//             } 
 					_Output.Write ("            }}\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					// 			/* 
+					_Output.Write ("			/*\n{0}", _Indent);
+					// 		/// <summary> 
+					_Output.Write ("		/// <summary>\n{0}", _Indent);
+					// 		/// Decode buffer to populate class members 
+					_Output.Write ("		/// Decode buffer to populate class members\n{0}", _Indent);
+					// 		/// 
+					_Output.Write ("		///\n{0}", _Indent);
+					// 		/// This is done in the forward direction 
+					_Output.Write ("		/// This is done in the forward direction\n{0}", _Indent);
+					// 		/// </summary> 
+					_Output.Write ("		/// </summary>\n{0}", _Indent);
+					//         public override void Decode (Goedel.ASN1.Buffer Buffer) { 
+					_Output.Write ("        public override void Decode (Goedel.ASN1.Buffer Buffer) {{\n{0}", _Indent);
+					// 			int Position = Buffer.Decode__Sequence_Start (); 
+					_Output.Write ("			int Position = Buffer.Decode__Sequence_Start ();\n{0}", _Indent);
+					// #foreach (Member Member in Class.Entries) 
+					foreach  (Member Member in Class.Entries) {
+						// #% Decode (Member); 
+						 Decode (Member);
+						// 			Buffer.Debug ("#{Member.Name}"); 
+						_Output.Write ("			Buffer.Debug (\"{1}\");\n{0}", _Indent, Member.Name);
+						// #end foreach 
+						}
+					// 			Buffer.Decode__Sequence_End (Position); 
+					_Output.Write ("			Buffer.Decode__Sequence_End (Position);\n{0}", _Indent);
+					//             } 
+					_Output.Write ("            }}\n{0}", _Indent);
+					// 			*/ 
+					_Output.Write ("			*/\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
 					// 		} 
@@ -241,8 +271,8 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("	/// {1} \n{0}", _Indent, Object.Name);
 					//     /// </summary> 
 					_Output.Write ("    /// </summary>\n{0}", _Indent);
-					// 	public partial class #{Object.Name} : Goedel.ASN.Root { 
-					_Output.Write ("	public partial class {1} : Goedel.ASN.Root {{\n{0}", _Indent, Object.Name);
+					// 	public partial class #{Object.Name} : Goedel.ASN1.Root { 
+					_Output.Write ("	public partial class {1} : Goedel.ASN1.Root {{\n{0}", _Indent, Object.Name);
 					// 		/// <summary> 
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
 					// 		/// The OID value 
@@ -276,14 +306,12 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
 					// 		/// <param name="Buffer">Output buffer</param> 
 					_Output.Write ("		/// <param name=\"Buffer\">Output buffer</param>\n{0}", _Indent);
-					//         public override void Encode (Goedel.ASN.Buffer Buffer) { 
-					_Output.Write ("        public override void Encode (Goedel.ASN.Buffer Buffer) {{\n{0}", _Indent);
+					//         public override void Encode (Goedel.ASN1.Buffer Buffer) { 
+					_Output.Write ("        public override void Encode (Goedel.ASN1.Buffer Buffer) {{\n{0}", _Indent);
 					// 			int Position = Buffer.Encode__Sequence_Start (); 
 					_Output.Write ("			int Position = Buffer.Encode__Sequence_Start ();\n{0}", _Indent);
-					// #foreach (Member Member in Object.Entries) 
-					foreach  (Member Member in Object.Entries) {
-						// #! Encode (Member.Name.ToString(), Member.Spec, Member.Flags, Member.Code); 
-						// Encode (Member.Name.ToString(), Member.Spec, Member.Flags, Member.Code);
+					// #foreach (Member Member in Object.ReversedEntries) 
+					foreach  (Member Member in Object.ReversedEntries) {
 						// #% Encode (Member); 
 						 Encode (Member);
 						// #end foreach 
@@ -292,6 +320,38 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("			Buffer.Encode__Sequence_End (Position);\n{0}", _Indent);
 					//             } 
 					_Output.Write ("            }}\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					// 			/* 
+					_Output.Write ("			/*\n{0}", _Indent);
+					// 		/// <summary> 
+					_Output.Write ("		/// <summary>\n{0}", _Indent);
+					// 		/// Decode buffer to populate class members 
+					_Output.Write ("		/// Decode buffer to populate class members\n{0}", _Indent);
+					// 		/// 
+					_Output.Write ("		///\n{0}", _Indent);
+					// 		/// This is done in the forward direction 
+					_Output.Write ("		/// This is done in the forward direction\n{0}", _Indent);
+					// 		/// </summary> 
+					_Output.Write ("		/// </summary>\n{0}", _Indent);
+					//         public override void Decode (Goedel.ASN1.Buffer Buffer) { 
+					_Output.Write ("        public override void Decode (Goedel.ASN1.Buffer Buffer) {{\n{0}", _Indent);
+					// 			int Position = Buffer.Decode__Sequence_Start (); 
+					_Output.Write ("			int Position = Buffer.Decode__Sequence_Start ();\n{0}", _Indent);
+					// #foreach (Member Member in Object.Entries) 
+					foreach  (Member Member in Object.Entries) {
+						// #% Decode (Member); 
+						 Decode (Member);
+						// 			Buffer.Debug ("#{Member.Name}"); 
+						_Output.Write ("			Buffer.Debug (\"{1}\");\n{0}", _Indent, Member.Name);
+						// #end foreach 
+						}
+					// 			Buffer.Decode__Sequence_End (Position); 
+					_Output.Write ("			Buffer.Decode__Sequence_End (Position);\n{0}", _Indent);
+					//             } 
+					_Output.Write ("            }}\n{0}", _Indent);
+					// 			*/ 
+					_Output.Write ("			*/\n{0}", _Indent);
 					// 		} 
 					_Output.Write ("		}}\n{0}", _Indent);
 					//  
@@ -310,8 +370,8 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("	/// {1} \n{0}", _Indent, SingularObject.Name);
 					//     /// </summary> 
 					_Output.Write ("    /// </summary>\n{0}", _Indent);
-					// 	public partial class #{SingularObject.Name} : Goedel.ASN.Root { 
-					_Output.Write ("	public partial class {1} : Goedel.ASN.Root {{\n{0}", _Indent, SingularObject.Name);
+					// 	public partial class #{SingularObject.Name} : Goedel.ASN1.Root { 
+					_Output.Write ("	public partial class {1} : Goedel.ASN1.Root {{\n{0}", _Indent, SingularObject.Name);
 					// 		/// <summary> 
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
 					// 		/// The OID value 
@@ -342,18 +402,50 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
 					// 		/// <param name="Buffer">Output buffer</param> 
 					_Output.Write ("		/// <param name=\"Buffer\">Output buffer</param>\n{0}", _Indent);
-					//         public override void Encode (Goedel.ASN.Buffer Buffer) { 
-					_Output.Write ("        public override void Encode (Goedel.ASN.Buffer Buffer) {{\n{0}", _Indent);
-					// #foreach (Member Member in SingularObject.Entries) 
-					foreach  (Member Member in SingularObject.Entries) {
-						// #! Encode (Member.Name.ToString(), Member.Spec, Member.Flags, Member.Code); 
-						// Encode (Member.Name.ToString(), Member.Spec, Member.Flags, Member.Code);
+					//         public override void Encode (Goedel.ASN1.Buffer Buffer) { 
+					_Output.Write ("        public override void Encode (Goedel.ASN1.Buffer Buffer) {{\n{0}", _Indent);
+					// #foreach (Member Member in SingularObject.ReversedEntries) 
+					foreach  (Member Member in SingularObject.ReversedEntries) {
 						// #% Encode (Member); 
 						 Encode (Member);
 						// #end foreach 
 						}
 					//             } 
 					_Output.Write ("            }}\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					// 			/* 
+					_Output.Write ("			/*\n{0}", _Indent);
+					// 		/// <summary> 
+					_Output.Write ("		/// <summary>\n{0}", _Indent);
+					// 		/// Decode buffer to populate class members 
+					_Output.Write ("		/// Decode buffer to populate class members\n{0}", _Indent);
+					// 		/// 
+					_Output.Write ("		///\n{0}", _Indent);
+					// 		/// This is done in the forward direction 
+					_Output.Write ("		/// This is done in the forward direction\n{0}", _Indent);
+					// 		/// </summary> 
+					_Output.Write ("		/// </summary>\n{0}", _Indent);
+					//         public override void Decode (Goedel.ASN1.Buffer Buffer) { 
+					_Output.Write ("        public override void Decode (Goedel.ASN1.Buffer Buffer) {{\n{0}", _Indent);
+					// 			int Position = Buffer.Decode__Sequence_Start (); 
+					_Output.Write ("			int Position = Buffer.Decode__Sequence_Start ();\n{0}", _Indent);
+					// #foreach (Member Member in SingularObject.Entries) 
+					foreach  (Member Member in SingularObject.Entries) {
+						// #% Decode (Member); 
+						 Decode (Member);
+						// 			Buffer.Debug ("#{Member.Name}"); 
+						_Output.Write ("			Buffer.Debug (\"{1}\");\n{0}", _Indent, Member.Name);
+						// #end foreach 
+						}
+					// 			Buffer.Decode__Sequence_End (Position); 
+					_Output.Write ("			Buffer.Decode__Sequence_End (Position);\n{0}", _Indent);
+					//             } 
+					_Output.Write ("            }}\n{0}", _Indent);
+					// 			*/ 
+					_Output.Write ("			*/\n{0}", _Indent);
+					//  
+					_Output.Write ("\n{0}", _Indent);
 					// 		} 
 					_Output.Write ("		}}\n{0}", _Indent);
 					//  
@@ -548,6 +640,19 @@ namespace Goedel.Tool.ASN {
 			  Encode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
 			// #end method 
 			}
+		//  
+		// #method Decode Member Member 
+		
+
+		//
+		// Decode
+		//
+		public void Decode (Member Member) {
+			// #%  Decode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code); 
+			  Decode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
+			// #end method 
+			}
+		//  
 		// #block 
 		
 
@@ -810,6 +915,271 @@ namespace Goedel.Tool.ASN {
 			 }
 			// #end block 
 		
+		//  
+		//  
+		// #block 
+		
+
+		//
+		// 
+		//
+
+			// #%  public void Decode (String Name, _Choice Spec, int Flags, int Code) { 
+			  public void Decode (String Name, _Choice Spec, int Flags, int Code) {
+			// #%		Decode (Name, null, Spec, Flags, Code); 
+					Decode (Name, null, Spec, Flags, Code);
+			// #%		} 
+					}
+			// #%  public void Decode (String Name, String Default, _Choice Spec, int Flags, int Code) { 
+			  public void Decode (String Name, String Default, _Choice Spec, int Flags, int Code) {
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// #% bool Call = false; 
+			 bool Call = false;
+			// #switchcast ASN2Type Spec 
+			switch (Spec._Tag ()) {
+				// #casecast OIDRef Cast 
+				case ASN2Type.OIDRef: {
+				  OIDRef Cast = (OIDRef) Spec; 
+				// 			Buffer.Decode__OIDRef #! 
+				_Output.Write ("			Buffer.Decode__OIDRef ", _Indent);
+				// #% Call = true; 
+				
+				 Call = true;
+				// #casecast Any Cast 
+				break; }
+				case ASN2Type.Any: {
+				  Any Cast = (Any) Spec; 
+				// 			Buffer.Decode__Any #! 
+				_Output.Write ("			Buffer.Decode__Any ", _Indent);
+				// #% Call = true; 
+				
+				 Call = true;
+				// #casecast Integer Cast 
+				break; }
+				case ASN2Type.Integer: {
+				  Integer Cast = (Integer) Spec; 
+				// #if (Default != null) 
+				if (  (Default != null) ) {
+					// 			// Default is #{Default} 
+					_Output.Write ("			// Default is {1}\n{0}", _Indent, Default);
+					// 			if (#{Name} != #{Default}) { 
+					_Output.Write ("			if ({1} != {2}) {{\n{0}", _Indent, Name, Default);
+					// 				Buffer.Decode__Integer (#{Name}, #{Flags}, #{Code}); 
+					_Output.Write ("				Buffer.Decode__Integer ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
+					// 				} 
+					_Output.Write ("				}}\n{0}", _Indent);
+					// #else  
+					} else {
+					// 			Buffer.Encode__Integer #! 
+					_Output.Write ("			Buffer.Encode__Integer ", _Indent);
+					// #% Call = true; 
+					 Call = true;
+					// #end if 
+					}
+				// #casecast BigInteger Cast 
+				break; }
+				case ASN2Type.BigInteger: {
+				  BigInteger Cast = (BigInteger) Spec; 
+				// 			Buffer.Decode__BigInteger #! 
+				_Output.Write ("			Buffer.Decode__BigInteger ", _Indent);
+				// #% Call = true; 
+				
+				 Call = true;
+				// #casecast Boolean Cast 
+				break; }
+				case ASN2Type.Boolean: {
+				  Boolean Cast = (Boolean) Spec; 
+				// #if (Default != null) 
+				if (  (Default != null) ) {
+					// 			// Default is #{Default} 
+					_Output.Write ("			// Default is {1}\n{0}", _Indent, Default);
+					// 			if (#{Name} != #{Default}) { 
+					_Output.Write ("			if ({1} != {2}) {{\n{0}", _Indent, Name, Default);
+					// 				Buffer.Decode__Boolean (#{Name}, #{Flags}, #{Code}); 
+					_Output.Write ("				Buffer.Decode__Boolean ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
+					// 				} 
+					_Output.Write ("				}}\n{0}", _Indent);
+					// #else  
+					} else {
+					// 			Buffer.Decode__Boolean #! 
+					_Output.Write ("			Buffer.Decode__Boolean ", _Indent);
+					// #% Call = true; 
+					 Call = true;
+					// #end if 
+					}
+				// #casecast Time Cast 
+				break; }
+				case ASN2Type.Time: {
+				  Time Cast = (Time) Spec; 
+				// 			Buffer.EDecode__Time #! 
+				_Output.Write ("			Buffer.EDecode__Time ", _Indent);
+				// #% Call = true; 
+				
+				 Call = true;
+				// #casecast Bits Cast 
+				break; }
+				case ASN2Type.Bits: {
+				  Bits Cast = (Bits) Spec; 
+				// 			Buffer.Decode__Bits #! 
+				_Output.Write ("			Buffer.Decode__Bits ", _Indent);
+				// #% Call = true; 
+				
+				 Call = true;
+				// #casecast VBits Cast 
+				break; }
+				case ASN2Type.VBits: {
+				  VBits Cast = (VBits) Spec; 
+				// 			Buffer.Decode__VBits #! 
+				_Output.Write ("			Buffer.Decode__VBits ", _Indent);
+				// #% Call = true; 
+				
+				 Call = true;
+				// #casecast Octets Cast 
+				break; }
+				case ASN2Type.Octets: {
+				  Octets Cast = (Octets) Spec; 
+				// 			Buffer.Decode__Octets #! 
+				_Output.Write ("			Buffer.Decode__Octets ", _Indent);
+				// #% Call = true; 
+				
+				 Call = true;
+				// #casecast IA5String Cast 
+				break; }
+				case ASN2Type.IA5String: {
+				  IA5String Cast = (IA5String) Spec; 
+				// 			Buffer.Decode__IA5String #! 
+				_Output.Write ("			Buffer.Decode__IA5String ", _Indent);
+				// #% Call = true; 
+				
+				 Call = true;
+				// #casecast BMPString Cast 
+				break; }
+				case ASN2Type.BMPString: {
+				  BMPString Cast = (BMPString) Spec; 
+				// 			Buffer.Decode__BMPString #! 
+				_Output.Write ("			Buffer.Decode__BMPString ", _Indent);
+				// #% Call = true; 
+				
+				 Call = true;
+				// #casecast UTF8String Cast 
+				break; }
+				case ASN2Type.UTF8String: {
+				  UTF8String Cast = (UTF8String) Spec; 
+				// 			Buffer.Decode__UTF8String #! 
+				_Output.Write ("			Buffer.Decode__UTF8String ", _Indent);
+				// #% Call = true; 
+				
+				 Call = true;
+				// #casecast PrintableString Cast 
+				break; }
+				case ASN2Type.PrintableString: {
+				  PrintableString Cast = (PrintableString) Spec; 
+				// 			Buffer.Decode__PrintableString #! 
+				_Output.Write ("			Buffer.Decode__PrintableString ", _Indent);
+				// #% Call = true; 
+				
+				 Call = true;
+				// #casecast _Label Case 
+				break; }
+				case ASN2Type._Label: {
+				  _Label Case = (_Label) Spec; 
+				// 			Buffer.Decode__Object (#{Name}, #{Flags}, #{Code}); 
+				_Output.Write ("			Buffer.Decode__Object ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
+				// #casecast List Cast 
+				break; }
+				case ASN2Type.List: {
+				  List Cast = (List) Spec; 
+				// 			if (#{Name} == null || #{Name}.Count == 0) { 
+				_Output.Write ("			if ({1} == null || {2}.Count == 0) {{\n{0}", _Indent, Name, Name);
+				// 				Buffer.Decode__Object (null, #{Flags}, #{Code}); 
+				_Output.Write ("				Buffer.Decode__Object (null, {1}, {2});\n{0}", _Indent, Flags, Code);
+				// 				} 
+				_Output.Write ("				}}\n{0}", _Indent);
+				// 			else { 
+				_Output.Write ("			else {{\n{0}", _Indent);
+				// 				int XPosition = Buffer.Decode__Sequence_Start(); 
+				_Output.Write ("				int XPosition = Buffer.Decode__Sequence_Start();\n{0}", _Indent);
+				// 				foreach (#! 
+				_Output.Write ("				foreach (", _Indent);
+				// #% TypeDeclaration (Cast.Spec); 
+				
+				 TypeDeclaration (Cast.Spec);
+				//  _Index in #{Name}) { 
+				_Output.Write (" _Index in {1}) {{\n{0}", _Indent, Name);
+				// 		#! 
+				_Output.Write ("		", _Indent);
+				// #% Encode ("_Index", Cast.Spec, 0, 0); 
+				
+				 Encode ("_Index", Cast.Spec, 0, 0);
+				// 					} 
+				_Output.Write ("					}}\n{0}", _Indent);
+				// 				Buffer.Decode__Sequence_End(XPosition, #{Flags}, #{Code}); 
+				_Output.Write ("				Buffer.Decode__Sequence_End(XPosition, {1}, {2});\n{0}", _Indent, Flags, Code);
+				// 			} 
+				_Output.Write ("			}}\n{0}", _Indent);
+				// #casecast Set Cast 
+				break; }
+				case ASN2Type.Set: {
+				  Set Cast = (Set) Spec; 
+				// 			if (#{Name} == null || #{Name}.Count == 0) { 
+				_Output.Write ("			if ({1} == null || {2}.Count == 0) {{\n{0}", _Indent, Name, Name);
+				// 				Buffer.Decode__Object (null, #{Flags}, #{Code}); 
+				_Output.Write ("				Buffer.Decode__Object (null, {1}, {2});\n{0}", _Indent, Flags, Code);
+				// 				} 
+				_Output.Write ("				}}\n{0}", _Indent);
+				// 			else { 
+				_Output.Write ("			else {{\n{0}", _Indent);
+				// 				int XPosition = Decode.Encode__Set_Start(); 
+				_Output.Write ("				int XPosition = Decode.Encode__Set_Start();\n{0}", _Indent);
+				// 				foreach (#! 
+				_Output.Write ("				foreach (", _Indent);
+				// #% TypeDeclaration (Cast.Spec); 
+				
+				 TypeDeclaration (Cast.Spec);
+				//  _Index in #{Name}) { 
+				_Output.Write (" _Index in {1}) {{\n{0}", _Indent, Name);
+				// 		#! 
+				_Output.Write ("		", _Indent);
+				// #% Encode ("_Index", Cast.Spec, 0, 0); 
+				
+				 Encode ("_Index", Cast.Spec, 0, 0);
+				// 					} 
+				_Output.Write ("					}}\n{0}", _Indent);
+				// 				Buffer.Decode__Set_End(XPosition, #{Flags}, #{Code}); 
+				_Output.Write ("				Buffer.Decode__Set_End(XPosition, {1}, {2});\n{0}", _Indent, Flags, Code);
+				// 			} 
+				_Output.Write ("			}}\n{0}", _Indent);
+				// #casecast Choice Cast 
+				break; }
+				case ASN2Type.Choice: {
+				  Choice Cast = (Choice) Spec; 
+				// 	// Do Choice 
+				_Output.Write ("	// Do Choice\n{0}", _Indent);
+				// #foreach (Member ChoiceEntry in Cast.Entries) 
+				foreach  (Member ChoiceEntry in Cast.Entries) {
+					//             // 
+					_Output.Write ("            //\n{0}", _Indent);
+					// #! Encode (ChoiceEntry.Name.ToString(), ChoiceEntry.Spec, ChoiceEntry.Flags, ChoiceEntry.Code); 
+					// Encode (ChoiceEntry.Name.ToString(), ChoiceEntry.Spec, ChoiceEntry.Flags, ChoiceEntry.Code);
+					// #% Encode (ChoiceEntry); 
+					 Encode (ChoiceEntry);
+					// #end foreach 
+					}
+				// #end switchcast 
+			break; }
+				}
+			// #if Call 
+			if (  Call ) {
+				//  (#{Name}, #{Flags}, #{Code}); 
+				_Output.Write (" ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
+				// #end if 
+				}
+			// #% } 
+			 }
+			// #end block 
+		
+		//  
 		//  
 		//  
 		// #method MakeChildren _Choice Element 
