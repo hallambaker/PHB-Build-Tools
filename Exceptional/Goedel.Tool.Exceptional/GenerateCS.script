@@ -16,6 +16,14 @@ using System;
 
 #foreach (_Choice Toplevel in Exceptions.Top)
 #switchcast ExceptionsType Toplevel
+#casecast Using Using
+using #{Using.Id};
+#end switchcast
+#end foreach
+
+
+#foreach (_Choice Toplevel in Exceptions.Top)
+#switchcast ExceptionsType Toplevel
 #casecast Namespace Namespace
 namespace #{Namespace.Id} {
 
@@ -35,6 +43,13 @@ namespace #{Namespace.Id} {
 #end foreach
     /// </summary>
     public class #{Exception.Id} : global::System.Exception {
+
+
+		/// <summary>
+        /// Create an instance of the exception.
+        /// </summary>		
+		public #{Exception.Id} () : base () {
+			}
         
 		/// <summary>
         /// Create an instance of the exception.
@@ -42,16 +57,64 @@ namespace #{Namespace.Id} {
         /// <param name="Description">Description of the error</param>	
 		public #{Exception.Id} (string Description) : base (Description) {
 			}
+
+		/// <summary>
+        /// Create an instance of the exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public #{Exception.Id} (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		public object UserData;
+
+#foreach (var Object in Exception.Objects)
+		/// <summary>
+        /// Create an instance of the exception.
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public #{Exception.Id} (#{Object.Type} Object) : 
+				base (String.Format (#{Object.Text.Quoted()}#!
+#foreach (var Parameter in Object.Parameters)
+,
+					Object.#{Parameter.Name}#!
+#end foreach				
+					)) {
+			UserData = Object;
+			}
+
+		/// <summary>
+        /// Create an instance of the exception.
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public #{Exception.Id} (#{Object.Type} Object, System.Exception Inner) : 
+				base (String.Format (#{Object.Text.Quoted()}#!
+#foreach (var Parameter in Object.Parameters)
+,
+					Object.#{Parameter.Name}#!
+#end foreach				
+					), Inner) {
+			UserData = Object;
+			}
+
+#end foreach
+
+
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw;
 
-        static System.Exception _Throw(string Reason) {
-			if (Reason == null) {
-				return new #{Exception.Id}(Reason);
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new #{Exception.Id}(Reason as string);
 				}
+
+
 			else {
 				return new #{Exception.Id}(#{Exception.Console.Quoted()});
 				}

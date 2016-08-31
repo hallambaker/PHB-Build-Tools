@@ -42,13 +42,18 @@ using Goedel.Registry;
 // Types
 //   TopTypeType
 //       Namespace
+//       Using
 //   TypeType
 //       Exception
-//       Console
+//       Parent
 //       Description
+//       Console
+//       Object
+//       Parameter
 //   IdType
 //       NamespaceT
 //       ExceptionT
+//       TypeType
 //   NamespaceType
 //       Goedel.Tool.Exceptional
 //   ClassType
@@ -56,8 +61,12 @@ using Goedel.Registry;
 //   NameType
 //       Id
 //       Options
-//       Message
+//       Children
+//       Type
 //       Text
+//       Parameters
+//       Name
+//       Message
 //   TokenType
 
 namespace Goedel.Tool.Exceptional {
@@ -67,7 +76,11 @@ namespace Goedel.Tool.Exceptional {
         _Top,
 
         Namespace,
+        Using,
+        Parent,
         Exception,
+        Object,
+        Parameter,
         Console,
         Description,
 
@@ -129,6 +142,63 @@ namespace Goedel.Tool.Exceptional {
 			}
 		}
 
+    public partial class Using : _Choice {
+        public ID<_Choice>				Id; 
+
+        public override ExceptionsType _Tag () {
+            return ExceptionsType.Using;
+            }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Using");
+				}
+
+	        Output.WriteId ("Id", Id.ToString()); 
+			if (tag) {
+				Output.EndElement ("Using");
+				}			
+			}
+		}
+
+    public partial class Parent : _Choice {
+        public ID<_Choice>				Id; 
+        public List <_Choice>           Children = new List<_Choice> ();
+
+        public override ExceptionsType _Tag () {
+            return ExceptionsType.Parent;
+            }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Children) {
+				Sub._InitChildren (this);
+				}
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Parent");
+				}
+
+	        Output.WriteId ("Id", Id.ToString()); 
+			Output.StartList ("");
+			foreach (_Choice _e in Children) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("Parent");
+				}			
+			}
+		}
+
     public partial class Exception : _Choice {
         public ID<_Choice>				Id; 
         public List <_Choice>           Options = new List<_Choice> ();
@@ -158,6 +228,65 @@ namespace Goedel.Tool.Exceptional {
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Exception");
+				}			
+			}
+		}
+
+    public partial class Object : _Choice {
+        public ID<_Choice>				Type; 
+		public string					Text;
+        public List <Parameter>           Parameters = new List<Parameter> ();
+
+        public override ExceptionsType _Tag () {
+            return ExceptionsType.Object;
+            }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Parameters) {
+				Sub._InitChildren (this);
+				}
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Object");
+				}
+
+	        Output.WriteId ("Type", Type.ToString()); 
+			Output.WriteAttribute ("Text", Text);
+			Output.StartList ("");
+			foreach (Parameter _e in Parameters) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("Object");
+				}			
+			}
+		}
+
+    public partial class Parameter : _Choice {
+        public ID<_Choice>				Name; 
+
+        public override ExceptionsType _Tag () {
+            return ExceptionsType.Parameter;
+            }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Parameter");
+				}
+
+	        Output.WriteId ("Name", Name.ToString()); 
+			if (tag) {
+				Output.EndElement ("Parameter");
 				}			
 			}
 		}
@@ -239,9 +368,20 @@ namespace Goedel.Tool.Exceptional {
 		Namespace_Start,
 		Namespace__Id,				
 		Namespace__Options,				
+		Using_Start,
+		Using__Id,				
+		Parent_Start,
+		Parent__Id,				
+		Parent__Children,				
 		Exception_Start,
 		Exception__Id,				
 		Exception__Options,				
+		Object_Start,
+		Object__Type,				
+		Object__Text,				
+		Object__Parameters,				
+		Parameter_Start,
+		Parameter__Name,				
 		Console_Start,
 		Console__Message,				
 		Description_Start,
@@ -308,6 +448,7 @@ namespace Goedel.Tool.Exceptional {
 
 			TYPE__NamespaceT = Registry.TYPE ("NamespaceT"); 
 			TYPE__ExceptionT = Registry.TYPE ("ExceptionT"); 
+			TYPE__TypeType = Registry.TYPE ("TypeType"); 
 
 
 
@@ -317,12 +458,17 @@ namespace Goedel.Tool.Exceptional {
 
         public TYPE<Goedel.Tool.Exceptional._Choice> TYPE__NamespaceT ;
         public TYPE<Goedel.Tool.Exceptional._Choice> TYPE__ExceptionT ;
+        public TYPE<Goedel.Tool.Exceptional._Choice> TYPE__TypeType ;
 
         private Goedel.Tool.Exceptional._Choice New_Choice(string Label) {
             switch (Label) {
 
                 case "Namespace": return NewNamespace();
+                case "Using": return NewUsing();
+                case "Parent": return NewParent();
                 case "Exception": return NewException();
+                case "Object": return NewObject();
+                case "Parameter": return NewParameter();
                 case "Console": return NewConsole();
                 case "Description": return NewDescription();
 
@@ -340,10 +486,42 @@ namespace Goedel.Tool.Exceptional {
             }
 
 
+        private Goedel.Tool.Exceptional.Using NewUsing() {
+            Goedel.Tool.Exceptional.Using result = new Goedel.Tool.Exceptional.Using();
+            Push (result);
+            State = StateCode.Using_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Exceptional.Parent NewParent() {
+            Goedel.Tool.Exceptional.Parent result = new Goedel.Tool.Exceptional.Parent();
+            Push (result);
+            State = StateCode.Parent_Start;
+            return result;
+            }
+
+
         private Goedel.Tool.Exceptional.Exception NewException() {
             Goedel.Tool.Exceptional.Exception result = new Goedel.Tool.Exceptional.Exception();
             Push (result);
             State = StateCode.Exception_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Exceptional.Object NewObject() {
+            Goedel.Tool.Exceptional.Object result = new Goedel.Tool.Exceptional.Object();
+            Push (result);
+            State = StateCode.Object_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Exceptional.Parameter NewParameter() {
+            Goedel.Tool.Exceptional.Parameter result = new Goedel.Tool.Exceptional.Parameter();
+            Push (result);
+            State = StateCode.Parameter_Start;
             return result;
             }
 
@@ -368,7 +546,11 @@ namespace Goedel.Tool.Exceptional {
             switch (Label) {
 
                 case "Namespace": return Goedel.Tool.Exceptional.ExceptionsType.Namespace;
+                case "Using": return Goedel.Tool.Exceptional.ExceptionsType.Using;
+                case "Parent": return Goedel.Tool.Exceptional.ExceptionsType.Parent;
                 case "Exception": return Goedel.Tool.Exceptional.ExceptionsType.Exception;
+                case "Object": return Goedel.Tool.Exceptional.ExceptionsType.Object;
+                case "Parameter": return Goedel.Tool.Exceptional.ExceptionsType.Parameter;
                 case "Console": return Goedel.Tool.Exceptional.ExceptionsType.Console;
                 case "Description": return Goedel.Tool.Exceptional.ExceptionsType.Description;
 
@@ -448,7 +630,8 @@ namespace Goedel.Tool.Exceptional {
                         if (Token == TokenType.LABEL) {
                             Goedel.Tool.Exceptional.ExceptionsType LabelType = _Reserved (Text);
                             if (false |
-									(LabelType == Goedel.Tool.Exceptional.ExceptionsType.Namespace)) {
+									(LabelType == Goedel.Tool.Exceptional.ExceptionsType.Namespace) |
+									(LabelType == Goedel.Tool.Exceptional.ExceptionsType.Using)) {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
@@ -496,11 +679,67 @@ namespace Goedel.Tool.Exceptional {
 							Goedel.Tool.Exceptional.Namespace Current_Cast = (Goedel.Tool.Exceptional.Namespace)Current;
                             Goedel.Tool.Exceptional.ExceptionsType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.Tool.Exceptional.ExceptionsType.Exception) ) {
+									(LabelType == Goedel.Tool.Exceptional.ExceptionsType.Exception) |
+									(LabelType == Goedel.Tool.Exceptional.ExceptionsType.Parent) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Exception ]");
+								throw new System.Exception("Parser Error Expected [Exception Parent ]");
+								}
+							}
+                        break;
+
+
+                    case StateCode.Using_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Exceptional.Using Current_Cast = (Goedel.Tool.Exceptional.Using)Current;
+                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__NamespaceT, Current_Cast);
+                            State = StateCode.Using__Id;
+                            break;
+                            }
+                        throw new System.Exception("Expected LABEL or LITERAL");
+
+                    case StateCode.Using__Id:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Parent_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Exceptional.Parent Current_Cast = (Goedel.Tool.Exceptional.Parent)Current;
+                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__NamespaceT, Current_Cast);
+                            State = StateCode.Parent__Id;
+                            break;
+                            }
+                        throw new System.Exception("Expected LABEL or LITERAL");
+
+                    case StateCode.Parent__Id:
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Parent__Children;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.Parent__Children: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Exceptional.Parent Current_Cast = (Goedel.Tool.Exceptional.Parent)Current;
+                            Goedel.Tool.Exceptional.ExceptionsType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.Exceptional.ExceptionsType.Exception) |
+									(LabelType == Goedel.Tool.Exceptional.ExceptionsType.Description) ) {
+                                Current_Cast.Children.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new System.Exception("Parser Error Expected [Exception Description ]");
 								}
 							}
                         break;
@@ -538,16 +777,77 @@ namespace Goedel.Tool.Exceptional {
                             Goedel.Tool.Exceptional.ExceptionsType LabelType = _Reserved (Text);
                             if ( false |
 									(LabelType == Goedel.Tool.Exceptional.ExceptionsType.Console) |
-									(LabelType == Goedel.Tool.Exceptional.ExceptionsType.Description) ) {
+									(LabelType == Goedel.Tool.Exceptional.ExceptionsType.Description) |
+									(LabelType == Goedel.Tool.Exceptional.ExceptionsType.Object) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Console Description ]");
+								throw new System.Exception("Parser Error Expected [Console Description Object ]");
 								}
 							}
                         break;
 
 
+                    case StateCode.Object_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Exceptional.Object Current_Cast = (Goedel.Tool.Exceptional.Object)Current;
+                            Current_Cast.Type = Registry.ID(Position, Text, TYPE__TypeType, Current_Cast);
+                            State = StateCode.Object__Type;
+                            break;
+                            }
+                        throw new System.Exception("Expected LABEL or LITERAL");
+
+                    case StateCode.Object__Type:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Exceptional.Object Current_Cast = (Goedel.Tool.Exceptional.Object)Current;
+                            Current_Cast.Text = Text;
+                            State = StateCode.Object__Text;
+                            break;
+                            }
+                        throw new System.Exception("Expected String");
+
+                    case StateCode.Object__Text:
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Object__Parameters;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.Object__Parameters: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+
+						/// Label
+                        else {
+                            Goedel.Tool.Exceptional.Object Current_Cast = (Goedel.Tool.Exceptional.Object)Current;
+                            Current_Cast.Parameters.Add (NewParameter ());
+                            Represent = true;
+                            }
+
+                        break;
+
+
+                    case StateCode.Parameter_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Exceptional.Parameter Current_Cast = (Goedel.Tool.Exceptional.Parameter)Current;
+                            Current_Cast.Name = Registry.ID(Position, Text, TYPE__TypeType, Current_Cast);
+                            State = StateCode.Parameter__Name;
+                            break;
+                            }
+                        throw new System.Exception("Expected LABEL or LITERAL");
+
+                    case StateCode.Parameter__Name:
+                        Pop ();
+                        Represent = true; 
+                        break;
                     case StateCode.Console_Start:
                         if (Token == TokenType.STRING) {
                             Goedel.Tool.Exceptional.Console Current_Cast = (Goedel.Tool.Exceptional.Console)Current;
