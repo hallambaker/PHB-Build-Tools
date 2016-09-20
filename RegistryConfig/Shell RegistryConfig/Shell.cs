@@ -270,7 +270,7 @@ namespace CommandShell {
 
 			inputfile = Options.ConfigItems.Text;
 
-            RegistryConfig.ConfigItems Parse = new RegistryConfig.ConfigItems();
+            Goedel.Tool.RegistryConfig.ConfigItems Parse = new Goedel.Tool.RegistryConfig.ConfigItems();
 
 
 			Parse.Options = Options;
@@ -296,7 +296,7 @@ namespace CommandShell {
 							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
 					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
 
-						RegistryConfig.GenerateCS Script = new RegistryConfig.GenerateCS (OutputWriter);
+						Goedel.Tool.RegistryConfig.GenerateCS Script = new Goedel.Tool.RegistryConfig.GenerateCS (OutputWriter);
 
 						Script.Generate (Parse);
 						}

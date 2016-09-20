@@ -1,4 +1,4 @@
-﻿Class RegistryConfig ConfigItems
+﻿Class Goedel.Tool.RegistryConfig ConfigItems
 	TopType Class
 		Namespace	Token	ClassType
 		Id			ID		ClassType

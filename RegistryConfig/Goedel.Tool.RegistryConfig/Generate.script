@@ -1,6 +1,6 @@
 ﻿#script 1.0
 #license MITLicense
-#pclass RegistryConfig GenerateCS
+#pclass Goedel.Tool.RegistryConfig GenerateCS
 
 #% DateTime GenerateTime = DateTime.UtcNow;
 

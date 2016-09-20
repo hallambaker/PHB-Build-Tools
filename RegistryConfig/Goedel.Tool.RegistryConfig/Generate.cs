@@ -23,12 +23,12 @@
 //  THE SOFTWARE.
 //  
 //  
-// #pclass RegistryConfig GenerateCS 
+// #pclass Goedel.Tool.RegistryConfig GenerateCS 
 using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace RegistryConfig {
+namespace Goedel.Tool.RegistryConfig {
 	public partial class GenerateCS : global::Goedel.Registry.Script {
 		public GenerateCS () : base () {
 			}

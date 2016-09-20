@@ -12,6 +12,7 @@
 #end method
 
 #method GenerateCSX Exceptions Exceptions
+#% Exceptions._InitChildren ();
 using System;
 
 #foreach (_Choice Toplevel in Exceptions.Top)
@@ -27,10 +28,15 @@ using #{Using.Id};
 #casecast Namespace Namespace
 namespace #{Namespace.Id} {
 
-#foreach (_Choice NamespaceOption in Namespace.Options)
-#switchcast ExceptionsType NamespaceOption
-#casecast Exception Exception
-#% Exception.Complete();
+#% WriteListExceptions (Namespace.Options);
+
+	}
+#end switchcast
+#end foreach
+#end method
+
+
+#method WriteException Exception Exception
 
     /// <summary>
 #foreach (_Choice Optionlevel in Exception.Options)
@@ -42,8 +48,7 @@ namespace #{Namespace.Id} {
 #end switchcast
 #end foreach
     /// </summary>
-    public class #{Exception.Id} : global::System.Exception {
-
+    public class #{Exception.Id} : #{Exception.BaseClass} {
 
 		/// <summary>
         /// Create an instance of the exception.
@@ -67,7 +72,9 @@ namespace #{Namespace.Id} {
 				base (Description, Inner) {
 			}
 
+#if (Exception.Base)
 		public object UserData;
+#end if
 
 #foreach (var Object in Exception.Objects)
 		/// <summary>
@@ -107,7 +114,7 @@ namespace #{Namespace.Id} {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw;
+        public static #{Exception.Base.If("", "new ")}global::Goedel.Utilities.ThrowDelegate Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
@@ -121,10 +128,15 @@ namespace #{Namespace.Id} {
             }
         }
 
-#end switchcast
-#end foreach
-	}
-#end switchcast
+#% WriteListExceptions (Exception.Options);
+#end method
+
+#method WriteListExceptions List<_Choice> Exceptions
+#foreach (_Choice Exception in Exceptions)
+#if (Exception as Exception != null)
+#% WriteException (Exception as Exception );
+#end if
 #end foreach
 #end method
+
 #end pclass

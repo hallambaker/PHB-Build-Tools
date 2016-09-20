@@ -26,6 +26,7 @@ namespace Goedel.Tool.ProtoGen {
 
         public bool Parameterized = false;
 
+        public string ThisInherits = ": global::Goedel.Protocol.JSONObject";
 
         // Classes that don't inherit internally are children of JSONObject
         // by default.
@@ -160,6 +161,9 @@ namespace Goedel.Tool.ProtoGen {
                     ((Message)Entry).Normalize();
 
                     Structures.Add (((Message)Entry).AsStructure());
+                    }
+                else if (Entry.GetType() == typeof(Inherits)) {
+                    ThisInherits = ": " + (Entry as Inherits).Ref.ToString();
                     }
                 else if (Entry.GetType() == typeof(Structure)) {
                     ((Structure)Entry).Normalize();

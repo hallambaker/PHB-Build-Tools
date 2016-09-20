@@ -18,6 +18,8 @@
 			Success
 			Warning
 			Error
+			Inherits
+
 
 	Type Using									// Pull in external namespace
 		Id			Token NamespaceType			// The namspace being used

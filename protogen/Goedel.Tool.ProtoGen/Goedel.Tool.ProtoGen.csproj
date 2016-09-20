@@ -65,7 +65,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GenerateCSharp.script</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Annotation.cs" />
+    <Compile Include="Annotation.cs" />
     <Compile Include="ProtoGen.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

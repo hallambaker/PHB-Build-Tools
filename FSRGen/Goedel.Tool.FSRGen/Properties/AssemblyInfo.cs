@@ -17,10 +17,11 @@ using System.Runtime.InteropServices;
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
-[assembly: ComVisible(false)]
+[assembly: ComVisible(true)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("0a83f096-c9bf-4aa0-a9f7-18efa715442c")]
+[assembly: Guid("3C0B8000-B3B3-49B6-B74A-C1521FA65B55")]
+
 
 // Version information for an assembly consists of the following four values:
 //

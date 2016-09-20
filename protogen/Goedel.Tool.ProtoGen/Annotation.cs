@@ -87,8 +87,8 @@ namespace Goedel.Tool.ProtoGen {
             foreach (_Choice Entry in Entries) {
                 if (Entry._Tag() == ProtoStructType.Inherits) {
                     Inherits Inherits = (Inherits) Entry;
-                    Superclass = (Structure) (Inherits.Ref.ID.Object) ;
-                    Superclass.Subclasses.Add (this);
+                    Superclass =(Inherits.Ref.ID.Object) as Structure;
+                    Superclass?.Subclasses.Add (this); // If this is a superclass, add it.
                     Inherits.Ref.Object = this; 
                     }
                 if (Entry._Tag() == ProtoStructType.Abstract) {

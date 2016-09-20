@@ -52,17 +52,14 @@ namespace Goedel.Tool.ProtoGen {
 			 ProtoStruct.Complete ();
 			// #% var GenerateTime =System.DateTime.UtcNow; 
 			 var GenerateTime =System.DateTime.UtcNow;
-			// #%// Boilerplate.Header (_Output, "//  ", GenerateTime); 
-			// #% Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + "2014", "."); 
-			 Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + "2014", ".");
-			// #% var ThisInherits = ": Goedel.Protocol.JSONObject"; // "" 
-			 var ThisInherits = ": Goedel.Protocol.JSONObject"; // ""
+			// #% Boilerplate.Header (_Output, "//  ", GenerateTime); 
+			 Boilerplate.Header (_Output, "//  ", GenerateTime);
+			// #% Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + "2016", "."); 
+			 Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + "2016", ".");
 			// #% var InheritsOverride = "override"; // "virtual" 
 			 var InheritsOverride = "override"; // "virtual"
-			// //Header 
-			_Output.Write ("//Header\n{0}", _Indent);
-			// // With all fields as properties 
-			_Output.Write ("// With all fields as properties\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// using System; 
@@ -128,8 +125,8 @@ namespace Goedel.Tool.ProtoGen {
 					_Output.Write ("    /// \n{0}", _Indent);
 					//     /// </summary> 
 					_Output.Write ("    /// </summary>\n{0}", _Indent);
-					// 	public abstract partial class #{Protocol.Prefix} #{ThisInherits} { 
-					_Output.Write ("	public abstract partial class {1} {2} {{\n{0}", _Indent, Protocol.Prefix, ThisInherits);
+					// 	public abstract partial class #{Protocol.Prefix} #{Protocol.ThisInherits} { 
+					_Output.Write ("	public abstract partial class {1} {2} {{\n{0}", _Indent, Protocol.Prefix, Protocol.ThisInherits);
 					// #% CurrentPrefix = Protocol.Prefix.ToString (); 
 					
 					 CurrentPrefix = Protocol.Prefix.ToString ();
@@ -954,8 +951,8 @@ namespace Goedel.Tool.ProtoGen {
 			_Output.Write ("        /// <returns>The tag</returns>\n{0}", _Indent);
 			// 		public override string Tag () { 
 			_Output.Write ("		public override string Tag () {{\n{0}", _Indent);
-			// 			return "#{Id}" 
-			_Output.Write ("			return \"{1}\"\n{0}", _Indent, Id);
+			// 			return "#{Id}"; 
+			_Output.Write ("			return \"{1}\";\n{0}", _Indent, Id);
 			// 			} 
 			_Output.Write ("			}}\n{0}", _Indent);
 			//  

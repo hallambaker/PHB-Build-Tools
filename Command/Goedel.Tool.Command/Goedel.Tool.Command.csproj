@@ -62,6 +62,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Generate.script</DependentUpon>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Command.gdl">
@@ -73,9 +74,7 @@
       <LastGenOutput>Generate.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\Goedel.Registry\Goedel.Registry.csproj">
       <Project>{f2a1f8ea-18e2-4f3a-aeaf-3983cea19fe0}</Project>

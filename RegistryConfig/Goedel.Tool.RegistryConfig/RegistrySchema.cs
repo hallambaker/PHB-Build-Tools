@@ -13,7 +13,7 @@ using Goedel.Registry;
 
 
 //
-// Namespace RegistryConfig
+// Namespace Goedel.Tool.RegistryConfig
 // Class ConfigItems
 //
 
@@ -30,7 +30,7 @@ using Goedel.Registry;
 //   IdType
 //       FieldType
 //   NamespaceType
-//       RegistryConfig
+//       Goedel.Tool.RegistryConfig
 //   ClassType
 //       ConfigItems
 //   NameType
@@ -43,7 +43,7 @@ using Goedel.Registry;
 //   TokenType
 //       ClassType
 
-namespace RegistryConfig {
+namespace Goedel.Tool.RegistryConfig {
 
 
     public enum ConfigItemsType {
@@ -284,12 +284,12 @@ namespace RegistryConfig {
 
     struct _StackItem {
         public StateCode   State;
-        public RegistryConfig._Choice     Token;
+        public Goedel.Tool.RegistryConfig._Choice     Token;
         }
 
     public partial class ConfigItems : Goedel.Registry.Parser{
-        public List <RegistryConfig._Choice>        Top;
-        public Registry	<RegistryConfig._Choice>	Registry;
+        public List <Goedel.Tool.RegistryConfig._Choice>        Top;
+        public Registry	<Goedel.Tool.RegistryConfig._Choice>	Registry;
 
 
 
@@ -300,7 +300,7 @@ namespace RegistryConfig {
             }
 
         StateCode								State;
-        RegistryConfig._Choice				Current;
+        Goedel.Tool.RegistryConfig._Choice				Current;
         List <_StackItem>						Stack;
         TokenType								CurrentToken;
         Position								CurrentPosition;
@@ -333,8 +333,8 @@ namespace RegistryConfig {
 			}
 
         public ConfigItems() {
-            Top = new List<RegistryConfig._Choice> () ;
-            Registry = new Registry <RegistryConfig._Choice> ();
+            Top = new List<Goedel.Tool.RegistryConfig._Choice> () ;
+            Registry = new Registry <Goedel.Tool.RegistryConfig._Choice> ();
             State = StateCode._Start;
             Stack = new List <_StackItem> ();
             _StartOfEntry = true;
@@ -348,10 +348,10 @@ namespace RegistryConfig {
 
 
 
-        public TYPE<RegistryConfig._Choice> TYPE__FieldType ;
-        public TYPE<RegistryConfig._Choice> TYPE__ClassType ;
+        public TYPE<Goedel.Tool.RegistryConfig._Choice> TYPE__FieldType ;
+        public TYPE<Goedel.Tool.RegistryConfig._Choice> TYPE__ClassType ;
 
-        private RegistryConfig._Choice New_Choice(string Label) {
+        private Goedel.Tool.RegistryConfig._Choice New_Choice(string Label) {
             switch (Label) {
 
                 case "Class": return NewClass();
@@ -367,66 +367,66 @@ namespace RegistryConfig {
 
 
 
-        private RegistryConfig.Class NewClass() {
-            RegistryConfig.Class result = new RegistryConfig.Class();
+        private Goedel.Tool.RegistryConfig.Class NewClass() {
+            Goedel.Tool.RegistryConfig.Class result = new Goedel.Tool.RegistryConfig.Class();
             Push (result);
             State = StateCode.Class_Start;
             return result;
             }
 
 
-        private RegistryConfig.Field NewField() {
-            RegistryConfig.Field result = new RegistryConfig.Field();
+        private Goedel.Tool.RegistryConfig.Field NewField() {
+            Goedel.Tool.RegistryConfig.Field result = new Goedel.Tool.RegistryConfig.Field();
             Push (result);
             State = StateCode.Field_Start;
             return result;
             }
 
 
-        private RegistryConfig.AltID NewAltID() {
-            RegistryConfig.AltID result = new RegistryConfig.AltID();
+        private Goedel.Tool.RegistryConfig.AltID NewAltID() {
+            Goedel.Tool.RegistryConfig.AltID result = new Goedel.Tool.RegistryConfig.AltID();
             Push (result);
             State = StateCode.AltID_Start;
             return result;
             }
 
 
-        private RegistryConfig.String NewString() {
-            RegistryConfig.String result = new RegistryConfig.String();
+        private Goedel.Tool.RegistryConfig.String NewString() {
+            Goedel.Tool.RegistryConfig.String result = new Goedel.Tool.RegistryConfig.String();
             Push (result);
             State = StateCode.String_Start;
             return result;
             }
 
 
-        private RegistryConfig.Int NewInt() {
-            RegistryConfig.Int result = new RegistryConfig.Int();
+        private Goedel.Tool.RegistryConfig.Int NewInt() {
+            Goedel.Tool.RegistryConfig.Int result = new Goedel.Tool.RegistryConfig.Int();
             Push (result);
             State = StateCode.Int_Start;
             return result;
             }
 
 
-        private RegistryConfig.Binary NewBinary() {
-            RegistryConfig.Binary result = new RegistryConfig.Binary();
+        private Goedel.Tool.RegistryConfig.Binary NewBinary() {
+            Goedel.Tool.RegistryConfig.Binary result = new Goedel.Tool.RegistryConfig.Binary();
             Push (result);
             State = StateCode.Binary_Start;
             return result;
             }
 
 
-        static RegistryConfig.ConfigItemsType _Reserved(string Label) {
+        static Goedel.Tool.RegistryConfig.ConfigItemsType _Reserved(string Label) {
             switch (Label) {
 
-                case "Class": return RegistryConfig.ConfigItemsType.Class;
-                case "Field": return RegistryConfig.ConfigItemsType.Field;
-                case "AltID": return RegistryConfig.ConfigItemsType.AltID;
-                case "String": return RegistryConfig.ConfigItemsType.String;
-                case "Int": return RegistryConfig.ConfigItemsType.Int;
-                case "Binary": return RegistryConfig.ConfigItemsType.Binary;
+                case "Class": return Goedel.Tool.RegistryConfig.ConfigItemsType.Class;
+                case "Field": return Goedel.Tool.RegistryConfig.ConfigItemsType.Field;
+                case "AltID": return Goedel.Tool.RegistryConfig.ConfigItemsType.AltID;
+                case "String": return Goedel.Tool.RegistryConfig.ConfigItemsType.String;
+                case "Int": return Goedel.Tool.RegistryConfig.ConfigItemsType.Int;
+                case "Binary": return Goedel.Tool.RegistryConfig.ConfigItemsType.Binary;
 
                 }
-            return RegistryConfig.ConfigItemsType._Bottom;
+            return Goedel.Tool.RegistryConfig.ConfigItemsType._Bottom;
             }
 
 
@@ -438,14 +438,14 @@ namespace RegistryConfig {
 
 			StructureWriter StructureWriter = StructureWriter.GetStructureWriter (Output, OutputFormat);
 			StructureWriter.StartDocument ();
-			foreach (RegistryConfig._Choice Entry in Top) {
+			foreach (Goedel.Tool.RegistryConfig._Choice Entry in Top) {
 				Entry.Serialize (StructureWriter, true);
 				}
 			StructureWriter.EndDocument ();
 			}
 
 
-        void Push (RegistryConfig._Choice Token) {
+        void Push (Goedel.Tool.RegistryConfig._Choice Token) {
             _StackItem Item = new _StackItem ();
             Item.State = State;
             Item.Token = Current;
@@ -499,9 +499,9 @@ namespace RegistryConfig {
 
                     case StateCode._Choice:                //      LABEL Class | END
                         if (Token == TokenType.LABEL) {
-                            RegistryConfig.ConfigItemsType LabelType = _Reserved (Text);
+                            Goedel.Tool.RegistryConfig.ConfigItemsType LabelType = _Reserved (Text);
                             if (false |
-									(LabelType == RegistryConfig.ConfigItemsType.Class)) {
+									(LabelType == Goedel.Tool.RegistryConfig.ConfigItemsType.Class)) {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
@@ -520,7 +520,7 @@ namespace RegistryConfig {
 
                     case StateCode.Class_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            RegistryConfig.Class Current_Cast = (RegistryConfig.Class)Current;
+                            Goedel.Tool.RegistryConfig.Class Current_Cast = (Goedel.Tool.RegistryConfig.Class)Current;
                             Current_Cast.Namespace = Registry.TOKEN(Position, Text, TYPE__ClassType, Current_Cast);
                             State = StateCode.Class__Namespace;
                             break;
@@ -529,7 +529,7 @@ namespace RegistryConfig {
 
                     case StateCode.Class__Namespace:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            RegistryConfig.Class Current_Cast = (RegistryConfig.Class)Current;
+                            Goedel.Tool.RegistryConfig.Class Current_Cast = (Goedel.Tool.RegistryConfig.Class)Current;
                             Current_Cast.Id = Registry.ID(Position, Text, TYPE__ClassType, Current_Cast);
                             State = StateCode.Class__Id;
                             break;
@@ -557,7 +557,7 @@ namespace RegistryConfig {
 
 						/// Label
                         else {
-                            RegistryConfig.Class Current_Cast = (RegistryConfig.Class)Current;
+                            Goedel.Tool.RegistryConfig.Class Current_Cast = (Goedel.Tool.RegistryConfig.Class)Current;
                             Current_Cast.Fields.Add (NewField ());
                             Represent = true;
                             }
@@ -567,7 +567,7 @@ namespace RegistryConfig {
 
                     case StateCode.Field_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            RegistryConfig.Field Current_Cast = (RegistryConfig.Field)Current;
+                            Goedel.Tool.RegistryConfig.Field Current_Cast = (Goedel.Tool.RegistryConfig.Field)Current;
                             Current_Cast.Id = Registry.ID(Position, Text, TYPE__FieldType, Current_Cast);
                             State = StateCode.Field__Id;
                             break;
@@ -576,12 +576,12 @@ namespace RegistryConfig {
 
                     case StateCode.Field__Id:
                         if (Token == TokenType.LABEL) {
-							RegistryConfig.Field Current_Cast = (RegistryConfig.Field)Current;
-                            RegistryConfig.ConfigItemsType LabelType = _Reserved (Text);
+							Goedel.Tool.RegistryConfig.Field Current_Cast = (Goedel.Tool.RegistryConfig.Field)Current;
+                            Goedel.Tool.RegistryConfig.ConfigItemsType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == RegistryConfig.ConfigItemsType.String) |
-									(LabelType == RegistryConfig.ConfigItemsType.Int) |
-									(LabelType == RegistryConfig.ConfigItemsType.Binary) ) {
+									(LabelType == Goedel.Tool.RegistryConfig.ConfigItemsType.String) |
+									(LabelType == Goedel.Tool.RegistryConfig.ConfigItemsType.Int) |
+									(LabelType == Goedel.Tool.RegistryConfig.ConfigItemsType.Binary) ) {
                                 State = StateCode.Field__Type;
                                 Current_Cast.Type = New_Choice(Text);
                                 }
@@ -611,11 +611,11 @@ namespace RegistryConfig {
 						// Parser transition for LIST $$$$$
 
                         else if (Token == TokenType.LABEL) {
-							RegistryConfig.Field Current_Cast = (RegistryConfig.Field)Current;
-                            RegistryConfig.ConfigItemsType LabelType = _Reserved (Text);
+							Goedel.Tool.RegistryConfig.Field Current_Cast = (Goedel.Tool.RegistryConfig.Field)Current;
+                            Goedel.Tool.RegistryConfig.ConfigItemsType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == RegistryConfig.ConfigItemsType.AltID) |
-									(LabelType == RegistryConfig.ConfigItemsType.AltID) ) {
+									(LabelType == Goedel.Tool.RegistryConfig.ConfigItemsType.AltID) |
+									(LabelType == Goedel.Tool.RegistryConfig.ConfigItemsType.AltID) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
@@ -627,7 +627,7 @@ namespace RegistryConfig {
 
                     case StateCode.AltID_Start:
                         if (Token == TokenType.STRING) {
-                            RegistryConfig.AltID Current_Cast = (RegistryConfig.AltID)Current;
+                            Goedel.Tool.RegistryConfig.AltID Current_Cast = (Goedel.Tool.RegistryConfig.AltID)Current;
                             Current_Cast.Name = Text;
                             State = StateCode.AltID__Name;
                             break;

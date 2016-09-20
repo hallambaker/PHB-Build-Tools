@@ -5,24 +5,19 @@ Class Goedel.Tool.Exceptional Exceptions
         Id ID NamespaceT
 		Options List Choice
 			Exception
-			Parent
-
+			
 	TopType Using
         Id ID NamespaceT
 
 
-	Type Parent
-        Id ID NamespaceT
-		Children List Choice
-			Exception
-			Description
-
     Type Exception
         Id  ID ExceptionT
         Options List Choice
+			Abstract
 			Console
 			Description
 			Object
+			Exception
 					
 	Type Object
 		Type	ID TypeType
@@ -34,6 +29,9 @@ Class Goedel.Tool.Exceptional Exceptions
 
     Type Console
 		Message		String 
+
 	Type Description
 		Text		Text
+
+	Type Abstract
 

@@ -14,7 +14,7 @@
 		Lazy Lazy "lazy"	
 			Brief "Only generate code if source or generator have changed"
 
-		Parser RegistryConfig ConfigItems "schema"
+		Parser Goedel.Tool.RegistryConfig ConfigItems "schema"
 
-		Script  RegistryConfig GenerateCS Generate "cs"
+		Script  Goedel.Tool.RegistryConfig GenerateCS Generate "cs"
 			Brief "Generate code for C#"

@@ -11,7 +11,7 @@
    -->
 
   <!-- Full version number to display -->
-  <?define VersionNumber="1.0.0.1" ?>
+  <?define VersionNumber="1.0.0.4" ?>
 
   <!--
    Upgrade code HAS to be the same for all updates.
@@ -74,7 +74,7 @@
     <!-- Upgrade logic -->
     <!-- AllowSameVersionUpgrades -> Always upgrade, never allow two versions to be installed next to each other -->
     <!-- AllowSameVersionUpgrades causes ICE61 which must be ignored -->
-    <MajorUpgrade DowngradeErrorMessage="!(loc.NewerInstalled)" AllowSameVersionUpgrades="yes" />
+    <MajorUpgrade DowngradeErrorMessage="!(loc.NewerInstalled)" AllowSameVersionUpgrades="no" />
 
     <!-- This is the main installer sequence run when the product is actually installed -->
     <InstallExecuteSequence>

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CommandPlugin")]
+[assembly: AssemblyTitle("Goede.Tool.RegistryConfig")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Default Deny Security Inc.")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(true)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4d146941-393a-4959-bfc1-d325d4c83ba3")]
+[assembly: Guid("585EA221-ECDF-4783-8D74-B2B443E4D3E4")]
 
 // Version information for an assembly consists of the following four values:
 //

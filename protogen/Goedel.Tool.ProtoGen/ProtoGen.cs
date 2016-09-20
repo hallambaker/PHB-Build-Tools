@@ -35,9 +35,9 @@ using Goedel.Registry;
 //       Success
 //       Warning
 //       Error
+//       Inherits
 //       Status
 //       Abstract
-//       Inherits
 //       External
 //       Boolean
 //       Integer
@@ -3481,11 +3481,12 @@ namespace Goedel.Tool.ProtoGen {
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Enumeration) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Success) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Warning) |
-									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Error) ) {
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Error) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Inherits) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Section Service Transaction Message Structure Description Using Extern Enumeration Success Warning Error ]");
+								throw new System.Exception("Parser Error Expected [Section Service Transaction Message Structure Description Using Extern Enumeration Success Warning Error Inherits ]");
 								}
 							}
                         break;

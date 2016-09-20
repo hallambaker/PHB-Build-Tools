@@ -10,12 +10,10 @@
 #method GenerateCS ProtoStruct ProtoStruct
 #% ProtoStruct.Complete ();
 #% var GenerateTime =System.DateTime.UtcNow;
-#%// Boilerplate.Header (_Output, "//  ", GenerateTime);
-#% Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + "2014", ".");
-#% var ThisInherits = ": Goedel.Protocol.JSONObject"; // ""
+#% Boilerplate.Header (_Output, "//  ", GenerateTime);
+#% Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + "2016", ".");
 #% var InheritsOverride = "override"; // "virtual"
-//Header
-// With all fields as properties
+
 
 using System;
 using System.IO;
@@ -46,7 +44,7 @@ namespace #{Protocol.Namespace} {
     /// <summary>
     /// 
     /// </summary>
-	public abstract partial class #{Protocol.Prefix} #{ThisInherits} {
+	public abstract partial class #{Protocol.Prefix} #{Protocol.ThisInherits} {
 #% CurrentPrefix = Protocol.Prefix.ToString ();
 
         /// <summary>
@@ -428,7 +426,7 @@ public partial class #{Id}#{TTT} : #{Inherits} {
         /// </summary>
         /// <returns>The tag</returns>
 		public override string Tag () {
-			return "#{Id}"
+			return "#{Id}";
 			}
 
         /// <summary>
