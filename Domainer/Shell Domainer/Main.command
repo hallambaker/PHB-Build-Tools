@@ -7,7 +7,7 @@
 
 	About "about"
 
-	Command  Domainer "domainer"
+	Command  Domainer "in"
 		DefaultCommand
 
 		Lazy Lazy "lazy"	

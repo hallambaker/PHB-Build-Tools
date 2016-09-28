@@ -36,8 +36,32 @@ namespace Goedel.Registry {
             _Filename = null;
             }
 
+        public static bool _TestEntryAssembly = true;
+        public static Assembly _EntryAssembly = null;
+
+        public static Assembly EntryAssembly {
+            get {
+                if (_TestEntryAssembly) {
+                    _EntryAssembly = Assembly.GetEntryAssembly();
+                    _TestEntryAssembly = false;
+                    }
+                return _EntryAssembly;
+                }
+            }
+
+        static System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
+
+        public static string Platform {
+            get { return OperatingSystem.Platform.ToString (); }
+            }
+
+        public static string PlatformVersion {
+            get { return OperatingSystem.Version.ToString(); }
+            }
+
+
         public static string AssemblyTitle {
-            get { return GetAssemblyTitle(Assembly.GetEntryAssembly()); }
+            get { return GetAssemblyTitle(EntryAssembly); }
             }
 
         public static string GetAssemblyTitle(Assembly Assembly) {
@@ -54,7 +78,8 @@ namespace Goedel.Registry {
 
         public static string AssemblyVersion {
             get {
-                return GetAssemblyVersion(Assembly.GetEntryAssembly());
+                return EntryAssembly != null ? GetAssemblyVersion(EntryAssembly) :
+                        "Unknown";
                 }
             }
 
@@ -64,7 +89,8 @@ namespace Goedel.Registry {
 
         public static string AssemblyDescription {
             get {
-                return GetAssemblyDescription(Assembly.GetEntryAssembly());
+                return EntryAssembly != null ? GetAssemblyDescription(EntryAssembly) :
+                        "Unknown";
                 }
             }
 
@@ -84,7 +110,8 @@ namespace Goedel.Registry {
 
         public static string AssemblyProduct {
             get {
-                return GetAssemblyProduct(Assembly.GetEntryAssembly());
+                return EntryAssembly != null ? GetAssemblyProduct(EntryAssembly) :
+                        "Unknown";
                 }
             }
 
@@ -102,7 +129,8 @@ namespace Goedel.Registry {
 
         public static string AssemblyCopyright {
             get {
-                return GetAssemblyCopyright(Assembly.GetEntryAssembly());
+                return EntryAssembly != null ? GetAssemblyCopyright(EntryAssembly) :
+                        "Unknown";
                 }
             }
         public static string GetAssemblyCopyright(Assembly Assembly) {
@@ -118,7 +146,8 @@ namespace Goedel.Registry {
 
         public static string AssemblyCompany {
             get {
-                return GetAssemblyCompany(Assembly.GetEntryAssembly());
+                return EntryAssembly != null ? GetAssemblyCompany(EntryAssembly) :
+                        "Unknown";
                 }
             }
 

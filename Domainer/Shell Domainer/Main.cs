@@ -54,7 +54,7 @@ namespace DomainerShell {
 							FileTools.About ();
 							break;
 							}
-						case "domainer" : {
+						case "in" : {
 							Handle_Domainer (Dispatch, args, 1);
 							break;
 							}
@@ -144,7 +144,7 @@ namespace DomainerShell {
 					Domainer		Dummy = new Domainer ();
 #pragma warning restore 219
 
-					Console.Write ("{0}domainer ", UsageFlag);
+					Console.Write ("{0}in ", UsageFlag);
 					Console.WriteLine ();
 
 				}
@@ -268,7 +268,7 @@ namespace DomainerShell {
 
 			inputfile = Options.Domainer.Text;
 
-            Goedel.Tool.Domainer.Domainer Parse = new Goedel.Tool.Domainer.Domainer();
+            GoedelDomainer.Domainer Parse = new GoedelDomainer.Domainer();
 
 
 			Parse.Options = Options;
@@ -294,7 +294,7 @@ namespace DomainerShell {
 							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
 					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
 
-						Goedel.Tool.Domainer.Generate Script = new Goedel.Tool.Domainer.Generate (OutputWriter);
+						GoedelDomainer.Generate Script = new GoedelDomainer.Generate (OutputWriter);
 
 						Script.GenerateCS (Parse);
 						}

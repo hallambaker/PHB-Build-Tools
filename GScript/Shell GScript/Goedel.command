@@ -5,7 +5,7 @@
 	Type ExistingFile		"file"
 	Type ID				"string"
 
-	Command Generate "generate"
+	Command Generate "in"
 		DefaultCommand
 		Parameter InputFile "input" ExistingFile
 		Parameter OutputFile "output" NewFile

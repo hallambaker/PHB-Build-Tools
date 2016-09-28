@@ -7,7 +7,7 @@
 
 	About "about"
 
-	Command  Exception "exception"
+	Command  Exception "in"
 		DefaultCommand
 
 		Lazy Lazy "lazy"	

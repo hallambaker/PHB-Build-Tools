@@ -57,8 +57,6 @@ namespace Goedel.Registry {
 			 public static void Header (TextWriter _Output, string Comment, DateTime GenerateTime) {
 			// #% string _Indent = ""; 
 			 string _Indent = "";
-			// #% System.OperatingSystem OperatingSystem = System.Environment.OSVersion; 
-			 System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 			// #prefix Comment 
 			_Indent =  Comment + _Indent; {
 				//  
@@ -83,8 +81,8 @@ namespace Goedel.Registry {
 				_Output.Write ("    Copyright : {1}\n{0}", _Indent, Script.AssemblyCopyright);
 				//  
 				_Output.Write ("\n{0}", _Indent);
-				// Build Platform: #{OperatingSystem.Platform} #{OperatingSystem.Version} 
-				_Output.Write ("Build Platform: {1} {2}\n{0}", _Indent, OperatingSystem.Platform, OperatingSystem.Version);
+				// Build Platform: #{Script.Platform} #{Script.PlatformVersion} 
+				_Output.Write ("Build Platform: {1} {2}\n{0}", _Indent, Script.Platform, Script.PlatformVersion);
 				//  
 				_Output.Write ("\n{0}", _Indent);
 				// #end prefix 

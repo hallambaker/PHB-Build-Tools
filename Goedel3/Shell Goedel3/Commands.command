@@ -6,7 +6,7 @@
 	Type ExistingFile		"file"
 	Type Flag				"flag"
 
-	Command Schema "schema"
+	Command Schema "in"
 		DefaultCommand
 		Brief	"Convert a Goedel schema file to code"
 

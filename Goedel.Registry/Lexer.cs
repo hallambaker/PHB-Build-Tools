@@ -30,6 +30,7 @@ namespace Goedel.Registry {
         TEXT = 11
         }
 
+    [Serializable]
     public class GoedelParseException : System.Exception {
         Position Position;
         string ParseMessage;

@@ -7,7 +7,7 @@
 
 	About "about"
 
-	Command  Generate "cs"
+	Command  Generate "in"
 		DefaultCommand
 
 		Lazy Lazy "lazy"	

@@ -54,7 +54,7 @@ namespace Goedel.Shell.ASN2 {
 							FileTools.About ();
 							break;
 							}
-						case "cs" : {
+						case "in" : {
 							Handle_Generate (Dispatch, args, 1);
 							break;
 							}
@@ -144,7 +144,7 @@ namespace Goedel.Shell.ASN2 {
 					Generate		Dummy = new Generate ();
 #pragma warning restore 219
 
-					Console.Write ("{0}cs ", UsageFlag);
+					Console.Write ("{0}in ", UsageFlag);
 					Console.WriteLine ();
 
 				}

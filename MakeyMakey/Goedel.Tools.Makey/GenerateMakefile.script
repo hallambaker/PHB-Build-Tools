@@ -1,0 +1,174 @@
+﻿#script 1.0
+#license MITLicense
+#xclass Goedel.Tool.Makey Generate
+#%  public Generate (TextWriter Output) : base (Output) {}
+#% string Prefix = "! "; //"\t";
+#method GenerateMakefile VSProject Project
+##
+## Makefile for Visual Studio Project ...
+##
+## This file is generated automatically from the Visual Studio Project
+## File. If you make changes to this file and do not update the project
+## file, changes will be lost when the file is regenerated.
+
+## The following targets are defined (well planned)
+##
+## make 			Compile for the current platform
+## make cross		Compile for all platforms
+## make install		Compile and install
+## make clean		Delete all target and intermediate files
+
+## The following build flags are supported
+##
+## make mode= release | debug			Build release or debug version
+## make arch= this | all | <x>			Bundle for the current platform, all platforms
+##										or the specified platform
+
+## Define the default target directories (referenced projects must all follow same scheme)
+##
+## By default, we arrange the mono targets as follows:
+##
+## <Source>					The source code directory
+## <Source>/mono/			Equivalent to VS bin directory
+## <Source>/mono/Debug		Equivalent to VS bin/Debug directory
+## <Source>/mono/Release	Equivalent to VS bin/Debug directory
+##
+## If the target is an executable, the following directories are also created:
+##
+## <Source>/This			The bundled executable for the platform the code was compiled on
+## <Source>/<Arch1>			The bundled executable for the platform <Arch1>	
+##
+## If the install target is selected, the bundles will be installed in
+##
+## ~/Tools/This				The bundled executable for platform the code is built on
+## ~/Tools/<Arch1>			The bundled executable for this platform <Arch1>	
+
+export TARGETROOT	?= mono
+export MODE		?= Release
+export ARCH		?= This
+
+export TARGETBIN	= $(TARGETROOT)/$(MODE)/
+export TARGETEXE	= $(TARGETROOT)/$(ARCH)/
+
+export INSTALLROOT	?= ~/Tools/
+export INSTALL		?= $INSTALLROOT$(ARCH)/
+
+## Define the default compilers, linkers, packagers, etc.
+export CSHARPDLL	?=  mcs /target:library
+export CSHARPEXE	?=  mcs /target:exe
+export BUNDLE		?=  mkbundle --deps --static -o 
+
+
+## The following tools are used in the goedel build system itself:
+#% PHBTool ("RFC2TXT",		"rfctool /in", "/txt");
+#% PHBTool ("RFC2XML",		"rfctool /in", "/xml");
+#% PHBTool ("RFC2MD",		"rfctool /in", "/md");
+#% PHBTool ("RFC2HTML",		"rfctool /in", "/html");
+#% PHBTool ("CommandCS",	"commandparse /in", "/cs");
+#% PHBTool ("FSRCS",		"fsrgen /in", "/cs");
+#% PHBTool ("Exceptional",	"exceptional /in", "/cs");
+#% PHBTool ("GScript",		"gscript /in", "/cs");
+#% PHBTool ("Goedel3",		"goedel3 /in", "/cs");
+#% PHBTool ("ASN2CS",		"asn2 /in", "/cs");
+#% PHBTool ("DomainerCS",	"domainer /in", "/cs");
+#% PHBTool ("RegistryCS",	"registryconfig /in", "/cs");
+#% PHBTool ("VSIXBuild",	"vsixbuild /in", "/cs");
+#% PHBTool ("ProtoGen",		"protogen /in", "/cs");
+#% PHBTool ("TrojanGTK",	"trojan /gtk", "/cs");
+
+#if (Prefix != "\t")
+## Use the specified character as the prefix character. Note this may not 
+## be supported on versions of make other than gmake.
+.RECIPEPREFIX = #{Prefix}
+#end if
+
+
+## The main target
+
+#if (Project.OutputType == "Exe")
+#foreach (var File in Project.SourceDependency)
+$(TARGETBIN)#{Project.AssemblyName}.exe : #{File}
+#end foreach
+#foreach (var File in Project.LinkDependency)
+$(TARGETBIN)#{Project.AssemblyName}.exe : $(TARGETBIN)#{File}.dll
+#end foreach
+
+$(TARGETBIN)#{Project.AssemblyName}.exe :
+#{Prefix}$(CSHARPEXE) /out:$@ $^
+
+$(TARGETBIN)#{Project.AssemblyName} : $(TARGETBIN)#{Project.AssemblyName}.exe
+#{Prefix}$(BUNDLE) $@ $^
+
+#elseif (Project.OutputType == "Library")
+#foreach (var File in Project.SourceDependency)
+$(TARGETBIN)#{Project.AssemblyName}.dll : #{File}
+#end foreach
+#foreach (var File in Project.LinkDependency)
+$(TARGETBIN)#{Project.AssemblyName}.dll : $(TARGETBIN)#{File}.dll
+#end foreach
+
+$(TARGETBIN)#{Project.AssemblyName}.dll : 
+#{Prefix}$(CSHARPDLL) /out:$@ $^
+
+#else
+#end if
+
+
+## Generated code
+
+#foreach (var Item in Project.None)
+#if (Item.Generator != null)
+#{Item.LastGenOutput} : #{Item.Include}
+#{Prefix} $(Custom_#{Item.Generator}) #{Item.Include} $(Custom_#{Item.Generator}_FLAG) #{Item.LastGenOutput} 
+#end if
+#end foreach
+
+.PHONY : clean install cross recursive
+
+
+## Referenced projects
+
+#foreach (var Item in Project.ProjectReference)
+$(TARGETBIN)/#{Item.Name}.dll : recursive
+#{Prefix}$(Make) -C #{Item.Include.UnixPath()}
+#end foreach
+
+
+
+## Clean up
+##
+## At the moment we only delete the currently indicated target. This allows a 
+## developer to do a make clean / make when a problem with a corrupted intermediate
+## file is suspected.
+
+clean : 
+	rm -f $(TARGETBIN)/*
+	rm -f $(TARGETEXE)/*
+
+## Install
+##
+## Install files to a tools directory. Default is ~/Tools/Arch
+
+install : 
+
+
+## Cross
+##
+## Cross compilation targets. 
+
+
+cross :
+
+
+
+
+
+#end method
+
+#method3 PHBTool string Tag string Tool string Flag
+export Custom_#{Tag}		?= #{Tool}
+export Custom_#{Tag}_FLAG	?= #{Flag}
+#end method3
+
+
+#end xclass

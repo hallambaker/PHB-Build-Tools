@@ -54,7 +54,7 @@ namespace ExceptionalShell {
 							FileTools.About ();
 							break;
 							}
-						case "exception" : {
+						case "in" : {
 							Handle_Exception (Dispatch, args, 1);
 							break;
 							}
@@ -144,7 +144,7 @@ namespace ExceptionalShell {
 					Exception		Dummy = new Exception ();
 #pragma warning restore 219
 
-					Console.Write ("{0}exception ", UsageFlag);
+					Console.Write ("{0}in ", UsageFlag);
 					Console.WriteLine ();
 
 				}

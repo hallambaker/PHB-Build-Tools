@@ -50,7 +50,7 @@ namespace GoedelShell {
 							Usage ();
 							break;
 							}
-						case "generate" : {
+						case "in" : {
 							Handle_Generate (Dispatch, args, 1);
 							break;
 							}
@@ -302,7 +302,7 @@ namespace GoedelShell {
 					Generate		Dummy = new Generate ();
 #pragma warning restore 219
 
-					Console.Write ("{0}generate ", UsageFlag);
+					Console.Write ("{0}in ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.InputFile.Usage (null, "input", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.OutputFile.Usage (null, "output", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.CommentLine.Usage ("line", "value", UsageFlag));
@@ -518,7 +518,7 @@ namespace GoedelShell {
 					Generate		Dummy = new Generate ();
 #pragma warning restore 219
 
-					Console.Write ("{0}generate ", UsageFlag);
+					Console.Write ("{0}in ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.InputFile.Usage (null, "input", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.OutputFile.Usage (null, "output", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.CommentLine.Usage ("line", "value", UsageFlag));

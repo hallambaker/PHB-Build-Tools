@@ -8,7 +8,7 @@
 	About "about"
 	Brief "brief"
 
-	Command HTML "rfc"
+	Command HTML "in"
 		DefaultCommand
 		Lazy Lazy "lazy"	
 			Brief "Only generate code if source or program have changed"

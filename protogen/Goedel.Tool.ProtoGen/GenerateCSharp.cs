@@ -2,7 +2,7 @@
 // Script Syntax Version:  1.0
 // #license MITLicense 
 
-//  Copyright ©  2011 by Default Deny Security Inc.
+//  Unknown by Unknown
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -52,8 +52,7 @@ namespace Goedel.Tool.ProtoGen {
 			 ProtoStruct.Complete ();
 			// #% var GenerateTime =System.DateTime.UtcNow; 
 			 var GenerateTime =System.DateTime.UtcNow;
-			// #% Boilerplate.Header (_Output, "//  ", GenerateTime); 
-			 Boilerplate.Header (_Output, "//  ", GenerateTime);
+			// #!% Boilerplate.Header (_Output, "//  ", GenerateTime); 
 			// #% Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + "2016", "."); 
 			 Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + "2016", ".");
 			// #% var InheritsOverride = "override"; // "virtual" 

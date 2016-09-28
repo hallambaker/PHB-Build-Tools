@@ -7,7 +7,7 @@
 
 	About "about"
 
-	Command  FSR "fsr"
+	Command  FSR "in"
 		DefaultCommand
 
 		Lazy Lazy "lazy"	

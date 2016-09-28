@@ -58,7 +58,7 @@ namespace MakeRFC {
 							Usage ();
 							break;
 							}
-						case "rfc" : {
+						case "in" : {
 							Handle_HTML (Dispatch, args, 1);
 							break;
 							}
@@ -387,7 +387,7 @@ namespace MakeRFC {
 					HTML		Dummy = new HTML ();
 #pragma warning restore 219
 
-					Console.Write ("{0}rfc ", UsageFlag);
+					Console.Write ("{0}in ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.InputFile.Usage (null, "input", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.InputFormat.Usage ("in", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Catalog.Usage ("catalog", "value", UsageFlag));
@@ -605,7 +605,7 @@ namespace MakeRFC {
 					HTML		Dummy = new HTML ();
 #pragma warning restore 219
 
-					Console.Write ("{0}rfc ", UsageFlag);
+					Console.Write ("{0}in ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.InputFile.Usage (null, "input", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.InputFormat.Usage ("in", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Catalog.Usage ("catalog", "value", UsageFlag));

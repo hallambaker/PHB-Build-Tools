@@ -54,7 +54,7 @@ namespace CommandShell {
 							FileTools.About ();
 							break;
 							}
-						case "generate" : {
+						case "in" : {
 							Handle_Generate (Dispatch, args, 1);
 							break;
 							}
@@ -144,7 +144,7 @@ namespace CommandShell {
 					Generate		Dummy = new Generate ();
 #pragma warning restore 219
 
-					Console.Write ("{0}generate ", UsageFlag);
+					Console.Write ("{0}in ", UsageFlag);
 					Console.WriteLine ();
 
 					Console.WriteLine ("    Generate code to serialize/deserialize schema");

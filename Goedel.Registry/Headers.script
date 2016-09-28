@@ -18,7 +18,6 @@
 #block Header
 #% public static void Header (TextWriter _Output, string Comment, DateTime GenerateTime) {
 #% string _Indent = "";
-#% System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 #prefix Comment
 
 This file was automatically generated at #{GenerateTime.ToLocalTime()}
@@ -31,7 +30,7 @@ Generator:  #{Script.AssemblyTitle} version #{Script.AssemblyVersion}
 
     Copyright : #{Script.AssemblyCopyright}
 
-Build Platform: #{OperatingSystem.Platform} #{OperatingSystem.Version}
+Build Platform: #{Script.Platform} #{Script.PlatformVersion}
 
 #end prefix
 #% }

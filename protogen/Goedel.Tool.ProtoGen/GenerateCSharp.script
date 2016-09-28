@@ -10,7 +10,7 @@
 #method GenerateCS ProtoStruct ProtoStruct
 #% ProtoStruct.Complete ();
 #% var GenerateTime =System.DateTime.UtcNow;
-#% Boilerplate.Header (_Output, "//  ", GenerateTime);
+#!% Boilerplate.Header (_Output, "//  ", GenerateTime);
 #% Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + "2016", ".");
 #% var InheritsOverride = "override"; // "virtual"
 

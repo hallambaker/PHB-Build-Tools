@@ -54,7 +54,7 @@ namespace Goedel.Shell.FSRGen {
 							FileTools.About ();
 							break;
 							}
-						case "fsr" : {
+						case "in" : {
 							Handle_FSR (Dispatch, args, 1);
 							break;
 							}
@@ -157,7 +157,7 @@ namespace Goedel.Shell.FSRGen {
 					FSR		Dummy = new FSR ();
 #pragma warning restore 219
 
-					Console.Write ("{0}fsr ", UsageFlag);
+					Console.Write ("{0}in ", UsageFlag);
 					Console.WriteLine ();
 
 				}

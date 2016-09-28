@@ -54,7 +54,7 @@ namespace Command {
 							FileTools.About ();
 							break;
 							}
-						case "schema" : {
+						case "in" : {
 							Handle_Schema (Dispatch, args, 1);
 							break;
 							}
@@ -196,7 +196,7 @@ namespace Command {
 					Schema		Dummy = new Schema ();
 #pragma warning restore 219
 
-					Console.Write ("{0}schema ", UsageFlag);
+					Console.Write ("{0}in ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.DebugLexer.Usage ("dlexer", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.DebugParser.Usage ("dparser", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.DebugStack.Usage ("dstack", "value", UsageFlag));
