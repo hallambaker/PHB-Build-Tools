@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Makey</RootNamespace>
     <AssemblyName>Makey</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,9 +56,14 @@
     </None>
     <None Include="makefile" />
     <None Include="packages.config" />
-    <None Include="Shell Makey.proj" />
+    <Content Include="BuildTools.sln" />
+    <Content Include="Shell Makey.test.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Goedel.IO\Goedel.IO.csproj">
+      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
+      <Name>Goedel.IO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Goedel.Registry\Goedel.Registry.csproj">
       <Project>{f2a1f8ea-18e2-4f3a-aeaf-3983cea19fe0}</Project>
       <Name>Goedel.Registry</Name>

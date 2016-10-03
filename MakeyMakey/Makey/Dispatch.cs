@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
 
+using System.Collections.Generic;
+using Goedel.IO;
 using Goedel.Registry;
 using Goedel.Tool.Makey;
 
@@ -16,37 +17,65 @@ namespace Goedel.Shell.Makey {
         public override void Project(Project Options) {
 
 
-            string inputfile = Options.InputFile.Text;
-            string outputfile = Options?.OutputFile?.Text ?? "makefile";
+            string Inputfile = Options.InputFile.Text;
+            string Outputfile = Options?.OutputFile?.Text ?? "makefile";
 
-            if (outputfile == null) {
-                outputfile = Path.GetFileNameWithoutExtension(inputfile) +
+            if (Outputfile == null) {
+                Outputfile = Path.GetFileNameWithoutExtension(Inputfile) +
                     "." + Options.OutputFile.Extension;
                 }
-            if (Options.Lazy.IsSet & FileTools.UpToDate(inputfile, outputfile)) {
+            if (Options.Lazy.IsSet & FileTools.UpToDate(Inputfile, Outputfile)) {
                 return;
                 }
 
-            Console.WriteLine("Process file {0} to {1}", inputfile, outputfile);
+            var InType = Path.GetExtension(Inputfile);
 
-            VSProject Project;
-            using (Stream scriptfile =
-                new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
+            if (InType == ".sln") {
+                var Solution = new VSSolution(Inputfile);
+                var SolutionPath = Path.GetDirectoryName(Inputfile);
 
-                using (var TextReader = new StreamReader(scriptfile)) {
+                Solution.Directory = SolutionPath;
 
-                    Project = new VSProject(TextReader);
+                var OutputFile = Path.Combine(SolutionPath, "Makefile");
+
+                foreach (var Item in Solution.Projects) {
+                    var ProjectFile = Path.Combine(SolutionPath, Item.Directory);
+
+                    Item.Project = new VSProject(ProjectFile, true);
+
+                    var ProjectPath = Path.GetDirectoryName(Item.Directory);
+                    var TargetFile = Path.Combine(SolutionPath, ProjectPath, "Makefile");
+
+                    Console.WriteLine("Make Project {0} -> {1}", ProjectFile, TargetFile);
+
+                    using (var outputStream = TargetFile.OpenFileWrite()) {
+                        using (var outputText = outputStream.OpenTextWriter()) {
+                            var Generate = new Generate(outputText);
+
+                            Generate.GenerateMakefile(Item.Project);
+                            }
+                        }
+                    }
+
+                using (var outputStream = OutputFile.OpenFileWrite()) {
+                    using (var outputText = outputStream.OpenTextWriter()) {
+                        var Generate = new Generate(outputText);
+                        Generate.GenerateMakefile(Solution);
+                        }
                     }
                 }
+            else if (InType == ".csproj") {
+                Console.WriteLine("Process project {0} to {1}", Inputfile, Outputfile);
 
-            using (Stream outputStream =
-                new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-                using (TextWriter outputText = new StreamWriter(outputStream)) {
-                    var Generate = new Generate(outputText);
+                var Project = new VSProject(Inputfile, true); 
 
-                    Generate.GenerateMakefile(Project);
+                using (var outputStream =Outputfile.OpenFileWrite()) {
+                    using (var outputText = outputStream.OpenTextWriter()) {
+                        var Generate = new Generate(outputText);
+
+                        Generate.GenerateMakefile(Project);
+                        }
                     }
-
                 }
             }
         }

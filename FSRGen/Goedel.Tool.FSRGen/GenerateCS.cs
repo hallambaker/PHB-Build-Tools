@@ -2,7 +2,7 @@
 // Script Syntax Version:  1.0
 // #license MITLicense 
 
-//  Copyright ©  2011 by Default Deny Security Inc.
+//  Unknown by Unknown
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -110,34 +110,6 @@ namespace Goedel.Tool.FSRGen {
 					_Output.Write ("        /// <param name=\"Reader\">The input source.</param>\n{0}", _Indent);
 					//         public  #{FSR.Prefix}(LexReader Reader) : base (Reader) { 
 					_Output.Write ("        public  {1}(LexReader Reader) : base (Reader) {{\n{0}", _Indent, FSR.Prefix);
-					//             } 
-					_Output.Write ("            }}\n{0}", _Indent);
-					//  
-					_Output.Write ("\n{0}", _Indent);
-					//         /// <summary> 
-					_Output.Write ("        /// <summary>\n{0}", _Indent);
-					//         /// Create and initialize a lexical analyzer. 
-					_Output.Write ("        /// Create and initialize a lexical analyzer.\n{0}", _Indent);
-					//         /// </summary> 
-					_Output.Write ("        /// </summary>\n{0}", _Indent);
-					//         /// <param name="FileInfo">The input source.</param> 
-					_Output.Write ("        /// <param name=\"FileInfo\">The input source.</param>\n{0}", _Indent);
-					//         public  #{FSR.Prefix}(FileInfo FileInfo) : base (new LexReader (FileInfo)) { 
-					_Output.Write ("        public  {1}(FileInfo FileInfo) : base (new LexReader (FileInfo)) {{\n{0}", _Indent, FSR.Prefix);
-					//             } 
-					_Output.Write ("            }}\n{0}", _Indent);
-					//  
-					_Output.Write ("\n{0}", _Indent);
-					//         /// <summary> 
-					_Output.Write ("        /// <summary>\n{0}", _Indent);
-					//         /// Create and initialize a lexical analyzer. 
-					_Output.Write ("        /// Create and initialize a lexical analyzer.\n{0}", _Indent);
-					//         /// </summary> 
-					_Output.Write ("        /// </summary>\n{0}", _Indent);
-					//         /// <param name="FilePath">The input source.</param> 
-					_Output.Write ("        /// <param name=\"FilePath\">The input source.</param>\n{0}", _Indent);
-					//         public  #{FSR.Prefix}(string FilePath) : base(new LexReader(FilePath)) { 
-					_Output.Write ("        public  {1}(string FilePath) : base(new LexReader(FilePath)) {{\n{0}", _Indent, FSR.Prefix);
 					//             } 
 					_Output.Write ("            }}\n{0}", _Indent);
 					//  

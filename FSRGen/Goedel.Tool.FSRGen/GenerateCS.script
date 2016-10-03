@@ -42,20 +42,6 @@ namespace #{FSR.Id}{
         /// <summary>
         /// Create and initialize a lexical analyzer.
         /// </summary>
-        /// <param name="FileInfo">The input source.</param>
-        public  #{FSR.Prefix}(FileInfo FileInfo) : base (new LexReader (FileInfo)) {
-            }
-
-        /// <summary>
-        /// Create and initialize a lexical analyzer.
-        /// </summary>
-        /// <param name="FilePath">The input source.</param>
-        public  #{FSR.Prefix}(string FilePath) : base(new LexReader(FilePath)) {
-            }
-
-        /// <summary>
-        /// Create and initialize a lexical analyzer.
-        /// </summary>
         /// <param name="Stream">The input source.</param>
         public  #{FSR.Prefix}(Stream Stream) : base(new LexReader(Stream)) {
             }

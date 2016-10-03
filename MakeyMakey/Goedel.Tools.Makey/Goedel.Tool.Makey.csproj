@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Tools.Makey</RootNamespace>
     <AssemblyName>Goedel.Tools.Makey</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+    </Compile>
     <Compile Include="Microsoft_Build_Core.cs" />
     <Compile Include="ParseProject.cs" />
     <Compile Include="GenerateMakefile.cs">
@@ -47,10 +53,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="ParseSolution.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tokenizer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tokenizer.fsr</DependentUpon>
+    </Compile>
+    <Compile Include="TokenizerPlus.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Exceptions.exceptional">
+      <Generator>exceptional</Generator>
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+    </None>
     <None Include="GenerateMakefile.script">
       <Generator>GScript</Generator>
       <LastGenOutput>GenerateMakefile.cs</LastGenOutput>
@@ -58,11 +75,27 @@
     <None Include="Microsoft.Build.Core.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Tokenizer.fsr">
+      <Generator>fsrcs</Generator>
+      <LastGenOutput>Tokenizer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Goedel.IO\Goedel.IO.csproj">
+      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
+      <Name>Goedel.IO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Goedel.Registry\Goedel.Registry.csproj">
       <Project>{f2a1f8ea-18e2-4f3a-aeaf-3983cea19fe0}</Project>
       <Name>Goedel.Registry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
+      <Project>{ccc286f1-6a5b-4946-a382-8a48797192b4}</Project>
+      <Name>Goedel.FSR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
+      <Name>Goedel.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

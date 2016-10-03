@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 //using Goedel.Registry;
 //using Goedel.Utilities;
@@ -89,7 +90,11 @@ namespace Goedel.Tool.Makey {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Private")]
-        public bool Private { get; set; }
+        public string Private { get; set; }
+
+        public string Name {
+            get { return HintPath != null ? Path.GetFileName(HintPath) : null; }
+            }
 
         }
 

@@ -3,7 +3,9 @@
 #xclass Goedel.Tool.Makey Generate
 #%  public Generate (TextWriter Output) : base (Output) {}
 #% string Prefix = "! "; //"\t";
-#method GenerateMakefile VSProject Project
+
+
+#method Preamble VSFile VSFile
 ##
 ## Makefile for Visual Studio Project ...
 ##
@@ -44,19 +46,25 @@
 ## ~/Tools/<Arch1>			The bundled executable for this platform <Arch1>	
 
 export TARGETROOT	?= mono
-export MODE		?= Release
-export ARCH		?= This
+export MODE			?= Release
+export ARCH			?= This
+export Packages		?= ~/Packages
+export PackagesPath ?= /lib/net40
 
-export TARGETBIN	= $(TARGETROOT)/$(MODE)/
-export TARGETEXE	= $(TARGETROOT)/$(ARCH)/
+export TARGETBIN	= $(TARGETROOT)/$(MODE)
+export TARGETEXE	= $(TARGETROOT)/$(ARCH)
 
-export INSTALLROOT	?= ~/Tools/
-export INSTALL		?= $INSTALLROOT$(ARCH)/
+export DESTDIR		?= ~/.local
+export bindir		?= /bin
+export libdir		?= /lib
+export INSTALL_PROGRAM	?= $(DESTDIR)$(bindir)
+export INSTALL_DATA		?= $(DESTDIR)$(bindir)
 
 ## Define the default compilers, linkers, packagers, etc.
 export CSHARPDLL	?=  mcs /target:library
 export CSHARPEXE	?=  mcs /target:exe
 export BUNDLE		?=  mkbundle --deps --static -o 
+
 
 
 ## The following tools are used in the goedel build system itself:
@@ -81,37 +89,93 @@ export BUNDLE		?=  mkbundle --deps --static -o
 ## be supported on versions of make other than gmake.
 .RECIPEPREFIX = #{Prefix}
 #end if
+#end method
 
+
+#method GenerateMakefile VSSolution Solution
+#call Preamble Solution
 
 ## The main target
 
-#if (Project.OutputType == "Exe")
-#foreach (var File in Project.SourceDependency)
-$(TARGETBIN)#{Project.AssemblyName}.exe : #{File}
+.PHONY all
+
+## Need to identify the target directory using UnixPath()
+## This file in directory #{Solution.Directory}
+
+#foreach (var Item in Solution.Projects)
+#% var Project = Item.Project;
+#% var TargetPath = Item.Directory.UnixPath (Project.Target);
+#if (Project.Target != null)
+all :  #{Project.Target}
+
+#foreach (var Dep in Project.LinkDependency)
+#% var DepPath = Item.Directory.UnixFile (Dep);
+#{TargetPath} : #{DepPath}
 #end foreach
-#foreach (var File in Project.LinkDependency)
-$(TARGETBIN)#{Project.AssemblyName}.exe : $(TARGETBIN)#{File}.dll
+#{TargetPath} :
+#{Prefix}$(MAKE) -C #{Project.Directory}
+
+#end if
 #end foreach
 
-$(TARGETBIN)#{Project.AssemblyName}.exe :
-#{Prefix}$(CSHARPEXE) /out:$@ $^
+#end method
 
-$(TARGETBIN)#{Project.AssemblyName} : $(TARGETBIN)#{Project.AssemblyName}.exe
+
+
+#method GenerateMakefile VSProject Project
+#call Preamble Project
+
+## The main target
+
+#if (Project.IsExe)
+$(TARGETEXE)/#{Project.AssemblyName} :| $(TARGETEXE)
+$(TARGETEXE)/#{Project.AssemblyName} : $(TARGETBIN)/#{Project.AssemblyName}.exe 
 #{Prefix}$(BUNDLE) $@ $^
 
-#elseif (Project.OutputType == "Library")
+
+$(TARGETBIN)/#{Project.Target} :| $(TARGETBIN)
 #foreach (var File in Project.SourceDependency)
-$(TARGETBIN)#{Project.AssemblyName}.dll : #{File}
+$(TARGETBIN)/#{Project.Target} : #{File.UnixFile()} 
 #end foreach
 #foreach (var File in Project.LinkDependency)
-$(TARGETBIN)#{Project.AssemblyName}.dll : $(TARGETBIN)#{File}.dll
+$(TARGETBIN)/#{Project.Target} : $(TARGETBIN)/#{File}.dll
 #end foreach
 
-$(TARGETBIN)#{Project.AssemblyName}.dll : 
+$(TARGETBIN/)#{Project.Target} :
+#{Prefix}$(CSHARPEXE) /out:$@ $^
+
+
+#elseif (Project.IsLibrary)
+$(TARGETBIN)/#{Project.Target} :| $(TARGETBIN)
+#foreach (var File in Project.SourceDependency)
+$(TARGETBIN)/#{Project.Target} : #{File}
+#end foreach
+#foreach (var File in Project.LinkDependency)
+$(TARGETBIN)/#{Project.Target} : $(TARGETBIN)/#{File}.dll
+#end foreach
+#foreach (var Item in Project.PrivateReference)
+$(TARGETBIN)/#{Project.Target} : $(TARGETBIN)/#{Item.Name}.dll
+#end foreach
+
+$(TARGETBIN)#{Project.Target} : 
 #{Prefix}$(CSHARPDLL) /out:$@ $^
 
 #else
 #end if
+
+## Directories etc.
+
+$(INSTALL_PROGRAM) :
+#{Prefix}mkdir -p $(INSTALL_PROGRAM) 
+
+$(INSTALL_DATA) :
+#{Prefix}mkdir -p $(INSTALL_DATA) 
+
+$(TARGETBIN) :
+#{Prefix}mkdir -p $(TARGETBIN) 
+
+$(TARGETEXE) :
+#{Prefix}mkdir -p $(TARGETEXE) 
 
 
 ## Generated code
@@ -127,12 +191,31 @@ $(TARGETBIN)#{Project.AssemblyName}.dll :
 
 
 ## Referenced projects
+##
+
+## Recursive make targets, do not execute if the variable NORECURSE is defined
+ifndef NORECURSE
 
 #foreach (var Item in Project.ProjectReference)
-$(TARGETBIN)/#{Item.Name}.dll : recursive
-#{Prefix}$(Make) -C #{Item.Include.UnixPath()}
+#{Item.Include.UnixPath()}/$(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll : recursive
+#{Prefix}$(MAKE) -C #{Item.Include.UnixPath()}
+
+#end foreach
+endif
+
+# copy libraries into the base library
+#foreach (var Item in Project.ProjectReference)
+$(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll : #{Item.Include.UnixPath()}/$(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll
+#{Prefix} cp #{Item.Include.UnixPath()}/$(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll $(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll
+
 #end foreach
 
+## Referenced Libraries
+##
+#foreach (var Item in Project.PrivateReference)
+$(TARGETBIN)/#{Item.Name} : #{Item.HintPath.UnixFile()}
+#{Prefix} cp   #{Item.HintPath.UnixFile()} $(TARGETBIN)/#{Item.Name}
+#end foreach
 
 
 ## Clean up
@@ -142,26 +225,44 @@ $(TARGETBIN)/#{Item.Name}.dll : recursive
 ## file is suspected.
 
 clean : 
-	rm -f $(TARGETBIN)/*
-	rm -f $(TARGETEXE)/*
+#{Prefix}rm -f $(TARGETBIN)/*
+#{Prefix}rm -f $(TARGETEXE)/*
 
 ## Install
 ##
-## Install files to a tools directory. Default is ~/Tools/Arch
+## Install files to a tools directory. Default is ~/.local/bin
 
-install : 
 
+#if (Project.IsExe)
+install : $(INSTALL_PROGRAM)/#{Project.AssemblyName} 
+
+$(INSTALL_PROGRAM)/#{Project.AssemblyName}  :| $(INSTALL_PROGRAM)
+$(INSTALL_PROGRAM)/#{Project.AssemblyName}  : $(TARGETEXE)/#{Project.AssemblyName} 
+#{Prefix}cp $^ $@ 
+
+#elseif (Project.OutputType == "Library")
+install : $(INSTALL_DATA)/#{Project.AssemblyName}.dll
+
+$(INSTALL_DATA)/#{Project.AssemblyName}.dll :| $(INSTALL_DATA)
+$(INSTALL_DATA)/#{Project.AssemblyName}.dll : $(TARGETBIN)/#{Project.AssemblyName}.dll
+#{Prefix}cp $^ $@ 
+
+#end if
 
 ## Cross
 ##
 ## Cross compilation targets. 
 
 
-cross :
+#if (Project.IsExe)
+#foreach (var Arch in Project.CrossTargets)
+cross : $(TARGETROOT)/#{Arch}/#{Project.AssemblyName} 
+$(TARGETROOT)/#{Arch}/#{Project.AssemblyName} : $(TARGETBIN)/#{Project.AssemblyName}.exe
+#{Prefix}mkdir -p $(TARGETROOT)/#{Arch}/#{Project.AssemblyName} 
+#{Prefix}$(BUNDLE) $@ --cross ${Arch} $^
 
-
-
-
+#end foreach
+#end if
 
 #end method
 
