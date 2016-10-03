@@ -56,6 +56,7 @@ namespace Goedel.Tool.Makey {
         public bool IsExe = false;
         public bool IsLibrary = false;
         public string AssemblyName { get; set; } = null;
+        public string ProjectGuid { get; set; } = null;
 
         public List<ReferenceType> Reference { get; set; } = new List<ReferenceType>();
         public List<ReferenceType> PrivateReference { get; set; } = new List<ReferenceType>();
@@ -98,6 +99,7 @@ namespace Goedel.Tool.Makey {
             foreach (var PropertyGroup in Project.PropertyGroup) {
                 OutputType = OutputType != null ? OutputType : PropertyGroup.OutputType;
                 AssemblyName = AssemblyName != null ? AssemblyName : PropertyGroup.AssemblyName;
+                ProjectGuid = ProjectGuid != null ? ProjectGuid : PropertyGroup.ProjectGuid;
                 }
 
             switch (OutputType) {

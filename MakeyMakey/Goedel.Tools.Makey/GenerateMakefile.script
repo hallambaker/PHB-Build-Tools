@@ -58,7 +58,7 @@ export DESTDIR		?= ~/.local
 export bindir		?= /bin
 export libdir		?= /lib
 export INSTALL_PROGRAM	?= $(DESTDIR)$(bindir)
-export INSTALL_DATA		?= $(DESTDIR)$(bindir)
+export INSTALL_DATA		?= $(DESTDIR)$(libdir)
 
 ## Define the default compilers, linkers, packagers, etc.
 export CSHARPDLL	?=  mcs /target:library
@@ -97,25 +97,42 @@ export BUNDLE		?=  mkbundle --deps --static -o
 
 ## The main target
 
-.PHONY all
+.PHONY : all always
 
 ## Need to identify the target directory using UnixPath()
 ## This file in directory #{Solution.Directory}
 
 #foreach (var Item in Solution.Projects)
-#% var Project = Item.Project;
-#% var TargetPath = Item.Directory.UnixPath (Project.Target);
-#if (Project.Target != null)
-all :  #{Project.Target}
-
-#foreach (var Dep in Project.LinkDependency)
-#% var DepPath = Item.Directory.UnixFile (Dep);
-#{TargetPath} : #{DepPath}
-#end foreach
-#{TargetPath} :
-#{Prefix}$(MAKE) -C #{Project.Directory}
-
+#% var  Project = Item.Project;
+#% var Target = Project.Target.UnixFile();
+#% var Directory = Item.Directory.UnixPath();
+## Project : #{Target}
+## Item :  #{Directory}
+#if (Project.IsExe)
+## Output :     #{Directory}/$(TARGETBIN)/#{Target}
+#elseif (Project.IsLibrary)
+## Output :     #{Directory}/$(TARGETBIN)/#{Target}
+#else
 #end if
+
+all : #{Directory}/$(TARGETBIN)/#{Project.Target}
+
+#foreach (var Dep in Project.ProjectReference)
+#% var SubProject = Dep.SubProject;
+#% var GUID = SubProject.ProjectGuid;
+#% var SubProjectRef = Solution.ByGuid (GUID);
+#% var SubProjectDir = Solution.ByGuid (GUID).Directory.UnixPath();
+## SubTarget #{SubProject.Target}
+## SubProject #{SubProjectDir}
+## GUID #{GUID}
+#{Directory}/$(TARGETBIN)/#{Project.Target} : #{SubProjectDir}/$(TARGETBIN)/#{SubProject.Target}
+
+
+#end foreach
+
+#{Directory}/$(TARGETBIN)/#{Project.Target} : always
+#{Prefix}make -C  #{Directory}
+
 #end foreach
 
 #end method
@@ -125,40 +142,46 @@ all :  #{Project.Target}
 #method GenerateMakefile VSProject Project
 #call Preamble Project
 
-## The main target
+## The main target 
 
+SourceFiles = #!
+#foreach (var File in Project.SourceDependency)
+\
+     #{File.UnixFile()}#!
+#end foreach
+
+
+LinkFiles = #!
+#foreach (var File in Project.LinkDependency)
+\
+    $(TARGETBIN)/#{File}#!
+#end foreach
+
+
+NugetFiles = #!
+#foreach (var File in Project.PrivateReference)
+\
+    $(TARGETBIN)/#{File}#!
+#end foreach
+
+
+## A) Main target packaged
 #if (Project.IsExe)
 $(TARGETEXE)/#{Project.AssemblyName} :| $(TARGETEXE)
 $(TARGETEXE)/#{Project.AssemblyName} : $(TARGETBIN)/#{Project.AssemblyName}.exe 
 #{Prefix}$(BUNDLE) $@ $^
 
-
+## B) Main target executable
 $(TARGETBIN)/#{Project.Target} :| $(TARGETBIN)
-#foreach (var File in Project.SourceDependency)
-$(TARGETBIN)/#{Project.Target} : #{File.UnixFile()} 
-#end foreach
-#foreach (var File in Project.LinkDependency)
-$(TARGETBIN)/#{Project.Target} : $(TARGETBIN)/#{File}.dll
-#end foreach
-
-$(TARGETBIN/)#{Project.Target} :
-#{Prefix}$(CSHARPEXE) /out:$@ $^
-
+$(TARGETBIN)/#{Project.Target} : $(SourceFiles) $(LinkFiles) $(NugetFiles)
+#{Prefix}$(CSHARPEXE) /out:$@ $(SourceFiles) $(LinkFiles) $(NugetFiles)
 
 #elseif (Project.IsLibrary)
-$(TARGETBIN)/#{Project.Target} :| $(TARGETBIN)
-#foreach (var File in Project.SourceDependency)
-$(TARGETBIN)/#{Project.Target} : #{File}
-#end foreach
-#foreach (var File in Project.LinkDependency)
-$(TARGETBIN)/#{Project.Target} : $(TARGETBIN)/#{File}.dll
-#end foreach
-#foreach (var Item in Project.PrivateReference)
-$(TARGETBIN)/#{Project.Target} : $(TARGETBIN)/#{Item.Name}.dll
-#end foreach
 
-$(TARGETBIN)#{Project.Target} : 
-#{Prefix}$(CSHARPDLL) /out:$@ $^
+$(TARGETBIN)/#{Project.Target} :| $(TARGETBIN)
+
+$(TARGETBIN)/#{Project.Target} :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
+#{Prefix}$(CSHARPDLL) /out:$@  $(SourceFiles) $(LinkFiles) $(NugetFiles)
 
 #else
 #end if

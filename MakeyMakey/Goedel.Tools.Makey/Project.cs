@@ -36,6 +36,10 @@ namespace Goedel.Tool.Makey {
     public partial class PropertyGroupType {
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ProjectGuid")]
+        public string ProjectGuid { get; set; }
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("OutputType")]
         public string OutputType { get; set; }
 

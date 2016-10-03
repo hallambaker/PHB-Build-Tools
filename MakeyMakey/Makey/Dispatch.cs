@@ -48,7 +48,7 @@ namespace Goedel.Shell.Makey {
 
                     Console.WriteLine("Make Project {0} -> {1}", ProjectFile, TargetFile);
 
-                    using (var outputStream = TargetFile.OpenFileWrite()) {
+                    using (var outputStream = TargetFile.OpenFileNew()) {
                         using (var outputText = outputStream.OpenTextWriter()) {
                             var Generate = new Generate(outputText);
 
@@ -57,7 +57,7 @@ namespace Goedel.Shell.Makey {
                         }
                     }
 
-                using (var outputStream = OutputFile.OpenFileWrite()) {
+                using (var outputStream = OutputFile.OpenFileNew()) {
                     using (var outputText = outputStream.OpenTextWriter()) {
                         var Generate = new Generate(outputText);
                         Generate.GenerateMakefile(Solution);
@@ -69,7 +69,7 @@ namespace Goedel.Shell.Makey {
 
                 var Project = new VSProject(Inputfile, true); 
 
-                using (var outputStream =Outputfile.OpenFileWrite()) {
+                using (var outputStream =Outputfile.OpenFileNew()) {
                     using (var outputText = outputStream.OpenTextWriter()) {
                         var Generate = new Generate(outputText);
 
