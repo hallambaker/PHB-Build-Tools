@@ -51,7 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Annotate.cs" />
-    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="Command.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -2,7 +2,7 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"
                  xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="5232FCB3-2937-4BCB-BF3D-AB58810C8295" Version="1.5" Language="en-US" Publisher="Phillip Hallam-Baker" />
+    <Identity Id="5232FCB3-2937-4BCB-BF3D-AB58810C8295" Version="1.6" Language="en-US" Publisher="Phillip Hallam-Baker" />
     <DisplayName>WhiPHB RFC Tools</DisplayName>
     <Description xml:space="preserve">Phill Hallam-Baker's RFC and document tools
 
@@ -26,8 +26,8 @@ Note, this version of the tools does not support syntax shading.</Description>
   <Assets>
     <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
     <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.RFCTool" Path="|Goedel.Tool.RFCTool|" AssemblyName="|Goedel.Tool.RFCTool;AssemblyName|" />
-    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.RFCTool Binding" Path="|Goedel.Tool.RFCTool Binding|" AssemblyName="|Goedel.Tool.RFCTool Binding;AssemblyName|" />
     <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Registry" Path="|Goedel.Registry|" AssemblyName="|Goedel.Registry;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.RFCTool.Binding" Path="|Goedel.Tool.RFCTool.Binding|" AssemblyName="|Goedel.Tool.RFCTool.Binding;AssemblyName|" />
   </Assets>
 </PackageManifest>
 

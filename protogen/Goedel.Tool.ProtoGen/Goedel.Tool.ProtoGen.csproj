@@ -49,7 +49,6 @@
       <Generator>GScript</Generator>
       <LastGenOutput>GenerateCSharp.cs</LastGenOutput>
     </None>
-    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="Document.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -141,7 +141,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="GoedelBinding.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

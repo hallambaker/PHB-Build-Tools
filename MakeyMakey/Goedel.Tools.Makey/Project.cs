@@ -35,6 +35,13 @@ namespace Goedel.Tool.Makey {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
     public partial class PropertyGroupType {
 
+
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ProjectTypeGuids")]
+        public string ProjectTypeGuids { get; set; }
+
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ProjectGuid")]
         public string ProjectGuid { get; set; }

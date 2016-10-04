@@ -45,7 +45,6 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="Import.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

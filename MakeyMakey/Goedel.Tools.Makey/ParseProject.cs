@@ -57,6 +57,8 @@ namespace Goedel.Tool.Makey {
         public bool IsLibrary = false;
         public string AssemblyName { get; set; } = null;
         public string ProjectGuid { get; set; } = null;
+        public string ProjectTypeGuids { get; set; } = null;
+        
 
         public List<ReferenceType> Reference { get; set; } = new List<ReferenceType>();
         public List<ReferenceType> PrivateReference { get; set; } = new List<ReferenceType>();
@@ -100,6 +102,7 @@ namespace Goedel.Tool.Makey {
                 OutputType = OutputType != null ? OutputType : PropertyGroup.OutputType;
                 AssemblyName = AssemblyName != null ? AssemblyName : PropertyGroup.AssemblyName;
                 ProjectGuid = ProjectGuid != null ? ProjectGuid : PropertyGroup.ProjectGuid;
+                ProjectTypeGuids = ProjectTypeGuids != null ? ProjectTypeGuids : PropertyGroup.ProjectTypeGuids;
                 }
 
             switch (OutputType) {
@@ -131,6 +134,7 @@ namespace Goedel.Tool.Makey {
                         Reference.Add(Item);
                         if (Item.Private == "True") {
                             PrivateReference.Add(Item);
+                            Console.WriteLine("Nuget Package Path {0}", Item.HintPath);
                             }
                         }
                     }

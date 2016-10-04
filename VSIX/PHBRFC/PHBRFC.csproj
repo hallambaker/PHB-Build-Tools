@@ -141,7 +141,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="Binding1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -195,9 +194,11 @@
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
-    <ProjectReference Include="..\..\RFCTool\Goedel.Tool.RFCTool Binding\Goedel.Tool.RFCTool Binding.csproj">
+    <ProjectReference Include="..\..\RFCTool\Goedel.Tool.RFCTool.Binding\Goedel.Tool.RFCTool.Binding.csproj">
       <Project>{dc03ab95-92b7-4143-9333-f5ce74bcb124}</Project>
-      <Name>Goedel.Tool.RFCTool Binding</Name>
+      <Name>Goedel.Tool.RFCTool.Binding</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
     <ProjectReference Include="..\..\RFCTool\LibBootMaker\LibBootMaker.csproj">
       <Project>{BA3E686D-8404-46B3-B06D-048E6367E4EB}</Project>

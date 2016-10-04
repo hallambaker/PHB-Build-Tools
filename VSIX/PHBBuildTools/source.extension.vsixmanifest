@@ -2,7 +2,7 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"
                  xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="D93BF07A-0921-43F0-B959-7C7AC4CC72F6" Version="1.5" Language="en-US" Publisher="Phillip Hallam-Baker" />
+    <Identity Id="D93BF07A-0921-43F0-B959-7C7AC4CC72F6" Version="1.6" Language="en-US" Publisher="Phillip Hallam-Baker" />
     <DisplayName>PHB Code Generation Tools</DisplayName>
     <Description xml:space="preserve">Phill Hallam-Baker's code generation tools.
 
@@ -34,7 +34,6 @@ Note, this version of the tools does not support syntax shading.</Description>
     <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.VSIXBuild" Path="|Goedel.Tool.VSIXBuild|" AssemblyName="|Goedel.Tool.VSIXBuild;AssemblyName|" />
     <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.ProtoGen" Path="|Goedel.Tool.ProtoGen|" AssemblyName="|Goedel.Tool.ProtoGen;AssemblyName|" />
     <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Trojan.Script" Path="|Goedel.Trojan.Script|" AssemblyName="|Goedel.Trojan.Script;AssemblyName|" />
-    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Registry" Path="|Goedel.Registry|" AssemblyName="|Goedel.Registry;AssemblyName|" />
   </Assets>
 </PackageManifest>
 

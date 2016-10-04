@@ -42,7 +42,6 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="Goedel.cs">
       <SubType>Code</SubType>
     </Compile>

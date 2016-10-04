@@ -6,12 +6,16 @@
 
 
 #method Preamble VSFile VSFile
-##
-## Makefile for Visual Studio Project ...
-##
 ## This file is generated automatically from the Visual Studio Project
 ## File. If you make changes to this file and do not update the project
 ## file, changes will be lost when the file is regenerated.
+
+## NB: This process will fail if any of the paths have spaces in them
+## While it is possible to work around the lack of support for spaces in 
+## file paths in gmake, it is not possible to do this reliably in the tools
+## that it invokes to build the system. Rather than do half a job, it seems
+## safest to simply reject the corner case
+
 
 ## The following targets are defined (well planned)
 ##
@@ -93,6 +97,9 @@ export BUNDLE		?=  mkbundle --deps --static -o
 
 
 #method GenerateMakefile VSSolution Solution
+##
+## Makefile for Visual Studio Solution ..
+##
 #call Preamble Solution
 
 ## The main target
@@ -103,13 +110,16 @@ export BUNDLE		?=  mkbundle --deps --static -o
 ## This file in directory #{Solution.Directory}
 
 #foreach (var Item in Solution.Projects)
+#if (Item.MakeUnix())
 #% var  Project = Item.Project;
 #% var Target = Project.Target.UnixFile();
 #% var Directory = Item.Directory.UnixPath();
 ## Project : #{Target}
 ## Item :  #{Directory}
-#if (Project.IsExe)
-## Output :     #{Directory}/$(TARGETBIN)/#{Target}
+#if (Directory.IndexOf(' ') >= 0)
+***** Spaces in file path not supported
+#elseif (Project.IsExe)
+## Output :     #{Directory}/$(TARGETEXE)/#{Target}
 #elseif (Project.IsLibrary)
 ## Output :     #{Directory}/$(TARGETBIN)/#{Target}
 #else
@@ -122,25 +132,35 @@ all : #{Directory}/$(TARGETBIN)/#{Project.Target}
 #% var GUID = SubProject.ProjectGuid;
 #% var SubProjectRef = Solution.ByGuid (GUID);
 #% var SubProjectDir = Solution.ByGuid (GUID).Directory.UnixPath();
-## SubTarget #{SubProject.Target}
-## SubProject #{SubProjectDir}
-## GUID #{GUID}
+#! SubTarget #{SubProject.Target}
+#! SubProject #{SubProjectDir}
+#! GUID #{GUID}
+#if (Project.IsExe)
 #{Directory}/$(TARGETBIN)/#{Project.Target} : #{SubProjectDir}/$(TARGETBIN)/#{SubProject.Target}
-
+#elseif (Project.IsLibrary)
+#{Directory}/$(TARGETBIN)/#{Project.Target} : #{SubProjectDir}/$(TARGETBIN)/#{SubProject.Target}
+#else
+#end if
 
 #end foreach
 
 #{Directory}/$(TARGETBIN)/#{Project.Target} : always
-#{Prefix}make -C  #{Directory}
+#{Prefix}make NORECURSE=true -C #{Directory}
 
+#end if
 #end foreach
 
 #end method
 
 
-
 #method GenerateMakefile VSProject Project
+##
+## Makefile for Visual Studio Project ...
+##
 #call Preamble Project
+#% bool HaveSoure = Project.SourceDependency.Count > 0;
+#% bool HaveLink = Project.LinkDependency.Count > 0;
+#% bool HavePackage = Project.PrivateReference.Count > 0;
 
 ## The main target 
 
@@ -158,9 +178,23 @@ LinkFiles = #!
 #end foreach
 
 
+LinkFilesComma = #!
+#% var LinkSep = new Separator ("", ",");
+#foreach (var File in Project.LinkDependency)
+#{LinkSep}$(TARGETBIN)/#{File}#!
+#end foreach
+
+
 NugetFiles = #!
 #foreach (var File in Project.PrivateReference)
 \
+    $(TARGETBIN)/#{File}#!
+#end foreach
+
+NugetFilesComa = #!
+#% var PkgSep = new Separator ("", ",");
+#foreach (var File in Project.PrivateReference)
+#{PkgSep}\
     $(TARGETBIN)/#{File}#!
 #end foreach
 
@@ -169,19 +203,33 @@ NugetFiles = #!
 #if (Project.IsExe)
 $(TARGETEXE)/#{Project.AssemblyName} :| $(TARGETEXE)
 $(TARGETEXE)/#{Project.AssemblyName} : $(TARGETBIN)/#{Project.AssemblyName}.exe 
-#{Prefix}$(BUNDLE) $@ $^
+#{Prefix}$(BUNDLE) $@ $^ $(LinkFiles)
 
 ## B) Main target executable
 $(TARGETBIN)/#{Project.Target} :| $(TARGETBIN)
 $(TARGETBIN)/#{Project.Target} : $(SourceFiles) $(LinkFiles) $(NugetFiles)
-#{Prefix}$(CSHARPEXE) /out:$@ $(SourceFiles) $(LinkFiles) $(NugetFiles)
+#{Prefix}$(CSHARPEXE) /out:$@  $(SourceFiles) #!
+#if HaveLink
+-reference:$(LinkFilesComma) #!
+#end if
+#if HavePackage
+-pkg:$(NugetFilesComa) #!
+#end if
+
 
 #elseif (Project.IsLibrary)
 
 $(TARGETBIN)/#{Project.Target} :| $(TARGETBIN)
 
 $(TARGETBIN)/#{Project.Target} :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
-#{Prefix}$(CSHARPDLL) /out:$@  $(SourceFiles) $(LinkFiles) $(NugetFiles)
+#{Prefix}$(CSHARPDLL) /out:$@  $(SourceFiles) #!
+#if HaveLink
+-reference:$(LinkFilesComma) #!
+#end if
+#if HavePackage
+-pkg:$(NugetFilesComa) #!
+#end if
+
 
 #else
 #end if
@@ -203,12 +251,16 @@ $(TARGETEXE) :
 
 ## Generated code
 
+ifdef PHB_BUILD
+
 #foreach (var Item in Project.None)
 #if (Item.Generator != null)
 #{Item.LastGenOutput} : #{Item.Include}
 #{Prefix} $(Custom_#{Item.Generator}) #{Item.Include} $(Custom_#{Item.Generator}_FLAG) #{Item.LastGenOutput} 
 #end if
 #end foreach
+
+endif
 
 .PHONY : clean install cross recursive
 
@@ -228,6 +280,7 @@ endif
 
 # copy libraries into the base library
 #foreach (var Item in Project.ProjectReference)
+$(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll :| $(TARGETBIN)
 $(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll : #{Item.Include.UnixPath()}/$(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll
 #{Prefix} cp #{Item.Include.UnixPath()}/$(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll $(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll
 
@@ -236,6 +289,7 @@ $(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll : #{Item.Include.UnixPath()}/$(
 ## Referenced Libraries
 ##
 #foreach (var Item in Project.PrivateReference)
+$(TARGETBIN)/#{Item.Name} :| $(TARGETBIN)
 $(TARGETBIN)/#{Item.Name} : #{Item.HintPath.UnixFile()}
 #{Prefix} cp   #{Item.HintPath.UnixFile()} $(TARGETBIN)/#{Item.Name}
 #end foreach

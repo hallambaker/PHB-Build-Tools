@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="Bibliography.cs" />
     <Compile Include="Document.cs" />
     <Compile Include="FileReader.cs" />

@@ -41,7 +41,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="Document.cs" />
     <Compile Include="MakeWeb.cs" />
     <Compile Include="MarkDown.cs">
@@ -73,7 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MarkDownWiki.fsr" />
-    <None Include="Test.md" />
     <None Include="Docs.md" />
     <None Include="MarkParagraph.fsr">
       <Generator>FSRCS</Generator>

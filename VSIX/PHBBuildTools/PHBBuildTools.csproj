@@ -141,7 +141,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="BuildBinding.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -210,6 +209,8 @@
     <ProjectReference Include="..\..\Protogen\Goedel.Tool.ProtoGen\Goedel.Tool.ProtoGen.csproj">
       <Project>{15877b95-fcbe-4970-b833-a1c6a70586b1}</Project>
       <Name>Goedel.Tool.ProtoGen</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
     <ProjectReference Include="..\..\RegistryConfig\Goedel.Tool.RegistryConfig\Goedel.Tool.RegistryConfig.csproj">
       <Project>{fad27739-eff1-4d5e-bc80-bc43a62707c1}</Project>
@@ -238,6 +239,8 @@
     <ProjectReference Include="..\..\VSIXBuild\Goedel.Tool.VSIXBuild\Goedel.Tool.VSIXBuild.csproj">
       <Project>{88e55204-d54c-438d-bd47-9d33ccb2580b}</Project>
       <Name>Goedel.Tool.VSIXBuild</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

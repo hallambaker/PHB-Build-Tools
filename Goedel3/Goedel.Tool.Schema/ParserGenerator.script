@@ -232,9 +232,6 @@ namespace #{Class.Namespace} {
         StateCode								State;
         #{Class.Namespace}._Choice				Current;
         List <_StackItem>						Stack;
-        TokenType								CurrentToken;
-        Position								CurrentPosition;
-        string									CurrentText;
 
 
         public static #{Class.Name} Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -396,9 +393,6 @@ namespace #{Class.Namespace} {
 
 
         public override void Process(TokenType Token, Position Position, string Text) {
-            CurrentToken = Token;
-            CurrentPosition = Position;
-            CurrentText = Text;
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |

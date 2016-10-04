@@ -2,7 +2,7 @@
 // Script Syntax Version:  1.0
 // #license MITLicense 
 
-//  Copyright ©  2011 by Default Deny Security Inc.
+//  Unknown by Unknown
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -47,6 +47,7 @@ namespace Goedel.Tool.ASN {
 		// GenerateCS
 		//
 		public void GenerateCS (ASN2 ASN2) {
+			// #pragma warning disable  CS0219 
 			// #% ASN2.Complete (); 
 			 ASN2.Complete ();
 			//  
@@ -512,89 +513,76 @@ namespace Goedel.Tool.ASN {
 		public void TypeDeclaration (_Choice Type) {
 			// #switchcast ASN2Type Type 
 			switch (Type._Tag ()) {
-				// #casecast OIDRef Cast 
-				case ASN2Type.OIDRef: {
-				  OIDRef Cast = (OIDRef) Type; 
+				// #case ASN2Type.OIDRef 
+				case  ASN2Type.OIDRef: {
 				// int []  #! 
 				_Output.Write ("int []  ", _Indent);
-				// #casecast Any Cast 
+				// #case ASN2Type.Any  
 				break; }
-				case ASN2Type.Any: {
-				  Any Cast = (Any) Type; 
+				case  ASN2Type.Any : {
 				// byte []  #! 
 				_Output.Write ("byte []  ", _Indent);
-				// #casecast Integer Cast 
+				// #case ASN2Type.Integer  
 				break; }
-				case ASN2Type.Integer: {
-				  Integer Cast = (Integer) Type; 
+				case  ASN2Type.Integer : {
 				// int  #! 
 				_Output.Write ("int  ", _Indent);
-				// #casecast BigInteger Cast 
+				// #case ASN2Type.BigInteger  
 				break; }
-				case ASN2Type.BigInteger: {
-				  BigInteger Cast = (BigInteger) Type; 
+				case  ASN2Type.BigInteger : {
 				// byte []  #! 
 				_Output.Write ("byte []  ", _Indent);
-				// #casecast Boolean Cast 
+				// #case ASN2Type.Boolean  
 				break; }
-				case ASN2Type.Boolean: {
-				  Boolean Cast = (Boolean) Type; 
+				case  ASN2Type.Boolean : {
 				// bool  #! 
 				_Output.Write ("bool  ", _Indent);
-				// #casecast Time Cast 
+				// #case ASN2Type.Time  
 				break; }
-				case ASN2Type.Time: {
-				  Time Cast = (Time) Type; 
+				case  ASN2Type.Time : {
 				// DateTime  #! 
 				_Output.Write ("DateTime  ", _Indent);
-				// #casecast Bits Cast 
+				// #case ASN2Type.Bits  
 				break; }
-				case ASN2Type.Bits: {
-				  Bits Cast = (Bits) Type; 
+				case  ASN2Type.Bits : {
 				// byte []  #! 
 				_Output.Write ("byte []  ", _Indent);
-				// #casecast VBits Cast 
+				// #case ASN2Type.VBits  
 				break; }
-				case ASN2Type.VBits: {
-				  VBits Cast = (VBits) Type; 
+				case  ASN2Type.VBits : {
 				// byte []  #! 
 				_Output.Write ("byte []  ", _Indent);
-				// #casecast Octets Cast 
+				// #case ASN2Type.Octets  
 				break; }
-				case ASN2Type.Octets: {
-				  Octets Cast = (Octets) Type; 
+				case  ASN2Type.Octets : {
 				// byte []  #! 
 				_Output.Write ("byte []  ", _Indent);
-				// #casecast IA5String Cast 
+				// #case ASN2Type.IA5String  
 				break; }
-				case ASN2Type.IA5String: {
-				  IA5String Cast = (IA5String) Type; 
+				case  ASN2Type.IA5String : {
 				// string #! 
 				_Output.Write ("string ", _Indent);
-				// #casecast BMPString Cast 
+				// #case ASN2Type.BMPString  
 				break; }
-				case ASN2Type.BMPString: {
-				  BMPString Cast = (BMPString) Type; 
+				case  ASN2Type.BMPString : {
 				// string #! 
 				_Output.Write ("string ", _Indent);
-				// #casecast UTF8String Cast 
+				// #case ASN2Type.UTF8String  
 				break; }
-				case ASN2Type.UTF8String: {
-				  UTF8String Cast = (UTF8String) Type; 
+				case  ASN2Type.UTF8String : {
 				// string #! 
 				_Output.Write ("string ", _Indent);
-				// #casecast PrintableString Cast 
+				// #case ASN2Type.PrintableString  
 				break; }
-				case ASN2Type.PrintableString: {
-				  PrintableString Cast = (PrintableString) Type; 
+				case  ASN2Type.PrintableString : {
 				// string #! 
 				_Output.Write ("string ", _Indent);
-				// #casecast _Label Case 
+				// #casecast _Label Cast 
 				break; }
 				case ASN2Type._Label: {
-				  _Label Case = (_Label) Type; 
-				// #{Namespace}.#{Case.Label} #! 
-				_Output.Write ("{1}.{2} ", _Indent, Namespace, Case.Label);
+				  _Label Cast = (_Label) Type; 
+				// #{Namespace}.#{Cast.Label} #! 
+				_Output.Write ("{1}.{2} ", _Indent, Namespace, Cast.Label);
 				// #casecast List Cast 
 				break; }
 				case ASN2Type.List: {
@@ -617,10 +605,9 @@ namespace Goedel.Tool.ASN {
 				 TypeDeclaration (Cast.Spec);
 				// > #! 
 				_Output.Write ("> ", _Indent);
-				// #casecast Choice Cast 
+				// #case ASN2Type.Choice 
 				break; }
-				case ASN2Type.Choice: {
-				  Choice Cast = (Choice) Type; 
+				case  ASN2Type.Choice: {
 				// // Choice declare all the type parts 
 				_Output.Write ("// Choice declare all the type parts\n{0}", _Indent);
 				// #end switchcast 
@@ -674,27 +661,24 @@ namespace Goedel.Tool.ASN {
 			 bool Call = false;
 			// #switchcast ASN2Type Spec 
 			switch (Spec._Tag ()) {
-				// #casecast OIDRef Cast 
-				case ASN2Type.OIDRef: {
-				  OIDRef Cast = (OIDRef) Spec; 
+				// #case ASN2Type.OIDRef 
+				case  ASN2Type.OIDRef: {
 				// 			Buffer.Encode__OIDRef #! 
 				_Output.Write ("			Buffer.Encode__OIDRef ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast Any Cast 
+				// #case ASN2Type.Any 
 				break; }
-				case ASN2Type.Any: {
-				  Any Cast = (Any) Spec; 
+				case  ASN2Type.Any: {
 				// 			Buffer.Encode__Any #! 
 				_Output.Write ("			Buffer.Encode__Any ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast Integer Cast 
+				// #case ASN2Type.Integer 
 				break; }
-				case ASN2Type.Integer: {
-				  Integer Cast = (Integer) Spec; 
+				case  ASN2Type.Integer: {
 				// #if (Default != null) 
 				if (  (Default != null) ) {
 					// 			// Default is #{Default} 
@@ -713,19 +697,17 @@ namespace Goedel.Tool.ASN {
 					 Call = true;
 					// #end if 
 					}
-				// #casecast BigInteger Cast 
+				// #case ASN2Type.BigInteger 
 				break; }
-				case ASN2Type.BigInteger: {
-				  BigInteger Cast = (BigInteger) Spec; 
+				case  ASN2Type.BigInteger: {
 				// 			Buffer.Encode__BigInteger #! 
 				_Output.Write ("			Buffer.Encode__BigInteger ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast Boolean Cast 
+				// #case ASN2Type.Boolean 
 				break; }
-				case ASN2Type.Boolean: {
-				  Boolean Cast = (Boolean) Spec; 
+				case  ASN2Type.Boolean: {
 				// #if (Default != null) 
 				if (  (Default != null) ) {
 					// 			// Default is #{Default} 
@@ -744,82 +726,73 @@ namespace Goedel.Tool.ASN {
 					 Call = true;
 					// #end if 
 					}
-				// #casecast Time Cast 
+				// #case ASN2Type.Time  
 				break; }
-				case ASN2Type.Time: {
-				  Time Cast = (Time) Spec; 
+				case  ASN2Type.Time : {
 				// 			Buffer.Encode__Time #! 
 				_Output.Write ("			Buffer.Encode__Time ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast Bits Cast 
+				// #case ASN2Type.Bits  
 				break; }
-				case ASN2Type.Bits: {
-				  Bits Cast = (Bits) Spec; 
+				case  ASN2Type.Bits : {
 				// 			Buffer.Encode__Bits #! 
 				_Output.Write ("			Buffer.Encode__Bits ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast VBits Cast 
+				// #case ASN2Type.VBits  
 				break; }
-				case ASN2Type.VBits: {
-				  VBits Cast = (VBits) Spec; 
+				case  ASN2Type.VBits : {
 				// 			Buffer.Encode__VBits #! 
 				_Output.Write ("			Buffer.Encode__VBits ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast Octets Cast 
+				// #case ASN2Type.Octets  
 				break; }
-				case ASN2Type.Octets: {
-				  Octets Cast = (Octets) Spec; 
+				case  ASN2Type.Octets : {
 				// 			Buffer.Encode__Octets #! 
 				_Output.Write ("			Buffer.Encode__Octets ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast IA5String Cast 
+				// #case ASN2Type.IA5String  
 				break; }
-				case ASN2Type.IA5String: {
-				  IA5String Cast = (IA5String) Spec; 
+				case  ASN2Type.IA5String : {
 				// 			Buffer.Encode__IA5String #! 
 				_Output.Write ("			Buffer.Encode__IA5String ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast BMPString Cast 
+				// #case ASN2Type.BMPString  
 				break; }
-				case ASN2Type.BMPString: {
-				  BMPString Cast = (BMPString) Spec; 
+				case  ASN2Type.BMPString : {
 				// 			Buffer.Encode__BMPString #! 
 				_Output.Write ("			Buffer.Encode__BMPString ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast UTF8String Cast 
+				// #case ASN2Type.UTF8String  
 				break; }
-				case ASN2Type.UTF8String: {
-				  UTF8String Cast = (UTF8String) Spec; 
+				case  ASN2Type.UTF8String : {
 				// 			Buffer.Encode__UTF8String #! 
 				_Output.Write ("			Buffer.Encode__UTF8String ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast PrintableString Cast 
+				// #case ASN2Type.PrintableString  
 				break; }
-				case ASN2Type.PrintableString: {
-				  PrintableString Cast = (PrintableString) Spec; 
+				case  ASN2Type.PrintableString : {
 				// 			Buffer.Encode__PrintableString #! 
 				_Output.Write ("			Buffer.Encode__PrintableString ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast _Label Case 
+				// #case ASN2Type._Label  
 				break; }
-				case ASN2Type._Label: {
-				  _Label Case = (_Label) Spec; 
+				case  ASN2Type._Label : {
 				// 			Buffer.Encode__Object (#{Name}, #{Flags}, #{Code}); 
 				_Output.Write ("			Buffer.Encode__Object ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
 				// #casecast List Cast 
@@ -938,27 +911,24 @@ namespace Goedel.Tool.ASN {
 			 bool Call = false;
 			// #switchcast ASN2Type Spec 
 			switch (Spec._Tag ()) {
-				// #casecast OIDRef Cast 
-				case ASN2Type.OIDRef: {
-				  OIDRef Cast = (OIDRef) Spec; 
+				// #case ASN2Type.OIDRef  
+				case  ASN2Type.OIDRef : {
 				// 			Buffer.Decode__OIDRef #! 
 				_Output.Write ("			Buffer.Decode__OIDRef ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast Any Cast 
+				// #case ASN2Type.Any  
 				break; }
-				case ASN2Type.Any: {
-				  Any Cast = (Any) Spec; 
+				case  ASN2Type.Any : {
 				// 			Buffer.Decode__Any #! 
 				_Output.Write ("			Buffer.Decode__Any ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast Integer Cast 
+				// #case ASN2Type.Integer  
 				break; }
-				case ASN2Type.Integer: {
-				  Integer Cast = (Integer) Spec; 
+				case  ASN2Type.Integer : {
 				// #if (Default != null) 
 				if (  (Default != null) ) {
 					// 			// Default is #{Default} 
@@ -977,19 +947,17 @@ namespace Goedel.Tool.ASN {
 					 Call = true;
 					// #end if 
 					}
-				// #casecast BigInteger Cast 
+				// #case ASN2Type.BigInteger  
 				break; }
-				case ASN2Type.BigInteger: {
-				  BigInteger Cast = (BigInteger) Spec; 
+				case  ASN2Type.BigInteger : {
 				// 			Buffer.Decode__BigInteger #! 
 				_Output.Write ("			Buffer.Decode__BigInteger ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast Boolean Cast 
+				// #case ASN2Type.Boolean  
 				break; }
-				case ASN2Type.Boolean: {
-				  Boolean Cast = (Boolean) Spec; 
+				case  ASN2Type.Boolean : {
 				// #if (Default != null) 
 				if (  (Default != null) ) {
 					// 			// Default is #{Default} 
@@ -1008,82 +976,73 @@ namespace Goedel.Tool.ASN {
 					 Call = true;
 					// #end if 
 					}
-				// #casecast Time Cast 
+				// #case ASN2Type.Time  
 				break; }
-				case ASN2Type.Time: {
-				  Time Cast = (Time) Spec; 
+				case  ASN2Type.Time : {
 				// 			Buffer.EDecode__Time #! 
 				_Output.Write ("			Buffer.EDecode__Time ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast Bits Cast 
+				// #case ASN2Type.Bits  
 				break; }
-				case ASN2Type.Bits: {
-				  Bits Cast = (Bits) Spec; 
+				case  ASN2Type.Bits : {
 				// 			Buffer.Decode__Bits #! 
 				_Output.Write ("			Buffer.Decode__Bits ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast VBits Cast 
+				// #case ASN2Type.VBits  
 				break; }
-				case ASN2Type.VBits: {
-				  VBits Cast = (VBits) Spec; 
+				case  ASN2Type.VBits : {
 				// 			Buffer.Decode__VBits #! 
 				_Output.Write ("			Buffer.Decode__VBits ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast Octets Cast 
+				// #case ASN2Type.Octets  
 				break; }
-				case ASN2Type.Octets: {
-				  Octets Cast = (Octets) Spec; 
+				case  ASN2Type.Octets : {
 				// 			Buffer.Decode__Octets #! 
 				_Output.Write ("			Buffer.Decode__Octets ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast IA5String Cast 
+				// #case ASN2Type.IA5String  
 				break; }
-				case ASN2Type.IA5String: {
-				  IA5String Cast = (IA5String) Spec; 
+				case  ASN2Type.IA5String : {
 				// 			Buffer.Decode__IA5String #! 
 				_Output.Write ("			Buffer.Decode__IA5String ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast BMPString Cast 
+				// #case ASN2Type.BMPString  
 				break; }
-				case ASN2Type.BMPString: {
-				  BMPString Cast = (BMPString) Spec; 
+				case  ASN2Type.BMPString : {
 				// 			Buffer.Decode__BMPString #! 
 				_Output.Write ("			Buffer.Decode__BMPString ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast UTF8String Cast 
+				// #case ASN2Type.UTF8String  
 				break; }
-				case ASN2Type.UTF8String: {
-				  UTF8String Cast = (UTF8String) Spec; 
+				case  ASN2Type.UTF8String : {
 				// 			Buffer.Decode__UTF8String #! 
 				_Output.Write ("			Buffer.Decode__UTF8String ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast PrintableString Cast 
+				// #case ASN2Type.PrintableString  
 				break; }
-				case ASN2Type.PrintableString: {
-				  PrintableString Cast = (PrintableString) Spec; 
+				case  ASN2Type.PrintableString : {
 				// 			Buffer.Decode__PrintableString #! 
 				_Output.Write ("			Buffer.Decode__PrintableString ", _Indent);
 				// #% Call = true; 
 				
 				 Call = true;
-				// #casecast _Label Case 
+				// #case ASN2Type._Label  
 				break; }
-				case ASN2Type._Label: {
-				  _Label Case = (_Label) Spec; 
+				case  ASN2Type._Label : {
 				// 			Buffer.Decode__Object (#{Name}, #{Flags}, #{Code}); 
 				_Output.Write ("			Buffer.Decode__Object ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
 				// #casecast List Cast 

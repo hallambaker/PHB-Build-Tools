@@ -5,6 +5,7 @@
 #% string Namespace = "Goedel.ASN";
 
 #method GenerateCS ASN2 ASN2
+#pragma warning disable  CS0219
 #% ASN2.Complete ();
 
 using System;
@@ -223,34 +224,34 @@ namespace #{Cast.Name} {
 
 #method TypeDeclaration _Choice Type
 #switchcast ASN2Type Type
-#casecast OIDRef Cast
+#case ASN2Type.OIDRef
 int []  #!
-#casecast Any Cast
+#case ASN2Type.Any 
 byte []  #!
-#casecast Integer Cast
+#case ASN2Type.Integer 
 int  #!
-#casecast BigInteger Cast
+#case ASN2Type.BigInteger 
 byte []  #!
-#casecast Boolean Cast
+#case ASN2Type.Boolean 
 bool  #!
-#casecast Time Cast
+#case ASN2Type.Time 
 DateTime  #!
-#casecast Bits Cast
+#case ASN2Type.Bits 
 byte []  #!
-#casecast VBits Cast
+#case ASN2Type.VBits 
 byte []  #!
-#casecast Octets Cast
+#case ASN2Type.Octets 
 byte []  #!
-#casecast IA5String Cast
+#case ASN2Type.IA5String 
 string #!
-#casecast BMPString Cast
+#case ASN2Type.BMPString 
 string #!
-#casecast UTF8String Cast
+#case ASN2Type.UTF8String 
 string #!
-#casecast PrintableString Cast
+#case ASN2Type.PrintableString 
 string #!
-#casecast _Label Case
-#{Namespace}.#{Case.Label} #!
+#casecast _Label Cast
+#{Namespace}.#{Cast.Label} #!
 #casecast List Cast
 List <#!
 #% TypeDeclaration (Cast.Spec);
@@ -259,7 +260,7 @@ List <#!
 List <#!
 #% TypeDeclaration (Cast.Spec);
 > #!
-#casecast Choice Cast
+#case ASN2Type.Choice
 // Choice declare all the type parts
 #end switchcast
 #end method
@@ -280,13 +281,13 @@ List <#!
 
 #% bool Call = false;
 #switchcast ASN2Type Spec
-#casecast OIDRef Cast
+#case ASN2Type.OIDRef
 			Buffer.Encode__OIDRef #!
 #% Call = true;
-#casecast Any Cast
+#case ASN2Type.Any
 			Buffer.Encode__Any #!
 #% Call = true;
-#casecast Integer Cast
+#case ASN2Type.Integer
 #if (Default != null)
 			// Default is #{Default}
 			if (#{Name} != #{Default}) {
@@ -296,10 +297,10 @@ List <#!
 			Buffer.Encode__Integer #!
 #% Call = true;
 #end if
-#casecast BigInteger Cast
+#case ASN2Type.BigInteger
 			Buffer.Encode__BigInteger #!
 #% Call = true;
-#casecast Boolean Cast
+#case ASN2Type.Boolean
 #if (Default != null)
 			// Default is #{Default}
 			if (#{Name} != #{Default}) {
@@ -309,31 +310,31 @@ List <#!
 			Buffer.Encode__Boolean #!
 #% Call = true;
 #end if
-#casecast Time Cast
+#case ASN2Type.Time 
 			Buffer.Encode__Time #!
 #% Call = true;
-#casecast Bits Cast
+#case ASN2Type.Bits 
 			Buffer.Encode__Bits #!
 #% Call = true;
-#casecast VBits Cast
+#case ASN2Type.VBits 
 			Buffer.Encode__VBits #!
 #% Call = true;
-#casecast Octets Cast
+#case ASN2Type.Octets 
 			Buffer.Encode__Octets #!
 #% Call = true;
-#casecast IA5String Cast
+#case ASN2Type.IA5String 
 			Buffer.Encode__IA5String #!
 #% Call = true;
-#casecast BMPString Cast
+#case ASN2Type.BMPString 
 			Buffer.Encode__BMPString #!
 #% Call = true;
-#casecast UTF8String Cast
+#case ASN2Type.UTF8String 
 			Buffer.Encode__UTF8String #!
 #% Call = true;
-#casecast PrintableString Cast
+#case ASN2Type.PrintableString 
 			Buffer.Encode__PrintableString #!
 #% Call = true;
-#casecast _Label Case
+#case ASN2Type._Label 
 			Buffer.Encode__Object (#{Name}, #{Flags}, #{Code});
 #casecast List Cast
 			if (#{Name} == null || #{Name}.Count == 0) {
@@ -386,13 +387,13 @@ List <#!
 
 #% bool Call = false;
 #switchcast ASN2Type Spec
-#casecast OIDRef Cast
+#case ASN2Type.OIDRef 
 			Buffer.Decode__OIDRef #!
 #% Call = true;
-#casecast Any Cast
+#case ASN2Type.Any 
 			Buffer.Decode__Any #!
 #% Call = true;
-#casecast Integer Cast
+#case ASN2Type.Integer 
 #if (Default != null)
 			// Default is #{Default}
 			if (#{Name} != #{Default}) {
@@ -402,10 +403,10 @@ List <#!
 			Buffer.Encode__Integer #!
 #% Call = true;
 #end if
-#casecast BigInteger Cast
+#case ASN2Type.BigInteger 
 			Buffer.Decode__BigInteger #!
 #% Call = true;
-#casecast Boolean Cast
+#case ASN2Type.Boolean 
 #if (Default != null)
 			// Default is #{Default}
 			if (#{Name} != #{Default}) {
@@ -415,31 +416,31 @@ List <#!
 			Buffer.Decode__Boolean #!
 #% Call = true;
 #end if
-#casecast Time Cast
+#case ASN2Type.Time 
 			Buffer.EDecode__Time #!
 #% Call = true;
-#casecast Bits Cast
+#case ASN2Type.Bits 
 			Buffer.Decode__Bits #!
 #% Call = true;
-#casecast VBits Cast
+#case ASN2Type.VBits 
 			Buffer.Decode__VBits #!
 #% Call = true;
-#casecast Octets Cast
+#case ASN2Type.Octets 
 			Buffer.Decode__Octets #!
 #% Call = true;
-#casecast IA5String Cast
+#case ASN2Type.IA5String 
 			Buffer.Decode__IA5String #!
 #% Call = true;
-#casecast BMPString Cast
+#case ASN2Type.BMPString 
 			Buffer.Decode__BMPString #!
 #% Call = true;
-#casecast UTF8String Cast
+#case ASN2Type.UTF8String 
 			Buffer.Decode__UTF8String #!
 #% Call = true;
-#casecast PrintableString Cast
+#case ASN2Type.PrintableString 
 			Buffer.Decode__PrintableString #!
 #% Call = true;
-#casecast _Label Case
+#case ASN2Type._Label 
 			Buffer.Decode__Object (#{Name}, #{Flags}, #{Code});
 #casecast List Cast
 			if (#{Name} == null || #{Name}.Count == 0) {

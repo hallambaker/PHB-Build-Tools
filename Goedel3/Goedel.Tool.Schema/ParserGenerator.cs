@@ -2,7 +2,7 @@
 // Script Syntax Version:  1.0
 // #license MITLicense 
 
-//  Copyright ©  2011 by Default Deny Security Inc.
+//  Unknown by Unknown
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -533,12 +533,6 @@ namespace GoedelSchema {
 			_Output.Write ("        {1}._Choice				Current;\n{0}", _Indent, Class.Namespace);
 			//         List <_StackItem>						Stack; 
 			_Output.Write ("        List <_StackItem>						Stack;\n{0}", _Indent);
-			//         TokenType								CurrentToken; 
-			_Output.Write ("        TokenType								CurrentToken;\n{0}", _Indent);
-			//         Position								CurrentPosition; 
-			_Output.Write ("        Position								CurrentPosition;\n{0}", _Indent);
-			//         string									CurrentText; 
-			_Output.Write ("        string									CurrentText;\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			//  
@@ -859,12 +853,6 @@ namespace GoedelSchema {
 			_Output.Write ("\n{0}", _Indent);
 			//         public override void Process(TokenType Token, Position Position, string Text) { 
 			_Output.Write ("        public override void Process(TokenType Token, Position Position, string Text) {{\n{0}", _Indent);
-			//             CurrentToken = Token; 
-			_Output.Write ("            CurrentToken = Token;\n{0}", _Indent);
-			//             CurrentPosition = Position; 
-			_Output.Write ("            CurrentPosition = Position;\n{0}", _Indent);
-			//             CurrentText = Text; 
-			_Output.Write ("            CurrentText = Text;\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			//             if ((Token == TokenType.SEPARATOR) | 

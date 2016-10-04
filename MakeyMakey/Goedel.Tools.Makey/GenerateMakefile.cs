@@ -44,18 +44,26 @@ namespace Goedel.Tool.Makey {
 		// Preamble
 		//
 		public void Preamble (VSFile VSFile) {
-			// ## 
-			_Output.Write ("#\n{0}", _Indent);
-			// ## Makefile for Visual Studio Project ... 
-			_Output.Write ("# Makefile for Visual Studio Project ...\n{0}", _Indent);
-			// ## 
-			_Output.Write ("#\n{0}", _Indent);
 			// ## This file is generated automatically from the Visual Studio Project 
 			_Output.Write ("# This file is generated automatically from the Visual Studio Project\n{0}", _Indent);
 			// ## File. If you make changes to this file and do not update the project 
 			_Output.Write ("# File. If you make changes to this file and do not update the project\n{0}", _Indent);
 			// ## file, changes will be lost when the file is regenerated. 
 			_Output.Write ("# file, changes will be lost when the file is regenerated.\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// ## NB: This process will fail if any of the paths have spaces in them 
+			_Output.Write ("# NB: This process will fail if any of the paths have spaces in them\n{0}", _Indent);
+			// ## While it is possible to work around the lack of support for spaces in  
+			_Output.Write ("# While it is possible to work around the lack of support for spaces in \n{0}", _Indent);
+			// ## file paths in gmake, it is not possible to do this reliably in the tools 
+			_Output.Write ("# file paths in gmake, it is not possible to do this reliably in the tools\n{0}", _Indent);
+			// ## that it invokes to build the system. Rather than do half a job, it seems 
+			_Output.Write ("# that it invokes to build the system. Rather than do half a job, it seems\n{0}", _Indent);
+			// ## safest to simply reject the corner case 
+			_Output.Write ("# safest to simply reject the corner case\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// ## The following targets are defined (well planned) 
@@ -221,6 +229,12 @@ namespace Goedel.Tool.Makey {
 		// GenerateMakefile
 		//
 		public void GenerateMakefile (VSSolution Solution) {
+			// ## 
+			_Output.Write ("#\n{0}", _Indent);
+			// ## Makefile for Visual Studio Solution .. 
+			_Output.Write ("# Makefile for Visual Studio Solution ..\n{0}", _Indent);
+			// ## 
+			_Output.Write ("#\n{0}", _Indent);
 			// #call Preamble Solution 
 			Preamble (Solution);
 			//  
@@ -241,73 +255,88 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("\n{0}", _Indent);
 			// #foreach (var Item in Solution.Projects) 
 			foreach  (var Item in Solution.Projects) {
-				// #% var  Project = Item.Project; 
-				 var  Project = Item.Project;
-				// #% var Target = Project.Target.UnixFile(); 
-				 var Target = Project.Target.UnixFile();
-				// #% var Directory = Item.Directory.UnixPath(); 
-				 var Directory = Item.Directory.UnixPath();
-				// ## Project : #{Target} 
-				_Output.Write ("# Project : {1}\n{0}", _Indent, Target);
-				// ## Item :  #{Directory} 
-				_Output.Write ("# Item :  {1}\n{0}", _Indent, Directory);
-				// #if (Project.IsExe) 
-				if (  (Project.IsExe) ) {
-					// ## Output :     #{Directory}/$(TARGETBIN)/#{Target} 
-					_Output.Write ("# Output :     {1}/$(TARGETBIN)/{2}\n{0}", _Indent, Directory, Target);
-					// #elseif (Project.IsLibrary) 
-					} else if (  (Project.IsLibrary)) {
-					// ## Output :     #{Directory}/$(TARGETBIN)/#{Target} 
-					_Output.Write ("# Output :     {1}/$(TARGETBIN)/{2}\n{0}", _Indent, Directory, Target);
-					// #else 
-					} else {
+				// #if (Item.MakeUnix()) 
+				if (  (Item.MakeUnix()) ) {
+					// #% var  Project = Item.Project; 
+					 var  Project = Item.Project;
+					// #% var Target = Project.Target.UnixFile(); 
+					 var Target = Project.Target.UnixFile();
+					// #% var Directory = Item.Directory.UnixPath(); 
+					 var Directory = Item.Directory.UnixPath();
+					// ## Project : #{Target} 
+					_Output.Write ("# Project : {1}\n{0}", _Indent, Target);
+					// ## Item :  #{Directory} 
+					_Output.Write ("# Item :  {1}\n{0}", _Indent, Directory);
+					// #if (Directory.IndexOf(' ') >= 0) 
+					if (  (Directory.IndexOf(' ') >= 0) ) {
+						// ***** Spaces in file path not supported 
+						_Output.Write ("***** Spaces in file path not supported\n{0}", _Indent);
+						// #elseif (Project.IsExe) 
+						} else if (  (Project.IsExe)) {
+						// ## Output :     #{Directory}/$(TARGETEXE)/#{Target} 
+						_Output.Write ("# Output :     {1}/$(TARGETEXE)/{2}\n{0}", _Indent, Directory, Target);
+						// #elseif (Project.IsLibrary) 
+						} else if (  (Project.IsLibrary)) {
+						// ## Output :     #{Directory}/$(TARGETBIN)/#{Target} 
+						_Output.Write ("# Output :     {1}/$(TARGETBIN)/{2}\n{0}", _Indent, Directory, Target);
+						// #else 
+						} else {
+						// #end if 
+						}
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					// all : #{Directory}/$(TARGETBIN)/#{Project.Target} 
+					_Output.Write ("all : {1}/$(TARGETBIN)/{2}\n{0}", _Indent, Directory, Project.Target);
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					// #foreach (var Dep in Project.ProjectReference) 
+					foreach  (var Dep in Project.ProjectReference) {
+						// #% var SubProject = Dep.SubProject; 
+						 var SubProject = Dep.SubProject;
+						// #% var GUID = SubProject.ProjectGuid; 
+						 var GUID = SubProject.ProjectGuid;
+						// #% var SubProjectRef = Solution.ByGuid (GUID); 
+						 var SubProjectRef = Solution.ByGuid (GUID);
+						// #% var SubProjectDir = Solution.ByGuid (GUID).Directory.UnixPath(); 
+						 var SubProjectDir = Solution.ByGuid (GUID).Directory.UnixPath();
+						// #! SubTarget #{SubProject.Target} 
+						// SubTarget #{SubProject.Target}
+						// #! SubProject #{SubProjectDir} 
+						// SubProject #{SubProjectDir}
+						// #! GUID #{GUID} 
+						// GUID #{GUID}
+						// #if (Project.IsExe) 
+						if (  (Project.IsExe) ) {
+							// #{Directory}/$(TARGETBIN)/#{Project.Target} : #{SubProjectDir}/$(TARGETBIN)/#{SubProject.Target} 
+							_Output.Write ("{1}/$(TARGETBIN)/{2} : {3}/$(TARGETBIN)/{4}\n{0}", _Indent, Directory, Project.Target, SubProjectDir, SubProject.Target);
+							// #elseif (Project.IsLibrary) 
+							} else if (  (Project.IsLibrary)) {
+							// #{Directory}/$(TARGETBIN)/#{Project.Target} : #{SubProjectDir}/$(TARGETBIN)/#{SubProject.Target} 
+							_Output.Write ("{1}/$(TARGETBIN)/{2} : {3}/$(TARGETBIN)/{4}\n{0}", _Indent, Directory, Project.Target, SubProjectDir, SubProject.Target);
+							// #else 
+							} else {
+							// #end if 
+							}
+						//  
+						_Output.Write ("\n{0}", _Indent);
+						// #end foreach 
+						}
+					//  
+					_Output.Write ("\n{0}", _Indent);
+					// #{Directory}/$(TARGETBIN)/#{Project.Target} : always 
+					_Output.Write ("{1}/$(TARGETBIN)/{2} : always\n{0}", _Indent, Directory, Project.Target);
+					// #{Prefix}make NORECURSE=true -C #{Directory} 
+					_Output.Write ("{1}make NORECURSE=true -C {2}\n{0}", _Indent, Prefix, Directory);
+					//  
+					_Output.Write ("\n{0}", _Indent);
 					// #end if 
 					}
-				//  
-				_Output.Write ("\n{0}", _Indent);
-				// all : #{Directory}/$(TARGETBIN)/#{Project.Target} 
-				_Output.Write ("all : {1}/$(TARGETBIN)/{2}\n{0}", _Indent, Directory, Project.Target);
-				//  
-				_Output.Write ("\n{0}", _Indent);
-				// #foreach (var Dep in Project.ProjectReference) 
-				foreach  (var Dep in Project.ProjectReference) {
-					// #% var SubProject = Dep.SubProject; 
-					 var SubProject = Dep.SubProject;
-					// #% var GUID = SubProject.ProjectGuid; 
-					 var GUID = SubProject.ProjectGuid;
-					// #% var SubProjectRef = Solution.ByGuid (GUID); 
-					 var SubProjectRef = Solution.ByGuid (GUID);
-					// #% var SubProjectDir = Solution.ByGuid (GUID).Directory.UnixPath(); 
-					 var SubProjectDir = Solution.ByGuid (GUID).Directory.UnixPath();
-					// ## SubTarget #{SubProject.Target} 
-					_Output.Write ("# SubTarget {1}\n{0}", _Indent, SubProject.Target);
-					// ## SubProject #{SubProjectDir} 
-					_Output.Write ("# SubProject {1}\n{0}", _Indent, SubProjectDir);
-					// ## GUID #{GUID} 
-					_Output.Write ("# GUID {1}\n{0}", _Indent, GUID);
-					// #{Directory}/$(TARGETBIN)/#{Project.Target} : #{SubProjectDir}/$(TARGETBIN)/#{SubProject.Target} 
-					_Output.Write ("{1}/$(TARGETBIN)/{2} : {3}/$(TARGETBIN)/{4}\n{0}", _Indent, Directory, Project.Target, SubProjectDir, SubProject.Target);
-					//  
-					_Output.Write ("\n{0}", _Indent);
-					//  
-					_Output.Write ("\n{0}", _Indent);
-					// #end foreach 
-					}
-				//  
-				_Output.Write ("\n{0}", _Indent);
-				// #{Directory}/$(TARGETBIN)/#{Project.Target} : always 
-				_Output.Write ("{1}/$(TARGETBIN)/{2} : always\n{0}", _Indent, Directory, Project.Target);
-				// #{Prefix}make -C  #{Directory} 
-				_Output.Write ("{1}make -C  {2}\n{0}", _Indent, Prefix, Directory);
-				//  
-				_Output.Write ("\n{0}", _Indent);
 				// #end foreach 
 				}
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// #end method 
 			}
-		//  
 		//  
 		//  
 		// #method GenerateMakefile VSProject Project 
@@ -317,8 +346,20 @@ namespace Goedel.Tool.Makey {
 		// GenerateMakefile
 		//
 		public void GenerateMakefile (VSProject Project) {
+			// ## 
+			_Output.Write ("#\n{0}", _Indent);
+			// ## Makefile for Visual Studio Project ... 
+			_Output.Write ("# Makefile for Visual Studio Project ...\n{0}", _Indent);
+			// ## 
+			_Output.Write ("#\n{0}", _Indent);
 			// #call Preamble Project 
 			Preamble (Project);
+			// #% bool HaveSoure = Project.SourceDependency.Count > 0; 
+			 bool HaveSoure = Project.SourceDependency.Count > 0;
+			// #% bool HaveLink = Project.LinkDependency.Count > 0; 
+			 bool HaveLink = Project.LinkDependency.Count > 0;
+			// #% bool HavePackage = Project.PrivateReference.Count > 0; 
+			 bool HavePackage = Project.PrivateReference.Count > 0;
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// ## The main target  
@@ -353,12 +394,40 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
+			// LinkFilesComma = #! 
+			_Output.Write ("LinkFilesComma = ", _Indent);
+			// #% var LinkSep = new Separator ("", ","); 
+			 var LinkSep = new Separator ("", ",");
+			// #foreach (var File in Project.LinkDependency) 
+			foreach  (var File in Project.LinkDependency) {
+				// #{LinkSep}$(TARGETBIN)/#{File}#! 
+				_Output.Write ("{1}$(TARGETBIN)/{2}", _Indent, LinkSep, File);
+				// #end foreach 
+				}
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
 			// NugetFiles = #! 
 			_Output.Write ("NugetFiles = ", _Indent);
 			// #foreach (var File in Project.PrivateReference) 
 			foreach  (var File in Project.PrivateReference) {
 				// \ 
 				_Output.Write ("\\\n{0}", _Indent);
+				//     $(TARGETBIN)/#{File}#! 
+				_Output.Write ("    $(TARGETBIN)/{1}", _Indent, File);
+				// #end foreach 
+				}
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// NugetFilesComa = #! 
+			_Output.Write ("NugetFilesComa = ", _Indent);
+			// #% var PkgSep = new Separator ("", ","); 
+			 var PkgSep = new Separator ("", ",");
+			// #foreach (var File in Project.PrivateReference) 
+			foreach  (var File in Project.PrivateReference) {
+				// #{PkgSep}\ 
+				_Output.Write ("{1}\\\n{0}", _Indent, PkgSep);
 				//     $(TARGETBIN)/#{File}#! 
 				_Output.Write ("    $(TARGETBIN)/{1}", _Indent, File);
 				// #end foreach 
@@ -375,8 +444,8 @@ namespace Goedel.Tool.Makey {
 				_Output.Write ("$(TARGETEXE)/{1} :| $(TARGETEXE)\n{0}", _Indent, Project.AssemblyName);
 				// $(TARGETEXE)/#{Project.AssemblyName} : $(TARGETBIN)/#{Project.AssemblyName}.exe  
 				_Output.Write ("$(TARGETEXE)/{1} : $(TARGETBIN)/{2}.exe \n{0}", _Indent, Project.AssemblyName, Project.AssemblyName);
-				// #{Prefix}$(BUNDLE) $@ $^ 
-				_Output.Write ("{1}$(BUNDLE) $@ $^\n{0}", _Indent, Prefix);
+				// #{Prefix}$(BUNDLE) $@ $^ $(LinkFiles) 
+				_Output.Write ("{1}$(BUNDLE) $@ $^ $(LinkFiles)\n{0}", _Indent, Prefix);
 				//  
 				_Output.Write ("\n{0}", _Indent);
 				// ## B) Main target executable 
@@ -385,8 +454,22 @@ namespace Goedel.Tool.Makey {
 				_Output.Write ("$(TARGETBIN)/{1} :| $(TARGETBIN)\n{0}", _Indent, Project.Target);
 				// $(TARGETBIN)/#{Project.Target} : $(SourceFiles) $(LinkFiles) $(NugetFiles) 
 				_Output.Write ("$(TARGETBIN)/{1} : $(SourceFiles) $(LinkFiles) $(NugetFiles)\n{0}", _Indent, Project.Target);
-				// #{Prefix}$(CSHARPEXE) /out:$@ $(SourceFiles) $(LinkFiles) $(NugetFiles) 
-				_Output.Write ("{1}$(CSHARPEXE) /out:$@ $(SourceFiles) $(LinkFiles) $(NugetFiles)\n{0}", _Indent, Prefix);
+				// #{Prefix}$(CSHARPEXE) /out:$@  $(SourceFiles) #! 
+				_Output.Write ("{1}$(CSHARPEXE) /out:$@  $(SourceFiles) ", _Indent, Prefix);
+				// #if HaveLink 
+				if (  HaveLink ) {
+					// -reference:$(LinkFilesComma) #! 
+					_Output.Write ("-reference:$(LinkFilesComma) ", _Indent);
+					// #end if 
+					}
+				// #if HavePackage 
+				if (  HavePackage ) {
+					// -pkg:$(NugetFilesComa) #! 
+					_Output.Write ("-pkg:$(NugetFilesComa) ", _Indent);
+					// #end if 
+					}
+				//  
+				_Output.Write ("\n{0}", _Indent);
 				//  
 				_Output.Write ("\n{0}", _Indent);
 				// #elseif (Project.IsLibrary) 
@@ -399,8 +482,22 @@ namespace Goedel.Tool.Makey {
 				_Output.Write ("\n{0}", _Indent);
 				// $(TARGETBIN)/#{Project.Target} :  $(SourceFiles) $(LinkFiles) $(NugetFiles) 
 				_Output.Write ("$(TARGETBIN)/{1} :  $(SourceFiles) $(LinkFiles) $(NugetFiles)\n{0}", _Indent, Project.Target);
-				// #{Prefix}$(CSHARPDLL) /out:$@  $(SourceFiles) $(LinkFiles) $(NugetFiles) 
-				_Output.Write ("{1}$(CSHARPDLL) /out:$@  $(SourceFiles) $(LinkFiles) $(NugetFiles)\n{0}", _Indent, Prefix);
+				// #{Prefix}$(CSHARPDLL) /out:$@  $(SourceFiles) #! 
+				_Output.Write ("{1}$(CSHARPDLL) /out:$@  $(SourceFiles) ", _Indent, Prefix);
+				// #if HaveLink 
+				if (  HaveLink ) {
+					// -reference:$(LinkFilesComma) #! 
+					_Output.Write ("-reference:$(LinkFilesComma) ", _Indent);
+					// #end if 
+					}
+				// #if HavePackage 
+				if (  HavePackage ) {
+					// -pkg:$(NugetFilesComa) #! 
+					_Output.Write ("-pkg:$(NugetFilesComa) ", _Indent);
+					// #end if 
+					}
+				//  
+				_Output.Write ("\n{0}", _Indent);
 				//  
 				_Output.Write ("\n{0}", _Indent);
 				// #else 
@@ -443,6 +540,10 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("# Generated code\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
+			// ifdef PHB_BUILD 
+			_Output.Write ("ifdef PHB_BUILD\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
 			// #foreach (var Item in Project.None) 
 			foreach  (var Item in Project.None) {
 				// #if (Item.Generator != null) 
@@ -455,6 +556,10 @@ namespace Goedel.Tool.Makey {
 					}
 				// #end foreach 
 				}
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// endif 
+			_Output.Write ("endif\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// .PHONY : clean install cross recursive 
@@ -492,6 +597,8 @@ namespace Goedel.Tool.Makey {
 			// # copy libraries into the base library 
 			// #foreach (var Item in Project.ProjectReference) 
 			foreach  (var Item in Project.ProjectReference) {
+				// $(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll :| $(TARGETBIN) 
+				_Output.Write ("$(TARGETBIN)/{1}.dll :| $(TARGETBIN)\n{0}", _Indent, Item.SubProject.AssemblyName);
 				// $(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll : #{Item.Include.UnixPath()}/$(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll 
 				_Output.Write ("$(TARGETBIN)/{1}.dll : {2}/$(TARGETBIN)/{3}.dll\n{0}", _Indent, Item.SubProject.AssemblyName, Item.Include.UnixPath(), Item.SubProject.AssemblyName);
 				// #{Prefix} cp #{Item.Include.UnixPath()}/$(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll $(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll 
@@ -508,6 +615,8 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("#\n{0}", _Indent);
 			// #foreach (var Item in Project.PrivateReference) 
 			foreach  (var Item in Project.PrivateReference) {
+				// $(TARGETBIN)/#{Item.Name} :| $(TARGETBIN) 
+				_Output.Write ("$(TARGETBIN)/{1} :| $(TARGETBIN)\n{0}", _Indent, Item.Name);
 				// $(TARGETBIN)/#{Item.Name} : #{Item.HintPath.UnixFile()} 
 				_Output.Write ("$(TARGETBIN)/{1} : {2}\n{0}", _Indent, Item.Name, Item.HintPath.UnixFile());
 				// #{Prefix} cp   #{Item.HintPath.UnixFile()} $(TARGETBIN)/#{Item.Name} 

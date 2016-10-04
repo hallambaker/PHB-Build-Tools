@@ -72,7 +72,6 @@
       <DependentUpon>Asn2.gdl</DependentUpon>
     </Compile>
     <Compile Include="AsnPlus.cs" />
-    <Compile Include="AssemblyKeyName.cs" />
     <Compile Include="GenerateCS.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -89,6 +88,7 @@
       <Generator>GScript</Generator>
       <LastGenOutput>GenerateCS.cs</LastGenOutput>
     </None>
+    <None Include="Makefile" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Design.htm" />
