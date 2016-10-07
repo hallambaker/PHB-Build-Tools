@@ -1,0 +1,551 @@
+<?xml version='1.0'?>
+<!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>
+<rfc ipr="trust200902" docName="draft-hallambaker-jsonbcd-03">
+<front>
+<title abbrev="JSON-B, JSON-C, JSON-D">Binary Encodings for JavaScript Object Notation: JSON-B, JSON-C, JSON-D</title>
+<author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker">
+<organization>Comodo Group Inc.</organization>
+<address>
+<email>philliph@comodo.com</email>
+</address>
+</author>
+<date day="27" month="November" year="2015"/>
+<area>General</area>
+<workgroup/>
+<keyword>Transparency</keyword>
+<keyword>PKI</keyword>
+<keyword>PKIX</keyword>
+<abstract>
+<t>Three binary encodings for JavaScript Object Notation (JSON) are presented. JSON-B (Binary) is a strict superset of the JSON encoding that permits efficient binary encoding of intrinsic JavaScript data types. JSON-C (Compact) is a strict superset of JSON-B that supports compact representation of repeated data strings with short numeric codes. JSON-D (Data) supports additional binary data types for integer and floating point representations for use in scientific applications where conversion between binary and decimal representations would cause a loss of precision. </t>
+</abstract>
+</front>
+<middle>
+<section title="Definitions" anchor="Section_1">
+<section title="Requirements Language" anchor="Section_1_1">
+<t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119]. </t>
+</section>
+</section>
+<section title="Introduction" anchor="Section_2">
+<t>JavaScript Object Notation (JSON) is a simple text encoding for the JavaScript Data model that has found wide application beyond its original field of use. In particular JSON has rapidly become a preferred encoding for Web Services. </t>
+<t>JSON encoding supports just four fundamental data types (integer, floating point, string and boolean), arrays and objects which consist of a list of tag-value pairs. </t>
+<t>Although the JSON encoding is sufficient for many purposes it is not always efficient. In particular there is no efficient representation for blocks of binary data. Use of base64 encoding increases data volume by 33%. This overhead increases exponentially in applications where nested binary encodings are required making use of JSON encoding unsatisfactory in cryptographic applications where nested binary structures are frequently required. </t>
+<t>Another source of inefficiency in JSON encoding is the repeated occurrence of object tags. A JSON encoding containing an array of a hundred objects such as {"first":1,"second":2} will contain a hundred occurrences of the string "first" (seven bytes) and a hundred occurrences of the string "second" (eight bytes). Using two byte code sequences in place of strings allows a saving of 11 bytes per object without loss of information, a saving of 50%. </t>
+<t>A third objection to the use of JSON encoding is that floating point numbers can only be represented in decimal form and this necessarily involves a loss of precision when converting between binary and decimal representations. While such issues are rarely important in network applications they can be critical in scientific applications. It is not acceptable for saving and restoring a data set to change the result of a calculation. </t>
+<section title="Objectives" anchor="Section_2_1">
+<t>The following were identified as core objectives for a binary JSON encoding:</t>
+<t><list style="symbols">
+<t>Low overhead encoding and decoding </t>
+<t>Easy to convert existing encoders and decoders to add binary support </t>
+<t>Efficient encoding of binary data </t>
+<t>Ability to convert from JSON to binary encoding in a streaming mode (i.e. without reading the entire binary data block before beginning encoding. </t>
+<t>Lossless encoding of JavaScript data types </t>
+<t>The ability to support JSON tag compression and extended data types are considered desirable but not essential for typical network applications. </t>
+</list></t>
+<t>Three binary encodings are defined:</t>
+<t><list style="hanging">
+<t hangText="JSON-B (Binary)">Simply encodes JSON data in binary. Only the JavaScript data model is supported (i.e. atomic types are integers, double or string). Integers may be 8, 16, 32 or 64 bits either signed or unsigned. Floating points are IEEE 754 binary64 format [!IEEE-754]. Supports chunked encoding for binary and UTF-8 string types. </t>
+<t hangText="JSON-C (Compact)">As JSON-B but with support for representing JSON tags in numeric code form (16 bit code space). This is done for both compact encoding and to allow simplification of encoders/decoders in constrained environments. Codes may be defined inline or by reference to a known dictionary of codes referenced via a digest value.</t>
+<t hangText="JSON-D (Data)">As JSON-C but with support for representing additional data types without loss of precision. In particular other IEEE 754 floating point formats, both binary and decimal and Intel's 80 bit floating point, plus 128 bit integers and bignum integers.</t>
+</list></t>
+</section>
+</section>
+<section title="Extended JSON Grammar" anchor="Section_3">
+<t>The JSON-B, JSON-C and JSON-D encodings are all based on the JSON grammar [RFC4627] using the same syntactic structure but different lexical encodings. </t>
+<t>JSON-B0 and JSON-C0 replace the JSON lexical encodings for strings and numbers with binary encodings. JSON-B1 and JSON-C1 allow either lexical encoding to be used. Thus any valid JSON encoding is a valid JSON-B1 or JSON-C1 encoding. </t>
+<t>The grammar of JSON-B, JSON-C and JSON-D is a superset of the JSON grammar. The following productions are added to the grammar:</t>
+<t><list style="hanging">
+<t hangText="x-value">Binary encodings for data values. As the binary value encodings are all self delimiting </t>
+<t hangText="x-member">An object member where the value is specified as an X-value and thus does not require a value-separator. </t>
+<t hangText="b-value">Binary data encodings defined in JSON-B. </t>
+<t hangText="b-string">Defined length string encoding defined in JSON-B. </t>
+<t hangText="c-def">Tag code definition defined in JSON-C. These may only appear before the beginning of an Object or Array and before any preceeding white space. </t>
+<t hangText="c-tag">Tag code value defined in JSON-C. </t>
+<t hangText="d-value">Additional binary data encodings defined in JSON-D for use in scientific data applications. </t>
+</list></t>
+<t>The JSON grammar is modified to permit the use of x-value productions in place of ( value value-separator ) : </t>
+<figure>
+<artwork>
+<![CDATA[   JSON-text = (object / array)
+
+    object = *cdef begin-object [
+        *( member value-separator | x-member )
+        (member | x-member) ] end-object
+
+    member = tag value
+    x-member = tag x-value
+
+    tag = string name-separator | b-string | c-tag
+
+    array = *cdef begin-array [  *( value value-separator | x-value )
+        (value | x-value) ] end-array
+
+    x-value = b-value / d-value
+
+    value = false / null / true / object / array / number / string
+
+    name-separator  = ws %x3A ws  ; : colon
+    value-separator = ws %x2C ws  ; , comma
+]]></artwork>
+</figure>
+<t>The following lexical values are unchanged: </t>
+<figure>
+<artwork>
+<![CDATA[   begin-array     = ws %x5B ws  ; [ left square bracket
+    begin-object    = ws %x7B ws  ; { left curly bracket
+    end-array       = ws %x5D ws  ; ] right square bracket
+    end-object      = ws %x7D ws  ; } right curly bracket
+
+    ws = *( %x20 %x09 %x0A  %x0D )
+
+    false = %x66.61.6c.73.65   ; false
+    null  = %x6e.75.6c.6c      ; null
+    true  = %x74.72.75.65      ; true
+]]></artwork>
+</figure>
+<t>The productions number and string are defined as before: </t>
+<figure>
+<artwork>
+<![CDATA[   number = [ minus ] int [ frac ] [ exp ]
+    decimal-point = %x2E       ; .
+    digit1-9 = %x31-39         ; 1-9
+    e = %x65 / %x45            ; e E
+    exp = e [ minus / plus ] 1*DIGIT
+    frac = decimal-point 1*DIGIT
+    int = zero / ( digit1-9 *DIGIT )
+    minus = %x2D               ; -
+    plus = %x2B                ; +
+    zero = %x30                ; 0
+
+    string = quotation-mark *char quotation-mark
+    char = unescaped /
+    escape ( %x22 / %x5C / %x2F / %x62 / %x66 /
+    %x6E / %x72 / %x74 /  %x75 4HEXDIG )
+
+    escape = %x5C              ; \
+    quotation-mark = %x22      ; "
+    unescaped = %x20-21 / %x23-5B / %x5D-10FFFF
+]]></artwork>
+</figure>
+</section>
+<section title="JSON-B" anchor="Section_4">
+<t>The JSON-B encoding defines the b-value and b-string productions: </t>
+<figure>
+<artwork>
+<![CDATA[   b-value = b-atom | b-string | b-data | b-integer | b-float
+
+    b-string = *( string-chunk ) string-term
+    b-data = *( data-chunk ) data-last
+
+    b-integer = p-int8 | p-int16 | p-int32 | p-int64 | p-bignum16 |
+        n-int8 | n-int16 | n-int32 | n-int64 | n-bignum16
+
+    b-float = binary64
+]]></artwork>
+</figure>
+<t>The lexical encodings of the productions are defined in the following table where the column 'tag' specifies the byte code that begins the production, 'Fixed' specifies the number of data bytes that follow and 'Length' specifies the number of bytes used to define the length of a variable length field following the data bytes: </t>
+<texttable >
+<ttcol>Production</ttcol>
+<ttcol>Tag</ttcol>
+<ttcol>Fixed</ttcol>
+<ttcol>Length</ttcol>
+<ttcol>Data Description</ttcol>
+<c>string-term</c>
+<c>x80</c>
+<c>-</c>
+<c>1</c>
+<c>Terminal String 8 bit length</c>
+<c>string-term</c>
+<c>x81</c>
+<c>-</c>
+<c>2</c>
+<c>Terminal String 16 bit length</c>
+<c>string-term</c>
+<c>x82</c>
+<c>-</c>
+<c>4</c>
+<c>Terminal String 32 bit length</c>
+<c>string-term</c>
+<c>x83</c>
+<c>-</c>
+<c>8</c>
+<c>Terminal String 64 bit length</c>
+<c>string-chunk</c>
+<c>x84</c>
+<c>-</c>
+<c>1</c>
+<c>Non-Terminal String 8 bit length</c>
+<c>string-chunk</c>
+<c>x85</c>
+<c>-</c>
+<c>2</c>
+<c>Non-Terminal String 16 bit length</c>
+<c>string-chunk</c>
+<c>x86</c>
+<c>-</c>
+<c>4</c>
+<c>Non-Terminal String 32 bit length</c>
+<c>string-chunk</c>
+<c>x87</c>
+<c>-</c>
+<c>8</c>
+<c>Non-Terminal String 64 bit length</c>
+<c>data-term</c>
+<c>x88</c>
+<c>-</c>
+<c>1</c>
+<c>Terminal Data 8 bit length</c>
+<c>data-term</c>
+<c>x89</c>
+<c>-</c>
+<c>2</c>
+<c>Terminal Data 16 bit length</c>
+<c>data-term</c>
+<c>x8A</c>
+<c>-</c>
+<c>4</c>
+<c>Terminal Data 32 bit length</c>
+<c>data-term</c>
+<c>x8B</c>
+<c>-</c>
+<c>8</c>
+<c>Terminal Data 64 bit length</c>
+<c>data-chunk</c>
+<c>x8C</c>
+<c>-</c>
+<c>1</c>
+<c>Non-Terminal Data 8 bit length</c>
+<c>data-chunk</c>
+<c>x8D</c>
+<c>-</c>
+<c>2</c>
+<c>Non-Terminal Data 16 bit length</c>
+<c>data-chunk</c>
+<c>x8E</c>
+<c>-</c>
+<c>4</c>
+<c>Non-Terminal Data 32 bit length</c>
+<c>data-chunk</c>
+<c>x8F</c>
+<c>-</c>
+<c>8</c>
+<c>Non-Terminal String 64 bit length</c>
+<c>p-int8</c>
+<c>xA0</c>
+<c>1</c>
+<c>-</c>
+<c>Positive 8 bit Integer</c>
+<c>p-int16</c>
+<c>xA1</c>
+<c>2</c>
+<c>-</c>
+<c>Positive 16 bit Integer</c>
+<c>p-int32</c>
+<c>xA2</c>
+<c>4</c>
+<c>-</c>
+<c>Positive 32 bit Integer</c>
+<c>p-int64</c>
+<c>xA3</c>
+<c>8</c>
+<c>-</c>
+<c>Positive 64 bit Integer</c>
+<c>p-bignum16</c>
+<c>xA5</c>
+<c>-</c>
+<c>2</c>
+<c>Positive Bignum 16 bit length</c>
+<c>n-int8</c>
+<c>xA8</c>
+<c>1</c>
+<c>-</c>
+<c>Negative 8 bit Integer</c>
+<c>n-int16</c>
+<c>xA9</c>
+<c>2</c>
+<c>-</c>
+<c>Negative 16 bit Integer</c>
+<c>n-int32</c>
+<c>xAA</c>
+<c>4</c>
+<c>-</c>
+<c>Negative 32 bit Integer</c>
+<c>n-int64</c>
+<c>xAB</c>
+<c>8</c>
+<c>-</c>
+<c>Negative 64 bit Integer</c>
+<c>n-bignum16</c>
+<c>xAD</c>
+<c>-</c>
+<c>2</c>
+<c>Negative Bignum 16 bit length</c>
+<c>binary64</c>
+<c>x92</c>
+<c>8</c>
+<c>-</c>
+<c>IEEE 754 Floating Point binary64</c>
+<c>b-value</c>
+<c>xB0</c>
+<c>-</c>
+<c>-</c>
+<c>True</c>
+<c>b-value</c>
+<c>xB1</c>
+<c>-</c>
+<c>-</c>
+<c>False</c>
+<c>b-value</c>
+<c>xB2</c>
+<c>-</c>
+<c>-</c>
+<c>Null</c>
+</texttable >
+<t>A data type commonly used in networking that is not defined in this scheme is a datetime representation. </t>
+<section title="JSON-B Examples" anchor="Section_4_1">
+<t>The following examples show examples of using JSON-B encoding: </t>
+<figure>
+<artwork>
+<![CDATA[Binary Encoding                  JSON Equivalent
+
+A0 2A                            42 (as 8 bit integer)
+A1 00 2A                         42 (as 16 bit integer)
+A2 00 00 00 2A                   42 (as 32 bit integer)
+A3 00 00 00 00 00 00 00 2A       42 (as 64 bit integer)
+A5 00 01 42                      42 (as Bignum)
+
+80 05 48 65 6c 6c 6f             "Hello" (single chunk)
+81 00 05 48 65 6c 6c 6f          "Hello" (single chunk)
+84 05 48 65 6c 6c 6f 80 00       "Hello" (as two chunks)
+
+92 3f f0 00 00 00 00 00 00       1.0
+92 40 24 00 00 00 00 00 00       10.0
+92 40 09 21 fb 54 44 2e ea       3.14159265359
+92 bf f0 00 00 00 00 00 00       -1.0
+
+B0                               true
+B1                               false
+B2                               null
+]]></artwork>
+</figure>
+</section>
+</section>
+<section title="JSON-C" anchor="Section_5">
+<t>JSON-C (Compressed) permits numeric code values to be substituted for strings and binary data. Tag codes MAY be 8, 16 or 32 bits long encoded in network byte order. </t>
+<t>Tag codes MUST be defined before they are referenced. A Tag code MAY be defined before the corresponding data or string value is used or at the same time that it is used. </t>
+<t>A dictionary is a list of tag code definitions. An encoding MAY incorporate definitions from a dictionary using the dict-hash production. The dict hash production specifies a (positive) offset value to be added to the entries in the dictionary and a hash code identifier consisting of the ASN.1 OID value sequence for the cryptographic digest used to compute the hash value followed by the hash value in network byte order. </t>
+<texttable >
+<ttcol>Production</ttcol>
+<ttcol>Tag</ttcol>
+<ttcol>Fixed</ttcol>
+<ttcol>Length</ttcol>
+<ttcol>Data Description</ttcol>
+<c>c-tag</c>
+<c>xC0</c>
+<c>1</c>
+<c>-</c>
+<c>8 bit tag code</c>
+<c>c-tag</c>
+<c>xC1</c>
+<c>2</c>
+<c>-</c>
+<c>16 bit tag code</c>
+<c>c-tag</c>
+<c>xC2</c>
+<c>4</c>
+<c>-</c>
+<c>32 bit tag code</c>
+<c>c-def</c>
+<c>xC4</c>
+<c>1</c>
+<c>-</c>
+<c>8 bit tag definition</c>
+<c>c-def</c>
+<c>xC5</c>
+<c>2</c>
+<c>-</c>
+<c>16 bit tag definition</c>
+<c>c-def</c>
+<c>xC6</c>
+<c>4</c>
+<c>-</c>
+<c>32 bit tag definition</c>
+<c>c-tag</c>
+<c>xC8</c>
+<c>1</c>
+<c>-</c>
+<c>8 bit tag code &amp; definition</c>
+<c>c-tag</c>
+<c>xC9</c>
+<c>2</c>
+<c>-</c>
+<c>16 bit tag code &amp; definition</c>
+<c>c-tag</c>
+<c>xCA</c>
+<c>4</c>
+<c>-</c>
+<c>32 bit tag code &amp; definition</c>
+<c>c-def</c>
+<c>xCC</c>
+<c>1</c>
+<c>-</c>
+<c>8 bit tag dictionary definition</c>
+<c>c-def</c>
+<c>xCD</c>
+<c>2</c>
+<c>-</c>
+<c>16 bit tag dictionary definition</c>
+<c>c-def</c>
+<c>xCE</c>
+<c>4</c>
+<c>-</c>
+<c>32 bit tag dictionary definition</c>
+<c>dict-hash</c>
+<c>xD0</c>
+<c>4</c>
+<c>1</c>
+<c>Hash of dictionary</c>
+</texttable >
+<t>All integer values are encoded in Network Byte Order (most significant byte first). </t>
+<section title="JSON-C Examples" anchor="Section_5_1">
+<t>The following examples show examples of using JSON-C encoding: </t>
+<figure>
+<artwork>
+<![CDATA[JSON-C                           Value      Define
+
+C8 20 80 05 48 65 6c 6c 6f       "Hello"    20 = "Hello"
+C4 21 80 05 48 65 6c 6c 6f                  21 = "Hello"
+C0 20                            "Hello"
+C1 00 20                         "Hello"
+
+D0 00 00 01 00 1B                           277 = "Hello"
+06 09 60 86 48 01 65 03
+04 02 01                      OID for SHA-2-256
+e3 b0 c4 42 98 fc 1c 14
+9a fb f4 c8 99 6f b9 24
+27 ae 41 e4 64 9b 93 4c
+a4 95 99 1b 78 52 b8 55       SHA-256(C4 21 80 05 48 65 6c 6c 6f)
+]]></artwork>
+</figure>
+<t>2.16.840.1.101.3.4.2.1</t>
+</section>
+</section>
+<section title="JSON-D (Data)" anchor="Section_6">
+<t>JSON-B and JSON-C only support the two numeric types defined in the JavaScript data model: Integers and 64 bit floating point values. JSON-D (Data) defines binary encodings for additional data types that are commonly used in scientific applications. These comprise positive and negative 128 bit integers, six additional floating point representations defined by IEEE 754 [RFC2119] and the Intel extended precision 80 bit floating point representation. </t>
+<t>Should the need arise, even bigger bignums could be defined with the length specified as a 32 bit value permitting bignums of up to 2^35 bits to be represented. </t>
+<figure>
+<artwork>
+<![CDATA[d-value = d-integer | d-float
+
+d-float = binary16 | binary32 | binary128 | binary80 |
+decimal32 | decimal64 | decimal 128
+]]></artwork>
+</figure>
+<texttable >
+<ttcol>Production</ttcol>
+<ttcol>Tag</ttcol>
+<ttcol>Fixed</ttcol>
+<ttcol>Length</ttcol>
+<ttcol>Data Description</ttcol>
+<c>p-int128</c>
+<c>xA4</c>
+<c>16</c>
+<c>-</c>
+<c>Positive 128 bit Integer</c>
+<c>n-in7128</c>
+<c>xAC</c>
+<c>16</c>
+<c>-</c>
+<c>Negative 128 bit Integer</c>
+<c>binary16</c>
+<c>x90</c>
+<c>2</c>
+<c>-</c>
+<c>IEEE 754 Floating Point binary16</c>
+<c>binary32</c>
+<c>x91</c>
+<c>4</c>
+<c>-</c>
+<c>IEEE 754 Floating Point binary32</c>
+<c>binary128</c>
+<c>x94</c>
+<c>16</c>
+<c>-</c>
+<c>IEEE 754 Floating Point binary128</c>
+<c>intel80</c>
+<c>x95</c>
+<c>10</c>
+<c>-</c>
+<c>Intel 80 bit extended binary Floating Point</c>
+<c>decimal32</c>
+<c>x96</c>
+<c>4</c>
+<c>-</c>
+<c>IEEE 754 Floating Point decimal32</c>
+<c>decimal64</c>
+<c>x97</c>
+<c>8</c>
+<c>-</c>
+<c>IEEE 754 Floating Point decimal64</c>
+<c>decimal128</c>
+<c>x98</c>
+<c>18</c>
+<c>-</c>
+<c>IEEE 754 Floating Point decimal128</c>
+</texttable >
+</section>
+<section title="Acknowledgements" anchor="Section_7">
+<t>Nico Williams, etc </t>
+</section>
+<section title="Security Considerations" anchor="Section_8">
+<t>TBS </t>
+</section>
+<section title="IANA Considerations" anchor="Section_9">
+<t>[TBS list out all the code points that require an IANA registration] </t>
+</section>
+</middle>
+<back>
+<references title="Normative References">
+<reference anchor="RFC2119">
+<front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author fullname="Scott Bradner" initials="S." surname="Bradner">
+<organization>Harvard University</organization>
+<address>
+</address>
+</author>
+<date month="March" year="1997"/>
+<keyword>keyword</keyword>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<format type="TXT" target="http://www.rfc-editor.org/rfc/rfc2119.txt" octets="4723"/>
+<format type="HTML" target="http://xml.resource.org/public/rfc/html/rfc2119.html" octets="17970"/>
+<format type="XML" target="http://xml.resource.org/public/rfc/xml/rfc2119.xml" octets="5777"/>
+</reference>
+<reference anchor="RFC4627">
+<front>
+<title>The application/json Media Type for JavaScript Object Notation (JSON)</title>
+<author fullname="D. Crockford" initials="D." surname="Crockford">
+<organization/>
+<address>
+</address>
+</author>
+<date month="July" year="2006"/>
+</front>
+<seriesInfo name="RFC" value="4627"/>
+<format type="TXT" target="http://www.rfc-editor.org/rfc/rfc4627.txt" octets="16319"/>
+</reference>
+<reference anchor="IEEE-754">
+<front>
+<title>[Reference Not Found!]</title>
+<author initials="" surname="">
+<organization/>
+<address>
+</address>
+</author>
+<date/>
+</front>
+</reference>
+</references>
+</back>
+</rfc>

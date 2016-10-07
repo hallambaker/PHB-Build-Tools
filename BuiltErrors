@@ -1,0 +1,205 @@
+Script.cs(209,22): warning CS0219: The variable `DaylightSavings' is assigned but its value is never used
+Lexer.cs(35,18): warning CS0414: The private field `Goedel.Registry.GoedelParseException.Position' is assigned but its value is never used
+Asn2.cs(1015,26): warning CS0414: The private field `Goedel.Tool.ASN.ASN2.CurrentToken' is assigned but its value is never used
+Asn2.cs(1016,25): warning CS0414: The private field `Goedel.Tool.ASN.ASN2.CurrentPosition' is assigned but its value is never used
+Asn2.cs(1017,24): warning CS0414: The private field `Goedel.Tool.ASN.ASN2.CurrentText' is assigned but its value is never used
+Generate.cs(105,27): warning CS0219: The variable `Default' is assigned but its value is never used
+Generate.cs(112,22): warning CS0219: The variable `Parameter' is assigned but its value is never used
+Generate.cs(116,19): warning CS0219: The variable `Option' is assigned but its value is never used
+Generate.cs(244,14): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(849,20): warning CS0219: The variable `Generator' is assigned but its value is never used
+Generate.cs(1077,17): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(1084,20): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(1091,17): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(1209,21): warning CS0219: The variable `Generator' is assigned but its value is never used
+Command.cs(741,26): warning CS0414: The private field `Goedel.Tool.Command.CommandParse.CurrentToken' is assigned but its value is never used
+Command.cs(742,25): warning CS0414: The private field `Goedel.Tool.Command.CommandParse.CurrentPosition' is assigned but its value is never used
+Command.cs(743,24): warning CS0414: The private field `Goedel.Tool.Command.CommandParse.CurrentText' is assigned but its value is never used
+Generate.cs(59,18): warning CS0414: The private field `Goedel.Tool.Command.GenerateCS.OptionSetType' is assigned but its value is never used
+Generate.cs(463,15): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(469,15): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(475,17): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(481,15): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(487,17): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(493,15): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(499,16): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(505,16): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(511,17): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(517,17): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(523,17): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(529,25): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(539,18): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(549,18): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(555,17): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(561,18): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(569,19): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(585,14): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(591,15): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(599,16): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(607,21): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(621,18): warning CS0219: The variable `Cast' is assigned but its value is never used
+Generate.cs(649,17): warning CS0219: The variable `Binary' is assigned but its value is never used
+Generate.cs(655,18): warning CS0219: The variable `Binary8' is assigned but its value is never used
+Generate.cs(667,19): warning CS0219: The variable `Binary16' is assigned but its value is never used
+Generate.cs(685,14): warning CS0219: The variable `Hex' is assigned but its value is never used
+Generate.cs(691,15): warning CS0219: The variable `Hex8' is assigned but its value is never used
+Generate.cs(703,16): warning CS0219: The variable `Hex16' is assigned but its value is never used
+Generate.cs(715,18): warning CS0219: The variable `Strings' is assigned but its value is never used
+Generate.cs(721,25): warning CS0219: The variable `OptionalString' is assigned but its value is never used
+Generate.cs(741,18): warning CS0219: The variable `StringX' is assigned but its value is never used
+Domainer.cs(1258,26): warning CS0414: The private field `Goedel.Tool.Domainer.Domainer.CurrentToken' is assigned but its value is never used
+Domainer.cs(1259,25): warning CS0414: The private field `Goedel.Tool.Domainer.Domainer.CurrentPosition' is assigned but its value is never used
+Domainer.cs(1260,24): warning CS0414: The private field `Goedel.Tool.Domainer.Domainer.CurrentText' is assigned but its value is never used
+Extension.cs(30,43): warning CS0414: The private field `Goedel.Tool.Domainer.Domainer.ConversionCS' is assigned but its value is never used
+Extension.cs(12,16): warning CS0414: The private field `Goedel.Tool.Domainer.Conversion.Declaration' is assigned but its value is never used
+Exceptional.cs(398,26): warning CS0414: The private field `Goedel.Tool.Exceptional.Exceptions.CurrentToken' is assigned but its value is never used
+Exceptional.cs(399,25): warning CS0414: The private field `Goedel.Tool.Exceptional.Exceptions.CurrentPosition' is assigned but its value is never used
+Exceptional.cs(400,24): warning CS0414: The private field `Goedel.Tool.Exceptional.Exceptions.CurrentText' is assigned but its value is never used
+FSRSchemaPlus.cs(187,29): warning CS0219: The variable `Any' is assigned but its value is never used
+FSRSchema.cs(416,26): warning CS0414: The private field `Goedel.Tool.FSRGen.FSRSchema.CurrentToken' is assigned but its value is never used
+FSRSchema.cs(417,25): warning CS0414: The private field `Goedel.Tool.FSRGen.FSRSchema.CurrentPosition' is assigned but its value is never used
+FSRSchema.cs(418,24): warning CS0414: The private field `Goedel.Tool.FSRGen.FSRSchema.CurrentText' is assigned but its value is never used
+Client.cs(347,17): warning CS0219: The variable `match' is assigned but its value is never used
+ParserGenerator.cs(62,20): warning CS0219: The variable `License' is assigned but its value is never used
+ParserGenerator.cs(69,21): warning CS0219: The variable `License' is assigned but its value is never used
+ParserGenerator.cs(76,21): warning CS0219: The variable `License' is assigned but its value is never used
+ParserGenerator.cs(83,20): warning CS0219: The variable `License' is assigned but its value is never used
+ParserGenerator.cs(90,24): warning CS0219: The variable `License' is assigned but its value is never used
+ParserGenerator.cs(336,16): warning CS0219: The variable `Choice' is assigned but its value is never used
+ParserGenerator.cs(342,19): warning CS0219: The variable `ChoiceREF' is assigned but its value is never used
+ParserGenerator.cs(348,16): warning CS0219: The variable `Label' is assigned but its value is never used
+ParserGenerator.cs(994,16): warning CS0219: The variable `Label' is assigned but its value is never used
+ParserGenerator.cs(1054,18): warning CS0219: The variable `Single' is assigned but its value is never used
+ParserGenerator.cs(1060,20): warning CS0219: The variable `Multiple' is assigned but its value is never used
+ParserGenerator.cs(1205,19): warning CS0219: The variable `ChoiceREF' is assigned but its value is never used
+ParserGenerator.cs(1431,16): warning CS0219: The variable `Entry_Cast' is assigned but its value is never used
+ParserGenerator.cs(1449,14): warning CS0219: The variable `Text' is assigned but its value is never used
+ParserGenerator.cs(1498,17): warning CS0219: The variable `Integer' is assigned but its value is never used
+ParserGenerator.cs(1516,17): warning CS0219: The variable `Boolean' is assigned but its value is never used
+ParserGenerator.cs(1601,16): warning CS0219: The variable `Single' is assigned but its value is never used
+ParserGenerator.cs(1607,18): warning CS0219: The variable `Multiple' is assigned but its value is never used
+ParserGenerator.cs(1694,14): warning CS0219: The variable `Choice' is assigned but its value is never used
+ParserGenerator.cs(1700,17): warning CS0219: The variable `ChoiceREF' is assigned but its value is never used
+ParserGenerator.cs(1706,10): warning CS0219: The variable `ID' is assigned but its value is never used
+ParserGenerator.cs(1712,11): warning CS0219: The variable `REF' is assigned but its value is never used
+ParserGenerator.cs(1718,13): warning CS0219: The variable `Token' is assigned but its value is never used
+ParserGenerator.cs(1724,14): warning CS0219: The variable `String' is assigned but its value is never used
+ParserGenerator.cs(1730,12): warning CS0219: The variable `Text' is assigned but its value is never used
+ParserGenerator.cs(1736,15): warning CS0219: The variable `Integer' is assigned but its value is never used
+ParserGenerator.cs(1742,15): warning CS0219: The variable `Boolean' is assigned but its value is never used
+ParserGenerator.cs(1763,14): warning CS0219: The variable `Label' is assigned but its value is never used
+ParserGenerator.cs(1776,16): warning CS0219: The variable `Single' is assigned but its value is never used
+ParserGenerator.cs(1784,18): warning CS0219: The variable `Multiple' is assigned but its value is never used
+ParserGenerator.cs(1816,15): warning CS0219: The variable `Choice' is assigned but its value is never used
+ParserGenerator.cs(1824,18): warning CS0219: The variable `ChoiceREF' is assigned but its value is never used
+ParserGenerator.cs(1832,11): warning CS0219: The variable `ID' is assigned but its value is never used
+ParserGenerator.cs(1840,12): warning CS0219: The variable `REF' is assigned but its value is never used
+ParserGenerator.cs(1848,14): warning CS0219: The variable `Token' is assigned but its value is never used
+ParserGenerator.cs(1856,15): warning CS0219: The variable `String' is assigned but its value is never used
+ParserGenerator.cs(1864,16): warning CS0219: The variable `Integer' is assigned but its value is never used
+ParserGenerator.cs(1872,16): warning CS0219: The variable `Boolean' is assigned but its value is never used
+ParserGenerator.cs(1887,14): warning CS0219: The variable `Choice' is assigned but its value is never used
+ParserGenerator.cs(1893,17): warning CS0219: The variable `ChoiceREF' is assigned but its value is never used
+ParserGenerator.cs(1899,10): warning CS0219: The variable `ID' is assigned but its value is never used
+ParserGenerator.cs(1905,11): warning CS0219: The variable `REF' is assigned but its value is never used
+ParserGenerator.cs(1911,13): warning CS0219: The variable `Token' is assigned but its value is never used
+ParserGenerator.cs(1917,14): warning CS0219: The variable `String' is assigned but its value is never used
+ParserGenerator.cs(1923,12): warning CS0219: The variable `Text' is assigned but its value is never used
+ParserGenerator.cs(1933,15): warning CS0219: The variable `Integer' is assigned but its value is never used
+ParserGenerator.cs(1939,15): warning CS0219: The variable `Boolean' is assigned but its value is never used
+Goedel.cs(581,26): warning CS0414: The private field `GoedelSchema.Goedel.CurrentToken' is assigned but its value is never used
+Goedel.cs(582,25): warning CS0414: The private field `GoedelSchema.Goedel.CurrentPosition' is assigned but its value is never used
+Goedel.cs(583,24): warning CS0414: The private field `GoedelSchema.Goedel.CurrentText' is assigned but its value is never used
+Document.cs(1018,12): warning CS0219: The variable `def' is assigned but its value is never used
+Document.cs(1025,17): warning CS0219: The variable `Required' is assigned but its value is never used
+Document.cs(1032,17): warning CS0219: The variable `Multiple' is assigned but its value is never used
+GenerateC.cs(356,14): warning CS0219: The variable `OComma' is assigned but its value is never used
+GenerateC.cs(439,20): warning CS0219: The variable `Cast' is assigned but its value is never used
+GenerateC.cs(445,20): warning CS0219: The variable `Cast' is assigned but its value is never used
+GenerateC.cs(451,20): warning CS0219: The variable `Cast' is assigned but its value is never used
+GenerateC.cs(457,18): warning CS0219: The variable `Cast' is assigned but its value is never used
+GenerateC.cs(463,19): warning CS0219: The variable `Cast' is assigned but its value is never used
+GenerateC.cs(469,19): warning CS0219: The variable `Cast' is assigned but its value is never used
+GenerateC.cs(475,19): warning CS0219: The variable `Cast' is assigned but its value is never used
+GenerateC.cs(768,12): warning CS0219: The variable `OComma' is assigned but its value is never used
+GenerateCSharp.cs(713,17): warning CS0219: The variable `Abstract' is assigned but its value is never used
+GenerateCSharp.cs(746,17): warning CS0219: The variable `Multiple' is assigned but its value is never used
+GenerateCSharp.cs(779,17): warning CS0219: The variable `Required' is assigned but its value is never used
+GenerateCSharp.cs(1085,12): warning CS0219: The variable `IsOverride' is assigned but its value is never used
+GenerateCSharp.cs(1524,15): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1530,15): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1536,14): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1542,14): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1548,15): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1570,13): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1576,12): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1582,14): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1588,11): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1594,16): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1622,15): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1628,15): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1634,14): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1640,14): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1656,15): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1670,13): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1676,12): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1682,14): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1688,11): warning CS0219: The variable `Param' is assigned but its value is never used
+GenerateCSharp.cs(1694,16): warning CS0219: The variable `Param' is assigned but its value is never used
+Document.cs(61,11): warning CS0414: The private field `Goedel.Tool.ProtoGen.Generate.Namespace' is assigned but its value is never used
+ProtoGen.cs(2530,26): warning CS0414: The private field `Goedel.Tool.ProtoGen.ProtoStruct.CurrentToken' is assigned but its value is never used
+ProtoGen.cs(2531,25): warning CS0414: The private field `Goedel.Tool.ProtoGen.ProtoStruct.CurrentPosition' is assigned but its value is never used
+ProtoGen.cs(2532,24): warning CS0414: The private field `Goedel.Tool.ProtoGen.ProtoStruct.CurrentText' is assigned but its value is never used
+BlockParse.cs(190,17): warning CS0219: The variable `LastAttributes' is assigned but its value is never used
+Schema.cs(640,26): warning CS0414: The private field `Goedel.BootMark.MarkSchema.CurrentToken' is assigned but its value is never used
+Schema.cs(641,25): warning CS0414: The private field `Goedel.BootMark.MarkSchema.CurrentPosition' is assigned but its value is never used
+Schema.cs(642,24): warning CS0414: The private field `Goedel.BootMark.MarkSchema.CurrentText' is assigned but its value is never used
+Bibliography.cs(371,26): warning CS0219: The variable `NewParse' is assigned but its value is never used
+Document.cs(88,30): warning CS0219: The variable `NewParse' is assigned but its value is never used
+Document.cs(95,34): warning CS0219: The variable `Rfc2629Parse' is assigned but its value is never used
+NewParse.cs(179,38): warning CS0219: The variable `Text' is assigned but its value is never used
+NewParse.cs(259,17): warning CS0219: The variable `NewParse' is assigned but its value is never used
+NewParse.cs(327,27): warning CS0219: The variable `Front' is assigned but its value is never used
+NewParse.cs(327,34): warning CS0219: The variable `Middle' is assigned but its value is never used
+NewParse.cs(813,38): warning CS0219: The variable `BibParse' is assigned but its value is never used
+rfc2629parse.cs(21,17): warning CS0219: The variable `Rfc2629Parse' is assigned but its value is never used
+Bibliography.cs(313,16): warning CS0414: The private field `Goedel.Tool.RFCTool.Source.UriPattern' is assigned but its value is never used
+FileReader.cs(13,26): warning CS0414: The private field `Goedel.Tool.RFCTool.SourceFile.SourceFiles' is assigned but its value is never used
+NewParse.cs(245,20): warning CS0414: The private field `Goedel.Tool.RFCTool.NewParse.TextReader' is assigned but its value is never used
+NewParse.cs(409,13): warning CS0414: The private field `Goedel.Tool.RFCTool.NewParse.SectionLevel' is assigned but its value is never used
+ConverterRFC.cs(24,17): warning CS0219: The variable `Converter' is assigned but its value is never used
+RegistrySchema.cs(305,26): warning CS0414: The private field `Goedel.Tool.RegistryConfig.ConfigItems.CurrentToken' is assigned but its value is never used
+RegistrySchema.cs(306,25): warning CS0414: The private field `Goedel.Tool.RegistryConfig.ConfigItems.CurrentPosition' is assigned but its value is never used
+RegistrySchema.cs(307,24): warning CS0414: The private field `Goedel.Tool.RegistryConfig.ConfigItems.CurrentText' is assigned but its value is never used
+GenerateCS.cs(109,20): warning CS0219: The variable `xCast' is assigned but its value is never used
+VSIXBuild.cs(419,26): warning CS0414: The private field `Goedel.Tool.VSIXBuild.VSIXBuild.CurrentToken' is assigned but its value is never used
+VSIXBuild.cs(420,25): warning CS0414: The private field `Goedel.Tool.VSIXBuild.VSIXBuild.CurrentPosition' is assigned but its value is never used
+VSIXBuild.cs(421,24): warning CS0414: The private field `Goedel.Tool.VSIXBuild.VSIXBuild.CurrentText' is assigned but its value is never used
+MakeWord.cs(64,17): warning CS0219: The variable `MakeWord' is assigned but its value is never used
+Shell.cs(19,20): warning CS0219: The variable `bibliography' is assigned but its value is never used
+Shell.cs(53,21): warning CS0219: The variable `BibParse' is assigned but its value is never used
+Generate.cs(746,16): warning CS0219: The variable `Divider' is assigned but its value is never used
+Generate.cs(846,11): warning CS0219: The variable `Enumerate' is assigned but its value is never used
+Generate.cs(880,11): warning CS0219: The variable `Item' is assigned but its value is never used
+Generate.cs(1120,13): warning CS0219: The variable `Item' is assigned but its value is never used
+Generate.cs(1124,13): warning CS0219: The variable `List' is assigned but its value is never used
+Generate.cs(1128,12): warning CS0219: The variable `Set' is assigned but its value is never used
+TrojanSchema.cs(1317,26): warning CS0414: The private field `Goedel.Trojan.Script.GUISchema.CurrentToken' is assigned but its value is never used
+TrojanSchema.cs(1318,25): warning CS0414: The private field `Goedel.Trojan.Script.GUISchema.CurrentPosition' is assigned but its value is never used
+TrojanSchema.cs(1319,24): warning CS0414: The private field `Goedel.Trojan.Script.GUISchema.CurrentText' is assigned but its value is never used
+BaseEncode.cs(174,31): warning CS0414: The private field `Goedel.Utilities.BaseConvert.BASE32HexValue' is assigned but its value is never used
+GenerateMakefile.cs(299,12): warning CS0219: The variable `SubProjectRef' is assigned but its value is never used
+GenerateMakefile.cs(414,10): warning CS0219: The variable `HaveSoure' is assigned but its value is never used
+ParseSolution.cs(218,17): warning CS0219: The variable `Found' is assigned but its value is never used
+JPC.cs(244,17): warning CS0219: The variable `ResultObject' is assigned but its value is never used
+ByteBuffer.cs(116,14): warning CS0414: The private field `Goedel.Protocol.StreamBuffer.WriteCache' is assigned but its value is never used
+ReaderWriter.cs(112,16): warning CS0169: The private field `Goedel.Protocol.CharacterTextStream.Source' is never used
+ReaderWriter.cs(113,14): warning CS0169: The private field `Goedel.Protocol.CharacterTextStream.Position' is never used
+Ticket.cs(259,17): warning CS0219: The variable `Sign' is assigned but its value is never used
+Cryoptography.cs(151,28): warning CS0414: The private field `Goedel.Protocol.Cryptography.Key.Authentication' is assigned but its value is never used
+Cryoptography.cs(152,24): warning CS0414: The private field `Goedel.Protocol.Cryptography.Key.Encryption' is assigned but its value is never used
+Cryoptography.cs(151,28): warning CS0414: The private field `Goedel.Protocol.Cryptography.Key.Authentication' is assigned but its value is never used
+Cryoptography.cs(152,24): warning CS0414: The private field `Goedel.Protocol.Cryptography.Key.Encryption' is assigned but its value is never used
+Buffer.cs(215,18): warning CS0219: The variable `Optional' is assigned but its value is never used
+Buffer.cs(416,17): warning CS0219: The variable `Position' is assigned but its value is never used
+Buffer.cs(446,28): warning CS0472: The result of comparing value type `System.DateTime' with null is always `false'

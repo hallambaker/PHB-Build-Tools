@@ -1012,9 +1012,6 @@ namespace Goedel.Tool.ASN {
         StateCode								State;
         Goedel.Tool.ASN._Choice				Current;
         List <_StackItem>						Stack;
-        TokenType								CurrentToken;
-        Position								CurrentPosition;
-        string									CurrentText;
 
 
         public static ASN2 Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -1432,9 +1429,6 @@ namespace Goedel.Tool.ASN {
 
 
         public override void Process(TokenType Token, Position Position, string Text) {
-            CurrentToken = Token;
-            CurrentPosition = Position;
-            CurrentText = Text;
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |

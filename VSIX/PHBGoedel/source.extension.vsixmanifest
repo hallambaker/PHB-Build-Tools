@@ -2,7 +2,7 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"
                  xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="AAECB34E-FA34-4CC1-B2F8-8AE537AF3B56" Version="1.6" Language="en-US" Publisher="Phillip Hallam-Baker" />
+    <Identity Id="AAECB34E-FA34-4CC1-B2F8-8AE537AF3B56" Version="1.8" Language="en-US" Publisher="Phillip Hallam-Baker" />
     <DisplayName>Goedel Code Meta Synthesizer</DisplayName>
     <Description xml:space="preserve">Phill Hallam-Baker's meta-code generation tools.
 
@@ -27,11 +27,7 @@ Note, this version of the tools does not support syntax shading.</Description>
   </Dependencies>
   <Assets>
     <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
-    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.Command" Path="|Goedel.Tool.Command|" AssemblyName="|Goedel.Tool.Command;AssemblyName|" />
-    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.FSRGen" Path="|Goedel.Tool.FSRGen|" AssemblyName="|Goedel.Tool.FSRGen;AssemblyName|" />
-    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.Exceptional" Path="|Goedel.Tool.Exceptional|" AssemblyName="|Goedel.Tool.Exceptional;AssemblyName|" />
     <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.Script" Path="|Goedel.Tool.Script|" AssemblyName="|Goedel.Tool.Script;AssemblyName|" />
-    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.Schema" Path="|Goedel.Tool.Schema|" AssemblyName="|Goedel.Tool.Schema;AssemblyName|" />
     <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Registry" Path="|Goedel.Registry|" AssemblyName="|Goedel.Registry;AssemblyName|" />
   </Assets>
 </PackageManifest>

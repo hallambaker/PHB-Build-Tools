@@ -88,8 +88,8 @@
     <None Include="TagDefinitions.mdsd" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Goedel.Registry\Goedel.Registry.csproj">
-      <Project>{f2a1f8ea-18e2-4f3a-aeaf-3983cea19fe0}</Project>
+    <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
+      <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
       <Name>Goedel.Registry</Name>
     </ProjectReference>
   </ItemGroup>

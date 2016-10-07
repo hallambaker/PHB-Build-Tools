@@ -2,7 +2,7 @@
 // Script Syntax Version:  1.0
 // #license MITLicense 
 
-//  Copyright ©  2011 by Default Deny Security Inc.
+//  Unknown by Unknown
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -55,8 +55,6 @@ namespace Goedel.Tool.Command {
 		//  *	Allow debug stubs to be turned off to make code compact
 		// #! 
 		//
-		// #% DateTime GenerateTime = DateTime.UtcNow; 
-		 DateTime GenerateTime = DateTime.UtcNow;
 		// #% TYPE<_Choice> OptionSetType; 
 		 TYPE<_Choice> OptionSetType;
 		// #% TYPE<_Choice> TypeType; 

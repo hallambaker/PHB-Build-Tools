@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.25802.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PHBTools2", "PHBTools2\PHBTools2.csproj", "{0CDEEDF9-9942-4423-A59F-75E8E5BCA97E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75D3ED83-2AE6-47BF-A280-3E82983C975E} = {75D3ED83-2AE6-47BF-A280-3E82983C975E}
+		{F2A1F8EA-18E2-4F3A-AEAF-3983CEA19FE0} = {F2A1F8EA-18E2-4F3A-AEAF-3983CEA19FE0}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Registry", "..\..\Goedel.Registry\Goedel.Registry.csproj", "{F2A1F8EA-18E2-4F3A-AEAF-3983CEA19FE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Script", "..\..\GScript\Goedel.Tool.Script\Goedel.Tool.Script.csproj", "{75D3ED83-2AE6-47BF-A280-3E82983C975E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CDEEDF9-9942-4423-A59F-75E8E5BCA97E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CDEEDF9-9942-4423-A59F-75E8E5BCA97E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CDEEDF9-9942-4423-A59F-75E8E5BCA97E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CDEEDF9-9942-4423-A59F-75E8E5BCA97E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2A1F8EA-18E2-4F3A-AEAF-3983CEA19FE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2A1F8EA-18E2-4F3A-AEAF-3983CEA19FE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2A1F8EA-18E2-4F3A-AEAF-3983CEA19FE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2A1F8EA-18E2-4F3A-AEAF-3983CEA19FE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75D3ED83-2AE6-47BF-A280-3E82983C975E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75D3ED83-2AE6-47BF-A280-3E82983C975E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75D3ED83-2AE6-47BF-A280-3E82983C975E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75D3ED83-2AE6-47BF-A280-3E82983C975E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

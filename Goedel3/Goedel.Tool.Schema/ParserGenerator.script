@@ -1,7 +1,6 @@
 ﻿#script 1.0
 #license MITLicense
 #pclass GoedelSchema GenerateParser
-#% DateTime GenerateTime = DateTime.UtcNow;
 #% Goedel Goedel;
 #method GenerateCS Goedel GoedelIn
 #% Goedel = GoedelIn;

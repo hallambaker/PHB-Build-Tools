@@ -1,0 +1,347 @@
+Internet Engineering Task Force (IETF)              Phillip Hallam-Baker
+INTERNET-DRAFT                                         Comodo Group Inc.
+Intended Status: Standards Track                           April 8, 2015
+Expires: October 10, 2015
+
+
+                                 Title
+                     draft-hallambaker-webseccaa-00
+
+Abstract
+
+   DNS Publication of HTTP Strict Security and Key Pinning Declarations
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the 
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering 
+   Task Force (IETF).  Note that other groups may also distribute 
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any 
+   time.  It is inappropriate to use Internet-Drafts as reference 
+   material or to cite them other than as "work in progress."
+
+Copyright Notice
+
+   Copyright (c) 2015 IETF Trust and the persons identified as the 
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal 
+   Provisions Relating to IETF Documents 
+   (http://trustee.ietf.org/license-info) in effect on the date of 
+   publication of this document. Please review these documents 
+   carefully, as they describe your rights and restrictions with respect
+   to this document. Code Components extracted from this document must 
+   include Simplified BSD License text as described in Section 4.e of 
+   the Trust Legal Provisions and are provided without warranty as 
+   described in the Simplified BSD License.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker                October 10, 2015                    [Page 1]
+
+Internet-Draft        DNS Publication HSTS & HPKP             April 2015
+
+Table of Contents
+
+   1.  Abstract . . . . . . . . . . . . . . . . . . . . . . . . . . .  3
+   2.  Definitions  . . . . . . . . . . . . . . . . . . . . . . . . .  3
+      2.1.  Requirements Language . . . . . . . . . . . . . . . . . .  3
+   3.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  3
+   4.  Record Format and Interpretation . . . . . . . . . . . . . . .  4
+      4.1.  Record Format . . . . . . . . . . . . . . . . . . . . . .  4
+         4.1.1.  HSTS . . . . . . . . . . . . . . . . . . . . . . . .  4
+         4.1.2.  HPKP . . . . . . . . . . . . . . . . . . . . . . . .  4
+      4.2.  Interpretation  . . . . . . . . . . . . . . . . . . . . .  5
+   5.  Security Considerations  . . . . . . . . . . . . . . . . . . .  5
+   6.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . .  5
+   7.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . .  6
+   8.  References . . . . . . . . . . . . . . . . . . . . . . . . . .  6
+      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  6
+      8.2.  Informative References  . . . . . . . . . . . . . . . . .  6
+   Author's Address . . . . . . . . . . . . . . . . . . . . . . . . .  6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker                October 10, 2015                    [Page 2]
+
+Internet-Draft        DNS Publication HSTS & HPKP             April 2015
+
+1. Abstract
+
+   HTTP Strict Transport Security (HSTS) and Public Key Pinning (HPKP) 
+   define security policies that provide Secure After First Use security
+   when published through HTTP over TLS. This specification defines a 
+   mechanism allowing HSTS and HPKP assertions to be published using DNS
+   CAA records to support Secure On First Use mechanisms.
+
+2. Definitions
+
+2.1. Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", 
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this 
+   document are to be interpreted as described in RFC 2119 [RFC2119].
+
+3. Introduction
+
+   HTTP Strict Transport Security (HSTS) [RFC6797] defines a mechanism 
+   enabling web sites to declare themselves accessible only via secure 
+   connections and/or for users to be able to direct their user agent(s)
+   to interact with given sites only over secure connections. An HTTP 
+   host declares itself an HSTS Host by issuing to UAs an HSTS Policy, 
+   which is represented by and conveyed via the Strict-Transport-
+   Security HTTP response header field over secure transport (e.g., 
+   TLS).
+
+   While signaling the security configuration of the HTTP server in-band
+   affords considerable deployment advantages, the security policy 
+   enforcement is of the ?Secure After First Contact? type. Conveying 
+   HSTS policy declarations inband does not and cannot provide security 
+   on first contact.
+
+   One response to this limitation is the use of ?pre-loaded list? 
+   registries as described in [RFC6797] section 14.6. Such lists are 
+   frequently employed by HTTP clients supporting the HTTP Strict 
+   Security mechanism.
+
+   The Certificate Authority Authorization record (CAA) [RFC6844] 
+   provides an extensible mechanism for publishing assertions that 
+   relate to the issue and use of PKIX certificates. This document 
+   defines CAA tags for HTTP Strict Security (HSTS) and Public Key 
+   Pinning (HPKP).
+
+   Unlike TLSA record specified by DANE [RFC6698], the syntax and 
+   intended semantics of a HSTS or HPKP record are identical to the 
+   corresponding HTTP headers. This affords considerable convenience in 
+   provisioning as all that is necessary is to forward data from the 
+   HTTP headers to the DNS service, a task which may be performed with 
+   little or no code.
+
+
+
+
+Hallam-Baker                October 10, 2015                    [Page 3]
+
+Internet-Draft        DNS Publication HSTS & HPKP             April 2015
+
+4. Record Format and Interpretation
+
+   The CAA record is an extensible DNS Resource Record defined for the 
+   purpose of making assertions about CA issued PKIX keys in the DNS.
+
+   Although the intended semantics are identical, the context is not. In
+   particular, a CAA record is presented through the DNS rather than in-
+   band within the TLS protocol. While a CAA record MAY be authenticated
+   by a valid DNSSEC signature, such a signature only establishes that 
+   the record is authoritative, it does not provide evidence of the 
+   state of the TLS server to which the record refers.
+
+   The consequences of the difference in semantics are discussed in the 
+   security considerations section.
+
+4.1. Record Format
+
+   The CAA record has four fields:
+
+         *  A flags field, permitting a criticality bit to be set.
+
+         *  A tag length field specifying the length of the following 
+            tag value
+
+         *  An attribute tag. Reserved tag values are specified in the 
+            IANA "Certification Authority Restriction Properties" 
+            registry.
+
+         *  A data block specifying the value.
+
+4.1.1. HSTS
+
+   To publish a HTTP Strict Security declaration as a CAA record, the 
+   following parameters are used:
+
+         *  Flags = 0
+
+         *  Tag Length = 4
+
+         *  Tag = 'hsts'
+
+         *  Value = The HTTP Strict Security policy declaration as 
+            specified in [RFC6797].
+
+4.1.2. HPKP
+
+   To publish a Public Key Pinning declaration as a CAA record, the 
+   following parameters are used:
+
+         *  Flags = 0
+
+
+
+
+Hallam-Baker                October 10, 2015                    [Page 4]
+
+Internet-Draft        DNS Publication HSTS & HPKP             April 2015
+
+         *  Tag Length = 4
+
+         *  Tag = 'hpkp'
+
+         *  Value = The Public Key Pinning policy declaration as 
+            specified in [I-D.ietf-websec-key-pinning].
+
+4.2. Interpretation
+
+   A CAA record with a hsts or hpkp tag is an assertion that HTTPS 
+   queries to the specified domain will return the data specified in the
+   Value section as a HTTP Strict-Transport-Security header or Public 
+   Key Pinning header.
+
+   While the semantics of data presented through a CAA record are 
+   identical to the presentation of the same record through a HTTP 
+   header by a Web server operating on port 443 of the same domain, the 
+   context in which the record is presented are different. In 
+   particular, DNS records have an explicit expiry time while HTTP 
+   transactions do not.
+
+5. Security Considerations
+
+   HSTS and HPKP are security policy mechanisms that attempt to set a 
+   minimum level of security. Providing additional channels through 
+   which security policy can be published does not introduce new 
+   security vulnerabilities affecting confidentiality or integrity but 
+   does create new opportunities for denial of service. In particular, 
+   self-inflicted denial of service attacks.
+
+   As noted previously, CAA records provide an out-of-band mechanism for
+   publication of HSTS and HPKP. Since the records are not presented by 
+   the
+
+   CAA records with the hsts or hpkp tag MUST NOT be cached for longer 
+   than the DNS expiry interval.
+
+   When used to compile pre-loaded lists, hsts and hpkp declarations 
+   published by CAA records SHOULD be validated by an attempt to 
+   establish a HTTP connection over TLs if possible and verifying that 
+   the HTTP headers presented in the response are consistent. If this is
+   not possible (e.g. the Web site is not publicly visible), the list 
+   compiler SHOULD re-verify the published CAA records on a regular 
+   basis.
+
+6. IANA Considerations
+
+   On publication, IANA should add the following entries to the 
+   "Certification Authority Restriction Properties" registry:
+
+
+
+
+
+Hallam-Baker                October 10, 2015                    [Page 5]
+
+Internet-Draft        DNS Publication HSTS & HPKP             April 2015
+
+   Tag          Meaning                                Reference
+
+   -----------  -------------------------------------- ---------
+
+   hsts         Strict-Transport-Security              [This]
+
+   hpkp         Public-Key-Pins                        [This]
+
+   issue        Authorization Entry by Domain          [RFC6844]
+
+7. Acknowledgements
+
+   TBS
+
+8. References
+
+8.1. Normative References
+
+   [RFC6797]  Hodges, J.,Jackson, C.,Barth, A., "HTTP Strict Transport 
+              Security (HSTS)", RFC 6797, November 2012.
+
+   [RFC6844]  Hallam-Baker, P.,Stradling, R., "DNS Certification 
+              Authority Authorization (CAA) Resource Record", RFC 6844, 
+              January 2013.
+
+   [I-D.ietf-websec-key-pinning]  Evans, C,Palmer, C,Sleevi, R, "Public 
+              Key Pinning Extension for HTTP", Internet-Draft draft-
+              ietf-websec-key-pinning-21, 5 October 2014.
+
+8.2. Informative References
+
+   [RFC6698]  Hoffman, P.,Schlyter, J., "The DNS-Based Authentication of
+              Named Entities (DANE) Transport Layer Security (TLS) 
+              Protocol: TLSA", RFC 6698, August 2012.
+
+Author's Address
+
+   Phillip Hallam-Baker
+   Comodo Group Inc.
+
+   philliph@comodo.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker                October 10, 2015                    [Page 6]

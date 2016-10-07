@@ -35,8 +35,6 @@ namespace Goedel.Tool.ASN {
 		public Generate (TextWriter Output) : base (Output) {
 			}
 
-		// #% DateTime GenerateTime = DateTime.UtcNow; 
-		 DateTime GenerateTime = DateTime.UtcNow;
 		// #% string Namespace = "Goedel.ASN"; 
 		 string Namespace = "Goedel.ASN";
 		//  

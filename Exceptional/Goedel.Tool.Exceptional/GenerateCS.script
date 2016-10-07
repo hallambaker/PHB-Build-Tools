@@ -1,7 +1,7 @@
 ﻿#script 1.0
 #license MITLicense
 #pclass Goedel.Tool.Exceptional Generate
-#% DateTime GenerateTime = DateTime.UtcNow;
+
 
 #method GenerateCS Exceptions Exceptions
 #! Goedel.Registry.Script.Header (_Output, "//", GenerateTime);

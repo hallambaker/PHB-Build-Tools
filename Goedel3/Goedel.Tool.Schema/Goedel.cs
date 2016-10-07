@@ -209,7 +209,6 @@ namespace GoedelSchema {
 		}
 
     public partial class Apache2License : _Choice {
-
         public override GoedelType _Tag () {
             return GoedelType.Apache2License;
             }

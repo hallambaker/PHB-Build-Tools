@@ -1,7 +1,6 @@
 ﻿#script 1.0
 #license MITLicense
 #pclass Goedel.Tool.VSIXBuild Generate
-#% DateTime GenerateTime = DateTime.UtcNow;
 
 #method GenerateCS VSIXBuild VSIXBuild
 #foreach (var Toplevel in VSIXBuild.Top)

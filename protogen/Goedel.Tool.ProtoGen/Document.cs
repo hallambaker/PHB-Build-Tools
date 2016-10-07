@@ -2,7 +2,7 @@
 // Script Syntax Version:  1.0
 // #license MITLicense 
 
-//  Copyright ©  2011 by Default Deny Security Inc.
+//  Unknown by Unknown
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -41,8 +41,6 @@ namespace Goedel.Tool.ProtoGen {
 		// #!output GenerateJava Java java 
 		// #!output GenerateC C c 
 		// #!output  
-		// #% System.DateTime GenerateTime = System.DateTime.UtcNow; 
-		 System.DateTime GenerateTime = System.DateTime.UtcNow;
 		// #% string StartP , EndP ; 
 		 string StartP , EndP ;
 		// #% string StartParamList , EndParamList ; 

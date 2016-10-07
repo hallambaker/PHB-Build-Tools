@@ -35,8 +35,6 @@ namespace GoedelSchema {
 		public GenerateParser (TextWriter Output) : base (Output) {
 			}
 
-		// #% DateTime GenerateTime = DateTime.UtcNow; 
-		 DateTime GenerateTime = DateTime.UtcNow;
 		// #% Goedel Goedel; 
 		 Goedel Goedel;
 		// #method GenerateCS Goedel GoedelIn 

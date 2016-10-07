@@ -243,8 +243,8 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("# The main target\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
-			// .PHONY : all always 
-			_Output.Write (".PHONY : all always\n{0}", _Indent);
+			// .PHONY : all always clean install publish cross 
+			_Output.Write (".PHONY : all always clean install publish cross\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// ## Need to identify the target directory using UnixPath() 
@@ -335,6 +335,62 @@ namespace Goedel.Tool.Makey {
 				}
 			//  
 			_Output.Write ("\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// ## clean all projects 
+			_Output.Write ("# clean all projects\n{0}", _Indent);
+			// clean : 
+			_Output.Write ("clean :\n{0}", _Indent);
+			// #foreach (var Item in Solution.Projects) 
+			foreach  (var Item in Solution.Projects) {
+				// #if (Item.MakeUnix()) 
+				if (  (Item.MakeUnix()) ) {
+					// #% var Directory = Item.Directory.UnixPath(); 
+					 var Directory = Item.Directory.UnixPath();
+					// #{Prefix}make clean NORECURSE=true -C #{Directory} 
+					_Output.Write ("{1}make clean NORECURSE=true -C {2}\n{0}", _Indent, Prefix, Directory);
+					// #end if 
+					}
+				// #end foreach 
+				}
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// ## publish all projects 
+			_Output.Write ("# publish all projects\n{0}", _Indent);
+			// publish : all 
+			_Output.Write ("publish : all\n{0}", _Indent);
+			// #foreach (var Item in Solution.Projects) 
+			foreach  (var Item in Solution.Projects) {
+				// #if (Item.MakeUnix()) 
+				if (  (Item.MakeUnix()) ) {
+					// #% var Directory = Item.Directory.UnixPath(); 
+					 var Directory = Item.Directory.UnixPath();
+					// #{Prefix}make publish NORECURSE=true -C #{Directory} 
+					_Output.Write ("{1}make publish NORECURSE=true -C {2}\n{0}", _Indent, Prefix, Directory);
+					// #end if 
+					}
+				// #end foreach 
+				}
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// ## install all projects 
+			_Output.Write ("# install all projects\n{0}", _Indent);
+			// install : all 
+			_Output.Write ("install : all\n{0}", _Indent);
+			// #foreach (var Item in Solution.Projects) 
+			foreach  (var Item in Solution.Projects) {
+				// #if (Item.MakeUnix()) 
+				if (  (Item.MakeUnix()) ) {
+					// #% var Directory = Item.Directory.UnixPath(); 
+					 var Directory = Item.Directory.UnixPath();
+					// #{Prefix}make install NORECURSE=true -C #{Directory} 
+					_Output.Write ("{1}make install NORECURSE=true -C {2}\n{0}", _Indent, Prefix, Directory);
+					// #end if 
+					}
+				// #end foreach 
+				}
+			//  
+			_Output.Write ("\n{0}", _Indent);
 			// #end method 
 			}
 		//  
@@ -348,8 +404,8 @@ namespace Goedel.Tool.Makey {
 		public void GenerateMakefile (VSProject Project) {
 			// ## 
 			_Output.Write ("#\n{0}", _Indent);
-			// ## Makefile for Visual Studio Project ... 
-			_Output.Write ("# Makefile for Visual Studio Project ...\n{0}", _Indent);
+			// ## Makefile for Visual Studio Project #{Project.AssemblyName} 
+			_Output.Write ("# Makefile for Visual Studio Project {1}\n{0}", _Indent, Project.AssemblyName);
 			// ## 
 			_Output.Write ("#\n{0}", _Indent);
 			// #call Preamble Project 
@@ -404,18 +460,32 @@ namespace Goedel.Tool.Makey {
 				_Output.Write ("{1}$(TARGETBIN)/{2}", _Indent, LinkSep, File);
 				// #end foreach 
 				}
+			// #foreach (var File in Project.AdditionalLinkDependency) 
+			foreach  (var File in Project.AdditionalLinkDependency) {
+				// #{LinkSep}#{File}#! 
+				_Output.Write ("{1}{2}", _Indent, LinkSep, File);
+				// #end foreach 
+				}
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// #foreach (var Item in Project.PrivateReference) 
+			foreach  (var Item in Project.PrivateReference) {
+				// ##  Nuget #{Item.Include} :  #{Item.HintPath} 
+				_Output.Write ("#  Nuget {1} :  {2}\n{0}", _Indent, Item.Include, Item.HintPath);
+				// #end foreach 
+				}
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// NugetFiles = #! 
 			_Output.Write ("NugetFiles = ", _Indent);
-			// #foreach (var File in Project.PrivateReference) 
-			foreach  (var File in Project.PrivateReference) {
+			// #foreach (var Item in Project.PrivateReference) 
+			foreach  (var Item in Project.PrivateReference) {
 				// \ 
 				_Output.Write ("\\\n{0}", _Indent);
-				//     $(TARGETBIN)/#{File}#! 
-				_Output.Write ("    $(TARGETBIN)/{1}", _Indent, File);
+				//     #{Item.HintPath.UnixFile()}#! 
+				_Output.Write ("    {1}", _Indent, Item.HintPath.UnixFile());
 				// #end foreach 
 				}
 			//  
@@ -424,12 +494,12 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("NugetFilesComa = ", _Indent);
 			// #% var PkgSep = new Separator ("", ","); 
 			 var PkgSep = new Separator ("", ",");
-			// #foreach (var File in Project.PrivateReference) 
-			foreach  (var File in Project.PrivateReference) {
+			// #foreach (var Item in Project.PrivateReference) 
+			foreach  (var Item in Project.PrivateReference) {
 				// #{PkgSep}\ 
 				_Output.Write ("{1}\\\n{0}", _Indent, PkgSep);
-				//     $(TARGETBIN)/#{File}#! 
-				_Output.Write ("    $(TARGETBIN)/{1}", _Indent, File);
+				//     #{Item.HintPath.UnixFile()}#! 
+				_Output.Write ("    {1}", _Indent, Item.HintPath.UnixFile());
 				// #end foreach 
 				}
 			//  
@@ -444,8 +514,8 @@ namespace Goedel.Tool.Makey {
 				_Output.Write ("$(TARGETEXE)/{1} :| $(TARGETEXE)\n{0}", _Indent, Project.AssemblyName);
 				// $(TARGETEXE)/#{Project.AssemblyName} : $(TARGETBIN)/#{Project.AssemblyName}.exe  
 				_Output.Write ("$(TARGETEXE)/{1} : $(TARGETBIN)/{2}.exe \n{0}", _Indent, Project.AssemblyName, Project.AssemblyName);
-				// #{Prefix}$(BUNDLE) $@ $^ $(LinkFiles) 
-				_Output.Write ("{1}$(BUNDLE) $@ $^ $(LinkFiles)\n{0}", _Indent, Prefix);
+				// #{Prefix}$(BUNDLE) $@ $^ $(LinkFiles)  $(NugetFiles) 
+				_Output.Write ("{1}$(BUNDLE) $@ $^ $(LinkFiles)  $(NugetFiles)\n{0}", _Indent, Prefix);
 				//  
 				_Output.Write ("\n{0}", _Indent);
 				// ## B) Main target executable 
@@ -464,8 +534,8 @@ namespace Goedel.Tool.Makey {
 					}
 				// #if HavePackage 
 				if (  HavePackage ) {
-					// -pkg:$(NugetFilesComa) #! 
-					_Output.Write ("-pkg:$(NugetFilesComa) ", _Indent);
+					// -r:$(NugetFilesComa) #! 
+					_Output.Write ("-r:$(NugetFilesComa) ", _Indent);
 					// #end if 
 					}
 				//  
@@ -492,8 +562,8 @@ namespace Goedel.Tool.Makey {
 					}
 				// #if HavePackage 
 				if (  HavePackage ) {
-					// -pkg:$(NugetFilesComa) #! 
-					_Output.Write ("-pkg:$(NugetFilesComa) ", _Indent);
+					// -r:$(NugetFilesComa) #! 
+					_Output.Write ("-r:$(NugetFilesComa) ", _Indent);
 					// #end if 
 					}
 				//  
@@ -562,8 +632,8 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("endif\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
-			// .PHONY : clean install cross recursive 
-			_Output.Write (".PHONY : clean install cross recursive\n{0}", _Indent);
+			// .PHONY : clean install publish debian rpm 
+			_Output.Write (".PHONY : clean install publish debian rpm\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			//  
@@ -689,34 +759,26 @@ namespace Goedel.Tool.Makey {
 				}
 			//  
 			_Output.Write ("\n{0}", _Indent);
-			// ## Cross 
-			_Output.Write ("# Cross\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
+			// ## To Do List 
+			_Output.Write ("# To Do List\n{0}", _Indent);
 			// ## 
 			_Output.Write ("#\n{0}", _Indent);
-			// ## Cross compilation targets.  
-			_Output.Write ("# Cross compilation targets. \n{0}", _Indent);
+			// ## 1) Redo install target 
+			_Output.Write ("# 1) Redo install target\n{0}", _Indent);
+			// ##    Create a wrapper script and library  
+			_Output.Write ("#    Create a wrapper script and library \n{0}", _Indent);
+			// ## 2) Create a Debian target 
+			_Output.Write ("# 2) Create a Debian target\n{0}", _Indent);
+			// ## 3) Create a RPM target 
+			_Output.Write ("# 3) Create a RPM target\n{0}", _Indent);
+			// ## 4) Create a nuget target 
+			_Output.Write ("# 4) Create a nuget target\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
-			//  
-			_Output.Write ("\n{0}", _Indent);
-			// #if (Project.IsExe) 
-			if (  (Project.IsExe) ) {
-				// #foreach (var Arch in Project.CrossTargets) 
-				foreach  (var Arch in Project.CrossTargets) {
-					// cross : $(TARGETROOT)/#{Arch}/#{Project.AssemblyName}  
-					_Output.Write ("cross : $(TARGETROOT)/{1}/{2} \n{0}", _Indent, Arch, Project.AssemblyName);
-					// $(TARGETROOT)/#{Arch}/#{Project.AssemblyName} : $(TARGETBIN)/#{Project.AssemblyName}.exe 
-					_Output.Write ("$(TARGETROOT)/{1}/{2} : $(TARGETBIN)/{3}.exe\n{0}", _Indent, Arch, Project.AssemblyName, Project.AssemblyName);
-					// #{Prefix}mkdir -p $(TARGETROOT)/#{Arch}/#{Project.AssemblyName}  
-					_Output.Write ("{1}mkdir -p $(TARGETROOT)/{2}/{3} \n{0}", _Indent, Prefix, Arch, Project.AssemblyName);
-					// #{Prefix}$(BUNDLE) $@ --cross ${Arch} $^ 
-					_Output.Write ("{1}$(BUNDLE) $@ --cross ${{Arch}} $^\n{0}", _Indent, Prefix);
-					//  
-					_Output.Write ("\n{0}", _Indent);
-					// #end foreach 
-					}
-				// #end if 
-				}
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// #end method 

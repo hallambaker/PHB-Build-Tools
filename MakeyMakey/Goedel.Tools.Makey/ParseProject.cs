@@ -31,6 +31,11 @@ namespace Goedel.Tool.Makey {
 
     public class VSProject : VSFile  {
 
+        public SortedSet<string> ManualAddLibraries = new SortedSet<string> {
+            "WindowsBase"
+            };
+
+
         public List<string> CrossTargets { get; set; } = new List<string> {
 
             "4.4.0-linux-libc2.13-amd64",
@@ -62,6 +67,8 @@ namespace Goedel.Tool.Makey {
 
         public List<ReferenceType> Reference { get; set; } = new List<ReferenceType>();
         public List<ReferenceType> PrivateReference { get; set; } = new List<ReferenceType>();
+        
+
 
         public List<CompileType> Compile { get; set; } = new List<CompileType>();
         public List<NoneType> None { get; set; } = new List<NoneType>();
@@ -72,7 +79,7 @@ namespace Goedel.Tool.Makey {
 
         public List<string> SourceDependency = new List<string>();
         public List<string> LinkDependency = new List<string>();
-
+        public List<string> AdditionalLinkDependency { get; set; } = new List<string>();
 
         public string Directory;
 
@@ -135,6 +142,9 @@ namespace Goedel.Tool.Makey {
                         if (Item.Private == "True") {
                             PrivateReference.Add(Item);
                             Console.WriteLine("Nuget Package Path {0}", Item.HintPath);
+                            }
+                        else if (ManualAddLibraries.Contains(Item.Include)) {
+                            AdditionalLinkDependency.Add(Item.Include);
                             }
                         }
                     }

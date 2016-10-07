@@ -203,10 +203,9 @@ namespace Goedel.Tool.Script {
         const string IndentText = "_Indent = _Indent + \"\\t\";";
         const string OutdentText = "_Indent = _Indent.Remove (0,1);";
 
-        const string SwitchCastText = "switch ({1}._Tag ()) {{";  
+        const string SwitchCastText = "switch ({1}._Tag ()) {{";
         const string CaseCastText = "case {2}.{0}: {{\n{4}  {0} {1} = ({0}) {3}; ";
-
-
+        const string CaseNoCastText = "case {2}.{0}: {{ ";
         const string IfAsText = "if (({0} as {1}) != null) { var {1} {2} = {0} as {1} ;";
         const string ElseAsText = "} else if (({0} as {1}) != null) { var {1} {2} = {0} as {1} ;";
 
@@ -452,10 +451,15 @@ namespace Goedel.Tool.Script {
                                         break;
                                         }
                                 case 11: {
-                                        CheckArguments (arguments.Length, 2);
-                                        Writer.WriteLine(CaseCastText, arguments[1], arguments[2], SwitchType, SwitchVar, Indent);
-                                        break;
+                                    CheckArguments(arguments.Length, 2);
+                                    if (arguments[2] == "null") {
+                                        Writer.WriteLine(CaseNoCastText, arguments[1], arguments[2], SwitchType, SwitchVar, Indent);
                                         }
+                                    else {
+                                        Writer.WriteLine(CaseCastText, arguments[1], arguments[2], SwitchType, SwitchVar, Indent);
+                                        }
+                                    break;
+                                    }
                                 case 12: {
                                         CheckArguments (arguments.Length, 2);
                                         Writer.WriteLine(ClassText, arguments[1], arguments[2], GenerateTime);

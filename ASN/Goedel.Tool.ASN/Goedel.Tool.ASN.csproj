@@ -94,13 +94,13 @@
     <Content Include="Design.htm" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Goedel.Registry\Goedel.Registry.csproj">
-      <Project>{f2a1f8ea-18e2-4f3a-aeaf-3983cea19fe0}</Project>
-      <Name>Goedel.Registry</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj">
-      <Project>{1867378f-b442-4d27-9749-6183a7f1ef7e}</Project>
+    <ProjectReference Include="..\..\Libraries\Goedel.ASN\Goedel.ASN.csproj">
+      <Project>{44e8b35d-0394-4f37-b52c-246f8610f031}</Project>
       <Name>Goedel.ASN</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
+      <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
+      <Name>Goedel.Registry</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

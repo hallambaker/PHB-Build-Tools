@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>GtkSharp.Win32</id>
+    <version>3.1.2</version>
+    <authors>Mike Kestner</authors>
+    <owners>nimoov</owners>
+    <licenseUrl>https://github.com/mono/gtk-sharp/blob/master/COPYING</licenseUrl>
+    <projectUrl>https://github.com/mono/gtk-sharp</projectUrl>
+    <iconUrl>https://upload.wikimedia.org/wikipedia/en/5/5f/Gtk_Sharp_Logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This package contains native win32 GTK3 libraries to be used by Gtk# on Windows. Gtk# is a .NET language binding for the GTK+ toolkit and assorted GNOME libraries.</description>
+    <copyright>Copyright 2015</copyright>
+    <tags>GTK3 GTK# gtk3-sharp</tags>
+    <dependencies>
+      <dependency id="GtkSharp" version="3.1.0" />
+    </dependencies>
+  </metadata>
+</package>

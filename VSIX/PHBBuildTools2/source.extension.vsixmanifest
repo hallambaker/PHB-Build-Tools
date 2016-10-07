@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="PHBBuildTools2.Phill Hallam-Baker.9fbf85be-a16f-47dd-a077-074bde75471b" Version="2.0" Language="en-US" Publisher="Phill Hallam-Baker" />
+    <DisplayName>PHBBuildTools2</DisplayName>
+    <Description>Empty VSIX Project.</Description>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0]" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Registry" Path="|Goedel.Registry|" AssemblyName="|Goedel.Registry;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.ASN" Path="|Goedel.ASN|" AssemblyName="|Goedel.ASN;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.Domainer" Path="|Goedel.Tool.Domainer|" AssemblyName="|Goedel.Tool.Domainer;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.RegistryConfig" Path="|Goedel.Tool.RegistryConfig|" AssemblyName="|Goedel.Tool.RegistryConfig;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.VSIXBuild" Path="|Goedel.Tool.VSIXBuild|" AssemblyName="|Goedel.Tool.VSIXBuild;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.ProtoGen" Path="|Goedel.Tool.ProtoGen|" AssemblyName="|Goedel.Tool.ProtoGen;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Trojan.Script" Path="|Goedel.Trojan.Script|" AssemblyName="|Goedel.Trojan.Script;AssemblyName|" />
+  </Assets>
+</PackageManifest>

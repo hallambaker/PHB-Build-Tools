@@ -104,7 +104,7 @@ export BUNDLE		?=  mkbundle --deps --static -o
 
 ## The main target
 
-.PHONY : all always
+.PHONY : all always clean install publish cross
 
 ## Need to identify the target directory using UnixPath()
 ## This file in directory #{Solution.Directory}
@@ -150,12 +150,40 @@ all : #{Directory}/$(TARGETBIN)/#{Project.Target}
 #end if
 #end foreach
 
+
+## clean all projects
+clean :
+#foreach (var Item in Solution.Projects)
+#if (Item.MakeUnix())
+#% var Directory = Item.Directory.UnixPath();
+#{Prefix}make clean NORECURSE=true -C #{Directory}
+#end if
+#end foreach
+
+## publish all projects
+publish : all
+#foreach (var Item in Solution.Projects)
+#if (Item.MakeUnix())
+#% var Directory = Item.Directory.UnixPath();
+#{Prefix}make publish NORECURSE=true -C #{Directory}
+#end if
+#end foreach
+
+## install all projects
+install : all
+#foreach (var Item in Solution.Projects)
+#if (Item.MakeUnix())
+#% var Directory = Item.Directory.UnixPath();
+#{Prefix}make install NORECURSE=true -C #{Directory}
+#end if
+#end foreach
+
 #end method
 
 
 #method GenerateMakefile VSProject Project
 ##
-## Makefile for Visual Studio Project ...
+## Makefile for Visual Studio Project #{Project.AssemblyName}
 ##
 #call Preamble Project
 #% bool HaveSoure = Project.SourceDependency.Count > 0;
@@ -183,19 +211,26 @@ LinkFilesComma = #!
 #foreach (var File in Project.LinkDependency)
 #{LinkSep}$(TARGETBIN)/#{File}#!
 #end foreach
+#foreach (var File in Project.AdditionalLinkDependency)
+#{LinkSep}#{File}#!
+#end foreach
+
+#foreach (var Item in Project.PrivateReference)
+##  Nuget #{Item.Include} :  #{Item.HintPath}
+#end foreach
 
 
 NugetFiles = #!
-#foreach (var File in Project.PrivateReference)
+#foreach (var Item in Project.PrivateReference)
 \
-    $(TARGETBIN)/#{File}#!
+    #{Item.HintPath.UnixFile()}#!
 #end foreach
 
 NugetFilesComa = #!
 #% var PkgSep = new Separator ("", ",");
-#foreach (var File in Project.PrivateReference)
+#foreach (var Item in Project.PrivateReference)
 #{PkgSep}\
-    $(TARGETBIN)/#{File}#!
+    #{Item.HintPath.UnixFile()}#!
 #end foreach
 
 
@@ -203,7 +238,7 @@ NugetFilesComa = #!
 #if (Project.IsExe)
 $(TARGETEXE)/#{Project.AssemblyName} :| $(TARGETEXE)
 $(TARGETEXE)/#{Project.AssemblyName} : $(TARGETBIN)/#{Project.AssemblyName}.exe 
-#{Prefix}$(BUNDLE) $@ $^ $(LinkFiles)
+#{Prefix}$(BUNDLE) $@ $^ $(LinkFiles)  $(NugetFiles)
 
 ## B) Main target executable
 $(TARGETBIN)/#{Project.Target} :| $(TARGETBIN)
@@ -213,7 +248,7 @@ $(TARGETBIN)/#{Project.Target} : $(SourceFiles) $(LinkFiles) $(NugetFiles)
 -reference:$(LinkFilesComma) #!
 #end if
 #if HavePackage
--pkg:$(NugetFilesComa) #!
+-r:$(NugetFilesComa) #!
 #end if
 
 
@@ -227,7 +262,7 @@ $(TARGETBIN)/#{Project.Target} :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
 -reference:$(LinkFilesComma) #!
 #end if
 #if HavePackage
--pkg:$(NugetFilesComa) #!
+-r:$(NugetFilesComa) #!
 #end if
 
 
@@ -262,7 +297,7 @@ ifdef PHB_BUILD
 
 endif
 
-.PHONY : clean install cross recursive
+.PHONY : clean install publish debian rpm
 
 
 ## Referenced projects
@@ -326,20 +361,16 @@ $(INSTALL_DATA)/#{Project.AssemblyName}.dll : $(TARGETBIN)/#{Project.AssemblyNam
 
 #end if
 
-## Cross
+
+
+## To Do List
 ##
-## Cross compilation targets. 
+## 1) Redo install target
+##    Create a wrapper script and library 
+## 2) Create a Debian target
+## 3) Create a RPM target
+## 4) Create a nuget target
 
-
-#if (Project.IsExe)
-#foreach (var Arch in Project.CrossTargets)
-cross : $(TARGETROOT)/#{Arch}/#{Project.AssemblyName} 
-$(TARGETROOT)/#{Arch}/#{Project.AssemblyName} : $(TARGETBIN)/#{Project.AssemblyName}.exe
-#{Prefix}mkdir -p $(TARGETROOT)/#{Arch}/#{Project.AssemblyName} 
-#{Prefix}$(BUNDLE) $@ --cross ${Arch} $^
-
-#end foreach
-#end if
 
 #end method
 

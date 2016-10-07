@@ -13,7 +13,6 @@
 #!	*	Predispatch call
 #!  *	Allow debug stubs to be turned off to make code compact
 #!
-#% DateTime GenerateTime = DateTime.UtcNow;
 #% TYPE<_Choice> OptionSetType;
 #% TYPE<_Choice> TypeType;
 #% CommandParse CommandParse;

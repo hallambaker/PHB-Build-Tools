@@ -72,6 +72,7 @@
       <Generator>GScript</Generator>
       <LastGenOutput>GenerateMakefile.cs</LastGenOutput>
     </None>
+    <None Include="Makefile" />
     <None Include="Microsoft.Build.Core.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -85,13 +86,13 @@
       <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
       <Name>Goedel.IO</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Goedel.Registry\Goedel.Registry.csproj">
-      <Project>{f2a1f8ea-18e2-4f3a-aeaf-3983cea19fe0}</Project>
-      <Name>Goedel.Registry</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
       <Project>{ccc286f1-6a5b-4946-a382-8a48797192b4}</Project>
       <Name>Goedel.FSR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
+      <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
+      <Name>Goedel.Registry</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
       <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>

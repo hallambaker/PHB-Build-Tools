@@ -3,7 +3,7 @@
 #using System.Linq
 #pclass Goedel.Trojan.Script GenerateGTK
 #!
-#% System.DateTime GenerateTime = System.DateTime.UtcNow;
+
 #% string GoedelNamespace = "Goedel.Trojan";
 #% Separator Separator;
 #% public bool FALSE = false;

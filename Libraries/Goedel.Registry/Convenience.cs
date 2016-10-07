@@ -1,0 +1,165 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Goedel.Registry {
+
+
+    public static partial class ExtensionMethods {
+
+        private static string _Target = "CS" ;
+
+        /// <summary>
+        /// Sets the code generation target type. This ensures that labels,
+        /// etc have the correct prefixes and formatting style for the target
+        /// language. The default is to generate for C#.
+        /// </summary>
+        public static string Target {
+            get {
+                return _Target;
+                }
+            set {
+                _Target = value;
+                }
+            }
+
+        /// <summary>
+        /// Generate a label for the currently specified code generation target.
+        /// The default is to generate for C#.
+        /// </summary>
+        /// <param name="Base"></param>
+        /// <returns></returns>
+        public static string Label(this object Base) {
+            switch (Target) {
+                case "CS": {
+                    return Base.cs();
+                    }
+                }
+            return Base.cs();
+            }
+
+
+        /// <summary>
+        /// Convert an arbitrary string to a label suitable for use in C# code
+        /// avoiding collisions with reserved words and labels reserved to 
+        /// implementation code.
+        /// 
+        /// All spaces are converted to underscores. Labels that begin with a 
+        /// number or a leading underscore or are a reserved word are prefixed
+        /// by an underscore.
+        /// </summary>
+        /// <param name="Base">Input string</param>
+        /// <returns>Character safe label.</returns>
+        public static string cs (this object Base) {
+            return Base.ToString();
+            }
+
+        public static string Quoted (this string Base) {
+            var StringBuilder = new StringBuilder();
+            StringBuilder.Append("\"");
+            Escape(StringBuilder, Base);
+            StringBuilder.Append("\"");
+
+            return StringBuilder.ToString();
+            }
+
+        public static string Quoted(this List<string> Base) {
+            if (Base == null) return "\"\"";
+
+            var StringBuilder = new StringBuilder();
+            StringBuilder.Append("\"");
+            bool Space = false;
+            foreach (var Text in Base) {
+                if (Space) {
+                    StringBuilder.Append(" ");
+                    }
+                Space = true;
+                Escape(StringBuilder, Text);
+                }
+            StringBuilder.Append("\"");
+
+            return StringBuilder.ToString();
+            }
+
+        private static void Escape(StringBuilder Builder, string Text) {
+            foreach (var c in Text) {
+                if (c == '\"') {
+                    Builder.Append("\\\"");
+                    }
+                else if (c == '\'') {
+                    Builder.Append("\\\'");
+                    }
+                else {
+                    Builder.Append(c);
+                    }
+                }
+            }
+
+        public static string If(this bool Value, string True) {
+            return If(Value, True, "");
+            }
+
+        public static string If(this bool Value, string True, string False) {
+
+            return Value ? True : False;
+            }
+
+        }
+
+
+    /// <summary>
+    /// The separator class prints as one value the first time ToString() is called
+    /// and a different value thereafter.
+    /// </summary>
+    public class Separator {
+
+        /// <summary>
+        /// Value to return the first time ToString() is called
+        /// </summary>
+        public string First;
+
+        /// <summary>
+        /// Value to return after the first time ToString() is called
+        /// </summary>
+        public string Next;
+
+        /// <summary>
+        /// Is this the first time ToString was called?
+        /// </summary>
+        public bool IsFirst = true;
+
+        /// <summary>
+        /// Create a separator class.
+        /// </summary>
+        /// <param name="First">String to return on the first call to ToString()</param>
+        /// <param name="Next">String to return after the first call to ToString()</param>
+        public Separator(string First, string Next) {
+            this.First = First;
+            this.Next = Next;
+            }
+
+        /// <summary>
+        /// Create a separactor class that returns an empty string the first
+        /// time ToString is called.
+        /// </summary>
+        /// <param name="Next">String to return after the first call to ToString()</param>
+
+        public Separator(string Next) : this ("", Next){
+            }
+
+        /// <summary>
+        /// Return the value First if this is the first time the
+        /// method is called or Next otherwise.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString() {
+            if (IsFirst) {
+                IsFirst = false;
+                return First;
+                }
+            return Next;
+            }
+
+        }
+    }

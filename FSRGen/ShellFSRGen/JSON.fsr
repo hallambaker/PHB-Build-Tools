@@ -1,0 +1,104 @@
+﻿FSR Goedel.ProtoGen JsonLex
+
+
+	Charset Digit		"0" "9"
+	Charset HexL		"a" "f"
+	Charset HexU		"A" "F"
+	Charset Lower		"a" "z"
+	Charset Upper		"A" "Z"
+
+	State Start Ignore Empty
+		On "{" Return StartObject
+		On "}" Return EndObject
+		On "[" Return StartArray
+		On "]" Return EndArray
+		On ":" Return Colon
+		On "," Return Comma
+		
+		Lower GoTo s5
+		On "0" GoTo s7
+		On "-" GoTo s8
+		Digit GoTo s9
+
+		On "\"" GoTo s15
+
+		On " \t\r\h" GoTo s0
+
+	State s5   AddComplete    Litteral
+		Lower GoTo s5	
+		Equals "true" True
+		Equals "false" False
+		Equals "null" Null
+	  
+	State s7   AddComplete    Number
+		On Digit Return Invalid
+		On Lower Return Invalid
+		On Upper Return Invalid 
+
+	State s8   Add            Number
+		On "0" GoTo s7
+		Digit GoTo s9
+	  
+	State s9   AddComplete    Number 
+		Digit GoTo s9
+		On "." s10
+		On "Ee" s12
+
+	State s10  Add            Invalid 
+		Digit GoTo s11
+
+	State s11  AddComplete    Number 
+		Digit GoTo s11
+		On "Ee" s12
+	State s12  Add            Invalid  
+		Digit GoTo s14
+		On "+-" s13
+	State s13  Add            Invalid  
+		Digit GoTo s14
+	State s14  Add            Number  
+		Digit GoTo s14
+
+	State s15  Ignore         String  
+		On "\"" GoTo 24 
+		On "\\" GoTo S17
+		Any GoTo s16
+
+	State s16  Add            String 
+		On "\"" GoTo 24  
+		On "\\" GoTo S17
+		Any State s16
+
+	State s17  Ignore         String  
+		On "\"\\\t\r\n\f\b" s23
+		On "u" GoTo s18
+
+	State s18  Ignore         String   
+		Digit	GoTo s19
+		HexU	GoTo s19
+		HexL	GoTo s19
+
+	State s19  AddHex         String 
+		Digit	GoTo s20
+		HexU	GoTo s20
+		HexL	GoTo s20	  
+	State s20  AddHex         String   
+		Digit	GoTo s21
+		HexU	GoTo s21
+		HexL	GoTo s21
+	State s21  AddHex         String   
+		Digit	GoTo s22
+		HexU	GoTo s22
+		HexL	GoTo s22
+	
+	State s22  LastHex        String   
+		On "\"" GoTo 24  
+		On "\\" GoTo S17
+		Any GoTo s16
+
+	State s23  Escape         String 
+		On "\"" GoTo 24  
+		On "\\" GoTo S17
+		Any GoTo s16	 
+	
+	State s24  Complete       String  
+

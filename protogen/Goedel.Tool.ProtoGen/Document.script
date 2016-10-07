@@ -9,7 +9,6 @@
 #!output GenerateJava Java java
 #!output GenerateC C c
 #!output 
-#% System.DateTime GenerateTime = System.DateTime.UtcNow;
 #% string StartP , EndP ;
 #% string StartParamList , EndParamList ;
 #% public string StartParam , MidParam , EndParam, EndParamBlock;

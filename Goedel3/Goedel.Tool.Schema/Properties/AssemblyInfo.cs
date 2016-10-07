@@ -26,5 +26,5 @@ using System.Runtime.InteropServices;
 
 
 #if !(__MonoCS__)
-[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
+[assembly: AssemblyKeyName("SigningKeyDeveloper")]
 #endif
