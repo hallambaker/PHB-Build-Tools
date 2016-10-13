@@ -1314,9 +1314,6 @@ namespace Goedel.Trojan.Script {
         StateCode								State;
         Goedel.Trojan.Script._Choice				Current;
         List <_StackItem>						Stack;
-        TokenType								CurrentToken;
-        Position								CurrentPosition;
-        string									CurrentText;
 
 
         public static GUISchema Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -1762,9 +1759,6 @@ namespace Goedel.Trojan.Script {
 
 
         public override void Process(TokenType Token, Position Position, string Text) {
-            CurrentToken = Token;
-            CurrentPosition = Position;
-            CurrentText = Text;
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |

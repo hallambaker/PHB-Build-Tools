@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F2A1F8EA-18E2-4F3A-AEAF-3983CEA19FE0}</ProjectGuid>
+    <ProjectGuid>{EBDA947E-D7A9-4A93-AEF1-AEA9D56B9225}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Registry</RootNamespace>

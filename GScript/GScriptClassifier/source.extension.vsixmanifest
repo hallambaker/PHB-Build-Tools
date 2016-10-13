@@ -7,7 +7,7 @@
     <License>License.txt</License>
     <PreviewImage>ScriptClassifier_Screenshot.png</PreviewImage>
   </Metadata>
-  <Installation AllUsers="true" InstalledByMsi="true">
+  <Installation AllUsers="true">
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[14.0]" />
   </Installation>
   <Dependencies>

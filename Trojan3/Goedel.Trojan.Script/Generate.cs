@@ -740,10 +740,9 @@ namespace Goedel.Trojan.Script {
 					_Output.Write ("				Id =\"{1}\",  \n{0}", _Indent, Action.Id);
 					// 				Label = "#{Action.Tag}" }#! 
 					_Output.Write ("				Label = \"{1}\" }}", _Indent, Action.Tag);
-					// #casecast Divider Divider 
+					// #casecast Divider null 
 					break; }
-					case GUISchemaType.Divider: {
-					  Divider Divider = (Divider) Entry; 
+					case GUISchemaType.Divider: { 
 					// #{Separator} 
 					_Output.Write ("{1}\n{0}", _Indent, Separator);
 					// 			new MenuDivider () #! 
@@ -856,8 +855,8 @@ namespace Goedel.Trojan.Script {
 					_Output.Write ("						Entries = new List<ObjectEntry> {{", _Indent);
 					// #% var SubSeparator = new Separator (","); 
 					 var SubSeparator = new Separator (",");
-					// #foreach (var RadioEntry in (Entry as Enumerate).Entries) 
-					foreach  (var RadioEntry in (Entry as Enumerate).Entries) {
+					// #foreach (var RadioEntry in Enumerate.Entries) 
+					foreach  (var RadioEntry in Enumerate.Entries) {
 						// #{SubSeparator} 
 						_Output.Write ("{1}\n{0}", _Indent, SubSeparator);
 						// 				new ObjectFieldRadio { 
@@ -876,8 +875,6 @@ namespace Goedel.Trojan.Script {
 					_Output.Write ("						}}", _Indent);
 					// #elseif (Entry as Item != null)  
 					} else if (  (Entry as Item != null) ) {
-					// #% var Item = Entry as Item; 
-					 var Item = Entry as Item;
 					// #{Separator} 
 					_Output.Write ("{1}\n{0}", _Indent, Separator);
 					// 			new ObjectFieldItem { 
@@ -1115,17 +1112,14 @@ namespace Goedel.Trojan.Script {
 					}
 				// #switchcast GUISchemaType Entry 
 				switch (Entry._Tag ()) {
-					// #casecast Item Item 
-					case GUISchemaType.Item: {
-					  Item Item = (Item) Entry; 
-					// #casecast List List 
+					// #casecast Item null 
+					case GUISchemaType.Item: { 
+					// #casecast List null 
 					break; }
-					case GUISchemaType.List: {
-					  List List = (List) Entry; 
-					// #casecast Set Set 
+					case GUISchemaType.List: { 
+					// #casecast Set null 
 					break; }
-					case GUISchemaType.Set: {
-					  Set Set = (Set) Entry; 
+					case GUISchemaType.Set: { 
 					// #casecast Option Option 
 					break; }
 					case GUISchemaType.Option: {

@@ -27,7 +27,7 @@ using System.Text;
 using System.IO;
 using Goedel.Protocol;
 
-namespace Goedel.Protocol {
+namespace Goedel.Protocol.Extended {
     public partial class Cryptography {
 
         public static byte [] NormalizePIN(string PIN) {

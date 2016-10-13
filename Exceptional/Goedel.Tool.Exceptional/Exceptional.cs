@@ -395,9 +395,6 @@ namespace Goedel.Tool.Exceptional {
         StateCode								State;
         Goedel.Tool.Exceptional._Choice				Current;
         List <_StackItem>						Stack;
-        TokenType								CurrentToken;
-        Position								CurrentPosition;
-        string									CurrentText;
 
 
         public static Exceptions Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -587,9 +584,6 @@ namespace Goedel.Tool.Exceptional {
 
 
         public override void Process(TokenType Token, Position Position, string Text) {
-            CurrentToken = Token;
-            CurrentPosition = Position;
-            CurrentText = Text;
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |

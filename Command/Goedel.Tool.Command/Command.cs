@@ -738,9 +738,6 @@ namespace Goedel.Tool.Command {
         StateCode								State;
         Goedel.Tool.Command._Choice				Current;
         List <_StackItem>						Stack;
-        TokenType								CurrentToken;
-        Position								CurrentPosition;
-        string									CurrentText;
 
 
         public static CommandParse Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -1026,9 +1023,6 @@ namespace Goedel.Tool.Command {
 
 
         public override void Process(TokenType Token, Position Position, string Text) {
-            CurrentToken = Token;
-            CurrentPosition = Position;
-            CurrentText = Text;
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |

@@ -32,7 +32,9 @@ namespace Goedel.Tool.Makey {
     public class VSProject : VSFile  {
 
         public SortedSet<string> ManualAddLibraries = new SortedSet<string> {
-            "WindowsBase"
+            "WindowsBase",
+            "System.Numerics",
+            "Microsoft.VisualStudio.QualityTools.UnitTestFramework"
             };
 
 
@@ -78,6 +80,7 @@ namespace Goedel.Tool.Makey {
         public string LinkAll = "";
 
         public List<string> SourceDependency = new List<string>();
+        public List<string> FixedLinkDependency = new List<string>();
         public List<string> LinkDependency = new List<string>();
         public List<string> AdditionalLinkDependency { get; set; } = new List<string>();
 
@@ -139,12 +142,22 @@ namespace Goedel.Tool.Makey {
                 if (ItemGroup.Reference != null) {
                     foreach (var Item in ItemGroup?.Reference) {
                         Reference.Add(Item);
+
+                        var Len = Item.Include.IndexOf(',');
+                        var Name = Len >0 ? Item.Include.Substring(0, Len): Item.Include;
+                        Console.WriteLine("Library {0}", Name);
+
                         if (Item.Private == "True") {
                             PrivateReference.Add(Item);
                             Console.WriteLine("Nuget Package Path {0}", Item.HintPath);
                             }
-                        else if (ManualAddLibraries.Contains(Item.Include)) {
-                            AdditionalLinkDependency.Add(Item.Include);
+                        else if (ManualAddLibraries.Contains(Name)) {
+                            AdditionalLinkDependency.Add(Name);
+                            Console.WriteLine("Assembly library Path {0}", Name);
+                            }
+                        else if (Item.HintPath != null) {
+                            Console.WriteLine("Link library Path {0}", Item.HintPath);
+                            FixedLinkDependency.Add(Path.GetFileName(Item.HintPath));
                             }
                         }
                     }

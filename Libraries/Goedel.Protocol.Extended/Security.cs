@@ -28,7 +28,7 @@ using System.Text;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
-namespace Goedel.Protocol {
+namespace Goedel.Protocol.Extended {
     public class CryptographicContext {
         public byte[] Ticket;
         public Cryptography.Key Key;

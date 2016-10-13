@@ -27,7 +27,7 @@ using System.Text;
 using System.Diagnostics;
 using System.IO;
 
-namespace Goedel.Protocol {
+namespace Goedel.Protocol.Extended {
     public partial class Cryptography {
 
         //using (AesManaged aesAlg = new AesManaged()) {
@@ -148,8 +148,8 @@ namespace Goedel.Protocol {
 
         public class Key {
             public byte[] KeyData;
-            Authentication Authentication = Authentication.Unknown;
-            Encryption Encryption = Encryption.Unknown;
+            public Authentication Authentication = Authentication.Unknown;
+            public Encryption Encryption = Encryption.Unknown;
 
             public Key() {
                 this.KeyData = Nonce(KeyLength() / 8);

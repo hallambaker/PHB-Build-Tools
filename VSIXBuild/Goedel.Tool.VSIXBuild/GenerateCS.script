@@ -33,7 +33,7 @@ namespace #{Cast.Name} {
 
 #foreach (var Extension in Cast.Entries)
 #switchcast VSIXBuildType Extension.Is
-#casecast Generator xCast
+#casecast Generator null
 #% MakeGenerator (Extension);
 #end switchcast
 #end foreach

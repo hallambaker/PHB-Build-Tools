@@ -309,11 +309,11 @@ namespace Goedel.Tool.RFCTool {
         }
 
     public class Source {
-        string Prefix;
-        string UriPattern;
-        string UriStart;
-        string UriEnd;
-        string UriFormat = null;
+        public string Prefix;
+        public string UriPattern;
+        public string UriStart;
+        public string UriEnd;
+        public string UriFormat = null;
 
         public Source(string Prefix, string UriPattern) {
             this.UriPattern = UriPattern;
@@ -368,7 +368,7 @@ namespace Goedel.Tool.RFCTool {
                 // This is horribly hack but will do for now.
                 // Should really rewrite the parser to separate
                 // the references parser from the document parser
-                NewParse NewParse = new NewParse (Result, Document);
+                new NewParse (Result, Document);
 
                 var Reference = Document.Catalog.FindReference (Citation.Label);
                 Citation.Reference = Reference;

@@ -194,18 +194,30 @@
     <ProjectReference Include="..\..\Exceptional\Goedel.Tool.Exceptional\Goedel.Tool.Exceptional.csproj">
       <Project>{9c9c300a-f6b6-440d-82a7-df457e607fb2}</Project>
       <Name>Goedel.Tool.Exceptional</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
     <ProjectReference Include="..\..\FSRGen\Goedel.Tool.FSRGen\Goedel.Tool.FSRGen.csproj">
       <Project>{8cad8afc-c92f-4cb4-af2c-79933362a63e}</Project>
       <Name>Goedel.Tool.FSRGen</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
     <ProjectReference Include="..\..\Goedel3\Goedel.Tool.Schema\Goedel.Tool.Schema.csproj">
       <Project>{7d41544e-cc2e-436e-9c2f-937b4d516c92}</Project>
       <Name>Goedel.Tool.Schema</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
     <ProjectReference Include="..\..\GScript\Goedel.Tool.Script\Goedel.Tool.Script.csproj">
       <Project>{75d3ed83-2ae6-47bf-a280-3e82983c975e}</Project>
       <Name>Goedel.Tool.Script</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GScript\GScriptClassifier\ScriptClassifier.csproj">
+      <Project>{e7efcc71-c81a-4d8b-b0b8-037441a5ffa3}</Project>
+      <Name>ScriptClassifier</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3bPkgdefProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
       <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>

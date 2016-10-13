@@ -26,7 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Goedel.Debug {
+namespace Goedel.Debug2 {
     class MyConsole {
         }
     }

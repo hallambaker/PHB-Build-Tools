@@ -85,14 +85,14 @@ namespace Goedel.Tool.RFCTool {
             if (Format == null || (Format.ToLower() == "html" | Format.ToLower() == "html2rfc")) {
                 using (FileReader FileReader = new FileReader(InputFile)) {
 
-                    NewParse NewParse = new NewParse(FileReader, this);
+                    new NewParse(FileReader, this);
                     }
                 }
             else if (Format.ToLower() == "xml" | Format.ToLower() == "xml2rfc"
                     | Format.ToLower() == "rfc2629") {
                 using (FileReader FileReader = new FileReader(InputFile)) {
 
-                    Rfc2629Parse Rfc2629Parse = new Rfc2629Parse (FileReader, this);
+                    new Rfc2629Parse (FileReader, this);
                     }
                 }
             else {

@@ -57,37 +57,32 @@ namespace GoedelSchema {
 					  Copyright Copyright = (Copyright) Item; 
 					// #switchcast GoedelType Copyright.License 
 					switch (Copyright.License._Tag ()) {
-						// #casecast MITLicense License 
-						case GoedelType.MITLicense: {
-						  MITLicense License = (MITLicense) Copyright.License; 
+						// #casecast MITLicense null 
+						case GoedelType.MITLicense: { 
 						// #% Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + Copyright.Date, Copyright.Holder); 
 						
 						 Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + Copyright.Date, Copyright.Holder);
-						// #casecast BSD2License License 
+						// #casecast BSD2License null 
 						break; }
-						case GoedelType.BSD2License: {
-						  BSD2License License = (BSD2License) Copyright.License; 
+						case GoedelType.BSD2License: { 
 						// #% Boilerplate.BSD2License (_Output, "//  ", "Copyright (c) " +  Copyright.Date, Copyright.Holder); 
 						
 						 Boilerplate.BSD2License (_Output, "//  ", "Copyright (c) " +  Copyright.Date, Copyright.Holder);
-						// #casecast BSD3License License 
+						// #casecast BSD3License null 
 						break; }
-						case GoedelType.BSD3License: {
-						  BSD3License License = (BSD3License) Copyright.License; 
+						case GoedelType.BSD3License: { 
 						// #% Boilerplate.BSD3License (_Output, "//  ", "Copyright (c) " +  Copyright.Date, Copyright.Holder); 
 						
 						 Boilerplate.BSD3License (_Output, "//  ", "Copyright (c) " +  Copyright.Date, Copyright.Holder);
-						// #casecast ISCLicense License 
+						// #casecast ISCLicense null 
 						break; }
-						case GoedelType.ISCLicense: {
-						  ISCLicense License = (ISCLicense) Copyright.License; 
+						case GoedelType.ISCLicense: { 
 						// #% Boilerplate.ISCLicense (_Output, "//  ", "Copyright (c) " +  Copyright.Date, Copyright.Holder); 
 						
 						 Boilerplate.ISCLicense (_Output, "//  ", "Copyright (c) " +  Copyright.Date, Copyright.Holder);
-						// #casecast Apache2License License 
+						// #casecast Apache2License null 
 						break; }
-						case GoedelType.Apache2License: {
-						  Apache2License License = (Apache2License) Copyright.License; 
+						case GoedelType.Apache2License: { 
 						// #% Boilerplate.Apache2License (_Output, "//  ", "Copyright (c) " +  Copyright.Date, Copyright.Holder); 
 						
 						 Boilerplate.Apache2License (_Output, "//  ", "Copyright (c) " +  Copyright.Date, Copyright.Holder);
@@ -331,21 +326,18 @@ namespace GoedelSchema {
 				foreach  (Entry Entry in Entries) {
 					// #switchcast GoedelType Entry.Type 
 					switch (Entry.Type._Tag ()) {
-						// #casecast Choice Choice 
-						case GoedelType.Choice: {
-						  Choice Choice = (Choice) Entry.Type; 
+						// #casecast Choice null 
+						case GoedelType.Choice: { 
 						// 			#{Entry.Name}._InitChildren (this); 
 						_Output.Write ("			{1}._InitChildren (this);\n{0}", _Indent, Entry.Name);
-						// #casecast ChoiceREF ChoiceREF 
+						// #casecast ChoiceREF null 
 						break; }
-						case GoedelType.ChoiceREF: {
-						  ChoiceREF ChoiceREF = (ChoiceREF) Entry.Type; 
+						case GoedelType.ChoiceREF: { 
 						// 			#{Entry.Name}._InitChildren (this); 
 						_Output.Write ("			{1}._InitChildren (this);\n{0}", _Indent, Entry.Name);
-						// #casecast _Label Label 
+						// #casecast _Label null 
 						break; }
-						case GoedelType._Label: {
-						  _Label Label = (_Label) Entry.Type; 
+						case GoedelType._Label: { 
 						// 			#{Entry.Name}._InitChildren (this); 
 						_Output.Write ("			{1}._InitChildren (this);\n{0}", _Indent, Entry.Name);
 						// #casecast List List 
@@ -989,9 +981,8 @@ namespace GoedelSchema {
 					 IsList = false;
 					// #switchcast GoedelType Entry.Type 
 					switch (Entry.Type._Tag ()) {
-						// #casecast _Label Label 
-						case GoedelType._Label: {
-						  _Label Label = (_Label) Entry.Type; 
+						// #casecast _Label null 
+						case GoedelType._Label: { 
 						// 						// Parser transition for _Label $$$$$ 
 						_Output.Write ("						// Parser transition for _Label $$$$$\n{0}", _Indent);
 						// #casecast Options Options 
@@ -1049,15 +1040,13 @@ namespace GoedelSchema {
 							_Output.Write ("									// {1}  {2}\n{0}", _Indent, OEntry.Name, OEntry.Type);
 							// #switchcast GoedelType OEntry.Occurs 
 							switch (OEntry.Occurs._Tag ()) {
-								// #casecast Single Single 
-								case GoedelType.Single: {
-								  Single Single = (Single) OEntry.Occurs; 
+								// #casecast Single null 
+								case GoedelType.Single: { 
 								// 									Current_Cast.#{OEntry.Name} = New#{OEntry.Type} (); 
 								_Output.Write ("									Current_Cast.{1} = New{2} ();\n{0}", _Indent, OEntry.Name, OEntry.Type);
-								// #casecast Multiple Multiple 
+								// #casecast Multiple null 
 								break; }
-								case GoedelType.Multiple: {
-								  Multiple Multiple = (Multiple) OEntry.Occurs; 
+								case GoedelType.Multiple: { 
 								// 									Current_Cast.#{OEntry.Name}.Add (New#{OEntry.Type} ()); 
 								_Output.Write ("									Current_Cast.{1}.Add (New{2} ());\n{0}", _Indent, OEntry.Name, OEntry.Type);
 								// #end switchcast 
@@ -1200,9 +1189,8 @@ namespace GoedelSchema {
 							// #case GoedelType.ChoiceREF 
 							break; }
 							case  GoedelType.ChoiceREF: {
-							// #% ChoiceREF ChoiceREF = (ChoiceREF) List.Type;  
-							
-							 ChoiceREF ChoiceREF = (ChoiceREF) List.Type; 
+							//  
+							_Output.Write ("\n{0}", _Indent);
 							//  
 							_Output.Write ("\n{0}", _Indent);
 							// #case GoedelType.ID 
@@ -1425,10 +1413,9 @@ namespace GoedelSchema {
 						_Output.Write ("                            }}\n{0}", _Indent);
 						//                         throw new System.Exception("Expected LABEL or LITERAL"); 
 						_Output.Write ("                        throw new System.Exception(\"Expected LABEL or LITERAL\");\n{0}", _Indent);
-						// #casecast String Entry_Cast 
+						// #casecast String null 
 						break; }
-						case GoedelType.String: {
-						  String Entry_Cast = (String) Entry.Type; 
+						case GoedelType.String: { 
 						//                         if (Token == TokenType.STRING) { 
 						_Output.Write ("                        if (Token == TokenType.STRING) {{\n{0}", _Indent);
 						//                             #{Class.Namespace}.#{ID} Current_Cast = (#{Class.Namespace}.#{ID})Current; 
@@ -1443,10 +1430,9 @@ namespace GoedelSchema {
 						_Output.Write ("                            }}\n{0}", _Indent);
 						//                         throw new System.Exception("Expected String"); 
 						_Output.Write ("                        throw new System.Exception(\"Expected String\");\n{0}", _Indent);
-						// #casecast Text Text 
+						// #casecast Text null 
 						break; }
-						case GoedelType.Text: {
-						  Text Text = (Text) Entry.Type; 
+						case GoedelType.Text: { 
 						//                         if (Token == TokenType.BEGIN) { 
 						_Output.Write ("                        if (Token == TokenType.BEGIN) {{\n{0}", _Indent);
 						//                             State = StateCode.#{ID}__#{Entry.Name}; 
@@ -1492,10 +1478,9 @@ namespace GoedelSchema {
 						// #% IsList = true; 
 						
 						 IsList = true;
-						// #casecast Integer Integer 
+						// #casecast Integer null 
 						break; }
-						case GoedelType.Integer: {
-						  Integer Integer = (Integer) Entry.Type; 
+						case GoedelType.Integer: { 
 						//                         if (Token == TokenType.INTEGER) { 
 						_Output.Write ("                        if (Token == TokenType.INTEGER) {{\n{0}", _Indent);
 						//                             #{Class.Namespace}.#{ID} Current_Cast = (#{Class.Namespace}.#{ID})Current; 
@@ -1510,10 +1495,9 @@ namespace GoedelSchema {
 						_Output.Write ("                            }}\n{0}", _Indent);
 						//                         throw new System.Exception("Expected Integer"); 
 						_Output.Write ("                        throw new System.Exception(\"Expected Integer\");\n{0}", _Indent);
-						// #casecast Boolean Boolean 
+						// #casecast Boolean null 
 						break; }
-						case GoedelType.Boolean: {
-						  Boolean Boolean = (Boolean) Entry.Type; 
+						case GoedelType.Boolean: { 
 						//                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL))  { 
 						_Output.Write ("                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL))  {{\n{0}", _Indent);
 						//                             #{Class.Namespace}.#{ID} Current_Cast = (#{Class.Namespace}.#{ID})Current; 
@@ -1596,15 +1580,13 @@ namespace GoedelSchema {
 				foreach  (OptionEntry OEntry in Options.Entries) {
 					// #switchcast GoedelType OEntry.Occurs 
 					switch (OEntry.Occurs._Tag ()) {
-						// #casecast Single Single 
-						case GoedelType.Single: {
-						  Single Single = (Single) OEntry.Occurs; 
+						// #casecast Single null 
+						case GoedelType.Single: { 
 						// 		public #{OEntry.Type}  #{OEntry.Name} = new  #{OEntry.Type}(); 
 						_Output.Write ("		public {1}  {2} = new  {3}();\n{0}", _Indent, OEntry.Type, OEntry.Name, OEntry.Type);
-						// #casecast Multiple Multiple 
+						// #casecast Multiple null 
 						break; }
-						case GoedelType.Multiple: {
-						  Multiple Multiple = (Multiple) OEntry.Occurs; 
+						case GoedelType.Multiple: { 
 						// 		public List<#{OEntry.Type}>  #{OEntry.Name} = new  List <#{OEntry.Type}> (); 
 						_Output.Write ("		public List<{1}>  {2} = new  List <{3}> ();\n{0}", _Indent, OEntry.Type, OEntry.Name, OEntry.Type);
 						// #end switchcast 
@@ -1688,58 +1670,49 @@ namespace GoedelSchema {
 					}
 				//         public List <#{Type}>           #{Entry.Name} = new List<#{Type}> (); 
 				_Output.Write ("        public List <{1}>           {2} = new List<{3}> ();\n{0}", _Indent, Type, Entry.Name, Type);
-				// #casecast Choice Choice 
+				// #casecast Choice null 
 				break; }
-				case GoedelType.Choice: {
-				  Choice Choice = (Choice) Entry.Type; 
+				case GoedelType.Choice: { 
 				//         public _Choice					#{Entry.Name}; 
 				_Output.Write ("        public _Choice					{1};\n{0}", _Indent, Entry.Name);
-				// #casecast ChoiceREF ChoiceREF 
+				// #casecast ChoiceREF null 
 				break; }
-				case GoedelType.ChoiceREF: {
-				  ChoiceREF ChoiceREF = (ChoiceREF) Entry.Type; 
+				case GoedelType.ChoiceREF: { 
 				//         public _Choice					#{Entry.Name}; 
 				_Output.Write ("        public _Choice					{1};\n{0}", _Indent, Entry.Name);
-				// #casecast ID ID 
+				// #casecast ID null 
 				break; }
-				case GoedelType.ID: {
-				  ID ID = (ID) Entry.Type; 
+				case GoedelType.ID: { 
 				//         public ID<_Choice>				#{Entry.Name};  
 				_Output.Write ("        public ID<_Choice>				{1}; \n{0}", _Indent, Entry.Name);
-				// #casecast REF REF 
+				// #casecast REF null 
 				break; }
-				case GoedelType.REF: {
-				  REF REF = (REF) Entry.Type; 
+				case GoedelType.REF: { 
 				//         public REF<_Choice>				#{Entry.Name}; 
 				_Output.Write ("        public REF<_Choice>				{1};\n{0}", _Indent, Entry.Name);
-				// #casecast Token Token 
+				// #casecast Token null 
 				break; }
-				case GoedelType.Token: {
-				  Token Token = (Token) Entry.Type; 
+				case GoedelType.Token: { 
 				//         public TOKEN<_Choice>			#{Entry.Name}; 
 				_Output.Write ("        public TOKEN<_Choice>			{1};\n{0}", _Indent, Entry.Name);
-				// #casecast String String 
+				// #casecast String null 
 				break; }
-				case GoedelType.String: {
-				  String String = (String) Entry.Type; 
+				case GoedelType.String: { 
 				// 		public string					#{Entry.Name}; 
 				_Output.Write ("		public string					{1};\n{0}", _Indent, Entry.Name);
-				// #casecast Text Text 
+				// #casecast Text null 
 				break; }
-				case GoedelType.Text: {
-				  Text Text = (Text) Entry.Type; 
+				case GoedelType.Text: { 
 				// 		public List <System.String>			#{Entry.Name} = new List <System.String> ();  
 				_Output.Write ("		public List <System.String>			{1} = new List <System.String> (); \n{0}", _Indent, Entry.Name);
-				// #casecast Integer Integer 
+				// #casecast Integer null 
 				break; }
-				case GoedelType.Integer: {
-				  Integer Integer = (Integer) Entry.Type; 
+				case GoedelType.Integer: { 
 				// 		public int						#{Entry.Name}; 
 				_Output.Write ("		public int						{1};\n{0}", _Indent, Entry.Name);
-				// #casecast Boolean Boolean 
+				// #casecast Boolean null 
 				break; }
-				case GoedelType.Boolean: {
-				  Boolean Boolean = (Boolean) Entry.Type; 
+				case GoedelType.Boolean: { 
 				// 		public bool						#{Entry.Name}; 
 				_Output.Write ("		public bool						{1};\n{0}", _Indent, Entry.Name);
 				// #end switchcast 
@@ -1758,9 +1731,8 @@ namespace GoedelSchema {
 		public void SerializeEntry (Entry Entry) {
 			// #switchcast GoedelType Entry.Type 
 			switch (Entry.Type._Tag ()) {
-				// #casecast _Label Label 
-				case GoedelType._Label: {
-				  _Label Label = (_Label) Entry.Type; 
+				// #casecast _Label null 
+				case GoedelType._Label: { 
 				// #casecast Options Options 
 				break; }
 				case GoedelType.Options: {
@@ -1771,17 +1743,15 @@ namespace GoedelSchema {
 				foreach  (OptionEntry OEntry in Options.Entries) {
 					// #switchcast GoedelType OEntry.Occurs 
 					switch (OEntry.Occurs._Tag ()) {
-						// #casecast Single Single 
-						case GoedelType.Single: {
-						  Single Single = (Single) OEntry.Occurs; 
+						// #casecast Single null 
+						case GoedelType.Single: { 
 						// 		// public #{OEntry.Type}  #{OEntry.Name} = new  #{OEntry.Type}(); 
 						_Output.Write ("		// public {1}  {2} = new  {3}();\n{0}", _Indent, OEntry.Type, OEntry.Name, OEntry.Type);
 						// 			#{OEntry.Name}.Serialize (Output, true); 
 						_Output.Write ("			{1}.Serialize (Output, true);\n{0}", _Indent, OEntry.Name);
-						// #casecast Multiple Multiple 
+						// #casecast Multiple null 
 						break; }
-						case GoedelType.Multiple: {
-						  Multiple Multiple = (Multiple) OEntry.Occurs; 
+						case GoedelType.Multiple: { 
 						// 			foreach (#{OEntry.Type} _e in #{OEntry.Name}) { 
 						_Output.Write ("			foreach ({1} _e in {2}) {{\n{0}", _Indent, OEntry.Type, OEntry.Name);
 						// 				_e.Serialize (Output, true); 
@@ -1810,66 +1780,58 @@ namespace GoedelSchema {
 					_Output.Write ("			foreach ({1} _e in {2}) {{\n{0}", _Indent, LLabel.Label, Entry.Name);
 					// 				_e.Serialize (Output, true); 
 					_Output.Write ("				_e.Serialize (Output, true);\n{0}", _Indent);
-					// #casecast Choice Choice 
+					// #casecast Choice null 
 					break; }
-					case GoedelType.Choice: {
-					  Choice Choice = (Choice) List.Type; 
+					case GoedelType.Choice: { 
 					// 			foreach (_Choice _e in #{Entry.Name}) { 
 					_Output.Write ("			foreach (_Choice _e in {1}) {{\n{0}", _Indent, Entry.Name);
 					// 				_e.Serialize (Output, true); 
 					_Output.Write ("				_e.Serialize (Output, true);\n{0}", _Indent);
-					// #casecast ChoiceREF ChoiceREF 
+					// #casecast ChoiceREF null 
 					break; }
-					case GoedelType.ChoiceREF: {
-					  ChoiceREF ChoiceREF = (ChoiceREF) List.Type; 
+					case GoedelType.ChoiceREF: { 
 					// 			foreach (_Choice _e in #{Entry.Name}) { 
 					_Output.Write ("			foreach (_Choice _e in {1}) {{\n{0}", _Indent, Entry.Name);
 					// 				_e.Serialize (Output, true); 
 					_Output.Write ("				_e.Serialize (Output, true);\n{0}", _Indent);
-					// #casecast ID ID 
+					// #casecast ID null 
 					break; }
-					case GoedelType.ID: {
-					  ID ID = (ID) List.Type; 
+					case GoedelType.ID: { 
 					// 			foreach (ID<_Choice> _e in #{Entry.Name}) { 
 					_Output.Write ("			foreach (ID<_Choice> _e in {1}) {{\n{0}", _Indent, Entry.Name);
 					// 				Output.WriteId ("#{Entry.Name}", _e.ToString());  
 					_Output.Write ("				Output.WriteId (\"{1}\", _e.ToString()); \n{0}", _Indent, Entry.Name);
-					// #casecast REF REF 
+					// #casecast REF null 
 					break; }
-					case GoedelType.REF: {
-					  REF REF = (REF) List.Type; 
+					case GoedelType.REF: { 
 					// 			foreach (REF<_Choice> _e in #{Entry.Name}) { 
 					_Output.Write ("			foreach (REF<_Choice> _e in {1}) {{\n{0}", _Indent, Entry.Name);
 					// 				Output.WriteId ("#{Entry.Name}", _e.ToString()); 
 					_Output.Write ("				Output.WriteId (\"{1}\", _e.ToString());\n{0}", _Indent, Entry.Name);
-					// #casecast Token Token 
+					// #casecast Token null 
 					break; }
-					case GoedelType.Token: {
-					  Token Token = (Token) List.Type; 
+					case GoedelType.Token: { 
 					// 			foreach (TOKEN<_Choice> _e in #{Entry.Name}) { 
 					_Output.Write ("			foreach (TOKEN<_Choice> _e in {1}) {{\n{0}", _Indent, Entry.Name);
 					// 				Output.WriteId ("#{Entry.Name}", _e.ToString()); 
 					_Output.Write ("				Output.WriteId (\"{1}\", _e.ToString());\n{0}", _Indent, Entry.Name);
-					// #casecast String String 
+					// #casecast String null 
 					break; }
-					case GoedelType.String: {
-					  String String = (String) List.Type; 
+					case GoedelType.String: { 
 					// 			foreach (string _e in #{Entry.Name}) { 
 					_Output.Write ("			foreach (string _e in {1}) {{\n{0}", _Indent, Entry.Name);
 					// 				Output.WriteAttribute ("#{Entry.Name}", _e); 
 					_Output.Write ("				Output.WriteAttribute (\"{1}\", _e);\n{0}", _Indent, Entry.Name);
-					// #casecast Integer Integer 
+					// #casecast Integer null 
 					break; }
-					case GoedelType.Integer: {
-					  Integer Integer = (Integer) List.Type; 
+					case GoedelType.Integer: { 
 					// 			foreach (int _e in #{Entry.Name}) { 
 					_Output.Write ("			foreach (int _e in {1}) {{\n{0}", _Indent, Entry.Name);
 					// 				Output.Write ("#{Entry.Name}", _e); 
 					_Output.Write ("				Output.Write (\"{1}\", _e);\n{0}", _Indent, Entry.Name);
-					// #casecast Boolean Boolean 
+					// #casecast Boolean null 
 					break; }
-					case GoedelType.Boolean: {
-					  Boolean Boolean = (Boolean) List.Type; 
+					case GoedelType.Boolean: { 
 					// 			foreach (bool _e in #{Entry.Name}) { 
 					_Output.Write ("			foreach (bool _e in {1}) {{\n{0}", _Indent, Entry.Name);
 					// 				Output.WriteAttribute ("#{Entry.Name}", _e); 
@@ -1881,62 +1843,53 @@ namespace GoedelSchema {
 				_Output.Write ("				}}\n{0}", _Indent);
 				// 			Output.EndList (""); 
 				_Output.Write ("			Output.EndList (\"\");\n{0}", _Indent);
-				// #casecast Choice Choice 
+				// #casecast Choice null 
 				break; }
-				case GoedelType.Choice: {
-				  Choice Choice = (Choice) Entry.Type; 
+				case GoedelType.Choice: { 
 				// 	        #{Entry.Name}.Serialize (Output, true); 
 				_Output.Write ("	        {1}.Serialize (Output, true);\n{0}", _Indent, Entry.Name);
-				// #casecast ChoiceREF ChoiceREF 
+				// #casecast ChoiceREF null 
 				break; }
-				case GoedelType.ChoiceREF: {
-				  ChoiceREF ChoiceREF = (ChoiceREF) Entry.Type; 
+				case GoedelType.ChoiceREF: { 
 				// 	        #{Entry.Name}.Serialize (Output, true); 
 				_Output.Write ("	        {1}.Serialize (Output, true);\n{0}", _Indent, Entry.Name);
-				// #casecast ID ID 
+				// #casecast ID null 
 				break; }
-				case GoedelType.ID: {
-				  ID ID = (ID) Entry.Type; 
+				case GoedelType.ID: { 
 				// 	        Output.WriteId ("#{Entry.Name}", #{Entry.Name}.ToString());  
 				_Output.Write ("	        Output.WriteId (\"{1}\", {2}.ToString()); \n{0}", _Indent, Entry.Name, Entry.Name);
-				// #casecast REF REF 
+				// #casecast REF null 
 				break; }
-				case GoedelType.REF: {
-				  REF REF = (REF) Entry.Type; 
+				case GoedelType.REF: { 
 				// 	        Output.WriteId ("#{Entry.Name}", #{Entry.Name}.ToString()); 
 				_Output.Write ("	        Output.WriteId (\"{1}\", {2}.ToString());\n{0}", _Indent, Entry.Name, Entry.Name);
-				// #casecast Token Token 
+				// #casecast Token null 
 				break; }
-				case GoedelType.Token: {
-				  Token Token = (Token) Entry.Type; 
+				case GoedelType.Token: { 
 				// 	        Output.WriteId ("#{Entry.Name}", #{Entry.Name}.ToString()); 
 				_Output.Write ("	        Output.WriteId (\"{1}\", {2}.ToString());\n{0}", _Indent, Entry.Name, Entry.Name);
-				// #casecast String String 
+				// #casecast String null 
 				break; }
-				case GoedelType.String: {
-				  String String = (String) Entry.Type; 
+				case GoedelType.String: { 
 				// 			Output.WriteAttribute ("#{Entry.Name}", #{Entry.Name}); 
 				_Output.Write ("			Output.WriteAttribute (\"{1}\", {2});\n{0}", _Indent, Entry.Name, Entry.Name);
-				// #casecast Text Text 
+				// #casecast Text null 
 				break; }
-				case GoedelType.Text: {
-				  Text Text = (Text) Entry.Type; 
+				case GoedelType.Text: { 
 				// 			foreach (string _s in #{Entry.Name}) { 
 				_Output.Write ("			foreach (string _s in {1}) {{\n{0}", _Indent, Entry.Name);
 				// 				Output.WriteAttribute ("#{Entry.Name}",_s); 
 				_Output.Write ("				Output.WriteAttribute (\"{1}\",_s);\n{0}", _Indent, Entry.Name);
 				// 				} 
 				_Output.Write ("				}}\n{0}", _Indent);
-				// #casecast Integer Integer 
+				// #casecast Integer null 
 				break; }
-				case GoedelType.Integer: {
-				  Integer Integer = (Integer) Entry.Type; 
+				case GoedelType.Integer: { 
 				// 			Output.WriteAttribute ("#{Entry.Name}", #{Entry.Name}); 
 				_Output.Write ("			Output.WriteAttribute (\"{1}\", {2});\n{0}", _Indent, Entry.Name, Entry.Name);
-				// #casecast Boolean Boolean 
+				// #casecast Boolean null 
 				break; }
-				case GoedelType.Boolean: {
-				  Boolean Boolean = (Boolean) Entry.Type; 
+				case GoedelType.Boolean: { 
 				// 			Output.WriteAttribute ("#{Entry.Name}", #{Entry.Name}); 
 				_Output.Write ("			Output.WriteAttribute (\"{1}\", {2});\n{0}", _Indent, Entry.Name, Entry.Name);
 				// #end switchcast 

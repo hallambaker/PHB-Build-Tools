@@ -109,8 +109,8 @@ namespace Goedel.Protocol {
 
 
     public abstract class CharacterTextStream : BufferedCharacterStream {
-        byte[] Source;
-        long Position;
+        //byte[] Source;
+        //long Position;
 
         protected long MarkPosition = -1;
         protected int MarkBuffer;

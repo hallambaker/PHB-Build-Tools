@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Goedel.Debug {
+namespace Goedel.Debug2 {
 
     /// <summary>
     /// General utility routines to simplify checking of inputs, return values, etc.

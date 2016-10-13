@@ -346,7 +346,7 @@ Object Object #!
 			new MenuEntry () { 
 				Id ="#{Action.Id}",  
 				Label = "#{Action.Tag}" }#!
-#casecast Divider Divider
+#casecast Divider null
 #{Separator}
 			new MenuDivider () #!
 #end switchcast
@@ -401,7 +401,7 @@ Object Object #!
 						Label = "#{Entry.FieldTag}",
 						Entries = new List<ObjectEntry> {#!
 #% var SubSeparator = new Separator (",");
-#foreach (var RadioEntry in (Entry as Enumerate).Entries)
+#foreach (var RadioEntry in Enumerate.Entries)
 #{SubSeparator}
 				new ObjectFieldRadio {
 						Id = "#{RadioEntry.FieldName}",  
@@ -411,7 +411,6 @@ Object Object #!
 							}
 						}#!
 #elseif (Entry as Item != null) 
-#% var Item = Entry as Item;
 #{Separator}
 			new ObjectFieldItem {
 						Id = "#{Entry.FieldName}",  
@@ -527,9 +526,9 @@ Object Object #!
 #end if
 #end if
 #switchcast GUISchemaType Entry
-#casecast Item Item
-#casecast List List
-#casecast Set Set
+#casecast Item null
+#casecast List null
+#casecast Set null
 #casecast Option Option
 #call DeclareFields Option.Entries
 #end switchcast

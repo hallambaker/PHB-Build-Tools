@@ -57,8 +57,8 @@ namespace Goedel.Tool.ProtoGen {
 			 Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + "2016", ".");
 			// #% var InheritsOverride = "override"; // "virtual" 
 			 var InheritsOverride = "override"; // "virtual"
-			//  
-			_Output.Write ("\n{0}", _Indent);
+			// #% string Namespace; 
+			 string Namespace;
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// using System; 
@@ -112,8 +112,8 @@ namespace Goedel.Tool.ProtoGen {
 					// #% Namespace = Protocol.Namespace.ToString (); 
 					
 					 Namespace = Protocol.Namespace.ToString ();
-					// namespace #{Protocol.Namespace} { 
-					_Output.Write ("namespace {1} {{\n{0}", _Indent, Protocol.Namespace);
+					// namespace #{Namespace} { 
+					_Output.Write ("namespace {1} {{\n{0}", _Indent, Namespace);
 					//  
 					_Output.Write ("\n{0}", _Indent);
 					//  
@@ -708,9 +708,8 @@ namespace Goedel.Tool.ProtoGen {
 			foreach  (_Choice Entry in Entries) {
 				// #switchcast ProtoStructType Entry 
 				switch (Entry._Tag ()) {
-					// #casecast Abstract Abstract 
-					case ProtoStructType.Abstract: {
-					  Abstract Abstract = (Abstract) Entry; 
+					// #casecast Abstract null 
+					case ProtoStructType.Abstract: { 
 					// #% result = true; 
 					
 					 result = true;
@@ -741,9 +740,8 @@ namespace Goedel.Tool.ProtoGen {
 			foreach  (_Choice Entry in Entries) {
 				// #switchcast ProtoStructType Entry 
 				switch (Entry._Tag ()) {
-					// #casecast Multiple Multiple 
-					case ProtoStructType.Multiple: {
-					  Multiple Multiple = (Multiple) Entry; 
+					// #casecast Multiple null 
+					case ProtoStructType.Multiple: { 
 					// #% result = true; 
 					
 					 result = true;
@@ -774,9 +772,8 @@ namespace Goedel.Tool.ProtoGen {
 			foreach  (_Choice Entry in Entries) {
 				// #switchcast ProtoStructType Entry 
 				switch (Entry._Tag ()) {
-					// #casecast Required Required 
-					case ProtoStructType.Required: {
-					  Required Required = (Required) Entry; 
+					// #casecast Required null 
+					case ProtoStructType.Required: { 
 					// #% result = true; 
 					
 					 result = true;
@@ -1081,8 +1078,7 @@ namespace Goedel.Tool.ProtoGen {
 
 			// #% public void MakeSerializers  (ID<_Choice> Id, string STag, List<_Choice> Entries, string Inherits) { 
 			 public void MakeSerializers  (ID<_Choice> Id, string STag, List<_Choice> Entries, string Inherits) {
-			// #% string IsOverride = (Id.Object.Superclass == null) ? "virtual " : "virtual "; 
-			 string IsOverride = (Id.Object.Superclass == null) ? "virtual " : "virtual ";
+			// #!% string IsOverride = (Id.Object.Superclass == null) ? "virtual " : "virtual "; 
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			//         /// <summary> 
@@ -1519,33 +1515,28 @@ namespace Goedel.Tool.ProtoGen {
 		public void MakeSerializeEntry (_Choice Entry, string Tag) {
 			// #switchcast ProtoStructType Entry 
 			switch (Entry._Tag ()) {
-				// #casecast Boolean Param 
-				case ProtoStructType.Boolean: {
-				  Boolean Param = (Boolean) Entry; 
+				// #casecast Boolean null 
+				case ProtoStructType.Boolean: { 
 				// 					_Writer.WriteBoolean (#{Tag}); 
 				_Output.Write ("					_Writer.WriteBoolean ({1});\n{0}", _Indent, Tag);
-				// #casecast Integer Param 
+				// #casecast Integer null 
 				break; }
-				case ProtoStructType.Integer: {
-				  Integer Param = (Integer) Entry; 
+				case ProtoStructType.Integer: { 
 				// 					_Writer.WriteInteger32 (#{Tag}); 
 				_Output.Write ("					_Writer.WriteInteger32 ({1});\n{0}", _Indent, Tag);
-				// #casecast Binary Param 
+				// #casecast Binary null 
 				break; }
-				case ProtoStructType.Binary: {
-				  Binary Param = (Binary) Entry; 
+				case ProtoStructType.Binary: { 
 				// 					_Writer.WriteBinary (#{Tag}); 
 				_Output.Write ("					_Writer.WriteBinary ({1});\n{0}", _Indent, Tag);
-				// #casecast Struct Param 
+				// #casecast Struct null 
 				break; }
-				case ProtoStructType.Struct: {
-				  Struct Param = (Struct) Entry; 
+				case ProtoStructType.Struct: { 
 				// 					#{Tag}.Serialize (_Writer, false); 
 				_Output.Write ("					{1}.Serialize (_Writer, false);\n{0}", _Indent, Tag);
-				// #casecast TStruct Param 
+				// #casecast TStruct null 
 				break; }
-				case ProtoStructType.TStruct: {
-				  TStruct Param = (TStruct) Entry; 
+				case ProtoStructType.TStruct: { 
 				// 					// expand this to a tagged structure 
 				_Output.Write ("					// expand this to a tagged structure\n{0}", _Indent);
 				// 					//#{Tag}.Serialize (_Writer, false); 
@@ -1564,34 +1555,29 @@ namespace Goedel.Tool.ProtoGen {
 				_Output.Write ("						_Writer.WriteObjectEnd();\n{0}", _Indent);
 				// 						} 
 				_Output.Write ("						}}\n{0}", _Indent);
-				// #casecast Label Param 
+				// #casecast Label null 
 				break; }
-				case ProtoStructType.Label: {
-				  Label Param = (Label) Entry; 
+				case ProtoStructType.Label: { 
 				// 					_Writer.WriteString (#{Tag}); 
 				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
-				// #casecast Name Param 
+				// #casecast Name null 
 				break; }
-				case ProtoStructType.Name: {
-				  Name Param = (Name) Entry; 
+				case ProtoStructType.Name: { 
 				// 					_Writer.WriteString (#{Tag}); 
 				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
-				// #casecast String Param 
+				// #casecast String null 
 				break; }
-				case ProtoStructType.String: {
-				  String Param = (String) Entry; 
+				case ProtoStructType.String: { 
 				// 					_Writer.WriteString (#{Tag}); 
 				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
-				// #casecast URI Param 
+				// #casecast URI null 
 				break; }
-				case ProtoStructType.URI: {
-				  URI Param = (URI) Entry; 
+				case ProtoStructType.URI: { 
 				// 					_Writer.WriteString (#{Tag}); 
 				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
-				// #casecast DateTime Param 
+				// #casecast DateTime null 
 				break; }
-				case ProtoStructType.DateTime: {
-				  DateTime Param = (DateTime) Entry; 
+				case ProtoStructType.DateTime: { 
 				// 					_Writer.WriteDateTime (#{Tag}); 
 				_Output.Write ("					_Writer.WriteDateTime ({1});\n{0}", _Indent, Tag);
 				// #%							break; } 
@@ -1617,27 +1603,23 @@ namespace Goedel.Tool.ProtoGen {
 		public void MakeSerializeArrayEntry (_Choice Entry, string Tag) {
 			// #switchcast ProtoStructType Entry 
 			switch (Entry._Tag ()) {
-				// #casecast Boolean Param 
-				case ProtoStructType.Boolean: {
-				  Boolean Param = (Boolean) Entry; 
+				// #casecast Boolean null 
+				case ProtoStructType.Boolean: { 
 				// 					_Writer.WriteBoolean (#{Tag}); 
 				_Output.Write ("					_Writer.WriteBoolean ({1});\n{0}", _Indent, Tag);
-				// #casecast Integer Param 
+				// #casecast Integer null 
 				break; }
-				case ProtoStructType.Integer: {
-				  Integer Param = (Integer) Entry; 
+				case ProtoStructType.Integer: { 
 				// 					_Writer.WriteInteger32 (#{Tag}); 
 				_Output.Write ("					_Writer.WriteInteger32 ({1});\n{0}", _Indent, Tag);
-				// #casecast Binary Param 
+				// #casecast Binary null 
 				break; }
-				case ProtoStructType.Binary: {
-				  Binary Param = (Binary) Entry; 
+				case ProtoStructType.Binary: { 
 				// 					_Writer.WriteBinary (#{Tag}); 
 				_Output.Write ("					_Writer.WriteBinary ({1});\n{0}", _Indent, Tag);
-				// #casecast Struct Param 
+				// #casecast Struct null 
 				break; }
-				case ProtoStructType.Struct: {
-				  Struct Param = (Struct) Entry; 
+				case ProtoStructType.Struct: { 
 				// 					// This is an untagged structure. Cannot inherit. 
 				_Output.Write ("					// This is an untagged structure. Cannot inherit.\n{0}", _Indent);
 				//                     //_Writer.WriteObjectStart(); 
@@ -1650,10 +1632,9 @@ namespace Goedel.Tool.ProtoGen {
 				_Output.Write ("					{1}.Serialize (_Writer, true, ref firstinner);\n{0}", _Indent, Tag);
 				//                     //_Writer.WriteObjectEnd(); 
 				_Output.Write ("                    //_Writer.WriteObjectEnd();\n{0}", _Indent);
-				// #casecast TStruct Param 
+				// #casecast TStruct null 
 				break; }
-				case ProtoStructType.TStruct: {
-				  TStruct Param = (TStruct) Entry; 
+				case ProtoStructType.TStruct: { 
 				//                     _Writer.WriteObjectStart(); 
 				_Output.Write ("                    _Writer.WriteObjectStart();\n{0}", _Indent);
 				//                     _Writer.WriteToken(#{Tag}.Tag(), 1); 
@@ -1664,34 +1645,29 @@ namespace Goedel.Tool.ProtoGen {
 				_Output.Write ("					{1}.Serialize (_Writer, true, ref firstinner);\n{0}", _Indent, Tag);
 				//                     _Writer.WriteObjectEnd(); 
 				_Output.Write ("                    _Writer.WriteObjectEnd();\n{0}", _Indent);
-				// #casecast Label Param 
+				// #casecast Label null 
 				break; }
-				case ProtoStructType.Label: {
-				  Label Param = (Label) Entry; 
+				case ProtoStructType.Label: { 
 				// 					_Writer.WriteString (#{Tag}); 
 				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
-				// #casecast Name Param 
+				// #casecast Name null 
 				break; }
-				case ProtoStructType.Name: {
-				  Name Param = (Name) Entry; 
+				case ProtoStructType.Name: { 
 				// 					_Writer.WriteString (#{Tag}); 
 				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
-				// #casecast String Param 
+				// #casecast String null 
 				break; }
-				case ProtoStructType.String: {
-				  String Param = (String) Entry; 
+				case ProtoStructType.String: { 
 				// 					_Writer.WriteString (#{Tag}); 
 				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
-				// #casecast URI Param 
+				// #casecast URI null 
 				break; }
-				case ProtoStructType.URI: {
-				  URI Param = (URI) Entry; 
+				case ProtoStructType.URI: { 
 				// 					_Writer.WriteString (#{Tag}); 
 				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
-				// #casecast DateTime Param 
+				// #casecast DateTime null 
 				break; }
-				case ProtoStructType.DateTime: {
-				  DateTime Param = (DateTime) Entry; 
+				case ProtoStructType.DateTime: { 
 				// 					_Writer.WriteDateTime (#{Tag}); 
 				_Output.Write ("					_Writer.WriteDateTime ({1});\n{0}", _Indent, Tag);
 				// #%							break; } 

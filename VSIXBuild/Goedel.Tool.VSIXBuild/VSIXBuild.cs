@@ -416,9 +416,6 @@ namespace Goedel.Tool.VSIXBuild {
         StateCode								State;
         Goedel.Tool.VSIXBuild._Choice				Current;
         List <_StackItem>						Stack;
-        TokenType								CurrentToken;
-        Position								CurrentPosition;
-        string									CurrentText;
 
 
         public static VSIXBuild Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -618,9 +615,6 @@ namespace Goedel.Tool.VSIXBuild {
 
 
         public override void Process(TokenType Token, Position Position, string Text) {
-            CurrentToken = Token;
-            CurrentPosition = Position;
-            CurrentText = Text;
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |

@@ -45,9 +45,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Goedel.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Goedel.cs" />
     <Compile Include="Parameters.cs" />
     <Compile Include="ParserGenerator.cs">
       <AutoGen>True</AutoGen>
@@ -57,7 +55,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Goedel.gdl" />
+    <None Include="Goedel.gdl">
+      <Generator>Goedel3</Generator>
+    </None>
     <None Include="PreBuild.bat" />
     <None Include="ParserGenerator.script">
       <Generator>GScript</Generator>

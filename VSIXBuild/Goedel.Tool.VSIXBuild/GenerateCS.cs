@@ -104,9 +104,8 @@ namespace Goedel.Tool.VSIXBuild {
 					foreach  (var Extension in Cast.Entries) {
 						// #switchcast VSIXBuildType Extension.Is 
 						switch (Extension.Is._Tag ()) {
-							// #casecast Generator xCast 
-							case VSIXBuildType.Generator: {
-							  Generator xCast = (Generator) Extension.Is; 
+							// #casecast Generator null 
+							case VSIXBuildType.Generator: { 
 							// #% MakeGenerator (Extension); 
 							
 							 MakeGenerator (Extension);

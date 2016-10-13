@@ -83,12 +83,6 @@
     <Compile Include="WidgetsMultiple.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Trojan\Goedel.Trojan.csproj">
-      <Project>{30425912-50ae-4cac-8a26-cf672f1d94f8}</Project>
-      <Name>Goedel.Trojan</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Class1.csxx" />
     <None Include="packages.config" />
   </ItemGroup>

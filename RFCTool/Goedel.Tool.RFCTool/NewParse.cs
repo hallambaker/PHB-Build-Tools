@@ -176,7 +176,7 @@ namespace Goedel.Tool.RFCTool {
                         else if (XML.GetType() == typeof(Content)) {
                             Content Content = (Content)XML;
                             if (Content.ContentType == ContentType.Text) {
-                                Text Text = new Text (TextType);
+                                //Text Text = new Text (TextType);
                                 //Text.Data =  SpaceStrip ? StripSpaces (Content.Text) : Content.Text;
 
 
@@ -242,7 +242,7 @@ namespace Goedel.Tool.RFCTool {
             }
 
 
-        TextReader TextReader;
+        public TextReader TextReader;
         Document Document;
         XmlReader XmlReader;
 
@@ -256,7 +256,7 @@ namespace Goedel.Tool.RFCTool {
             }
 
         public static void Parse(TextReader TextReader, Document Document) {
-            var NewParse = new NewParse(TextReader, Document);
+            new NewParse(TextReader, Document);
             }
 
         public NewParse(TextReader FileReader, Document Document) {
@@ -294,7 +294,7 @@ namespace Goedel.Tool.RFCTool {
                 }
             }
 
-        void ParseReferences(TextReader TextReader) {
+        public void ParseReferences(TextReader TextReader) {
                 XmlPreloadedResolver XmlPreloadedResolver = new XmlPreloadedResolver();
 
                 XmlReaderSettings XmlReaderSettings = new XmlReaderSettings();
@@ -331,11 +331,11 @@ namespace Goedel.Tool.RFCTool {
             if (Body == null) throw new Exception("No HTML Body");
 
             Front = GetNextElement(Body.Contents, "h1", ref FrontIndex);
-            if (Body == null) throw new Exception("No H1 Title Element");
+            if (Front == null) throw new Exception("No H1 Title Element");
 
             MiddleIndex = FrontIndex + 1;
             Middle = GetNextElement(Body.Contents, "h1", ref MiddleIndex);
-            if (Body == null) throw new Exception("No H1 Start of Document Element");
+            if (Middle == null) throw new Exception("No H1 Start of Document Element");
 
             MakeHTMLFront(Body.Contents, FrontIndex, MiddleIndex);
             MakeHTMLMiddle(Body.Contents, MiddleIndex);
@@ -406,7 +406,7 @@ namespace Goedel.Tool.RFCTool {
         bool Back = false;
 
         Section[] Sections = new Section[6];
-        int SectionLevel = 0;
+        //int SectionLevel = 0;
         Section CurrentSection;
         static string BackPrefix = "Appendix:";
         Section SetSection(Element Element) {
@@ -433,7 +433,7 @@ namespace Goedel.Tool.RFCTool {
             else {
                 Sections[Level - 1].Subsections.Add(CurrentSection);
                 }
-            SectionLevel = Level;
+            //SectionLevel = Level;
             Sections[Level] = CurrentSection;
 
             return CurrentSection;
@@ -810,7 +810,7 @@ namespace Goedel.Tool.RFCTool {
                             //FileReader.Include(Processing.File);
                             }
                         if (XmlReader.Name.ToLower() == "bibliography") {
-                            NewParse BibParse = new NewParse (Processing, Document);
+                            new NewParse (Processing, Document);
                             if (Processing.Cache != null) {
                                 Document.Catalog.Caches.Add (Processing.File);
                                 }

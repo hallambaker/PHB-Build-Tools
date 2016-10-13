@@ -209,6 +209,7 @@ namespace GoedelSchema {
 		}
 
     public partial class Apache2License : _Choice {
+
         public override GoedelType _Tag () {
             return GoedelType.Apache2License;
             }
@@ -577,9 +578,9 @@ namespace GoedelSchema {
         StateCode								State;
         GoedelSchema._Choice				Current;
         List <_StackItem>						Stack;
-        TokenType								CurrentToken;
-        Position								CurrentPosition;
-        string									CurrentText;
+        public TokenType								CurrentToken;
+        public Position								CurrentPosition;
+        public string									CurrentText;
 
 
 

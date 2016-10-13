@@ -212,7 +212,7 @@ namespace Goedel.ASN {
             bool Context = (Flags & (int) ASNFlags.Context) > 0;
             bool Implicit = (Flags & (int) ASNFlags.Implicit) > 0;
             bool Explicit = (Flags & (int) ASNFlags.Explicit) > 0;
-            bool Optional = (Flags & (int) ASNFlags.Optional) > 0;
+            //bool Optional = (Flags & (int) ASNFlags.Optional) > 0;
 
             if (Context) {
                 AddLength (Position - Pointer);
@@ -413,7 +413,7 @@ namespace Goedel.ASN {
             }
 
         public void Encode__Object(Goedel.ASN.Root Data, int Flags, int Code) {
-            int Position = Pointer;
+            //int Position = Pointer;
 
             if (NullCheck(Data == null, Flags, Code)) return;
 
@@ -443,7 +443,7 @@ namespace Goedel.ASN {
         //
         public void Encode__Time(DateTime Data, int Flags, int Code) {
 
-            if (NullCheck (Data == null, Flags, Code)) return;
+            //if (NullCheck (Data == null, Flags, Code)) return;
 
             if (Data.Year < 2050) {
                 Encode__UTCTime (Data, Flags, Code);

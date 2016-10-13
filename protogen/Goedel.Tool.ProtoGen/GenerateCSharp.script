@@ -13,7 +13,7 @@
 #!% Boilerplate.Header (_Output, "//  ", GenerateTime);
 #% Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + "2016", ".");
 #% var InheritsOverride = "override"; // "virtual"
-
+#% string Namespace;
 
 using System;
 using System.IO;
@@ -38,7 +38,7 @@ using #{Using.Id};
 
 #% DescriptionListC (Protocol.Entries, 0);
 #% Namespace = Protocol.Namespace.ToString ();
-namespace #{Protocol.Namespace} {
+namespace #{Namespace} {
 
 
     /// <summary>
@@ -321,7 +321,7 @@ namespace #{Protocol.Namespace} {
 #% bool result = false;
 #foreach (_Choice Entry in Entries)
 #switchcast ProtoStructType Entry
-#casecast Abstract Abstract
+#casecast Abstract null
 #% result = true;
 #end switchcast
 #end foreach
@@ -334,7 +334,7 @@ namespace #{Protocol.Namespace} {
 #% bool result = false;
 #foreach (_Choice Entry in Entries)
 #switchcast ProtoStructType Entry
-#casecast Multiple Multiple
+#casecast Multiple null
 #% result = true;
 #end switchcast
 #end foreach
@@ -347,7 +347,7 @@ namespace #{Protocol.Namespace} {
 #% bool result = false;
 #foreach (_Choice Entry in Entries)
 #switchcast ProtoStructType Entry
-#casecast Required Required
+#casecast Required null
 #% result = true;
 #end switchcast
 #end foreach
@@ -488,7 +488,7 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 
 #block MakeSerializers
 #% public void MakeSerializers  (ID<_Choice> Id, string STag, List<_Choice> Entries, string Inherits) {
-#% string IsOverride = (Id.Object.Superclass == null) ? "virtual " : "virtual ";
+#!% string IsOverride = (Id.Object.Superclass == null) ? "virtual " : "virtual ";
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -705,15 +705,15 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 
 #method2 MakeSerializeEntry _Choice Entry string Tag
 #switchcast ProtoStructType Entry
-#casecast Boolean Param
+#casecast Boolean null
 					_Writer.WriteBoolean (#{Tag});
-#casecast Integer Param
+#casecast Integer null
 					_Writer.WriteInteger32 (#{Tag});
-#casecast Binary Param
+#casecast Binary null
 					_Writer.WriteBinary (#{Tag});
-#casecast Struct Param
+#casecast Struct null
 					#{Tag}.Serialize (_Writer, false);
-#casecast TStruct Param
+#casecast TStruct null
 					// expand this to a tagged structure
 					//#{Tag}.Serialize (_Writer, false);
 					{
@@ -723,15 +723,15 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 						#{Tag}.Serialize (_Writer, true, ref firstinner);
 						_Writer.WriteObjectEnd();
 						}
-#casecast Label Param
+#casecast Label null
 					_Writer.WriteString (#{Tag});
-#casecast Name Param
+#casecast Name null
 					_Writer.WriteString (#{Tag});
-#casecast String Param
+#casecast String null
 					_Writer.WriteString (#{Tag});
-#casecast URI Param
+#casecast URI null
 					_Writer.WriteString (#{Tag});
-#casecast DateTime Param
+#casecast DateTime null
 					_Writer.WriteDateTime (#{Tag});
 #%							break; }
 #% default : {
@@ -741,34 +741,34 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 
 #method2 MakeSerializeArrayEntry _Choice Entry string Tag
 #switchcast ProtoStructType Entry
-#casecast Boolean Param
+#casecast Boolean null
 					_Writer.WriteBoolean (#{Tag});
-#casecast Integer Param
+#casecast Integer null
 					_Writer.WriteInteger32 (#{Tag});
-#casecast Binary Param
+#casecast Binary null
 					_Writer.WriteBinary (#{Tag});
-#casecast Struct Param
+#casecast Struct null
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
                     //_Writer.WriteToken(#{Tag}.Tag(), 1);
 					bool firstinner = true;
 					#{Tag}.Serialize (_Writer, true, ref firstinner);
                     //_Writer.WriteObjectEnd();
-#casecast TStruct Param
+#casecast TStruct null
                     _Writer.WriteObjectStart();
                     _Writer.WriteToken(#{Tag}.Tag(), 1);
 					bool firstinner = true;
 					#{Tag}.Serialize (_Writer, true, ref firstinner);
                     _Writer.WriteObjectEnd();
-#casecast Label Param
+#casecast Label null
 					_Writer.WriteString (#{Tag});
-#casecast Name Param
+#casecast Name null
 					_Writer.WriteString (#{Tag});
-#casecast String Param
+#casecast String null
 					_Writer.WriteString (#{Tag});
-#casecast URI Param
+#casecast URI null
 					_Writer.WriteString (#{Tag});
-#casecast DateTime Param
+#casecast DateTime null
 					_Writer.WriteDateTime (#{Tag});
 #%							break; }
 #% default : {

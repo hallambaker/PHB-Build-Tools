@@ -57,8 +57,6 @@ namespace Goedel.Tool.ProtoGen {
 		 string StartSection4 , MidSection4 , EndSection4;
 		// #% string CurrentPrefix; 
 		 string CurrentPrefix;
-		// #% string Namespace; 
-		 string Namespace;
 		// #% string StartTransaction, MidTransaction, EndTransaction; 
 		 string StartTransaction, MidTransaction, EndTransaction;
 		// #% 
@@ -1014,32 +1012,24 @@ namespace Goedel.Tool.ProtoGen {
 			 public void OptionList  (List<_Choice> Entries) {
 			// #% bool PRequired = false, PMultiple = false; 
 			 bool PRequired = false, PMultiple = false;
-			// #% string def; 
-			 string def;
 			// #foreach (_Choice Entry in Entries) 
 			foreach  (_Choice Entry in Entries) {
 				// #switchcast ProtoStructType Entry 
 				switch (Entry._Tag ()) {
-					// #casecast Required Required 
-					case ProtoStructType.Required: {
-					  Required Required = (Required) Entry; 
+					// #casecast Required null 
+					case ProtoStructType.Required: { 
 					// #% PRequired = true; 
 					
 					 PRequired = true;
-					// #casecast Multiple Multiple 
+					// #casecast Multiple null 
 					break; }
-					case ProtoStructType.Multiple: {
-					  Multiple Multiple = (Multiple) Entry; 
+					case ProtoStructType.Multiple: { 
 					// #% PMultiple = true; 
 					
 					 PMultiple = true;
-					// #casecast Default Default 
+					// #casecast Default null 
 					break; }
-					case ProtoStructType.Default: {
-					  Default Default = (Default) Entry; 
-					// #% def = "Default =" + Default.Value; 
-					
-					 def = "Default =" + Default.Value;
+					case ProtoStructType.Default: { 
 					// #end switchcast 
 				break; }
 					}

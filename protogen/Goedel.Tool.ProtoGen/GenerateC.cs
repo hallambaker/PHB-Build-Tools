@@ -2,7 +2,7 @@
 // Script Syntax Version:  1.0
 // #license MITLicense 
 
-//  Copyright ©  2011 by Default Deny Security Inc.
+//  Unknown by Unknown
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -348,12 +348,8 @@ namespace Goedel.Tool.ProtoGen {
 						}
 					//  
 					_Output.Write ("\n{0}", _Indent);
-					// #% Int32 Comma = 0; 
-					
-					 Int32 Comma = 0;
-					// #% Object OComma = Comma; 
-					
-					 Object OComma = Comma;
+					//  
+					_Output.Write ("\n{0}", _Indent);
 					// static JSON_Registry _#{Prefix}_Meta [] = { 
 					_Output.Write ("static JSON_Registry _{1}_Meta [] = {{\n{0}", _Indent, Prefix);
 					// 	{"String", sizeof("String")-1}, 
@@ -434,45 +430,38 @@ namespace Goedel.Tool.ProtoGen {
 								} else {
 								// #switchcast ProtoStructType Member 
 								switch (Member._Tag ()) {
-									// #casecast Boolean Cast 
-									case ProtoStructType.Boolean: {
-									  Boolean Cast = (Boolean) Member; 
+									// #casecast Boolean null 
+									case ProtoStructType.Boolean: { 
 									// 	Result->#{Member.ID} = Boolean_NaN; 
 									_Output.Write ("	Result->{1} = Boolean_NaN;\n{0}", _Indent, Member.ID);
-									// #casecast Integer Cast 
+									// #casecast Integer null 
 									break; }
-									case ProtoStructType.Integer: {
-									  Integer Cast = (Integer) Member; 
+									case ProtoStructType.Integer: { 
 									// 	Result->#{Member.ID} = Int64_NaN; 
 									_Output.Write ("	Result->{1} = Int64_NaN;\n{0}", _Indent, Member.ID);
-									// #casecast Decimal Cast 
+									// #casecast Decimal null 
 									break; }
-									case ProtoStructType.Decimal: {
-									  Decimal Cast = (Decimal) Member; 
+									case ProtoStructType.Decimal: { 
 									// 	Result->#{Member.ID} = Decimal64_NaN; 
 									_Output.Write ("	Result->{1} = Decimal64_NaN;\n{0}", _Indent, Member.ID);
-									// #casecast Float Cast 
+									// #casecast Float null 
 									break; }
-									case ProtoStructType.Float: {
-									  Float Cast = (Float) Member; 
+									case ProtoStructType.Float: { 
 									// 	Result->#{Member.ID} = Real64_NaN; 
 									_Output.Write ("	Result->{1} = Real64_NaN;\n{0}", _Indent, Member.ID);
-									// #casecast String Cast 
+									// #casecast String null 
 									break; }
-									case ProtoStructType.String: {
-									  String Cast = (String) Member; 
+									case ProtoStructType.String: { 
 									// 	Result->#{Member.ID}.Data = NULL; 
 									_Output.Write ("	Result->{1}.Data = NULL;\n{0}", _Indent, Member.ID);
-									// #casecast Binary Cast 
+									// #casecast Binary null 
 									break; }
-									case ProtoStructType.Binary: {
-									  Binary Cast = (Binary) Member; 
+									case ProtoStructType.Binary: { 
 									// 	Result->#{Member.ID}.Data = NULL; 
 									_Output.Write ("	Result->{1}.Data = NULL;\n{0}", _Indent, Member.ID);
-									// #casecast Struct Cast 
+									// #casecast Struct null 
 									break; }
-									case ProtoStructType.Struct: {
-									  Struct Cast = (Struct) Member; 
+									case ProtoStructType.Struct: { 
 									// 	Result->#{Member.ID} = NULL; 
 									_Output.Write ("	Result->{1} = NULL;\n{0}", _Indent, Member.ID);
 									// #end switchcast 
@@ -764,8 +753,6 @@ namespace Goedel.Tool.ProtoGen {
 		public void MakeCDeserialize (List<_Choice> Members) {
 			// #% Int32 Comma = 0; 
 			 Int32 Comma = 0;
-			// #% Object OComma = Comma; 
-			 Object OComma = Comma;
 			// #foreach (_Choice Member in Members) 
 			foreach  (_Choice Member in Members) {
 				// #call MakeComma Comma 

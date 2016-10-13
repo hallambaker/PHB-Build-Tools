@@ -7,8 +7,8 @@
     <ProjectGuid>{73BE9200-F4AB-4B78-B794-97196856838C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Goedel.Tools.Makey</RootNamespace>
-    <AssemblyName>Goedel.Tools.Makey</AssemblyName>
+    <RootNamespace>Goedel.Tool.Makey</RootNamespace>
+    <AssemblyName>Goedel.Tool.Makey</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

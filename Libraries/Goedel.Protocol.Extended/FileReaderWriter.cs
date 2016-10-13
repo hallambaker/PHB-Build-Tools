@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Goedel.Protocol {
+namespace Goedel.Protocol.Extended {
     // This implmentation accesses the file directly.
 
 

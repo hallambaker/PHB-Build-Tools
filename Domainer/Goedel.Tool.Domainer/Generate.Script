@@ -201,64 +201,64 @@ namespace Goedel.DNS {
 			//Encode Encode = new Encode ();
 #foreach (_Choice Entry in RR.Entries)
 #switchcast DomainerType Entry
-#casecast IPv4 Cast
+#casecast IPv4 null
 			Index.WriteIPv4 (#{Entry.IdLabel});
-#casecast IPv6 Cast
+#casecast IPv6 null
 			Index.WriteIPv6 (#{Entry.IdLabel});
-#casecast Domain Cast
+#casecast Domain null
 			Index.WriteDomain (#{Entry.IdLabel});
-#casecast Mail Cast
+#casecast Mail null
 			Index.WriteMail (#{Entry.IdLabel});
-#casecast NodeID Cast
+#casecast NodeID null
 			Index.WriteInt64 (#{Entry.IdLabel});
-#casecast Byte Cast
+#casecast Byte null
 			Index.WriteByte (#{Entry.IdLabel});
-#casecast Int16 Cast
+#casecast Int16 null
 			Index.WriteInt16 (#{Entry.IdLabel});
-#casecast Int32 Cast
+#casecast Int32 null
 			Index.WriteInt32 (#{Entry.IdLabel});
-#casecast Time32 Cast
+#casecast Time32 null
 			Index.WriteInt32 (#{Entry.IdLabel});
-#casecast Time48 Cast
+#casecast Time48 null
 			Index.WriteInt48 (#{Entry.IdLabel});
-#casecast String Cast
+#casecast String null
 			Index.WriteString8 (#{Entry.IdLabel});
-#casecast OptionalString Cast
+#casecast OptionalString null
 			if (#{Entry.IdLabel} != null) {
 				Index.WriteString8 (#{Entry.IdLabel});
 				}
-#casecast Strings Cast
+#casecast Strings null
 			foreach (string s in #{Entry.IdLabel}) {
 				Index.WriteString8 (s);
 				}
-#casecast StringX Cast
+#casecast StringX null
 			Index.WriteString (#{Entry.IdLabel});
-#casecast Binary Cast
+#casecast Binary null
 			Index.WriteData (#{Entry.IdLabel});
-#casecast Binary8 Cast
+#casecast Binary8 null
 			Index.WriteByte ((byte)#{Entry.IdLabel}.Length);
 			Index.WriteData (#{Entry.IdLabel});
-#casecast Binary16 Cast
+#casecast Binary16 null
 			Index.WriteInt16 (#{Entry.IdLabel}.Length);
 			Index.WriteData (#{Entry.IdLabel});
 #casecast LBinary Cast
 			Index.Write (#{Cast.Length});
 			Index.WriteData (#{Entry.IdLabel});
-#casecast Hex Cast
+#casecast Hex null
 			Index.WriteData (#{Entry.IdLabel});
-#casecast Hex8 Cast
+#casecast Hex8 null
 			Index.WriteByte ((byte)#{Entry.IdLabel}.Length);
 			Index.WriteData (#{Entry.IdLabel});
-#casecast Hex16 Cast
+#casecast Hex16 null
 			Index.WriteInt16 (#{Entry.IdLabel}.Length);
 			Index.WriteData (#{Entry.IdLabel});
-#casecast OptionList Cast
+#casecast OptionList null
 			foreach (DNSOption opt in #{Entry.IdLabel}) {
 				Index.WriteInt16 (opt.Code);
 				Index.WriteInt16 (opt.Data.Length);
 				Index.WriteData (opt.Data);
 				}
-#casecast Gateway Cast
+#casecast Gateway null
 #end switchcast
 			//Encode.#{Entry.Tag}  (#{Entry.IdLabel});
 #end foreach
@@ -271,35 +271,35 @@ namespace Goedel.DNS {
 
 #foreach (_Choice Entry in RR.Entries)
 #switchcast DomainerType Entry
-#casecast Binary Binary
+#casecast Binary null
 			NewRecord.#{Entry.IdLabel} = Index.ReadData (Length - (Index.Pointer - NewRecord.Start));
-#casecast Binary8 Binary8
+#casecast Binary8 null
 			{
 			int FieldLength = Index.ReadByte ();
 			NewRecord.#{Entry.IdLabel} = Index.ReadData (FieldLength);
 			}
-#casecast Binary16 Binary16
+#casecast Binary16 null
 			{
 			int FieldLength = Index.ReadInt16 ();
 			NewRecord.#{Entry.IdLabel} = Index.ReadData (FieldLength);
 			}
 #casecast LBinary LBinary
 			// Binary - length specified by #{LBinary.Length}
-#casecast Hex Hex
+#casecast Hex null
 			NewRecord.#{Entry.IdLabel} = Index.ReadData (Length - (Index.Pointer - NewRecord.Start));
-#casecast Hex8 Hex8
+#casecast Hex8 null
 			{
 			int FieldLength = Index.ReadByte ();
 			NewRecord.#{Entry.IdLabel} = Index.ReadData (FieldLength);
 			}
-#casecast Hex16 Hex16
+#casecast Hex16 null
 			{
 			int FieldLength = Index.ReadInt16 ();
 			NewRecord.#{Entry.IdLabel} = Index.ReadData (FieldLength);
 			}
-#casecast Strings Strings
+#casecast Strings null
 			NewRecord.#{Entry.IdLabel} = Index.ReadStrings (Length - (Index.Pointer - NewRecord.Start)) ;
-#casecast OptionalString OptionalString
+#casecast OptionalString null
 			// If there is space left in the record, the optional string will be represented as
 			// an octet followed by the string data
 			if (Length - (Index.Pointer - NewRecord.Start) > 0) {
@@ -308,7 +308,7 @@ namespace Goedel.DNS {
 			else {
 				NewRecord.#{Entry.IdLabel} = null;
 				}
-#casecast StringX StringX
+#casecast StringX null
 			NewRecord.#{Entry.IdLabel} = Index.ReadString (Length - (Index.Pointer - NewRecord.Start));
 #% break; } default: {
 #if (Entry.Tag != null)

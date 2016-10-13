@@ -51,9 +51,9 @@
     <Compile Include="WebRemoteSession.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Debug\Goedel.Debug.csproj">
+    <ProjectReference Include="..\Goedel.Debug\Goedel.Debug2.csproj">
       <Project>{dd669f16-ee46-4111-a76d-d5e3e2e8d2b7}</Project>
-      <Name>Goedel.Debug</Name>
+      <Name>Goedel.Debug2</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{02d75812-6892-45f7-8497-82266b6f0328}</Project>

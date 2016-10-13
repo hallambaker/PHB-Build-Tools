@@ -25,9 +25,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-using Goedel.Debug;
+using Goedel.Debug2;
 
-namespace Goedel.Protocol {
+namespace Goedel.Protocol.Extended {
 
     /*
     *   Items described here:

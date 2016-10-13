@@ -343,7 +343,7 @@ namespace Goedel.Tool.Script {
             string[] arguments = line.Split(splitchars);
 
             string tag = arguments[0].Substring(1);
-            int match = -1;
+            //int match = -1;
             bool search = true;
 
             for (int i = 0; (i < Commands.Length) & search; i++) {
@@ -486,7 +486,7 @@ namespace Goedel.Tool.Script {
                             }
                         }
                     else {
-                        match = i;
+                        //match = i;
                         }
                     }
                 }

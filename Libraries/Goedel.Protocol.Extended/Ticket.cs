@@ -27,7 +27,7 @@ using System.Text;
 using System.IO;
 using Goedel.Utilities;
 
-namespace Goedel.Protocol {
+namespace Goedel.Protocol.Extended {
     public class TicketData {
         public static Cryptography.Authentication TicketAuthentication = 
                         Cryptography.Authentication.HS256T128;
@@ -256,7 +256,7 @@ namespace Goedel.Protocol {
         public byte[] GetTicket(Cryptography.Key MasterKey) {
             Ticket = new byte [Length()];
             
-            int Sign = Fill();
+            //int Sign = Fill();
 
             //if (Sign != Ticket.Length - AuthenticationBytes) throw new Exception ("Ticket Length");
 

@@ -117,6 +117,18 @@ namespace Goedel.BootMark {
         abstract public MarkSchemaType _Tag ();
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
+
+		public virtual void Init (_Choice Parent) {
+			}
+
+		bool _Initialized = false;
+		public virtual void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			if (_Initialized) {
+				return;
+				}
+			_Initialized = true;
+			}
         }
 
 
@@ -129,6 +141,13 @@ namespace Goedel.BootMark {
         public override MarkSchemaType _Tag () {
             return MarkSchemaType.Class;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -157,6 +176,13 @@ namespace Goedel.BootMark {
             return MarkSchemaType.Meta;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -182,6 +208,13 @@ namespace Goedel.BootMark {
         public override MarkSchemaType _Tag () {
             return MarkSchemaType.Layout;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -209,6 +242,13 @@ namespace Goedel.BootMark {
             return MarkSchemaType.Block;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -235,6 +275,13 @@ namespace Goedel.BootMark {
             return MarkSchemaType.Annotation;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -260,6 +307,13 @@ namespace Goedel.BootMark {
         public override MarkSchemaType _Tag () {
             return MarkSchemaType.Item;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -288,6 +342,10 @@ namespace Goedel.BootMark {
             return MarkSchemaType.Markup;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -311,6 +369,13 @@ namespace Goedel.BootMark {
         public override MarkSchemaType _Tag () {
             return MarkSchemaType.XML;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -339,6 +404,10 @@ namespace Goedel.BootMark {
             return MarkSchemaType.Default;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -360,6 +429,10 @@ namespace Goedel.BootMark {
             return MarkSchemaType.Stack;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -379,6 +452,10 @@ namespace Goedel.BootMark {
         public override MarkSchemaType _Tag () {
             return MarkSchemaType.Wrap;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -400,6 +477,10 @@ namespace Goedel.BootMark {
             return MarkSchemaType.Level;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -419,6 +500,10 @@ namespace Goedel.BootMark {
         public override MarkSchemaType _Tag () {
             return MarkSchemaType.Remark;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -442,6 +527,10 @@ namespace Goedel.BootMark {
             return MarkSchemaType.Start;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -463,6 +552,10 @@ namespace Goedel.BootMark {
         public override MarkSchemaType _Tag () {
             return MarkSchemaType.End;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -486,6 +579,10 @@ namespace Goedel.BootMark {
             return MarkSchemaType.String;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -506,6 +603,10 @@ namespace Goedel.BootMark {
             return MarkSchemaType.Flag;
             }
 
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
@@ -525,6 +626,10 @@ namespace Goedel.BootMark {
         public override MarkSchemaType _Tag () {
             return MarkSchemaType.Integer;
             }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
@@ -556,9 +661,7 @@ namespace Goedel.BootMark {
 			Output.WriteId ("ID", Label.ToString());
 			}
         }
-//	}
 
-//namespace Goedel.Registry {
 
     public enum StateCode {  
         _Start,
@@ -637,9 +740,6 @@ namespace Goedel.BootMark {
         StateCode								State;
         Goedel.BootMark._Choice				Current;
         List <_StackItem>						Stack;
-        TokenType								CurrentToken;
-        Position								CurrentPosition;
-        string									CurrentText;
 
 
         public static MarkSchema Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -651,10 +751,21 @@ namespace Goedel.BootMark {
                 Lexer Schema = new Lexer(File);
                 Schema.Process(infile, Result);
                 }
+			Result._InitChildren ();
 
             return Result;
             }
 
+		bool _Initialized = false;
+		public virtual void _InitChildren () {
+			if (_Initialized) {
+				return;
+				}
+			_Initialized = true;
+			foreach (var Entry in Top) {
+				Entry._InitChildren (null);
+				}
+			}
 
         public MarkSchema() {
             Top = new List<Goedel.BootMark._Choice> () ;
@@ -920,9 +1031,6 @@ namespace Goedel.BootMark {
 
 
         public override void Process(TokenType Token, Position Position, string Text) {
-            CurrentToken = Token;
-            CurrentPosition = Position;
-            CurrentText = Text;
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |

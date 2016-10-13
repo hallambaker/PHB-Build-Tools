@@ -16,7 +16,7 @@ namespace MakeRFC {
 
         public override void HTML(HTML Options) {
             string inputfile = Options.InputFile.Text;
-            string bibliography = Options.Bibliography.Text;
+            //string bibliography = Options.Bibliography.Text;
             string cache = Options.Cache.Text;
 
             string htmlfile = Options.HTML.DefaultFile(inputfile);
@@ -50,7 +50,8 @@ namespace MakeRFC {
                 Document.Catalog.Caches.Add(cache);
                 var Processing = new NewParse.Processing("bibliography", "");
                 Processing.File = cache;
-                var BibParse = new NewParse(Processing, Document);
+                new NewParse(Processing, Document);
+
                 }
 
             var Import = new Import (TagCatalog);

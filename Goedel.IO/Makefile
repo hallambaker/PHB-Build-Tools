@@ -44,16 +44,20 @@
 # ~/Tools/This				The bundled executable for platform the code is built on
 # ~/Tools/<Arch1>			The bundled executable for this platform <Arch1>	
 
-export TARGETROOT	?= mono
-export MODE			?= Release
-export ARCH			?= This
-export Packages		?= ~/Packages
-export PackagesPath ?= /lib/net40
+export TARGETROOT		?= mono
+export MODE				?= Release
+export ARCH				?= This
+export Packages			?= $(HOME)/Packages
+export PackagesPath		?= /lib/net40
+export Libraries		?= $(HOME)/Libraries
+export LibrariesPath	?= /Mono
+
 
 export TARGETBIN	= $(TARGETROOT)/$(MODE)
 export TARGETEXE	= $(TARGETROOT)/$(ARCH)
+export LIBRARYBIN	= $(Libraries)$(LibrariesPath)
 
-export DESTDIR		?= ~/.local
+export DESTDIR		?= $(HOME)/.local
 export bindir		?= /bin
 export libdir		?= /lib
 export INSTALL_PROGRAM	?= $(DESTDIR)$(bindir)
@@ -118,10 +122,12 @@ NugetFilesComa =
 
 # A) Main target packaged
 
+$(TARGETBIN)/Goedel.IO.dll :| $(LIBRARYBIN)
 $(TARGETBIN)/Goedel.IO.dll :| $(TARGETBIN)
 
 $(TARGETBIN)/Goedel.IO.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
 ! $(CSHARPDLL) /out:$@  $(SourceFiles) 
+! cp $(TARGETBIN)/Goedel.IO.dll $(LIBRARYBIN)/Goedel.IO.dll
 
 
 # Directories etc.
@@ -138,6 +144,8 @@ $(TARGETBIN) :
 $(TARGETEXE) :
 ! mkdir -p $(TARGETEXE) 
 
+$(LIBRARYBIN) :
+! mkdir -p $(LIBRARYBIN)
 
 # Generated code
 

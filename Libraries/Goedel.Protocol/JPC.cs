@@ -241,7 +241,7 @@ namespace Goedel.Protocol {
             var DataText = Data.GetUTF8;
             var JSONReader = new JSONReader(DataText);
 
-            var ResultObject = Host.Dispatch(this, JSONReader);
+            Host.Dispatch(this, JSONReader);
 
             return null;
             }

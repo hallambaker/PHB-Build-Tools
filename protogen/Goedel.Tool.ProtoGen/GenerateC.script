@@ -146,8 +146,7 @@ JSON_Parse *_#{Prefix}_Meta_#{Structure.Id} = NULL;
 
 #end foreach
 
-#% Int32 Comma = 0;
-#% Object OComma = Comma;
+
 static JSON_Registry _#{Prefix}_Meta [] = {
 	{"String", sizeof("String")-1},
 	{"Binary", sizeof("Binary")-1},
@@ -188,19 +187,19 @@ PUBLIC_ENTRY #{Prefix}_Create_#{Structure.Id} (void *parent, #{Prefix}_#{Structu
 	Result->#{Member.ID}.Members = NULL;
 #else 
 #switchcast ProtoStructType Member
-#casecast Boolean Cast
+#casecast Boolean null
 	Result->#{Member.ID} = Boolean_NaN;
-#casecast Integer Cast
+#casecast Integer null
 	Result->#{Member.ID} = Int64_NaN;
-#casecast Decimal Cast
+#casecast Decimal null
 	Result->#{Member.ID} = Decimal64_NaN;
-#casecast Float Cast
+#casecast Float null
 	Result->#{Member.ID} = Real64_NaN;
-#casecast String Cast
+#casecast String null
 	Result->#{Member.ID}.Data = NULL;
-#casecast Binary Cast
+#casecast Binary null
 	Result->#{Member.ID}.Data = NULL;
-#casecast Struct Cast
+#casecast Struct null
 	Result->#{Member.ID} = NULL;
 #end switchcast
 #end if
@@ -338,7 +337,6 @@ PUBLIC_ENTRY #{Prefix}_Free (void *item) {
 
 #method MakeCDeserialize List<_Choice> Members
 #% Int32 Comma = 0;
-#% Object OComma = Comma;
 #foreach (_Choice Member in Members)
 #call MakeComma Comma
 #call MakeCDeserialize Member

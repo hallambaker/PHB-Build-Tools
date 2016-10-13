@@ -44,16 +44,20 @@
 # ~/Tools/This				The bundled executable for platform the code is built on
 # ~/Tools/<Arch1>			The bundled executable for this platform <Arch1>	
 
-export TARGETROOT	?= mono
-export MODE			?= Release
-export ARCH			?= This
-export Packages		?= ~/Packages
-export PackagesPath ?= /lib/net40
+export TARGETROOT		?= mono
+export MODE				?= Release
+export ARCH				?= This
+export Packages			?= $(HOME)/Packages
+export PackagesPath		?= /lib/net40
+export Libraries		?= $(HOME)/Libraries
+export LibrariesPath	?= /Mono
+
 
 export TARGETBIN	= $(TARGETROOT)/$(MODE)
 export TARGETEXE	= $(TARGETROOT)/$(ARCH)
+export LIBRARYBIN	= $(Libraries)$(LibrariesPath)
 
-export DESTDIR		?= ~/.local
+export DESTDIR		?= $(HOME)/.local
 export bindir		?= /bin
 export libdir		?= /lib
 export INSTALL_PROGRAM	?= $(DESTDIR)$(bindir)
@@ -111,12 +115,12 @@ SourceFiles = \
 
 LinkFiles = \
     $(TARGETBIN)/Goedel.IO.dll\
-    $(TARGETBIN)/Goedel.Registry.dll\
     $(TARGETBIN)/Goedel.FSR.dll\
+    $(TARGETBIN)/Goedel.Registry.dll\
     $(TARGETBIN)/Goedel.Utilities.dll\
-    $(TARGETBIN)/Goedel.Tools.Makey.dll
+    $(TARGETBIN)/Goedel.Tool.Makey.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Tools.Makey.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Tool.Makey.dll
 
 
 NugetFiles = 
@@ -147,6 +151,8 @@ $(TARGETBIN) :
 $(TARGETEXE) :
 ! mkdir -p $(TARGETEXE) 
 
+$(LIBRARYBIN) :
+! mkdir -p $(LIBRARYBIN)
 
 # Generated code
 
@@ -169,16 +175,16 @@ ifndef NORECURSE
 ../../Goedel.IO/$(TARGETBIN)/Goedel.IO.dll : recursive
 ! $(MAKE) -C ../../Goedel.IO
 
-../../Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
-! $(MAKE) -C ../../Goedel.Registry
-
 ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : recursive
 ! $(MAKE) -C ../../Libraries/Goedel.FSR
+
+../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Registry
 
 ../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
 ! $(MAKE) -C ../../Libraries/Goedel.Utilities
 
-../Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tools.Makey.dll : recursive
+../Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : recursive
 ! $(MAKE) -C ../Goedel.Tools.Makey
 
 endif
@@ -187,21 +193,21 @@ $(TARGETBIN)/Goedel.IO.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.IO.dll : ../../Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
 !  cp ../../Goedel.IO/$(TARGETBIN)/Goedel.IO.dll $(TARGETBIN)/Goedel.IO.dll
 
-$(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Registry.dll : ../../Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
-!  cp ../../Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll $(TARGETBIN)/Goedel.Registry.dll
-
 $(TARGETBIN)/Goedel.FSR.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.FSR.dll : ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
 !  cp ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll $(TARGETBIN)/Goedel.FSR.dll
+
+$(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Registry.dll : ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+!  cp ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll $(TARGETBIN)/Goedel.Registry.dll
 
 $(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Utilities.dll : ../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
 !  cp ../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
 
-$(TARGETBIN)/Goedel.Tools.Makey.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Tools.Makey.dll : ../Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tools.Makey.dll
-!  cp ../Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tools.Makey.dll $(TARGETBIN)/Goedel.Tools.Makey.dll
+$(TARGETBIN)/Goedel.Tool.Makey.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Tool.Makey.dll : ../Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll
+!  cp ../Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll $(TARGETBIN)/Goedel.Tool.Makey.dll
 
 
 # Referenced Libraries

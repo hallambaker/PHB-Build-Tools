@@ -215,7 +215,7 @@ namespace Goedel.Tool.Makey {
             if (GUID == null) { return null; }
 
             SolutionProject Result;
-            var Found = ProjectsByGUID.TryGetValue(GUID, out Result);
+            ProjectsByGUID.TryGetValue(GUID, out Result);
 
             return Result;
             }

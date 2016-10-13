@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Goedel.Debug {
+namespace Goedel.Debug2 {
 
     /// <summary>
     /// Define extension codes for checking HTTP/SMTP/FTP style status return values

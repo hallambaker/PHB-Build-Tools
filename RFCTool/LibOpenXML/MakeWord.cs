@@ -60,8 +60,8 @@ namespace OpenXML {
                 }
             }
         
-        public static void FromHTML2RFC (string Filename, Goedel.Tool.RFCTool.Document Source) {
-            var MakeWord = new MakeWord(Filename, Source);
+        public static MakeWord FromHTML2RFC (string Filename, Goedel.Tool.RFCTool.Document Source) {
+            return new MakeWord(Filename, Source);
             }
 
 

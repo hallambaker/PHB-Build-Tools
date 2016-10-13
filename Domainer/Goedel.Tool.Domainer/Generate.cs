@@ -2,7 +2,7 @@
 // Script Syntax Version:  1.0
 // #license MITLicense 
 
-//  Copyright ©  2011 by Default Deny Security Inc.
+//  Unknown by Unknown
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -458,115 +458,98 @@ namespace Goedel.Tool.Domainer {
 					foreach  (_Choice Entry in RR.Entries) {
 						// #switchcast DomainerType Entry 
 						switch (Entry._Tag ()) {
-							// #casecast IPv4 Cast 
-							case DomainerType.IPv4: {
-							  IPv4 Cast = (IPv4) Entry; 
+							// #casecast IPv4 null 
+							case DomainerType.IPv4: { 
 							// 			Index.WriteIPv4 (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteIPv4 ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast IPv6 Cast 
+							// #casecast IPv6 null 
 							break; }
-							case DomainerType.IPv6: {
-							  IPv6 Cast = (IPv6) Entry; 
+							case DomainerType.IPv6: { 
 							// 			Index.WriteIPv6 (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteIPv6 ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast Domain Cast 
+							// #casecast Domain null 
 							break; }
-							case DomainerType.Domain: {
-							  Domain Cast = (Domain) Entry; 
+							case DomainerType.Domain: { 
 							// 			Index.WriteDomain (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteDomain ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast Mail Cast 
+							// #casecast Mail null 
 							break; }
-							case DomainerType.Mail: {
-							  Mail Cast = (Mail) Entry; 
+							case DomainerType.Mail: { 
 							// 			Index.WriteMail (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteMail ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast NodeID Cast 
+							// #casecast NodeID null 
 							break; }
-							case DomainerType.NodeID: {
-							  NodeID Cast = (NodeID) Entry; 
+							case DomainerType.NodeID: { 
 							// 			Index.WriteInt64 (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteInt64 ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast Byte Cast 
+							// #casecast Byte null 
 							break; }
-							case DomainerType.Byte: {
-							  Byte Cast = (Byte) Entry; 
+							case DomainerType.Byte: { 
 							// 			Index.WriteByte (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteByte ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast Int16 Cast 
+							// #casecast Int16 null 
 							break; }
-							case DomainerType.Int16: {
-							  Int16 Cast = (Int16) Entry; 
+							case DomainerType.Int16: { 
 							// 			Index.WriteInt16 (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteInt16 ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast Int32 Cast 
+							// #casecast Int32 null 
 							break; }
-							case DomainerType.Int32: {
-							  Int32 Cast = (Int32) Entry; 
+							case DomainerType.Int32: { 
 							// 			Index.WriteInt32 (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteInt32 ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast Time32 Cast 
+							// #casecast Time32 null 
 							break; }
-							case DomainerType.Time32: {
-							  Time32 Cast = (Time32) Entry; 
+							case DomainerType.Time32: { 
 							// 			Index.WriteInt32 (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteInt32 ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast Time48 Cast 
+							// #casecast Time48 null 
 							break; }
-							case DomainerType.Time48: {
-							  Time48 Cast = (Time48) Entry; 
+							case DomainerType.Time48: { 
 							// 			Index.WriteInt48 (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteInt48 ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast String Cast 
+							// #casecast String null 
 							break; }
-							case DomainerType.String: {
-							  String Cast = (String) Entry; 
+							case DomainerType.String: { 
 							// 			Index.WriteString8 (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteString8 ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast OptionalString Cast 
+							// #casecast OptionalString null 
 							break; }
-							case DomainerType.OptionalString: {
-							  OptionalString Cast = (OptionalString) Entry; 
+							case DomainerType.OptionalString: { 
 							// 			if (#{Entry.IdLabel} != null) { 
 							_Output.Write ("			if ({1} != null) {{\n{0}", _Indent, Entry.IdLabel);
 							// 				Index.WriteString8 (#{Entry.IdLabel}); 
 							_Output.Write ("				Index.WriteString8 ({1});\n{0}", _Indent, Entry.IdLabel);
 							// 				} 
 							_Output.Write ("				}}\n{0}", _Indent);
-							// #casecast Strings Cast 
+							// #casecast Strings null 
 							break; }
-							case DomainerType.Strings: {
-							  Strings Cast = (Strings) Entry; 
+							case DomainerType.Strings: { 
 							// 			foreach (string s in #{Entry.IdLabel}) { 
 							_Output.Write ("			foreach (string s in {1}) {{\n{0}", _Indent, Entry.IdLabel);
 							// 				Index.WriteString8 (s); 
 							_Output.Write ("				Index.WriteString8 (s);\n{0}", _Indent);
 							// 				} 
 							_Output.Write ("				}}\n{0}", _Indent);
-							// #casecast StringX Cast 
+							// #casecast StringX null 
 							break; }
-							case DomainerType.StringX: {
-							  StringX Cast = (StringX) Entry; 
+							case DomainerType.StringX: { 
 							// 			Index.WriteString (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteString ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast Binary Cast 
+							// #casecast Binary null 
 							break; }
-							case DomainerType.Binary: {
-							  Binary Cast = (Binary) Entry; 
+							case DomainerType.Binary: { 
 							// 			Index.WriteData (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteData ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast Binary8 Cast 
+							// #casecast Binary8 null 
 							break; }
-							case DomainerType.Binary8: {
-							  Binary8 Cast = (Binary8) Entry; 
+							case DomainerType.Binary8: { 
 							// 			Index.WriteByte ((byte)#{Entry.IdLabel}.Length); 
 							_Output.Write ("			Index.WriteByte ((byte){1}.Length);\n{0}", _Indent, Entry.IdLabel);
 							// 			Index.WriteData (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteData ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast Binary16 Cast 
+							// #casecast Binary16 null 
 							break; }
-							case DomainerType.Binary16: {
-							  Binary16 Cast = (Binary16) Entry; 
+							case DomainerType.Binary16: { 
 							// 			Index.WriteInt16 (#{Entry.IdLabel}.Length); 
 							_Output.Write ("			Index.WriteInt16 ({1}.Length);\n{0}", _Indent, Entry.IdLabel);
 							// 			Index.WriteData (#{Entry.IdLabel}); 
@@ -579,32 +562,28 @@ namespace Goedel.Tool.Domainer {
 							_Output.Write ("			Index.Write ({1});\n{0}", _Indent, Cast.Length);
 							// 			Index.WriteData (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteData ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast Hex Cast 
+							// #casecast Hex null 
 							break; }
-							case DomainerType.Hex: {
-							  Hex Cast = (Hex) Entry; 
+							case DomainerType.Hex: { 
 							// 			Index.WriteData (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteData ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast Hex8 Cast 
+							// #casecast Hex8 null 
 							break; }
-							case DomainerType.Hex8: {
-							  Hex8 Cast = (Hex8) Entry; 
+							case DomainerType.Hex8: { 
 							// 			Index.WriteByte ((byte)#{Entry.IdLabel}.Length); 
 							_Output.Write ("			Index.WriteByte ((byte){1}.Length);\n{0}", _Indent, Entry.IdLabel);
 							// 			Index.WriteData (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteData ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast Hex16 Cast 
+							// #casecast Hex16 null 
 							break; }
-							case DomainerType.Hex16: {
-							  Hex16 Cast = (Hex16) Entry; 
+							case DomainerType.Hex16: { 
 							// 			Index.WriteInt16 (#{Entry.IdLabel}.Length); 
 							_Output.Write ("			Index.WriteInt16 ({1}.Length);\n{0}", _Indent, Entry.IdLabel);
 							// 			Index.WriteData (#{Entry.IdLabel}); 
 							_Output.Write ("			Index.WriteData ({1});\n{0}", _Indent, Entry.IdLabel);
-							// #casecast OptionList Cast 
+							// #casecast OptionList null 
 							break; }
-							case DomainerType.OptionList: {
-							  OptionList Cast = (OptionList) Entry; 
+							case DomainerType.OptionList: { 
 							// 			foreach (DNSOption opt in #{Entry.IdLabel}) { 
 							_Output.Write ("			foreach (DNSOption opt in {1}) {{\n{0}", _Indent, Entry.IdLabel);
 							// 				Index.WriteInt16 (opt.Code); 
@@ -615,10 +594,9 @@ namespace Goedel.Tool.Domainer {
 							_Output.Write ("				Index.WriteData (opt.Data);\n{0}", _Indent);
 							// 				} 
 							_Output.Write ("				}}\n{0}", _Indent);
-							// #casecast Gateway Cast 
+							// #casecast Gateway null 
 							break; }
-							case DomainerType.Gateway: {
-							  Gateway Cast = (Gateway) Entry; 
+							case DomainerType.Gateway: { 
 							// #end switchcast 
 						break; }
 							}
@@ -644,15 +622,13 @@ namespace Goedel.Tool.Domainer {
 					foreach  (_Choice Entry in RR.Entries) {
 						// #switchcast DomainerType Entry 
 						switch (Entry._Tag ()) {
-							// #casecast Binary Binary 
-							case DomainerType.Binary: {
-							  Binary Binary = (Binary) Entry; 
+							// #casecast Binary null 
+							case DomainerType.Binary: { 
 							// 			NewRecord.#{Entry.IdLabel} = Index.ReadData (Length - (Index.Pointer - NewRecord.Start)); 
 							_Output.Write ("			NewRecord.{1} = Index.ReadData (Length - (Index.Pointer - NewRecord.Start));\n{0}", _Indent, Entry.IdLabel);
-							// #casecast Binary8 Binary8 
+							// #casecast Binary8 null 
 							break; }
-							case DomainerType.Binary8: {
-							  Binary8 Binary8 = (Binary8) Entry; 
+							case DomainerType.Binary8: { 
 							// 			{ 
 							_Output.Write ("			{{\n{0}", _Indent);
 							// 			int FieldLength = Index.ReadByte (); 
@@ -661,10 +637,9 @@ namespace Goedel.Tool.Domainer {
 							_Output.Write ("			NewRecord.{1} = Index.ReadData (FieldLength);\n{0}", _Indent, Entry.IdLabel);
 							// 			} 
 							_Output.Write ("			}}\n{0}", _Indent);
-							// #casecast Binary16 Binary16 
+							// #casecast Binary16 null 
 							break; }
-							case DomainerType.Binary16: {
-							  Binary16 Binary16 = (Binary16) Entry; 
+							case DomainerType.Binary16: { 
 							// 			{ 
 							_Output.Write ("			{{\n{0}", _Indent);
 							// 			int FieldLength = Index.ReadInt16 (); 
@@ -679,16 +654,14 @@ namespace Goedel.Tool.Domainer {
 							  LBinary LBinary = (LBinary) Entry; 
 							// 			// Binary - length specified by #{LBinary.Length} 
 							_Output.Write ("			// Binary - length specified by {1}\n{0}", _Indent, LBinary.Length);
-							// #casecast Hex Hex 
+							// #casecast Hex null 
 							break; }
-							case DomainerType.Hex: {
-							  Hex Hex = (Hex) Entry; 
+							case DomainerType.Hex: { 
 							// 			NewRecord.#{Entry.IdLabel} = Index.ReadData (Length - (Index.Pointer - NewRecord.Start)); 
 							_Output.Write ("			NewRecord.{1} = Index.ReadData (Length - (Index.Pointer - NewRecord.Start));\n{0}", _Indent, Entry.IdLabel);
-							// #casecast Hex8 Hex8 
+							// #casecast Hex8 null 
 							break; }
-							case DomainerType.Hex8: {
-							  Hex8 Hex8 = (Hex8) Entry; 
+							case DomainerType.Hex8: { 
 							// 			{ 
 							_Output.Write ("			{{\n{0}", _Indent);
 							// 			int FieldLength = Index.ReadByte (); 
@@ -697,10 +670,9 @@ namespace Goedel.Tool.Domainer {
 							_Output.Write ("			NewRecord.{1} = Index.ReadData (FieldLength);\n{0}", _Indent, Entry.IdLabel);
 							// 			} 
 							_Output.Write ("			}}\n{0}", _Indent);
-							// #casecast Hex16 Hex16 
+							// #casecast Hex16 null 
 							break; }
-							case DomainerType.Hex16: {
-							  Hex16 Hex16 = (Hex16) Entry; 
+							case DomainerType.Hex16: { 
 							// 			{ 
 							_Output.Write ("			{{\n{0}", _Indent);
 							// 			int FieldLength = Index.ReadInt16 (); 
@@ -709,16 +681,14 @@ namespace Goedel.Tool.Domainer {
 							_Output.Write ("			NewRecord.{1} = Index.ReadData (FieldLength);\n{0}", _Indent, Entry.IdLabel);
 							// 			} 
 							_Output.Write ("			}}\n{0}", _Indent);
-							// #casecast Strings Strings 
+							// #casecast Strings null 
 							break; }
-							case DomainerType.Strings: {
-							  Strings Strings = (Strings) Entry; 
+							case DomainerType.Strings: { 
 							// 			NewRecord.#{Entry.IdLabel} = Index.ReadStrings (Length - (Index.Pointer - NewRecord.Start)) ; 
 							_Output.Write ("			NewRecord.{1} = Index.ReadStrings (Length - (Index.Pointer - NewRecord.Start)) ;\n{0}", _Indent, Entry.IdLabel);
-							// #casecast OptionalString OptionalString 
+							// #casecast OptionalString null 
 							break; }
-							case DomainerType.OptionalString: {
-							  OptionalString OptionalString = (OptionalString) Entry; 
+							case DomainerType.OptionalString: { 
 							// 			// If there is space left in the record, the optional string will be represented as 
 							_Output.Write ("			// If there is space left in the record, the optional string will be represented as\n{0}", _Indent);
 							// 			// an octet followed by the string data 
@@ -735,10 +705,9 @@ namespace Goedel.Tool.Domainer {
 							_Output.Write ("				NewRecord.{1} = null;\n{0}", _Indent, Entry.IdLabel);
 							// 				} 
 							_Output.Write ("				}}\n{0}", _Indent);
-							// #casecast StringX StringX 
+							// #casecast StringX null 
 							break; }
-							case DomainerType.StringX: {
-							  StringX StringX = (StringX) Entry; 
+							case DomainerType.StringX: { 
 							// 			NewRecord.#{Entry.IdLabel} = Index.ReadString (Length - (Index.Pointer - NewRecord.Start)); 
 							_Output.Write ("			NewRecord.{1} = Index.ReadString (Length - (Index.Pointer - NewRecord.Start));\n{0}", _Indent, Entry.IdLabel);
 							// #% break; } default: { 

@@ -77,8 +77,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellRFCTool", "RFCTool\She
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibOpenXML", "RFCTool\LibOpenXML\LibOpenXML.csproj", "{CF4F9F67-550F-494C-88C8-51AB0CB552CB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trojan", "Trojan", "{3D4BACD6-D147-41BC-9B95-0DDD15B24AD0}"
-EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trojan3", "Trojan3", "{1694405C-A46E-4DDE-B318-E19EA3BE587B}"
@@ -92,6 +90,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trojan3", "Trojan3\Trojan3\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F61136C8-EA6D-4458-AF67-E40927C1858D}"
 	ProjectSection(SolutionItems) = preProject
+		make.log = make.log
 		Makefile = Makefile
 		Mono.md = Mono.md
 		Nuget.Config = Nuget.Config
@@ -119,7 +118,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Utilities", "Librari
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.IO", "Goedel.IO\Goedel.IO.csproj", "{C4824513-F416-4EAD-BE82-F2DF23641F6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Debug", "Libraries\Goedel.Debug\Goedel.Debug.csproj", "{DD669F16-EE46-4111-A76D-D5E3E2E8D2B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Debug2", "Libraries\Goedel.Debug\Goedel.Debug2.csproj", "{DD669F16-EE46-4111-A76D-D5E3E2E8D2B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Protocol.Extended", "Libraries\Goedel.Protocol.Extended\Goedel.Protocol.Extended.csproj", "{C1D2C847-EE62-430C-82DC-A4BD5AB38A44}"
 EndProject
@@ -130,6 +129,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Protocol", "Libraries\Goedel.Protocol\Goedel.Protocol.csproj", "{02D75812-6892-45F7-8497-82266B6F0328}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Registry", "Libraries\Goedel.Registry\Goedel.Registry.csproj", "{EBDA947E-D7A9-4A93-AEF1-AEA9D56B9225}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PHBGoedel", "VSIX\PHBGoedel\PHBGoedel.csproj", "{F31D47C6-524D-4FAB-976A-D67AB9662C75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -894,6 +895,24 @@ Global
 		{EBDA947E-D7A9-4A93-AEF1-AEA9D56B9225}.Release|ARM.Build.0 = Release|Any CPU
 		{EBDA947E-D7A9-4A93-AEF1-AEA9D56B9225}.Release|x86.ActiveCfg = Release|Any CPU
 		{EBDA947E-D7A9-4A93-AEF1-AEA9D56B9225}.Release|x86.Build.0 = Release|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.Debug|ARM.Build.0 = Debug|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.Debug|x86.Build.0 = Debug|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.RaspberryPi|ARM.ActiveCfg = Release|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.RaspberryPi|ARM.Build.0 = Release|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.RaspberryPi|x86.Build.0 = Release|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.Release|ARM.ActiveCfg = Release|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.Release|ARM.Build.0 = Release|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.Release|x86.ActiveCfg = Release|Any CPU
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -941,5 +960,6 @@ Global
 		{E350FDAE-19A1-45B5-B74C-26CAF0415BC4} = {3520B12D-FC1D-4A96-8954-E69F5F7DBA53}
 		{02D75812-6892-45F7-8497-82266B6F0328} = {C9F3105C-F5D8-490E-AC54-2A571CBB0492}
 		{EBDA947E-D7A9-4A93-AEF1-AEA9D56B9225} = {C9F3105C-F5D8-490E-AC54-2A571CBB0492}
+		{F31D47C6-524D-4FAB-976A-D67AB9662C75} = {3520B12D-FC1D-4A96-8954-E69F5F7DBA53}
 	EndGlobalSection
 EndGlobal

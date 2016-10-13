@@ -113,7 +113,7 @@ namespace Goedel.Protocol {
             }
 
         bool WriteCached = false;
-        char WriteCache;
+        //char WriteCache;
         public void Write(char c) {
             if (!WriteCached) {
                 if (c < 0x80) {
@@ -138,7 +138,7 @@ namespace Goedel.Protocol {
                     }
                 else {
                     WriteCached = true;
-                    WriteCache = c;
+                    //WriteCache = c;
                     }
                 }
             else {

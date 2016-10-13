@@ -18,7 +18,7 @@ namespace Goedel.Tool.RFCTool {
             }
 
         public static void Parse(TextReader TextReader, Document Document) {
-            var Rfc2629Parse = new Rfc2629Parse(TextReader, Document);
+            new Rfc2629Parse(TextReader, Document);
             }
 
         

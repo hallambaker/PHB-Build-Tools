@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Goedel.Debug {
+namespace Goedel.Debug2 {
 
 
     public partial class Trace {

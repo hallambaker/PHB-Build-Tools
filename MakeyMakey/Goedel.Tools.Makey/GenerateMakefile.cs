@@ -130,26 +130,34 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("# ~/Tools/<Arch1>			The bundled executable for this platform <Arch1>	\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
-			// export TARGETROOT	?= mono 
-			_Output.Write ("export TARGETROOT	?= mono\n{0}", _Indent);
-			// export MODE			?= Release 
-			_Output.Write ("export MODE			?= Release\n{0}", _Indent);
-			// export ARCH			?= This 
-			_Output.Write ("export ARCH			?= This\n{0}", _Indent);
-			// export Packages		?= ~/Packages 
-			_Output.Write ("export Packages		?= ~/Packages\n{0}", _Indent);
-			// export PackagesPath ?= /lib/net40 
-			_Output.Write ("export PackagesPath ?= /lib/net40\n{0}", _Indent);
+			// export TARGETROOT		?= mono 
+			_Output.Write ("export TARGETROOT		?= mono\n{0}", _Indent);
+			// export MODE				?= Release 
+			_Output.Write ("export MODE				?= Release\n{0}", _Indent);
+			// export ARCH				?= This 
+			_Output.Write ("export ARCH				?= This\n{0}", _Indent);
+			// export Packages			?= $(HOME)/Packages 
+			_Output.Write ("export Packages			?= $(HOME)/Packages\n{0}", _Indent);
+			// export PackagesPath		?= /lib/net40 
+			_Output.Write ("export PackagesPath		?= /lib/net40\n{0}", _Indent);
+			// export Libraries		?= $(HOME)/Libraries 
+			_Output.Write ("export Libraries		?= $(HOME)/Libraries\n{0}", _Indent);
+			// export LibrariesPath	?= /Mono 
+			_Output.Write ("export LibrariesPath	?= /Mono\n{0}", _Indent);
+			//  
+			_Output.Write ("\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// export TARGETBIN	= $(TARGETROOT)/$(MODE) 
 			_Output.Write ("export TARGETBIN	= $(TARGETROOT)/$(MODE)\n{0}", _Indent);
 			// export TARGETEXE	= $(TARGETROOT)/$(ARCH) 
 			_Output.Write ("export TARGETEXE	= $(TARGETROOT)/$(ARCH)\n{0}", _Indent);
+			// export LIBRARYBIN	= $(Libraries)$(LibrariesPath) 
+			_Output.Write ("export LIBRARYBIN	= $(Libraries)$(LibrariesPath)\n{0}", _Indent);
 			//  
 			_Output.Write ("\n{0}", _Indent);
-			// export DESTDIR		?= ~/.local 
-			_Output.Write ("export DESTDIR		?= ~/.local\n{0}", _Indent);
+			// export DESTDIR		?= $(HOME)/.local 
+			_Output.Write ("export DESTDIR		?= $(HOME)/.local\n{0}", _Indent);
 			// export bindir		?= /bin 
 			_Output.Write ("export bindir		?= /bin\n{0}", _Indent);
 			// export libdir		?= /lib 
@@ -295,8 +303,7 @@ namespace Goedel.Tool.Makey {
 						 var SubProject = Dep.SubProject;
 						// #% var GUID = SubProject.ProjectGuid; 
 						 var GUID = SubProject.ProjectGuid;
-						// #% var SubProjectRef = Solution.ByGuid (GUID); 
-						 var SubProjectRef = Solution.ByGuid (GUID);
+						// #!% var SubProjectRef = Solution.ByGuid (GUID); 
 						// #% var SubProjectDir = Solution.ByGuid (GUID).Directory.UnixPath(); 
 						 var SubProjectDir = Solution.ByGuid (GUID).Directory.UnixPath();
 						// #! SubTarget #{SubProject.Target} 
@@ -325,6 +332,10 @@ namespace Goedel.Tool.Makey {
 					_Output.Write ("\n{0}", _Indent);
 					// #{Directory}/$(TARGETBIN)/#{Project.Target} : always 
 					_Output.Write ("{1}/$(TARGETBIN)/{2} : always\n{0}", _Indent, Directory, Project.Target);
+					// #{Prefix}echo "" >&2 
+					_Output.Write ("{1}echo \"\" >&2\n{0}", _Indent, Prefix);
+					// #{Prefix}echo "*** Directory #{Directory}" >&2 
+					_Output.Write ("{1}echo \"*** Directory {2}\" >&2\n{0}", _Indent, Prefix, Directory);
 					// #{Prefix}make NORECURSE=true -C #{Directory} 
 					_Output.Write ("{1}make NORECURSE=true -C {2}\n{0}", _Indent, Prefix, Directory);
 					//  
@@ -410,10 +421,9 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("#\n{0}", _Indent);
 			// #call Preamble Project 
 			Preamble (Project);
-			// #% bool HaveSoure = Project.SourceDependency.Count > 0; 
-			 bool HaveSoure = Project.SourceDependency.Count > 0;
-			// #% bool HaveLink = Project.LinkDependency.Count > 0; 
-			 bool HaveLink = Project.LinkDependency.Count > 0;
+			// #!% bool HaveSoure = Project.SourceDependency.Count > 0; 
+			// #% bool HaveLink = (Project.LinkDependency.Count > 0) |  (Project.FixedLinkDependency.Count > 0); 
+			 bool HaveLink = (Project.LinkDependency.Count > 0) |  (Project.FixedLinkDependency.Count > 0);
 			// #% bool HavePackage = Project.PrivateReference.Count > 0; 
 			 bool HavePackage = Project.PrivateReference.Count > 0;
 			//  
@@ -438,6 +448,14 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("\n{0}", _Indent);
 			// LinkFiles = #! 
 			_Output.Write ("LinkFiles = ", _Indent);
+			// #foreach (var File in Project.FixedLinkDependency) 
+			foreach  (var File in Project.FixedLinkDependency) {
+				// \ 
+				_Output.Write ("\\\n{0}", _Indent);
+				//     $(LIBRARYBIN)/#{File}#! 
+				_Output.Write ("    $(LIBRARYBIN)/{1}", _Indent, File);
+				// #end foreach 
+				}
 			// #foreach (var File in Project.LinkDependency) 
 			foreach  (var File in Project.LinkDependency) {
 				// \ 
@@ -454,6 +472,12 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("LinkFilesComma = ", _Indent);
 			// #% var LinkSep = new Separator ("", ","); 
 			 var LinkSep = new Separator ("", ",");
+			// #foreach (var File in Project.FixedLinkDependency) 
+			foreach  (var File in Project.FixedLinkDependency) {
+				// #{LinkSep}$(LIBRARYBIN)/#{File}#! 
+				_Output.Write ("{1}$(LIBRARYBIN)/{2}", _Indent, LinkSep, File);
+				// #end foreach 
+				}
 			// #foreach (var File in Project.LinkDependency) 
 			foreach  (var File in Project.LinkDependency) {
 				// #{LinkSep}$(TARGETBIN)/#{File}#! 
@@ -546,6 +570,8 @@ namespace Goedel.Tool.Makey {
 				} else if (  (Project.IsLibrary)) {
 				//  
 				_Output.Write ("\n{0}", _Indent);
+				// $(TARGETBIN)/#{Project.Target} :| $(LIBRARYBIN) 
+				_Output.Write ("$(TARGETBIN)/{1} :| $(LIBRARYBIN)\n{0}", _Indent, Project.Target);
 				// $(TARGETBIN)/#{Project.Target} :| $(TARGETBIN) 
 				_Output.Write ("$(TARGETBIN)/{1} :| $(TARGETBIN)\n{0}", _Indent, Project.Target);
 				//  
@@ -568,6 +594,8 @@ namespace Goedel.Tool.Makey {
 					}
 				//  
 				_Output.Write ("\n{0}", _Indent);
+				// #{Prefix}cp $(TARGETBIN)/#{Project.Target} $(LIBRARYBIN)/#{Project.Target} 
+				_Output.Write ("{1}cp $(TARGETBIN)/{2} $(LIBRARYBIN)/{3}\n{0}", _Indent, Prefix, Project.Target, Project.Target);
 				//  
 				_Output.Write ("\n{0}", _Indent);
 				// #else 
@@ -604,6 +632,10 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("{1}mkdir -p $(TARGETEXE) \n{0}", _Indent, Prefix);
 			//  
 			_Output.Write ("\n{0}", _Indent);
+			// $(LIBRARYBIN) : 
+			_Output.Write ("$(LIBRARYBIN) :\n{0}", _Indent);
+			// #{Prefix}mkdir -p $(LIBRARYBIN) 
+			_Output.Write ("{1}mkdir -p $(LIBRARYBIN)\n{0}", _Indent, Prefix);
 			//  
 			_Output.Write ("\n{0}", _Indent);
 			// ## Generated code 

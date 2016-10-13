@@ -9,15 +9,15 @@
 #switchcast GoedelType Item
 #casecast Copyright Copyright
 #switchcast GoedelType Copyright.License
-#casecast MITLicense License
+#casecast MITLicense null
 #% Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + Copyright.Date, Copyright.Holder);
-#casecast BSD2License License
+#casecast BSD2License null
 #% Boilerplate.BSD2License (_Output, "//  ", "Copyright (c) " +  Copyright.Date, Copyright.Holder);
-#casecast BSD3License License
+#casecast BSD3License null
 #% Boilerplate.BSD3License (_Output, "//  ", "Copyright (c) " +  Copyright.Date, Copyright.Holder);
-#casecast ISCLicense License
+#casecast ISCLicense null
 #% Boilerplate.ISCLicense (_Output, "//  ", "Copyright (c) " +  Copyright.Date, Copyright.Holder);
-#casecast Apache2License License
+#casecast Apache2License null
 #% Boilerplate.Apache2License (_Output, "//  ", "Copyright (c) " +  Copyright.Date, Copyright.Holder);
 #casecast OtherLicense License
 // Copyright (1) #{Copyright.Date} by #{Copyright.Holder}
@@ -135,11 +135,11 @@ namespace #{Class.Namespace} {
 			Init (Parent);
 #foreach (Entry Entry in Entries)
 #switchcast GoedelType Entry.Type
-#casecast Choice Choice
+#casecast Choice null
 			#{Entry.Name}._InitChildren (this);
-#casecast ChoiceREF ChoiceREF
+#casecast ChoiceREF null
 			#{Entry.Name}._InitChildren (this);
-#casecast _Label Label
+#casecast _Label null
 			#{Entry.Name}._InitChildren (this);
 #casecast List List
 #if ((List.Type._Tag() == GoedelType._Label) |  (List.Type._Tag() == GoedelType.Choice) | (List.Type._Tag() == GoedelType.ChoiceREF))
@@ -461,7 +461,7 @@ namespace #{Class.Namespace} {
 #foreach (Entry Entry in Entries)
 #% IsList = false;
 #switchcast GoedelType Entry.Type
-#casecast _Label Label
+#casecast _Label null
 						// Parser transition for _Label $$$$$
 #casecast Options Options
 #% IsList = true;
@@ -489,9 +489,9 @@ namespace #{Class.Namespace} {
 
 									// #{OEntry.Name}  #{OEntry.Type}
 #switchcast GoedelType OEntry.Occurs
-#casecast Single Single
+#casecast Single null
 									Current_Cast.#{OEntry.Name} = New#{OEntry.Type} ();
-#casecast Multiple Multiple
+#casecast Multiple null
 									Current_Cast.#{OEntry.Name}.Add (New#{OEntry.Type} ());
 #end switchcast
 									break;
@@ -559,7 +559,7 @@ namespace #{Class.Namespace} {
 								}
 							}
 #case GoedelType.ChoiceREF
-#% ChoiceREF ChoiceREF = (ChoiceREF) List.Type; 
+
 
 #case GoedelType.ID
 #case GoedelType.REF
@@ -662,7 +662,7 @@ namespace #{Class.Namespace} {
                             break;
                             }
                         throw new System.Exception("Expected LABEL or LITERAL");
-#casecast String Entry_Cast
+#casecast String null
                         if (Token == TokenType.STRING) {
                             #{Class.Namespace}.#{ID} Current_Cast = (#{Class.Namespace}.#{ID})Current;
                             Current_Cast.#{Entry.Name} = Text;
@@ -670,7 +670,7 @@ namespace #{Class.Namespace} {
                             break;
                             }
                         throw new System.Exception("Expected String");
-#casecast Text Text
+#casecast Text null
                         if (Token == TokenType.BEGIN) {
                             State = StateCode.#{ID}__#{Entry.Name};
                             break;
@@ -693,7 +693,7 @@ namespace #{Class.Namespace} {
                        throw new System.Exception("Expected Text");
 
 #% IsList = true;
-#casecast Integer Integer
+#casecast Integer null
                         if (Token == TokenType.INTEGER) {
                             #{Class.Namespace}.#{ID} Current_Cast = (#{Class.Namespace}.#{ID})Current;
                             Current_Cast.#{Entry.Name} = Convert.ToInt32(Text);
@@ -701,7 +701,7 @@ namespace #{Class.Namespace} {
                             break;
                             }
                         throw new System.Exception("Expected Integer");
-#casecast Boolean Boolean
+#casecast Boolean null
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL))  {
                             #{Class.Namespace}.#{ID} Current_Cast = (#{Class.Namespace}.#{ID})Current;
                             Current_Cast.#{Entry.Name} = Convert.ToBoolean (Text);
@@ -739,9 +739,9 @@ namespace #{Class.Namespace} {
 #casecast Options Options
 #foreach (OptionEntry OEntry in Options.Entries)
 #switchcast GoedelType OEntry.Occurs
-#casecast Single Single
+#casecast Single null
 		public #{OEntry.Type}  #{OEntry.Name} = new  #{OEntry.Type}();
-#casecast Multiple Multiple
+#casecast Multiple null
 		public List<#{OEntry.Type}>  #{OEntry.Name} = new  List <#{OEntry.Type}> ();
 #end switchcast
 #end foreach
@@ -771,23 +771,23 @@ namespace #{Class.Namespace} {
 #% Type = "bool";
 #end switch
         public List <#{Type}>           #{Entry.Name} = new List<#{Type}> ();
-#casecast Choice Choice
+#casecast Choice null
         public _Choice					#{Entry.Name};
-#casecast ChoiceREF ChoiceREF
+#casecast ChoiceREF null
         public _Choice					#{Entry.Name};
-#casecast ID ID
+#casecast ID null
         public ID<_Choice>				#{Entry.Name}; 
-#casecast REF REF
+#casecast REF null
         public REF<_Choice>				#{Entry.Name};
-#casecast Token Token
+#casecast Token null
         public TOKEN<_Choice>			#{Entry.Name};
-#casecast String String
+#casecast String null
 		public string					#{Entry.Name};
-#casecast Text Text
+#casecast Text null
 		public List <System.String>			#{Entry.Name} = new List <System.String> (); 
-#casecast Integer Integer
+#casecast Integer null
 		public int						#{Entry.Name};
-#casecast Boolean Boolean
+#casecast Boolean null
 		public bool						#{Entry.Name};
 #end switchcast
 #end method
@@ -795,15 +795,15 @@ namespace #{Class.Namespace} {
 
 #method SerializeEntry Entry Entry
 #switchcast GoedelType Entry.Type
-#casecast _Label Label
+#casecast _Label null
 #casecast Options Options
 			Output.StartList ("");
 #foreach (OptionEntry OEntry in Options.Entries)
 #switchcast GoedelType OEntry.Occurs
-#casecast Single Single
+#casecast Single null
 		// public #{OEntry.Type}  #{OEntry.Name} = new  #{OEntry.Type}();
 			#{OEntry.Name}.Serialize (Output, true);
-#casecast Multiple Multiple
+#casecast Multiple null
 			foreach (#{OEntry.Type} _e in #{OEntry.Name}) {
 				_e.Serialize (Output, true);
 				}
@@ -816,52 +816,52 @@ namespace #{Class.Namespace} {
 #casecast _Label LLabel
 			foreach (#{LLabel.Label} _e in #{Entry.Name}) {
 				_e.Serialize (Output, true);
-#casecast Choice Choice
+#casecast Choice null
 			foreach (_Choice _e in #{Entry.Name}) {
 				_e.Serialize (Output, true);
-#casecast ChoiceREF ChoiceREF
+#casecast ChoiceREF null
 			foreach (_Choice _e in #{Entry.Name}) {
 				_e.Serialize (Output, true);
-#casecast ID ID
+#casecast ID null
 			foreach (ID<_Choice> _e in #{Entry.Name}) {
 				Output.WriteId ("#{Entry.Name}", _e.ToString()); 
-#casecast REF REF
+#casecast REF null
 			foreach (REF<_Choice> _e in #{Entry.Name}) {
 				Output.WriteId ("#{Entry.Name}", _e.ToString());
-#casecast Token Token
+#casecast Token null
 			foreach (TOKEN<_Choice> _e in #{Entry.Name}) {
 				Output.WriteId ("#{Entry.Name}", _e.ToString());
-#casecast String String
+#casecast String null
 			foreach (string _e in #{Entry.Name}) {
 				Output.WriteAttribute ("#{Entry.Name}", _e);
-#casecast Integer Integer
+#casecast Integer null
 			foreach (int _e in #{Entry.Name}) {
 				Output.Write ("#{Entry.Name}", _e);
-#casecast Boolean Boolean
+#casecast Boolean null
 			foreach (bool _e in #{Entry.Name}) {
 				Output.WriteAttribute ("#{Entry.Name}", _e);
 #end switchcast
 				}
 			Output.EndList ("");
-#casecast Choice Choice
+#casecast Choice null
 	        #{Entry.Name}.Serialize (Output, true);
-#casecast ChoiceREF ChoiceREF
+#casecast ChoiceREF null
 	        #{Entry.Name}.Serialize (Output, true);
-#casecast ID ID
+#casecast ID null
 	        Output.WriteId ("#{Entry.Name}", #{Entry.Name}.ToString()); 
-#casecast REF REF
+#casecast REF null
 	        Output.WriteId ("#{Entry.Name}", #{Entry.Name}.ToString());
-#casecast Token Token
+#casecast Token null
 	        Output.WriteId ("#{Entry.Name}", #{Entry.Name}.ToString());
-#casecast String String
+#casecast String null
 			Output.WriteAttribute ("#{Entry.Name}", #{Entry.Name});
-#casecast Text Text
+#casecast Text null
 			foreach (string _s in #{Entry.Name}) {
 				Output.WriteAttribute ("#{Entry.Name}",_s);
 				}
-#casecast Integer Integer
+#casecast Integer null
 			Output.WriteAttribute ("#{Entry.Name}", #{Entry.Name});
-#casecast Boolean Boolean
+#casecast Boolean null
 			Output.WriteAttribute ("#{Entry.Name}", #{Entry.Name});
 #end switchcast
 #end method

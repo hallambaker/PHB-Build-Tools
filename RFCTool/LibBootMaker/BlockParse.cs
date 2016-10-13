@@ -187,7 +187,7 @@ namespace Goedel.MarkLib {
             MarkDownParagraph Lexer = new MarkDownParagraph(Reader);
 
             var Token = Lexer.GetToken();
-            var LastAttributes = Lexer.Attributes;
+            //var LastAttributes = Lexer.Attributes;
 
             while (Token != MarkDownParagraph.Token.INVALID) {
                 ////Console.WriteLine("   {0} : {1}", Token, Lexer.Data);

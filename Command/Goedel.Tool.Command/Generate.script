@@ -13,7 +13,7 @@
 #!	*	Predispatch call
 #!  *	Allow debug stubs to be turned off to make code compact
 #!
-#% TYPE<_Choice> OptionSetType;
+#!% TYPE<_Choice> OptionSetType;
 #% TYPE<_Choice> TypeType;
 #% CommandParse CommandParse;
 
@@ -32,10 +32,10 @@
 #% List <_Choice> Extras = new List <_Choice>();
 #foreach (_Choice CommandEntry in Command.Entries)
 #switchcast CommandParseType CommandEntry
-#casecast DefaultCommand Default
+#casecast DefaultCommand null
 #% DefaultCommand = Command;
-#casecast Parameter Parameter
-#casecast Option Option
+#casecast Parameter null
+#casecast Option null
 #casecast Include Include
 #% if (Include.Id.ID == null) {
 #%		throw new System.Exception ("Internal parser error"); }
@@ -76,7 +76,7 @@
 #method GenerateX CommandParse CommandParseIn
 #% CommandParse = CommandParseIn;
 #call Normalize CommandParse.Top
-#% OptionSetType = CommandParse.Registry.FindType ("OptionSetType");
+#!% OptionSetType = CommandParse.Registry.FindType ("OptionSetType");
 #% TypeType = CommandParse.Registry.FindType ("TypeType");
 using System;
 using System.Collections.Generic;
@@ -86,7 +86,7 @@ using Goedel.Registry;
 
 #foreach (_Choice Item in CommandParse.Top)
 #switchcast CommandParseType Item
-#casecast Class Cast
+#casecast Class null
 #call GenerateClass (Class)Item
 #end switchcast
 #end foreach
@@ -362,7 +362,7 @@ namespace #{Class.Namespace} {
 #switchcast CommandParseType OptionC
 #casecast Parser Parser
 		public ExistingFile					#{Parser.Class} = new ExistingFile ("#{Parser.Extension}");
-#casecast Generator Generator
+#casecast Generator null
 #casecast Script Script
 		public NewFile						#{Script.Id} = new NewFile ("#{Script.Extension}");
 #casecast Lazy Lazy
@@ -466,11 +466,11 @@ namespace #{Class.Namespace} {
 #casecast Command Command
 #foreach (_Choice CommandEntry in Command.Entries)
 #switchcast CommandParseType CommandEntry
-#casecast Parser Cast
+#casecast Parser null
 #% DefaultOutput = false;
-#casecast Generator Cast
+#casecast Generator null
 #% DefaultOutput = false;
-#casecast Script Cast
+#casecast Script null
 #% DefaultOutput = false;
 #casecast Lazy Cast
 #% Lazy = Cast.Name.ToString ();
@@ -522,7 +522,7 @@ namespace #{Class.Namespace} {
                 Schema.Process(infile, Parse);
                 }
 
-#casecast Generator Generator
+#casecast Generator null
 #end switchcast
 #end foreach
 

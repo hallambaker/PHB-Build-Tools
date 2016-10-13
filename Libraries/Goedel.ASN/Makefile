@@ -1,5 +1,5 @@
 #
-# Makefile for Visual Studio Project Goedel.ASN2
+# Makefile for Visual Studio Project Goedel.ASN
 #
 # This file is generated automatically from the Visual Studio Project
 # File. If you make changes to this file and do not update the project
@@ -44,16 +44,20 @@
 # ~/Tools/This				The bundled executable for platform the code is built on
 # ~/Tools/<Arch1>			The bundled executable for this platform <Arch1>	
 
-export TARGETROOT	?= mono
-export MODE			?= Release
-export ARCH			?= This
-export Packages		?= ~/Packages
-export PackagesPath ?= /lib/net40
+export TARGETROOT		?= mono
+export MODE				?= Release
+export ARCH				?= This
+export Packages			?= $(HOME)/Packages
+export PackagesPath		?= /lib/net40
+export Libraries		?= $(HOME)/Libraries
+export LibrariesPath	?= /Mono
+
 
 export TARGETBIN	= $(TARGETROOT)/$(MODE)
 export TARGETEXE	= $(TARGETROOT)/$(ARCH)
+export LIBRARYBIN	= $(Libraries)$(LibrariesPath)
 
-export DESTDIR		?= ~/.local
+export DESTDIR		?= $(HOME)/.local
 export bindir		?= /bin
 export libdir		?= /lib
 export INSTALL_PROGRAM	?= $(DESTDIR)$(bindir)
@@ -119,10 +123,12 @@ NugetFilesComa =
 
 # A) Main target packaged
 
-$(TARGETBIN)/Goedel.ASN2.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.ASN.dll :| $(LIBRARYBIN)
+$(TARGETBIN)/Goedel.ASN.dll :| $(TARGETBIN)
 
-$(TARGETBIN)/Goedel.ASN2.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
+$(TARGETBIN)/Goedel.ASN.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
 ! $(CSHARPDLL) /out:$@  $(SourceFiles) 
+! cp $(TARGETBIN)/Goedel.ASN.dll $(LIBRARYBIN)/Goedel.ASN.dll
 
 
 # Directories etc.
@@ -139,6 +145,8 @@ $(TARGETBIN) :
 $(TARGETEXE) :
 ! mkdir -p $(TARGETEXE) 
 
+$(LIBRARYBIN) :
+! mkdir -p $(LIBRARYBIN)
 
 # Generated code
 
@@ -178,10 +186,10 @@ clean :
 # Install files to a tools directory. Default is ~/.local/bin
 
 
-install : $(INSTALL_DATA)/Goedel.ASN2.dll
+install : $(INSTALL_DATA)/Goedel.ASN.dll
 
-$(INSTALL_DATA)/Goedel.ASN2.dll :| $(INSTALL_DATA)
-$(INSTALL_DATA)/Goedel.ASN2.dll : $(TARGETBIN)/Goedel.ASN2.dll
+$(INSTALL_DATA)/Goedel.ASN.dll :| $(INSTALL_DATA)
+$(INSTALL_DATA)/Goedel.ASN.dll : $(TARGETBIN)/Goedel.ASN.dll
 ! cp $^ $@ 
 
 

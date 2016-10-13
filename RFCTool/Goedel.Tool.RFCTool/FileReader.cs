@@ -10,7 +10,7 @@ namespace Goedel.Tool.RFCTool {
         //int             End;
         //int             Line;
         //int             Column;
-        List<SourceFile> SourceFiles = new List<SourceFile>();
+        public List<SourceFile> SourceFiles = new List<SourceFile>();
         }
 
 

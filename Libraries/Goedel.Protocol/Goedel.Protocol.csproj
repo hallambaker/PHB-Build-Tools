@@ -8,8 +8,8 @@
     <ProjectGuid>{02D75812-6892-45F7-8497-82266B6F0328}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Goedel.Protocol2</RootNamespace>
-    <AssemblyName>Goedel.Protocol2</AssemblyName>
+    <RootNamespace>Goedel.Protocol</RootNamespace>
+    <AssemblyName>Goedel.Protocol</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -70,9 +70,9 @@
     <Compile Include="WrapWriter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Debug\Goedel.Debug.csproj">
+    <ProjectReference Include="..\Goedel.Debug\Goedel.Debug2.csproj">
       <Project>{dd669f16-ee46-4111-a76d-d5e3e2e8d2b7}</Project>
-      <Name>Goedel.Debug</Name>
+      <Name>Goedel.Debug2</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
       <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>

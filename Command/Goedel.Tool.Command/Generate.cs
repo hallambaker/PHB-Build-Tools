@@ -55,8 +55,7 @@ namespace Goedel.Tool.Command {
 		//  *	Allow debug stubs to be turned off to make code compact
 		// #! 
 		//
-		// #% TYPE<_Choice> OptionSetType; 
-		 TYPE<_Choice> OptionSetType;
+		// #!% TYPE<_Choice> OptionSetType; 
 		// #% TYPE<_Choice> TypeType; 
 		 TYPE<_Choice> TypeType;
 		// #% CommandParse CommandParse; 
@@ -100,20 +99,17 @@ namespace Goedel.Tool.Command {
 							foreach  (_Choice CommandEntry in Command.Entries) {
 								// #switchcast CommandParseType CommandEntry 
 								switch (CommandEntry._Tag ()) {
-									// #casecast DefaultCommand Default 
-									case CommandParseType.DefaultCommand: {
-									  DefaultCommand Default = (DefaultCommand) CommandEntry; 
+									// #casecast DefaultCommand null 
+									case CommandParseType.DefaultCommand: { 
 									// #% DefaultCommand = Command; 
 									
 									 DefaultCommand = Command;
-									// #casecast Parameter Parameter 
+									// #casecast Parameter null 
 									break; }
-									case CommandParseType.Parameter: {
-									  Parameter Parameter = (Parameter) CommandEntry; 
-									// #casecast Option Option 
+									case CommandParseType.Parameter: { 
+									// #casecast Option null 
 									break; }
-									case CommandParseType.Option: {
-									  Option Option = (Option) CommandEntry; 
+									case CommandParseType.Option: { 
 									// #casecast Include Include 
 									break; }
 									case CommandParseType.Include: {
@@ -219,8 +215,7 @@ namespace Goedel.Tool.Command {
 			 CommandParse = CommandParseIn;
 			// #call Normalize CommandParse.Top 
 			Normalize (CommandParse.Top);
-			// #% OptionSetType = CommandParse.Registry.FindType ("OptionSetType"); 
-			 OptionSetType = CommandParse.Registry.FindType ("OptionSetType");
+			// #!% OptionSetType = CommandParse.Registry.FindType ("OptionSetType"); 
 			// #% TypeType = CommandParse.Registry.FindType ("TypeType"); 
 			 TypeType = CommandParse.Registry.FindType ("TypeType");
 			// using System; 
@@ -239,9 +234,8 @@ namespace Goedel.Tool.Command {
 			foreach  (_Choice Item in CommandParse.Top) {
 				// #switchcast CommandParseType Item 
 				switch (Item._Tag ()) {
-					// #casecast Class Cast 
-					case CommandParseType.Class: {
-					  Class Cast = (Class) Item; 
+					// #casecast Class null 
+					case CommandParseType.Class: { 
 					// #call GenerateClass (Class)Item 
 					
 					GenerateClass ((Class)Item);
@@ -843,10 +837,9 @@ namespace Goedel.Tool.Command {
 							  Parser Parser = (Parser) OptionC; 
 							// 		public ExistingFile					#{Parser.Class} = new ExistingFile ("#{Parser.Extension}"); 
 							_Output.Write ("		public ExistingFile					{1} = new ExistingFile (\"{2}\");\n{0}", _Indent, Parser.Class, Parser.Extension);
-							// #casecast Generator Generator 
+							// #casecast Generator null 
 							break; }
-							case CommandParseType.Generator: {
-							  Generator Generator = (Generator) OptionC; 
+							case CommandParseType.Generator: { 
 							// #casecast Script Script 
 							break; }
 							case CommandParseType.Script: {
@@ -1072,23 +1065,20 @@ namespace Goedel.Tool.Command {
 					foreach  (_Choice CommandEntry in Command.Entries) {
 						// #switchcast CommandParseType CommandEntry 
 						switch (CommandEntry._Tag ()) {
-							// #casecast Parser Cast 
-							case CommandParseType.Parser: {
-							  Parser Cast = (Parser) CommandEntry; 
+							// #casecast Parser null 
+							case CommandParseType.Parser: { 
 							// #% DefaultOutput = false; 
 							
 							 DefaultOutput = false;
-							// #casecast Generator Cast 
+							// #casecast Generator null 
 							break; }
-							case CommandParseType.Generator: {
-							  Generator Cast = (Generator) CommandEntry; 
+							case CommandParseType.Generator: { 
 							// #% DefaultOutput = false; 
 							
 							 DefaultOutput = false;
-							// #casecast Script Cast 
+							// #casecast Script null 
 							break; }
-							case CommandParseType.Script: {
-							  Script Cast = (Script) CommandEntry; 
+							case CommandParseType.Script: { 
 							// #% DefaultOutput = false; 
 							
 							 DefaultOutput = false;
@@ -1203,10 +1193,9 @@ namespace Goedel.Tool.Command {
 								_Output.Write ("                }}\n{0}", _Indent);
 								//  
 								_Output.Write ("\n{0}", _Indent);
-								// #casecast Generator Generator 
+								// #casecast Generator null 
 								break; }
-								case CommandParseType.Generator: {
-								  Generator Generator = (Generator) CommandEntry; 
+								case CommandParseType.Generator: { 
 								// #end switchcast 
 							break; }
 								}

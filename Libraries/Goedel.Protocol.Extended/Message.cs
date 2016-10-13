@@ -26,7 +26,7 @@ using System.Text;
 using Goedel.Utilities;
 
 
-namespace Goedel.Protocol {
+namespace Goedel.Protocol.Extended {
     public enum MessageType {
         Request,
         Response

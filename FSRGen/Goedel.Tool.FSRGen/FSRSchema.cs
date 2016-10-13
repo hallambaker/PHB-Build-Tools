@@ -413,9 +413,6 @@ namespace Goedel.Tool.FSRGen {
         StateCode								State;
         Goedel.Tool.FSRGen._Choice				Current;
         List <_StackItem>						Stack;
-        TokenType								CurrentToken;
-        Position								CurrentPosition;
-        string									CurrentText;
 
 
         public static FSRSchema Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -621,9 +618,6 @@ namespace Goedel.Tool.FSRGen {
 
 
         public override void Process(TokenType Token, Position Position, string Text) {
-            CurrentToken = Token;
-            CurrentPosition = Position;
-            CurrentText = Text;
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |

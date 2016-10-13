@@ -184,7 +184,7 @@ namespace Goedel.Tool.FSRGen {
                             }
                         }
                     else if (Entry.Is._Tag() == FSRSchemaType.Any) {
-                        var Any = (Any) Entry.Is;        // is any character
+                        //var Any = (Any) Entry.Is;        // is any character
                         for (int i = 0; i < MaxChar; i++) {
                             SetState (State, (char) i, Entry.Action);
                             }

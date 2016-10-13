@@ -1255,9 +1255,6 @@ namespace Goedel.Tool.Domainer {
         StateCode								State;
         Goedel.Tool.Domainer._Choice				Current;
         List <_StackItem>						Stack;
-        TokenType								CurrentToken;
-        Position								CurrentPosition;
-        string									CurrentText;
 
 
         public static Domainer Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -1739,9 +1736,6 @@ namespace Goedel.Tool.Domainer {
 
 
         public override void Process(TokenType Token, Position Position, string Text) {
-            CurrentToken = Token;
-            CurrentPosition = Position;
-            CurrentText = Text;
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |

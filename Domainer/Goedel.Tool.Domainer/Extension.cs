@@ -8,8 +8,8 @@ using Goedel.Registry;
 namespace Goedel.Tool.Domainer {
 
     public class Conversion {
-        DomainerType Type;
-        string Declaration;
+        public DomainerType Type;
+        public string Declaration;
 
         public Conversion(DomainerType Type, string Declaration) {
             this.Type = Type;
@@ -27,7 +27,7 @@ namespace Goedel.Tool.Domainer {
 
     public partial class Domainer : Goedel.Registry.Parser {
 
-        static readonly IList<Conversion> ConversionCS = new ReadOnlyCollection<Conversion>(new[] {
+        public static readonly IList<Conversion> ConversionCS = new ReadOnlyCollection<Conversion>(new[] {
             new Conversion (DomainerType.IPv4, "IPAddress"),
             new Conversion (DomainerType.IPv6, "IPAddress"),
             new Conversion (DomainerType.Domain, "string"),

@@ -23,9 +23,9 @@
 using System;
 using System.Net;
 using System.IO;
-using Goedel.Debug;
+using Goedel.Debug2;
 
-namespace Goedel.Protocol {
+namespace Goedel.Protocol.Extended {
 
     /// <summary>
     /// Manage JPC session to a remote Web Service.

@@ -23,7 +23,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Goedel.Debug {
+namespace Goedel.Debug2 {
 
     /// <summary>
     /// Collection of static methods that provide debugging utilities. These may well have been

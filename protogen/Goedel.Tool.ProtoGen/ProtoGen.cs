@@ -2527,9 +2527,6 @@ namespace Goedel.Tool.ProtoGen {
         StateCode								State;
         Goedel.Tool.ProtoGen._Choice				Current;
         List <_StackItem>						Stack;
-        TokenType								CurrentToken;
-        Position								CurrentPosition;
-        string									CurrentText;
 
 
         public static ProtoStruct Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -3373,9 +3370,6 @@ namespace Goedel.Tool.ProtoGen {
 
 
         public override void Process(TokenType Token, Position Position, string Text) {
-            CurrentToken = Token;
-            CurrentPosition = Position;
-            CurrentText = Text;
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |

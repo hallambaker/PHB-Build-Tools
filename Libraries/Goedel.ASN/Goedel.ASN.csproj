@@ -8,8 +8,8 @@
     <ProjectGuid>{44E8B35D-0394-4F37-B52C-246F8610F031}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Goedel.ASN2</RootNamespace>
-    <AssemblyName>Goedel.ASN2</AssemblyName>
+    <RootNamespace>Goedel.ASN</RootNamespace>
+    <AssemblyName>Goedel.ASN</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -53,6 +53,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <None Include="Makefile" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASNLibrary.cs" />

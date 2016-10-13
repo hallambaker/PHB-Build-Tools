@@ -49,16 +49,20 @@
 ## ~/Tools/This				The bundled executable for platform the code is built on
 ## ~/Tools/<Arch1>			The bundled executable for this platform <Arch1>	
 
-export TARGETROOT	?= mono
-export MODE			?= Release
-export ARCH			?= This
-export Packages		?= ~/Packages
-export PackagesPath ?= /lib/net40
+export TARGETROOT		?= mono
+export MODE				?= Release
+export ARCH				?= This
+export Packages			?= $(HOME)/Packages
+export PackagesPath		?= /lib/net40
+export Libraries		?= $(HOME)/Libraries
+export LibrariesPath	?= /Mono
+
 
 export TARGETBIN	= $(TARGETROOT)/$(MODE)
 export TARGETEXE	= $(TARGETROOT)/$(ARCH)
+export LIBRARYBIN	= $(Libraries)$(LibrariesPath)
 
-export DESTDIR		?= ~/.local
+export DESTDIR		?= $(HOME)/.local
 export bindir		?= /bin
 export libdir		?= /lib
 export INSTALL_PROGRAM	?= $(DESTDIR)$(bindir)
@@ -130,7 +134,7 @@ all : #{Directory}/$(TARGETBIN)/#{Project.Target}
 #foreach (var Dep in Project.ProjectReference)
 #% var SubProject = Dep.SubProject;
 #% var GUID = SubProject.ProjectGuid;
-#% var SubProjectRef = Solution.ByGuid (GUID);
+#!% var SubProjectRef = Solution.ByGuid (GUID);
 #% var SubProjectDir = Solution.ByGuid (GUID).Directory.UnixPath();
 #! SubTarget #{SubProject.Target}
 #! SubProject #{SubProjectDir}
@@ -145,6 +149,8 @@ all : #{Directory}/$(TARGETBIN)/#{Project.Target}
 #end foreach
 
 #{Directory}/$(TARGETBIN)/#{Project.Target} : always
+#{Prefix}echo "" >&2
+#{Prefix}echo "*** Directory #{Directory}" >&2
 #{Prefix}make NORECURSE=true -C #{Directory}
 
 #end if
@@ -186,8 +192,8 @@ install : all
 ## Makefile for Visual Studio Project #{Project.AssemblyName}
 ##
 #call Preamble Project
-#% bool HaveSoure = Project.SourceDependency.Count > 0;
-#% bool HaveLink = Project.LinkDependency.Count > 0;
+#!% bool HaveSoure = Project.SourceDependency.Count > 0;
+#% bool HaveLink = (Project.LinkDependency.Count > 0) |  (Project.FixedLinkDependency.Count > 0);
 #% bool HavePackage = Project.PrivateReference.Count > 0;
 
 ## The main target 
@@ -200,6 +206,10 @@ SourceFiles = #!
 
 
 LinkFiles = #!
+#foreach (var File in Project.FixedLinkDependency)
+\
+    $(LIBRARYBIN)/#{File}#!
+#end foreach
 #foreach (var File in Project.LinkDependency)
 \
     $(TARGETBIN)/#{File}#!
@@ -208,6 +218,9 @@ LinkFiles = #!
 
 LinkFilesComma = #!
 #% var LinkSep = new Separator ("", ",");
+#foreach (var File in Project.FixedLinkDependency)
+#{LinkSep}$(LIBRARYBIN)/#{File}#!
+#end foreach
 #foreach (var File in Project.LinkDependency)
 #{LinkSep}$(TARGETBIN)/#{File}#!
 #end foreach
@@ -254,6 +267,7 @@ $(TARGETBIN)/#{Project.Target} : $(SourceFiles) $(LinkFiles) $(NugetFiles)
 
 #elseif (Project.IsLibrary)
 
+$(TARGETBIN)/#{Project.Target} :| $(LIBRARYBIN)
 $(TARGETBIN)/#{Project.Target} :| $(TARGETBIN)
 
 $(TARGETBIN)/#{Project.Target} :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
@@ -265,6 +279,7 @@ $(TARGETBIN)/#{Project.Target} :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
 -r:$(NugetFilesComa) #!
 #end if
 
+#{Prefix}cp $(TARGETBIN)/#{Project.Target} $(LIBRARYBIN)/#{Project.Target}
 
 #else
 #end if
@@ -283,6 +298,8 @@ $(TARGETBIN) :
 $(TARGETEXE) :
 #{Prefix}mkdir -p $(TARGETEXE) 
 
+$(LIBRARYBIN) :
+#{Prefix}mkdir -p $(LIBRARYBIN)
 
 ## Generated code
 

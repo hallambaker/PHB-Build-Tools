@@ -17,7 +17,6 @@
 #% string StartSection3 , MidSection3 , EndSection3;
 #% string StartSection4 , MidSection4 , EndSection4;
 #% string CurrentPrefix;
-#% string Namespace;
 #% string StartTransaction, MidTransaction, EndTransaction;
 #%
 #%
@@ -406,15 +405,13 @@ Response:#{Transaction.Response}
 #block OptionList
 #% public void OptionList  (List<_Choice> Entries) {
 #% bool PRequired = false, PMultiple = false;
-#% string def;
 #foreach (_Choice Entry in Entries)
 #switchcast ProtoStructType Entry
-#casecast Required Required
+#casecast Required null
 #% PRequired = true;
-#casecast Multiple Multiple
+#casecast Multiple null
 #% PMultiple = true;
-#casecast Default Default
-#% def = "Default =" + Default.Value;
+#casecast Default null
 #end switchcast
 #end foreach
  #!

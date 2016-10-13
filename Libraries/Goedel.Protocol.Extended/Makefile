@@ -44,16 +44,20 @@
 # ~/Tools/This				The bundled executable for platform the code is built on
 # ~/Tools/<Arch1>			The bundled executable for this platform <Arch1>	
 
-export TARGETROOT	?= mono
-export MODE			?= Release
-export ARCH			?= This
-export Packages		?= ~/Packages
-export PackagesPath ?= /lib/net40
+export TARGETROOT		?= mono
+export MODE				?= Release
+export ARCH				?= This
+export Packages			?= $(HOME)/Packages
+export PackagesPath		?= /lib/net40
+export Libraries		?= $(HOME)/Libraries
+export LibrariesPath	?= /Mono
+
 
 export TARGETBIN	= $(TARGETROOT)/$(MODE)
 export TARGETEXE	= $(TARGETROOT)/$(ARCH)
+export LIBRARYBIN	= $(Libraries)$(LibrariesPath)
 
-export DESTDIR		?= ~/.local
+export DESTDIR		?= $(HOME)/.local
 export bindir		?= /bin
 export libdir		?= /lib
 export INSTALL_PROGRAM	?= $(DESTDIR)$(bindir)
@@ -117,10 +121,10 @@ SourceFiles = \
 
 LinkFiles = \
     $(TARGETBIN)/Goedel.Debug2.dll\
-    $(TARGETBIN)/Goedel.Protocol2.dll\
+    $(TARGETBIN)/Goedel.Protocol.dll\
     $(TARGETBIN)/Goedel.Utilities.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.Debug2.dll,$(TARGETBIN)/Goedel.Protocol2.dll,$(TARGETBIN)/Goedel.Utilities.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Debug2.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Utilities.dll
 
 
 NugetFiles = 
@@ -128,10 +132,12 @@ NugetFilesComa =
 
 # A) Main target packaged
 
+$(TARGETBIN)/Goedel.Protocol.Extended.dll :| $(LIBRARYBIN)
 $(TARGETBIN)/Goedel.Protocol.Extended.dll :| $(TARGETBIN)
 
 $(TARGETBIN)/Goedel.Protocol.Extended.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
 ! $(CSHARPDLL) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) 
+! cp $(TARGETBIN)/Goedel.Protocol.Extended.dll $(LIBRARYBIN)/Goedel.Protocol.Extended.dll
 
 
 # Directories etc.
@@ -148,6 +154,8 @@ $(TARGETBIN) :
 $(TARGETEXE) :
 ! mkdir -p $(TARGETEXE) 
 
+$(LIBRARYBIN) :
+! mkdir -p $(LIBRARYBIN)
 
 # Generated code
 
@@ -165,11 +173,11 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
-../Goedel.Debug2/$(TARGETBIN)/Goedel.Debug2.dll : recursive
-! $(MAKE) -C ../Goedel.Debug2
+../Goedel.Debug/$(TARGETBIN)/Goedel.Debug2.dll : recursive
+! $(MAKE) -C ../Goedel.Debug
 
-../Goedel.Protocol2/$(TARGETBIN)/Goedel.Protocol2.dll : recursive
-! $(MAKE) -C ../Goedel.Protocol2
+../Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : recursive
+! $(MAKE) -C ../Goedel.Protocol
 
 ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
 ! $(MAKE) -C ../Goedel.Utilities
@@ -177,12 +185,12 @@ ifndef NORECURSE
 endif
 
 $(TARGETBIN)/Goedel.Debug2.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Debug2.dll : ../Goedel.Debug2/$(TARGETBIN)/Goedel.Debug2.dll
-!  cp ../Goedel.Debug2/$(TARGETBIN)/Goedel.Debug2.dll $(TARGETBIN)/Goedel.Debug2.dll
+$(TARGETBIN)/Goedel.Debug2.dll : ../Goedel.Debug/$(TARGETBIN)/Goedel.Debug2.dll
+!  cp ../Goedel.Debug/$(TARGETBIN)/Goedel.Debug2.dll $(TARGETBIN)/Goedel.Debug2.dll
 
-$(TARGETBIN)/Goedel.Protocol2.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Protocol2.dll : ../Goedel.Protocol2/$(TARGETBIN)/Goedel.Protocol2.dll
-!  cp ../Goedel.Protocol2/$(TARGETBIN)/Goedel.Protocol2.dll $(TARGETBIN)/Goedel.Protocol2.dll
+$(TARGETBIN)/Goedel.Protocol.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Protocol.dll : ../Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+!  cp ../Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll $(TARGETBIN)/Goedel.Protocol.dll
 
 $(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Utilities.dll : ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
