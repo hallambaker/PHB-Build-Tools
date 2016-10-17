@@ -27,28 +27,27 @@ using Goedel.Debug2;
 namespace Goedel.Protocol {
 
 
-    public partial class JSONReader {
 
-        public static JSONReader OfData (string Input) {
-            return new JSONBufferedReader(Input);
-            }
-
-        public static JSONReader OfData(byte[] Input) {
-            return new JSONBufferedReader(Input);
-            }
-
-       
-        }
-
-
+    /// <summary>
+    /// JSON Reader for buffered data. Uses the ability to back up and re-read data to 
+    /// improve efficiency.
+    /// </summary>
     public class JSONBufferedReader : JSONReader {
         BufferedCharacterStream BufferedInput;
 
+        /// <summary>
+        /// Create buffered reader for specified input string.
+        /// </summary>
+        /// <param name="InputIn">Input string</param>
         public JSONBufferedReader(String InputIn) {
             BufferedInput = new StringCharacterStream(InputIn);
             Input = BufferedInput;
             }
 
+        /// <summary>
+        /// Create buffered reader for specified input stream.
+        /// </summary>
+        /// <param name="InputIn">Input stream</param>
         public JSONBufferedReader(byte[] InputIn) {
             BufferedInput = new DataCharacterTextStream(InputIn);
             Input = BufferedInput;
@@ -198,6 +197,11 @@ namespace Goedel.Protocol {
 
 
         byte[] TokenBinary;
+
+        /// <summary>
+        /// Read binary data item.
+        /// </summary>
+        /// <returns></returns>
         public override byte[] ReadBinary() {
             EOR = false;
 

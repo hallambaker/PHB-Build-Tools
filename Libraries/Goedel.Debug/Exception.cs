@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Goedel {
+namespace Goedel.Debug2 {
 
     /// <summary>
     /// Exception that is never thrown. Useful for 'commenting out' a

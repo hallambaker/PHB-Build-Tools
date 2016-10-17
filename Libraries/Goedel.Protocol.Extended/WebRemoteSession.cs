@@ -51,7 +51,7 @@ namespace Goedel.Protocol.Extended {
         /// Create a remote session with authentication under the
         /// specified credential.
         /// </summary>
-        /// <param name="ServiceName">The Web Service Endpoint.</param>
+        /// <param name="URI">The Web Service Endpoint.</param>
         /// <param name="Domain">Domain</param>
         /// <param name="Account">Account name</param>
         /// <param name="UDF">Fingerprint of authentication key.</param>

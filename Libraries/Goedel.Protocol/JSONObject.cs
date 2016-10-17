@@ -27,6 +27,10 @@ using System.Text;
 using Goedel.Protocol;
 
 namespace Goedel.Protocol {
+
+    /// <summary>
+    /// Base class for JSON Objects.
+    /// </summary>
     public abstract partial class JSONObject {
 
         /// <summary>
@@ -36,16 +40,33 @@ namespace Goedel.Protocol {
         protected virtual void _Initialize () {
             }
 
+        /// <summary>
+        /// Tag value used as substitute for reflection internally.
+        /// </summary>
+        /// <returns></returns>
 		public virtual string Tag () {
 			return "MeshItem";
 			}
 
+        /// <summary>
+        /// Base constructor.
+        /// </summary>
 		public JSONObject () {
             _Initialize();
 			}
+
+        /// <summary>
+        /// Create object from data read from the corresponding reader.
+        /// </summary>
+        /// <param name="JSONReader">The input data</param>
 		public JSONObject (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
+
+        /// <summary>
+        /// Create object from data read from the corresponding string.
+        /// </summary>
+        /// <param name="_String">The input data</param>
         public JSONObject(string _String) {
 			Deserialize (_String);
 			}
@@ -59,34 +80,59 @@ namespace Goedel.Protocol {
             return null;
             }
 
-
+        /// <summary>
+        /// Convert object to string in JSON form
+        /// </summary>
+        /// <returns>Data as string.</returns>
 		public override string ToString () {
 			JSONWriter _JSONWriter = new JSONWriter ();
 			Serialize (_JSONWriter, true);
 			return _JSONWriter.GetUTF8;
 			}
 
+        /// <summary>
+        /// Convert object to string in JSON form.
+        /// </summary>
+        /// <returns>Data as string.</returns>
 		public virtual  string GetUTF8 () {
 			JSONWriter _JSONWriter = new JSONWriter ();
 			Serialize (_JSONWriter, true);
 			return _JSONWriter.GetUTF8;
 			}
 
+        /// <summary>
+        /// Convert object to byte sequence in JSON form.
+        /// </summary>
+        /// <returns>Data as byte sequence.</returns>
 		public virtual  byte [] GetBytes () {
             return GetBytes(true);
             }
 
+        /// <summary>
+        /// Convert object to byte sequence in JSON form.
+        /// </summary>
+        /// <param name="tag">If true, serialization is tagged with the object type.</param>
+        /// <returns>Data as byte sequence.</returns>
         public virtual byte[] GetBytes(bool tag) {
             JSONWriter _JSONWriter = new JSONWriter();
             Serialize(_JSONWriter, tag);
             return _JSONWriter.GetBytes;
             }
 
+        /// <summary>
+        /// Serialize to the specified Writer.
+        /// </summary>
+        /// <param name="Writer">Writer to serialize the data to</param>
         public virtual void Serialize (Writer Writer) {
 			Serialize (Writer, false);
 			}
 
-		public virtual void Serialize (Writer Writer, bool tag) {
+        /// <summary>
+        /// Serialize to the specified Writer.
+        /// </summary>
+        /// <param name="Writer">Writer to serialize the data to</param>
+        /// <param name="tag">If true, serialization is tagged with the object type.</param>
+        public virtual void Serialize (Writer Writer, bool tag) {
 			bool first = true;
 			if (tag) {
 				Writer.WriteObjectStart ();
@@ -100,38 +146,81 @@ namespace Goedel.Protocol {
 				}			
 			}
 
-		public virtual void Serialize (Writer Writer, bool wrap, ref bool first) {
-			}
+        /// <summary>
+        /// Serialize to the specified Writer.
+        /// </summary>
+        /// <param name="Writer">Writer to serialize the data to</param>
+        /// <param name="first">This is the first field in the object being serialized. This 
+        /// value is set to false on exit.</param>
+        /// <param name="wrap">Wrap the objects for formatting.</param>
+		public abstract void Serialize(Writer Writer, bool wrap, ref bool first);
 
-		public void SerializeX (Writer Writer, bool wrap, ref bool first) {
-			}
+        /// <summary>
+        /// Serialize to the specified Writer. This is a dummy routine
+        /// whose sole purpose is to prevent 'new' causing issues in derrived
+        /// classes.
+        /// </summary>
+        /// <param name="Writer">Writer to serialize the data to</param>
+        /// <param name="first">This is the first field in the object being serialized. This 
+        /// value is set to false on exit.</param>
+        /// <param name="wrap">Wrap the objects for formatting.</param>
+		public void SerializeX(Writer Writer, bool wrap, ref bool first) {
+            }
 
-
+        /// <summary>
+        /// Factory method to construct object from byte data.
+        /// </summary>
+        /// <param name="_Data">Source</param>
+        /// <returns>Constructed object</returns>
         public static JSONObject From(byte[] _Data) {
             return null;
             }
 
+        /// <summary>
+        /// Factory method to construct object from string data.
+        /// </summary>
+        /// <param name="_Input">Source</param>
+        /// <returns>Constructed object</returns>
         public static JSONObject From(string _Input) {
             return null;
             }
 
+        /// <summary>
+        /// Factory method to construct object from tagged byte data.
+        /// </summary>
+        /// <param name="_Data">Source</param>
+        /// <returns>Constructed object</returns>
         public static JSONObject FromTagged(byte[] _Data) {
             return null;
             }
 
+        /// <summary>
+        /// Factory method to construct object from tagged string data.
+        /// </summary>
+        /// <param name="_Input">Source</param>
+        /// <returns>Constructed object</returns>
         public static JSONObject FromTagged(string _Input) {
             return null;
             }
 
+        /// <summary>
+        /// Deserialize the input string to populate this object
+        /// </summary>
+        /// <param name="_Input">Input string</param>
         public virtual void Deserialize (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
 			Deserialize (JSONReader);
 			}
 
-        public static void FromTagged(JSONReader JSONReader) {
-            }
 
+        //public static void FromTagged(JSONReader JSONReader) {
+        //    }
+
+        /// <summary>
+        /// Deserialize the input string to populate this object
+        /// </summary>
+        /// <param name="JSONReader">Input data</param>
         public virtual void Deserialize(JSONReader JSONReader) {
 
             bool Going = JSONReader.StartObject();
@@ -148,6 +237,11 @@ namespace Goedel.Protocol {
             // JSONReader.EndObject (); Implicit 
             }
 
+        /// <summary>
+        /// Deserialize the input stream to populate this object having recieved the specified tag.
+        /// </summary>
+        /// <param name="JSONReader">Input data</param>
+        /// <param name="Tag">Input tag</param>
         public virtual void DeserializeToken (JSONReader JSONReader, string Tag) {
 			} 
 

@@ -105,15 +105,24 @@ namespace Goedel.Protocol {
 
         int state = 0;
 
+        /// <summary>
+        /// The output charater encoding.
+        /// </summary>
         public override Encoding Encoding { get {return  System.Text.Encoding.UTF8;} }
 
-
+        /// <summary>
+        /// Dispose method.
+        /// </summary>
+        /// <param name="Disposing"></param>
         protected override void Dispose(bool Disposing) {
             if (Disposing) {
                 Flush();
                 }
             }
 
+        /// <summary>
+        /// Force write of all characters to the output.
+        /// </summary>
         public override void Flush() {
             if ((Buffer != "") | (BreakBuffer != "" )) {
                 EndLine();
@@ -124,11 +133,21 @@ namespace Goedel.Protocol {
         //
         // Redirect all character methods to our new writer
         //
+
+        /// <summary>
+        /// Write buffer to the output.
+        /// </summary>
+        /// <param name="buffer">data to write.</param>
         public override void Write(char[] buffer) {
             foreach (char c in buffer) {
                 Write(c);
                 }
             }
+
+        /// <summary>
+        /// Write string to the output.
+        /// </summary>
+        /// <param name="value">Data to write.</param>
         public override void Write(string value) {
             foreach (char c in value) {
                 Write(c);
@@ -172,8 +191,15 @@ namespace Goedel.Protocol {
                 }
             }
 
+        /// <summary>
+        /// Number of spaces per tab stop.
+        /// </summary>
         public int TabStop = 4;
 
+        /// <summary>
+        /// Write character to output stream.
+        /// </summary>
+        /// <param name="c"></param>
         public override void Write(char c) {
             if (c == '\t') {
                 int Spaces = TabStop * ((Column + TabStop - 1) / TabStop) - Column;
@@ -250,6 +276,10 @@ namespace Goedel.Protocol {
                 }
             }
 
+        /// <summary>
+        /// Convert pending data to string.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString() {
             Flush ();
             string result = Output.ToString ();

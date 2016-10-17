@@ -32,31 +32,54 @@ namespace Goedel.Protocol {
 
 
 
-
+    /// <summary>
+    /// JSON Writer for JSON-C, which extends the JSON-B format to add support 
+    /// for compression.
+    /// </summary>
     public class JSONCWriter : JSONBWriter {
 
         Dictionary<string, int> TagDictionary;
 
+        /// <summary>
+        /// Return the contents of the writer as a string.
+        /// </summary>
+        /// <returns>Current buffered contents as string</returns>
         public override string ToString() {
             return Output.GetUTF8;
             }
 
+        /// <summary>
+        /// Create a new JSON Writer using the specified output buffer. If the buffer has
+        /// an output stream defined, text will be written to the stream.
+        /// </summary>
+        /// <param name="Output">Output buffer</param>
         public JSONCWriter(StreamBuffer Output) :
                 this (Output, new Dictionary<string,int>()) {
             }
 
+        /// <summary>
+        /// Create a new JSON Writer.
+        /// </summary>
         public JSONCWriter() :
             this(new StreamBuffer(), new Dictionary<string, int>()) {
             }
 
+        /// <summary>
+        /// Create a new JSON Writer using the specified output buffer. If the buffer has
+        /// an output stream defined, text will be written to the stream.
+        /// </summary>
+        /// <param name="TagDictionary">Tag dictionary to ues for compression</param>
         public JSONCWriter(Dictionary<string, int> TagDictionary) :
             this(new StreamBuffer(), TagDictionary) {
             }
 
-        public JSONCWriter(bool Wrap) {
-            this.Output = new StreamBuffer ();
-            }
 
+        /// <summary>
+        /// Create a new JSON Writer using the specified output buffer. If the buffer has
+        /// an output stream defined, text will be written to the stream.
+        /// </summary>
+        /// <param name="Output">Output buffer</param>
+        /// <param name="TagDictionary">Tag dictionary to ues for compression</param>
         public JSONCWriter(StreamBuffer Output, 
                     Dictionary<string, int> TagDictionary) {
             this.Output = Output;
@@ -64,10 +87,17 @@ namespace Goedel.Protocol {
             }
 
 
+        /// <summary>
+        /// Write Tag to the stream
+        /// </summary>
+        /// <param name="Tag">Tag text.</param>
+        /// <param name="IndentIn">Current indent level.</param>
         public override void WriteToken(string Tag, int IndentIn) {
             WriteString(Tag);
             }
 
+        /// <summary>Write string.</summary>
+        /// <param name="Data">Value to write</param>
         public override void WriteString(string Data) {
             int Index;
 

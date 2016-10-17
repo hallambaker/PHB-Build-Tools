@@ -22,14 +22,24 @@
 
 using System.IO;
 using System.Text;
+using Goedel.Debug2;
 
 namespace Goedel.Protocol {
 
-    // This is intended to be the start of a dechunker class to be expanded later.
-
+    /// <summary>
+    /// Read and buffer data chunks from a stream. This could be made a lot
+    /// more efficient for longer streams but is acceptable for small ones.
+    /// </summary>
     public class Dechunk {
 
-
+        /// <summary>
+        /// Tead a string from the stream
+        /// </summary>
+        /// <param name="Length">Length of stream. If less than zero,
+        /// HTTP chunked encoding is assumed.</param>
+        /// <param name="Stream">The stream to be read.</param>
+        /// <returns>The array data.</returns>
+        /// <returns>Data read from stream</returns>
         public static string ReadString(long Length, Stream Stream) {
             var Buffer = ReadBytes(Length, Stream);
             return Encoding.UTF8.GetString(Buffer, 0 , Buffer.Length);
@@ -61,7 +71,13 @@ namespace Goedel.Protocol {
             return Buffer;
             }
 
-
+        /// <summary>
+        /// Read an array of bytes from a stream. Note that the length
+        /// of the byte array is limited to 2GB internally. For longer 
+        /// streams, some form of processing pipeline is advised.
+        /// </summary>
+        /// <param name="Stream">The stream to be read.</param>
+        /// <returns>The array data.</returns>
         public static byte [] ReadChunked (Stream Stream) {
             throw new Throw("Not Yet Implemented");
             }

@@ -27,26 +27,37 @@ using System.Text;
 using Goedel.Utilities;
 
 namespace Goedel.Protocol {
-    //
-    //  JSON Writer code
-    //
 
+
+    /// <summary>
+    /// JSON Writer that presents data in a forat suitable for use in
+    /// documentation. All data is wrapped to fit a 72 character line.
+    /// Large data items are replaced with ellipsis, etc.
+    /// </summary>
     public class JSONDebugWriter : JSONWriter {
 
+        /// <summary>Threshold for redacting binary data blocks.</summary>
         static public int Threshold = 260;
 
+
+        /// <summary>
+        /// Create a new JSON Writer.
+        /// </summary>
         public JSONDebugWriter() {
             this.Output = new StreamBuffer ();
             }
 
+        /// <summary>
+        /// Create a new JSON Writer using the specified output buffer. If the buffer has
+        /// an output stream defined, text will be written to the stream.
+        /// </summary>
         public JSONDebugWriter(StreamBuffer Output) {
             this.Output = Output;
             }
 
-        public JSONDebugWriter(bool Wrap) {
-            this.Output = new StreamBuffer ();
-            }
 
+        /// <summary>Write binary data as Base64Url encoded string.</summary>
+        /// <param name="Data">Value to write</param>
         public override void WriteBinary(byte[] Data) {
             Output.Write("\"");
             if (Data.Length < Threshold) {
@@ -65,7 +76,11 @@ namespace Goedel.Protocol {
             Output.Write("\n");
             }
 
-
+        /// <summary>
+        /// Convert a JSONObject to redacted form.
+        /// </summary>
+        /// <param name="JSONObject">The object to convert</param>
+        /// <returns>The input as a redacted JSON encoded string.</returns>
         public static string Write(JSONObject JSONObject) {
             var Buffer = new StreamBuffer();
             var JSONWriter = new JSONDebugWriter(Buffer);

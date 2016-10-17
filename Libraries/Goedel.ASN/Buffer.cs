@@ -12,23 +12,42 @@ namespace Goedel.ASN {
     // Universal / Contrusted
 
 
-
+    /// <summary>
+    /// ASN.1 data tagging modes. 
+    /// </summary>
     public enum TagMode {
+        /// <summary>Intrinsic type.</summary>
         Universal           = 0,
-        Constructed         = 0x20,    // WTF how can Sets or LISTs not be constructed types?
-        Application         = 0x40,
-        Context             = 0x80,
-        Private             = 0xB0,
+        /// <summary>Type is constructed which is redundant as SETs and LISTs are
+        /// always constructed.</summary>
+        Constructed = 0x20,    // WTF how can Sets or LISTs not be constructed types?
+        /// <summary></summary>
+        Application = 0x40,
+        /// <summary></summary>
+        Context = 0x80,
+        /// <summary></summary>
+        Private = 0xB0,
         }
 
+    /// <summary>
+    /// ASN.1 flags
+    /// </summary>
     public enum ASNFlags : int {
+        /// <summary>No flags</summary>
         Nil = 0x00,
+        /// <summary>Tagging is implicit by position</summary>
         Implicit = 0x01,
+        /// <summary>Tagging is explicit</summary>
         Explicit = 0x02,
+        /// <summary>The field is optional and must be tagged with the option code if present</summary>
         Optional = 0x04,
+        /// <summary>The field is context dependent.</summary>
         Context = 0x08
         }
 
+    /// <summary>
+    /// Buffer class for assembling ASN.1 output data in DER encoding.
+    /// </summary>
     public partial class Buffer {
 
         // Internal variables
@@ -39,46 +58,61 @@ namespace Goedel.ASN {
         // would be stupid to do that.
         private int                    Pointer;
 
+        /// <summary>
+        /// The maximum chunk size for allocating data (defaults to 32,768)
+        /// </summary>
         public int                      MaxChunk = 32768;
 
-        // Return the value of the buffer (in a fresh zero based array)
+        /// <summary>
+        /// Return the value of the buffer (in a fresh zero based array)
+        /// </summary>
         public byte []                  Data {
             get {
                 byte [] Value = new byte [Length];
                 Array.Copy (Buffered, Pointer, Value, 0, Length);
                 return Value;} }
 
-        // Length is calculated as buffer size - used
+        /// <summary>
+        /// Length is calculated as buffer size - used
+        /// </summary>
         public int                 Length {
             get { return Buffered.Length - Pointer; }}
 
-        // Default buffer size is 1024 bytes
+        /// <summary>Constructor with default initial buffer size of 1024 bytes</summary>
         public Buffer() : this (1024) {
             }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="Size">Initial buffer size in bytes.</param>
         public Buffer (int Size) {
             Buffered = new byte [Size];
             Pointer = Size;
             }
 
 
-        public void Debug (string Tag) {
-            //Console.Write ("{0}:", Tag);
-            //for (int i = Pointer; i < Buffered.Length; i++) {
-            //    if ((i % 16) == 0) {
-            //        Console.WriteLine ();
-            //        Console.Write ("   ");
-            //        }
-            //    Console.Write (" {0:x2}", Buffered[i]);
-            //    }
-            //Console.WriteLine ();
-            }
+        //public void Debug (string Tag) {
+        //    //Console.Write ("{0}:", Tag);
+        //    //for (int i = Pointer; i < Buffered.Length; i++) {
+        //    //    if ((i % 16) == 0) {
+        //    //        Console.WriteLine ();
+        //    //        Console.Write ("   ");
+        //    //        }
+        //    //    Console.Write (" {0:x2}", Buffered[i]);
+        //    //    }
+        //    //Console.WriteLine ();
+        //    }
 
         // Convenience function, only ever adds the lowest byte.
         void AddByte (int Data) {
             Add ((byte) (Data & 0xff));
             }
 
+        /// <summary>
+        /// Add a byte to the stream
+        /// </summary>
+        /// <param name="Data">Data to write.</param>
         public void Add (byte Data) {
             if (Pointer <= 0) {
                 int NewLength = Buffered.Length * 2 < MaxChunk ?
@@ -95,6 +129,10 @@ namespace Goedel.ASN {
         // Lower 7 bits contain value, MSB first
         // Upper bit is 1 except on last byte where it is 0
 
+        /// <summary>
+        /// Add a base128 encoded length tag to the buffer.
+        /// </summary>
+        /// <param name="Data"></param>
         public void AddBase128(int Data) {
             if (Data < 0x80) {
                 AddByte (Data);
@@ -129,6 +167,11 @@ namespace Goedel.ASN {
         // For tags over 30, tag is presented base 128
         // last octet has bit 8 clear
 
+        /// <summary>
+        /// Add tag to the stream
+        /// </summary>
+        /// <param name="Data">Tag to add</param>
+        /// <param name="Mode">Tagging mode.</param>
         public void AddTag(int Data, TagMode Mode) {
             if (Data < 31) {
                 AddByte (Data | (int) Mode);
@@ -145,6 +188,10 @@ namespace Goedel.ASN {
         //                  2nd gives most significant digit etc.
         // Bytes are added in reverse order.
 
+        /// <summary>
+        /// Add a data length item to the stream
+        /// </summary>
+        /// <param name="Data">The length to add</param>
         public void AddLength(int Data) {
 
             if (Data < 0x80) {
@@ -174,7 +221,10 @@ namespace Goedel.ASN {
                 }
             }
 
-
+        /// <summary>
+        /// Add OID to the stream
+        /// </summary>
+        /// <param name="Data">The data to add</param>
         public void AddOID(int [] Data) {
             if (Data.Length < 2) throw new Exception("OID must have at least 2 segments");            
             
@@ -185,29 +235,61 @@ namespace Goedel.ASN {
             AddByte (Data [0] * 40 + Data [1]);
             }
 
-
+        /// <summary>
+        /// Start encoding a sequence
+        /// </summary>
+        /// <returns>Position in the buffer</returns>
         public int Encode__Sequence_Start () {
             return Pointer;
             }
-       
+
+        /// <summary>
+        /// Encode end of a sequence. Note that since everything is written out 
+        /// backwards calls to end sequences must preceed the date to begin.
+        /// </summary>
+        /// <param name="Position">Buffer position</param>
+        /// <param name="Flags">Flags</param>
+        /// <param name="Code">Code</param>
         public void Encode__Sequence_End (int Position, int Flags, int Code) {
             AddTagLength (Position, Constants.Sequence, TagMode.Constructed, Flags, Code);
             }
 
+        /// <summary>
+        /// Encode end of a sequence. Note that since everything is written out 
+        /// backwards calls to end sequences must preceed the date to begin.
+        /// </summary>
+        /// <param name="Position">Buffer position</param>
         public void Encode__Sequence_End (int Position) {
             AddTagLength (Position, Constants.Sequence, TagMode.Constructed, 0, 0);
             }
 
+        /// <summary>
+        /// Start encoding a set
+        /// </summary>
+        /// <returns>Position in the buffer</returns>
         public int Encode__Set_Start () {
             return Pointer;
             }
 
-
+        /// <summary>
+        /// Encode end of a set. Note that since everything is written out 
+        /// backwards calls to end sequences must preceed the date to begin.
+        /// </summary>
+        /// <param name="Position">Buffer position</param>
+        /// <param name="Flags">Flags</param>
+        /// <param name="Code">Code</param>
         public void Encode__Set_End(int Position, int Flags, int Code) {
             AddTagLength (Position, Constants.Set, TagMode.Constructed, Flags, Code);
             }
        
-
+        /// <summary>
+        /// Add a tag with length data
+        /// </summary>
+        /// <param name="Position">Current buffer position</param>
+        /// <param name="Tag">Tag to add</param>
+        /// <param name="TagMode">Tagging mode</param>
+        /// <param name="Flags">Flags</param>
+        /// <param name="Code">Code</param>
         public void AddTagLength (int Position, int Tag, TagMode TagMode, int Flags, int Code) {
             bool Context = (Flags & (int) ASNFlags.Context) > 0;
             bool Implicit = (Flags & (int) ASNFlags.Implicit) > 0;
@@ -239,7 +321,12 @@ namespace Goedel.ASN {
             }
 
 
-
+        /// <summary>
+        /// Encode the data type
+        /// </summary>
+        /// <param name="Data">Data to be encoded</param>
+        /// <param name="Flags">Flags</param>
+        /// <param name="code">Code</param>
         public void Encode__Any (byte [] Data, int Flags, int code) {
             }
 
@@ -249,12 +336,26 @@ namespace Goedel.ASN {
         //
         //  True = 0xff  / False = 0x00
         //
+
+        /// <summary>
+        /// Encode a boolean value with default.
+        /// </summary>
+        /// <param name="Data">Value to encode</param>
+        /// <param name="Flags">Flags</param>
+        /// <param name="code">Code</param>
+        /// <param name="Default">The default value</param>
         public void Encode__Boolean(bool Data, int Flags, int code, bool Default) {
             if (Data != Default) {
                 Encode__Boolean (Data, Flags, code);
                 }
             }
 
+        /// <summary>
+        /// Encode a boolean value.
+        /// </summary>
+        /// <param name="Data">Value to encode</param>
+        /// <param name="Flags">Flags</param>
+        /// <param name="Code">Code</param>
         public void Encode__Boolean (bool Data, int Flags, int Code) {
             int Position = Pointer;
 
@@ -270,13 +371,25 @@ namespace Goedel.ASN {
             AddTagLength (Position, Constants.Boolean, TagMode.Universal, Flags, Code);
             }
 
+        /// <summary>
+        /// Encode an integer value with default.
+        /// </summary>
+        /// <param name="Data">Value to encode</param>
+        /// <param name="Flags">Flags</param>
+        /// <param name="code">Code</param>
+        /// <param name="Default">The default value</param>
         public void Encode__Integer(int Data, int Flags, int code, int Default) {
             if (Data != Default) {
                 Encode__Integer (Data, Flags, code);
                 }
             }
 
-
+        /// <summary>
+        /// Encode a boolean value.
+        /// </summary>
+        /// <param name="Data">Value to encode</param>
+        /// <param name="Flags">Flags</param>
+        /// <param name="Code">Code</param>
         public void Encode__Integer(int Data, int Flags, int Code) {
             int Position = Pointer;
             if (Data == Int32.MinValue) {
@@ -317,6 +430,12 @@ namespace Goedel.ASN {
         // Only positive big numbers are supported.
         // The Microsoft .NET crypto routines return arrays in which Data[0] is the MSB
    
+        /// <summary>
+        /// Encode a big integer value.
+        /// </summary>
+        /// <param name="Data">The data to encode in most significant byte order.</param>
+        /// <param name="Flags">Flags</param>
+        /// <param name="Code">ASN.1 Code.</param>
         public void Encode__BigInteger(byte[] Data, int Flags, int Code) {
             int Position = Pointer;
             // Strip off preceding zeros
@@ -351,6 +470,11 @@ namespace Goedel.ASN {
                 }
             }
 
+        /// <summary>
+        /// Encode a null value.
+        /// </summary>
+        /// <param name="Flags">ASN.1 Flags</param>
+        /// <param name="Code">ASN.1 Code</param>
         public void Encode__Null(int Flags, int Code) {
             int Position = Pointer;
 
@@ -360,6 +484,7 @@ namespace Goedel.ASN {
             }
 
         // Bits must be byte aligned.
+
 
         private bool IsOptional(int Flags) {
             return (( Flags & ((int) ASNFlags.Optional)) > 0);
@@ -374,6 +499,12 @@ namespace Goedel.ASN {
             return IsDefault;
             }
 
+        /// <summary>
+        /// Encode a bit field.
+        /// </summary>
+        /// <param name="Data">Data to encode</param>
+        /// <param name="Flags">ASN.1 Flags</param>
+        /// <param name="Code">ASN.1 Code</param>
         public void Encode__Bits(byte[] Data, int Flags, int Code) {
             int Position = Pointer;
 
@@ -389,6 +520,14 @@ namespace Goedel.ASN {
 
         // The first byte in a VBits element specifies the number of 
         // unused bits in the last byte.
+
+        /// <summary>
+        /// Encode a VBits element. The first byte in a VBits element specifies the number of
+        /// unused bits in the last byte.
+        /// </summary>
+        /// <param name="Data">Data to encode</param>
+        /// <param name="Flags">ASN.1 Flags</param>
+        /// <param name="Code">ASN.1 Code</param>
         public void Encode__VBits(byte[] Data, int Flags, int Code) {
             int Position = Pointer;
             
@@ -401,6 +540,12 @@ namespace Goedel.ASN {
             AddTagLength (Position, Constants.BitString, TagMode.Universal, Flags, Code);
             }
 
+        /// <summary>
+        /// Encode a data element.
+        /// </summary>
+        /// <param name="Data">Data to encode</param>
+        /// <param name="Flags">ASN.1 Flags</param>
+        /// <param name="Code">ASN.1 Code</param>
         public void Encode__Octets (byte [] Data, int Flags, int Code) {
             int Position = Pointer;
             
@@ -412,6 +557,12 @@ namespace Goedel.ASN {
             AddTagLength (Position, Constants.OctetString, TagMode.Universal, Flags, Code);
             }
 
+        /// <summary>
+        /// Encode a data object.
+        /// </summary>
+        /// <param name="Data">Data to encode</param>
+        /// <param name="Flags">ASN.1 Flags</param>
+        /// <param name="Code">ASN.1 Code</param>
         public void Encode__Object(Goedel.ASN.Root Data, int Flags, int Code) {
             //int Position = Pointer;
 
@@ -421,6 +572,12 @@ namespace Goedel.ASN {
 
             }
 
+        /// <summary>
+        /// Encode an OID element.
+        /// </summary>
+        /// <param name="Data">Data to encode</param>
+        /// <param name="Flags">ASN.1 Flags</param>
+        /// <param name="Code">ASN.1 Code</param>
         public void Encode__OIDRef (int [] Data, int Flags, int Code) {
             int Position = Pointer;
 
@@ -441,6 +598,13 @@ namespace Goedel.ASN {
         //
         //  For dates before 1 Jan 2050 use UTCTime, otherwise Generalized Time
         //
+
+        /// <summary>
+        /// Encode a date-time element.
+        /// </summary>
+        /// <param name="Data">Data to encode</param>
+        /// <param name="Flags">ASN.1 Flags</param>
+        /// <param name="Code">ASN.1 Code</param>        
         public void Encode__Time(DateTime Data, int Flags, int Code) {
 
             //if (NullCheck (Data == null, Flags, Code)) return;
@@ -453,6 +617,12 @@ namespace Goedel.ASN {
                 }
             }
 
+        /// <summary>
+        /// Encode a UTC time element.
+        /// </summary>
+        /// <param name="Data">Data to encode</param>
+        /// <param name="Flags">ASN.1 Flags</param>
+        /// <param name="Code">ASN.1 Code</param>
         public void Encode__UTCTime (DateTime Data, int Flags, int Code) {
             int Position = Pointer;
 
@@ -463,7 +633,13 @@ namespace Goedel.ASN {
             //AddTag (Constants.UTCTime, TagMode.Universal);
             AddTagLength (Position, Constants.UTCTime, TagMode.Universal, Flags, Code);
             }
-        
+
+        /// <summary>
+        /// Encode a generalized time element.
+        /// </summary>
+        /// <param name="Data">Data to encode</param>
+        /// <param name="Flags">ASN.1 Flags</param>
+        /// <param name="Code">ASN.1 Code</param>
         public void Encode__GeneralizedTime (DateTime Data, int Flags, int Code) {
             int Position = Pointer;
 
@@ -475,7 +651,12 @@ namespace Goedel.ASN {
             AddTagLength (Position, Constants.GeneralizedTime, TagMode.Universal, Flags, Code);
             }
 
-        // 12
+        /// <summary>
+        /// Encode a UTF8 string element.
+        /// </summary>
+        /// <param name="Data">Data to encode</param>
+        /// <param name="Flags">ASN.1 Flags</param>
+        /// <param name="Code">ASN.1 Code</param>
         public void Encode__UTF8String (string Data, int Flags, int Code) {
             int Position = Pointer;
 
@@ -498,7 +679,12 @@ namespace Goedel.ASN {
             return false;
             }
 
-        //19
+        /// <summary>
+        /// Encode a printable string element.
+        /// </summary>
+        /// <param name="Data">Data to encode</param>
+        /// <param name="Flags">ASN.1 Flags</param>
+        /// <param name="Code">ASN.1 Code</param>
         public void Encode__PrintableString (string Data, int Flags, int Code) {
             int Position = Pointer;
 
@@ -518,7 +704,12 @@ namespace Goedel.ASN {
             AddTagLength (Position, Constants.PrintableString, TagMode.Universal, Flags, Code);
             }
 
-        // 22
+        /// <summary>
+        /// Encode a IA5String element.
+        /// </summary>
+        /// <param name="Data">Data to encode</param>
+        /// <param name="Flags">ASN.1 Flags</param>
+        /// <param name="Code">ASN.1 Code</param>
         public void Encode__IA5String (string Data, int Flags, int Code) {
             int Position = Pointer;
 
@@ -533,7 +724,12 @@ namespace Goedel.ASN {
             AddTagLength (Position, Constants.IA5String, TagMode.Universal, Flags, Code);
             }
 
-        //30
+        /// <summary>
+        /// Encode a BMP string data element.
+        /// </summary>
+        /// <param name="Data">Data to encode</param>
+        /// <param name="Flags">ASN.1 Flags</param>
+        /// <param name="Code">ASN.1 Code</param>
         public void Encode__BMPString(string Data, int Flags, int Code) {
             int Position = Pointer;
 

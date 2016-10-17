@@ -8,14 +8,16 @@ namespace Goedel.Utilities {
 
 
     /// <summary>
-    /// Delegate that will be thrown if a condition is met
+    /// Delegate that will be thrown as an exception if a condition is met
     /// </summary>
     /// <param name="Reason"></param>
     /// <returns></returns>
     public delegate System.Exception ThrowDelegate(string Reason);
 
     /// <summary>
-    /// Extension methods on 
+    /// Convenience routines to test various types of assertion and 
+    /// throw an exception using an exception factory method such as the ones
+    /// created by Exceptional.
     /// </summary>
     public static class Assert {
 
@@ -128,19 +130,6 @@ namespace Goedel.Utilities {
 
 
 
-    /// <summary>
-    /// Exception for 'Not yet implemented' exception.
-    /// </summary>
-    public class NYI : System.Exception {
-        /// <summary>
-        /// The public fatory delegate
-        /// </summary>
-        public static ThrowDelegate Throw;
-
-        static System.Exception _Throw(string Reason) {
-            return new NYI();
-            }
-        }
 
 
 

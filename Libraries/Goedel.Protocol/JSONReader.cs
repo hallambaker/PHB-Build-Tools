@@ -28,33 +28,83 @@ using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
+    /// <summary>
+    /// JSON Reader base class. Note that this implementation uses a hand coded
+    /// FSR rather than one generated with FSRGen. This should be fixed.
+    /// </summary>
     public partial class JSONReader : Reader {
 
-        protected enum CharType {
-
-            Quote=0,
-            LeftBrace=1, 
-            RightBrace=2,
-            LeftSquare=3, 
-            RightSquare=4,
-            Solidus=5,
-            Zero=6,
-            Digit=7,
-            Period=8,
-            Colon=9,
-            Comma=10,
-            Minus=11, 
-            Plus=12,
-            Ee=13,
-            u=14,
-            Escaped=15,
-            Hex=16,
-            Lower=17,
-            WS=18,
-            EOR=19,
-            Other=20,
+        /// <summary>
+        /// Return a JSON reader for the specified string.
+        /// </summary>
+        /// <param name="Input">The string to be read</param>
+        /// <returns>The reader instance.</returns>
+        public static JSONReader OfData(string Input) {
+            return new JSONBufferedReader(Input);
             }
 
+        /// <summary>
+        /// Return a JSON reader for the specified data.
+        /// </summary>
+        /// <param name="Input">The data to be read</param>
+        /// <returns>The reader instance.</returns>
+        public static JSONReader OfData(byte[] Input) {
+            return new JSONBufferedReader(Input);
+            }
+
+        /// <summary>
+        /// Character type used by the FSM.
+        /// </summary>
+        protected enum CharType {
+            /// <summary></summary>
+            Quote=0,
+            /// <summary></summary>
+            LeftBrace = 1,
+            /// <summary></summary>
+            RightBrace = 2,
+            /// <summary></summary>
+            LeftSquare = 3,
+            /// <summary></summary>
+            RightSquare = 4,
+            /// <summary></summary>
+            Solidus = 5,
+            /// <summary></summary>
+            Zero = 6,
+            /// <summary></summary>
+            Digit = 7,
+            /// <summary></summary>
+            Period = 8,
+            /// <summary></summary>
+            Colon = 9,
+            /// <summary></summary>
+            Comma = 10,
+            /// <summary></summary>
+            Minus = 11,
+            /// <summary></summary>
+            Plus = 12,
+            /// <summary></summary>
+            Ee = 13,
+            /// <summary></summary>
+            u = 14,
+            /// <summary></summary>
+            Escaped = 15,
+            /// <summary></summary>
+            Hex = 16,
+            /// <summary></summary>
+            Lower = 17,
+            /// <summary></summary>
+            WS = 18,
+            /// <summary></summary>
+            EOR = 19,
+            /// <summary></summary>
+            Other = 20,
+            }
+
+        /// <summary>
+        /// Convert character to character type.
+        /// </summary>
+        /// <param name="c">Input character</param>
+        /// <returns>Character class</returns>
         protected CharType GetCharType(char c) {
             if (c == '\"') return CharType.Quote;
             if (c == '{') return CharType.LeftBrace;
@@ -80,11 +130,7 @@ namespace Goedel.Protocol {
             return CharType.Other;
             }
 
-
-
-
-
-
+        /// <summary>State transition table</summary>
         protected int [,] States  = 
             
             {
@@ -126,16 +172,25 @@ namespace Goedel.Protocol {
                 { -1, -1, -1, -1, -1, -1, -1, 26, 26, -1, -1, 26, 26, 26, -1, -1, -1, -1, -1, -1, -1}  // 27  EOR
             };
 
+        /// <summary>Actions to perform on transitions</summary>
         protected enum Action {
+            /// <summary></summary>
             Ignore,
+            /// <summary></summary>
             Add,
+            /// <summary></summary>
             AddHex,
+            /// <summary></summary>
             Escape,
+            /// <summary></summary>
             LastHex,
+            /// <summary></summary>
             Complete,
+            /// <summary></summary>
             AddComplete
             }
 
+        /// <summary>Actions to perform on transitions</summary>
         protected Action [] Actions = {
             Action.Ignore,          //  0
             Action.AddComplete,     //  1
@@ -167,26 +222,43 @@ namespace Goedel.Protocol {
             Action.Ignore           // 27
             };
 
+        /// <summary>Tokens to return.</summary>
         public enum Token {
+            /// <summary></summary>
             Invalid,
+            /// <summary></summary>
             StartObject,    // Tested
+            /// <summary></summary>
             EndObject,      // Tested
+            /// <summary></summary>
             StartArray,     // Tested
+            /// <summary></summary>
             EndArray,       // Tested
+            /// <summary></summary>
             Colon,          // Tested
+            /// <summary></summary>
             Comma,          // Tested
+            /// <summary></summary>
             String,         // Tested
+            /// <summary></summary>
             Number,         // Tested
+            /// <summary></summary>
             Litteral,       // Should never be returned
+            /// <summary></summary>
             True,           // Tested
+            /// <summary></summary>
             False,          // Tested
+            /// <summary></summary>
             Null,           // Tested
+            /// <summary></summary>
             EndRecord,      //
+            /// <summary></summary>
             Binary,         // For internal use
+            /// <summary></summary>
             Empty
             }
 
-
+        /// <summary>Tokens to be returned if the FSR stops in the specified state.</summary>
         protected Token [] Tokens = {
             Token.Empty,                //  0
             Token.StartObject,          //  1
@@ -218,6 +290,7 @@ namespace Goedel.Protocol {
             Token.EndRecord               // 26
                                   };
 
+        /// <summary>Convert hex character to hex value</summary>
         protected int HexCharToInt(char c) {
             if ((c>='0') & (c<='9')) return ((int)c - (int)'0');
             if ((c>='a') & (c<='f')) return (10 + (int)c - (int)'a');
@@ -225,12 +298,19 @@ namespace Goedel.Protocol {
             return -1;
             }
 
+        /// <summary>If true there is a character in the lookahead buffer.</summary>
         protected bool Lookahead = false;
+
+        /// <summary>The current token string</summary>
         protected string TokenString = null;
+
+        /// <summary>The last token type read</summary>
         protected Token  TokenType = Token.Invalid;
 
+        /// <summary>If true, have reached the end of the current record.</summary>
         public bool EOR = false;
 
+        /// <summary>Get the next token.</summary>
         public virtual void GetToken () {
             EOR = false;
             if (!Lookahead) {
@@ -240,12 +320,13 @@ namespace Goedel.Protocol {
             //Trace.WriteLine("Got {0} \"{1}\"", TokenType, TokenString);
             }
 
+        /// <summary>Unget a token.</summary>
         public virtual void UnGetToken() {
             Lookahead = true;
             //Trace.WriteLine("Unget");
             }
 
-
+        /// <summary>Get the next lexical token.</summary>
         string Lexer (out Token Token) {
             string result = "";
             bool Going = true;
@@ -341,16 +422,29 @@ namespace Goedel.Protocol {
             return result;
             }
 
+        /// <summary>
+        /// Construct a JSONReader
+        /// </summary>
         public JSONReader () {
             }
 
+        /// <summary>
+        /// Construct a JSONReader for the specified input stream
+        /// </summary>
         public JSONReader(TextReader InputIn) {
             SetReader (InputIn);
             }
+
+        /// <summary>
+        /// Construct a JSONReader for the specified input string.
+        /// </summary>
         public JSONReader (string BufferIn) {
             SetReader (BufferIn);
             }
 
+        /// <summary>
+        /// Attempt to read an object start from input.
+        /// </summary>
         public override bool StartObject() {
             GetToken ();
             if ((TokenType == Token.EndRecord) | EOF ){
@@ -369,12 +463,20 @@ namespace Goedel.Protocol {
             UnGetToken ();
             return true;
             }
+
+        /// <summary>
+        /// Attempt to read an object end from input.
+        /// </summary>
         public override void EndObject() {
             GetToken ();
             if (TokenType != Token.EndObject) {
                 throw new Exception ("Expected }");
                 }
             }
+
+        /// <summary>
+        /// Attempt to read an object from input.
+        /// </summary>
         public override bool NextObject() {
             GetToken ();
             if (TokenType == Token.Comma) {
@@ -388,7 +490,9 @@ namespace Goedel.Protocol {
                 }
             }
 
-
+        /// <summary>
+        /// Attempt to read a token from input.
+        /// </summary>
         public override string ReadToken() {
             string result = null;
             GetToken ();
@@ -406,6 +510,10 @@ namespace Goedel.Protocol {
             return result;
             }
 
+        /// <summary>
+        /// Attempt to read Integer 32 from input.
+        /// </summary>
+        /// <returns>The data read</returns>
         public override int ReadInteger32() {
             GetToken ();
             if (TokenType != Token.Number) {
@@ -415,6 +523,10 @@ namespace Goedel.Protocol {
             return Convert.ToInt32 (TokenString);
             }
 
+        /// <summary>
+        /// Attempt to read Integer 64 from input.
+        /// </summary>
+        /// <returns>The data read</returns>
         public override long ReadInteger64() {
             GetToken ();
             if (TokenType != Token.Number) {
@@ -424,6 +536,10 @@ namespace Goedel.Protocol {
             return Convert.ToInt64 (TokenString);
             }
 
+        /// <summary>
+        /// Attempt to read boolean from input.
+        /// </summary>
+        /// <returns>The data read</returns>
         public override bool ReadBoolean() {
             GetToken ();
             if (TokenType == Token.True) {
@@ -435,6 +551,10 @@ namespace Goedel.Protocol {
             throw new Exception ("Expected true or false");
             }
 
+        /// <summary>
+        /// Attempt to read binary data from input.
+        /// </summary>
+        /// <returns>The data read</returns>
         public override byte[] ReadBinary() {
             GetToken ();
             if (TokenType != Token.String) {
@@ -443,6 +563,10 @@ namespace Goedel.Protocol {
             return BaseConvert.FromBase64urlString (TokenString);
             }
 
+        /// <summary>
+        /// Attempt to read string from input.
+        /// </summary>
+        /// <returns>The data read</returns>
         public override string ReadString() {
             GetToken ();
             if (TokenType != Token.String) {
@@ -451,7 +575,11 @@ namespace Goedel.Protocol {
             return TokenString;
             }
 
-       public override DateTime ReadDateTime() {
+        /// <summary>
+        /// Attempt to read date time from input.
+        /// </summary>
+        /// <returns>The data read</returns>
+        public override DateTime ReadDateTime() {
             GetToken ();
             if (TokenType != Token.String) {
                 throw new Exception ("Expected \"DateTime\"");
@@ -459,6 +587,10 @@ namespace Goedel.Protocol {
             return new DateTime ();
             }
 
+        /// <summary>
+        /// Attempt to read start of array from input.
+        /// </summary>
+        /// <returns></returns>
         public override bool StartArray() {
             GetToken ();
             if (TokenType != Token.StartArray) {
@@ -471,6 +603,11 @@ namespace Goedel.Protocol {
             UnGetToken ();
             return true;
             }
+
+        /// <summary>
+        /// Return true if there is a following array item.
+        /// </summary>
+        /// <returns></returns>
         public override bool NextArray() {
             GetToken ();
             if (TokenType == Token.Comma) {

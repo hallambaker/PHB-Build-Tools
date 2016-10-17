@@ -28,49 +28,79 @@ using System.IO;
 using Goedel.Utilities;
 
 namespace Goedel.Protocol.Extended {
+    
+    /// <summary>Represent symmetric key ticket.</summary>
     public class TicketData {
+
+        /// <summary></summary>
         public static Cryptography.Authentication TicketAuthentication = 
                         Cryptography.Authentication.HS256T128;
+
+        /// <summary>Number of authentication bytes.</summary>
         protected static int AuthenticationBytes = 0;
+
+        /// <summary>Number of master key bytes</summary>
         protected int MasterKeyBytes = Cryptography.KeyLength (TicketAuthentication) / 8;
 
         static Encoding UTF8Encoding = new UTF8Encoding ();
 
+        /// <summary>Account name.</summary>
         public string Account;
+
+        /// <summary>Account domain.</summary>
         public string Domain;
+
+        /// <summary>Message Authentication Code</summary>
         public byte[] MAC;
 
+        /// <summary>The account ID in username@domain form.</summary>
         public byte[] AccountID {
             get { return UTF8Encoding.GetBytes (Account + "@" + Domain); }
             }
 
+        /// <summary>The ticket data.</summary>
         public byte[] Ticket;
 
+        /// <summary>The authentication algorithm identifier.</summary>
         public Cryptography.Authentication Authentication;
+
+        /// <summary>The encryption algorithm identifier.</summary>
         public Cryptography.Encryption Encryption;
 
+        /// <summary>The master encryption key</summary>
         public Cryptography.Key MasterKey;
+
+        /// <summary>The authentication key derrived from the master key.</summary>
         public Cryptography.Key AuthenticationKey;
+
+        /// <summary>The encryption key derrived from the master key.</summary>
         public Cryptography.Key EncryptionKey;
 
+        /// <summary>If true, ticket has been authenticated.</summary>
         public Boolean Authenticated;
 
 
+        /// <summary>Default constructor, initialize new master key.</summary>
         public TicketData() {
             MasterKey = new Cryptography.Key (TicketAuthentication);
             // Derrive the Authentication and Encryption Keys
             }
 
+        /// <summary>Constructor specifying encryption and authentication algorithms.</summary>
+        /// <param name="Authentication">The authentication algorithm identifier.</param>
+        /// <param name="Encryption">The encryption algorithm identifier.</param>
         public TicketData(Cryptography.Authentication Authentication,
-                Cryptography.Encryption Encryption) {
+                Cryptography.Encryption Encryption) : this (){
 
             this.Authentication = Authentication;
             this.Encryption = Encryption;
 
-            MasterKey = new Cryptography.Key (Authentication);
-            // Derrive the Authentication and Encryption Keys
             }
 
+        /// <summary>
+        /// Unpack ticket data.
+        /// </summary>
+        /// <returns>Number of bytes read.</returns>
         protected int Unpack() {
             int index = 0;
             byte x;
@@ -102,20 +132,36 @@ namespace Goedel.Protocol.Extended {
             return index;
             }
 
-        // Unpack a binary ticket
+
+        /// <summary>
+        /// Construct authenticated ticket from data and authentication value.
+        /// </summary>
+        /// <param name="TicketIn"></param>
+        /// <param name="Hash"></param>
         public TicketData(byte[] TicketIn, byte [] Hash) {
             Ticket = TicketIn;
             this.MAC = Hash;
             Unpack() ;
             }
 
+        /// <summary>
+        /// Debug utility.
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <param name="Ticket"></param>
+        /// <param name="SeedKey"></param>
         static void DumpCrypto (string tag, byte[] Ticket, Cryptography.Key SeedKey) {
             Console.WriteLine ("Dump Crypto {0} Seed={1} Ticket={2}",
                 tag, BaseConvert.ToBase64urlString(SeedKey.KeyData), 
                         BaseConvert.ToBase64urlString(Ticket));
             }
 
-
+        /// <summary>
+        /// Package ticket data to form ticket.
+        /// </summary>
+        /// <param name="Ticket">The raw ticket data.</param>
+        /// <param name="SeedKey">The master key for encrypting and authenticating tickets.</param>
+        /// <returns>Packed ticket.</returns>
         public static byte[] Pack(byte[] Ticket, Cryptography.Key SeedKey) {
             byte [] Result = null;
             byte [] Hash = null;
@@ -141,6 +187,13 @@ namespace Goedel.Protocol.Extended {
             return Result;
             }
 
+        /// <summary>
+        /// Unpack ticket data.
+        /// </summary>
+        /// <param name="Ticket">The binary ticket</param>
+        /// <param name="SeedKey">The master key.</param>
+        /// <param name="Hash">The authentication value.</param>
+        /// <returns></returns>
         public static byte[] UnPack(byte[] Ticket, Cryptography.Key SeedKey, out byte [] Hash) {
             byte[] Decrypted = null;
             int IVlength;
@@ -185,9 +238,12 @@ namespace Goedel.Protocol.Extended {
             return Result;
             }
 
-
-
-
+        /// <summary>
+        /// Verify ticket
+        /// </summary>
+        /// <param name="Ticket">Raw ticket data.</param>
+        /// <param name="SeedKey">Ticket seed key.</param>
+        /// <returns></returns>
         public static bool VerifyTicket (byte[] Ticket, Cryptography.Key SeedKey) {
             int Sign = Ticket.Length - AuthenticationBytes;
 
@@ -200,6 +256,12 @@ namespace Goedel.Protocol.Extended {
             return true;
             }
 
+        /// <summary>
+        /// Convert binary ticket to ticket data.
+        /// </summary>
+        /// <param name="WrappedTicket">Binary ticket</param>
+        /// <param name="SeedKey">Master key for cryptographic operations.</param>
+        /// <returns></returns>
         public static TicketData MakeTicket(byte[] WrappedTicket, Cryptography.Key SeedKey) {
             byte [] Hash;
             byte[] Ticket = UnPack (WrappedTicket, SeedKey, out Hash);
@@ -232,10 +294,18 @@ namespace Goedel.Protocol.Extended {
 
         //  [KEY-SIZE]  MAC Data
 
+        /// <summary>
+        /// Return size of ticket in encoded form.
+        /// </summary>
+        /// <returns>Size of encoded ticket in bytes.</returns>
         public virtual int Length() {
             return (5 + MasterKey.KeyData.Length + AccountID.Length + AuthenticationBytes);
             }
 
+        /// <summary>
+        /// Write ticket data to ticket.
+        /// </summary>
+        /// <returns>Number of bytes written.</returns>
         protected virtual int Fill() {
             int index = 0;
 
@@ -252,32 +322,38 @@ namespace Goedel.Protocol.Extended {
             return (index);
             }
 
-        
+        /// <summary>
+        /// Convert to binary ticket under the specified key.
+        /// </summary>
+        /// <param name="MasterKey"></param>
+        /// <returns></returns>
         public byte[] GetTicket(Cryptography.Key MasterKey) {
             Ticket = new byte [Length()];
-            
-            //int Sign = Fill();
-
-            //if (Sign != Ticket.Length - AuthenticationBytes) throw new Exception ("Ticket Length");
-
-            //byte [] Hash = Cryptography.GetMAC (Ticket, Sign, TicketAuthentication, MasterKey);
-            //Array.Copy (Hash, 0, Ticket, Sign, AuthenticationBytes);
-
-            //DumpCrypto ("Sign ticket", Hash, MasterKey);
 
             return Pack (Ticket, MasterKey);
             }
 
         }
 
+    /// <summary>Represents the temporary ticket that is created while in the process of authenticating a ticket 
+    /// grant request.</summary>
     public class TemporaryTicketData : TicketData {
+        
+        /// <summary>The client challenge data.</summary>
         public byte[] ClientChallenge;
+        
+        /// <summary>The server challenge data.</summary>
         public byte[] ServerChallenge;
 
+        /// <summary>Construct a temporary ticket.</summary>
         public TemporaryTicketData() {
             }
 
-
+        /// <summary>
+        /// Construct a temporary ticket from the specified data.
+        /// </summary>
+        /// <param name="TicketIn">The ticket data.</param>
+        /// <param name="Hash">The authentication value.</param>
         public TemporaryTicketData(byte[] TicketIn, byte [] Hash) {
             Ticket = TicketIn;
             MAC = Hash;
@@ -297,10 +373,18 @@ namespace Goedel.Protocol.Extended {
                 }
             }
 
+        /// <summary>
+        /// The ticket lenght in bytes.
+        /// </summary>
+        /// <returns></returns>
         public override int Length() {
             return (7 + MasterKeyBytes + AccountID.Length + AuthenticationBytes + ClientChallenge.Length + ServerChallenge.Length);
             }
 
+        /// <summary>
+        /// Write ticket data to binary ticket.
+        /// </summary>
+        /// <returns></returns>
         protected override int Fill() {
             int index = 0;
 

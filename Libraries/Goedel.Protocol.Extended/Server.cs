@@ -26,6 +26,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Goedel.Debug2;
+using Goedel.Utilities;
 
 namespace Goedel.Protocol.Extended {
 
@@ -115,11 +116,19 @@ namespace Goedel.Protocol.Extended {
     /// </summary>
     public class InterfaceRegistration {
 
+        /// <summary>The provider of the service. A provider may be registered
+        /// at more than one server.</summary>
         public ProviderRegistration ProviderRegistration;
+        /// <summary>The provider interface</summary>
         public JPCInterface Interface;
 
         List<PortRegistration> Ports;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="Interface">The provider interface.</param>
+        /// <param name="ProviderRegistration">The provider.</param>
         public InterfaceRegistration (JPCInterface Interface, 
                     ProviderRegistration ProviderRegistration) {
             this.Interface = Interface;
@@ -145,9 +154,7 @@ namespace Goedel.Protocol.Extended {
         /// <summary>
         /// Register a service at the standard HTTP port.
         /// </summary>
-        /// <param name="URI">URI to register port at. If zero, a 
-        /// random port is chosen and may be read from the port
-        /// registration structure returned.</param>
+        /// <param name="Domain">DNS domain to register service to</param>
         /// <returns>The port registration structure.</returns>
         public HTTPPortRegistration AddService(string Domain) {
 
@@ -164,7 +171,9 @@ namespace Goedel.Protocol.Extended {
         /// </param>
         /// <returns></returns>
         public PortRegistration AddUDP(int port) {
-            return null;
+            throw NYI.Throw("Need to add implementation of Add UDP");
+
+            //return null;
             }
 
         /// <summary>
@@ -193,7 +202,9 @@ namespace Goedel.Protocol.Extended {
     /// Represents a specific service provider.
     /// </summary>
     public class ProviderRegistration {
+        /// <summary></summary>
         public JPCServer JPCServer;
+        /// <summary></summary>
         public JPCProvider JPCProvider;
 
         List<InterfaceRegistration> Interfaces;
@@ -210,7 +221,11 @@ namespace Goedel.Protocol.Extended {
             Interfaces = new List<InterfaceRegistration>();
             }
 
-
+        /// <summary>
+        /// Add an interface.
+        /// </summary>
+        /// <param name="Interface">Interface to add,</param>
+        /// <returns>Registration of interface.</returns>
         public InterfaceRegistration Add (JPCInterface Interface) {
             var InterfaceRegistration = new InterfaceRegistration (Interface, this);
             Interfaces.Add(InterfaceRegistration);
@@ -388,6 +403,10 @@ namespace Goedel.Protocol.Extended {
             Active = false;
             }
 
+        /// <summary>
+        /// Register listener port.
+        /// </summary>
+        /// <param name="Port">Port to add listener on.</param>
         public void Register(HTTPPortRegistration Port) {
             Ports.Add(Port);
             HttpListener.Prefixes.Add(Port.URI);

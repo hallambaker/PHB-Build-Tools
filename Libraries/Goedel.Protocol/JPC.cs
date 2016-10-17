@@ -35,21 +35,19 @@ namespace Goedel.Protocol {
         /// </summary>
         public static bool LocalLoopback = false;
 
-        protected JPCProvider () {
-            Interfaces = new List<JPCInterface> ();
-            }
+
 
         /// <summary>
         /// The dispatch service.
         /// </summary>
-        public List<JPCInterface> Interfaces;
+        public List<JPCInterface> Interfaces = new List<JPCInterface>();
 
         /// <summary>
         /// Dispatch Class. Reads input from the provided reader and attempts to
         /// dispatch a method in response. Note that the calling routine may throw 
         /// an error. This must be caught and processed by the host dispatch class.
         /// </summary>
-        /// <param name="JPCService">The service that is to handle the request.</param>
+        /// <param name="Session">The service session that is to handle the request.</param>
         /// <param name="JSONReader"></param>
         /// <returns>The response to the request.</returns>
         public abstract Goedel.Protocol.JSONObject Dispatch(JPCSession Session,
@@ -62,6 +60,8 @@ namespace Goedel.Protocol {
         /// <param name="Domain">DNS domain name of the service.</param>
         /// <param name="WellKnown">The well-known service identifier tag (see RFC 5785).</param>
         /// <param name="TLS">If true, the https scheme is used, otherwise http is used.</param>
+        /// <param name="HostMode">If true, service is self hosted.</param>
+        /// <param name="Prefix">The service prefix type</param>
         /// <returns></returns>
         public static string WellKnownToURI (string Domain, string WellKnown, 
                             string Prefix, bool TLS, bool HostMode) {
@@ -143,10 +143,19 @@ namespace Goedel.Protocol {
     /// </summary>
     public partial class DirectSession : JPCSession{
 
+        /// <summary>
+        /// Create a direct session for the specified account.
+        /// </summary>
+        /// <param name="Account"></param>
         public DirectSession (string Account) {
             this.Account = Account;
             }
 
+        /// <summary>
+        /// Authenticate session using the specified credentials
+        /// </summary>
+        /// <param name="UDF">UDF of credential to use.</param>
+        /// <returns></returns>
         public override bool Authenticate(string UDF) {
             this.UDF = UDF;
             Authenticated = true;
@@ -174,8 +183,19 @@ namespace Goedel.Protocol {
             return false;
             }
 
+        /// <summary>
+        /// Post the specified data to the remote service.
+        /// </summary>
+        /// <param name="Data">Input data</param>
+        /// <returns></returns>
         public abstract StreamBuffer Post(StreamBuffer Data);
 
+        /// <summary>
+        /// Construct a Post string.
+        /// </summary>
+        /// <param name="Tag">Operation to perform.</param>
+        /// <param name="Request">Request data.</param>
+        /// <returns>string returned in response.</returns>
         public virtual string Post (string Tag, JSONObject Request) {
 
             var Buffer = new StreamBuffer();
@@ -201,6 +221,9 @@ namespace Goedel.Protocol {
     /// for documentation.
     /// </summary>
     public partial class LocalRemoteSession : JPCRemoteSession {
+        /// <summary>
+        /// The provider.
+        /// </summary>
         protected JPCProvider Host;
 
 
@@ -250,25 +273,25 @@ namespace Goedel.Protocol {
 
 
 
-    /// <summary>
-    /// Generic exception. Thrown when the specified host is not
-    /// valid.
-    /// </summary>
-    public class InvalidHostService : Exception {
-        public InvalidHostService() : base() { }
-        public InvalidHostService(string message) : base(message) { }
-        public InvalidHostService(string message, System.Exception inner) : base(message, inner) { }
-        }
+    ///// <summary>
+    ///// Generic exception. Thrown when the specified host is not
+    ///// valid.
+    ///// </summary>
+    //public class InvalidHostService : Exception {
+    //    public InvalidHostService() : base() { }
+    //    public InvalidHostService(string message) : base(message) { }
+    //    public InvalidHostService(string message, System.Exception inner) : base(message, inner) { }
+    //    }
 
-    /// <summary>
-    /// Generic exception. Thrown when the requested operation is not
-    /// known to the host.
-    /// </summary>
-    public class UnknownOperation : Exception {
-        public UnknownOperation() : base() { }
-        public UnknownOperation(string message) : base(message) { }
-        public UnknownOperation(string message, System.Exception inner) : base(message, inner) { }
-        }
+    ///// <summary>
+    ///// Generic exception. Thrown when the requested operation is not
+    ///// known to the host.
+    ///// </summary>
+    //public class UnknownOperation : Exception {
+    //    public UnknownOperation() : base() { }
+    //    public UnknownOperation(string message) : base(message) { }
+    //    public UnknownOperation(string message, System.Exception inner) : base(message, inner) { }
+    //    }
 
     }
 

@@ -27,9 +27,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Goedel.Protocol {
+    /// <summary>
+    /// STUB!!!  DNS interface class. 
+    /// </summary>
     class DNS {
 
-
+        /// <summary>
+        /// STUB!!! Resolve the specified domain to obtain an IP address.
+        /// </summary>
+        /// <param name="Domain">Domain to resolve</param>
+        /// <param name="Prefix">The service prefix to resolve</param>
+        /// <returns>Currently the fixed string 192.168.1.39</returns>
         public static string Resolve (string Domain, string Prefix) {
 
             return "192.168.1.39";

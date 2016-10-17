@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Goedel.Protocol.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,7 +53,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ByteBuffer.cs" />
+    <Compile Include="CharacterReaders.cs" />
+    <Compile Include="StreamBuffer.cs" />
     <Compile Include="Dechunking.cs" />
     <Compile Include="DNS.cs" />
     <Compile Include="JPC.cs" />
@@ -81,6 +83,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
+    <None Include="index.md" />
+    <None Include="todo.md" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>

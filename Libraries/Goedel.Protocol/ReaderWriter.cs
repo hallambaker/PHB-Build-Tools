@@ -21,273 +21,177 @@
 //  
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-
-
-
 
 namespace Goedel.Protocol {
 
-    public abstract class CharacterStream {
-        public long Count = 0;
-        public abstract bool EOF { get; }
-
-        public abstract char LookNext();
-        public abstract char GetNext();
-
-        }
-
-    public abstract class BufferedCharacterStream : CharacterStream {
-
-        public abstract void Mark();
-
-        public abstract void Restore();
-        }
-
-    public class StringCharacterStream : BufferedCharacterStream {
-        string Source;
-        int Position = 0;
-        public override bool EOF { get { return Position >= Source.Length; } }
-
-        public StringCharacterStream(string Source) {
-            this.Source = Source;
-            }
-
-        public override char LookNext() {
-            return Source[Position];
-            }
-
-        public override char GetNext() {
-            return Source[Position++];
-            }
-
-
-        int MarkPosition = -1;
-        public override void Mark() {
-            MarkPosition = Position;
-            }
-
-        public override void Restore() {
-            if (MarkPosition >= 0) {
-                Position = MarkPosition;
-                }
-            }
-
-        }
-
-    public class TextCharacterTextStream : CharacterStream {
-        TextReader Source;
-        bool _EOF;
-        public override bool EOF { get { return _EOF; } }
-
-        public TextCharacterTextStream(TextReader Source) {
-            this.Source = Source;
-            _EOF = false;
-            }
-
-        public override char LookNext() {
-            var Char = Source.Peek();
-            if (Char < 0) {
-                _EOF = true;
-                return (char)0;
-                }
-            return (char)Char;
-            }
-
-        public override char GetNext() {
-            var Char = Source.Read();
-            if (Char < 0) {
-                _EOF = true;
-                return (char)0;
-                }
-            return (char)Char;
-            }
-
-        }
-
-
-    public abstract class CharacterTextStream : BufferedCharacterStream {
-        //byte[] Source;
-        //long Position;
-
-        protected long MarkPosition = -1;
-        protected int MarkBuffer;
-        protected int Buffer = -1;
-
-        protected bool _EOF = false;
-        public override bool EOF { get { return _EOF; } }
-
-        protected abstract int ReadChar();
-
-
-        public override char LookNext() {
-            Peek();
-            return (char)Buffer;
-            }
-
-        public override char GetNext() {
-            Peek();
-            Buffer = -1;
-            return (char)Buffer;
-            }
-
-        void Peek() {
-            if (Buffer > 0) {
-                return;
-                }
-
-            var Byte1 = ReadChar();
-            if (_EOF) {
-                return;
-                }
-
-            if (Byte1 >= 0xf0) {
-                // 4 byte sequence
-                var Byte2 = ReadChar();
-                var Byte3 = ReadChar();
-                var Byte4 = ReadChar();
-                Buffer = ((Byte1 & 0x1f) << 15) | ((Byte2 & 0x3f) << 12) |
-                    ((Byte3 & 0x1f) << 6) | (Byte4 & 0x3f);
-                }
-            else if (Byte1 >= 0xe0) {
-                // 3 byte sequence
-                var Byte2 = ReadChar();
-                var Byte3 = ReadChar();
-                Buffer = ((Byte1 & 0x1f) << 12) | ((Byte2 & 0x3f) << 6) |
-                    (Byte3 & 0x1f);
-                }
-            else if (Byte1 >= 0xc0) {
-                // 2 byte sequence
-                var Byte2 = ReadChar();
-                Buffer = ((Byte1 & 0x1f) << 6) | (Byte2 & 0x3f);
-                }
-            else {
-                Buffer = Byte1;
-                }
-
-            }
-
-        }
-
-
-
-    public class DataCharacterTextStream : CharacterTextStream {
-        byte[] Source;
-        long Position;
-
-        public override void Mark() {
-            MarkPosition = Position;
-            MarkBuffer = Buffer;
-            }
-
-        public override void Restore() {
-            if (MarkPosition >= 0) {
-                Position = MarkPosition;
-                Buffer = MarkBuffer;
-                }
-            }
-
-
-        public DataCharacterTextStream(byte[] Source) {
-            this.Source = Source;
-            Position = 0;
-            }
-
-        protected override int ReadChar() {
-            if (Position >= Source.Length) {
-                _EOF = true;
-                return -1;
-                }
-            var C1 = Source[Position++];
-            return C1;
-            }
- 
-        }
-
-
-
+    /// <summary>
+    /// Abstract JSON object deserializer
+    /// </summary>
     public abstract class Reader {
+
+        /// <summary>Input stream</summary>
         protected CharacterStream Input;
 
+        /// <summary>Get next character without advancing stream</summary>
         protected char LookNext() {
             return Input.LookNext();
             }
 
+        /// <summary>Get next character and advance stream</summary>
         protected char GetNext() {
             return Input.GetNext();
             }
 
+        /// <summary>If true, end of file has been reached</summary>
         protected bool EOF { get { return Input.EOF; } }
 
+        /// <summary>Set the input reader</summary>
+        /// <param name="InputIn">Input source</param>
         protected void SetReader(TextReader InputIn) {
             Input = new TextCharacterTextStream(InputIn);
             }
 
+        /// <summary>Set the input reader</summary>
+        /// <param name="InputIn">Input source</param>
         protected void SetReader(string InputIn) {
             Input = new StringCharacterStream(InputIn);
             }
 
+        /// <summary>Default constructor</summary>
+        public Reader() {
+            }
 
+        /// <summary>Constructor from string source</summary>
+        /// <param name="BufferIn">Input source</param>
         public Reader(string BufferIn) {
             SetReader(BufferIn);
             }
 
-        public Reader() {
-            }
-
-
-
+        /// <summary>Constructor from stream source</summary>
+        /// <param name="InputIn">Input source</param>
         public Reader(TextReader InputIn) {
             SetReader(InputIn);
             }
 
+        /// <summary>Get start of object</summary>
+        /// <returns></returns>
         abstract public bool StartObject();
+        
+        /// <summary>Get end of object</summary>
         abstract public void EndObject();
+
+        /// <summary>Get next object</summary>
+        /// <returns>Value read</returns>
         abstract public bool NextObject();
 
+        /// <summary>Read token</summary>
+        /// <returns>Value read</returns>
         abstract public string ReadToken();
 
+        /// <summary>Read Integer32</summary>
+        /// <returns>Value read</returns>
         abstract public int ReadInteger32();
+
+        /// <summary>Read Integer64</summary>
+        /// <returns>Value read</returns>
         abstract public long ReadInteger64();
+
+        /// <summary>Read boolen value</summary>
+        /// <returns>Value read</returns>
         abstract public bool ReadBoolean();
+
+        /// <summary>Read binary date</summary>
+        /// <returns>Value read</returns>
         abstract public byte[] ReadBinary();
+
+        /// <summary>Read string</summary>
+        /// <returns>Value read</returns>
         abstract public string ReadString();
+
+        /// <summary>Read date time item</summary>
+        /// <returns>Value read</returns>
         abstract public DateTime ReadDateTime();
+
+        /// <summary>Read</summary>
+        /// <returns>If true, is an item to read, otherwise have reached end.</returns>
         abstract public bool StartArray();
+
+        /// <summary>Read next item in array</summary>
+        /// <returns>If true, is an item to read, otherwise have reached end.</returns>
         abstract public bool NextArray();
         }
 
-
+    /// <summary>
+    /// Abstract JSON object serializer
+    /// </summary>
     public abstract class Writer {
 
+        /// <summary>Output tream</summary>
         protected StreamBuffer Output;
 
+        /// <summary>Convert output stream to byte array</summary>
+        /// <returns>Output stream as byte array</returns>
         public byte[] GetBytes {
             get { return Output.GetBytes; }
             }
 
+        /// <summary>Write out the start of a token.</summary>
+        /// <param name="Tag">Tag to write</param>
+        /// <param name="Indent">Indent level to write at</param>
         abstract public void WriteToken(string Tag, int Indent);
 
+        /// <summary>Write integer value token</summary>
+        /// <param name="Data">Value to write</param>
         abstract public void WriteInteger32(int Data);
+
+        /// <summary>Write integer value token</summary>
+        /// <param name="Data">Value to write</param>
         abstract public void WriteInteger64(long Data);
+
+        /// <summary>Write integer value token</summary>
+        /// <param name="Data">Value to write</param>
         abstract public void WriteFloat32(float Data);
+
+        /// <summary>Write integer value token</summary>
+        /// <param name="Data">Value to write</param>
         abstract public void WriteFloat64(double Data);
+
+        /// <summary>Write integer value token</summary>
+        /// <param name="Data">Value to write</param>
         abstract public void WriteBoolean(bool Data);
 
+        /// <summary>Write integer value token</summary>
+        /// <param name="Data">Value to write</param>
         abstract public void WriteString(string Data);
+ 
+        /// <summary>Write integer value token</summary>
+        /// <param name="Data">Value to write</param>
         abstract public void WriteBinary(byte[] Data);
+
+        /// <summary>Write integer value token</summary>
+        /// <param name="Data">Value to write</param>
         abstract public void WriteDateTime(DateTime Data);
 
-        // Mark the start, middle and end of array elements
+
+        /// <summary>Write array start</summary>
         abstract public void WriteArrayStart();
+
+        /// <summary>Write array separator</summary>
+        /// <param name="first">If true, is the first item in array, set to false on exit</param>
         abstract public void WriteArraySeparator(ref bool first);
+
+        /// <summary>Write array end</summary>
         abstract public void WriteArrayEnd();
 
-        // Mark the start, middle and end of object elements
+        /// <summary>Write object start</summary>
         abstract public void WriteObjectStart();
+
+        /// <summary>Write object separator.</summary>
+        /// <param name="first">If true, is the first item in array, set to false on exit</param>
         abstract public void WriteObjectSeparator(ref bool first);
+
+        /// <summary>Write object end.</summary>
         abstract public void WriteObjectEnd();
         }
     }

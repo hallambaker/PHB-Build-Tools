@@ -44,16 +44,16 @@ namespace Goedel.Protocol {
             }
 
 
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize(Writer Writer, bool wrap, ref bool first) {
-            SerializeX(Writer, wrap, ref first);
-            }
+  //      /// <summary>
+  //      /// Serialize this object to the specified output stream.
+  //      /// </summary>
+  //      /// <param name="Writer">Output stream</param>
+  //      /// <param name="wrap">If true, output is wrapped with object
+  //      /// start and end sequences '{ ... }'.</param>
+  //      /// <param name="first">If true, item is the first entry in a list.</param>
+		//public override void Serialize(Writer Writer, bool wrap, ref bool first) {
+  //          SerializeX(Writer, wrap, ref first);
+  //          }
 
         /// <summary>
         /// Serialize this object to the specified output stream.
