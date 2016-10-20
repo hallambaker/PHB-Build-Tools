@@ -5,7 +5,10 @@ using System.Text;
 
 namespace Goedel.Registry {
 
-
+    /// <summary>
+    /// Extension methods to create labels, escaped strings, etc. in a specified
+    /// target language.
+    /// </summary>
     public static partial class ExtensionMethods {
 
         private static string _Target = "CS" ;
@@ -13,11 +16,11 @@ namespace Goedel.Registry {
         /// <summary>
         /// Sets the code generation target type. This ensures that labels,
         /// etc have the correct prefixes and formatting style for the target
-        /// language. The default is to generate for C#.
+        /// language. The default is 'CS' to generate for C#.
         /// </summary>
         public static string Target {
             get {
-                return _Target;
+                return _Target.ToUpper();
                 }
             set {
                 _Target = value;
@@ -28,8 +31,8 @@ namespace Goedel.Registry {
         /// Generate a label for the currently specified code generation target.
         /// The default is to generate for C#.
         /// </summary>
-        /// <param name="Base"></param>
-        /// <returns></returns>
+        /// <param name="Base">Base string</param>
+        /// <returns>Approprately escaped label for current targe language.</returns>
         public static string Label(this object Base) {
             switch (Target) {
                 case "CS": {
@@ -55,6 +58,11 @@ namespace Goedel.Registry {
             return Base.ToString();
             }
 
+        /// <summary>
+        /// Create a quoted, escaped string in the current language
+        /// </summary>
+        /// <param name="Base">Unescaped string</param>
+        /// <returns>Quoted escaped string.</returns>
         public static string Quoted (this string Base) {
             var StringBuilder = new StringBuilder();
             StringBuilder.Append("\"");
@@ -64,6 +72,11 @@ namespace Goedel.Registry {
             return StringBuilder.ToString();
             }
 
+        /// <summary>
+        /// Create an escaped string in the current language
+        /// </summary>
+        /// <param name="Base">Unescaped string</param>
+        /// <returns>Escaped string.</returns>
         public static string Quoted(this List<string> Base) {
             if (Base == null) return "\"\"";
 
@@ -96,13 +109,28 @@ namespace Goedel.Registry {
                 }
             }
 
-        public static string If(this bool Value, string True) {
-            return If(Value, True, "");
+        /// <summary>
+        /// Return the string value if a condition is met, otherwise return an
+        /// empty string.
+        /// </summary>
+        /// <param name="Value">The condition value.</param>
+        /// <param name="Text">The string to return if Value is true.</param>
+        /// <returns>The string Text if Value is true, otherwise a null string.</returns>
+        public static string If(this bool Value, string Text) {
+            return If(Value, Text, "");
             }
 
-        public static string If(this bool Value, string True, string False) {
+        /// <summary>
+        /// Return the string value if a condition is met, otherwise return an
+        /// empty string.
+        /// </summary>
+        /// <param name="Value">The condition value.</param>
+        /// <param name="TrueText">The string to return if Value is true.</param>
+        /// <param name="FalseText">The string to return if Value is false.</param>
+        /// <returns>The string Text if Value is true, otherwise a null string.</returns>
+        public static string If(this bool Value, string TrueText, string FalseText) {
 
-            return Value ? True : False;
+            return Value ? TrueText : FalseText;
             }
 
         }

@@ -73,6 +73,9 @@ namespace #{Namespace.Id} {
 			}
 
 #if (Exception.Base)
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
 		public object UserData;
 #end if
 
@@ -81,7 +84,6 @@ namespace #{Namespace.Id} {
         /// Create an instance of the exception.
         /// </summary>		
         /// <param name="Object">User data</param>	
-		/// <param name="Inner">Inner Exception</param>	
 		public #{Exception.Id} (#{Object.Type} Object) : 
 				base (String.Format (#{Object.Text.Quoted()}#!
 #foreach (var Parameter in Object.Parameters)

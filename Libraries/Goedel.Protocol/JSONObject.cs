@@ -204,6 +204,15 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>
+        /// Factory method to construct object from tagged string data.
+        /// </summary>
+        /// <param name="_Input">Source</param>
+        /// <returns>Constructed object</returns>
+        public static JSONObject FromTagged(JSONReader _Input) {
+            return null;
+            }
+
+        /// <summary>
         /// Deserialize the input string to populate this object
         /// </summary>
         /// <param name="_Input">Input string</param>

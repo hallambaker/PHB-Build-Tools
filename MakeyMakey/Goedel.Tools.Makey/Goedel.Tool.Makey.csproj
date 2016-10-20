@@ -30,6 +30,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <OutputPath>bin\Publish\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -82,10 +85,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Goedel.IO\Goedel.IO.csproj">
-      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
-      <Name>Goedel.IO</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
       <Project>{ccc286f1-6a5b-4946-a382-8a48797192b4}</Project>
       <Name>Goedel.FSR</Name>

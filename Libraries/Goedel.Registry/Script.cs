@@ -7,28 +7,53 @@ using System.Reflection;
 
 
 namespace Goedel.Registry {
+
+    /// <summary>
+    /// Script output class
+    /// </summary>
     public partial class Script {
+        /// <summary></summary>
 		public TextWriter _Output = null;
-		public string _Indent = "";
+        /// <summary></summary>
+        public string _Indent = "";
+        /// <summary></summary>
         public string _Filename = null;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public Script () {
 			}
 
+        /// <summary>
+        /// Constructor with specified output.
+        /// </summary>
+        /// <param name="Output">The output stream</param>
 		public Script (TextWriter Output) {
 			_Output = Output;
 			}
 
+        /// <summary>
+        /// Set the output.
+        /// </summary>
+        /// <param name="Output">The output stream</param>
         public void SetTextWriter (TextWriter Output) {
             Close();
             _Output = Output;
             }
 
+        /// <summary>
+        /// Constructor with specified output file
+        /// </summary>
+        /// <param name="FileName">The output file </param>
         public void SetTextWriter (string FileName) {
             SetTextWriter (new StreamWriter(FileName));
             _Filename = FileName;
             }
 
+        /// <summary>
+        /// Close the current output file.
+        /// </summary>
         public void Close() {
             if (_Output != null) {
                 _Output.Close ();
@@ -36,9 +61,14 @@ namespace Goedel.Registry {
             _Filename = null;
             }
 
+        /// <summary>If true, the entry assembly is unknown.</summary>
         public static bool _TestEntryAssembly = true;
+        /// <summary>The entry assembly</summary>
         public static Assembly _EntryAssembly = null;
 
+        /// <summary>
+        /// Get the current entry assembly.
+        /// </summary>
         public static Assembly EntryAssembly {
             get {
                 if (_TestEntryAssembly) {
@@ -49,21 +79,27 @@ namespace Goedel.Registry {
                 }
             }
 
+        /// <summary>The operating system version.</summary>
         static System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 
+        /// <summary>The operating system platform name.</summary>
         public static string Platform {
             get { return OperatingSystem.Platform.ToString (); }
             }
 
+        /// <summary>The operating system version.</summary>
         public static string PlatformVersion {
             get { return OperatingSystem.Version.ToString(); }
             }
 
-
+        /// <summary>The assembly title.</summary>
         public static string AssemblyTitle {
             get { return GetAssemblyTitle(EntryAssembly); }
             }
 
+        /// <summary>Get assembly title.</summary>
+        /// <param name="Assembly">The assembly being queried.</param>
+        /// <returns>The assembly title.</returns>
         public static string GetAssemblyTitle(Assembly Assembly) {
             object[] attributes = Assembly.
                     GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
@@ -76,6 +112,7 @@ namespace Goedel.Registry {
             return System.IO.Path.GetFileNameWithoutExtension(Assembly.CodeBase);
             }
 
+        /// <summary>The assembly version</summary>
         public static string AssemblyVersion {
             get {
                 return EntryAssembly != null ? GetAssemblyVersion(EntryAssembly) :
@@ -83,10 +120,14 @@ namespace Goedel.Registry {
                 }
             }
 
+        /// <summary>Get assembly version</summary>
+        /// <param name="Assembly">The assembly being queried.</param>
+        /// <returns>The assembly version</returns>
         public static string GetAssemblyVersion(Assembly Assembly) {
             return Assembly.GetName().Version.ToString();
             }
 
+        /// <summary>The Assembly Description</summary>
         public static string AssemblyDescription {
             get {
                 return EntryAssembly != null ? GetAssemblyDescription(EntryAssembly) :
@@ -94,6 +135,9 @@ namespace Goedel.Registry {
                 }
             }
 
+        /// <summary>Get Assembly Description</summary>
+        /// <param name="Assembly">The assembly being queried.</param>
+        /// <returns>The Assembly Description</returns>
         public static string GetAssemblyDescription(Assembly Assembly) {
 
             // Get all Description attributes on this assembly
@@ -107,7 +151,7 @@ namespace Goedel.Registry {
 
             }
 
-
+        /// <summary>The Assembly Product</summary>
         public static string AssemblyProduct {
             get {
                 return EntryAssembly != null ? GetAssemblyProduct(EntryAssembly) :
@@ -115,6 +159,9 @@ namespace Goedel.Registry {
                 }
             }
 
+        /// <summary>Get Assembly Product</summary>
+        /// <param name="Assembly">The assembly being queried.</param>
+        /// <returns>The Assembly Product</returns>
         public static string GetAssemblyProduct(Assembly Assembly) {
             // Get all Product attributes on this assembly
             object[] attributes = Assembly.GetExecutingAssembly().
@@ -126,13 +173,17 @@ namespace Goedel.Registry {
             return ((AssemblyProductAttribute)attributes[0]).Product;
             }
 
-
+        /// <summary>The Assembly Copyright</summary>
         public static string AssemblyCopyright {
             get {
                 return EntryAssembly != null ? GetAssemblyCopyright(EntryAssembly) :
                         "Unknown";
                 }
             }
+
+        /// <summary>Get Assembly Copyright</summary>
+        /// <param name="Assembly">The assembly being queried.</param>
+        /// <returns>The Assembly Copyright</returns>
         public static string GetAssemblyCopyright(Assembly Assembly) {
             // Get all Copyright attributes on this assembly
             object[] attributes = Assembly.GetExecutingAssembly().
@@ -144,6 +195,7 @@ namespace Goedel.Registry {
             return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
             }
 
+        /// <summary>The Assembly Company</summary>
         public static string AssemblyCompany {
             get {
                 return EntryAssembly != null ? GetAssemblyCompany(EntryAssembly) :
@@ -151,6 +203,9 @@ namespace Goedel.Registry {
                 }
             }
 
+        /// <summary>Get Assembly Company</summary>
+        /// <param name="Assembly">The assembly being queried.</param>
+        /// <returns>The Assembly Company</returns>
         public static string GetAssemblyCompany(Assembly Assembly) {
 
             // Get all Company attributes on this assembly
@@ -174,6 +229,11 @@ namespace Goedel.Registry {
         // MSFT will do the right thing and provide a proper call for this before
         // they change the linker format.
 
+        /// <summary>
+        /// Return the assembly build time.
+        /// </summary>
+        /// <param name="Assembly">The assembly being queried.</param>
+        /// <returns>The assembly build time</returns>
         public static DateTime AssemblyBuildTime(Assembly Assembly) {
 
             string FilePath = Assembly.Location;
@@ -200,6 +260,12 @@ namespace Goedel.Registry {
             return DateTime.SpecifyKind(DateTime, DateTimeKind.Utc); ;
             }
 
+        /// <summary>
+        /// Convert a time to a localized string.
+        /// </summary>
+        /// <param name="Time">Time to convert.</param>
+        /// <param name="UTC">If true, use UTC, otherwise use the platform time.</param>
+        /// <returns>The localized time.</returns>
         public static string LocalizeTime(DateTime Time, bool UTC) {
             DateTime ZoneTime = Time;
             string Format = "u";
@@ -216,11 +282,12 @@ namespace Goedel.Registry {
             }
 
         /// <summary>
-        /// Build an indented comment string at the current position
+        /// Build an indented summary comment string at the current position
         /// for the currently selected language.
         /// </summary>
-        /// <param name="Text"></param>
-        /// <returns></returns>
+        /// <param name="Spaces">Number of spaces to indent text</param>
+        /// <param name="Text">Text to add</param>
+        /// <returns>The comment string.</returns>
         public string CommentSummary(int Spaces, string Text) {
             var Indent = _Indent + new string(' ', Spaces);
             var Builder = new StringBuilder();
@@ -242,104 +309,6 @@ namespace Goedel.Registry {
 
             return Builder.ToString();
             }
-
-        ////
-        //// Header
-        ////
-        //public static void Header(TextWriter _Output, string Comment, DateTime GenerateTime) {
-        //    // #% System.OperatingSystem OperatingSystem = System.Environment.OSVersion; 
-        //    System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
-        //    // #prefix "//" 
-        //    string _Indent = Comment;
-        //        {
-        //        //  
-        //        _Output.Write("\n{0}", _Indent);
-        //        // This file was automatically generated at #{GenerateTime.ToLocalTime()} 
-        //        _Output.Write("This file was automatically generated at {1}\n{0}", _Indent, GenerateTime.ToLocalTime());
-        //        //   
-        //        _Output.Write(" \n{0}", _Indent);
-        //        // Changes to this file may be overwritten without warning 
-        //        _Output.Write("Changes to this file may be overwritten without warning\n{0}", _Indent);
-        //        //  
-        //        _Output.Write("\n{0}", _Indent);
-        //        // Generator:  #{Script.AssemblyTitle} version #{Script.AssemblyVersion} 
-        //        _Output.Write("Generator:  {1} version {2}\n{0}", _Indent, Script.AssemblyTitle, Script.AssemblyVersion);
-        //        //     Goedel Script Version : 0.1   Generated  
-        //        _Output.Write("    Goedel Script Version : 0.1   Generated \n{0}", _Indent);
-        //        //     Goedel Schema Version : 0.1   Generated 
-        //        _Output.Write("    Goedel Schema Version : 0.1   Generated\n{0}", _Indent);
-        //        //  
-        //        _Output.Write("\n{0}", _Indent);
-        //        //     Copyright : #{Script.AssemblyCopyright} 
-        //        _Output.Write("    Copyright : {1}\n{0}", _Indent, Script.AssemblyCopyright);
-        //        //  
-        //        _Output.Write("\n{0}", _Indent);
-        //        // Build Platform: #{OperatingSystem.Platform} #{OperatingSystem.Version} 
-        //        _Output.Write("Build Platform: {1} {2}\n{0}", _Indent, OperatingSystem.Platform, OperatingSystem.Version);
-        //        //  
-        //        _Output.Write("\n{0}", _Indent);
-        //        // #end prefix 
-        //        }
-        //    // #end method 
-        //    }
-        ////  
-        ////  
-        //// #method3 MITLicense string Comment string Year string Holder 
-
-
-        ////
-        //// MITLicense
-        ////
-        //public static void MITLicense(TextWriter _Output, string Comment,
-        //                                string Year, string Holder) {
-        //    // #prefix "//" 
-        //    string _Indent = Comment;
-        //    //  
-        //    _Output.Write("\n{0}", _Indent);
-        //    // Copyright (C) #{Year} by #{Holder} 
-        //    _Output.Write("{1} by {2}\n{0}", _Indent, Year, Holder);
-        //    //  
-        //    _Output.Write("\n{0}", _Indent);
-        //    // Permission is hereby granted, free of charge, to any person obtaining a copy 
-        //    _Output.Write("Permission is hereby granted, free of charge, to any person obtaining a copy\n{0}", _Indent);
-        //    // of this software and associated documentation files (the "Software"), to deal 
-        //    _Output.Write("of this software and associated documentation files (the \"Software\"), to deal\n{0}", _Indent);
-        //    // in the Software without restriction, including without limitation the rights 
-        //    _Output.Write("in the Software without restriction, including without limitation the rights\n{0}", _Indent);
-        //    // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-        //    _Output.Write("to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n{0}", _Indent);
-        //    // copies of the Software, and to permit persons to whom the Software is 
-        //    _Output.Write("copies of the Software, and to permit persons to whom the Software is\n{0}", _Indent);
-        //    // furnished to do so, subject to the following conditions: 
-        //    _Output.Write("furnished to do so, subject to the following conditions:\n{0}", _Indent);
-        //    //  
-        //    _Output.Write("\n{0}", _Indent);
-        //    // The above copyright notice and this permission notice shall be included in 
-        //    _Output.Write("The above copyright notice and this permission notice shall be included in\n{0}", _Indent);
-        //    // all copies or substantial portions of the Software. 
-        //    _Output.Write("all copies or substantial portions of the Software.\n{0}", _Indent);
-        //    //  
-        //    _Output.Write("\n{0}", _Indent);
-        //    // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-        //    _Output.Write("THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n{0}", _Indent);
-        //    // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-        //    _Output.Write("IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n{0}", _Indent);
-        //    // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-        //    _Output.Write("FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n{0}", _Indent);
-        //    // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-        //    _Output.Write("AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n{0}", _Indent);
-        //    // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-        //    _Output.Write("LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n{0}", _Indent);
-        //    // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
-        //    _Output.Write("OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n{0}", _Indent);
-        //    // THE SOFTWARE. 
-        //    _Output.Write("THE SOFTWARE.\n{0}", _Indent);
-        //    //  
-        //    _Output.Write("\n{0}", _Indent);
-        //    // #end prefix 
-
-        //    // #end method 
-        //    }
 
 
         }

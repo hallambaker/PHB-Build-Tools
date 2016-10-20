@@ -196,6 +196,8 @@ namespace Goedel.Tool.FSRGen {
 					_Output.Write ("            }}\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
+					// 		/// <summary>State types</summary> 
+					_Output.Write ("		/// <summary>State types</summary>\n{0}", _Indent);
 					// 		public enum State { 
 					_Output.Write ("		public enum State {{\n{0}", _Indent);
 					// #foreach (State State in FSR.States) 
@@ -210,6 +212,8 @@ namespace Goedel.Tool.FSRGen {
 							_Output.Write (",\n{0}", _Indent);
 							// #end if 
 							}
+						// 			/// <summary>#{State.Id}</summary> 
+						_Output.Write ("			/// <summary>{1}</summary>\n{0}", _Indent, State.Id);
 						//             #{State.Id} = #{State.Index}#! 
 						_Output.Write ("            {1} = {2}", _Indent, State.Id, State.Index);
 						// #end foreach 
@@ -220,14 +224,20 @@ namespace Goedel.Tool.FSRGen {
 					_Output.Write ("			}};\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
+					// 		/// <summary>Token Types</summary> 
+					_Output.Write ("		/// <summary>Token Types</summary>\n{0}", _Indent);
 					// 		public enum Token { 
 					_Output.Write ("		public enum Token {{\n{0}", _Indent);
+					// 			/// <summary>Could not find a valid token.</summary> 
+					_Output.Write ("			/// <summary>Could not find a valid token.</summary>\n{0}", _Indent);
 					// 			INVALID = -1#! 
 					_Output.Write ("			INVALID = -1", _Indent);
 					// #foreach (Token Token in FSR.Tokens) 
 					foreach  (Token Token in FSR.Tokens) {
 						// , 
 						_Output.Write (",\n{0}", _Indent);
+						// 			/// <summary>#{Token.Tag}</summary> 
+						_Output.Write ("			/// <summary>{1}</summary>\n{0}", _Indent, Token.Tag);
 						//             #{Token.Tag} = #{Token.Index}#! 
 						_Output.Write ("            {1} = {2}", _Indent, Token.Tag, Token.Index);
 						// #end foreach 
@@ -240,18 +250,8 @@ namespace Goedel.Tool.FSRGen {
 					_Output.Write ("\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
-					//  
-					_Output.Write ("\n{0}", _Indent);
-					// 		//##define #{FSR.Id}_Action__Count  #{FSR.Actions.Count} 
-					_Output.Write ("		//#define {1}_Action__Count  {2}\n{0}", _Indent, FSR.Id, FSR.Actions.Count);
-					// 		//##define #{FSR.Id}_Token__Count  #{FSR.Tokens.Count} 
-					_Output.Write ("		//#define {1}_Token__Count  {2}\n{0}", _Indent, FSR.Id, FSR.Tokens.Count);
-					// 		//##define #{FSR.Id}_State__Count  #{FSR.States.Count} 
-					_Output.Write ("		//#define {1}_State__Count  {2}\n{0}", _Indent, FSR.Id, FSR.States.Count);
-					//  
-					_Output.Write ("\n{0}", _Indent);
-					//  
-					_Output.Write ("\n{0}", _Indent);
+					// 		/// <summary>Mapping of characters to character groups</summary> 
+					_Output.Write ("		/// <summary>Mapping of characters to character groups</summary>\n{0}", _Indent);
 					// 		static byte [] Character_Mapping   =  new byte [] { 
 					_Output.Write ("		static byte [] Character_Mapping   =  new byte [] {{\n{0}", _Indent);
 					// 			#! 
@@ -349,6 +349,10 @@ namespace Goedel.Tool.FSRGen {
 					_Output.Write ("			}};\n{0}", _Indent);
 					//  
 					_Output.Write ("\n{0}", _Indent);
+					// 		/// <summary>Generated initialization method, is called automatically  
+					_Output.Write ("		/// <summary>Generated initialization method, is called automatically \n{0}", _Indent);
+					// 		/// the FSR to reset </summary> 
+					_Output.Write ("		/// the FSR to reset </summary>\n{0}", _Indent);
 					//         public override void Init () { 
 					_Output.Write ("        public override void Init () {{\n{0}", _Indent);
 					//             Actions = new Action[] { 

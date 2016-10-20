@@ -5,10 +5,16 @@ using Goedel.Registry;
 using Goedel.ASN;
 
 namespace Goedel.Tool.ASN {
+
+    /// <summary>
+    /// The core parser
+    /// </summary>
     public partial class ASN2 : Parser {
         bool HaveRun = false;
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         virtual public void Complete() {
             if (!HaveRun) {
                 HaveRun = true;

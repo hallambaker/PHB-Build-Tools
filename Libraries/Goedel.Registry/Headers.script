@@ -1,6 +1,12 @@
 ﻿#using System.Text
 #pclass Goedel.Registry Boilerplate
 #block License
+#// <summary>Write license to output.The 
+#// copyright information is extracted from the assembly.</summary>
+#// <param name="_Output">The outout stream</param>
+#// <param name="Comment">Line comment prefix</param>
+#// <param name="Name">Name of the license to use. Valid values 
+#// are MITLicense, BSD2License, BSD3License, Apache2License, ISCLicense.</param>
 #%	public static void License (TextWriter _Output, string Comment, string Name) {
 #%		string Copyright	=	Script.AssemblyCopyright;
 #%		string Holder		=	Script.AssemblyCompany;
@@ -16,6 +22,11 @@
 #end block
 
 #block Header
+#// <summary>Write boilerplate header for generated code to file. The assembly tile,
+#// version and copyright information are extracted from the assembly.</summary>
+#// <param name="_Output">The outout stream</param>
+#// <param name="Comment">Line comment prefix</param>
+#// <param name="GenerateTime">Time code was generated.</param>
 #% public static void Header (TextWriter _Output, string Comment, DateTime GenerateTime) {
 #% string _Indent = "";
 #prefix Comment
@@ -38,6 +49,11 @@ Build Platform: #{Script.Platform} #{Script.PlatformVersion}
 
 
 #block MITLicense
+#// <summary>Write MIT license text to output.</summary>
+#// <param name="_Output">The outout stream</param>
+#// <param name="Comment">Line comment prefix</param>
+#// <param name="Copyright">Copyright date</param>
+#// <param name="Holder">Copyright holder</param>
 #% public static void MITLicense (TextWriter _Output, string Comment, string Copyright, string Holder) {
 #% string _Indent = "";
 #prefix Comment
@@ -67,6 +83,11 @@ THE SOFTWARE.
 #end block
 
 #block
+#// <summary>Write BSD 3 paragraph license text to output.</summary>
+#// <param name="_Output">The outout stream</param>
+#// <param name="Comment">Line comment prefix</param>
+#// <param name="Copyright">Copyright date</param>
+#// <param name="Holder">Copyright holder</param>
 #% public static void BSD3License (TextWriter _Output, string Comment, string Copyright, string Holder) {
 #% string _Indent = "";
 #prefix Comment
@@ -102,6 +123,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 #block
+#// <summary>Write BSD 2 paragraph license text to output.</summary>
+#// <param name="_Output">The outout stream</param>
+#// <param name="Comment">Line comment prefix</param>
+#// <param name="Copyright">Copyright date</param>
+#// <param name="Holder">Copyright holder</param>
 #% public static void BSD2License (TextWriter _Output, string Comment, string Copyright, string Holder) {
 #% string _Indent = "";
 #prefix Comment
@@ -138,6 +164,11 @@ or implied, of #{Holder}.
 
 
 #block
+#// <summary>Write Apache license text to output.</summary>
+#// <param name="_Output">The outout stream</param>
+#// <param name="Comment">Line comment prefix</param>
+#// <param name="Copyright">Copyright date</param>
+#// <param name="Holder">Copyright holder</param>
 #% public static void Apache2License (TextWriter _Output, string Comment, string Copyright, string Holder) {
 #% string _Indent = "";
 #prefix Comment
@@ -161,6 +192,11 @@ or implied, of #{Holder}.
 #end block
 
 #block
+#// <summary>Write ISC license text to output.</summary>
+#// <param name="_Output">The outout stream</param>
+#// <param name="Comment">Line comment prefix</param>
+#// <param name="Copyright">Copyright date</param>
+#// <param name="Holder">Copyright holder</param>
 #% public static void ISCLicense (TextWriter _Output, string Comment, string Copyright, string Holder) {
 #% string _Indent = "";
 #prefix Comment

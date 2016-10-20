@@ -184,8 +184,8 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("	/// {1} \n{0}", _Indent, Class.Name);
 					//     /// </summary> 
 					_Output.Write ("    /// </summary>\n{0}", _Indent);
-					// 	public partial class #{Class.Name} : Goedel.ASN1.Root { 
-					_Output.Write ("	public partial class {1} : Goedel.ASN1.Root {{\n{0}", _Indent, Class.Name);
+					// 	public partial class #{Class.Name} : Goedel.ASN.Root { 
+					_Output.Write ("	public partial class {1} : Goedel.ASN.Root {{\n{0}", _Indent, Class.Name);
 					//  
 					_Output.Write ("\n{0}", _Indent);
 					// #foreach (Member Member in Class.Entries) 
@@ -208,8 +208,8 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
 					// 		/// <param name="Buffer">Output buffer</param> 
 					_Output.Write ("		/// <param name=\"Buffer\">Output buffer</param>\n{0}", _Indent);
-					//         public override void Encode (Goedel.ASN1.Buffer Buffer) { 
-					_Output.Write ("        public override void Encode (Goedel.ASN1.Buffer Buffer) {{\n{0}", _Indent);
+					//         public override void Encode (Goedel.ASN.Buffer Buffer) { 
+					_Output.Write ("        public override void Encode (Goedel.ASN.Buffer Buffer) {{\n{0}", _Indent);
 					// 			int Position = Buffer.Encode__Sequence_Start (); 
 					_Output.Write ("			int Position = Buffer.Encode__Sequence_Start ();\n{0}", _Indent);
 					// #foreach (Member Member in Class.ReversedEntries) 
@@ -238,8 +238,8 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("		/// This is done in the forward direction\n{0}", _Indent);
 					// 		/// </summary> 
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
-					//         public override void Decode (Goedel.ASN1.Buffer Buffer) { 
-					_Output.Write ("        public override void Decode (Goedel.ASN1.Buffer Buffer) {{\n{0}", _Indent);
+					//         public override void Decode (Goedel.ASN.Buffer Buffer) { 
+					_Output.Write ("        public override void Decode (Goedel.ASN.Buffer Buffer) {{\n{0}", _Indent);
 					// 			int Position = Buffer.Decode__Sequence_Start (); 
 					_Output.Write ("			int Position = Buffer.Decode__Sequence_Start ();\n{0}", _Indent);
 					// #foreach (Member Member in Class.Entries) 
@@ -270,8 +270,8 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("	/// {1} \n{0}", _Indent, Object.Name);
 					//     /// </summary> 
 					_Output.Write ("    /// </summary>\n{0}", _Indent);
-					// 	public partial class #{Object.Name} : Goedel.ASN1.Root { 
-					_Output.Write ("	public partial class {1} : Goedel.ASN1.Root {{\n{0}", _Indent, Object.Name);
+					// 	public partial class #{Object.Name} : Goedel.ASN.Root { 
+					_Output.Write ("	public partial class {1} : Goedel.ASN.Root {{\n{0}", _Indent, Object.Name);
 					// 		/// <summary> 
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
 					// 		/// The OID value 
@@ -305,8 +305,8 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
 					// 		/// <param name="Buffer">Output buffer</param> 
 					_Output.Write ("		/// <param name=\"Buffer\">Output buffer</param>\n{0}", _Indent);
-					//         public override void Encode (Goedel.ASN1.Buffer Buffer) { 
-					_Output.Write ("        public override void Encode (Goedel.ASN1.Buffer Buffer) {{\n{0}", _Indent);
+					//         public override void Encode (Goedel.ASN.Buffer Buffer) { 
+					_Output.Write ("        public override void Encode (Goedel.ASN.Buffer Buffer) {{\n{0}", _Indent);
 					// 			int Position = Buffer.Encode__Sequence_Start (); 
 					_Output.Write ("			int Position = Buffer.Encode__Sequence_Start ();\n{0}", _Indent);
 					// #foreach (Member Member in Object.ReversedEntries) 
@@ -333,8 +333,8 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("		/// This is done in the forward direction\n{0}", _Indent);
 					// 		/// </summary> 
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
-					//         public override void Decode (Goedel.ASN1.Buffer Buffer) { 
-					_Output.Write ("        public override void Decode (Goedel.ASN1.Buffer Buffer) {{\n{0}", _Indent);
+					//         public override void Decode (Goedel.ASN.Buffer Buffer) { 
+					_Output.Write ("        public override void Decode (Goedel.ASN.Buffer Buffer) {{\n{0}", _Indent);
 					// 			int Position = Buffer.Decode__Sequence_Start (); 
 					_Output.Write ("			int Position = Buffer.Decode__Sequence_Start ();\n{0}", _Indent);
 					// #foreach (Member Member in Object.Entries) 
@@ -369,8 +369,8 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("	/// {1} \n{0}", _Indent, SingularObject.Name);
 					//     /// </summary> 
 					_Output.Write ("    /// </summary>\n{0}", _Indent);
-					// 	public partial class #{SingularObject.Name} : Goedel.ASN1.Root { 
-					_Output.Write ("	public partial class {1} : Goedel.ASN1.Root {{\n{0}", _Indent, SingularObject.Name);
+					// 	public partial class #{SingularObject.Name} : Goedel.ASN.Root { 
+					_Output.Write ("	public partial class {1} : Goedel.ASN.Root {{\n{0}", _Indent, SingularObject.Name);
 					// 		/// <summary> 
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
 					// 		/// The OID value 
@@ -401,8 +401,8 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
 					// 		/// <param name="Buffer">Output buffer</param> 
 					_Output.Write ("		/// <param name=\"Buffer\">Output buffer</param>\n{0}", _Indent);
-					//         public override void Encode (Goedel.ASN1.Buffer Buffer) { 
-					_Output.Write ("        public override void Encode (Goedel.ASN1.Buffer Buffer) {{\n{0}", _Indent);
+					//         public override void Encode (Goedel.ASN.Buffer Buffer) { 
+					_Output.Write ("        public override void Encode (Goedel.ASN.Buffer Buffer) {{\n{0}", _Indent);
 					// #foreach (Member Member in SingularObject.ReversedEntries) 
 					foreach  (Member Member in SingularObject.ReversedEntries) {
 						// #% Encode (Member); 
@@ -425,8 +425,8 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("		/// This is done in the forward direction\n{0}", _Indent);
 					// 		/// </summary> 
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
-					//         public override void Decode (Goedel.ASN1.Buffer Buffer) { 
-					_Output.Write ("        public override void Decode (Goedel.ASN1.Buffer Buffer) {{\n{0}", _Indent);
+					//         public override void Decode (Goedel.ASN.Buffer Buffer) { 
+					_Output.Write ("        public override void Decode (Goedel.ASN.Buffer Buffer) {{\n{0}", _Indent);
 					// 			int Position = Buffer.Decode__Sequence_Start (); 
 					_Output.Write ("			int Position = Buffer.Decode__Sequence_Start ();\n{0}", _Indent);
 					// #foreach (Member Member in SingularObject.Entries) 

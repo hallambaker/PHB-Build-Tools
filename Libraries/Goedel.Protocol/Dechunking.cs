@@ -22,7 +22,7 @@
 
 using System.IO;
 using System.Text;
-using Goedel.Debug2;
+using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -57,7 +57,9 @@ namespace Goedel.Protocol {
         public static byte [] ReadBytes (long Length, Stream Stream) {
 
             if (Length < 0) return ReadChunked(Stream);
-            if (Length > int.MaxValue) throw new Throw("Message too big");
+            Assert.False(Length > int.MaxValue, MessageTooBig.Throw);
+
+
 
             byte[] Buffer = new byte[Length];
             int Counter = 0;
@@ -79,11 +81,8 @@ namespace Goedel.Protocol {
         /// <param name="Stream">The stream to be read.</param>
         /// <returns>The array data.</returns>
         public static byte [] ReadChunked (Stream Stream) {
-            throw new Throw("Not Yet Implemented");
+            throw new NYI();
             }
-
-
-
 
         }
     }

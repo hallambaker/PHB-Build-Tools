@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using SD=System.Diagnostics;
 
 namespace Goedel.ASN {
 
@@ -91,18 +91,24 @@ namespace Goedel.ASN {
             Pointer = Size;
             }
 
-
-        //public void Debug (string Tag) {
-        //    //Console.Write ("{0}:", Tag);
-        //    //for (int i = Pointer; i < Buffered.Length; i++) {
-        //    //    if ((i % 16) == 0) {
-        //    //        Console.WriteLine ();
-        //    //        Console.Write ("   ");
-        //    //        }
-        //    //    Console.Write (" {0:x2}", Buffered[i]);
-        //    //    }
-        //    //Console.WriteLine ();
-        //    }
+        /// <summary>
+        /// Debug output
+        /// </summary>
+        /// <param name="Tag">Tag to mark to output</param>
+        public void Debug(string Tag) {
+            var Builder = new StringBuilder();
+            Builder.Append(Tag);
+            Builder.Append(":");
+            for (int i = Pointer; i < Buffered.Length; i++) {
+                if ((i % 16) == 0) {
+                    SD.Debug.WriteLine(Builder.ToString());
+                    Builder.Clear();
+                    Builder.Append("   ");
+                    }
+                Builder.AppendFormat(" {0:x2}", Buffered[i]);
+                }
+            SD.Debug.WriteLine(Builder.ToString());
+            }
 
         // Convenience function, only ever adds the lowest byte.
         void AddByte (int Data) {
@@ -132,7 +138,7 @@ namespace Goedel.ASN {
         /// <summary>
         /// Add a base128 encoded length tag to the buffer.
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Data">Integer to encode</param>
         public void AddBase128(int Data) {
             if (Data < 0x80) {
                 AddByte (Data);

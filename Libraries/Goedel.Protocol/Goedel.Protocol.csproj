@@ -52,8 +52,22 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <OutputPath>bin\Publish\</OutputPath>
+    <DocumentationFile>bin\Publish\Goedel.Protocol.XML</DocumentationFile>
+    <DefineConstants>DEBUG</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|ARM'">
+    <OutputPath>bin\ARM\Publish\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="CharacterReaders.cs" />
+    <Compile Include="Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="StatusCodes.cs" />
     <Compile Include="StreamBuffer.cs" />
     <Compile Include="Dechunking.cs" />
     <Compile Include="DNS.cs" />
@@ -72,16 +86,16 @@
     <Compile Include="WrapWriter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Debug\Goedel.Debug2.csproj">
-      <Project>{dd669f16-ee46-4111-a76d-d5e3e2e8d2b7}</Project>
-      <Name>Goedel.Debug2</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
       <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
       <Name>Goedel.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Exceptions.exceptional">
+      <Generator>exceptional</Generator>
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+    </None>
     <None Include="Makefile" />
     <None Include="index.md" />
     <None Include="todo.md" />

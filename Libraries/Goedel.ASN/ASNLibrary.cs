@@ -10,61 +10,61 @@ namespace Goedel.ASN {
     /// </summary>
     public class Constants {
 
-        /// <summary></summary>
+        /// <summary>Boolean</summary>
         public const byte Boolean           =  1;
-        /// <summary></summary>
+        /// <summary>Integer</summary>
         public const byte Integer           =  2;
-        /// <summary></summary>
+        /// <summary>Bit string</summary>
         public const byte BitString         =  3;
-        /// <summary></summary>
+        /// <summary>Array of bytes</summary>
         public const byte OctetString       =  4;
-        /// <summary></summary>
+        /// <summary>Null object</summary>
         public const byte Null              =  5;
-        /// <summary></summary>
+        /// <summary>Object Identifier OID</summary>
         public const byte ObjectIdentifier  =  6;
-        /// <summary></summary>
+        /// <summary>Object descriptor</summary>
         public const byte ObjectDescriptor  =  7;
-        /// <summary></summary>
+        /// <summary>External type</summary>
         public const byte External          =  8;
-        /// <summary></summary>
+        /// <summary>Floating point value</summary>
         public const byte Real              =  9;
-        /// <summary></summary>
+        /// <summary>Numerated value</summary>
         public const byte Numerated         = 10;
-        /// <summary></summary>
+        /// <summary>Embedded value</summary>
         public const byte Embedded          = 11;
-        /// <summary></summary>
+        /// <summary>UTF8 string</summary>
         public const byte UTF8String        = 12;
-        /// <summary></summary>
+        /// <summary>Part of OID</summary>
         public const byte RelativeOid       = 13;
-        /// <summary></summary>
+        /// <summary>List of items</summary>
         public const byte Sequence          = 16;
-        /// <summary></summary>
+        /// <summary>List of items occurring only once.</summary>
         public const byte Set               = 17;
-        /// <summary></summary>
+        /// <summary>Numeric string</summary>
         public const byte NumericString     = 18;
-        /// <summary></summary>
+        /// <summary>Printable string</summary>
         public const byte PrintableString   = 19;
-        /// <summary></summary>
+        /// <summary>Teletext string</summary>
         public const byte TeletexString     = 20;
-        /// <summary></summary>
+        /// <summary>Videotext string</summary>
         public const byte VideotexString    = 21;
-        /// <summary></summary>
+        /// <summary>IA5String</summary>
         public const byte IA5String         = 22;
-        /// <summary></summary>
+        /// <summary>UTC time</summary>
         public const byte UTCTime           = 23;
-        /// <summary></summary>
+        /// <summary>General time.</summary>
         public const byte GeneralizedTime   = 24;
-        /// <summary></summary>
+        /// <summary>Graphic string</summary>
         public const byte GraphicString     = 25;
-        /// <summary></summary>
+        /// <summary>Visible string</summary>
         public const byte VisibleString     = 26;
-        /// <summary></summary>
+        /// <summary>Generci string</summary>
         public const byte GeneralString     = 27;
-        /// <summary></summary>
+        /// <summary>Universal string</summary>
         public const byte UniversalString   = 28;
-        /// <summary></summary>
+        /// <summary>Charactr string</summary>
         public const byte CharacterString   = 29;
-        /// <summary></summary>
+        /// <summary>Bitmapped string</summary>
         public const byte BMPString         = 30;
 
 
@@ -84,6 +84,7 @@ namespace Goedel.ASN {
         /// <summary>
         /// Return the DER encoding of this structure
         /// </summary>
+        /// <returns>The DER encoded value.</returns>
         public virtual byte [] DER () {
             Goedel.ASN.Buffer Buffer = new Buffer ();
             this.Encode (Buffer);
@@ -94,6 +95,7 @@ namespace Goedel.ASN {
         /// <summary>
         /// Write this structure to a buffer.
         /// </summary>
+        /// <param name="Buffer">Buffer to write to.</param>
         public abstract void Encode (Goedel.ASN.Buffer Buffer) ;
 
         }
@@ -104,7 +106,9 @@ namespace Goedel.ASN {
     public class ASN {
         static char[] Dot = new char[] { '.' };
 
-        /// <summary></summary>
+        /// <summary>Convert an OID value to an array of integers</summary>
+        /// <param name="OID">The string value of the OID.</param>
+        /// <returns>The integer values of the OID segments.</returns>
         public static int[] OIDToArray(string OID) {
             var Split = OID.Split(Dot);
             var Result = new int [Split.Length];

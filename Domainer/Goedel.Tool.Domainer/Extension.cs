@@ -6,7 +6,7 @@ using System.Text;
 using Goedel.Registry;
 
 namespace Goedel.Tool.Domainer {
-
+    /// <summary> </summary>
     public class Conversion {
         public DomainerType Type;
         public string Declaration;

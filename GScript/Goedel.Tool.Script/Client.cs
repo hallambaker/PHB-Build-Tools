@@ -139,9 +139,13 @@ namespace Goedel.Tool.Script {
             "using System.Collections.Generic;\n" +
             "using Goedel.Registry;\n" +
             "namespace {0} {{\n" +
+            "\t/// <summary>A Goedel script.</summary>\n" +
             "\tpublic partial class {1} {{\n" +
             "\t\tTextWriter _Output;\n" +
+            "\t\t/// <summary>The indent prefix</summary>\n" +
             "\t\tpublic string _Indent = \"\";\n" +
+            "\t\t/// <summary>Constructor with output stream.</summary>\n" +
+            "\t\t/// <param name=\"Output\">The output stream</param>\n" +
             "\t\tpublic {1} (TextWriter Output) {{\n" +
             "\t\t\t_Output = Output;\n" +
             "\t\t\t}}\n";
@@ -152,9 +156,13 @@ namespace Goedel.Tool.Script {
             "using System.Collections.Generic;\n" +
             "using Goedel.Registry;\n" +
             "namespace {0} {{\n" +
+            "\t/// <summary>A Goedel script.</summary>\n" +
             "\tpublic partial class {1} : global::Goedel.Registry.Script {{\n" +
+            "\t\t/// <summary>Default constructor.</summary>\n" +
             "\t\tpublic {1} () : base () {{\n" +
             "\t\t\t}}\n"+
+            "\t\t/// <summary>Constructor with output stream.</summary>\n" +
+            "\t\t/// <param name=\"Output\">The output stream</param>\n" +
             "\t\tpublic {1} (TextWriter Output) : base (Output) {{\n" +
             "\t\t\t}}\n";
         
@@ -304,7 +312,7 @@ namespace Goedel.Tool.Script {
             for (string line = Reader.ReadLine(); line != null; line = Reader.ReadLine()) {
                 try {
                     ln++;
-                    this.Writer.WriteLine("{2}// {0} ", line, state, Indent);
+                    //this.Writer.WriteLine("{2}// {0} ", line, state, Indent);
 
                     if (line == "") {
                         if (state >= 2) {

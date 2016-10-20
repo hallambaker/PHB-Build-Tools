@@ -80,6 +80,7 @@ namespace #{FSR.Id}{
             return GetToken (0);
             }
 
+		/// <summary>State types</summary>
 		public enum State {
 #foreach (State State in FSR.States)
 #if (first) 
@@ -87,27 +88,26 @@ namespace #{FSR.Id}{
 #else 
 ,
 #end if
+			/// <summary>#{State.Id}</summary>
             #{State.Id} = #{State.Index}#!
 #end foreach
 
 			};
 
+		/// <summary>Token Types</summary>
 		public enum Token {
+			/// <summary>Could not find a valid token.</summary>
 			INVALID = -1#!
 #foreach (Token Token in FSR.Tokens)
 ,
+			/// <summary>#{Token.Tag}</summary>
             #{Token.Tag} = #{Token.Index}#!
 #end foreach
 
 			};
 
 
-
-		//##define #{FSR.Id}_Action__Count  #{FSR.Actions.Count}
-		//##define #{FSR.Id}_Token__Count  #{FSR.Tokens.Count}
-		//##define #{FSR.Id}_State__Count  #{FSR.States.Count}
-
-
+		/// <summary>Mapping of characters to character groups</summary>
 		static byte [] Character_Mapping   =  new byte [] {
 			#!
 #for (int j = 0; j < FSR.MaxChar; j++)
@@ -156,6 +156,8 @@ namespace #{FSR.Id}{
 
 			};
 
+		/// <summary>Generated initialization method, is called automatically 
+		/// the FSR to reset </summary>
         public override void Init () {
             Actions = new Action[] {
 #%  comma = false;

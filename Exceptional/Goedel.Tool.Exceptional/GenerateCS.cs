@@ -196,6 +196,12 @@ namespace Goedel.Tool.Exceptional {
 			_Output.Write ("\n{0}", _Indent);
 			// #if (Exception.Base) 
 			if (  (Exception.Base) ) {
+				// 		/// <summary> 
+				_Output.Write ("		/// <summary>\n{0}", _Indent);
+				//         /// User data associated with the exception. 
+				_Output.Write ("        /// User data associated with the exception.\n{0}", _Indent);
+				//         /// </summary>	 
+				_Output.Write ("        /// </summary>	\n{0}", _Indent);
 				// 		public object UserData; 
 				_Output.Write ("		public object UserData;\n{0}", _Indent);
 				// #end if 
@@ -212,8 +218,6 @@ namespace Goedel.Tool.Exceptional {
 				_Output.Write ("        /// </summary>		\n{0}", _Indent);
 				//         /// <param name="Object">User data</param>	 
 				_Output.Write ("        /// <param name=\"Object\">User data</param>	\n{0}", _Indent);
-				// 		/// <param name="Inner">Inner Exception</param>	 
-				_Output.Write ("		/// <param name=\"Inner\">Inner Exception</param>	\n{0}", _Indent);
 				// 		public #{Exception.Id} (#{Object.Type} Object) :  
 				_Output.Write ("		public {1} ({2} Object) : \n{0}", _Indent, Exception.Id, Object.Type);
 				// 				base (String.Format (#{Object.Text.Quoted()}#! 

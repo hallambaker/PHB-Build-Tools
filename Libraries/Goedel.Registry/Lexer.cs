@@ -4,36 +4,61 @@ using System.Collections;
 
 namespace Goedel.Registry {
 
+    /// <summary>
+    /// Preformatted headers to write to scrupt file output.
+    /// </summary>
     public class ScriptOutput {
+        /// <summary>The text writer to output text to.</summary>
         public TextWriter _Output;
+
+        /// <summary>The current indent prefix.</summary>
 		public string _Indent = "";
 
+        /// <summary>
+        /// Constructor to write to the specified output.
+        /// </summary>
+        /// <param name="Output"></param>
         public ScriptOutput(TextWriter Output) {
             this._Output = Output;
             }
 
         }
 
-
+    /// <summary>Token types</summary>
     public enum TokenType {
+        /// <summary>A begin token. This is either a start brace or an increase in indent level.</summary>
         BEGIN = 0,
+        /// <summary>An end token, this is either a close brace or a return to a previous indent level.</summary>
         END = 1,
+        /// <summary>A label token.</summary>
         LABEL = 2,
+        /// <summary>A literal token.</summary>
         LITERAL = 3,
+        /// <summary>A quoted string</summary>
         STRING = 4,
+        /// <summary>An integer</summary>
         INTEGER = 5,
+        /// <summary>A floating point number</summary>
         FLOAT = 6,
+        /// <summary>An invalid token</summary>
         INVALID = 7,
+        /// <summary>A comment</summary>
         COMMENT = 8,
+        /// <summary>Null</summary>
         NULL = 9,
+        /// <summary>A separator</summary>
         SEPARATOR = 10,
+        /// <summary>Block text</summary>
         TEXT = 11
         }
 
+    /// <summary>Exceptions. These need to be fixed up.</summary>
     [Serializable]
     public class GoedelParseException : System.Exception {
         //Position Position;
 
+        /// <summary>General parse error</summary>
+        /// <param name="Message">Message for user</param>/// 
         public GoedelParseException(string Message)
             : base(Message) {
 
@@ -41,6 +66,9 @@ namespace Goedel.Registry {
             //this.Position = new Position("Unknown");
             }
 
+        /// <summary>General parse error</summary>
+        /// <param name="Message">Message for user</param>
+        /// <param name="Position">position in the file</param>
         public GoedelParseException(string Message, Position Position) :
             base(Message + " at Line " + Position.Ln + " Col " + Position.Col + " in file " + Position.File) {
 
@@ -48,25 +76,44 @@ namespace Goedel.Registry {
             }
         }
 
+    /// <summary>Finite state analyzer</summary>
     public class Lexer {
 
+        /// <summary>Character types</summary>
         public enum CharType {
+            /// <summary>Whitespace, spaces, tabs</summary>
             WhiteSpace = 0,
+            /// <summary>0-9</summary>
             Digit = 1,
+            /// <summary>a-z</summary>
             Lower = 2,
+            /// <summary>A-Z</summary>
             Upper = 3,
+            /// <summary>_</summary>
             Underscore = 4,
+            /// <summary>/</summary>
             Slash = 5,
+            /// <summary>\</summary>
             BackSlash = 6,
 
+            /// <summary>"</summary>
             DoubleQuote = 7,
+            /// <summary>@</summary>
             At = 8,
+            /// <summary>{</summary>
             Left = 9,
+            /// <summary>}</summary>
             Right = 10,
+            /// <summary>.</summary>
             Period = 11,
+            /// <summary>,</summary>
             Comma = 12,
+
+            /// <summary>Linefeed</summary>
             Line = 13,
+            /// <summary>Carriage Return</summary>
             CR = 14,
+            /// <summary>Any other character</summary>
             Other = 15
             }
 
@@ -181,9 +228,13 @@ namespace Goedel.Registry {
             return CharType.Other;
             }
 
+        /// <summary>Position in the file.</summary>
         public Position Position;
 
-
+        /// <summary>
+        /// Create FSR from file.
+        /// </summary>
+        /// <param name="filename">The file to read.</param>
         public Lexer(string filename) {
             Position = new Position(filename);
             }
@@ -191,12 +242,22 @@ namespace Goedel.Registry {
 
         static int TabSize = 4;
 
+        /// <summary>
+        /// Process the input to create a parse tree.
+        /// </summary>
+        /// <param name="Input">Input file.</param>
+        /// <param name="Parse">Parse tree.</param>
         public void Process(Stream Input, Parser Parse) {
             using (TextReader Reader = new StreamReader(Input)) {
                 Process(Reader, Parse);
                 }
             }
 
+        /// <summary>
+        /// Process the input to create a parse tree.
+        /// </summary>
+        /// <param name="Reader">Input reader.</param>
+        /// <param name="Parse">Parse tree.</param>
         public void Process(TextReader Reader, Parser Parse) {
             bool indent = true;
 

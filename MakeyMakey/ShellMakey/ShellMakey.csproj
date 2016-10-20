@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <OutputPath>bin\Publish\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml.Linq" />
@@ -59,13 +62,13 @@
     <Content Include="Shell Makey.test.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Goedel.IO\Goedel.IO.csproj">
-      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
-      <Name>Goedel.IO</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
       <Project>{ccc286f1-6a5b-4946-a382-8a48797192b4}</Project>
       <Name>Goedel.FSR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.IO\Goedel.IO.csproj">
+      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
+      <Name>Goedel.IO</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
       <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>

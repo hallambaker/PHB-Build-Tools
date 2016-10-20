@@ -68,7 +68,7 @@ namespace #{Cast.Name} {
     /// <summary>
 	/// #{Class.Name} 
     /// </summary>
-	public partial class #{Class.Name} : Goedel.ASN1.Root {
+	public partial class #{Class.Name} : Goedel.ASN.Root {
 
 #foreach (Member Member in Class.Entries)
 #% EntryDeclaration (Member);
@@ -80,7 +80,7 @@ namespace #{Cast.Name} {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN1.Buffer Buffer) {
+        public override void Encode (Goedel.ASN.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 #foreach (Member Member in Class.ReversedEntries)
 #% Encode (Member);
@@ -95,7 +95,7 @@ namespace #{Cast.Name} {
 		///
 		/// This is done in the forward direction
 		/// </summary>
-        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+        public override void Decode (Goedel.ASN.Buffer Buffer) {
 			int Position = Buffer.Decode__Sequence_Start ();
 #foreach (Member Member in Class.Entries)
 #% Decode (Member);
@@ -110,7 +110,7 @@ namespace #{Cast.Name} {
     /// <summary>
 	/// #{Object.Name} 
     /// </summary>
-	public partial class #{Object.Name} : Goedel.ASN1.Root {
+	public partial class #{Object.Name} : Goedel.ASN.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
@@ -127,7 +127,7 @@ namespace #{Cast.Name} {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN1.Buffer Buffer) {
+        public override void Encode (Goedel.ASN.Buffer Buffer) {
 			int Position = Buffer.Encode__Sequence_Start ();
 #foreach (Member Member in Object.ReversedEntries)
 #% Encode (Member);
@@ -141,7 +141,7 @@ namespace #{Cast.Name} {
 		///
 		/// This is done in the forward direction
 		/// </summary>
-        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+        public override void Decode (Goedel.ASN.Buffer Buffer) {
 			int Position = Buffer.Decode__Sequence_Start ();
 #foreach (Member Member in Object.Entries)
 #% Decode (Member);
@@ -158,7 +158,7 @@ namespace #{Cast.Name} {
     /// <summary>
 	/// #{SingularObject.Name} 
     /// </summary>
-	public partial class #{SingularObject.Name} : Goedel.ASN1.Root {
+	public partial class #{SingularObject.Name} : Goedel.ASN.Root {
 		/// <summary>
 		/// The OID value
 		/// </summary>
@@ -174,7 +174,7 @@ namespace #{Cast.Name} {
 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
 		/// </summary>
 		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN1.Buffer Buffer) {
+        public override void Encode (Goedel.ASN.Buffer Buffer) {
 #foreach (Member Member in SingularObject.ReversedEntries)
 #% Encode (Member);
 #end foreach
@@ -186,7 +186,7 @@ namespace #{Cast.Name} {
 		///
 		/// This is done in the forward direction
 		/// </summary>
-        public override void Decode (Goedel.ASN1.Buffer Buffer) {
+        public override void Decode (Goedel.ASN.Buffer Buffer) {
 			int Position = Buffer.Decode__Sequence_Start ();
 #foreach (Member Member in SingularObject.Entries)
 #% Decode (Member);
