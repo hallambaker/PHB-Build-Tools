@@ -1,0 +1,62 @@
+﻿
+
+Namespace Goedel.ASN
+    
+	Exception ASNDecodingException
+        Console "An ASN.1 Decoding exception occurred"
+		Description
+			|An error occurred in the decoding of presumed ASN.1 binary data.
+
+		Exception Implementation
+			Console "Implementation restriction"
+			Description
+				|The data could not be decoded due to an implementation restriction
+				|in the decoder. This should not happen when attempting to decode
+				|legitimate inputs for the intended field of use.
+
+		Exception InvalidLength
+			Console "Length invalid"
+			Description
+				|A length specification was invalid.
+
+		Exception IndefiniteLengthInvalid
+			Console "Indefinite length not valid"
+			Description
+				|An indefinite length was specified in a context where it is not
+				|permitted. For example, a DER encoded item.
+
+		Exception LengthExceedsInput
+			Console "Length exceeds data input"
+			Description
+				|The declared length of an item exceeds the available data.
+				|This typically happens if the data item has been truncated
+				|or a malicious payload is attempting a buffer overflow attack.
+
+		Exception LengthExceedsStructure
+			Console "Length exceeds current structure"
+			Description
+				|The length of an inner length encoded item exceeds that of the
+				|enclosing item. This means that either the data is not ASN.1,
+				|the data has been corrupted or is a malicious payload intended to
+				|perform a buffer overflow attack.
+
+		Exception ExpectedSequence
+			Console "Expected Sequence"
+			Description
+				|A sequence of items was expected.
+
+		Exception UnExpectedData
+			Console "Unexpected Data"
+			Description
+				|Data was encountered in an unexpected location.
+
+		Exception ExpectedInteger
+			Console "Expected Integer"
+			Description
+				|An integer was expected.
+
+		Exception IntegerOverflow
+			Console "Integer too large"
+			Description
+				|The size of an integer exceeds the implementation limit. This
+				|is unlikely to occur in normal use.

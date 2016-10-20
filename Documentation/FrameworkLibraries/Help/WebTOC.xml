@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HelpTOC>
+
+  <HelpTOCNode Title="Welcome to the [TODO: Add project name]" Url="html/573692b2-c9fb-40d7-934a-081eb96ad03c.htm" />
+  <HelpTOCNode Id="fa842328-2042-4708-9c60-914402ad6e77" Title="Version History" Url="html/60b7b2a4-207f-4df1-8a50-1193c952af17.htm">
+    <HelpTOCNode Title="Version 1.0.0.0" Url="html/8ab61d01-4e9d-49ef-84ba-aed245fb1dbf.htm" />
+  </HelpTOCNode>
+  <HelpTOCNode Id="d18ea19f-7685-4121-910a-9f95a3ff4235" Title="Goedel.Cryptography.Framework" Url="html/85e3f94e-2fba-383c-1685-14d49522e0e9.htm">
+    <HelpTOCNode Id="a1db287e-02bb-4d09-8e23-688209c16eda" Title="Container Class" Url="html/a539e68c-b8de-87b6-922a-a7ddf033c0a7.htm">
+      <HelpTOCNode Id="62dbcc57-bd46-4a60-888c-4129517805a0" Title="Container Methods" Url="html/d4474ddd-d1d5-91c6-d48e-0700326be530.htm">
+        <HelpTOCNode Title="Name Method " Url="html/8fc75877-e30c-5584-72e4-bd2dde0b9735.htm" />
+        <HelpTOCNode Title="Prefix Method " Url="html/2e1f833a-3d14-5f38-cb48-be0cf53e2c5d.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="a1ebe7e4-6581-4209-823b-cdfb93abb937" Title="Cryptography Class" Url="html/45253885-efcc-7923-ac46-262ba1128520.htm">
+      <HelpTOCNode Id="673981e5-5421-4b63-996a-528e857be01c" Title="Cryptography Methods" Url="html/f507693f-d67f-dba7-8644-21a3ccf90162.htm">
+        <HelpTOCNode Title="GetRandomBytes Method " Url="html/110dcecb-0ad6-e482-fcae-a731127a8946.htm" />
+        <HelpTOCNode Title="Initialize Method " Url="html/f2b7a45f-807a-e0da-feeb-98af155a66e7.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="ed042ec4-37c0-42ec-ac8b-f0e0ed142813" Title="CryptoProviderAuthentication Class" Url="html/eb33d5ea-f007-a480-b9cb-a3860e805913.htm">
+      <HelpTOCNode Title="CryptoProviderAuthentication Constructor " Url="html/ff366cb3-fe95-27ee-d92d-54d71492ca60.htm" />
+      <HelpTOCNode Id="8214be9e-17dd-4519-9236-853b4840c372" Title="CryptoProviderAuthentication Properties" Url="html/a5e105f2-8870-ff3a-1b41-e213d5604ebd.htm">
+        <HelpTOCNode Title="AlgorithmClass Property " Url="html/22c1d49c-89af-228a-9c58-75aed09b22e2.htm" />
+        <HelpTOCNode Title="Key Property " Url="html/c49d0571-d058-37c9-ba55-4bbf6e12b98a.htm" />
+        <HelpTOCNode Title="OID Property " Url="html/da484a62-1a4b-52df-1f42-78320e2ab069.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="d9937af9-de85-4a84-82ad-ebd82e5eb463" Title="CryptoProviderAuthentication Methods" Url="html/977e2766-28cf-39e4-4832-d9d5d6d2e39d.htm">
+        <HelpTOCNode Title="Initialize Method " Url="html/44f63017-4ef8-22ce-64d5-20aa225dfbd2.htm" />
+        <HelpTOCNode Id="30246022-bfda-4c7e-81ea-50adba42ff6e" Title="Process Method " Url="html/02879dd6-5c75-4efe-cb3d-722e3c665c88.htm">
+          <HelpTOCNode Title="Process Method (Byte[], Int32, Int32)" Url="html/1d472241-64a3-f7f4-a90c-5cfd7419f0eb.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="TransformFinal Method " Url="html/16f2a2d8-a529-559d-45fd-c2c10f2d6544.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="3cf37c15-33c8-4091-a3a1-571e0ee3515b" Title="CryptoProviderAuthentication Fields" Url="html/0cb92f8e-7365-9fe5-2ecb-2c0ad6dd7961.htm">
+        <HelpTOCNode Title="HashAlgorithm Field" Url="html/8fbb53f6-2cdf-e055-a7c3-36878f21e2bb.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="ffd0fe7c-4cb4-4a01-8c41-164c28a91831" Title="CryptoProviderDigest Class" Url="html/5cf815b0-0b85-8a40-523b-7649017d0ff9.htm">
+      <HelpTOCNode Id="11cbc810-d3a9-47f3-8153-42d48c18d010" Title="CryptoProviderDigest Constructor " Url="html/9d1ef9e9-99e9-8c71-2e4f-092245aba8b3.htm">
+        <HelpTOCNode Title="CryptoProviderDigest Constructor " Url="html/e8b3bfc3-642d-c065-352b-922135e51bf4.htm" />
+        <HelpTOCNode Title="CryptoProviderDigest Constructor (HashAlgorithm)" Url="html/51d488ce-1762-a2e0-6427-35003e13693f.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="94a89c46-6e6a-4d84-8a5e-19bc2a948aa1" Title="CryptoProviderDigest Properties" Url="html/f4040431-8c22-81bb-2d74-20e721a8adfa.htm">
+        <HelpTOCNode Title="AlgorithmClass Property " Url="html/a86990fc-99d8-dee6-daa7-d7d926a7c928.htm" />
+        <HelpTOCNode Title="OID Property " Url="html/a400f41e-68c4-41dd-e32b-a823632faaad.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="61ea6c5a-94b7-436f-b874-3c3b63ea1864" Title="CryptoProviderDigest Methods" Url="html/47f8bd2d-3ac7-5fdf-ac4e-2d4a6eb30af4.htm">
+        <HelpTOCNode Title="Initialize Method " Url="html/cd349830-5dfc-fe21-f9e8-3ad131ac8f05.htm" />
+        <HelpTOCNode Id="6e120431-7ae8-4772-b124-30b79caf4531" Title="Process Method " Url="html/c37c4ab1-8970-ace5-d2c3-0d00cecc3f4a.htm">
+          <HelpTOCNode Title="Process Method (Byte[], Int32, Int32)" Url="html/2a0ac48f-41d4-8edc-ad39-07e6bd962b4b.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="TransformFinal Method " Url="html/cb40dedc-05d4-51f6-b3fb-37e72122dd23.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="b8dcb15b-6c76-4694-a06e-feaacb622eaa" Title="CryptoProviderDigest Fields" Url="html/b29c92cf-4ff9-d77a-36be-93af16451f83.htm">
+        <HelpTOCNode Title="HashAlgorithm Field" Url="html/69210258-01c3-f1a1-a588-1b7708e9341f.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="58697f9d-9112-45d7-ada8-17e672198589" Title="CryptoProviderEncryptAES Class" Url="html/47b23796-2ab4-864d-4c63-c675c0a85470.htm">
+      <HelpTOCNode Id="40fa6fa6-472a-41f0-8b71-ef92d506cde5" Title="CryptoProviderEncryptAES Constructor " Url="html/6ed375c6-34ae-28c1-0d63-776e57219e73.htm">
+        <HelpTOCNode Title="CryptoProviderEncryptAES Constructor (Int32)" Url="html/1d5a6c76-64b0-f339-ec54-afb9f4fed0e3.htm" />
+        <HelpTOCNode Title="CryptoProviderEncryptAES Constructor (Int32, CipherMode)" Url="html/74efd7f0-f2d0-9d52-14aa-95131c7ef016.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="08afef20-9db9-48cf-bf29-fc8a8a7a3896" Title="CryptoProviderEncryptAES Properties" Url="html/f58ee778-5c91-77f7-85ba-ca1988634f8f.htm">
+        <HelpTOCNode Title="CryptoAlgorithm Property " Url="html/b8f3c7be-8ec3-e766-97ac-533ba58bbf45.htm" />
+        <HelpTOCNode Title="CryptoAlgorithmID Property " Url="html/99311a1b-2ba2-6d6b-c983-936f98211e84.htm" />
+        <HelpTOCNode Title="GetCryptoProvider Property " Url="html/47970b42-7182-0d26-3a48-040f594ac85e.htm" />
+        <HelpTOCNode Title="JSONName Property " Url="html/a9636956-11c7-30c6-495b-770fcf59e32d.htm" />
+        <HelpTOCNode Title="Name Property " Url="html/e07629ab-4c37-d8e5-6e89-6bcdee4e3c06.htm" />
+        <HelpTOCNode Title="Size Property " Url="html/80ce1521-cb41-d418-ca74-7f2c4936ec99.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="CryptoProviderEncryptAES Methods" Url="html/c09424d1-3d3a-09ed-cac5-8268f3286c77.htm" />
+      <HelpTOCNode Title="CryptoProviderEncryptAES Fields" Url="html/1f99b2dc-8a35-b995-cf0b-57bd86dc9d90.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="f996a023-0760-41e9-9b6b-821d0bff0054" Title="CryptoProviderEncryption Class" Url="html/e7f51829-55b4-9cb1-03b6-42153ff11f30.htm">
+      <HelpTOCNode Title="CryptoProviderEncryption Constructor " Url="html/d0307b3c-d1ec-4a93-0c35-a43f9b8d6f43.htm" />
+      <HelpTOCNode Id="2757f54f-c39d-4ed1-bf56-3974d8d0e0b6" Title="CryptoProviderEncryption Properties" Url="html/126b9336-d34b-93d8-a2c1-6d07e9639e6c.htm">
+        <HelpTOCNode Title="AlgorithmClass Property " Url="html/695252b1-551e-8639-98e9-8b648e726ecc.htm" />
+        <HelpTOCNode Title="IV Property " Url="html/c5c780c2-08ce-4ddf-9778-f33ade463055.htm" />
+        <HelpTOCNode Title="Key Property " Url="html/c5a7dcee-0b26-2914-01b4-984cff011151.htm" />
+        <HelpTOCNode Title="OID Property " Url="html/692f23dd-d633-3e11-abe7-4fc57747a5ed.htm" />
+        <HelpTOCNode Title="Provider Property " Url="html/2865dd06-f7a5-a732-9da0-7cddd46e65f7.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="257f6253-8d66-4410-a4d6-5f9744fd6544" Title="CryptoProviderEncryption Methods" Url="html/e4ccc4df-cc96-eed6-ba87-9e7e9c171d43.htm">
+        <HelpTOCNode Title="Decrypt Method " Url="html/1e6f2dbd-4252-5908-dfe3-28125d167741.htm" />
+        <HelpTOCNode Id="5bd4d22d-0725-47f8-b40c-02adf2ba1777" Title="Encrypt Method " Url="html/4bf2f577-842e-5ba4-4516-54f14f0a673d.htm">
+          <HelpTOCNode Title="Encrypt Method (CryptoData)" Url="html/ddd94f0f-d84d-60e0-a368-2fb298ef82bf.htm" />
+          <HelpTOCNode Title="Encrypt Method (Byte[])" Url="html/3731f864-d015-6e8b-fa14-d63f46a32271.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="b966a1b7-a362-4092-853f-7e0db4d4753c" Title="Process Method " Url="html/0df4a944-4f0b-a7e6-0ea6-cd3750084d0f.htm">
+          <HelpTOCNode Title="Process Method (Byte[], Int32, Int32)" Url="html/03fb508e-08a3-81c4-ae3a-d34e08047235.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="0e0ac151-c483-4ef2-804e-f089f74c75df" Title="StartDecrypt Method " Url="html/6caf7e98-5d6b-c524-e258-555ce5bc81de.htm">
+          <HelpTOCNode Title="StartDecrypt Method (Byte[])" Url="html/8c47d9ea-a9e5-d05c-236f-328831cbdf2b.htm" />
+          <HelpTOCNode Title="StartDecrypt Method (Byte[], Byte[])" Url="html/dc681420-aa6d-6656-3fd8-c9a81428586b.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="d7e379b5-e02a-40c5-b2b5-ab61112f665a" Title="StartEncrypt Method " Url="html/1303798d-f64b-6ebc-be36-b15c0d39c9f2.htm">
+          <HelpTOCNode Title="StartEncrypt Method " Url="html/a16b442e-eb88-d4e3-ce00-488b13fea865.htm" />
+          <HelpTOCNode Title="StartEncrypt Method (Byte[], Byte[])" Url="html/35ae57f8-3d0b-3689-ec47-2289df43c177.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="ee2f74a6-144b-4782-9024-62db16272411" Title="CryptoProviderEncryption Fields" Url="html/e281597d-2d96-d050-fa95-4dfbe4fc3492.htm">
+        <HelpTOCNode Title="AppendIntegrity Field" Url="html/987d5a2d-5bae-b44e-49cb-0ffde9673880.htm" />
+        <HelpTOCNode Title="AppendIV Field" Url="html/5055db3b-e5ea-9868-e251-18d33b7e90b3.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="b9a38c93-8514-40aa-9b68-c27e756c9f51" Title="CryptoProviderExchangeRSA Class" Url="html/b0e81881-b50c-7477-e8cc-974b2eea3741.htm">
+      <HelpTOCNode Id="1b68af1f-ab47-43b1-a32d-0bea3c498095" Title="CryptoProviderExchangeRSA Constructor " Url="html/95502d39-e6de-678b-105c-933104da97d2.htm">
+        <HelpTOCNode Title="CryptoProviderExchangeRSA Constructor (Int32)" Url="html/1ddc724a-ea14-50e7-a3cd-c563d148ed96.htm" />
+        <HelpTOCNode Title="CryptoProviderExchangeRSA Constructor (RSAKeyPair)" Url="html/99237253-7fa2-fd19-a194-d3db84f8ca9f.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="a9fe4ee1-babc-4162-836e-5111162cedb9" Title="CryptoProviderExchangeRSA Properties" Url="html/880197e9-3f5a-9200-dfec-cf75021cfc77.htm">
+        <HelpTOCNode Title="CryptoAlgorithmID Property " Url="html/8ba22572-ff7c-5e4a-d01f-923f2cfcf0d9.htm" />
+        <HelpTOCNode Title="GetCryptoProvider Property " Url="html/98d06d9b-be64-ad2f-693f-d00955245afc.htm" />
+        <HelpTOCNode Title="JSONKeyType Property " Url="html/cf09879c-8659-720c-c98c-fc78c189a7bc.htm" />
+        <HelpTOCNode Title="JSONName Property " Url="html/9b8bfbc1-aafc-6897-b0d4-b588d61d762b.htm" />
+        <HelpTOCNode Title="KeyPair Property " Url="html/a7417060-08f5-31d8-e7d1-cb6c0804d54f.htm" />
+        <HelpTOCNode Title="KeySize Property " Url="html/57fdfc08-88a4-c59f-e7dd-32a691e45b65.htm" />
+        <HelpTOCNode Title="Name Property " Url="html/53bf9ebe-4461-540f-1a3f-74b4e51a2850.htm" />
+        <HelpTOCNode Title="OID Property " Url="html/cb5fc92a-0d8d-7aec-9247-8f02eecf70b3.htm" />
+        <HelpTOCNode Title="Size Property " Url="html/b1914263-9a97-9167-5b20-8c7ab8cbfdcc.htm" />
+        <HelpTOCNode Title="UDF Property " Url="html/7969e0f6-a9a7-b73f-4cce-bd248d4d9ed7.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="2f6e99eb-cf38-4576-919e-22686c5788c6" Title="CryptoProviderExchangeRSA Methods" Url="html/19758ef4-dc47-c6ed-d6cf-254ab0e3c792.htm">
+        <HelpTOCNode Id="b3620c51-0336-46fe-adbd-1ebe46fd7784" Title="Decrypt Method " Url="html/a6c28395-e154-9e9b-9466-2fc3471286a1.htm">
+          <HelpTOCNode Title="Decrypt Method (Byte[])" Url="html/59d811e9-155d-413b-a625-f72c713c7653.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="7514e7ba-11e2-40c4-a9c7-9060af6f65d7" Title="Encrypt Method " Url="html/1e29db15-6c59-c5a0-d803-86e9cf7a8818.htm">
+          <HelpTOCNode Title="Encrypt Method (Byte[])" Url="html/e23dcf70-471b-78b1-fc23-1a45d50838ba.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="FindLocal Method " Url="html/9fee9ff0-ce14-27c1-cecf-759a97c5a76e.htm" />
+        <HelpTOCNode Title="Generate Method " Url="html/8e277699-ee9b-f697-b87c-6a6ef80d6987.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="4f0776fb-3f47-4694-ac77-e19009dc05bc" Title="CryptoProviderExchangeRSA Fields" Url="html/4087f9ac-5f34-2de9-652f-9adb22ed7a8e.htm">
+        <HelpTOCNode Title="OAEP Field" Url="html/0ee0854e-b411-a2a5-95ff-a75c03db8fa2.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="091a872e-665b-4968-92f9-324a4db57efe" Title="CryptoProviderExchangeRSAPKCS Class" Url="html/63bc56d1-3fe2-0dfa-8dc1-7dd1bd00304a.htm">
+      <HelpTOCNode Title="CryptoProviderExchangeRSAPKCS Constructor " Url="html/1cbaec27-e7c4-285d-a27f-e7e57c797923.htm" />
+      <HelpTOCNode Id="9fbc76d5-9c28-4933-b2fd-4d854fc8526f" Title="CryptoProviderExchangeRSAPKCS Properties" Url="html/22fce503-1247-09a9-f31d-506f4b8da7f2.htm">
+        <HelpTOCNode Title="CryptoAlgorithmID Property " Url="html/47f21441-2ca9-349e-118f-547a70a7e6e2.htm" />
+        <HelpTOCNode Title="GetCryptoProvider Property " Url="html/2f36db8d-3798-e536-bc34-bf5d02644479.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="CryptoProviderExchangeRSAPKCS Methods" Url="html/4ef0405c-2505-46ee-63a9-6d654ee32e69.htm" />
+      <HelpTOCNode Title="CryptoProviderExchangeRSAPKCS Fields" Url="html/40600596-6d7a-0d78-3ad8-1deae94c9a0a.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="08237710-71cf-438c-b103-2b9aacd55c8d" Title="CryptoProviderHMACSHA2_256 Class" Url="html/f22aed72-1ef7-d0a1-4c6e-cc5585cfa57c.htm">
+      <HelpTOCNode Title="CryptoProviderHMACSHA2_256 Constructor " Url="html/bddfb720-98c0-4377-a676-a8824b783e54.htm" />
+      <HelpTOCNode Id="32621605-263e-47ec-b985-b965796e0e4b" Title="CryptoProviderHMACSHA2_256 Properties" Url="html/afa4b9a7-61b5-402c-df4a-698c6960c46d.htm">
+        <HelpTOCNode Title="CryptoAlgorithmID Property " Url="html/50da20f3-4ae8-28e8-0c49-092aaef96020.htm" />
+        <HelpTOCNode Title="GetCryptoProvider Property " Url="html/45afd334-e8a0-95db-7173-90a9cdd49f54.htm" />
+        <HelpTOCNode Title="JSONName Property " Url="html/e4520734-5954-a12f-f414-2f7dda11d0ca.htm" />
+        <HelpTOCNode Title="Name Property " Url="html/69367e3f-571d-6139-bad9-68b81f9c4d8d.htm" />
+        <HelpTOCNode Title="Size Property " Url="html/0192f605-f83f-0adb-10ce-0ff74b2eac09.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="CryptoProviderHMACSHA2_256 Methods" Url="html/98ba69e8-9e4e-e384-f21a-aa0d39d5dfc2.htm" />
+      <HelpTOCNode Title="CryptoProviderHMACSHA2_256 Fields" Url="html/a8a85aa1-92fa-a2b5-1eb7-ec9ce61a8499.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="6ca6bc75-500e-47fc-a052-4305db62d154" Title="CryptoProviderHMACSHA2_512 Class" Url="html/905a76d0-35dc-0d9a-e473-c9220ef1c74e.htm">
+      <HelpTOCNode Title="CryptoProviderHMACSHA2_512 Constructor " Url="html/7c5e06eb-6df6-d66d-527f-1883fb6d6cc8.htm" />
+      <HelpTOCNode Id="9da58b68-b1a4-4985-b4d2-846aadc5e575" Title="CryptoProviderHMACSHA2_512 Properties" Url="html/7f4c81af-11ae-f2d9-2ac9-a83674045d4f.htm">
+        <HelpTOCNode Title="CryptoAlgorithmID Property " Url="html/8da94ee7-fbfc-bdb3-040f-1867d5613df8.htm" />
+        <HelpTOCNode Title="GetCryptoProvider Property " Url="html/4e318c2e-ffdf-8e7c-d6eb-3a907c517437.htm" />
+        <HelpTOCNode Title="JSONName Property " Url="html/c82752bb-5eda-5405-1901-10de10638524.htm" />
+        <HelpTOCNode Title="Name Property " Url="html/90d84aa1-8b80-a631-85f7-13f36f3866d4.htm" />
+        <HelpTOCNode Title="Size Property " Url="html/df76a732-5d06-1720-918c-8449231369c5.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="CryptoProviderHMACSHA2_512 Methods" Url="html/25941a22-787c-5d2a-0388-074a48fd901f.htm" />
+      <HelpTOCNode Title="CryptoProviderHMACSHA2_512 Fields" Url="html/14f0232f-3ba7-e53c-035d-066c3817a843.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="9c593685-8410-4e9d-87fa-7e76c2afde5c" Title="CryptoProviderSHA1 Class" Url="html/2be35ed4-a1fa-781e-e4b2-25191b5fef92.htm">
+      <HelpTOCNode Title="CryptoProviderSHA1 Constructor " Url="html/921ba8d5-6c48-dd7e-0379-ad52a02c3e84.htm" />
+      <HelpTOCNode Id="beab3de3-d3ec-4b60-957b-f91a68c12478" Title="CryptoProviderSHA1 Properties" Url="html/995647b4-b3f8-f8e5-3f0e-96c4daeece99.htm">
+        <HelpTOCNode Title="CryptoAlgorithm Property " Url="html/aa08e0e8-852f-09ab-d89c-3f106a1d0277.htm" />
+        <HelpTOCNode Title="CryptoAlgorithmID Property " Url="html/72f8bf9d-8efa-7864-d3ef-5d50528724c5.htm" />
+        <HelpTOCNode Title="GetCryptoProvider Property " Url="html/80c4b241-dce0-b344-7a03-aa2ca27d1692.htm" />
+        <HelpTOCNode Title="JSONName Property " Url="html/62865ce7-edc6-9526-b116-862082df63d7.htm" />
+        <HelpTOCNode Title="Name Property " Url="html/d202c118-215d-7188-0ff1-03bac1948897.htm" />
+        <HelpTOCNode Title="Size Property " Url="html/57891899-2956-c62b-f9c0-13c5c19d5cd5.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="CryptoProviderSHA1 Methods" Url="html/10c65181-8953-f6db-844f-23626d2b6bef.htm" />
+      <HelpTOCNode Title="CryptoProviderSHA1 Fields" Url="html/aa15d5ad-7f87-6d6d-1f51-2aca1e45d36f.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="041b7122-e21c-4bbc-b9eb-9b2579ce441a" Title="CryptoProviderSHA2_256 Class" Url="html/73450e3e-1e33-3408-e337-928e0579b52d.htm">
+      <HelpTOCNode Title="CryptoProviderSHA2_256 Constructor " Url="html/166807b1-0dfb-70ac-754d-4edf7fb838b7.htm" />
+      <HelpTOCNode Id="70c7e404-6a53-48c8-a905-4410c4f39381" Title="CryptoProviderSHA2_256 Properties" Url="html/f315b349-affc-ba70-ce6e-f46217c23652.htm">
+        <HelpTOCNode Title="CryptoAlgorithm Property " Url="html/a7d63da5-b631-d2c9-0f29-9a5cc5a2d1d0.htm" />
+        <HelpTOCNode Title="CryptoAlgorithmID Property " Url="html/c32bb481-3ea3-1dea-75de-dbc20030ef23.htm" />
+        <HelpTOCNode Title="GetCryptoProvider Property " Url="html/00704b34-470f-f693-b54e-7e8a29c26635.htm" />
+        <HelpTOCNode Title="JSONName Property " Url="html/d24d39d6-74bc-2b06-eb26-6831a763d5c5.htm" />
+        <HelpTOCNode Title="Name Property " Url="html/ebd4f35b-cabf-22f3-4bb2-10019080af21.htm" />
+        <HelpTOCNode Title="Size Property " Url="html/b55b0cac-6a6e-ca72-d7bd-e4898e28368a.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="CryptoProviderSHA2_256 Methods" Url="html/e5648a6e-8d0b-d401-a4ff-ef89a64650b8.htm" />
+      <HelpTOCNode Title="CryptoProviderSHA2_256 Fields" Url="html/35babeee-a8fb-c195-2074-283f3c0596df.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="52095d26-9a69-4c89-a849-259398512396" Title="CryptoProviderSHA2_512 Class" Url="html/cc4e1e27-0cd3-eb93-ba18-492ff9d96343.htm">
+      <HelpTOCNode Title="CryptoProviderSHA2_512 Constructor " Url="html/fbfa5b63-a8ee-a9ab-f5b7-55818e4ecf26.htm" />
+      <HelpTOCNode Id="0b11f757-c8b6-48a1-a806-ce8137eeeb14" Title="CryptoProviderSHA2_512 Properties" Url="html/7823f8b7-aca8-8e94-d373-e22b0c27f11e.htm">
+        <HelpTOCNode Title="CryptoAlgorithm Property " Url="html/d7a3ae84-fac7-05c0-1492-0b8841108663.htm" />
+        <HelpTOCNode Title="CryptoAlgorithmID Property " Url="html/ac080936-8c11-3e56-9e50-4d5848f060a8.htm" />
+        <HelpTOCNode Title="GetCryptoProvider Property " Url="html/c192acf0-4a41-af55-7c92-71fbf2885cb7.htm" />
+        <HelpTOCNode Title="JSONName Property " Url="html/7b1c5022-6772-f055-e2df-8a7ae2b398bf.htm" />
+        <HelpTOCNode Title="Name Property " Url="html/0fbcf0c5-204b-b992-5550-52ba884fbf29.htm" />
+        <HelpTOCNode Title="Size Property " Url="html/7c77afef-ecb3-6c77-2aec-59a487335e2b.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="CryptoProviderSHA2_512 Methods" Url="html/e123bb81-fe7d-4847-9000-1a820e0ecc9a.htm" />
+      <HelpTOCNode Title="CryptoProviderSHA2_512 Fields" Url="html/3954a592-1e79-5ae8-0e4d-b7db57707120.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="30e2efbf-0490-4cac-97bc-4f323c23c034" Title="CryptoProviderSignatureRSA Class" Url="html/bf468d21-ec00-a5e2-8fc3-260653570142.htm">
+      <HelpTOCNode Id="a2e821c6-2df1-4557-9214-4b1661228511" Title="CryptoProviderSignatureRSA Constructor " Url="html/d954d600-94de-a75f-0825-373df59f4310.htm">
+        <HelpTOCNode Title="CryptoProviderSignatureRSA Constructor (Int32)" Url="html/b9ee79d3-eef1-e673-e3eb-75049463147b.htm" />
+        <HelpTOCNode Title="CryptoProviderSignatureRSA Constructor (RSAKeyPair)" Url="html/5416724f-a193-870a-deb9-c3961b457666.htm" />
+        <HelpTOCNode Title="CryptoProviderSignatureRSA Constructor (Int32, CryptoAlgorithmID)" Url="html/d0cee5e3-cdbe-17b2-0a23-38144abacd01.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="56d2aa0a-c9cb-402f-9d95-e42971144c1c" Title="CryptoProviderSignatureRSA Properties" Url="html/6172b028-23b0-778b-a30f-a9af37623b4b.htm">
+        <HelpTOCNode Title="CryptoAlgorithmID Property " Url="html/fe4793d0-0407-cef7-9ec5-e872a12a3179.htm" />
+        <HelpTOCNode Title="GetCryptoProvider Property " Url="html/85bc117c-ead1-7ac3-8068-f2aced685772.htm" />
+        <HelpTOCNode Title="JSONKeyType Property " Url="html/5628cb87-ac30-35aa-4901-c266b11896ad.htm" />
+        <HelpTOCNode Title="JSONName Property " Url="html/0bcc7e42-5733-0fb1-cabd-950a1bf78b82.htm" />
+        <HelpTOCNode Title="KeyPair Property " Url="html/81984fb0-2ddc-daed-932d-f76e4fbc57d4.htm" />
+        <HelpTOCNode Title="KeySize Property " Url="html/7cb9e894-0cb3-7d56-b733-3de49d4e2b8f.htm" />
+        <HelpTOCNode Title="Name Property " Url="html/3353c82b-af6a-b2af-23db-d1f4b1adf586.htm" />
+        <HelpTOCNode Title="OID Property " Url="html/e8616be9-6f55-293e-79f0-a7d131195b04.htm" />
+        <HelpTOCNode Title="Size Property " Url="html/81194a93-7cc2-607b-7de7-e1a0cf1bc8c3.htm" />
+        <HelpTOCNode Title="UDF Property " Url="html/a1b7894d-87b2-8632-d25f-f09b2130baf1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="cd962b11-bda2-48eb-8829-039b2d8ad8a0" Title="CryptoProviderSignatureRSA Methods" Url="html/57939afe-c128-e64c-21df-72dd1b028def.htm">
+        <HelpTOCNode Title="FindLocal Method " Url="html/5da99441-6eca-79f8-6765-5ff7698d78a5.htm" />
+        <HelpTOCNode Title="Generate Method " Url="html/bdb93e28-7f2c-198d-1085-b8400f444121.htm" />
+        <HelpTOCNode Id="e71a28f3-bb68-4697-935b-fc79934bf610" Title="Sign Method " Url="html/78642505-655d-fae2-9268-5e67a7f878ce.htm">
+          <HelpTOCNode Title="Sign Method (CryptoData)" Url="html/1aa99cc9-216a-98ba-3fe2-c3168f9a30b7.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="8bfb4e22-f55a-4961-9bdd-19b0ee6a347c" Title="Verify Method " Url="html/77bdf890-bad5-b431-0efe-cc0ec6ea47c9.htm">
+          <HelpTOCNode Title="Verify Method (CryptoData, Byte[])" Url="html/c7421c12-a601-079f-0f42-9195aa27e08d.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="feb09256-15b5-439c-bd63-a52bc5ef431c" Title="ExtensionMethods Class" Url="html/7a12b054-a49c-06fd-a4fe-daef5068f00d.htm">
+      <HelpTOCNode Id="03778ac6-6594-41ad-ba00-d332b1ff5077" Title="ExtensionMethods Methods" Url="html/c88a491b-1902-4c2d-edef-4280423212fc.htm">
+        <HelpTOCNode Title="AlgorithmIdentifier Method " Url="html/0ad8b626-b4c2-9da9-d2a9-abaf3e6013f0.htm" />
+        <HelpTOCNode Title="Certificate Method " Url="html/35959a43-f80a-24a2-2e7e-6eabc5b9f823.htm" />
+        <HelpTOCNode Title="Extension Method " Url="html/ec83da11-4221-fc34-2844-ae2efd1d5ec6.htm" />
+        <HelpTOCNode Title="KeyPair Method " Url="html/a39f12e4-4e47-8a02-7797-c0bac56b02f9.htm" />
+        <HelpTOCNode Title="Names Method " Url="html/4af17e40-5b86-6ab8-60f2-38e7b3619519.htm" />
+        <HelpTOCNode Id="cdc0af0a-d998-459e-93bc-b6d529b349d5" Title="RSAParameters Method " Url="html/c76d745c-2ad4-a106-d97a-4b7bd060c452.htm">
+          <HelpTOCNode Title="RSAParameters Method (RSAPrivateKey)" Url="html/6333bcdf-b546-6a8b-8a31-def9d0da07fa.htm" />
+          <HelpTOCNode Title="RSAParameters Method (RSAPublicKey)" Url="html/e5633ac4-70c2-5ea0-ae92-08d2366864f9.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="RSAPrivateKey Method " Url="html/2ef4530c-ada1-3474-f74c-62f42fb22f72.htm" />
+        <HelpTOCNode Title="RSAPublicKey Method " Url="html/b8f1ebe5-2efb-1b40-df66-2487ab6d7ec6.htm" />
+        <HelpTOCNode Title="TBSCertificate Method " Url="html/0e8053b2-ee63-2364-6039-1345b0b168a4.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="34b4e83d-0815-4ce5-a9e8-f2f8fe7703dd" Title="Factory Class" Url="html/48ca2aeb-19cc-6c71-9855-68188194925d.htm">
+      <HelpTOCNode Title="Factory Constructor " Url="html/c8cebbb1-3eb7-e5e9-0bf0-e3b33f60ee89.htm" />
+      <HelpTOCNode Id="29f36bf0-2093-40b6-9ce4-9b2d9770a83e" Title="Factory Methods" Url="html/0a2883f1-e8c7-6d96-4365-b6024fe73ae3.htm">
+        <HelpTOCNode Title="RSAPublicKey Method " Url="html/4da9aae7-cc60-5482-8cda-0635fb527ae7.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="08f4355d-683c-4199-b569-ddb79dcfd34a" Title="RSAKeyPair Class" Url="html/752529b0-1569-46f1-4756-6f9d37860abc.htm">
+      <HelpTOCNode Id="09af8110-89ed-4da3-8e53-e28bc6d2a808" Title="RSAKeyPair Constructor " Url="html/b085f0a1-828d-27a9-93de-5252601d7d90.htm">
+        <HelpTOCNode Title="RSAKeyPair Constructor (Int32)" Url="html/b4b291f1-72bf-d165-d2f3-0ca07daaf2e1.htm" />
+        <HelpTOCNode Title="RSAKeyPair Constructor (RSACryptoServiceProvider)" Url="html/100c1709-baa1-4769-990f-485c83a8590c.htm" />
+        <HelpTOCNode Title="RSAKeyPair Constructor (RSAParameters)" Url="html/0beab802-2e2e-19f8-7c52-0ea3f476aedb.htm" />
+        <HelpTOCNode Title="RSAKeyPair Constructor (String)" Url="html/8763ce55-b13e-ad23-93b8-048ba7c08f5f.htm" />
+        <HelpTOCNode Title="RSAKeyPair Constructor (Int32, Boolean)" Url="html/edd74eb2-3900-cd24-7970-b730edb98d0b.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="532b533a-68d9-429c-9483-0218048d7384" Title="RSAKeyPair Properties" Url="html/abd6c823-0ad3-36d4-8baa-2cbb512681f1.htm">
+        <HelpTOCNode Title="AsymmetricAlgorithm Property " Url="html/d1488c5c-bd62-880f-3d51-c0debd2b81aa.htm" />
+        <HelpTOCNode Title="ExchangeProviderDecrypt Property " Url="html/58467268-5200-d8ba-8cb4-8815f5bacf39.htm" />
+        <HelpTOCNode Title="ExchangeProviderEncrypt Property " Url="html/f4a82b4d-aece-f091-3c27-6df7a4d514e8.htm" />
+        <HelpTOCNode Title="KeyInfoData Property " Url="html/f3106dd5-9207-e4eb-9b18-dcc50ef8660f.htm" />
+        <HelpTOCNode Title="Provider Property " Url="html/c29741e5-8022-dddf-6f9e-d556d74a7f39.htm" />
+        <HelpTOCNode Title="RSAPrivateKey Property " Url="html/4e84d7aa-c1cd-4ee1-5c7a-7f4e8ff26c85.htm" />
+        <HelpTOCNode Title="RSAPublicKey Property " Url="html/faf0a3f8-a69c-a3dd-ec67-fb0074c93422.htm" />
+        <HelpTOCNode Title="SignatureProvider Property " Url="html/370a3168-0de9-8941-de83-c776751caca3.htm" />
+        <HelpTOCNode Title="VerificationProvider Property " Url="html/147bd1a1-2832-2fd0-e391-07f859db0ea6.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="9cb32b15-54de-465e-bb92-f184756d078b" Title="RSAKeyPair Methods" Url="html/06cd5361-8089-87c5-1835-0d899a7594d2.htm">
+        <HelpTOCNode Title="FindLocal Method " Url="html/43d96153-f91b-5068-f2a3-057eccdade0b.htm" />
+        <HelpTOCNode Title="GetPrivate Method " Url="html/517809a2-1197-062c-2f76-6213e0ba5203.htm" />
+        <HelpTOCNode Title="Persist Method " Url="html/8124228e-f715-2253-7ee4-c5ef9acd2e6d.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+  </HelpTOCNode>
+</HelpTOC>

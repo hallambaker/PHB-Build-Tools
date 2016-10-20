@@ -1,0 +1,13 @@
+﻿
+Namespace Goedel.Protocol
+    
+	Exception Dechunking
+        Console "Key could not be read"
+
+
+
+		Exception MessageTooBig
+			Console "Message is too big"
+			Description
+				|
+

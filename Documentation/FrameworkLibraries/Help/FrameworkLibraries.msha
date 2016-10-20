@@ -1,0 +1,20 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Goedel Support libraries</title>
+</head>
+<body class="vendor-book">
+    <div class="details">
+        <span class="vendor">Vendor Name</span>
+        <span class="locale">en-us</span>
+        <span class="product">Goedel Support libraries</span>
+        <span class="name">Goedel Support libraries</span>
+    </div>
+    <div class="package-list">
+        <div class="package">
+            <!-- NOTE: The "name" span value cannot contain any periods! -->
+            <span class="name">FrameworkLibraries</span>
+            <a class="current-link" href="FrameworkLibraries.mshc">FrameworkLibraries.mshc</a>
+        </div>
+    </div>
+</body>
+</html>
