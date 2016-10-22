@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Goedel.Platform {
 
     /// <summary>
-    /// 
+    /// DNS client.
     /// </summary>
     public class DNSClient {
 

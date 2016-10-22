@@ -55,7 +55,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Fast string read. Counts the number of bytes needed to determine the length, allocates 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The data read</returns>
         public override string ReadString() {
             GetStringToken();
             if (TokenType != Token.String) {
@@ -200,7 +200,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Read binary data item.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The data read</returns>
         public override byte[] ReadBinary() {
             EOR = false;
 

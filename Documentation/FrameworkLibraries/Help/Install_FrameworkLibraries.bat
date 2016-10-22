@@ -17,7 +17,7 @@ GOTO HelpViewer2:
 REM Help Viewer 1.0
 REM Uninstall first in case it is already there.  If not, it won't install below.  We'll ignore any error output
 REM by redirecting it to NUL.
-HelpLibraryManagerLauncher.exe /product "VS" /version "100" /locale en-us /uninstall /silent /vendor "Vendor Name" /productName "Goedel Support libraries" /mediaBookList "Goedel Support libraries" > NUL
+HelpLibraryManagerLauncher.exe /product "VS" /version "100" /locale en-us /uninstall /silent /vendor "Comodo Group Inc" /productName "Goedel Libraries" /mediaBookList "Goedel Support libraries" > NUL
 
 REM For Help Viewer 1.0. the setup name must be HelpContentSetup.msha so make sure we copy the setup file to that
 REM name.  SHFB names it after the help file so that multiple files can be deployed to the same output older at
@@ -34,7 +34,7 @@ GOTO Exit
 REM Help Viewer 2.x
 REM Uninstall first in case it is already there.  If not, it won't install below.  We'll ignore any error output
 REM by redirecting it to NUL.
-HelpLibraryManagerLauncher.exe /viewerVersion %1  /locale en-us /wait 0 /operation uninstall /vendor "Vendor Name" /productName "Goedel Support libraries" /bookList "Goedel Support libraries" > NUL
+HelpLibraryManagerLauncher.exe /viewerVersion %1  /locale en-us /wait 0 /operation uninstall /vendor "Comodo Group Inc" /productName "Goedel Libraries" /bookList "Goedel Support libraries" > NUL
 
 REM Install the new content.
 HelpLibraryManagerLauncher.exe /viewerVersion %1  /locale en-us /wait 0 /operation install /sourceUri "%CD%\FrameworkLibraries.msha"

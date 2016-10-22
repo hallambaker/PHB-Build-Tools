@@ -4,9 +4,9 @@
 </head>
 <body class="vendor-book">
     <div class="details">
-        <span class="vendor">Vendor Name</span>
+        <span class="vendor">Comodo Group Inc</span>
         <span class="locale">en-us</span>
-        <span class="product">Goedel Support libraries</span>
+        <span class="product">Goedel Libraries</span>
         <span class="name">Goedel Support libraries</span>
     </div>
     <div class="package-list">

@@ -55,6 +55,7 @@ namespace Goedel.FSR {
         /// <summary>
         /// Get the value of the current item and clear the input buffers.
         /// </summary>
+        /// <returns>The current item as a string.</returns>
         public string CurrentItem() {
 
             var Value = Current.ToString();

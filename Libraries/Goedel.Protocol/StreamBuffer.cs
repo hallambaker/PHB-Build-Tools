@@ -83,13 +83,16 @@ namespace Goedel.Protocol {
 
         // Write Methods
 
-        /// <summary>Send a fixed sized buffer to a Stream and close it.</summary>
+        /// <summary>Send a fixed sized buffer to a Stream and flush it.</summary>
+        /// <param name="Stream">Stream to send buffer to</param>
+        /// <param name="Buffer">Data to send</param>
         public static void Write(Stream Stream, byte[] Buffer) {
             Stream.Write (Buffer, 0, Buffer.Length);
             Stream.Flush ();
             }
 
-        /// <summary>Send this buffer to a Stream and close it.</summary>
+        /// <summary>Send this buffer to a Stream and flush it.</summary>
+        /// <param name="Stream">Output stream</param>
         public void Write(Stream Stream) {
             foreach (byte[] Buffer in BufferList) {
                 Stream.Write(Buffer, 0, Buffer.Length);
@@ -185,16 +188,19 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>Write string</summary>
+        /// <param name="s">Data to write</param>
         public void Write(string s) {
             foreach (char c in s) Write (c);
             }
 
         /// <summary>Write out the Date Time as a string in RFC3339 Format</summary>
+        /// <param name="Data">Data to write</param>
         public void Write(DateTime Data) {
             Write (Data.ToString ("yyyy-MM-dd'T'HH:mm:ssZ"));
             }
 
         /// <summary>Move forward the specified number of bytes.</summary>
+        /// <param name="Count">Number of butes to advance the input stream</param>
         public void Advance (int Count) {
             Index += Count;
             Length += Count;
@@ -245,6 +251,7 @@ namespace Goedel.Protocol {
                 get {return (ReadBuffer >= BufferList.Count) & (ReadIndex >= Current.Length); }}
 
         /// <summary>Read a byte from the buffer.</summary>
+        /// <returns>The data value read</returns>
         public byte ReadByte () {
             if (ReadBuffer >= BufferList.Count) {
                 return Current [ReadIndex++];
@@ -277,6 +284,7 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>Read a character from the buffer</summary>
+        /// <returns>The data value read</returns>
         public char ReadChar () {
             char Result = NextChar ();
             ReadBuffer = NextBuffer;
@@ -285,6 +293,7 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>Read a byte from the buffer</summary>
+        /// <returns>The data value read</returns>
         public byte NextByte () {
             if (ReadBuffer >= BufferList.Count) {
                 return Current [ReadIndex];
@@ -295,6 +304,7 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>Go to the next character</summary>
+        /// <returns>The data value read</returns>
         public char NextChar () {
             NextIndex = ReadIndex;
             NextBuffer = ReadBuffer;

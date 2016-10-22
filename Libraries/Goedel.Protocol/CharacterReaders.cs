@@ -178,7 +178,8 @@ namespace Goedel.Protocol {
             return (char)Buffer;
             }
 
-        /// <summary></summary>
+        /// <summary>Get next character in the stream as Unicode character</summary>
+        /// <returns>The character returned.</returns>
         public override char GetNext() {
             Peek();
             Buffer = -1;
@@ -249,6 +250,7 @@ namespace Goedel.Protocol {
 
 
         /// <summary>Default constructor, from byte array.</summary>
+        /// <param name="Source">The input source.</param>
         public DataCharacterTextStream(byte[] Source) {
             this.Source = Source;
             Position = 0;

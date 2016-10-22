@@ -14,14 +14,14 @@ GOTO HelpViewer2
 :HelpViewer1
 
 REM Help Viewer 1.0
-HelpLibraryManagerLauncher.exe /product "VS" /version "100" /locale en-us /uninstall /silent /vendor "Vendor Name" /productName "Goedel Support libraries" /mediaBookList "Goedel Support libraries"
+HelpLibraryManagerLauncher.exe /product "VS" /version "100" /locale en-us /uninstall /silent /vendor "Comodo Group Inc" /productName "Goedel Libraries" /mediaBookList "Goedel Support libraries"
 
 GOTO Exit
 
 :HelpViewer2
 
 REM Help Viewer 2.x
-HelpLibraryManagerLauncher.exe /viewerVersion %1  /locale en-us /wait 0 /operation uninstall /vendor "Vendor Name" /productName "Goedel Support libraries" /bookList "Goedel Support libraries"
+HelpLibraryManagerLauncher.exe /viewerVersion %1  /locale en-us /wait 0 /operation uninstall /vendor "Comodo Group Inc" /productName "Goedel Libraries" /bookList "Goedel Support libraries"
 
 GOTO Exit
 

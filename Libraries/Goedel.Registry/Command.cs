@@ -78,7 +78,7 @@ namespace Goedel.Registry {
         /// <param name="Tag">The type created</param>
         /// <param name="Value">The value</param>
         /// <param name="Usage">Platform dependent default prefix / for windows, - for Unix.</param>
-        /// <returns></returns>
+        /// <returns>The string value</returns>
         public virtual string Usage(string Tag, string Value, char Usage) {
             if (Tag == null) {
                 return Value;

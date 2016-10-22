@@ -20,6 +20,7 @@ namespace Goedel.Cryptography.Framework {
         /// Create PKIX RSAPrivateKey from RSAParameters structure.
         /// </summary>
         /// <param name="RSAParameters">The RSA Parameters in .NET format.</param>
+        /// <returns>The private key in Goedel format.</returns> 
         public static RSAPrivateKey RSAPrivateKey(this RSAParameters RSAParameters) {
             return new RSAPrivateKey() {
 
@@ -37,7 +38,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Convert PKIX RSAPrivateKey to RSAParameters structure.
         /// </summary>
-        /// <param name="RSAPrivateKey"></param>
+        /// <param name="RSAPrivateKey">RSA key  in System.Security.Cryptography form</param>
         /// <returns>The RSA parameters in PKIX format.</returns>
         public static RSAParameters RSAParameters(this RSAPrivateKey RSAPrivateKey) {
             return new RSAParameters {
@@ -55,7 +56,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Create PKIX RSAPublicKey from RSAParameters structure.
         /// </summary>
-        /// <param name="RSAParameters">Input parameters.</param>
+        /// <param name="RSAParameters">Input parameters  in System.Security.Cryptography form</param>
+        /// <returns>The public key in Goedel format.</returns>
         public static RSAPublicKey RSAPublicKey(this RSAParameters RSAParameters) {
             return new RSAPublicKey() {
 
@@ -67,8 +69,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Convert PKIX RSAPublicKey to RSAParameters structure.
         /// </summary>
-        /// <param name="RSAPublicKey"></param>
-        /// <returns>The RSA parameters in PKIX format.</returns>
+        /// <param name="RSAPublicKey">The RSA public key</param>
+        /// <returns>The RSA parameters in System.Security.Cryotography. format.</returns>
         public static RSAParameters RSAParameters(this RSAPublicKey RSAPublicKey) {
             return new RSAParameters {
                 Modulus = RSAPublicKey.Modulus,
@@ -77,10 +79,10 @@ namespace Goedel.Cryptography.Framework {
             }
 
         /// <summary>
-        /// Create Keypair from .NET AsymmetricAlgorithm provider
+        /// Create Keypair from System.Security.Cryotography.AsymmetricAlgorithm provider
         /// </summary>
-        /// <param name="AsymmetricAlgorithm"></param>
-        /// <returns></returns>
+        /// <param name="AsymmetricAlgorithm">The algorithm crypto provider</param>
+        /// <returns>Crypto provider wrapping the specified key.</returns>
         public static KeyPair KeyPair(this AsymmetricAlgorithm AsymmetricAlgorithm) {
             var AsRSA = AsymmetricAlgorithm as RSACryptoServiceProvider;
             if (AsRSA != null) {
@@ -93,8 +95,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Convert binary data to portable certificate.
         /// </summary>
-        /// <param name="Data"></param>
-        /// <returns></returns>
+        /// <param name="Data">Input data</param>
+        /// <returns>The certificate</returns>
         public static Certificate Certificate(this byte[] Data) {
 
             var X509Cert = new X509Certificate2(Data);
@@ -105,7 +107,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Create a TBSCertificate item from a X509Certificate2 object.
         /// </summary>
-        /// <param name="X509Cert"></param>
+        /// <param name="X509Cert">The X509 certificate to form TBS certificate from</param>
+        /// <returns>The TBS certificate structure</returns>
         public static TBSCertificate TBSCertificate(this X509Certificate2 X509Cert) {
 
             var TBSCertificate = new TBSCertificate() {
@@ -126,7 +129,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Convert .NET OID to portable OID
         /// </summary>
-        /// <param name="Oid">.NET OID structure</param>
+        /// <param name="Oid">OID structure in System.Security.Cryptography form</param>
         /// <returns>Portable OID structure</returns>
         public static AlgorithmIdentifier AlgorithmIdentifier(this Oid Oid) {
             return new AlgorithmIdentifier(Oid.ToString());
@@ -136,7 +139,7 @@ namespace Goedel.Cryptography.Framework {
         /// Convert .NET Distinguished Name to portable list of names.
         /// </summary>
         /// <remarks>NOT IMPLEMENTED STUB</remarks>
-        /// <param name="DN">.NET Distinguished Name.</param>
+        /// <param name="DN">Distinguished Name in System.Security.Cryptography form</param>
         /// <returns>Portable list of Names.</returns>
         public static List<Name> Names(this X500DistinguishedName DN) {
             return null;
@@ -146,7 +149,7 @@ namespace Goedel.Cryptography.Framework {
         /// Convert .NET extension to portable extensions 
         /// </summary>
         /// <remarks>NOT IMPLEMENTED STUB</remarks>
-        /// <param name="X509Extension"></param>
+        /// <param name="X509Extension">The X509 extension in System.Security.Cryptography form</param>
         /// <returns>Portable extension representation.</returns>
         public static PKIX.Extension Extension(this X509Extension X509Extension) {
             return null;
@@ -161,6 +164,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Container prefix
         /// </summary>
+        /// <returns>The container prefix</returns>
         public static string Prefix() {
             return Goedel.Cryptography.KeyPair.TestMode ? "TEST:" : "mmm:";
             }

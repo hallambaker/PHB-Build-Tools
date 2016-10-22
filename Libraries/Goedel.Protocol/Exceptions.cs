@@ -6,6 +6,7 @@ namespace Goedel.Protocol {
 
 
     /// <summary>
+    /// Receive chunked data from HTTP source.
     /// </summary>
     public class Dechunking : global::System.Exception {
 
@@ -58,7 +59,56 @@ namespace Goedel.Protocol {
 
 
     /// <summary>
-    /// 
+    /// The requested operation is not known to this server.
+    /// </summary>
+    public class UnknownOperation : Dechunking {
+
+		/// <summary>
+        /// Create an instance of the exception.
+        /// </summary>		
+		public UnknownOperation () : base () {
+			}
+        
+		/// <summary>
+        /// Create an instance of the exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public UnknownOperation (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Create an instance of the exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public UnknownOperation (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new UnknownOperation(Reason as string);
+				}
+
+
+			else {
+				return new UnknownOperation("The requested operation is not known to this server.");
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// Message exceeds permitted size limit
     /// </summary>
     public class MessageTooBig : Dechunking {
 

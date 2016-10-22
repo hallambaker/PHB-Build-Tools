@@ -37,8 +37,8 @@ namespace Goedel.Utilities {
         /// Count the number of bytes that are required to encode
         /// a string in UTF8.
         /// </summary>
-        /// <param name="Text"></param>
-        /// <returns></returns>
+        /// <param name="Text">Input string</param>
+        /// <returns>Number of bytes required to encode the string.</returns>
         public static int CountUTF8(this string Text) {
             var Encoding = new UTF8Encoding();
             return Encoding.GetByteCount(Text);

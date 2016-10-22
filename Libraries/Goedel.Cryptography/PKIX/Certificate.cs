@@ -213,9 +213,10 @@ namespace Goedel.Cryptography.PKIX {
 
 
         /// <summary>
-        /// Create a blank certificate
+        /// Create a certificate
         /// </summary>
-
+        /// <param name="Data">The binary certificate data</param>
+        /// <param name="TBSCertificate">The TBS certificate part</param>
         public Certificate(byte[] Data, TBSCertificate TBSCertificate) {
             _Data = Data;
             this.TBSCertificate = TBSCertificate;
@@ -343,7 +344,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Construct a certification request for the specified certificate.
         /// </summary>
-        /// <param name="Certificate"></param>
+        /// <param name="Certificate">A certificate prototype.</param>
         public CertificationRequest(Certificate Certificate) {
             CertificationRequestInfo = new CertificationRequestInfo();
             CertificationRequestInfo.Subject =
@@ -358,7 +359,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Sign the request
         /// </summary>
-        /// <param name="SigningKey"></param>
+        /// <param name="SigningKey">The signing key</param>
         public void Sign(CryptoProviderSignature SigningKey) {
             SignatureAlgorithm = new AlgorithmIdentifier(SigningKey.OID);
             var SignatureData = SigningKey.Sign(CertificationRequestInfo.DER());
@@ -368,7 +369,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Set the subject name.
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">The subject name to set.</param>
         public void SetSubject(string name) {
             CertificationRequestInfo.Subject = Name.ToName(name);
             }

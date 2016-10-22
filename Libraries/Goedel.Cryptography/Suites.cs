@@ -342,7 +342,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Add a suite with the specified parameters to the catalog.
         /// </summary>
-        /// <param name="Suite"></param>
+        /// <param name="Suite">The cryptosuite to add.</param>
         public void Add (CryptoSuite Suite) {
         ByName.Add(Suite.JOSE, Suite);
             }

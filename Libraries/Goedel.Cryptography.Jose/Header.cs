@@ -34,7 +34,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Initialize the alg parameter to match the specified provider.
         /// </summary>
-        /// <param name="Provider"></param>
+        /// <param name="Provider">The encryption provider</param>
         public Header(CryptoProviderEncryption Provider) {
             alg = Provider.JSONName;
             }
@@ -49,7 +49,7 @@ namespace Goedel.Cryptography.Jose {
         /// Initialize the alg and kid parameters to match the specified 
         /// signature provider.
         /// </summary>
-        /// <param name="SignatureProvider"></param>
+        /// <param name="SignatureProvider">The signature provider.</param>
         public SignatureHeader(CryptoProviderSignature SignatureProvider) {
             kid = SignatureProvider.UDF;
             alg = SignatureProvider.JSONName;

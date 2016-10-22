@@ -40,7 +40,7 @@ namespace Goedel.Protocol {
         /// <summary>The current indent level</summary>
         protected int Indent = 0;
 
-        /// <summary></summary>
+        /// <summary>Write newline character</summary>
         protected void NewLine() {
             Output.WriteLine();
             for (int i = 0; i < Indent; i++) {
@@ -76,6 +76,7 @@ namespace Goedel.Protocol {
         /// Create a new JSON Writer using the specified output buffer. If the buffer has
         /// an output stream defined, text will be written to the stream.
         /// </summary>
+        /// <param name="Output">The output stream.</param>
         public JSONWriter(StreamBuffer Output) {
             this.Output = Output;
             }

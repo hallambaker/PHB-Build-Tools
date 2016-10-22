@@ -27,7 +27,6 @@ using Goedel.Protocol;
 #foreach (var Item in ProtoStruct.Top)
 #switchcast ProtoStructType Item
 #casecast Protocol Protocol
-
 #foreach (var Entry in Protocol.Entries)
 #switchcast ProtoStructType Entry
 #casecast Using Using
@@ -36,20 +35,18 @@ using #{Using.Id};
 #end foreach
 
 
-#% DescriptionListC (Protocol.Entries, 0);
 #% Namespace = Protocol.Namespace.ToString ();
 namespace #{Namespace} {
 
 
-    /// <summary>
-    /// 
-    /// </summary>
+#% DescriptionListC (Protocol.Entries, 1);
 	public abstract partial class #{Protocol.Prefix} #{Protocol.ThisInherits} {
 #% CurrentPrefix = Protocol.Prefix.ToString ();
 
         /// <summary>
-        /// 
+        /// Schema tag.
         /// </summary>
+        /// <returns>The tag value</returns>
 		public #{InheritsOverride} string Tag () {
 			return "#{Protocol.Prefix}";
 			}
@@ -64,6 +61,7 @@ namespace #{Namespace} {
         /// <summary>
         /// Construct an instance from a JSON encoded stream.
         /// </summary>
+        /// <param name="JSONReader">Input stream</param>
 		public #{Protocol.Prefix} (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			_Initialize () ;
@@ -72,6 +70,7 @@ namespace #{Namespace} {
         /// <summary>
         /// Construct an instance from a JSON encoded string.
         /// </summary>
+        /// <param name="_String">Input string</param>
 		public #{Protocol.Prefix} (string _String) {
 			Deserialize (_String);
 			_Initialize () ;
@@ -80,6 +79,8 @@ namespace #{Namespace} {
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
+        /// <param name="JSONReader">Input stream</param>
+        /// <param name="Out">The created object</param>
         public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
 	
 			JSONReader.StartObject ();
@@ -160,8 +161,10 @@ namespace #{Namespace} {
 #casecast Transaction Transaction
 
         /// <summary>
-		/// Base class for implementing the transaction.
-        /// </summary>		
+		/// Base method for implementing the transaction  #{Transaction.Id}.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+		/// <returns>The response object from the service</returns>
         public virtual #{Transaction.Response} #{Transaction.Id} (
                 #{Transaction.Request} Request) {
             return null;
@@ -189,6 +192,7 @@ namespace #{Namespace} {
         /// <summary>
 		/// Create a client connection to the specified service.
         /// </summary>	
+        /// <param name="JPCRemoteSession">The remote session to connect to</param>
 		public #{Service.Id}Client (JPCRemoteSession JPCRemoteSession) {
 			this.JPCRemoteSession = JPCRemoteSession;
 			}
@@ -200,6 +204,8 @@ namespace #{Namespace} {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
+        /// <param name="Request">The request object</param>
+		/// <returns>The response object</returns>
         public override #{Transaction.Response} #{Transaction.Id} (
                 #{Transaction.Request} Request) {
 
@@ -273,7 +279,8 @@ namespace #{Namespace} {
 
         /// <summary>
 		/// Initialize class from JSONReader stream.
-        /// </summary>		
+        /// </summary>	
+        /// <param name="JSONReader">Input stream</param>			
 		public #{Message.Id} (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -281,6 +288,7 @@ namespace #{Namespace} {
         /// <summary>
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public #{Message.Id} (string _String) {
 			Deserialize (_String);
 			}
@@ -293,6 +301,7 @@ namespace #{Namespace} {
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public #{Structure.Id} (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -300,6 +309,7 @@ namespace #{Namespace} {
         /// <summary> 
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public #{Structure.Id} (string _String) {
 			Deserialize (_String);
 			}
@@ -451,9 +461,7 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 #if (Token != null)
 #% bool Multiple = IsMultiple (Options);
 #if Multiple
-		/// <summary>
-        /// 
-        /// </summary>
+#{CommentSummary(8,Entry.Description)}
 		public virtual List<#{Type}>				#{Token} {
 			get {return _#{Token};}			
 			set {_#{Token} = value;}
@@ -463,17 +471,13 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 #if !Nullable
 		bool								__#{Token} = false;
 		private #{Type}						_#{Token};
-        /// <summary>
-        /// 
-        /// </summary>
+#{CommentSummary(8,Entry.Description)}
 		public virtual #{Type}						#{Token} {
 			get {return _#{Token};}
 			set {_#{Token} = value; __#{Token} = true; }
 			}
 #else 
-        /// <summary>
-        /// 
-        /// </summary>
+#{CommentSummary(8,Entry.Description)}
 		public virtual #{Type}						#{Token} {
 			get {return _#{Token};}			
 			set {_#{Token} = value;}
@@ -614,7 +618,8 @@ public partial class #{Id}#{TTT} : #{Inherits} {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new #{Id}  FromTagged (JSONReader JSONReader) {
 			#{Id} Out = null;
 
@@ -643,8 +648,8 @@ public partial class #{Id}#{TTT} : #{Inherits} {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {

@@ -1,12 +1,13 @@
 ﻿using System;
 
 namespace Goedel.Platform {
-    /// <summary></summary>
+    /// <summary>Placehiolder exception</summary>
     public class TBSException : System.Exception {
-        /// <summary></summary>
+        /// <summary>Primitive exception</summary>
         public TBSException() {
             }
-        /// <summary></summary>
+        /// <summary>Descriptive exception.</summary>
+        /// <param name="message">Message to display.</param>
         public TBSException(string message)
             : base(message) {
             }

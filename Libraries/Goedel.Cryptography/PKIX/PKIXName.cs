@@ -58,7 +58,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Create name from the UDF fingerprint of a key.
         /// </summary>
-        /// <param name="CryptoProvider"></param>
+        /// <param name="CryptoProvider">The key to fingerprint</param>
         public Name(CryptoProvider CryptoProvider) :
                 this (CryptoProvider.UDF) {
             }

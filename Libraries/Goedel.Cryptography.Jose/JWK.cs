@@ -38,7 +38,7 @@ namespace Goedel.Cryptography.Jose {
         /// Build a KeyData object from a reference to a key. This may be a certificate,
         /// a certificate reference (URL and hash), a UDF value, etc.
         /// </summary>
-        /// <param name="KeyHandle"></param>
+        /// <param name="KeyHandle">The key handle</param>
         public KeyData(KeyHandle KeyHandle) {
 
 
@@ -50,7 +50,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Builds a KeyData object from a key.
         /// </summary>
-        /// <param name="CryptoKey"></param>
+        /// <param name="CryptoKey">The input data</param>
         public KeyData(CryptoKey CryptoKey) {
             }
 

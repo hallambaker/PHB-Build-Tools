@@ -25,6 +25,7 @@ namespace Goedel.Tool.ProtoGen {
         public bool ByValue = true;
 
         public bool Parameterized = false;
+        public List<string> Description = new List<string>();
 
         public string ThisInherits = ": global::Goedel.Protocol.JSONObject";
 
@@ -130,6 +131,11 @@ namespace Goedel.Tool.ProtoGen {
         public void SetOptions(List<_Choice> Options) {
             foreach (_Choice Entry in Options) {
                 Entry.Normalize();
+                if (Entry.GetType() == typeof(Description)) {
+                    foreach (var Text in (Entry as Description).Text1) {
+                        Description.Add(Text);
+                        }
+                    }
                 if (Entry.GetType() == typeof(Multiple)) {
                     Multiple = true;
                     }

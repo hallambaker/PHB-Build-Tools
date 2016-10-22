@@ -166,12 +166,12 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Create and populate a result for a digest or MAC algorithm.
         /// </summary>
-        /// <param name="Identifier"></param>
-        /// <param name="OID"></param>
-        /// <param name="Value"></param>
-        public CryptoData(CryptoAlgorithmID Identifier, string OID, byte[] Value) {
+        /// <param name="Identifier">The Goedel Cryptography identifier.</param>
+        /// <param name="OID">The OID of the algorithm used to process the data</param>
+        /// <param name="Integrity">The value of the digest.</param>
+        public CryptoData(CryptoAlgorithmID Identifier, string OID, byte[] Integrity) {
             _Identifier = Identifier;
-            _Integrity = Value;
+            _Integrity = Integrity;
             _Data = null;
             _Key = null;
             _IV = null;
@@ -182,14 +182,14 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Create and populate a result for an encryption with authentication algorithm.
         /// </summary>
-        /// <param name="Identifier"></param>
-        /// <param name="OID"></param>
-        /// <param name="Value"></param>
-        /// <param name="Data"></param>
+        /// <param name="Identifier">The Goedel Cryptography identifier.</param>
+        /// <param name="OID">The OID of the algorithm used to process the data</param>
+        /// <param name="Integrity">The value of the authantication data.</param>
+        /// <param name="Data">The encrypted data</param>
         public CryptoData(CryptoAlgorithmID Identifier, string OID,
-                        byte[] Value, byte[] Data) {
+                        byte[] Integrity, byte[] Data) {
             _Identifier = Identifier;
-            _Integrity = Value;
+            _Integrity = Integrity;
             _Data = Data;
             _OID = OID;
             _Key = null;
@@ -200,10 +200,10 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Create and populate a result for an encryption with authentication algorithm.
         /// </summary>
-        /// <param name="Identifier"></param>
-        /// <param name="OID"></param>
-        /// <param name="Integrity"></param>
-        /// <param name="Data"></param>
+        /// <param name="Identifier">The Goedel Cryptography identifier.</param>
+        /// <param name="OID">The OID of the algorithm used to process the data</param>
+        /// <param name="Integrity">The value of the authantication data.</param>
+        /// <param name="Data">The encrypted data</param>
         /// <param name="Key">Key data</param>
         /// <param name="IV">Initialization Vector</param>
         public CryptoData(CryptoAlgorithmID Identifier, string OID,

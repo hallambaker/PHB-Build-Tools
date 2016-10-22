@@ -41,33 +41,34 @@ namespace Goedel.Cryptography {
             }
 
         /// <summary>
-        /// 
+        /// Construct by key fingerprint
         /// </summary>
-        /// <param name="UDF"></param>
+        /// <param name="UDF">Fingerprint of the key.</param>
         public KeyHandle(string UDF) {
             }
 
         /// <summary>
-        /// 
+        /// Construct by key fingerprint and use
         /// </summary>
-        /// <param name="UDF"></param>
-        /// <param name="Application"></param>
+        /// <param name="UDF">Fingerprint of the key.</param>
+        /// <param name="Application">The use.</param>
         public KeyHandle(string UDF, string Application) {
             }
 
         /// <summary>
-        /// 
+        /// Construct by key fingerprint, use and name of key.
         /// </summary>
-        /// <param name="UDF"></param>
-        /// <param name="Application"></param>
-        /// <param name="Name"></param>
+        /// <param name="UDF">Fingerprint of the key.</param>
+        /// <param name="Application">The use.</param>
+        /// <param name="Name">The key friendly name</param>
         public KeyHandle(string UDF, string Application, string Name) {
             }
 
         /// <summary>
         /// Form a KeyHandle from an end entity certificate 
         /// </summary>
-        /// <param name="Certificate"></param>
+        /// <param name="Certificate">The end entity certificate to construct
+        /// the handle from.</param>
         public KeyHandle(Certificate Certificate) {
 
             }
@@ -191,8 +192,8 @@ namespace Goedel.Cryptography {
         /// Search all the local machine stores to find a key pair with the specified
         /// fingerprint
         /// </summary>
-        /// <param name="UDF"></param>
-        /// <returns></returns>
+        /// <param name="UDF">Fingerprint of key</param>
+        /// <returns>The key pair found</returns>
         public static KeyPair FindLocal(string UDF) {
             foreach (var Delegate in Platform.FindLocalDelegates) {
                 var KeyPair = Delegate(UDF);
@@ -225,6 +226,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Returns the UDF fingerprint of the current key as a byte array.
         /// </summary>
+        /// <returns>The UDF fingerprint value of this key.</returns>
         public byte[] GetUDFBytes() {
             return Goedel.Cryptography.UDF.FromKeyInfo(KeyInfoData.DER());
             }
@@ -263,10 +265,10 @@ namespace Goedel.Cryptography {
         public abstract void Generate(KeySecurity KeySecurity);
 
         /// <summary>
-        /// Locate the privatge key in the local key store.
+        /// Locate the private key in the local key store.
         /// </summary>
         /// <param name="UDF">Fingerprint of key to locate.</param>
-        /// <returns></returns>
+        /// <returns>True if private key exists.</returns>
         public abstract bool FindLocal(string UDF);
 
         }

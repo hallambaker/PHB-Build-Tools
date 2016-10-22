@@ -4,6 +4,8 @@ Namespace Goedel.Cryptography.KeyFile
     
 	Exception KeyFileException
         Console "Key could not be read"
+		Description
+			|Exception occurred parsing or encoding a key file.
 
 		Exception NoProviderSpecified
 			Console "No provider specified"

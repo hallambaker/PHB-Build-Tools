@@ -39,9 +39,6 @@
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Jose\bin\Publish\Goedel.Cryptography.Jose.XML" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Jose\bin\Publish\Goedel.Cryptography.Jose.dll" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Ticket\Goedel.Cryptography.Ticket.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Ticket\bin\Publish\Goedel.Cryptography.Ticket.XML" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Ticket\bin\Publish\Goedel.Cryptography.Ticket.dll" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.FSR\bin\Publish\Goedel.FSR.XML" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.FSR\bin\Publish\Goedel.FSR.dll" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj" />
@@ -81,14 +78,15 @@
     <CatalogProductId>VS</CatalogProductId>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="False" />
-<NamespaceSummaryItem name="Goedel.ASN" isDocumented="True">Utility functions to support limited ASN.1 parser used to parse PKIX certificates and associated data structures. Like ASN.1 itself, use for any purpose other than support for legacy systems is strongly discouraged. ASN.1 has set the field of cryptography back at least a decade.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Cryptography" isDocumented="True">Cryptographic support functions.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Cryptography.Jose" isDocumented="True">Support for JOSE JSON Object Signing and Encryption</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Cryptography.PKIX" isDocumented="True">Support for PKIX (bundled in Goedel.Cryptography assembly)</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Cryptography.Ticket" isDocumented="True">Cryptographic ticket class for efficient authentication and credential presentation.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.FSR" isDocumented="True">Utitlity class for Goedel Finite State Recognizer</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Platform" isDocumented="True">Manage platform specific libraries.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Protocol" isDocumented="True">Implementation class for Protogen targets.</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="Goedel.ASN" isDocumented="True">Utility functions to support limited ASN.1 parser used to parse PKIX certificates and associated data structures. Like ASN.1 itself, use for any purpose other than support for legacy systems is strongly discouraged. ASN.1 has set the field of cryptography back at least a decade.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Cryptography" isDocumented="True">Cryptographic support functions.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Cryptography.Jose" isDocumented="True">Support for JOSE JSON Object Signing and Encryption</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Cryptography.PKIX" isDocumented="True">Support for PKIX (bundled in Goedel.Cryptography assembly)</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Cryptography.Ticket" isDocumented="True">Cryptographic ticket class for efficient authentication and credential presentation.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.FSR" isDocumented="True">Utitlity class for Goedel Finite State Recognizer</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Platform" isDocumented="True">Manage platform specific libraries.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Protocol" isDocumented="True">Implementation class for Protogen targets.</NamespaceSummaryItem>
+    </NamespaceSummaries>
     <ProjectSummary>Support libraries for code generated with Goedel code synthesis tools.</ProjectSummary>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform

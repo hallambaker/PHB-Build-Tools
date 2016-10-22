@@ -51,8 +51,8 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Wrap the input string, inserting linebreaks where necessary.
         /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
+        /// <param name="input">The input string</param>
+        /// <returns>The wrapped output string</returns>
         static public string Wrap(string input) { 
             StringWriter StringWriter = new StringWriter ();
             WrapWriter WrapWriter = new WrapWriter (StringWriter);
@@ -199,7 +199,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Write character to output stream.
         /// </summary>
-        /// <param name="c"></param>
+        /// <param name="c">Character to write</param>
         public override void Write(char c) {
             if (c == '\t') {
                 int Spaces = TabStop * ((Column + TabStop - 1) / TabStop) - Column;
@@ -279,7 +279,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Convert pending data to string.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The string value</returns>
         public override string ToString() {
             Flush ();
             string result = Output.ToString ();

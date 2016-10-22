@@ -57,7 +57,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Create a new random secret with the specified number of bits.
         /// </summary>
-        /// <param name="Bits"></param>
+        /// <param name="Bits">Nyumber of bits in the secret</param>
         public Secret(int Bits) {
             Key = CryptoCatalog.GetBits(Bits);
             }
@@ -65,7 +65,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Create a secret from the specified key value.
         /// </summary>
-        /// <param name="Key"></param>
+        /// <param name="Key">The key value.</param>
         public Secret(byte[] Key) {
             this.Key = Key;
             }
@@ -106,7 +106,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Hash code of the current class.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Hash code of object instance.</returns>
         public override int GetHashCode() {
             return Text.GetHashCode();
             }
@@ -217,6 +217,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Create a set of N key shares with a quorum of N.
         /// </summary>
+        /// <param name="N">Number of key shares to create.</param>
         /// <returns>The key shares created.</returns> 
         public KeyShare[] Split(int N) {
             var KeyShares = new KeyShare[N];

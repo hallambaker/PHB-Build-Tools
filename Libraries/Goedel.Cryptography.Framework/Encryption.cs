@@ -106,8 +106,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Start an encryption session with the specified key and IV.
         /// </summary>
-        /// <param name="Key"></param>
-        /// <param name="IV"></param>
+        /// <param name="Key">The encryption key</param>
+        /// <param name="IV">The initialization vector</param>
         public virtual void StartEncrypt(byte[] Key, byte[] IV) {
             Encrypting = true;
             if (Key != null) {
@@ -127,7 +127,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Start a decryption session with the specified key and implicit IV.
         /// </summary>
-        /// <param name="Key"></param>
+        /// <param name="Key">The encryption key</param>
         public virtual void StartDecrypt(byte[] Key) {
             AppendIntegrity = true;
             Encrypting = false;
@@ -138,8 +138,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Start a decryption session with the specified key and IV.
         /// </summary>
-        /// <param name="Key"></param>
-        /// <param name="IV"></param>
+        /// <param name="Key">The encryption key</param>
+        /// <param name="IV">The initialization vector</param>
         public virtual void StartDecrypt(byte[] Key, byte[] IV) {
             AppendIntegrity = false;
             Encrypting = false;
@@ -170,7 +170,7 @@ namespace Goedel.Cryptography.Framework {
         /// Encrypt the provided data
         /// </summary>
         /// <param name="Data">Data to encrypt</param>
-        /// <remarks>Encrypted data.</remarks>
+        /// <returns>The encrypted data.</returns>
         public override CryptoData Encrypt(byte [] Data) {
             StartEncrypt();
             return Process(Data);
@@ -181,7 +181,7 @@ namespace Goedel.Cryptography.Framework {
         /// Encrypt the provided cryptoblob
         /// </summary>
         /// <param name="Input">Data to encrypt</param>
-        /// <remarks>Encrypted data.</remarks>
+        /// <returns>The encrypted data.</returns>
         public override CryptoData Encrypt(CryptoData Input) {
             StartEncrypt(Input.Key, Input.IV);
             return Process(Input);
@@ -192,6 +192,7 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="Input">Cryoptographic parameters</param>
         /// <param name="Data">Data to decrypt/</param>
+        /// <returns>The encrypted data.</returns>
         public override CryptoData Decrypt(CryptoData Input, byte[] Data) {
             StartDecrypt(Input.Key, Input.IV);
             return Process(Data);
@@ -367,7 +368,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Create an AES provider with the specified key size.
         /// </summary>
-        /// <param name="KeySize"></param>
+        /// <param name="KeySize">The key size. Valid sizes are 128, 192 and 256 bits.</param>
         public CryptoProviderEncryptAES(int KeySize)
             : base(new AesManaged(), KeySize, CipherMode.CBC) {
             }

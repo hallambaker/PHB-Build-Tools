@@ -169,7 +169,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Encode data item.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The encoded data</returns>
         public abstract byte[] Encode();
         }
 

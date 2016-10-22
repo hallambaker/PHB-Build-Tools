@@ -116,7 +116,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Do nothing
         /// </summary>
-        /// <param name="c"></param>
+        /// <param name="c">Character value read</param>
         public virtual void Abort(int c) {
             }
 

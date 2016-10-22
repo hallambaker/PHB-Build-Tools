@@ -1,15 +1,109 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <HelpKI>
+  <HelpKINode Title="Abort method" Url="html/284ed464-47f1-d118-0545-1398094a9084.htm" />
+  <HelpKINode Title="About method" Url="html/79d4889f-a86e-44cb-638c-c1c5bd6cf3dd.htm" />
+  <HelpKINode Title="AddAlgorithm method" Url="html/79ca896c-8d55-f58a-8b47-4de41a9982d1.htm" />
+  <HelpKINode Title="AddComment method" Url="html/aa76a786-39e3-3c93-0971-bd61d4a040ce.htm" />
+  <HelpKINode Title="AddData method" Url="html/fc42355f-ba21-f30f-1073-e59dcf2bdfc8.htm" />
+  <HelpKINode Title="AddTag method" Url="html/6bfad033-baf6-3f39-bd03-bf4ecd3e38a9.htm" />
+  <HelpKINode Title="Algorithm enumeration member" Url="html/77b43f76-bab0-4f7a-5416-73d1867ff432.htm" />
+  <HelpKINode Title="Algorithm field" Url="html/3901e9e0-7df6-9677-ef29-b58463be0a86.htm" />
   <HelpKINode Title="AlgorithmClass property">
     <HelpKINode Title="CryptoProviderAuthentication.AlgorithmClass Property " Url="html/22c1d49c-89af-228a-9c58-75aed09b22e2.htm" />
     <HelpKINode Title="CryptoProviderDigest.AlgorithmClass Property " Url="html/a86990fc-99d8-dee6-daa7-d7d926a7c928.htm" />
     <HelpKINode Title="CryptoProviderEncryption.AlgorithmClass Property " Url="html/695252b1-551e-8639-98e9-8b648e726ecc.htm" />
   </HelpKINode>
   <HelpKINode Title="AlgorithmIdentifier method" Url="html/0ad8b626-b4c2-9da9-d2a9-abaf3e6013f0.htm" />
+  <HelpKINode Title="AlgRead enumeration member" Url="html/93db771a-029e-fc88-1053-2ecdb7182b85.htm" />
+  <HelpKINode Title="AlgSpace enumeration member" Url="html/93db771a-029e-fc88-1053-2ecdb7182b85.htm" />
+  <HelpKINode Title="Allocate method" Url="html/7a047fce-ba34-1b5e-eb55-e5a2e04937d0.htm" />
+  <HelpKINode Title="Apache2License method" Url="html/b65e23c9-e978-202e-c586-4e892e60da91.htm" />
   <HelpKINode Title="AppendIntegrity field" Url="html/987d5a2d-5bae-b44e-49cb-0ffde9673880.htm" />
   <HelpKINode Title="AppendIV field" Url="html/5055db3b-e5ea-9868-e251-18d33b7e90b3.htm" />
+  <HelpKINode Title="Armor enumeration member" Url="html/71f7f293-6f77-5610-5015-6883e427f253.htm" />
+  <HelpKINode Title="ArmorEnd1 enumeration member" Url="html/734b7a8e-14bb-27b9-ddd7-afb39439368f.htm" />
+  <HelpKINode Title="ArmorEnd2 enumeration member" Url="html/734b7a8e-14bb-27b9-ddd7-afb39439368f.htm" />
+  <HelpKINode Title="ArmorStart1 enumeration member" Url="html/734b7a8e-14bb-27b9-ddd7-afb39439368f.htm" />
+  <HelpKINode Title="ArmorStart2 enumeration member" Url="html/734b7a8e-14bb-27b9-ddd7-afb39439368f.htm" />
+  <HelpKINode Title="AssemblyBuildTime method" Url="html/0a8b0410-4605-231e-4707-a0b3e72f5bfa.htm" />
+  <HelpKINode Title="AssemblyCompany property" Url="html/3826b8c8-3bca-c295-852d-1073225e12d1.htm" />
+  <HelpKINode Title="AssemblyCopyright property" Url="html/a8d6becd-8b28-63d1-dcc2-c4b0abc0a851.htm" />
+  <HelpKINode Title="AssemblyDescription property" Url="html/516e43a7-d50c-b620-cfe4-febfbb34455e.htm" />
+  <HelpKINode Title="AssemblyProduct property" Url="html/60cf0f38-d847-53ce-ff7f-5e3afc1266d9.htm" />
+  <HelpKINode Title="AssemblyTitle property" Url="html/8cc82388-b932-a217-8f98-77cc943af8aa.htm" />
+  <HelpKINode Title="AssemblyVersion property" Url="html/89024445-5b09-4876-4e71-b2d8a7221805.htm" />
   <HelpKINode Title="AsymmetricAlgorithm property" Url="html/d1488c5c-bd62-880f-3d51-c0debd2b81aa.htm" />
+  <HelpKINode Title="At enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
+  <HelpKINode Title="AuthKeysFileLex class">
+    <HelpKINode Title="AuthKeysFileLex Class" Url="html/fc0b7fea-2e15-adfd-a8db-16c9c3d0feaa.htm" />
+    <HelpKINode Title="about AuthKeysFileLex class" Url="html/fc0b7fea-2e15-adfd-a8db-16c9c3d0feaa.htm" />
+    <HelpKINode Title="constructor" Url="html/89856b37-c010-eec4-c17e-1b29190b8216.htm" />
+    <HelpKINode Title="fields" Url="html/18fd7cb9-c234-999d-d57f-b3e8af0914aa.htm" />
+    <HelpKINode Title="methods" Url="html/e974cd0e-2803-f102-8567-47191d363ad5.htm" />
+    <HelpKINode Title="properties" Url="html/9b58e230-1ab4-2fe0-39b6-9db4af9a6381.htm" />
+  </HelpKINode>
+  <HelpKINode Title="AuthKeysFileLex.AddAlgorithm method" Url="html/79ca896c-8d55-f58a-8b47-4de41a9982d1.htm" />
+  <HelpKINode Title="AuthKeysFileLex.AddComment method" Url="html/aa76a786-39e3-3c93-0971-bd61d4a040ce.htm" />
+  <HelpKINode Title="AuthKeysFileLex.AddData method" Url="html/fc42355f-ba21-f30f-1073-e59dcf2bdfc8.htm" />
+  <HelpKINode Title="AuthKeysFileLex.AuthKeysFileLex constructor" Url="html/89856b37-c010-eec4-c17e-1b29190b8216.htm" />
+  <HelpKINode Title="AuthKeysFileLex.CharacterMappings property" Url="html/729b8230-be9b-42ed-9cca-f70040d6b8e9.htm" />
+  <HelpKINode Title="AuthKeysFileLex.CompressedTransitions property" Url="html/f51adf0b-4393-9e71-e9c3-609bfe739708.htm" />
+  <HelpKINode Title="AuthKeysFileLex.GetTaggedData method" Url="html/c4097a11-4950-6d36-0531-333a55e43a76.htm" />
+  <HelpKINode Title="AuthKeysFileLex.GetToken method" Url="html/7fef2f31-b19c-354e-ce15-9f166f5c0d1c.htm" />
+  <HelpKINode Title="AuthKeysFileLex.Ignore method" Url="html/51e6d458-5838-d8ea-ffdb-8844cfc8df19.htm" />
+  <HelpKINode Title="AuthKeysFileLex.Init method" Url="html/09be9194-0a56-dd09-8ae7-c79744dd461e.htm" />
+  <HelpKINode Title="AuthKeysFileLex.State enumeration" Url="html/93db771a-029e-fc88-1053-2ecdb7182b85.htm" />
+  <HelpKINode Title="AuthKeysFileLex.Token enumeration" Url="html/77b43f76-bab0-4f7a-5416-73d1867ff432.htm" />
+  <HelpKINode Title="AuthorizedKey structure">
+    <HelpKINode Title="AuthorizedKey Structure" Url="html/9ad222cd-ee00-0b4c-514a-87e0c08bb7d5.htm" />
+    <HelpKINode Title="about AuthorizedKey structure" Url="html/9ad222cd-ee00-0b4c-514a-87e0c08bb7d5.htm" />
+    <HelpKINode Title="fields" Url="html/3c9a5129-5d1b-dc7c-aa03-f6e4d1215acc.htm" />
+    <HelpKINode Title="methods" Url="html/4f580b65-8101-a95f-8d00-9e1dbc66fcb3.htm" />
+  </HelpKINode>
+  <HelpKINode Title="AuthorizedKey.Algorithm field" Url="html/3901e9e0-7df6-9677-ef29-b58463be0a86.htm" />
+  <HelpKINode Title="AuthorizedKey.Comment field" Url="html/a5b353a8-667e-4d72-e9e3-bfc47b5613fd.htm" />
+  <HelpKINode Title="AuthorizedKey.Data field" Url="html/d8e6083d-3d13-a531-db14-73d5f6a9d7be.htm" />
+  <HelpKINode Title="AuthorizedKey.SSHData field" Url="html/891f89de-a804-e2a0-aa9b-ef30401aac9d.htm" />
+  <HelpKINode Title="BackSlash enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
+  <HelpKINode Title="Base64 method" Url="html/957a8f77-c21a-161f-0de8-a2bec8a152a4.htm" />
+  <HelpKINode Title="Base64Data enumeration member" Url="html/734b7a8e-14bb-27b9-ddd7-afb39439368f.htm" />
+  <HelpKINode Title="BEGIN enumeration member" Url="html/cd9cf2e7-daa3-a509-8e9e-38869b53d5a9.htm" />
+  <HelpKINode Title="Begin method" Url="html/1b518f83-4bd7-3c1b-1348-4bad715691ca.htm" />
+  <HelpKINode Title="Boilerplate class">
+    <HelpKINode Title="Boilerplate Class" Url="html/3c9a4ce0-ff23-2d22-8090-371b5e7dbd5b.htm" />
+    <HelpKINode Title="about Boilerplate class" Url="html/3c9a4ce0-ff23-2d22-8090-371b5e7dbd5b.htm" />
+    <HelpKINode Title="constructor" Url="html/7d15dd98-26ab-f3b9-e6c7-735cd3300614.htm" />
+    <HelpKINode Title="fields" Url="html/f445b1d4-0fad-ce0d-e8c6-f314d5bb4ece.htm" />
+    <HelpKINode Title="methods" Url="html/c296dd58-d6b9-6c26-0649-062b5f2902cc.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Boilerplate.Apache2License method" Url="html/b65e23c9-e978-202e-c586-4e892e60da91.htm" />
+  <HelpKINode Title="Boilerplate.Boilerplate constructor" Url="html/7d15dd98-26ab-f3b9-e6c7-735cd3300614.htm" />
+  <HelpKINode Title="Boilerplate.BSD2License method" Url="html/67db3e77-347c-b460-60c6-1582350d2bfd.htm" />
+  <HelpKINode Title="Boilerplate.BSD3License method" Url="html/6192c8e1-5987-e1a5-8889-f125656220e2.htm" />
+  <HelpKINode Title="Boilerplate.Header method" Url="html/55c43f0e-ea74-02f5-e14c-3eebb64fd693.htm" />
+  <HelpKINode Title="Boilerplate.ISCLicense method" Url="html/0d8cab1b-e649-503c-de6a-880443fbbf1c.htm" />
+  <HelpKINode Title="Boilerplate.License method" Url="html/19434311-5012-9371-89bb-b91dd4cd7a6a.htm" />
+  <HelpKINode Title="Boilerplate.MITLicense method" Url="html/e47afcb0-57a1-b2cb-ae27-74729277d7ba.htm" />
+  <HelpKINode Title="BSD2License method" Url="html/67db3e77-347c-b460-60c6-1582350d2bfd.htm" />
+  <HelpKINode Title="BSD3License method" Url="html/6192c8e1-5987-e1a5-8889-f125656220e2.htm" />
   <HelpKINode Title="Certificate method" Url="html/35959a43-f80a-24a2-2e7e-6eabc5b9f823.htm" />
+  <HelpKINode Title="Ch field" Url="html/c52c1d54-d6a6-d2f6-658c-f7d5bd1c2551.htm" />
+  <HelpKINode Title="CharacterMappings property">
+    <HelpKINode Title="AuthKeysFileLex.CharacterMappings Property " Url="html/729b8230-be9b-42ed-9cca-f70040d6b8e9.htm" />
+    <HelpKINode Title="KeyFileLex.CharacterMappings Property " Url="html/f8833c9d-50c9-a682-bb9e-563b8fc795bc.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Close method" Url="html/e580705a-124e-1017-8f96-24b265bd6508.htm" />
+  <HelpKINode Title="Col field" Url="html/c74de5dc-7a09-399a-e15c-e38735cd6d1f.htm" />
+  <HelpKINode Title="Comma enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
+  <HelpKINode Title="COMMENT enumeration member" Url="html/cd9cf2e7-daa3-a509-8e9e-38869b53d5a9.htm" />
+  <HelpKINode Title="Comment enumeration member" Url="html/93db771a-029e-fc88-1053-2ecdb7182b85.htm" />
+  <HelpKINode Title="Comment field" Url="html/a5b353a8-667e-4d72-e9e3-bfc47b5613fd.htm" />
+  <HelpKINode Title="CommentSpace enumeration member" Url="html/93db771a-029e-fc88-1053-2ecdb7182b85.htm" />
+  <HelpKINode Title="CommentSummary method" Url="html/9765f630-5441-1b88-7f65-9dd1334e75bd.htm" />
+  <HelpKINode Title="CompressedTransitions property">
+    <HelpKINode Title="AuthKeysFileLex.CompressedTransitions Property " Url="html/f51adf0b-4393-9e71-e9c3-609bfe739708.htm" />
+    <HelpKINode Title="KeyFileLex.CompressedTransitions Property " Url="html/ed347284-b945-7b36-7bac-d32e2c24def5.htm" />
+  </HelpKINode>
   <HelpKINode Title="Container class">
     <HelpKINode Title="Container Class" Url="html/a539e68c-b8de-87b6-922a-a7ddf033c0a7.htm" />
     <HelpKINode Title="about Container class" Url="html/a539e68c-b8de-87b6-922a-a7ddf033c0a7.htm" />
@@ -17,6 +111,12 @@
   </HelpKINode>
   <HelpKINode Title="Container.Name method" Url="html/8fc75877-e30c-5584-72e4-bd2dde0b9735.htm" />
   <HelpKINode Title="Container.Prefix method" Url="html/2e1f833a-3d14-5f38-cb48-be0cf53e2c5d.htm" />
+  <HelpKINode Title="Count field" Url="html/21b4596e-1b38-c05f-9287-1531e4afdb48.htm" />
+  <HelpKINode Title="Count1 method" Url="html/f5bb3b93-89b7-378e-6964-de1df6ffd987.htm" />
+  <HelpKINode Title="Count2 method" Url="html/3035bcf8-11ae-758b-4d00-422cffbcd7a9.htm" />
+  <HelpKINode Title="Count3 method" Url="html/8d4ce4b9-9193-530e-ab64-59b36eb855aa.htm" />
+  <HelpKINode Title="Count4 method" Url="html/9ae9a285-4807-6eb8-9cdf-0afe75600eeb.htm" />
+  <HelpKINode Title="CR enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
   <HelpKINode Title="CryptoAlgorithm property">
     <HelpKINode Title="CryptoProviderEncryptAES.CryptoAlgorithm Property " Url="html/b8f3c7be-8ec3-e766-97ac-533ba58bbf45.htm" />
     <HelpKINode Title="CryptoProviderSHA1.CryptoAlgorithm Property " Url="html/aa08e0e8-852f-09ab-d89c-3f106a1d0277.htm" />
@@ -238,30 +338,174 @@
   <HelpKINode Title="CryptoProviderSignatureRSA.Size property" Url="html/81194a93-7cc2-607b-7de7-e1a0cf1bc8c3.htm" />
   <HelpKINode Title="CryptoProviderSignatureRSA.UDF property" Url="html/a1b7894d-87b2-8632-d25f-f09b2130baf1.htm" />
   <HelpKINode Title="CryptoProviderSignatureRSA.Verify method" Url="html/77bdf890-bad5-b431-0efe-cc0ec6ea47c9.htm" />
+  <HelpKINode Title="cs method" Url="html/f91d45fa-57e3-fe78-3953-a2da28b4a8a4.htm" />
+  <HelpKINode Title="Current property" Url="html/c8c8ba8f-03e1-5a5d-2358-ba4bb810c7b2.htm" />
+  <HelpKINode Title="Data enumeration member">
+    <HelpKINode Title="AuthKeysFileLex.Token Enumeration" Url="html/77b43f76-bab0-4f7a-5416-73d1867ff432.htm" />
+    <HelpKINode Title="KeyFileLex.Token Enumeration" Url="html/71f7f293-6f77-5610-5015-6883e427f253.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Data field">
+    <HelpKINode Title="AuthorizedKey.Data Field" Url="html/d8e6083d-3d13-a531-db14-73d5f6a9d7be.htm" />
+    <HelpKINode Title="DataBuffer.Data Field" Url="html/f4092ec7-56b5-6a5d-12ec-7a86dd97f303.htm" />
+    <HelpKINode Title="TaggedData.Data Field" Url="html/c89e685b-876a-3bbd-0de6-b982297677f6.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DataBuffer class">
+    <HelpKINode Title="DataBuffer Class" Url="html/8aba1e5f-0d2d-7327-3110-9ed5fe3b3efa.htm" />
+    <HelpKINode Title="about DataBuffer class" Url="html/8aba1e5f-0d2d-7327-3110-9ed5fe3b3efa.htm" />
+    <HelpKINode Title="constructor" Url="html/f5b47a05-2381-8b3f-ac3f-ae3a302be38e.htm" />
+    <HelpKINode Title="fields" Url="html/a6a9485a-8282-0f8d-36f4-12a8e438c0fb.htm" />
+    <HelpKINode Title="methods" Url="html/1fd7eb24-23c6-65ff-fca5-09a57d8a8b79.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DataBuffer.Allocate method" Url="html/7a047fce-ba34-1b5e-eb55-e5a2e04937d0.htm" />
+  <HelpKINode Title="DataBuffer.Data field" Url="html/f4092ec7-56b5-6a5d-12ec-7a86dd97f303.htm" />
+  <HelpKINode Title="DataBuffer.DataBuffer constructor" Url="html/f5b47a05-2381-8b3f-ac3f-ae3a302be38e.htm" />
+  <HelpKINode Title="DataBuffer.Decode method" Url="html/c916ce5f-b8f8-06a3-8c11-f5e88581092b.htm" />
+  <HelpKINode Title="DataBuffer.DecodeLength method" Url="html/cb6ed433-23a8-6017-d0f0-33196579cbe4.htm" />
+  <HelpKINode Title="DataBuffer.Encode method" Url="html/c0021311-4545-12e8-6f27-090691a96043.htm" />
+  <HelpKINode Title="DataBuffer.EncodeLength method" Url="html/c3182c0a-71c5-9110-c463-dbdf7409ea30.htm" />
+  <HelpKINode Title="DataBuffer.Size method" Url="html/36d098d1-6602-fdad-831c-8d388700f358.htm" />
+  <HelpKINode Title="DataRead enumeration member" Url="html/93db771a-029e-fc88-1053-2ecdb7182b85.htm" />
+  <HelpKINode Title="DebugLocalSession class">
+    <HelpKINode Title="DebugLocalSession Class" Url="html/7d3f02a6-aab2-31f5-ecca-950a7784fecb.htm" />
+    <HelpKINode Title="about DebugLocalSession class" Url="html/7d3f02a6-aab2-31f5-ecca-950a7784fecb.htm" />
+    <HelpKINode Title="constructor" Url="html/53187fb0-70cc-45d1-f5c0-45f2973d1f92.htm" />
+    <HelpKINode Title="fields" Url="html/7e93830b-3f10-6956-ed96-2c67b7af87c1.htm" />
+    <HelpKINode Title="methods" Url="html/401d7fe9-538e-b420-8acb-03adaf8d4c0e.htm" />
+    <HelpKINode Title="properties" Url="html/5839d426-b12d-398b-800b-28a0d0e2ef4a.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DebugLocalSession.DebugLocalSession constructor" Url="html/53187fb0-70cc-45d1-f5c0-45f2973d1f92.htm" />
+  <HelpKINode Title="DebugLocalSession.Post method" Url="html/1d604d0b-9acd-c85d-2b4b-13ef0da25238.htm" />
+  <HelpKINode Title="DebugLocalSession.Traces property" Url="html/ec9ba4e4-3c0b-c437-3d9d-fedcd4be1c7c.htm" />
+  <HelpKINode Title="Declared field" Url="html/c97a069b-0bc0-82f8-60f6-5e285dffc232.htm" />
+  <HelpKINode Title="Decode method">
+    <HelpKINode Title="DataBuffer.Decode Method " Url="html/c916ce5f-b8f8-06a3-8c11-f5e88581092b.htm" />
+    <HelpKINode Title="SSHData.Decode Method " Url="html/eb290ffa-043c-86f6-6bb0-2d9499651f52.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DecodeAuthHost method" Url="html/21b8d8b7-5320-d024-7d50-435188da9cef.htm" />
+  <HelpKINode Title="DecodeLength method" Url="html/cb6ed433-23a8-6017-d0f0-33196579cbe4.htm" />
+  <HelpKINode Title="DecodePEM method" Url="html/adfb6e76-b29f-0463-183e-f7d839787af6.htm" />
+  <HelpKINode Title="DecodePEMText method" Url="html/31dbfe21-78a4-5af5-861f-0c8da8c8dd2f.htm" />
   <HelpKINode Title="Decrypt method">
     <HelpKINode Title="CryptoProviderEncryption.Decrypt Method " Url="html/1e6f2dbd-4252-5908-dfe3-28125d167741.htm" />
     <HelpKINode Title="CryptoProviderExchangeRSA.Decrypt Method " Url="html/a6c28395-e154-9e9b-9466-2fc3471286a1.htm" />
   </HelpKINode>
+  <HelpKINode Title="Default method">
+    <HelpKINode Title="Type.Default Method " Url="html/264e7650-783f-b048-041e-1ca303eaf2c1.htm" />
+    <HelpKINode Title="_File.Default Method " Url="html/19c4724d-2e76-72a7-52d0-a8ca323a5063.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DefaultExtension method" Url="html/02aa186e-7b6b-439f-0898-37939944b1d8.htm" />
+  <HelpKINode Title="DefaultFile method">
+    <HelpKINode Title="FileTools.DefaultFile Method " Url="html/6dacec81-8905-8aaf-ba5c-5d6098422aa0.htm" />
+    <HelpKINode Title="_File.DefaultFile Method " Url="html/446282c6-885d-e288-514c-2ffb72b92087.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DefaultOutput method" Url="html/4fc7258f-eaeb-31f7-3cd3-b96f0972fc4c.htm" />
+  <HelpKINode Title="Definition property" Url="html/2678bea6-1369-31fa-a038-39bb401b7eb3.htm" />
+  <HelpKINode Title="Digit enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
+  <HelpKINode Title="Dispatch class">
+    <HelpKINode Title="Dispatch Class" Url="html/b58d3a5b-22e2-007b-d6d9-88badaae0a01.htm" />
+    <HelpKINode Title="about Dispatch class" Url="html/b58d3a5b-22e2-007b-d6d9-88badaae0a01.htm" />
+    <HelpKINode Title="constructor" Url="html/cc6efc9c-e5c2-1c0c-2473-79b02aec35ca.htm" />
+    <HelpKINode Title="fields" Url="html/87f9f3c3-cfd2-7e1a-c857-b4d7f6ad225b.htm" />
+    <HelpKINode Title="methods" Url="html/13c4a53e-4f22-304f-e4ec-43bb27244e41.htm" />
+    <HelpKINode Title="properties" Url="html/d6d17642-a90c-b793-2040-c20ef52e015d.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Dispatch.Dispatch constructor" Url="html/cc6efc9c-e5c2-1c0c-2473-79b02aec35ca.htm" />
+  <HelpKINode Title="Dispatch.Elapsed property" Url="html/b9c687f9-1a77-570a-626f-c24645d6fd97.htm" />
+  <HelpKINode Title="Dispatch.Started field" Url="html/ee6c748e-388e-3cc5-f669-7eaf59bc28c8.htm" />
+  <HelpKINode Title="DNSClientUDP class">
+    <HelpKINode Title="DNSClientUDP Class" Url="html/a330946c-9ae8-094f-4e83-738dc242e01f.htm" />
+    <HelpKINode Title="about DNSClientUDP class" Url="html/a330946c-9ae8-094f-4e83-738dc242e01f.htm" />
+    <HelpKINode Title="constructor" Url="html/d963d9b4-12f8-c13d-fbaf-9ae7a5d452bc.htm" />
+    <HelpKINode Title="fields" Url="html/a7e86b69-c88a-9101-c7ca-0300d870e981.htm" />
+    <HelpKINode Title="methods" Url="html/9f71bd58-966c-f1a2-ef22-f64a018a8383.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DNSClientUDP.DNSClientUDP constructor" Url="html/d963d9b4-12f8-c13d-fbaf-9ae7a5d452bc.htm" />
+  <HelpKINode Title="DNSClientUDP.GetHostDNS method" Url="html/4dbe7cdb-3461-b0cb-2145-9b5809706c9d.htm" />
+  <HelpKINode Title="DNSClientUDP.ListIPAddress field" Url="html/3944b924-65f2-a823-eccb-047447ac8e71.htm" />
+  <HelpKINode Title="DNSClientUDP.Port field" Url="html/8df77cba-7ed5-9653-29fb-660d3c38c411.htm" />
+  <HelpKINode Title="DNSClientUDP.Query method" Url="html/d4b776c4-64ed-4ec2-4861-dd0eab5610a3.htm" />
+  <HelpKINode Title="DNSClientUDP.QueryAsync method" Url="html/6c36a826-adee-2ca2-9b50-c8e57342e1ea.htm" />
+  <HelpKINode Title="DoubleQuote enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
+  <HelpKINode Title="Dump method" Url="html/4b75b1fd-dcdb-7d8b-a2cf-0015b7ed9f10.htm" />
+  <HelpKINode Title="Elapsed property" Url="html/b9c687f9-1a77-570a-626f-c24645d6fd97.htm" />
+  <HelpKINode Title="Empty enumeration member">
+    <HelpKINode Title="AuthKeysFileLex.Token Enumeration" Url="html/77b43f76-bab0-4f7a-5416-73d1867ff432.htm" />
+    <HelpKINode Title="KeyFileLex.Token Enumeration" Url="html/71f7f293-6f77-5610-5015-6883e427f253.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Encode method">
+    <HelpKINode Title="DataBuffer.Encode Method " Url="html/c0021311-4545-12e8-6f27-090691a96043.htm" />
+    <HelpKINode Title="SSHData.Encode Method " Url="html/25bcd6bc-dba9-a68d-da65-9e13569435bd.htm" />
+    <HelpKINode Title="SSH_DSS.Encode Method " Url="html/4c95ce49-29e5-2b1c-3517-aae4a0ae61d0.htm" />
+    <HelpKINode Title="SSH_RSA.Encode Method " Url="html/e118d94e-b3e0-d18c-cb3b-00c216b32bc8.htm" />
+  </HelpKINode>
+  <HelpKINode Title="EncodeLength method" Url="html/c3182c0a-71c5-9110-c463-dbdf7409ea30.htm" />
   <HelpKINode Title="Encrypt method">
     <HelpKINode Title="CryptoProviderEncryption.Encrypt Method " Url="html/4bf2f577-842e-5ba4-4516-54f14f0a673d.htm" />
     <HelpKINode Title="CryptoProviderExchangeRSA.Encrypt Method " Url="html/1e29db15-6c59-c5a0-d803-86e9cf7a8818.htm" />
   </HelpKINode>
+  <HelpKINode Title="END enumeration member" Url="html/cd9cf2e7-daa3-a509-8e9e-38869b53d5a9.htm" />
+  <HelpKINode Title="End method" Url="html/73b9e7b0-6809-2dc7-e040-9e0808aeba77.htm" />
+  <HelpKINode Title="EndDocument method">
+    <HelpKINode Title="IndentWriter.EndDocument Method " Url="html/5a7277e1-a07a-2d9e-cee9-c1b1d3ae5b83.htm" />
+    <HelpKINode Title="StructureWriter.EndDocument Method " Url="html/b1f86ca3-b4be-2f25-1f2c-ab9e073e35a0.htm" />
+    <HelpKINode Title="XMLWriter.EndDocument Method " Url="html/4497dcd6-b759-c19c-bc4b-9698aaa8a0bf.htm" />
+  </HelpKINode>
+  <HelpKINode Title="EndElement method">
+    <HelpKINode Title="IndentWriter.EndElement Method " Url="html/0d0b77ec-9ed1-de0f-f226-ce44f9ad0281.htm" />
+    <HelpKINode Title="StructureWriter.EndElement Method " Url="html/54bd3ece-206f-353e-5bf7-dd927fe4450f.htm" />
+    <HelpKINode Title="XMLWriter.EndElement Method " Url="html/0803fdfb-e629-bbcd-6ef7-63ce3cba946b.htm" />
+  </HelpKINode>
+  <HelpKINode Title="EndList method">
+    <HelpKINode Title="IndentWriter.EndList Method " Url="html/252e5d90-6b1d-3577-e07c-9de4786900c7.htm" />
+    <HelpKINode Title="StructureWriter.EndList Method " Url="html/c9d6e32c-ea29-289a-ad5d-8d93aaa01a35.htm" />
+    <HelpKINode Title="XMLWriter.EndList Method " Url="html/0024c684-8ef6-3ebf-b29d-f55f7143448d.htm" />
+  </HelpKINode>
+  <HelpKINode Title="EntryAssembly property" Url="html/efe01750-9e05-b125-10c0-67f0ad7d252b.htm" />
   <HelpKINode Title="ExchangeProviderDecrypt property" Url="html/58467268-5200-d8ba-8cb4-8815f5bacf39.htm" />
   <HelpKINode Title="ExchangeProviderEncrypt property" Url="html/f4a82b4d-aece-f091-3c27-6df7a4d514e8.htm" />
+  <HelpKINode Title="Exponent field" Url="html/90c667d7-b32c-f0a3-2e8f-f7a1508b32e7.htm" />
+  <HelpKINode Title="Extension class">
+    <HelpKINode Title="Extension Class" Url="html/9512e400-1439-91b6-5aff-a873e59f9b0f.htm" />
+    <HelpKINode Title="Extension Class" Url="html/a865817e-8d50-64b1-18d1-96dc8f4f7325.htm" />
+    <HelpKINode Title="about Extension class" Url="html/9512e400-1439-91b6-5aff-a873e59f9b0f.htm" />
+    <HelpKINode Title="about Extension class" Url="html/a865817e-8d50-64b1-18d1-96dc8f4f7325.htm" />
+    <HelpKINode Title="methods" Url="html/8f55d688-5cb5-ecf6-565f-1e2e9299bfe0.htm" />
+    <HelpKINode Title="methods" Url="html/d07de4e8-edc0-0bfa-5174-990a4551d46b.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Extension field" Url="html/09144459-702c-b103-8a7a-58cb65cf3669.htm" />
   <HelpKINode Title="Extension method" Url="html/ec83da11-4221-fc34-2844-ae2efd1d5ec6.htm" />
+  <HelpKINode Title="Extension.Dump method" Url="html/4b75b1fd-dcdb-7d8b-a2cf-0015b7ed9f10.htm" />
+  <HelpKINode Title="Extension.OpenFileAppend method" Url="html/b1aff5bb-8916-704c-842c-6c3f5f45f502.htm" />
+  <HelpKINode Title="Extension.OpenFileAppendShare method" Url="html/996075ab-592f-6187-ba24-62edbdc22ded.htm" />
+  <HelpKINode Title="Extension.OpenFileNew method" Url="html/83504707-1d2a-50eb-4672-52e85ebc1480.htm" />
+  <HelpKINode Title="Extension.OpenFileRead method" Url="html/1f955363-efa7-a8e1-3662-704971a358eb.htm" />
+  <HelpKINode Title="Extension.OpenFileReadShared method" Url="html/a578df35-8399-7441-29b5-eba7ada51d50.htm" />
+  <HelpKINode Title="Extension.OpenFileWrite method" Url="html/2f0d3303-f39b-6092-ee6e-268a70c1e3ea.htm" />
+  <HelpKINode Title="Extension.OpenTextReader method" Url="html/9fb91900-79df-83e9-1510-7dc777fb5518.htm" />
+  <HelpKINode Title="Extension.OpenTextWriter method" Url="html/2681106f-0eb3-8155-6f09-19f968e9a2b4.htm" />
+  <HelpKINode Title="Extension.ToPEM method" Url="html/99064017-a846-6b1c-dae8-87088b404af8.htm" />
   <HelpKINode Title="ExtensionMethods class">
     <HelpKINode Title="ExtensionMethods Class" Url="html/7a12b054-a49c-06fd-a4fe-daef5068f00d.htm" />
+    <HelpKINode Title="ExtensionMethods Class" Url="html/b8f35837-ab41-2ebf-390b-e01cc91af6aa.htm" />
     <HelpKINode Title="about ExtensionMethods class" Url="html/7a12b054-a49c-06fd-a4fe-daef5068f00d.htm" />
+    <HelpKINode Title="about ExtensionMethods class" Url="html/b8f35837-ab41-2ebf-390b-e01cc91af6aa.htm" />
+    <HelpKINode Title="methods" Url="html/717b96c0-5442-56d8-5c08-8231c88b235a.htm" />
     <HelpKINode Title="methods" Url="html/c88a491b-1902-4c2d-edef-4280423212fc.htm" />
+    <HelpKINode Title="properties" Url="html/eedaf94c-07e9-ed94-748d-511073acce18.htm" />
   </HelpKINode>
   <HelpKINode Title="ExtensionMethods.AlgorithmIdentifier method" Url="html/0ad8b626-b4c2-9da9-d2a9-abaf3e6013f0.htm" />
   <HelpKINode Title="ExtensionMethods.Certificate method" Url="html/35959a43-f80a-24a2-2e7e-6eabc5b9f823.htm" />
+  <HelpKINode Title="ExtensionMethods.cs method" Url="html/f91d45fa-57e3-fe78-3953-a2da28b4a8a4.htm" />
   <HelpKINode Title="ExtensionMethods.Extension method" Url="html/ec83da11-4221-fc34-2844-ae2efd1d5ec6.htm" />
+  <HelpKINode Title="ExtensionMethods.If method" Url="html/420cb656-5f43-a620-1a32-4931fa8cfdc7.htm" />
   <HelpKINode Title="ExtensionMethods.KeyPair method" Url="html/a39f12e4-4e47-8a02-7797-c0bac56b02f9.htm" />
+  <HelpKINode Title="ExtensionMethods.Label method" Url="html/f3a3f4be-6d3f-172e-5452-7736cccf8c44.htm" />
   <HelpKINode Title="ExtensionMethods.Names method" Url="html/4af17e40-5b86-6ab8-60f2-38e7b3619519.htm" />
+  <HelpKINode Title="ExtensionMethods.Quoted method" Url="html/5a47cda2-ab1e-b226-65bc-f08989c6d297.htm" />
   <HelpKINode Title="ExtensionMethods.RSAParameters method" Url="html/c76d745c-2ad4-a106-d97a-4b7bd060c452.htm" />
   <HelpKINode Title="ExtensionMethods.RSAPrivateKey method" Url="html/2ef4530c-ada1-3474-f74c-62f42fb22f72.htm" />
   <HelpKINode Title="ExtensionMethods.RSAPublicKey method" Url="html/b8f1ebe5-2efb-1b40-df66-2487ab6d7ec6.htm" />
+  <HelpKINode Title="ExtensionMethods.Target property" Url="html/7dfd3320-a470-3de4-2e0c-8b79ff79fba0.htm" />
   <HelpKINode Title="ExtensionMethods.TBSCertificate method" Url="html/0e8053b2-ee63-2364-6039-1345b0b168a4.htm" />
   <HelpKINode Title="Factory class">
     <HelpKINode Title="Factory Class" Url="html/48ca2aeb-19cc-6c71-9855-68188194925d.htm" />
@@ -271,15 +515,52 @@
   </HelpKINode>
   <HelpKINode Title="Factory.Factory constructor" Url="html/c8cebbb1-3eb7-e5e9-0bf0-e3b33f60ee89.htm" />
   <HelpKINode Title="Factory.RSAPublicKey method" Url="html/4da9aae7-cc60-5482-8cda-0635fb527ae7.htm" />
+  <HelpKINode Title="Fail enumeration member" Url="html/734b7a8e-14bb-27b9-ddd7-afb39439368f.htm" />
+  <HelpKINode Title="File field" Url="html/fe12b6c8-d295-c2c5-1899-549f0762353d.htm" />
+  <HelpKINode Title="Files field" Url="html/466aad01-62f8-88ef-5486-fbb75f19ce58.htm" />
+  <HelpKINode Title="FileStart enumeration member" Url="html/734b7a8e-14bb-27b9-ddd7-afb39439368f.htm" />
+  <HelpKINode Title="FileTools class">
+    <HelpKINode Title="FileTools Class" Url="html/e3a3b686-c2f4-0eca-3849-460534879819.htm" />
+    <HelpKINode Title="about FileTools class" Url="html/e3a3b686-c2f4-0eca-3849-460534879819.htm" />
+    <HelpKINode Title="constructor" Url="html/35b22e21-9847-cbec-0e87-e36870c873ea.htm" />
+    <HelpKINode Title="methods" Url="html/cacb0b8c-65e9-b811-57ce-49388a7961d3.htm" />
+  </HelpKINode>
+  <HelpKINode Title="FileTools.About method" Url="html/79d4889f-a86e-44cb-638c-c1c5bd6cf3dd.htm" />
+  <HelpKINode Title="FileTools.DefaultExtension method" Url="html/02aa186e-7b6b-439f-0898-37939944b1d8.htm" />
+  <HelpKINode Title="FileTools.DefaultFile method" Url="html/6dacec81-8905-8aaf-ba5c-5d6098422aa0.htm" />
+  <HelpKINode Title="FileTools.DefaultOutput method" Url="html/4fc7258f-eaeb-31f7-3cd3-b96f0972fc4c.htm" />
+  <HelpKINode Title="FileTools.FileTools constructor" Url="html/35b22e21-9847-cbec-0e87-e36870c873ea.htm" />
+  <HelpKINode Title="FileTools.GetFileDateTime method" Url="html/1e35a8c3-665a-62ac-4385-444def5296c3.htm" />
+  <HelpKINode Title="FileTools.UpToDate method" Url="html/32542093-8301-b2ea-3751-bedbefed19a9.htm" />
+  <HelpKINode Title="Find method" Url="html/33099079-185f-2060-c0a3-3ed712d0d032.htm" />
   <HelpKINode Title="FindLocal method">
     <HelpKINode Title="CryptoProviderExchangeRSA.FindLocal Method " Url="html/9fee9ff0-ce14-27c1-cecf-759a97c5a76e.htm" />
     <HelpKINode Title="CryptoProviderSignatureRSA.FindLocal Method " Url="html/5da99441-6eca-79f8-6765-5ff7698d78a5.htm" />
     <HelpKINode Title="RSAKeyPair.FindLocal Method " Url="html/43d96153-f91b-5068-f2a3-057eccdade0b.htm" />
   </HelpKINode>
+  <HelpKINode Title="FindType method" Url="html/a4a95e31-9d4a-287c-0344-996b7df11131.htm" />
+  <HelpKINode Title="Finished enumeration member" Url="html/93db771a-029e-fc88-1053-2ecdb7182b85.htm" />
+  <HelpKINode Title="First field" Url="html/db4ee36f-5850-ee2a-73ba-eea922f26146.htm" />
+  <HelpKINode Title="FLOAT enumeration member" Url="html/cd9cf2e7-daa3-a509-8e9e-38869b53d5a9.htm" />
+  <HelpKINode Title="Framework class">
+    <HelpKINode Title="Framework Class" Url="html/71b44cfe-73e1-0b99-4ec5-11caf3d409a9.htm" />
+    <HelpKINode Title="about Framework class" Url="html/71b44cfe-73e1-0b99-4ec5-11caf3d409a9.htm" />
+    <HelpKINode Title="methods" Url="html/df5add86-feb2-30f6-1223-dca71633c539.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Framework.GetRandomBytes method" Url="html/3dab1866-0b14-3689-0a7b-2dde9b5a5d16.htm" />
+  <HelpKINode Title="Framework.Initialize method" Url="html/822ee5b7-c0c0-2320-ab8c-43efa045026e.htm" />
+  <HelpKINode Title="G field" Url="html/2d8e15ba-1d7f-20d8-ea3b-29e81ee743f3.htm" />
   <HelpKINode Title="Generate method">
     <HelpKINode Title="CryptoProviderExchangeRSA.Generate Method " Url="html/8e277699-ee9b-f697-b87c-6a6ef80d6987.htm" />
     <HelpKINode Title="CryptoProviderSignatureRSA.Generate Method " Url="html/bdb93e28-7f2c-198d-1085-b8400f444121.htm" />
   </HelpKINode>
+  <HelpKINode Title="Get method" Url="html/0557c384-8d93-6fd9-aa21-02ec6f42ce7d.htm" />
+  <HelpKINode Title="GetAssemblyCompany method" Url="html/251f0588-2a15-ebba-ebd0-42a90dbc4d91.htm" />
+  <HelpKINode Title="GetAssemblyCopyright method" Url="html/8eea5c15-a7f8-f66b-d4d3-3b389a0d84e0.htm" />
+  <HelpKINode Title="GetAssemblyDescription method" Url="html/17e88326-f325-6bde-eb9b-36926fb34d2f.htm" />
+  <HelpKINode Title="GetAssemblyProduct method" Url="html/4b1b0b39-603a-2701-29d5-fc43209906de.htm" />
+  <HelpKINode Title="GetAssemblyTitle method" Url="html/05722f1c-c00e-3533-561f-6d4e060be299.htm" />
+  <HelpKINode Title="GetAssemblyVersion method" Url="html/748d8339-0467-eef0-ff20-63431c2c565d.htm" />
   <HelpKINode Title="GetCryptoProvider property">
     <HelpKINode Title="CryptoProviderEncryptAES.GetCryptoProvider Property " Url="html/47970b42-7182-0d26-3a48-040f594ac85e.htm" />
     <HelpKINode Title="CryptoProviderExchangeRSA.GetCryptoProvider Property " Url="html/98d06d9b-be64-ad2f-693f-d00955245afc.htm" />
@@ -291,8 +572,23 @@
     <HelpKINode Title="CryptoProviderSHA2_512.GetCryptoProvider Property " Url="html/c192acf0-4a41-af55-7c92-71fbf2885cb7.htm" />
     <HelpKINode Title="CryptoProviderSignatureRSA.GetCryptoProvider Property " Url="html/85bc117c-ead1-7ac3-8068-f2aced685772.htm" />
   </HelpKINode>
+  <HelpKINode Title="GetFileDateTime method" Url="html/1e35a8c3-665a-62ac-4385-444def5296c3.htm" />
+  <HelpKINode Title="GetHostDNS method" Url="html/4dbe7cdb-3461-b0cb-2145-9b5809706c9d.htm" />
   <HelpKINode Title="GetPrivate method" Url="html/517809a2-1197-062c-2f76-6213e0ba5203.htm" />
-  <HelpKINode Title="GetRandomBytes method" Url="html/110dcecb-0ad6-e482-fcae-a731127a8946.htm" />
+  <HelpKINode Title="GetRandomBytes method">
+    <HelpKINode Title="Cryptography.GetRandomBytes Method " Url="html/110dcecb-0ad6-e482-fcae-a731127a8946.htm" />
+    <HelpKINode Title="Framework.GetRandomBytes Method " Url="html/3dab1866-0b14-3689-0a7b-2dde9b5a5d16.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetStructureWriter method" Url="html/b073cb22-bce5-b6de-3668-e329a23d8c54.htm" />
+  <HelpKINode Title="GetTaggedData method">
+    <HelpKINode Title="AuthKeysFileLex.GetTaggedData Method " Url="html/c4097a11-4950-6d36-0531-333a55e43a76.htm" />
+    <HelpKINode Title="KeyFileLex.GetTaggedData Method " Url="html/b6802e03-a32b-9465-7967-885925a92552.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetToken method">
+    <HelpKINode Title="AuthKeysFileLex.GetToken Method " Url="html/7fef2f31-b19c-354e-ce15-9f166f5c0d1c.htm" />
+    <HelpKINode Title="KeyFileLex.GetToken Method " Url="html/d6c87481-acc5-f339-9fa0-d50d7e02db90.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Goedel enumeration member" Url="html/56d2eb2f-b3d9-8381-3608-44bd9f8aaa73.htm" />
   <HelpKINode Title="Goedel.Cryptography.Framework namespace" Url="html/85e3f94e-2fba-383c-1685-14d49522e0e9.htm" />
   <HelpKINode Title="Goedel.Cryptography.Framework.Container class" Url="html/a539e68c-b8de-87b6-922a-a7ddf033c0a7.htm" />
   <HelpKINode Title="Goedel.Cryptography.Framework.Cryptography class" Url="html/45253885-efcc-7923-ac46-262ba1128520.htm" />
@@ -311,16 +607,165 @@
   <HelpKINode Title="Goedel.Cryptography.Framework.ExtensionMethods class" Url="html/7a12b054-a49c-06fd-a4fe-daef5068f00d.htm" />
   <HelpKINode Title="Goedel.Cryptography.Framework.Factory class" Url="html/48ca2aeb-19cc-6c71-9855-68188194925d.htm" />
   <HelpKINode Title="Goedel.Cryptography.Framework.RSAKeyPair class" Url="html/752529b0-1569-46f1-4756-6f9d37860abc.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile namespace" Url="html/bbe87ab5-deba-ffa4-ac5a-430af97a72b4.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.AuthKeysFileLex class" Url="html/fc0b7fea-2e15-adfd-a8db-16c9c3d0feaa.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.AuthKeysFileLex.State enumeration" Url="html/93db771a-029e-fc88-1053-2ecdb7182b85.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.AuthKeysFileLex.Token enumeration" Url="html/77b43f76-bab0-4f7a-5416-73d1867ff432.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.AuthorizedKey structure" Url="html/9ad222cd-ee00-0b4c-514a-87e0c08bb7d5.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.DataBuffer class" Url="html/8aba1e5f-0d2d-7327-3110-9ed5fe3b3efa.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.Extension class" Url="html/a865817e-8d50-64b1-18d1-96dc8f4f7325.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.KeyFile class" Url="html/c010e28d-30b8-7954-661d-8946a2496273.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.KeyFileException class" Url="html/e457f5e0-566f-5a60-5681-615c8877353f.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.KeyFileFormat enumeration" Url="html/2ac27d76-cd81-755f-8667-dd04b48eb424.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.KeyFileLex class" Url="html/147a81ef-6f04-fc2a-bd0c-79019cb0684d.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.KeyFileLex.State enumeration" Url="html/734b7a8e-14bb-27b9-ddd7-afb39439368f.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.KeyFileLex.Token enumeration" Url="html/71f7f293-6f77-5610-5015-6883e427f253.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.NoProviderSpecified class" Url="html/7d273fda-a869-2a41-2956-aba40d3f9bc3.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.ParseError class" Url="html/b28a65af-bfaa-4afa-c821-2e8094b1f15f.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.PrivateKeyNotAvailable class" Url="html/35be7336-284f-c77b-7165-0377087b50c9.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.SSHData class" Url="html/2b22ac69-d0ad-3b4b-fd9f-992f4e68849c.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.SSH_DSS class" Url="html/3d53108a-dc57-0933-ee48-3ca6db36f052.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.SSH_RSA class" Url="html/7dcbd726-0cf9-2be5-1baa-19435adbaf3e.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.TaggedData class" Url="html/95db1085-aad5-a5d8-43c6-7f772ccb8436.htm" />
+  <HelpKINode Title="Goedel.Cryptography.KeyFile.UnexpectedEnd class" Url="html/7efc9521-196f-847a-1211-387f9c7c9d21.htm" />
+  <HelpKINode Title="Goedel.IO namespace" Url="html/4605281b-61c1-357e-244f-ddc0f8f6a539.htm" />
+  <HelpKINode Title="Goedel.IO.Extension class" Url="html/9512e400-1439-91b6-5aff-a873e59f9b0f.htm" />
+  <HelpKINode Title="Goedel.Platform.Framework namespace" Url="html/fa83954b-4cd2-5d0b-54e3-8792ae5a7f1a.htm" />
+  <HelpKINode Title="Goedel.Platform.Framework.DNSClientUDP class" Url="html/a330946c-9ae8-094f-4e83-738dc242e01f.htm" />
+  <HelpKINode Title="Goedel.Platform.Framework.Framework class" Url="html/71b44cfe-73e1-0b99-4ec5-11caf3d409a9.htm" />
+  <HelpKINode Title="Goedel.Protocol.Debug namespace" Url="html/211a1fc3-5381-4953-219b-05fe55b46259.htm" />
+  <HelpKINode Title="Goedel.Protocol.Debug.DebugLocalSession class" Url="html/7d3f02a6-aab2-31f5-ecca-950a7784fecb.htm" />
+  <HelpKINode Title="Goedel.Protocol.Debug.TraceDictionary class" Url="html/ab2ea0c3-6ace-fda6-242b-67dedfeb0808.htm" />
+  <HelpKINode Title="Goedel.Protocol.Debug.TraceMessage class" Url="html/40506058-7ba9-5363-08f5-e6cd8df6d878.htm" />
+  <HelpKINode Title="Goedel.Protocol.Debug.TracePoint class" Url="html/edfafc6a-60fc-8a01-0f2d-0ff978d4848c.htm" />
+  <HelpKINode Title="Goedel.Registry namespace" Url="html/f1cf21f7-8224-04e3-9c9e-7f774e89aa54.htm" />
+  <HelpKINode Title="Goedel.Registry.Boilerplate class" Url="html/3c9a4ce0-ff23-2d22-8090-371b5e7dbd5b.htm" />
+  <HelpKINode Title="Goedel.Registry.Dispatch class" Url="html/b58d3a5b-22e2-007b-d6d9-88badaae0a01.htm" />
+  <HelpKINode Title="Goedel.Registry.ExtensionMethods class" Url="html/b8f35837-ab41-2ebf-390b-e01cc91af6aa.htm" />
+  <HelpKINode Title="Goedel.Registry.FileTools class" Url="html/e3a3b686-c2f4-0eca-3849-460534879819.htm" />
+  <HelpKINode Title="Goedel.Registry.GoedelParseException class" Url="html/756b20be-51a9-5e13-20d7-fb2399864816.htm" />
+  <HelpKINode Title="Goedel.Registry.ID(Of T) class" Url="html/9b7b8678-6178-28d8-594a-010f10990f0f.htm" />
+  <HelpKINode Title="Goedel.Registry.ID&lt;T&gt; class" Url="html/9b7b8678-6178-28d8-594a-010f10990f0f.htm" />
+  <HelpKINode Title="Goedel.Registry.IndentWriter class" Url="html/d809a14f-e0a9-a01e-5aa4-e410d796b49c.htm" />
+  <HelpKINode Title="Goedel.Registry.Lexer class" Url="html/13631f93-bf24-438b-dc35-0da74af2f43e.htm" />
+  <HelpKINode Title="Goedel.Registry.Lexer.CharType enumeration" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
+  <HelpKINode Title="Goedel.Registry.OutputFormat enumeration" Url="html/56d2eb2f-b3d9-8381-3608-44bd9f8aaa73.htm" />
+  <HelpKINode Title="Goedel.Registry.Parser class" Url="html/de4c3d4c-a6e6-f4d1-2d0f-68c194bfe04f.htm" />
+  <HelpKINode Title="Goedel.Registry.Position class" Url="html/6fbab952-af92-afb1-5275-a43946affb98.htm" />
+  <HelpKINode Title="Goedel.Registry.REF(Of T) class" Url="html/29267794-7c73-e45b-3c14-75428635628a.htm" />
+  <HelpKINode Title="Goedel.Registry.REF&lt;T&gt; class" Url="html/29267794-7c73-e45b-3c14-75428635628a.htm" />
+  <HelpKINode Title="Goedel.Registry.Registry class" Url="html/e689046c-b209-96bb-4374-72d2538ae449.htm" />
+  <HelpKINode Title="Goedel.Registry.Registry(Of T) class" Url="html/ca0a85a6-3e20-fb90-8099-94699a4e3595.htm" />
+  <HelpKINode Title="Goedel.Registry.Registry&lt;T&gt; class" Url="html/ca0a85a6-3e20-fb90-8099-94699a4e3595.htm" />
+  <HelpKINode Title="Goedel.Registry.RegistryEntry class" Url="html/191d6a02-e2d7-5b18-eefc-658416fa0314.htm" />
+  <HelpKINode Title="Goedel.Registry.Script class" Url="html/979dc3d9-0940-858c-3347-1204c221a4f6.htm" />
+  <HelpKINode Title="Goedel.Registry.ScriptOutput class" Url="html/97da7001-2a4e-f5f3-0037-bd1125d5a42f.htm" />
+  <HelpKINode Title="Goedel.Registry.Separator class" Url="html/e0794bcd-d687-439d-737f-b301601d0aaf.htm" />
+  <HelpKINode Title="Goedel.Registry.Source class" Url="html/38bc7acd-c2ed-5709-d8cb-e7a37afb671b.htm" />
+  <HelpKINode Title="Goedel.Registry.StructureWriter class" Url="html/219a99e5-9abc-f025-0c33-8a710a85ea11.htm" />
+  <HelpKINode Title="Goedel.Registry.TOKEN(Of T) class" Url="html/ce09e7c0-56a0-9c76-af77-cd8c0062389d.htm" />
+  <HelpKINode Title="Goedel.Registry.TOKEN&lt;T&gt; class" Url="html/ce09e7c0-56a0-9c76-af77-cd8c0062389d.htm" />
+  <HelpKINode Title="Goedel.Registry.TokenType enumeration" Url="html/cd9cf2e7-daa3-a509-8e9e-38869b53d5a9.htm" />
+  <HelpKINode Title="Goedel.Registry.Type class" Url="html/96aafa42-cd89-88f8-6277-27cade12e643.htm" />
+  <HelpKINode Title="Goedel.Registry.TYPE(Of T) class" Url="html/a97a08ce-35aa-2ee3-9b3b-1d5acdd9a2fd.htm" />
+  <HelpKINode Title="Goedel.Registry.TYPE&lt;T&gt; class" Url="html/a97a08ce-35aa-2ee3-9b3b-1d5acdd9a2fd.htm" />
+  <HelpKINode Title="Goedel.Registry.XMLWriter class" Url="html/2fda85d2-1461-0e75-b953-013eae7c262c.htm" />
+  <HelpKINode Title="Goedel.Registry._File class" Url="html/65c9729b-aca3-4677-513d-99866f56a1b8.htm" />
+  <HelpKINode Title="Goedel.Registry._Flag class" Url="html/56a5a49a-f864-0f0f-d3b2-4e21e7a8470f.htm" />
+  <HelpKINode Title="GoedelParseException class">
+    <HelpKINode Title="GoedelParseException Class" Url="html/756b20be-51a9-5e13-20d7-fb2399864816.htm" />
+    <HelpKINode Title="about GoedelParseException class" Url="html/756b20be-51a9-5e13-20d7-fb2399864816.htm" />
+    <HelpKINode Title="constructor" Url="html/9f463413-c13b-434c-2129-96860a9ac40a.htm" />
+    <HelpKINode Title="events" Url="html/1db8a9e4-44b5-a9cb-5d7c-0d4a5bd31a9e.htm" />
+    <HelpKINode Title="methods" Url="html/4c39fee7-828d-5807-8184-806fbfc4356f.htm" />
+    <HelpKINode Title="properties" Url="html/ac4b4317-501d-9a2e-5a51-e0117c66b475.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GoedelParseException.GoedelParseException constructor" Url="html/9f463413-c13b-434c-2129-96860a9ac40a.htm" />
   <HelpKINode Title="HashAlgorithm field">
     <HelpKINode Title="CryptoProviderAuthentication.HashAlgorithm Field" Url="html/8fbb53f6-2cdf-e055-a7c3-36878f21e2bb.htm" />
     <HelpKINode Title="CryptoProviderDigest.HashAlgorithm Field" Url="html/69210258-01c3-f1a1-a588-1b7708e9341f.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Header method" Url="html/55c43f0e-ea74-02f5-e14c-3eebb64fd693.htm" />
+  <HelpKINode Title="HostName property" Url="html/7593fe5f-3620-e644-e8e4-6372adfc20ac.htm" />
+  <HelpKINode Title="ID field" Url="html/6bc2460a-a00d-bc60-6ce3-378c292ca0fa.htm" />
+  <HelpKINode Title="ID method" Url="html/ff9291e0-ab76-3ae1-635c-7c6b2454ed8c.htm" />
+  <HelpKINode Title="ID(Of T) class">
+    <HelpKINode Title="ID(T) Class" Url="html/9b7b8678-6178-28d8-594a-010f10990f0f.htm" />
+    <HelpKINode Title="about ID(Of T) class" Url="html/9b7b8678-6178-28d8-594a-010f10990f0f.htm" />
+    <HelpKINode Title="constructor" Url="html/910606eb-9b00-cf51-855e-458d49c43b2e.htm" />
+    <HelpKINode Title="fields" Url="html/a5d40b2f-0a6d-a394-1e4a-b4d52c6f6b57.htm" />
+    <HelpKINode Title="methods" Url="html/b6b86c0f-e5b8-1a3b-f899-e57d30a15a90.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ID(Of T).Declared field" Url="html/c97a069b-0bc0-82f8-60f6-5e285dffc232.htm" />
+  <HelpKINode Title="ID(Of T).ID constructor" Url="html/910606eb-9b00-cf51-855e-458d49c43b2e.htm" />
+  <HelpKINode Title="ID(Of T).Label field" Url="html/e78eaaaa-0bc7-51fe-5df4-e4b2734d0454.htm" />
+  <HelpKINode Title="ID(Of T).Object field" Url="html/e035c787-dbab-ec4b-1714-b739115da82d.htm" />
+  <HelpKINode Title="ID(Of T).Position field" Url="html/ffbf42f5-7e68-cd6e-46d0-323ecb04fdbe.htm" />
+  <HelpKINode Title="ID(Of T).REFs field" Url="html/fdc2e7bb-62fa-b8a4-4115-5e38ace13647.htm" />
+  <HelpKINode Title="ID(Of T).ToString method" Url="html/34907310-126e-3fc9-d4db-c2e7609d5fcb.htm" />
+  <HelpKINode Title="ID(Of T).Type field" Url="html/750d16ae-255b-3ec5-7584-6177d7a95210.htm" />
+  <HelpKINode Title="ID&lt;T&gt; class">
+    <HelpKINode Title="ID(T) Class" Url="html/9b7b8678-6178-28d8-594a-010f10990f0f.htm" />
+    <HelpKINode Title="about ID&lt;T&gt; class" Url="html/9b7b8678-6178-28d8-594a-010f10990f0f.htm" />
+    <HelpKINode Title="constructor" Url="html/910606eb-9b00-cf51-855e-458d49c43b2e.htm" />
+    <HelpKINode Title="fields" Url="html/a5d40b2f-0a6d-a394-1e4a-b4d52c6f6b57.htm" />
+    <HelpKINode Title="methods" Url="html/b6b86c0f-e5b8-1a3b-f899-e57d30a15a90.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ID&lt;T&gt;.Declared field" Url="html/c97a069b-0bc0-82f8-60f6-5e285dffc232.htm" />
+  <HelpKINode Title="ID&lt;T&gt;.ID constructor" Url="html/910606eb-9b00-cf51-855e-458d49c43b2e.htm" />
+  <HelpKINode Title="ID&lt;T&gt;.Label field" Url="html/e78eaaaa-0bc7-51fe-5df4-e4b2734d0454.htm" />
+  <HelpKINode Title="ID&lt;T&gt;.Object field" Url="html/e035c787-dbab-ec4b-1714-b739115da82d.htm" />
+  <HelpKINode Title="ID&lt;T&gt;.Position field" Url="html/ffbf42f5-7e68-cd6e-46d0-323ecb04fdbe.htm" />
+  <HelpKINode Title="ID&lt;T&gt;.REFs field" Url="html/fdc2e7bb-62fa-b8a4-4115-5e38ace13647.htm" />
+  <HelpKINode Title="ID&lt;T&gt;.ToString method" Url="html/34907310-126e-3fc9-d4db-c2e7609d5fcb.htm" />
+  <HelpKINode Title="ID&lt;T&gt;.Type field" Url="html/750d16ae-255b-3ec5-7584-6177d7a95210.htm" />
+  <HelpKINode Title="IDs field">
+    <HelpKINode Title="Registry(T).IDs Field" Url="html/0ef631b1-964f-c24a-6fa3-b3127402c9ac.htm" />
+    <HelpKINode Title="TYPE(T).IDs Field" Url="html/2ffd1a89-ed71-bc27-d4ac-cf8308f4fa1c.htm" />
+  </HelpKINode>
+  <HelpKINode Title="If method" Url="html/420cb656-5f43-a620-1a32-4931fa8cfdc7.htm" />
+  <HelpKINode Title="Ignore method" Url="html/51e6d458-5838-d8ea-ffdb-8844cfc8df19.htm" />
+  <HelpKINode Title="Indent field" Url="html/ca537858-c91b-f756-82d3-6b5bfaa709cc.htm" />
+  <HelpKINode Title="IndentWriter class">
+    <HelpKINode Title="IndentWriter Class" Url="html/d809a14f-e0a9-a01e-5aa4-e410d796b49c.htm" />
+    <HelpKINode Title="about IndentWriter class" Url="html/d809a14f-e0a9-a01e-5aa4-e410d796b49c.htm" />
+    <HelpKINode Title="constructor" Url="html/b54bb1d1-e2d2-35fc-89c7-150f882e31e9.htm" />
+    <HelpKINode Title="fields" Url="html/72d4b90f-bc65-01cc-baae-cfff04b66fc4.htm" />
+    <HelpKINode Title="methods" Url="html/90b4248c-2a4a-3183-cefe-ea41a2a54aa1.htm" />
+  </HelpKINode>
+  <HelpKINode Title="IndentWriter.EndDocument method" Url="html/5a7277e1-a07a-2d9e-cee9-c1b1d3ae5b83.htm" />
+  <HelpKINode Title="IndentWriter.EndElement method" Url="html/0d0b77ec-9ed1-de0f-f226-ce44f9ad0281.htm" />
+  <HelpKINode Title="IndentWriter.EndList method" Url="html/252e5d90-6b1d-3577-e07c-9de4786900c7.htm" />
+  <HelpKINode Title="IndentWriter.IndentWriter constructor" Url="html/b54bb1d1-e2d2-35fc-89c7-150f882e31e9.htm" />
+  <HelpKINode Title="IndentWriter.StartDocument method" Url="html/4677f39e-b032-6a81-96fd-d43e2e2b51c3.htm" />
+  <HelpKINode Title="IndentWriter.StartElement method" Url="html/a75bc3f6-14b9-9678-a361-202272c33211.htm" />
+  <HelpKINode Title="IndentWriter.StartList method" Url="html/d8c41183-b0c5-dfdd-9639-a797a26f5937.htm" />
+  <HelpKINode Title="IndentWriter.WriteAttribute method" Url="html/7f53ffe1-5670-af85-f47d-48ddc82d2967.htm" />
+  <HelpKINode Title="IndentWriter.WriteId method" Url="html/bc7c1b1a-7b6d-a5ec-9d8f-c6499e572542.htm" />
+  <HelpKINode Title="Index field" Url="html/8ff1193a-2124-4183-a804-ad8c1e278d0c.htm" />
+  <HelpKINode Title="Init method">
+    <HelpKINode Title="AuthKeysFileLex.Init Method " Url="html/09be9194-0a56-dd09-8ae7-c79744dd461e.htm" />
+    <HelpKINode Title="KeyFileLex.Init Method " Url="html/67df17ce-5e28-0cf4-c646-c9c727091924.htm" />
+    <HelpKINode Title="Parser.Init Method " Url="html/8135220d-3f27-10ec-e230-10bde5a1d23a.htm" />
   </HelpKINode>
   <HelpKINode Title="Initialize method">
     <HelpKINode Title="Cryptography.Initialize Method " Url="html/f2b7a45f-807a-e0da-feeb-98af155a66e7.htm" />
     <HelpKINode Title="CryptoProviderAuthentication.Initialize Method " Url="html/44f63017-4ef8-22ce-64d5-20aa225dfbd2.htm" />
     <HelpKINode Title="CryptoProviderDigest.Initialize Method " Url="html/cd349830-5dfc-fe21-f9e8-3ad131ac8f05.htm" />
+    <HelpKINode Title="Framework.Initialize Method " Url="html/822ee5b7-c0c0-2320-ab8c-43efa045026e.htm" />
   </HelpKINode>
+  <HelpKINode Title="INTEGER enumeration member" Url="html/cd9cf2e7-daa3-a509-8e9e-38869b53d5a9.htm" />
+  <HelpKINode Title="INVALID enumeration member">
+    <HelpKINode Title="AuthKeysFileLex.Token Enumeration" Url="html/77b43f76-bab0-4f7a-5416-73d1867ff432.htm" />
+    <HelpKINode Title="KeyFileLex.Token Enumeration" Url="html/71f7f293-6f77-5610-5015-6883e427f253.htm" />
+    <HelpKINode Title="TokenType Enumeration" Url="html/cd9cf2e7-daa3-a509-8e9e-38869b53d5a9.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ISCLicense method" Url="html/0d8cab1b-e649-503c-de6a-880443fbbf1c.htm" />
+  <HelpKINode Title="IsFirst field" Url="html/f93bfca9-5cbe-ba61-9be4-123961c3ede4.htm" />
+  <HelpKINode Title="IsRequest property" Url="html/f0c51a0a-e1db-d8f3-ac04-38bc0d295d93.htm" />
+  <HelpKINode Title="IsSet field" Url="html/eb0c3d2d-fb7e-10d2-9c33-0e8c3ee9e44c.htm" />
   <HelpKINode Title="IV property" Url="html/c5c780c2-08ce-4ddf-9778-f33ade463055.htm" />
+  <HelpKINode Title="JSON enumeration member" Url="html/56d2eb2f-b3d9-8381-3608-44bd9f8aaa73.htm" />
   <HelpKINode Title="JSONKeyType property">
     <HelpKINode Title="CryptoProviderExchangeRSA.JSONKeyType Property " Url="html/cf09879c-8659-720c-c98c-fc78c189a7bc.htm" />
     <HelpKINode Title="CryptoProviderSignatureRSA.JSONKeyType Property " Url="html/5628cb87-ac30-35aa-4901-c266b11896ad.htm" />
@@ -339,6 +784,55 @@
     <HelpKINode Title="CryptoProviderAuthentication.Key Property " Url="html/c49d0571-d058-37c9-ba55-4bbf6e12b98a.htm" />
     <HelpKINode Title="CryptoProviderEncryption.Key Property " Url="html/c5a7dcee-0b26-2914-01b4-984cff011151.htm" />
   </HelpKINode>
+  <HelpKINode Title="KeyFile class">
+    <HelpKINode Title="KeyFile Class" Url="html/c010e28d-30b8-7954-661d-8946a2496273.htm" />
+    <HelpKINode Title="about KeyFile class" Url="html/c010e28d-30b8-7954-661d-8946a2496273.htm" />
+    <HelpKINode Title="methods" Url="html/cbc08329-44ad-38e1-e460-20e50cc5278f.htm" />
+  </HelpKINode>
+  <HelpKINode Title="KeyFile.DecodeAuthHost method" Url="html/21b8d8b7-5320-d024-7d50-435188da9cef.htm" />
+  <HelpKINode Title="KeyFile.DecodePEM method" Url="html/adfb6e76-b29f-0463-183e-f7d839787af6.htm" />
+  <HelpKINode Title="KeyFile.DecodePEMText method" Url="html/31dbfe21-78a4-5af5-861f-0c8da8c8dd2f.htm" />
+  <HelpKINode Title="KeyFileException class">
+    <HelpKINode Title="KeyFileException Class" Url="html/e457f5e0-566f-5a60-5681-615c8877353f.htm" />
+    <HelpKINode Title="about KeyFileException class" Url="html/e457f5e0-566f-5a60-5681-615c8877353f.htm" />
+    <HelpKINode Title="constructor" Url="html/53a54e44-7511-8d4b-ada7-63742cf01116.htm" />
+    <HelpKINode Title="events" Url="html/05ebab15-c423-761b-4445-abe2f7c4496a.htm" />
+    <HelpKINode Title="fields" Url="html/3d998467-9d63-9039-32ad-b6af3653acd2.htm" />
+    <HelpKINode Title="methods" Url="html/8ae7309b-cb00-2cad-b694-1e1607082f5e.htm" />
+    <HelpKINode Title="properties" Url="html/ae41cb3e-2947-992c-1605-423115c006dc.htm" />
+  </HelpKINode>
+  <HelpKINode Title="KeyFileException.KeyFileException constructor" Url="html/53a54e44-7511-8d4b-ada7-63742cf01116.htm" />
+  <HelpKINode Title="KeyFileException.Throw field" Url="html/caf0da03-a1d2-7a29-29bf-c6b2cd9206d0.htm" />
+  <HelpKINode Title="KeyFileException.UserData field" Url="html/5232a9cb-d3d7-ae18-8b13-4c5a8ee75fbc.htm" />
+  <HelpKINode Title="KeyFileFormat enumeration" Url="html/2ac27d76-cd81-755f-8667-dd04b48eb424.htm" />
+  <HelpKINode Title="KeyFileLex class">
+    <HelpKINode Title="KeyFileLex Class" Url="html/147a81ef-6f04-fc2a-bd0c-79019cb0684d.htm" />
+    <HelpKINode Title="about KeyFileLex class" Url="html/147a81ef-6f04-fc2a-bd0c-79019cb0684d.htm" />
+    <HelpKINode Title="constructor" Url="html/8c753cdd-c8a9-bc29-18fb-0900fefe5d47.htm" />
+    <HelpKINode Title="fields" Url="html/22ec7666-3fa0-8f07-fac9-8c1245961e7f.htm" />
+    <HelpKINode Title="methods" Url="html/08965c97-3878-d3d8-fb6c-2b79762db8ce.htm" />
+    <HelpKINode Title="properties" Url="html/3cf87ff2-097d-0f13-fe20-041797a7b290.htm" />
+  </HelpKINode>
+  <HelpKINode Title="KeyFileLex.Abort method" Url="html/284ed464-47f1-d118-0545-1398094a9084.htm" />
+  <HelpKINode Title="KeyFileLex.AddTag method" Url="html/6bfad033-baf6-3f39-bd03-bf4ecd3e38a9.htm" />
+  <HelpKINode Title="KeyFileLex.Base64 method" Url="html/957a8f77-c21a-161f-0de8-a2bec8a152a4.htm" />
+  <HelpKINode Title="KeyFileLex.Begin method" Url="html/1b518f83-4bd7-3c1b-1348-4bad715691ca.htm" />
+  <HelpKINode Title="KeyFileLex.CharacterMappings property" Url="html/f8833c9d-50c9-a682-bb9e-563b8fc795bc.htm" />
+  <HelpKINode Title="KeyFileLex.CompressedTransitions property" Url="html/ed347284-b945-7b36-7bac-d32e2c24def5.htm" />
+  <HelpKINode Title="KeyFileLex.Count1 method" Url="html/f5bb3b93-89b7-378e-6964-de1df6ffd987.htm" />
+  <HelpKINode Title="KeyFileLex.Count2 method" Url="html/3035bcf8-11ae-758b-4d00-422cffbcd7a9.htm" />
+  <HelpKINode Title="KeyFileLex.Count3 method" Url="html/8d4ce4b9-9193-530e-ab64-59b36eb855aa.htm" />
+  <HelpKINode Title="KeyFileLex.Count4 method" Url="html/9ae9a285-4807-6eb8-9cdf-0afe75600eeb.htm" />
+  <HelpKINode Title="KeyFileLex.End method" Url="html/73b9e7b0-6809-2dc7-e040-9e0808aeba77.htm" />
+  <HelpKINode Title="KeyFileLex.GetTaggedData method" Url="html/b6802e03-a32b-9465-7967-885925a92552.htm" />
+  <HelpKINode Title="KeyFileLex.GetToken method" Url="html/d6c87481-acc5-f339-9fa0-d50d7e02db90.htm" />
+  <HelpKINode Title="KeyFileLex.Init method" Url="html/67df17ce-5e28-0cf4-c646-c9c727091924.htm" />
+  <HelpKINode Title="KeyFileLex.KeyFileLex constructor" Url="html/8c753cdd-c8a9-bc29-18fb-0900fefe5d47.htm" />
+  <HelpKINode Title="KeyFileLex.Reset method" Url="html/268f4085-81ce-a712-5b9d-ef1750a7b7b0.htm" />
+  <HelpKINode Title="KeyFileLex.State enumeration" Url="html/734b7a8e-14bb-27b9-ddd7-afb39439368f.htm" />
+  <HelpKINode Title="KeyFileLex.Tag1 method" Url="html/3ae0173d-9d09-af68-d5f5-46b5a875c951.htm" />
+  <HelpKINode Title="KeyFileLex.Tag2 method" Url="html/5773de40-65c5-b9d7-2bfe-da11f15e183d.htm" />
+  <HelpKINode Title="KeyFileLex.Token enumeration" Url="html/71f7f293-6f77-5610-5015-6883e427f253.htm" />
   <HelpKINode Title="KeyInfoData property" Url="html/f3106dd5-9207-e4eb-9b18-dcc50ef8660f.htm" />
   <HelpKINode Title="KeyPair method" Url="html/a39f12e4-4e47-8a02-7797-c0bac56b02f9.htm" />
   <HelpKINode Title="KeyPair property">
@@ -349,6 +843,45 @@
     <HelpKINode Title="CryptoProviderExchangeRSA.KeySize Property " Url="html/57fdfc08-88a4-c59f-e7dd-32a691e45b65.htm" />
     <HelpKINode Title="CryptoProviderSignatureRSA.KeySize Property " Url="html/7cb9e894-0cb3-7d56-b733-3de49d4e2b8f.htm" />
   </HelpKINode>
+  <HelpKINode Title="LABEL enumeration member" Url="html/cd9cf2e7-daa3-a509-8e9e-38869b53d5a9.htm" />
+  <HelpKINode Title="Label field">
+    <HelpKINode Title="ID(T).Label Field" Url="html/e78eaaaa-0bc7-51fe-5df4-e4b2734d0454.htm" />
+    <HelpKINode Title="TYPE(T).Label Field" Url="html/4577a40f-0ba5-63ca-078a-f824724e8e2f.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Label method">
+    <HelpKINode Title="ExtensionMethods.Label Method " Url="html/f3a3f4be-6d3f-172e-5452-7736cccf8c44.htm" />
+    <HelpKINode Title="TraceDictionary.Label Method " Url="html/aa5d1b30-74d8-5ef6-b4fe-0a165abe6171.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Label property" Url="html/797a615f-d256-888e-556a-8ced8ed4332f.htm" />
+  <HelpKINode Title="Left enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
+  <HelpKINode Title="Level field" Url="html/17176b5d-407e-2876-7304-6a332699a6b3.htm" />
+  <HelpKINode Title="Level property">
+    <HelpKINode Title="TraceDictionary.Level Property " Url="html/50caa365-c15d-a559-b434-c3bd9171b79e.htm" />
+    <HelpKINode Title="TracePoint.Level Property " Url="html/dd491b66-35e4-b7db-31ca-8fc93c8c7b3c.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Lexer class">
+    <HelpKINode Title="Lexer Class" Url="html/13631f93-bf24-438b-dc35-0da74af2f43e.htm" />
+    <HelpKINode Title="about Lexer class" Url="html/13631f93-bf24-438b-dc35-0da74af2f43e.htm" />
+    <HelpKINode Title="constructor" Url="html/c8464b39-1032-4120-5488-e148893464c0.htm" />
+    <HelpKINode Title="fields" Url="html/681b60fb-77b2-30e2-f52c-90267ccc43d2.htm" />
+    <HelpKINode Title="methods" Url="html/7a9a711b-81ca-293b-3d05-ee5fed14081b.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Lexer.CharType enumeration" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
+  <HelpKINode Title="Lexer.Lexer constructor" Url="html/c8464b39-1032-4120-5488-e148893464c0.htm" />
+  <HelpKINode Title="Lexer.Position field" Url="html/0b09f78c-7b3b-e870-14c3-fa3e2a7cbffc.htm" />
+  <HelpKINode Title="Lexer.Process method" Url="html/78838626-5419-6571-1f0c-7b28794d186b.htm" />
+  <HelpKINode Title="License method" Url="html/19434311-5012-9371-89bb-b91dd4cd7a6a.htm" />
+  <HelpKINode Title="Line enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
+  <HelpKINode Title="LineStart enumeration member" Url="html/93db771a-029e-fc88-1053-2ecdb7182b85.htm" />
+  <HelpKINode Title="ListIPAddress field" Url="html/3944b924-65f2-a823-eccb-047447ac8e71.htm" />
+  <HelpKINode Title="LITERAL enumeration member" Url="html/cd9cf2e7-daa3-a509-8e9e-38869b53d5a9.htm" />
+  <HelpKINode Title="Ln field" Url="html/555bc2b3-3b2f-ed56-0406-be898c7e9f2c.htm" />
+  <HelpKINode Title="LocalizeTime method" Url="html/7c537325-af38-8c06-ee90-8c60296b52fd.htm" />
+  <HelpKINode Title="Lower enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
+  <HelpKINode Title="MD enumeration member" Url="html/56d2eb2f-b3d9-8381-3608-44bd9f8aaa73.htm" />
+  <HelpKINode Title="Messages property" Url="html/8e0f769f-fffc-ddd1-df08-e4a0870e0eff.htm" />
+  <HelpKINode Title="MITLicense method" Url="html/e47afcb0-57a1-b2cb-ae27-74729277d7ba.htm" />
+  <HelpKINode Title="Modulus field" Url="html/88c80454-65c7-9063-437e-cc136dd5f0a9.htm" />
   <HelpKINode Title="Name method" Url="html/8fc75877-e30c-5584-72e4-bd2dde0b9735.htm" />
   <HelpKINode Title="Name property">
     <HelpKINode Title="CryptoProviderEncryptAES.Name Property " Url="html/e07629ab-4c37-d8e5-6e89-6bcdee4e3c06.htm" />
@@ -359,9 +892,27 @@
     <HelpKINode Title="CryptoProviderSHA2_256.Name Property " Url="html/ebd4f35b-cabf-22f3-4bb2-10019080af21.htm" />
     <HelpKINode Title="CryptoProviderSHA2_512.Name Property " Url="html/0fbcf0c5-204b-b992-5550-52ba884fbf29.htm" />
     <HelpKINode Title="CryptoProviderSignatureRSA.Name Property " Url="html/3353c82b-af6a-b2af-23db-d1f4b1adf586.htm" />
+    <HelpKINode Title="Source.Name Property " Url="html/6fb0562b-ec67-91a7-59e0-16c0982f0557.htm" />
   </HelpKINode>
   <HelpKINode Title="Names method" Url="html/4af17e40-5b86-6ab8-60f2-38e7b3619519.htm" />
+  <HelpKINode Title="Next field" Url="html/53963932-1c11-3b78-4e2f-461e2790d04e.htm" />
+  <HelpKINode Title="NoProviderSpecified class">
+    <HelpKINode Title="NoProviderSpecified Class" Url="html/7d273fda-a869-2a41-2956-aba40d3f9bc3.htm" />
+    <HelpKINode Title="about NoProviderSpecified class" Url="html/7d273fda-a869-2a41-2956-aba40d3f9bc3.htm" />
+    <HelpKINode Title="constructor" Url="html/b5c52066-3644-aca4-f72b-880331c1a2f7.htm" />
+    <HelpKINode Title="events" Url="html/9015c0b7-8582-77ec-0e42-48608a4b9dbf.htm" />
+    <HelpKINode Title="fields" Url="html/f7f50e0c-c643-bbbd-651c-caa0f3cae70b.htm" />
+    <HelpKINode Title="methods" Url="html/06e42fd9-a382-d467-d179-79c0c4dcf5f3.htm" />
+    <HelpKINode Title="properties" Url="html/e2572fac-fe0f-1dd9-b54c-8a71cbb53ef7.htm" />
+  </HelpKINode>
+  <HelpKINode Title="NoProviderSpecified.NoProviderSpecified constructor" Url="html/b5c52066-3644-aca4-f72b-880331c1a2f7.htm" />
+  <HelpKINode Title="NoProviderSpecified.Throw field" Url="html/5fa32061-b99d-74eb-7ae1-ebb3ba5469cd.htm" />
+  <HelpKINode Title="NULL enumeration member" Url="html/cd9cf2e7-daa3-a509-8e9e-38869b53d5a9.htm" />
   <HelpKINode Title="OAEP field" Url="html/0ee0854e-b411-a2a5-95ff-a75c03db8fa2.htm" />
+  <HelpKINode Title="Object field">
+    <HelpKINode Title="ID(T).Object Field" Url="html/e035c787-dbab-ec4b-1714-b739115da82d.htm" />
+    <HelpKINode Title="REF(T).Object Field" Url="html/6129fc7e-6c37-39a8-10d5-65a3a3b0a608.htm" />
+  </HelpKINode>
   <HelpKINode Title="OID property">
     <HelpKINode Title="CryptoProviderAuthentication.OID Property " Url="html/da484a62-1a4b-52df-1f42-78320e2ab069.htm" />
     <HelpKINode Title="CryptoProviderDigest.OID Property " Url="html/a400f41e-68c4-41dd-e32b-a823632faaad.htm" />
@@ -369,17 +920,194 @@
     <HelpKINode Title="CryptoProviderExchangeRSA.OID Property " Url="html/cb5fc92a-0d8d-7aec-9247-8f02eecf70b3.htm" />
     <HelpKINode Title="CryptoProviderSignatureRSA.OID Property " Url="html/e8616be9-6f55-293e-79f0-a7d131195b04.htm" />
   </HelpKINode>
+  <HelpKINode Title="OpenFileAppend method" Url="html/b1aff5bb-8916-704c-842c-6c3f5f45f502.htm" />
+  <HelpKINode Title="OpenFileAppendShare method" Url="html/996075ab-592f-6187-ba24-62edbdc22ded.htm" />
+  <HelpKINode Title="OpenFileNew method" Url="html/83504707-1d2a-50eb-4672-52e85ebc1480.htm" />
+  <HelpKINode Title="OpenFileRead method" Url="html/1f955363-efa7-a8e1-3662-704971a358eb.htm" />
+  <HelpKINode Title="OpenFileReadShared method" Url="html/a578df35-8399-7441-29b5-eba7ada51d50.htm" />
+  <HelpKINode Title="OpenFileWrite method" Url="html/2f0d3303-f39b-6092-ee6e-268a70c1e3ea.htm" />
+  <HelpKINode Title="OpenSSH enumeration member" Url="html/2ac27d76-cd81-755f-8667-dd04b48eb424.htm" />
+  <HelpKINode Title="OpenTextReader method" Url="html/9fb91900-79df-83e9-1510-7dc777fb5518.htm" />
+  <HelpKINode Title="OpenTextWriter method" Url="html/2681106f-0eb3-8155-6f09-19f968e9a2b4.htm" />
+  <HelpKINode Title="Options field" Url="html/952905ca-ee04-2500-5940-9d2fda2e943c.htm" />
+  <HelpKINode Title="Other enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
+  <HelpKINode Title="OutputFormat enumeration" Url="html/56d2eb2f-b3d9-8381-3608-44bd9f8aaa73.htm" />
+  <HelpKINode Title="P field" Url="html/cb01c3f5-6420-a7c3-6855-9b2cf8d37e66.htm" />
+  <HelpKINode Title="Parameter method">
+    <HelpKINode Title="Type.Parameter Method " Url="html/86fc73b5-fdee-10fd-5c20-0a32ed86260f.htm" />
+    <HelpKINode Title="_Flag.Parameter Method " Url="html/80f3d851-9bef-41fc-e928-84ee7c456312.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ParseError class">
+    <HelpKINode Title="ParseError Class" Url="html/b28a65af-bfaa-4afa-c821-2e8094b1f15f.htm" />
+    <HelpKINode Title="about ParseError class" Url="html/b28a65af-bfaa-4afa-c821-2e8094b1f15f.htm" />
+    <HelpKINode Title="constructor" Url="html/16524e80-69cf-86ae-3d99-7cd90b267b0f.htm" />
+    <HelpKINode Title="events" Url="html/c6d1f54b-c67a-dc05-fccc-c602701f4914.htm" />
+    <HelpKINode Title="fields" Url="html/bb3bcd93-fe3d-7097-428a-78b693376b99.htm" />
+    <HelpKINode Title="methods" Url="html/138347ce-744e-c37e-0cb9-520b78109777.htm" />
+    <HelpKINode Title="properties" Url="html/f622229f-6f46-f4ab-b68d-fa6e9abf3898.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ParseError.ParseError constructor" Url="html/16524e80-69cf-86ae-3d99-7cd90b267b0f.htm" />
+  <HelpKINode Title="ParseError.Throw field" Url="html/407edcb8-1fce-15d9-19c7-aa9600571fc8.htm" />
+  <HelpKINode Title="Parser class">
+    <HelpKINode Title="Parser Class" Url="html/de4c3d4c-a6e6-f4d1-2d0f-68c194bfe04f.htm" />
+    <HelpKINode Title="about Parser class" Url="html/de4c3d4c-a6e6-f4d1-2d0f-68c194bfe04f.htm" />
+    <HelpKINode Title="constructor" Url="html/0b268cbe-4e25-f2b3-e978-19441907f2da.htm" />
+    <HelpKINode Title="fields" Url="html/475a8593-64d2-a15f-b092-a66de0534812.htm" />
+    <HelpKINode Title="methods" Url="html/e29bd241-f3b4-f0c3-ae9c-3e4308f7c0d3.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Parser.Init method" Url="html/8135220d-3f27-10ec-e230-10bde5a1d23a.htm" />
+  <HelpKINode Title="Parser.Options field" Url="html/952905ca-ee04-2500-5940-9d2fda2e943c.htm" />
+  <HelpKINode Title="Parser.Parser constructor" Url="html/0b268cbe-4e25-f2b3-e978-19441907f2da.htm" />
+  <HelpKINode Title="Parser.Process method" Url="html/dce10b1a-217a-d8df-565c-2b1ee8dc234d.htm" />
+  <HelpKINode Title="Payload property" Url="html/a3a3685a-477d-df41-a763-43da8ae2b5f0.htm" />
+  <HelpKINode Title="PEMPrivate enumeration member" Url="html/2ac27d76-cd81-755f-8667-dd04b48eb424.htm" />
+  <HelpKINode Title="PEMPublic enumeration member" Url="html/2ac27d76-cd81-755f-8667-dd04b48eb424.htm" />
+  <HelpKINode Title="Period enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
   <HelpKINode Title="Persist method" Url="html/8124228e-f715-2253-7ee4-c5ef9acd2e6d.htm" />
+  <HelpKINode Title="Platform property" Url="html/adf000fb-36f0-2d06-affa-717614c47b1b.htm" />
+  <HelpKINode Title="PlatformVersion property" Url="html/1c672e49-34a8-d2c5-7fc6-58359b0a433d.htm" />
+  <HelpKINode Title="Port field" Url="html/8df77cba-7ed5-9653-29fb-660d3c38c411.htm" />
+  <HelpKINode Title="Position class">
+    <HelpKINode Title="Position Class" Url="html/6fbab952-af92-afb1-5275-a43946affb98.htm" />
+    <HelpKINode Title="about Position class" Url="html/6fbab952-af92-afb1-5275-a43946affb98.htm" />
+    <HelpKINode Title="constructor" Url="html/a91d1292-c25c-6827-ca14-468210b46d98.htm" />
+    <HelpKINode Title="fields" Url="html/39058289-3646-a7b3-f9ce-0e25e733ad78.htm" />
+    <HelpKINode Title="methods" Url="html/6bfeeda7-ab70-07dd-36de-4c55019b3c3d.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Position field">
+    <HelpKINode Title="ID(T).Position Field" Url="html/ffbf42f5-7e68-cd6e-46d0-323ecb04fdbe.htm" />
+    <HelpKINode Title="Lexer.Position Field" Url="html/0b09f78c-7b3b-e870-14c3-fa3e2a7cbffc.htm" />
+    <HelpKINode Title="REF(T).Position Field" Url="html/56ce72da-bbbf-a468-d56e-f195d8550793.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Position.Ch field" Url="html/c52c1d54-d6a6-d2f6-658c-f7d5bd1c2551.htm" />
+  <HelpKINode Title="Position.Col field" Url="html/c74de5dc-7a09-399a-e15c-e38735cd6d1f.htm" />
+  <HelpKINode Title="Position.File field" Url="html/fe12b6c8-d295-c2c5-1899-549f0762353d.htm" />
+  <HelpKINode Title="Position.Ln field" Url="html/555bc2b3-3b2f-ed56-0406-be898c7e9f2c.htm" />
+  <HelpKINode Title="Position.Position constructor" Url="html/a91d1292-c25c-6827-ca14-468210b46d98.htm" />
+  <HelpKINode Title="Position.ToString method" Url="html/9c8b73d8-eff9-3288-964c-0f18beadf5a9.htm" />
+  <HelpKINode Title="Post method" Url="html/1d604d0b-9acd-c85d-2b4b-13ef0da25238.htm" />
   <HelpKINode Title="Prefix method" Url="html/2e1f833a-3d14-5f38-cb48-be0cf53e2c5d.htm" />
+  <HelpKINode Title="PrivateKeyNotAvailable class">
+    <HelpKINode Title="PrivateKeyNotAvailable Class" Url="html/35be7336-284f-c77b-7165-0377087b50c9.htm" />
+    <HelpKINode Title="about PrivateKeyNotAvailable class" Url="html/35be7336-284f-c77b-7165-0377087b50c9.htm" />
+    <HelpKINode Title="constructor" Url="html/0585b2dd-d2c3-a07b-d2ee-6b414cddc3df.htm" />
+    <HelpKINode Title="events" Url="html/3d91951f-93bd-5b40-ac20-71d086b8716e.htm" />
+    <HelpKINode Title="fields" Url="html/630ce79e-5304-49b8-9814-d056416885c1.htm" />
+    <HelpKINode Title="methods" Url="html/ceceb824-1165-e4e7-4f7f-4316dabc23cc.htm" />
+    <HelpKINode Title="properties" Url="html/b3a536ea-2b6c-2c42-4cd9-1bdfaa93a891.htm" />
+  </HelpKINode>
+  <HelpKINode Title="PrivateKeyNotAvailable.PrivateKeyNotAvailable constructor" Url="html/0585b2dd-d2c3-a07b-d2ee-6b414cddc3df.htm" />
+  <HelpKINode Title="PrivateKeyNotAvailable.Throw field" Url="html/3582cefa-556b-3dd4-df6e-a684189274d3.htm" />
   <HelpKINode Title="Process method">
     <HelpKINode Title="CryptoProviderAuthentication.Process Method " Url="html/02879dd6-5c75-4efe-cb3d-722e3c665c88.htm" />
     <HelpKINode Title="CryptoProviderDigest.Process Method " Url="html/c37c4ab1-8970-ace5-d2c3-0d00cecc3f4a.htm" />
     <HelpKINode Title="CryptoProviderEncryption.Process Method " Url="html/0df4a944-4f0b-a7e6-0ea6-cd3750084d0f.htm" />
+    <HelpKINode Title="Lexer.Process Method " Url="html/78838626-5419-6571-1f0c-7b28794d186b.htm" />
+    <HelpKINode Title="Parser.Process Method " Url="html/dce10b1a-217a-d8df-565c-2b1ee8dc234d.htm" />
   </HelpKINode>
   <HelpKINode Title="Provider property">
     <HelpKINode Title="CryptoProviderEncryption.Provider Property " Url="html/2865dd06-f7a5-a732-9da0-7cddd46e65f7.htm" />
     <HelpKINode Title="RSAKeyPair.Provider Property " Url="html/c29741e5-8022-dddf-6f9e-d556d74a7f39.htm" />
   </HelpKINode>
+  <HelpKINode Title="PuTTY enumeration member" Url="html/2ac27d76-cd81-755f-8667-dd04b48eb424.htm" />
+  <HelpKINode Title="Q field" Url="html/c98df698-4a1e-d497-1e04-6ed26fd990a7.htm" />
+  <HelpKINode Title="Query method" Url="html/d4b776c4-64ed-4ec2-4861-dd0eab5610a3.htm" />
+  <HelpKINode Title="QueryAsync method" Url="html/6c36a826-adee-2ca2-9b50-c8e57342e1ea.htm" />
+  <HelpKINode Title="Quoted method" Url="html/5a47cda2-ab1e-b226-65bc-f08989c6d297.htm" />
+  <HelpKINode Title="REF method" Url="html/30e9b989-f276-5ffc-a344-b02ed16400ab.htm" />
+  <HelpKINode Title="REF(Of T) class">
+    <HelpKINode Title="REF(T) Class" Url="html/29267794-7c73-e45b-3c14-75428635628a.htm" />
+    <HelpKINode Title="about REF(Of T) class" Url="html/29267794-7c73-e45b-3c14-75428635628a.htm" />
+    <HelpKINode Title="constructor" Url="html/f0786761-468f-26ba-0714-042a767d31ab.htm" />
+    <HelpKINode Title="fields" Url="html/e998a53d-249a-b6d7-dbc2-9ff7ffafe8b8.htm" />
+    <HelpKINode Title="methods" Url="html/ac5dd4fd-aeb6-a6d4-fa33-7c69fe837d83.htm" />
+    <HelpKINode Title="properties" Url="html/1ccd707b-1c5b-4478-9fc1-741b0fc2c41f.htm" />
+  </HelpKINode>
+  <HelpKINode Title="REF(Of T).Definition property" Url="html/2678bea6-1369-31fa-a038-39bb401b7eb3.htm" />
+  <HelpKINode Title="REF(Of T).ID field" Url="html/6bc2460a-a00d-bc60-6ce3-378c292ca0fa.htm" />
+  <HelpKINode Title="REF(Of T).Label property" Url="html/797a615f-d256-888e-556a-8ced8ed4332f.htm" />
+  <HelpKINode Title="REF(Of T).Object field" Url="html/6129fc7e-6c37-39a8-10d5-65a3a3b0a608.htm" />
+  <HelpKINode Title="REF(Of T).Position field" Url="html/56ce72da-bbbf-a468-d56e-f195d8550793.htm" />
+  <HelpKINode Title="REF(Of T).REF constructor" Url="html/f0786761-468f-26ba-0714-042a767d31ab.htm" />
+  <HelpKINode Title="REF(Of T).ToString method" Url="html/b29d7f0d-cafb-745e-63d1-90fa92290006.htm" />
+  <HelpKINode Title="REF&lt;T&gt; class">
+    <HelpKINode Title="REF(T) Class" Url="html/29267794-7c73-e45b-3c14-75428635628a.htm" />
+    <HelpKINode Title="about REF&lt;T&gt; class" Url="html/29267794-7c73-e45b-3c14-75428635628a.htm" />
+    <HelpKINode Title="constructor" Url="html/f0786761-468f-26ba-0714-042a767d31ab.htm" />
+    <HelpKINode Title="fields" Url="html/e998a53d-249a-b6d7-dbc2-9ff7ffafe8b8.htm" />
+    <HelpKINode Title="methods" Url="html/ac5dd4fd-aeb6-a6d4-fa33-7c69fe837d83.htm" />
+    <HelpKINode Title="properties" Url="html/1ccd707b-1c5b-4478-9fc1-741b0fc2c41f.htm" />
+  </HelpKINode>
+  <HelpKINode Title="REF&lt;T&gt;.Definition property" Url="html/2678bea6-1369-31fa-a038-39bb401b7eb3.htm" />
+  <HelpKINode Title="REF&lt;T&gt;.ID field" Url="html/6bc2460a-a00d-bc60-6ce3-378c292ca0fa.htm" />
+  <HelpKINode Title="REF&lt;T&gt;.Label property" Url="html/797a615f-d256-888e-556a-8ced8ed4332f.htm" />
+  <HelpKINode Title="REF&lt;T&gt;.Object field" Url="html/6129fc7e-6c37-39a8-10d5-65a3a3b0a608.htm" />
+  <HelpKINode Title="REF&lt;T&gt;.Position field" Url="html/56ce72da-bbbf-a468-d56e-f195d8550793.htm" />
+  <HelpKINode Title="REF&lt;T&gt;.REF constructor" Url="html/f0786761-468f-26ba-0714-042a767d31ab.htm" />
+  <HelpKINode Title="REF&lt;T&gt;.ToString method" Url="html/b29d7f0d-cafb-745e-63d1-90fa92290006.htm" />
+  <HelpKINode Title="REFs field" Url="html/fdc2e7bb-62fa-b8a4-4115-5e38ace13647.htm" />
+  <HelpKINode Title="Register method">
+    <HelpKINode Title="Registry.Register Method " Url="html/88cd4bca-9229-1204-87b2-fb7e03ebb337.htm" />
+    <HelpKINode Title="Type.Register Method " Url="html/301e3702-c955-32bc-47ea-47edf88d2413.htm" />
+    <HelpKINode Title="_Flag.Register Method " Url="html/c06a63d4-babf-4b32-64f7-a71ddb909cd3.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Registry class">
+    <HelpKINode Title="Registry Class" Url="html/e689046c-b209-96bb-4374-72d2538ae449.htm" />
+    <HelpKINode Title="about Registry class" Url="html/e689046c-b209-96bb-4374-72d2538ae449.htm" />
+    <HelpKINode Title="constructor" Url="html/1d6e4fa3-7330-0ead-b1d4-ff2c4537cf6d.htm" />
+    <HelpKINode Title="methods" Url="html/299b3522-802d-9217-2ba7-db8ac2b20615.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Registry(Of T) class">
+    <HelpKINode Title="Registry(T) Class" Url="html/ca0a85a6-3e20-fb90-8099-94699a4e3595.htm" />
+    <HelpKINode Title="about Registry(Of T) class" Url="html/ca0a85a6-3e20-fb90-8099-94699a4e3595.htm" />
+    <HelpKINode Title="constructor" Url="html/3c453708-815f-b763-ee99-168251da7a22.htm" />
+    <HelpKINode Title="fields" Url="html/dfd430ab-bd10-de92-b93a-9215b2b4853b.htm" />
+    <HelpKINode Title="methods" Url="html/e89cadce-338d-43b8-e5b4-8c4bc7602fa7.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Registry(Of T).Files field" Url="html/466aad01-62f8-88ef-5486-fbb75f19ce58.htm" />
+  <HelpKINode Title="Registry(Of T).FindType method" Url="html/a4a95e31-9d4a-287c-0344-996b7df11131.htm" />
+  <HelpKINode Title="Registry(Of T).ID method" Url="html/ff9291e0-ab76-3ae1-635c-7c6b2454ed8c.htm" />
+  <HelpKINode Title="Registry(Of T).IDs field" Url="html/0ef631b1-964f-c24a-6fa3-b3127402c9ac.htm" />
+  <HelpKINode Title="Registry(Of T).REF method" Url="html/30e9b989-f276-5ffc-a344-b02ed16400ab.htm" />
+  <HelpKINode Title="Registry(Of T).Registry constructor" Url="html/3c453708-815f-b763-ee99-168251da7a22.htm" />
+  <HelpKINode Title="Registry(Of T).SetFile method" Url="html/d2bedfe3-b149-710f-a131-7d289b7cca5b.htm" />
+  <HelpKINode Title="Registry(Of T).TOKEN method" Url="html/e101c73b-5ef4-710f-1b36-dc7edd1ddaf8.htm" />
+  <HelpKINode Title="Registry(Of T).TYPE method" Url="html/d570b546-88a3-cdf5-60b6-3e81bc489022.htm" />
+  <HelpKINode Title="Registry(Of T).Types field" Url="html/c85e46a1-f2b2-300d-a965-b112b25a8998.htm" />
+  <HelpKINode Title="Registry.Find method" Url="html/33099079-185f-2060-c0a3-3ed712d0d032.htm" />
+  <HelpKINode Title="Registry.Register method" Url="html/88cd4bca-9229-1204-87b2-fb7e03ebb337.htm" />
+  <HelpKINode Title="Registry.Registry constructor" Url="html/1d6e4fa3-7330-0ead-b1d4-ff2c4537cf6d.htm" />
+  <HelpKINode Title="Registry&lt;T&gt; class">
+    <HelpKINode Title="Registry(T) Class" Url="html/ca0a85a6-3e20-fb90-8099-94699a4e3595.htm" />
+    <HelpKINode Title="about Registry&lt;T&gt; class" Url="html/ca0a85a6-3e20-fb90-8099-94699a4e3595.htm" />
+    <HelpKINode Title="constructor" Url="html/3c453708-815f-b763-ee99-168251da7a22.htm" />
+    <HelpKINode Title="fields" Url="html/dfd430ab-bd10-de92-b93a-9215b2b4853b.htm" />
+    <HelpKINode Title="methods" Url="html/e89cadce-338d-43b8-e5b4-8c4bc7602fa7.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Registry&lt;T&gt;.Files field" Url="html/466aad01-62f8-88ef-5486-fbb75f19ce58.htm" />
+  <HelpKINode Title="Registry&lt;T&gt;.FindType method" Url="html/a4a95e31-9d4a-287c-0344-996b7df11131.htm" />
+  <HelpKINode Title="Registry&lt;T&gt;.ID method" Url="html/ff9291e0-ab76-3ae1-635c-7c6b2454ed8c.htm" />
+  <HelpKINode Title="Registry&lt;T&gt;.IDs field" Url="html/0ef631b1-964f-c24a-6fa3-b3127402c9ac.htm" />
+  <HelpKINode Title="Registry&lt;T&gt;.REF method" Url="html/30e9b989-f276-5ffc-a344-b02ed16400ab.htm" />
+  <HelpKINode Title="Registry&lt;T&gt;.Registry constructor" Url="html/3c453708-815f-b763-ee99-168251da7a22.htm" />
+  <HelpKINode Title="Registry&lt;T&gt;.SetFile method" Url="html/d2bedfe3-b149-710f-a131-7d289b7cca5b.htm" />
+  <HelpKINode Title="Registry&lt;T&gt;.TOKEN method" Url="html/e101c73b-5ef4-710f-1b36-dc7edd1ddaf8.htm" />
+  <HelpKINode Title="Registry&lt;T&gt;.TYPE method" Url="html/d570b546-88a3-cdf5-60b6-3e81bc489022.htm" />
+  <HelpKINode Title="Registry&lt;T&gt;.Types field" Url="html/c85e46a1-f2b2-300d-a965-b112b25a8998.htm" />
+  <HelpKINode Title="RegistryEntry class">
+    <HelpKINode Title="RegistryEntry Class" Url="html/191d6a02-e2d7-5b18-eefc-658416fa0314.htm" />
+    <HelpKINode Title="about RegistryEntry class" Url="html/191d6a02-e2d7-5b18-eefc-658416fa0314.htm" />
+    <HelpKINode Title="constructor" Url="html/51439e9e-23ca-f0c7-4b9a-ebccf69a6415.htm" />
+    <HelpKINode Title="fields" Url="html/81dded08-6ffa-99ab-7392-d3e467e9da88.htm" />
+    <HelpKINode Title="methods" Url="html/f6e81145-4cda-71a1-bd3c-fa62b88b1237.htm" />
+  </HelpKINode>
+  <HelpKINode Title="RegistryEntry.Index field" Url="html/8ff1193a-2124-4183-a804-ad8c1e278d0c.htm" />
+  <HelpKINode Title="RegistryEntry.RegistryEntry constructor" Url="html/51439e9e-23ca-f0c7-4b9a-ebccf69a6415.htm" />
+  <HelpKINode Title="RegistryEntry.Tag field" Url="html/d84622a8-9aad-ea4c-a23b-12839ecee829.htm" />
+  <HelpKINode Title="Request method" Url="html/565f5a22-3214-24a8-c223-eae5d71c004d.htm" />
+  <HelpKINode Title="Reset method" Url="html/268f4085-81ce-a712-5b9d-ef1750a7b7b0.htm" />
+  <HelpKINode Title="Response method" Url="html/c6ba8f29-85c5-89db-0c11-383e50dc756c.htm" />
+  <HelpKINode Title="Right enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
   <HelpKINode Title="RSAKeyPair class">
     <HelpKINode Title="RSAKeyPair Class" Url="html/752529b0-1569-46f1-4756-6f9d37860abc.htm" />
     <HelpKINode Title="about RSAKeyPair class" Url="html/752529b0-1569-46f1-4756-6f9d37860abc.htm" />
@@ -408,8 +1136,68 @@
     <HelpKINode Title="Factory.RSAPublicKey Method " Url="html/4da9aae7-cc60-5482-8cda-0635fb527ae7.htm" />
   </HelpKINode>
   <HelpKINode Title="RSAPublicKey property" Url="html/faf0a3f8-a69c-a3dd-ec67-fb0074c93422.htm" />
+  <HelpKINode Title="Script class">
+    <HelpKINode Title="Script Class" Url="html/979dc3d9-0940-858c-3347-1204c221a4f6.htm" />
+    <HelpKINode Title="about Script class" Url="html/979dc3d9-0940-858c-3347-1204c221a4f6.htm" />
+    <HelpKINode Title="constructor" Url="html/b42628e8-ff82-f582-1555-38f7164cfeed.htm" />
+    <HelpKINode Title="fields" Url="html/e6c75729-81ab-c9ca-771c-3a6d973d4b39.htm" />
+    <HelpKINode Title="methods" Url="html/c83a239e-370d-3adf-5a75-3aca99066267.htm" />
+    <HelpKINode Title="properties" Url="html/10482960-39f6-2166-bbf7-25a22ba70a5f.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Script.AssemblyBuildTime method" Url="html/0a8b0410-4605-231e-4707-a0b3e72f5bfa.htm" />
+  <HelpKINode Title="Script.AssemblyCompany property" Url="html/3826b8c8-3bca-c295-852d-1073225e12d1.htm" />
+  <HelpKINode Title="Script.AssemblyCopyright property" Url="html/a8d6becd-8b28-63d1-dcc2-c4b0abc0a851.htm" />
+  <HelpKINode Title="Script.AssemblyDescription property" Url="html/516e43a7-d50c-b620-cfe4-febfbb34455e.htm" />
+  <HelpKINode Title="Script.AssemblyProduct property" Url="html/60cf0f38-d847-53ce-ff7f-5e3afc1266d9.htm" />
+  <HelpKINode Title="Script.AssemblyTitle property" Url="html/8cc82388-b932-a217-8f98-77cc943af8aa.htm" />
+  <HelpKINode Title="Script.AssemblyVersion property" Url="html/89024445-5b09-4876-4e71-b2d8a7221805.htm" />
+  <HelpKINode Title="Script.Close method" Url="html/e580705a-124e-1017-8f96-24b265bd6508.htm" />
+  <HelpKINode Title="Script.CommentSummary method" Url="html/9765f630-5441-1b88-7f65-9dd1334e75bd.htm" />
+  <HelpKINode Title="Script.EntryAssembly property" Url="html/efe01750-9e05-b125-10c0-67f0ad7d252b.htm" />
+  <HelpKINode Title="Script.GetAssemblyCompany method" Url="html/251f0588-2a15-ebba-ebd0-42a90dbc4d91.htm" />
+  <HelpKINode Title="Script.GetAssemblyCopyright method" Url="html/8eea5c15-a7f8-f66b-d4d3-3b389a0d84e0.htm" />
+  <HelpKINode Title="Script.GetAssemblyDescription method" Url="html/17e88326-f325-6bde-eb9b-36926fb34d2f.htm" />
+  <HelpKINode Title="Script.GetAssemblyProduct method" Url="html/4b1b0b39-603a-2701-29d5-fc43209906de.htm" />
+  <HelpKINode Title="Script.GetAssemblyTitle method" Url="html/05722f1c-c00e-3533-561f-6d4e060be299.htm" />
+  <HelpKINode Title="Script.GetAssemblyVersion method" Url="html/748d8339-0467-eef0-ff20-63431c2c565d.htm" />
+  <HelpKINode Title="Script.LocalizeTime method" Url="html/7c537325-af38-8c06-ee90-8c60296b52fd.htm" />
+  <HelpKINode Title="Script.Platform property" Url="html/adf000fb-36f0-2d06-affa-717614c47b1b.htm" />
+  <HelpKINode Title="Script.PlatformVersion property" Url="html/1c672e49-34a8-d2c5-7fc6-58359b0a433d.htm" />
+  <HelpKINode Title="Script.Script constructor" Url="html/b42628e8-ff82-f582-1555-38f7164cfeed.htm" />
+  <HelpKINode Title="Script.SetTextWriter method" Url="html/90cc662f-3342-6680-48a3-06eb3fc43f81.htm" />
+  <HelpKINode Title="Script._EntryAssembly field" Url="html/08bc02c8-da6e-9739-05f9-a3fee090022b.htm" />
+  <HelpKINode Title="Script._Filename field" Url="html/a3dd073b-9970-bb0f-80cc-6974eafdb379.htm" />
+  <HelpKINode Title="Script._Indent field" Url="html/e021ef49-5a60-97ff-2b9e-c06c4f02127d.htm" />
+  <HelpKINode Title="Script._Output field" Url="html/691fce03-4067-1ce3-5ebb-2a41e0e95ae7.htm" />
+  <HelpKINode Title="Script._TestEntryAssembly field" Url="html/f7240ebe-37e2-1d1e-44de-2ab346963ff4.htm" />
+  <HelpKINode Title="ScriptOutput class">
+    <HelpKINode Title="ScriptOutput Class" Url="html/97da7001-2a4e-f5f3-0037-bd1125d5a42f.htm" />
+    <HelpKINode Title="about ScriptOutput class" Url="html/97da7001-2a4e-f5f3-0037-bd1125d5a42f.htm" />
+    <HelpKINode Title="constructor" Url="html/fc746f93-046e-d0a0-327c-6fa4263f9fa5.htm" />
+    <HelpKINode Title="fields" Url="html/5f963406-7d79-54c5-ec3f-f243ee54300c.htm" />
+    <HelpKINode Title="methods" Url="html/c40baad9-11ab-5a7c-3446-b6f2d625493a.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ScriptOutput.ScriptOutput constructor" Url="html/fc746f93-046e-d0a0-327c-6fa4263f9fa5.htm" />
+  <HelpKINode Title="ScriptOutput._Indent field" Url="html/c6d442b4-c0e7-4b3b-c4e1-b46c6efa4a87.htm" />
+  <HelpKINode Title="ScriptOutput._Output field" Url="html/6a227eaf-e8bf-ccce-61e5-f234369e3d91.htm" />
+  <HelpKINode Title="Separator class">
+    <HelpKINode Title="Separator Class" Url="html/e0794bcd-d687-439d-737f-b301601d0aaf.htm" />
+    <HelpKINode Title="about Separator class" Url="html/e0794bcd-d687-439d-737f-b301601d0aaf.htm" />
+    <HelpKINode Title="constructor" Url="html/3201845d-fa48-f763-4040-001b9ae1a7e5.htm" />
+    <HelpKINode Title="fields" Url="html/bcc80ade-ff58-ad78-06db-8d2fe5f2d441.htm" />
+    <HelpKINode Title="methods" Url="html/6fe84b68-ec0f-2a32-a79a-b7c922b52b4b.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SEPARATOR enumeration member" Url="html/cd9cf2e7-daa3-a509-8e9e-38869b53d5a9.htm" />
+  <HelpKINode Title="Separator.First field" Url="html/db4ee36f-5850-ee2a-73ba-eea922f26146.htm" />
+  <HelpKINode Title="Separator.IsFirst field" Url="html/f93bfca9-5cbe-ba61-9be4-123961c3ede4.htm" />
+  <HelpKINode Title="Separator.Next field" Url="html/53963932-1c11-3b78-4e2f-461e2790d04e.htm" />
+  <HelpKINode Title="Separator.Separator constructor" Url="html/3201845d-fa48-f763-4040-001b9ae1a7e5.htm" />
+  <HelpKINode Title="Separator.ToString method" Url="html/122cf4ee-ecb8-5ce2-e105-b5120739275c.htm" />
+  <HelpKINode Title="SetFile method" Url="html/d2bedfe3-b149-710f-a131-7d289b7cca5b.htm" />
+  <HelpKINode Title="SetTextWriter method" Url="html/90cc662f-3342-6680-48a3-06eb3fc43f81.htm" />
   <HelpKINode Title="Sign method" Url="html/78642505-655d-fae2-9268-5e67a7f878ce.htm" />
   <HelpKINode Title="SignatureProvider property" Url="html/370a3168-0de9-8941-de83-c776751caca3.htm" />
+  <HelpKINode Title="Size method" Url="html/36d098d1-6602-fdad-831c-8d388700f358.htm" />
   <HelpKINode Title="Size property">
     <HelpKINode Title="CryptoProviderEncryptAES.Size Property " Url="html/80ce1521-cb41-d418-ca74-7f2c4936ec99.htm" />
     <HelpKINode Title="CryptoProviderExchangeRSA.Size Property " Url="html/b1914263-9a97-9167-5b20-8c7ab8cbfdcc.htm" />
@@ -420,16 +1208,306 @@
     <HelpKINode Title="CryptoProviderSHA2_512.Size Property " Url="html/7c77afef-ecb3-6c77-2aec-59a487335e2b.htm" />
     <HelpKINode Title="CryptoProviderSignatureRSA.Size Property " Url="html/81194a93-7cc2-607b-7de7-e1a0cf1bc8c3.htm" />
   </HelpKINode>
+  <HelpKINode Title="Slash enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
+  <HelpKINode Title="Source class">
+    <HelpKINode Title="Source Class" Url="html/38bc7acd-c2ed-5709-d8cb-e7a37afb671b.htm" />
+    <HelpKINode Title="about Source class" Url="html/38bc7acd-c2ed-5709-d8cb-e7a37afb671b.htm" />
+    <HelpKINode Title="constructor" Url="html/1d576f58-6103-277f-78e2-41e3c8839183.htm" />
+    <HelpKINode Title="methods" Url="html/4b54745d-f5eb-f62f-04b6-cb39e28d38f5.htm" />
+    <HelpKINode Title="properties" Url="html/30cc1c4f-f3af-76ad-ff0a-dbae0fe5f621.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Source.Name property" Url="html/6fb0562b-ec67-91a7-59e0-16c0982f0557.htm" />
+  <HelpKINode Title="Source.Source constructor" Url="html/1d576f58-6103-277f-78e2-41e3c8839183.htm" />
+  <HelpKINode Title="SSHData class">
+    <HelpKINode Title="SSHData Class" Url="html/2b22ac69-d0ad-3b4b-fd9f-992f4e68849c.htm" />
+    <HelpKINode Title="about SSHData class" Url="html/2b22ac69-d0ad-3b4b-fd9f-992f4e68849c.htm" />
+    <HelpKINode Title="constructor" Url="html/85feb413-21b4-acf9-a477-c1b7f2224fb5.htm" />
+    <HelpKINode Title="methods" Url="html/93dd3c90-e7d2-0b12-267a-85976d31d4a8.htm" />
+    <HelpKINode Title="properties" Url="html/f0233f55-c66e-2455-b772-687b0ea57452.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SSHData field" Url="html/891f89de-a804-e2a0-aa9b-ef30401aac9d.htm" />
+  <HelpKINode Title="SSHData.Decode method" Url="html/eb290ffa-043c-86f6-6bb0-2d9499651f52.htm" />
+  <HelpKINode Title="SSHData.Encode method" Url="html/25bcd6bc-dba9-a68d-da65-9e13569435bd.htm" />
+  <HelpKINode Title="SSHData.SSHData constructor" Url="html/85feb413-21b4-acf9-a477-c1b7f2224fb5.htm" />
+  <HelpKINode Title="SSHData.Tag property" Url="html/9e69dcb7-f9f6-b9e8-aee3-f3d0e9aefd8f.htm" />
+  <HelpKINode Title="SSH_DSS class">
+    <HelpKINode Title="SSH_DSS Class" Url="html/3d53108a-dc57-0933-ee48-3ca6db36f052.htm" />
+    <HelpKINode Title="about SSH_DSS class" Url="html/3d53108a-dc57-0933-ee48-3ca6db36f052.htm" />
+    <HelpKINode Title="constructor" Url="html/a9ca2937-a7ee-58c8-059e-5f23be8809df.htm" />
+    <HelpKINode Title="fields" Url="html/21df7050-9837-936c-3185-cad6e67f28d9.htm" />
+    <HelpKINode Title="methods" Url="html/2e2f4365-b72b-4977-4189-0e2bc06afe2c.htm" />
+    <HelpKINode Title="properties" Url="html/253754b2-d4ec-ee41-1ca6-dc35765be80e.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SSH_DSS.Encode method" Url="html/4c95ce49-29e5-2b1c-3517-aae4a0ae61d0.htm" />
+  <HelpKINode Title="SSH_DSS.G field" Url="html/2d8e15ba-1d7f-20d8-ea3b-29e81ee743f3.htm" />
+  <HelpKINode Title="SSH_DSS.P field" Url="html/cb01c3f5-6420-a7c3-6855-9b2cf8d37e66.htm" />
+  <HelpKINode Title="SSH_DSS.Q field" Url="html/c98df698-4a1e-d497-1e04-6ed26fd990a7.htm" />
+  <HelpKINode Title="SSH_DSS.SSH_DSS constructor" Url="html/a9ca2937-a7ee-58c8-059e-5f23be8809df.htm" />
+  <HelpKINode Title="SSH_DSS.Tag property" Url="html/a7310d8b-6e83-6181-2ac2-3092deec378c.htm" />
+  <HelpKINode Title="SSH_DSS.TagID property" Url="html/5988b824-ca8f-7cc4-e8c7-5086de94ed73.htm" />
+  <HelpKINode Title="SSH_DSS.Y field" Url="html/cf8749d4-4c7a-2d07-4fe1-baf46c26230e.htm" />
+  <HelpKINode Title="SSH_RSA class">
+    <HelpKINode Title="SSH_RSA Class" Url="html/7dcbd726-0cf9-2be5-1baa-19435adbaf3e.htm" />
+    <HelpKINode Title="about SSH_RSA class" Url="html/7dcbd726-0cf9-2be5-1baa-19435adbaf3e.htm" />
+    <HelpKINode Title="constructor" Url="html/5812f104-50fa-7644-b177-9f5dc12df16a.htm" />
+    <HelpKINode Title="fields" Url="html/80694d52-a168-1130-f573-198c7886f48d.htm" />
+    <HelpKINode Title="methods" Url="html/3fd96032-7aa7-e88d-18cb-b8cb5660bd6b.htm" />
+    <HelpKINode Title="properties" Url="html/1a963496-aa29-7c70-f8b4-a34327eff3b0.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SSH_RSA.Encode method" Url="html/e118d94e-b3e0-d18c-cb3b-00c216b32bc8.htm" />
+  <HelpKINode Title="SSH_RSA.Exponent field" Url="html/90c667d7-b32c-f0a3-2e8f-f7a1508b32e7.htm" />
+  <HelpKINode Title="SSH_RSA.Modulus field" Url="html/88c80454-65c7-9063-437e-cc136dd5f0a9.htm" />
+  <HelpKINode Title="SSH_RSA.SSH_RSA constructor" Url="html/5812f104-50fa-7644-b177-9f5dc12df16a.htm" />
+  <HelpKINode Title="SSH_RSA.Tag property" Url="html/3b0fe176-d584-d3d3-b9a1-9894fb3c4bfe.htm" />
+  <HelpKINode Title="SSH_RSA.TagID property" Url="html/a41e4b70-a4fe-c757-1fb6-f3121c821439.htm" />
   <HelpKINode Title="StartDecrypt method" Url="html/6caf7e98-5d6b-c524-e258-555ce5bc81de.htm" />
+  <HelpKINode Title="StartDocument method">
+    <HelpKINode Title="IndentWriter.StartDocument Method " Url="html/4677f39e-b032-6a81-96fd-d43e2e2b51c3.htm" />
+    <HelpKINode Title="StructureWriter.StartDocument Method " Url="html/19c94016-64ff-a194-7ffa-66d5b7592d1c.htm" />
+    <HelpKINode Title="XMLWriter.StartDocument Method " Url="html/b74000e0-fba9-2cd4-dc3b-fd3dde560a97.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Started field" Url="html/ee6c748e-388e-3cc5-f669-7eaf59bc28c8.htm" />
+  <HelpKINode Title="StartElement method">
+    <HelpKINode Title="IndentWriter.StartElement Method " Url="html/a75bc3f6-14b9-9678-a361-202272c33211.htm" />
+    <HelpKINode Title="StructureWriter.StartElement Method " Url="html/1d7a0d53-e3b6-f631-5747-c7a58f1d4d54.htm" />
+    <HelpKINode Title="XMLWriter.StartElement Method " Url="html/ec27b5eb-ab75-3b76-3f51-a23673d5c6aa.htm" />
+  </HelpKINode>
   <HelpKINode Title="StartEncrypt method" Url="html/1303798d-f64b-6ebc-be36-b15c0d39c9f2.htm" />
+  <HelpKINode Title="StartLine method" Url="html/c812db0d-321d-710a-8018-213d2d48f284.htm" />
+  <HelpKINode Title="StartList method">
+    <HelpKINode Title="IndentWriter.StartList Method " Url="html/d8c41183-b0c5-dfdd-9639-a797a26f5937.htm" />
+    <HelpKINode Title="StructureWriter.StartList Method " Url="html/50ace5b2-53d1-61db-1ddf-cea1a5637c18.htm" />
+    <HelpKINode Title="XMLWriter.StartList Method " Url="html/91847630-62fe-c653-ce0b-c11688cd6a5a.htm" />
+  </HelpKINode>
+  <HelpKINode Title="StartOfLine field" Url="html/2afda22d-178c-4252-8a0d-8f78fe54bd28.htm" />
+  <HelpKINode Title="StartTag enumeration member" Url="html/734b7a8e-14bb-27b9-ddd7-afb39439368f.htm" />
+  <HelpKINode Title="Status property" Url="html/afc82f24-1f78-8903-9eff-f34383540603.htm" />
+  <HelpKINode Title="Strict field" Url="html/d28ef65f-689f-5f78-d106-0a7adf8db5b9.htm" />
+  <HelpKINode Title="STRING enumeration member" Url="html/cd9cf2e7-daa3-a509-8e9e-38869b53d5a9.htm" />
+  <HelpKINode Title="String method" Url="html/2c9341ab-7ce3-ae0b-2ae0-cbad3c2f7286.htm" />
+  <HelpKINode Title="StringHTTP method" Url="html/d0276025-a394-6d1f-a677-38354ab1fa84.htm" />
+  <HelpKINode Title="StringJSON method" Url="html/fb16ad28-d0eb-485e-89c1-922a7bef6475.htm" />
+  <HelpKINode Title="StructureWriter class">
+    <HelpKINode Title="StructureWriter Class" Url="html/219a99e5-9abc-f025-0c33-8a710a85ea11.htm" />
+    <HelpKINode Title="about StructureWriter class" Url="html/219a99e5-9abc-f025-0c33-8a710a85ea11.htm" />
+    <HelpKINode Title="constructor" Url="html/7e36adad-b930-790b-3f3b-9686be71571b.htm" />
+    <HelpKINode Title="fields" Url="html/78cfc14b-8657-c64d-2820-6db25be76e4b.htm" />
+    <HelpKINode Title="methods" Url="html/5dc949d8-8ab4-8cde-6617-f21ee7590c43.htm" />
+  </HelpKINode>
+  <HelpKINode Title="StructureWriter.EndDocument method" Url="html/b1f86ca3-b4be-2f25-1f2c-ab9e073e35a0.htm" />
+  <HelpKINode Title="StructureWriter.EndElement method" Url="html/54bd3ece-206f-353e-5bf7-dd927fe4450f.htm" />
+  <HelpKINode Title="StructureWriter.EndList method" Url="html/c9d6e32c-ea29-289a-ad5d-8d93aaa01a35.htm" />
+  <HelpKINode Title="StructureWriter.GetStructureWriter method" Url="html/b073cb22-bce5-b6de-3668-e329a23d8c54.htm" />
+  <HelpKINode Title="StructureWriter.Indent field" Url="html/ca537858-c91b-f756-82d3-6b5bfaa709cc.htm" />
+  <HelpKINode Title="StructureWriter.Level field" Url="html/17176b5d-407e-2876-7304-6a332699a6b3.htm" />
+  <HelpKINode Title="StructureWriter.StartDocument method" Url="html/19c94016-64ff-a194-7ffa-66d5b7592d1c.htm" />
+  <HelpKINode Title="StructureWriter.StartElement method" Url="html/1d7a0d53-e3b6-f631-5747-c7a58f1d4d54.htm" />
+  <HelpKINode Title="StructureWriter.StartLine method" Url="html/c812db0d-321d-710a-8018-213d2d48f284.htm" />
+  <HelpKINode Title="StructureWriter.StartList method" Url="html/50ace5b2-53d1-61db-1ddf-cea1a5637c18.htm" />
+  <HelpKINode Title="StructureWriter.StartOfLine field" Url="html/2afda22d-178c-4252-8a0d-8f78fe54bd28.htm" />
+  <HelpKINode Title="StructureWriter.StructureWriter constructor" Url="html/7e36adad-b930-790b-3f3b-9686be71571b.htm" />
+  <HelpKINode Title="StructureWriter.TextWriter field" Url="html/eb1f1da6-5c47-d7f2-b152-767b99556387.htm" />
+  <HelpKINode Title="StructureWriter.WriteAttribute method" Url="html/90d14b6f-e6e4-b732-c142-e2fe891871c2.htm" />
+  <HelpKINode Title="StructureWriter.WriteId method" Url="html/f54b9041-ffd8-3e31-c148-46a87fe82502.htm" />
+  <HelpKINode Title="Tag enumeration member" Url="html/71f7f293-6f77-5610-5015-6883e427f253.htm" />
+  <HelpKINode Title="Tag field">
+    <HelpKINode Title="RegistryEntry.Tag Field" Url="html/d84622a8-9aad-ea4c-a23b-12839ecee829.htm" />
+    <HelpKINode Title="TaggedData.Tag Field" Url="html/d5d3a4d7-6845-3662-d005-309c711636b7.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Tag method">
+    <HelpKINode Title="Type.Tag Method " Url="html/c01199e3-906f-6e4a-33ef-1405cfa185ee.htm" />
+    <HelpKINode Title="_Flag.Tag Method " Url="html/442fb6ac-df5a-8323-0f22-750328a06545.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Tag property">
+    <HelpKINode Title="SSHData.Tag Property " Url="html/9e69dcb7-f9f6-b9e8-aee3-f3d0e9aefd8f.htm" />
+    <HelpKINode Title="SSH_DSS.Tag Property " Url="html/a7310d8b-6e83-6181-2ac2-3092deec378c.htm" />
+    <HelpKINode Title="SSH_RSA.Tag Property " Url="html/3b0fe176-d584-d3d3-b9a1-9894fb3c4bfe.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Tag1 method" Url="html/3ae0173d-9d09-af68-d5f5-46b5a875c951.htm" />
+  <HelpKINode Title="Tag2 method" Url="html/5773de40-65c5-b9d7-2bfe-da11f15e183d.htm" />
+  <HelpKINode Title="TagEnd enumeration member" Url="html/734b7a8e-14bb-27b9-ddd7-afb39439368f.htm" />
+  <HelpKINode Title="TagEndEnd enumeration member" Url="html/734b7a8e-14bb-27b9-ddd7-afb39439368f.htm" />
+  <HelpKINode Title="TaggedData class">
+    <HelpKINode Title="TaggedData Class" Url="html/95db1085-aad5-a5d8-43c6-7f772ccb8436.htm" />
+    <HelpKINode Title="about TaggedData class" Url="html/95db1085-aad5-a5d8-43c6-7f772ccb8436.htm" />
+    <HelpKINode Title="constructor" Url="html/906c1e6d-2b7b-ca8f-6a84-77a1bdb85916.htm" />
+    <HelpKINode Title="fields" Url="html/134aa88f-645c-ed8f-f893-265e13febfb5.htm" />
+    <HelpKINode Title="methods" Url="html/98efc1c3-dba3-8eb0-ac51-722677084f12.htm" />
+  </HelpKINode>
+  <HelpKINode Title="TaggedData.Count field" Url="html/21b4596e-1b38-c05f-9287-1531e4afdb48.htm" />
+  <HelpKINode Title="TaggedData.Data field" Url="html/c89e685b-876a-3bbd-0de6-b982297677f6.htm" />
+  <HelpKINode Title="TaggedData.Strict field" Url="html/d28ef65f-689f-5f78-d106-0a7adf8db5b9.htm" />
+  <HelpKINode Title="TaggedData.Tag field" Url="html/d5d3a4d7-6845-3662-d005-309c711636b7.htm" />
+  <HelpKINode Title="TaggedData.TaggedData constructor" Url="html/906c1e6d-2b7b-ca8f-6a84-77a1bdb85916.htm" />
+  <HelpKINode Title="TagID property">
+    <HelpKINode Title="SSH_DSS.TagID Property " Url="html/5988b824-ca8f-7cc4-e8c7-5086de94ed73.htm" />
+    <HelpKINode Title="SSH_RSA.TagID Property " Url="html/a41e4b70-a4fe-c757-1fb6-f3121c821439.htm" />
+  </HelpKINode>
+  <HelpKINode Title="TagStart enumeration member" Url="html/734b7a8e-14bb-27b9-ddd7-afb39439368f.htm" />
+  <HelpKINode Title="TagStartBegin enumeration member" Url="html/734b7a8e-14bb-27b9-ddd7-afb39439368f.htm" />
+  <HelpKINode Title="TagText field" Url="html/17f29fdb-c3dd-23ea-89f7-0e2c764e9123.htm" />
+  <HelpKINode Title="Target property" Url="html/7dfd3320-a470-3de4-2e0c-8b79ff79fba0.htm" />
   <HelpKINode Title="TBSCertificate method" Url="html/0e8053b2-ee63-2364-6039-1345b0b168a4.htm" />
+  <HelpKINode Title="TEXT enumeration member" Url="html/cd9cf2e7-daa3-a509-8e9e-38869b53d5a9.htm" />
+  <HelpKINode Title="Text field" Url="html/6adda8a8-8838-3eba-898b-1264f9e5b39b.htm" />
+  <HelpKINode Title="TextWriter field" Url="html/eb1f1da6-5c47-d7f2-b152-767b99556387.htm" />
+  <HelpKINode Title="Throw field">
+    <HelpKINode Title="KeyFileException.Throw Field" Url="html/caf0da03-a1d2-7a29-29bf-c6b2cd9206d0.htm" />
+    <HelpKINode Title="NoProviderSpecified.Throw Field" Url="html/5fa32061-b99d-74eb-7ae1-ebb3ba5469cd.htm" />
+    <HelpKINode Title="ParseError.Throw Field" Url="html/407edcb8-1fce-15d9-19c7-aa9600571fc8.htm" />
+    <HelpKINode Title="PrivateKeyNotAvailable.Throw Field" Url="html/3582cefa-556b-3dd4-df6e-a684189274d3.htm" />
+    <HelpKINode Title="UnexpectedEnd.Throw Field" Url="html/a886a84b-b3d0-30d3-448d-a3c9ce670fe8.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Time property" Url="html/77cef7ae-579d-8444-81db-4c4027402fb8.htm" />
+  <HelpKINode Title="TOKEN method" Url="html/e101c73b-5ef4-710f-1b36-dc7edd1ddaf8.htm" />
+  <HelpKINode Title="TOKEN(Of T) class">
+    <HelpKINode Title="TOKEN(T) Class" Url="html/ce09e7c0-56a0-9c76-af77-cd8c0062389d.htm" />
+    <HelpKINode Title="about TOKEN(Of T) class" Url="html/ce09e7c0-56a0-9c76-af77-cd8c0062389d.htm" />
+    <HelpKINode Title="constructor" Url="html/ad5ff5d0-ae63-26ca-a3d3-5987851f7a56.htm" />
+    <HelpKINode Title="fields" Url="html/a97270c8-c2c9-fd9b-d7df-456d18596d26.htm" />
+    <HelpKINode Title="methods" Url="html/e5fbb4e3-7750-5386-6bd8-8556663d78bd.htm" />
+    <HelpKINode Title="properties" Url="html/f2840cfe-95ab-3e13-6b66-5a05d3ce59c8.htm" />
+  </HelpKINode>
+  <HelpKINode Title="TOKEN(Of T).TOKEN constructor" Url="html/ad5ff5d0-ae63-26ca-a3d3-5987851f7a56.htm" />
+  <HelpKINode Title="TOKEN(Of T).ToString method" Url="html/8fe673c9-52e7-2718-8472-134e5794432a.htm" />
+  <HelpKINode Title="TOKEN&lt;T&gt; class">
+    <HelpKINode Title="TOKEN(T) Class" Url="html/ce09e7c0-56a0-9c76-af77-cd8c0062389d.htm" />
+    <HelpKINode Title="about TOKEN&lt;T&gt; class" Url="html/ce09e7c0-56a0-9c76-af77-cd8c0062389d.htm" />
+    <HelpKINode Title="constructor" Url="html/ad5ff5d0-ae63-26ca-a3d3-5987851f7a56.htm" />
+    <HelpKINode Title="fields" Url="html/a97270c8-c2c9-fd9b-d7df-456d18596d26.htm" />
+    <HelpKINode Title="methods" Url="html/e5fbb4e3-7750-5386-6bd8-8556663d78bd.htm" />
+    <HelpKINode Title="properties" Url="html/f2840cfe-95ab-3e13-6b66-5a05d3ce59c8.htm" />
+  </HelpKINode>
+  <HelpKINode Title="TOKEN&lt;T&gt;.TOKEN constructor" Url="html/ad5ff5d0-ae63-26ca-a3d3-5987851f7a56.htm" />
+  <HelpKINode Title="TOKEN&lt;T&gt;.ToString method" Url="html/8fe673c9-52e7-2718-8472-134e5794432a.htm" />
+  <HelpKINode Title="TokenType enumeration" Url="html/cd9cf2e7-daa3-a509-8e9e-38869b53d5a9.htm" />
+  <HelpKINode Title="ToPEM method" Url="html/99064017-a846-6b1c-dae8-87088b404af8.htm" />
+  <HelpKINode Title="ToString method">
+    <HelpKINode Title="ID(T).ToString Method " Url="html/34907310-126e-3fc9-d4db-c2e7609d5fcb.htm" />
+    <HelpKINode Title="Position.ToString Method " Url="html/9c8b73d8-eff9-3288-964c-0f18beadf5a9.htm" />
+    <HelpKINode Title="REF(T).ToString Method " Url="html/b29d7f0d-cafb-745e-63d1-90fa92290006.htm" />
+    <HelpKINode Title="Separator.ToString Method " Url="html/122cf4ee-ecb8-5ce2-e105-b5120739275c.htm" />
+    <HelpKINode Title="TOKEN(T).ToString Method " Url="html/8fe673c9-52e7-2718-8472-134e5794432a.htm" />
+    <HelpKINode Title="Type.ToString Method " Url="html/70c103b9-9a44-3233-168e-be7b022e55fc.htm" />
+    <HelpKINode Title="_Flag.ToString Method " Url="html/148b97df-a9ea-76c4-5077-d33548924479.htm" />
+  </HelpKINode>
+  <HelpKINode Title="TraceDictionary class">
+    <HelpKINode Title="TraceDictionary Class" Url="html/ab2ea0c3-6ace-fda6-242b-67dedfeb0808.htm" />
+    <HelpKINode Title="about TraceDictionary class" Url="html/ab2ea0c3-6ace-fda6-242b-67dedfeb0808.htm" />
+    <HelpKINode Title="constructor" Url="html/be7b372c-1508-50c3-b6f3-3f02a05858db.htm" />
+    <HelpKINode Title="fields" Url="html/ae161fdf-2a55-ffe2-927f-0369fa362df4.htm" />
+    <HelpKINode Title="methods" Url="html/d0d036cd-6d66-0c4b-8adf-8751779141e1.htm" />
+    <HelpKINode Title="properties" Url="html/28dabbff-2c8f-b3ea-3d04-712d1448aec4.htm" />
+  </HelpKINode>
+  <HelpKINode Title="TraceDictionary property" Url="html/221c16e7-e305-6033-4fbd-771431473c10.htm" />
+  <HelpKINode Title="TraceDictionary.Current property" Url="html/c8c8ba8f-03e1-5a5d-2358-ba4bb810c7b2.htm" />
+  <HelpKINode Title="TraceDictionary.Get method" Url="html/0557c384-8d93-6fd9-aa21-02ec6f42ce7d.htm" />
+  <HelpKINode Title="TraceDictionary.HostName property" Url="html/7593fe5f-3620-e644-e8e4-6372adfc20ac.htm" />
+  <HelpKINode Title="TraceDictionary.Label method" Url="html/aa5d1b30-74d8-5ef6-b4fe-0a165abe6171.htm" />
+  <HelpKINode Title="TraceDictionary.Level property" Url="html/50caa365-c15d-a559-b434-c3bd9171b79e.htm" />
+  <HelpKINode Title="TraceDictionary.Request method" Url="html/565f5a22-3214-24a8-c223-eae5d71c004d.htm" />
+  <HelpKINode Title="TraceDictionary.Response method" Url="html/c6ba8f29-85c5-89db-0c11-383e50dc756c.htm" />
+  <HelpKINode Title="TraceDictionary.TraceDictionary constructor" Url="html/be7b372c-1508-50c3-b6f3-3f02a05858db.htm" />
+  <HelpKINode Title="TraceDictionary.Traces field" Url="html/b6a2477f-d97f-19a7-8192-b582293a612a.htm" />
+  <HelpKINode Title="TraceDictionary.URI property" Url="html/083f9036-8ade-72e3-66e3-6ecf64c07ed9.htm" />
+  <HelpKINode Title="TraceMessage class">
+    <HelpKINode Title="TraceMessage Class" Url="html/40506058-7ba9-5363-08f5-e6cd8df6d878.htm" />
+    <HelpKINode Title="about TraceMessage class" Url="html/40506058-7ba9-5363-08f5-e6cd8df6d878.htm" />
+    <HelpKINode Title="constructor" Url="html/1a137817-8c24-05d2-2e0b-098958957f26.htm" />
+    <HelpKINode Title="methods" Url="html/b25d5122-a151-5737-8ec7-409e559ff143.htm" />
+    <HelpKINode Title="properties" Url="html/8fad2c59-f2f7-ec19-e3e5-61142d1577b4.htm" />
+  </HelpKINode>
+  <HelpKINode Title="TraceMessage.IsRequest property" Url="html/f0c51a0a-e1db-d8f3-ac04-38bc0d295d93.htm" />
+  <HelpKINode Title="TraceMessage.Payload property" Url="html/a3a3685a-477d-df41-a763-43da8ae2b5f0.htm" />
+  <HelpKINode Title="TraceMessage.Status property" Url="html/afc82f24-1f78-8903-9eff-f34383540603.htm" />
+  <HelpKINode Title="TraceMessage.String method" Url="html/2c9341ab-7ce3-ae0b-2ae0-cbad3c2f7286.htm" />
+  <HelpKINode Title="TraceMessage.StringHTTP method" Url="html/d0276025-a394-6d1f-a677-38354ab1fa84.htm" />
+  <HelpKINode Title="TraceMessage.StringJSON method" Url="html/fb16ad28-d0eb-485e-89c1-922a7bef6475.htm" />
+  <HelpKINode Title="TraceMessage.Time property" Url="html/77cef7ae-579d-8444-81db-4c4027402fb8.htm" />
+  <HelpKINode Title="TraceMessage.TraceMessage constructor" Url="html/1a137817-8c24-05d2-2e0b-098958957f26.htm" />
+  <HelpKINode Title="TracePoint class">
+    <HelpKINode Title="TracePoint Class" Url="html/edfafc6a-60fc-8a01-0f2d-0ff978d4848c.htm" />
+    <HelpKINode Title="about TracePoint class" Url="html/edfafc6a-60fc-8a01-0f2d-0ff978d4848c.htm" />
+    <HelpKINode Title="constructor" Url="html/e7ffa117-c634-74d3-d051-2cd201049426.htm" />
+    <HelpKINode Title="methods" Url="html/1d9ee3d9-61c1-b87a-667e-478efc21892c.htm" />
+    <HelpKINode Title="properties" Url="html/b843883d-65ce-a1aa-a336-75f3944f437f.htm" />
+  </HelpKINode>
+  <HelpKINode Title="TracePoint.Level property" Url="html/dd491b66-35e4-b7db-31ca-8fc93c8c7b3c.htm" />
+  <HelpKINode Title="TracePoint.Messages property" Url="html/8e0f769f-fffc-ddd1-df08-e4a0870e0eff.htm" />
+  <HelpKINode Title="TracePoint.TraceDictionary property" Url="html/221c16e7-e305-6033-4fbd-771431473c10.htm" />
+  <HelpKINode Title="TracePoint.TracePoint constructor" Url="html/e7ffa117-c634-74d3-d051-2cd201049426.htm" />
+  <HelpKINode Title="Traces field" Url="html/b6a2477f-d97f-19a7-8192-b582293a612a.htm" />
+  <HelpKINode Title="Traces property" Url="html/ec9ba4e4-3c0b-c437-3d9d-fedcd4be1c7c.htm" />
   <HelpKINode Title="TransformFinal method">
     <HelpKINode Title="CryptoProviderAuthentication.TransformFinal Method " Url="html/16f2a2d8-a529-559d-45fd-c2c10f2d6544.htm" />
     <HelpKINode Title="CryptoProviderDigest.TransformFinal Method " Url="html/cb40dedc-05d4-51f6-b3fb-37e72122dd23.htm" />
   </HelpKINode>
+  <HelpKINode Title="Type class">
+    <HelpKINode Title="Type Class" Url="html/96aafa42-cd89-88f8-6277-27cade12e643.htm" />
+    <HelpKINode Title="about Type class" Url="html/96aafa42-cd89-88f8-6277-27cade12e643.htm" />
+    <HelpKINode Title="constructor" Url="html/f3743c8a-4fc2-a9d1-498d-4f4fb7d41e25.htm" />
+    <HelpKINode Title="fields" Url="html/6698435a-cbf7-8057-3b55-c264954828be.htm" />
+    <HelpKINode Title="methods" Url="html/36949f33-c49e-57a5-ec5d-169e60ff24c2.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Type field" Url="html/750d16ae-255b-3ec5-7584-6177d7a95210.htm" />
+  <HelpKINode Title="TYPE method" Url="html/d570b546-88a3-cdf5-60b6-3e81bc489022.htm" />
+  <HelpKINode Title="TYPE(Of T) class">
+    <HelpKINode Title="TYPE(T) Class" Url="html/a97a08ce-35aa-2ee3-9b3b-1d5acdd9a2fd.htm" />
+    <HelpKINode Title="about TYPE(Of T) class" Url="html/a97a08ce-35aa-2ee3-9b3b-1d5acdd9a2fd.htm" />
+    <HelpKINode Title="constructor" Url="html/27aadb9f-f91a-af5d-3f51-df79d15654b1.htm" />
+    <HelpKINode Title="fields" Url="html/9fffb48c-8f7f-875a-f9f8-bcf3035e680b.htm" />
+    <HelpKINode Title="methods" Url="html/94e16c52-47b4-e0c9-0018-072e2377cd80.htm" />
+  </HelpKINode>
+  <HelpKINode Title="TYPE(Of T).IDs field" Url="html/2ffd1a89-ed71-bc27-d4ac-cf8308f4fa1c.htm" />
+  <HelpKINode Title="TYPE(Of T).Label field" Url="html/4577a40f-0ba5-63ca-078a-f824724e8e2f.htm" />
+  <HelpKINode Title="TYPE(Of T).TYPE constructor" Url="html/27aadb9f-f91a-af5d-3f51-df79d15654b1.htm" />
+  <HelpKINode Title="Type.Default method" Url="html/264e7650-783f-b048-041e-1ca303eaf2c1.htm" />
+  <HelpKINode Title="Type.Parameter method" Url="html/86fc73b5-fdee-10fd-5c20-0a32ed86260f.htm" />
+  <HelpKINode Title="Type.Register method" Url="html/301e3702-c955-32bc-47ea-47edf88d2413.htm" />
+  <HelpKINode Title="Type.Tag method" Url="html/c01199e3-906f-6e4a-33ef-1405cfa185ee.htm" />
+  <HelpKINode Title="Type.TagText field" Url="html/17f29fdb-c3dd-23ea-89f7-0e2c764e9123.htm" />
+  <HelpKINode Title="Type.Text field" Url="html/6adda8a8-8838-3eba-898b-1264f9e5b39b.htm" />
+  <HelpKINode Title="Type.ToString method" Url="html/70c103b9-9a44-3233-168e-be7b022e55fc.htm" />
+  <HelpKINode Title="Type.Type constructor" Url="html/f3743c8a-4fc2-a9d1-498d-4f4fb7d41e25.htm" />
+  <HelpKINode Title="Type.Usage method" Url="html/d3a7dfd7-a111-fb2a-3c34-9e8f809cb455.htm" />
+  <HelpKINode Title="TYPE&lt;T&gt; class">
+    <HelpKINode Title="TYPE(T) Class" Url="html/a97a08ce-35aa-2ee3-9b3b-1d5acdd9a2fd.htm" />
+    <HelpKINode Title="about TYPE&lt;T&gt; class" Url="html/a97a08ce-35aa-2ee3-9b3b-1d5acdd9a2fd.htm" />
+    <HelpKINode Title="constructor" Url="html/27aadb9f-f91a-af5d-3f51-df79d15654b1.htm" />
+    <HelpKINode Title="fields" Url="html/9fffb48c-8f7f-875a-f9f8-bcf3035e680b.htm" />
+    <HelpKINode Title="methods" Url="html/94e16c52-47b4-e0c9-0018-072e2377cd80.htm" />
+  </HelpKINode>
+  <HelpKINode Title="TYPE&lt;T&gt;.IDs field" Url="html/2ffd1a89-ed71-bc27-d4ac-cf8308f4fa1c.htm" />
+  <HelpKINode Title="TYPE&lt;T&gt;.Label field" Url="html/4577a40f-0ba5-63ca-078a-f824724e8e2f.htm" />
+  <HelpKINode Title="TYPE&lt;T&gt;.TYPE constructor" Url="html/27aadb9f-f91a-af5d-3f51-df79d15654b1.htm" />
+  <HelpKINode Title="Types field" Url="html/c85e46a1-f2b2-300d-a965-b112b25a8998.htm" />
   <HelpKINode Title="UDF property">
     <HelpKINode Title="CryptoProviderExchangeRSA.UDF Property " Url="html/7969e0f6-a9a7-b73f-4cce-bd248d4d9ed7.htm" />
     <HelpKINode Title="CryptoProviderSignatureRSA.UDF Property " Url="html/a1b7894d-87b2-8632-d25f-f09b2130baf1.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Underscore enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
+  <HelpKINode Title="UnexpectedEnd class">
+    <HelpKINode Title="UnexpectedEnd Class" Url="html/7efc9521-196f-847a-1211-387f9c7c9d21.htm" />
+    <HelpKINode Title="about UnexpectedEnd class" Url="html/7efc9521-196f-847a-1211-387f9c7c9d21.htm" />
+    <HelpKINode Title="constructor" Url="html/83adcfec-7098-be25-e273-d2d4e15382c3.htm" />
+    <HelpKINode Title="events" Url="html/d11e50b7-7c40-5bea-abba-ad42d91a65ff.htm" />
+    <HelpKINode Title="fields" Url="html/cca468d9-f7d0-1db2-a398-1feefb39cbd2.htm" />
+    <HelpKINode Title="methods" Url="html/5776128e-6e9f-532d-c8af-0c8becf51b29.htm" />
+    <HelpKINode Title="properties" Url="html/47ca26ce-801b-86a3-5002-3433f477282b.htm" />
+  </HelpKINode>
+  <HelpKINode Title="UnexpectedEnd.Throw field" Url="html/a886a84b-b3d0-30d3-448d-a3c9ce670fe8.htm" />
+  <HelpKINode Title="UnexpectedEnd.UnexpectedEnd constructor" Url="html/83adcfec-7098-be25-e273-d2d4e15382c3.htm" />
+  <HelpKINode Title="Upper enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
+  <HelpKINode Title="UpToDate method" Url="html/32542093-8301-b2ea-3751-bedbefed19a9.htm" />
+  <HelpKINode Title="URI property" Url="html/083f9036-8ade-72e3-66e3-6ecf64c07ed9.htm" />
+  <HelpKINode Title="Usage method">
+    <HelpKINode Title="Type.Usage Method " Url="html/d3a7dfd7-a111-fb2a-3c34-9e8f809cb455.htm" />
+    <HelpKINode Title="_Flag.Usage Method " Url="html/6eefbb49-ca0d-e1cd-0ad3-fa5fe047cc00.htm" />
+  </HelpKINode>
+  <HelpKINode Title="UserData field" Url="html/5232a9cb-d3d7-ae18-8b13-4c5a8ee75fbc.htm" />
+  <HelpKINode Title="Value property">
+    <HelpKINode Title="_File.Value Property " Url="html/554ac1ea-85f5-d95c-8a2b-05c22991d323.htm" />
+    <HelpKINode Title="_Flag.Value Property " Url="html/c63eed53-c9fd-df11-aea1-b1857406ee15.htm" />
   </HelpKINode>
   <HelpKINode Title="VerificationProvider property" Url="html/147bd1a1-2832-2fd0-e391-07f859db0ea6.htm" />
   <HelpKINode Title="Verify method" Url="html/77bdf890-bad5-b431-0efe-cc0ec6ea47c9.htm" />
@@ -438,4 +1516,73 @@
     <HelpKINode Title="history" Url="html/60b7b2a4-207f-4df1-8a50-1193c952af17.htm" />
   </HelpKINode>
   <HelpKINode Title="Welcome" Url="html/573692b2-c9fb-40d7-934a-081eb96ad03c.htm" />
+  <HelpKINode Title="WhiteSpace enumeration member" Url="html/c442c4f0-ca83-500c-2314-09cc756cee35.htm" />
+  <HelpKINode Title="WriteAttribute method">
+    <HelpKINode Title="IndentWriter.WriteAttribute Method " Url="html/7f53ffe1-5670-af85-f47d-48ddc82d2967.htm" />
+    <HelpKINode Title="StructureWriter.WriteAttribute Method " Url="html/90d14b6f-e6e4-b732-c142-e2fe891871c2.htm" />
+    <HelpKINode Title="XMLWriter.WriteAttribute Method " Url="html/3c4bc1f3-cd02-09b6-e715-0fa74efeec78.htm" />
+  </HelpKINode>
+  <HelpKINode Title="WriteId method">
+    <HelpKINode Title="IndentWriter.WriteId Method " Url="html/bc7c1b1a-7b6d-a5ec-9d8f-c6499e572542.htm" />
+    <HelpKINode Title="StructureWriter.WriteId Method " Url="html/f54b9041-ffd8-3e31-c148-46a87fe82502.htm" />
+    <HelpKINode Title="XMLWriter.WriteId Method " Url="html/ae536ca4-cd63-6b39-91ce-5726fd095e4b.htm" />
+  </HelpKINode>
+  <HelpKINode Title="XML enumeration member" Url="html/56d2eb2f-b3d9-8381-3608-44bd9f8aaa73.htm" />
+  <HelpKINode Title="XMLWriter class">
+    <HelpKINode Title="XMLWriter Class" Url="html/2fda85d2-1461-0e75-b953-013eae7c262c.htm" />
+    <HelpKINode Title="about XMLWriter class" Url="html/2fda85d2-1461-0e75-b953-013eae7c262c.htm" />
+    <HelpKINode Title="constructor" Url="html/a64c0aac-b2f1-c0f4-faa2-3bd8e054074d.htm" />
+    <HelpKINode Title="fields" Url="html/7603f5fc-f9d2-4fd1-31e3-a84532b6a5f2.htm" />
+    <HelpKINode Title="methods" Url="html/a3aae699-76b7-84c5-98a6-9c6b4d2ce588.htm" />
+  </HelpKINode>
+  <HelpKINode Title="XMLWriter.EndDocument method" Url="html/4497dcd6-b759-c19c-bc4b-9698aaa8a0bf.htm" />
+  <HelpKINode Title="XMLWriter.EndElement method" Url="html/0803fdfb-e629-bbcd-6ef7-63ce3cba946b.htm" />
+  <HelpKINode Title="XMLWriter.EndList method" Url="html/0024c684-8ef6-3ebf-b29d-f55f7143448d.htm" />
+  <HelpKINode Title="XMLWriter.StartDocument method" Url="html/b74000e0-fba9-2cd4-dc3b-fd3dde560a97.htm" />
+  <HelpKINode Title="XMLWriter.StartElement method" Url="html/ec27b5eb-ab75-3b76-3f51-a23673d5c6aa.htm" />
+  <HelpKINode Title="XMLWriter.StartList method" Url="html/91847630-62fe-c653-ce0b-c11688cd6a5a.htm" />
+  <HelpKINode Title="XMLWriter.WriteAttribute method" Url="html/3c4bc1f3-cd02-09b6-e715-0fa74efeec78.htm" />
+  <HelpKINode Title="XMLWriter.WriteId method" Url="html/ae536ca4-cd63-6b39-91ce-5726fd095e4b.htm" />
+  <HelpKINode Title="XMLWriter.XMLWriter constructor" Url="html/a64c0aac-b2f1-c0f4-faa2-3bd8e054074d.htm" />
+  <HelpKINode Title="Y field" Url="html/cf8749d4-4c7a-2d07-4fe1-baf46c26230e.htm" />
+  <HelpKINode Title="_EntryAssembly field" Url="html/08bc02c8-da6e-9739-05f9-a3fee090022b.htm" />
+  <HelpKINode Title="_File class">
+    <HelpKINode Title="_File Class" Url="html/65c9729b-aca3-4677-513d-99866f56a1b8.htm" />
+    <HelpKINode Title="about _File class" Url="html/65c9729b-aca3-4677-513d-99866f56a1b8.htm" />
+    <HelpKINode Title="constructor" Url="html/af2a101c-bce1-1012-3a34-f14ef818fcda.htm" />
+    <HelpKINode Title="fields" Url="html/f8e5d379-eec9-eb32-e53e-6eb5ef100b27.htm" />
+    <HelpKINode Title="methods" Url="html/c052b38c-2565-730c-5dcb-a59717f492a8.htm" />
+    <HelpKINode Title="properties" Url="html/08a4d520-b8ed-d8df-2883-f922d9a43a5d.htm" />
+  </HelpKINode>
+  <HelpKINode Title="_File.Default method" Url="html/19c4724d-2e76-72a7-52d0-a8ca323a5063.htm" />
+  <HelpKINode Title="_File.DefaultFile method" Url="html/446282c6-885d-e288-514c-2ffb72b92087.htm" />
+  <HelpKINode Title="_File.Extension field" Url="html/09144459-702c-b103-8a7a-58cb65cf3669.htm" />
+  <HelpKINode Title="_File.Value property" Url="html/554ac1ea-85f5-d95c-8a2b-05c22991d323.htm" />
+  <HelpKINode Title="_File._File constructor" Url="html/af2a101c-bce1-1012-3a34-f14ef818fcda.htm" />
+  <HelpKINode Title="_Filename field" Url="html/a3dd073b-9970-bb0f-80cc-6974eafdb379.htm" />
+  <HelpKINode Title="_Flag class">
+    <HelpKINode Title="_Flag Class" Url="html/56a5a49a-f864-0f0f-d3b2-4e21e7a8470f.htm" />
+    <HelpKINode Title="about _Flag class" Url="html/56a5a49a-f864-0f0f-d3b2-4e21e7a8470f.htm" />
+    <HelpKINode Title="constructor" Url="html/8ab2409c-5e16-1093-3103-8962d34de5dd.htm" />
+    <HelpKINode Title="fields" Url="html/41dd11e3-ea6a-764a-81b2-8732d4cf7d69.htm" />
+    <HelpKINode Title="methods" Url="html/ee0a7527-0bf8-132f-0160-867c0dcd36bf.htm" />
+    <HelpKINode Title="properties" Url="html/e8f77991-87bb-ba2d-40f9-fb3c3a7aecdc.htm" />
+  </HelpKINode>
+  <HelpKINode Title="_Flag.IsSet field" Url="html/eb0c3d2d-fb7e-10d2-9c33-0e8c3ee9e44c.htm" />
+  <HelpKINode Title="_Flag.Parameter method" Url="html/80f3d851-9bef-41fc-e928-84ee7c456312.htm" />
+  <HelpKINode Title="_Flag.Register method" Url="html/c06a63d4-babf-4b32-64f7-a71ddb909cd3.htm" />
+  <HelpKINode Title="_Flag.Tag method" Url="html/442fb6ac-df5a-8323-0f22-750328a06545.htm" />
+  <HelpKINode Title="_Flag.ToString method" Url="html/148b97df-a9ea-76c4-5077-d33548924479.htm" />
+  <HelpKINode Title="_Flag.Usage method" Url="html/6eefbb49-ca0d-e1cd-0ad3-fa5fe047cc00.htm" />
+  <HelpKINode Title="_Flag.Value property" Url="html/c63eed53-c9fd-df11-aea1-b1857406ee15.htm" />
+  <HelpKINode Title="_Flag._Flag constructor" Url="html/8ab2409c-5e16-1093-3103-8962d34de5dd.htm" />
+  <HelpKINode Title="_Indent field">
+    <HelpKINode Title="Script._Indent Field" Url="html/e021ef49-5a60-97ff-2b9e-c06c4f02127d.htm" />
+    <HelpKINode Title="ScriptOutput._Indent Field" Url="html/c6d442b4-c0e7-4b3b-c4e1-b46c6efa4a87.htm" />
+  </HelpKINode>
+  <HelpKINode Title="_Output field">
+    <HelpKINode Title="Script._Output Field" Url="html/691fce03-4067-1ce3-5ebb-2a41e0e95ae7.htm" />
+    <HelpKINode Title="ScriptOutput._Output Field" Url="html/6a227eaf-e8bf-ccce-61e5-f234369e3d91.htm" />
+  </HelpKINode>
+  <HelpKINode Title="_TestEntryAssembly field" Url="html/f7240ebe-37e2-1d1e-44de-2ab346963ff4.htm" />
 </HelpKI>

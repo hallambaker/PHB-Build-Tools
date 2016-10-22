@@ -162,6 +162,7 @@ namespace Goedel.Cryptography.Framework {
         /// Generate a new RSA Key Pair with the Key size specified when the 
         /// instance was created.
         /// </summary>
+        /// <param name="KeySecurity">The key security mode</param>
         public override void Generate(KeySecurity KeySecurity) {
         _RSAKeyPair = new RSAKeyPair(KeySize);
         _RSAKeyPair.Persist(KeySecurity);
@@ -227,7 +228,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// RSA provider that defaults to the PKCS#1.5 padding. For compatibility use only.
         /// </summary>
-        /// <param name="KeySize"></param>
+        /// <param name="KeySize">The key size in bits. Note that implementations are only
+        /// required to support 2048 and 4096 bits.</param>
         public CryptoProviderExchangeRSAPKCS(int KeySize) : base(KeySize) {
             this.OAEP = false;
             }

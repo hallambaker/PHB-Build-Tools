@@ -17,7 +17,7 @@ namespace Goedel.Registry {
         /// <summary>
         /// Constructor to write to the specified output.
         /// </summary>
-        /// <param name="Output"></param>
+        /// <param name="Output">The output stream</param>
         public ScriptOutput(TextWriter Output) {
             this._Output = Output;
             }

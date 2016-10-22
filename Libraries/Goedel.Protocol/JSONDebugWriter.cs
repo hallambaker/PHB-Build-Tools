@@ -51,6 +51,7 @@ namespace Goedel.Protocol {
         /// Create a new JSON Writer using the specified output buffer. If the buffer has
         /// an output stream defined, text will be written to the stream.
         /// </summary>
+        /// <param name="Output">The output stream.</param>
         public JSONDebugWriter(StreamBuffer Output) {
             this.Output = Output;
             }

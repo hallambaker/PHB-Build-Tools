@@ -12,11 +12,11 @@ namespace Goedel.Registry {
     /// Script output class
     /// </summary>
     public partial class Script {
-        /// <summary></summary>
+        /// <summary>The script output writer</summary>
 		public TextWriter _Output = null;
-        /// <summary></summary>
+        /// <summary>The current indent string, this is prefixed to each line.</summary>
         public string _Indent = "";
-        /// <summary></summary>
+        /// <summary>The output filename.</summary>
         public string _Filename = null;
 
         /// <summary>
@@ -310,6 +310,33 @@ namespace Goedel.Registry {
             return Builder.ToString();
             }
 
+        /// <summary>
+        /// Build an indented summary comment string at the current position
+        /// for the currently selected language.
+        /// </summary>
+        /// <param name="Spaces">Number of spaces to indent text</param>
+        /// <param name="Text">Text to add</param>
+        /// <returns>The comment string.</returns>
+        public string CommentSummary(int Spaces, List<string> Text) {
+            var Indent = _Indent + new string(' ', Spaces);
+            var Builder = new StringBuilder();
+
+            Builder.Append(Indent);
+            Builder.Append("/// <summary>\n");
+
+
+            foreach (var Part in Text) {
+                Builder.Append(Indent);
+                Builder.Append("///");
+                Builder.Append(Part);
+                Builder.Append("\n");
+                }
+
+            Builder.Append(Indent);
+            Builder.Append("/// </summary>\n");
+
+            return Builder.ToString();
+            }
 
         }
     }

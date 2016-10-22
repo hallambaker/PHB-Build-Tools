@@ -302,6 +302,8 @@ namespace Goedel.Utilities  {
         /// <param name="data">The data to convert.</param>
         /// <param name="Length">Number of bytes to convert</param>
         /// <param name="Builder">StringBuilder to collect the emitted characteres</param>
+        /// <param name="Length">Number of bytes to convert</param>
+        /// <returns>The resulting string.</returns>
         public static void ToBase32String(StringBuilder Builder, byte[] data, int Length) {
             int offset = 0;
             int a = 0;
@@ -331,6 +333,7 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="data">The data to convert.</param>
         /// <param name="Length">Number of bytes to convert</param>
+        /// <returns>The encoded string</returns>
         public static string ToBase32sString(byte[] data, int Length) {
             string result = "";
             int offset = 0;
@@ -370,7 +373,8 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="data">The data to take the fingerprint of.</param>
         /// <param name="Precision">The precision in multiples of 25 bits.</param>
-        /// <returns></returns>
+        /// <param name="Length">Number of bytes to convert</param>
+        /// <returns>The resulting string.</returns>
         public static string ToUDF(byte[] data, int Precision) {
             var Chunks = (Precision + 24) / 25; // number of chunks
             var Characters = (Chunks * 6) - 1;
@@ -642,7 +646,7 @@ namespace Goedel.Utilities  {
         /// that because the two character sets are unambiguous, a single conversion
         /// function converts both types of data.
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Data">The string to convert</param>
         /// <returns>The resulting binary data.</returns>
         public static byte[] FromBase64urlString(string Data) {
             int Bits = 0;
@@ -676,7 +680,7 @@ namespace Goedel.Utilities  {
         /// <summary>
         /// Convert Base32 character string data to binary data.
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Data">The string to convert</param>
         /// <returns>The resulting binary data.</returns>
         public static byte[] FromBase32String(string Data) {
             int Bits = 0;
@@ -710,7 +714,7 @@ namespace Goedel.Utilities  {
         /// <summary>
         /// Convert Base16 character string data to binary data.
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Data">The string to convert</param>
         /// <returns>The resulting binary data.</returns>
         public static byte[] FromBase16String(string Data) {
             int Length = 0;

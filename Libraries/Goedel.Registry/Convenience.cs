@@ -180,7 +180,7 @@ namespace Goedel.Registry {
         /// Return the value First if this is the first time the
         /// method is called or Next otherwise.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The string value</returns>
         public override string ToString() {
             if (IsFirst) {
                 IsFirst = false;

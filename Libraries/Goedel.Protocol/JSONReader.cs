@@ -291,6 +291,8 @@ namespace Goedel.Protocol {
                                   };
 
         /// <summary>Convert hex character to hex value</summary>
+        /// <param name="c">The hex character</param>
+        /// <returns>Integer value.</returns>
         protected int HexCharToInt(char c) {
             if ((c>='0') & (c<='9')) return ((int)c - (int)'0');
             if ((c>='a') & (c<='f')) return (10 + (int)c - (int)'a');
@@ -431,6 +433,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Construct a JSONReader for the specified input stream
         /// </summary>
+        /// <param name="InputIn">The source.</param>
         public JSONReader(TextReader InputIn) {
             SetReader (InputIn);
             }
@@ -438,6 +441,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Construct a JSONReader for the specified input string.
         /// </summary>
+        /// <param name="BufferIn">The source.</param>
         public JSONReader (string BufferIn) {
             SetReader (BufferIn);
             }
@@ -445,6 +449,8 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Attempt to read an object start from input.
         /// </summary>
+        /// <returns>True if there is an object start item, otherwise 
+        /// false</returns> 
         public override bool StartObject() {
             GetToken ();
             if ((TokenType == Token.EndRecord) | EOF ){
@@ -477,6 +483,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Attempt to read an object from input.
         /// </summary>
+        /// <returns>True if there is a next object.</returns>
         public override bool NextObject() {
             GetToken ();
             if (TokenType == Token.Comma) {
@@ -493,6 +500,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Attempt to read a token from input.
         /// </summary>
+        /// <returns>The token read.</returns>
         public override string ReadToken() {
             string result = null;
             GetToken ();
@@ -590,7 +598,8 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Attempt to read start of array from input.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if there is an array start token, otherwise 
+        /// false</returns>
         public override bool StartArray() {
             GetToken ();
             if (TokenType != Token.StartArray) {
@@ -607,7 +616,8 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Return true if there is a following array item.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if there is a following array item, otherwise 
+        /// false</returns>
         public override bool NextArray() {
             GetToken ();
             if (TokenType == Token.Comma) {

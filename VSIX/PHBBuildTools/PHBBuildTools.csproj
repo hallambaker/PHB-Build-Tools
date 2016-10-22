@@ -194,6 +194,10 @@
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.ASN\Goedel.ASN.csproj">
+      <Project>{44e8b35d-0394-4f37-b52c-246f8610f031}</Project>
+      <Name>Goedel.ASN</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
       <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
       <Name>Goedel.Registry</Name>
@@ -207,18 +211,6 @@
     <ProjectReference Include="..\..\RegistryConfig\Goedel.Tool.RegistryConfig\Goedel.Tool.RegistryConfig.csproj">
       <Project>{fad27739-eff1-4d5e-bc80-bc43a62707c1}</Project>
       <Name>Goedel.Tool.RegistryConfig</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RFCTool\LibBootMaker\LibBootMaker.csproj">
-      <Project>{BA3E686D-8404-46B3-B06D-048E6367E4EB}</Project>
-      <Name>LibBootMaker</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RFCTool\LibBridge\LibBridge.csproj">
-      <Project>{EFEFBAB6-A3B4-42DC-AF30-FA14F2A9FF16}</Project>
-      <Name>LibBridge</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>

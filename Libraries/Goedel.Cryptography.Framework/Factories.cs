@@ -36,7 +36,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Create instance from RSAParameters structure.
         /// </summary>
-        /// <param name="RSAParameters">Input parameters.</param>
+        /// <param name="RSAParameters">Input parameters in System.Security.Cryotography format</param>
+        /// <returns>The public key</returns>
         public RSAPublicKey RSAPublicKey(RSAParameters RSAParameters) {
             var RSAPublicKey = new RSAPublicKey() {
                 Modulus = RSAParameters.Modulus,

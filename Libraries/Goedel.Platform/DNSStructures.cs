@@ -4,31 +4,31 @@ using System.Net;
 
 namespace Goedel.Platform {
 
-    /// <summary></summary>
+    /// <summary>Describe DNS Option</summary>
     public partial struct DNSOption {
-        /// <summary></summary>
+        /// <summary>Code</summary>
         public ushort          Code;
-        /// <summary></summary>
+        /// <summary>Data</summary>
         public byte []         Data;
         }
 
-    /// <summary></summary>
+    /// <summary>The type of gateway</summary>
     public enum DNSGatewayType : byte  {
-        /// <summary></summary>
+        /// <summary>Unknown</summary>
         NULL = 0,
-        /// <summary></summary>
+        /// <summary>IPv4 Address</summary>
         IPv4 = 1,
-        /// <summary></summary>
+        /// <summary>IPv6 Address</summary>
         IPv6 = 2,
-        /// <summary></summary>
+        /// <summary>Domain name</summary>
         DomainName = 3,
         }
 
-    /// <summary></summary>
+    /// <summary>DNS Gateway</summary>
     public partial struct DNSGateway {
-        /// <summary></summary>
-        public DNSGatewayType _Type;
-        /// <summary></summary>
+        
+        private DNSGatewayType _Type;
+        /// <summary>The type of gateway</summary>
         public DNSGatewayType Type {
             get { return _Type; }
             set { _Type = value; }
@@ -37,14 +37,14 @@ namespace Goedel.Platform {
         IPAddress               _IPAddress;
         string                  _DomainName;
 
-        /// <summary></summary>
+        /// <summary>The IP address of the gateway</summary>
         public IPAddress        IPAddress {
             set {_DomainName = null; _IPAddress = value;
                 _Type = DNSGatewayType.IPv4;}
             get {return _IPAddress;}
             
             }
-        /// <summary></summary>
+        /// <summary>The DNS address of the gateway</summary>
         public string           DomainName {
             set {_DomainName = value; _IPAddress = null; _Type = 
                 DNSGatewayType.DomainName;}
@@ -53,23 +53,23 @@ namespace Goedel.Platform {
 
         }
 
-    /// <summary></summary>
+    /// <summary>Base class for DNS records</summary>
     public abstract partial class DNSRecord {
-        /// <summary></summary>
+        /// <summary>The domain name</summary>
         public Domain           Domain;
-        /// <summary></summary>
+        /// <summary>Record type code</summary>
         public DNSTypeCode      RType;
-        /// <summary></summary>
+        /// <summary>Record class</summary>
         public DNSClass         RClass;
-        /// <summary></summary>
+        /// <summary>Time to live</summary>
         public uint             TTL;
-        /// <summary></summary>
+        /// <summary>Record data</summary>
         public DNSBufferIndex   RData;
-        /// <summary></summary>
+        /// <summary>Start index</summary>
         public int              Start;
 
 
-        /// <summary></summary>
+        /// <summary>Default constructor</summary>
         public DNSRecord() {
             }
 
@@ -102,7 +102,7 @@ namespace Goedel.Platform {
 
 
 
-        /// <summary></summary>
+        /// <summary>Write value</summary>
         public void Write () {
             //Encode ();
             }
@@ -122,8 +122,7 @@ namespace Goedel.Platform {
         //    }
 
         /// <summary>Convert to wire form</summary>
-        /// <param name="Index)">Output buffer</param>
-        /// <returns>Canonical form of record data contents</returns>
+        /// <param name="Index">Output buffer</param>
         public virtual void Encode(DNSBufferIndex Index) {
             }
 
@@ -134,74 +133,75 @@ namespace Goedel.Platform {
         }
 
 
-    /// <summary></summary>
+    /// <summary>DNS Flags</summary>
     public enum DNSFlags : ushort {
-        /// <summary></summary>
+        /// <summary>QR</summary>
         QR = 0x8000,
-        /// <summary></summary>
+        /// <summary>OP Codes</summary>
         OPCODE_Mask = 0x7800,
-        /// <summary></summary>
+        /// <summary>Query</summary>
         OPCODE_QUERY = 0x0000,
-        /// <summary></summary>
+        /// <summary>I Query</summary>
         OPCODE_IQUERY = 0x8000,
-        /// <summary></summary>
+        /// <summary>Status </summary>
         OPCODE_STATUS = 0x1000,
-        /// <summary></summary>
+        /// <summary>AA</summary>
         AA = 0x0400,
-        /// <summary></summary>
+        /// <summary>TC</summary>
         TC = 0x0200,
-        /// <summary></summary>
+        /// <summary>RD</summary>
         RD = 0x0100,
-        /// <summary></summary>
+        /// <summary>RA</summary>
         RA = 0x0080,
-        /// <summary></summary>
+        /// <summary>Z</summary>
         Z_Mask = 0x0070,
-        /// <summary></summary>
+        /// <summary>Result code Flags</summary>
         RCODE_Mask = 0xF,
-        /// <summary></summary>
+        /// <summary>Success</summary>
         RCODE_Success = 0,
-        /// <summary></summary>
+        /// <summary>Format error</summary>
         RCODE_FormatError = 1,
-        /// <summary></summary>
+        /// <summary>Failure at server</summary>
         RCODE_ServerFailure = 2,
-        /// <summary></summary>
+        /// <summary>Name not understood</summary>
         RCODE_NameError = 3,
-        /// <summary></summary>
+        /// <summary>Feature not implemented</summary>
         RCODE_NotImplemented = 4,
-        /// <summary></summary>
+        /// <summary>Request refused.</summary>
         RCODE_Refused = 5
         };
 
-    /// <summary></summary>
+    /// <summary>DNS Classes</summary>
     public enum DNSClass {
         //0            //0x0000         Reserved                        [RFC6195]
-        /// <summary></summary>
+        /// <summary>Internet (IN)</summary>
         IN = 1,        //0x0001         Internet (IN)                   [RFC1035]
         //2            //0x0002         Unassigned                      
-        /// <summary></summary>
+        /// <summary>Chaos (CH) </summary>
         CH = 3,        //0x0003         Chaos (CH)                      [Moon1981]
-        /// <summary></summary>
+        /// <summary>Hesiod (HS</summary>
         HS = 4,        //0x0004         Hesiod (HS)                     [Dyer1987]
 
         //5-253        0x0005-0x00FD    Unassigned                    
-        /// <summary></summary>
+        /// <summary>QCLASS NONE  </summary>
         NONE = 254,    //0x00FD         QCLASS NONE                     [RFC2136]
-        /// <summary></summary>
+        /// <summary>QCLASS * (ANY) </summary>
         ANY = 255      //0x00FF         QCLASS * (ANY)                  [RFC1035]
         //256-65279    0x0100-0xFEFF    Unassigned                      
         //65280-65534  0xFF00-0xFFFE    Reserved for Private Use        [RFC6195]
         //65535        0xFFFF           Reserved                        [RFC6195] 
         }
 
-    /// <summary></summary>
+    /// <summary>Domain name</summary>
     public class Domain {
-        /// <summary></summary>
+        /// <summary>Unicode representation of name</summary>
         public string Name; // Unicode representation of name
-        /// <summary></summary>
+        /// <summary>DNSClient represenation (punycode)</summary>
         public byte[] Data; // DNSClient represenation (punycode)
 
 
-        /// <summary></summary>
+        /// <summary>Constructor from string</summary>
+        /// <param name="Name">The DNS name in UNICODE format.</param>
         public Domain(string Name) {
             this.Name = Name;
             }
@@ -209,10 +209,10 @@ namespace Goedel.Platform {
 
 
 
-    /// <summary></summary>
+    /// <summary>DNS Message class</summary>
     public class DNSMessage {
 
-        /// <summary></summary>
+        /// <summary>The message data</summary>
         public byte[] Data {
             get {
                 DNSBufferIndex Index = new DNSBufferIndex();
@@ -221,7 +221,7 @@ namespace Goedel.Platform {
                 }
             }
 
-        /// <summary></summary>
+        /// <summary>The message data buffer</summary>
         public DNSBuffer Buffer {
             get {
                 DNSBufferIndex Index = new DNSBufferIndex();
@@ -231,39 +231,40 @@ namespace Goedel.Platform {
             }
 
 
-        /// <summary></summary>
+        /// <summary>Message identifier code for matching requests and responses.</summary>
         public UInt16           ID;
-        /// <summary></summary>
+        /// <summary>Flags</summary>
         public DNSFlags         Flags;
 
-        /// <summary></summary>
+        /// <summary>OPCode flags</summary>
         public DNSFlags OPCODE { get { return (Flags & DNSFlags.OPCODE_Mask); } }
-        /// <summary></summary>
+        /// <summary>Request code flags</summary>
         public DNSFlags RCODE { get { return (Flags & DNSFlags.RCODE_Mask); } }
-        /// <summary></summary>
+        /// <summary>The QR flag</summary>
         public bool QR { get { return ((Flags & DNSFlags.QR) == DNSFlags.QR); } }
-        /// <summary></summary>
+        /// <summary>The AA flag</summary>
         public bool AA { get { return ((Flags & DNSFlags.AA) == DNSFlags.AA); } }
-        /// <summary></summary>
+        /// <summary>The TC flag</summary>
         public bool TC { get { return ((Flags & DNSFlags.TC) == DNSFlags.TC); } }
-        /// <summary></summary>
+        /// <summary>The RD flag</summary>
         public bool RD { get { return ((Flags & DNSFlags.RD) == DNSFlags.RD); } }
-        /// <summary></summary>
+        /// <summary>The RA flag</summary>
         public bool RA { get { return ((Flags & DNSFlags.RA) == DNSFlags.RA); } }
 
-        /// <summary></summary>
+        /// <summary>The DNS Query</summary>
         public DNSQuery         Query;
-        /// <summary></summary>
+        /// <summary>The authoritative answers</summary>
         public DNSRecord []     Answers = { };
-        /// <summary></summary>
+        /// <summary>The authorities answering</summary>
         public DNSRecord []     Authorities = { };
-        /// <summary></summary>
+        /// <summary>Additional records</summary>
         public DNSRecord []     Additional = { };
 
 
         int QueryCount, AnswerCount, AuthorityCount, AdditionalCount;
 
-        /// <summary></summary>
+        /// <summary>Encode message to buffer</summary>
+        /// <param name="Index">Buffer out</param>
         public void Encode (DNSBufferIndex Index) {
             Index.WriteInt16 (ID);
             Index.WriteInt16 (Flags);
@@ -286,7 +287,8 @@ namespace Goedel.Platform {
                 }
             }
 
-        /// <summary></summary>
+        /// <summary>Decode message from buffer</summary>
+        /// <param name="Index">Buffer in</param>
         public void Decode (DNSBufferIndex Index) {
             
             Index.ReadInt16 (out ID);
@@ -319,22 +321,21 @@ namespace Goedel.Platform {
             }
 
 
-
-        // Parse the data in the buffer BufferIn 
-        /// <summary></summary>
+        /// <summary>Parse the data in the buffer BufferIn </summary>
+        /// <param name="data">The encoded message</param>
         public DNSMessage (byte [] data) {
             DNSBufferIndex Index = new DNSBufferIndex (data);
 
             Decode (Index);
             }
 
-        // Create Empty Message buffer (do not parse, done in sub);
-        /// <summary></summary>
+
+        /// <summary> Create Empty Message buffer (do not parse, done in sub);</summary>
         public DNSMessage () {
             //Index = ( new DNSBufferIndex () );
             }
 
-        /// <summary></summary>
+        /// <summary>The type tag</summary>
         public virtual string TypeTag { get { return null; } }
 
         //static int Display = 16;
@@ -426,7 +427,7 @@ namespace Goedel.Platform {
     //The DNSClient protocol actually supports making multiple queries in one request but this
     //does not actually work in the field and should probably be deprecated.
 
-    /// <summary></summary>
+    /// <summary>DNS request message</summary>
     public class DNSRequest : DNSMessage {
 
         /// <summary>Text tag describing message type.</summary>
@@ -439,7 +440,9 @@ namespace Goedel.Platform {
         //// Here add in flags to turn on recursive resolution, DNSSEC validation, etc.
 
 
-        /// <summary></summary>
+        /// <summary>Constructor for request</summary>
+        /// <param name="Domain">The domain name</param>
+        /// <param name="QType">The query type</param>
         public DNSRequest(string Domain, string QType){
             if (QType == null) {
                 Query = new DNSQuery (Domain, DNSTypeCode.ALL);
@@ -450,24 +453,26 @@ namespace Goedel.Platform {
             Flags = DNSFlags.RD | DNSFlags.OPCODE_QUERY;
             }
 
-        /// <summary></summary>
+        /// <summary>Constructor for request</summary>
+        /// <param name="Domain">The domain name</param>
+        /// <param name="QCode">The query type</param>
         public DNSRequest(string Domain, DNSTypeCode QCode) {
             Query = new DNSQuery (Domain,  QCode);
             }
 
         }
 
-    /// <summary></summary>
+    /// <summary>DNS response message</summary>
     public class DNSResponse : DNSMessage {
 
-        /// <summary></summary>
+        /// <summary>The type of the message</summary>
         public override string TypeTag { get { return "Response"; } }
         //public List<DNSRR> Answer;
         //public List<DNSRR> Authoritative;
         //public List<DNSRR> Additional;
 
-        /// <summary></summary>
-        /// <param name="Data"></param>
+        /// <summary>Default constructor</summary>
+        /// <param name="Data">Input data</param>
         public DNSResponse(byte[] Data) {
             // here do the decode thing.
             //Dump (Data);
@@ -481,17 +486,17 @@ namespace Goedel.Platform {
 
 
 
-    /// <summary></summary>
+    /// <summary>DNS Query class</summary>
     public class DNSQuery {
-        /// <summary></summary>
+        /// <summary>The Query name</summary>
         public String           QName;
-        /// <summary></summary>
+        /// <summary>The Query Type</summary>
         public DNSTypeCode      QType;
-        /// <summary></summary>
+        /// <summary>The Class</summary>
         public DNSClass         QClass;
 
-        /// <summary></summary>
-        /// <param name="Index"></param>
+        /// <summary>Encode Query</summary>
+        /// <param name="Index">Output buffer</param>
         public void Encode (DNSBufferIndex   Index) {
             Index.WriteName (QName);
             Index.WriteInt16 (QType);
@@ -499,9 +504,9 @@ namespace Goedel.Platform {
             //Index.Dump ();
             }
 
-        /// <summary></summary>
-        /// <param name="Index"></param>
-        /// <returns></returns>
+        /// <summary>Decode Query</summary>
+        /// <param name="Index">Input buffer</param>
+        /// <returns>Query</returns>
         public static DNSQuery Decode (DNSBufferIndex   Index) {
             String  QName = Index.ReadName ();
             DNSTypeCode QType = (DNSTypeCode)Index.ReadInt16 ();
@@ -513,19 +518,19 @@ namespace Goedel.Platform {
             }
 
         // Constructors
-        /// <summary></summary>
-        /// <param name="Domain"></param>
-        /// <param name="QTypeIn"></param>
-        /// <param name="QClassIn"></param>
+        /// <summary>Constructor from main components</summary>
+        /// <param name="Domain">Domain name</param>
+        /// <param name="QTypeIn">Query type</param>
+        /// <param name="QClassIn">Query class</param>
         public DNSQuery (String Domain, DNSTypeCode QTypeIn, DNSClass QClassIn) {
             QName = Domain;
             QType = QTypeIn;
             QClass = QClassIn;
             }
 
-        /// <summary></summary>
-        /// <param name="Domain"></param>
-        /// <param name="QTypeIn"></param>
+        /// <summary>Constructor from main components for internet class</summary>
+        /// <param name="Domain">Domain name</param>
+        /// <param name="QTypeIn">Query type</param>
         public DNSQuery (String Domain, DNSTypeCode QTypeIn) :
             this (Domain, QTypeIn, DNSClass.IN) {}
 

@@ -34,8 +34,8 @@ namespace Goedel.Platform {
         /// <summary>
         /// Create buffer from received data buffer and length specification.
         /// </summary>
-        /// <param name="data"></param>
-        /// <param name="LengthIn"></param>
+        /// <param name="data">Input data</param>
+        /// <param name="LengthIn">Length of message received.</param>
         public DNSBuffer (byte[] data, int LengthIn) {
             //Pointer = 0;
             Buffer = data;
@@ -399,7 +399,7 @@ namespace Goedel.Platform {
             }
 
         /// <summary>Read 32 bit integer value</summary>
-        /// <returns>The value read</returns>
+        /// <param name="data">The value read</param>
         public void ReadInt32 (out UInt32 data) {
             data = ReadInt32 ();
             }
@@ -411,7 +411,7 @@ namespace Goedel.Platform {
             }
 
         /// <summary>Read 64 bit node identifier value</summary>
-        /// <returns>The value read</returns>
+        /// <param name="data">The value read</param>
         public void ReadNodeID (out UInt64 data) {
             data = ReadInt64 ();
             }
@@ -501,7 +501,7 @@ namespace Goedel.Platform {
             }
 
         /// <summary>Read data value with 16 bit length delimeter.</summary>
-        /// <returns>The value read</returns>
+        /// <param name="data">The value read.</param>
         public void ReadL16Data(out DNSBufferIndex data) {
             UInt16 length = ReadInt16();
             CheckSpaceRead(length);
@@ -519,6 +519,7 @@ namespace Goedel.Platform {
             }
 
         /// <summary>Read remainder of the buffer as binary data value</summary>
+        /// <param name="Length">Number of bytes to read</param>
         /// <returns>The value read</returns>
         public byte[] ReadData (int Length) {
             CheckSpaceRead (Length);
@@ -539,6 +540,7 @@ namespace Goedel.Platform {
             }
 
         /// <summary>Read string value with specified length.</summary>
+        /// <param name="length">Number of bytes to read.</param>
         /// <returns>The value read</returns>
         public String ReadString (int length) {
             CheckSpaceRead (length);
@@ -550,6 +552,7 @@ namespace Goedel.Platform {
             }
 
         /// <summary>Read set of strrings value</summary>
+        /// <param name="Extent">Number of bytes to read.</param>
         /// <returns>Null list, this is a stub</returns>
         /// <remarks>Not yet implemented.</remarks>
         public List<String> ReadStrings(int Extent) {

@@ -18,7 +18,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Create structure from ASN1 data
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Data">The encoded private key data</param>
         public RSAPrivateKey (byte[] Data) {
             var Buffer = new global::Goedel.ASN.DecodeBuffer(Data);
             Decode(Buffer);
@@ -36,6 +36,7 @@ namespace Goedel.Cryptography.PKIX {
         ///
         /// This is done in the forward direction
         /// </summary>
+        /// <param name="Buffer">The source buffer</param>
         public void Decode(global::Goedel.ASN.DecodeBuffer Buffer) {
             Buffer.Decode__Sequence_Start();
 
@@ -72,7 +73,7 @@ namespace Goedel.Cryptography.PKIX {
 
 
         /// <summary>
-        /// 
+        /// Debugging aid.
         /// </summary>
         public void Dump() {
             var BigModulus = new BigInteger(Modulus);

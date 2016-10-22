@@ -59,7 +59,7 @@ namespace Goedel.Cryptography.Framework {
         /// Initializes an instance of the hash provider with the specified
         /// implementation.
         /// </summary>
-        /// <param name="HashAlgorithm"></param>
+        /// <param name="HashAlgorithm">Digest algorithm to construct from</param>
         protected CryptoProviderDigest(HashAlgorithm HashAlgorithm) {
             this.HashAlgorithm = HashAlgorithm;
             //Buffer = new byte[HashAlgorithm.InputBlockSize];

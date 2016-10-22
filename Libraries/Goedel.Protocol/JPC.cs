@@ -48,7 +48,7 @@ namespace Goedel.Protocol {
         /// an error. This must be caught and processed by the host dispatch class.
         /// </summary>
         /// <param name="Session">The service session that is to handle the request.</param>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream to be read</param>
         /// <returns>The response to the request.</returns>
         public abstract Goedel.Protocol.JSONObject Dispatch(JPCSession Session,
             JSONReader JSONReader);
@@ -62,7 +62,7 @@ namespace Goedel.Protocol {
         /// <param name="TLS">If true, the https scheme is used, otherwise http is used.</param>
         /// <param name="HostMode">If true, service is self hosted.</param>
         /// <param name="Prefix">The service prefix type</param>
-        /// <returns></returns>
+        /// <returns>The formed URI</returns>
         public static string WellKnownToURI (string Domain, string WellKnown, 
                             string Prefix, bool TLS, bool HostMode) {
 
@@ -132,6 +132,7 @@ namespace Goedel.Protocol {
         /// Authenticate session data.
         /// </summary>
         /// <param name="UDF">Fingerprint of authentication key to use for authentication.</param>
+        /// <returns>True if authentication succeeded, otherwise false.</returns>
         public abstract bool Authenticate(string UDF);
       
 
@@ -146,7 +147,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Create a direct session for the specified account.
         /// </summary>
-        /// <param name="Account"></param>
+        /// <param name="Account">The account name</param>
         public DirectSession (string Account) {
             this.Account = Account;
             }
@@ -155,7 +156,7 @@ namespace Goedel.Protocol {
         /// Authenticate session using the specified credentials
         /// </summary>
         /// <param name="UDF">UDF of credential to use.</param>
-        /// <returns></returns>
+        /// <returns>If true, request was authenticated.</returns>
         public override bool Authenticate(string UDF) {
             this.UDF = UDF;
             Authenticated = true;
@@ -187,7 +188,7 @@ namespace Goedel.Protocol {
         /// Post the specified data to the remote service.
         /// </summary>
         /// <param name="Data">Input data</param>
-        /// <returns></returns>
+        /// <returns>The response data</returns>
         public abstract StreamBuffer Post(StreamBuffer Data);
 
         /// <summary>

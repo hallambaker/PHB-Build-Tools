@@ -120,8 +120,8 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Find the certificate with a specified fingerprint.
         /// </summary>
-        /// <param name="Fingerprint"></param>
-        /// <returns></returns>
+        /// <param name="Fingerprint">Fingerprint of public key</param>
+        /// <returns>Parsed certificate</returns>
         public static GCP.Certificate Get(string Fingerprint) {
             return PlatformGet (Fingerprint);
             }

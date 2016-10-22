@@ -163,8 +163,8 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Convert a binary UDF to a string.
         /// </summary>
-        /// <param name="Data"></param>
-        /// <returns></returns>
+        /// <param name="Data">Input data.</param>
+        /// <returns>The UDF value as a string.</returns>
         public static string ToString(byte[] Data) {
             int Length = (6 * ((Data.Length * 8) / 25)) - 1;
             return BaseConvert.ToUDF32String(Data, Length);
@@ -174,7 +174,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Return a random sequence as a UDF 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A randomly generated UDF string.</returns>
         public static string Random() {
             return Random(DefaultBits);
             }
@@ -182,8 +182,8 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Return a random sequence as a UDF 
         /// </summary>
-        /// <param name="Bits"></param>
-        /// <returns></returns>
+        /// <param name="Bits">Number of bits in the string</param>
+        /// <returns>A randomly generated UDF string.</returns>
         public static string Random (int Bits) {
             var Data = CryptoCatalog.GetBits(Bits);
             return ToString("application/random", Data, Bits);
@@ -196,8 +196,8 @@ namespace Goedel.Cryptography {
         /// the test must be exact. It is possible that this can be relaxed
         /// so that a longer fingerprint will satisfy a shorter one.
         /// </summary>
-        /// <param name="Test"></param>
-        /// <param name="Value"></param>
+        /// <param name="Test">Expected value</param>
+        /// <param name="Value">Comparison value.</param>
         public static void Validate (string Test, string Value) {
             Assert.False(Test != Value, FingerprintMatchFailed.Throw);
 

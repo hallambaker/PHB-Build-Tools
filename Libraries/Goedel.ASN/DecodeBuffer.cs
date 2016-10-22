@@ -44,7 +44,7 @@ namespace Goedel.ASN {
         /// <summary>
         /// Write out debug message during processing
         /// </summary>
-        /// <param name="Text"></param>
+        /// <param name="Text">Text to write</param>
         public virtual void Debug(string Text) {
             }
 

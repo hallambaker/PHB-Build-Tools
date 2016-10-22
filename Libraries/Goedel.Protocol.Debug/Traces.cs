@@ -8,7 +8,10 @@ using Goedel.Protocol;
 
 namespace Goedel.Protocol.Debug {
     /// <summary>
-    /// 
+    /// The trace dictionary class is used for capturing a set of protocol
+    /// messages for use in documentation. The functions supported include
+    /// capture of the message objects and presenting them in full or
+    /// with various levels of redaction.
     /// </summary>
     public class TraceDictionary {
 
@@ -36,7 +39,7 @@ namespace Goedel.Protocol.Debug {
             }
 
         /// <summary>
-        /// 
+        /// The tract dictionary, maps labels to traces.
         /// </summary>
         public Dictionary<string, TracePoint> Traces;
 
@@ -67,6 +70,8 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// Default constructor.
         /// </summary>
+        /// <param name="HostName">The host name for the example</param>
+        /// <param name="URI">The web service end point.</param>
         public TraceDictionary(string HostName, string URI) {
             _HostName = HostName;
             _URI = URI;
@@ -74,9 +79,12 @@ namespace Goedel.Protocol.Debug {
             }
 
         /// <summary>
-        /// Start a new trace point.
+        /// Start a new named trace point. This allows an example generator to assign
+        /// labels to each test 'label1' and retrieve the 2nd message of trace 'label1'
+        /// when describing that particular function.
         /// </summary>
-        /// <param name="Tag"></param>
+        /// <param name="Tag">Label for future retrieval</param>
+        /// <returns>The trace point created.</returns>
         public TracePoint Label(string Tag) {
             _Current = new TracePoint(this, Tag);
             Traces.Add(Tag, _Current);
@@ -86,8 +94,8 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// Find the trace point with the specified value
         /// </summary>
-        /// <param name="Tag"></param>
-        /// <returns></returns>
+        /// <param name="Tag">The trace label to find</param>
+        /// <returns>The traces created.</returns>
         public TracePoint Get(string Tag) {
 
             TracePoint Result;
@@ -102,7 +110,7 @@ namespace Goedel.Protocol.Debug {
         /// Create a trace entry for a request message
         /// </summary>
         /// <param name="Payload">The message Payload</param>
-        /// <returns></returns>
+        /// <returns>The trace message entry</returns>
         public TraceMessage Request(JSONObject Payload) {
             return new TraceMessage(Current, Payload, DateTime.Now, true);
             }
@@ -113,7 +121,7 @@ namespace Goedel.Protocol.Debug {
         /// </summary>
         /// <param name="Status">HTTP Status return line</param>
         /// <param name="Payload">The message Payload</param>
-        /// <returns></returns>
+        /// <returns>The trace message entry</returns>
         public TraceMessage Response(string Status, JSONObject Payload) {
             var Message = new TraceMessage(Current, Payload, DateTime.Now, false);
             Message.Status = Status;
@@ -125,7 +133,7 @@ namespace Goedel.Protocol.Debug {
         }
 
     /// <summary>
-    /// 
+    /// Capture a related set of traces.
     /// </summary>
     public class TracePoint {
         TraceDictionary _TraceDictionary;
@@ -165,7 +173,7 @@ namespace Goedel.Protocol.Debug {
             }
 
         /// <summary>
-        /// 
+        /// Constructor for a trace point.
         /// </summary>
         /// <param name="TraceDictionary">The parent dictionary</param>
         /// <param name="Tag">Locator tag within the trace dictionary</param>
@@ -180,7 +188,7 @@ namespace Goedel.Protocol.Debug {
         }
 
     /// <summary>
-    /// 
+    /// Represents a single trace message
     /// </summary>
     public class TraceMessage {
 
@@ -245,9 +253,10 @@ namespace Goedel.Protocol.Debug {
         /// Constructor
         /// </summary>
         /// <param name="TracePoint">the parent tracepoint</param>
-        /// <param name="Payload"></param>
-        /// <param name="Time"></param>
-        /// <param name="IsRequest"></param>
+        /// <param name="Payload">the payload object</param>
+        /// <param name="Time">The date and time of the request</param>
+        /// <param name="IsRequest">If true, this was a request message (sent by the initiator
+        /// of the conversation. Otherwise it is a response.</param>
         public TraceMessage(TracePoint TracePoint,
                     JSONObject Payload, DateTime Time, bool IsRequest) {
             this.TracePoint = TracePoint;
@@ -262,7 +271,8 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// Wrap minimal HTTP headers round a request
         /// </summary>
-        /// <param name="Redact"></param>
+        /// <param name="Redact">If true, redact the payload to omit long
+        /// sections of base64 encoded text.</param>
         /// <returns>the formatted message</returns>
         public string StringHTTP(bool Redact) {
             var StringBuilder = new StringBuilder();

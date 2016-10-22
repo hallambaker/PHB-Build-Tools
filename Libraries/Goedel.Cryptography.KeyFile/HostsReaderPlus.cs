@@ -20,7 +20,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Add characters to the algorithm
         /// </summary>
-        /// <param name="c"></param>
+        /// <param name="c">The character read</param>
         public virtual void AddAlgorithm(int c) {
             BuildTag1.Append(c.ToASCII());
             }
@@ -28,7 +28,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Add characters to the base64 encoded data section
         /// </summary>
-        /// <param name="c"></param>
+        /// <param name="c">The character read</param>
         public virtual void AddData(int c) {
             BuildBase64.Append(c.ToASCII());
             }
@@ -36,7 +36,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Add characters to the comment section
         /// </summary>
-        /// <param name="c"></param>
+        /// <param name="c">The character read</param>
         public virtual void AddComment(int c) {
             BuildTag2.Append(c.ToASCII());
             }
@@ -44,7 +44,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Do nothing
         /// </summary>
-        /// <param name="c"></param>
+        /// <param name="c">The character read</param>
         public virtual void Ignore(int c) {
             }
 

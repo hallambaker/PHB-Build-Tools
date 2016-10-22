@@ -180,7 +180,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Generate a KeyPair from a .NET Provider.
         /// </summary>
-        /// <param name="RSACryptoServiceProvider"></param>
+        /// <param name="RSACryptoServiceProvider">The platform cryptographic provider.</param>
         public RSAKeyPair(RSACryptoServiceProvider RSACryptoServiceProvider) {
             _Provider = RSACryptoServiceProvider;
             }

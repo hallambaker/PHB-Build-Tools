@@ -70,7 +70,7 @@ namespace Goedel.Cryptography.Framework {
         /// Initializes an instance of the hash provider with the specified
         /// implementation.
         /// </summary>
-        /// <param name="HashAlgorithm"></param>
+        /// <param name="HashAlgorithm">The hash algorithm to construct provider for.</param>
         protected CryptoProviderAuthentication(HashAlgorithm HashAlgorithm) {
             this.HashAlgorithm = HashAlgorithm;
             }

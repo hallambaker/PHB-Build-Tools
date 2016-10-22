@@ -81,7 +81,7 @@ namespace Goedel.Cryptography.Jose {
         /// Create a new encryption context and encrypt the data under the 
         /// generated content key and IV.
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Data">Data to encrypt</param>
         public void Encrypt(byte[] Data) {
             var Encryptor = CryptoCatalog.Default.GetEncryption(BulkAlgorithm);
             Encrypt(Data, Encryptor);
@@ -126,7 +126,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Add a recipient entry to the recipient list.
         /// </summary>
-        /// <param name="Recipient"></param>
+        /// <param name="Recipient">Recipient to add</param>
         public void Add(Recipient Recipient) {
             Recipients = Recipients == null ? new List<Recipient>() : Recipients;
             Recipients.Add(Recipient);
@@ -155,6 +155,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Decrypt the content using the specified private key.
         /// </summary>
+        /// <param name="DecryptionKey">The decryption key.</param>
         /// <returns>The decrypted data</returns>
         public byte[] Decrypt(KeyPair DecryptionKey) {
             // Read the preheader, get the encryption algorithm

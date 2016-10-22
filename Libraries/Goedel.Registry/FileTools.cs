@@ -90,7 +90,7 @@ namespace Goedel.Registry {
         /// <summary>
         /// Convert value to string.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the string value</returns>
         public override string ToString() {
             return IsSet ? "true" : "false";
             }
@@ -122,7 +122,7 @@ namespace Goedel.Registry {
         /// <summary>
         /// Constructor with specified default value.
         /// </summary>
-        /// <param name="Value"></param>
+        /// <param name="Value">The default value text for this entry</param>
         public _File (string Value) {
             Default(Value);
             }
@@ -135,7 +135,7 @@ namespace Goedel.Registry {
         /// <summary>
         /// Set the default.
         /// </summary>
-        /// <param name="TextIn"></param>
+        /// <param name="TextIn">The default value text for this entry</param>
         public override void Default(string TextIn) {
             Extension = TextIn;
             }
@@ -230,7 +230,7 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="Entry">The command line entry.</param>
         /// <param name="Default">The default file name.</param>
-        /// <returns></returns>
+        /// <returns>The defaulted output file.</returns>
         public static string DefaultFile(_File Entry, string Default) {
             if (Entry.Text != null) {
                 return Entry.Text;

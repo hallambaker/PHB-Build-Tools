@@ -6,6 +6,7 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
+    /// Base class for cryptographic exceptions.
     /// </summary>
     public class CryptographicException : global::System.Exception {
 
@@ -108,7 +109,7 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
-    /// 
+    /// Some or all of the quorum parameters are incorrect.
     /// </summary>
     public class InvalidQuorum : CryptographicException {
 
@@ -157,7 +158,8 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
-    /// 
+    /// The recovery attempt failed because there weren't enough shares
+    /// to recover the key.
     /// </summary>
     public class InsufficientShares : InvalidQuorum {
 
@@ -206,7 +208,8 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
-    /// 
+    /// The number of shares required to create a quorum must be 
+    /// equal to or smaller than the number of shares
     /// </summary>
     public class QuorumExceedsShares : InvalidQuorum {
 
@@ -255,7 +258,7 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
-    /// 
+    /// The quorum must require at least 2 shares.
     /// </summary>
     public class QuorumInsufficient : InvalidQuorum {
 
@@ -304,7 +307,7 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
-    /// 
+    /// There must be at least two key shares.
     /// </summary>
     public class SharesInsufficient : InvalidQuorum {
 
@@ -353,7 +356,8 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
-    /// 
+    /// This implementation does not support the number of shares
+    /// that were requested.
     /// </summary>
     public class QuorumExceeded : InvalidQuorum {
 
@@ -402,7 +406,8 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
-    /// 
+    /// The number of shares required to create a quorum exceeds the maximum
+    /// permitted polynomial degree.
     /// </summary>
     public class QuorumDegreeExceeded : InvalidQuorum {
 
@@ -451,7 +456,7 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
-    /// 
+    /// The shares presented are not from the same set of shares.
     /// </summary>
     public class MismatchedShares : InvalidQuorum {
 
@@ -500,7 +505,8 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
-    /// 			
+    /// Thje data presented did not match the expected fingerprint
+    /// value.			
     /// </summary>
     public class FingerprintMatchFailed : CryptographicException {
 

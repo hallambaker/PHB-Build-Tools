@@ -101,7 +101,7 @@ namespace Goedel.Cryptography.PKIX {
         /// is backdated to one minute after midnight UTC on the day of one hour before the
         /// current time.
         /// </summary>
-        /// <param name="Years"></param>
+        /// <param name="Years">Number of years for certificate to be valid</param>
         public void SetValidity(int Years) {
             TimeSpan TimeSpan = new TimeSpan(366 * Years, 0, 0, 0);
             SetValidity(TimeSpan);
@@ -153,7 +153,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Set the Authority Key Identifier extension
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="ID">The authority identifier</param>
 
         public void SetAuthorityKeyIdentifier(byte[] ID) {
             AuthorityKeyIdentifier AuthorityKeyIdentifier =
@@ -166,7 +166,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Set the subject key identifier extension.
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="ID">The key identifier</param>
         public void SetSubjectKeyIdentifier (byte[] ID) {
             SubjectKeyIdentifier SubjectKeyIdentifier = new SubjectKeyIdentifier();
             SubjectKeyIdentifier.Value = ID;
@@ -174,9 +174,9 @@ namespace Goedel.Cryptography.PKIX {
             }
 
         /// <summary>
-        /// 
+        /// Set the subject alt name
         /// </summary>
-        /// <param name="Name"></param>
+        /// <param name="Name">Name to set</param>
         public void SetSubjectAltName(string Name) {
             GeneralName GeneralName = new GeneralName(Name);
             SubjectAltName SubjectAltName = new SubjectAltName(GeneralName);
@@ -187,7 +187,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Set the profile for an end entity certificate
         /// </summary>
-        /// <param name="Use"></param>
+        /// <param name="Use">Use for the certificate</param>
         public void SetProfile(Application Use) {
             SetProfile(Use, -1);
             }
@@ -195,8 +195,8 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Set the profile for a certificate
         /// </summary>
-        /// <param name="Use"></param>
-        /// <param name="PathLen"></param>
+        /// <param name="Use">Use for the certificate</param>
+        /// <param name="PathLen">Path length constraint</param>
         public void SetProfile(Application Use, int PathLen) {
 
             bool CA = false;
@@ -313,7 +313,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// PKIX extended key uses
         /// </summary>
-        /// <param name="Values"></param>
+        /// <param name="Values">The key usage values</param>
         public void SetExtendedKeyUsage(List<int[]> Values) {
             ExtendedKeyUsage ExtendedKeyUsage = new ExtendedKeyUsage();
             ExtendedKeyUsage.KeyPurpose = Values;
@@ -400,7 +400,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Construct from a general name.
         /// </summary>
-        /// <param name="GeneralName"></param>
+        /// <param name="GeneralName">General name to encode</param>
         public SubjectAltName(GeneralName GeneralName) {
             this.Names = new List<GeneralName>();
             this.Names.Add(GeneralName);
@@ -429,10 +429,10 @@ namespace Goedel.Cryptography.PKIX {
 
     public partial class Name {
         /// <summary>
-        /// 
+        /// Conver a common name string to a list of Name segments.
         /// </summary>
-        /// <param name="CommonName"></param>
-        /// <returns></returns>
+        /// <param name="CommonName">Common name to convert</param>
+        /// <returns>List of Name segments.</returns>
         public static List<Name> ToName(string CommonName) {
             List<Name> Result = new List<Name>();
             Name Segment = new Name(CommonName);

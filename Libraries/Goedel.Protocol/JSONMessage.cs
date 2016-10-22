@@ -75,10 +75,11 @@ namespace Goedel.Protocol {
 
 
         /// <summary>
-        /// 
+        /// Deserialize a token. Should probably extend this to write unknown 
+        /// fields to some sort of DOM tree.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag read</param>
 		public override void DeserializeToken(JSONReader JSONReader, string Tag) {
             // Don't have any default elements.
             return;
@@ -88,6 +89,7 @@ namespace Goedel.Protocol {
         }
 
     /// <summary>
+    /// Base class for all responses.
     /// </summary>
     public abstract class Response : JSONObject {
         private int _Status = 201;  // Default value for status is success

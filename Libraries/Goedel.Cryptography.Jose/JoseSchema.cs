@@ -20,7 +20,6 @@
 //  THE SOFTWARE.
 //  
 //  
-
 using System;
 using System.IO;
 using System.Collections;
@@ -32,18 +31,19 @@ using Goedel.Protocol;
 
 
 
-
 namespace Goedel.Cryptography.Jose {
 
 
-    /// <summary>
-    /// 
-    /// </summary>
+	/// <summary>
+	///
+	/// Support classes for JSON Object Signing and Encryption
+	/// </summary>
 	public abstract partial class Jose : global::Goedel.Protocol.JSONObject {
 
         /// <summary>
-        /// 
+        /// Schema tag.
         /// </summary>
+        /// <returns>The tag value</returns>
 		public override string Tag () {
 			return "Jose";
 			}
@@ -58,6 +58,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Construct an instance from a JSON encoded stream.
         /// </summary>
+        /// <param name="JSONReader">Input stream</param>
 		public Jose (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			_Initialize () ;
@@ -66,6 +67,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Construct an instance from a JSON encoded string.
         /// </summary>
+        /// <param name="_String">Input string</param>
 		public Jose (string _String) {
 			Deserialize (_String);
 			_Initialize () ;
@@ -74,6 +76,8 @@ namespace Goedel.Cryptography.Jose {
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
+        /// <param name="JSONReader">Input stream</param>
+        /// <param name="Out">The created object</param>
         public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
 	
 			JSONReader.StartObject ();
@@ -182,35 +186,42 @@ namespace Goedel.Cryptography.Jose {
 
 		// Transaction Classes
 	/// <summary>
+	///
+	/// A signed JOSE data object. The data contents are all binary encoded to 
+	/// enable direct authentication of the contents.
 	/// </summary>
 	public partial class JoseWebSignature : Jose {
         /// <summary>
-        /// 
+        ///The signature header
         /// </summary>
-		public virtual byte[]						Protected {
-			get {return _Protected;}			
-			set {_Protected = value;}
-			}
-		byte[]						_Protected ;
-        /// <summary>
-        /// 
-        /// </summary>
+
 		public virtual byte[]						Header {
 			get {return _Header;}			
 			set {_Header = value;}
 			}
 		byte[]						_Header ;
         /// <summary>
-        /// 
+        ///The signed data
         /// </summary>
+
 		public virtual byte[]						Payload {
 			get {return _Payload;}			
 			set {_Payload = value;}
 			}
 		byte[]						_Payload ;
         /// <summary>
-        /// 
+        ///Data protected by the signature
         /// </summary>
+
+		public virtual byte[]						Protected {
+			get {return _Protected;}			
+			set {_Protected = value;}
+			}
+		byte[]						_Protected ;
+        /// <summary>
+        ///The signature value
+        /// </summary>
+
 		public virtual byte[]						Signature {
 			get {return _Signature;}			
 			set {_Signature = value;}
@@ -234,6 +245,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public JoseWebSignature (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -241,6 +253,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary> 
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public JoseWebSignature (string _String) {
 			Deserialize (_String);
 			}
@@ -270,11 +283,6 @@ namespace Goedel.Cryptography.Jose {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			if (Protected != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("protected", 1);
-					_Writer.WriteBinary (Protected);
-				}
 			if (Header != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("header", 1);
@@ -284,6 +292,11 @@ namespace Goedel.Cryptography.Jose {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("payload", 1);
 					_Writer.WriteBinary (Payload);
+				}
+			if (Protected != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("protected", 1);
+					_Writer.WriteBinary (Protected);
 				}
 			if (Signature != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -349,7 +362,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new JoseWebSignature  FromTagged (JSONReader JSONReader) {
 			JoseWebSignature Out = null;
 
@@ -384,21 +398,21 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "protected" : {
-					Protected = JSONReader.ReadBinary ();
-					break;
-					}
 				case "header" : {
 					Header = JSONReader.ReadBinary ();
 					break;
 					}
 				case "payload" : {
 					Payload = JSONReader.ReadBinary ();
+					break;
+					}
+				case "protected" : {
+					Protected = JSONReader.ReadBinary ();
 					break;
 					}
 				case "signature" : {
@@ -416,59 +430,68 @@ namespace Goedel.Cryptography.Jose {
 		}
 
 	/// <summary>
+	///
+	/// A signed JOSE data object. The encrypte data contents are all binary encoded.
 	/// </summary>
 	public partial class JoseWebEncryption : Jose {
         /// <summary>
-        /// 
+        ///Data protected by the signature
         /// </summary>
+
 		public virtual byte[]						Protected {
 			get {return _Protected;}			
 			set {_Protected = value;}
 			}
 		byte[]						_Protected ;
         /// <summary>
-        /// 
+        ///Data not protected by the signature
         /// </summary>
+
 		public virtual byte[]						Unprotected {
 			get {return _Unprotected;}			
 			set {_Unprotected = value;}
 			}
 		byte[]						_Unprotected ;
         /// <summary>
-        /// 
+        ///The initialization vector for the bulk cipher.
         /// </summary>
+
 		public virtual byte[]						IV {
 			get {return _IV;}			
 			set {_IV = value;}
 			}
 		byte[]						_IV ;
         /// <summary>
-        /// 
+        ///The encrypted data
         /// </summary>
+
 		public virtual byte[]						CipherText {
 			get {return _CipherText;}			
 			set {_CipherText = value;}
 			}
 		byte[]						_CipherText ;
         /// <summary>
-        /// 
+        ///Authentication tag
         /// </summary>
+
 		public virtual byte[]						JTag {
 			get {return _JTag;}			
 			set {_JTag = value;}
 			}
 		byte[]						_JTag ;
         /// <summary>
-        /// 
+        ///Additional data that is included in the authentication scope but not the encryption
         /// </summary>
+
 		public virtual byte[]						AdditionalAuthenticatedData {
 			get {return _AdditionalAuthenticatedData;}			
 			set {_AdditionalAuthenticatedData = value;}
 			}
 		byte[]						_AdditionalAuthenticatedData ;
-		/// <summary>
-        /// 
+        /// <summary>
+        ///Per recipient decryption data.
         /// </summary>
+
 		public virtual List<Recipient>				Recipients {
 			get {return _Recipients;}			
 			set {_Recipients = value;}
@@ -492,6 +515,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public JoseWebEncryption (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -499,6 +523,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary> 
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public JoseWebEncryption (string _String) {
 			Deserialize (_String);
 			}
@@ -634,7 +659,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new JoseWebEncryption  FromTagged (JSONReader JSONReader) {
 			JoseWebEncryption Out = null;
 
@@ -669,8 +695,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -721,27 +747,32 @@ namespace Goedel.Cryptography.Jose {
 		}
 
 	/// <summary>
+	///
+	/// Compact representation for signed data
 	/// </summary>
 	public partial class Signed : Jose {
         /// <summary>
-        /// 
+        ///Header
         /// </summary>
+
 		public virtual Header						Header {
 			get {return _Header;}			
 			set {_Header = value;}
 			}
 		Header						_Header ;
         /// <summary>
-        /// 
+        ///The authenticated data
         /// </summary>
+
 		public virtual byte[]						Payload {
 			get {return _Payload;}			
 			set {_Payload = value;}
 			}
 		byte[]						_Payload ;
         /// <summary>
-        /// 
+        ///The signature data
         /// </summary>
+
 		public virtual byte[]						Signature {
 			get {return _Signature;}			
 			set {_Signature = value;}
@@ -765,6 +796,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public Signed (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -772,6 +804,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary> 
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public Signed (string _String) {
 			Deserialize (_String);
 			}
@@ -875,7 +908,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new Signed  FromTagged (JSONReader JSONReader) {
 			Signed Out = null;
 
@@ -910,8 +944,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -940,35 +974,41 @@ namespace Goedel.Cryptography.Jose {
 		}
 
 	/// <summary>
+	///
+	/// Compact representation for encrypted data
 	/// </summary>
 	public partial class Encrypted : Jose {
         /// <summary>
-        /// 
+        ///Header
         /// </summary>
+
 		public virtual Header						Header {
 			get {return _Header;}			
 			set {_Header = value;}
 			}
 		Header						_Header ;
         /// <summary>
-        /// 
+        ///The initialization vector for the cipher
         /// </summary>
+
 		public virtual byte[]						IV {
 			get {return _IV;}			
 			set {_IV = value;}
 			}
 		byte[]						_IV ;
         /// <summary>
-        /// 
+        ///The encrypted data 
         /// </summary>
+
 		public virtual byte[]						CipherText {
 			get {return _CipherText;}			
 			set {_CipherText = value;}
 			}
 		byte[]						_CipherText ;
         /// <summary>
-        /// 
+        ///The signature data
         /// </summary>
+
 		public virtual byte[]						Signature {
 			get {return _Signature;}			
 			set {_Signature = value;}
@@ -992,6 +1032,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public Encrypted (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -999,6 +1040,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary> 
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public Encrypted (string _String) {
 			Deserialize (_String);
 			}
@@ -1107,7 +1149,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new Encrypted  FromTagged (JSONReader JSONReader) {
 			Encrypted Out = null;
 
@@ -1142,8 +1185,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -1176,59 +1219,69 @@ namespace Goedel.Cryptography.Jose {
 		}
 
 	/// <summary>
+	///
+	/// Describe a cryptographic key
 	/// </summary>
 	public partial class KeyData : Jose {
         /// <summary>
-        /// 
+        ///Bulk encryption algorithm for content
         /// </summary>
+
 		public virtual string						enc {
 			get {return _enc;}			
 			set {_enc = value;}
 			}
 		string						_enc ;
         /// <summary>
-        /// 
+        ///Key exchange algorithm
         /// </summary>
+
 		public virtual string						alg {
 			get {return _alg;}			
 			set {_alg = value;}
 			}
 		string						_alg ;
         /// <summary>
-        /// 
+        ///Key identifier. If a UDF fingerprint is used to identify the 
+        ///key it is placed in this field.
         /// </summary>
+
 		public virtual string						kid {
 			get {return _kid;}			
 			set {_kid = value;}
 			}
 		string						_kid ;
         /// <summary>
-        /// 
+        ///URL identifying an X.509 public key certificate
         /// </summary>
+
 		public virtual string						x5u {
 			get {return _x5u;}			
 			set {_x5u = value;}
 			}
 		string						_x5u ;
         /// <summary>
-        /// 
+        ///An X.509 public key certificate
         /// </summary>
+
 		public virtual byte[]						x5c {
 			get {return _x5c;}			
 			set {_x5c = value;}
 			}
 		byte[]						_x5c ;
         /// <summary>
-        /// 
+        ///SHA-1 fingerprint of X.509 certificate
         /// </summary>
+
 		public virtual byte[]						x5t {
 			get {return _x5t;}			
 			set {_x5t = value;}
 			}
 		byte[]						_x5t ;
         /// <summary>
-        /// 
+        ///SHA-2-256 fingerprint of X.509 certificate
         /// </summary>
+
 		public virtual byte[]						x5tS256 {
 			get {return _x5tS256;}			
 			set {_x5tS256 = value;}
@@ -1252,6 +1305,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public KeyData (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -1259,6 +1313,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary> 
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public KeyData (string _String) {
 			Deserialize (_String);
 			}
@@ -1382,7 +1437,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new KeyData  FromTagged (JSONReader JSONReader) {
 			KeyData Out = null;
 
@@ -1445,8 +1501,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -1489,48 +1545,56 @@ namespace Goedel.Cryptography.Jose {
 		}
 
 	/// <summary>
+	///
+	/// A JOSE Header.
 	/// </summary>
 	public partial class Header : KeyData {
         /// <summary>
-        /// 
+        ///JWK Set URL
         /// </summary>
+
 		public virtual string						jku {
 			get {return _jku;}			
 			set {_jku = value;}
 			}
 		string						_jku ;
         /// <summary>
-        /// 
+        ///The key identifier
         /// </summary>
+
 		public virtual string						jwk {
 			get {return _jwk;}			
 			set {_jwk = value;}
 			}
 		string						_jwk ;
         /// <summary>
-        /// 
+        ///Another IANA content type parameter
         /// </summary>
+
 		public virtual string						typ {
 			get {return _typ;}			
 			set {_typ = value;}
 			}
 		string						_typ ;
         /// <summary>
-        /// 
+        ///Content type parameter
         /// </summary>
+
 		public virtual string						cty {
 			get {return _cty;}			
 			set {_cty = value;}
 			}
 		string						_cty ;
         /// <summary>
-        /// 
+        ///List of header parameters that a recipient MUST understand to interpret
+        ///the authentication portion of the JOSE object.
         /// </summary>
-		public virtual string						crit {
+
+		public virtual List<string>				crit {
 			get {return _crit;}			
 			set {_crit = value;}
 			}
-		string						_crit ;
+		List<string>				_crit;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1549,6 +1613,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public Header (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -1556,6 +1621,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary> 
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public Header (string _String) {
 			Deserialize (_String);
 			}
@@ -1609,8 +1675,15 @@ namespace Goedel.Cryptography.Jose {
 			if (crit != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("crit", 1);
-					_Writer.WriteString (crit);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in crit) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
 				}
+
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -1670,7 +1743,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new Header  FromTagged (JSONReader JSONReader) {
 			Header Out = null;
 
@@ -1705,8 +1779,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -1727,7 +1801,14 @@ namespace Goedel.Cryptography.Jose {
 					break;
 					}
 				case "crit" : {
-					crit = JSONReader.ReadString ();
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					crit = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						crit.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
 					break;
 					}
 				default : {
@@ -1742,35 +1823,42 @@ namespace Goedel.Cryptography.Jose {
 		}
 
 	/// <summary>
+	///
+	/// A JOSE key. All fields map onto the equivalent fields defined in
+	/// RFC 7517
 	/// </summary>
 	public partial class Key : KeyData {
         /// <summary>
-        /// 
+        ///Key type
         /// </summary>
+
 		public virtual string						kty {
 			get {return _kty;}			
 			set {_kty = value;}
 			}
 		string						_kty ;
         /// <summary>
-        /// 
+        ///Public Key use
         /// </summary>
+
 		public virtual string						use {
 			get {return _use;}			
 			set {_use = value;}
 			}
 		string						_use ;
         /// <summary>
-        /// 
+        ///Key operations
         /// </summary>
+
 		public virtual string						key_ops {
 			get {return _key_ops;}			
 			set {_key_ops = value;}
 			}
 		string						_key_ops ;
         /// <summary>
-        /// 
+        ///Symmetric key value.
         /// </summary>
+
 		public virtual byte[]						k {
 			get {return _k;}			
 			set {_k = value;}
@@ -1794,6 +1882,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public Key (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -1801,6 +1890,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary> 
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public Key (string _String) {
 			Deserialize (_String);
 			}
@@ -1910,7 +2000,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new Key  FromTagged (JSONReader JSONReader) {
 			Key Out = null;
 
@@ -1959,8 +2050,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -1992,19 +2083,23 @@ namespace Goedel.Cryptography.Jose {
 		}
 
 	/// <summary>
+	///
+	/// Recipient information
 	/// </summary>
 	public partial class Recipient : Jose {
         /// <summary>
-        /// 
+        ///Specify the recipient and per recipient data
         /// </summary>
+
 		public virtual Header						Header {
 			get {return _Header;}			
 			set {_Header = value;}
 			}
 		Header						_Header ;
         /// <summary>
-        /// 
+        ///The decryption data for use by this recipient.
         /// </summary>
+
 		public virtual byte[]						EncryptedKey {
 			get {return _EncryptedKey;}			
 			set {_EncryptedKey = value;}
@@ -2028,6 +2123,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public Recipient (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -2035,6 +2131,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary> 
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public Recipient (string _String) {
 			Deserialize (_String);
 			}
@@ -2133,7 +2230,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new Recipient  FromTagged (JSONReader JSONReader) {
 			Recipient Out = null;
 
@@ -2168,8 +2266,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -2194,19 +2292,23 @@ namespace Goedel.Cryptography.Jose {
 		}
 
 	/// <summary>
+	///
+	/// An RSA Public key
 	/// </summary>
 	public partial class PublicKeyRSA : Key {
         /// <summary>
-        /// 
+        ///The public modulus
         /// </summary>
+
 		public virtual byte[]						n {
 			get {return _n;}			
 			set {_n = value;}
 			}
 		byte[]						_n ;
         /// <summary>
-        /// 
+        ///The public exponent
         /// </summary>
+
 		public virtual byte[]						e {
 			get {return _e;}			
 			set {_e = value;}
@@ -2227,10 +2329,10 @@ namespace Goedel.Cryptography.Jose {
 		public PublicKeyRSA () {
 			_Initialize ();
 			}
-
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public PublicKeyRSA (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -2238,6 +2340,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary> 
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public PublicKeyRSA (string _String) {
 			Deserialize (_String);
 			}
@@ -2337,7 +2440,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new PublicKeyRSA  FromTagged (JSONReader JSONReader) {
 			PublicKeyRSA Out = null;
 
@@ -2379,8 +2483,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
@@ -2404,51 +2508,59 @@ namespace Goedel.Cryptography.Jose {
 		}
 
 	/// <summary>
+	///
+	/// RSA private key parameters
 	/// </summary>
 	public partial class PrivateKeyRSA : PublicKeyRSA {
         /// <summary>
-        /// 
+        ///The parameter d
         /// </summary>
+
 		public virtual byte[]						d {
 			get {return _d;}			
 			set {_d = value;}
 			}
 		byte[]						_d ;
         /// <summary>
-        /// 
+        ///The parameter p
         /// </summary>
+
 		public virtual byte[]						p {
 			get {return _p;}			
 			set {_p = value;}
 			}
 		byte[]						_p ;
         /// <summary>
-        /// 
+        ///The parameter q
         /// </summary>
+
 		public virtual byte[]						q {
 			get {return _q;}			
 			set {_q = value;}
 			}
 		byte[]						_q ;
         /// <summary>
-        /// 
+        ///The parameter dp
         /// </summary>
+
 		public virtual byte[]						dp {
 			get {return _dp;}			
 			set {_dp = value;}
 			}
 		byte[]						_dp ;
         /// <summary>
-        /// 
+        ///The parameter dq
         /// </summary>
+
 		public virtual byte[]						dq {
 			get {return _dq;}			
 			set {_dq = value;}
 			}
 		byte[]						_dq ;
         /// <summary>
-        /// 
+        ///The parameter QInverse
         /// </summary>
+
 		public virtual byte[]						qi {
 			get {return _qi;}			
 			set {_qi = value;}
@@ -2472,6 +2584,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
 		public PrivateKeyRSA (JSONReader JSONReader) {
 			Deserialize (JSONReader);
 			}
@@ -2479,6 +2592,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary> 
 		/// Initialize class from a JSON encoded class.
         /// </summary>		
+        /// <param name="_String">Input string</param>
 		public PrivateKeyRSA (string _String) {
 			Deserialize (_String);
 			}
@@ -2598,7 +2712,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
         public static new PrivateKeyRSA  FromTagged (JSONReader JSONReader) {
 			PrivateKeyRSA Out = null;
 
@@ -2633,8 +2748,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader"></param>
-        /// <param name="Tag"></param>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {

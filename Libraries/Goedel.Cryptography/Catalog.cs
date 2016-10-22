@@ -354,7 +354,8 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Add a cryptographic algorithm provider to the catalog
         /// </summary>
-        /// <param name="CryptoProvider"></param>
+        /// <param name="CryptoProvider">Provider to add</param>
+        /// <returns>The catalog entry.</returns>
         public CryptoAlgorithm Add(CryptoProvider CryptoProvider) {
             var ID = CryptoProvider.CryptoAlgorithmID;
             var Slot = (int)ID;
@@ -530,7 +531,7 @@ namespace Goedel.Cryptography {
         }
 
     /// <summary>
-    /// 
+    /// A cryptographic algorithm.
     /// </summary>
     public class CryptoAlgorithm {
 
@@ -615,7 +616,7 @@ namespace Goedel.Cryptography {
         private string _JSON_alg;
 
         /// <summary>
-        /// 
+        /// The identifier for the algorithm in XML Signature and Encryption.
         /// </summary>
         public string XML {
             get { return _XML; }

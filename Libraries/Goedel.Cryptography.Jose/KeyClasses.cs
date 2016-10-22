@@ -32,7 +32,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Extract a KeyPair object from the JOSE data structure.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The extracted key pair</returns>
         public virtual KeyPair GetKeyPair () {
             return null;
             }

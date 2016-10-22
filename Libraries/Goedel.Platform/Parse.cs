@@ -48,78 +48,80 @@ namespace Goedel.Platform {
 
     /// <summary>DNS Token types</summary>
     public enum TokenType {
-        /// <summary></summary>
+        /// <summary>End of file</summary>
         EOF         = 0x1,
-        /// <summary></summary>
+        /// <summary>End of line</summary>
         EOL = 0x2,
-        /// <summary></summary>
+        /// <summary>Directive</summary>
         Directive = 0x4,
-        /// <summary></summary>
+        /// <summary>ALabel</summary>
         ALabel = 0x8,
-        /// <summary></summary>
+        /// <summary>Domain Label</summary>
         DLabel = 0x10,
-        /// <summary></summary>
+        /// <summary>Integer</summary>
         Number = 0x20,
-        /// <summary></summary>
+        /// <summary>Left parethesis</summary>
         Left = 0x40,
-        /// <summary></summary>
+        /// <summary>Right parethesis</summary>
         Right = 0x80,
-        /// <summary></summary>
+        /// <summary>Character @</summary>
         At = 0x100,
-        /// <summary></summary>
+        /// <summary>String value</summary>
         String = 0x200,
-        /// <summary></summary>
+        /// <summary>Literal value</summary>
         Literal = 0x400,
-        /// <summary></summary>
+        /// <summary>Unknown value</summary>
         Unknown = 0x8000000         // Anything else
         }
 
-    /// <summary></summary>
+    /// <summary>Character groups</summary>
     public enum CharType {
-        /// <summary></summary>
+        /// <summary>Whitespace</summary>
         White = 1,
-        /// <summary></summary>
+        /// <summary>Digit</summary>
         Digit = 2,      //0-9
-        /// <summary></summary>
+        /// <summary>a-z</summary>
         Lower = 3,
-        /// <summary></summary>
+        /// <summary>A-Z</summary>
         Upper = 4,
-        /// <summary></summary>
+        /// <summary>.</summary>
         Dot = 5,
-        /// <summary></summary>
+        /// <summary>_</summary>
         Under = 6,
-        /// <summary></summary>
+        /// <summary>-</summary>
         Dash = 7,
-        /// <summary></summary>
+        /// <summary>"</summary>
         Quote = 8,
-        /// <summary></summary>
+        /// <summary>$</summary>
         Dollar = 9,
-        /// <summary></summary>
+        /// <summary>;</summary>
         Semi = 10,
-        /// <summary></summary>
+        /// <summary>(</summary>
         Left = 11,
-        /// <summary></summary>
+        /// <summary>)</summary>
         Right = 12,
-        /// <summary></summary>
+        /// <summary>End of line</summary>
         Return = 13,
-        /// <summary></summary>
+        /// <summary>@</summary>
         At = 14,
-        /// <summary></summary>
+        /// <summary>\</summary>
         Backslash = 15,
-        /// <summary></summary>
+        /// <summary>#</summary>
         Hash = 16,
-        /// <summary></summary>
+        /// <summary>Other</summary>
         Unknown = 0
         }
 
 
 
-    /// <summary></summary>
+    /// <summary>Stub DNS parser class. Not currently implemented. 
+    /// Could be the basis for a DNS config file parser.</summary>
     public class Parse {
         TextBuffer TextBuffer;
         bool LastEOL = false;
 
-        /// <summary></summary>
+        /// <summary>Construct from specified string.</summary>
+        /// <param name="Buffer">Input data to parse.</param>
         public Parse(string Buffer) {
             TextBuffer = new TextBuffer (Buffer);
             }
@@ -217,10 +219,10 @@ namespace Goedel.Platform {
             }
 
         /// <summary>
-        /// 
+        /// Get next input token
         /// </summary>
-        /// <param name="TokenType"></param>
-        /// <returns></returns>
+        /// <param name="TokenType">Type of parse token received.</param>
+        /// <returns>The token value as a string.</returns>
         public string Token(TokenType TokenType) {
             TokenType GotTokenType;
             string result = Token (out GotTokenType);
@@ -236,13 +238,13 @@ namespace Goedel.Platform {
         bool BlockMode = false;
 
 
-        // Get next token after eliminating EOL tokens inside parenthesis blocks ( foo )
-        // and parenthesis block markers
+
         /// <summary>
-        /// 
+        /// Get next token after eliminating EOL tokens inside parenthesis blocks ( foo )
+        /// and parenthesis block markers
         /// </summary>
-        /// <param name="TokenType"></param>
-        /// <returns></returns>
+        /// <param name="TokenType">The token type</param>
+        /// <returns>The token received</returns>
         public string Token(out TokenType TokenType) {
             
             while (true) {
@@ -266,12 +268,11 @@ namespace Goedel.Platform {
             }
 
 
-        // Get next raw token (including parenthesis tokens)
         /// <summary>
-        /// 
+        /// Get next raw token (including parenthesis tokens)
         /// </summary>
-        /// <param name="TokenType"></param>
-        /// <returns></returns>
+        /// <param name="TokenType">The token type</param>
+        /// <returns>The token received</returns>
         public string RawToken(out TokenType TokenType) {
             int state = 0;
             char c;
@@ -317,9 +318,9 @@ namespace Goedel.Platform {
             }
 
         /// <summary>
-        /// 
+        /// Get the next record
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The record received.</returns>
         public DNSRecord DNSRecord() {
             TokenType TokenType;
             
@@ -335,85 +336,87 @@ namespace Goedel.Platform {
             }
 
 
-        /// <summary></summary>
-        /// <returns></returns>
+        /// <summary>Get IPv4Address</summary>
+        /// <returns>The value returned</returns>
         public IPAddress IPv4 () {
             return null;
             }
-        /// <summary></summary>
-        /// <returns></returns>
+        /// <summary>Get IPv6Address</summary>
+        /// <returns>The value returned</returns>
         public IPAddress IPv6 () {
             return null;
             }
-        /// <summary></summary>
-        /// <returns></returns>
+        /// <summary>Get Domain name</summary>
+        /// <returns>The value returned</returns>
         public Domain Domain ( ) {
             string token = Token (TokenType.ALabel | TokenType.DLabel);
             return new Domain (token);
             }
 
-        /// <summary></summary>
-        /// <returns></returns>
+        /// <summary>Get Mail Address</summary>
+        /// <returns>The value returned</returns>
         public string Mail ( ) {
             return null;
             }
 
-        /// <summary></summary>
-        /// <returns></returns>
+        /// <summary>Get Node ID</summary>
+        /// <returns>The value returned</returns>
         public ulong NodeID ( ) {
             return 0;
             }
 
-        /// <summary></summary>
-        /// <returns></returns>
+        /// <summary>Get Byte</summary>
+        /// <returns>The value returned</returns>
         public byte Byte ( ) {
             return 0;
             }
 
-        /// <summary></summary>
-        /// <returns></returns>
+        /// <summary>Get Int16</summary>
+        /// <returns>The value returned</returns>
         public ushort Int16 ( ) {
             string result = Token (TokenType.Number);
 
             return Convert.ToUInt16 (result);
             }
 
-        /// <summary></summary>
-        /// <returns></returns>
+        /// <summary>Get Int32</summary>
+        /// <returns>The value returned</returns>
         public uint Int32 ( ) {            
             string result = Token (TokenType.Number);
 
             return Convert.ToUInt16 (result);
             }
 
-        /// <summary></summary>
-        /// <returns></returns>
+        /// <summary>Get Time32</summary>
+        /// <returns>The value returned</returns>
         public uint Time32 ( ) {return 0;
             }
         // Same as for Time32 (resolution is still seconds, just a longer interval)
 
-        /// <summary></summary>
-        /// <returns></returns>
+        /// <summary>Get Time48</summary>
+        /// <returns>The value returned</returns>
         public ulong Time48() {
             return 0;
             }
 
-        /// <summary></summary>
-        /// <returns></returns>
+        /// <summary>Get String</summary>
+        /// <returns>The value returned</returns>
         public string String ( ) {
             return null;
             }
 
-        /// <summary></summary>
-        /// <returns></returns>
-        public string OptionalString ( ) {return null;
+        /// <summary>Get Optional String</summary>
+        /// <returns>The value returned</returns>
+        public string OptionalString ( ) {return String();
             }
-        /// <summary></summary>
-        /// <returns></returns>
-        public string StringX ( ) {return null;
+
+        /// <summary>Get String with otherwise specified length</summary>
+        /// <returns>The value returned</returns>
+        public string StringX ( ) {return String();
             }
-        /// <summary></summary>
-        /// <returns></returns>
+
+        /// <summary>Get multiple strings</summary>
+        /// <returns>The value returned</returns>
         public List<string> Strings() {
             List<string> ListString = new List<string> ();
             while (true) {
@@ -426,33 +429,34 @@ namespace Goedel.Platform {
                 ListString.Add (token);
                 }
             }
-        /// <summary></summary>
-        /// <returns></returns>
+
+        /// <summary>Get Binary data</summary>
+        /// <returns>The value returned</returns>
         public byte[] Binary () {return null;
             }
-        /// <summary></summary>
-        /// <returns></returns>
-        public byte[] Binary8 () {return null;
+        /// <summary>Get Binary data with 8 bit length value</summary>
+        /// <returns>The value returned</returns>
+        public byte[] Binary8 () {return Binary();
             }
-        /// <summary></summary>
-        /// <returns></returns>
-        public byte[] Binary16 () {return null;
+        /// <summary>Get Binary data with 16 bit length value</summary>
+        /// <returns>The value returned</returns>
+        public byte[] Binary16 () {return Binary();
             }
-        /// <summary></summary>
-        /// <returns></returns>
+        /// <summary>Get Binary data with L production</summary>
+        /// <returns>The value returned</returns>
         public byte[] LBinary () {return null;
             }
-        /// <summary></summary>
-        /// <returns></returns>
+        /// <summary>Get Hex data</summary>
+        /// <returns>The value returned</returns>>
         public byte[] Hex () {return null;
             }
-        /// <summary></summary>
-        /// <returns></returns>
-        public byte[] Hex8 () {return null;
+        /// <summary>Get Hex data with 8 bit length value</summary>
+        /// <returns>The value returned</returns>
+        public byte[] Hex8 () {return Hex();
             }
-        /// <summary></summary>
-        /// <returns></returns>
-        public byte[] Hex16 () {return null;
+        /// <summary>Get Hex data with 8 bit length value</summary>
+        /// <returns>The value returned</returns>
+        public byte[] Hex16 () {return Hex();
             }
 
         }

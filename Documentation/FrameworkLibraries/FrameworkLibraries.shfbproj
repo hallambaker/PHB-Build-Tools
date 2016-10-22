@@ -37,6 +37,21 @@
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Framework\Goedel.Cryptography.Framework.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Framework\bin\Publish\Goedel.Cryptography.Framework.XML" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Framework\bin\Publish\Goedel.Cryptography.Framework.dll" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.KeyFile\bin\Publish\Goedel.Cryptography.KeyFile.XML" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.KeyFile\bin\Publish\Goedel.Cryptography.KeyFile.dll" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.IO\Goedel.IO.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.IO\bin\Publish\Goedel.IO.XML" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.IO\bin\Publish\Goedel.IO.dll" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Platform.Framework\Goedel.Platform.Framework.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Platform.Framework\bin\Publish\Goedel.Platform.Framework.XML" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Platform.Framework\bin\Publish\Goedel.Platform.Framework.dll" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol.Debug\bin\Publish\Goedel.Protocol.Debug.XML" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol.Debug\bin\Publish\Goedel.Protocol.Debug.dll" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Registry\bin\Publish\Goedel.Registry.XML" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Registry\bin\Publish\Goedel.Registry.dll" />
     </DocumentationSources>
     <HelpFileVersion>1.0.0.0</HelpFileVersion>
     <MaximumGroupParts>2</MaximumGroupParts>
@@ -58,15 +73,22 @@
           <ignoreIfUnresolved>
             <assemblyIdentity name="BusinessObjects.Licensing.KeycodeDecoder" />
             <assemblyIdentity name="Microsoft.VisualStudio.TestTools.UITest.Playback" />
+            <assemblyIdentity name="System.Diagnostics.Debug" />
             <assemblyIdentity name="System.IO" />
             <assemblyIdentity name="System.Runtime" />
+            <assemblyIdentity name="System.Threading.Tasks" />
           </ignoreIfUnresolved>
         </configuration>
       </PlugInConfig>
-    </PlugInConfigurations>
+<PlugInConfig id="Additional Reference Links" enabled="True"><configuration><targets><target htmlSdkLinkType="None" helpViewerSdkLinkType="Id" websiteSdkLinkType="None" helpFileProject="..\PortableLibraries\PortableLibraries.shfbproj" /></targets></configuration></PlugInConfig></PlugInConfigurations>
     <NamespaceSummaries>
-      <NamespaceSummaryItem name="(global)" isDocumented="False" xmlns="">Implementation of cryptographic operations.</NamespaceSummaryItem>
-    </NamespaceSummaries>
+      <NamespaceSummaryItem name="(global)" isDocumented="False">Implementation of cryptographic operations.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Cryptography.Framework" isDocumented="True">Implementation of the Goedel.Cryptography algorithms using the libraries in the .NET Framework and Mono</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Cryptography.KeyFile" isDocumented="True">Encode and decode various cryptographic key file formats (PEM, OpenSSH, etc.)</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.IO" isDocumented="True">Convenience functions for IO operations. This will become the hub for all non portable IO operations including creating file handles, web clients and services.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Platform.Framework" isDocumented="True">Bind platform specific delegates to Goedel.Platform.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Protocol.Debug" isDocumented="True">Debugging tools for Protogen generated web services.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Registry" isDocumented="True">Support libraries for Goedel synthesis tools and the Command line interface synthesizer. Most of this functionality should probably migrate into a portable library in due course.</NamespaceSummaryItem></NamespaceSummaries>
     <TocParentId>-1</TocParentId>
     <TocParentVersion>100</TocParentVersion>
     <TopicVersion>100</TopicVersion>

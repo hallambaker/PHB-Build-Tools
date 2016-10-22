@@ -34,11 +34,13 @@ namespace Goedel.Protocol {
         protected CharacterStream Input;
 
         /// <summary>Get next character without advancing stream</summary>
+        /// <returns>The next character in the stream</returns> 
         protected char LookNext() {
             return Input.LookNext();
             }
 
         /// <summary>Get next character and advance stream</summary>
+        /// <returns>The character received</returns>
         protected char GetNext() {
             return Input.GetNext();
             }
@@ -75,7 +77,7 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>Get start of object</summary>
-        /// <returns></returns>
+        /// <returns>True if start of object found</returns>
         abstract public bool StartObject();
         
         /// <summary>Get end of object</summary>

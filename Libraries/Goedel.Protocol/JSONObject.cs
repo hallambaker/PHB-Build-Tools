@@ -43,7 +43,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Tag value used as substitute for reflection internally.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The object tag.</returns>
 		public virtual string Tag () {
 			return "MeshItem";
 			}

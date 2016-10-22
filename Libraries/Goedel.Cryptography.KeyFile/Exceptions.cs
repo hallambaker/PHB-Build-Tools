@@ -7,6 +7,7 @@ namespace Goedel.Cryptography.KeyFile {
 
 
     /// <summary>
+    /// Exception occurred parsing or encoding a key file.
     /// </summary>
     public class KeyFileException : global::System.Exception {
 

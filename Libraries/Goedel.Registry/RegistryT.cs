@@ -82,7 +82,7 @@ namespace Goedel.Registry {
         /// <summary>
         /// Convert position to text.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The string value</returns>
         public override string ToString() {
             return ("Line "+ Ln.ToString() + " Col "+ Col.ToString () + " in :" + File.Name );
             }
@@ -178,7 +178,7 @@ namespace Goedel.Registry {
         /// <param name="Text">The name</param>
         /// <param name="Type">The type</param>
         /// <param name="ObjectIn">The parse tree being constructed.</param>
-        /// <returns></returns>
+        /// <returns>The identifier created</returns>
         public ID<T> ID (Position Position, string Text, TYPE<T> Type, T ObjectIn) {
             //Console.WriteLine ("Declare ID {0}", Text);
             
@@ -207,7 +207,7 @@ namespace Goedel.Registry {
         /// <param name="Text">The name</param>
         /// <param name="Type">The type</param>
         /// <param name="ObjectIn">The parse tree being constructed.</param>
-        /// <returns></returns>
+        /// <returns>The reference created</returns>
         public REF<T>  REF (Position Position, string Text, TYPE<T> Type, T ObjectIn)  {
             ID<T> ID = FindID (Text, Type);
 
@@ -229,7 +229,7 @@ namespace Goedel.Registry {
         /// <param name="Text">The name</param>
         /// <param name="Type">The type</param>
         /// <param name="ObjectIn">The parse tree being constructed.</param>
-        /// <returns></returns>
+        /// <returns>The token created</returns>
         public TOKEN<T> TOKEN (Position Position, string Text, TYPE<T> Type, T ObjectIn) {
             ID<T> ID = FindID (Text, Type);
 
@@ -282,7 +282,7 @@ namespace Goedel.Registry {
         /// <param name="Position">Position in the source.</param>
         /// <param name="Label">The name</param>
         /// <param name="Type">The type</param>
-        /// <param name="Declared"></param>
+        /// <param name="Declared">If true, this is a declaration for the ID.</param>
         /// <param name="ObjectIn">The parse tree being constructed.</param>
         public ID(Position Position, string Label, TYPE <T> Type, bool Declared, T ObjectIn) {
             this.Position = Position;

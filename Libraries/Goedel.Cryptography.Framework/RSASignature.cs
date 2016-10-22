@@ -185,6 +185,7 @@ namespace Goedel.Cryptography.Framework {
         /// Generate a new RSA Key Pair with the Key size specified when the 
         /// instance was created.
         /// </summary>
+        /// <param name="KeySecurity">The key security level.</param>
         public override void Generate(KeySecurity KeySecurity) {
             _RSAKeyPair = new RSAKeyPair(KeySize);
             _RSAKeyPair.Persist(KeySecurity);
@@ -194,7 +195,7 @@ namespace Goedel.Cryptography.Framework {
         /// Locate the private key in the local key store.
         /// </summary>
         /// <param name="UDF">Fingerprint of key to locate.</param>
-        /// <returns></returns>
+        /// <returns>True if key is found, otherwise false.</returns>
         public override bool FindLocal(string UDF) {
             _RSAKeyPair = new RSAKeyPair(UDF);
             return _RSAKeyPair.Provider != null;

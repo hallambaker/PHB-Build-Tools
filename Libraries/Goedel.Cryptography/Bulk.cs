@@ -145,7 +145,7 @@ namespace Goedel.Cryptography {
         /// Encrypt the provided data
         /// </summary>
         /// <param name="Data">Data to encrypt</param>
-        /// <remarks>Encrypted data.</remarks>
+        /// <returns>Encrypted data.</returns>
         public abstract CryptoData Encrypt(byte[] Data);
 
 
@@ -153,7 +153,7 @@ namespace Goedel.Cryptography {
         /// Encrypt the provided cryptoblob
         /// </summary>
         /// <param name="Input">Data to encrypt</param>
-        /// <remarks>Encrypted data.</remarks>
+        /// <returns>Encrypted data.</returns>
         public abstract CryptoData Encrypt(CryptoData Input);
 
 
@@ -162,6 +162,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Input">Cryoptographic parameters</param>
         /// <param name="Data">Data to decrypt/</param>
+        /// <returns>Decrypted data.</returns>
         public abstract CryptoData Decrypt(CryptoData Input, byte[] Data);
         }
 
