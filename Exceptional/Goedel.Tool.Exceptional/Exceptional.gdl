@@ -1,11 +1,12 @@
-﻿Copyright "2012" "Default Deny Security Inc." MITLicense
+﻿Copyright "2012-2016" "Default Deny Security Inc." MITLicense
 
 Class Goedel.Tool.Exceptional Exceptions
     TopType Namespace
         Id ID NamespaceT
 		Options List Choice
 			Exception
-			
+
+
 	TopType Using
         Id ID NamespaceT
 

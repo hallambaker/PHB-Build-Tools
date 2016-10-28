@@ -129,7 +129,7 @@ namespace Goedel.FSR {
     /// <summary>
     /// Lexical reader reading from string input.
     /// </summary>
-    public class StringReader : LexReader {
+    public class LexStringReader : LexReader {
         string Data;
         int Count;
 
@@ -137,7 +137,7 @@ namespace Goedel.FSR {
         /// Constructor
         /// </summary>
         /// <param name="Data">The string to be read.</param>
-        public StringReader(string Data) {
+        public LexStringReader(string Data) {
             this.Data = Data;
             Count = 0;
             }

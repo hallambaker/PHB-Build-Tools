@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Goedel.MarkLib {
+namespace Goedel.Document.Markdown {
     //class RichDocument {
 
     //    KeyValuePair<string, string> MetaData;

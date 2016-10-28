@@ -34,7 +34,7 @@ using Goedel.Registry;
 
 
 //
-// Namespace Goedel.BootMark
+// Namespace Goedel.Document.Markdown.Tags
 // Class MarkSchema
 //
 
@@ -62,7 +62,7 @@ using Goedel.Registry;
 //       ElementID
 //       AttributeID
 //   NamespaceType
-//       Goedel.BootMark
+//       Goedel.Document.Markdown.Tags
 //   ClassType
 //       MarkSchema
 //   NameType
@@ -83,7 +83,7 @@ using Goedel.Registry;
 //       NamespaceType
 //       ClassType
 
-namespace Goedel.BootMark {
+namespace Goedel.Document.Markdown.Tags {
 
 
     public enum MarkSchemaType {
@@ -722,12 +722,12 @@ namespace Goedel.BootMark {
 
     struct _StackItem {
         public StateCode   State;
-        public Goedel.BootMark._Choice     Token;
+        public Goedel.Document.Markdown.Tags._Choice     Token;
         }
 
     public partial class MarkSchema : Goedel.Registry.Parser{
-        public List <Goedel.BootMark._Choice>        Top;
-        public Registry	<Goedel.BootMark._Choice>	Registry;
+        public List <Goedel.Document.Markdown.Tags._Choice>        Top;
+        public Registry	<Goedel.Document.Markdown.Tags._Choice>	Registry;
 
 
 
@@ -738,7 +738,7 @@ namespace Goedel.BootMark {
             }
 
         StateCode								State;
-        Goedel.BootMark._Choice				Current;
+        Goedel.Document.Markdown.Tags._Choice				Current;
         List <_StackItem>						Stack;
 
 
@@ -768,8 +768,8 @@ namespace Goedel.BootMark {
 			}
 
         public MarkSchema() {
-            Top = new List<Goedel.BootMark._Choice> () ;
-            Registry = new Registry <Goedel.BootMark._Choice> ();
+            Top = new List<Goedel.Document.Markdown.Tags._Choice> () ;
+            Registry = new Registry <Goedel.Document.Markdown.Tags._Choice> ();
             State = StateCode._Start;
             Stack = new List <_StackItem> ();
             _StartOfEntry = true;
@@ -785,12 +785,12 @@ namespace Goedel.BootMark {
 
 
 
-        public TYPE<Goedel.BootMark._Choice> TYPE__ElementID ;
-        public TYPE<Goedel.BootMark._Choice> TYPE__AttributeID ;
-        public TYPE<Goedel.BootMark._Choice> TYPE__NamespaceType ;
-        public TYPE<Goedel.BootMark._Choice> TYPE__ClassType ;
+        public TYPE<Goedel.Document.Markdown.Tags._Choice> TYPE__ElementID ;
+        public TYPE<Goedel.Document.Markdown.Tags._Choice> TYPE__AttributeID ;
+        public TYPE<Goedel.Document.Markdown.Tags._Choice> TYPE__NamespaceType ;
+        public TYPE<Goedel.Document.Markdown.Tags._Choice> TYPE__ClassType ;
 
-        private Goedel.BootMark._Choice New_Choice(string Label) {
+        private Goedel.Document.Markdown.Tags._Choice New_Choice(string Label) {
             switch (Label) {
 
                 case "Class": return NewClass();
@@ -818,174 +818,174 @@ namespace Goedel.BootMark {
 
 
 
-        private Goedel.BootMark.Class NewClass() {
-            Goedel.BootMark.Class result = new Goedel.BootMark.Class();
+        private Goedel.Document.Markdown.Tags.Class NewClass() {
+            Goedel.Document.Markdown.Tags.Class result = new Goedel.Document.Markdown.Tags.Class();
             Push (result);
             State = StateCode.Class_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.Meta NewMeta() {
-            Goedel.BootMark.Meta result = new Goedel.BootMark.Meta();
+        private Goedel.Document.Markdown.Tags.Meta NewMeta() {
+            Goedel.Document.Markdown.Tags.Meta result = new Goedel.Document.Markdown.Tags.Meta();
             Push (result);
             State = StateCode.Meta_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.Layout NewLayout() {
-            Goedel.BootMark.Layout result = new Goedel.BootMark.Layout();
+        private Goedel.Document.Markdown.Tags.Layout NewLayout() {
+            Goedel.Document.Markdown.Tags.Layout result = new Goedel.Document.Markdown.Tags.Layout();
             Push (result);
             State = StateCode.Layout_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.Block NewBlock() {
-            Goedel.BootMark.Block result = new Goedel.BootMark.Block();
+        private Goedel.Document.Markdown.Tags.Block NewBlock() {
+            Goedel.Document.Markdown.Tags.Block result = new Goedel.Document.Markdown.Tags.Block();
             Push (result);
             State = StateCode.Block_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.Annotation NewAnnotation() {
-            Goedel.BootMark.Annotation result = new Goedel.BootMark.Annotation();
+        private Goedel.Document.Markdown.Tags.Annotation NewAnnotation() {
+            Goedel.Document.Markdown.Tags.Annotation result = new Goedel.Document.Markdown.Tags.Annotation();
             Push (result);
             State = StateCode.Annotation_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.Item NewItem() {
-            Goedel.BootMark.Item result = new Goedel.BootMark.Item();
+        private Goedel.Document.Markdown.Tags.Item NewItem() {
+            Goedel.Document.Markdown.Tags.Item result = new Goedel.Document.Markdown.Tags.Item();
             Push (result);
             State = StateCode.Item_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.Markup NewMarkup() {
-            Goedel.BootMark.Markup result = new Goedel.BootMark.Markup();
+        private Goedel.Document.Markdown.Tags.Markup NewMarkup() {
+            Goedel.Document.Markdown.Tags.Markup result = new Goedel.Document.Markdown.Tags.Markup();
             Push (result);
             State = StateCode.Markup_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.XML NewXML() {
-            Goedel.BootMark.XML result = new Goedel.BootMark.XML();
+        private Goedel.Document.Markdown.Tags.XML NewXML() {
+            Goedel.Document.Markdown.Tags.XML result = new Goedel.Document.Markdown.Tags.XML();
             Push (result);
             State = StateCode.XML_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.Default NewDefault() {
-            Goedel.BootMark.Default result = new Goedel.BootMark.Default();
+        private Goedel.Document.Markdown.Tags.Default NewDefault() {
+            Goedel.Document.Markdown.Tags.Default result = new Goedel.Document.Markdown.Tags.Default();
             Push (result);
             State = StateCode.Default_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.Stack NewStack() {
-            Goedel.BootMark.Stack result = new Goedel.BootMark.Stack();
+        private Goedel.Document.Markdown.Tags.Stack NewStack() {
+            Goedel.Document.Markdown.Tags.Stack result = new Goedel.Document.Markdown.Tags.Stack();
             Push (result);
             State = StateCode.Stack_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.Wrap NewWrap() {
-            Goedel.BootMark.Wrap result = new Goedel.BootMark.Wrap();
+        private Goedel.Document.Markdown.Tags.Wrap NewWrap() {
+            Goedel.Document.Markdown.Tags.Wrap result = new Goedel.Document.Markdown.Tags.Wrap();
             Push (result);
             State = StateCode.Wrap_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.Level NewLevel() {
-            Goedel.BootMark.Level result = new Goedel.BootMark.Level();
+        private Goedel.Document.Markdown.Tags.Level NewLevel() {
+            Goedel.Document.Markdown.Tags.Level result = new Goedel.Document.Markdown.Tags.Level();
             Push (result);
             State = StateCode.Level_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.Remark NewRemark() {
-            Goedel.BootMark.Remark result = new Goedel.BootMark.Remark();
+        private Goedel.Document.Markdown.Tags.Remark NewRemark() {
+            Goedel.Document.Markdown.Tags.Remark result = new Goedel.Document.Markdown.Tags.Remark();
             Push (result);
             State = StateCode.Remark_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.Start NewStart() {
-            Goedel.BootMark.Start result = new Goedel.BootMark.Start();
+        private Goedel.Document.Markdown.Tags.Start NewStart() {
+            Goedel.Document.Markdown.Tags.Start result = new Goedel.Document.Markdown.Tags.Start();
             Push (result);
             State = StateCode.Start_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.End NewEnd() {
-            Goedel.BootMark.End result = new Goedel.BootMark.End();
+        private Goedel.Document.Markdown.Tags.End NewEnd() {
+            Goedel.Document.Markdown.Tags.End result = new Goedel.Document.Markdown.Tags.End();
             Push (result);
             State = StateCode.End_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.String NewString() {
-            Goedel.BootMark.String result = new Goedel.BootMark.String();
+        private Goedel.Document.Markdown.Tags.String NewString() {
+            Goedel.Document.Markdown.Tags.String result = new Goedel.Document.Markdown.Tags.String();
             Push (result);
             State = StateCode.String_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.Flag NewFlag() {
-            Goedel.BootMark.Flag result = new Goedel.BootMark.Flag();
+        private Goedel.Document.Markdown.Tags.Flag NewFlag() {
+            Goedel.Document.Markdown.Tags.Flag result = new Goedel.Document.Markdown.Tags.Flag();
             Push (result);
             State = StateCode.Flag_Start;
             return result;
             }
 
 
-        private Goedel.BootMark.Integer NewInteger() {
-            Goedel.BootMark.Integer result = new Goedel.BootMark.Integer();
+        private Goedel.Document.Markdown.Tags.Integer NewInteger() {
+            Goedel.Document.Markdown.Tags.Integer result = new Goedel.Document.Markdown.Tags.Integer();
             Push (result);
             State = StateCode.Integer_Start;
             return result;
             }
 
 
-        static Goedel.BootMark.MarkSchemaType _Reserved(string Label) {
+        static Goedel.Document.Markdown.Tags.MarkSchemaType _Reserved(string Label) {
             switch (Label) {
 
-                case "Class": return Goedel.BootMark.MarkSchemaType.Class;
-                case "Meta": return Goedel.BootMark.MarkSchemaType.Meta;
-                case "Layout": return Goedel.BootMark.MarkSchemaType.Layout;
-                case "Block": return Goedel.BootMark.MarkSchemaType.Block;
-                case "Annotation": return Goedel.BootMark.MarkSchemaType.Annotation;
-                case "Item": return Goedel.BootMark.MarkSchemaType.Item;
-                case "Markup": return Goedel.BootMark.MarkSchemaType.Markup;
-                case "XML": return Goedel.BootMark.MarkSchemaType.XML;
-                case "Default": return Goedel.BootMark.MarkSchemaType.Default;
-                case "Stack": return Goedel.BootMark.MarkSchemaType.Stack;
-                case "Wrap": return Goedel.BootMark.MarkSchemaType.Wrap;
-                case "Level": return Goedel.BootMark.MarkSchemaType.Level;
-                case "Remark": return Goedel.BootMark.MarkSchemaType.Remark;
-                case "Start": return Goedel.BootMark.MarkSchemaType.Start;
-                case "End": return Goedel.BootMark.MarkSchemaType.End;
-                case "String": return Goedel.BootMark.MarkSchemaType.String;
-                case "Flag": return Goedel.BootMark.MarkSchemaType.Flag;
-                case "Integer": return Goedel.BootMark.MarkSchemaType.Integer;
+                case "Class": return Goedel.Document.Markdown.Tags.MarkSchemaType.Class;
+                case "Meta": return Goedel.Document.Markdown.Tags.MarkSchemaType.Meta;
+                case "Layout": return Goedel.Document.Markdown.Tags.MarkSchemaType.Layout;
+                case "Block": return Goedel.Document.Markdown.Tags.MarkSchemaType.Block;
+                case "Annotation": return Goedel.Document.Markdown.Tags.MarkSchemaType.Annotation;
+                case "Item": return Goedel.Document.Markdown.Tags.MarkSchemaType.Item;
+                case "Markup": return Goedel.Document.Markdown.Tags.MarkSchemaType.Markup;
+                case "XML": return Goedel.Document.Markdown.Tags.MarkSchemaType.XML;
+                case "Default": return Goedel.Document.Markdown.Tags.MarkSchemaType.Default;
+                case "Stack": return Goedel.Document.Markdown.Tags.MarkSchemaType.Stack;
+                case "Wrap": return Goedel.Document.Markdown.Tags.MarkSchemaType.Wrap;
+                case "Level": return Goedel.Document.Markdown.Tags.MarkSchemaType.Level;
+                case "Remark": return Goedel.Document.Markdown.Tags.MarkSchemaType.Remark;
+                case "Start": return Goedel.Document.Markdown.Tags.MarkSchemaType.Start;
+                case "End": return Goedel.Document.Markdown.Tags.MarkSchemaType.End;
+                case "String": return Goedel.Document.Markdown.Tags.MarkSchemaType.String;
+                case "Flag": return Goedel.Document.Markdown.Tags.MarkSchemaType.Flag;
+                case "Integer": return Goedel.Document.Markdown.Tags.MarkSchemaType.Integer;
 
                 }
-            return Goedel.BootMark.MarkSchemaType._Bottom;
+            return Goedel.Document.Markdown.Tags.MarkSchemaType._Bottom;
             }
 
 
@@ -997,14 +997,14 @@ namespace Goedel.BootMark {
 
 			StructureWriter StructureWriter = StructureWriter.GetStructureWriter (Output, OutputFormat);
 			StructureWriter.StartDocument ();
-			foreach (Goedel.BootMark._Choice Entry in Top) {
+			foreach (Goedel.Document.Markdown.Tags._Choice Entry in Top) {
 				Entry.Serialize (StructureWriter, true);
 				}
 			StructureWriter.EndDocument ();
 			}
 
 
-        void Push (Goedel.BootMark._Choice Token) {
+        void Push (Goedel.Document.Markdown.Tags._Choice Token) {
             _StackItem Item = new _StackItem ();
             Item.State = State;
             Item.Token = Current;
@@ -1055,9 +1055,9 @@ namespace Goedel.BootMark {
 
                     case StateCode._Choice:                //      LABEL Class | END
                         if (Token == TokenType.LABEL) {
-                            Goedel.BootMark.MarkSchemaType LabelType = _Reserved (Text);
+                            Goedel.Document.Markdown.Tags.MarkSchemaType LabelType = _Reserved (Text);
                             if (false |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Class)) {
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Class)) {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
@@ -1076,7 +1076,7 @@ namespace Goedel.BootMark {
 
                     case StateCode.Class_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.BootMark.Class Current_Cast = (Goedel.BootMark.Class)Current;
+                            Goedel.Document.Markdown.Tags.Class Current_Cast = (Goedel.Document.Markdown.Tags.Class)Current;
                             Current_Cast.Namespace = Registry.TOKEN(Position, Text, TYPE__NamespaceType, Current_Cast);
                             State = StateCode.Class__Namespace;
                             break;
@@ -1085,7 +1085,7 @@ namespace Goedel.BootMark {
 
                     case StateCode.Class__Namespace:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.BootMark.Class Current_Cast = (Goedel.BootMark.Class)Current;
+                            Goedel.Document.Markdown.Tags.Class Current_Cast = (Goedel.Document.Markdown.Tags.Class)Current;
                             Current_Cast.Name = Registry.TOKEN(Position, Text, TYPE__ClassType, Current_Cast);
                             State = StateCode.Class__Name;
                             break;
@@ -1111,15 +1111,15 @@ namespace Goedel.BootMark {
 						// Parser transition for LIST $$$$$
 
                         else if (Token == TokenType.LABEL) {
-							Goedel.BootMark.Class Current_Cast = (Goedel.BootMark.Class)Current;
-                            Goedel.BootMark.MarkSchemaType LabelType = _Reserved (Text);
+							Goedel.Document.Markdown.Tags.Class Current_Cast = (Goedel.Document.Markdown.Tags.Class)Current;
+                            Goedel.Document.Markdown.Tags.MarkSchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Meta) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Item) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Annotation) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Layout) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Block) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Remark) ) {
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Meta) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Item) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Annotation) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Layout) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Block) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Remark) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
@@ -1133,7 +1133,7 @@ namespace Goedel.BootMark {
 
                     case StateCode.Meta__TBS:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.BootMark.Meta Current_Cast = (Goedel.BootMark.Meta)Current;
+                            Goedel.Document.Markdown.Tags.Meta Current_Cast = (Goedel.Document.Markdown.Tags.Meta)Current;
                             Current_Cast.Id = Registry.ID(Position, Text, TYPE__ElementID, Current_Cast);
                             State = StateCode.Meta__Id;
                             break;
@@ -1159,14 +1159,14 @@ namespace Goedel.BootMark {
 						// Parser transition for LIST $$$$$
 
                         else if (Token == TokenType.LABEL) {
-							Goedel.BootMark.Meta Current_Cast = (Goedel.BootMark.Meta)Current;
-                            Goedel.BootMark.MarkSchemaType LabelType = _Reserved (Text);
+							Goedel.Document.Markdown.Tags.Meta Current_Cast = (Goedel.Document.Markdown.Tags.Meta)Current;
+                            Goedel.Document.Markdown.Tags.MarkSchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Flag) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.String) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Remark) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Integer) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Meta) ) {
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Flag) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.String) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Remark) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Integer) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Meta) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
@@ -1178,7 +1178,7 @@ namespace Goedel.BootMark {
 
                     case StateCode.Layout_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.BootMark.Layout Current_Cast = (Goedel.BootMark.Layout)Current;
+                            Goedel.Document.Markdown.Tags.Layout Current_Cast = (Goedel.Document.Markdown.Tags.Layout)Current;
                             Current_Cast.Id = Registry.ID(Position, Text, TYPE__ElementID, Current_Cast);
                             State = StateCode.Layout__Id;
                             break;
@@ -1204,18 +1204,18 @@ namespace Goedel.BootMark {
 						// Parser transition for LIST $$$$$
 
                         else if (Token == TokenType.LABEL) {
-							Goedel.BootMark.Layout Current_Cast = (Goedel.BootMark.Layout)Current;
-                            Goedel.BootMark.MarkSchemaType LabelType = _Reserved (Text);
+							Goedel.Document.Markdown.Tags.Layout Current_Cast = (Goedel.Document.Markdown.Tags.Layout)Current;
+                            Goedel.Document.Markdown.Tags.MarkSchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Flag) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.String) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Remark) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Integer) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Layout) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Markup) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.XML) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Stack) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Wrap) ) {
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Flag) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.String) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Remark) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Integer) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Layout) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Markup) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.XML) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Stack) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Wrap) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
@@ -1227,7 +1227,7 @@ namespace Goedel.BootMark {
 
                     case StateCode.Block_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.BootMark.Block Current_Cast = (Goedel.BootMark.Block)Current;
+                            Goedel.Document.Markdown.Tags.Block Current_Cast = (Goedel.Document.Markdown.Tags.Block)Current;
                             Current_Cast.Id = Registry.ID(Position, Text, TYPE__ElementID, Current_Cast);
                             State = StateCode.Block__Id;
                             break;
@@ -1253,18 +1253,18 @@ namespace Goedel.BootMark {
 						// Parser transition for LIST $$$$$
 
                         else if (Token == TokenType.LABEL) {
-							Goedel.BootMark.Block Current_Cast = (Goedel.BootMark.Block)Current;
-                            Goedel.BootMark.MarkSchemaType LabelType = _Reserved (Text);
+							Goedel.Document.Markdown.Tags.Block Current_Cast = (Goedel.Document.Markdown.Tags.Block)Current;
+                            Goedel.Document.Markdown.Tags.MarkSchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Flag) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.String) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Remark) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Integer) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Markup) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Level) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.XML) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Stack) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Wrap) ) {
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Flag) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.String) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Remark) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Integer) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Markup) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Level) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.XML) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Stack) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Wrap) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
@@ -1276,7 +1276,7 @@ namespace Goedel.BootMark {
 
                     case StateCode.Annotation_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.BootMark.Annotation Current_Cast = (Goedel.BootMark.Annotation)Current;
+                            Goedel.Document.Markdown.Tags.Annotation Current_Cast = (Goedel.Document.Markdown.Tags.Annotation)Current;
                             Current_Cast.Id = Registry.ID(Position, Text, TYPE__ElementID, Current_Cast);
                             State = StateCode.Annotation__Id;
                             break;
@@ -1302,15 +1302,15 @@ namespace Goedel.BootMark {
 						// Parser transition for LIST $$$$$
 
                         else if (Token == TokenType.LABEL) {
-							Goedel.BootMark.Annotation Current_Cast = (Goedel.BootMark.Annotation)Current;
-                            Goedel.BootMark.MarkSchemaType LabelType = _Reserved (Text);
+							Goedel.Document.Markdown.Tags.Annotation Current_Cast = (Goedel.Document.Markdown.Tags.Annotation)Current;
+                            Goedel.Document.Markdown.Tags.MarkSchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Flag) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.String) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Remark) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Integer) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Markup) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.XML) ) {
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Flag) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.String) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Remark) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Integer) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Markup) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.XML) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
@@ -1322,7 +1322,7 @@ namespace Goedel.BootMark {
 
                     case StateCode.Item_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.BootMark.Item Current_Cast = (Goedel.BootMark.Item)Current;
+                            Goedel.Document.Markdown.Tags.Item Current_Cast = (Goedel.Document.Markdown.Tags.Item)Current;
                             Current_Cast.Id = Registry.ID(Position, Text, TYPE__ElementID, Current_Cast);
                             State = StateCode.Item__Id;
                             break;
@@ -1348,15 +1348,15 @@ namespace Goedel.BootMark {
 						// Parser transition for LIST $$$$$
 
                         else if (Token == TokenType.LABEL) {
-							Goedel.BootMark.Item Current_Cast = (Goedel.BootMark.Item)Current;
-                            Goedel.BootMark.MarkSchemaType LabelType = _Reserved (Text);
+							Goedel.Document.Markdown.Tags.Item Current_Cast = (Goedel.Document.Markdown.Tags.Item)Current;
+                            Goedel.Document.Markdown.Tags.MarkSchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Flag) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.String) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Remark) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Integer) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Markup) |
-									(LabelType == Goedel.BootMark.MarkSchemaType.XML) ) {
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Flag) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.String) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Remark) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Integer) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Markup) |
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.XML) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
@@ -1368,7 +1368,7 @@ namespace Goedel.BootMark {
 
                     case StateCode.Markup_Start:
                         if (Token == TokenType.STRING) {
-                            Goedel.BootMark.Markup Current_Cast = (Goedel.BootMark.Markup)Current;
+                            Goedel.Document.Markdown.Tags.Markup Current_Cast = (Goedel.Document.Markdown.Tags.Markup)Current;
                             Current_Cast.Start = Text;
                             State = StateCode.Markup__Start;
                             break;
@@ -1377,7 +1377,7 @@ namespace Goedel.BootMark {
 
                     case StateCode.Markup__Start:
                         if (Token == TokenType.STRING) {
-                            Goedel.BootMark.Markup Current_Cast = (Goedel.BootMark.Markup)Current;
+                            Goedel.Document.Markdown.Tags.Markup Current_Cast = (Goedel.Document.Markdown.Tags.Markup)Current;
                             Current_Cast.Start1 = Text;
                             State = StateCode.Markup__Start1;
                             break;
@@ -1386,7 +1386,7 @@ namespace Goedel.BootMark {
 
                     case StateCode.Markup__Start1:
                         if (Token == TokenType.STRING) {
-                            Goedel.BootMark.Markup Current_Cast = (Goedel.BootMark.Markup)Current;
+                            Goedel.Document.Markdown.Tags.Markup Current_Cast = (Goedel.Document.Markdown.Tags.Markup)Current;
                             Current_Cast.End = Text;
                             State = StateCode.Markup__End;
                             break;
@@ -1399,7 +1399,7 @@ namespace Goedel.BootMark {
                         break;
                     case StateCode.XML_Start:
                         if (Token == TokenType.STRING) {
-                            Goedel.BootMark.XML Current_Cast = (Goedel.BootMark.XML)Current;
+                            Goedel.Document.Markdown.Tags.XML Current_Cast = (Goedel.Document.Markdown.Tags.XML)Current;
                             Current_Cast.Tag = Text;
                             State = StateCode.XML__Tag;
                             break;
@@ -1408,7 +1408,7 @@ namespace Goedel.BootMark {
 
                     case StateCode.XML__Tag:
                         if (Token == TokenType.STRING) {
-                            Goedel.BootMark.XML Current_Cast = (Goedel.BootMark.XML)Current;
+                            Goedel.Document.Markdown.Tags.XML Current_Cast = (Goedel.Document.Markdown.Tags.XML)Current;
                             Current_Cast.First = Text;
                             State = StateCode.XML__First;
                             break;
@@ -1434,10 +1434,10 @@ namespace Goedel.BootMark {
 						// Parser transition for LIST $$$$$
 
                         else if (Token == TokenType.LABEL) {
-							Goedel.BootMark.XML Current_Cast = (Goedel.BootMark.XML)Current;
-                            Goedel.BootMark.MarkSchemaType LabelType = _Reserved (Text);
+							Goedel.Document.Markdown.Tags.XML Current_Cast = (Goedel.Document.Markdown.Tags.XML)Current;
+                            Goedel.Document.Markdown.Tags.MarkSchemaType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.BootMark.MarkSchemaType.Default) ) {
+									(LabelType == Goedel.Document.Markdown.Tags.MarkSchemaType.Default) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
@@ -1449,7 +1449,7 @@ namespace Goedel.BootMark {
 
                     case StateCode.Default_Start:
                         if (Token == TokenType.STRING) {
-                            Goedel.BootMark.Default Current_Cast = (Goedel.BootMark.Default)Current;
+                            Goedel.Document.Markdown.Tags.Default Current_Cast = (Goedel.Document.Markdown.Tags.Default)Current;
                             Current_Cast.Tag = Text;
                             State = StateCode.Default__Tag;
                             break;
@@ -1458,7 +1458,7 @@ namespace Goedel.BootMark {
 
                     case StateCode.Default__Tag:
                         if (Token == TokenType.STRING) {
-                            Goedel.BootMark.Default Current_Cast = (Goedel.BootMark.Default)Current;
+                            Goedel.Document.Markdown.Tags.Default Current_Cast = (Goedel.Document.Markdown.Tags.Default)Current;
                             Current_Cast.Value = Text;
                             State = StateCode.Default__Value;
                             break;
@@ -1471,7 +1471,7 @@ namespace Goedel.BootMark {
                         break;
                     case StateCode.Stack_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.BootMark.Stack Current_Cast = (Goedel.BootMark.Stack)Current;
+                            Goedel.Document.Markdown.Tags.Stack Current_Cast = (Goedel.Document.Markdown.Tags.Stack)Current;
                             Current_Cast.Wrapper = Registry.REF(Position, Text, TYPE__ElementID, Current_Cast);
                             State = StateCode.Stack__Wrapper;
                             break;
@@ -1484,7 +1484,7 @@ namespace Goedel.BootMark {
                         break;
                     case StateCode.Wrap_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.BootMark.Wrap Current_Cast = (Goedel.BootMark.Wrap)Current;
+                            Goedel.Document.Markdown.Tags.Wrap Current_Cast = (Goedel.Document.Markdown.Tags.Wrap)Current;
                             Current_Cast.Wrapper = Registry.REF(Position, Text, TYPE__ElementID, Current_Cast);
                             State = StateCode.Wrap__Wrapper;
                             break;
@@ -1497,7 +1497,7 @@ namespace Goedel.BootMark {
                         break;
                     case StateCode.Level_Start:
                         if (Token == TokenType.INTEGER) {
-                            Goedel.BootMark.Level Current_Cast = (Goedel.BootMark.Level)Current;
+                            Goedel.Document.Markdown.Tags.Level Current_Cast = (Goedel.Document.Markdown.Tags.Level)Current;
                             Current_Cast.Value = Convert.ToInt32(Text);
                             State = StateCode.Level__Value;
                             break;
@@ -1524,7 +1524,7 @@ namespace Goedel.BootMark {
                             break;
                             }
                        else if (Token == TokenType.TEXT) {
-                            Goedel.BootMark.Remark Current_Cast = (Goedel.BootMark.Remark)Current;
+                            Goedel.Document.Markdown.Tags.Remark Current_Cast = (Goedel.Document.Markdown.Tags.Remark)Current;
                             Current_Cast.Text.Add (Text);
                             break;							
                             }
@@ -1547,7 +1547,7 @@ namespace Goedel.BootMark {
                             break;
                             }
                        else if (Token == TokenType.TEXT) {
-                            Goedel.BootMark.Start Current_Cast = (Goedel.BootMark.Start)Current;
+                            Goedel.Document.Markdown.Tags.Start Current_Cast = (Goedel.Document.Markdown.Tags.Start)Current;
                             Current_Cast.Text.Add (Text);
                             break;							
                             }
@@ -1570,7 +1570,7 @@ namespace Goedel.BootMark {
                             break;
                             }
                        else if (Token == TokenType.TEXT) {
-                            Goedel.BootMark.End Current_Cast = (Goedel.BootMark.End)Current;
+                            Goedel.Document.Markdown.Tags.End Current_Cast = (Goedel.Document.Markdown.Tags.End)Current;
                             Current_Cast.Text.Add (Text);
                             break;							
                             }
@@ -1579,7 +1579,7 @@ namespace Goedel.BootMark {
 
                     case StateCode.String_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.BootMark.String Current_Cast = (Goedel.BootMark.String)Current;
+                            Goedel.Document.Markdown.Tags.String Current_Cast = (Goedel.Document.Markdown.Tags.String)Current;
                             Current_Cast.Id = Registry.ID(Position, Text, TYPE__AttributeID, Current_Cast);
                             State = StateCode.String__Id;
                             break;
@@ -1592,7 +1592,7 @@ namespace Goedel.BootMark {
                         break;
                     case StateCode.Flag_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.BootMark.Flag Current_Cast = (Goedel.BootMark.Flag)Current;
+                            Goedel.Document.Markdown.Tags.Flag Current_Cast = (Goedel.Document.Markdown.Tags.Flag)Current;
                             Current_Cast.Id = Registry.ID(Position, Text, TYPE__AttributeID, Current_Cast);
                             State = StateCode.Flag__Id;
                             break;
@@ -1605,7 +1605,7 @@ namespace Goedel.BootMark {
                         break;
                     case StateCode.Integer_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.BootMark.Integer Current_Cast = (Goedel.BootMark.Integer)Current;
+                            Goedel.Document.Markdown.Tags.Integer Current_Cast = (Goedel.Document.Markdown.Tags.Integer)Current;
                             Current_Cast.Id = Registry.ID(Position, Text, TYPE__AttributeID, Current_Cast);
                             State = StateCode.Integer__Id;
                             break;

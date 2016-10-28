@@ -302,7 +302,6 @@ namespace Goedel.Utilities  {
         /// <param name="data">The data to convert.</param>
         /// <param name="Length">Number of bytes to convert</param>
         /// <param name="Builder">StringBuilder to collect the emitted characteres</param>
-        /// <param name="Length">Number of bytes to convert</param>
         /// <returns>The resulting string.</returns>
         public static void ToBase32String(StringBuilder Builder, byte[] data, int Length) {
             int offset = 0;
@@ -373,7 +372,6 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="data">The data to take the fingerprint of.</param>
         /// <param name="Precision">The precision in multiples of 25 bits.</param>
-        /// <param name="Length">Number of bytes to convert</param>
         /// <returns>The resulting string.</returns>
         public static string ToUDF(byte[] data, int Precision) {
             var Chunks = (Precision + 24) / 25; // number of chunks

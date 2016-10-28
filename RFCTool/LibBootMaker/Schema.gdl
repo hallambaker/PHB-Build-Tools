@@ -1,6 +1,6 @@
 ﻿Copyright "2015" "Phillip Hallam-Baker" MITLicense
 
-Class Goedel.BootMark MarkSchema
+Class Goedel.Document.Markdown.Tags MarkSchema
 
 
 	TopType Class

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Goedel.MarkLib;
+using Goedel.Document.Markdown;
 using Goedel.Registry;
 
 namespace BridgeLib {
@@ -19,7 +19,7 @@ namespace BridgeLib {
 
         public static TagCatalog GetTagCatalog(string filename) {
 
-            var Parse = new Goedel.BootMark.MarkSchema();
+            var Parse = new Goedel.Document.Markdown.Tags.MarkSchema();
 
             if (filename == null) {
             using (Stream infile = StreamFromString(Constants.Value)) {

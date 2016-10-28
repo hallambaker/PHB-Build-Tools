@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Goedel.BootMark;
-using BM=Goedel.BootMark;
+using Goedel.Document.Markdown.Tags;
+using BM=Goedel.Document.Markdown.Tags;
 
-namespace Goedel.MarkLib {
+namespace Goedel.Document.Markdown {
 
     public enum ElementType {
         Start,

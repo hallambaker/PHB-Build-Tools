@@ -455,3 +455,15 @@ Class TBSEndorsement
 	Subject					List Name
 	SubjectAltName			List SubjectAltName
 	Extensions				List Extension
+
+Class RFC2631OtherInfo
+	KeyInfo					KeySpecificInfo
+	PartyAInfo				Octets
+		Code 0
+		Optional
+	SuppPubInfo				Octets
+		Code 2
+
+Class KeySpecificInfo
+	Algorithm 				OIDRef
+	Counter					Octets

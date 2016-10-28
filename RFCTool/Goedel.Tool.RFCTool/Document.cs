@@ -260,6 +260,9 @@ namespace Goedel.Tool.RFCTool {
         }
 
     public class Author : TextBlock {
+
+        public override BlockType BlockType { get { return BlockType.Author; } }
+
         public string                  Name;
         public string Initials;
         public string Surname;
@@ -298,17 +301,51 @@ namespace Goedel.Tool.RFCTool {
 
         }
 
+    /// <summary>Text Block Types</summary>
+    public enum BlockType {
+        /// <summary>Formatted paragraph</summary>
+        Paragraph,
+        /// <summary>Verbatim paragraph</summary>
+        Verbatim,
+        /// <summary>Numbered list</summary>
+        Ordered,
+        /// <summary>Bullet List</summary>
+        Symbol,
+        /// <summary>Definitions</summary>
+        Definitions,
+        /// <summary>Defined Term</summary>
+        Term,
+        /// <summary>Definition</summary>
+        Data,
+        /// <summary>Table</summary>
+        Table,
+        /// <summary>Table Row</summary>
+        TableRow,
+        /// <summary>Table Data</summary>
+        TableData,
+        /// <summary>Reference</summary>
+        Reference,
+        /// <summary>Author</summary>
+        Author,
+        /// <summary>Null type</summary>
+        Null
+        }
 
     public abstract class TextBlock {
-        public string                  ID;
-        public int                      Line, Position;
-        public int                      Page;
+        public string ID;
+        public int Line, Position;
+        public int Page;
+
+        public abstract BlockType BlockType {get;}
+
         }
 
     public class P : TextBlock {
         public List <Text>              Chunks = new List<Text>();
         public string Text { get { return _Text; } }
         public string                   _Text;
+
+        public override BlockType BlockType { get { return BlockType.Paragraph; } }
 
         public P(string Text, string ID) {
             this.ID = ID;
@@ -349,28 +386,28 @@ namespace Goedel.Tool.RFCTool {
         }
 
     public class PRE : P  {
+        public override BlockType BlockType { get { return BlockType.Verbatim; } }
 
         public PRE (string Text, string ID) : base (Text, ID){
 
             }
         }
 
-    public enum ListItem {
-        Ordered, Symbol, Definitions, Term, Data
-        }
+
 
     public class LI : P {
-        public ListItem         Type;
+        public BlockType         Type;
         public int              Level;
         public int              Index;
+        public override BlockType BlockType { get { return Type; } }
 
-        public LI (string Text, string ID, ListItem Type, int Level) : 
+        public LI (string Text, string ID, BlockType Type, int Level) : 
                     base (Text, ID){
             this.Type = Type; this.Level = Level;
             }
 
 
-        public LI (string Text, string ID, ListItem Type, int Level, int Index) : 
+        public LI (string Text, string ID, BlockType Type, int Level, int Index) : 
                     this (Text, ID, Type, Level){
             this.Index = Index;
             }
@@ -380,13 +417,15 @@ namespace Goedel.Tool.RFCTool {
     public class ListBlock : LI {
 
         public List<TextBlock> Items = new List<TextBlock> ();
-        public ListBlock(string Text, string ID, ListItem Type, int Level) : 
+        public ListBlock(string Text, string ID, BlockType Type, int Level) : 
                 base (null, ID, Type, Level) {
             }
         }
 
 
     public class Table : TextBlock {
+        public override BlockType BlockType { get { return BlockType.Table; } }
+
         public int MaxRow = 0;
         public List<int>                   Percent = new List<int>();
         public List<int>                   Width = new List<int>();
@@ -394,10 +433,12 @@ namespace Goedel.Tool.RFCTool {
         }
 
     public class TableRow : TextBlock {
+        public override BlockType BlockType { get { return BlockType.TableRow; } }
         public List <TableData>            Data = new List<TableData>();
         }
 
     public class TableData : TextBlock {
+        public override BlockType BlockType { get { return BlockType.TableData; } }
         public bool                        IsHeading;
         public string               Text;
         }
@@ -405,24 +446,40 @@ namespace Goedel.Tool.RFCTool {
 
 
 
-
+    /// <summary>
+    /// Types of text occurring within paragraph blocks.
+    /// </summary>
     public enum TextType {
+        /// <summary>Standard text type</summary>
         Plain,
-
+        /// <summary>Cross reference</summary>
         CrossRef,
+        /// <summary>Reference to external data</summary>
         ExternalRef,
+        /// <summary>Index term</summary>
         Index,
+        /// <summary>Comment</summary>
         Comment,
 
+        /// <summary>Typically italics</summary>
         Emphasis,
+        /// <summary>Typically bold</summary>
         Strong,
-        //Code,
+        /// <summary>Identifiers, code, etc.</summary>
+        Code,
+        /// <summary>Human input</summary>
         Keyboard,
 
+        /// <summary>Definition of term</summary>
         Definition,
+        /// <summary>Citation of reference</summary>
         Citation,
-        Normative
+        /// <summary>Normative text</summary>
+        Normative,
 
+
+        /// <summary>Null type</summary>
+        Null
         }
 
     public class Text {
@@ -450,6 +507,8 @@ namespace Goedel.Tool.RFCTool {
         }
 
     public class Reference : TextBlock {
+        public override BlockType BlockType { get { return BlockType.Reference; } }
+
         public string              Label;
 
         public string               Target;

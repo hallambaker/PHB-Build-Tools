@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Goedel.FSR;
+using Goedel.IO;
 
-
-namespace Goedel.MarkLib {
+namespace Goedel.Document.Markdown {
 
     public abstract class BlockParser {
         protected Document Document;
@@ -183,13 +184,13 @@ namespace Goedel.MarkLib {
         /// </summary>
         /// <param name="Text">Text string input.</param>
         protected void ProcessParagraphText(string Text) {
-            var Reader = new StringReader(Text);
+            var Reader = new LexStringReader(Text);
             MarkDownParagraph Lexer = new MarkDownParagraph(Reader);
 
             var Token = Lexer.GetToken();
             //var LastAttributes = Lexer.Attributes;
 
-            while (Token != MarkDownParagraph.Token.INVALID) {
+            while (Token != MarkDownParagraph.Token.Null) {
                 ////Console.WriteLine("   {0} : {1}", Token, Lexer.Data);
                 //foreach (var Tag in Lexer.Attributes) {
                 //    Console.WriteLine("      {0} = {1}", Tag.Tag, Tag.Value);
@@ -358,7 +359,7 @@ namespace Goedel.MarkLib {
         /// <returns></returns>
         public static Document Parse(TextReader TextReader, TagCatalog TagCatalog) {
 
-            var Reader = new Reader(TextReader);
+            var Reader = new LexReader(TextReader);
             var Document = new Document();
 
             Document.Parse(Reader);
@@ -378,7 +379,7 @@ namespace Goedel.MarkLib {
         /// <returns></returns>
         public static bool Include(string FileName, TagCatalog TagCatalog, 
                         Document Document) {
-            var Reader = new Reader(FileName);
+            var Reader = new LexReader(FileName.OpenTextReader());
 
             var Included = new Document();
             Included.Parse(Reader);

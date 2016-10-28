@@ -331,17 +331,17 @@ namespace Goedel.Tool.RFCTool {
                 }
             }
 
-        void MakeListItem(List<TextBlock> Parent, ListItem ListItem,
+        void MakeListItem(List<TextBlock> Parent, BlockType ListItem,
                         ref string Text, ref string ID, ref string hangtext, int level, ref int Index) {
 
-            if (ListItem == ListItem.Definitions) {
+            if (ListItem == BlockType.Definitions) {
                 if (hangtext != null) {
-                    LI LI = new LI(hangtext, ID, ListItem.Term, level);
+                    LI LI = new LI(hangtext, ID, BlockType.Term, level);
                     ID = null; hangtext = null;
                     Parent.Add(LI);
                     }
                 if (Text != null) {
-                    LI LI = new LI(Text, ID, ListItem.Data, level);
+                    LI LI = new LI(Text, ID, BlockType.Data, level);
                     ID = null; Text = null;
                     Parent.Add(LI);
                     }
@@ -408,17 +408,17 @@ namespace Goedel.Tool.RFCTool {
             //    Parent.Add(P);
             //    }
 
-            ListItem ListItem;
+            BlockType ListItem;
             int Index = 1;
 
             if ((list.style == null) || (list.style == "symbols")) {
-                ListItem = ListItem.Symbol;
+                ListItem = BlockType.Symbol;
                 }
             else if (list.style == "numbers") {
-                ListItem = ListItem.Ordered;
+                ListItem = BlockType.Ordered;
                 }
             else if (list.style == "hanging") {
-                ListItem = ListItem.Definitions;
+                ListItem = BlockType.Definitions;
                 }
             else {
                 throw new Exception ("List type not supported [" + list.style + "]");

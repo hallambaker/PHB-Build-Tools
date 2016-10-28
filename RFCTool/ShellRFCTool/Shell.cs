@@ -6,7 +6,7 @@ using Goedel.Registry;
 using Goedel.Tool.RFCTool;
 using MakeRFC;
 using OpenXML;
-using GM=Goedel.MarkLib;
+using GM=Goedel.Document.Markdown;
 
 namespace MakeRFC {
     public partial class Shell {
@@ -14,7 +14,7 @@ namespace MakeRFC {
 
 
 
-        public override void HTML(HTML Options) {
+        public override void RFC(RFC Options) {
             string inputfile = Options.InputFile.Text;
             //string bibliography = Options.Bibliography.Text;
             string cache = Options.Cache.Text;
@@ -24,6 +24,7 @@ namespace MakeRFC {
             string txtfile = Options.TXT.DefaultFile(inputfile);
             string mdfile = Options.MD.DefaultFile(inputfile);
             string docfile = Options.DOC.DefaultFile(inputfile);
+            string amlfile = Options.AML.DefaultFile(inputfile);
 
             string catalog = Options.Catalog.Text;
             var TagCatalog = BridgeLib.Configure.GetTagCatalog(catalog);
@@ -90,11 +91,12 @@ namespace MakeRFC {
 
             Document.MakeAutomatics();
 
-            if (htmlfile!= null) Goedel.Tool.RFCTool.HTML2RFC.WriteHTML (htmlfile, Document);
-            if (xmlfile!= null) Goedel.Tool.RFCTool.HTML2RFC.WriteXML (xmlfile, Document);
-            if (txtfile!= null) Goedel.Tool.RFCTool.HTML2RFC.WriteTXT (txtfile, Document);
-            if (mdfile != null) Goedel.Tool.RFCTool.HTML2RFC.WriteMD(mdfile, Document);
+            if (htmlfile!= null) Goedel.Tool.RFCTool.Writers.WriteHTML (htmlfile, Document);
+            if (xmlfile!= null) Goedel.Tool.RFCTool.Writers.WriteXML (xmlfile, Document);
+            if (txtfile!= null) Goedel.Tool.RFCTool.Writers.WriteTXT (txtfile, Document);
+            if (mdfile != null) Goedel.Tool.RFCTool.Writers.WriteMD(mdfile, Document);
             if (docfile != null) OpenXML.MakeWord.FromHTML2RFC(docfile, Document);
+            if (amlfile != null) Goedel.Tool.RFCTool.Writers.WriteAML(amlfile, Document);
             }
 
         public override void Template(Template Options) {
@@ -107,10 +109,10 @@ namespace MakeRFC {
 
             var Document = NewTemplate.Fill(ID);
 
-            if (htmlfile != null) Goedel.Tool.RFCTool.HTML2RFC.WriteHTML(htmlfile, Document);
-            if (xmlfile != null) Goedel.Tool.RFCTool.HTML2RFC.WriteXML(xmlfile, Document);
+            if (htmlfile != null) Goedel.Tool.RFCTool.Writers.WriteHTML(htmlfile, Document);
+            if (xmlfile != null) Goedel.Tool.RFCTool.Writers.WriteXML(xmlfile, Document);
             if (docfile != null) OpenXML.MakeWord.FromHTML2RFC(docfile, Document);
-            if (mdfile != null) Goedel.Tool.RFCTool.HTML2RFC.WriteMD(mdfile, Document);
+            if (mdfile != null) Goedel.Tool.RFCTool.Writers.WriteMD(mdfile, Document);
             }
         }
     }

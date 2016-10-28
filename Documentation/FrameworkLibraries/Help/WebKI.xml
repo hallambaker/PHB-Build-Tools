@@ -465,8 +465,8 @@
   <HelpKINode Title="ExchangeProviderEncrypt property" Url="html/f4a82b4d-aece-f091-3c27-6df7a4d514e8.htm" />
   <HelpKINode Title="Exponent field" Url="html/90c667d7-b32c-f0a3-2e8f-f7a1508b32e7.htm" />
   <HelpKINode Title="Extension class">
-    <HelpKINode Title="Extension Class" Url="html/9512e400-1439-91b6-5aff-a873e59f9b0f.htm" />
     <HelpKINode Title="Extension Class" Url="html/a865817e-8d50-64b1-18d1-96dc8f4f7325.htm" />
+    <HelpKINode Title="Extension Class" Url="html/9512e400-1439-91b6-5aff-a873e59f9b0f.htm" />
     <HelpKINode Title="about Extension class" Url="html/9512e400-1439-91b6-5aff-a873e59f9b0f.htm" />
     <HelpKINode Title="about Extension class" Url="html/a865817e-8d50-64b1-18d1-96dc8f4f7325.htm" />
     <HelpKINode Title="methods" Url="html/8f55d688-5cb5-ecf6-565f-1e2e9299bfe0.htm" />
@@ -485,10 +485,10 @@
   <HelpKINode Title="Extension.OpenTextWriter method" Url="html/2681106f-0eb3-8155-6f09-19f968e9a2b4.htm" />
   <HelpKINode Title="Extension.ToPEM method" Url="html/99064017-a846-6b1c-dae8-87088b404af8.htm" />
   <HelpKINode Title="ExtensionMethods class">
-    <HelpKINode Title="ExtensionMethods Class" Url="html/7a12b054-a49c-06fd-a4fe-daef5068f00d.htm" />
     <HelpKINode Title="ExtensionMethods Class" Url="html/b8f35837-ab41-2ebf-390b-e01cc91af6aa.htm" />
-    <HelpKINode Title="about ExtensionMethods class" Url="html/7a12b054-a49c-06fd-a4fe-daef5068f00d.htm" />
+    <HelpKINode Title="ExtensionMethods Class" Url="html/7a12b054-a49c-06fd-a4fe-daef5068f00d.htm" />
     <HelpKINode Title="about ExtensionMethods class" Url="html/b8f35837-ab41-2ebf-390b-e01cc91af6aa.htm" />
+    <HelpKINode Title="about ExtensionMethods class" Url="html/7a12b054-a49c-06fd-a4fe-daef5068f00d.htm" />
     <HelpKINode Title="methods" Url="html/717b96c0-5442-56d8-5c08-8231c88b235a.htm" />
     <HelpKINode Title="methods" Url="html/c88a491b-1902-4c2d-edef-4280423212fc.htm" />
     <HelpKINode Title="properties" Url="html/eedaf94c-07e9-ed94-748d-511073acce18.htm" />

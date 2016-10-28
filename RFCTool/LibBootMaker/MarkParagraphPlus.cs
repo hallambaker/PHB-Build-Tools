@@ -3,67 +3,68 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Goedel.FSR;
 
-namespace Goedel.MarkLib {
+namespace Goedel.Document.Markdown {
 
-    public partial class MarkDownParagraph {
-        Reader Reader;
-        State S;
+    //public partial class MarkDownParagraph {
+    //    //Reader Reader;
+    //    State S;
 
-        public bool EOF {
-            get { return Reader.EOF; }
-            }
-
-
-        public MarkDownParagraph(Reader Reader) {
-            this.Reader = Reader;
-            Init();
-            Reset();
-            }
-
-        public Token GetToken() {
-            return GetToken((State)0);
-            }
-
-        public Token GetToken(State StartState) {
-            Reset();
-            S = StartState;
-            Token Token = MarkDownParagraph.Token.INVALID;
-
-            bool Going = Reader.Get();
-            while (Going) {
-
-                //Console.Write(Reader.LastChar);
-
-                int c = Reader.LastInt;
-                int ct = ((c >= 0) & (c < Character_Mapping.Length)) ?
-                    Character_Mapping[c] : 0;
-
-                //Console.WriteLine("  {0} {1} {2}", S, c, ct);
-
-                S = (State)Compressed_Transitions[(int)S, ct];
-
-                if (S >= 0) {
-                    Action Action = Actions[(int)S];
-                    Action(Reader.LastInt);
-                    Token = Tokens[(int)S];
-                    Going = Reader.Get();
-                    }
-                else {
-                    Going = false;
-                    Reader.UnGet();
-                    }
-                }
-
-            //Console.WriteLine();
-            //Console.Write("State {0} ", S);
-            return Token;
-            }
+    //    public bool EOF {
+    //        get { return Reader.EOF; }
+    //        }
 
 
+    //    public MarkDownParagraph(Reader Reader) {
+    //        this.Reader = Reader;
+    //        Init();
+    //        Reset();
+    //        }
+
+    //    //public Token GetToken() {
+    //    //    return GetToken((State)0);
+    //    //    }
+
+    //    //public Token GetToken(State StartState) {
+    //    //    Reset();
+    //    //    S = StartState;
+    //    //    Token Token = MarkDownParagraph.Token.INVALID;
+
+    //    //    bool Going = Reader.Get();
+    //    //    while (Going) {
+
+    //    //        //Console.Write(Reader.LastChar);
+
+    //    //        int c = Reader.LastInt;
+    //    //        int ct = ((c >= 0) & (c < Character_Mapping.Length)) ?
+    //    //            Character_Mapping[c] : 0;
+
+    //    //        //Console.WriteLine("  {0} {1} {2}", S, c, ct);
+
+    //    //        S = (State)Compressed_Transitions[(int)S, ct];
+
+    //    //        if (S >= 0) {
+    //    //            Action Action = Actions[(int)S];
+    //    //            Action(Reader.LastInt);
+    //    //            Token = Tokens[(int)S];
+    //    //            Going = Reader.Get();
+    //    //            }
+    //    //        else {
+    //    //            Going = false;
+    //    //            Reader.UnGet();
+    //    //            }
+    //    //        }
+
+    //    //    //Console.WriteLine();
+    //    //    //Console.Write("State {0} ", S);
+    //    //    return Token;
+    //    //    }
 
 
-        }
+
+
+    //    }
 
     public class TagValue {
         public string Tag = "";
@@ -118,7 +119,7 @@ namespace Goedel.MarkLib {
             Extra = Extra + (char)c;
             }
 
-        public virtual void Reset() {
+        public override void Reset() {
             Buffer = "";
             Extra = "";
             Element = null;
@@ -195,7 +196,7 @@ namespace Goedel.MarkLib {
         public static void TestParse(string Data) {
             Console.WriteLine(Data);
 
-            var Reader = new StringReader(Data);
+            var Reader = new System.IO.StringReader(Data);
             MarkDownParagraph Lexer = new MarkDownParagraph(Reader);
 
             var Token = Lexer.GetToken();

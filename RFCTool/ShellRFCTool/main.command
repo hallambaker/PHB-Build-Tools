@@ -8,7 +8,7 @@
 	About "about"
 	Brief "brief"
 
-	Command HTML "in"
+	Command RFC "rfc"
 		DefaultCommand
 		Lazy Lazy "lazy"	
 			Brief "Only generate code if source or program have changed"
@@ -30,6 +30,10 @@
 		Option DOC "docx" NewFile
 			Default "docx"
 
+		Option AML "aml" NewFile
+			Default "aml"
+
+
 		Option W3C "w3c" NewFile
 			Default "html"
 
@@ -38,6 +42,8 @@
 
 		Option Stylesheet "style" ExistingFile
 		Option Boilerplate "boiler" ExistingFile
+
+
 
 	Command Template "new"
 		Parameter Identifier "identifier" String

@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 
 namespace Goedel.Tool.RFCTool {
-    public partial class HTML2RFC {
+    public partial class Writers {
 
         /// <summary>
         /// Write RFC Document out in HTML to file.
@@ -16,6 +16,9 @@ namespace Goedel.Tool.RFCTool {
                 WriteHTML(TextWriter, Document);
                 }
             }
+
+
+
 
         /// <summary>
         /// Write RFC Document out in HTML to text writer.

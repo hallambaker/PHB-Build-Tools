@@ -13,8 +13,8 @@
     <RootNamespace>Sandcastle</RootNamespace>
     <Name>Portable Libraries</Name>
     <!-- SHFB properties -->
-    <FrameworkVersion>.NET Portable Library 4.6</FrameworkVersion>
-    <OutputPath>.\Help\</OutputPath>
+    <FrameworkVersion>.NET Portable Library 5.0</FrameworkVersion>
+    <OutputPath>..\..\..\WebPublish\PrismProof\code\portable\</OutputPath>
     <HtmlHelpName>GoedelPortable</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
@@ -88,6 +88,7 @@
       <NamespaceSummaryItem name="Goedel.Protocol" isDocumented="True">Implementation class for Protogen targets.</NamespaceSummaryItem>
     </NamespaceSummaries>
     <ProjectSummary>Support libraries for code generated with Goedel code synthesis tools.</ProjectSummary>
+    <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
@@ -114,14 +115,27 @@
     <Folder Include="media" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\CodeStandards.aml" />
+    <None Include="Content\CryptographyLibraries.aml" />
+    <None Include="Content\Documentation.aml" />
+    <None Include="Content\Exceptional.aml" />
+    <None Include="Content\FrameworkLibraries.aml" />
+    <None Include="Content\Libraries.aml" />
+    <None Include="Content\ParserLibraries.aml" />
+    <None Include="Content\ProtocolLibraries.aml" />
+    <None Include="Content\TextConversion.aml" />
+    <None Include="Content\UniversalLibraries.aml" />
     <None Include="Content\VersionHistory\v1.0.0.0.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
+    <None Include="Content\VSIXIntegration.aml" />
     <None Include="Content\Welcome.aml" />
   </ItemGroup>
   <ItemGroup>
     <ContentLayout Include="ContentLayout.content" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\CryptographyLibraries.md" />
+    <Content Include="Cryptography.html" />
     <Content Include="icons\Help.png" />
   </ItemGroup>
   <!-- Import the SHFB build targets -->
@@ -136,6 +150,6 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Publish' ">
-    <OutputPath>bin\Publish\</OutputPath>
+    <OutputPath>..\..\..\WebPublish\PrismProof\code\portable\</OutputPath>
   </PropertyGroup>
 </Project>

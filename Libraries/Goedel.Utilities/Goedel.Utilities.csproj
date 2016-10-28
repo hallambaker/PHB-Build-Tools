@@ -63,12 +63,23 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <None Include="Exceptions.exceptional">
+      <Generator>exceptional</Generator>
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+    </None>
+    <None Include="test.ignore" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assert.cs" />
     <Compile Include="BaseConvert.cs" />
     <Compile Include="Character.cs" />
+    <Compile Include="Exceptions.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+    </Compile>
     <Compile Include="NamespaceDoc.cs" />
+    <Compile Include="NumberSplit.cs" />
     <Compile Include="NYI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

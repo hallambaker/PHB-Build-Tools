@@ -147,9 +147,9 @@
       <DependentUpon>Binding.vsixbuild</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RFCToolBinding.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Binding - Copy.vsixbuild" />
     <None Include="Binding.vsixbuild">
       <Generator>VSIXBuild</Generator>
       <LastGenOutput>Binding.cs</LastGenOutput>
@@ -185,28 +185,30 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
       <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
       <Name>Goedel.Registry</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RFCTool\Goedel.Tool.RFCTool.Binding\Goedel.Tool.RFCTool.Binding.csproj">
-      <Project>{dc03ab95-92b7-4143-9333-f5ce74bcb124}</Project>
-      <Name>Goedel.Tool.RFCTool.Binding</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
-    <ProjectReference Include="..\..\RFCTool\LibBootMaker\LibBootMaker.csproj">
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{E891BC7F-D7BD-4931-931B-42C83CCA68E2}</Project>
+      <Name>Goedel.Utilities</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RFCTool\LibBootMaker\Goedel.Document.Markdown.csproj">
       <Project>{BA3E686D-8404-46B3-B06D-048E6367E4EB}</Project>
-      <Name>LibBootMaker</Name>
+      <Name>Goedel.Document.Markdown</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
-    <ProjectReference Include="..\..\RFCTool\LibBridge\LibBridge.csproj">
+    <ProjectReference Include="..\..\RFCTool\LibBridge\Goedel.Document.RFC.Tag.csproj">
       <Project>{EFEFBAB6-A3B4-42DC-AF30-FA14F2A9FF16}</Project>
-      <Name>LibBridge</Name>
+      <Name>Goedel.Document.RFC.Tag</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
-    <ProjectReference Include="..\..\RFCTool\Goedel.Tool.RFCTool\Goedel.Tool.RFCTool.csproj">
+    <ProjectReference Include="..\..\RFCTool\Goedel.Tool.RFCTool\Goedel.Document.RFC.csproj">
       <Project>{53284d1c-9b9f-4a44-adde-306606f8f0e7}</Project>
-      <Name>Goedel.Tool.RFCTool</Name>
+      <Name>Goedel.Document.RFC</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>

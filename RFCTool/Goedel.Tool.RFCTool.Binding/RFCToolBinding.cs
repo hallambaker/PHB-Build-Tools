@@ -1,14 +1,16 @@
-﻿using System;
-using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using Goedel.Registry;
+﻿using System.IO;
 using Goedel.Tool.RFCTool;
 using MakeRFC;
 using GM = Goedel.MarkLib;
 
 namespace Goedel.Tool.RFCToolBinding {
 
+    /// <summary>
+    /// This class provides entry points into the Goedel.Document.* classes
+    /// for use in the VSIX integration tools.
+    /// Thhe entry points provided accept files in any of the supported 
+    /// input file formats and emit them in a specific output file format.
+    /// </summary>
     public class BindingRFC {
 
         /// <summary>
@@ -88,8 +90,8 @@ namespace Goedel.Tool.RFCToolBinding {
                         return Document;
                         }
                 case ".docx": {
-                        // Till we have the ability to read raw files
-                        //var Source = BlockParseWord.Parse(Reader, TagCatalog);
+                        // Probably best to ommit this unless a smaller version of the OpenXML
+                        // library becomes available.
                         //ConverterRFC.Convert(Source, Document);
                         return null;
                         }

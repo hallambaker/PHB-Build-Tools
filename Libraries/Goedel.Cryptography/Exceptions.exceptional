@@ -72,3 +72,15 @@ Namespace Goedel.Cryptography
 				|The specified key did not have a valid cryptographic
 				|provider. This may be because the key algorithm is 
 				|not supported or the key parameters were found to be invalid.
+
+
+		Exception KeySizeNotSupported
+			Console "The requested key size is not supported"
+			Description
+				|The implementation does not support the requested key size
+
+		Exception InitializationFailed
+			Console "Initialization of the cryptographic support library failed."
+			Description
+				|Initialization of the cryptographic support library failed.
+				|This is a fatal error that cannot be recovered from.

@@ -6,7 +6,7 @@ using Goedel.Registry;
 using Goedel.Tool.RFCTool;
 using MakeRFC;
 using BridgeLib;
-using GM = Goedel.MarkLib;
+using GM = Goedel.Document.Markdown;
 
 namespace MakeRFC {
     public class NewTemplate {

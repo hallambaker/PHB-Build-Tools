@@ -476,15 +476,15 @@ namespace Goedel.Tool.RFCTool {
                                 break;
                                 }
                         case "ol": {
-                                MakeList(Element.Contents, ListItem.Ordered, 0);
+                                MakeList(Element.Contents, BlockType.Ordered, 0);
                                 break;
                                 }
                         case "ul": {
-                                MakeList(Element.Contents, ListItem.Symbol, 0);
+                                MakeList(Element.Contents, BlockType.Symbol, 0);
                                 break;
                                 }
                         case "dl": {
-                                MakeList(Element.Contents, ListItem.Definitions, 0);
+                                MakeList(Element.Contents, BlockType.Definitions, 0);
                                 break;
                                 }
                         case "table": {
@@ -556,7 +556,7 @@ namespace Goedel.Tool.RFCTool {
             }
 
 
-        void MakeList(List<XML> Contents, ListItem Type, int Level) {
+        void MakeList(List<XML> Contents, BlockType Type, int Level) {
 
             for (int Index = 0; Index < Contents.Count; Index++) {
                 if (Contents[Index].GetType() == typeof(Element)) {
@@ -571,27 +571,27 @@ namespace Goedel.Tool.RFCTool {
                                 break;
                                 }
                         case "dt": {
-                                LI = new LI(FilteredText, Element.Id, ListItem.Term, Level);
+                                LI = new LI(FilteredText, Element.Id, BlockType.Term, Level);
                                 CurrentSection.TextBlocks.Add(LI);
                                 break;
                                 }
                         case "dd": {
-                                LI = new LI(FilteredText, Element.Id, ListItem.Data, Level);
+                                LI = new LI(FilteredText, Element.Id, BlockType.Data, Level);
                                 CurrentSection.TextBlocks.Add(LI);
                                 break;
                                 }
 
                         // Recursive lists 
                         case "ol": {
-                                MakeList(Element.Contents, ListItem.Ordered, Level + 1);
+                                MakeList(Element.Contents, BlockType.Ordered, Level + 1);
                                 break;
                                 }
                         case "ul": {
-                                MakeList(Element.Contents, ListItem.Symbol, Level + 1);
+                                MakeList(Element.Contents, BlockType.Symbol, Level + 1);
                                 break;
                                 }
                         case "dl": {
-                                MakeList(Element.Contents, ListItem.Definitions, Level + 1);
+                                MakeList(Element.Contents, BlockType.Definitions, Level + 1);
                                 break;
                                 }
 

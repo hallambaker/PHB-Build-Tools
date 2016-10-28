@@ -5,7 +5,7 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 
-using GM = Goedel.MarkLib;
+using GM = Goedel.Document.Markdown;
 
 namespace OpenXML {
     public partial class BlockParseWord : GM.BlockParser {

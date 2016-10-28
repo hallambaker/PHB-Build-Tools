@@ -61,9 +61,9 @@
       <Project>{efefbab6-a3b4-42dc-af30-fa14f2a9ff16}</Project>
       <Name>LibBridge</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Tool.RFCTool\Goedel.Tool.RFCTool.csproj">
+    <ProjectReference Include="..\Goedel.Tool.RFCTool\Goedel.Document.RFC.csproj">
       <Project>{53284d1c-9b9f-4a44-adde-306606f8f0e7}</Project>
-      <Name>Goedel.Tool.RFCTool</Name>
+      <Name>Goedel.Document.RFC</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

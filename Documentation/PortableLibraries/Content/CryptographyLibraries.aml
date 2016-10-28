@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="f49b1505-1206-4ffe-8f23-43f42f61e4bd" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!--The Abstract-->
+    <introduction>
+      <para>
+        The cryptography libraries provide a single consistent high level interface  to all the cryptographic resources used in the Mathematical Mesh. 
+      </para>
+    </introduction>
+    <!--The Body-->
+    <section>
+      <title> Cryptography Libraries </title>
+      <content>
+        <para>
+          The Cryptography libraries are organized around the following principal classes 
+        </para>
+        <definitionTable>
+          <definedTerm>
+            CryptoCatalog 
+          </definedTerm>
+          <definition>
+            <para>
+              A Registry that permits a CryptoProvider or CryptoAlgorithm to be obtained. 
+            </para>
+            <para>
+              More comment 
+            </para>
+          </definition>
+          <definedTerm>
+            CryptoAlgorithm 
+          </definedTerm>
+          <definition>
+            <para>
+              Describes a cryptographic algorithm and contains factories for Key and CryptoProvider classes. 
+            </para>
+          </definition>
+          <definedTerm>
+            Key 
+          </definedTerm>
+          <definition>
+            <para>
+              Base class for all cryptographic keys, whether symmetric or asymmetric. 
+            </para>
+          </definition>
+          <definedTerm>
+            CryptoData 
+          </definedTerm>
+          <definition>
+            <para>
+              Base class for all ciphertext, plaintext and associated data. 
+            </para>
+          </definition>
+          <definedTerm>
+            CryptoProvider 
+          </definedTerm>
+          <definition>
+            <para>
+              Base class for all classes that perform operations on *CryptoData* using a *Key* 
+            </para>
+          </definition>
+        </definitionTable>
+      </content>
+      <sections>
+        <section>
+          <title>Initialization </title>
+          <content>
+            <para>
+              The portable library Goedel.Cryptography does not provide access to any cryptographic algorithm providers. To make use of the library it is necessary to link to either  Goedel.Cryptography.Framework or Goedel.Cryptography.Universal and make a call to the corresponding initialize method as follows: 
+            </para>
+            <code language="none">
+              <![CDATA[        public void TestInitialize() {
+            Framework.Cryptography.Initialize();
+            }]]>
+            </code>
+            <para>
+              It is only necessary to call the initializer once per process. Once the library is  initialized, further attempts to initialize the library are ignored. 
+            </para>
+          </content>
+        </section>
+        <section>
+          <title>Discovering Algorithms </title>
+          <content>
+          </content>
+          <sections>
+            <section>
+              <title>Discovery by Name </title>
+              <content>
+              </content>
+            </section>
+            <section>
+              <title>Shortcut Discovery </title>
+              <content>
+                <para>
+                  For convenience, the class Goedel.Cryptography.Platform contains convenience shortcuts for the default implementation of the most commonly used algorithms. 
+                </para>
+                <code language="none">
+                  <![CDATA[]]>
+                </code>
+              </content>
+            </section>
+          </sections>
+        </section>
+        <section>
+          <title>Creating Keys </title>
+          <content>
+          </content>
+          <sections>
+            <section>
+              <title>Public Key Pair </title>
+              <content>
+              </content>
+            </section>
+          </sections>
+        </section>
+        <section>
+          <title>Creating a CryptoProvider </title>
+          <content>
+          </content>
+        </section>
+        <section>
+          <title>Performing Operations </title>
+          <content>
+          </content>
+          <sections>
+            <section>
+              <title>Digest Operation </title>
+              <content>
+              </content>
+            </section>
+            <section>
+              <title>Public Key Encryption Operation </title>
+              <content>
+              </content>
+            </section>
+            <section>
+              <title>Public Key Signed Encryption Operation </title>
+              <content>
+              </content>
+            </section>
+          </sections>
+        </section>
+      </sections>
+    </section>
+    <section>
+      <title>Authors' Addresses</title>
+      <content>
+      </content>
+    </section>
+    <!--References-->
+    <relatedTopics>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

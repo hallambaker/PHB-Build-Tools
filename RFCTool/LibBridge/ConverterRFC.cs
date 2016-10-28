@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Tool.RFCTool;
-using GM = Goedel.MarkLib;
+using GM = Goedel.Document.Markdown;
 using Goedel.Registry;
 
 namespace MakeRFC {
@@ -106,8 +106,8 @@ namespace MakeRFC {
                 //Console.WriteLine("Block {0}", Block.BlockType);
 
 
-                if ((Block.GetType() == typeof(Goedel.MarkLib.Layout)) |
-                    (Block.GetType() == typeof(Goedel.MarkLib.Close))){
+                if ((Block.GetType() == typeof(Goedel.Document.Markdown.Layout)) |
+                    (Block.GetType() == typeof(Goedel.Document.Markdown.Close))){
                     }
                 else if (Block.CatalogEntry.Level > 0) {
                     //Console.WriteLine("    Heading");
@@ -140,23 +140,23 @@ namespace MakeRFC {
 
                     switch (Block.CatalogEntry.Key) {
                         case "li": {
-                            var TextBlock = new Goedel.Tool.RFCTool.LI(FilteredText, "", ListItem.Symbol, 1);
+                            var TextBlock = new Goedel.Tool.RFCTool.LI(FilteredText, "", BlockType.Symbol, 1);
                             CurrentText.Add(TextBlock);
                             break;
                             }
                         case "nli": 
                         case "ni" : {
-                            var TextBlock = new Goedel.Tool.RFCTool.LI(FilteredText, "", ListItem.Ordered, 1);
+                            var TextBlock = new Goedel.Tool.RFCTool.LI(FilteredText, "", BlockType.Ordered, 1);
                             CurrentText.Add(TextBlock);
                             break;
                             }
                         case "dt": {
-                            var TextBlock = new Goedel.Tool.RFCTool.LI(FilteredText, "", ListItem.Term, 1);
+                            var TextBlock = new Goedel.Tool.RFCTool.LI(FilteredText, "", BlockType.Term, 1);
                             CurrentText.Add(TextBlock);
                             break;
                             }
                         case "dd": {
-                            var TextBlock = new Goedel.Tool.RFCTool.LI(FilteredText, "", ListItem.Data, 1);
+                            var TextBlock = new Goedel.Tool.RFCTool.LI(FilteredText, "", BlockType.Data, 1);
                             CurrentText.Add(TextBlock);
                             break;
                             }

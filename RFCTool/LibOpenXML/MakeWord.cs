@@ -41,8 +41,6 @@ namespace OpenXML {
             var nid = np.NumberingId;
             var nins = np.Inserted;
             if (nid == null) return;
-
-
             }
 
 
@@ -122,16 +120,16 @@ namespace OpenXML {
                     foreach (var TextBlock in Section.TextBlocks) {
                         if (TextBlock.GetType() == typeof(HT.LI)) {
                             var LI = (HT.LI)TextBlock;
-                            if (LI.Type == HT.ListItem.Symbol) {
+                            if (LI.Type == HT.BlockType.Symbol) {
                                 WriteParagraph(StyleID_li, LI.Text);
                                 }
-                            else if (LI.Type == HT.ListItem.Ordered) {
+                            else if (LI.Type == HT.BlockType.Ordered) {
                                 WriteParagraph(StyleID_ni, LI.Text);
                                 }
-                            else if (LI.Type == HT.ListItem.Term) {
+                            else if (LI.Type == HT.BlockType.Term) {
                                 WriteParagraph(StyleID_dt, LI.Text);
                                 }
-                            else if (LI.Type == HT.ListItem.Data) {
+                            else if (LI.Type == HT.BlockType.Data) {
                                 WriteParagraph(StyleID_dd, LI.Text);
                                 }
                             }

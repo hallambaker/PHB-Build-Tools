@@ -194,10 +194,17 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Flag for Galois Counter Mode
         /// </summary>
-        ModeGCM
+        ModeGCM,
         
-        
-        
+        ///<summary>Diffie Hellman 2048 bit</summary>
+        DH2048,
+
+        ///<summary>Diffie Hellman 4096 bit</summary>
+        DH4096,
+
+
+        ///<summary>Unknown/unsupported</summary>
+        Unknown
         }
 
     /// <summary>

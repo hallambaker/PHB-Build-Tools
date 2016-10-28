@@ -66,32 +66,29 @@
     <None Include="Makefile" />
     <None Include="packages.config" />
     <None Include="PostBuild.bat" />
-    <None Include="Requirements.md" />
     <None Include="TagDefinitions.mdsd" />
-    <None Include="Test.md" />
     <None Include="ToDo.md" />
-    <None Include="WTest.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
       <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
       <Name>Goedel.Registry</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibBootMaker\LibBootMaker.csproj">
+    <ProjectReference Include="..\LibBootMaker\Goedel.Document.Markdown.csproj">
       <Project>{ba3e686d-8404-46b3-b06d-048e6367e4eb}</Project>
-      <Name>LibBootMaker</Name>
+      <Name>Goedel.Document.Markdown</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibBridge\LibBridge.csproj">
+    <ProjectReference Include="..\LibBridge\Goedel.Document.RFC.Tag.csproj">
       <Project>{efefbab6-a3b4-42dc-af30-fa14f2a9ff16}</Project>
-      <Name>LibBridge</Name>
+      <Name>Goedel.Document.RFC.Tag</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibOpenXML\LibOpenXML.csproj">
+    <ProjectReference Include="..\LibOpenXML\Goedel.Document.OpenXML.csproj">
       <Project>{cf4f9f67-550f-494c-88c8-51ab0cb552cb}</Project>
-      <Name>LibOpenXML</Name>
+      <Name>Goedel.Document.OpenXML</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Tool.RFCTool\Goedel.Tool.RFCTool.csproj">
+    <ProjectReference Include="..\Goedel.Tool.RFCTool\Goedel.Document.RFC.csproj">
       <Project>{53284d1c-9b9f-4a44-adde-306606f8f0e7}</Project>
-      <Name>Goedel.Tool.RFCTool</Name>
+      <Name>Goedel.Document.RFC</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -101,9 +98,6 @@
     <Content Include="draft_hallambaker_jsonbcd.html" />
     <Content Include="draft_hallambaker_jsonbcd.txt" />
     <Content Include="draft_hallambaker_jsonbcd.xml" />
-    <Content Include="Test.txt" />
-    <Content Include="WTest.txt" />
-    <Content Include="wtest.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

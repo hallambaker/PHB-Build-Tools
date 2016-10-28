@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
     /// <summary>
@@ -46,6 +47,61 @@ namespace Goedel.Cryptography {
             GetRandomBytesDelegate(Data, 0, Length);
             return Data;
             }
+
+        /// <summary>
+        /// Get a Big integer with a specified number of random bits.
+        /// </summary>
+        /// <param name="Bits">Number of bits to get</param>
+        /// <returns>Random data</returns>
+        public static BigInteger GetRandomBigInteger(int Bits) {
+            var RandomBytes = GetRandomBytes(Bits / 8);
+            return new BigInteger(RandomBytes);
+            }
+
+
+        /// <summary>
+        /// Get a Big Integer that is smaller than the input value
+        /// </summary>
+        /// <param name="Ceiling">Number of bits to get</param>
+        /// <returns>Random data</returns>
+        public static BigInteger GetRandomBigInteger(BigInteger Ceiling) {
+            Assert.True(Ceiling > 0, CryptographicException.Throw);
+
+            var Bits = Ceiling.ToByteArray().Length * 8;
+            var Test = GetRandomBigInteger(Bits);
+
+            while (Test >= Ceiling) {
+                Test = GetRandomBigInteger(Bits);
+                }
+
+            return Test;
+            }
+
+        ///// <summary>
+        ///// Find a random prime with the specified number of bits.
+        ///// </summary>
+        ///// <param name="Bits">Number of bits in prime to be created</param>
+        ///// <returns>The generated prime</returns>
+        //public static BigInteger GetRandomPrime (int Bits) {
+
+        //    var Data = GetRandomBytes(Bits / 8);
+
+        //    // Set the most and least significant bits to 1. 
+        //    // The C# BigInteger class stores data in little endian fashion.
+        //    Data[0] |= (byte) 0x01;
+        //    Data[Data.Length-1] |= (byte)0x80;
+        //    var Result = new BigInteger(Data);
+
+        //    var Prime = Result.IsPrime();
+        //    while (!Prime) {
+        //        Result += 2;
+        //        Prime = Result.IsPrime();
+        //        }
+
+        //    return Result;
+        //    }
+
+
 
         /// <summary>Find a key by fingerprint in the local key stores</summary>
         /// <param name="UDF"></param>

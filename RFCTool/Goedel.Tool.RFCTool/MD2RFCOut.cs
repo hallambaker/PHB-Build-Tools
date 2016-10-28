@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Goedel.Tool.RFCTool {
 
-    public partial class HTML2RFC {
+    public partial class Writers {
 
         /// <summary>
         /// Write RFC Document out in Markdown Format to file.

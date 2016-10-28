@@ -49,8 +49,6 @@ namespace Goedel.Cryptography {
 			if (Reason as string != null) {
 				return new CryptographicException(Reason as string);
 				}
-
-
 			else {
 				return new CryptographicException("A cryptographic exception occurred");
 				}
@@ -291,7 +289,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
@@ -600,6 +598,105 @@ namespace Goedel.Cryptography {
 
 			else {
 				return new NoProviderSpecified("No provider specified");
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// The implementation does not support the requested key size
+    /// </summary>
+    public class KeySizeNotSupported : CryptographicException {
+
+		/// <summary>
+        /// Create an instance of the exception.
+        /// </summary>		
+		public KeySizeNotSupported () : base () {
+			}
+        
+		/// <summary>
+        /// Create an instance of the exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public KeySizeNotSupported (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Create an instance of the exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public KeySizeNotSupported (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new KeySizeNotSupported(Reason as string);
+				}
+
+
+			else {
+				return new KeySizeNotSupported("The requested key size is not supported");
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// Initialization of the cryptographic support library failed.
+    /// This is a fatal error that cannot be recovered from.
+    /// </summary>
+    public class InitializationFailed : CryptographicException {
+
+		/// <summary>
+        /// Create an instance of the exception.
+        /// </summary>		
+		public InitializationFailed () : base () {
+			}
+        
+		/// <summary>
+        /// Create an instance of the exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public InitializationFailed (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Create an instance of the exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public InitializationFailed (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new InitializationFailed(Reason as string);
+				}
+
+
+			else {
+				return new InitializationFailed("Initialization of the cryptographic support library failed.");
 				}
             }
         }

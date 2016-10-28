@@ -14,7 +14,7 @@
     <Name>FrameworkLibraries</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.6</FrameworkVersion>
-    <OutputPath>Help\</OutputPath>
+    <OutputPath>..\..\..\WebPublish\PrismProof\code\framework\</OutputPath>
     <HtmlHelpName>FrameworkLibraries</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
@@ -52,6 +52,9 @@
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Registry\bin\Publish\Goedel.Registry.XML" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Registry\bin\Publish\Goedel.Registry.dll" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol.Framework\Goedel.Protocol.Framework.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol.Framework\bin\Publish\Goedel.Protocol.Framework.xml" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol.Framework\bin\Publish\Goedel.Protocol.Framework.dll" />
     </DocumentationSources>
     <HelpFileVersion>1.0.0.0</HelpFileVersion>
     <MaximumGroupParts>2</MaximumGroupParts>
@@ -73,6 +76,7 @@
           <ignoreIfUnresolved>
             <assemblyIdentity name="BusinessObjects.Licensing.KeycodeDecoder" />
             <assemblyIdentity name="Microsoft.VisualStudio.TestTools.UITest.Playback" />
+            <assemblyIdentity name="System.Collections" />
             <assemblyIdentity name="System.Diagnostics.Debug" />
             <assemblyIdentity name="System.IO" />
             <assemblyIdentity name="System.Runtime" />
@@ -83,12 +87,13 @@
 <PlugInConfig id="Additional Reference Links" enabled="True"><configuration><targets><target htmlSdkLinkType="None" helpViewerSdkLinkType="Id" websiteSdkLinkType="None" helpFileProject="..\PortableLibraries\PortableLibraries.shfbproj" /></targets></configuration></PlugInConfig></PlugInConfigurations>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="False">Implementation of cryptographic operations.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Cryptography.Framework" isDocumented="True">Implementation of the Goedel.Cryptography algorithms using the libraries in the .NET Framework and Mono</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Cryptography.KeyFile" isDocumented="True">Encode and decode various cryptographic key file formats (PEM, OpenSSH, etc.)</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.IO" isDocumented="True">Convenience functions for IO operations. This will become the hub for all non portable IO operations including creating file handles, web clients and services.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Platform.Framework" isDocumented="True">Bind platform specific delegates to Goedel.Platform.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Protocol.Debug" isDocumented="True">Debugging tools for Protogen generated web services.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Registry" isDocumented="True">Support libraries for Goedel synthesis tools and the Command line interface synthesizer. Most of this functionality should probably migrate into a portable library in due course.</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="Goedel.Cryptography.Framework" isDocumented="True">Implementation of the Goedel.Cryptography algorithms using the libraries in the .NET Framework and Mono</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Cryptography.KeyFile" isDocumented="True">Encode and decode various cryptographic key file formats (PEM, OpenSSH, etc.)</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.IO" isDocumented="True">Convenience functions for IO operations. This will become the hub for all non portable IO operations including creating file handles, web clients and services.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Platform.Framework" isDocumented="True">Bind platform specific delegates to Goedel.Platform.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Protocol.Debug" isDocumented="True">Debugging tools for Protogen generated web services.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Registry" isDocumented="True">Support libraries for Goedel synthesis tools and the Command line interface synthesizer. Most of this functionality should probably migrate into a portable library in due course.</NamespaceSummaryItem>
+    </NamespaceSummaries>
     <TocParentId>-1</TocParentId>
     <TocParentVersion>100</TocParentVersion>
     <TopicVersion>100</TopicVersion>

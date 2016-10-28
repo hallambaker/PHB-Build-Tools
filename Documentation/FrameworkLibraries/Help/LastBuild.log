@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shfbBuild product="Sandcastle Help File Builder and Tools" version="2016.9.17.0" projectFile="C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\FrameworkLibraries.shfbproj" started="10/22/2016 3:11:42 PM">
+<shfbBuild product="Sandcastle Help File Builder and Tools" version="2016.9.17.0" projectFile="C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\FrameworkLibraries.shfbproj" started="10/25/2016 12:40:16 PM">
 <buildStep step="Initializing">
 Finding tools...
 The Sandcastle tools are located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\&#39;
@@ -73,7 +73,7 @@ References to include (excluding framework assemblies):
     None
 
 Copying XML comments files
-    C:\Users\hallam\Work\buildtools\Libraries\Goedel.Cryptography.Framework\bin\Publish\Goedel.Cryptography.Framework.XML -&gt; C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\Goedel.Cryptography.Framework.XML
+SHFB: Warning BE0061: File &#39;C:\Users\hallam\Work\buildtools\Libraries\Goedel.Cryptography.Framework\bin\Publish\Goedel.Cryptography.Framework.XML&#39; could not be loaded and will not be used as an XML comments file.  Error: Root element is missing.
     C:\Users\hallam\Work\buildtools\Libraries\Goedel.Cryptography.KeyFile\bin\Publish\Goedel.Cryptography.KeyFile.XML -&gt; C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\Goedel.Cryptography.KeyFile.XML
     C:\Users\hallam\Work\buildtools\Libraries\Goedel.IO\bin\Publish\Goedel.IO.XML -&gt; C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\Goedel.IO.XML
     C:\Users\hallam\Work\buildtools\Libraries\Goedel.Platform.Framework\bin\Publish\Goedel.Platform.Framework.XML -&gt; C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\Goedel.Platform.Framework.XML
@@ -83,11 +83,11 @@ Copying XML comments files
 <buildStep step="GenerateSharedContent">
 Generating shared content files (en-US, English (United States))...
 <plugIn name="Lightweight Website Style" behavior="After" priority="1000">
-</plugIn>    Last step completed in 00:00:00.0110
+</plugIn>    Last step completed in 00:00:00.0115
 </buildStep>
 <buildStep step="GenerateApiFilter">
 Generating API filter for MRefBuilder...
-    Last step completed in 00:00:00.0075
+    Last step completed in 00:00:00.0020
 </buildStep>
 <buildStep step="GenerateReflectionInfo">
 Generating reflection information...
@@ -100,7 +100,7 @@ Adding ignored assembly names to assembly resolver configuration:
     System.Runtime
     System.Threading.Tasks
 </plugIn>[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - GenerateRefInfo.proj]
-Build started 10/22/2016 3:11:42 PM.
+Build started 10/25/2016 12:40:17 PM.
 The target &quot;_ConvertPdbFiles&quot; listed in a BeforeTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,37)&quot; does not exist in the project, and will be ignored.
 The target &quot;_CollectPdbFiles&quot; listed in an AfterTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,70)&quot; does not exist in the project, and will be ignored.
 The target &quot;_CollectMdbFiles&quot; listed in a BeforeTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,38)&quot; does not exist in the project, and will be ignored.
@@ -197,13 +197,13 @@ Done Building Project &quot;C:\Users\hallam\Work\buildtools\Documentation\Framew
 
 Build succeeded.
 
-Time Elapsed 00:00:17.66
-    Last step completed in 00:00:17.7428
+Time Elapsed 00:00:17.33
+    Last step completed in 00:00:17.4149
 </buildStep>
 <buildStep step="TransformReflectionInfo">
 Transforming reflection output...
 [C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - TransformManifest.proj]
-Build started 10/22/2016 3:12:00 PM.
+Build started 10/25/2016 12:40:34 PM.
 Project &quot;C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\TransformManifest.proj&quot; on node 1 (default targets).
 TransformManifest:
   XslTransform (v2016.9.17.0)
@@ -223,8 +223,8 @@ Done Building Project &quot;C:\Users\hallam\Work\buildtools\Documentation\Framew
 
 Build succeeded.
 
-Time Elapsed 00:00:00.60
-    Last step completed in 00:00:00.6595
+Time Elapsed 00:00:00.50
+    Last step completed in 00:00:00.5589
 </buildStep>
 <buildStep step="GenerateNamespaceSummaries">
 Generating namespace summary information...
@@ -239,7 +239,7 @@ GenerateApiFilter
 GenerateReflectionInfo
 TransformReflectionInfo
 Completed
-</plugIn>    Last step completed in 00:00:02.6926
+</plugIn>    Last step completed in 00:00:02.6746
 </buildStep>
 <buildStep step="CopyConceptualContent">
 Copying conceptual content...
@@ -254,21 +254,21 @@ Generating conceptual topic files
     C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Content\VersionHistory\VersionHistory.aml -&gt; C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\ddueXml\60b7b2a4-207f-4df1-8a50-1193c952af17.xml
     Parsing topic file &#39;C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Content\VersionHistory\v1.0.0.0.aml&#39;
     C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Content\VersionHistory\v1.0.0.0.aml -&gt; C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\ddueXml\8ab61d01-4e9d-49ef-84ba-aed245fb1dbf.xml
-    Last step completed in 00:00:00.0321
+    Last step completed in 00:00:00.0501
 </buildStep>
 <buildStep step="CreateConceptualTopicConfigs">
 Creating conceptual topic configuration files...
     Companion files
     _ContentMetadata_.xml
     Merging topic IDs into manifest.xml
-    Last step completed in 00:00:00.0210
+    Last step completed in 00:00:00.0270
 </buildStep>
 <buildStep step="CopyAdditionalContent">
 Copying additional content files...
 C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\icons\Help.png -&gt; C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\Output\HtmlHelp1\icons\Help.png
 C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\icons\Help.png -&gt; C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\Output\MSHelpViewer\icons\Help.png
 C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\icons\Help.png -&gt; C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\Output\Website\icons\Help.png
-    Last step completed in 00:00:00.0115
+    Last step completed in 00:00:00.0125
 </buildStep>
 <buildStep step="MergeTablesOfContents">
 Merging conceptual and additional tables of contents...
@@ -277,7 +277,7 @@ Merging conceptual and additional tables of contents...
 <buildStep step="GenerateIntermediateTableOfContents">
 Generating intermediate table of contents file...
 [C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - GenerateIntermediateTOC.proj]
-Build started 10/22/2016 3:12:04 PM.
+Build started 10/25/2016 12:40:38 PM.
 Project &quot;C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\GenerateIntermediateTOC.proj&quot; on node 1 (default targets).
 GenerateIntermediateTOC:
   XslTransform (v2016.9.17.0)
@@ -288,16 +288,16 @@ Done Building Project &quot;C:\Users\hallam\Work\buildtools\Documentation\Framew
 
 Build succeeded.
 
-Time Elapsed 00:00:00.09
+Time Elapsed 00:00:00.11
 Generating conceptual content intermediate TOC file...
-    Last step completed in 00:00:00.1617
+    Last step completed in 00:00:00.2043
 </buildStep>
 <buildStep step="CreateBuildAssemblerConfigs">
 Creating Sandcastle configuration files...
 <plugIn name="Additional Reference Links" behavior="Before" priority="1000">
 Adding additional reference link namespaces...
 </plugIn>    sandcastle.config
-    Last step completed in 00:00:00.2349
+    Last step completed in 00:00:00.3846
 </buildStep>
 <buildStep step="MergeCustomConfigs">
 Merging custom build component configurations
@@ -308,12 +308,12 @@ C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\sa
 <plugIn name="Additional Reference Links" behavior="After" priority="1000">
 
 Adding references to C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\sandcastle.config...
-</plugIn>    Last step completed in 00:00:00.0125
+</plugIn>    Last step completed in 00:00:00.0200
 </buildStep>
 <buildStep step="BuildTopics">
 Building help topics...
 [C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - BuildTopics.proj]
-Build started 10/22/2016 3:12:04 PM.
+Build started 10/25/2016 12:40:38 PM.
 Project &quot;C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj&quot; on node 1 (default targets).
 BuildTopics:
   BuildAssembler (v2016.9.17.0)
@@ -321,6 +321,236 @@ BuildTopics:
   Portions Copyright c 2006-2016, Eric Woodruff, All Rights Reserved.
   Loading configuration...
   Processing topics...
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.Container] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.Container.Name(System.String)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.Container.Name(System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.Container.Name(System.String)] Missing &lt;param name=&quot;UDF&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.Container.Prefix] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.Container.Prefix] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.Cryptography] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.Cryptography.GetRandomBytes(System.Byte[],System.Int32,System.Int32)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.Cryptography.GetRandomBytes(System.Byte[],System.Int32,System.Int32)] Missing &lt;param name=&quot;Data&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.Cryptography.GetRandomBytes(System.Byte[],System.Int32,System.Int32)] Missing &lt;param name=&quot;Offset&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.Cryptography.GetRandomBytes(System.Byte[],System.Int32,System.Int32)] Missing &lt;param name=&quot;Count&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.Cryptography.Initialize] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.CryptoProviderAuthentication] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderAuthentication.#ctor(System.Security.Cryptography.HashAlgorithm)] Missing &lt;param name=&quot;HashAlgorithm&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderAuthentication.AlgorithmClass] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [F:Goedel.Cryptography.Framework.CryptoProviderAuthentication.HashAlgorithm] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderAuthentication.Initialize] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderAuthentication.Key] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderAuthentication.OID] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderAuthentication.Process(System.Byte[],System.Int32,System.Int32)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderAuthentication.Process(System.Byte[],System.Int32,System.Int32)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderAuthentication.Process(System.Byte[],System.Int32,System.Int32)] Missing &lt;param name=&quot;Buffer&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderAuthentication.Process(System.Byte[],System.Int32,System.Int32)] Missing &lt;param name=&quot;offset&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderAuthentication.Process(System.Byte[],System.Int32,System.Int32)] Missing &lt;param name=&quot;count&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderAuthentication.TransformFinal] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderAuthentication.TransformFinal] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.CryptoProviderDigest] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderDigest.#ctor(System.Security.Cryptography.HashAlgorithm)] Missing &lt;param name=&quot;HashAlgorithm&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderDigest.AlgorithmClass] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [F:Goedel.Cryptography.Framework.CryptoProviderDigest.HashAlgorithm] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderDigest.Initialize] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderDigest.OID] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderDigest.Process(System.Byte[],System.Int32,System.Int32)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderDigest.Process(System.Byte[],System.Int32,System.Int32)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderDigest.Process(System.Byte[],System.Int32,System.Int32)] Missing &lt;param name=&quot;Buffer&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderDigest.Process(System.Byte[],System.Int32,System.Int32)] Missing &lt;param name=&quot;offset&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderDigest.Process(System.Byte[],System.Int32,System.Int32)] Missing &lt;param name=&quot;count&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderDigest.TransformFinal] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderDigest.TransformFinal] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.CryptoProviderEncryptAES] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryptAES.#ctor(System.Int32)] Missing &lt;param name=&quot;KeySize&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryptAES.#ctor(System.Int32,System.Security.Cryptography.CipherMode)] Missing &lt;param name=&quot;KeySize&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryptAES.#ctor(System.Int32,System.Security.Cryptography.CipherMode)] Missing &lt;param name=&quot;CipherMode&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderEncryptAES.CryptoAlgorithm] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderEncryptAES.CryptoAlgorithmID] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderEncryptAES.GetCryptoProvider] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderEncryptAES.JSONName] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderEncryptAES.Name] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderEncryptAES.Size] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.CryptoProviderEncryption] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.#ctor(System.Security.Cryptography.SymmetricAlgorithm,System.Int32,System.Security.Cryptography.CipherMode)] Missing &lt;param name=&quot;SymmetricAlgorithm&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.#ctor(System.Security.Cryptography.SymmetricAlgorithm,System.Int32,System.Security.Cryptography.CipherMode)] Missing &lt;param name=&quot;KeySize&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.#ctor(System.Security.Cryptography.SymmetricAlgorithm,System.Int32,System.Security.Cryptography.CipherMode)] Missing &lt;param name=&quot;CipherMode&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderEncryption.AlgorithmClass] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [F:Goedel.Cryptography.Framework.CryptoProviderEncryption.AppendIntegrity] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [F:Goedel.Cryptography.Framework.CryptoProviderEncryption.AppendIV] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.Decrypt(Goedel.Cryptography.CryptoData,System.Byte[])] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.Decrypt(Goedel.Cryptography.CryptoData,System.Byte[])] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.Decrypt(Goedel.Cryptography.CryptoData,System.Byte[])] Missing &lt;param name=&quot;Input&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.Decrypt(Goedel.Cryptography.CryptoData,System.Byte[])] Missing &lt;param name=&quot;Data&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.Encrypt(Goedel.Cryptography.CryptoData)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.Encrypt(Goedel.Cryptography.CryptoData)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.Encrypt(Goedel.Cryptography.CryptoData)] Missing &lt;param name=&quot;Input&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.Encrypt(System.Byte[])] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.Encrypt(System.Byte[])] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.Encrypt(System.Byte[])] Missing &lt;param name=&quot;Data&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderEncryption.IV] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderEncryption.Key] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderEncryption.OID] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.Process(System.Byte[],System.Int32,System.Int32)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.Process(System.Byte[],System.Int32,System.Int32)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.Process(System.Byte[],System.Int32,System.Int32)] Missing &lt;param name=&quot;InputBuffer&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.Process(System.Byte[],System.Int32,System.Int32)] Missing &lt;param name=&quot;InputOffset&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.Process(System.Byte[],System.Int32,System.Int32)] Missing &lt;param name=&quot;Count&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderEncryption.Provider] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.StartDecrypt(System.Byte[])] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.StartDecrypt(System.Byte[])] Missing &lt;param name=&quot;Key&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.StartDecrypt(System.Byte[],System.Byte[])] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.StartDecrypt(System.Byte[],System.Byte[])] Missing &lt;param name=&quot;Key&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.StartDecrypt(System.Byte[],System.Byte[])] Missing &lt;param name=&quot;IV&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.StartEncrypt] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.StartEncrypt(System.Byte[],System.Byte[])] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.StartEncrypt(System.Byte[],System.Byte[])] Missing &lt;param name=&quot;Key&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderEncryption.StartEncrypt(System.Byte[],System.Byte[])] Missing &lt;param name=&quot;IV&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.#ctor(Goedel.Cryptography.Framework.RSAKeyPair)] Missing &lt;param name=&quot;RSAKeyPair&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.#ctor(System.Int32)] Missing &lt;param name=&quot;KeySize&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.CryptoAlgorithmID] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.Decrypt(System.Byte[])] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.Decrypt(System.Byte[])] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.Decrypt(System.Byte[])] Missing &lt;param name=&quot;Input&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.Encrypt(System.Byte[])] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.Encrypt(System.Byte[])] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.Encrypt(System.Byte[])] Missing &lt;param name=&quot;Input&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.FindLocal(System.String)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.FindLocal(System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.FindLocal(System.String)] Missing &lt;param name=&quot;UDF&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.Generate(Goedel.Cryptography.KeySecurity)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.Generate(Goedel.Cryptography.KeySecurity)] Missing &lt;param name=&quot;KeySecurity&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.GetCryptoProvider] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.JSONKeyType] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.JSONName] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.KeyPair] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.KeySize] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.Name] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [F:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.OAEP] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.OID] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.Size] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderExchangeRSA.UDF] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.CryptoProviderExchangeRSAPKCS] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderExchangeRSAPKCS.#ctor(System.Int32)] Missing &lt;param name=&quot;KeySize&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderExchangeRSAPKCS.CryptoAlgorithmID] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderExchangeRSAPKCS.GetCryptoProvider] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.CryptoProviderHMACSHA2_256] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderHMACSHA2_256.CryptoAlgorithmID] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderHMACSHA2_256.GetCryptoProvider] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderHMACSHA2_256.JSONName] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderHMACSHA2_256.Name] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderHMACSHA2_256.Size] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.CryptoProviderHMACSHA2_512] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderHMACSHA2_512.CryptoAlgorithmID] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderHMACSHA2_512.GetCryptoProvider] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderHMACSHA2_512.JSONName] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderHMACSHA2_512.Name] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderHMACSHA2_512.Size] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.CryptoProviderSHA1] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA1.CryptoAlgorithm] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA1.CryptoAlgorithmID] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA1.GetCryptoProvider] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA1.JSONName] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA1.Name] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA1.Size] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.CryptoProviderSHA2_256] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA2_256.CryptoAlgorithm] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA2_256.CryptoAlgorithmID] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA2_256.GetCryptoProvider] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA2_256.JSONName] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA2_256.Name] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA2_256.Size] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.CryptoProviderSHA2_512] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA2_512.CryptoAlgorithm] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA2_512.CryptoAlgorithmID] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA2_512.GetCryptoProvider] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA2_512.JSONName] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA2_512.Name] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSHA2_512.Size] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.#ctor(Goedel.Cryptography.Framework.RSAKeyPair)] Missing &lt;param name=&quot;RSAKeyPair&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.#ctor(System.Int32)] Missing &lt;param name=&quot;KeySize&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.#ctor(System.Int32,Goedel.Cryptography.CryptoAlgorithmID)] Missing &lt;param name=&quot;KeySize&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.#ctor(System.Int32,Goedel.Cryptography.CryptoAlgorithmID)] Missing &lt;param name=&quot;DigestAlgorithm&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.CryptoAlgorithmID] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.FindLocal(System.String)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.FindLocal(System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.FindLocal(System.String)] Missing &lt;param name=&quot;UDF&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.Generate(Goedel.Cryptography.KeySecurity)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.Generate(Goedel.Cryptography.KeySecurity)] Missing &lt;param name=&quot;KeySecurity&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.GetCryptoProvider] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.JSONKeyType] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.JSONName] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.KeyPair] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.KeySize] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.Name] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.OID] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.Sign(Goedel.Cryptography.CryptoData)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.Sign(Goedel.Cryptography.CryptoData)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.Sign(Goedel.Cryptography.CryptoData)] Missing &lt;param name=&quot;Data&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.Size] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.UDF] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.Verify(Goedel.Cryptography.CryptoData,System.Byte[])] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.Verify(Goedel.Cryptography.CryptoData,System.Byte[])] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.Verify(Goedel.Cryptography.CryptoData,System.Byte[])] Missing &lt;param name=&quot;Data&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.CryptoProviderSignatureRSA.Verify(Goedel.Cryptography.CryptoData,System.Byte[])] Missing &lt;param name=&quot;Signature&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.ExtensionMethods] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.AlgorithmIdentifier(System.Security.Cryptography.Oid)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.AlgorithmIdentifier(System.Security.Cryptography.Oid)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.AlgorithmIdentifier(System.Security.Cryptography.Oid)] Missing &lt;param name=&quot;Oid&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.Certificate(System.Byte[])] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.Certificate(System.Byte[])] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.Certificate(System.Byte[])] Missing &lt;param name=&quot;Data&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.Extension(System.Security.Cryptography.X509Certificates.X509Extension)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.Extension(System.Security.Cryptography.X509Certificates.X509Extension)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.Extension(System.Security.Cryptography.X509Certificates.X509Extension)] Missing &lt;param name=&quot;X509Extension&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.KeyPair(System.Security.Cryptography.AsymmetricAlgorithm)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.KeyPair(System.Security.Cryptography.AsymmetricAlgorithm)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.KeyPair(System.Security.Cryptography.AsymmetricAlgorithm)] Missing &lt;param name=&quot;AsymmetricAlgorithm&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.Names(System.Security.Cryptography.X509Certificates.X500DistinguishedName)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.Names(System.Security.Cryptography.X509Certificates.X500DistinguishedName)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.Names(System.Security.Cryptography.X509Certificates.X500DistinguishedName)] Missing &lt;param name=&quot;DN&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.RSAParameters(Goedel.Cryptography.PKIX.RSAPrivateKey)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.RSAParameters(Goedel.Cryptography.PKIX.RSAPrivateKey)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.RSAParameters(Goedel.Cryptography.PKIX.RSAPrivateKey)] Missing &lt;param name=&quot;RSAPrivateKey&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.RSAParameters(Goedel.Cryptography.PKIX.RSAPublicKey)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.RSAParameters(Goedel.Cryptography.PKIX.RSAPublicKey)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.RSAParameters(Goedel.Cryptography.PKIX.RSAPublicKey)] Missing &lt;param name=&quot;RSAPublicKey&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.RSAPrivateKey(System.Security.Cryptography.RSAParameters)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.RSAPrivateKey(System.Security.Cryptography.RSAParameters)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.RSAPrivateKey(System.Security.Cryptography.RSAParameters)] Missing &lt;param name=&quot;RSAParameters&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.RSAPublicKey(System.Security.Cryptography.RSAParameters)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.RSAPublicKey(System.Security.Cryptography.RSAParameters)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.RSAPublicKey(System.Security.Cryptography.RSAParameters)] Missing &lt;param name=&quot;RSAParameters&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.TBSCertificate(System.Security.Cryptography.X509Certificates.X509Certificate2)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.TBSCertificate(System.Security.Cryptography.X509Certificates.X509Certificate2)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.ExtensionMethods.TBSCertificate(System.Security.Cryptography.X509Certificates.X509Certificate2)] Missing &lt;param name=&quot;X509Cert&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.Factory] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.Factory.RSAPublicKey(System.Security.Cryptography.RSAParameters)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.Factory.RSAPublicKey(System.Security.Cryptography.RSAParameters)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.Factory.RSAPublicKey(System.Security.Cryptography.RSAParameters)] Missing &lt;param name=&quot;RSAParameters&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:Goedel.Cryptography.Framework.RSAKeyPair] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.RSAKeyPair.#ctor(System.Int32)] Missing &lt;param name=&quot;KeySize&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.RSAKeyPair.#ctor(System.Int32,System.Boolean)] Missing &lt;param name=&quot;KeySize&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.RSAKeyPair.#ctor(System.Int32,System.Boolean)] Missing &lt;param name=&quot;Exportable&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.RSAKeyPair.#ctor(System.Security.Cryptography.RSACryptoServiceProvider)] Missing &lt;param name=&quot;RSACryptoServiceProvider&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.RSAKeyPair.#ctor(System.Security.Cryptography.RSAParameters)] Missing &lt;param name=&quot;RSAParameters&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.RSAKeyPair.#ctor(System.String)] Missing &lt;param name=&quot;UDF&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.RSAKeyPair.AsymmetricAlgorithm] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.RSAKeyPair.ExchangeProviderDecrypt] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.RSAKeyPair.ExchangeProviderEncrypt] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.RSAKeyPair.FindLocal(System.String)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.RSAKeyPair.FindLocal(System.String)] Missing &lt;returns&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.RSAKeyPair.FindLocal(System.String)] Missing &lt;param name=&quot;UDF&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.RSAKeyPair.GetPrivate] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.RSAKeyPair.KeyInfoData] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.RSAKeyPair.Persist(Goedel.Cryptography.KeySecurity)] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Goedel.Cryptography.Framework.RSAKeyPair.Persist(Goedel.Cryptography.KeySecurity)] Missing &lt;param name=&quot;KeySecurity&quot;/&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.RSAKeyPair.Provider] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.RSAKeyPair.RSAPrivateKey] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.RSAKeyPair.RSAPublicKey] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.RSAKeyPair.SignatureProvider] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [P:Goedel.Cryptography.Framework.RSAKeyPair.VerificationProvider] Missing &lt;summary&gt; documentation [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [T:Goedel.Platform.Framework.DNSClientUDP] Unknown reference link target &#39;M:Goedel.Platform.DNSClient.QueryAsync(System.Void)&#39;. [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [T:Goedel.Platform.Framework.DNSClientUDP] Unknown reference link target &#39;M:Goedel.Platform.DNSClient.QueryAsync(System.Void)&#39;. [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [T:Goedel.Platform.Framework.DNSClientUDP] Unknown reference link target &#39;M:Goedel.Platform.DNSClient.QueryAsync(System.Void)&#39;. [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
@@ -331,21 +561,22 @@ BuildAssembler : warning : ResolveReferenceLinksComponent: [Overload:Goedel.Plat
 BuildAssembler : warning : ResolveReferenceLinksComponent: [Overload:Goedel.Platform.Framework.DNSClientUDP.QueryAsync] Unknown reference link target &#39;M:Goedel.Platform.DNSClient.QueryAsync(System.Void)&#39;. [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [Overload:Goedel.Platform.Framework.DNSClientUDP.QueryAsync] Unknown reference link target &#39;M:Goedel.Platform.DNSClient.QueryAsync(System.Void)&#39;. [C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj]
   Processed 784 topic(s)
-  9 warning(s)
+  239 warning(s)
   CopyFromIndexComponent: &quot;metadata&quot; in-memory cache entries used: 1 of 15.
   ResolveArtLinksComponent: Copying media files...
   ResolveArtLinksComponent: Copying media files...
   ResolveArtLinksComponent: Copying media files...
   CopyFromIndexComponent: &quot;reflection&quot; in-memory cache entries used: 10 of 15.
-  CopyFromIndexComponent: &quot;comments&quot; in-memory cache entries used: 11 of 30.
-  SaveComponent: Waiting for the document writer task to finish (93 Help1 API file(s) remaining)...
-  SaveComponent: Waiting for the document writer task to finish (7 MSHelpViewer API file(s) remaining)...
+  CopyFromIndexComponent: &quot;comments&quot; in-memory cache entries used: 9 of 30.
+  SaveComponent: Waiting for the document writer task to finish (83 Help1 API file(s) remaining)...
+  SaveComponent: Waiting for the document writer task to finish (4 MSHelpViewer API file(s) remaining)...
+  SaveComponent: Waiting for the document writer task to finish (9 Website API file(s) remaining)...
 Done Building Project &quot;C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\BuildTopics.proj&quot; (default targets).
 
 Build succeeded.
 
-Time Elapsed 00:00:17.43
-    Last step completed in 00:00:17.5142
+Time Elapsed 00:00:17.61
+    Last step completed in 00:00:17.7118
 </buildStep>
 <buildStep step="CombiningIntermediateTocFiles">
 Combining conceptual and API intermediate TOC files...
@@ -371,7 +602,7 @@ Processed 784 HTML files
 Sorting keywords and generating See Also indices
 Saving website keyword index to C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\WebKI.xml
 Saving website table of contents to C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\WebTOC.xml
-    Last step completed in 00:00:02.5910
+    Last step completed in 00:00:02.8238
 </buildStep>
 <buildStep step="CopyStandardHelpContent">
 Copying standard help content...
@@ -575,11 +806,11 @@ C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyle
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\branding-Website.js -&gt; C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\Output\Website\scripts\branding-Website.js
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\clipboard.min.js -&gt; C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\Output\Website\scripts\clipboard.min.js
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\jquery-1.11.0.min.js -&gt; C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\Output\Website\scripts\jquery-1.11.0.min.js
-    Last step completed in 00:00:00.8113
+    Last step completed in 00:00:00.8253
 </buildStep>
 <buildStep step="GenerateHelpFormatTableOfContents">
 Generating HTML Help 1 table of contents file...
-    Last step completed in 00:00:00.0005
+    Last step completed in 00:00:00.0000
 </buildStep>
 <buildStep step="GenerateHelpFileIndex">
 Generating HTML Help 1 index file...
@@ -606,7 +837,7 @@ Compiling HTML Help 1 file...
   
   786	Topics
   
-  8,569	Local links
+  8,605	Local links
   
   1,992	Internet links
   
@@ -616,19 +847,19 @@ Compiling HTML Help 1 file...
   
   
   
-  Created c:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\Output\HtmlHelp1\FrameworkLibraries.chm, 970,067 bytes
+  Created c:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\Working\Output\HtmlHelp1\FrameworkLibraries.chm, 951,817 bytes
   
-  Compression decreased file by 5,512,190 bytes.
+  Compression decreased file by 5,495,020 bytes.
   
-    Last step completed in 00:00:03.5165
+    Last step completed in 00:00:03.4952
 </buildStep>
 <buildStep step="GenerateHelpFormatTableOfContents">
 Executing informational Generate Table of Contents build step for plug-ins (not used for MS Help Viewer)
-    Last step completed in 00:00:00.0045
+    Last step completed in 00:00:00.0005
 </buildStep>
 <buildStep step="GenerateHelpProject">
 Executing informational Generate Help Project build step for plug-ins (not used for MS Help Viewer)
-    Last step completed in 00:00:00.0035
+    Last step completed in 00:00:00.0005
 </buildStep>
 <buildStep step="CompilingHelpFile">
 Generating MS Help Viewer file...
@@ -639,8 +870,8 @@ Generating MS Help Viewer file...
   Saving C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\FrameworkLibraries.mshc...
   Saved 500 of 853 items
   Finished saving C:\Users\hallam\Work\buildtools\Documentation\FrameworkLibraries\Help\FrameworkLibraries.mshc
-  Compressed 5 folders, 848 files.  Reduced size by 5,020,236 bytes (76%).
-    Last step completed in 00:00:00.8018
+  Compressed 5 folders, 848 files.  Reduced size by 4,993,260 bytes (76%).
+    Last step completed in 00:00:00.6736
 </buildStep>
 <buildStep step="GenerateHelpFormatTableOfContents">
 Generating website table of contents file...
@@ -651,7 +882,7 @@ Generating full-text index for the website...
 
 <plugIn name="Lightweight Website Style" behavior="After" priority="1000">
 Adding lightweight search and TOC elements to each topic...
-</plugIn>    Last step completed in 00:00:01.7802
+</plugIn>    Last step completed in 00:00:01.7006
 </buildStep>
 <buildStep step="CopyingWebsiteFiles">
 Copying website files to output folder...
@@ -659,15 +890,15 @@ Copying website files to output folder...
 Copied 500 files
 Copied 1000 files
 Copied 1128 files for the website content
-    Last step completed in 00:00:01.1753
+    Last step completed in 00:00:01.1623
 </buildStep>
 <buildStep step="CleanIntermediates">
 Removing intermediate files...
-    Last step completed in 00:00:00.7815
+    Last step completed in 00:00:00.7086
 </buildStep>
 <buildStep step="Completed">
 
-Build completed successfully at 10/22/2016 3:12:33 PM.  Total time: 00:00:51.0173
+Build completed successfully at 10/25/2016 12:41:07 PM.  Total time: 00:00:51.3025
 
 </buildStep>
 </shfbBuild>

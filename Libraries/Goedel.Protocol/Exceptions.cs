@@ -15,6 +15,7 @@ namespace Goedel.Protocol {
         /// </summary>		
 		public Dechunking () : base () {
 			}
+
         
 		/// <summary>
         /// Create an instance of the exception.

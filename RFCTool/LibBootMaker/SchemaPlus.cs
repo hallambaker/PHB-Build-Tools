@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Goedel.MarkLib;
+using Goedel.Document.Markdown;
 
-namespace Goedel.BootMark {
+namespace Goedel.Document.Markdown.Tags {
     public partial class MarkLib {
 
         public void Complete () {

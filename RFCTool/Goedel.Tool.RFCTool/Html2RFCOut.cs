@@ -90,10 +90,10 @@ namespace Goedel.Tool.RFCTool {
             TextWriter.WriteLine("</{0}>", Tag);
             }
 
-        List<ListItem> ListItems = new List<ListItem>();
+        List<BlockType> ListItems = new List<BlockType>();
         int ListPointer = -1;
 
-        void OpenList(ListItem ListItem) {
+        void OpenList(BlockType ListItem) {
             //TextWriter.Write(Start);
             ListPointer++;
 
@@ -105,11 +105,11 @@ namespace Goedel.Tool.RFCTool {
                 ListItems[ListPointer] = ListItem;
                 }
             switch (ListItems[ListPointer]) {
-                case ListItem.Definitions:
-                case ListItem.Term:
-                case ListItem.Data: TextWriter.WriteLine("<dl>"); return;
-                case ListItem.Ordered: TextWriter.WriteLine("<ol>"); return;
-                case ListItem.Symbol: TextWriter.WriteLine("<ul>"); return;
+                case BlockType.Definitions:
+                case BlockType.Term:
+                case BlockType.Data: TextWriter.WriteLine("<dl>"); return;
+                case BlockType.Ordered: TextWriter.WriteLine("<ol>"); return;
+                case BlockType.Symbol: TextWriter.WriteLine("<ul>"); return;
                 }
 
             }
@@ -117,17 +117,17 @@ namespace Goedel.Tool.RFCTool {
         void CloseList() {
 
             switch (ListItems[ListPointer]) {
-                case ListItem.Definitions:
-                case ListItem.Term:
-                case ListItem.Data: TextWriter.WriteLine("</dl>"); break;
-                case ListItem.Ordered: TextWriter.WriteLine("</ol>"); break;
-                case ListItem.Symbol: TextWriter.WriteLine("</ul>"); break;
+                case BlockType.Definitions:
+                case BlockType.Term:
+                case BlockType.Data: TextWriter.WriteLine("</dl>"); break;
+                case BlockType.Ordered: TextWriter.WriteLine("</ol>"); break;
+                case BlockType.Symbol: TextWriter.WriteLine("</ul>"); break;
                 }
 
             ListPointer--;
             }
 
-        void SetListLevel(int Level, ListItem ListItem) {
+        void SetListLevel(int Level, BlockType ListItem) {
             if (Level < ListPointer) {
                 while (Level < ListPointer) {
                     CloseList();
@@ -145,7 +145,7 @@ namespace Goedel.Tool.RFCTool {
 
             // Level == ListPointer 
             if ((ListItems[ListPointer] == ListItem) |
-                (ListItems[ListPointer] == ListItem.Term & ListItem == ListItem.Data)) {
+                (ListItems[ListPointer] == BlockType.Term & ListItem == BlockType.Data)) {
                 return;
                 }
             CloseList();
@@ -160,15 +160,15 @@ namespace Goedel.Tool.RFCTool {
             SetListLevel(LI.Level, LI.Type);
 
             switch (LI.Type) {
-                case ListItem.Data: WriteValueTag("dd", LI.Text); break;
-                case ListItem.Term: WriteValueTag("dt", LI.Text); break;
-                case ListItem.Ordered: WriteValueTag("li", LI.Text); break;
-                case ListItem.Symbol: WriteValueTag("li", LI.Text); break;
+                case BlockType.Data: WriteValueTag("dd", LI.Text); break;
+                case BlockType.Term: WriteValueTag("dt", LI.Text); break;
+                case BlockType.Ordered: WriteValueTag("li", LI.Text); break;
+                case BlockType.Symbol: WriteValueTag("li", LI.Text); break;
                  }
             }
 
         void ListLast() {
-            SetListLevel(-1, ListItem.Data);
+            SetListLevel(-1, BlockType.Data);
             }
 
         static string[] HeadTags = {"h1", "h2", "h3", "h4", "h5", "h6"};

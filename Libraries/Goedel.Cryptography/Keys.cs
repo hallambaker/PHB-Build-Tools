@@ -271,6 +271,11 @@ namespace Goedel.Cryptography {
         /// <returns>True if private key exists.</returns>
         public abstract bool FindLocal(string UDF);
 
+
+
+
+
+
         }
 
 

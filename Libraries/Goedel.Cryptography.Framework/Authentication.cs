@@ -85,6 +85,8 @@ namespace Goedel.Cryptography.Framework {
         public override CryptoData Process(byte[] Buffer, int offset, int count) {
             var Data = HashAlgorithm.ComputeHash(Buffer, offset, count);
             var CryptoDigestValue = new CryptoData(CryptoAlgorithmID, OID, Data);
+
+
             return CryptoDigestValue;
             }
 

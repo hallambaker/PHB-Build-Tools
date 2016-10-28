@@ -60,6 +60,7 @@ namespace Goedel.Cryptography.Ticket {
         /// to the MAC</param>
         /// <param name="Authentication">MAC provider</param>
         /// <returns>The response to the PIN challenge.</returns>
+        /// <exception cref="NYI">Not Yet Implemented</exception>
         public static byte[] GetPINKey(string PIN, byte[] ClientChallenge,
             Cryptography.Authentication Authentication) {
 

@@ -164,8 +164,8 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="KeySecurity">The key security mode</param>
         public override void Generate(KeySecurity KeySecurity) {
-        _RSAKeyPair = new RSAKeyPair(KeySize);
-        _RSAKeyPair.Persist(KeySecurity);
+            _RSAKeyPair = new RSAKeyPair(KeySize);
+            _RSAKeyPair.Persist(KeySecurity);
             }
 
         /// <summary>

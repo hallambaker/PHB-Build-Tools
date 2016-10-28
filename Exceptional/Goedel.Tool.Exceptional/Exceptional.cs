@@ -1,5 +1,5 @@
 
-//  Copyright (c) 2012 by Default Deny Security Inc.
+//  Copyright (c) 2012-2016 by Default Deny Security Inc.
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal

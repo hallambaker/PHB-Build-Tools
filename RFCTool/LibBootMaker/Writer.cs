@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Goedel.MarkLib {
+namespace Goedel.Document.Markdown {
     public class Writer : IDisposable {
         protected Stream Stream = null;
         protected TextWriter TextWriter = null;

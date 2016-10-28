@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Goedel.FSR;
 
 
-// Goedel.MarkLib
-namespace Goedel.MarkLib {
+// Goedel.Document.Markdown
+namespace Goedel.Document.Markdown{
+
 
 	// Prototypes for the actions. These must be implemented in 
 	// the plus class
@@ -46,54 +48,127 @@ namespace Goedel.MarkLib {
 		}
 	*/
 
-	public partial class MarkDownLex {
+	public partial class MarkDownLex : global::Goedel.FSR.Lexer {
+       /// <summary>
+        /// Create and initialize a lexical analyzer.
+        /// </summary>
+        /// <param name="Reader">The input source.</param>
+        public  MarkDownLex(LexReader Reader) : base (Reader) {
+            }
 
-		public delegate void Action (int c);
+        /// <summary>
+        /// Create and initialize a lexical analyzer.
+        /// </summary>
+        /// <param name="Stream">The input source.</param>
+        public  MarkDownLex(Stream Stream) : base(new LexReader(Stream)) {
+            }
 
+        /// <summary>
+        /// Create and initialize a lexical analyzer.
+        /// </summary>
+        /// <param name="TextReader">The input source.</param>
+        public  MarkDownLex(TextReader TextReader) : base(new LexReader(TextReader)) {
+            }
+
+        /// <summary>
+        /// Maps characters to character sets
+        /// </summary>
+        public override byte[] CharacterMappings { get { return Character_Mapping; }  }
+
+        /// <summary>
+        /// State transitions in response to character set
+        /// </summary>
+        public override short[,] CompressedTransitions { get { return Compressed_Transitions; } }
+
+        /// <summary>
+        /// Get the next token from the stream
+        /// </summary>
+        /// <param name="StartState">The initial starting state</param>
+        /// <returns>The token detected or -1 if an error occurred</returns>
+        public Token GetToken(State StartState) {
+            return Tokens [GetTokenInt((int)StartState)];
+            }
+
+        /// <summary>
+        /// Get the next token from the stream
+        /// </summary>
+        /// <returns>The token detected or -1 if an error occurred</returns>
+        public Token GetToken () {
+            return GetToken (0);
+            }
+
+		/// <summary>State types</summary>
 		public enum State {
+			/// <summary>BlockStart</summary>
             BlockStart = 0,
+			/// <summary>Comment1</summary>
             Comment1 = 1,
+			/// <summary>Comment2</summary>
             Comment2 = 2,
+			/// <summary>Pre1</summary>
             Pre1 = 3,
+			/// <summary>Pre2</summary>
             Pre2 = 4,
+			/// <summary>PreCR</summary>
             PreCR = 5,
+			/// <summary>InPre</summary>
             InPre = 6,
+			/// <summary>PreAdd</summary>
             PreAdd = 7,
+			/// <summary>PreOut1</summary>
             PreOut1 = 8,
+			/// <summary>PreOut2</summary>
             PreOut2 = 9,
+			/// <summary>PreOut3</summary>
             PreOut3 = 10,
+			/// <summary>PreOut4</summary>
             PreOut4 = 11,
+			/// <summary>NotPre</summary>
             NotPre = 12,
+			/// <summary>WhiteSpace</summary>
             WhiteSpace = 13,
+			/// <summary>Text</summary>
             Text = 14,
+			/// <summary>TextSpace</summary>
             TextSpace = 15,
+			/// <summary>TextMoreSpace</summary>
             TextMoreSpace = 16,
+			/// <summary>TextCR</summary>
             TextCR = 17,
+			/// <summary>TextCRSpace</summary>
             TextCRSpace = 18,
+			/// <summary>TextH1</summary>
             TextH1 = 19,
+			/// <summary>TextH2</summary>
             TextH2 = 20,
+			/// <summary>Heading</summary>
             Heading = 21,
+			/// <summary>Defined</summary>
             Defined = 22,
+			/// <summary>Defined2</summary>
             Defined2 = 23,
+			/// <summary>Number</summary>
             Number = 24,
+			/// <summary>Numbered</summary>
             Numbered = 25,
+			/// <summary>Bullet</summary>
             Bullet = 26,
+			/// <summary>End</summary>
             End = 27
 			};
 
+		/// <summary>Token Types</summary>
 		public enum Token {
+			/// <summary>Could not find a valid token.</summary>
 			INVALID = -1,
+			/// <summary>Empty</summary>
             Empty = 0,
+			/// <summary>Block</summary>
             Block = 1
 			};
 
 
-
-		//#define Goedel.MarkLib_Action__Count  15
-		//#define Goedel.MarkLib_Token__Count  2
-		//#define Goedel.MarkLib_State__Count  28
-
-
+		/// <summary>Mapping of characters to character groups</summary>
 		static byte [] Character_Mapping   =  new byte [] {
 			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 2 , 0 , 0 , 0 , 0 , 0 , 
 			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 
@@ -167,8 +242,9 @@ namespace Goedel.MarkLib {
 			Token.Block
 			};
 
-        public Action[] Actions;
-        public void Init () {
+		/// <summary>Generated initialization method, is called automatically 
+		/// the FSR to reset </summary>
+        public override void Init () {
             Actions = new Action[] {
 				Reset,
 				Ignore,

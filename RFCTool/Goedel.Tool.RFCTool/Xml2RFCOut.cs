@@ -90,10 +90,10 @@ namespace Goedel.Tool.RFCTool {
             TextWriter.WriteLine("</{0}>", Tag);
             }
 
-        List<ListItem> ListItems = new List<ListItem>();
+        List<BlockType> ListItems = new List<BlockType>();
         int ListPointer = -1;
 
-        void OpenList(ListItem ListItem) {
+        void OpenList(BlockType ListItem) {
             //TextWriter.Write(Start);
             ListPointer++;
 
@@ -105,11 +105,11 @@ namespace Goedel.Tool.RFCTool {
                 ListItems[ListPointer] = ListItem;
                 }
             switch (ListItems[ListPointer]) {
-                case ListItem.Definitions:
-                case ListItem.Term:
-                case ListItem.Data: TextWriter.WriteLine("<t><list style=\"hanging\">"); return;
-                case ListItem.Ordered: TextWriter.WriteLine("<t><list style=\"numbers\">"); return;
-                case ListItem.Symbol: TextWriter.WriteLine("<t><list style=\"symbols\">"); return;
+                case BlockType.Definitions:
+                case BlockType.Term:
+                case BlockType.Data: TextWriter.WriteLine("<t><list style=\"hanging\">"); return;
+                case BlockType.Ordered: TextWriter.WriteLine("<t><list style=\"numbers\">"); return;
+                case BlockType.Symbol: TextWriter.WriteLine("<t><list style=\"symbols\">"); return;
                 }
 
             }
@@ -117,17 +117,17 @@ namespace Goedel.Tool.RFCTool {
         void CloseList() {
 
             switch (ListItems[ListPointer]) {
-                case ListItem.Definitions:
-                case ListItem.Term:
-                case ListItem.Data: TextWriter.WriteLine("</list></t>"); break;
-                case ListItem.Ordered: TextWriter.WriteLine("</list></t>"); break;
-                case ListItem.Symbol: TextWriter.WriteLine("</list></t>"); break;
+                case BlockType.Definitions:
+                case BlockType.Term:
+                case BlockType.Data: TextWriter.WriteLine("</list></t>"); break;
+                case BlockType.Ordered: TextWriter.WriteLine("</list></t>"); break;
+                case BlockType.Symbol: TextWriter.WriteLine("</list></t>"); break;
                 }
 
             ListPointer--;
             }
 
-        void SetListLevel(int Level, ListItem ListItem) {
+        void SetListLevel(int Level, BlockType ListItem) {
             if (Level < ListPointer) {
                 while (Level < ListPointer) {
                     CloseList();
@@ -145,7 +145,7 @@ namespace Goedel.Tool.RFCTool {
 
             // Level == ListPointer 
             if ((ListItems[ListPointer] == ListItem) |
-                (ListItems[ListPointer] == ListItem.Term & ListItem == ListItem.Data)) {
+                (ListItems[ListPointer] == BlockType.Term & ListItem == BlockType.Data)) {
                 return;
                 }
             CloseList();
@@ -159,7 +159,7 @@ namespace Goedel.Tool.RFCTool {
         string HangText = null;
         void ListLevel(LI LI) {
 
-            if (HangText != null & LI.Type != ListItem.Data) {
+            if (HangText != null & LI.Type != BlockType.Data) {
                 WriteValueTag("t", " ", "hangText", HangText);
                 HangText = null;
                 }
@@ -167,11 +167,11 @@ namespace Goedel.Tool.RFCTool {
             SetListLevel(LI.Level, LI.Type);
 
             switch (LI.Type) {
-                case ListItem.Data: WriteValueTag("t", LI.Text,
+                case BlockType.Data: WriteValueTag("t", LI.Text,
                    "hangText", WrapNull(HangText)); HangText = null; break;
-                case ListItem.Term: HangText = LI.Text; break;
-                case ListItem.Ordered:
-                case ListItem.Symbol:
+                case BlockType.Term: HangText = LI.Text; break;
+                case BlockType.Ordered:
+                case BlockType.Symbol:
                     WriteValueTag("t", LI.Text); break;
                 }
             }
@@ -182,7 +182,7 @@ namespace Goedel.Tool.RFCTool {
                 HangText = null;
                 }
 
-            SetListLevel(-1, ListItem.Data);
+            SetListLevel(-1, BlockType.Data);
             }
 
         public void WriteSections(List<Section> Sections) {

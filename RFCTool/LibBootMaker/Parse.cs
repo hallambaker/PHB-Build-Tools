@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-
+using Goedel.FSR;
 
 
     //State DocStart Ignore Empty			// Starting State for Document		
@@ -15,17 +15,17 @@ using System.Threading.Tasks;
     //State GetTitle AddCharWS Title
     //    On "\r" GoTo Start
 
-namespace Goedel.MarkLib {
+namespace Goedel.Document.Markdown {
 
     public partial class Document {
 
-        public void Parse(Reader Reader) {
+        public void Parse(LexReader Reader) {
             Parse(Reader, Paragraphs);
             }
 
 
 
-        public void Parse(Reader Reader, List<Paragraph> Paragraphs) {
+        public void Parse(LexReader Reader, List<Paragraph> Paragraphs) {
             bool First = true;
             MarkDownLex Lexer = new MarkDownLex(Reader);
 

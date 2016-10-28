@@ -5,11 +5,24 @@
       <HelpKeyword index="K" term="Welcome" />
     </HelpKeywords>
   </Topic>
+  <Topic id="87a98061-24fe-4bd7-a67f-5e1e2b1a92f7" visible="True" title="Coding Standards" tocTitle="Coding Standards" />
+  <Topic id="22699065-52a8-4e7b-9d2f-575338471deb" visible="True" isExpanded="true" title="Support Libraries" tocTitle="Libraries">
+    <Topic id="98313b54-9855-415f-9cf8-7a3beb669ae7" visible="True" title="Network Protocol Support Libraries" tocTitle="Network  Libraries" />
+    <Topic id="f49b1505-1206-4ffe-8f23-43f42f61e4bd" visible="True" title="Cryptography Support Libraries" tocTitle="Cryptography Libraries" />
+    <Topic id="9a1e36d4-be25-49e5-8182-8eebe08681d8" visible="True" />
+    <Topic id="46e08fe1-5735-47cf-aaab-b738f125d326" visible="True" />
+    <Topic id="a308ce4a-1c41-4273-ae66-b66f74d208f5" visible="True" />
+    <Topic id="1a4dea8e-9571-4b26-80bd-a1fece57b2cd" visible="True" isSelected="true" />
+  </Topic>
+  <Topic id="43492f57-fc54-4884-8024-eb99454fe959" visible="True" isExpanded="true" title="Exception Handling using Exceptional" tocTitle="Exception Handling">
+    <Topic id="c3c40fd4-528b-4496-a87c-571fde8886f7" visible="True" />
+  </Topic>
+  <Topic id="23330bd8-ccd3-4de5-b806-860b84e42380" visible="True" />
   <Topic id="3a616bb2-acaa-4b30-8aab-03736daf78a9" visible="True" isExpanded="true" title="Version History">
     <HelpKeywords>
       <HelpKeyword index="K" term="version, history" />
     </HelpKeywords>
-    <Topic id="c07d5c4a-8272-4e98-988f-862bbdea879f" visible="True" isSelected="true" title="Version 1.0.0.0">
+    <Topic id="c07d5c4a-8272-4e98-988f-862bbdea879f" visible="True" title="Version 1.0.0.0">
       <HelpKeywords>
         <HelpKeyword index="K" term="version, 1.0.0.0" />
       </HelpKeywords>

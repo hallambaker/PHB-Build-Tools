@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 
 namespace Goedel.Tool.RFCTool {
-    public partial class HTML2RFC {
+    public partial class Writers {
 
         /// <summary>
         /// Write document to specified output stream
@@ -226,28 +226,28 @@ namespace Goedel.Tool.RFCTool {
                 if (TextBlock.GetType() == typeof(LI)) {
                     LI LI = (LI)TextBlock;
                     int First = 0, Left = 0, Above = 0, Below = 0; string Text = LI.Text; bool Break = true;
-                    if (LI.Type == ListItem.Symbol) {
+                    if (LI.Type == BlockType.Symbol) {
                         PageWriter.AllowBreak = true;
                         First = 6 + (LI.Level * 3);
                         Left = First + 3;
                         Text = "*  " + Text;
                         Above = 1; Below = 1;
                         }
-                    if (LI.Type == ListItem.Ordered) {
+                    if (LI.Type == BlockType.Ordered) {
                         PageWriter.AllowBreak = true;
                         First = 6 + (LI.Level * 3);
                         Left = First + 3;
                         Text = LI.Index.ToString() + ") " + Text;
                         Above = 1; Below = 1;
                         }
-                    if (LI.Type == ListItem.Term) {
+                    if (LI.Type == BlockType.Term) {
                         PageWriter.AllowBreak = false;
                         First = 6 + (LI.Level * 3);
                         Left = First + 3;
                         Above = 1;
                         Break = false; // suppress page break between defined term and definition
                         }
-                    if (LI.Type == ListItem.Data) {
+                    if (LI.Type == BlockType.Data) {
                         PageWriter.AllowBreak = true;
                         First = 9 + (LI.Level * 3);
                         Left = First;

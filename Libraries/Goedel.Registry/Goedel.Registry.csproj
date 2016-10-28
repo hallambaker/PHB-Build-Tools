@@ -65,6 +65,11 @@
   <ItemGroup>
     <Compile Include="Command.cs" />
     <Compile Include="Convenience.cs" />
+    <Compile Include="Exceptions.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+    </Compile>
     <Compile Include="FileTools.cs" />
     <Compile Include="Headers.cs">
       <AutoGen>True</AutoGen>
@@ -76,8 +81,13 @@
     <Compile Include="RegistryT.cs" />
     <Compile Include="Script.cs" />
     <Compile Include="StructureWriter.cs" />
+    <Compile Include="XMLEscape.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Exceptions.exceptional">
+      <Generator>exceptional</Generator>
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+    </None>
     <None Include="Goedel.Registry.nuspec">
       <SubType>Designer</SubType>
     </None>
@@ -85,6 +95,12 @@
       <Generator>GScript</Generator>
       <LastGenOutput>Headers.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

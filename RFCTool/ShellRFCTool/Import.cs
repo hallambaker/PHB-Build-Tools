@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Tool.RFCTool;
-using GM=Goedel.MarkLib;
+using GM=Goedel.Document.Markdown;
 using GW=Goedel.WordLib;
 using Goedel.Registry;
 using OpenXML;
@@ -13,7 +13,7 @@ namespace MakeRFC {
         GM.TagCatalog TagCatalog;
 
         public Import(string inputfile) {
-            var Parse = new Goedel.BootMark.MarkSchema();
+            var Parse = new Goedel.Document.Markdown.Tags.MarkSchema();
 
             using (Stream infile =
                         new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {

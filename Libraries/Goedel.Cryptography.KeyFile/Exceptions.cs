@@ -12,20 +12,20 @@ namespace Goedel.Cryptography.KeyFile {
     public class KeyFileException : global::System.Exception {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Key could not be read"
         /// </summary>		
-		public KeyFileException () : base () {
+		public KeyFileException () : base ("Key could not be read") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Key could not be read"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public KeyFileException (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -44,14 +44,12 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new KeyFileException(Reason as string);
 				}
-
-
 			else {
 				return new KeyFileException("Key could not be read");
 				}
@@ -67,20 +65,20 @@ namespace Goedel.Cryptography.KeyFile {
     public class NoProviderSpecified : KeyFileException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "No provider specified"
         /// </summary>		
-		public NoProviderSpecified () : base () {
+		public NoProviderSpecified () : base ("No provider specified") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "No provider specified"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public NoProviderSpecified (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -95,14 +93,12 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new NoProviderSpecified(Reason as string);
 				}
-
-
 			else {
 				return new NoProviderSpecified("No provider specified");
 				}
@@ -117,20 +113,20 @@ namespace Goedel.Cryptography.KeyFile {
     public class PrivateKeyNotAvailable : KeyFileException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "The specified private key could not be found"
         /// </summary>		
-		public PrivateKeyNotAvailable () : base () {
+		public PrivateKeyNotAvailable () : base ("The specified private key could not be found") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "The specified private key could not be found"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public PrivateKeyNotAvailable (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -145,14 +141,12 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new PrivateKeyNotAvailable(Reason as string);
 				}
-
-
 			else {
 				return new PrivateKeyNotAvailable("The specified private key could not be found");
 				}
@@ -167,20 +161,20 @@ namespace Goedel.Cryptography.KeyFile {
     public class UnexpectedEnd : KeyFileException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "File read error, file was incomplete"
         /// </summary>		
-		public UnexpectedEnd () : base () {
+		public UnexpectedEnd () : base ("File read error, file was incomplete") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "File read error, file was incomplete"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public UnexpectedEnd (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -195,14 +189,12 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new UnexpectedEnd(Reason as string);
 				}
-
-
 			else {
 				return new UnexpectedEnd("File read error, file was incomplete");
 				}
@@ -216,20 +208,20 @@ namespace Goedel.Cryptography.KeyFile {
     public class ParseError : KeyFileException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "An error occurred"
         /// </summary>		
-		public ParseError () : base () {
+		public ParseError () : base ("An error occurred") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "An error occurred"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public ParseError (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -238,8 +230,8 @@ namespace Goedel.Cryptography.KeyFile {
 			}
 
 
-		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception using a userdata parameter of
+		/// type LexReader and the format string "The file {0} could not be read"
         /// </summary>		
         /// <param name="Object">User data</param>	
 		public ParseError (LexReader Object) : 
@@ -249,7 +241,8 @@ namespace Goedel.Cryptography.KeyFile {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception using a userdata parameter of
+		/// type LexReader and the format string "The file {0} could not be read"
         /// </summary>		
         /// <param name="Object">User data</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -265,14 +258,15 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new ParseError(Reason as string);
 				}
-
-
+			else if (Reason as LexReader != null) {
+				return new ParseError(Reason as LexReader);
+				}
 			else {
 				return new ParseError("An error occurred");
 				}

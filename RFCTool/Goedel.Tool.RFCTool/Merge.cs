@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Goedel.Tool.RFCTool {
 
-    public partial class HTML2RFC {
+    public partial class Writers {
         public static void Merge (string InputFile, string OutputFile) {
             Translate Translate = new Translate();
 

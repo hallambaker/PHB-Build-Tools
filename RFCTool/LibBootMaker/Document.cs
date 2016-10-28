@@ -4,8 +4,10 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security;
+using Goedel.FSR;
+using Goedel.IO;
 
-namespace Goedel.MarkLib {
+namespace Goedel.Document.Markdown {
     public class DocumentSet {
 
         public string Name = ".";
@@ -345,7 +347,7 @@ namespace Goedel.MarkLib {
             Name = file;
             Link = System.IO.Path.GetFileNameWithoutExtension(Name) + ".html";
 
-            using (var Reader = new Reader(file)) {
+            using (var Reader = new LexReader(file.OpenTextReader())) {
                 Parse(Reader);
                 }
             }
@@ -366,7 +368,7 @@ namespace Goedel.MarkLib {
 
         public Document(Stream Stream, TagCatalog TagCatalog)
             : base() {
-            using (var Reader = new Reader(Stream)) {
+            using (var Reader = new LexReader(Stream)) {
                 Init(Reader, TagCatalog);
                 }
             }
@@ -383,16 +385,16 @@ namespace Goedel.MarkLib {
             }
 
         private void Init(FileInfo FileInfo, TagCatalog TagCatalog) {
-            using (var Reader = new Reader(FileInfo)) {
+            using (var Reader = new LexReader(FileInfo.Name.OpenTextReader())) {
                 Init(Reader, TagCatalog);
                 }
             }
 
 
-        private void Init(Reader Reader, TagCatalog TagCatalog) {
+        private void Init(LexReader Reader, TagCatalog TagCatalog) {
             Parse(Reader);  // Pre parse the source file into blocks
 
-            var BlockParser = new Goedel.MarkLib.BlockParserMarkDown(TagCatalog, this);
+            var BlockParser = new Goedel.Document.Markdown.BlockParserMarkDown(TagCatalog, this);
             BlockParser.Parse(); // Convert blocks into paragraph entries.
             }
 

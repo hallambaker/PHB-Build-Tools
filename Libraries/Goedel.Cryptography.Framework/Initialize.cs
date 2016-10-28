@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Security.Cryptography;
 using Goedel.Cryptography;
 
@@ -13,39 +13,58 @@ namespace Goedel.Cryptography.Framework {
     /// </summary>
     public static class Cryptography {
 
+        static bool Initialized = false;
+        static Mutex InitializationLock = new Mutex();
+
         /// <summary>
         /// Perform initialization of the Goedel.Cryptography portable class
         /// with delegates to the .NET framework methods.
         /// </summary>
         public static void Initialize() {
-            // This is actually a duplicate of Goedel.Platform but it is 
-            // needed so often as to make this the easiest solution.
-            Goedel.Cryptography.Platform.GetRandomBytesDelegate = GetRandomBytes;
 
-            // Load thje default algorithms first
+            InitializationLock.WaitOne();
 
-            Platform.SHA2_512       = CryptoCatalog.Default.Add(new CryptoProviderSHA2_512());
-            Platform.HMAC_SHA2_512  = CryptoCatalog.Default.Add(new CryptoProviderHMACSHA2_512());
-            Platform.AES_256        = CryptoCatalog.Default.Add(new CryptoProviderEncryptAES(256));
-            CryptoCatalog.Default.Add(new CryptoProviderSignatureRSA(2048));
-            CryptoCatalog.Default.Add(new CryptoProviderExchangeRSA(2048));
+            try {
+                if (Initialized) {
+                    return;
+                    }
+                Initialized = true;
 
-            // The rest
-            Platform.SHA2_256       = CryptoCatalog.Default.Add(new CryptoProviderSHA2_256());
-            Platform.SHA1           = CryptoCatalog.Default.Add(new CryptoProviderSHA1());
-            Platform.HMAC_SHA2_256  = CryptoCatalog.Default.Add(new CryptoProviderHMACSHA2_256());
-            CryptoCatalog.Default.Add(new CryptoProviderEncryptAES(128));
+                // This is actually a duplicate of Goedel.Platform but it is 
+                // needed so often as to make this the easiest solution.
+                Goedel.Cryptography.Platform.GetRandomBytesDelegate = GetRandomBytes;
 
-            //Add(new CryptoProviderEncryptAES(128, CipherMode.CTS));
-            //Add(new CryptoProviderEncryptAES(256, CipherMode.CTS));
+                // Load thje default algorithms first
 
-            CryptoCatalog.Default.Add(new CryptoProviderSignatureRSA(4096));
-            CryptoCatalog.Default.Add(new CryptoProviderExchangeRSA(4096));
-            CryptoCatalog.Default.Add(new CryptoProviderExchangeRSAPKCS(2048));
-            CryptoCatalog.Default.Add(new CryptoProviderExchangeRSAPKCS(4096));
+                Platform.SHA2_512 = CryptoCatalog.Default.Add(new CryptoProviderSHA2_512());
+                Platform.HMAC_SHA2_512 = CryptoCatalog.Default.Add(new CryptoProviderHMACSHA2_512());
+                Platform.AES_256 = CryptoCatalog.Default.Add(new CryptoProviderEncryptAES(256));
+                CryptoCatalog.Default.Add(new CryptoProviderSignatureRSA(2048));
+                CryptoCatalog.Default.Add(new CryptoProviderExchangeRSA(2048));
+
+                // The rest
+                Platform.SHA2_256 = CryptoCatalog.Default.Add(new CryptoProviderSHA2_256());
+                Platform.SHA1 = CryptoCatalog.Default.Add(new CryptoProviderSHA1());
+                Platform.HMAC_SHA2_256 = CryptoCatalog.Default.Add(new CryptoProviderHMACSHA2_256());
+                CryptoCatalog.Default.Add(new CryptoProviderEncryptAES(128));
+
+                //Add(new CryptoProviderEncryptAES(128, CipherMode.CTS));
+                //Add(new CryptoProviderEncryptAES(256, CipherMode.CTS));
+
+                CryptoCatalog.Default.Add(new CryptoProviderSignatureRSA(4096));
+                CryptoCatalog.Default.Add(new CryptoProviderExchangeRSA(4096));
+                CryptoCatalog.Default.Add(new CryptoProviderExchangeRSAPKCS(2048));
+                CryptoCatalog.Default.Add(new CryptoProviderExchangeRSAPKCS(4096));
 
 
-            Platform.FindLocalDelegates.Add(RSAKeyPair.FindLocal);
+                Platform.FindLocalDelegates.Add(RSAKeyPair.FindLocal);
+                }
+            catch {
+                throw new Goedel.Cryptography.InitializationFailed();
+                }
+            finally {
+                InitializationLock.ReleaseMutex();
+                }
 
             }
 

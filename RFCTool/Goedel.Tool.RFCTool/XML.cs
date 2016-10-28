@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 
 namespace Goedel.Tool.RFCTool {
-    public partial class HTML2RFC {
+    public partial class Writers {
 
         public static void WriteXML(string OutputFile, Document Document) {
             using (TextWriter TextWriter = new StreamWriter(OutputFile, false, Encoding.ASCII)) {

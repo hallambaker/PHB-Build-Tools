@@ -4017,5 +4017,115 @@ namespace Goedel.Cryptography.PKIX {
 			*/
 
 		}
+    /// <summary>
+	/// RFC2631OtherInfo 
+    /// </summary>
+	public partial class RFC2631OtherInfo : Goedel.ASN.Root {
+
+		/// <summary>
+		/// ASN.1 member KeyInfo 
+		/// </summary>
+		public Goedel.Cryptography.PKIX.KeySpecificInfo KeyInfo ;
+		/// <summary>
+		/// ASN.1 member PartyAInfo 
+		/// </summary>
+		public byte []  PartyAInfo ;
+		/// <summary>
+		/// ASN.1 member SuppPubInfo 
+		/// </summary>
+		public byte []  SuppPubInfo ;
+
+		/// <summary>
+		/// Encode ASN.1 class members to specified buffer. 
+		///
+		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
+		/// </summary>
+		/// <param name="Buffer">Output buffer</param>
+        public override void Encode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Encode__Sequence_Start ();
+
+			Buffer.Encode__Octets  (SuppPubInfo, 0, 2);
+			Buffer.Debug ("SuppPubInfo");
+
+			Buffer.Encode__Octets  (PartyAInfo, 4, 0);
+			Buffer.Debug ("PartyAInfo");
+
+			Buffer.Encode__Object (KeyInfo, 0, -1);
+			Buffer.Debug ("KeyInfo");
+			Buffer.Encode__Sequence_End (Position);
+            }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__Object (KeyInfo, 0, -1);
+			Buffer.Debug ("KeyInfo");
+
+			Buffer.Decode__Octets  (PartyAInfo, 4, 0);
+			Buffer.Debug ("PartyAInfo");
+
+			Buffer.Decode__Octets  (SuppPubInfo, 0, 2);
+			Buffer.Debug ("SuppPubInfo");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
+		}
+    /// <summary>
+	/// KeySpecificInfo 
+    /// </summary>
+	public partial class KeySpecificInfo : Goedel.ASN.Root {
+
+		/// <summary>
+		/// ASN.1 member Algorithm 
+		/// </summary>
+		public int []  Algorithm ;
+		/// <summary>
+		/// ASN.1 member Counter 
+		/// </summary>
+		public byte []  Counter ;
+
+		/// <summary>
+		/// Encode ASN.1 class members to specified buffer. 
+		///
+		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
+		/// </summary>
+		/// <param name="Buffer">Output buffer</param>
+        public override void Encode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Encode__Sequence_Start ();
+
+			Buffer.Encode__Octets  (Counter, 0, -1);
+			Buffer.Debug ("Counter");
+
+			Buffer.Encode__OIDRef  (Algorithm, 0, -1);
+			Buffer.Debug ("Algorithm");
+			Buffer.Encode__Sequence_End (Position);
+            }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__OIDRef  (Algorithm, 0, -1);
+			Buffer.Debug ("Algorithm");
+
+			Buffer.Decode__Octets  (Counter, 0, -1);
+			Buffer.Debug ("Counter");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
+		}
 	}
 

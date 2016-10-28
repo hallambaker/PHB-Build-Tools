@@ -169,7 +169,8 @@ namespace Goedel.Protocol.Framework {
         /// </summary>
         /// <param name="port">The UDP port to register the service at.
         /// </param>
-        /// <returns></returns>
+        /// <returns>The port registration created</returns>
+        /// <exception cref="NYI">Not Yet Implemented</exception> 
         public PortRegistration AddUDP(int port) {
             throw NYI.Throw("Need to add implementation of Add UDP");
 

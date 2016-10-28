@@ -98,6 +98,7 @@ namespace Goedel.FSR {
             Reset();    
 
             bool Going = Reader.Get();
+
             while (Going) {
 
                 //Console.Write(Reader.LastChar);

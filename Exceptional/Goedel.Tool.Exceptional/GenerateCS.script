@@ -14,6 +14,7 @@
 #method GenerateCSX Exceptions Exceptions
 #% Exceptions._InitChildren ();
 using System;
+using Goedel.Utilities;
 
 #foreach (_Choice Toplevel in Exceptions.Top)
 #switchcast ExceptionsType Toplevel
@@ -51,20 +52,21 @@ namespace #{Namespace.Id} {
     public class #{Exception.Id} : #{Exception.BaseClass} {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception #{Exception.Console.Quoted()}
         /// </summary>		
-		public #{Exception.Id} () : base () {
+		public #{Exception.Id} () : base (#{Exception.Console.Quoted()}) {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception #{Exception.Console.Quoted()}
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public #{Exception.Id} (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception #{Exception.Console.Quoted()
+		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -81,7 +83,8 @@ namespace #{Namespace.Id} {
 
 #foreach (var Object in Exception.Objects)
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception using a userdata parameter of
+		/// type #{Object.Type} and the format string #{Object.Text.Quoted()}
         /// </summary>		
         /// <param name="Object">User data</param>	
 		public #{Exception.Id} (#{Object.Type} Object) : 
@@ -95,7 +98,8 @@ namespace #{Namespace.Id} {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception using a userdata parameter of
+		/// type #{Object.Type} and the format string #{Object.Text.Quoted()}
         /// </summary>		
         /// <param name="Object">User data</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -116,16 +120,19 @@ namespace #{Namespace.Id} {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static #{Exception.Base.If("", "new ")}global::Goedel.Utilities.ThrowDelegate Throw;
+        public static #{Exception.Base.If("", "new ")}global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new #{Exception.Id}(Reason as string);
 				}
-
-
+#foreach (var Object in Exception.Objects)
+			else if (Reason as #{Object.Type} != null) {
+				return new #{Exception.Id}(Reason as #{Object.Type});
+				}
+#end foreach
 			else {
-				return new #{Exception.Id}(#{Exception.Console.Quoted()});
+				return new #{Exception.Id}();
 				}
             }
         }

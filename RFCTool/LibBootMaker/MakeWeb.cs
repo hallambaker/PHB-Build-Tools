@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Goedel.MarkLib {
+namespace Goedel.Document.Markdown {
 
     enum ListType {
         Bullet,

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Goedel.MarkLib;
+using Goedel.Document.Markdown;
 
 
 namespace Goedel.WordLib {
 
-    class OpenWordDocument : Document {
+    class OpenWordDocument : Goedel.Document.Markdown.Document {
 
         /// <summary>
         /// Construct a reader for a complete file.
@@ -27,8 +27,8 @@ namespace Goedel.WordLib {
         /// <param name="FileName"></param>
         /// <param name="TagCatalog"></param>
         /// <param name="Document"></param>
-        public OpenWordDocument(string FileName, TagCatalog TagCatalog, 
-                    Document Document) {
+        public OpenWordDocument(string FileName, TagCatalog TagCatalog,
+                    Goedel.Document.Markdown.Document Document) {
 
             Parse(FileName, TagCatalog, Document);
             }
@@ -42,7 +42,7 @@ namespace Goedel.WordLib {
         /// <param name="TagCatalog"></param>
         /// <param name="Document"></param>
         public static void Parse (string FileName, TagCatalog TagCatalog,
-                    Document Document) {
+                    Goedel.Document.Markdown.Document Document) {
 
 
 

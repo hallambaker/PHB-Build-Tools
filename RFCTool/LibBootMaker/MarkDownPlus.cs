@@ -4,7 +4,9 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Goedel.MarkLib {
+using Goedel.FSR;
+
+namespace Goedel.Document.Markdown {
     
 	// The following markup is accepted :
 	//
@@ -26,58 +28,58 @@ namespace Goedel.MarkLib {
 
     // This part to go to the generator
     public partial class MarkDownLex {
-        Reader Reader;
-        State S;
+        //Reader Reader;
+        //State S;
 
-        public bool EOF {
-            get { return Reader.EOF; }
-            }
+        //public bool EOF {
+        //    get { return Reader.EOF; }
+        //    }
 
 
-        public MarkDownLex (Reader Reader) {
-            this.Reader = Reader;
-            Init();
-            Reset();
-            }
+        //public MarkDownLex (LexReader Reader) : base (Reader) {
+        //    this.Reader = Reader;
+        //    Init();
+        //    Reset();
+        //    }
 
-        public Token GetToken () {
-            return GetToken((State)0);
-            }
+        //public Token GetToken () {
+        //    return GetToken((State)0);
+        //    }
 
-        public Token GetToken (State StartState) {
-            Reset();
-            S =  StartState;
-            Token Token = MarkDownLex.Token.INVALID;
+        //public Token GetToken (State StartState) {
+        //    Reset();
+        //    S =  StartState;
+        //    Token Token = MarkDownLex.Token.INVALID;
 
-            bool Going = Reader.Get();
-            while (Going) {
+        //    bool Going = Reader.Get();
+        //    while (Going) {
 
-                //Console.Write(Reader.LastChar);
+        //        //Console.Write(Reader.LastChar);
 
-                int c = Reader.LastInt;
-                int ct = ((c >= 0) & (c < Character_Mapping.Length)) ?
-                    Character_Mapping[c] : 0;
+        //        int c = Reader.LastInt;
+        //        int ct = ((c >= 0) & (c < Character_Mapping.Length)) ?
+        //            Character_Mapping[c] : 0;
 
-                //Console.WriteLine("  {0} {1} {2}", S, c, ct);
+        //        //Console.WriteLine("  {0} {1} {2}", S, c, ct);
 
-                S = (State)Compressed_Transitions[(int)S, ct];
+        //        S = (State)Compressed_Transitions[(int)S, ct];
 
-                if (S >= 0) {
-                    Action Action = Actions[(int)S];
-                    Action(Reader.LastInt);
-                    Token = Tokens[(int)S];
-                    Going = Reader.Get();
-                    }
-                else {
-                    Going = false;
-                    Reader.UnGet();
-                    }
-                }
+        //        if (S >= 0) {
+        //            Action Action = Actions[(int)S];
+        //            Action(Reader.LastInt);
+        //            Token = Tokens[(int)S];
+        //            Going = Reader.Get();
+        //            }
+        //        else {
+        //            Going = false;
+        //            Reader.UnGet();
+        //            }
+        //        }
 
-            //Console.WriteLine();
-            //Console.Write("State {0} ", S);
-            return Token;
-            }
+        //    //Console.WriteLine();
+        //    //Console.Write("State {0} ", S);
+        //    return Token;
+        //    }
 
         }
    
@@ -91,7 +93,7 @@ namespace Goedel.MarkLib {
         public string Text;
         public string XText;
 
-        public virtual void Reset () {
+        public override void Reset () {
             WhiteSpace = 0;
             Level = 0;
             BlockType = BlockType.Paragraph;

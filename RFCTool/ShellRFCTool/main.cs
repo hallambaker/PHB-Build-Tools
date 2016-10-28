@@ -58,8 +58,8 @@ namespace MakeRFC {
 							Usage ();
 							break;
 							}
-						case "in" : {
-							Handle_HTML (Dispatch, args, 1);
+						case "rfc" : {
+							Handle_RFC (Dispatch, args, 1);
 							break;
 							}
 						case "new" : {
@@ -72,12 +72,12 @@ namespace MakeRFC {
                         }
                     }
                 else {
-					Handle_HTML (Dispatch, args, 0);
+					Handle_RFC (Dispatch, args, 0);
                     }
             } // Main
 
 
-		private enum TagType_HTML {
+		private enum TagType_RFC {
 			Lazy,
 			InputFile,
 			InputFormat,
@@ -87,6 +87,7 @@ namespace MakeRFC {
 			TXT,
 			MD,
 			DOC,
+			AML,
 			W3C,
 			Bibliography,
 			Cache,
@@ -94,26 +95,27 @@ namespace MakeRFC {
 			Boilerplate,
 			}
 
-		private static void Handle_HTML (
+		private static void Handle_RFC (
 					Shell Dispatch, string[] args, int index) {
-			HTML		Options = new HTML ();
+			RFC		Options = new RFC ();
 
 			var Registry = new Goedel.Registry.Registry ();
 
-			Options.Lazy.Register ("lazy", Registry, (int) TagType_HTML.Lazy);
-			Options.InputFile.Register ("input", Registry, (int) TagType_HTML.InputFile);
-			Options.InputFormat.Register ("in", Registry, (int) TagType_HTML.InputFormat);
-			Options.Catalog.Register ("catalog", Registry, (int) TagType_HTML.Catalog);
-			Options.HTML.Register ("html", Registry, (int) TagType_HTML.HTML);
-			Options.XML.Register ("xml", Registry, (int) TagType_HTML.XML);
-			Options.TXT.Register ("txt", Registry, (int) TagType_HTML.TXT);
-			Options.MD.Register ("md", Registry, (int) TagType_HTML.MD);
-			Options.DOC.Register ("docx", Registry, (int) TagType_HTML.DOC);
-			Options.W3C.Register ("w3c", Registry, (int) TagType_HTML.W3C);
-			Options.Bibliography.Register ("bib", Registry, (int) TagType_HTML.Bibliography);
-			Options.Cache.Register ("cache", Registry, (int) TagType_HTML.Cache);
-			Options.Stylesheet.Register ("style", Registry, (int) TagType_HTML.Stylesheet);
-			Options.Boilerplate.Register ("boiler", Registry, (int) TagType_HTML.Boilerplate);
+			Options.Lazy.Register ("lazy", Registry, (int) TagType_RFC.Lazy);
+			Options.InputFile.Register ("input", Registry, (int) TagType_RFC.InputFile);
+			Options.InputFormat.Register ("in", Registry, (int) TagType_RFC.InputFormat);
+			Options.Catalog.Register ("catalog", Registry, (int) TagType_RFC.Catalog);
+			Options.HTML.Register ("html", Registry, (int) TagType_RFC.HTML);
+			Options.XML.Register ("xml", Registry, (int) TagType_RFC.XML);
+			Options.TXT.Register ("txt", Registry, (int) TagType_RFC.TXT);
+			Options.MD.Register ("md", Registry, (int) TagType_RFC.MD);
+			Options.DOC.Register ("docx", Registry, (int) TagType_RFC.DOC);
+			Options.AML.Register ("aml", Registry, (int) TagType_RFC.AML);
+			Options.W3C.Register ("w3c", Registry, (int) TagType_RFC.W3C);
+			Options.Bibliography.Register ("bib", Registry, (int) TagType_RFC.Bibliography);
+			Options.Cache.Register ("cache", Registry, (int) TagType_RFC.Cache);
+			Options.Stylesheet.Register ("style", Registry, (int) TagType_RFC.Stylesheet);
+			Options.Boilerplate.Register ("boiler", Registry, (int) TagType_RFC.Boilerplate);
 
 			// looking for parameter Param.Name}
 			if (index < args.Length && !IsFlag (args [index][0] )) {
@@ -128,12 +130,12 @@ namespace MakeRFC {
 					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
 				string Rest = args [i].Substring (1);
 
-				TagType_HTML TagType = (TagType_HTML) Registry.Find (Rest);
+				TagType_RFC TagType = (TagType_RFC) Registry.Find (Rest);
 
 				// here have the cases for what to do with it.
 
 				switch (TagType) {
-					case TagType_HTML.Lazy : {
+					case TagType_RFC.Lazy : {
 						int OptionParams = Options.Lazy.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -144,7 +146,7 @@ namespace MakeRFC {
 							}
 						break;
 						}
-					case TagType_HTML.InputFormat : {
+					case TagType_RFC.InputFormat : {
 						int OptionParams = Options.InputFormat.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -155,7 +157,7 @@ namespace MakeRFC {
 							}
 						break;
 						}
-					case TagType_HTML.Catalog : {
+					case TagType_RFC.Catalog : {
 						int OptionParams = Options.Catalog.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -166,7 +168,7 @@ namespace MakeRFC {
 							}
 						break;
 						}
-					case TagType_HTML.HTML : {
+					case TagType_RFC.HTML : {
 						int OptionParams = Options.HTML.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -177,7 +179,7 @@ namespace MakeRFC {
 							}
 						break;
 						}
-					case TagType_HTML.XML : {
+					case TagType_RFC.XML : {
 						int OptionParams = Options.XML.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -188,7 +190,7 @@ namespace MakeRFC {
 							}
 						break;
 						}
-					case TagType_HTML.TXT : {
+					case TagType_RFC.TXT : {
 						int OptionParams = Options.TXT.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -199,7 +201,7 @@ namespace MakeRFC {
 							}
 						break;
 						}
-					case TagType_HTML.MD : {
+					case TagType_RFC.MD : {
 						int OptionParams = Options.MD.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -210,7 +212,7 @@ namespace MakeRFC {
 							}
 						break;
 						}
-					case TagType_HTML.DOC : {
+					case TagType_RFC.DOC : {
 						int OptionParams = Options.DOC.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -221,7 +223,18 @@ namespace MakeRFC {
 							}
 						break;
 						}
-					case TagType_HTML.W3C : {
+					case TagType_RFC.AML : {
+						int OptionParams = Options.AML.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.AML.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+					case TagType_RFC.W3C : {
 						int OptionParams = Options.W3C.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -232,7 +245,7 @@ namespace MakeRFC {
 							}
 						break;
 						}
-					case TagType_HTML.Bibliography : {
+					case TagType_RFC.Bibliography : {
 						int OptionParams = Options.Bibliography.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -243,7 +256,7 @@ namespace MakeRFC {
 							}
 						break;
 						}
-					case TagType_HTML.Cache : {
+					case TagType_RFC.Cache : {
 						int OptionParams = Options.Cache.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -254,7 +267,7 @@ namespace MakeRFC {
 							}
 						break;
 						}
-					case TagType_HTML.Stylesheet : {
+					case TagType_RFC.Stylesheet : {
 						int OptionParams = Options.Stylesheet.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -265,7 +278,7 @@ namespace MakeRFC {
 							}
 						break;
 						}
-					case TagType_HTML.Boilerplate : {
+					case TagType_RFC.Boilerplate : {
 						int OptionParams = Options.Boilerplate.Tag (Rest);
 						
 						if (OptionParams>0 && ((i+1) < args.Length)) {
@@ -281,7 +294,7 @@ namespace MakeRFC {
 				}
 
 #pragma warning restore 162
-			Dispatch.HTML (Options);
+			Dispatch.RFC (Options);
 
 			}
 		private enum TagType_Template {
@@ -384,10 +397,10 @@ namespace MakeRFC {
 
 				{
 #pragma warning disable 219
-					HTML		Dummy = new HTML ();
+					RFC		Dummy = new RFC ();
 #pragma warning restore 219
 
-					Console.Write ("{0}in ", UsageFlag);
+					Console.Write ("{0}rfc ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.InputFile.Usage (null, "input", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.InputFormat.Usage ("in", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Catalog.Usage ("catalog", "value", UsageFlag));
@@ -396,6 +409,7 @@ namespace MakeRFC {
 					Console.Write ("[{0}] ", Dummy.TXT.Usage ("txt", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.MD.Usage ("md", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.DOC.Usage ("docx", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.AML.Usage ("aml", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.W3C.Usage ("w3c", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Bibliography.Usage ("bib", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Cache.Usage ("cache", "value", UsageFlag));
@@ -445,7 +459,7 @@ namespace MakeRFC {
 
 
 
-    public class _HTML : Goedel.Registry.Dispatch {
+    public class _RFC : Goedel.Registry.Dispatch {
 		public Flag							Lazy = new Flag ("false");
 		public ExistingFile			InputFile = new ExistingFile ();
 
@@ -463,6 +477,8 @@ namespace MakeRFC {
 
 		public NewFile			DOC = new  NewFile ("docx");
 
+		public NewFile			AML = new  NewFile ("aml");
+
 		public NewFile			W3C = new  NewFile ("html");
 
 		public ExistingFile			Bibliography = new  ExistingFile ();
@@ -476,8 +492,8 @@ namespace MakeRFC {
 
 		}
 
-    public partial class HTML : _HTML {
-        } // class HTML
+    public partial class RFC : _RFC {
+        } // class RFC
 
 
     public class _Template : Goedel.Registry.Dispatch {
@@ -596,16 +612,16 @@ namespace MakeRFC {
     public class _Shell {
 
 
-		public virtual void HTML ( HTML Options
+		public virtual void RFC ( RFC Options
 				) {
 
 			char UsageFlag = '-';
 				{
 #pragma warning disable 219
-					HTML		Dummy = new HTML ();
+					RFC		Dummy = new RFC ();
 #pragma warning restore 219
 
-					Console.Write ("{0}in ", UsageFlag);
+					Console.Write ("{0}rfc ", UsageFlag);
 					Console.Write ("[{0}] ", Dummy.InputFile.Usage (null, "input", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.InputFormat.Usage ("in", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Catalog.Usage ("catalog", "value", UsageFlag));
@@ -614,6 +630,7 @@ namespace MakeRFC {
 					Console.Write ("[{0}] ", Dummy.TXT.Usage ("txt", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.MD.Usage ("md", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.DOC.Usage ("docx", "value", UsageFlag));
+					Console.Write ("[{0}] ", Dummy.AML.Usage ("aml", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.W3C.Usage ("w3c", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Bibliography.Usage ("bib", "value", UsageFlag));
 					Console.Write ("[{0}] ", Dummy.Cache.Usage ("cache", "value", UsageFlag));
@@ -639,6 +656,8 @@ namespace MakeRFC {
 							"MD", Options.MD);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "NewFile", 
 							"DOC", Options.DOC);
+				Console.WriteLine ("    {0}\t{1} = [{2}]", "NewFile", 
+							"AML", Options.AML);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "NewFile", 
 							"W3C", Options.W3C);
 				Console.WriteLine ("    {0}\t{1} = [{2}]", "ExistingFile", 

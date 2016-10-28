@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Goedel.MarkLib {
+namespace Goedel.Document.Markdown {
 
     public delegate Document Parse(string FileName, TagCatalog TagCatalog);
     public delegate bool Include(string FileName, TagCatalog TagCatalog, Document Document);
