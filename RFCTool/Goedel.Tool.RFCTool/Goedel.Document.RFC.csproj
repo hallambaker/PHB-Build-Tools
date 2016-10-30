@@ -7,8 +7,8 @@
     <ProjectGuid>{53284D1C-9B9F-4A44-ADDE-306606F8F0E7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Goedel.Tool.RFCTool</RootNamespace>
-    <AssemblyName>Goedel.Tool.RFCTool</AssemblyName>
+    <RootNamespace>Goedel.Document.RFC</RootNamespace>
+    <AssemblyName>Goedel.Document.RFC</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -83,6 +83,10 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
       <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
       <Name>Goedel.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Document.Markdown\Goedel.Document.Markdown.csproj">
+      <Project>{ba3e686d-8404-46b3-b06d-048e6367e4eb}</Project>
+      <Name>Goedel.Document.Markdown</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

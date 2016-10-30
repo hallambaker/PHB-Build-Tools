@@ -71,6 +71,22 @@ namespace Goedel.Tool.RFCToolBinding {
             }
 
 
+
+        /// <summary>
+        /// Process document to produce output in MAML format
+        /// </summary>
+        /// <param name="FileName">The original document file name.</param>
+        /// <param name="Reader">TextReader object containing document source.</param>
+        /// <param name="Writer">Destination to write document to.</param>
+        public void Process2AML(string FileName, TextReader Reader, TextWriter Writer) {
+            var Document = ReadDocument(FileName, Reader);
+
+            if (Document != null) {
+                Goedel.Tool.RFCTool.Writers.WriteAML(Writer, Document);
+                }
+            }
+
+
         /// <summary>
         /// Read document according to input format indicated by extension.
         /// </summary>

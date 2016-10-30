@@ -99,6 +99,7 @@
     <None Include="Makefile" />
     <None Include="index.md" />
     <None Include="todo.md" />
+    <None Include="ProtocolLibraries.md" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>

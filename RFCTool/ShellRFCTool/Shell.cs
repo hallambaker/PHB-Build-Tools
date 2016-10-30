@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Goedel.Registry;
 using Goedel.Tool.RFCTool;
 using MakeRFC;
@@ -15,6 +16,11 @@ namespace MakeRFC {
 
 
         public override void RFC(RFC Options) {
+            Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            Debug.AutoFlush = true;
+
+
+
             string inputfile = Options.InputFile.Text;
             //string bibliography = Options.Bibliography.Text;
             string cache = Options.Cache.Text;

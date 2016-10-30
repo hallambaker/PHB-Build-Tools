@@ -182,38 +182,14 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
-      <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
-      <Name>Goedel.Registry</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{E891BC7F-D7BD-4931-931B-42C83CCA68E2}</Project>
-      <Name>Goedel.Utilities</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RFCTool\LibBootMaker\Goedel.Document.Markdown.csproj">
-      <Project>{BA3E686D-8404-46B3-B06D-048E6367E4EB}</Project>
-      <Name>Goedel.Document.Markdown</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RFCTool\LibBridge\Goedel.Document.RFC.Tag.csproj">
-      <Project>{EFEFBAB6-A3B4-42DC-AF30-FA14F2A9FF16}</Project>
-      <Name>Goedel.Document.RFC.Tag</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RFCTool\Goedel.Tool.RFCTool\Goedel.Document.RFC.csproj">
-      <Project>{53284d1c-9b9f-4a44-adde-306606f8f0e7}</Project>
-      <Name>Goedel.Document.RFC</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Goedel.Registry.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Goedel.Utilities.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -230,6 +206,38 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
+      <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
+      <Name>Goedel.Registry</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
+      <Name>Goedel.Utilities</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RFCTool\Goedel.Tool.RFCTool\Goedel.Document.RFC.csproj">
+      <Project>{53284d1c-9b9f-4a44-adde-306606f8f0e7}</Project>
+      <Name>Goedel.Document.RFC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RFCTool\Goedel.Document.Markdown\Goedel.Document.Markdown.csproj">
+      <Project>{ba3e686d-8404-46b3-b06d-048e6367e4eb}</Project>
+      <Name>Goedel.Document.Markdown</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RFCTool\Goedel.Document.RFC.Convert\Goedel.Document.RFC.Convert.csproj">
+      <Project>{efefbab6-a3b4-42dc-af30-fa14f2a9ff16}</Project>
+      <Name>Goedel.Document.RFC.Convert</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RFCTool\Goedel.Document.OpenXML\Goedel.Document.OpenXML.csproj">
+      <Project>{cf4f9f67-550f-494c-88c8-51ab0cb552cb}</Project>
+      <Name>Goedel.Document.OpenXML</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>

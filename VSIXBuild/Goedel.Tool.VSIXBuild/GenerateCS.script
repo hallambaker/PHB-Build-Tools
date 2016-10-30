@@ -73,6 +73,9 @@ namespace #{Cast.Name} {
 #elseif (Project.Value.ToString() =="Wix") 
     [CodeGeneratorRegistration(typeof(#{Extension.Name}), "#{Extension.Name}", 
 				    "E0EE8E7D-F498-459E-9E90-2B3D73124AD5", GeneratesDesignTimeSource = true)]
+#elseif (Project.Value.ToString() =="SHFB") 
+    [CodeGeneratorRegistration(typeof(#{Extension.Name}), "#{Extension.Name}", 
+				    "7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4", GeneratesDesignTimeSource = true)]
 #end if
 #end foreach
     public class #{Extension.Name} : IVsSingleFileGenerator, IObjectWithSite, IDisposable {

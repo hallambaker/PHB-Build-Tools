@@ -113,6 +113,7 @@
     <Folder Include="Content\VersionHistory" />
     <Folder Include="icons" />
     <Folder Include="media" />
+    <Folder Include="Markdown" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\CodeStandards.aml" />
@@ -120,6 +121,7 @@
     <None Include="Content\Documentation.aml" />
     <None Include="Content\Exceptional.aml" />
     <None Include="Content\FrameworkLibraries.aml" />
+    <None Include="Content\FSRTool.aml" />
     <None Include="Content\Libraries.aml" />
     <None Include="Content\ParserLibraries.aml" />
     <None Include="Content\ProtocolLibraries.aml" />
@@ -129,12 +131,17 @@
     <None Include="Content\VersionHistory\VersionHistory.aml" />
     <None Include="Content\VSIXIntegration.aml" />
     <None Include="Content\Welcome.aml" />
+    <None Include="PreBuild.bat" />
   </ItemGroup>
   <ItemGroup>
     <ContentLayout Include="ContentLayout.content" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\CryptographyLibraries.md" />
+    <Content Include="Markdown\CodeStandards.md" />
+    <Content Include="Markdown\Documentation.md" />
+    <Content Include="Markdown\VSIXIntegration.md" />
+    <Content Include="Markdown\Libraries.md" />
+    <XamlConfiguration Include="Content\CryptographyLibraries.md" />
     <Content Include="Cryptography.html" />
     <Content Include="icons\Help.png" />
   </ItemGroup>
@@ -143,8 +150,7 @@
   <!-- The pre-build and post-build event properties must appear *after* the targets file import in order to be
 			 evaluated correctly. -->
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>call Prebuild.bat</PreBuildEvent>
     <PostBuildEvent>
     </PostBuildEvent>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>

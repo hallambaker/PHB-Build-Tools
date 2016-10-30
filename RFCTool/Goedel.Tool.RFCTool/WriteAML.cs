@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+
 using Goedel.Registry;
 using Goedel.Utilities;
 
@@ -19,8 +20,6 @@ namespace Goedel.Tool.RFCTool {
                 }
             }
 
-
-
         /// <summary>
         /// Write document to specified output stream
         /// </summary>
@@ -30,8 +29,6 @@ namespace Goedel.Tool.RFCTool {
             // Format document to place line numbers
             WriteAML WriteAML = new WriteAML(TextWriter);
             WriteAML.Write(Document);
-
-
             }
         }
 
@@ -40,6 +37,7 @@ namespace Goedel.Tool.RFCTool {
         TextWriter TextWriter;
         XMLTextWriterPlus XMLOutput;
         Document Document;
+
 
 
         public WriteAML(TextWriter TextWriter) {
@@ -55,7 +53,16 @@ namespace Goedel.Tool.RFCTool {
         string xmlns_xlink = "http://www.w3.org/1999/xlink";
 
         public void Write (Document Document) {
+
+
+
             this.Document = Document;
+            var Source = Document.Source;
+
+            Id = Source.MetaDataGetString("id", "noid").TrimEnd(null);
+            Version = Source.MetaDataGetString("version", "1").TrimEnd(null);
+            ContentType = Source.MetaDataGetString("contenttype", "developerConceptualDocument").TrimEnd(null);
+
             var Stack = XMLOutput.Stack;
 
             XMLOutput.Start("topic", "id", Id, "revisionNumber", Version);
@@ -119,15 +126,6 @@ namespace Goedel.Tool.RFCTool {
 
         public void Write(List<TextBlock> Texts) {
             var Stack = XMLOutput.Stack;
-
-            //XMLOutput.OpenBlock();
-            //foreach (var Text in Texts) {
-            //    XMLOutput.SetTextBlock(Text);
-            //    Write(Text);
-            //    LastBlock = Text;
-            //    }
-
-            //XMLOutput.CloseBlock();
 
             XMLOutput.OpenBlock();
 
@@ -241,7 +239,6 @@ namespace Goedel.Tool.RFCTool {
         /// </summary>
         /// <param name="Mode">The type of content for this block</param>
         protected override void Open(Mode Mode) {
-            Console.WriteLine("++++{0}", Mode);
             if (Mode == Mode.Definition) {
                 Start("definitionTable");
                 }
@@ -253,7 +250,6 @@ namespace Goedel.Tool.RFCTool {
         /// </summary>
         /// <param name="Mode">The type of content for this block</param>
         protected override void Close(Mode Mode) {
-            Console.WriteLine("----{0}", Mode);
             if (Mode == Mode.Definition) {
                 End();
                 }
@@ -264,7 +260,6 @@ namespace Goedel.Tool.RFCTool {
         /// </summary>
         /// <param name="ListItem">The type of list</param>
         protected override void OpenList(BlockType ListItem) {
-            Console.WriteLine("++++{0}", ListItem);
             if (ListItem == BlockType.Symbol) {
                 Start("list", "class", "bullet");
                 }
@@ -278,7 +273,6 @@ namespace Goedel.Tool.RFCTool {
         /// </summary>
         /// <param name="ListItem">The type of list</param>
         protected override void CloseList(BlockType ListItem) {
-            Console.WriteLine("----{0}", ListItem);
             if (ListItem == BlockType.Symbol) {
                 End();
                 }

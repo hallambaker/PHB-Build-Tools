@@ -26,12 +26,21 @@ Namespace Goedel.VSIX.Binding.RFC
 		Project VisualBasic
 		Process Goedel.Tool.RFCToolBinding.BindingRFC Process2MD
 		Description
-			|Convert RFC source in Markdown, XML or HTML to MerkDown format.
+			|Convert RFC source in Markdown, XML or HTML to Markdown format.
 
 	RFC2HTML Generator ".html"
 		GUID "EF6FDFE2-6947-4A14-AD41-77C062FC0E67"
 		Project CSharp
 		Project VisualBasic
-		Process Goedel.Tool.RFCToolBinding.BindingRFC Process2HTML
+		Process Goedel.Tool.RFCToolBinding.BindingRFC Process2AML
 		Description
-			|Convert RFC source in Markdown, XML or HTML to HTML format.
+			|Convert Markdown, XML or HTML to AML
+
+	MD2AML Generator ".aml"
+		GUID "F2E41CD6-A03C-4C86-85E5-06C18F2E9595"
+		Project CSharp
+		Project VisualBasic
+		Project SHFB
+		Process Goedel.Tool.RFCToolBinding.BindingRFC Process2XML
+		Description
+			|Convert RFC source in Markdown, XML or HTML to XML2RFC format.

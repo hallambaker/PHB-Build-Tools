@@ -1,4 +1,7 @@
-﻿
+﻿<id>f49b1505-1206-4ffe-8f23-43f42f61e4bd
+<version>3
+<contenttype>developerConceptualDocument
+
 The cryptography libraries provide a single consistent high level interface 
 to all the cryptographic resources used in the Mathematical Mesh.
 

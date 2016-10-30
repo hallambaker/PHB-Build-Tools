@@ -182,52 +182,10 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ASN\Goedel.Tool.ASN\Goedel.Tool.ASN.csproj">
-      <Project>{d252e267-bb98-474b-a1e2-d9e5fe7873a6}</Project>
-      <Name>Goedel.Tool.ASN</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Domainer\Goedel.Tool.Domainer\Goedel.Tool.Domainer.csproj">
-      <Project>{04a6d8be-5072-486d-832d-d6c2c586c72d}</Project>
-      <Name>Goedel.Tool.Domainer</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.ASN\Goedel.ASN.csproj">
-      <Project>{44e8b35d-0394-4f37-b52c-246f8610f031}</Project>
-      <Name>Goedel.ASN</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
-      <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
-      <Name>Goedel.Registry</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Protogen\Goedel.Tool.ProtoGen\Goedel.Tool.ProtoGen.csproj">
-      <Project>{15877b95-fcbe-4970-b833-a1c6a70586b1}</Project>
-      <Name>Goedel.Tool.ProtoGen</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RegistryConfig\Goedel.Tool.RegistryConfig\Goedel.Tool.RegistryConfig.csproj">
-      <Project>{fad27739-eff1-4d5e-bc80-bc43a62707c1}</Project>
-      <Name>Goedel.Tool.RegistryConfig</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Trojan3\Goedel.Trojan.Script\Goedel.Trojan.Script.csproj">
-      <Project>{343b6836-1c87-4717-ba6f-611e38bccc82}</Project>
-      <Name>Goedel.Trojan.Script</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\VSIXBuild\Goedel.Tool.VSIXBuild\Goedel.Tool.VSIXBuild.csproj">
-      <Project>{88e55204-d54c-438d-bd47-9d33ccb2580b}</Project>
-      <Name>Goedel.Tool.VSIXBuild</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Goedel.Registry.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -244,6 +202,50 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ASN\Goedel.Tool.ASN\Goedel.Tool.ASN.csproj">
+      <Project>{d252e267-bb98-474b-a1e2-d9e5fe7873a6}</Project>
+      <Name>Goedel.Tool.ASN</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Domainer\Goedel.Tool.Domainer\Goedel.Tool.Domainer.csproj">
+      <Project>{04a6d8be-5072-486d-832d-d6c2c586c72d}</Project>
+      <Name>Goedel.Tool.Domainer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.ASN\Goedel.ASN.csproj">
+      <Project>{44e8b35d-0394-4f37-b52c-246f8610f031}</Project>
+      <Name>Goedel.ASN</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
+      <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
+      <Name>Goedel.Registry</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
+      <Name>Goedel.Utilities</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Protogen\Goedel.Tool.ProtoGen\Goedel.Tool.ProtoGen.csproj">
+      <Project>{15877b95-fcbe-4970-b833-a1c6a70586b1}</Project>
+      <Name>Goedel.Tool.ProtoGen</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RegistryConfig\Goedel.Tool.RegistryConfig\Goedel.Tool.RegistryConfig.csproj">
+      <Project>{fad27739-eff1-4d5e-bc80-bc43a62707c1}</Project>
+      <Name>Goedel.Tool.RegistryConfig</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Trojan3\Goedel.Trojan.Script\Goedel.Trojan.Script.csproj">
+      <Project>{343b6836-1c87-4717-ba6f-611e38bccc82}</Project>
+      <Name>Goedel.Trojan.Script</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VSIXBuild\Goedel.Tool.VSIXBuild\Goedel.Tool.VSIXBuild.csproj">
+      <Project>{88e55204-d54c-438d-bd47-9d33ccb2580b}</Project>
+      <Name>Goedel.Tool.VSIXBuild</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>

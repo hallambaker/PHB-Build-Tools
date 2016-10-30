@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using GM = Goedel.Document.Markdown;
 
 namespace Goedel.Tool.RFCTool {
     public partial class Document {
+
+        public GM.Document Source = null;
+
         public string           Title ="";
         public string           Abrrev = "";
         public string           Docname = "";

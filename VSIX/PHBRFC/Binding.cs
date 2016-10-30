@@ -568,7 +568,158 @@ namespace Goedel.VSIX.Binding.RFC {
 
             // Process the data
             var Script = new global::Goedel.Tool.RFCToolBinding.BindingRFC();
-            Script.Process2HTML (wszInputFilePath, Reader, Writer);
+            Script.Process2AML (wszInputFilePath, Reader, Writer);
+
+            // Convert writer data to a string and then a byte array
+            var Text = Writer.ToString();
+            var Data = Encoding.UTF8.GetBytes(Text);
+
+			// Fill in the Visual Studio return buffer (this memory will be freed by VS)
+            if (Data == null) {
+                rgbOutputFileContents[0] = IntPtr.Zero;
+                pcbOutput = 0;
+                }
+            else {
+				var Length = Data.Length;
+                rgbOutputFileContents[0] = Marshal.AllocCoTaskMem(Length);
+                Marshal.Copy(Data, 0, rgbOutputFileContents[0], Length);
+                pcbOutput = (uint)Length;
+                }
+
+            return VSConstants.S_OK;
+            }
+
+        #endregion IVsSingleFileGenerator
+
+		// The IObjectWithSite interface is not currently required but might be
+		// in the future if we ever get to the point where multiple file generation
+		// is supported.
+
+        #region IObjectWithSite
+
+        public void GetSite(ref Guid riid, out IntPtr ppvSite) {
+            if (site == null)
+                Marshal.ThrowExceptionForHR(VSConstants.E_NOINTERFACE);
+
+            // Query for the interface using the site object initially passed to the generator
+            IntPtr punk = Marshal.GetIUnknownForObject(site);
+            int hr = Marshal.QueryInterface(punk, ref riid, out ppvSite);
+            Marshal.Release(punk);
+            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(hr);
+            }
+
+        public void SetSite(object pUnkSite) {
+            // Save away the site object for later use
+            site = pUnkSite;
+
+            // These are initialized on demand via our private CodeProvider and SiteServiceProvider properties
+            codeDomProvider = null;
+            serviceProvider = null;
+            }
+
+        #endregion IObjectWithSite
+        }
+
+	// NB The name of the Guid field MUST match the VSIX package generator
+	// naming convention. Otherwise it doesn't work.
+
+	// Or maybe not, getting this thing to work is hit and miss. Sometime you just
+	// have to restart the system and it all works. Problem seems to be that Visual Studio 
+	// can only handle so many module loads and unloads without a reset.
+
+    static partial class GuidList {
+        public const string guidMD2AMLGeneratorString = "F2E41CD6-A03C-4C86-85E5-06C18F2E9595";
+        public static readonly Guid guidMD2AMLGenerator = new Guid(guidMD2AMLGeneratorString);
+        };
+
+    [ComVisible(true)]
+    [Guid(GuidList.guidMD2AMLGeneratorString)]
+    [ProvideObject(typeof(MD2AML))]
+    [CodeGeneratorRegistration(typeof(MD2AML), "MD2AML", 
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(MD2AML), "MD2AML", 
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(MD2AML), "MD2AML", 
+				    "7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4", GeneratesDesignTimeSource = true)]
+    public class MD2AML : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
+        private object site = null;
+        private CodeDomProvider codeDomProvider = null;
+        private ServiceProvider serviceProvider = null;
+
+        private CodeDomProvider CodeProvider {
+            get {
+                if (codeDomProvider == null) {
+                    IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);
+                    if (provider != null)
+                        codeDomProvider = (CodeDomProvider)provider.CodeDomProvider;
+                    }
+                return codeDomProvider;
+                }
+            }
+
+        private ServiceProvider SiteServiceProvider {
+            get {
+                if (serviceProvider == null) {
+                    IOleServiceProvider oleServiceProvider = site as IOleServiceProvider;
+                    serviceProvider = new ServiceProvider(oleServiceProvider);
+                    }
+                return serviceProvider;
+                }
+            }
+
+        #region IDisposable
+
+        bool _disposed;
+
+        public void Dispose() {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+            }
+
+        ~MD2AML () {
+            Dispose(false);
+            }
+
+        protected virtual void Dispose(bool disposing)  {
+            if (_disposed)
+                return;
+
+            if (disposing) {
+                if (serviceProvider != null) {
+					serviceProvider.Dispose();
+					}
+                }
+
+            // release any unmanaged objects
+            // set the object references to null
+
+            _disposed = true;
+            }
+
+        #endregion IDisposable
+
+        #region IVsSingleFileGenerator
+
+        public int DefaultExtension(out string pbstrDefaultExtension) {
+            pbstrDefaultExtension = ".aml";
+            return VSConstants.S_OK;
+            }
+
+        public int Generate(string wszInputFilePath, 
+				string bstrInputFileContents, 
+				string wszDefaultNamespace, 
+				IntPtr[] rgbOutputFileContents, 
+				out uint pcbOutput, 
+				IVsGeneratorProgress pGenerateProgress) {
+            if (bstrInputFileContents == null)
+                throw new ArgumentException(bstrInputFileContents);
+
+            var Reader = new StringReader(bstrInputFileContents);
+            var Writer = new StringWriter();
+
+            // Process the data
+            var Script = new global::Goedel.Tool.RFCToolBinding.BindingRFC();
+            Script.Process2XML (wszInputFilePath, Reader, Writer);
 
             // Convert writer data to a string and then a byte array
             var Text = Writer.ToString();

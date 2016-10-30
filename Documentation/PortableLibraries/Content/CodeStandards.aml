@@ -45,8 +45,8 @@
           </listItem>
           <listItem>
             <para>
-              A C# file with the extension  <localUri>.cs</localUri> generated from the schema using the Goedel3 custom tool
-              </para>
+             A C# file with the extension  <localUri>.cs</localUri> generated from the schema using the Goedel3 custom tool
+               </para>
           </listItem>
           <listItem>
             <para>

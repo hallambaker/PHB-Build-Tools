@@ -12,7 +12,8 @@
     <Topic id="9a1e36d4-be25-49e5-8182-8eebe08681d8" visible="True" />
     <Topic id="46e08fe1-5735-47cf-aaab-b738f125d326" visible="True" />
     <Topic id="a308ce4a-1c41-4273-ae66-b66f74d208f5" visible="True" />
-    <Topic id="1a4dea8e-9571-4b26-80bd-a1fece57b2cd" visible="True" isSelected="true" />
+    <Topic id="1a4dea8e-9571-4b26-80bd-a1fece57b2cd" visible="True" />
+    <Topic id="b04a600b-67e1-40cc-91f2-cdff6806c5ce" visible="True" isSelected="true" />
   </Topic>
   <Topic id="43492f57-fc54-4884-8024-eb99454fe959" visible="True" isExpanded="true" title="Exception Handling using Exceptional" tocTitle="Exception Handling">
     <Topic id="c3c40fd4-528b-4496-a87c-571fde8886f7" visible="True" />

@@ -72,6 +72,10 @@
     <Compile Include="LexReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="FSRTool.md" />
+    <None Include="ParserLibraries.md" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>powershell publishtarget "$(TargetPath)"</PostBuildEvent>

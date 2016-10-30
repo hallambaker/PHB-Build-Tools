@@ -145,6 +145,10 @@
       <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
       <Name>Goedel.Registry</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Goedel.Tool.Command\Goedel.Tool.Command.csproj">
       <Project>{40104bff-96c2-4f70-ab22-68aefb023740}</Project>
       <Name>Goedel.Tool.Command</Name>

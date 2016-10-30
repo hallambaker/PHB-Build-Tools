@@ -34,6 +34,10 @@
     <OutputPath>bin\Publish\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Goedel.FSR, Version=1.0.6136.27851, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Library\Goedel.FSR.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -85,10 +89,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
-      <Project>{ccc286f1-6a5b-4946-a382-8a48797192b4}</Project>
-      <Name>Goedel.FSR</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
       <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
       <Name>Goedel.Registry</Name>

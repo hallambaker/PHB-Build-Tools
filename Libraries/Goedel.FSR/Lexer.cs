@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 using Goedel.Utilities;
+using System.Diagnostics;
 
 namespace Goedel.FSR {
 
@@ -84,6 +85,11 @@ namespace Goedel.FSR {
         public int NextState = -1;
 
         /// <summary>
+        /// If set tru, debug tracing is enabled
+        /// </summary>
+        public bool Trace = false;
+
+        /// <summary>
         /// Get the next token calling all token actions while the
         /// stream is read.
         /// </summary>
@@ -101,13 +107,15 @@ namespace Goedel.FSR {
 
             while (Going) {
 
-                //Console.Write(Reader.LastChar);
+                //Trace.Write(Reader.LastChar);
 
                 int c = Reader.LastInt;
                 int ct = ((c >= 0) & (c < CharacterMappings.Length)) ?
                     CharacterMappings[c] : 0;
 
-                //Console.WriteLine("  {0} {1} {2}", StateInt, c, ct);
+                if (Trace) {
+                    Debug.WriteLine("  {0} {1}:{3} {2}", StateInt, c, ct, (char) c);
+                    }
 
                 NextState = CompressedTransitions[StateInt, ct];
 

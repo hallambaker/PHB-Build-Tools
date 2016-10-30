@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<topic id="f49b1505-1206-4ffe-8f23-43f42f61e4bd" revisionNumber="1">
+<topic id="f49b1505-1206-4ffe-8f23-43f42f61e4bd" revisionNumber="4">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!--The Abstract-->
     <introduction>
@@ -21,9 +21,6 @@
           <definition>
             <para>
               A Registry that permits a CryptoProvider or CryptoAlgorithm to be obtained. 
-            </para>
-            <para>
-              More comment 
             </para>
           </definition>
           <definedTerm>

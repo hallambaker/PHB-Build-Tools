@@ -94,6 +94,10 @@
       <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
       <Name>Goedel.Registry</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Goedel.Tool.ProtoGen\Goedel.Tool.ProtoGen.csproj">
       <Project>{15877b95-fcbe-4970-b833-a1c6a70586b1}</Project>
       <Name>Goedel.Tool.ProtoGen</Name>

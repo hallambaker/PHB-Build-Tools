@@ -2,8 +2,8 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"
                  xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="5232FCB3-2937-4BCB-BF3D-AB58810C8295" Version="1.6.1" Language="en-US" Publisher="Phillip Hallam-Baker" />
-    <DisplayName>WhiPHB RFC Tools</DisplayName>
+    <Identity Id="5232FCB3-2937-4BCB-BF3D-AB58810C8295" Version="1.6.2" Language="en-US" Publisher="Phillip Hallam-Baker" />
+    <DisplayName>PHB's Documentation Tools</DisplayName>
     <Description xml:space="preserve">Phill Hallam-Baker's RFC and document tools
 
 Note, this version of the tools does not support syntax shading.</Description>
@@ -25,11 +25,11 @@ Note, this version of the tools does not support syntax shading.</Description>
   </Dependencies>
   <Assets>
     <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Document.RFC" Path="|Goedel.Document.RFC|" AssemblyName="|Goedel.Document.RFC;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Document.RFC.Convert" Path="|Goedel.Document.RFC.Convert|" AssemblyName="|Goedel.Document.RFC.Convert;AssemblyName|" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Document.Markdown" Path="|Goedel.Document.Markdown|" AssemblyName="|Goedel.Document.Markdown;AssemblyName|" />
     <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Registry" Path="|Goedel.Registry|" AssemblyName="|Goedel.Registry;AssemblyName|" />
     <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Utilities" Path="|Goedel.Utilities|" AssemblyName="|Goedel.Utilities;AssemblyName|" />
-    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Document.RFC" Path="|Goedel.Document.RFC|" AssemblyName="|Goedel.Document.RFC;AssemblyName|" />
-    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Document.RFC.Tag" Path="|Goedel.Document.RFC.Tag|" AssemblyName="|Goedel.Document.RFC.Tag;AssemblyName|" />
-    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Document.Markdown" Path="|Goedel.Document.Markdown|" AssemblyName="|Goedel.Document.Markdown;AssemblyName|" />
   </Assets>
 </PackageManifest>
 
