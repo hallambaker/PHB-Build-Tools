@@ -99,6 +99,46 @@ export BUNDLE		?=  mkbundle --deps --static -o
 #end if
 #end method
 
+#method GenerateVSMakefile VSProject Project
+
+## Supplemental Makefile for Visual Studios Projects
+##
+## Visual Studio is responsible for managing rules for production of
+## code but does not provide support for pre and post build actions.
+## 
+## Prebuild items supported:
+##   [None currently]
+## 
+## PostBuild items supported:
+##   * Copy library to locations on disk
+##   * Build ilMerge executables
+##   * Postprocess VSIX projects
+##   * Copy executables
+
+LinkFiles = #!
+#foreach (var File in Project.FixedLinkDependency)
+\
+    #{File}#!
+#end foreach
+#foreach (var File in Project.LinkDependency)
+\
+    #{File}#!
+#end foreach
+
+
+prebuild : 
+    echo "Do Prebuild"
+
+postbuild : 
+#if (Project.IsExe)
+	powershell publishtarget #{Project.Target} $(LinkFiles) 
+#elseif (Project.IsLibrary)
+	powershell publishtarget #{Project.Target}
+#end if
+
+
+#end method
+
 
 #method GenerateMakefile VSSolution Solution
 ##
@@ -390,6 +430,11 @@ $(INSTALL_DATA)/#{Project.AssemblyName}.dll : $(TARGETBIN)/#{Project.AssemblyNam
 
 
 #end method
+
+
+
+
+
 
 #method3 PHBTool string Tag string Tool string Flag
 export Custom_#{Tag}		?= #{Tool}

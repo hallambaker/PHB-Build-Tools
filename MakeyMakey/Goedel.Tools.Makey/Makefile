@@ -120,12 +120,11 @@ SourceFiles = \
      TokenizerPlus.cs
 
 LinkFiles = \
-    $(TARGETBIN)/Goedel.IO.dll\
-    $(TARGETBIN)/Goedel.FSR.dll\
+    $(LIBRARYBIN)/Goedel.FSR.dll\
     $(TARGETBIN)/Goedel.Registry.dll\
     $(TARGETBIN)/Goedel.Utilities.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll
+LinkFilesComma = $(LIBRARYBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll
 
 
 NugetFiles = 
@@ -180,12 +179,6 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
-../../Goedel.IO/$(TARGETBIN)/Goedel.IO.dll : recursive
-! $(MAKE) -C ../../Goedel.IO
-
-../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : recursive
-! $(MAKE) -C ../../Libraries/Goedel.FSR
-
 ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
 ! $(MAKE) -C ../../Libraries/Goedel.Registry
 
@@ -193,14 +186,6 @@ ifndef NORECURSE
 ! $(MAKE) -C ../../Libraries/Goedel.Utilities
 
 endif
-
-$(TARGETBIN)/Goedel.IO.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.IO.dll : ../../Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
-!  cp ../../Goedel.IO/$(TARGETBIN)/Goedel.IO.dll $(TARGETBIN)/Goedel.IO.dll
-
-$(TARGETBIN)/Goedel.FSR.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.FSR.dll : ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
-!  cp ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll $(TARGETBIN)/Goedel.FSR.dll
 
 $(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Registry.dll : ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll

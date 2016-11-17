@@ -4,9 +4,8 @@ using System.IO;
 using System.Text;
 using Goedel.Tool.RFCTool;
 using GM=Goedel.Document.Markdown;
-using GW=Goedel.WordLib;
 using Goedel.Registry;
-using OpenXML;
+using Goedel.Document.OpenXML;
 
 namespace MakeRFC {
     class Import {

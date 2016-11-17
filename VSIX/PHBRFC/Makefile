@@ -44,16 +44,20 @@
 # ~/Tools/This				The bundled executable for platform the code is built on
 # ~/Tools/<Arch1>			The bundled executable for this platform <Arch1>	
 
-export TARGETROOT	?= mono
-export MODE			?= Release
-export ARCH			?= This
-export Packages		?= ~/Packages
-export PackagesPath ?= /lib/net40
+export TARGETROOT		?= mono
+export MODE				?= Release
+export ARCH				?= This
+export Packages			?= $(HOME)/Packages
+export PackagesPath		?= /lib/net40
+export Libraries		?= $(HOME)/Libraries
+export LibrariesPath	?= /Mono
+
 
 export TARGETBIN	= $(TARGETROOT)/$(MODE)
 export TARGETEXE	= $(TARGETROOT)/$(ARCH)
+export LIBRARYBIN	= $(Libraries)$(LibrariesPath)
 
-export DESTDIR		?= ~/.local
+export DESTDIR		?= $(HOME)/.local
 export bindir		?= /bin
 export libdir		?= /lib
 export INSTALL_PROGRAM	?= $(DESTDIR)$(bindir)
@@ -105,18 +109,19 @@ export Custom_TrojanGTK_FLAG	?= /cs
 # The main target 
 
 SourceFiles = \
-     Binding1.cs\
-     Properties/AssemblyInfo.cs
+     Binding.cs\
+     Properties/AssemblyInfo.cs\
+     RFCToolBinding.cs
 
 LinkFiles = \
-    $(TARGETBIN)/Goedel.ASN.dll\
     $(TARGETBIN)/Goedel.Registry.dll\
-    $(TARGETBIN)/Goedel.Tool.RFCToolBinding.dll\
-    $(TARGETBIN)/LibBootMaker.dll\
-    $(TARGETBIN)/LibBridge.dll\
-    $(TARGETBIN)/Goedel.Tool.RFCTool.dll
+    $(TARGETBIN)/Goedel.Utilities.dll\
+    $(TARGETBIN)/Goedel.Document.RFC.dll\
+    $(TARGETBIN)/Goedel.Document.Markdown.dll\
+    $(TARGETBIN)/Goedel.Document.RFC.Convert.dll\
+    $(TARGETBIN)/Goedel.Document.OpenXML.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.ASN.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Tool.RFCToolBinding.dll,$(TARGETBIN)/LibBootMaker.dll,$(TARGETBIN)/LibBridge.dll,$(TARGETBIN)/Goedel.Tool.RFCTool.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Document.RFC.dll,$(TARGETBIN)/Goedel.Document.Markdown.dll,$(TARGETBIN)/Goedel.Document.RFC.Convert.dll,$(TARGETBIN)/Goedel.Document.OpenXML.dll
 #  Nuget Microsoft.VisualStudio.Imaging, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\packages\Microsoft.VisualStudio.Imaging.14.1.24720\lib\net45\Microsoft.VisualStudio.Imaging.dll
 #  Nuget Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a :  ..\packages\Microsoft.VisualStudio.OLE.Interop.7.10.6070\lib\Microsoft.VisualStudio.OLE.Interop.dll
 #  Nuget Microsoft.VisualStudio.Shell.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\packages\Microsoft.VisualStudio.Shell.14.0.14.1.24720\lib\Microsoft.VisualStudio.Shell.14.0.dll
@@ -166,10 +171,12 @@ NugetFilesComa = \
 
 # A) Main target packaged
 
+$(TARGETBIN)/PHBRFC.dll :| $(LIBRARYBIN)
 $(TARGETBIN)/PHBRFC.dll :| $(TARGETBIN)
 
 $(TARGETBIN)/PHBRFC.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
 ! $(CSHARPDLL) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) -r:$(NugetFilesComa) 
+! cp $(TARGETBIN)/PHBRFC.dll $(LIBRARYBIN)/PHBRFC.dll
 
 
 # Directories etc.
@@ -186,13 +193,15 @@ $(TARGETBIN) :
 $(TARGETEXE) :
 ! mkdir -p $(TARGETEXE) 
 
+$(LIBRARYBIN) :
+! mkdir -p $(LIBRARYBIN)
 
 # Generated code
 
 ifdef PHB_BUILD
 
-Binding1.cs : Binding.vsixbuild
-!  $(Custom_VSIXBuild) Binding.vsixbuild $(Custom_VSIXBuild_FLAG) Binding1.cs 
+Binding.cs : Binding.vsixbuild
+!  $(Custom_VSIXBuild) Binding.vsixbuild $(Custom_VSIXBuild_FLAG) Binding.cs 
 
 endif
 
@@ -205,49 +214,49 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
-../../ASN/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll : recursive
-! $(MAKE) -C ../../ASN/Goedel.ASN
+../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Registry
 
-../../Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
-! $(MAKE) -C ../../Goedel.Registry
+../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Utilities
 
-../../RFCTool/Goedel.Tool.RFCTool.Binding/$(TARGETBIN)/Goedel.Tool.RFCToolBinding.dll : recursive
-! $(MAKE) -C ../../RFCTool/Goedel.Tool.RFCTool.Binding
-
-../../RFCTool/LibBootMaker/$(TARGETBIN)/LibBootMaker.dll : recursive
-! $(MAKE) -C ../../RFCTool/LibBootMaker
-
-../../RFCTool/LibBridge/$(TARGETBIN)/LibBridge.dll : recursive
-! $(MAKE) -C ../../RFCTool/LibBridge
-
-../../RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Tool.RFCTool.dll : recursive
+../../RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : recursive
 ! $(MAKE) -C ../../RFCTool/Goedel.Tool.RFCTool
+
+../../RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : recursive
+! $(MAKE) -C ../../RFCTool/Goedel.Document.Markdown
+
+../../RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : recursive
+! $(MAKE) -C ../../RFCTool/Goedel.Document.RFC.Convert
+
+../../RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : recursive
+! $(MAKE) -C ../../RFCTool/Goedel.Document.OpenXML
 
 endif
 
-$(TARGETBIN)/Goedel.ASN.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.ASN.dll : ../../ASN/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
-!  cp ../../ASN/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll $(TARGETBIN)/Goedel.ASN.dll
-
 $(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Registry.dll : ../../Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
-!  cp ../../Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll $(TARGETBIN)/Goedel.Registry.dll
+$(TARGETBIN)/Goedel.Registry.dll : ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+!  cp ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll $(TARGETBIN)/Goedel.Registry.dll
 
-$(TARGETBIN)/Goedel.Tool.RFCToolBinding.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Tool.RFCToolBinding.dll : ../../RFCTool/Goedel.Tool.RFCTool.Binding/$(TARGETBIN)/Goedel.Tool.RFCToolBinding.dll
-!  cp ../../RFCTool/Goedel.Tool.RFCTool.Binding/$(TARGETBIN)/Goedel.Tool.RFCToolBinding.dll $(TARGETBIN)/Goedel.Tool.RFCToolBinding.dll
+$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Utilities.dll : ../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+!  cp ../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
 
-$(TARGETBIN)/LibBootMaker.dll :| $(TARGETBIN)
-$(TARGETBIN)/LibBootMaker.dll : ../../RFCTool/LibBootMaker/$(TARGETBIN)/LibBootMaker.dll
-!  cp ../../RFCTool/LibBootMaker/$(TARGETBIN)/LibBootMaker.dll $(TARGETBIN)/LibBootMaker.dll
+$(TARGETBIN)/Goedel.Document.RFC.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Document.RFC.dll : ../../RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll
+!  cp ../../RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll $(TARGETBIN)/Goedel.Document.RFC.dll
 
-$(TARGETBIN)/LibBridge.dll :| $(TARGETBIN)
-$(TARGETBIN)/LibBridge.dll : ../../RFCTool/LibBridge/$(TARGETBIN)/LibBridge.dll
-!  cp ../../RFCTool/LibBridge/$(TARGETBIN)/LibBridge.dll $(TARGETBIN)/LibBridge.dll
+$(TARGETBIN)/Goedel.Document.Markdown.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Document.Markdown.dll : ../../RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll
+!  cp ../../RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll $(TARGETBIN)/Goedel.Document.Markdown.dll
 
-$(TARGETBIN)/Goedel.Tool.RFCTool.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Tool.RFCTool.dll : ../../RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Tool.RFCTool.dll
-!  cp ../../RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Tool.RFCTool.dll $(TARGETBIN)/Goedel.Tool.RFCTool.dll
+$(TARGETBIN)/Goedel.Document.RFC.Convert.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : ../../RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll
+!  cp ../../RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll $(TARGETBIN)/Goedel.Document.RFC.Convert.dll
+
+$(TARGETBIN)/Goedel.Document.OpenXML.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Document.OpenXML.dll : ../../RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll
+!  cp ../../RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll $(TARGETBIN)/Goedel.Document.OpenXML.dll
 
 
 # Referenced Libraries

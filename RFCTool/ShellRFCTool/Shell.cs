@@ -6,7 +6,7 @@ using System.Diagnostics;
 using Goedel.Registry;
 using Goedel.Tool.RFCTool;
 using MakeRFC;
-using OpenXML;
+using Goedel.Document.OpenXML;
 using GM=Goedel.Document.Markdown;
 
 namespace MakeRFC {
@@ -101,7 +101,7 @@ namespace MakeRFC {
             if (xmlfile!= null) Goedel.Tool.RFCTool.Writers.WriteXML (xmlfile, Document);
             if (txtfile!= null) Goedel.Tool.RFCTool.Writers.WriteTXT (txtfile, Document);
             if (mdfile != null) Goedel.Tool.RFCTool.Writers.WriteMD(mdfile, Document);
-            if (docfile != null) OpenXML.MakeWord.FromHTML2RFC(docfile, Document);
+            if (docfile != null) Goedel.Document.OpenXML.MakeWord.FromHTML2RFC(docfile, Document);
             if (amlfile != null) Goedel.Tool.RFCTool.Writers.WriteAML(amlfile, Document);
             }
 
@@ -117,7 +117,7 @@ namespace MakeRFC {
 
             if (htmlfile != null) Goedel.Tool.RFCTool.Writers.WriteHTML(htmlfile, Document);
             if (xmlfile != null) Goedel.Tool.RFCTool.Writers.WriteXML(xmlfile, Document);
-            if (docfile != null) OpenXML.MakeWord.FromHTML2RFC(docfile, Document);
+            if (docfile != null) Goedel.Document.OpenXML.MakeWord.FromHTML2RFC(docfile, Document);
             if (mdfile != null) Goedel.Tool.RFCTool.Writers.WriteMD(mdfile, Document);
             }
         }

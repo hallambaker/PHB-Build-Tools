@@ -1,5 +1,5 @@
 #
-# Makefile for Visual Studio Project Goedel.Tool.RFCTool
+# Makefile for Visual Studio Project Goedel.Document.RFC
 #
 # This file is generated automatically from the Visual Studio Project
 # File. If you make changes to this file and do not update the project
@@ -122,12 +122,17 @@ SourceFiles = \
      rfc2629.cs\
      rfc2629parse.cs\
      TXT.cs\
+     WriteAML.cs\
      XML.cs\
-     Xml2RFCOut.cs
+     Xml2RFCOut.cs\
+     XMLTextWriterPlus.cs
 
-LinkFiles = 
+LinkFiles = \
+    $(TARGETBIN)/Goedel.Registry.dll\
+    $(TARGETBIN)/Goedel.Utilities.dll\
+    $(TARGETBIN)/Goedel.Document.Markdown.dll
 
-LinkFilesComma = 
+LinkFilesComma = $(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Document.Markdown.dll
 
 
 NugetFiles = 
@@ -135,12 +140,12 @@ NugetFilesComa =
 
 # A) Main target packaged
 
-$(TARGETBIN)/Goedel.Tool.RFCTool.dll :| $(LIBRARYBIN)
-$(TARGETBIN)/Goedel.Tool.RFCTool.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Document.RFC.dll :| $(LIBRARYBIN)
+$(TARGETBIN)/Goedel.Document.RFC.dll :| $(TARGETBIN)
 
-$(TARGETBIN)/Goedel.Tool.RFCTool.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
-! $(CSHARPDLL) /out:$@  $(SourceFiles) 
-! cp $(TARGETBIN)/Goedel.Tool.RFCTool.dll $(LIBRARYBIN)/Goedel.Tool.RFCTool.dll
+$(TARGETBIN)/Goedel.Document.RFC.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
+! $(CSHARPDLL) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) 
+! cp $(TARGETBIN)/Goedel.Document.RFC.dll $(LIBRARYBIN)/Goedel.Document.RFC.dll
 
 
 # Directories etc.
@@ -176,7 +181,28 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Registry
+
+../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Utilities
+
+../Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : recursive
+! $(MAKE) -C ../Goedel.Document.Markdown
+
 endif
+
+$(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Registry.dll : ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+!  cp ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll $(TARGETBIN)/Goedel.Registry.dll
+
+$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Utilities.dll : ../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+!  cp ../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
+
+$(TARGETBIN)/Goedel.Document.Markdown.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Document.Markdown.dll : ../Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll
+!  cp ../Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll $(TARGETBIN)/Goedel.Document.Markdown.dll
 
 
 # Referenced Libraries
@@ -198,10 +224,10 @@ clean :
 # Install files to a tools directory. Default is ~/.local/bin
 
 
-install : $(INSTALL_DATA)/Goedel.Tool.RFCTool.dll
+install : $(INSTALL_DATA)/Goedel.Document.RFC.dll
 
-$(INSTALL_DATA)/Goedel.Tool.RFCTool.dll :| $(INSTALL_DATA)
-$(INSTALL_DATA)/Goedel.Tool.RFCTool.dll : $(TARGETBIN)/Goedel.Tool.RFCTool.dll
+$(INSTALL_DATA)/Goedel.Document.RFC.dll :| $(INSTALL_DATA)
+$(INSTALL_DATA)/Goedel.Document.RFC.dll : $(TARGETBIN)/Goedel.Document.RFC.dll
 ! cp $^ $@ 
 
 

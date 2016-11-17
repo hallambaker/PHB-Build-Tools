@@ -32,7 +32,7 @@ namespace Goedel.Registry {
         /// The default is to generate for C#.
         /// </summary>
         /// <param name="Base">Base string</param>
-        /// <returns>Approprately escaped label for current targe language.</returns>
+        /// <returns>Appropriately escaped label for current target language.</returns>
         public static string Label(this object Base) {
             switch (Target) {
                 case "CS": {

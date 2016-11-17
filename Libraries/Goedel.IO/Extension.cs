@@ -72,6 +72,16 @@ namespace Goedel.IO {
             }
 
         /// <summary>
+        /// Open an existing file for exclusive write access, or create new file.
+        /// </summary>
+        /// <param name="Filename">The file to write to.</param>
+        /// <returns>File stream to write to the file.</returns>
+        public static FileStream OpenFileWriteShare(this string Filename) {
+            return new FileStream(Filename, FileMode.OpenOrCreate, FileAccess.Write,
+                FileShare.Read);
+            }
+
+        /// <summary>
         /// Open a new or existing file for append only write access. Permit
         /// concurrent reads but not writes.
         /// </summary>

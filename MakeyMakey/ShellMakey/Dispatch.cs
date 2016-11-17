@@ -57,6 +57,16 @@ namespace Goedel.Shell.Makey {
                                 Generate.GenerateMakefile(Item.Project);
                                 }
                             }
+
+                        var TargetFile2 = Path.Combine(SolutionPath, ProjectPath, "VS.Make");
+                        using (var outputStream = TargetFile2.OpenFileNew()) {
+                            using (var outputText = outputStream.OpenTextWriter()) {
+                                var Generate = new Generate(outputText);
+
+                                Generate.GenerateVSMakefile(Item.Project);
+                                }
+                            }
+
                         }
                     }
 

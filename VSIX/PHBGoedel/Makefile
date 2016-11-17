@@ -118,10 +118,10 @@ LinkFiles = \
     $(TARGETBIN)/Goedel.Tool.FSRGen.dll\
     $(TARGETBIN)/Goedel.Tool.Schema.dll\
     $(TARGETBIN)/Goedel.Tool.Script.dll\
-    $(TARGETBIN)/ScriptClassifier.dll\
-    $(TARGETBIN)/Goedel.Registry.dll
+    $(TARGETBIN)/Goedel.Registry.dll\
+    $(TARGETBIN)/Goedel.Utilities.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.Tool.Command.dll,$(TARGETBIN)/Goedel.Tool.Exceptional.dll,$(TARGETBIN)/Goedel.Tool.FSRGen.dll,$(TARGETBIN)/Goedel.Tool.Schema.dll,$(TARGETBIN)/Goedel.Tool.Script.dll,$(TARGETBIN)/ScriptClassifier.dll,$(TARGETBIN)/Goedel.Registry.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Tool.Command.dll,$(TARGETBIN)/Goedel.Tool.Exceptional.dll,$(TARGETBIN)/Goedel.Tool.FSRGen.dll,$(TARGETBIN)/Goedel.Tool.Schema.dll,$(TARGETBIN)/Goedel.Tool.Script.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll
 #  Nuget Microsoft.VisualStudio.Imaging, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\..\NugetPackages\Microsoft.VisualStudio.Imaging.14.1.24720\lib\net45\Microsoft.VisualStudio.Imaging.dll
 #  Nuget Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a :  ..\..\NugetPackages\Microsoft.VisualStudio.OLE.Interop.7.10.6070\lib\Microsoft.VisualStudio.OLE.Interop.dll
 #  Nuget Microsoft.VisualStudio.Shell.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\..\NugetPackages\Microsoft.VisualStudio.Shell.14.0.14.1.24720\lib\Microsoft.VisualStudio.Shell.14.0.dll
@@ -229,11 +229,11 @@ ifndef NORECURSE
 ../../GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll : recursive
 ! $(MAKE) -C ../../GScript/Goedel.Tool.Script
 
-../../GScript/GScriptClassifier/$(TARGETBIN)/ScriptClassifier.dll : recursive
-! $(MAKE) -C ../../GScript/GScriptClassifier
-
 ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
 ! $(MAKE) -C ../../Libraries/Goedel.Registry
+
+../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Utilities
 
 endif
 
@@ -257,13 +257,13 @@ $(TARGETBIN)/Goedel.Tool.Script.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Tool.Script.dll : ../../GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll
 !  cp ../../GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll $(TARGETBIN)/Goedel.Tool.Script.dll
 
-$(TARGETBIN)/ScriptClassifier.dll :| $(TARGETBIN)
-$(TARGETBIN)/ScriptClassifier.dll : ../../GScript/GScriptClassifier/$(TARGETBIN)/ScriptClassifier.dll
-!  cp ../../GScript/GScriptClassifier/$(TARGETBIN)/ScriptClassifier.dll $(TARGETBIN)/ScriptClassifier.dll
-
 $(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Registry.dll : ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
 !  cp ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll $(TARGETBIN)/Goedel.Registry.dll
+
+$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Utilities.dll : ../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+!  cp ../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
 
 
 # Referenced Libraries

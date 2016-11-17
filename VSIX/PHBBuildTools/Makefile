@@ -44,16 +44,20 @@
 # ~/Tools/This				The bundled executable for platform the code is built on
 # ~/Tools/<Arch1>			The bundled executable for this platform <Arch1>	
 
-export TARGETROOT	?= mono
-export MODE			?= Release
-export ARCH			?= This
-export Packages		?= ~/Packages
-export PackagesPath ?= /lib/net40
+export TARGETROOT		?= mono
+export MODE				?= Release
+export ARCH				?= This
+export Packages			?= $(HOME)/Packages
+export PackagesPath		?= /lib/net40
+export Libraries		?= $(HOME)/Libraries
+export LibrariesPath	?= /Mono
+
 
 export TARGETBIN	= $(TARGETROOT)/$(MODE)
 export TARGETEXE	= $(TARGETROOT)/$(ARCH)
+export LIBRARYBIN	= $(Libraries)$(LibrariesPath)
 
-export DESTDIR		?= ~/.local
+export DESTDIR		?= $(HOME)/.local
 export bindir		?= /bin
 export libdir		?= /lib
 export INSTALL_PROGRAM	?= $(DESTDIR)$(bindir)
@@ -110,17 +114,16 @@ SourceFiles = \
 
 LinkFiles = \
     $(TARGETBIN)/Goedel.Tool.ASN.dll\
-    $(TARGETBIN)/Goedel.ASN.dll\
     $(TARGETBIN)/Goedel.Tool.Domainer.dll\
+    $(TARGETBIN)/Goedel.ASN.dll\
     $(TARGETBIN)/Goedel.Registry.dll\
+    $(TARGETBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Tool.ProtoGen.dll\
     $(TARGETBIN)/Goedel.Tool.RegistryConfig.dll\
-    $(TARGETBIN)/LibBootMaker.dll\
-    $(TARGETBIN)/LibBridge.dll\
     $(TARGETBIN)/libTrojanScript.dll\
     $(TARGETBIN)/Goedel.Tool.VSIXBuild.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.Tool.ASN.dll,$(TARGETBIN)/Goedel.ASN.dll,$(TARGETBIN)/Goedel.Tool.Domainer.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Tool.ProtoGen.dll,$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll,$(TARGETBIN)/LibBootMaker.dll,$(TARGETBIN)/LibBridge.dll,$(TARGETBIN)/libTrojanScript.dll,$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Tool.ASN.dll,$(TARGETBIN)/Goedel.Tool.Domainer.dll,$(TARGETBIN)/Goedel.ASN.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Tool.ProtoGen.dll,$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll,$(TARGETBIN)/libTrojanScript.dll,$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll
 #  Nuget Microsoft.VisualStudio.Imaging, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\packages\Microsoft.VisualStudio.Imaging.14.1.24720\lib\net45\Microsoft.VisualStudio.Imaging.dll
 #  Nuget Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a :  ..\packages\Microsoft.VisualStudio.OLE.Interop.7.10.6070\lib\Microsoft.VisualStudio.OLE.Interop.dll
 #  Nuget Microsoft.VisualStudio.Shell.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\packages\Microsoft.VisualStudio.Shell.14.0.14.1.24720\lib\Microsoft.VisualStudio.Shell.14.0.dll
@@ -170,10 +173,12 @@ NugetFilesComa = \
 
 # A) Main target packaged
 
+$(TARGETBIN)/PHBBuildTools.dll :| $(LIBRARYBIN)
 $(TARGETBIN)/PHBBuildTools.dll :| $(TARGETBIN)
 
 $(TARGETBIN)/PHBBuildTools.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
 ! $(CSHARPDLL) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) -r:$(NugetFilesComa) 
+! cp $(TARGETBIN)/PHBBuildTools.dll $(LIBRARYBIN)/PHBBuildTools.dll
 
 
 # Directories etc.
@@ -190,6 +195,8 @@ $(TARGETBIN) :
 $(TARGETEXE) :
 ! mkdir -p $(TARGETEXE) 
 
+$(LIBRARYBIN) :
+! mkdir -p $(LIBRARYBIN)
 
 # Generated code
 
@@ -212,26 +219,23 @@ ifndef NORECURSE
 ../../ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll : recursive
 ! $(MAKE) -C ../../ASN/Goedel.Tool.ASN
 
-../../ASN/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll : recursive
-! $(MAKE) -C ../../ASN/Goedel.ASN
-
 ../../Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll : recursive
 ! $(MAKE) -C ../../Domainer/Goedel.Tool.Domainer
 
-../../Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
-! $(MAKE) -C ../../Goedel.Registry
+../../Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.ASN
+
+../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Registry
+
+../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Utilities
 
 ../../Protogen/Goedel.Tool.ProtoGen/$(TARGETBIN)/Goedel.Tool.ProtoGen.dll : recursive
 ! $(MAKE) -C ../../Protogen/Goedel.Tool.ProtoGen
 
 ../../RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll : recursive
 ! $(MAKE) -C ../../RegistryConfig/Goedel.Tool.RegistryConfig
-
-../../RFCTool/LibBootMaker/$(TARGETBIN)/LibBootMaker.dll : recursive
-! $(MAKE) -C ../../RFCTool/LibBootMaker
-
-../../RFCTool/LibBridge/$(TARGETBIN)/LibBridge.dll : recursive
-! $(MAKE) -C ../../RFCTool/LibBridge
 
 ../../Trojan3/Goedel.Trojan.Script/$(TARGETBIN)/libTrojanScript.dll : recursive
 ! $(MAKE) -C ../../Trojan3/Goedel.Trojan.Script
@@ -245,17 +249,21 @@ $(TARGETBIN)/Goedel.Tool.ASN.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Tool.ASN.dll : ../../ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll
 !  cp ../../ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll $(TARGETBIN)/Goedel.Tool.ASN.dll
 
-$(TARGETBIN)/Goedel.ASN.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.ASN.dll : ../../ASN/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
-!  cp ../../ASN/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll $(TARGETBIN)/Goedel.ASN.dll
-
 $(TARGETBIN)/Goedel.Tool.Domainer.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Tool.Domainer.dll : ../../Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll
 !  cp ../../Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll $(TARGETBIN)/Goedel.Tool.Domainer.dll
 
+$(TARGETBIN)/Goedel.ASN.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.ASN.dll : ../../Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
+!  cp ../../Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll $(TARGETBIN)/Goedel.ASN.dll
+
 $(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Registry.dll : ../../Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
-!  cp ../../Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll $(TARGETBIN)/Goedel.Registry.dll
+$(TARGETBIN)/Goedel.Registry.dll : ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+!  cp ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll $(TARGETBIN)/Goedel.Registry.dll
+
+$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Utilities.dll : ../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+!  cp ../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
 
 $(TARGETBIN)/Goedel.Tool.ProtoGen.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Tool.ProtoGen.dll : ../../Protogen/Goedel.Tool.ProtoGen/$(TARGETBIN)/Goedel.Tool.ProtoGen.dll
@@ -264,14 +272,6 @@ $(TARGETBIN)/Goedel.Tool.ProtoGen.dll : ../../Protogen/Goedel.Tool.ProtoGen/$(TA
 $(TARGETBIN)/Goedel.Tool.RegistryConfig.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Tool.RegistryConfig.dll : ../../RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll
 !  cp ../../RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll $(TARGETBIN)/Goedel.Tool.RegistryConfig.dll
-
-$(TARGETBIN)/LibBootMaker.dll :| $(TARGETBIN)
-$(TARGETBIN)/LibBootMaker.dll : ../../RFCTool/LibBootMaker/$(TARGETBIN)/LibBootMaker.dll
-!  cp ../../RFCTool/LibBootMaker/$(TARGETBIN)/LibBootMaker.dll $(TARGETBIN)/LibBootMaker.dll
-
-$(TARGETBIN)/LibBridge.dll :| $(TARGETBIN)
-$(TARGETBIN)/LibBridge.dll : ../../RFCTool/LibBridge/$(TARGETBIN)/LibBridge.dll
-!  cp ../../RFCTool/LibBridge/$(TARGETBIN)/LibBridge.dll $(TARGETBIN)/LibBridge.dll
 
 $(TARGETBIN)/libTrojanScript.dll :| $(TARGETBIN)
 $(TARGETBIN)/libTrojanScript.dll : ../../Trojan3/Goedel.Trojan.Script/$(TARGETBIN)/libTrojanScript.dll

@@ -115,9 +115,12 @@ SourceFiles = \
      ScriptClassificationDefinitions.cs\
      Properties/FxCopSuppressions.cs
 
-LinkFiles = 
+LinkFiles = \
+    $(TARGETBIN)/Goedel.FSR.dll\
+    $(TARGETBIN)/Goedel.Registry.dll\
+    $(TARGETBIN)/Goedel.Utilities.dll
 
-LinkFilesComma = WindowsBase
+LinkFilesComma = $(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,WindowsBase
 #  Nuget Microsoft.VisualStudio.CoreUtility, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\..\NugetPackages\Microsoft.VisualStudio.CoreUtility.14.0.22823-RC\lib\net45\Microsoft.VisualStudio.CoreUtility.dll
 #  Nuget Microsoft.VisualStudio.Text.Data, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\..\NugetPackages\Microsoft.VisualStudio.Text.Data.14.0.22823-RC\lib\net45\Microsoft.VisualStudio.Text.Data.dll
 #  Nuget Microsoft.VisualStudio.Text.Logic, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\..\NugetPackages\Microsoft.VisualStudio.Text.Logic.14.0.22823-RC\lib\net45\Microsoft.VisualStudio.Text.Logic.dll
@@ -144,7 +147,7 @@ $(TARGETBIN)/ScriptClassifier.dll :| $(LIBRARYBIN)
 $(TARGETBIN)/ScriptClassifier.dll :| $(TARGETBIN)
 
 $(TARGETBIN)/ScriptClassifier.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
-! $(CSHARPDLL) /out:$@  $(SourceFiles) -r:$(NugetFilesComa) 
+! $(CSHARPDLL) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) -r:$(NugetFilesComa) 
 ! cp $(TARGETBIN)/ScriptClassifier.dll $(LIBRARYBIN)/ScriptClassifier.dll
 
 
@@ -181,7 +184,28 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.FSR
+
+../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Registry
+
+../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Utilities
+
 endif
+
+$(TARGETBIN)/Goedel.FSR.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.FSR.dll : ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+!  cp ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll $(TARGETBIN)/Goedel.FSR.dll
+
+$(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Registry.dll : ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+!  cp ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll $(TARGETBIN)/Goedel.Registry.dll
+
+$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Utilities.dll : ../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+!  cp ../../Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
 
 
 # Referenced Libraries

@@ -159,6 +159,6 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>powershell publishtarget "$(TargetPath)" Goedel.Registry.dll Goedel.Tool.Script.dll</PostBuildEvent>
+    <PostBuildEvent>call postbuild</PostBuildEvent>
   </PropertyGroup>
 </Project>

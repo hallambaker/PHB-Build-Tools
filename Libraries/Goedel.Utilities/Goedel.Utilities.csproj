@@ -67,7 +67,6 @@
       <Generator>exceptional</Generator>
       <LastGenOutput>Exceptions.cs</LastGenOutput>
     </None>
-    <None Include="test.ignore" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assert.cs" />
@@ -80,7 +79,6 @@
     </Compile>
     <Compile Include="NamespaceDoc.cs" />
     <Compile Include="NumberSplit.cs" />
-    <Compile Include="NYI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

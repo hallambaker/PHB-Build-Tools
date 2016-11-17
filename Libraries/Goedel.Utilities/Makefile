@@ -110,8 +110,12 @@ export Custom_TrojanGTK_FLAG	?= /cs
 
 SourceFiles = \
      Assert.cs\
-     BaseEncode.cs\
+     BaseConvert.cs\
      Character.cs\
+     Exceptions.cs\
+     NamespaceDoc.cs\
+     NumberSplit.cs\
+     NYI.cs\
      Properties/AssemblyInfo.cs
 
 LinkFiles = 
@@ -153,6 +157,8 @@ $(LIBRARYBIN) :
 
 ifdef PHB_BUILD
 
+Exceptions.cs : Exceptions.exceptional
+!  $(Custom_exceptional) Exceptions.exceptional $(Custom_exceptional_FLAG) Exceptions.cs 
 
 endif
 

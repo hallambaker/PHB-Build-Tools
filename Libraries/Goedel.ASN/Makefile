@@ -111,11 +111,14 @@ export Custom_TrojanGTK_FLAG	?= /cs
 SourceFiles = \
      ASNLibrary.cs\
      Buffer.cs\
+     DecodeBuffer.cs\
+     Exceptions.cs\
      Properties/AssemblyInfo.cs
 
-LinkFiles = 
+LinkFiles = \
+    $(TARGETBIN)/Goedel.Utilities.dll
 
-LinkFilesComma = 
+LinkFilesComma = $(TARGETBIN)/Goedel.Utilities.dll
 
 
 NugetFiles = 
@@ -127,7 +130,7 @@ $(TARGETBIN)/Goedel.ASN.dll :| $(LIBRARYBIN)
 $(TARGETBIN)/Goedel.ASN.dll :| $(TARGETBIN)
 
 $(TARGETBIN)/Goedel.ASN.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
-! $(CSHARPDLL) /out:$@  $(SourceFiles) 
+! $(CSHARPDLL) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) 
 ! cp $(TARGETBIN)/Goedel.ASN.dll $(LIBRARYBIN)/Goedel.ASN.dll
 
 
@@ -152,6 +155,8 @@ $(LIBRARYBIN) :
 
 ifdef PHB_BUILD
 
+Exceptions.cs : Exceptions.exceptional
+!  $(Custom_exceptional) Exceptions.exceptional $(Custom_exceptional_FLAG) Exceptions.cs 
 
 endif
 
@@ -164,7 +169,14 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
+! $(MAKE) -C ../Goedel.Utilities
+
 endif
+
+$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Utilities.dll : ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+!  cp ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
 
 
 # Referenced Libraries
