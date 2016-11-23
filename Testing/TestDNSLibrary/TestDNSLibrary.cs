@@ -17,11 +17,11 @@ namespace TestDNS_Library {
             // Use the DNS UDP client.
             Framework.Initialize();
 
-            var Service1 = DNSClient.Resolve("prismproof.org");
+            var Service1 = DNSClient.ResolveService("prismproof.org");
 
-            var Service2 = DNSClient.Resolve("prismproof.org", "mmm");
+            var Service2 = DNSClient.ResolveService("prismproof.org", "mmm");
 
-            var Service3 = DNSClient.Resolve("prismproof.org", "www", 80);
+            var Service3 = DNSClient.ResolveService("prismproof.org", "www", 80);
 
 
             }

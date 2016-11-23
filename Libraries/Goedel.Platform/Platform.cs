@@ -9,26 +9,14 @@ namespace Goedel.Platform {
     /// </summary>
     public static class Platform {
 
-        /// <summary>
-        /// Make a DNS Request of the specified client.
-        /// </summary>
-        /// <param name="Request">DNS request set</param>
-        /// <param name="DNSClient">Client to which request is directed</param>
-        /// <returns>Task instance.</returns>
-        public delegate Task<DNSResponse> QueryAsyncDelegateType(DNSClient DNSClient, DNSRequest Request);
-
-        /// <summary>Make a DNS Request of the specified client.</summary>
-        public static QueryAsyncDelegateType QueryAsyncDelegate;
-
         /// <summary>Default client context for DNS query</summary>
-        public static DNSClient Client;
+        public static DNSClient DNSClient;
 
         /// <summary>Fill byte buffer with cryptographically strong random numbers.</summary>
         public delegate void GetRandomBytesDelegateType(byte[] Data, int Offset, int Count);
 
         /// <summary>Fill byte buffer with cryptographically strong random numbers</summary>
         public static GetRandomBytesDelegateType GetRandomBytesDelegate;
-
 
         /// <summary>
         /// Get a specified number of random bytes.
@@ -39,6 +27,33 @@ namespace Goedel.Platform {
             var Data = new byte[Length];
             GetRandomBytesDelegate(Data, 0, Length);
             return Data;
+            }
+
+
+        /// <summary>
+        /// Return a randomly assigned UDP port.
+        /// </summary>
+        /// <returns></returns>
+        public static int GetRandomPort() {
+            var Bytes = GetRandomBytes(3);
+            int Result = Bytes[0] + 256 * Bytes[1];
+
+            if (Result < 4096) {
+                Result = Result + 256 * (Bytes[2] | 0x10);
+                }
+
+            return Result;
+            }
+
+        /// <summary>
+        /// Return a randomly assigned UDP port.
+        /// </summary>
+        /// <returns>Random integer</returns>
+        public static ushort GetRandom16 () {
+            var Bytes = GetRandomBytes(2);
+            var Result = Bytes[0] + 256 * Bytes[1];
+
+            return (ushort) Result;
             }
 
 

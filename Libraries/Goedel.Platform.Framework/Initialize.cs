@@ -17,8 +17,8 @@ namespace Goedel.Platform.Framework {
         /// (if this can be found)
         /// </summary>
         public static void Initialize () {
-            Goedel.Platform.Platform.Client = new DNSClientUDP();
-            Goedel.Platform.Platform.QueryAsyncDelegate = DNSClientUDP.QueryAsync;
+            Goedel.Platform.Platform.DNSClient = new DNSClientUDP();
+            //Goedel.Platform.Platform.QueryAsyncDelegate = DNSClientUDP.QueryAsync;
             Goedel.Platform.Platform.GetRandomBytesDelegate = GetRandomBytes;
             }
 

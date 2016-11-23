@@ -23,7 +23,7 @@ contain spaces. Using these features on either platform requires code to tread
 code paths that few others have trod. And are therefore to be avoided.
 
 * All filenames must use the standard file extensions
-* Only latin character set letters (a-z, A-Z), numbers, the period (.) and 
+* Only Latin character set letters (a-z, A-Z), numbers, the period (.) and 
 underscore are permitted in file and directory names.
 * Spaces are not permitted in any part of a file name path
 

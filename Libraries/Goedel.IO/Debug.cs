@@ -13,7 +13,7 @@ namespace Goedel.IO {
         /// <summary>
         /// Perform standard initialization
         /// </summary>
-        public static void Init() {
+        public static void Initialize() {
             if (Initialized) {
                 return;
                 }

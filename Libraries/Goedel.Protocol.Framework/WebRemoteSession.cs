@@ -23,6 +23,8 @@
 using System;
 using System.Net;
 using System.IO;
+using Goedel.Platform;
+
 
 namespace Goedel.Protocol.Framework {
 
@@ -30,35 +32,22 @@ namespace Goedel.Protocol.Framework {
     /// Manage JPC session to a remote Web Service.
     /// </summary>
     public partial class WebRemoteSession : JPCRemoteSession {
-
-        // Misc state variables.
+        ServiceDescription ServiceDescription = null;
         string URI;
-
-        /// <summary>
-        /// Create a remote session without authentication. This call
-        /// is typically used when beginning an interaction that will
-        /// lead to the authentication credential being established.
-        /// </summary>
-        /// <param name="URI">The Web Service Endpoint.</param>/// 
-        /// <param name="Domain">Domain</param>
-        /// <param name="Account">Account name</param>
-        public WebRemoteSession(string URI, string Domain, string Account) : 
-                    this (URI, Domain, Account, null) {
-            }
 
         /// <summary>
         /// Create a remote session with authentication under the
         /// specified credential.
         /// </summary>
-        /// <param name="URI">The Web Service Endpoint.</param>
         /// <param name="Domain">Domain</param>
+        /// <param name="Service">The IANA Well Known service identifier</param>
         /// <param name="Account">Account name</param>
         /// <param name="UDF">Fingerprint of authentication key.</param>
-        public WebRemoteSession(string URI, string Domain, 
-                    string Account, string UDF) {
-            this.Domain = Domain;
-            this.URI = URI;
+        public WebRemoteSession(string Domain, string Service, string Account=null, string UDF=null) {
             this.Account = Account;
+            ServiceDescription = DNSClient.ResolveService (Domain, Service: Service);
+            URI = ServiceDescription.Next.HTTPEndpoint;
+            this.Domain = ServiceDescription.Next.Address;
             }
 
         /// <summary>
@@ -68,7 +57,6 @@ namespace Goedel.Protocol.Framework {
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
         public override StreamBuffer Post(StreamBuffer Content) {
             Stream RequestStream = null;
-
 
             // Get request object for the URI
             var Request = WebRequest.CreateHttp(URI);
@@ -82,7 +70,6 @@ namespace Goedel.Protocol.Framework {
             //Trace.WriteLine(Content.GetUTF8);
  
             RequestStream = Request.GetRequestStream();
-
 
 
             // If using an integrity preamble, put it here.

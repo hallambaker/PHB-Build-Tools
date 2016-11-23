@@ -57,6 +57,10 @@
       <Project>{fe16891b-e611-4e77-845b-8ba8806c7332}</Project>
       <Name>Goedel.Cryptography.Ticket</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Goedel.Platform\Goedel.Platform.csproj">
+      <Project>{bd2729ca-402f-4e52-9682-3fc6bb8e9c49}</Project>
+      <Name>Goedel.Platform</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{02d75812-6892-45f7-8497-82266b6f0328}</Project>
       <Name>Goedel.Protocol</Name>

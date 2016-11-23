@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="DNS.domainer" />
+    <None Include="DNS.md" />
     <None Include="Makefile" />
     <None Include="project.json" />
     <None Include="todo.md" />
@@ -58,6 +59,7 @@
     <Compile Include="Parse.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceDescription.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">

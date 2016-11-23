@@ -10,7 +10,5 @@ Has authentication and encryption methods that aren't derrived from the common a
 
 Might well be redundant. We have TicketData as well.
 
-==ConvertFromBase64String
 
-Surely redundant.
 

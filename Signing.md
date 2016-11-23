@@ -19,7 +19,7 @@ default command tool path. So the easiest way to run it is to
 start the Visual Studio Developer Console. This is installed in the
 Visual Studio start menu folder.
 
-Note that since the tool runs in the windows systemn directory by 
+Note that since the tool runs in the windows system directory by 
 default, you will need to cd to a different directory.
 
 To create a key pair:

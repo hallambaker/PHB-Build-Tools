@@ -16,7 +16,7 @@ Control Panel\System and Security\System
 Advanced Settings
 Environment variables
 
-Path        <<add in the path to your personal tools directory>
+Path        add in the path to your personal tools directory>
 ToolPath	Set to the directory where you want tools to be written
 
 

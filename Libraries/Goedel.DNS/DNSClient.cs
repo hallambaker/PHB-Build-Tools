@@ -4,30 +4,21 @@ using System.Net;
 using System.Net.Sockets;
 using System.Net.NetworkInformation;
 using System.Text;
-
+using System.Security.Cryptography;
 using System.Threading;
+using System.Runtime.Remoting.Messaging;
 
-using Goedel.Utilities;
-using System.Threading.Tasks;
-using Goedel.Platform;
+namespace Goedel.DNS {
 
-namespace Goedel.Platform.Framework {
 
-    /// <summary>
-    /// DNS client implementation
-    /// </summary>
-    public partial class DNSClientUDP : DNSClient {
-        /// <summary>
-        /// List of IP addresses top contact.
-        /// </summary>
+
+
+
+    public partial class DNSClient {
         public List<IPAddress>          ListIPAddress;
-
-        /// <summary>
-        /// Port number to contact.
-        /// </summary>
         public ushort                   Port;
 
-        
+        private RNGCryptoServiceProvider RNGCryptoServiceProvider = new RNGCryptoServiceProvider ();
 
         void SetIPAddress(IPAddress IPAddress) {
             ListIPAddress = new List<IPAddress>();
@@ -36,19 +27,12 @@ namespace Goedel.Platform.Framework {
                 }
             }
 
-        /// <summary>
-        /// Default constructor using platform default DNS.
-        /// </summary>
-        public DNSClientUDP() {
+        public DNSClient() {
             ListIPAddress = GetHostDNS ();
             Port = 53;
             }
 
-        /// <summary>
-        /// Constructor from server name.
-        /// </summary>
-        /// <param name="Server">Address of DNS server</param>
-        public DNSClientUDP(string Server) {
+        public DNSClient(string Server) {
             if (Server != null) {
                 IPAddress IPAddress;
                 IPAddress.TryParse(Server, out IPAddress);
@@ -61,37 +45,20 @@ namespace Goedel.Platform.Framework {
             Port = 53;
             }
 
-        /// <summary>
-        /// Constructor from IP Address using default DNS port (53).
-        /// </summary>
-        /// <param name="IPAddress">Address of DNS server</param>
-        public DNSClientUDP(IPAddress IPAddress) :
+        public DNSClient(IPAddress IPAddress) :
             this (IPAddress, 53) {
             }
 
-        /// <summary>
-        /// Constructor from list of IP Addresses
-        /// </summary>
-        /// <param name="ListIPAddress">List of addresses of DNS server</param>
-        public DNSClientUDP(List<IPAddress> ListIPAddress) {
+        public DNSClient(List<IPAddress> ListIPAddress) {
             this.ListIPAddress = ListIPAddress;
             this.Port = 53;
             }
 
-        /// <summary>
-        /// Constructor from IP Address and port.
-        /// </summary>
-        /// <param name="IPAddress">Address of DNS server</param>
-        /// <param name="Port">Port number</param>
-        public DNSClientUDP(IPAddress IPAddress, ushort Port) {
+        public DNSClient(IPAddress IPAddress, ushort Port) {
             SetIPAddress (IPAddress);
             this.Port = Port;
             }
 
-        /// <summary>
-        /// Stub method for non portable funtion to get the host DNS server address.
-        /// </summary>
-        /// <returns>List of DNS servers.</returns>
         static public List<IPAddress> GetHostDNS() {
 
             List<IPAddress> DNSServices = new List<IPAddress>();
@@ -103,11 +70,11 @@ namespace Goedel.Platform.Framework {
                     IPAddressCollection dnsServers = adapterProperties.DnsAddresses;
                     UnicastIPAddressInformationCollection uniCast = adapterProperties.UnicastAddresses;
                     if (dnsServers.Count > 0) {
-                        //Console.WriteLine(adapter.Description);
+                        Console.WriteLine(adapter.Description);
                         foreach (IPAddress dns in dnsServers) {
                             if (!dns.IsIPv6SiteLocal) {
-                                //Console.WriteLine("  DNS Servers ............................. : {0}",
-                                //    dns.ToString());
+                                Console.WriteLine("  DNS Servers ............................. : {0}",
+                                    dns.ToString());
                                 DNSServices.Add(dns);
                                 }
                             }
@@ -115,11 +82,11 @@ namespace Goedel.Platform.Framework {
                         foreach (UnicastIPAddressInformation uni in uniCast) {
                             DateTime when;
 
-                            //Console.WriteLine("  Unicast Address ......................... : {0}", uni.Address);
-                            //Console.WriteLine("     Prefix Origin ........................ : {0}", uni.PrefixOrigin);
-                            //Console.WriteLine("     Suffix Origin ........................ : {0}", uni.SuffixOrigin);
-                            //Console.WriteLine("     Duplicate Address Detection .......... : {0}",
-                            //    uni.DuplicateAddressDetectionState);
+                            Console.WriteLine("  Unicast Address ......................... : {0}", uni.Address);
+                            Console.WriteLine("     Prefix Origin ........................ : {0}", uni.PrefixOrigin);
+                            Console.WriteLine("     Suffix Origin ........................ : {0}", uni.SuffixOrigin);
+                            Console.WriteLine("     Duplicate Address Detection .......... : {0}",
+                                uni.DuplicateAddressDetectionState);
 
                             // Format the lifetimes as Sunday, February 16, 2003 11:33:44 PM 
                             // if en-us is the current culture. 
@@ -155,15 +122,17 @@ namespace Goedel.Platform.Framework {
         // build the async interfaces
 
 
-        private static UdpClient GetUDPClient(IPAddress Address, int Port) {
-            UdpClient UdpClient = new UdpClient(GetPort());
-            UdpClient.Connect(Address, Port);
+        private UdpClient GetUDPClient(IPAddress Address, int Port) {
+            UdpClient UdpClient = new UdpClient (GetPort());
+            UdpClient.Connect (Address, Port);
             return UdpClient;
             }
 
 
-        private static int GetPort() {
-            var Bytes = Platform.GetRandomBytes(3);
+        private int GetPort() {
+            byte[] Bytes = new byte[3];
+
+            RNGCryptoServiceProvider.GetBytes (Bytes);
             int Result = Bytes[0] + 256 * Bytes [1];
 
             // Avoid allocating a well known port number 
@@ -172,7 +141,7 @@ namespace Goedel.Platform.Framework {
                 }
 
 
-            //Console.WriteLine ("Use port {0}", Result);
+            Console.WriteLine ("Use port {0}", Result);
             return Result;
             }
 
@@ -184,11 +153,6 @@ namespace Goedel.Platform.Framework {
         // This should be set up to do things like divide up the queries across the services
         // and try failover etc. And do things in async mode etc.
 
-        /// <summary>
-        /// Make DNS querry and wait for response.
-        /// </summary>
-        /// <param name="Request">The request</param>
-        /// <returns>The first valid response received.</returns>
         public DNSResponse Query(DNSRequest Request) {
             UdpClient UdpClient = GetUDPClient (ListIPAddress[0], Port);
 
@@ -201,45 +165,37 @@ namespace Goedel.Platform.Framework {
             return new DNSResponse (Result);
             }
 
+        public delegate DNSResponse AsyncQuery(DNSRequest Request);
 
-        /// <summary>
-        /// Make DNS querry and wait for response.
-        /// </summary>
-        /// <param name="Request">The request</param>
-        /// <returns>The first valid response received.</returns>
-        public override async Task<DNSResponse> QueryAsync(DNSRequest Request) {
-            UdpClient UdpClient = GetUDPClient(ListIPAddress[0], Port);
 
-            UdpClient.Send(Request.Buffer.Buffer, Request.Buffer.Length);
 
-            var ReceiveTask = UdpClient.ReceiveAsync();
-            var ReceiveResult = await ReceiveTask;
-            byte[] Result = ReceiveResult.Buffer;
+        //public DNSRecord[] Query(string Domain, DNSTypeCode Type) {
+        //    return null;
+        //    }
 
-            return new DNSResponse(Result);
+
+        public IAsyncResult BeginQuery(DNSRequest Request, 
+                            AsyncCallback requestCallback, Object state) {
+            AsyncQuery Caller = new AsyncQuery (this.Query);
+            IAsyncResult Result = Caller.BeginInvoke (Request, requestCallback, state);
+            return Result;
             }
 
-        /// <summary>
-        /// Make DNS querry and wait for response.
-        /// </summary>
-        /// <param name="Request">The request.</param>
-        /// <param name="Client">The client to handle the request.</param>
-        /// <returns>The first valid response received.</returns>
-        public static async Task<DNSResponse> QueryAsync(
-                DNSClient Client, DNSRequest Request) {
+        public IAsyncResult BeginQuery(string Domain, DNSTypeCode Type, 
+                            AsyncCallback requestCallback, Object state) {
 
-            var DNSClientUDP = Client as DNSClientUDP;
+            DNSRequest Request = new DNSRequest (Domain, Type);
 
-            UdpClient UdpClient = GetUDPClient(DNSClientUDP.ListIPAddress[0], 
-                        DNSClientUDP.Port);
-            UdpClient.Send(Request.Buffer.Buffer, Request.Buffer.Length);
-
-            var ReceiveTask = UdpClient.ReceiveAsync();
-            var ReceiveResult = await ReceiveTask;
-            byte[] Result = ReceiveResult.Buffer;
-
-            return new DNSResponse(Result);
+            return BeginQuery (Request, requestCallback, state);
             }
 
+        public DNSResponse EndQuery(IAsyncResult IResult) {
+            AsyncResult result = (AsyncResult) IResult;
+            AsyncQuery Caller = (AsyncQuery) result.AsyncDelegate;
+
+            DNSResponse returnValue = Caller.EndInvoke (IResult);
+
+            return returnValue;
+            }
         }
     }

@@ -457,6 +457,7 @@ namespace Goedel.Platform {
         /// <param name="Domain">The domain name</param>
         /// <param name="QCode">The query type</param>
         public DNSRequest(string Domain, DNSTypeCode QCode) {
+            Flags = DNSFlags.RD | DNSFlags.OPCODE_QUERY;
             Query = new DNSQuery (Domain,  QCode);
             }
 

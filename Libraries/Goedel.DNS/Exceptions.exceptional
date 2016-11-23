@@ -1,0 +1,49 @@
+﻿
+Namespace Goedel.DNS
+
+	Exception DNSError
+        Console "A DNS Error occurred"
+		Description
+			|An internal assertion check failed.
+
+
+		Exception NYI
+			Console "The feature has not been implemented"
+			Description
+				|This feature has not been implemented
+
+		Exception Internal
+			Console "An internal error occurred"
+			Description
+				|An internal assertion check failed.
+
+
+		Exception DNSBufferOverflow
+			Console "Buffer Overflow"
+			Description
+				|Buffer Overflow
+
+		Exception DNSReadTruncated
+			Console "Read Truncated"
+			Description
+				|Read Truncated
+
+		Exception DNSLabelTooLong
+			Console "The DNS response contained a label that is too long"
+			Description
+				|The DNS response contained a label that is too long
+
+		Exception DNSIllegalCharacter
+			Console "The DNS response contained an illegal character"
+			Description
+				|The DNS response contained an illegal character
+
+		Exception DNSInvalidAddress
+			Console "The data is not a valid IP address"
+			Description
+				|The data is not a valid IP address
+
+		Exception DNSTagTooLong
+			Console "The DNS response contained a tag that is too long"
+			Description
+				|The DNS response contained a tag that is too long
