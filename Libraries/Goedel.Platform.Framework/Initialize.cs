@@ -10,7 +10,7 @@ namespace Goedel.Platform.Framework {
     /// Network initialization. Bind the .Net implementation methods
     /// to the static delegates in the portable libraries.
     /// </summary>
-    public static partial class Framework {
+    public static partial class Platform {
         /// <summary>
         /// Initialize the network and cryptography stacks for use with a
         /// .NET Framework or Mono app.

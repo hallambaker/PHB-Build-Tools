@@ -10,43 +10,50 @@ namespace Goedel.Cryptography {
     /// Diffie Hellman shared group parameters.
     /// </summary>
     public class DiffeHellmanPublic {
-        private const string Group2048PText = @"
-            87A8E61D B4B6663C FFBBD19C 65195999 8CEEF608 660DD0F2
-            5D2CEED4 435E3B00 E00DF8F1 D61957D4 FAF7DF45 61B2AA30
-            16C3D911 34096FAA 3BF4296D 830E9A7C 209E0C64 97517ABD
-            5A8A9D30 6BCF67ED 91F9E672 5B4758C0 22E0B1EF 4275BF7B
-            6C5BFC11 D45F9088 B941F54E B1E59BB8 BC39A0BF 12307F5C
-            4FDB70C5 81B23F76 B63ACAE1 CAA6B790 2D525267 35488A0E
-            F13C6D9A 51BFA4AB 3AD83477 96524D8E F6A167B5 A41825D9
-            67E144E5 14056425 1CCACB83 E6B486F6 B3CA3F79 71506026
-            C0B857F6 89962856 DED4010A BD0BE621 C3A3960A 54E710C3
-            75F26375 D7014103 A4B54330 C198AF12 6116D227 6E11715F
-            693877FA D7EF09CA DB094AE9 1E1A1597";
 
-        private const string Group2048GText = @"
-            3FB32C9B 73134D0B 2E775066 60EDBD48 4CA7B18F 21EF2054
-            07F4793A 1A0BA125 10DBC150 77BE463F FF4FED4A AC0BB555
-            BE3A6C1B 0C6B47B1 BC3773BF 7E8C6F62 901228F8 C28CBB18
-            A55AE313 41000A65 0196F931 C77A57F2 DDF463E5 E9EC144B
-            777DE62A AAB8A862 8AC376D2 82D6ED38 64E67982 428EBC83
-            1D14348F 6F2F9193 B5045AF2 767164E1 DFC967C1 FB3F2E55
-            A4BD1BFF E83B9C80 D052B985 D182EA0A DB2A3B73 13D3FE14
-            C8484B1E 052588B9 B7D2BBD2 DF016199 ECD06E15 57CD0915
-            B3353BBB 64E0EC37 7FD02837 0DF92B52 C7891428 CDC67EB6
-            184B523D 1DB246C3 2F630784 90F00EF8 D647D148 D4795451
-            5E2327CF EF98C582 664B4C0F 6CC41659";
+        /// <summary>
+        /// Parameters from rfc3526. These are generated using a rigid construction
+        /// that has been widely reviewed but not by me.
+        /// </summary>
+        private const string Group2048PText = @"00
+            FFFFFFFF FFFFFFFF C90FDAA2 2168C234 C4C6628B 80DC1CD1
+            29024E08 8A67CC74 020BBEA6 3B139B22 514A0879 8E3404DD
+            EF9519B3 CD3A431B 302B0A6D F25F1437 4FE1356D 6D51C245
+            E485B576 625E7EC6 F44C42E9 A637ED6B 0BFF5CB6 F406B7ED
+            EE386BFB 5A899FA5 AE9F2411 7C4B1FE6 49286651 ECE45B3D
+            C2007CB8 A163BF05 98DA4836 1C55D39A 69163FA8 FD24CF5F
+            83655D23 DCA3AD96 1C62F356 208552BB 9ED52907 7096966D
+            670C354E 4ABC9804 F1746C08 CA18217C 32905E46 2E36CE3B
+            E39E772C 180E8603 9B2783A2 EC07A28F B5C55DF0 6F4C52C9
+            DE2BCBF6 95581718 3995497C EA956AE5 15D22618 98FA0510
+            15728E5A 8AACAA68 FFFFFFFF FFFFFFFF";
 
-        private const string Group2048QText = @"
-            8CF83642 A709A097 B4479976 40129DA2 99B1A47D 1EB3750B
-            A308B0FE 64F5FBD3";
+        private const string Group4096PText = @"00
+            FFFFFFFF FFFFFFFF C90FDAA2 2168C234 C4C6628B 80DC1CD1
+            29024E08 8A67CC74 020BBEA6 3B139B22 514A0879 8E3404DD
+            EF9519B3 CD3A431B 302B0A6D F25F1437 4FE1356D 6D51C245
+            E485B576 625E7EC6 F44C42E9 A637ED6B 0BFF5CB6 F406B7ED
+            EE386BFB 5A899FA5 AE9F2411 7C4B1FE6 49286651 ECE45B3D
+            C2007CB8 A163BF05 98DA4836 1C55D39A 69163FA8 FD24CF5F
+            83655D23 DCA3AD96 1C62F356 208552BB 9ED52907 7096966D
+            670C354E 4ABC9804 F1746C08 CA18217C 32905E46 2E36CE3B
+            E39E772C 180E8603 9B2783A2 EC07A28F B5C55DF0 6F4C52C9
+            DE2BCBF6 95581718 3995497C EA956AE5 15D22618 98FA0510
+            15728E5A 8AAAC42D AD33170D 04507A33 A85521AB DF1CBA64
+            ECFB8504 58DBEF0A 8AEA7157 5D060C7D B3970F85 A6E1E4C7
+            ABF5AE8C DB0933D7 1E8C94E0 4A25619D CEE3D226 1AD2EE6B
+            F12FFA06 D98A0864 D8760273 3EC86A64 521F2B18 177B200C
+            BBE11757 7A615D6C 770988C0 BAD946E2 08E24FA0 74E5AB31
+            43DB5BFC E0FD108E 4B82D120 A9210801 1A723C12 A787E6D7
+            88719A10 BDBA5B26 99C32718 6AF4E23C 1A946834 B6150BDA
+            2583E9CA 2AD44CE8 DBBBC2DB 04DE8EF9 2E8EFC14 1FBECAA6
+            287C5947 4E6BC05D 99B2964F A090C3A2 233BA186 515BE7ED
+            1F612970 CEE2D7AF B81BDD76 2170481C D0069127 D5B05AA9
+            93B4EA98 8D8FDDC1 86FFB7DC 90A6C08F 4DF435C9 34063199
+            FFFFFFFF FFFFFFFF";
 
-        static readonly BigInteger Group2048P =
-                new BigInteger(BaseConvert.FromBase16String(Group2048PText));
-        static readonly BigInteger Group2048G =
-                new BigInteger(BaseConvert.FromBase16String(Group2048GText));
-        static readonly BigInteger Group2048Q =
-                new BigInteger(BaseConvert.FromBase16String(Group2048QText));
-
+        static readonly BigInteger Group2048P = Group2048PText.HexToBigInteger();
+        static readonly BigInteger Group2048G = new BigInteger(2);
 
         /// <summary>Group modulus</summary>
         public BigInteger Modulus { get; set; }
@@ -104,16 +111,6 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
-        /// Perform Diffie Hellman Key Agreement using the public key of the counterparty 
-        /// parameters and this private key.
-        /// </summary>
-        /// <param name="Private">The counterparty private key</param>
-        /// <returns>The key agreement value ZZ</returns>
-        internal protected BigInteger Agreement(BigInteger Private) {
-            return BigInteger.ModPow(Public, Private, Modulus);
-            }
-
-        /// <summary>
         /// Create a new ephemeral private key and use it to perform a key
         /// agreement.
         /// </summary>
@@ -122,8 +119,7 @@ namespace Goedel.Cryptography {
         public BigInteger Agreement (out DiffeHellmanPublic Public) {
             var Private = new DiffeHellmanPrivate(this);
             Public = Private.DiffeHellmanPublic;
-
-            return Agreement (Private.Private);
+            return Private.Agreement(this);
             }
 
 
@@ -192,7 +188,10 @@ namespace Goedel.Cryptography {
             IsRecryption = false;
             }
 
-
+        private DiffeHellmanPrivate (BigInteger Private) {
+            this.Private = Private;
+            Public = BigInteger.ModPow(Generator, Private, Modulus);
+            }
 
 
         /// <summary>
@@ -200,18 +199,22 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Shares">Number of shares to create</param>
         /// <returns>Array shares.</returns>
-        public BigInteger[] MakeRecryption (int Shares) {
+        public DiffeHellmanPrivate[] MakeRecryption (int Shares) {
             BigInteger Accumulator = 0;
-            var Result = new BigInteger[Shares];
+            var Result = new DiffeHellmanPrivate[Shares];
 
             for (var i = 1; i < Shares; i++) {
-                Result [i] = Platform.GetRandomBigInteger(Modulus);
-                Accumulator = (Accumulator + Result[i]) % Modulus;
-                }
-            Result[0] = (Private - Accumulator) % Modulus;
+                var NewPrivate = Platform.GetRandomBigInteger(Modulus);
 
+                Result[i] = new DiffeHellmanPrivate(NewPrivate) { IsRecryption = true};
+                Accumulator = (Accumulator + NewPrivate) % Modulus;
+                }
+
+            Result[0] = new DiffeHellmanPrivate((Modulus + Private - Accumulator) % Modulus) {
+                IsRecryption = true };
             return Result;
             }
+
 
         /// <summary>
         /// Perform a Diffie Hellman Key Agreement to this private key
@@ -220,7 +223,7 @@ namespace Goedel.Cryptography {
         /// <returns>The key agreement value ZZ</returns>
         public BigInteger Agreement(DiffeHellmanPublic Public) {
             Verify(Public);
-            return Public.Agreement(Private);
+            return BigInteger.ModPow(Public.Public, Private, Modulus);
             }
 
         /// <summary>
@@ -231,8 +234,26 @@ namespace Goedel.Cryptography {
         /// result of this key agreement.</param>
         /// <returns>The key agreement value ZZ</returns>
         public BigInteger Agreement(DiffeHellmanPublic Public, BigInteger Carry) {
+            Verify(Public);
             var Partial = Agreement(Public);
-            return Partial + Carry;
+            return (Partial * Carry) % Modulus;
+            }
+
+
+        /// <summary>
+        /// Perform final stage in a Diffie Hellman Agreement to reduce 
+        /// </summary>
+        /// <param name="Carry">The partial recryption results.</param>
+        /// <returns>The key agreement value ZZ</returns>
+        public BigInteger Agreement(BigInteger[] Carry) {
+
+            Assert.True(Carry.Length >= 1, InsufficientResults.Throw);
+
+            var Accumulator = Carry[0];
+            for (var i = 1; i< Carry.Length; i++) {
+                Accumulator = Accumulator * Carry[i];
+                }
+            return Accumulator % Modulus;
             }
 
 

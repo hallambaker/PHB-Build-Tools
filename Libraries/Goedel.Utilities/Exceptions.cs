@@ -51,7 +51,7 @@ namespace Goedel.Utilities {
 				return new NYI(Reason as string);
 				}
 			else {
-				return new NYI("The feature has not been implemented");
+				return new NYI();
 				}
             }
         }
@@ -102,7 +102,7 @@ namespace Goedel.Utilities {
 				return new Internal(Reason as string);
 				}
 			else {
-				return new Internal("An internal error occurred");
+				return new Internal();
 				}
             }
         }
@@ -140,6 +140,7 @@ namespace Goedel.Utilities {
         /// </summary>	
 		public object UserData;
 
+		/// <summary>
         /// Construct instance for exception using a userdata parameter of
 		/// type ExceptionData and the format string "The file {0} could not be read"
         /// </summary>		
@@ -178,7 +179,7 @@ namespace Goedel.Utilities {
 				return new FileReadError(Reason as ExceptionData);
 				}
 			else {
-				return new FileReadError("The file could not be read");
+				return new FileReadError();
 				}
             }
         }

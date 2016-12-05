@@ -27,12 +27,12 @@ namespace TestDNS {
 
 
             //Register DNS Client with the portable libraries
-            Framework.Initialize();
+            Goedel.Platform.Framework.Platform.Initialize();
 
             var Service = DNSClient.ResolveService("prismproof.org",
                 "mmm", Fallback: DNSFallback.Prefix);
 
-            var Next = Service.Next;
+            var Next = Service.Next();
 
             var HTTP = Next.HTTPEndpoint;
             var Domain = Next.Address;

@@ -9,6 +9,9 @@
 			Enumerate	
 			Type
 			About
+			Library
+
+	Type Library
 
 	Type	Command	
 		Id			ID CommandType

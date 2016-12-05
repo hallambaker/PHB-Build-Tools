@@ -59,6 +59,11 @@ Namespace Goedel.Cryptography
 				Description
 					|The shares presented are not from the same set of shares.
 		
+		Exception InsufficientResults
+			Console "There must be at least one result"
+			Description
+				|A recryption attempt failed because there were no result values to combine.
+
 		Exception FingerprintMatchFailed
 			Console "Data did not match expected fingerprint value"
 			Description

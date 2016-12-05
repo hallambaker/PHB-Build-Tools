@@ -11,7 +11,7 @@ namespace Goedel.Cryptography.Jose {
     public partial class PublicKeyRSA {
 
         /// <summary>
-        /// Construct from the spcified RSA Key
+        /// Construct from the specified RSA Key
         /// </summary>
         /// <param name="KeyPair">An RSA key Pair.</param>
         public PublicKeyRSA(RSAKeyPairBase KeyPair) {

@@ -1,4 +1,5 @@
 using System;
+using Goedel.Utilities;
 
 
 
@@ -11,20 +12,20 @@ namespace Goedel.Cryptography {
     public class CryptographicException : global::System.Exception {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "A cryptographic exception occurred"
         /// </summary>		
-		public CryptographicException () : base () {
+		public CryptographicException () : base ("A cryptographic exception occurred") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "A cryptographic exception occurred"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public CryptographicException (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -43,14 +44,14 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new CryptographicException(Reason as string);
 				}
 			else {
-				return new CryptographicException("A cryptographic exception occurred");
+				return new CryptographicException();
 				}
             }
         }
@@ -63,20 +64,20 @@ namespace Goedel.Cryptography {
     public class ImplementationLimit : CryptographicException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Some implementation limit hit"
         /// </summary>		
-		public ImplementationLimit () : base () {
+		public ImplementationLimit () : base ("Some implementation limit hit") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Some implementation limit hit"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public ImplementationLimit (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -91,16 +92,14 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new ImplementationLimit(Reason as string);
 				}
-
-
 			else {
-				return new ImplementationLimit("Some implementation limit hit");
+				return new ImplementationLimit();
 				}
             }
         }
@@ -112,20 +111,20 @@ namespace Goedel.Cryptography {
     public class InvalidQuorum : CryptographicException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Quorum parameters invalid"
         /// </summary>		
-		public InvalidQuorum () : base () {
+		public InvalidQuorum () : base ("Quorum parameters invalid") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Quorum parameters invalid"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public InvalidQuorum (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -140,16 +139,14 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new InvalidQuorum(Reason as string);
 				}
-
-
 			else {
-				return new InvalidQuorum("Quorum parameters invalid");
+				return new InvalidQuorum();
 				}
             }
         }
@@ -162,20 +159,20 @@ namespace Goedel.Cryptography {
     public class InsufficientShares : InvalidQuorum {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Not enough shares to recover key"
         /// </summary>		
-		public InsufficientShares () : base () {
+		public InsufficientShares () : base ("Not enough shares to recover key") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Not enough shares to recover key"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public InsufficientShares (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -190,16 +187,14 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new InsufficientShares(Reason as string);
 				}
-
-
 			else {
-				return new InsufficientShares("Not enough shares to recover key");
+				return new InsufficientShares();
 				}
             }
         }
@@ -212,20 +207,20 @@ namespace Goedel.Cryptography {
     public class QuorumExceedsShares : InvalidQuorum {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Quorum can\'t exceed shares"
         /// </summary>		
-		public QuorumExceedsShares () : base () {
+		public QuorumExceedsShares () : base ("Quorum can\'t exceed shares") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Quorum can\'t exceed shares"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public QuorumExceedsShares (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -240,16 +235,14 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new QuorumExceedsShares(Reason as string);
 				}
-
-
 			else {
-				return new QuorumExceedsShares("Quorum can\'t exceed shares");
+				return new QuorumExceedsShares();
 				}
             }
         }
@@ -261,20 +254,20 @@ namespace Goedel.Cryptography {
     public class QuorumInsufficient : InvalidQuorum {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Quorum must be at least 2"
         /// </summary>		
-		public QuorumInsufficient () : base () {
+		public QuorumInsufficient () : base ("Quorum must be at least 2") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Quorum must be at least 2"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public QuorumInsufficient (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -295,10 +288,8 @@ namespace Goedel.Cryptography {
 			if (Reason as string != null) {
 				return new QuorumInsufficient(Reason as string);
 				}
-
-
 			else {
-				return new QuorumInsufficient("Quorum must be at least 2");
+				return new QuorumInsufficient();
 				}
             }
         }
@@ -310,20 +301,20 @@ namespace Goedel.Cryptography {
     public class SharesInsufficient : InvalidQuorum {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Shares must be at least 2"
         /// </summary>		
-		public SharesInsufficient () : base () {
+		public SharesInsufficient () : base ("Shares must be at least 2") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Shares must be at least 2"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public SharesInsufficient (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -338,16 +329,14 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new SharesInsufficient(Reason as string);
 				}
-
-
 			else {
-				return new SharesInsufficient("Shares must be at least 2");
+				return new SharesInsufficient();
 				}
             }
         }
@@ -360,20 +349,20 @@ namespace Goedel.Cryptography {
     public class QuorumExceeded : InvalidQuorum {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Too many shares specified"
         /// </summary>		
-		public QuorumExceeded () : base () {
+		public QuorumExceeded () : base ("Too many shares specified") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Too many shares specified"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public QuorumExceeded (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -388,16 +377,14 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new QuorumExceeded(Reason as string);
 				}
-
-
 			else {
-				return new QuorumExceeded("Too many shares specified");
+				return new QuorumExceeded();
 				}
             }
         }
@@ -410,20 +397,20 @@ namespace Goedel.Cryptography {
     public class QuorumDegreeExceeded : InvalidQuorum {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Degree too high"
         /// </summary>		
-		public QuorumDegreeExceeded () : base () {
+		public QuorumDegreeExceeded () : base ("Degree too high") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Degree too high"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public QuorumDegreeExceeded (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -438,16 +425,14 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new QuorumDegreeExceeded(Reason as string);
 				}
-
-
 			else {
-				return new QuorumDegreeExceeded("Degree too high");
+				return new QuorumDegreeExceeded();
 				}
             }
         }
@@ -459,20 +444,20 @@ namespace Goedel.Cryptography {
     public class MismatchedShares : InvalidQuorum {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Keys must have same threshold"
         /// </summary>		
-		public MismatchedShares () : base () {
+		public MismatchedShares () : base ("Keys must have same threshold") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Keys must have same threshold"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public MismatchedShares (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -487,16 +472,61 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new MismatchedShares(Reason as string);
 				}
-
-
 			else {
-				return new MismatchedShares("Keys must have same threshold");
+				return new MismatchedShares();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// A recryption attempt failed because there were no result values to combine.
+    /// </summary>
+    public class InsufficientResults : CryptographicException {
+
+		/// <summary>
+        /// Construct instance for exception "There must be at least one result"
+        /// </summary>		
+		public InsufficientResults () : base ("There must be at least one result") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "There must be at least one result"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public InsufficientResults (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public InsufficientResults (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new InsufficientResults(Reason as string);
+				}
+			else {
+				return new InsufficientResults();
 				}
             }
         }
@@ -509,20 +539,20 @@ namespace Goedel.Cryptography {
     public class FingerprintMatchFailed : CryptographicException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Data did not match expected fingerprint value"
         /// </summary>		
-		public FingerprintMatchFailed () : base () {
+		public FingerprintMatchFailed () : base ("Data did not match expected fingerprint value") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Data did not match expected fingerprint value"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public FingerprintMatchFailed (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -537,16 +567,14 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new FingerprintMatchFailed(Reason as string);
 				}
-
-
 			else {
-				return new FingerprintMatchFailed("Data did not match expected fingerprint value");
+				return new FingerprintMatchFailed();
 				}
             }
         }
@@ -560,20 +588,20 @@ namespace Goedel.Cryptography {
     public class NoProviderSpecified : CryptographicException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "No provider specified"
         /// </summary>		
-		public NoProviderSpecified () : base () {
+		public NoProviderSpecified () : base ("No provider specified") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "No provider specified"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public NoProviderSpecified (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -588,16 +616,14 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new NoProviderSpecified(Reason as string);
 				}
-
-
 			else {
-				return new NoProviderSpecified("No provider specified");
+				return new NoProviderSpecified();
 				}
             }
         }
@@ -609,20 +635,20 @@ namespace Goedel.Cryptography {
     public class KeySizeNotSupported : CryptographicException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "The requested key size is not supported"
         /// </summary>		
-		public KeySizeNotSupported () : base () {
+		public KeySizeNotSupported () : base ("The requested key size is not supported") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "The requested key size is not supported"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public KeySizeNotSupported (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -637,16 +663,14 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new KeySizeNotSupported(Reason as string);
 				}
-
-
 			else {
-				return new KeySizeNotSupported("The requested key size is not supported");
+				return new KeySizeNotSupported();
 				}
             }
         }
@@ -659,20 +683,20 @@ namespace Goedel.Cryptography {
     public class InitializationFailed : CryptographicException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Initialization of the cryptographic support library failed."
         /// </summary>		
-		public InitializationFailed () : base () {
+		public InitializationFailed () : base ("Initialization of the cryptographic support library failed.") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Initialization of the cryptographic support library failed."
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public InitializationFailed (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -687,16 +711,14 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new InitializationFailed(Reason as string);
 				}
-
-
 			else {
-				return new InitializationFailed("Initialization of the cryptographic support library failed.");
+				return new InitializationFailed();
 				}
             }
         }

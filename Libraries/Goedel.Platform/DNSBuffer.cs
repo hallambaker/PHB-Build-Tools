@@ -436,6 +436,9 @@ namespace Goedel.Platform {
             bool going = true;
             String name = "";
 
+            var StringBuilder = new StringBuilder();
+            bool First = true;
+
             while (going) {
                 byte b0 = ReadByte();
                 if (b0 == 0) {
@@ -458,7 +461,12 @@ namespace Goedel.Platform {
                                 // do not support recursive compression
                                 }
                             else {
-                                name = name + ASCIIEncoding.GetString (Buffer.Buffer, nPointer+1, b2) + ".";
+                                if(!First) {
+                                    StringBuilder.Append('.');
+                                    }
+                                First = false;
+                                StringBuilder.Append(ASCIIEncoding.GetString(Buffer.Buffer, nPointer + 1, b2));
+                                //name = name + ASCIIEncoding.GetString (Buffer.Buffer, nPointer+1, b2) + ".";
                                 //Console.WriteLine("   [{0}]", name);
                                 nPointer = nPointer + b2 + 1;
                                 }
@@ -470,12 +478,17 @@ namespace Goedel.Platform {
 
                     }
                 else {
-                    name = name + ReadString((int)b0) + ".";
+                    if (!First) {
+                        StringBuilder.Append('.');
+                        }
+                    First = false;
+                    StringBuilder.Append(ReadString((int)b0));
+                    //name = name + ReadString((int)b0) + ".";
                     //Console.WriteLine("   {0}", name);
                     }
                 }
             //Console.WriteLine("Got name {0}", name);
-            return name;
+            return StringBuilder.ToString();
 
             }
 
@@ -551,13 +564,18 @@ namespace Goedel.Platform {
             return result;
             }
 
-        /// <summary>Read set of strrings value</summary>
+        /// <summary>Read set of strings value</summary>
         /// <param name="Extent">Number of bytes to read.</param>
         /// <returns>Null list, this is a stub</returns>
         /// <remarks>Not yet implemented.</remarks>
         public List<String> ReadStrings(int Extent) {
             List<String> ListString = new List<string> ();
             //int length = ReadByte ();
+            while (Pointer < MaxRead) {
+                var Text = ReadString();
+                ListString.Add(Text);
+                }
+
             return ListString;
             }
 

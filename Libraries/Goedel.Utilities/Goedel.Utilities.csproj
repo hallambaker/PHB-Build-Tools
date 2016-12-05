@@ -77,9 +77,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.exceptional</DependentUpon>
     </Compile>
+    <Compile Include="IsTrue.cs" />
     <Compile Include="NamespaceDoc.cs" />
     <Compile Include="NumberSplit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TraceX.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>

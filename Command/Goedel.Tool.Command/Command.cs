@@ -28,6 +28,7 @@ using Goedel.Registry;
 //       Enumerate
 //       Type
 //       About
+//       Library
 //       Parameter
 //       Option
 //       Include
@@ -68,6 +69,7 @@ namespace Goedel.Tool.Command {
         _Top,
 
         Class,
+        Library,
         Command,
         DefaultCommand,
         Brief,
@@ -141,6 +143,28 @@ namespace Goedel.Tool.Command {
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Class");
+				}			
+			}
+		}
+
+    public partial class Library : _Choice {
+
+        public override CommandParseType _Tag () {
+            return CommandParseType.Library;
+            }
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Library");
+				}
+
+			if (tag) {
+				Output.EndElement ("Library");
 				}			
 			}
 		}
@@ -662,6 +686,7 @@ namespace Goedel.Tool.Command {
 		Class__Namespace,				
 		Class__Id,				
 		Class__Entries,				
+		Library_Start,
 		Command_Start,
 		Command__Id,				
 		Command__Tag,				
@@ -796,6 +821,7 @@ namespace Goedel.Tool.Command {
             switch (Label) {
 
                 case "Class": return NewClass();
+                case "Library": return NewLibrary();
                 case "Command": return NewCommand();
                 case "DefaultCommand": return NewDefaultCommand();
                 case "Brief": return NewBrief();
@@ -823,6 +849,14 @@ namespace Goedel.Tool.Command {
             Goedel.Tool.Command.Class result = new Goedel.Tool.Command.Class();
             Push (result);
             State = StateCode.Class_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Command.Library NewLibrary() {
+            Goedel.Tool.Command.Library result = new Goedel.Tool.Command.Library();
+            Push (result);
+            State = StateCode.Library_Start;
             return result;
             }
 
@@ -959,6 +993,7 @@ namespace Goedel.Tool.Command {
             switch (Label) {
 
                 case "Class": return Goedel.Tool.Command.CommandParseType.Class;
+                case "Library": return Goedel.Tool.Command.CommandParseType.Library;
                 case "Command": return Goedel.Tool.Command.CommandParseType.Command;
                 case "DefaultCommand": return Goedel.Tool.Command.CommandParseType.DefaultCommand;
                 case "Brief": return Goedel.Tool.Command.CommandParseType.Brief;
@@ -1111,16 +1146,21 @@ namespace Goedel.Tool.Command {
 									(LabelType == Goedel.Tool.Command.CommandParseType.OptionSet) |
 									(LabelType == Goedel.Tool.Command.CommandParseType.Enumerate) |
 									(LabelType == Goedel.Tool.Command.CommandParseType.Type) |
-									(LabelType == Goedel.Tool.Command.CommandParseType.About) ) {
+									(LabelType == Goedel.Tool.Command.CommandParseType.About) |
+									(LabelType == Goedel.Tool.Command.CommandParseType.Library) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Brief Command OptionSet Enumerate Type About ]");
+								throw new System.Exception("Parser Error Expected [Brief Command OptionSet Enumerate Type About Library ]");
 								}
 							}
                         break;
 
 
+                    case StateCode.Library_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
                     case StateCode.Command_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Command.Command Current_Cast = (Goedel.Tool.Command.Command)Current;

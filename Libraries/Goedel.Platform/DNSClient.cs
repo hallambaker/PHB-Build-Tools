@@ -82,10 +82,10 @@ namespace Goedel.Platform {
         public static ServiceDescription ResolveService(string Address, string Service = null,
                     int? Port = null, DNSFallback Fallback = DNSFallback.Prefix) {
 
-            var ServiceDescription = ResolveServiceAsync(Address, Service);
-            ServiceDescription.Wait();
+            var TaskService = ResolveServiceAsync(Address, Service, Port, Fallback);
+            TaskService.Wait();
 
-            return ServiceDescription.Result;
+            return TaskService.Result;
 
             }
 
@@ -101,8 +101,7 @@ namespace Goedel.Platform {
         /// <returns>Description of the discovered services.</returns>
         public static async Task<ServiceDescription> ResolveServiceAsync (string Address, 
                         string Service = null,
-                        int? Port = null, DNSFallback Fallback = DNSFallback.Prefix,
-                        int Timeout = 2500) {
+                        int? Port = null, DNSFallback Fallback = DNSFallback.Prefix) {
 
             var Context = Platform.DNSClient.GetContext();
             return await Context.QueryServiceAsync(Address, Service, Port, Fallback);
@@ -130,7 +129,7 @@ namespace Goedel.Platform {
 
         Task TaskRetry; // Task that expires when it is time to retry requests
         Task TaskTimeout ; // Task that expires when it is time to give up
-
+        protected Task<byte[]> TaskListen = null; // listen to the DNS port
 
         /// <summary>
         /// If true there are pending requests and the context has not timed out
@@ -162,7 +161,7 @@ namespace Goedel.Platform {
 
             TaskTimeout = Task.Delay(Timeout);
             TaskRetry = Task.Delay(Retry);
-
+            
             }
 
         /// <summary>
@@ -178,6 +177,13 @@ namespace Goedel.Platform {
         /// </summary>
         /// <returns>The first valid response received.</returns>
         public abstract Task<DNSResponse> GetResponseAsync();
+
+
+        /// <summary>
+        /// Get the next DNS response
+        /// </summary>
+        /// <returns>The first valid response received.</returns>
+        public abstract Task<byte[]> GetResponseRawAsync();
 
         bool Disposed = false;
 
@@ -215,18 +221,23 @@ namespace Goedel.Platform {
         public virtual async Task<DNSResponse> NextAsync() {
 
             while (Active) {
-                var Result = GetResponseAsync();
+                await Task.WhenAny(TaskListen, TaskTimeout);
 
-                await Task.WhenAny(Result, TaskTimeout);
+                if (TaskListen.IsCompleted) {
+                    var Data = TaskListen.Result;
+                    TaskListen = GetResponseRawAsync();
+                    var Response = new DNSResponse(Data);
 
-                if (Result.IsCompleted) {
-                    var Response = Result.Result;
                     for (var i = 0; i < PendingRequests.Count; i++) {
                         if (PendingRequests[i].ID == Response.ID) {
                             PendingRequests.RemoveAt(i);
                             return Response;
                             }
                         }
+                    }
+
+                else {
+                    Debug.WriteLine("Problem");
                     }
                 if (TaskTimeout.IsCompleted) { // query has expired
                     Active = false;
@@ -247,8 +258,8 @@ namespace Goedel.Platform {
         /// <param name="Request">DNS request set</param>
         /// <returns>Task instance.</returns>
         public void QueueRequest(DNSRequest Request) {
-            SendRequest(Request);
-            PendingRequests.Add(Request);
+            PendingRequests.Add(Request); // always add to the queue first
+            SendRequest(Request);            
             }
 
         /// <summary>
@@ -276,23 +287,27 @@ namespace Goedel.Platform {
                         string Service = null, int? Port = null, 
                         DNSFallback Fallback = DNSFallback.Prefix) {
 
-            if (Service == null) {
-                return new ServiceDescription(Address, Service, Port, Fallback);
-                }
+            var ServiceDescription = new ServiceDescription(Address, Service, Port, Fallback);
 
-            var ServiceDescription = new ServiceDescription(Address, Service);
+            if (Service == null) {
+                return ServiceDescription;
+                }
 
             QueueRequest(ServiceDescription.ServiceAddress, DNSTypeCode.SRV);
             QueueRequest(ServiceDescription.ServiceAddress, DNSTypeCode.TXT);
 
             while (Pending) {
                 var Result = await NextAsync();
-
-                foreach (var Record in Result.Answers) {
-                    Add(ServiceDescription, Record);
+                if (Result != null) {
+                    foreach (var Record in Result.Answers) {
+                        Add(ServiceDescription, Record);
+                        }
+                    foreach (var Record in Result.Additional) {
+                        Add(ServiceDescription, Record);
+                        }
                     }
-                foreach (var Record in Result.Additional) {
-                    Add(ServiceDescription, Record);
+                else {
+                    Debug.WriteLine("timed out");
                     }
                 }
 
@@ -310,19 +325,48 @@ namespace Goedel.Platform {
         /// <param name="ServiceDescription">The service description to add to</param>
         /// <param name="Record">DNS record to add data from</param>
         void Add(ServiceDescription ServiceDescription, DNSRecord Record) {
+            var Domain = Record.Domain.Name.ToLower();
 
             if (Record.Code == DNSTypeCode.SRV) {
                 var RecordSRV = Record as DNSRecord_SRV;
 
                 Debug.WriteLine(String.Format("SRV {0} -> {1}",
-                        RecordSRV.Domain.Name, RecordSRV.Target.Name));
+                        Domain, RecordSRV.Target.Name));
+
+                if (Domain == ServiceDescription.ServiceAddress) {
+                    var Entry = new ServiceEntry() {
+                        Address = RecordSRV.Target.Name,
+                        Port = RecordSRV.Port,
+                        Priority = RecordSRV.Priority,
+                        Weight = RecordSRV.Weight
+                        };
+                    ServiceDescription.Add(Entry);
+                    QueueRequest(Entry.HostAddress, DNSTypeCode.TXT);
+                    }
                 }
             else if (Record.Code == DNSTypeCode.TXT) {
 
                 var RecordTXT = Record as DNSRecord_TXT;
 
                 Debug.WriteLine(String.Format("TXT {0} -> {1}",
-                        RecordTXT.Domain.Name, RecordTXT.Text));
+                        Domain, RecordTXT.Text));
+
+
+                if (Domain == ServiceDescription.ServiceAddress) {
+                    foreach (var TXT in RecordTXT.Text) {
+                        ServiceDescription.TXT.Add(TXT);
+                        }
+                    }
+
+                else {
+                    foreach (var Entry in ServiceDescription.Entries) {
+                        if (Domain == Entry.HostAddress) {
+                            foreach (var TXT in RecordTXT.Text) {
+                                Entry.TXT.Add(TXT);
+                                }
+                            }
+                        }
+                    }
                 }
             else if (Record.Code == DNSTypeCode.A) {
 
@@ -338,86 +382,6 @@ namespace Goedel.Platform {
 
         }
 
-
-
-    /// <summary>
-    /// Represents an Internet destination, this may be a single IPv4 or IPv6 
-    /// address or a sequence of prioritized IP addresses.
-    /// </summary>
-    public class ServiceEntry {
-
-        string _Address;
-        /// <summary>The DNS Address to resolve</summary>
-        public virtual string Address {
-            get { return _Address ?? ServiceDescription?.Default.Address; }
-            set { _Address = value; } }
-
-        int? _Port;
-        /// <summary>The port number to connect to</summary>
-        public virtual int? Port { 
-            get {return _Port ?? ServiceDescription?.Default.Port;}
-            set { _Port = value;}}
-
-        /// <summary>Priority of this service entry</summary>
-        public virtual int Priority { get; set; }
-        /// <summary>Weight of this service entry</summary>
-        public virtual int Weight { get; set; }
-
-        string _Path;
-        /// <summary>URI path to connect to (will default to /.well-known/&lt;Service&gt;</summary>
-        public virtual string Path {
-            get { return _Path ?? ServiceDescription?.Default.Path; }
-            set { _Path = value; } }
-
-        TransportSecurity? _TransportSecurity;
-        /// <summary>Transport security setting</summary>
-        public virtual TransportSecurity? TransportSecurity {
-            get { return _TransportSecurity ?? ServiceDescription?.Default.TransportSecurity; }
-            set { _TransportSecurity = value; }
-            }
-
-        Transport? _Transport;
-        /// <summary>Transport setting</summary>
-        public virtual Transport? Transport {
-            get { return _Transport ?? ServiceDescription?.Default.Transport; }
-            set { _Transport = value; }
-            }
-
-        string _URI;
-        /// <summary>Security policy URI</summary>
-        public virtual string URI {
-            get { return _URI ?? ServiceDescription?.Default.URI; }
-            set { _URI = value; }
-            }
-
-        string _UDF;
-        /// <summary>Security policy fingerprint</summary>
-        public virtual string UDF {
-            get { return _UDF ?? ServiceDescription?.Default.UDF; }
-            set { _UDF = value; }
-            }
-
-        /// <summary>Internal flag used in the sorting algorithm to mark allocated entries. </summary>
-        public bool Flag { get; set; } = false;
-
-
-        /// <summary>The service description to which this entry is attached</summary>
-        public ServiceDescription ServiceDescription { get; set; }
-
-
-        /// <summary>Calculate the Web Service Endpoint for a HTTP binding</summary>
-        public string HTTPEndpoint {
-            get {
-                if (_Port == null) {
-                    return "http://" + Address + Path;
-                    }
-                else {
-                    return "http://" + Address + ":" + Port.ToString() + Path;
-                    }
-                }
-            }
-
-        }
 
 
 

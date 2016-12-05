@@ -58,22 +58,11 @@ If two DNS resolvers are configured:
 
 ##Not Yet Implemented
 
-The code does not currently actually call the DNS Client. Instead, it assumes the 
-DNS SRV lookup fails and performs the fallback approach (go to 
-http://mmm.prismproof.org/.well-known/mmm/)
 
-The DNS classes in Goedel.Platform need to be redesigned to cope with
+The DNS classes in Goedel.Platform need to implement
 
 <ul>
-* Out of order responses to multiple requests
-
-* Responses that don't match the request
-
 * Retry if request not received
-
-* Timeout if request fails.
-
-* Batch multiple queries into one
 
 * DNS TTL values are saved and the retrieved DNS parameters flushed
 when they become stale.
@@ -85,3 +74,60 @@ Goedel.Protocol.Framework.WebRemoteSession
 
 This needs to be modified so that the ServiceDescription parameters are 
 updated properly
+
+##Test suite
+
+A test suite is needed to perform the following unit test matrix:
+
+Resolver configuration
+
+<ul>
+* Unavailable U1=10.6.6.6, U2=10.66.66.66
+
+* Available: A1=8.8.8.8, A2=8.8.4.4
+</ul>
+
+The tests need to be run to check for correct behavior in the following 
+configurations
+
+<ul>
+* U1
+
+* U1, U2
+
+* A1
+
+* A1, A2
+
+* A1, U1
+
+* U1, A1
+</ul>
+
+
+Zone file:
+
+
+<dl>
+:null_test.prismproof.org
+
+::No servers reachable
+
+:default_test.prismproof.org
+
+::mmm.default_test
+
+:srv1_test.prismproof.org
+
+::srv->test1.prismproof.org
+
+:srv2_test.prismproof.org
+
+::srv->test1.prismproof.org{0,100}, test2.prismproof.org {0,50}
+
+:srv3_test.prismproof.org
+
+::srv->test1.prismproof.org{0,100}, test2.prismproof.org {0,50}, test3.prismproof.org {1,100}
+</dl>
+
+Each test needs to be done multiple times with a check to see that the balancing works.

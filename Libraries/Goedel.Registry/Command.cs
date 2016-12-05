@@ -5,6 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Goedel.Registry {
+
+    /// <summary>
+    /// Base class for command line interpreters
+    /// </summary>
+    public abstract class CommandLineInterpreterBase {
+
+
+        }
+
+
+
     /// <summary>Base class for Command line parser types. This could do with
     /// some decrufting to remove implementation artifacts.</summary>
     public abstract class Type {

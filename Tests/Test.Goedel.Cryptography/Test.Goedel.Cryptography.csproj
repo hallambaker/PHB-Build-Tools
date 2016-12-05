@@ -60,9 +60,17 @@
       <Project>{b12ad19f-0e50-4d1d-99de-30c63886e718}</Project>
       <Name>Goedel.Cryptography.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
+      <Project>{a9a97306-a35e-4bc9-91ef-f6880dd7456d}</Project>
+      <Name>Goedel.Cryptography.Jose</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <Project>{bc1e98e7-f516-41a3-9653-056e20560a22}</Project>
       <Name>Goedel.Cryptography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
+      <Project>{ccc286f1-6a5b-4946-a382-8a48797192b4}</Project>
+      <Name>Goedel.FSR</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
       <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>

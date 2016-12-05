@@ -41,7 +41,7 @@ namespace Goedel.Cryptography.Framework {
 
 
         private RSACryptoServiceProvider _Provider;
-        private RSAParameters _Parameters;
+        private RSAParameters PublicParameters;
 
 
 
@@ -49,13 +49,19 @@ namespace Goedel.Cryptography.Framework {
         /// Return private key parameters in PKIX structure
         /// </summary>
         public override RSAPrivateKey RSAPrivateKey {
-            get { return _Parameters.RSAPrivateKey(); }  }
+            get {
+                var PrivateParameters = _Provider.ExportParameters(true);
+                return PrivateParameters.RSAPrivateKey();
+                }
+            }
 
         /// <summary>
         /// Return public key parameters in PKIX structure
         /// </summary>
         public override RSAPublicKey RSAPublicKey {
-            get { return _Parameters.RSAPublicKey(); }
+            get {
+                return PublicParameters.RSAPublicKey();
+                }
             }
 
         /// <summary>
@@ -98,16 +104,14 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         public RSACryptoServiceProvider Provider {
             get {
-
                 if (_Provider == null) { GetProvider(); }
-
                 return _Provider;
                 }
             }
 
         void GetProvider() {
             _Provider = new RSACryptoServiceProvider();
-            _Provider.ImportParameters(_Parameters);
+            _Provider.ImportParameters(PublicParameters);
             }
 
 
@@ -157,14 +161,15 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="KeySize">Size of key in multiples of 64 bits.</param>
         /// <param name="Exportable">If true, key may be exported, otherwise machine bound.</param>
         public RSAKeyPair(int KeySize, bool Exportable) {
-            var Parameters = new CspParameters();
+            var CSPParameters = new CspParameters();
             if (Exportable) {
-                Parameters.Flags = CspProviderFlags.UseArchivableKey | CspProviderFlags.CreateEphemeralKey;
+                CSPParameters.Flags = CspProviderFlags.UseArchivableKey | CspProviderFlags.CreateEphemeralKey;
                 }
             else {
-                Parameters.Flags = CspProviderFlags.UseNonExportableKey | CspProviderFlags.CreateEphemeralKey;
+                CSPParameters.Flags = CspProviderFlags.UseNonExportableKey | CspProviderFlags.CreateEphemeralKey;
                 }
-            _Provider = new RSACryptoServiceProvider(KeySize, Parameters);
+            _Provider = new RSACryptoServiceProvider(KeySize, CSPParameters);
+            PublicParameters = _Provider.ExportParameters(false);
             }
 
 
@@ -174,6 +179,7 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="UDF">Fingerprint of key.</param>
         public RSAKeyPair(string UDF) {
             _Provider = PlatformLocateRSAProvider(UDF);
+            PublicParameters = _Provider.ExportParameters(false);
             }
 
 
@@ -183,6 +189,7 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="RSACryptoServiceProvider">The platform cryptographic provider.</param>
         public RSAKeyPair(RSACryptoServiceProvider RSACryptoServiceProvider) {
             _Provider = RSACryptoServiceProvider;
+            PublicParameters = _Provider.ExportParameters(false);
             }
 
 
@@ -191,7 +198,7 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="RSAParameters">The RSA parameters.</param>
         public RSAKeyPair(RSAParameters RSAParameters) {
-            _Parameters = RSAParameters;
+            PublicParameters = RSAParameters;
 
             _Provider = new RSACryptoServiceProvider();
             _Provider.ImportParameters(RSAParameters);

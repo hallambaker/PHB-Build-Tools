@@ -29,28 +29,32 @@ namespace Goedel.Platform {
         /// <summary>The service being discovered</summary>
         public string Service { get; set; }
 
+        /// <summary>The service prefix</summary>
+        public string Prefix { get { return "_" + Service + "._tcp."; } }
+
         /// <summary>The service address being discovered</summary>
-        public string ServiceAddress { get; set; }
+        public string ServiceAddress { get { return (Prefix + Address).ToLower(); } }
 
         /// <summary>The default path for the Web Service Endpoint</summary>
         string DefaultPath {
             get { return "/.well-known/" + Service + "/"; }
             }
 
+        List<string> _TXT = new List<string>();
+        /// <summary>Text policy records</summary>
+        public virtual List<string> TXT { get { return _TXT; } }
 
         int Index;
         /// <summary>Returns the next service entry</summary>
-        public ServiceEntry Next {
-            get {
-                if (Entries.Count <= 0) {
-                    return Default;
-                    }
-                if (SortedEntries == null) {
-                    Sort();
-                    Index = 0;
-                    }
-                return Index < SortedEntries.Length ? SortedEntries[Index++] : null;
+        public ServiceEntry Next() {
+            if (Entries.Count <= 0) {
+                return Default;
                 }
+            if (SortedEntries == null) {
+                Sort();
+                Index = 0;
+                }
+            return Index < SortedEntries.Length ? SortedEntries[Index++] : null;
             }
 
         /// <summary>
@@ -59,7 +63,6 @@ namespace Goedel.Platform {
         public ServiceDescription(string Address, string Service) {
             this.Service = Service;
             this.Address = Address;
-            ServiceAddress = "_" + Service + "._tcp." + Address;
             }
 
         /// <summary>
@@ -165,5 +168,100 @@ namespace Goedel.Platform {
 
 
         }
+
+
+
+    /// <summary>
+    /// Represents an Internet destination, this may be a single IPv4 or IPv6 
+    /// address or a sequence of prioritized IP addresses.
+    /// </summary>
+    public class ServiceEntry {
+
+        /// <summary>The prefixed Host address</summary>
+        public string HostAddress { get {
+                var Text = ServiceDescription?.Prefix + Address;
+                return Text.ToLower(); } }
+
+        string _Address;
+        /// <summary>The DNS Address to resolve</summary>
+        public virtual string Address {
+            get { return _Address ?? ServiceDescription?.Default.Address; }
+            set { _Address = value; }
+            }
+
+        int? _Port;
+        /// <summary>The port number to connect to</summary>
+        public virtual int? Port {
+            get { return _Port ?? ServiceDescription?.Default.Port; }
+            set { _Port = value; }
+            }
+
+        /// <summary>Priority of this service entry</summary>
+        public virtual int Priority { get; set; }
+        /// <summary>Weight of this service entry</summary>
+        public virtual int Weight { get; set; }
+
+        string _Path;
+        /// <summary>URI path to connect to (will default to /.well-known/&lt;Service&gt;</summary>
+        public virtual string Path {
+            get { return _Path ?? ServiceDescription?.Default.Path; }
+            set { _Path = value; }
+            }
+
+        TransportSecurity? _TransportSecurity;
+        /// <summary>Transport security setting</summary>
+        public virtual TransportSecurity? TransportSecurity {
+            get { return _TransportSecurity ?? ServiceDescription?.Default.TransportSecurity; }
+            set { _TransportSecurity = value; }
+            }
+
+        Transport? _Transport;
+        /// <summary>Transport setting</summary>
+        public virtual Transport? Transport {
+            get { return _Transport ?? ServiceDescription?.Default.Transport; }
+            set { _Transport = value; }
+            }
+
+        string _URI;
+        /// <summary>Security policy URI</summary>
+        public virtual string URI {
+            get { return _URI ?? ServiceDescription?.Default.URI; }
+            set { _URI = value; }
+            }
+
+        string _UDF;
+        /// <summary>Security policy fingerprint</summary>
+        public virtual string UDF {
+            get { return _UDF ?? ServiceDescription?.Default.UDF; }
+            set { _UDF = value; }
+            }
+
+        List<string> _TXT = new List<string>();
+        /// <summary>Text policy records</summary>
+        public virtual List<string> TXT { get { return _TXT; } }
+
+        /// <summary>Internal flag used in the sorting algorithm to mark allocated entries. </summary>
+        public bool Flag { get; set; } = false;
+
+
+        /// <summary>The service description to which this entry is attached</summary>
+        public ServiceDescription ServiceDescription { get; set; }
+
+
+        /// <summary>Calculate the Web Service Endpoint for a HTTP binding</summary>
+        public string HTTPEndpoint {
+            get {
+                if (_Port == null) {
+                    return "http://" + Address + Path;
+                    }
+                else {
+                    return "http://" + Address + ":" + Port.ToString() + Path;
+                    }
+                }
+            }
+
+        }
+
+
 
     }

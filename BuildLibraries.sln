@@ -101,6 +101,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.DNS", "Libraries\Goe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDNS", "TestDNS\TestDNS.csproj", "{987DB614-BCFA-45C1-94D9-BD2113312A2A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCrypto", "TestCrypto\TestCrypto.csproj", "{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -947,6 +949,38 @@ Global
 		{987DB614-BCFA-45C1-94D9-BD2113312A2A}.Release|x64.Build.0 = Release|Any CPU
 		{987DB614-BCFA-45C1-94D9-BD2113312A2A}.Release|x86.ActiveCfg = Release|Any CPU
 		{987DB614-BCFA-45C1-94D9-BD2113312A2A}.Release|x86.Build.0 = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Debug|ARM.Build.0 = Debug|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Debug|x64.Build.0 = Debug|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Debug|x86.Build.0 = Debug|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Publish|ARM.ActiveCfg = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Publish|ARM.Build.0 = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Publish|x64.ActiveCfg = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Publish|x64.Build.0 = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Publish|x86.ActiveCfg = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Publish|x86.Build.0 = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.RaspberryPi|ARM.ActiveCfg = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.RaspberryPi|ARM.Build.0 = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.RaspberryPi|x64.ActiveCfg = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.RaspberryPi|x64.Build.0 = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.RaspberryPi|x86.Build.0 = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Release|ARM.ActiveCfg = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Release|ARM.Build.0 = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Release|x64.ActiveCfg = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Release|x64.Build.0 = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Release|x86.ActiveCfg = Release|Any CPU
+		{E640FF6C-3D7B-41E3-B9AB-D7053E32AB2D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

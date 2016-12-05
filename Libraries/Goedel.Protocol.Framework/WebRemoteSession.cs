@@ -46,8 +46,11 @@ namespace Goedel.Protocol.Framework {
         public WebRemoteSession(string Domain, string Service, string Account=null, string UDF=null) {
             this.Account = Account;
             ServiceDescription = DNSClient.ResolveService (Domain, Service: Service);
-            URI = ServiceDescription.Next.HTTPEndpoint;
-            this.Domain = ServiceDescription.Next.Address;
+
+            var Host = ServiceDescription.Next();
+
+            URI = Host.HTTPEndpoint;
+            this.Domain = Host.Address;
             }
 
         /// <summary>

@@ -176,6 +176,7 @@ namespace Goedel.Platform.Framework {
         /// <param name="Port"></param>
         public DNSContextUDP (List<IPAddress> ListIPAddress, ushort Port) {
             UdpClient = GetUDPClient(ListIPAddress[0], Port);
+            TaskListen = GetResponseRawAsync();
             }
 
         /// <summary>
@@ -207,9 +208,20 @@ namespace Goedel.Platform.Framework {
             var ReceiveTask = UdpClient.ReceiveAsync();
             await ReceiveTask;
 
-            byte[] Result = ReceiveTask.Result.Buffer;
-            return new DNSResponse(Result);
+            try {
+                byte[] Result = ReceiveTask.Result.Buffer;
+                return new DNSResponse(Result);
+                }
+            catch {
+                return null;
+                }
 
+            }
+
+
+        /// <returns>The first valid response received.</returns>
+        public override async Task<byte[]> GetResponseRawAsync() {
+            return (await UdpClient.ReceiveAsync()).Buffer;
             }
 
 
@@ -218,10 +230,13 @@ namespace Goedel.Platform.Framework {
 
 
         private static UdpClient GetUDPClient(IPAddress Address, int Port) {
-            UdpClient UdpClient = new UdpClient(Platform.GetRandomPort());
+            UdpClient UdpClient = new UdpClient(Goedel.Platform.Platform.GetRandomPort());
             UdpClient.Connect(Address, Port);
             return UdpClient;
             }
 
+
         }
+
+   
     }

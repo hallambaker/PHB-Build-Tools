@@ -54,7 +54,8 @@ namespace Goedel.Cryptography {
         /// <param name="Bits">Number of bits to get</param>
         /// <returns>Random data</returns>
         public static BigInteger GetRandomBigInteger(int Bits) {
-            var RandomBytes = GetRandomBytes(Bits / 8);
+            var RandomBytes = GetRandomBytes(1+ Bits / 8);
+            RandomBytes[RandomBytes.Length - 1] = 0; // make sure it is positive
             return new BigInteger(RandomBytes);
             }
 
@@ -67,14 +68,11 @@ namespace Goedel.Cryptography {
         public static BigInteger GetRandomBigInteger(BigInteger Ceiling) {
             Assert.True(Ceiling > 0, CryptographicException.Throw);
 
-            var Bits = Ceiling.ToByteArray().Length * 8;
+            // Generate extra bits to avoid a biased sample.
+            var Bits = 16 + 8 * (Ceiling.ToByteArray().Length);
             var Test = GetRandomBigInteger(Bits);
 
-            while (Test >= Ceiling) {
-                Test = GetRandomBigInteger(Bits);
-                }
-
-            return Test;
+            return Test % Ceiling;
             }
 
         ///// <summary>
@@ -114,6 +112,20 @@ namespace Goedel.Cryptography {
         public static List<FindLocalDelegateType> FindLocalDelegates =
             new List<FindLocalDelegateType>();
 
+
+        /// <summary>
+        /// Create a Big Integer from a text string constant. This is not optimized for
+        /// speed since it is unlikely this will be called very often and may well 
+        /// be optimized away. Note that the caller is responsible for making sure
+        /// that the input is positive
+        /// </summary>
+        /// <param name="Text"></param>
+        /// <returns></returns>
+        public static BigInteger HexToBigInteger (this string Text) {
+            var Bytes = BaseConvert.FromBase16String(Text);
+            Array.Reverse(Bytes);
+            return new BigInteger(Bytes);
+            }
 
         }
     }

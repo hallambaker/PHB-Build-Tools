@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net;
-
+using System.Diagnostics;
 
 namespace Goedel.Platform {
 
@@ -338,91 +338,7 @@ namespace Goedel.Platform {
         /// <summary>The type tag</summary>
         public virtual string TypeTag { get { return null; } }
 
-        //static int Display = 16;
-
-        ///// <summary></summary>
-        ///// <param name="Data"></param>
-        //protected void Dump(byte[] Data) {
-        //    for (int i = 0; i < Data.Length; ) {
-        //        for (int j = 0; (j < Display) ; j++) {
-        //        if (i + j < Data.Length) {
-        //            Console.Write("{0:x2} ", Data[i + j]);
-        //            }
-        //        else {
-        //            Console.Write ("   ");
-        //            }
-        //            }
-        //        for (int j = 0; (j < Display) && (i+j < Data.Length); j++) {
-
-        //            if (Data[i+j] >= 32) {
-        //                Console.Write("{0:s}", (char)Data[i+j]);
-        //                }
-        //            else {
-        //                Console.Write(".");
-        //                }
-        //            }
-        //        i += Display;
-        //        Console.WriteLine ();
-        //        }
-        //    }
-
-        ///// <summary></summary>
-        //public void Dump () {
-
-        //    Console.WriteLine ("DNS {0}", TypeTag); 
-        //    Dump (Data);
-            
-        //    Console.WriteLine ("ID {0} / Flags {1}", ID, Flags);
-        //    if (Query != null) {
-        //        Console.WriteLine ("Query");
-        //        Query.Dump ();
-        //        }
-        //    Console.WriteLine ("Answers");
-        //    foreach (DNSRecord Record in Answers) {
-        //        Record.Dump ();
-        //        }
-        //    Console.WriteLine ("Authorities");
-        //    foreach (DNSRecord Record in Authorities) {
-        //        Record.Dump ();
-        //        }
-        //    Console.WriteLine ("Additional");
-        //    foreach (DNSRecord Record in Additional) {
-        //        Record.Dump ();
-        //        }
-        //    }
-
-
-
         }
-
-    //public class DNSQueryMessage : DNSMessage {
-
-
-    //    public DNSQueryMessage (String Domain, DNSTypeCode QTypeIn, DNSClass QClassIn) 
-    //            : base () {
-    //        Query = new DNSQuery (Index, Domain, QTypeIn, QClassIn);
-    //        }
-
-    //    public DNSQueryMessage (String Domain, DNSTypeCode QTypeIn) :
-    //        this (Domain, QTypeIn, DNSClass.IN) { }
-    //    }
-
-
-
-
-
-    //public class DNSMessage {
-    //    public ushort ID;
-    //    public DNSFlags Flags;
-    //    public DNSFlags OPCODE { get { return (Flags & DNSFlags.OPCODE_Mask); } }
-    //    public DNSFlags RCODE { get { return (Flags & DNSFlags.RCODE_Mask); } }
-    //    public bool QR { get { return ((Flags & DNSFlags.QR) == DNSFlags.QR); } }
-    //    public bool AA { get { return ((Flags & DNSFlags.AA) == DNSFlags.AA); } }
-    //    public bool TC { get { return ((Flags & DNSFlags.TC) == DNSFlags.TC); } }
-    //    public bool RD { get { return ((Flags & DNSFlags.RD) == DNSFlags.RD); } }
-    //    public bool RA { get { return ((Flags & DNSFlags.RA) == DNSFlags.RA); } }
-    //    }
-
 
     //The DNSClient protocol actually supports making multiple queries in one request but this
     //does not actually work in the field and should probably be deprecated.
@@ -432,13 +348,6 @@ namespace Goedel.Platform {
 
         /// <summary>Text tag describing message type.</summary>
         public override string TypeTag { get { return "Request"; } }
-
-        //public Domain QName;
-        //public Int16 QType;
-        //public DNSClass QClass;
-
-        //// Here add in flags to turn on recursive resolution, DNSSEC validation, etc.
-
 
         /// <summary>Constructor for request</summary>
         /// <param name="Domain">The domain name</param>
@@ -468,19 +377,21 @@ namespace Goedel.Platform {
 
         /// <summary>The type of the message</summary>
         public override string TypeTag { get { return "Response"; } }
-        //public List<DNSRR> Answer;
-        //public List<DNSRR> Authoritative;
-        //public List<DNSRR> Additional;
 
         /// <summary>Default constructor</summary>
         /// <param name="Data">Input data</param>
         public DNSResponse(byte[] Data) {
             // here do the decode thing.
             //Dump (Data);
-            
-            DNSBufferIndex Index = new DNSBufferIndex (Data);
 
-            Decode (Index);
+            try {
+                DNSBufferIndex Index = new DNSBufferIndex(Data);
+
+                Decode(Index);
+                }
+            catch {
+                Debug.WriteLine("Ooops");
+                }
 
             }
         }
@@ -490,32 +401,32 @@ namespace Goedel.Platform {
     /// <summary>DNS Query class</summary>
     public class DNSQuery {
         /// <summary>The Query name</summary>
-        public String           QName;
+        public String QName;
         /// <summary>The Query Type</summary>
-        public DNSTypeCode      QType;
+        public DNSTypeCode QType;
         /// <summary>The Class</summary>
-        public DNSClass         QClass;
+        public DNSClass QClass;
 
         /// <summary>Encode Query</summary>
         /// <param name="Index">Output buffer</param>
-        public void Encode (DNSBufferIndex   Index) {
-            Index.WriteName (QName);
-            Index.WriteInt16 (QType);
-            Index.WriteInt16 (QClass);
+        public void Encode(DNSBufferIndex Index) {
+            Index.WriteName(QName);
+            Index.WriteInt16(QType);
+            Index.WriteInt16(QClass);
             //Index.Dump ();
             }
 
         /// <summary>Decode Query</summary>
         /// <param name="Index">Input buffer</param>
         /// <returns>Query</returns>
-        public static DNSQuery Decode (DNSBufferIndex   Index) {
-            String  QName = Index.ReadName ();
-            DNSTypeCode QType = (DNSTypeCode)Index.ReadInt16 ();
-            DNSClass QClass = (DNSClass)Index.ReadInt16 ();
+        public static DNSQuery Decode(DNSBufferIndex Index) {
+            String QName = Index.ReadName();
+            DNSTypeCode QType = (DNSTypeCode)Index.ReadInt16();
+            DNSClass QClass = (DNSClass)Index.ReadInt16();
 
             //Console.WriteLine ("Query Name={0:s} Type={1:d} Class={1:d}",
             //        QName, QType, QClass);
-            return new DNSQuery (QName, QType, QClass);
+            return new DNSQuery(QName, QType, QClass);
             }
 
         // Constructors
@@ -523,7 +434,7 @@ namespace Goedel.Platform {
         /// <param name="Domain">Domain name</param>
         /// <param name="QTypeIn">Query type</param>
         /// <param name="QClassIn">Query class</param>
-        public DNSQuery (String Domain, DNSTypeCode QTypeIn, DNSClass QClassIn) {
+        public DNSQuery(String Domain, DNSTypeCode QTypeIn, DNSClass QClassIn) {
             QName = Domain;
             QType = QTypeIn;
             QClass = QClassIn;
@@ -532,50 +443,8 @@ namespace Goedel.Platform {
         /// <summary>Constructor from main components for internet class</summary>
         /// <param name="Domain">Domain name</param>
         /// <param name="QTypeIn">Query type</param>
-        public DNSQuery (String Domain, DNSTypeCode QTypeIn) :
-            this (Domain, QTypeIn, DNSClass.IN) {}
-
-        ///// <summary></summary>
-        //public void Dump () {
-        //    Console.WriteLine ("Query {0:s} {1:d} {2:d}",
-        //            QName,  QType,QClass);
-        //    }
-
+        public DNSQuery(String Domain, DNSTypeCode QTypeIn) :
+            this(Domain, QTypeIn, DNSClass.IN) { }
         }
-
-
-
-
-
-
-
-
-
-
-    ///// <summary></summary>
-    //public class DNSEx {
-
-
-
-    //    // Old style asynch interface, start request with BeginQuery, passing completion 
-    //    // routine that passes back 
-
-    //    [HostProtectionAttribute(SecurityAction.LinkDemand, ExternalThreading = true)]
-    //    public IAsyncResult BeginQuery (DNSRequest Request, 	        
-    //                AsyncCallback requestCallback,
-	   //             Object state) {
-    //        return null;
-    //        }
-
-    //    public DNSResponse EndQuery(IAsyncResult asyncResult) {
-    //        return null;
-    //        }
-
-    //    [HostProtectionAttribute(SecurityAction.LinkDemand, Synchronization = true, 
-    //        ExternalThreading = true)]
-
-    //    public Task<DNSResponse> QueryAsync(DNSRequest Request) {
-    //        return null;
-    //        }
-    //    }
+    
     }

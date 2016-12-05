@@ -28,6 +28,8 @@
 #casecast Class Class
 #foreach (_Choice Entry in Class.Entries)
 #switchcast CommandParseType Entry
+#case CommandParseType.Library
+#% CommandParse.Main = false;
 #casecast Command Command
 #% List <_Choice> Extras = new List <_Choice>();
 #foreach (_Choice CommandEntry in Command.Entries)
@@ -95,7 +97,7 @@ using Goedel.Registry;
 
 #method GenerateClass Class Class
 namespace #{Class.Namespace} {
-    class _Main {
+    public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 
 		static char UsageFlag;
 		static char UnixFlag = '-';
@@ -105,29 +107,27 @@ namespace #{Class.Namespace} {
             return (c == UnixFlag) | (c == WindowsFlag) ;
             }
 
-        static _Main () {
-			// For compatability with .NET Core, remove all references to operating
-			// system version. Since this is only used for giving help, this does not
-			// matter a great deal.
+        static CommandLineInterpreter () {
+            System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 
-		    UsageFlag = WindowsFlag;
-
-            //System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
-
-            //if (OperatingSystem.Platform == PlatformID.Unix |
-            //        OperatingSystem.Platform == PlatformID.MacOSX) {
-            //    UsageFlag = UnixFlag;
-            //    }
-            //else {
-            //    UsageFlag = WindowsFlag;
-            //    }
+            if (OperatingSystem.Platform == PlatformID.Unix |
+                    OperatingSystem.Platform == PlatformID.MacOSX) {
+                UsageFlag = UnixFlag;
+                }
+            else {
+                UsageFlag = WindowsFlag;
+                }
             }
 
 #if CommandParse.Main
         static void Main(string[] args) {
+			var CLI = new CommandLineInterpreter ();
+			CLI.MainMethod (args);
+			}
 #else
-        static void MainMethod(string[] args) {
+
 #end if
+        public void MainMethod(string[] args) {
 
 			#{Class.Id} Dispatch = new #{Class.Id} ();
 

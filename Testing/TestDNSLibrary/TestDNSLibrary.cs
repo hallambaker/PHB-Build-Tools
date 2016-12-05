@@ -15,7 +15,7 @@ namespace TestDNS_Library {
         /// <param name="args"></param>
         static void Main(string[] args) {
             // Use the DNS UDP client.
-            Framework.Initialize();
+            Goedel.Platform.Framework.Platform.Initialize();
 
             var Service1 = DNSClient.ResolveService("prismproof.org");
 
