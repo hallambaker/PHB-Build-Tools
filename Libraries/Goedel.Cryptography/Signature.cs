@@ -24,94 +24,144 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
     /// <summary>
     /// Crypto provider for digital signature algorithms.
     /// 
-    /// The chief reason this is necessary is the excrable nature of the .NET APIs
+    /// The chief reason this is necessary is the execrable nature of the .NET APIs
     /// in which the base class does not expose methods such as sign.
     /// </summary>
     public abstract class CryptoProviderSignature : CryptoProviderAsymmetric {
-        /// <summary>
-        /// The type of algorithm
-        /// </summary>
-        public override CryptoAlgorithmClass AlgorithmClass { get { return CryptoAlgorithmClass.Signature; } }
 
-        /// <summary>
-        /// The digest algorithm.
-        /// </summary>
-        public CryptoAlgorithmID DigestAlgorithm {
-            get { return _DigestAlgorithm; }
-            set { _DigestAlgorithm = value; }
-            }
-        private CryptoAlgorithmID _DigestAlgorithm;
+        /// <summary>The crypto algorithm class.</summary>
+        protected static CryptoAlgorithmClass _AlgorithmClass =
+            CryptoAlgorithmClass.Signature;
 
-        /// <summary>
-        /// Return a provider for the current digest algorithm.
-        /// </summary>
-        /// <returns>Digest provider</returns>
-        public CryptoProviderDigest GetDigestProvider() {
-            return CryptoCatalog.Default.GetDigest(DigestAlgorithm);
+        /// <summary>Return the crypto algorithm class.</summary>
+        public override CryptoAlgorithmClass AlgorithmClass {
+            get { return _AlgorithmClass; }
             }
 
-        
         /// <summary>
-        /// Sign a previously computed digest (requires private key).
+        /// Create a digest encoder that is compatible with this signature provider. The
+        /// signature is not added at this stage. 
         /// </summary>
-        /// <param name="Data">Computed digest</param>
-        /// <returns>Signature</returns>
-        public abstract CryptoData Sign(CryptoData Data);
+        /// <param name="Algorithm">The bulk algorithm to use. This parameter is ignored
+        /// if a bulk provider is specified.</param>
+        /// <param name="Bulk">The bulk provider to use. If specified, the parameters from
+        /// the specified provider will be used. Otherwise a new bulk provider will 
+        /// be created and returned as part of the result.</param>
+        /// <param name="OutputStream"></param>
+        /// <returns>Instance describing the key agreement parameters.</returns>
+        public override CryptoDataEncoder MakeEncoder(
+                            CryptoProviderBulk Bulk = null,
+                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            Stream OutputStream = null
+                            ) {
 
+            var DefaultedAlgorithm = Algorithm.Default(
+                BulkDefault: BulkAlgorithmDefault,
+                MetaDefault: CryptoAlgorithmID);
+
+            Bulk = Bulk ?? CryptoCatalog.Default.GetDigest(DefaultedAlgorithm);
+
+            var Encoder = Bulk.MakeEncoder (Algorithm: DefaultedAlgorithm.Bulk());
+
+            return Encoder;
+            }
+
+        /*
+         * Convenience methods 
+         */
+
+        /// <summary>
+        /// Create an encoder with a signature data entry for this provider.
+        /// </summary>
+        /// <param name="Digest"></param>
+        /// <returns></returns>
+        public CryptoDataSignature MakeSigner(CryptoAlgorithmID Digest = CryptoAlgorithmID.Default) {
+            var Encoder = MakeEncoder(Algorithm: Digest);
+            return new CryptoDataSignature(CryptoAlgorithmID, Encoder, this);
+            }
 
         /// <summary>
         /// Sign data using the default digest (requires private key).
         /// </summary>
         /// <param name="Data">Data to be signed.</param>
+        /// <param name="Digest">Digest algorithm identifier</param>
         /// <returns>Signature.</returns>
-        public CryptoData Sign(byte[] Data) {
-            var DigestProvider = GetDigestProvider();
-            var DigestResult = DigestProvider.Process(Data);
-            return Sign(DigestResult);
+        public CryptoDataSignature Sign(byte[] Data, CryptoAlgorithmID Digest= CryptoAlgorithmID.Default) {
+
+            var Encoder = MakeEncoder(Algorithm:Digest);
+            var Signer = new CryptoDataSignature(CryptoAlgorithmID, Encoder, this);
+            Encoder.Write(Data);
+            Encoder.Complete();
+            return Signer;
+            }
+
+        ///// <summary>
+        ///// Sign data using the default digest (requires private key).
+        ///// </summary>
+        ///// <param name="Data">Data to be signed.</param>
+        ///// <param name="Digest">Digest algorithm identifier</param>
+        ///// <returns>Signature.</returns>
+        //public bool Verify (byte[] Data, CryptoAlgorithmID Digest = CryptoAlgorithmID.Default) {
+
+        //    var Encoder = MakeDecoder(Algorithm: Digest);
+        //    Encoder.InputStream.Write(Data, 0, Data.Length);
+        //    Encoder.Complete();
+        //    return Encoder.Verify;
+        //    }
+
+
+        /// <summary>
+        /// Complete processing at the end of an encoding or decoding operation
+        /// </summary>
+        /// <param name="CryptoData">Structure to write result to</param>
+        public override void Complete(CryptoData CryptoData) {
+            var CryptoDataSignature = CryptoData as CryptoDataSignature;
+            var Bulk = CryptoDataSignature?.BulkData;
+
+            if (Bulk as CryptoDataEncoder != null) {
+                Sign(CryptoDataSignature);
+                }
+            if (Bulk as CryptoDataDecoder != null) {
+                Verify(CryptoDataSignature);
+                }
             }
 
         /// <summary>
-        /// Verify signature.
+        /// Sign text(requires private key).
         /// </summary>
-        /// <param name="Data">Computed digest</param>
-        /// <param name="Signature">Signature</param>
-        /// <returns>True if signature verification is successful, otherwise false.</returns>
-        public abstract bool Verify(CryptoData Data, byte[] Signature);
-
-        /// <summary>
-        /// Verify signature.
-        /// </summary>
-        /// <param name="Data">Computed digest</param>
-        /// <param name="Signature">Signature</param>
-        /// <returns>True if signature verification is successful, otherwise false.</returns>
-        public virtual bool Verify(CryptoData Data, CryptoData Signature) {
-            return Verify(Data, Signature.Integrity);
+        /// <param name="Text">Text to be converted to UTF8 and signed.</param>
+        /// <param name="Digest">Digest algorithm identifier</param>
+        /// <returns>Signature.</returns>
+        public CryptoData Sign(string Text, 
+                    CryptoAlgorithmID Digest = CryptoAlgorithmID.Default) {
+            return Sign(Encoding.UTF8.GetBytes(Text), Digest);
             }
 
-        /// <summary>
-        /// Verify signature.
-        /// </summary>
-        /// <param name="Data">Computed digest</param>
-        /// <param name="Signature">Signature</param>
-        /// <returns>True if signature verification is successful, otherwise false.</returns>
-        public virtual bool Verify(byte[] Data, byte[] Signature) {
-            var DigestProvider = GetDigestProvider();
-            var DigestResult = DigestProvider.Process(Data);
-            return Verify(DigestResult, Signature);
-            }
-
+        /* 
+        * Methods that MUST be implemented in instance classes.
+        */
 
         /// <summary>
-        /// JSON Key use.
+        /// Sign the integrity value specified in the CryptoDataEncoder
         /// </summary>
-        public override string JSONKeyUse { get { return "sig"; } }
+        /// <param name="Data"></param>
+        public abstract void Sign(CryptoDataSignature Data);
+
+        /// <summary>
+        /// Verify the signature value
+        /// </summary>
+        /// <param name="Data"></param>
+        /// <returns>True if the verification operation succeeded, otherwise false</returns>
+        public abstract bool Verify(CryptoDataSignature Data);
+
+
 
 
         }

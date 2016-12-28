@@ -724,4 +724,190 @@ namespace Goedel.Cryptography {
         }
 
 
+    /// <summary>
+    /// The keypair presented was not of the expected type.
+    /// </summary>
+    public class InvalidKeyPairType : CryptographicException {
+
+		/// <summary>
+        /// Construct instance for exception "The keypair presented was not of the expected type"
+        /// </summary>		
+		public InvalidKeyPairType () : base ("The keypair presented was not of the expected type") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The keypair presented was not of the expected type"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public InvalidKeyPairType (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public InvalidKeyPairType (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new InvalidKeyPairType(Reason as string);
+				}
+			else {
+				return new InvalidKeyPairType();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// An attempt was made to create more recryption shares than the implementation supports.
+    /// </summary>
+    public class RecryptionShareLimitExceeded : CryptographicException {
+
+		/// <summary>
+        /// Construct instance for exception "The number of recryption shares requested exceeds the implementation limit"
+        /// </summary>		
+		public RecryptionShareLimitExceeded () : base ("The number of recryption shares requested exceeds the implementation limit") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The number of recryption shares requested exceeds the implementation limit"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public RecryptionShareLimitExceeded (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public RecryptionShareLimitExceeded (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new RecryptionShareLimitExceeded(Reason as string);
+				}
+			else {
+				return new RecryptionShareLimitExceeded();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class InvalidOperation : CryptographicException {
+
+		/// <summary>
+        /// Construct instance for exception "The cryptographic provider does not support the requested operation"
+        /// </summary>		
+		public InvalidOperation () : base ("The cryptographic provider does not support the requested operation") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The cryptographic provider does not support the requested operation"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public InvalidOperation (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public InvalidOperation (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new InvalidOperation(Reason as string);
+				}
+			else {
+				return new InvalidOperation();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class PrivateKeyNotFound : CryptographicException {
+
+		/// <summary>
+        /// Construct instance for exception "The operation requested requires a private key that could not be found"
+        /// </summary>		
+		public PrivateKeyNotFound () : base ("The operation requested requires a private key that could not be found") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The operation requested requires a private key that could not be found"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public PrivateKeyNotFound (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public PrivateKeyNotFound (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new PrivateKeyNotFound(Reason as string);
+				}
+			else {
+				return new PrivateKeyNotFound();
+				}
+            }
+        }
+
+
 	}

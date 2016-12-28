@@ -42,22 +42,34 @@
     <DefineConstants>DEBUG</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="Architecture.md" />
     <None Include="CryptographyLibraries.md" />
+    <None Include="Decoding.md" />
     <None Include="Exceptions.exceptional">
       <Generator>exceptional</Generator>
       <LastGenOutput>Exceptions.cs</LastGenOutput>
     </None>
+    <None Include="Encoding.md" />
     <None Include="Index.md" />
     <None Include="Makefile" />
-    <None Include="PKIX\PKIX.asn2" />
+    <None Include="PKIX\PKIX.asn2">
+      <Generator>ASN2CS</Generator>
+      <LastGenOutput>PKIX.cs</LastGenOutput>
+    </None>
     <None Include="project.json" />
     <None Include="ToDo.md" />
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DiffieHellman.cs" />
+    <Compile Include="AlgorithmID.cs" />
+    <Compile Include="CryptoAlgorithmID.cs" />
+    <Compile Include="CryptoAlgorithm.cs" />
+    <Compile Include="PKIX\DHDomain.cs" />
+    <Compile Include="DHKeyPair.cs" />
+    <Compile Include="DH.cs" />
     <Compile Include="Bulk.cs" />
     <Compile Include="Catalog.cs" />
+    <Compile Include="DHProvider.cs" />
     <Compile Include="Exceptions.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -70,7 +82,11 @@
     <Compile Include="PKIX\KeyInfo.cs" />
     <Compile Include="Keys.cs" />
     <Compile Include="KeyShare.cs" />
-    <Compile Include="PKIX\PKIX.cs" />
+    <Compile Include="PKIX\PKIX.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PKIX.asn2</DependentUpon>
+    </Compile>
     <Compile Include="PKIX\PKIXConstants.cs" />
     <Compile Include="PKIX\PKIXName.cs" />
     <Compile Include="PKIX\RFC2631.cs" />
@@ -79,7 +95,6 @@
     <Compile Include="PKIX\RSAPrivateKey.cs" />
     <Compile Include="Recrypt.cs" />
     <Compile Include="Signature.cs" />
-    <Compile Include="Suites.cs" />
     <Compile Include="PKIX\TBSCertificate.cs" />
     <Compile Include="UDF.cs" />
   </ItemGroup>

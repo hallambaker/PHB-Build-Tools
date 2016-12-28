@@ -3,66 +3,31 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 using Goedel.Utilities;
+using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Cryptography {
+
 
     /// <summary>
     /// Diffie Hellman shared group parameters.
     /// </summary>
     public class DiffeHellmanPublic {
 
+
         /// <summary>
-        /// Parameters from rfc3526. These are generated using a rigid construction
-        /// that has been widely reviewed but not by me.
+        /// The shared domain parameters
         /// </summary>
-        private const string Group2048PText = @"00
-            FFFFFFFF FFFFFFFF C90FDAA2 2168C234 C4C6628B 80DC1CD1
-            29024E08 8A67CC74 020BBEA6 3B139B22 514A0879 8E3404DD
-            EF9519B3 CD3A431B 302B0A6D F25F1437 4FE1356D 6D51C245
-            E485B576 625E7EC6 F44C42E9 A637ED6B 0BFF5CB6 F406B7ED
-            EE386BFB 5A899FA5 AE9F2411 7C4B1FE6 49286651 ECE45B3D
-            C2007CB8 A163BF05 98DA4836 1C55D39A 69163FA8 FD24CF5F
-            83655D23 DCA3AD96 1C62F356 208552BB 9ED52907 7096966D
-            670C354E 4ABC9804 F1746C08 CA18217C 32905E46 2E36CE3B
-            E39E772C 180E8603 9B2783A2 EC07A28F B5C55DF0 6F4C52C9
-            DE2BCBF6 95581718 3995497C EA956AE5 15D22618 98FA0510
-            15728E5A 8AACAA68 FFFFFFFF FFFFFFFF";
+        public DHDomain DHDomain;
 
-        private const string Group4096PText = @"00
-            FFFFFFFF FFFFFFFF C90FDAA2 2168C234 C4C6628B 80DC1CD1
-            29024E08 8A67CC74 020BBEA6 3B139B22 514A0879 8E3404DD
-            EF9519B3 CD3A431B 302B0A6D F25F1437 4FE1356D 6D51C245
-            E485B576 625E7EC6 F44C42E9 A637ED6B 0BFF5CB6 F406B7ED
-            EE386BFB 5A899FA5 AE9F2411 7C4B1FE6 49286651 ECE45B3D
-            C2007CB8 A163BF05 98DA4836 1C55D39A 69163FA8 FD24CF5F
-            83655D23 DCA3AD96 1C62F356 208552BB 9ED52907 7096966D
-            670C354E 4ABC9804 F1746C08 CA18217C 32905E46 2E36CE3B
-            E39E772C 180E8603 9B2783A2 EC07A28F B5C55DF0 6F4C52C9
-            DE2BCBF6 95581718 3995497C EA956AE5 15D22618 98FA0510
-            15728E5A 8AAAC42D AD33170D 04507A33 A85521AB DF1CBA64
-            ECFB8504 58DBEF0A 8AEA7157 5D060C7D B3970F85 A6E1E4C7
-            ABF5AE8C DB0933D7 1E8C94E0 4A25619D CEE3D226 1AD2EE6B
-            F12FFA06 D98A0864 D8760273 3EC86A64 521F2B18 177B200C
-            BBE11757 7A615D6C 770988C0 BAD946E2 08E24FA0 74E5AB31
-            43DB5BFC E0FD108E 4B82D120 A9210801 1A723C12 A787E6D7
-            88719A10 BDBA5B26 99C32718 6AF4E23C 1A946834 B6150BDA
-            2583E9CA 2AD44CE8 DBBBC2DB 04DE8EF9 2E8EFC14 1FBECAA6
-            287C5947 4E6BC05D 99B2964F A090C3A2 233BA186 515BE7ED
-            1F612970 CEE2D7AF B81BDD76 2170481C D0069127 D5B05AA9
-            93B4EA98 8D8FDDC1 86FFB7DC 90A6C08F 4DF435C9 34063199
-            FFFFFFFF FFFFFFFF";
-
-        static readonly BigInteger Group2048P = Group2048PText.HexToBigInteger();
-        static readonly BigInteger Group2048G = new BigInteger(2);
 
         /// <summary>Group modulus</summary>
-        public BigInteger Modulus { get; set; }
+        public BigInteger Modulus { get; }
 
         /// <summary>Generator</summary>
-        public BigInteger Generator { get; set; }
+        public BigInteger Generator { get; }
 
         /// <summary>Public Key</summary>
-        public BigInteger Public { get; set; }
+        public BigInteger Public { get; protected set; }
 
 
         /// <summary>
@@ -70,18 +35,33 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Bits">The number of bits, this identifies the group modulus </param>
         public DiffeHellmanPublic(int Bits=2048) {
-            SetModulus(Bits);
+            switch (Bits) {
+                case 2048: {
+                    DHDomain = DHDomain.DHDomain2048;
+                    break;
+                    }
+                case 4096: {
+                    DHDomain = DHDomain.DHDomain4096;
+                    break;
+                    }
+                default:  {
+                    throw new KeySizeNotSupported();
+                    }
+                }
+            Modulus = DHDomain.BigIntegerP;
+            Generator = DHDomain.BigIntegerG;
             }
 
         /// <summary>
-        /// Create a new set of Diffie Hellman group parameters.
+        /// Create a new set of Diffie Hellman parameters using the shared modulus, 
+        /// a newly constructed generator and public and private keys.
         /// </summary>
-        /// <param name="Bits">The number of bits, this identifies the group modulus </param>
-        /// <param name="Generator">The generator parameter, g.</param>
-        public DiffeHellmanPublic(int Bits, BigInteger Generator) {
-            SetModulus(Bits);
-            this.Generator = Generator;
+        /// <param name="DHDomain">The shared parameters</param>
+        public DiffeHellmanPublic(DHDomain DHDomain)  {
+            Modulus = DHDomain.BigIntegerP;
+            Generator = DHDomain.BigIntegerG;
             }
+
 
         /// <summary>
         /// Create a new set of Diffie Hellman group parameters.
@@ -97,18 +77,6 @@ namespace Goedel.Cryptography {
                 this.Public = (BigInteger)Public;
                 }
             }
-
-        private void SetModulus(int Bits) {
-            switch (Bits) {
-                case 2048: {
-                    Modulus = Group2048P;
-                    Generator = Group2048G;
-                    return;
-                    }
-                }
-            throw new KeySizeNotSupported();
-            }
-
 
         /// <summary>
         /// Create a new ephemeral private key and use it to perform a key
@@ -158,6 +126,18 @@ namespace Goedel.Cryptography {
                     }
                 return _DiffeHellmanPublic;
                 }
+            }
+
+
+        /// <summary>
+        /// Create a new set of Diffie Hellman parameters using the shared modulus, 
+        /// a newly constructed generator and public and private keys.
+        /// </summary>
+        /// <param name="DHDomain">The shared parameters</param>
+        public DiffeHellmanPrivate(DHDomain DHDomain) : base (DHDomain) {
+            Private = Platform.GetRandomBigInteger(Modulus);
+            Public = BigInteger.ModPow(Generator, Private, Modulus);
+            IsRecryption = false;
             }
 
 
@@ -257,38 +237,6 @@ namespace Goedel.Cryptography {
             }
 
 
-        /// <summary>
-        /// Perform a Diffie Hellman Key agreement to this private key.
-        /// </summary>
-        /// <param name="Input"></param>
-        /// <returns></returns>
-        public CryptoData Agreement (CryptoData Input) {
-            //if (IsRecryption) {
-            //    if (Input.Recrypt == null) {
-            //        var Result = 
-            //        }
-            //    else {
-
-            //        }
-            //    }
-            //else {
-
-            //    }
-
-            throw new NYI();
-            //return null;
-            }
-
-
         }
 
-
-
-    //public class DiffieHellmanKeyPair : KeyPair {
-
-    //    }
-
-
-    //public class DiffieHellman : CryptoProviderRecryption {
-    //    }
     }

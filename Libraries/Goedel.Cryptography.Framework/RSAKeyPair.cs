@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using Goedel.Cryptography;
+using Goedel.Utilities;
 using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Cryptography.Framework {
@@ -65,38 +65,25 @@ namespace Goedel.Cryptography.Framework {
             }
 
         /// <summary>
-        /// Returns a signature provider for the key (if the private portion is available).
+        /// Stub method to return a signature provider. This provider does not implement
+        /// signature and so always returns null. 
         /// </summary>
-        public override Goedel.Cryptography.CryptoProviderSignature SignatureProvider {
-            get {
-                GetPrivate();
-                return new CryptoProviderSignatureRSA(this);
-                }
-            }
-
-        /// <summary>
-        /// Returns a signature provider for the key (if the private portion is available).
-        /// </summary>
-        public override Goedel.Cryptography.CryptoProviderSignature VerificationProvider {
-            get { return new CryptoProviderSignatureRSA(this); }
+        /// <param name="ID">The algorithms to use, if set to  CryptoAlgorithmID.Default,
+        /// the default algorithm for the key type is used.</param> 
+        public override CryptoProviderSignature SignatureProvider(
+                    CryptoAlgorithmID ID = CryptoAlgorithmID.Default) {
+            return new CryptoProviderSignatureRSA(this);
             }
 
 
         /// <summary>
         /// Returns an encryption provider for the key (if the public portion is available)
         /// </summary>
-        public override Goedel.Cryptography.CryptoProviderExchange ExchangeProviderEncrypt {
-            get { return new CryptoProviderExchangeRSA(this); }
-            }
-
-        /// <summary>
-        /// Returns an encryption provider for the key (if the public portion is available)
-        /// </summary>
-        public override Goedel.Cryptography.CryptoProviderExchange ExchangeProviderDecrypt {
-            get {
-                GetPrivate();
-                return new CryptoProviderExchangeRSA(this);
-                }
+        /// <param name="ID">The algorithms to use, if set to  CryptoAlgorithmID.Default,
+        /// the default algorithm for the key type is used.</param>
+        public override CryptoProviderExchange ExchangeProvider(
+                    CryptoAlgorithmID ID = CryptoAlgorithmID.Default) {
+            return new CryptoProviderExchangeRSA(this);
             }
 
         /// <summary>

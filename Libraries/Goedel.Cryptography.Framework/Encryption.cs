@@ -25,7 +25,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
-using Goedel.Cryptography;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Framework {
     /// <summary>
@@ -40,46 +40,38 @@ namespace Goedel.Cryptography.Framework {
         public override CryptoAlgorithmClass AlgorithmClass {
             get { return CryptoAlgorithmClass.Encryption; } }
 
-        private SymmetricAlgorithm _Provider;
-
-        /// <summary>
-        /// The Key under which encryption/decryption is performed.
-        /// </summary>
-        public byte[] Key {
-            get { return _Provider.Key; }
-            set { _Provider.Key = value; }
-            }
-
-        /// <summary>
-        /// The initialization vector under which encryption/decryption is performed.
-        /// </summary>
-        public byte[] IV {
-            get { return _Provider.IV; }
-            set { _Provider.IV = value; }
-            }
         /// <summary>
         /// The .NET cryptographic provider (for use by sub classes).
         /// </summary>
-        protected SymmetricAlgorithm Provider {
-            get { return _Provider; }
-            set { _Provider = value; }
-            }
+        protected SymmetricAlgorithm Provider { get; set; }
+        
         ICryptoTransform Transform = null;
         bool Encrypting;
 
         /// <summary>
+        /// The size of the required key
+        /// </summary>
+        public override int KeySize { get { return Provider.KeySize; } }
+
+        /// <summary>
+        /// The size of the required IV. If zero, no IV is required.
+        /// </summary>
+        public override int IVSize { get { return Provider.IV.Length * 8; } }
+
+        /// <summary>
         /// If set to true, the initialization vector (if used) will be prepended to the
-        /// output byte stream.
+        /// beginning of the output byte stream.
         /// </summary>
         public bool AppendIV = false;
 
         /// <summary>
-        /// If set to true, the authentication code (if created) will be prepended to the
-        /// output byte stream.
+        /// If set to true, the authentication code (if created) will be appended to the
+        /// end of the output byte stream.
         /// 
         /// Since we don't currently have a GCM mode, this isn't currently used.
         /// </summary>
         public bool AppendIntegrity = false;
+
 
         /// <summary>
         /// Constructor for initializing a delegate class.
@@ -94,191 +86,109 @@ namespace Goedel.Cryptography.Framework {
             Provider.Mode = CipherMode;
             }
 
-        /// <summary>
-        /// Start an encryption session with random key and IV.
-        /// </summary>
-        public virtual void StartEncrypt() {
-            Encrypting = true;
-            Provider.GenerateKey();
-            Provider.GenerateIV();
+
+        /// <param name="Algorithm">The key wrap algorithm</param>
+        /// <param name="Bulk">The bulk provider to use. If specified, the parameters from
+        /// the specified provider will be used. Otherwise a new bulk provider will 
+        /// be created and returned as part of the result.</param>
+        /// <param name="OutputStream">Output stream</param>
+        /// <returns>Instance describing the key agreement parameters.</returns>
+        public override CryptoDataEncoder MakeEncoder(
+                            CryptoProviderBulk Bulk = null,
+                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            Stream OutputStream = null
+                            ) {
+
+            return MakeEncryptor (Algorithm, OutputStream, 
+                Provider.Key, Provider.IV);
             }
 
         /// <summary>
-        /// Start an encryption session with the specified key and IV.
+        /// Create an encoder for a bulk algorithm and optional key wrap or exchange.
         /// </summary>
-        /// <param name="Key">The encryption key</param>
-        /// <param name="IV">The initialization vector</param>
-        public virtual void StartEncrypt(byte[] Key, byte[] IV) {
-            Encrypting = true;
-            if (Key != null) {
-                Provider.Key = Key;
-                }
-            else {
-                Provider.GenerateKey();
-                }
-            if (Key != null) {
-                Provider.IV = IV;
-                }
-            else {
-                Provider.GenerateIV();
-                }
-            }
 
-        /// <summary>
-        /// Start a decryption session with the specified key and implicit IV.
-        /// </summary>
-        /// <param name="Key">The encryption key</param>
-        public virtual void StartDecrypt(byte[] Key) {
-            AppendIntegrity = true;
-            Encrypting = false;
-            Provider.Key = Key;
-            Provider.GenerateIV();
-            }
+        /// <param name="Algorithm">The key wrap algorithm</param>
+        /// <param name="OutputStream">Output stream</param>
+        /// <param name="IV">Initialization vector for symmetric encryption</param>
+        /// <param name="Key">Encryption Key</param>
+        /// <returns>Instance describing the key agreement parameters.</returns>
+        public override CryptoDataEncoder MakeEncryptor(
+                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            Stream OutputStream = null,
+                            byte[] Key = null, byte[] IV = null
+                            ) {
+            var Result = new CryptoDataEncoder(CryptoAlgorithmID, this);
+            Result.OutputStream = OutputStream ?? new MemoryStream();
+            Result.IV = IV;
+            Result.Key = Key;
+            BindEncoder(Result);
 
-        /// <summary>
-        /// Start a decryption session with the specified key and IV.
-        /// </summary>
-        /// <param name="Key">The encryption key</param>
-        /// <param name="IV">The initialization vector</param>
-        public virtual void StartDecrypt(byte[] Key, byte[] IV) {
-            AppendIntegrity = false;
-            Encrypting = false;
-            if (Key != null) {
-                Provider.Key = Key;
-                }
-            else {
-                Provider.GenerateKey();
-                }
-            if (Key != null) {
-                Provider.IV = IV;
-                }
-            else {
-                Provider.GenerateIV();
-                }
-            }
-
-        /// <summary>
-        /// ASN.1 Object Identifier.
-        /// </summary>
-        public override string OID {
-            get {
-                return CryptoConfig.MapNameToOID(Name);
-                }
-            }
-
-        /// <summary>
-        /// Encrypt the provided data
-        /// </summary>
-        /// <param name="Data">Data to encrypt</param>
-        /// <returns>The encrypted data.</returns>
-        public override CryptoData Encrypt(byte [] Data) {
-            StartEncrypt();
-            return Process(Data);
+            return Result;
             }
 
 
         /// <summary>
-        /// Encrypt the provided cryptoblob
+        /// Create a crypto stream from this provider.
         /// </summary>
-        /// <param name="Input">Data to encrypt</param>
-        /// <returns>The encrypted data.</returns>
-        public override CryptoData Encrypt(CryptoData Input) {
-            StartEncrypt(Input.Key, Input.IV);
-            return Process(Input);
-            }
-
-        /// <summary>
-        /// Decrypt data;
-        /// </summary>
-        /// <param name="Input">Cryoptographic parameters</param>
-        /// <param name="Data">Data to decrypt/</param>
-        /// <returns>The encrypted data.</returns>
-        public override CryptoData Decrypt(CryptoData Input, byte[] Data) {
-            StartDecrypt(Input.Key, Input.IV);
-            return Process(Data);
+        /// <param name="Encoder"></param>
+        public override void BindEncoder(CryptoDataEncoder Encoder) {
+            var Transform = Provider.CreateEncryptor(Encoder.Key, Encoder.IV);
+            Encoder.InputStream = new CryptoStream(
+                    Encoder.OutputStream, Transform, CryptoStreamMode.Write);
             }
 
 
         /// <summary>
-        /// Processes the specified region of the specified byte array
+        /// Encrypt the specified byte array
         /// </summary>
-        /// <param name="InputBuffer">The input to process</param>
-        /// <param name="InputOffset">The offset into the byte array from which to begin using data.</param>
-        /// <param name="Count">The number of bytes in the array to use as data.</param>
+        /// <param name="Data">The input to process</param>
+        /// <param name="IV">The Initialization Vector</param>
+        /// <param name="Key">The key</param>
         /// <returns>The result of the cryptographic operation.</returns>
-        public override CryptoData Process(byte[] InputBuffer, int InputOffset, int Count) {
+        public override byte[] Encrypt(byte[] Data, 
+                        byte[] Key = null, byte[] IV = null) {
 
-            int FullBlocks;
-            int ExtraBytes;
-            int LastOffset = 0;
-            
-            if (Encrypting) {
-                Transform = Provider.CreateEncryptor();
-                FullBlocks = Count / Transform.InputBlockSize;
-                ExtraBytes = AppendIV ? Transform.InputBlockSize : 0;
-
-                // calculate extra bytes required for padding
-                if (Provider.Mode == CipherMode.CBC) {
-                    ExtraBytes += Transform.OutputBlockSize;
-                    }
-                else if (Provider.Mode == CipherMode.CTS) {
-                    // Cipher Text Stealling does not require padding unless there is
-                    // less than a full block in the input.
-                    ExtraBytes += FullBlocks == 0 ? Transform.OutputBlockSize : Count % Transform.InputBlockSize;
-                    }
-                }
-            else {
-                Transform = Provider.CreateDecryptor();
-                FullBlocks = (Count / Transform.InputBlockSize) - 1 - (AppendIV ? 1 : 0);
-                // This will always be more than needed.
-                ExtraBytes = Transform.OutputBlockSize;
-                LastOffset = FullBlocks > 0 ? Transform.OutputBlockSize : 0;
-                }
-
-
-            // Here we will need to add code to manage the additional data for the
-            // integrity check value and initialization when available.
-
-            int TotalBytes = FullBlocks * Transform.OutputBlockSize + ExtraBytes;
-
-            byte[] OutputBuffer = new byte[TotalBytes];
-            int OutputOffset = 0;
-
-
-            if (AppendIV) {
-                Array.Copy(Provider.IV, OutputBuffer, Provider.IV.Length);
-                OutputOffset += Provider.IV.Length;
-                }
-
-            if (FullBlocks == 0) {
-                }
-            else if (Transform.CanTransformMultipleBlocks) { // Can we do it the fast way?
-                Transform.TransformBlock(InputBuffer, InputOffset, FullBlocks * Transform.InputBlockSize,
-                    OutputBuffer, OutputOffset);
-                InputOffset += FullBlocks * Transform.InputBlockSize;
-                OutputOffset += FullBlocks * Transform.OutputBlockSize;
-
-                }
-            else { // Do it the lame way
-                for (var i = 0; i < FullBlocks; i++) {
-                    Transform.TransformBlock(InputBuffer, InputOffset, Transform.InputBlockSize,
-                        OutputBuffer, OutputOffset);
-                    InputOffset += Transform.InputBlockSize;
-                    OutputOffset += Transform.OutputBlockSize;
-                    }               
-                }
-            
-            var LastBlock = Transform.TransformFinalBlock(InputBuffer, InputOffset,
-                Count - FullBlocks * Transform.InputBlockSize);
-
-            Array.Copy(LastBlock, 0, OutputBuffer, OutputOffset - LastOffset, LastBlock.Length);
-            Array.Resize(ref OutputBuffer, TotalBytes - Transform.OutputBlockSize + LastBlock.Length - LastOffset);
-            var CryptoResult = new CryptoData(CryptoAlgorithmID.NULL, null, null, OutputBuffer);
-
-            CryptoResult.IV = IV;
-            CryptoResult.Key = Key;
-            return CryptoResult;
+            Key = Key ?? Provider.Key;
+            IV = IV ?? Provider.IV;
+            var Transform = Provider.CreateEncryptor(Key, IV);
+            return Process(Data, Transform);
             }
+
+        /// <summary>
+        /// Encrypt the specified byte array
+        /// </summary>
+        /// <param name="Data">The input to process</param>
+        /// <param name="IV">The Initialization Vector</param>
+        /// <param name="Key">The key</param>
+        /// <returns>The result of the cryptographic operation.</returns>
+        public override byte[] Decrypt(byte[] Data,
+                        byte[] Key = null, byte[] IV = null) {
+            Key = Key ?? Provider.Key;
+            IV = IV ?? Provider.IV;
+            var Transform = Provider.CreateDecryptor(Key, IV);
+            return Process(Data, Transform);
+            }
+
+
+        byte[] Process (byte[] Data, ICryptoTransform Transform) { 
+            byte[] Result;
+            using (var Output = new MemoryStream ()) {
+                using (var Input = new CryptoStream(Output, Transform, CryptoStreamMode.Write)) {
+                    Input.Write(Data, 0, Data.Length);
+                    }
+                Result = Output.ToArray();
+                }
+            return Result;
+            }
+        /// <summary>
+        /// Complete processing at the end of an encoding or decoding operation
+        /// </summary>
+        /// <param name="CryptoData"></param>
+        public override void Complete(CryptoData CryptoData) {
+            (CryptoData.InputStream as CryptoStream).FlushFinalBlock();
+            base.Complete(CryptoData);
+            }
+
         }
 
 
@@ -289,62 +199,59 @@ namespace Goedel.Cryptography.Framework {
     public class CryptoProviderEncryptAES : CryptoProviderEncryption {
 
         /// <summary>
-        /// Return a CryptoAlgorithm structure with properties describing this provider.
-        /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm {
-            get {
-                return new CryptoAlgorithm(
-                    CryptoAlgorithmID, Name, OID, Size,
-                    null, null, null,
-                    "http://www.w3.org/2001/04/xmlenc#aes128-cbc",
-                    CryptoAlgorithmClass.Encryption,
-                    GetCryptoProvider);
-                }
-            }
-
-
-
-        /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
         public override CryptoAlgorithmID CryptoAlgorithmID {
             get {
-                if (Provider.KeySize == 128) {
-                    if (Provider.Mode == CipherMode.CBC) {
+                return (Provider.KeySize == 128) ? 
+                    Goedel.Cryptography.CryptoAlgorithmID.AES128CBC :
+                    Goedel.Cryptography.CryptoAlgorithmID.AES256CBC;
+                }
+            }
 
-                        return CryptoAlgorithmID.AES128CBC;
-                        }
-                    else {
-                        return CryptoAlgorithmID.AES128CTS;
-                        }
-                    }
-                else {
-                    if (Provider.Mode == CipherMode.CBC) {
+        /// <summary>
+        /// Return a CryptoAlgorithm structure with properties describing this provider.
+        /// </summary>
+        public override CryptoAlgorithm CryptoAlgorithm {
+            get {
+                return (Provider.KeySize == 128) ?
+                    CryptoAlgorithm128 : CryptoAlgorithm256;
+                }
+            }
 
-                        return CryptoAlgorithmID.AES256CBC;
-                        }
-                    else {
-                        return CryptoAlgorithmID.AES256CTS;
-                        }
-                    }
-                }
-            }
+        static CryptoAlgorithm CryptoAlgorithmAny = new CryptoAlgorithm(
+                    Goedel.Cryptography.CryptoAlgorithmID.AES256, 128,
+                            _AlgorithmClass, Factory);
+        static CryptoAlgorithm CryptoAlgorithm128 = new CryptoAlgorithm(
+                    Goedel.Cryptography.CryptoAlgorithmID.AES128CBC, 128, 
+                            _AlgorithmClass, Factory);
+        static CryptoAlgorithm CryptoAlgorithm256 = new CryptoAlgorithm(
+                    Goedel.Cryptography.CryptoAlgorithmID.AES256CBC, 256, 
+                            _AlgorithmClass, Factory);
+
+
+
         /// <summary>
-        /// .NET Framework name
+        /// Register this provider in the specified crypto catalog. A provider may 
+        /// register itself multiple times to describe different configurations that 
+        /// are supported.
         /// </summary>
-        public override string Name {
-            get {
-                return "AES";
-                }
+        /// <param name="Catalog">The catalog to register the provider to, if
+        /// null, the default catalog is used.</param>
+        /// <returns>Description of the principal algorithm registration.</returns>
+        public static CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
+            Catalog = Catalog ?? CryptoCatalog.Default;
+            var Default = Catalog.Add(CryptoAlgorithm256);
+            Catalog.Add(CryptoAlgorithmAny);
+            Catalog.Add(CryptoAlgorithm128);
+            return Default;
             }
-        /// <summary>
-        /// JSON Algorithm Name
-        /// </summary>
-        public override string JSONName {
-            get {
-                return "AE128";
-                }
+
+        private static CryptoProvider Factory(int KeySize,
+                            CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) {
+            return new CryptoProviderEncryptAES(KeySize);
             }
+
         /// <summary>
         /// Default algorithm key size.
         /// </summary>
@@ -352,17 +259,6 @@ namespace Goedel.Cryptography.Framework {
             get {
                 return Provider.KeySize;
                 }
-            }
-        /// <summary>
-        /// Returns the default crypto provider.
-        /// </summary>
-        public override GetCryptoProvider GetCryptoProvider {
-            get {
-                return Factory;
-                }
-            }
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) {
-            return new CryptoProviderEncryptAES(KeySize);
             }
 
         /// <summary>
@@ -381,8 +277,5 @@ namespace Goedel.Cryptography.Framework {
         public CryptoProviderEncryptAES(int KeySize, CipherMode CipherMode)
             : base(new AesManaged(), KeySize, CipherMode) {
             }
-
         }
-
-
     }

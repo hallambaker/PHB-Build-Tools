@@ -89,3 +89,20 @@ Namespace Goedel.Cryptography
 			Description
 				|Initialization of the cryptographic support library failed.
 				|This is a fatal error that cannot be recovered from.
+
+		Exception InvalidKeyPairType
+			Console "The keypair presented was not of the expected type"
+			Description
+				|The keypair presented was not of the expected type.
+		
+		Exception RecryptionShareLimitExceeded 
+			Console "The number of recryption shares requested exceeds the implementation limit"
+			Description
+				|An attempt was made to create more recryption shares than the implementation supports.
+
+
+		Exception InvalidOperation
+			Console "The cryptographic provider does not support the requested operation"
+
+		Exception PrivateKeyNotFound
+			Console "The operation requested requires a private key that could not be found"

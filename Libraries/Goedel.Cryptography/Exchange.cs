@@ -28,120 +28,120 @@ using System.Threading.Tasks;
 
 namespace Goedel.Cryptography {
 
+
+
     /// <summary>
     /// Base provider for public key encryption and symmetric key wrap.
     /// 
     /// NB these classes do not support bulk encryption.
     /// </summary>
     public abstract class CryptoProviderExchange : CryptoProviderAsymmetric {
-        /// <summary>
-        /// The type of algorithm
-        /// </summary>
-        public override CryptoAlgorithmClass AlgorithmClass { get { return CryptoAlgorithmClass.Exchange; } }
 
-        /// <summary>
-        /// Encrypt key data.
-        /// </summary>
-        /// <param name="Input">The key data to encrypt.</param>
-        /// <returns>Encrypted data</returns>
-        public abstract byte[] Encrypt(byte[] Input);
+        /// <summary>The crypto algorithm class.</summary>
+        protected static CryptoAlgorithmClass _AlgorithmClass =
+            CryptoAlgorithmClass.Exchange;
 
-        /// <summary>
-        /// Encrypt key data.
-        /// </summary>
-        /// <param name="Input">The key data to encrypt.</param>
-        /// <returns>Encrypted data</returns>
-        public CryptoData Encrypt(CryptoData Input) {
-            var Result = Encrypt(Input.Key);
-            return new CryptoData(CryptoAlgorithmID, OID, null, Result, null, null);
+        /// <summary>Return the crypto algorithm class.</summary>
+        public override CryptoAlgorithmClass AlgorithmClass {
+            get { return _AlgorithmClass; }
             }
 
         /// <summary>
-        /// JSON Key use.
+        /// Extract the actual algorithm ID from the requested Algorithm ID. This allows
+        /// the provider to select the default for the key exchange mode etc.
         /// </summary>
-        public override string JSONKeyUse { get { return "enc"; } }
-
-        /// <summary>
-        /// Decrypt data. Note that this is only possibly when the corresponding private
-        /// key is available on the local machine.
-        /// </summary>
-        /// <param name="Input">The data to decrypt.</param>
-        /// <returns>Decrypted data.</returns>
-        public abstract byte[] Decrypt(byte[] Input);
-
-        /// <summary>
-        /// Decrypt data. Note that this is only possibly when the corresponding private
-        /// key is available on the local machine.
-        /// </summary>
-        /// <param name="Input">The data to decrypt.</param>
-        /// <returns>Decrypted data.</returns>
-        public CryptoData Decrypt(CryptoData Input) {
-            var Result = Decrypt(Input.Data);
-            return new CryptoData(CryptoAlgorithmID, OID, null, null, Result, null);
+        /// <param name="BaseAlgorithm">Base ID</param>
+        /// <returns>Selected ID.</returns>
+        protected virtual CryptoAlgorithmID SetOptions (CryptoAlgorithmID BaseAlgorithm) {
+            return BaseAlgorithm.Meta();
             }
+
+
+        /// <summary>
+        /// Perform a key wrap operation and return a CryptoDataWrapped instance
+        /// containing the wrapped key parameters and a bulk provider. 
+        /// </summary>
+        /// <param name="Algorithm">The key wrap algorithm</param>
+        /// <param name="Bulk">The bulk provider to use. If specified, the parameters from
+        /// the specified provider will be used. Otherwise a new bulk provider will 
+        /// be created and returned as part of the result.</param>
+        /// <param name="OutputStream">Output stream (ignored)</param> 
+        /// <returns>Instance describing the key agreement parameters.</returns>
+        public override CryptoDataEncoder MakeEncoder(
+                            CryptoProviderBulk Bulk = null,
+                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            Stream OutputStream = null
+                            ) {
+
+            var BulkAlgorithm = Algorithm.Bulk();
+            BulkAlgorithm = (BulkAlgorithm == CryptoAlgorithmID.Default) ? BulkAlgorithmDefault : BulkAlgorithm;
+
+            var ExchangeAlgorithm = SetOptions (Algorithm.Meta());
+
+            var Encryption = (Bulk as CryptoProviderEncryption) ?? 
+                CryptoCatalog.Default.GetEncryption(BulkAlgorithm);
+
+            var Key = Platform.GetRandomBits(Encryption.KeySize);
+            var IV = Platform.GetRandomBits(Encryption.IVSize);
+
+            var Result = Encryption.MakeEncryptor(Algorithm, OutputStream, Key, IV);
+            Result.AlgorithmIdentifier = ExchangeAlgorithm | Encryption.CryptoAlgorithmID;
+            Encrypt(Result);
+
+            return Result;
+            }
+
+
+        /// <summary>
+        /// Encrypt data under the keypair
+        /// </summary>
+        /// <param name="Data">Data to be encrypted.</param>
+        /// <param name="Algorithm">Composite encryption algorithm.</param>
+        /// <returns>Signature.</returns>
+        public CryptoData Encrypt(byte[] Data, CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) {
+            var Encoder = MakeEncoder(Algorithm: Algorithm);
+            Encoder.InputStream.Write(Data, 0, Data.Length);
+            Encoder.Complete();
+            return Encoder;
+            }
+
+        /// <summary>
+        /// Sign data using the default digest (requires private key).
+        /// </summary>
+        /// <param name="Text">Text to be converted to UTF8 and signed.</param>
+        /// <param name="Digest">Digest algorithm identifier</param>
+        /// <returns>Signature.</returns>
+        public CryptoData Encrypt(string Text, CryptoAlgorithmID Digest = CryptoAlgorithmID.Default) {
+            return Encrypt(Encoding.UTF8.GetBytes(Text), Digest);
+            }
+
+
+        /* 
+         * Methods that MUST be implemented in instance classes.
+        
+        (From CryptoProvider) 
+        public abstract CryptoDataDecoder SetDecoder(
+                            CryptoDataDecoder Decoder = null
+                            );
+         */
+
+
+        /// <summary>
+        /// Encrypt the bulk key.
+        /// </summary>
+        /// <param name="Data"></param>
+        /// <param name="Algorithm">Composite encryption algorithm.</param>
+        /// <param name="Wrap">If true create a new CryptoData instance that
+        /// wraps the parameters supplied in Data.</param>
+        public abstract CryptoDataExchange Encrypt(CryptoData Data, 
+            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, bool Wrap =false);
+
+        /// <summary>
+        /// Decrypt the bulk key.
+        /// </summary>
+        /// <param name="Data"></param>
+        public abstract CryptoData Decrypt(CryptoDataExchange Data);
+
+
         }
-
-
-
-
-
-
-
-
-    /// <summary>
-    /// Base provider for public key encryption and symmetric key wrap.
-    /// 
-    /// NB these classes do not support bulk encryption.
-    /// </summary>
-    public abstract class CryptoProviderRecryption : CryptoProviderExchange {
-        /// <summary>
-        /// The maximum number of key shares that the provider will generate.
-        /// </summary>
-        public abstract int SharesMaximum { get; }
-
-
-        /// <summary>
-        /// Split the private key into a recryption pair. This is a convenience function
-        /// to support the most common use case in an implementation.
-        /// <para>
-        /// Since the
-        /// typical use case for recryption requires both parts of the generated machine
-        /// to be used on a machine that is not the machine on which they are created, the
-        /// key security level is always to permit export.</para>
-        /// </summary>
-        /// <param name="Recryption">The private key for use by the recryption provider.</param>
-        /// <param name="Completion">The private key to be used to complete the decryption
-        /// operation.</param>
-        public virtual void GenerateRecryptionPair(out KeyPair Recryption, out KeyPair Completion) {
-            var Keys = GenerateRecryptionSet(2);
-            Recryption = Keys[0];
-            Completion = Keys[1];
-            }
-
-        /// <summary>
-        /// Split the private key into a number of recryption keys.
-        /// <para>
-        /// Since the
-        /// typical use case for recryption requires both parts of the generated machine
-        /// to be used on a machine that is not the machine on which they are created, the
-        /// key security level is always to permit export.</para>
-        /// </summary>
-        /// <param name="Shares">The number of keys to create.</param>
-        /// <returns>The created keys</returns>
-        public abstract KeyPair[] GenerateRecryptionSet(int Shares);
-
-        /// <summary>
-        /// Perform a recryption operation on the input data. A recryption operation
-        /// is any operation that is not a final decryption operation. When more 
-        /// than two recryption keys are used, the 
-        /// </summary>
-        /// <param name="CryptoData"></param>
-        /// <returns>The partially decrypted data</returns>
-        public abstract CryptoData Recrypt(CryptoData CryptoData);
-
-
-
-        }
-
-
     }

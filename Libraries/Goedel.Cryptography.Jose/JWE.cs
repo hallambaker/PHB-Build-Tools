@@ -21,126 +21,155 @@
 //  
 
 using System.Collections.Generic;
-using Goedel.Cryptography;
+using Goedel.Utilities;
 
 
 namespace Goedel.Cryptography.Jose {
+
+    
+
 
     /// <summary>
     /// Represents a JWE data structure.
     /// </summary>
     public partial class JoseWebEncryption {
-        CryptoAlgorithmID _BulkAlgorithm = CryptoAlgorithmID.NULL;
-        CryptoData CryptoData;
 
         /// <summary>
-        /// Get or set the bulk encryption algorithm
+        /// The decrypted plaintext value
         /// </summary>
-        public CryptoAlgorithmID BulkAlgorithm {
+        public byte[] Plaintext {
             get {
-                if (_BulkAlgorithm == CryptoAlgorithmID.NULL) {
-                    _BulkAlgorithm = CryptoCatalog.Default.AlgorithmEncryption;
-                    }
-                return _BulkAlgorithm;
+                _Plaintext = _Plaintext ?? Decrypt();
+                return _Plaintext;
                 }
-            set { _BulkAlgorithm = value; }
             }
+        byte[] _Plaintext = null;
 
         /// <summary>
-        /// Construct a JWE encryption object and encrypt the specified data.
+        /// The decrypted plaintext as a string.
         /// </summary>
-        /// <param name="Data">The data to be encrypted.</param>
-        public JoseWebEncryption(byte[] Data) {
-            Encrypt(Data);
-            }
-
-        /// <summary>
-        /// Construct a JWE encryption object and encrypt the specified data
-        /// using the specified encryption provider.
-        /// </summary>
-        /// <param name="Encryptor">Encryption provider to use.</param>
-        /// <param name="Data">The data to be encrypted.</param>
-        public JoseWebEncryption(byte[] Data, CryptoProviderEncryption Encryptor) {
-            Encrypt(Data, Encryptor);
+        public string UTF8 {
+            get { return Plaintext.ToString(); }
             }
 
 
+
         /// <summary>
-        /// Construct a JWE encryption object and encrypt the specified data
-        /// and create decryption entries for the specified recipients.
+        /// Construct a JWE instance from a CryptoData object
         /// </summary>
-        /// <param name="Recipients">The recipients to create the 
-        /// decryption blobs for.</param>
-        /// <param name="Data">The data to be encrypted.</param>
-        public JoseWebEncryption(byte[] Data, List<Recipient> Recipients) {
-            Encrypt(Data);
-            this.Recipients = Recipients;
+        /// <param name="Data">Key information to construct the bulk and optionally
+        /// key exchange headers</param>
+        /// <param name="ContentType">The type of content being encrypted.</param>
+        /// <param name="SigningKey">Optional signing key.</param>
+        public JoseWebEncryption    (CryptoData Data,
+                    string ContentType = null,
+                    KeyPair SigningKey = null
+                    ) {
+
+            BindCryptoData(Data, ContentType);
+            }
+
+
+        /// <summary>
+        /// Construct a JWE instance from binary data. 
+        /// </summary>
+        /// <param name="Data">Key information to construct the bulk and optionally
+        /// key exchange headers</param>
+        /// <param name="ContentType">The type of content being encrypted.</param>
+        /// <param name="EncryptionKey">Optional Encryption key.</param>
+        /// <param name="SigningKey">Optional signing key.</param>
+        /// <param name="AlgorithmID">Specify the Meta and Bulk algorithms</param>
+        public JoseWebEncryption(byte[] Data,
+                    KeyPair EncryptionKey = null,
+                    KeyPair SigningKey = null,
+                    string ContentType = null,
+                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default
+                    ) {
+
+            var Provider = CryptoCatalog.Default.GetEncryption(AlgorithmID);
+            var Encoder = Provider.MakeEncoder(Algorithm: AlgorithmID);
+            _CryptoData = Encoder;
+
+            if (EncryptionKey != null) {
+                AddRecipient(EncryptionKey, AlgorithmID);
+                }
+
+            Encoder.Write(Data);
+            Encoder.Complete();
+
+            BindCryptoData(Encoder, ContentType);
             }
 
         /// <summary>
-        /// Create a new encryption context and encrypt the data under the 
-        /// generated content key and IV.
+        /// Construct a JWE instance from binary data. 
         /// </summary>
-        /// <param name="Data">Data to encrypt</param>
-        public void Encrypt(byte[] Data) {
-            var Encryptor = CryptoCatalog.Default.GetEncryption(BulkAlgorithm);
-            Encrypt(Data, Encryptor);
-            }
+        /// <param name="Text">Key information to construct the bulk and optionally
+        /// key exchange headers</param>
+        /// <param name="ContentType">The type of content being encrypted.</param>
+        /// <param name="EncryptionKey">Optional Encryption key.</param>
+        /// <param name="SigningKey">Optional signing key.</param>
+        /// <param name="Algorithm">Specify the Meta and Bulk algorithms</param>
+        public JoseWebEncryption(string Text,
+                    KeyPair EncryptionKey = null,
+                    KeyPair SigningKey = null,
+                    string ContentType = null,
+                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) :
+                this(System.Text.Encoding.UTF8.GetBytes(Text),
+                        EncryptionKey, SigningKey, ContentType, Algorithm) { }
+
 
         /// <summary>
-        /// Create a new encryption context and encrypt the data under the 
-        /// generated content key and IV.
+        /// Add a recipient to an existing JWE header.
         /// </summary>
-        /// <param name="Data">The data to encrypt</param>
-        /// <param name="Encryptor">The encryption provider to use.</param>
-        public void Encrypt(byte[] Data, CryptoProviderEncryption Encryptor) {
-            //Trace.WriteHex("Encryption Key", Encryptor.Key);
+        /// <remarks>If custom crypto suites are used, the caller is responsible for 
+        /// ensuring that the exchange algorithm is compatible with the bulk algorithm 
+        /// already selected. </remarks>
+        /// <param name="EncryptionKey">The recipient key to add.</param>
+        /// <param name="ProviderAlgorithm">Algorithm parameters (if supported)</param>
+        /// <returns>The recipient instance</returns>
+        public Recipient AddRecipient (KeyPair EncryptionKey,
+                CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default) {
 
+            //var ExchangeProvider = EncryptionKey.ExchangeProvider(CryptoData, ProviderAlgorithm);
+            //var ExchangeData = ExchangeProvider.MakeEncoder(CryptoData);
 
-            CryptoData = Encryptor.Encrypt(Data);
-            var Preheader = new Header(Encryptor);
-            Protected = Preheader.GetBytes(false); // get the data bytes untagged
-            IV = CryptoData.IV;
-            JTag = CryptoData.Integrity;
-            CipherText = CryptoData.Data;
-            }
+            var ExchangeData = EncryptionKey.EncryptKey(CryptoData, ProviderAlgorithm);
 
-        /// <summary>
-        /// Add an entry for the specified key to the recipient list.
-        /// </summary>
-        /// <param name="EncryptionKey">The encryption key to create the
-        /// entry for.</param>
-        public void Add(KeyPair EncryptionKey) {
-            var Recipient = new Recipient(EncryptionKey);
-
-            //Trace.WriteLine("Create blob for {0}", EncryptionKey.UDF);
-            Recipient.EncryptedKey = EncryptKey(EncryptionKey);
-            //Trace.WriteHex("Created", Recipient.EncryptedKey);
-
-            Recipient.Header = new Header();
-            Recipient.Header.kid = EncryptionKey.UDF;
-            Add(Recipient);
-            return;
-            }
-
-        /// <summary>
-        /// Add a recipient entry to the recipient list.
-        /// </summary>
-        /// <param name="Recipient">Recipient to add</param>
-        public void Add(Recipient Recipient) {
-            Recipients = Recipients == null ? new List<Recipient>() : Recipients;
+            var Recipient = new Recipient(ExchangeData);
+            Recipients = Recipients ?? new List<Recipient>();
             Recipients.Add(Recipient);
+
+            return Recipient;
             }
 
+        /// <summary>
+        /// Finish processing of the data and write out the integrity data
+        /// </summary>
+        public void Complete () {
+            CryptoData.Complete();
+            CipherText = _CryptoData.OutputData;
+            JTag = _CryptoData.Integrity;
 
-        private Recipient Find (string KeyID) {
-            foreach (var Recipient in Recipients) {
-                if (KeyID == Recipient.Header.kid) {
-                    return Recipient;
-                    }
-                }
+            CipherText = CryptoData.ProcessedData;
 
-            return null;
+
+            // Sign here?
+            }
+
+        void BindCryptoData(CryptoData Data, string ContentType) {
+            _CryptoData = Data;
+
+            var enc = Data.AlgorithmIdentifier.Bulk();
+            var encID = enc.ToJoseID();
+
+            var ProtectedTBW = new Header() {
+                cty = ContentType,
+                enc = encID
+                };
+
+            Protected = ProtectedTBW.GetBytes();
+            IV = Data.IV;
+            CipherText = Data.OutputData;
             }
 
         /// <summary>
@@ -158,42 +187,9 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="DecryptionKey">The decryption key.</param>
         /// <returns>The decrypted data</returns>
         public byte[] Decrypt(KeyPair DecryptionKey) {
-            // Read the preheader, get the encryption algorithm
-            //var PreHeader = Header.From(Protected);
-            var Recipient = Find(DecryptionKey.UDF);
-            var Exchange = DecryptionKey.ExchangeProviderDecrypt;
-
-
-
-
-            CryptoData.Key = Exchange.Decrypt(Recipient.EncryptedKey);
-
-            //Trace.WriteHex("Decryption Key", CryptoData.Key);
-
-            CryptoData.IV = IV;
-
-            // get the IV
-            var Decryptor = CryptoCatalog.Default.GetEncryption(BulkAlgorithm);
-
-            // decrypt the data
-            var Result = Decryptor.Decrypt(CryptoData, CipherText);
-            return Result.Data;
+            return null;
             }
 
-        /// <summary>
-        /// Return an encrypted key data entry for the specified encryption key.
-        /// </summary>
-        /// <param name="EncryptionKey">The key to use for encryption.</param>
-        /// <returns>The encrypted key data.</returns>
-        public byte[] EncryptKey(KeyPair EncryptionKey) {
-
-            var Exchange = EncryptionKey.ExchangeProviderEncrypt;
-            var Result = Exchange.Encrypt(CryptoData.Key);
-
-            //Trace.WriteHex("Key is ", CryptoData.Key);
-
-            return Result;
-            }
 
         }
 
@@ -205,10 +201,14 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Encrypt to the specified key of the specified profile.
         /// </summary>
-        /// <param name="KeyPair">KeyPair for the recipient.</param>
-        public Recipient(KeyPair KeyPair) {
-            Header = new Header();
-            Header.kid = KeyPair.UDF;
+        /// <param name="RecipientData">KeyPair for the recipient.</param>
+        public Recipient(CryptoDataExchange RecipientData) {
+            var Key = RecipientData.Meta;
+            Header = new Header() {
+                alg = Key?.CryptoAlgorithmID.Meta().ToJoseID(),
+                kid = Key?.UDF
+                };
+            EncryptedKey = RecipientData.Exchange;
             }
 
         }

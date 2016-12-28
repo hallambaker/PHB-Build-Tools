@@ -12,29 +12,88 @@ namespace Goedel.Cryptography {
     /// </summary>
     public static class Platform {
 
+        /// <summary>
+        /// Static initializer
+        /// </summary>
+        static Platform () {
+            // Add the providers defined in the portable library to the catalog.
+            FindLocalDelegates.Add(DHKeyPair.FindLocal);
+            }
+
+
+
         /// <summary>Default SHA-2-512 provider optimized for small data items</summary>
+        /// <remarks>This delegate must bound to the platform
+        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
         public static CryptoAlgorithm SHA2_512;
         /// <summary>Default SHA-2-256 provider optimized for small data items</summary>
+        /// <remarks>This delegate must bound to the platform
+        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
         public static CryptoAlgorithm SHA2_256;
         /// <summary>Default SHA-1 provider optimized for small data items</summary>
+        /// <remarks>This delegate must bound to the platform
+        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
         public static CryptoAlgorithm SHA1;
 
         /// <summary>Default HMAC-SHA2-512 provider optimized for small data items</summary>
+        /// <remarks>This delegate must bound to the platform
+        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
         public static CryptoAlgorithm HMAC_SHA2_256;
         /// <summary>Default HMAC-SHA2-512 provider optimized for small data items</summary>
+        /// <remarks>This delegate must bound to the platform
+        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
         public static CryptoAlgorithm HMAC_SHA2_384;
         /// <summary>Default HMAC-SHA2-512 provider optimized for small data items</summary>
+        /// <remarks>This delegate must bound to the platform
+        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
         public static CryptoAlgorithm HMAC_SHA2_512;
 
 
         /// <summary>Default AES-256 provider optimized for small data items</summary>
+        /// <remarks>This delegate must bound to the platform
+        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
         public static CryptoAlgorithm AES_256;
 
         /// <summary>Fill byte buffer with cryptographically strong random numbers.</summary>
+        /// <param name="Data"></param>
+        /// <param name="Offset"></param>
+        /// <param name="Count"></param>
         public delegate void GetRandomBytesDelegateType(byte[] Data, int Offset, int Count);
 
         /// <summary>Fill byte buffer with cryptographically strong random numbers</summary>
+        /// <remarks>This delegate must bound to the platform
+        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
         public static GetRandomBytesDelegateType GetRandomBytesDelegate;
+
+
+        /// <summary>
+        /// Write a key to the machine keystore
+        /// </summary>
+        /// <param name="KeyPair">The key store</param>
+        /// <param name="KeySecurity">The storage security level</param>
+        public delegate void WriteToKeyStoreDelegate (KeyPair KeyPair, KeySecurity KeySecurity);
+
+        /// <summary>
+        /// Write a key to the machine keystore
+        /// </summary>
+        /// <remarks>This delegate must bound to the platform
+        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
+        public static WriteToKeyStoreDelegate WriteToKeyStore;
+
+
+        /// <summary>
+        /// Retrieve record from the local key store. 
+        /// </summary>
+        /// <param name="UDF">The key identifier</param>
+        /// <returns></returns>
+        public delegate KeyPair FindInKeyStoreDelegate(string UDF);
+
+        /// <summary>
+        /// Retrieve record from the local key store. 
+        /// </summary>
+        /// <remarks>This delegate must bound to the platform
+        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
+        public static FindInKeyStoreDelegate FindInKeyStore;
 
 
         /// <summary>
@@ -46,6 +105,16 @@ namespace Goedel.Cryptography {
             var Data = new byte[Length];
             GetRandomBytesDelegate(Data, 0, Length);
             return Data;
+            }
+
+
+        /// <summary>
+        /// Get a specified number of random bits.
+        /// </summary>
+        /// <param name="Length">Number of bits to get</param>
+        /// <returns>Random data</returns>
+        public static byte[] GetRandomBits(int Length) {
+            return GetRandomBytes(Length/8);
             }
 
         /// <summary>
@@ -74,31 +143,6 @@ namespace Goedel.Cryptography {
 
             return Test % Ceiling;
             }
-
-        ///// <summary>
-        ///// Find a random prime with the specified number of bits.
-        ///// </summary>
-        ///// <param name="Bits">Number of bits in prime to be created</param>
-        ///// <returns>The generated prime</returns>
-        //public static BigInteger GetRandomPrime (int Bits) {
-
-        //    var Data = GetRandomBytes(Bits / 8);
-
-        //    // Set the most and least significant bits to 1. 
-        //    // The C# BigInteger class stores data in little endian fashion.
-        //    Data[0] |= (byte) 0x01;
-        //    Data[Data.Length-1] |= (byte)0x80;
-        //    var Result = new BigInteger(Data);
-
-        //    var Prime = Result.IsPrime();
-        //    while (!Prime) {
-        //        Result += 2;
-        //        Prime = Result.IsPrime();
-        //        }
-
-        //    return Result;
-        //    }
-
 
 
         /// <summary>Find a key by fingerprint in the local key stores</summary>

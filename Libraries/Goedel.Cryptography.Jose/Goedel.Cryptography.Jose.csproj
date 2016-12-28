@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Goedel.Cryptography.Jose.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -39,6 +40,9 @@
     <DocumentationFile>bin\Publish\Goedel.Cryptography.Jose.XML</DocumentationFile>
     <DefineConstants>DEBUG</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="JoseSchema.Protocol">
       <Generator>ProtoGen</Generator>
@@ -48,6 +52,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlgorithmID.cs" />
     <Compile Include="Dictionary.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="JOSE.cs" />

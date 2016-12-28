@@ -68,9 +68,19 @@ namespace Goedel.Platform.Framework {
 
         }
 
-    public class ResultUDP {
+    ///// <summary>
+    ///// List of UDP results
+    ///// </summary>
+    //public class ResultUDP {
 
-        public byte[] Data;
-        ResultUDP Next;
-        }
+    //    /// <summary>
+    //    /// Data
+    //    /// </summary>
+    //    public byte[] Data;
+
+    //    /// <summary>
+    //    /// Next result
+    //    /// </summary>
+    //    ResultUDP Next;
+    //    }
     }

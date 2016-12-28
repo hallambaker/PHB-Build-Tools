@@ -25,7 +25,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
-using Goedel.Cryptography;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Framework {
     /// <summary>
@@ -41,27 +41,19 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Hash algorithm provider.
         /// </summary>
-        public HashAlgorithm HashAlgorithm;
+        public KeyedHashAlgorithm KeyedHashAlgorithm;
 
-        /// <summary>
-        /// ASN.1 Object Identifier.
-        /// </summary>
-        public override string OID {
-            get {
-                return CryptoConfig.MapNameToOID(Name);
-                }
-            }
 
         /// <summary>
         /// Authentication key.
         /// </summary>
         public byte[] Key {
             set {
-                var KeyedHash = HashAlgorithm as KeyedHashAlgorithm;
+                var KeyedHash = KeyedHashAlgorithm as KeyedHashAlgorithm;
                 KeyedHash.Key = value;
                 }
             get {
-                var KeyedHash = HashAlgorithm as KeyedHashAlgorithm;
+                var KeyedHash = KeyedHashAlgorithm as KeyedHashAlgorithm;
                 return KeyedHash.Key;
                 }
             }
@@ -70,48 +62,55 @@ namespace Goedel.Cryptography.Framework {
         /// Initializes an instance of the hash provider with the specified
         /// implementation.
         /// </summary>
-        /// <param name="HashAlgorithm">The hash algorithm to construct provider for.</param>
-        protected CryptoProviderAuthentication(HashAlgorithm HashAlgorithm) {
-            this.HashAlgorithm = HashAlgorithm;
+        /// <param name="KeyedHashAlgorithm">The hash algorithm to construct provider for.</param>
+        protected CryptoProviderAuthentication(KeyedHashAlgorithm KeyedHashAlgorithm) {
+            this.KeyedHashAlgorithm = KeyedHashAlgorithm;
+            }
+
+        /// <param name="Algorithm">The key wrap algorithm</param>
+        /// <param name="Bulk">The bulk provider to use. If specified, the parameters from
+        /// the specified provider will be used. Otherwise a new bulk provider will 
+        /// be created and returned as part of the result.</param>
+        /// <param name="OutputStream">Output stream</param>
+        /// <returns>Instance describing the key agreement parameters.</returns>
+        public override CryptoDataEncoder MakeEncoder(
+                            CryptoProviderBulk Bulk = null,
+                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            Stream OutputStream = null
+                            ) {
+
+            // Key wrap is not yet implemented.
+            if (Bulk != null) { throw new NYI("Key wrap"); }
+
+            var Result = new CryptoDataEncoder(CryptoAlgorithmID, this);
+            Result.OutputStream = OutputStream ?? new MemoryStream();
+            BindEncoder(Result);
+
+            return Result;
             }
 
         /// <summary>
-        /// Computes the hash value for the specified region of the specified byte array
+        /// Create a crypto stream from this provider.
         /// </summary>
-        /// <param name="Buffer">The input to compute the hash code for.</param>
-        /// <param name="offset">The offset into the byte array from which to begin using data.</param>
-        /// <param name="count">The number of bytes in the array to use as data.</param>
-        /// <returns>The computed hash code.</returns>
-        public override CryptoData Process(byte[] Buffer, int offset, int count) {
-            var Data = HashAlgorithm.ComputeHash(Buffer, offset, count);
-            var CryptoDigestValue = new CryptoData(CryptoAlgorithmID, OID, Data);
-
-
-            return CryptoDigestValue;
+        /// <param name="Encoder"></param>
+        public override void BindEncoder(CryptoDataEncoder Encoder) {
+            Encoder.InputStream = new CryptoStream(
+                    null, KeyedHashAlgorithm, CryptoStreamMode.Write);
             }
 
+
         /// <summary>
-        /// Terminates a part processing session and returns the result.
+        /// Processes the specified byte array
         /// </summary>
-        /// <returns>The computed hash code.</returns>
-        public override CryptoData TransformFinal() {
-            if (MemoryStream == null) {
-                MemoryStream = new MemoryStream();
+        /// <param name="Data">The input to process</param>
+        /// <param name="Key">The key</param>
+        /// <returns>The result of the cryptographic operation.</returns>
+        public override byte[] ProcessData(byte[] Data, byte[] Key = null) {
+            if (Key != null) {
+                KeyedHashAlgorithm.Key = Key;
                 }
-            var Data = HashAlgorithm.ComputeHash(MemoryStream);
-            var CryptoDigestValue = new CryptoData(CryptoAlgorithmID, OID, Data);
-            return CryptoDigestValue;
+            return KeyedHashAlgorithm.ComputeHash(Data);
             }
-
-        /// <summary>
-        /// Initializes or re-initializes an instance.
-        /// </summary>
-        public virtual void Initialize() {
-            HashAlgorithm.Initialize();
-            //Pointer = 0;
-            }
-
-
 
         }
 
@@ -119,30 +118,41 @@ namespace Goedel.Cryptography.Framework {
     /// Provider for HMAC SHA-2 256 bits.
     /// </summary>
     public class CryptoProviderHMACSHA2_256 : CryptoProviderAuthentication {
+        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.HMAC_SHA_2_256;
+
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
         public override CryptoAlgorithmID CryptoAlgorithmID {
-            get {
-                return CryptoAlgorithmID.HMAC_SHA_2_256;
-                }
+            get { return _CryptoAlgorithmID; }
             }
+
         /// <summary>
-        /// .NET Framework name
+        /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public override string Name {
-            get {
-                return "HMACSHA256";
-                }
+        public override CryptoAlgorithm CryptoAlgorithm {
+            get { return _CryptoAlgorithm; }
             }
+
+        static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
+                    _CryptoAlgorithmID, 512, _AlgorithmClass, Factory);
+
+
         /// <summary>
-        /// JSON Algorithm Name
+        /// Register this provider in the specified crypto catalog. A provider may 
+        /// register itself multiple times to describe different configurations that 
+        /// are supported.
         /// </summary>
-        public override string JSONName {
-            get {
-                return "HS256";
-                }
+        /// <param name="Catalog">The catalog to register the provider to, if
+        /// null, the default catalog is used.</param>
+        /// <returns>Description of the principal algorithm registration.</returns>
+        public static CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
+            Catalog = Catalog ?? CryptoCatalog.Default;
+            return Catalog.Add(_CryptoAlgorithm);
             }
+
+
+
         /// <summary>
         /// Default algorithm key and output size.
         /// </summary>
@@ -151,14 +161,7 @@ namespace Goedel.Cryptography.Framework {
                 return 256;
                 }
             }
-        /// <summary>
-        /// Returns the default crypto provider.
-        /// </summary>
-        public override GetCryptoProvider GetCryptoProvider {
-            get {
-                return Factory;
-                }
-            }
+
         private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID Ignore) {
             return new CryptoProviderHMACSHA2_256();
             }
@@ -175,29 +178,38 @@ namespace Goedel.Cryptography.Framework {
     /// Provider for HMAC SHA-2 512 bits.
     /// </summary>
     public class CryptoProviderHMACSHA2_512 : CryptoProviderAuthentication {
+
+        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.HMAC_SHA_2_512;
+
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
         public override CryptoAlgorithmID CryptoAlgorithmID {
-            get {
-                return CryptoAlgorithmID.HMAC_SHA_2_512;
-                }
+            get { return _CryptoAlgorithmID; }
             }
+
         /// <summary>
-        /// .NET Framework name
+        /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public override string Name {
-            get {
-                return "HMACSHA512";
-                }
+        public override CryptoAlgorithm CryptoAlgorithm {
+            get { return _CryptoAlgorithm; }
             }
+
+        static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
+                    _CryptoAlgorithmID, 512, _AlgorithmClass, Factory);
+
+
         /// <summary>
-        /// JSON Algorithm Name
+        /// Register this provider in the specified crypto catalog. A provider may 
+        /// register itself multiple times to describe different configurations that 
+        /// are supported.
         /// </summary>
-        public override string JSONName {
-            get {
-                return "HS512";
-                }
+        /// <param name="Catalog">The catalog to register the provider to, if
+        /// null, the default catalog is used.</param>
+        /// <returns>Description of the principal algorithm registration.</returns>
+        public static CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
+            Catalog = Catalog ?? CryptoCatalog.Default;
+            return Catalog.Add(_CryptoAlgorithm);
             }
         /// <summary>
         /// Default algorithm key and output size.
@@ -207,23 +219,19 @@ namespace Goedel.Cryptography.Framework {
                 return 512;
                 }
             }
-        /// <summary>
-        /// Returns the default crypto provider.
-        /// </summary>
-        public override GetCryptoProvider GetCryptoProvider {
-            get {
-                return Factory;
-                }
-            }
+
+        
         private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID Ignore) {
             return new CryptoProviderHMACSHA2_512();
             }
+
         /// <summary>
         /// Constructor, algorithm takes no parameters.
         /// </summary>
         public CryptoProviderHMACSHA2_512()
             : base(new HMACSHA512()) {
             }
+
         }
 
     }

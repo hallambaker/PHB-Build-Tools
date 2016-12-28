@@ -97,7 +97,6 @@ namespace Goedel.Platform {
         /// <param name="Service">The IANA service name</param>
         /// <param name="Port">The default DNS port number</param>
         /// <param name="Fallback">The fallback mode to use if SRV lookup fails</param> 
-        /// <param name="Timeout">Timeout for the request</param> 
         /// <returns>Description of the discovered services.</returns>
         public static async Task<ServiceDescription> ResolveServiceAsync (string Address, 
                         string Service = null,
@@ -129,6 +128,10 @@ namespace Goedel.Platform {
 
         Task TaskRetry; // Task that expires when it is time to retry requests
         Task TaskTimeout ; // Task that expires when it is time to give up
+
+        /// <summary>
+        /// Task listening on the DNS port
+        /// </summary>
         protected Task<byte[]> TaskListen = null; // listen to the DNS port
 
         /// <summary>
@@ -281,6 +284,7 @@ namespace Goedel.Platform {
         /// </summary>
         /// <param name="Address">The address to query</param>
         /// <param name="Service">The IANA service name</param>
+        /// <param name="Port">The default port number to use if no SRV record is found</param>
         /// <param name="Fallback">Fallback mode for if no SRV record is found</param>
         /// <returns>Description of the discovered services.</returns>
         public async Task<ServiceDescription> QueryServiceAsync(string Address,

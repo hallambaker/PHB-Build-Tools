@@ -25,13 +25,14 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Framework {
 
     /// <summary>
     /// <para>Base class for all cryptographic hash providers.</para>
     /// 
-    /// <para>Provides utility and convenience functions that are employed in derrived
+    /// <para>Provides utility and convenience functions that are employed in derived
     /// classes. This provides consistency when using either the built in .NET
     /// providers or those from other sources.</para>
     /// 
@@ -41,12 +42,6 @@ namespace Goedel.Cryptography.Framework {
     /// </summary>
     public abstract class CryptoProviderDigest : 
                 Goedel.Cryptography.CryptoProviderDigest {
-
-        /// <summary>
-        /// The type of algorithm
-        /// </summary>
-        public override CryptoAlgorithmClass AlgorithmClass {
-            get { return CryptoAlgorithmClass.Digest; } }
 
 
         /// <summary>
@@ -62,17 +57,29 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="HashAlgorithm">Digest algorithm to construct from</param>
         protected CryptoProviderDigest(HashAlgorithm HashAlgorithm) {
             this.HashAlgorithm = HashAlgorithm;
-            //Buffer = new byte[HashAlgorithm.InputBlockSize];
             }
 
+
         /// <summary>
-        /// ASN.1 Object Identifier.
+        /// Register this set of providers to the specified catalog.
         /// </summary>
-        public override string OID {
-            get {
-                return CryptoConfig.MapNameToOID(Name);
-                }
+        /// <param name="Catalog">Catalog to register the providers to</param>
+        /// <returns>Registration for the preferred provider (SHA-2-512)</returns>
+        public static CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
+            CryptoProviderSHA2_256.Register(Catalog);
+            CryptoProviderSHA1.Register(Catalog);
+            return CryptoProviderSHA2_512.Register(Catalog);
             }
+
+
+        ///// <summary>
+        ///// ASN.1 Object Identifier.
+        ///// </summary>
+        //public override string OID {
+        //    get {
+        //        return CryptoConfig.MapNameToOID(Name);
+        //        }
+        //    }
 
         /// <summary>
         /// Default constructor.
@@ -81,40 +88,87 @@ namespace Goedel.Cryptography.Framework {
             }
 
 
+        /// <param name="Algorithm">Ignored</param>
+        /// <param name="Bulk">Ignored</param>
+        /// <param name="OutputStream">Output stream. Data written to the input 
+        /// stream is written to the output without modification. This permits
+        /// multiple digest values to be calculated simultaneously.</param>
+        /// <returns>Instance describing the key agreement parameters.</returns>
+        public override CryptoDataEncoder MakeEncoder(
+                            CryptoProviderBulk Bulk = null,
+                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            Stream OutputStream = null
+                            ) {
+
+
+            var Result = new CryptoDataEncoder(Algorithm, this);
+            Result.OutputStream = OutputStream ?? Stream.Null;
+            BindEncoder(Result);
+
+            return Result;
+            }
+
+
+
+
         /// <summary>
-        /// Computes the hash value for the specified region of the specified byte array
+        /// Create a crypto stream from this provider.
         /// </summary>
-        /// <param name="Buffer">The input to compute the hash code for.</param>
-        /// <param name="offset">The offset into the byte array from which to begin using data.</param>
-        /// <param name="count">The number of bytes in the array to use as data.</param>
-        /// <returns>The computed hash code.</returns>
-        public override CryptoData Process(byte[] Buffer, int offset, int count) {
-            var Data = HashAlgorithm.ComputeHash(Buffer, offset, count);
-            var CryptoDigestValue = new CryptoData(CryptoAlgorithmID, OID, Data);
-            return CryptoDigestValue;
+        /// <param name="Encoder"></param>
+        public override void BindEncoder(CryptoDataEncoder Encoder) {
+            Encoder.InputStream = new CryptoStream(
+                    Encoder.OutputStream, HashAlgorithm, CryptoStreamMode.Write);
+            }
+
+
+        /// <summary>
+        /// Processes the specified byte array
+        /// </summary>
+        /// <param name="Data">The input to process</param>
+        /// <param name="Key">The key</param>
+        /// <returns>The result of the cryptographic operation.</returns>
+        public override byte[] ProcessData(byte[] Data, byte[] Key = null) {
+            return HashAlgorithm.ComputeHash(Data);
             }
 
         /// <summary>
-        /// Terminates a part processing session and returns the result.
+        /// Complete processing at the end of an encoding or decoding operation
         /// </summary>
-        /// <returns>The computed hash code.</returns>
-        public override CryptoData TransformFinal() {
-            if (MemoryStream == null) {
-                MemoryStream = new MemoryStream();
-                }
-            var Data = HashAlgorithm.ComputeHash(MemoryStream);
-            var CryptoDigestValue = new CryptoData(CryptoAlgorithmID, OID, Data);
-            return CryptoDigestValue;
+        /// <param name="CryptoData">Structure to write result to</param>
+        public override void Complete(CryptoData CryptoData) {
+            var CryptoStream = CryptoData.InputStream as CryptoStream;
+            CryptoStream.FlushFinalBlock();
+            CryptoData.Integrity = HashAlgorithm.Hash;
+
+            return;
+            }
+
+        }
+
+
+
+    class CryptoDataEncoderDigest : CryptoDataEncoder {
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="Identifier">The Goedel Cryptography identifier.</param>
+        /// <param name="Bulk">Provider to use to process the bulk data
+        /// signature operations where the asymmetric operation is performed after the
+        /// bulk operation completes. </param> 
+        public CryptoDataEncoderDigest(CryptoAlgorithmID Identifier, 
+                        CryptoProviderBulk Bulk) :
+                            base (Identifier, Bulk){ 
             }
 
         /// <summary>
-        /// Initializes or re-initializes an instance.
+        /// Close the crypto stream and get the digest value.
         /// </summary>
-        public virtual void Initialize() {
-            HashAlgorithm.Initialize();
-            //Pointer = 0;
-            }
+        public override void Complete () {
+            InputStream.Close();
+            
 
+            }
         }
 
 
@@ -124,48 +178,40 @@ namespace Goedel.Cryptography.Framework {
     public class CryptoProviderSHA2_256 : CryptoProviderDigest {
 
 
-        /// <summary>
-        /// Return a CryptoAlgorithm structure with properties describing this provider.
-        /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm {
-            get { return new CryptoAlgorithm (
-                CryptoAlgorithmID.SHA_2_256, Name, OID, 256,
-                null, null, null, 
-                "http://www.w3.org/2001/04/xmlenc#sha256",
-                CryptoAlgorithmClass.Digest,
-                GetCryptoProvider);}
-            }
-
-
+        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.SHA_2_256;
 
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
         public override CryptoAlgorithmID CryptoAlgorithmID {
-            get {
-                return CryptoAlgorithmID.SHA_2_256;
-                }
+            get { return _CryptoAlgorithmID; }
+            }
+
+        /// <summary>
+        /// Return a CryptoAlgorithm structure with properties describing this provider.
+        /// </summary>
+        public override CryptoAlgorithm CryptoAlgorithm {
+            get { return _CryptoAlgorithm; }
             }
 
 
+        static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
+                    _CryptoAlgorithmID, 512, _AlgorithmClass, Factory);
 
 
         /// <summary>
-        /// .NET Framework name
+        /// Register this provider in the specified crypto catalog. A provider may 
+        /// register itself multiple times to describe different configurations that 
+        /// are supported.
         /// </summary>
-        public override string Name {
-            get {
-                return "SHA256";
-                }
+        /// <param name="Catalog">The catalog to register the provider to, if
+        /// null, the default catalog is used.</param>
+        /// <returns>Description of the principal algorithm registration.</returns>
+        public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
+            Catalog = Catalog ?? CryptoCatalog.Default;
+            return Catalog.Add(_CryptoAlgorithm);
             }
-        /// <summary>
-        /// JSON Algorithm Name
-        /// </summary>
-        public override string JSONName {
-            get {
-                return "HS256";
-                }
-            }
+
         /// <summary>
         /// Default output size.
         /// </summary>
@@ -174,14 +220,7 @@ namespace Goedel.Cryptography.Framework {
                 return 256;
                 }
             }
-        /// <summary>
-        /// Returns a factory delegate for this class.
-        /// </summary>
-        public override GetCryptoProvider GetCryptoProvider {
-            get {
-                return Factory;
-                }
-            }
+
         private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) {
             return new CryptoProviderSHA2_256();
             }
@@ -199,45 +238,39 @@ namespace Goedel.Cryptography.Framework {
     /// </summary>
     public class CryptoProviderSHA2_512 : CryptoProviderDigest {
 
-
-        /// <summary>
-        /// Return a CryptoAlgorithm structure with properties describing this provider.
-        /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm {
-            get {
-                return new CryptoAlgorithm(
-                    CryptoAlgorithmID.SHA_2_512, Name, OID, 512,
-                    null, null, null,
-                    "http://www.w3.org/2001/04/xmlenc#sha512",
-                    CryptoAlgorithmClass.Digest,
-                    GetCryptoProvider);
-                }
-            }
+        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512;
 
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
         public override CryptoAlgorithmID CryptoAlgorithmID {
-            get {
-                return CryptoAlgorithmID.SHA_2_512;
-                }
+            get { return _CryptoAlgorithmID; }
             }
+
         /// <summary>
-        /// .NET Framework name
+        /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public override string Name {
-            get {
-                return "SHA512";
-                }
-            }
+        public override CryptoAlgorithm CryptoAlgorithm {
+            get { return _CryptoAlgorithm; } }
+
+
+        static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
+                    _CryptoAlgorithmID, 512, _AlgorithmClass, Factory);
+
+
         /// <summary>
-        /// JSON Algorithm Name
+        /// Register this provider in the specified crypto catalog. A provider may 
+        /// register itself multiple times to describe different configurations that 
+        /// are supported.
         /// </summary>
-        public override string JSONName {
-            get {
-                return "HS512";
-                }
+        /// <param name="Catalog">The catalog to register the provider to, if
+        /// null, the default catalog is used.</param>
+        /// <returns>Description of the principal algorithm registration.</returns>
+        public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
+            Catalog = Catalog ?? CryptoCatalog.Default;
+            return Catalog.Add(_CryptoAlgorithm);
             }
+
         /// <summary>
         /// Default output size.
         /// </summary>
@@ -246,17 +279,12 @@ namespace Goedel.Cryptography.Framework {
                 return 512;
                 }
             }
-        /// <summary>
-        /// Returns the default crypto provider.
-        /// </summary>
-        public override GetCryptoProvider GetCryptoProvider {
-            get {
-                return Factory;
-                }
-            }
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) {
+
+        private static CryptoProvider Factory(int KeySize, 
+                            CryptoAlgorithmID Bulk=CryptoAlgorithmID.Default) {
             return new CryptoProviderSHA2_512();
             }
+        
         /// <summary>
         /// Create a SHA-2-256 digest provider.
         /// </summary>
@@ -270,44 +298,39 @@ namespace Goedel.Cryptography.Framework {
     public class CryptoProviderSHA1 : CryptoProviderDigest {
 
 
-        /// <summary>
-        /// Return a CryptoAlgorithm structure with properties describing this provider.
-        /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm {
-            get {
-                return new CryptoAlgorithm(
-                    CryptoAlgorithmID.SHA_1_DEPRECATED, Name, OID, 160,
-                    null, null, null,
-                    "http://www.w3.org/2000/09/xmldsig#sha1",
-                    CryptoAlgorithmClass.Digest,
-                    GetCryptoProvider);
-                }
-            }
+        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.SHA_1_DEPRECATED;
 
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
         public override CryptoAlgorithmID CryptoAlgorithmID {
-            get {
-                return CryptoAlgorithmID.SHA_1_DEPRECATED;
-                }
+            get { return _CryptoAlgorithmID; }
             }
+
         /// <summary>
-        /// .NET Framework name
+        /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public override string Name {
-            get {
-                return "SHA1";
-                }
+        public override CryptoAlgorithm CryptoAlgorithm {
+            get { return _CryptoAlgorithm; }
             }
+
+        static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
+                    _CryptoAlgorithmID, 512, _AlgorithmClass, Factory);
+
+
         /// <summary>
-        /// JSON Algorithm Name
+        /// Register this provider in the specified crypto catalog. A provider may 
+        /// register itself multiple times to describe different configurations that 
+        /// are supported.
         /// </summary>
-        public override string JSONName {
-            get {
-                return null;
-                }
+        /// <param name="Catalog">The catalog to register the provider to, if
+        /// null, the default catalog is used.</param>
+        /// <returns>Description of the principal algorithm registration.</returns>
+        public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
+            Catalog = Catalog ?? CryptoCatalog.Default;
+            return Catalog.Add(_CryptoAlgorithm);
             }
+
         /// <summary>
         /// Default output size.
         /// </summary>
@@ -316,14 +339,8 @@ namespace Goedel.Cryptography.Framework {
                 return 160;
                 }
             }
-        /// <summary>
-        /// Returns the default crypto provider.
-        /// </summary>
-        public override GetCryptoProvider GetCryptoProvider {
-            get {
-                return Factory;
-                }
-            }
+
+
         private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) {
             return new CryptoProviderSHA1();
             }

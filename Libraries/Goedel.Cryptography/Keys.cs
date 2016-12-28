@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
@@ -143,6 +144,7 @@ namespace Goedel.Cryptography {
 
 
 
+
         /// <summary>
         /// If true, keys will be created in containers prefixed with the name
         /// "test:" to allow them to be easily identified and cleaned up.
@@ -152,34 +154,99 @@ namespace Goedel.Cryptography {
             set { _TestMode = value; }
             }
 
-
-
         /// <summary>
         /// Returns a signature provider for the key (if the private portion is available).
         /// </summary>
-        public abstract CryptoProviderSignature SignatureProvider {
-            get;
-            }
-
-        /// <summary>
-        /// Returns a signature provider for the key (if the public portion is available).
-        /// </summary>
-        public abstract CryptoProviderSignature VerificationProvider {
-            get;
-            }
+        /// <param name="BulkAlgorithm">The digest algorithm to use</param>
+        public abstract CryptoProviderSignature SignatureProvider(
+                    CryptoAlgorithmID BulkAlgorithm = CryptoAlgorithmID.Default);
 
         /// <summary>
         /// Returns an encryption provider for the key (if the public portion is available)
         /// </summary>
-        public abstract CryptoProviderExchange ExchangeProviderEncrypt {
-            get;
+        /// <param name="BulkAlgorithm">The encryption algorithm to use</param>
+        public abstract CryptoProviderExchange ExchangeProvider(
+                    CryptoAlgorithmID BulkAlgorithm = CryptoAlgorithmID.Default);
+
+        CryptoProviderExchange CachedExchangeProvider = null;
+        CryptoProviderSignature CachedSignatureProvider = null;
+
+        /// <summary>
+        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
+        /// </summary>
+        /// <param name="Bulk">The provider to wrap.</param>
+        /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <returns></returns>
+        public virtual CryptoDataExchange EncryptKey(CryptoData Bulk,
+                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
+
+            CachedExchangeProvider = CachedExchangeProvider ?? ExchangeProvider(AlgorithmID);
+            var Exchange = CachedExchangeProvider.Encrypt(Bulk, Wrap: true);
+            Bulk.Exchanges = Bulk.Exchanges ?? new List<CryptoDataExchange>();
+            Bulk.Exchanges.Add(Exchange);
+
+            return Exchange;
             }
 
         /// <summary>
-        /// Returns an encryption provider for the key (if the public portion is available)
+        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
         /// </summary>
-        public abstract CryptoProviderExchange ExchangeProviderDecrypt {
-            get;
+        /// <param name="Meta">The provider to unwrap.</param>
+        /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <returns></returns>
+        public virtual CryptoData DecryptKey(CryptoData Meta,
+                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
+
+            CachedExchangeProvider = CachedExchangeProvider ??
+                ExchangeProvider(AlgorithmID);
+
+            throw new NYI("Fix here");
+            
+            //return CachedExchangeProvider.Decrypt(Meta);
+            }
+
+        /// <summary>
+        /// Sign a precomputed digest
+        /// </summary>
+        /// <param name="Bulk">The provider to wrap.</param>
+        /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <returns></returns>
+        public virtual CryptoData Sign(CryptoData Bulk,
+                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
+
+            CachedSignatureProvider = CachedSignatureProvider ??
+                        SignatureProvider(AlgorithmID);
+
+            throw new NYI("Fix here");
+            }
+
+
+        /// <summary>
+        /// Sign a precomputed digest
+        /// </summary>
+        /// <param name="Data">The data to sign.</param>
+        /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <returns></returns>
+        public virtual CryptoDataSignature Sign(byte [] Data,
+                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
+
+            CachedSignatureProvider = CachedSignatureProvider ??
+                        SignatureProvider(AlgorithmID);
+
+            return CachedSignatureProvider.Sign(Data);
+            }
+
+
+        /// <summary>
+        /// Verify a precomputed digest
+        /// </summary>
+        /// <param name="Bulk">The provider to wrap.</param>
+        /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <returns></returns>
+        public virtual CryptoDataDecoder Verify(CryptoData Bulk,
+                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
+
+            throw new NYI("Fix here");
             }
 
         /// <summary>
@@ -254,6 +321,58 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
+    /// RSA Key Pair
+    /// </summary>
+    public abstract class DHKeyPairBase : KeyPair {
+
+        /// <summary>
+        /// ASN.1 Object Identifier for the domain parameters.
+        /// </summary>
+        /// <remarks>
+        /// Since this is not standard DH, the OID is in 
+        /// PHB's OID space.
+        /// </remarks>
+        public const string KeyOIDDomain = "1.3.6.1.4.1.35405.1.22.0";
+
+        /// <summary>
+        /// ASN.1 Object Identifier for the public key parameters.
+        /// </summary>
+        /// <remarks>
+        /// Since this is not standard DH, the OID is in 
+        /// PHB's OID space.
+        /// </remarks>
+        public const string KeyOIDPublic = "1.3.6.1.4.1.35405.1.22.1";
+
+        /// <summary>
+        /// ASN.1 Object Identifier for the private key parameters.
+        /// </summary>
+        /// <remarks>
+        /// Since this is not standard DH, the OID is in 
+        /// PHB's OID space.
+        /// </remarks>
+        public const string KeyOIDPrivate = "1.3.6.1.4.1.35405.1.22.2";
+
+
+
+        /// <summary>
+        /// Return private key parameters in PKIX structure
+        /// </summary>
+        public abstract DHDomain DHDomain { get; }
+
+        /// <summary>
+        /// Return private key parameters in PKIX structure
+        /// </summary>
+        public abstract DHPrivateKey DHPrivateKey { get; }
+
+        /// <summary>
+        /// Return public key parameters in PKIX structure
+        /// </summary>
+        public abstract DHPublicKey DHPublicKey { get; }
+        }
+
+
+
+    /// <summary>
     /// Base class for all public key cryptographic providers.
     /// </summary>
     public abstract class CryptoProviderAsymmetric : CryptoProvider {
@@ -261,8 +380,8 @@ namespace Goedel.Cryptography {
         /// Generates a new signing key pair with the default key size.
         /// </summary>
         /// <param name="KeySecurity">Specifies the protection level for the key.</param>
-
-        public abstract void Generate(KeySecurity KeySecurity);
+        /// <param name="KeySize">The key size</param>
+        public abstract void Generate(KeySecurity KeySecurity, int KeySize=0);
 
         /// <summary>
         /// Locate the private key in the local key store.
@@ -272,7 +391,12 @@ namespace Goedel.Cryptography {
         public abstract bool FindLocal(string UDF);
 
 
-
+        /// <summary>
+        /// The default digest algorithm. This may be overriden in subclasses.
+        /// for example, to make a different digest algorithm the default for
+        /// a particular provider.
+        /// </summary>
+        public virtual CryptoAlgorithmID BulkAlgorithmDefault { get; set; } = CryptoAlgorithmID.Default;
 
 
 

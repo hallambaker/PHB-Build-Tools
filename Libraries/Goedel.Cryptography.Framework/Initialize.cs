@@ -34,28 +34,23 @@ namespace Goedel.Cryptography.Framework {
                 // needed so often as to make this the easiest solution.
                 Goedel.Cryptography.Platform.GetRandomBytesDelegate = GetRandomBytes;
 
-                // Load thje default algorithms first
+                // Load the default algorithms for each class first
 
-                Platform.SHA2_512 = CryptoCatalog.Default.Add(new CryptoProviderSHA2_512());
-                Platform.HMAC_SHA2_512 = CryptoCatalog.Default.Add(new CryptoProviderHMACSHA2_512());
-                Platform.AES_256 = CryptoCatalog.Default.Add(new CryptoProviderEncryptAES(256));
-                CryptoCatalog.Default.Add(new CryptoProviderSignatureRSA(2048));
-                CryptoCatalog.Default.Add(new CryptoProviderExchangeRSA(2048));
+                Platform.SHA2_512 = CryptoProviderSHA2_512.Register();
+                Platform.SHA2_256 = CryptoProviderSHA2_256.Register();
+                Platform.SHA1 = CryptoProviderSHA1.Register();
 
-                // The rest
-                Platform.SHA2_256 = CryptoCatalog.Default.Add(new CryptoProviderSHA2_256());
-                Platform.SHA1 = CryptoCatalog.Default.Add(new CryptoProviderSHA1());
-                Platform.HMAC_SHA2_256 = CryptoCatalog.Default.Add(new CryptoProviderHMACSHA2_256());
-                CryptoCatalog.Default.Add(new CryptoProviderEncryptAES(128));
+                Platform.HMAC_SHA2_512 = CryptoProviderHMACSHA2_512.Register();
+                Platform.HMAC_SHA2_256 = CryptoProviderHMACSHA2_256.Register();
 
-                //Add(new CryptoProviderEncryptAES(128, CipherMode.CTS));
-                //Add(new CryptoProviderEncryptAES(256, CipherMode.CTS));
+                Platform.AES_256 = CryptoProviderEncryptAES.Register();
 
-                CryptoCatalog.Default.Add(new CryptoProviderSignatureRSA(4096));
-                CryptoCatalog.Default.Add(new CryptoProviderExchangeRSA(4096));
-                CryptoCatalog.Default.Add(new CryptoProviderExchangeRSAPKCS(2048));
-                CryptoCatalog.Default.Add(new CryptoProviderExchangeRSAPKCS(4096));
+                CryptoProviderSignatureRSA.Register();
+                CryptoProviderExchangeRSA.Register();
 
+                // Although this is in the portable library, we register it here so
+                // as to allow for the possibility we might override it.
+                CryptoProviderExchangeDH.Register();
 
                 Platform.FindLocalDelegates.Add(RSAKeyPair.FindLocal);
                 }

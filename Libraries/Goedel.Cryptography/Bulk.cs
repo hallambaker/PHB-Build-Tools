@@ -33,93 +33,13 @@ namespace Goedel.Cryptography {
     /// digest, authentication.
     /// </summary>
     public abstract class CryptoProviderBulk : CryptoProvider {
-        /// <summary>
-        /// Memory stream used in part processing mode.
-        /// </summary>
-        protected MemoryStream MemoryStream;
-
-        /// <summary>
-        /// Processes the specified region of the specified byte array
-        /// </summary>
-        /// <param name="Buffer">The input to process</param>
-        /// <param name="offset">The offset into the byte array from which to begin using data.</param>
-        /// <param name="count">The number of bytes in the array to use as data.</param>
-        /// <returns>The result of the cryptographic operation.</returns>
-        public abstract CryptoData Process(byte[] Buffer, int offset, int count);
-
-        // Convenience routines
-
-        /// <summary>
-        /// Processes the specified byte array
-        /// </summary>
-        /// <param name="Buffer">The input to process</param>
-        /// <returns>The result of the cryptographic operation.</returns>
-        public virtual CryptoData Process(byte[] Buffer) {
-            return Process(Buffer, 0, Buffer.Length);
-            }
-
-        /// <summary>
-        /// Processes the specified string in UTF8 encoding.
-        /// </summary>
-        /// <param name="Data">The input to process</param>
-        /// <returns>The result of the cryptographic operation.</returns>
-        public virtual CryptoData Process(string Data) {
-            return Process(Encoding.UTF8.GetBytes(Data));
-            }
-
-        /// <summary>
-        /// Processes the specified input data.
-        /// </summary>
-        /// <param name="Data">The input to process</param>
-        /// <returns>The result of the cryptographic operation.</returns>
-        public virtual CryptoData Process(CryptoData Data) {
-            return Process(Data.Data);
-            }
 
 
         /// <summary>
-        /// Part processes the specified region of the specified byte array.
-        /// 
-        /// [Efficiency] Currently the data is buffered internally and processed in one go.
-        /// Use of the underlying TransformBlock methods would allow for more 
-        /// efficient processing and reduce memory overhead.
+        /// Create a crypto stream from this provider.
         /// </summary>
-        /// <param name="Buffer">The input to process</param>
-        /// <param name="offset">The offset into the byte array from which to begin using data.</param>
-        /// <param name="count">The number of bytes in the array to use as data.</param>
-        public virtual void ProcessPart(byte[] Buffer, int offset, int count) {
-            if (MemoryStream == null) {
-                MemoryStream = new MemoryStream();
-                }
-            MemoryStream.Write(Buffer, offset, count);
-            }
-
-        /// <summary>
-        /// Part processes the specified region of the specified byte array.
-        /// </summary>
-        /// <param name="Buffer">The input to process</param>
-        public virtual void ProcessPart(byte[] Buffer) {
-            ProcessPart(Buffer, 0, Buffer.Length);
-            }
-
-        /// <summary>
-        /// Part processes the specified region of the specified string in UTF8 encoding.
-        /// </summary>
-        /// <param name="Data">The input to process</param>
-        public virtual void ProcessPart(string Data) {
-            ProcessPart(Encoding.UTF8.GetBytes(Data));
-            }
-
-        /// <summary>
-        /// Terminates a part processing session and returns the result.
-        /// </summary>
-        /// <returns>The result of the cryptographic operation.</returns>
-        public virtual CryptoData TransformFinal() {
-            if (MemoryStream == null) {
-                MemoryStream = new MemoryStream();
-                }
-            return Process(MemoryStream.ToArray(), 0, (int)MemoryStream.Position);
-            }
+        /// <param name="Encoder"></param>
+        public abstract void BindEncoder(CryptoDataEncoder Encoder);
 
 
         }
@@ -128,12 +48,52 @@ namespace Goedel.Cryptography {
     /// Base class for cryptographic digest providers.
     /// </summary>
     public abstract class CryptoProviderDigest : CryptoProviderBulk {
+        /// <summary>
+        /// Processes the specified byte array
+        /// </summary>
+        /// <param name="Data">The input to process</param>
+        /// <param name="Key">The key</param>
+        /// <returns>The result of the cryptographic operation.</returns>
+        public virtual CryptoData Process(byte[] Data, byte[] Key = null) {
+            var Integrity = ProcessData(Data, Key);
+            return new CryptoDataEncoder(CryptoAlgorithmID, this) {
+                Integrity = Integrity
+                };
+            }
+
+
+        /// <summary>
+        /// Processes the specified byte array
+        /// </summary>
+        /// <param name="Data">The input to process</param>
+        /// <param name="Key">The key</param>
+        /// <returns>The result of the cryptographic operation.</returns>
+        public abstract byte[] ProcessData(byte[] Data, byte[] Key = null);
+
+        /// <summary>The crypto algorithm class.</summary>
+        protected static CryptoAlgorithmClass _AlgorithmClass =
+            CryptoAlgorithmClass.Digest;
+
+        /// <summary>Return the crypto algorithm class.</summary>
+        public override CryptoAlgorithmClass AlgorithmClass {
+            get { return _AlgorithmClass; }
+            }
+
         }
 
     /// <summary>
     /// Base class for cryptographic MAC providers.
     /// </summary>
     public abstract class CryptoProviderAuthentication : CryptoProviderDigest {
+
+        /// <summary>The crypto algorithm class.</summary>
+        protected static new CryptoAlgorithmClass _AlgorithmClass =
+            CryptoAlgorithmClass.MAC;
+
+        /// <summary>Return the crypto algorithm class.</summary>
+        public override CryptoAlgorithmClass AlgorithmClass {
+            get { return _AlgorithmClass; }
+            }
         }
 
     /// <summary>
@@ -142,28 +102,61 @@ namespace Goedel.Cryptography {
     public abstract class CryptoProviderEncryption : CryptoProviderBulk {
 
         /// <summary>
-        /// Encrypt the provided data
+        /// The size of the required key
         /// </summary>
-        /// <param name="Data">Data to encrypt</param>
-        /// <returns>Encrypted data.</returns>
-        public abstract CryptoData Encrypt(byte[] Data);
-
+        public abstract int KeySize { get; }
 
         /// <summary>
-        /// Encrypt the provided cryptoblob
+        /// The size of the required IV. If zero, no IV is required.
         /// </summary>
-        /// <param name="Input">Data to encrypt</param>
-        /// <returns>Encrypted data.</returns>
-        public abstract CryptoData Encrypt(CryptoData Input);
-
+        public abstract int IVSize { get; }
 
         /// <summary>
-        /// Decrypt data;
+        /// Encrypts the specified byte array
         /// </summary>
-        /// <param name="Input">Cryoptographic parameters</param>
-        /// <param name="Data">Data to decrypt/</param>
-        /// <returns>Decrypted data.</returns>
-        public abstract CryptoData Decrypt(CryptoData Input, byte[] Data);
+        /// <param name="Data">The input to process</param>
+        /// <param name="IV">The Initialization Vector</param>
+        /// <param name="Key">The key</param>
+        /// <returns>The result of the cryptographic operation.</returns>
+        public abstract byte[] Encrypt(byte[] Data, byte[] Key = null, byte[] IV = null);
+
+        /// <summary>
+        /// Decrypts the specified byte array
+        /// </summary>
+        /// <param name="Data">The input to process</param>
+        /// <param name="IV">The Initialization Vector</param>
+        /// <param name="Key">The key</param>
+        /// <returns>The result of the cryptographic operation.</returns>
+        public abstract byte[] Decrypt(byte[] Data, byte[] Key = null, byte[] IV = null);
+
+
+        /// <summary>Return the crypto algorithm class.</summary>
+        public override CryptoAlgorithmClass AlgorithmClass {
+            get { return _AlgorithmClass; }
+            }
+
+        /// <summary>The crypto algorithm class.</summary>
+        protected static CryptoAlgorithmClass _AlgorithmClass =
+            CryptoAlgorithmClass.Encryption;
+
+        /// <summary>
+        /// Create an encoder for a bulk algorithm and optional key wrap or exchange.
+        /// </summary>
+
+        /// <param name="Algorithm">The key wrap algorithm</param>
+        /// <param name="OutputStream">Output stream</param>
+        /// <param name="IV">Initialization vector for symmetric encryption</param>
+        /// <param name="Key">Encryption Key</param>
+        /// <returns>Instance describing the key agreement parameters.</returns>
+        public abstract CryptoDataEncoder MakeEncryptor(
+                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            Stream OutputStream = null,
+                            byte[] Key = null, byte[] IV = null
+                            );
+
+
+
         }
-
     }
+
+

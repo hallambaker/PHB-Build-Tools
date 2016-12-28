@@ -9,6 +9,25 @@ namespace Goedel.Utilities {
     public static partial class Extension {
 
         /// <summary>
+        /// Convert UTF8 encoded bytes to string
+        /// </summary>
+        /// <param name="Data">The encoded bytes to convert.</param>
+        /// <returns>The resulting string.</returns>
+        public static string ToUTF8 (this byte[] Data) {
+            return Encoding.UTF8.GetString(Data, 0, Data.Length);
+            }
+
+        /// <summary>
+        /// Convert Text to UTF8 encoded bytes
+        /// </summary>
+        /// <param name="Text">Text to convert</param>
+        /// <returns>The encoded bytes</returns>
+        public static byte[] ToBytes(this string Text) {
+            return Encoding.UTF8.GetBytes(Text);
+            }
+
+
+        /// <summary>
         /// Convert integer to ASCII character if in the range 1-127, otherwise
         /// return .
         /// </summary>

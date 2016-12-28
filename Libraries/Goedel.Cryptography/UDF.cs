@@ -79,8 +79,7 @@ namespace Goedel.Cryptography {
         /// <returns>The binary UDF fingerprint.</returns>
         public static byte[] From(string ContentType, byte[] Data, int Bits) {
 
-            var DigestOfData = Platform.SHA2_512.Process(Data);
-            byte[] HashData = DigestOfData.Integrity;
+            byte[] HashData = Platform.SHA2_512.Process(Data);
 
 
             var Tag = Encoding.UTF8.GetBytes(ContentType);
@@ -95,9 +94,7 @@ namespace Goedel.Cryptography {
                 Input[i++] = Byte;
                 }
 
-
-            var DigestOfMetaData = Platform.SHA2_512.Process(Input);
-            var UDFData = DigestOfMetaData.Integrity;
+            var UDFData = Platform.SHA2_512.Process(Input);
 
             var TotalBits = Bits;
             var FullBytes = TotalBits / 8;

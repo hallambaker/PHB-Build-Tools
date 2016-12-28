@@ -70,7 +70,7 @@ namespace Goedel.Cryptography.PKIX {
         public byte[] SHA1 {
             get {
                 if (_SHA1 == null) {
-                    _SHA1 = Platform.SHA1.Process(Data).Integrity;
+                    _SHA1 = Platform.SHA1.Process(Data);
                     }
                 return _SHA1;
                 }
@@ -83,7 +83,7 @@ namespace Goedel.Cryptography.PKIX {
         public byte[] SHA256 {
             get {
                 if (_SHA256 == null) {
-                    _SHA256 = Platform.SHA2_256.Process(Data).Integrity;
+                    _SHA256 = Platform.SHA2_256.Process(Data);
                     }
                 return _SHA256;
                 }
@@ -107,7 +107,7 @@ namespace Goedel.Cryptography.PKIX {
         public CryptoProviderSignature CryptoProviderSignature {
             get {
                 if (_CryptoProviderSignature == null) {
-                    _CryptoProviderSignature = KeyPair.SignatureProvider;
+                    _CryptoProviderSignature = KeyPair.SignatureProvider ();
                     }
                 return _CryptoProviderSignature;
                 }
@@ -121,7 +121,7 @@ namespace Goedel.Cryptography.PKIX {
         public CryptoProviderExchange CryptoProviderExchange {
             get {
                 if (_CryptoProviderExchange == null) {
-                    _CryptoProviderExchange = KeyPair.ExchangeProviderEncrypt;
+                    _CryptoProviderExchange = KeyPair.ExchangeProvider();
                     }
                 return _CryptoProviderExchange;
                 }
@@ -267,12 +267,11 @@ namespace Goedel.Cryptography.PKIX {
         /// <param name="Signer">Cryptographic provider for the signer.</param>
         public void Sign(CryptoProviderSignature Signer) {
 
-            TBSCertificate.Signature = new AlgorithmIdentifier(Signer.OID);
+            TBSCertificate.Signature = new AlgorithmIdentifier(Signer.CryptoAlgorithmID);
             SignatureAlgorithm = TBSCertificate.Signature;
 
             var Data = TBSCertificate.DER();
-            var SignatureData = Signer.Sign(Data);
-            Signature = SignatureData.Integrity;
+            Signature = Signer.Sign(Data).Signature;
 
             _Data = this.DER();
             }
@@ -361,9 +360,9 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         /// <param name="SigningKey">The signing key</param>
         public void Sign(CryptoProviderSignature SigningKey) {
-            SignatureAlgorithm = new AlgorithmIdentifier(SigningKey.OID);
+            SignatureAlgorithm = new AlgorithmIdentifier(SigningKey.CryptoAlgorithmID);
             var SignatureData = SigningKey.Sign(CertificationRequestInfo.DER());
-            Signature = SignatureData.Integrity;
+            Signature = SigningKey.Sign(CertificationRequestInfo.DER()).Signature;
             }
 
         /// <summary>

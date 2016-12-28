@@ -310,9 +310,6 @@ Class AttributeTypeValues
 	Value					Set Any
 
 
-Class RSAPublicKey 
-	Modulus					BigInteger
-	PublicExponent			BigInteger
 
 
 Object AuthorityKeyIdentifier  id_ce_authorityKeyIdentifier
@@ -430,6 +427,11 @@ Class PrivateKeyInfo
 		Code 0
 		Implicit
 
+Class RSAPublicKey 
+	Modulus					BigInteger
+	PublicExponent			BigInteger
+
+
 Class RSAPrivateKey
 	Version					Integer
 	Modulus					BigInteger
@@ -440,6 +442,19 @@ Class RSAPrivateKey
 	Exponent1				BigInteger
 	Exponent2				BigInteger
 	Coefficient				BigInteger
+
+
+Class DHDomain
+	Modulus					BigInteger
+	Generator				BigInteger
+
+Class DHPublicKey
+	Shared					Octets
+	Public					BigInteger
+
+Class DHPrivateKey
+	Shared					Octets
+	Private					BigInteger
 
 
 Class Endorsement  

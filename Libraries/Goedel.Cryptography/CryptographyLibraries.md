@@ -22,13 +22,19 @@ CryptoProvider classes.
 
 ::Base class for all cryptographic keys, whether symmetric or asymmetric.
 
+:CryptoProvider
+
+::Base class for all classes that perform operations on *CryptoData* using a *Key*
+
+:CryptoProcessor
+
+::Base class for CryptoDataEncoder and CryptoDecoder 
+
 :CryptoData
 
 ::Base class for all ciphertext, plaintext and associated data.
 
-:CryptoProvider
 
-::Base class for all classes that perform operations on *CryptoData* using a *Key*
 
 
 ##Initialization

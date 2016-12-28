@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -2498,6 +2498,56 @@ namespace Goedel.Cryptography.PKIX {
 
 		}
     /// <summary>
+	/// RSAPublicKey 
+    /// </summary>
+	public partial class RSAPublicKey : Goedel.ASN.Root {
+
+		/// <summary>
+		/// ASN.1 member Modulus 
+		/// </summary>
+		public byte []  Modulus ;
+		/// <summary>
+		/// ASN.1 member PublicExponent 
+		/// </summary>
+		public byte []  PublicExponent ;
+
+		/// <summary>
+		/// Encode ASN.1 class members to specified buffer. 
+		///
+		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
+		/// </summary>
+		/// <param name="Buffer">Output buffer</param>
+        public override void Encode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Encode__Sequence_Start ();
+
+			Buffer.Encode__BigInteger  (PublicExponent, 0, -1);
+			Buffer.Debug ("PublicExponent");
+
+			Buffer.Encode__BigInteger  (Modulus, 0, -1);
+			Buffer.Debug ("Modulus");
+			Buffer.Encode__Sequence_End (Position);
+            }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__BigInteger  (Modulus, 0, -1);
+			Buffer.Debug ("Modulus");
+
+			Buffer.Decode__BigInteger  (PublicExponent, 0, -1);
+			Buffer.Debug ("PublicExponent");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
+		}
+    /// <summary>
 	/// AuthorityKeyIdentifier 
     /// </summary>
 	public partial class AuthorityKeyIdentifier : Goedel.ASN.Root {
@@ -3628,56 +3678,6 @@ namespace Goedel.Cryptography.PKIX {
 
 		}
     /// <summary>
-	/// RSAPublicKey 
-    /// </summary>
-	public partial class RSAPublicKey : Goedel.ASN.Root {
-
-		/// <summary>
-		/// ASN.1 member Modulus 
-		/// </summary>
-		public byte []  Modulus ;
-		/// <summary>
-		/// ASN.1 member PublicExponent 
-		/// </summary>
-		public byte []  PublicExponent ;
-
-		/// <summary>
-		/// Encode ASN.1 class members to specified buffer. 
-		///
-		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
-		/// </summary>
-		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
-			int Position = Buffer.Encode__Sequence_Start ();
-
-			Buffer.Encode__BigInteger  (PublicExponent, 0, -1);
-			Buffer.Debug ("PublicExponent");
-
-			Buffer.Encode__BigInteger  (Modulus, 0, -1);
-			Buffer.Debug ("Modulus");
-			Buffer.Encode__Sequence_End (Position);
-            }
-
-			/*
-		/// <summary>
-		/// Decode buffer to populate class members
-		///
-		/// This is done in the forward direction
-		/// </summary>
-        public override void Decode (Goedel.ASN.Buffer Buffer) {
-			int Position = Buffer.Decode__Sequence_Start ();
-
-			Buffer.Decode__BigInteger  (Modulus, 0, -1);
-			Buffer.Debug ("Modulus");
-
-			Buffer.Decode__BigInteger  (PublicExponent, 0, -1);
-			Buffer.Debug ("PublicExponent");
-			Buffer.Decode__Sequence_End (Position);
-            }
-			*/
-
-		}
-    /// <summary>
 	/// RSAPrivateKey 
     /// </summary>
 	public partial class RSAPrivateKey : Goedel.ASN.Root {
@@ -3792,159 +3792,6 @@ namespace Goedel.Cryptography.PKIX {
 
 			Buffer.Decode__BigInteger  (Coefficient, 0, -1);
 			Buffer.Debug ("Coefficient");
-			Buffer.Decode__Sequence_End (Position);
-            }
-			*/
-
-		}
-    /// <summary>
-	/// DHDomain 
-    /// </summary>
-	public partial class DHDomain : Goedel.ASN.Root {
-
-		/// <summary>
-		/// ASN.1 member Modulus 
-		/// </summary>
-		public byte []  Modulus ;
-		/// <summary>
-		/// ASN.1 member Generator 
-		/// </summary>
-		public byte []  Generator ;
-
-		/// <summary>
-		/// Encode ASN.1 class members to specified buffer. 
-		///
-		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
-		/// </summary>
-		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
-			int Position = Buffer.Encode__Sequence_Start ();
-
-			Buffer.Encode__BigInteger  (Generator, 0, -1);
-			Buffer.Debug ("Generator");
-
-			Buffer.Encode__BigInteger  (Modulus, 0, -1);
-			Buffer.Debug ("Modulus");
-			Buffer.Encode__Sequence_End (Position);
-            }
-
-			/*
-		/// <summary>
-		/// Decode buffer to populate class members
-		///
-		/// This is done in the forward direction
-		/// </summary>
-        public override void Decode (Goedel.ASN.Buffer Buffer) {
-			int Position = Buffer.Decode__Sequence_Start ();
-
-			Buffer.Decode__BigInteger  (Modulus, 0, -1);
-			Buffer.Debug ("Modulus");
-
-			Buffer.Decode__BigInteger  (Generator, 0, -1);
-			Buffer.Debug ("Generator");
-			Buffer.Decode__Sequence_End (Position);
-            }
-			*/
-
-		}
-    /// <summary>
-	/// DHPublicKey 
-    /// </summary>
-	public partial class DHPublicKey : Goedel.ASN.Root {
-
-
-
-
-		/// <summary>
-		/// ASN.1 member Shared 
-		/// </summary>
-		public byte []  Shared ;
-		/// <summary>
-		/// ASN.1 member Public 
-		/// </summary>
-		public byte []  Public ;
-
-		/// <summary>
-		/// Encode ASN.1 class members to specified buffer. 
-		///
-		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
-		/// </summary>
-		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
-			int Position = Buffer.Encode__Sequence_Start ();
-
-			Buffer.Encode__BigInteger  (Public, 0, -1);
-			Buffer.Debug ("Public");
-
-			Buffer.Encode__Octets  (Shared, 0, -1);
-			Buffer.Debug ("Shared");
-			Buffer.Encode__Sequence_End (Position);
-            }
-
-			/*
-		/// <summary>
-		/// Decode buffer to populate class members
-		///
-		/// This is done in the forward direction
-		/// </summary>
-        public override void Decode (Goedel.ASN.Buffer Buffer) {
-			int Position = Buffer.Decode__Sequence_Start ();
-
-			Buffer.Decode__Octets  (Shared, 0, -1);
-			Buffer.Debug ("Shared");
-
-			Buffer.Decode__BigInteger  (Public, 0, -1);
-			Buffer.Debug ("Public");
-			Buffer.Decode__Sequence_End (Position);
-            }
-			*/
-
-		}
-    /// <summary>
-	/// DHPrivateKey 
-    /// </summary>
-	public partial class DHPrivateKey : Goedel.ASN.Root {
-
-		/// <summary>
-		/// ASN.1 member Shared 
-		/// </summary>
-		public byte []  Shared ;
-		/// <summary>
-		/// ASN.1 member Private 
-		/// </summary>
-		public byte []  Private ;
-
-		/// <summary>
-		/// Encode ASN.1 class members to specified buffer. 
-		///
-		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
-		/// </summary>
-		/// <param name="Buffer">Output buffer</param>
-        public override void Encode (Goedel.ASN.Buffer Buffer) {
-			int Position = Buffer.Encode__Sequence_Start ();
-
-			Buffer.Encode__BigInteger  (Private, 0, -1);
-			Buffer.Debug ("Private");
-
-			Buffer.Encode__Octets  (Shared, 0, -1);
-			Buffer.Debug ("Shared");
-			Buffer.Encode__Sequence_End (Position);
-            }
-
-			/*
-		/// <summary>
-		/// Decode buffer to populate class members
-		///
-		/// This is done in the forward direction
-		/// </summary>
-        public override void Decode (Goedel.ASN.Buffer Buffer) {
-			int Position = Buffer.Decode__Sequence_Start ();
-
-			Buffer.Decode__Octets  (Shared, 0, -1);
-			Buffer.Debug ("Shared");
-
-			Buffer.Decode__BigInteger  (Private, 0, -1);
-			Buffer.Debug ("Private");
 			Buffer.Decode__Sequence_End (Position);
             }
 			*/

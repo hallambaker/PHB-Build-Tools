@@ -40,7 +40,7 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Main.cs" />
+    <Compile Include="MainCrypto.cs" />
     <Compile Include="Exceptions.cs">
       <DependentUpon>Exceptions.exceptional</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -74,6 +74,10 @@
     <ProjectReference Include="..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
       <Project>{ccc286f1-6a5b-4946-a382-8a48797192b4}</Project>
       <Name>Goedel.FSR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\Goedel.IO\Goedel.IO.csproj">
+      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
+      <Name>Goedel.IO</Name>
     </ProjectReference>
     <ProjectReference Include="..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{02d75812-6892-45f7-8497-82266b6f0328}</Project>

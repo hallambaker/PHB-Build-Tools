@@ -8,28 +8,26 @@
 			|A signed JOSE data object. The data contents are all binary encoded to 
 			|enable direct authentication of the contents.
 		// Parametric Object
-
-		Binary Header
-			Tag "header"
+		Struct Header Unprotected
+			Tag "unprotected"
 			Description
-				|The signature header
+				|Data not protected by the signature
 		Binary Payload
 			Tag "payload"
 			Description
 				|The signed data
-		Binary Protected
-			Tag "protected"
-			Description
-				|Data protected by the signature
-		Binary Signature
+		Struct Signature Signatures
+			Multiple
 			Tag "signature"
 			Description
 				|The signature value
-
+	
 
 	Structure JoseWebEncryption
+		Inherits JoseWebSignature
+
 		Description
-			|A signed JOSE data object. The encrypte data contents are all binary encoded.
+			|A signed JOSE data object. The encrypted data contents are all binary encoded.
 
 		// Parametric Object
 
@@ -37,14 +35,24 @@
 			Tag "protected"
 			Description
 				|Data protected by the signature
-		Binary Unprotected
-			Tag "unprotected"
-			Description
-				|Data not protected by the signature
+
 		Binary IV
 			Tag "iv"
 			Description
 				|The initialization vector for the bulk cipher.
+		Struct Recipient Recipients
+			Tag "recipients"
+			Multiple
+			Description
+				|Per recipient decryption data.
+		Binary EncryptedKey 
+			Tag "encrypted_key"
+			Description
+				|The decryption data for use by this recipient.
+		Binary AdditionalAuthenticatedData
+			Tag "aad"
+			Description
+				|Additional data that is included in the authentication scope but not the encryption
 		Binary CipherText
 			Tag "ciphertext"
 			Description
@@ -53,28 +61,15 @@
 			Tag "tag"
 			Description
 				|Authentication tag
-		Binary AdditionalAuthenticatedData
-			Tag "aad"
-			Description
-				|Additional data that is included in the authentication scope but not the encryption
-		Struct Recipient Recipients
-			Tag "recipients"
-			Multiple
-			Description
-				|Per recipient decryption data.
 
-
-
-	
 	Structure Signed
 		Description
 			|Compact representation for signed data
 
-
-		Struct Header Header
-			Tag "header"
+		Binary Protected
+			Tag "protected"
 			Description
-				|Header
+				|Data protected by the signature
 		Binary Payload
 			Tag "payload"
 			Description
@@ -87,7 +82,6 @@
 	Structure Encrypted
 		Description
 			|Compact representation for encrypted data
-
 
 		Struct Header Header
 			Tag "header"
@@ -106,15 +100,15 @@
 			Description
 				|The signature data
 
-
-
 	Structure KeyData
 		Description
 			|Describe a cryptographic key
 		String enc
 			Description
 				|Bulk encryption algorithm for content
-
+		String dig
+			Description
+				|Digest algorithm hint
 		String alg
 			Description
 				|Key exchange algorithm
@@ -159,6 +153,24 @@
 			Description
 				|List of header parameters that a recipient MUST understand to interpret
 				|the authentication portion of the JOSE object.
+		Binary val
+			Description
+				|The digest value
+
+	Structure Signature
+		Binary Header
+			Tag "header"
+			Description
+				|The signature header
+		Binary Protected
+			Tag "protected"
+			Description
+				|Data protected by the signature
+		Binary SignatureValue
+			Tag "signature"
+			Description
+				|The signature value
+
 
 	Structure Key
 		Description

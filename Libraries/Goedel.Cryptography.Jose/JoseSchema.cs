@@ -139,6 +139,14 @@ namespace Goedel.Cryptography.Jose {
 					}
 
 
+				case "Signature" : {
+					var Result = new Signature ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+
 				case "Key" : {
 					var Result = new Key ();
 					Result.Deserialize (JSONReader);
@@ -192,14 +200,14 @@ namespace Goedel.Cryptography.Jose {
 	/// </summary>
 	public partial class JoseWebSignature : Jose {
         /// <summary>
-        ///The signature header
+        ///Data not protected by the signature
         /// </summary>
 
-		public virtual byte[]						Header {
-			get {return _Header;}			
-			set {_Header = value;}
+		public virtual Header						Unprotected {
+			get {return _Unprotected;}			
+			set {_Unprotected = value;}
 			}
-		byte[]						_Header ;
+		Header						_Unprotected ;
         /// <summary>
         ///The signed data
         /// </summary>
@@ -210,23 +218,14 @@ namespace Goedel.Cryptography.Jose {
 			}
 		byte[]						_Payload ;
         /// <summary>
-        ///Data protected by the signature
-        /// </summary>
-
-		public virtual byte[]						Protected {
-			get {return _Protected;}			
-			set {_Protected = value;}
-			}
-		byte[]						_Protected ;
-        /// <summary>
         ///The signature value
         /// </summary>
 
-		public virtual byte[]						Signature {
-			get {return _Signature;}			
-			set {_Signature = value;}
+		public virtual List<Signature>				Signatures {
+			get {return _Signatures;}			
+			set {_Signatures = value;}
 			}
-		byte[]						_Signature ;
+		List<Signature>				_Signatures;
 
         /// <summary>
         /// Tag identifying this class.
@@ -283,26 +282,33 @@ namespace Goedel.Cryptography.Jose {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			if (Header != null) {
+			if (Unprotected != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("header", 1);
-					_Writer.WriteBinary (Header);
+				_Writer.WriteToken ("unprotected", 1);
+					Unprotected.Serialize (_Writer, false);
 				}
 			if (Payload != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("payload", 1);
 					_Writer.WriteBinary (Payload);
 				}
-			if (Protected != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("protected", 1);
-					_Writer.WriteBinary (Protected);
-				}
-			if (Signature != null) {
+			if (Signatures != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("signature", 1);
-					_Writer.WriteBinary (Signature);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Signatures) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index.Tag(), 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
 				}
+
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -383,6 +389,13 @@ namespace Goedel.Cryptography.Jose {
 					break;
 					}
 
+				case "JoseWebEncryption" : {
+					var Result = new JoseWebEncryption ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
 				default : {
 					//Ignore the unknown data
                     //throw new Exception ("Not supported");
@@ -403,20 +416,26 @@ namespace Goedel.Cryptography.Jose {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "header" : {
-					Header = JSONReader.ReadBinary ();
+				case "unprotected" : {
+					// An untagged structure
+					Unprotected = new Header (JSONReader);
+ 
 					break;
 					}
 				case "payload" : {
 					Payload = JSONReader.ReadBinary ();
 					break;
 					}
-				case "protected" : {
-					Protected = JSONReader.ReadBinary ();
-					break;
-					}
 				case "signature" : {
-					Signature = JSONReader.ReadBinary ();
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Signatures = new List <Signature> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new Signature (JSONReader);
+						Signatures.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
 					break;
 					}
 				default : {
@@ -431,9 +450,9 @@ namespace Goedel.Cryptography.Jose {
 
 	/// <summary>
 	///
-	/// A signed JOSE data object. The encrypte data contents are all binary encoded.
+	/// A signed JOSE data object. The encrypted data contents are all binary encoded.
 	/// </summary>
-	public partial class JoseWebEncryption : Jose {
+	public partial class JoseWebEncryption : JoseWebSignature {
         /// <summary>
         ///Data protected by the signature
         /// </summary>
@@ -444,15 +463,6 @@ namespace Goedel.Cryptography.Jose {
 			}
 		byte[]						_Protected ;
         /// <summary>
-        ///Data not protected by the signature
-        /// </summary>
-
-		public virtual byte[]						Unprotected {
-			get {return _Unprotected;}			
-			set {_Unprotected = value;}
-			}
-		byte[]						_Unprotected ;
-        /// <summary>
         ///The initialization vector for the bulk cipher.
         /// </summary>
 
@@ -461,6 +471,33 @@ namespace Goedel.Cryptography.Jose {
 			set {_IV = value;}
 			}
 		byte[]						_IV ;
+        /// <summary>
+        ///Per recipient decryption data.
+        /// </summary>
+
+		public virtual List<Recipient>				Recipients {
+			get {return _Recipients;}			
+			set {_Recipients = value;}
+			}
+		List<Recipient>				_Recipients;
+        /// <summary>
+        ///The decryption data for use by this recipient.
+        /// </summary>
+
+		public virtual byte[]						EncryptedKey {
+			get {return _EncryptedKey;}			
+			set {_EncryptedKey = value;}
+			}
+		byte[]						_EncryptedKey ;
+        /// <summary>
+        ///Additional data that is included in the authentication scope but not the encryption
+        /// </summary>
+
+		public virtual byte[]						AdditionalAuthenticatedData {
+			get {return _AdditionalAuthenticatedData;}			
+			set {_AdditionalAuthenticatedData = value;}
+			}
+		byte[]						_AdditionalAuthenticatedData ;
         /// <summary>
         ///The encrypted data
         /// </summary>
@@ -479,24 +516,6 @@ namespace Goedel.Cryptography.Jose {
 			set {_JTag = value;}
 			}
 		byte[]						_JTag ;
-        /// <summary>
-        ///Additional data that is included in the authentication scope but not the encryption
-        /// </summary>
-
-		public virtual byte[]						AdditionalAuthenticatedData {
-			get {return _AdditionalAuthenticatedData;}			
-			set {_AdditionalAuthenticatedData = value;}
-			}
-		byte[]						_AdditionalAuthenticatedData ;
-        /// <summary>
-        ///Per recipient decryption data.
-        /// </summary>
-
-		public virtual List<Recipient>				Recipients {
-			get {return _Recipients;}			
-			set {_Recipients = value;}
-			}
-		List<Recipient>				_Recipients;
 
         /// <summary>
         /// Tag identifying this class.
@@ -553,35 +572,16 @@ namespace Goedel.Cryptography.Jose {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
+			((JoseWebSignature)this).SerializeX(_Writer, false, ref _first);
 			if (Protected != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("protected", 1);
 					_Writer.WriteBinary (Protected);
 				}
-			if (Unprotected != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("unprotected", 1);
-					_Writer.WriteBinary (Unprotected);
-				}
 			if (IV != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("iv", 1);
 					_Writer.WriteBinary (IV);
-				}
-			if (CipherText != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ciphertext", 1);
-					_Writer.WriteBinary (CipherText);
-				}
-			if (JTag != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("tag", 1);
-					_Writer.WriteBinary (JTag);
-				}
-			if (AdditionalAuthenticatedData != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("aad", 1);
-					_Writer.WriteBinary (AdditionalAuthenticatedData);
 				}
 			if (Recipients != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -600,6 +600,26 @@ namespace Goedel.Cryptography.Jose {
 				_Writer.WriteArrayEnd ();
 				}
 
+			if (EncryptedKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("encrypted_key", 1);
+					_Writer.WriteBinary (EncryptedKey);
+				}
+			if (AdditionalAuthenticatedData != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("aad", 1);
+					_Writer.WriteBinary (AdditionalAuthenticatedData);
+				}
+			if (CipherText != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ciphertext", 1);
+					_Writer.WriteBinary (CipherText);
+				}
+			if (JTag != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("tag", 1);
+					_Writer.WriteBinary (JTag);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -704,24 +724,8 @@ namespace Goedel.Cryptography.Jose {
 					Protected = JSONReader.ReadBinary ();
 					break;
 					}
-				case "unprotected" : {
-					Unprotected = JSONReader.ReadBinary ();
-					break;
-					}
 				case "iv" : {
 					IV = JSONReader.ReadBinary ();
-					break;
-					}
-				case "ciphertext" : {
-					CipherText = JSONReader.ReadBinary ();
-					break;
-					}
-				case "tag" : {
-					JTag = JSONReader.ReadBinary ();
-					break;
-					}
-				case "aad" : {
-					AdditionalAuthenticatedData = JSONReader.ReadBinary ();
 					break;
 					}
 				case "recipients" : {
@@ -736,7 +740,24 @@ namespace Goedel.Cryptography.Jose {
 						}
 					break;
 					}
+				case "encrypted_key" : {
+					EncryptedKey = JSONReader.ReadBinary ();
+					break;
+					}
+				case "aad" : {
+					AdditionalAuthenticatedData = JSONReader.ReadBinary ();
+					break;
+					}
+				case "ciphertext" : {
+					CipherText = JSONReader.ReadBinary ();
+					break;
+					}
+				case "tag" : {
+					JTag = JSONReader.ReadBinary ();
+					break;
+					}
 				default : {
+					base.DeserializeToken(JSONReader, Tag);
 					break;
 					}
 				}
@@ -752,14 +773,14 @@ namespace Goedel.Cryptography.Jose {
 	/// </summary>
 	public partial class Signed : Jose {
         /// <summary>
-        ///Header
+        ///Data protected by the signature
         /// </summary>
 
-		public virtual Header						Header {
-			get {return _Header;}			
-			set {_Header = value;}
+		public virtual byte[]						Protected {
+			get {return _Protected;}			
+			set {_Protected = value;}
 			}
-		Header						_Header ;
+		byte[]						_Protected ;
         /// <summary>
         ///The authenticated data
         /// </summary>
@@ -834,10 +855,10 @@ namespace Goedel.Cryptography.Jose {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			if (Header != null) {
+			if (Protected != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("header", 1);
-					Header.Serialize (_Writer, false);
+				_Writer.WriteToken ("protected", 1);
+					_Writer.WriteBinary (Protected);
 				}
 			if (Payload != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -949,10 +970,8 @@ namespace Goedel.Cryptography.Jose {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "header" : {
-					// An untagged structure
-					Header = new Header (JSONReader);
- 
+				case "protected" : {
+					Protected = JSONReader.ReadBinary ();
 					break;
 					}
 				case "payload" : {
@@ -1233,6 +1252,15 @@ namespace Goedel.Cryptography.Jose {
 			}
 		string						_enc ;
         /// <summary>
+        ///Digest algorithm hint
+        /// </summary>
+
+		public virtual string						dig {
+			get {return _dig;}			
+			set {_dig = value;}
+			}
+		string						_dig ;
+        /// <summary>
         ///Key exchange algorithm
         /// </summary>
 
@@ -1347,6 +1375,11 @@ namespace Goedel.Cryptography.Jose {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("enc", 1);
 					_Writer.WriteString (enc);
+				}
+			if (dig != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("dig", 1);
+					_Writer.WriteString (dig);
 				}
 			if (alg != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -1510,6 +1543,10 @@ namespace Goedel.Cryptography.Jose {
 					enc = JSONReader.ReadString ();
 					break;
 					}
+				case "dig" : {
+					dig = JSONReader.ReadString ();
+					break;
+					}
 				case "alg" : {
 					alg = JSONReader.ReadString ();
 					break;
@@ -1595,6 +1632,15 @@ namespace Goedel.Cryptography.Jose {
 			set {_crit = value;}
 			}
 		List<string>				_crit;
+        /// <summary>
+        ///The digest value
+        /// </summary>
+
+		public virtual byte[]						val {
+			get {return _val;}			
+			set {_val = value;}
+			}
+		byte[]						_val ;
 
         /// <summary>
         /// Tag identifying this class.
@@ -1684,6 +1730,11 @@ namespace Goedel.Cryptography.Jose {
 				_Writer.WriteArrayEnd ();
 				}
 
+			if (val != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("val", 1);
+					_Writer.WriteBinary (val);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -1811,8 +1862,235 @@ namespace Goedel.Cryptography.Jose {
 						}
 					break;
 					}
+				case "val" : {
+					val = JSONReader.ReadBinary ();
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class Signature : Jose {
+        /// <summary>
+        ///The signature header
+        /// </summary>
+
+		public virtual byte[]						Header {
+			get {return _Header;}			
+			set {_Header = value;}
+			}
+		byte[]						_Header ;
+        /// <summary>
+        ///Data protected by the signature
+        /// </summary>
+
+		public virtual byte[]						Protected {
+			get {return _Protected;}			
+			set {_Protected = value;}
+			}
+		byte[]						_Protected ;
+        /// <summary>
+        ///The signature value
+        /// </summary>
+
+		public virtual byte[]						SignatureValue {
+			get {return _SignatureValue;}			
+			set {_SignatureValue = value;}
+			}
+		byte[]						_SignatureValue ;
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "Signature";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public Signature () {
+			_Initialize ();
+			}
+        /// <summary>
+		/// Initialize class from JSONReader stream.
+        /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
+		public Signature (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public Signature (string _String) {
+			Deserialize (_String);
+			}
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			if (Header != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("header", 1);
+					_Writer.WriteBinary (Header);
+				}
+			if (Protected != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("protected", 1);
+					_Writer.WriteBinary (Protected);
+				}
+			if (SignatureValue != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("signature", 1);
+					_Writer.WriteBinary (SignatureValue);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new Signature From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new Signature From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new Signature (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "Signature" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new Signature FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "Signature" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new Signature FromTagged (string _Input) {
+			//Signature _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
+        public static new Signature  FromTagged (JSONReader JSONReader) {
+			Signature Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "Signature" : {
+					var Result = new Signature ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
+					//Ignore the unknown data
+                    //throw new Exception ("Not supported");
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "header" : {
+					Header = JSONReader.ReadBinary ();
+					break;
+					}
+				case "protected" : {
+					Protected = JSONReader.ReadBinary ();
+					break;
+					}
+				case "signature" : {
+					SignatureValue = JSONReader.ReadBinary ();
+					break;
+					}
+				default : {
 					break;
 					}
 				}

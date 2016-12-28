@@ -25,7 +25,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
-using Goedel.Cryptography;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Framework {
 
@@ -33,6 +33,43 @@ namespace Goedel.Cryptography.Framework {
     /// Provider for RSA Signature class.
     /// </summary>
     public class CryptoProviderSignatureRSA : CryptoProviderSignature {
+
+
+        /// <summary>
+        /// The CryptoAlgorithmID Identifier.
+        /// </summary>
+        public override CryptoAlgorithmID CryptoAlgorithmID {
+            get {
+                return Goedel.Cryptography.CryptoAlgorithmID.RSASign;
+                }
+            }
+
+        /// <summary>
+        /// Return a CryptoAlgorithm structure with properties describing this provider.
+        /// </summary>
+        public override CryptoAlgorithm CryptoAlgorithm {
+            get { return CryptoAlgorithmAny; }
+            }
+
+        static CryptoAlgorithm CryptoAlgorithmAny = new CryptoAlgorithm(
+                    Goedel.Cryptography.CryptoAlgorithmID.RSASign, 2048, _AlgorithmClass, Factory);
+
+        /// <summary>
+        /// Register this provider in the specified crypto catalog. A provider may 
+        /// register itself multiple times to describe different configurations that 
+        /// are supported.
+        /// </summary>
+        /// <param name="Catalog">The catalog to register the provider to, if
+        /// null, the default catalog is used.</param>
+        /// <returns>Description of the principal algorithm registration.</returns>
+        public static CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
+            Catalog = Catalog ?? CryptoCatalog.Default;
+            return Catalog.Add(CryptoAlgorithmAny);
+            }
+
+
+
+
         RSAKeyPair _RSAKeyPair;
 
         /// <summary>
@@ -48,27 +85,7 @@ namespace Goedel.Cryptography.Framework {
             }
 
 
-        /// <summary>
-        /// ASN.1 Object Identifier.
-        /// </summary>
-        public override string OID {
-            get {
-                switch (DigestAlgorithm) {
-                    case CryptoAlgorithmID.SHA_1_DEPRECATED:
-                        return PKIX.Constants.OIDS__sha1WithRSAEncryption;
-                    case CryptoAlgorithmID.SHA_2_256:
-                        return PKIX.Constants.OIDS__sha256WithRSAEncryption;
-                    case CryptoAlgorithmID.SHA_2_512:
-                        return PKIX.Constants.OIDS__sha512WithRSAEncryption;
-                    case CryptoAlgorithmID.SHA_3_256:
-                        return PKIX.Constants.OIDS__sha256WithRSAEncryption;
-                    case CryptoAlgorithmID.SHA_3_512:
-                        return PKIX.Constants.OIDS__sha512WithRSAEncryption;
-                    default:
-                        return null;
-                    }
-                }
-            }
+
 
 
 
@@ -87,7 +104,7 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="KeySize">Default key size.</param>
         public CryptoProviderSignatureRSA(int KeySize) :
-            this(KeySize, CryptoAlgorithmID.SHA_2_512) {
+            this(KeySize, Goedel.Cryptography.CryptoAlgorithmID.SHA_2_512) {
             }
 
         /// <summary>
@@ -98,7 +115,7 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="DigestAlgorithm">Default digest algorithm.</param>
         public CryptoProviderSignatureRSA(int KeySize, CryptoAlgorithmID DigestAlgorithm) {
             this.KeySize = KeySize;
-            this.DigestAlgorithm = DigestAlgorithm;
+            this.BulkAlgorithmDefault = DigestAlgorithm;
             }
 
 
@@ -108,58 +125,13 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="RSAKeyPair">The RSA Key Pair</param>
         public CryptoProviderSignatureRSA(RSAKeyPair RSAKeyPair)  {
             this._RSAKeyPair = RSAKeyPair;
-            this.DigestAlgorithm = CryptoCatalog.Default.AlgorithmDigest;
+            this.BulkAlgorithmDefault = CryptoCatalog.Default.AlgorithmDigest;
             }
 
-
-        /// <summary>
-        /// Returns the default crypto provider.
-        /// </summary>
-        public override GetCryptoProvider GetCryptoProvider {
-            get {
-                return Factory;
-                }
-            }
 
         private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) {
             return new CryptoProviderSignatureRSA(KeySize, DigestAlgorithm);
             }
-
-        /// <summary>
-        /// The CryptoAlgorithmID Identifier.
-        /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID {
-            get {
-
-                if (KeySize == 2048) {
-                    return CryptoAlgorithmID.RSASign2048;
-                    }
-                return CryptoAlgorithmID.RSASign4096;
-                }
-            }
-
-        /// <summary>
-        /// .NET Framework name
-        /// </summary>
-        public override string Name {
-            get {
-                return "RSA";
-                }
-            }
-        /// <summary>
-        /// JSON Algorithm Name
-        /// </summary>
-        public override string JSONName {
-            get {
-                return "RS512"; // NYI placeholder for now
-                }
-            }
-
-
-        /// <summary>
-        /// JSON Key type.
-        /// </summary>
-        public override string JSONKeyType { get { return "rsa"; } }
 
 
         /// <summary>
@@ -186,7 +158,9 @@ namespace Goedel.Cryptography.Framework {
         /// instance was created.
         /// </summary>
         /// <param name="KeySecurity">The key security level.</param>
-        public override void Generate(KeySecurity KeySecurity) {
+        /// <param name="Size">The key size (2048 or 4096), if zero the default is used.</param>
+        public override void Generate(KeySecurity KeySecurity, int Size = 0) {
+            KeySize = (Size == 0) ? KeySize : Size;
             _RSAKeyPair = new RSAKeyPair(KeySize);
             _RSAKeyPair.Persist(KeySecurity);
             }
@@ -201,25 +175,56 @@ namespace Goedel.Cryptography.Framework {
             return _RSAKeyPair.Provider != null;
             }
 
+        ///// <summary>
+        ///// Verify signature.
+        ///// </summary>
+        ///// <param name="Data">Computed digest</param>
+        ///// <param name="Signature">Signature</param>
+        ///// <returns>True if signature verification is successful, otherwise false.</returns>
+        //public override bool Verify(CryptoData Data, byte [] Signature) {
+        //    return Provider.VerifyHash(Data.Integrity, Data.OID, Signature);
+        //    }
+
+
         /// <summary>
-        /// Sign a previously computed digest (requires private key).
+        /// Sign the integrity value specified in the CryptoDataEncoder
         /// </summary>
-        /// <param name="Data">Computed digest</param>
-        /// <returns>Signature</returns>
-        public override CryptoData Sign(CryptoData Data) {
-            var Signature = Provider.SignHash(Data.Integrity, Data.OID);
-            var Result = new CryptoData(CryptoAlgorithmID, OID, Signature);
-            return Result;
+        /// <param name="Data"></param>
+        public override void Sign(CryptoDataSignature Data) {
+
+            //var SignatureID = CryptoAlgorithmID.Meta().Base();
+            //var DigestID = Data.Identifier;
+
+            //if (SignatureID == CryptoAlgorithmID.RSASign) {
+
+
+            //    }
+
+            switch (Data.BulkData.BulkID) {
+                case CryptoAlgorithmID.SHA_2_256: {
+                    Data.Signature = Provider.SignHash(Data.BulkData.Integrity, 
+                        HashAlgorithmName.SHA256,
+                        RSASignaturePadding.Pkcs1);
+                    break;
+                    }
+                case CryptoAlgorithmID.SHA_2_512: {
+                    Data.Signature = Provider.SignHash(Data.BulkData.Integrity, 
+                        HashAlgorithmName.SHA512,
+                        RSASignaturePadding.Pkcs1);
+                    break;
+                    }
+
+                }
+            return ;
             }
 
         /// <summary>
-        /// Verify signature.
+        /// Verify the signature value
         /// </summary>
-        /// <param name="Data">Computed digest</param>
-        /// <param name="Signature">Signature</param>
-        /// <returns>True if signature verification is successful, otherwise false.</returns>
-        public override bool Verify(CryptoData Data, byte [] Signature) {
-            return Provider.VerifyHash(Data.Integrity, Data.OID, Signature);
+        /// <param name="Data"></param>
+        /// <returns>True if the verification operation succeeded, otherwise false</returns>
+        public override bool Verify(CryptoDataSignature Data) {
+            throw new NYI("To do");
             }
 
         }

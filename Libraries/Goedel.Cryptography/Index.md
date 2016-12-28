@@ -32,33 +32,7 @@ namespace Test {
 
 ===Creating Random numbers
 
-The Platform class contains convenience methods that generate 
+The Platform class contains convenience methods that generate random Numbers
 
-
-===Diffie Hellman Key Agreement
-
-The key agreement class has two parts, a support library that implements
-the math and a crypto provider that allows the functions to be used in the
-Goedel libraries.
-
-Bob creates a Key Pair
-
-~~~~
-var BobPrivate = new DiffeHellmanPrivate();
-var BobPublic = BobPrivate.DiffeHellmanPublic;
-~~~~
-
-Alice uses keypair to send data
-
-~~~~
-DiffeHellmanPublic AlicePublic;
-var AliceKey = BobPublic.Agreement(BobPublic, out AlicePublic);
-~~~~
-
-Bob uses keypair to recover key:
-
-~~~~
-var BobKey = BobPrivate.Agreement(AlicePublic);
-~~~~
 
 

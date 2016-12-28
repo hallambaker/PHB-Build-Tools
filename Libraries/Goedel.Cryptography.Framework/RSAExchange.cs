@@ -26,6 +26,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using Goedel.Cryptography;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Framework {
 
@@ -34,6 +35,38 @@ namespace Goedel.Cryptography.Framework {
     /// Provider for RSA encryption.
     /// </summary>
     public class CryptoProviderExchangeRSA : CryptoProviderExchange {
+
+        /// <summary>
+        /// The CryptoAlgorithmID Identifier.
+        /// </summary>
+        public override CryptoAlgorithmID CryptoAlgorithmID {
+            get {
+                return CryptoAlgorithmID.RSAExch;
+                }
+            }
+
+        /// <summary>
+        /// Return a CryptoAlgorithm structure with properties describing this provider.
+        /// </summary>
+        public override CryptoAlgorithm CryptoAlgorithm {
+            get { return CryptoAlgorithmAny; }
+            }
+
+        static CryptoAlgorithm CryptoAlgorithmAny = new CryptoAlgorithm(
+                    CryptoAlgorithmID.RSAExch, 2048, _AlgorithmClass, Factory);
+
+        /// <summary>
+        /// Register this provider in the specified crypto catalog. A provider may 
+        /// register itself multiple times to describe different configurations that 
+        /// are supported.
+        /// </summary>
+        /// <param name="Catalog">The catalog to register the provider to, if
+        /// null, the default catalog is used.</param>
+        /// <returns>Description of the principal algorithm registration.</returns>
+        public static CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
+            Catalog = Catalog ?? CryptoCatalog.Default;
+            return Catalog.Add(CryptoAlgorithmAny);
+            }
 
 
         RSAKeyPair _RSAKeyPair;
@@ -97,58 +130,11 @@ namespace Goedel.Cryptography.Framework {
             this.OAEP = true;
             }
 
-        /// <summary>
-        /// Returns the default crypto provider.
-        /// </summary>
-        public override GetCryptoProvider GetCryptoProvider {
-            get {
-                return Factory;
-                }
-            }
 
         private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) {
             return new CryptoProviderExchangeRSA(KeySize);
             }
 
-        /// <summary>
-        /// The CryptoAlgorithmID Identifier.
-        /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID {
-            get {
-                if (KeySize == 2048) {
-                    return CryptoAlgorithmID.RSAExch2048;
-                    }
-                return CryptoAlgorithmID.RSAExch4096;
-                }
-            }
-        /// <summary>
-        /// .NET Framework name
-        /// </summary>
-        public override string Name {
-            get {
-                return "RSA";
-                }
-            }
-
-        /// <summary>
-        /// ASN.1 Object Identifier.
-        /// </summary>
-        public override string OID {
-            get {
-                return CryptoConfig.MapNameToOID(Name);
-                }
-            }
- 
-
-
-        /// <summary>
-        /// JSON Algorithm Name
-        /// </summary>
-        public override string JSONName {
-            get {
-                return "RSAES"; // NYI placeholder for now
-                }
-            }
         /// <summary>
         /// Default algorithm key size.
         /// </summary>
@@ -163,7 +149,9 @@ namespace Goedel.Cryptography.Framework {
         /// instance was created.
         /// </summary>
         /// <param name="KeySecurity">The key security mode</param>
-        public override void Generate(KeySecurity KeySecurity) {
+        /// <param name="Size">The key size (2048 or 4096), if zero the default is used.</param>
+        public override void Generate(KeySecurity KeySecurity, int Size=0) {
+            KeySize = (Size == 0) ? KeySize : Size;
             _RSAKeyPair = new RSAKeyPair(KeySize);
             _RSAKeyPair.Persist(KeySecurity);
             }
@@ -178,32 +166,61 @@ namespace Goedel.Cryptography.Framework {
             return _RSAKeyPair.Provider != null;
             }
 
+
         /// <summary>
-        /// Encrypt data block. Block MUST be smaller than the key length or
-        /// an exception will be thrown.
+        /// Encrypt the bulk key.
         /// </summary>
-        /// <param name="Input">Data to encrypt.</param>
-        /// <returns>Encrypted data.</returns>
-        public override byte[] Encrypt(byte[] Input) {
-            return Provider.Encrypt(Input, OAEP);
+        /// <param name="Data"></param>
+        /// <param name="Algorithm">Composite encryption algorithm.</param>
+        /// <param name="Wrap">If true create a new CryptoData instance that
+        /// wraps the parameters supplied in Data.</param> 
+        public override CryptoDataExchange Encrypt(CryptoData Data,
+            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, bool Wrap = false) {
+
+            var Exchange = Provider.Encrypt(Data.Key, OAEP);
+
+            return new CryptoDataExchange(Algorithm, Data, this) {
+                Exchange = Exchange,
+                };
+
             }
 
         /// <summary>
-        /// Decrypt data block.
+        /// Decrypt the bulk key.
         /// </summary>
-        /// <param name="Input">Data to decrypt.</param>
-        /// <returns>Decrypted data.</returns>
-        public override byte[] Decrypt(byte[] Input) {
-            return Provider.Decrypt(Input, OAEP);
+        /// <param name="Data"></param>
+        public override CryptoData Decrypt(CryptoDataExchange Data) {
+            //Data.Key = Provider.Encrypt(Data.Exchange, OAEP);
+            throw new NYI("To do");
             }
 
 
+        ///// <summary>
+        ///// Decrypt data block.
+        ///// </summary>
+        ///// <param name="Input">Data to decrypt.</param>
+        ///// <returns>Decrypted data.</returns>
+        //public override byte[] Decrypt(byte[] Input) {
+        //    return Provider.Decrypt(Input, OAEP);
+        //    }
 
-        /// <summary>
-        /// JSON Key type.
-        /// </summary>
-        public override string JSONKeyType { get { return "rsa"; } }
 
+        ///// <summary>
+        ///// Perform a key wrap operation and return a CryptoDataWrapped instance
+        ///// containing the wrapped key parameters and a bulk provider. 
+        ///// </summary>
+        ///// <param name="Algorithm">The key wrap algorithm</param>
+        ///// <param name="Bulk">The bulk provider to use. If specified, the parameters from
+        ///// the specified provider will be used. Otherwise a new bulk provider will 
+        ///// be created and returned as part of the result.</param>
+        ///// <returns>Instance describing the key agreement parameters.</returns>
+        //public override CryptoDataDecoder SetDecoder(
+        //                    CryptoProviderBulk Bulk = null,
+        //                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+        //                    Stream OutputStream = null
+        //                    ) {
+        //    throw new NYI("To do");
+        //    }
 
         }
 
@@ -217,10 +234,7 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         public override CryptoAlgorithmID CryptoAlgorithmID {
             get {
-                if (KeySize == 2048) {
-                    return CryptoAlgorithmID.RSAExch2048_P15;
-                    }
-                return CryptoAlgorithmID.RSAExch4096_P15;
+                return CryptoAlgorithmID.RSAExch_P15;
                 }
             }
 
@@ -234,14 +248,6 @@ namespace Goedel.Cryptography.Framework {
             this.OAEP = false;
             }
 
-        /// <summary>
-        /// Returns a delegate that creates an instance of this class.
-        /// </summary>
-        public override GetCryptoProvider GetCryptoProvider {
-            get {
-                return Factory;
-                }
-            }
 
         private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID Ignore) {
             return new CryptoProviderExchangeRSAPKCS(KeySize);

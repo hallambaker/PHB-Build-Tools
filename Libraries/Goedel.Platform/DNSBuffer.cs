@@ -434,7 +434,6 @@ namespace Goedel.Platform {
         /// <returns>The value read</returns>
         public String ReadName() {
             bool going = true;
-            String name = "";
 
             var StringBuilder = new StringBuilder();
             bool First = true;
