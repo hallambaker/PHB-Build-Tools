@@ -113,7 +113,14 @@ namespace Goedel.Cryptography.Framework {
             return new RSAKeyPair(Provider);
             }
 
-
+        /// <summary>
+        /// Return the CryptoAlgorithmID that would be used with the specified base parameters.
+        /// </summary>
+        /// <param name="Base"></param>
+        /// <returns>The computed CryptoAlgorithmID</returns>
+        public override CryptoAlgorithmID SignatureAlgorithmID(CryptoAlgorithmID Base) {
+            return CryptoAlgorithmID.RSASign | Base.Bulk();
+            }
 
 
 

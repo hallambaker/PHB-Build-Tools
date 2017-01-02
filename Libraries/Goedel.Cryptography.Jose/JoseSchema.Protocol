@@ -18,7 +18,7 @@
 				|The signed data
 		Struct Signature Signatures
 			Multiple
-			Tag "signature"
+			Tag "signatures"
 			Description
 				|The signature value
 	
@@ -158,7 +158,7 @@
 				|The digest value
 
 	Structure Signature
-		Binary Header
+		Struct Header Header
 			Tag "header"
 			Description
 				|The signature header

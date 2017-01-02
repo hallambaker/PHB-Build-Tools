@@ -171,6 +171,18 @@ namespace Goedel.Cryptography {
         CryptoProviderExchange CachedExchangeProvider = null;
         CryptoProviderSignature CachedSignatureProvider = null;
 
+
+        /// <summary>
+        /// Return the CryptoAlgorithmID that would be used with the specified base parameters.
+        /// </summary>
+        /// <param name="Base"></param>
+        /// <returns>The computed CryptoAlgorithmID</returns>
+        public virtual CryptoAlgorithmID SignatureAlgorithmID(CryptoAlgorithmID Base) {
+            return Base;
+            }
+
+
+
         /// <summary>
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
         /// </summary>
@@ -188,22 +200,7 @@ namespace Goedel.Cryptography {
             return Exchange;
             }
 
-        /// <summary>
-        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
-        /// </summary>
-        /// <param name="Meta">The provider to unwrap.</param>
-        /// <param name="AlgorithmID">The algorithm to use.</param>
-        /// <returns></returns>
-        public virtual CryptoData DecryptKey(CryptoData Meta,
-                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
 
-            CachedExchangeProvider = CachedExchangeProvider ??
-                ExchangeProvider(AlgorithmID);
-
-            throw new NYI("Fix here");
-            
-            //return CachedExchangeProvider.Decrypt(Meta);
-            }
 
         /// <summary>
         /// Sign a precomputed digest
@@ -238,15 +235,37 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
+        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
+        /// </summary>
+        /// <param name="EncryptedKey">The encrypted session</param>
+        /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <returns>The decoded data instance</returns>
+        public virtual byte[] Decrypt(
+                    byte[]EncryptedKey,
+                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
+
+            CachedExchangeProvider = CachedExchangeProvider ??
+                ExchangeProvider(AlgorithmID);
+
+            return CachedExchangeProvider.Decrypt(EncryptedKey, CryptoAlgorithmID);
+            }
+
+
+
+
+        /// <summary>
         /// Verify a precomputed digest
         /// </summary>
         /// <param name="Bulk">The provider to wrap.</param>
-        /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <param name="Signature">The signature blob value.</param>
+        /// <param name="AlgorithmID">The algorithm used.</param>
         /// <returns></returns>
-        public virtual CryptoDataDecoder Verify(CryptoData Bulk,
+        public virtual bool Verify(CryptoData Bulk, Byte [] Signature,
                 CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
+            CachedSignatureProvider = CachedSignatureProvider ??
+                        SignatureProvider(AlgorithmID);
 
-            throw new NYI("Fix here");
+            return CachedSignatureProvider.Verify(Bulk, Signature);
             }
 
         /// <summary>

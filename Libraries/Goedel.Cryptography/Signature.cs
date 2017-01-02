@@ -128,9 +128,9 @@ namespace Goedel.Cryptography {
             if (Bulk as CryptoDataEncoder != null) {
                 Sign(CryptoDataSignature);
                 }
-            if (Bulk as CryptoDataDecoder != null) {
-                Verify(CryptoDataSignature);
-                }
+            //if (Bulk as CryptoDataDecoder != null) {
+            //    Verify(CryptoDataSignature);
+            //    }
             }
 
         /// <summary>
@@ -157,12 +157,12 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Verify the signature value
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Bulk">The provider to wrap.</param>
+        /// <param name="Signature">The signature blob value.</param>
+        /// <param name="AlgorithmID">The algorithm used.</param>
         /// <returns>True if the verification operation succeeded, otherwise false</returns>
-        public abstract bool Verify(CryptoDataSignature Data);
-
-
-
+        public abstract bool Verify(CryptoData Bulk, Byte[] Signature,
+                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default);
 
         }
 

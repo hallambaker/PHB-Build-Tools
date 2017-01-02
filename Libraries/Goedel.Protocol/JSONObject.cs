@@ -103,17 +103,9 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Convert object to byte sequence in JSON form.
         /// </summary>
-        /// <returns>Data as byte sequence.</returns>
-		public virtual  byte [] GetBytes () {
-            return GetBytes(true);
-            }
-
-        /// <summary>
-        /// Convert object to byte sequence in JSON form.
-        /// </summary>
         /// <param name="tag">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
-        public virtual byte[] GetBytes(bool tag) {
+        public virtual byte[] GetBytes(bool tag = true) {
             JSONWriter _JSONWriter = new JSONWriter();
             Serialize(_JSONWriter, tag);
             return _JSONWriter.GetBytes;
@@ -123,16 +115,8 @@ namespace Goedel.Protocol {
         /// Serialize to the specified Writer.
         /// </summary>
         /// <param name="Writer">Writer to serialize the data to</param>
-        public virtual void Serialize (Writer Writer) {
-			Serialize (Writer, false);
-			}
-
-        /// <summary>
-        /// Serialize to the specified Writer.
-        /// </summary>
-        /// <param name="Writer">Writer to serialize the data to</param>
         /// <param name="tag">If true, serialization is tagged with the object type.</param>
-        public virtual void Serialize (Writer Writer, bool tag) {
+        public virtual void Serialize (Writer Writer, bool tag=false) {
 			bool first = true;
 			if (tag) {
 				Writer.WriteObjectStart ();
@@ -157,7 +141,7 @@ namespace Goedel.Protocol {
 
         /// <summary>
         /// Serialize to the specified Writer. This is a dummy routine
-        /// whose sole purpose is to prevent 'new' causing issues in derrived
+        /// whose sole purpose is to prevent 'new' causing issues in derived
         /// classes.
         /// </summary>
         /// <param name="Writer">Writer to serialize the data to</param>

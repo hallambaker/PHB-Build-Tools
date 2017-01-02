@@ -54,6 +54,11 @@ namespace Goedel.Cryptography {
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
         public static CryptoAlgorithm AES_256;
 
+
+        /// <summary>Provider for AES block transform</summary>
+        public static BlockProviderFactory BlockProviderFactoryAes = null;
+
+
         /// <summary>Fill byte buffer with cryptographically strong random numbers.</summary>
         /// <param name="Data"></param>
         /// <param name="Offset"></param>

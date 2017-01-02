@@ -32,27 +32,26 @@ namespace Goedel.Cryptography.Jose {
     public partial class JoseWebSignature {
 
         /// <summary>
-        /// Construct a JWS instance from a CryptoData Result.
+        /// The signed data.
         /// </summary>
-        /// <param name="Data"></param>
-        /// <param name="ContentType"></param>
-        public JoseWebSignature(CryptoData Data,
-            string ContentType = null
-            ) {
+        public virtual byte [] Data {
+            get { return Payload; }
+            set { Payload = value; } }
 
-            var ProtectedTBW = new Header() {
-                cty = ContentType,
-                alg = Data.AlgorithmIdentifier.Meta().ToJoseID(),
-                enc = Data.AlgorithmIdentifier.Bulk().ToJoseID()
-                };
-            //var RecipientHeader = new Header() {
-            //    kid = Data.Meta?.UDF
-            //    };
-            //var Recipient = new Recipient() {
-            //    Header = RecipientHeader,
-            //    EncryptedKey = Data.Exchange
-            //    };
+        /// <summary>Caches the CryptoData instance</summary>
+        protected CryptoData _CryptoDataDigest = null;
+
+        /// <summary>
+        /// Call GetCryptoData and return the result, unless GetCryptoData has been
+        /// called previously on this instance in which case return the last result. 
+        /// </summary>
+        public CryptoData CryptoDataDigest {
+            get {
+                _CryptoDataDigest = _CryptoDataDigest ?? GetCryptoData();
+                return _CryptoDataDigest;
+                }
             }
+
 
         /// <summary>
         /// Sign binary data.
@@ -66,23 +65,16 @@ namespace Goedel.Cryptography.Jose {
                     KeyPair SigningKey = null, 
                     string ContentType = null, 
                     CryptoAlgorithmID Algorithm=CryptoAlgorithmID.Default) {
-            //if (SigningKey != null) {
-            //    var Signer = SigningKey.SignatureProvider(Algorithm);
-            //    _CryptoData = Signer.Sign(Data);
-            //    }
-            //else {
-
-            //    }
 
             var Encoder = CryptoCatalog.Default.GetDigest(Algorithm);
-            _CryptoData = Encoder.Process(Data);
+            _CryptoDataDigest = Encoder.Process(Data);
             Payload = Data;
 
             if (SigningKey != null) {
-                AddSignature(SigningKey, Algorithm);
+                AddSignature(SigningKey, Encoder.CryptoAlgorithmID);
                 }
 
-            Bind(_CryptoData);
+            Bind(_CryptoDataDigest);
             }
 
         /// <summary>
@@ -115,14 +107,23 @@ namespace Goedel.Cryptography.Jose {
 
             Signatures = Signatures ?? new List<Signature>();
 
+            var Alg = SignerKey.SignatureAlgorithmID(ProviderAlgorithm);
+
+
             var ProtectedTBE = new Header() {
                 cty = ContentType,
-                val = CryptoData.Integrity
+                val = CryptoDataDigest.Integrity,
+                alg = Alg.ToJoseID()
                 };
             var Protected = ProtectedTBE.ToJson();
-            var SignatureData = SignerKey.Sign(Protected);
+            var SignatureData = SignerKey.Sign(Protected, ProviderAlgorithm);
+
+            var Header = new Header() {
+                kid = SignerKey.UDF
+                };
 
             var Signature = new Signature() {
+                Header = Header,
                 Protected = Protected,
                 SignatureValue = SignatureData.Signature
                 };
@@ -130,67 +131,25 @@ namespace Goedel.Cryptography.Jose {
             return Signature;
             }
 
-        ///// <summary>
-        ///// Add a signature instance
-        ///// </summary>
-        ///// <param name="CryptoData"></param>
-
-        ///// <returns></returns>
-        //public Signature AddSignature(CryptoData CryptoData, string ContentType = null) {
-
-
-
-        //    //var RecipientHeader = new Header() {
-        //    //    kid = Data.Meta?.UDF
-        //    //    };
-        //    //var Recipient = new Recipient() {
-        //    //    Header = RecipientHeader,
-        //    //    EncryptedKey = Data.Exchange
-        //    //    };
-        //    return null;
-        //    }
-
-
         /// <summary>
         /// Recalculate the CryptoData object parameters. This causes 
         /// </summary>
         /// <returns></returns>
         public CryptoData GetCryptoData () {
-            return _CryptoData;
+            return _CryptoDataDigest;
             }
 
-        /// <summary>Caches the CryptoData instance</summary>
-        protected CryptoData _CryptoData = null;
 
-        /// <summary>
-        /// Call GetCryptoData and return the result, unless GetCryptoData has been
-        /// called previously on this instance in which case return the last result. 
-        /// </summary>
-        public CryptoData CryptoData {
-            get {
-                _CryptoData = _CryptoData ?? GetCryptoData();
-                return _CryptoData;
-                }
-            }
 
         private void Bind (CryptoData Data,
                 string ContentType = null
                 ) {
+            var DigestID = Data.AlgorithmIdentifier.Digest();
+
             Unprotected =  new Header() {
-                dig = Data.AlgorithmIdentifier.Digest().ToJoseID()
+                dig = DigestID.ToJoseID()
                 };
             }
-
-        ///// <summary>
-        ///// Parse the binary signature header
-        ///// </summary>
-        //public Header ParsedHeader {
-        //    get {
-        //        _ParsedHeader = _ParsedHeader ?? Cryptography.Jose.Header.From(Protected);
-        //        return _ParsedHeader;
-        //        }
-        //    }
-        //Header _ParsedHeader = null;
 
         /// <summary>
         /// Verify the specified signature.
@@ -209,24 +168,52 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="Public">The public signature verification key.</param>
         /// <returns>True if verification succeeds, otherwise false.</returns>
         public bool Verify(KeyPair Public) {
-            //var Verifier = Public.SignatureProvider(
-            //        BulkAlgorithm, ProviderAlgorithm);
-            throw new NYI("To do");
+            var Signature = MatchSigner(Public);
 
-            //var Decoder = Verifier.BindDecoder(null);
-            //Decoder.Bulk.Process(Payload);
-            //Decoder.Complete();
-            //return Decoder.Verified == true;
+            var ProtectedText = Signature.Protected.ToUTF8();
+            var Header = new Header(ProtectedText);
+
+            var Algorithm = Header.alg.FromJoseID();
+            var BulkID = Algorithm.Bulk();
+
+            var Encoder = CryptoCatalog.Default.GetDigest(Algorithm);
+            var DigestOfData = Encoder.Process(Data);
+
+
+            var Match = Assert.IsEqualTo(Header.val, DigestOfData.Integrity);
+
+            if (!Header.val.IsEqualTo(DigestOfData.Integrity)) {
+                return false; // Digest does not match
+                }
+
+            var DigestOfProtected = Encoder.Process(Signature.Protected);
+            return Public.Verify(DigestOfProtected, Signature.SignatureValue, Algorithm);
             }
 
 
-        //// Replace with a dictionary in some JSON catalog.
-        //CryptoAlgorithmID BulkAlgorithm {
-        //    get { return CryptoAlgorithmID.SHA_2_512; }
-        //    }
-        //CryptoAlgorithmID ProviderAlgorithm {
-        //    get { return CryptoAlgorithmID.RSASign; }
-        //    }
+        /// <summary>
+        /// Match a recipient header by key.
+        /// </summary>
+        /// <param name="SigningKey">Key</param>
+        /// <returns>The Recipient data for the specified key, if found.</returns>
+        public Signature MatchSigner(KeyPair SigningKey) {
+            return MatchSigner(SigningKey.UDF);
+            }
+
+        /// <summary>
+        /// Match a recipient header by key identifier.
+        /// </summary>
+        /// <param name="UDF">Key fingerprint</param>
+        /// <returns>The Recipient data for the specified key, if found.</returns>
+        public Signature MatchSigner(string UDF) {
+            foreach (var Signature in Signatures) {
+                if (Signature?.Header?.kid == UDF) {
+                    return Signature;
+                    }
+                }
+            return null;
+            }
+
         }
 
 

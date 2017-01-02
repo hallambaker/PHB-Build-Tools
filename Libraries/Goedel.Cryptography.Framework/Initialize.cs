@@ -45,6 +45,8 @@ namespace Goedel.Cryptography.Framework {
 
                 Platform.AES_256 = CryptoProviderEncryptAES.Register();
 
+                Platform.BlockProviderFactoryAes = AesBlock.Factory;
+
                 CryptoProviderSignatureRSA.Register();
                 CryptoProviderExchangeRSA.Register();
 

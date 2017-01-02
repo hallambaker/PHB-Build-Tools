@@ -64,6 +64,7 @@
     <Compile Include="AlgorithmID.cs" />
     <Compile Include="CryptoAlgorithmID.cs" />
     <Compile Include="CryptoAlgorithm.cs" />
+    <Compile Include="KeyWrap.cs" />
     <Compile Include="PKIX\DHDomain.cs" />
     <Compile Include="DHKeyPair.cs" />
     <Compile Include="DH.cs" />

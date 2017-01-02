@@ -84,7 +84,7 @@ namespace Goedel.Cryptography {
             var Key = Platform.GetRandomBits(Encryption.KeySize);
             var IV = Platform.GetRandomBits(Encryption.IVSize);
 
-            var Result = Encryption.MakeEncryptor(Algorithm, OutputStream, Key, IV);
+            var Result = Encryption.MakeEncryptor(Key, IV, Algorithm, OutputStream);
             Result.AlgorithmIdentifier = ExchangeAlgorithm | Encryption.CryptoAlgorithmID;
             Encrypt(Result);
 
@@ -115,17 +115,6 @@ namespace Goedel.Cryptography {
             return Encrypt(Encoding.UTF8.GetBytes(Text), Digest);
             }
 
-
-        /* 
-         * Methods that MUST be implemented in instance classes.
-        
-        (From CryptoProvider) 
-        public abstract CryptoDataDecoder SetDecoder(
-                            CryptoDataDecoder Decoder = null
-                            );
-         */
-
-
         /// <summary>
         /// Encrypt the bulk key.
         /// </summary>
@@ -137,11 +126,14 @@ namespace Goedel.Cryptography {
             CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, bool Wrap =false);
 
         /// <summary>
-        /// Decrypt the bulk key.
+        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
         /// </summary>
-        /// <param name="Data"></param>
-        public abstract CryptoData Decrypt(CryptoDataExchange Data);
-
+        /// <param name="EncryptedKey">The encrypted session</param>
+        /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <returns>The decoded data instance</returns>
+        public abstract byte[] Decrypt(
+                    byte[] EncryptedKey,
+                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default);
 
         }
     }

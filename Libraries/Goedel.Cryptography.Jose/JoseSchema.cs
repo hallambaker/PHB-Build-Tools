@@ -294,7 +294,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 			if (Signatures != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("signature", 1);
+				_Writer.WriteToken ("signatures", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
 				foreach (var _index in Signatures) {
@@ -426,7 +426,7 @@ namespace Goedel.Cryptography.Jose {
 					Payload = JSONReader.ReadBinary ();
 					break;
 					}
-				case "signature" : {
+				case "signatures" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
 					Signatures = new List <Signature> ();
@@ -1884,11 +1884,11 @@ namespace Goedel.Cryptography.Jose {
         ///The signature header
         /// </summary>
 
-		public virtual byte[]						Header {
+		public virtual Header						Header {
 			get {return _Header;}			
 			set {_Header = value;}
 			}
-		byte[]						_Header ;
+		Header						_Header ;
         /// <summary>
         ///Data protected by the signature
         /// </summary>
@@ -1966,7 +1966,7 @@ namespace Goedel.Cryptography.Jose {
 			if (Header != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("header", 1);
-					_Writer.WriteBinary (Header);
+					Header.Serialize (_Writer, false);
 				}
 			if (Protected != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -2079,7 +2079,9 @@ namespace Goedel.Cryptography.Jose {
 			
 			switch (Tag) {
 				case "header" : {
-					Header = JSONReader.ReadBinary ();
+					// An untagged structure
+					Header = new Header (JSONReader);
+ 
 					break;
 					}
 				case "protected" : {

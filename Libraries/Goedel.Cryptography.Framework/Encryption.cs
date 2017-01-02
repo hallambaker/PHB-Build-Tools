@@ -99,8 +99,8 @@ namespace Goedel.Cryptography.Framework {
                             Stream OutputStream = null
                             ) {
 
-            return MakeEncryptor (Algorithm, OutputStream, 
-                Provider.Key, Provider.IV);
+            return MakeEncryptor(Provider.Key, Provider.IV,
+                Algorithm, OutputStream);
             }
 
         /// <summary>
@@ -113,10 +113,9 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="Key">Encryption Key</param>
         /// <returns>Instance describing the key agreement parameters.</returns>
         public override CryptoDataEncoder MakeEncryptor(
-                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
-                            Stream OutputStream = null,
-                            byte[] Key = null, byte[] IV = null
-                            ) {
+                            byte[] Key = null, byte[] IV = null,
+                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, 
+                            Stream OutputStream = null) {
             var Result = new CryptoDataEncoder(CryptoAlgorithmID, this);
             Result.OutputStream = OutputStream ?? new MemoryStream();
             Result.IV = IV;
@@ -128,6 +127,28 @@ namespace Goedel.Cryptography.Framework {
 
 
         /// <summary>
+        /// Create a decoder for a bulk algorithm and optional key wrap or exchange.
+        /// </summary>
+
+        /// <param name="Algorithm">The key wrap algorithm</param>
+        /// <param name="OutputStream">Output stream</param>
+        /// <param name="IV">Initialization vector for symmetric encryption</param>
+        /// <param name="Key">Encryption Key</param>
+        /// <returns>Instance describing the key agreement parameters.</returns>
+        public override CryptoDataDecoder MakeDecryptor(
+                            byte[] Key, byte[] IV,
+                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, 
+                            Stream OutputStream = null) {
+            var Result = new CryptoDataDecoder(CryptoAlgorithmID, this);
+            Result.OutputStream = OutputStream ?? new MemoryStream();
+            Result.IV = IV;
+            Result.Key = Key;
+            BindDecoder(Result);
+
+            return Result;
+            }
+
+        /// <summary>
         /// Create a crypto stream from this provider.
         /// </summary>
         /// <param name="Encoder"></param>
@@ -137,6 +158,16 @@ namespace Goedel.Cryptography.Framework {
                     Encoder.OutputStream, Transform, CryptoStreamMode.Write);
             }
 
+
+        /// <summary>
+        /// Create a crypto stream from this provider.
+        /// </summary>
+        /// <param name="Decoder"></param>
+        public override void BindDecoder(CryptoDataDecoder Decoder) {
+            var Transform = Provider.CreateEncryptor(Decoder.Key, Decoder.IV);
+            Decoder.InputStream = new CryptoStream(
+                    Decoder.OutputStream, Transform, CryptoStreamMode.Write);
+            }
 
         /// <summary>
         /// Encrypt the specified byte array
@@ -180,6 +211,10 @@ namespace Goedel.Cryptography.Framework {
                 }
             return Result;
             }
+
+
+        
+
         /// <summary>
         /// Complete processing at the end of an encoding or decoding operation
         /// </summary>
@@ -277,5 +312,9 @@ namespace Goedel.Cryptography.Framework {
         public CryptoProviderEncryptAES(int KeySize, CipherMode CipherMode)
             : base(new AesManaged(), KeySize, CipherMode) {
             }
+
+
+
+
         }
     }

@@ -26,13 +26,17 @@ using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Jose {
 
-    
-
-
     /// <summary>
     /// Represents a JWE data structure.
     /// </summary>
     public partial class JoseWebEncryption {
+
+        /// <summary>The signed data.</summary>
+        public override byte[] Data {
+            get { return CipherText; }
+            set { CipherText = value; }
+            }
+
 
         /// <summary>
         /// The decrypted plaintext value
@@ -52,21 +56,18 @@ namespace Goedel.Cryptography.Jose {
             get { return Plaintext.ToString(); }
             }
 
-
+        /// <summary>Caches the CryptoData instance</summary>
+        protected CryptoData _CryptoDataEncrypt = null;
 
         /// <summary>
-        /// Construct a JWE instance from a CryptoData object
+        /// Call GetCryptoData and return the result, unless GetCryptoData has been
+        /// called previously on this instance in which case return the last result. 
         /// </summary>
-        /// <param name="Data">Key information to construct the bulk and optionally
-        /// key exchange headers</param>
-        /// <param name="ContentType">The type of content being encrypted.</param>
-        /// <param name="SigningKey">Optional signing key.</param>
-        public JoseWebEncryption    (CryptoData Data,
-                    string ContentType = null,
-                    KeyPair SigningKey = null
-                    ) {
-
-            BindCryptoData(Data, ContentType);
+        public CryptoData CryptoDataEncrypt {
+            get {
+                _CryptoDataEncrypt = _CryptoDataEncrypt ?? GetCryptoData();
+                return _CryptoDataEncrypt;
+                }
             }
 
 
@@ -78,26 +79,40 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="ContentType">The type of content being encrypted.</param>
         /// <param name="EncryptionKey">Optional Encryption key.</param>
         /// <param name="SigningKey">Optional signing key.</param>
-        /// <param name="AlgorithmID">Specify the Meta and Bulk algorithms</param>
+        /// <param name="EncryptID">Composite ID for encryption and key exchange</param>
+        /// <param name="SignID">Composite ID for signature and digest</param>
         public JoseWebEncryption(byte[] Data,
                     KeyPair EncryptionKey = null,
                     KeyPair SigningKey = null,
                     string ContentType = null,
-                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default
+                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmID SignID = CryptoAlgorithmID.Default
                     ) {
 
-            var Provider = CryptoCatalog.Default.GetEncryption(AlgorithmID);
-            var Encoder = Provider.MakeEncoder(Algorithm: AlgorithmID);
-            _CryptoData = Encoder;
+            var Provider = CryptoCatalog.Default.GetEncryption(EncryptID);
+            var EncryptEncoder = Provider.MakeEncoder(Algorithm: EncryptID);
+            _CryptoDataEncrypt = EncryptEncoder;
 
             if (EncryptionKey != null) {
-                AddRecipient(EncryptionKey, AlgorithmID);
+                AddRecipient(EncryptionKey, EncryptID);
                 }
 
-            Encoder.Write(Data);
-            Encoder.Complete();
+            var DigestProvider = SigningKey != null ? CryptoCatalog.Default.GetDigest(SignID) : null;
 
-            BindCryptoData(Encoder, ContentType);
+
+            BindCryptoData(EncryptEncoder, ContentType, DigestProvider);
+
+            EncryptEncoder.Write(Data);
+            EncryptEncoder.Complete();
+
+            CipherText = EncryptEncoder.OutputData;
+
+            if (SigningKey != null) {
+                
+                _CryptoDataDigest = DigestProvider.Process(CipherText);
+                AddSignature(SigningKey, DigestProvider.CryptoAlgorithmID);
+                }
+
             }
 
         /// <summary>
@@ -130,10 +145,7 @@ namespace Goedel.Cryptography.Jose {
         public Recipient AddRecipient (KeyPair EncryptionKey,
                 CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default) {
 
-            //var ExchangeProvider = EncryptionKey.ExchangeProvider(CryptoData, ProviderAlgorithm);
-            //var ExchangeData = ExchangeProvider.MakeEncoder(CryptoData);
-
-            var ExchangeData = EncryptionKey.EncryptKey(CryptoData, ProviderAlgorithm);
+            var ExchangeData = EncryptionKey.EncryptKey(CryptoDataEncrypt, ProviderAlgorithm);
 
             var Recipient = new Recipient(ExchangeData);
             Recipients = Recipients ?? new List<Recipient>();
@@ -146,18 +158,19 @@ namespace Goedel.Cryptography.Jose {
         /// Finish processing of the data and write out the integrity data
         /// </summary>
         public void Complete () {
-            CryptoData.Complete();
-            CipherText = _CryptoData.OutputData;
-            JTag = _CryptoData.Integrity;
+            CryptoDataEncrypt.Complete();
+            CipherText = _CryptoDataEncrypt.OutputData;
+            JTag = _CryptoDataEncrypt.Integrity;
 
-            CipherText = CryptoData.ProcessedData;
+            CipherText = CryptoDataEncrypt.ProcessedData;
 
 
             // Sign here?
             }
 
-        void BindCryptoData(CryptoData Data, string ContentType) {
-            _CryptoData = Data;
+        void BindCryptoData(CryptoData Data, string ContentType, 
+                    CryptoProviderDigest Digest) {
+            _CryptoDataEncrypt = Data;
 
             var enc = Data.AlgorithmIdentifier.Bulk();
             var encID = enc.ToJoseID();
@@ -166,10 +179,19 @@ namespace Goedel.Cryptography.Jose {
                 cty = ContentType,
                 enc = encID
                 };
+            if (Digest != null) {
+                ProtectedTBW.dig = Digest.CryptoAlgorithmID.ToJoseID();
+                }
 
-            Protected = ProtectedTBW.GetBytes();
+            Protected = ProtectedTBW.ToJson();
             IV = Data.IV;
-            CipherText = Data.OutputData;
+
+            if (Digest != null) {
+                Unprotected = new Header() {
+                    dig = Digest.CryptoAlgorithmID.ToJoseID()
+                    };
+                }
+
             }
 
         /// <summary>
@@ -187,9 +209,47 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="DecryptionKey">The decryption key.</param>
         /// <returns>The decrypted data</returns>
         public byte[] Decrypt(KeyPair DecryptionKey) {
-            return null;
+
+            var Recipient = MatchRecipient(DecryptionKey);
+            var AlgorithmJose = Recipient?.Header.alg;
+            var ExchangeID = AlgorithmJose.FromJoseID();
+
+            var ProtectedText = Protected.ToUTF8();
+            var Header = new Header(ProtectedText);
+            var BulkID = Header.enc.FromJoseID();
+
+            var Exchange = DecryptionKey.Decrypt(Recipient.EncryptedKey, BulkID);
+
+            var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
+            //var EncryptEncoder = Provider.MakeDecryptor(Exchange, IV, Algorithm: BulkID);
+
+            var Result = Provider.Decrypt(CipherText, Exchange, IV);
+
+            return Result;
             }
 
+        /// <summary>
+        /// Match a recipient header by key.
+        /// </summary>
+        /// <param name="DecryptionKey">Key</param>
+        /// <returns>The Recipient data for the specified key, if found.</returns>
+        public Recipient MatchRecipient(KeyPair DecryptionKey) {
+            return MatchRecipient(DecryptionKey.UDF);
+            }
+
+        /// <summary>
+        /// Match a recipient header by key identifier.
+        /// </summary>
+        /// <param name="UDF">Key fingerprint</param>
+        /// <returns>The Recipient data for the specified key, if found.</returns>
+        public Recipient MatchRecipient(string UDF) {
+            foreach (var Recipient in Recipients) {
+                if (Recipient?.Header?.kid == UDF) {
+                    return Recipient;
+                    }
+                }
+            return null;
+            }
 
         }
 

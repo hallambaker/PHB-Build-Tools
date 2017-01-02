@@ -167,6 +167,8 @@ namespace Goedel.Cryptography.Framework {
             }
 
 
+        byte[] KeptKey;
+
         /// <summary>
         /// Encrypt the bulk key.
         /// </summary>
@@ -178,6 +180,7 @@ namespace Goedel.Cryptography.Framework {
             CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, bool Wrap = false) {
 
             var Exchange = Provider.Encrypt(Data.Key, OAEP);
+            KeptKey = Exchange;
 
             return new CryptoDataExchange(Algorithm, Data, this) {
                 Exchange = Exchange,
@@ -186,12 +189,15 @@ namespace Goedel.Cryptography.Framework {
             }
 
         /// <summary>
-        /// Decrypt the bulk key.
+        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
         /// </summary>
-        /// <param name="Data"></param>
-        public override CryptoData Decrypt(CryptoDataExchange Data) {
-            //Data.Key = Provider.Encrypt(Data.Exchange, OAEP);
-            throw new NYI("To do");
+        /// <param name="EncryptedKey">The encrypted session</param>
+        /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <returns>The decoded data instance</returns>
+        public override byte[] Decrypt(
+                    byte[] EncryptedKey,
+                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
+            return Provider.Decrypt(EncryptedKey, OAEP);
             }
 
 

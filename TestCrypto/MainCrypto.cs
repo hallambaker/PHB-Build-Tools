@@ -43,19 +43,55 @@ namespace TestCrypto {
         KeyPair EncrypterKeyPair;
         KeyPair SignerKeyPair;
 
+
+        byte[] MakeKek (int Length) {
+            var Result = new byte[Length];
+            for (var i =0; i< Length; i++) {
+                Result[i] = (byte) i;
+                }
+            return Result;
+            }
+
+        byte[] MakeKey(int Length) {
+            var Result = new byte[Length];
+            for (var i = 0; i < 16; i++) {
+                Result[i] = (byte) (i*17);
+                }
+            for (var i = 16; i < Length; i++) {
+                Result[i] = (byte)(i - 16);
+                }
+            return Result;
+            }
+
         public void Test() {
-            Encrypter = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID.RSAExch);
-            Encrypter.Generate(KeySecurity.Ephemeral, KeySize:2048);
-            EncrypterKeyPair = Encrypter.KeyPair;
+            var Wrapper = new KeyWrapRFC3394();
 
-            Signer = CryptoCatalog.Default.GetSignature(CryptoAlgorithmID.RSASign);
-            Signer.Generate(KeySecurity.Ephemeral, KeySize:2048);
-            SignerKeyPair = Signer.KeyPair;
+            var Kek256 = MakeKek(32);
+            var Key128 = MakeKey(16);
+            var Key192 = MakeKey(24);
+            var Key256 = MakeKey(32);
 
-            //TestDigest();
-            //TestDigest512();
-            //TestSign();
-            TestJose();
+            var Wrapped = Wrapper.Wrap(Kek256, Key128);
+            var Result = Wrapper.Unwrap(Kek256, Wrapped);
+
+            Wrapped = Wrapper.Wrap(Kek256, Key192);
+            Result = Wrapper.Unwrap(Kek256, Wrapped);
+
+            Wrapped = Wrapper.Wrap(Kek256, Key256);
+            Result = Wrapper.Unwrap(Kek256, Wrapped);
+
+            //Encrypter = CryptoCatalog.Default.GetExchange(CryptoAlgorithmID.RSAExch);
+            //Encrypter.Generate(KeySecurity.Ephemeral, KeySize:2048);
+            //EncrypterKeyPair = Encrypter.KeyPair;
+
+            //Signer = CryptoCatalog.Default.GetSignature(CryptoAlgorithmID.RSASign);
+            //Signer.Generate(KeySecurity.Ephemeral, KeySize:2048);
+            //SignerKeyPair = Signer.KeyPair;
+
+            ////TestDigest();
+            ////TestDigest512();
+            ////TestSign();
+            //TestJose();
             }
 
         string TestString = "This is a test";
@@ -86,6 +122,17 @@ namespace TestCrypto {
 
 
         public void TestJose() {
+
+            var JWE = new JoseWebEncryption(TestString, EncrypterKeyPair);
+            var JWEText = JWE.ToString();
+            var JWEProt = JWE.Protected.ToUTF8();
+            Console.WriteLine(JWEText);
+            Console.WriteLine(JWEProt);
+
+            var Data = JWE.Decrypt(EncrypterKeyPair);
+            var Text = Data.ToUTF8();
+
+
             var JWS = new JoseWebSignature(TestString, SignerKeyPair);
             var JWSText = JWS.ToString();
 
@@ -95,20 +142,27 @@ namespace TestCrypto {
                 Console.WriteLine(JWSProt);
                 }
 
-            var JWE = new JoseWebEncryption(TestString, EncrypterKeyPair);
-            var JWEText = JWE.ToString();
-            var JWEProt = JWE.Protected.ToUTF8();
-            Console.WriteLine(JWEText);
-            Console.WriteLine(JWEProt);
+            var Verify1 = JWS.Verify(SignerKeyPair);
 
             var JWES = new JoseWebEncryption(TestString, EncrypterKeyPair, SignerKeyPair);
+            var JWESText = JWES.ToString();
+            var JWESProt = JWES.Protected.ToUTF8();
 
-            var Data = JWE.Decrypt().ToString();
-            var Data2 = JWES.Decrypt().ToString();
+            Console.WriteLine("Sign + encrypt");
+            Console.WriteLine(JWESText);
+            Console.WriteLine(JWESProt);
+            foreach (var Signer in JWES.Signatures) {
+                var JWSProt = Signer.Protected.ToUTF8();
+                Console.WriteLine(JWSProt);
+                }
+
+
+            var Data2 = JWES.Decrypt(EncrypterKeyPair);
+            var Text2 = Data2.ToUTF8();
 
             // Verification result, returns the UDF of the key that validated.
-            //var Verify1 = JWS.Verify(SignerKeyPair);
-            //var Verify2 = JWES.Verify(SignerKeyPair);
+
+            var Verify2 = JWES.Verify(SignerKeyPair);
 
             }
 

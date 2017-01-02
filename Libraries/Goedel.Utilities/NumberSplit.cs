@@ -48,6 +48,46 @@ namespace Goedel.Utilities {
             }
 
         /// <summary>
+        /// Extract bits 0-7 from an integer value
+        /// </summary>
+        /// <param name="Data">Input</param>
+        /// <returns>Bits 0-7</returns>
+        public static byte Byte0(this uint Data) {
+            return (byte)(Data & 0xff);
+            }
+
+        /// <summary>
+        /// Extract bits 8-15 from an integer value
+        /// </summary>
+        /// <param name="Data">Input</param>
+        /// <returns>Bits 8-15</returns>
+        public static byte Byte1(this uint Data) {
+            return (byte)((Data >> 8) & 0xff);
+            }
+
+        /// <summary>
+        /// Extract bits 16-23 from an integer value
+        /// </summary>
+        /// <param name="Data">Input</param>
+        /// <returns>Bits 16-23</returns>
+        public static byte Byte2(this uint Data) {
+            return (byte)((Data >> 16) & 0xff);
+            }
+
+        /// <summary>
+        /// Extract bits 24-31 from an integer value
+        /// </summary>
+        /// <param name="Data">Input</param>
+        /// <returns>Bits 24-31</returns>
+        public static byte Byte3(this uint Data) {
+            return (byte)((Data >> 24) & 0xff);
+            }
+
+
+
+
+
+        /// <summary>
         /// Convert integer to bigendian array. That is with the most significant byte first.
         /// </summary>
         /// <param name="Data">Input</param>
@@ -82,6 +122,36 @@ namespace Goedel.Utilities {
         /// <param name="Array"></param>
         /// <param name="Data"></param>
         public static void SetBigEndian (this byte[] Array, int Data) {
+            Array[0] = Data.Byte3();
+            Array[1] = Data.Byte2();
+            Array[2] = Data.Byte1();
+            Array[3] = Data.Byte0();
+            }
+
+        /// <summary>
+        /// Set the values of a byte array from 32 bit integer in big endian order
+        /// </summary>
+        /// <param name="Array"></param>
+        /// <param name="Data"></param>
+        public static void SetBigEndian(this byte[] Array, uint Data) {
+            Array[0] = Data.Byte3();
+            Array[1] = Data.Byte2();
+            Array[2] = Data.Byte1();
+            Array[3] = Data.Byte0();
+            }
+
+
+
+        /// <summary>
+        /// Set the values of a byte array from 64 bit integer in big endian order
+        /// </summary>
+        /// <param name="Array"></param>
+        /// <param name="Data"></param>
+        public static void SetBigEndian(this byte[] Array, ulong Data) {
+            Array[0] = Data.Byte7();
+            Array[0] = Data.Byte6();
+            Array[0] = Data.Byte5();
+            Array[0] = Data.Byte4();
             Array[0] = Data.Byte3();
             Array[1] = Data.Byte2();
             Array[2] = Data.Byte1();
@@ -183,5 +253,91 @@ namespace Goedel.Utilities {
         public static byte Byte7(this long Data) {
             return (byte)((Data >> 56) & 0xff);
             }
+
+
+        /// <summary>
+        /// Extract bits 0-7 from an integer value
+        /// </summary>
+        /// <param name="Data">Input</param>
+        /// <returns>Bits 0-7</returns>
+        public static byte Byte0(this ulong Data) {
+            return (byte)(Data & 0xff);
+            }
+
+        /// <summary>
+        /// Extract bits 8-15 from an integer value
+        /// </summary>
+        /// <param name="Data">Input</param>
+        /// <returns>Bits 8-15</returns>
+        public static byte Byte1(this ulong Data) {
+            return (byte)((Data >> 8) & 0xff);
+            }
+
+        /// <summary>
+        /// Extract bits 16-23 from an integer value
+        /// </summary>
+        /// <param name="Data">Input</param>
+        /// <returns>Bits 16-23</returns>
+        public static byte Byte2(this ulong Data) {
+            return (byte)((Data >> 16) & 0xff);
+            }
+
+        /// <summary>
+        /// Extract bits 24-31 from an integer value
+        /// </summary>
+        /// <param name="Data">Input</param>
+        /// <returns>Bits 24-31</returns>
+        public static byte Byte3(this ulong Data) {
+            return (byte)((Data >> 24) & 0xff);
+            }
+
+        /// <summary>
+        /// Extract bits 24-31 from an integer value
+        /// </summary>
+        /// <param name="Data">Input</param>
+        /// <returns>Bits 24-31</returns>
+        public static byte Byte4(this ulong Data) {
+            return (byte)((Data >> 32) & 0xff);
+            }
+
+        /// <summary>
+        /// Extract bits 24-31 from an integer value
+        /// </summary>
+        /// <param name="Data">Input</param>
+        /// <returns>Bits 24-31</returns>
+        public static byte Byte5(this ulong Data) {
+            return (byte)((Data >> 40) & 0xff);
+            }
+
+        /// <summary>
+        /// Extract bits 24-31 from an integer value
+        /// </summary>
+        /// <param name="Data">Input</param>
+        /// <returns>Bits 24-31</returns>
+        public static byte Byte6(this ulong Data) {
+            return (byte)((Data >> 48) & 0xff);
+            }
+
+        /// <summary>
+        /// Extract bits 24-31 from an integer value
+        /// </summary>
+        /// <param name="Data">Input</param>
+        /// <returns>Bits 24-31</returns>
+        public static byte Byte7(this ulong Data) {
+            return (byte)((Data >> 56) & 0xff);
+            }
+
+
+        /// <summary>
+        /// Convert integer to bigendian array. That is with the most significant byte first.
+        /// </summary>
+        /// <param name="Data">Input</param>
+        /// <returns>Output array</returns>
+        public static byte[] BigEndian(this ulong Data) {
+            return new byte[] { Data.Byte7(), Data.Byte6(), Data.Byte5(), Data.Byte4(),
+                Data.Byte3(), Data.Byte2(), Data.Byte1(), Data.Byte0() };
+            }
+
+
         }
     }

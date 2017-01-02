@@ -42,6 +42,7 @@ namespace Goedel.Cryptography {
         public abstract void BindEncoder(CryptoDataEncoder Encoder);
 
 
+
         }
 
     /// <summary>
@@ -100,6 +101,12 @@ namespace Goedel.Cryptography {
     /// Base class for cryptographic encryption providers.
     /// </summary>
     public abstract class CryptoProviderEncryption : CryptoProviderBulk {
+        /// <summary>
+        /// Create a crypto stream from this provider.
+        /// </summary>
+        /// <param name="Decoder"></param>
+        public abstract void BindDecoder(CryptoDataDecoder Decoder);
+
 
         /// <summary>
         /// The size of the required key
@@ -149,12 +156,24 @@ namespace Goedel.Cryptography {
         /// <param name="Key">Encryption Key</param>
         /// <returns>Instance describing the key agreement parameters.</returns>
         public abstract CryptoDataEncoder MakeEncryptor(
+                            byte[] Key = null, byte[] IV = null,
+                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, 
+                            Stream OutputStream = null);
+
+        /// <summary>
+        /// Create an encoder for a bulk algorithm and optional key wrap or exchange.
+        /// </summary>
+
+        /// <param name="Algorithm">The key wrap algorithm</param>
+        /// <param name="OutputStream">Output stream</param>
+        /// <param name="IV">Initialization vector for symmetric encryption</param>
+        /// <param name="Key">Encryption Key</param>
+        /// <returns>Instance describing the key agreement parameters.</returns>
+        public abstract CryptoDataDecoder MakeDecryptor(
+                            byte[] Key, byte[] IV,
                             CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
-                            Stream OutputStream = null,
-                            byte[] Key = null, byte[] IV = null
+                            Stream OutputStream = null
                             );
-
-
 
         }
     }

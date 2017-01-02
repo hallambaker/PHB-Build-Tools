@@ -910,4 +910,50 @@ namespace Goedel.Cryptography {
         }
 
 
+    /// <summary>
+    /// </summary>
+    public class UnwrapFailed : CryptographicException {
+
+		/// <summary>
+        /// Construct instance for exception "The key unwrap operation returned an invalid value."
+        /// </summary>		
+		public UnwrapFailed () : base ("The key unwrap operation returned an invalid value.") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The key unwrap operation returned an invalid value."
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public UnwrapFailed (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public UnwrapFailed (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new UnwrapFailed(Reason as string);
+				}
+			else {
+				return new UnwrapFailed();
+				}
+            }
+        }
+
+
 	}

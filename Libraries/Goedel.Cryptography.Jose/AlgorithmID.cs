@@ -17,6 +17,10 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         public static readonly Dictionary<string, CryptoAlgorithmID> StringtoID =
             new Dictionary<string, CryptoAlgorithmID> {
+                //SHA-256	alg (Private)
+                { "S256", CryptoAlgorithmID.SHA_2_256},
+                //SHA-512	alg (Private)
+                { "S512", CryptoAlgorithmID.SHA_2_512},
 
                 //HS256   HMAC using SHA-256	alg Required[IESG]  [RFC7518, Section 3.2]
                 { "HS256", CryptoAlgorithmID.HMAC_SHA_2_256},
@@ -24,9 +28,9 @@ namespace Goedel.Cryptography.Jose {
                 { "HS512", CryptoAlgorithmID.HMAC_SHA_2_512},
 
                 //RS256   RSASSA-PKCS1-v1_5 using SHA-256	alg Recommended[IESG]  [RFC7518, Section 3.3]
-                { "RS256", CryptoAlgorithmID.RSAExch_P15 | CryptoAlgorithmID.SHA_2_256},
+                { "RS256", CryptoAlgorithmID.RSASign | CryptoAlgorithmID.SHA_2_256},
                 //RS512   RSASSA-PKCS1-v1_5 using SHA-512	alg Optional[IESG]  [RFC7518, Section 3.3]
-                { "RS512", CryptoAlgorithmID.RSAExch_P15 | CryptoAlgorithmID.SHA_2_512},
+                { "RS512", CryptoAlgorithmID.RSASign | CryptoAlgorithmID.SHA_2_512},
 
                 //RSA-OAEP RSAES OAEP using default parameters alg Recommended+	[IESG]
                 { "RSA-OAEP", CryptoAlgorithmID.RSAExch},

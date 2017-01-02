@@ -169,10 +169,14 @@ namespace Goedel.Cryptography {
             }
 
         /// <summary>
-        /// Decrypt the bulk key.
+        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
         /// </summary>
-        /// <param name="Data"></param>
-        public override CryptoData Decrypt(CryptoDataExchange Data) {
+        /// <param name="EncryptedKey">The encrypted session</param>
+        /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <returns>The decoded data instance</returns>
+        public override byte[] Decrypt(
+                    byte[] EncryptedKey,
+                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
             throw new NYI("To do");
             }
 

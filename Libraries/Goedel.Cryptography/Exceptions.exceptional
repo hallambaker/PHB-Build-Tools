@@ -106,3 +106,6 @@ Namespace Goedel.Cryptography
 
 		Exception PrivateKeyNotFound
 			Console "The operation requested requires a private key that could not be found"
+
+		Exception UnwrapFailed
+			Console "The key unwrap operation returned an invalid value."

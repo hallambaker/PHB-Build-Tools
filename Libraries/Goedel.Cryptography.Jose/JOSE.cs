@@ -59,31 +59,37 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Encode object as a JSON byte array.
         /// </summary>
+        /// <param name="tag">If true, serialization is tagged with 
+        /// the object type.</param>
         /// <returns>The encoded data.</returns>
-        public byte[] ToJson() {
+        public byte[] ToJson(bool tag=false) {
             var JSONWriter = new JSONWriter();
-            Serialize(JSONWriter);
+            Serialize(JSONWriter, tag);
             return JSONWriter.GetBytes;
             }
 
         /// <summary>
         /// Encode object as a JSON-B byte array
         /// </summary>
+        /// <param name="tag">If true, serialization is tagged with 
+        /// the object type.</param>
         /// <returns>The encoded data.</returns>
-        public byte[] ToJsonB() {
+        public byte[] ToJsonB(bool tag = false) {
             var JSONWriter = new JSONBWriter();
-            Serialize(JSONWriter);
+            Serialize(JSONWriter, tag);
             return JSONWriter.GetBytes;
             }
 
         /// <summary>
         /// Encode object as a JSON-C byte array
         /// </summary>
+        /// <param name="tag">If true, serialization is tagged with 
+        /// the object type.</param>
         /// <param name="Dictionary">Dictionary for encoding tags.</param>
         /// <returns>The encoded data.</returns>
-        public byte[] ToJsonC(Dictionary<string, int> Dictionary) {
+        public byte[] ToJsonC(Dictionary<string, int> Dictionary, bool tag = false) {
             var JSONWriter = new JSONCWriter(Dictionary);
-            Serialize(JSONWriter);
+            Serialize(JSONWriter, tag);
             return JSONWriter.GetBytes;
             }
         }

@@ -111,7 +111,7 @@ namespace Goedel.Utilities {
         /// <param name="Test2">Second test value</param>
         /// <returns>true if and only if the two arrays are of the same size and each
         /// element is equal.</returns>
-        public static bool Equals(this byte[] Test1, byte[] Test2) {
+        public static bool IsEqualTo(this byte[] Test1, byte[] Test2) {
             if ((Test1 == null) & (Test2 != null)) {
                 return false;
                 }
