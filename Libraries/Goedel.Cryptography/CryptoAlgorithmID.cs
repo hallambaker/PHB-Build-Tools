@@ -32,8 +32,6 @@ namespace Goedel.Cryptography {
     // systems of crypto algorithm marshalling code, here is yet another set of 
     // wrapper classes.
 
-    //
-
     /// <summary>
     /// <para>
     /// Numeric identifiers for Cryptographic Algorithms and suites. The identifier 
@@ -120,14 +118,19 @@ namespace Goedel.Cryptography {
         /// <summary>SHA2 512 bit</summary>
         SHA_2_512 = Digest + 3,
 
+        /// <summary>SHA2 512 bit</summary>
+        SHA_2_512T128 = Digest + 4,
+
         /// <summary>SHA3 256 bit</summary>
-        SHA_3_256 = Digest + 4,
+        SHA_3_256 = Digest + 5,
 
         /// <summary>SHA3 512 bit</summary>
-        SHA_3_512 = Digest + 5,
+        SHA_3_512 = Digest + 6,
 
 
-        /// <summary>Flag for CBC mode</summary>
+
+
+        /// <summary>Flag for CBC mode with PKCS#7 padding</summary>
         ModeCBC = 1,
 
         /// <summary>Flag for Cipher Text Stealing Mode</summary>
@@ -138,6 +141,12 @@ namespace Goedel.Cryptography {
 
         /// <summary>Flag for HMAC SHA-2 Mode</summary>
         ModeHMAC = 4,
+
+        /// <summary>Flag for CBC mode with no padding</summary>
+        ModeCBCNone = 5,
+
+        /// <summary>Flag for Electronic Code Book Mode</summary>
+        ModeECB = 6,
 
 
         /// <summary>AES 128 bit key</summary>
@@ -159,6 +168,12 @@ namespace Goedel.Cryptography {
         /// <summary>AES 128 bit with HMAC</summary>
         AES128HMAC = AES128 + ModeHMAC,
 
+        /// <summary>AES 128 bit CBC mode with no padding</summary>
+        AES128CBCNone = AES128 + ModeCBCNone,
+
+        /// <summary>AES 128 bit ECB mode with zeros padding</summary>
+        AES128ECB = AES128 + ModeECB,
+
 
         /// <summary>AES 256 bit in CBC mode</summary>
         AES256CBC = AES256 + ModeCBC,
@@ -172,6 +187,12 @@ namespace Goedel.Cryptography {
         /// <summary>AES 256 Bit with HMAC</summary>
         AES256HMAC = AES256 + ModeHMAC,
 
+        /// <summary>AES 256 bit CBC mode with no padding</summary>
+        AES256CBCNone = AES256 + ModeCBCNone,
+
+        /// <summary>AES 128 bit ECB mode with zeros padding</summary>
+        AES256ECB = AES256 + ModeECB,
+
 
         // HMAC Modes
 
@@ -181,6 +202,8 @@ namespace Goedel.Cryptography {
         /// <summary>HMAC SHA 2 with 512 bit key.</summary>
         HMAC_SHA_2_512 = 13,
 
+        /// <summary>HMAC SHA 2 with 512 bit key.</summary>
+        HMAC_SHA_2_512T128 = 14,
 
 
         /// <summary>Flag for CBC mode</summary>
@@ -202,11 +225,24 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>RSA Signature using PSS padding.</summary>
-        RSASign_PSS = Exchange + Meta,
+        RSASign_PSS = Signature + Meta,
 
 
         /// <summary>Elliptic Curve DSA with curve 25519x</summary>
         EDDSA = Signature + Meta * 8,
+
+
+        /// <summary>RSA Signature using PKCS#1.5 padding and SHA-2 256 digest</summary>
+        RSASign_SHA_2_256 = RSASign | SHA_2_256,
+
+        /// <summary>RSA Signature using PKCS#1.5 padding and SHA-2 512 digest</summary>
+        RSASign_SHA_2_512 = RSASign | SHA_2_512,
+
+        /// <summary>RSA Signature using PSS padding and SHA-2 256 digest</summary>
+        RSASign_PSS_SHA_2_256 = RSASign_PSS | SHA_2_256,
+
+        /// <summary>RSA Signature using PSS padding and SHA-2 512 digest</summary>
+        RSASign_PSS_SHA_2_512 = RSASign_PSS | SHA_2_512,
 
 
         // Public Key Exchange
@@ -224,215 +260,23 @@ namespace Goedel.Cryptography {
         DH = Exchange + Meta * 16,
 
 
+
         // Key Wrap
 
         ///<summary>Direct (no wrap)</summary>
         Direct = Wrap + Meta * 1,
 
         ///<summary>RFC 3394 / NIST with AES and 128 bit key</summary>
-        AES128_KW = Wrap + Meta * 2,
+        KW3394_AES128 = Wrap + Meta * 2,
 
-        ///<summary>RFC 3394 / NIST with AES and 128 bit key</summary>
-        AES256_KW = Wrap + Meta * 3,
+        ///<summary>RFC 3394 / NIST with AES and 192 bit key</summary>
+        KW3394_AES256 = Wrap + Meta * 3,
 
         ///<summary>RFC 3394 / NIST with AES and 128 bit key</summary>
         AES128_GCM_KW = Wrap + Meta * 4,
 
-        ///<summary>RFC 3394 / NIST with AES and 128 bit key</summary>
+        ///<summary>RFC 3394 / NIST with AES and 192 bit key</summary>
         AES256_GCM_KW = Wrap + Meta * 5,
-        }
-
-    /// <summary>
-    /// Extension methods to extract algorithm sub types
-    /// </summary>
-    public static class CryptoID {
-
-
-        /// <summary>
-        /// Return the MAC algorithm from a possibly composite ID
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns>The digest algorithm</returns>
-        static CryptoAlgorithmID ExtractMAC (this CryptoAlgorithmID ID) {
-
-            switch (ID.Bulk()) {
-                case CryptoAlgorithmID.AES128HMAC: return CryptoAlgorithmID.HMAC_SHA_2_256;
-                case CryptoAlgorithmID.AES256HMAC: return CryptoAlgorithmID.HMAC_SHA_2_512;
-                }
-            return ID.Bulk();
-            }
-
-        /// <summary>
-        /// Return the encryption algorithm from a possibly composite ID
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns>The encryption algorithm</returns>
-        static CryptoAlgorithmID ExtractEncryption(this CryptoAlgorithmID ID) {
-
-            switch (ID.Bulk()) {
-                case CryptoAlgorithmID.AES128HMAC: return CryptoAlgorithmID.AES128CBC;
-                case CryptoAlgorithmID.AES256HMAC: return CryptoAlgorithmID.AES256CBC;
-                }
-            return ID.Bulk();
-            }
-
-
-        /// <summary>
-        /// Get the bulk algorithm
-        /// </summary>
-        /// <param name="ID">Composite identifier</param>
-        /// <returns>The bulk component.</returns>
-        public static CryptoAlgorithmID Bulk (this CryptoAlgorithmID ID) {
-            return ID < 0? ID :ID & CryptoAlgorithmID.BulkMask;
-            }
-
-        /// <summary>
-        /// Get the Meta algorithm
-        /// </summary>
-        /// <param name="ID">Composite identifier</param>
-        /// <returns>The meta component.</returns>
-        public static CryptoAlgorithmID Meta(this CryptoAlgorithmID ID) {
-            return ID < 0 ? ID : ID & CryptoAlgorithmID.MetaMask;
-            }
-
-        /// <summary>
-        /// Set algorithm defaults
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <param name="BulkDefault"></param>
-        /// <param name="MetaDefault"></param>
-        /// <returns></returns>
-        public static CryptoAlgorithmID Default(
-                    this CryptoAlgorithmID ID,
-                    CryptoAlgorithmID BulkDefault = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID MetaDefault = CryptoAlgorithmID.Default) {
-            var Meta = ID.Meta();
-            var Bulk = ID.Bulk();
-            Meta = Meta == CryptoAlgorithmID.Default ? MetaDefault : Meta;
-            Bulk = Bulk == CryptoAlgorithmID.Default ? BulkDefault : Bulk;
-            return Meta | Bulk;
-            }
-
-
-        /// <summary>
-        /// Set algorithm defaults
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <param name="Default"></param>
-        /// <returns></returns>
-        public static CryptoAlgorithmID DefaultMeta(
-                    this CryptoAlgorithmID ID,
-                    CryptoAlgorithmID Default = CryptoAlgorithmID.Default) {
-            var DefaultedID = ID.Meta();
-            DefaultedID = DefaultedID == CryptoAlgorithmID.Default ? 
-                Default.Bulk() : DefaultedID;
-            return DefaultedID ;
-            }
-
-        /// <summary>
-        /// Set algorithm defaults
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <param name="Default"></param>
-        /// <returns></returns>
-        public static CryptoAlgorithmID DefaultBulk(
-                    this CryptoAlgorithmID ID,
-                    CryptoAlgorithmID Default = CryptoAlgorithmID.Default) {
-            var DefaultedID = ID.Bulk ();
-            DefaultedID = DefaultedID == CryptoAlgorithmID.Default ? 
-                    Default.Bulk() : DefaultedID;
-            return DefaultedID;
-            }
-
-
-        /// <summary>
-        /// Get the base part of an algorithm
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns></returns>
-        public static CryptoAlgorithmID Base (this CryptoAlgorithmID ID) {
-            return ID < 0 ? ID : ID & CryptoAlgorithmID.BaseMask;
-            }
-
-        /// <summary>
-        /// Get the bulk algorithm
-        /// </summary>
-        /// <param name="ID">Composite identifier</param>
-        /// <returns>The bulk component.</returns>
-        public static CryptoAlgorithmID Digest(this CryptoAlgorithmID ID) {
-            var Bulk = ID.Bulk();
-            return Bulk >= (CryptoAlgorithmID.Digest) & (Bulk <= CryptoAlgorithmID.MaxDigest) ?
-                Bulk : CryptoAlgorithmID.Default;
-            }
-
-
-        /// <summary>
-        /// Get the bulk algorithm
-        /// </summary>
-        /// <param name="ID">Composite identifier</param>
-        /// <returns>The bulk component.</returns>
-        public static CryptoAlgorithmID MAC(this CryptoAlgorithmID ID) {
-            var Bulk = ID.ExtractMAC();
-            return Bulk >= (CryptoAlgorithmID.MAC) & (Bulk <= CryptoAlgorithmID.MaxMAC) ?
-                Bulk : CryptoAlgorithmID.Default;
-            }
-
-
-        /// <summary>
-        /// Get the bulk algorithm
-        /// </summary>
-        /// <param name="ID">Composite identifier</param>
-        /// <returns>The bulk component.</returns>
-        public static CryptoAlgorithmID Encryption(this CryptoAlgorithmID ID) {
-            var Bulk = ID.ExtractEncryption();
-            return Bulk >= (CryptoAlgorithmID.Encryption) & (Bulk <= CryptoAlgorithmID.MaxEncryption) ?
-                Bulk : CryptoAlgorithmID.Default;
-            }
-
-        /// <summary>
-        /// Get the bulk algorithm
-        /// </summary>
-        /// <param name="ID">Composite identifier</param>
-        /// <returns>The bulk component.</returns>
-        public static CryptoAlgorithmID Mode(this CryptoAlgorithmID ID) {
-            var Encryption = ID.Encryption();
-            return (Encryption > 0 )? Encryption & ((CryptoAlgorithmID) 0x7) : Encryption;
-            }
-
-
-        /// <summary>
-        /// Get the bulk algorithm
-        /// </summary>
-        /// <param name="ID">Composite identifier</param>
-        /// <returns>The bulk component.</returns>
-        public static CryptoAlgorithmID Signature(this CryptoAlgorithmID ID) {
-            var Meta = ID.Meta();
-            return Meta >= (CryptoAlgorithmID.Signature) & (Meta <= CryptoAlgorithmID.MaxSignature) ?
-                Meta : CryptoAlgorithmID.Default;
-            }
-
-        /// <summary>
-        /// Get the bulk algorithm
-        /// </summary>
-        /// <param name="ID">Composite identifier</param>
-        /// <returns>The bulk component.</returns>
-        public static CryptoAlgorithmID Exchange(this CryptoAlgorithmID ID) {
-            var Meta = ID.Meta();
-            return Meta >= (CryptoAlgorithmID.Exchange) & (Meta <= CryptoAlgorithmID.MaxExchange) ?
-                Meta : CryptoAlgorithmID.Default;
-            }
-
-        /// <summary>
-        /// Get the bulk algorithm
-        /// </summary>
-        /// <param name="ID">Composite identifier</param>
-        /// <returns>The bulk component.</returns>
-        public static CryptoAlgorithmID Wrap(this CryptoAlgorithmID ID) {
-            var Meta = ID.Meta();
-            return Meta >= (CryptoAlgorithmID.Wrap) & (Meta <= CryptoAlgorithmID.MaxWrap) ?
-                Meta : CryptoAlgorithmID.Default;
-            }
-
 
         }
 

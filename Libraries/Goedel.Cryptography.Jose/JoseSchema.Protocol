@@ -236,3 +236,21 @@
 			Description
 				|The parameter QInverse
 
+	Structure PublicKeyDH
+		Description
+			|A Diffie Helllman Public key
+		Inherits Key
+		String Domain
+			Description
+				|The fingerprint of the domain
+		Binary Public
+			Description
+				|The public key
+
+	Structure PrivateKeyDH
+		Description
+			|Diffie Helllman private key parameters
+		Inherits PublicKeyDH
+		Binary Private
+			Description
+				|The private key

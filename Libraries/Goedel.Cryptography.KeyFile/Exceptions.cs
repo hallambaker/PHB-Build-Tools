@@ -1,4 +1,5 @@
 using System;
+using Goedel.Utilities;
 
 using Goedel.FSR;
 
@@ -51,7 +52,7 @@ namespace Goedel.Cryptography.KeyFile {
 				return new KeyFileException(Reason as string);
 				}
 			else {
-				return new KeyFileException("Key could not be read");
+				return new KeyFileException();
 				}
             }
         }
@@ -100,7 +101,7 @@ namespace Goedel.Cryptography.KeyFile {
 				return new NoProviderSpecified(Reason as string);
 				}
 			else {
-				return new NoProviderSpecified("No provider specified");
+				return new NoProviderSpecified();
 				}
             }
         }
@@ -148,7 +149,7 @@ namespace Goedel.Cryptography.KeyFile {
 				return new PrivateKeyNotAvailable(Reason as string);
 				}
 			else {
-				return new PrivateKeyNotAvailable("The specified private key could not be found");
+				return new PrivateKeyNotAvailable();
 				}
             }
         }
@@ -196,7 +197,7 @@ namespace Goedel.Cryptography.KeyFile {
 				return new UnexpectedEnd(Reason as string);
 				}
 			else {
-				return new UnexpectedEnd("File read error, file was incomplete");
+				return new UnexpectedEnd();
 				}
             }
         }
@@ -230,6 +231,7 @@ namespace Goedel.Cryptography.KeyFile {
 			}
 
 
+		/// <summary>
         /// Construct instance for exception using a userdata parameter of
 		/// type LexReader and the format string "The file {0} could not be read"
         /// </summary>		
@@ -268,7 +270,7 @@ namespace Goedel.Cryptography.KeyFile {
 				return new ParseError(Reason as LexReader);
 				}
 			else {
-				return new ParseError("An error occurred");
+				return new ParseError();
 				}
             }
         }

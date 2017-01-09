@@ -125,10 +125,13 @@ namespace Goedel.Cryptography.Framework {
         /// Processes the specified byte array
         /// </summary>
         /// <param name="Data">The input to process</param>
+        /// <param name="Offset">Offset within array</param>
+        /// <param name="Count">Number of bytes to process</param>
         /// <param name="Key">The key</param>
         /// <returns>The result of the cryptographic operation.</returns>
-        public override byte[] ProcessData(byte[] Data, byte[] Key = null) {
-            return HashAlgorithm.ComputeHash(Data);
+        public override byte[] ProcessData(byte[] Data, int Offset,
+                            int Count, byte[] Key = null) {
+            return HashAlgorithm.ComputeHash(Data, Offset, Count);
             }
 
         /// <summary>

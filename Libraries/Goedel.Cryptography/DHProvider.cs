@@ -92,8 +92,10 @@ namespace Goedel.Cryptography {
         /// Construct a provider for a Keypair
         /// </summary>
         /// <param name="KeyPair">Keypair to construct from</param>
-        public CryptoProviderExchangeDH(KeyPair KeyPair) {
+        /// <param name="Bulk">Default encryption algorithm.</param>
+        public CryptoProviderExchangeDH(KeyPair KeyPair, CryptoAlgorithmID Bulk) {
             this.KeyPair = KeyPair;
+            this.BulkAlgorithmDefault = Bulk;
             }
 
         /// <summary>
@@ -123,7 +125,7 @@ namespace Goedel.Cryptography {
         /// <param name="UDF">Fingerprint of key to locate.</param>
         /// <returns>True if private key exists.</returns>
         public override bool FindLocal(string UDF) {
-            KeyPair = Platform.FindInKeyStore(UDF);
+            KeyPair = Platform.FindInKeyStore(UDF, CryptoAlgorithmID.DH);
             return KeyPair != null;
             }
 
@@ -131,6 +133,7 @@ namespace Goedel.Cryptography {
         public override int SharesMaximum {
             get { return 16; }
             }
+
 
         // --------------------------------------
 
@@ -153,6 +156,16 @@ namespace Goedel.Cryptography {
                             CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
                             Stream OutputStream = null
                             ) {
+
+            // Generate an ephemeral DH key and perform a Key agreement against it.
+
+            DiffeHellmanPublic DiffeHellmanPublic;
+            var Result = DHKeyPair.Agreement(out DiffeHellmanPublic);
+
+            // NYI: Replace this and return the DH Result instance
+
+            // NYI: DH MakeEncoder
+
             throw new NYI("To do");
             }
 
@@ -165,6 +178,8 @@ namespace Goedel.Cryptography {
         /// wraps the parameters supplied in Data.</param> 
         public override CryptoDataExchange Encrypt(CryptoData Data, 
             CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, bool Wrap = false){
+
+            // NYI: DH Encrypt
             throw new NYI("To do");
             }
 
@@ -177,83 +192,12 @@ namespace Goedel.Cryptography {
         public override byte[] Decrypt(
                     byte[] EncryptedKey,
                     CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
+
+            // NYI: DH Decrypt
             throw new NYI("To do");
             }
 
 
-
-        ///// <summary>
-        ///// Perform a key wrap operation and return a CryptoDataWrapped instance
-        ///// containing the wrapped key parameters and a bulk provider. 
-        ///// </summary>
-        ///// <param name="Algorithm">The key wrap algorithm</param>
-        ///// <param name="Bulk">The bulk provider to use. If specified, the parameters from
-        ///// the specified provider will be used. Otherwise a new bulk provider will 
-        ///// be created and returned as part of the result.</param>
-        ///// <returns>Instance describing the key agreement parameters.</returns>
-        //public override CryptoDataDecoder SetDecoder(
-        //                    CryptoProviderBulk Bulk = null,
-        //                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
-        //                    Stream OutputStream = null
-        //                    ) {
-        //    throw new NYI("To do");
-        //}
-
-        ///// <summary>
-        ///// Encrypt key data.
-        ///// </summary>
-        ///// <param name="Input">The key data to encrypt.</param>
-        ///// <returns>Encrypted data</returns>
-        //public override CryptoData Encrypt(KeyPair Recipient) {
-
-        //    var RecipientDH = Recipient as DHKeyPair;
-        //    Assert.NotNull(RecipientDH, InvalidKeyPairType.Throw);
-
-        //    // Generate a new ephemeral DH key
-        //    var Ephemeral = new DiffeHellmanPrivate(DHKeyPair.DHDomain);
-
-        //    // Calculate the shared parameters
-        //    var Agreed = RecipientDH.Agreement(Ephemeral);
-
-        //    // Convert to a key
-        //    var AgreedBytes = Agreed.ToByteArray();
-        //    Array.Reverse(AgreedBytes);
-
-        //    var Result = CryptoData.SHA512(CryptoAlgorithmID, OID, AgreedBytes, 256);
-
-        //    return Result;
-        //    }
-
-        ///// <summary>
-        ///// Decrypt data. Note that this is only possibly when the corresponding private
-        ///// key is available on the local machine.
-        ///// </summary>
-        ///// <param name="Input">The data to decrypt.</param>
-        ///// <returns>Decrypted data.</returns>
-        //public override CryptoData Decrypt(CryptoData Input, KeyPair Sender) {
-        //    var SenderDH = Sender as DHKeyPair;
-        //    Assert.NotNull(SenderDH, InvalidKeyPairType.Throw);
-
-        //    // Calculate the shared parameters
-
-        //    BigInteger Agreed;
-
-        //    if (Input.Recrypt == null) {
-        //        Agreed = SenderDH.Agreement(DHKeyPair);
-        //        }
-        //    else {
-        //        var Carry = new BigInteger(Input.Recrypt);
-        //        Agreed = SenderDH.Agreement(DHKeyPair, Carry);
-        //        }
-
-        //    // Convert to a key
-        //    var AgreedBytes = Agreed.ToByteArray();
-        //    Array.Reverse(AgreedBytes);
-
-        //    var Result = CryptoData.SHA512(CryptoAlgorithmID, OID, AgreedBytes, 256);
-
-        //    return Result;
-        //    }
 
 
         // From CryptoProviderRecryption
@@ -282,7 +226,7 @@ namespace Goedel.Cryptography {
         /// <param name="CryptoData"></param>
         /// <returns>The partially decrypted data</returns>
         public override CryptoDataEncoder Recrypt(CryptoDataEncoder CryptoData) {
-
+            // NYI: DH CryptoDataEncoder
             throw new NYI("To do");
 
             //var TargetDH = Target as DHKeyPair;
@@ -309,6 +253,7 @@ namespace Goedel.Cryptography {
         /// <param name="CryptoDatas"></param>
         /// <returns>The partially decrypted data</returns>
         public override CryptoDataEncoder Recrypt(CryptoDataEncoder[] CryptoDatas) {
+            // NYI: DH CryptoDataEncoder
             throw new NYI("To do");
             }
         }

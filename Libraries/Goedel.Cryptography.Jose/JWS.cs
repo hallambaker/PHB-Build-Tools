@@ -180,7 +180,7 @@ namespace Goedel.Cryptography.Jose {
             var DigestOfData = Encoder.Process(Data);
 
 
-            var Match = Assert.IsEqualTo(Header.val, DigestOfData.Integrity);
+            var Match = Header.val.IsEqualTo(DigestOfData.Integrity);
 
             if (!Header.val.IsEqualTo(DigestOfData.Integrity)) {
                 return false; // Digest does not match

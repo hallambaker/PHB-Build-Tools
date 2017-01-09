@@ -34,6 +34,7 @@ namespace Goedel.Cryptography {
     /// <param name="KeySize">Key size. If zero, the default key size for the
     /// algorithm is used.</param>
     /// <param name="Bulk">Bulk cipher, if required.</param>
+    /// 
     /// <returns></returns>
     public delegate CryptoProvider CryptoProviderFactory(
                 int KeySize = 0,
@@ -135,26 +136,28 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
-        /// Convenience function, create digest provider and apply to data.
+        /// Convenience function, create bulk provider and apply to data.
         /// </summary>
         /// <param name="Buffer">Data to apply digest to.</param>
+        /// /// <param name="Key">The key to apply</param>
         /// <returns>Result of digest operation.</returns>
-        public byte[] Process(byte[] Buffer) {
+        public byte[] Process(byte[] Buffer, byte[] Key = null) {
             Assert.True(AlgorithmClass == CryptoAlgorithmClass.Digest,
                     CryptographicException.Throw);
             var Provider = CryptoProviderFactory(0, CryptoAlgorithmID.NULL) as CryptoProviderDigest;
             Assert.NotNull(Provider, CryptographicException.Throw);
-            var Result = Provider.Process(Buffer);
+            var Result = Provider.Process(Buffer, Key);
             return Result.Integrity;
             }
 
         /// <summary>
-        /// Convenience function, create digest provider and apply to data.
+        /// Convenience function, create bulk provider and apply to data.
         /// </summary>
         /// <param name="Text">Text to apply digest to.</param>
+        /// <param name="Key">The key to apply</param>
         /// <returns>Result of digest operation.</returns>
-        public byte[] Process(string Text) {
-            return Process(Encoding.UTF8.GetBytes(Text));
+        public byte[] Process(string Text, byte[] Key = null) {
+            return Process(Encoding.UTF8.GetBytes(Text), Key);
 
             }
         }

@@ -35,7 +35,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the parameters as a PKIX RSAPublicKey structure;
         /// </summary>
-        public virtual RSAPublicKey RSAPublicKey {
+        public virtual RSAPublicKey PKIXParameters {
             get {
                 return new RSAPublicKey() {
                     Modulus = n,
@@ -44,17 +44,17 @@ namespace Goedel.Cryptography.Jose {
                 }
             }
 
+        /// <summary>
+        /// Extract a KeyPair object from the JOSE data structure.
+        /// </summary>
+        /// <returns>The extracted key pair</returns>
+        public override KeyPair GetKeyPair() {
 
-        ///// <summary>
-        ///// Extract an RSA KeyPair.
-        ///// </summary>
-        ///// <returns></returns>
-        //public override KeyPair GetKeyPair() {
-        //    var Parameters = RSAParameters();
-        //    return new RSAKeyPair(RSAPublicKey);
-        //    }
+            var PKIXParams = PKIXParameters;
+            var KeyPair = RSAKeyPairBase.KeyPairFactory(PKIXParams);
 
-
+            return KeyPair;
+            }
 
         }
 
@@ -64,7 +64,7 @@ namespace Goedel.Cryptography.Jose {
     public partial class PrivateKeyRSA {
 
         /// <summary>
-        /// Construct from the spcified RSA Key
+        /// Construct from the specified RSA Key
         /// </summary>
         /// <param name="KeyPair">An RSA key Pair.</param>
         public PrivateKeyRSA(RSAKeyPairBase KeyPair) {

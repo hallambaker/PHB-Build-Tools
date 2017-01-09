@@ -200,6 +200,19 @@ namespace Goedel.Cryptography.Framework {
 
 
         /// <summary>
+        /// Delegate to create a key pair base
+        /// </summary>
+        /// <param name="PKIXParameters"></param>
+        /// <returns>The created key pair</returns>
+        public static new KeyPair KeyPairFactory (RSAPublicKey PKIXParameters) {
+
+            var RSAParameters = PKIXParameters.RSAParameters();
+            return new RSAKeyPair(RSAParameters);
+            }
+
+
+
+        /// <summary>
         /// Makes a key persistent on the local machine with the specified level of
         /// protection.
         /// </summary>

@@ -267,7 +267,10 @@ namespace Goedel.Cryptography.PKIX {
         /// <param name="Signer">Cryptographic provider for the signer.</param>
         public void Sign(CryptoProviderSignature Signer) {
 
-            TBSCertificate.Signature = new AlgorithmIdentifier(Signer.CryptoAlgorithmID);
+            var Algorithm = CryptoCatalog.Default.SignatureDefaults(Signer.CryptoAlgorithmID);
+
+
+            TBSCertificate.Signature = new AlgorithmIdentifier(Algorithm);
             SignatureAlgorithm = TBSCertificate.Signature;
 
             var Data = TBSCertificate.DER();

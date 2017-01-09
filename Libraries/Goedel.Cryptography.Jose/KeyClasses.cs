@@ -34,7 +34,8 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <returns>The extracted key pair</returns>
         public virtual KeyPair GetKeyPair () {
-            return null;
+
+            throw new InternalError("GetKeyPair method not implemented in child class");
             }
 
         /// <summary>
@@ -45,6 +46,9 @@ namespace Goedel.Cryptography.Jose {
         public static Key GetPublic(KeyPair KeyPair) {
             if (KeyPair as RSAKeyPairBase != null) {
                 return new PublicKeyRSA (KeyPair as RSAKeyPairBase);
+                }
+            if (KeyPair as DHKeyPairBase != null) {
+                return new PublicKeyDH(KeyPair as DHKeyPairBase);
                 }
             return null;
             }
@@ -57,6 +61,9 @@ namespace Goedel.Cryptography.Jose {
         public static Key GetPrivate(KeyPair KeyPair) {
             if (KeyPair as RSAKeyPairBase != null) {
                 return new PrivateKeyRSA (KeyPair as RSAKeyPairBase);
+                }
+            if (KeyPair as DHKeyPairBase != null) {
+                return new PrivateKeyDH(KeyPair as DHKeyPairBase);
                 }
             return null;
             }

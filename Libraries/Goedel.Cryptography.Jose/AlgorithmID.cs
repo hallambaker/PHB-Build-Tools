@@ -46,10 +46,10 @@ namespace Goedel.Cryptography.Jose {
                 { "dir", CryptoAlgorithmID.Direct},                            
                 
                 //A128KW  AES Key Wrap using 128-bit key  alg Recommended[IESG]  [RFC7518, Section 4.4]
-                { "A128KW", CryptoAlgorithmID.AES128_KW},
+                { "A128KW", CryptoAlgorithmID.KW3394_AES128},
 
                 //A256KW  AES Key Wrap using 256-bit key  alg Recommended[IESG]  [RFC7518, Section 4.4]
-                { "A256KW", CryptoAlgorithmID.AES256_KW},
+                { "A256KW", CryptoAlgorithmID.KW3394_AES256},
 
                 //A128GCMKW   Key wrapping with AES GCM using 128-bit key alg Optional[IESG]  [RFC7518, Section 4.7]
                 { "A128GCMKW", CryptoAlgorithmID.AES128_GCM_KW},

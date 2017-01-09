@@ -320,6 +320,12 @@ namespace Goedel.Cryptography {
 
         }
 
+    /// <summary>
+    /// Delegate to create a key pair base
+    /// </summary>
+    /// <param name="PKIXParameters"></param>
+    /// <returns></returns>
+    public delegate KeyPair DelegateFactoryRSAKeyPair (RSAPublicKey PKIXParameters);
 
     /// <summary>
     /// RSA Key Pair
@@ -335,9 +341,21 @@ namespace Goedel.Cryptography {
         /// Return public key parameters in PKIX structure
         /// </summary>
         public abstract RSAPublicKey RSAPublicKey { get; }
+
+
+        /// <summary>
+        /// Construct a KeyPair entry from PKIX parameters. Defaults to the built in
+        /// provider.
+        /// </summary>
+        public static DelegateFactoryRSAKeyPair KeyPairFactory;
         }
 
-
+    /// <summary>
+    /// Delegate to create a key pair base
+    /// </summary>
+    /// <param name="PKIXParameters"></param>
+    /// <returns></returns>
+    public delegate KeyPair DelegateFactoryDHKeyPair(DHPublicKey PKIXParameters);
 
     /// <summary>
     /// RSA Key Pair
@@ -387,6 +405,12 @@ namespace Goedel.Cryptography {
         /// Return public key parameters in PKIX structure
         /// </summary>
         public abstract DHPublicKey DHPublicKey { get; }
+
+        /// <summary>
+        /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
+        /// platform provider.
+        /// </summary>
+        public static DelegateFactoryDHKeyPair KeyPairFactory = DHKeyPair.KeyPairFactory;
         }
 
 
@@ -411,11 +435,11 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
-        /// The default digest algorithm. This may be overriden in subclasses.
+        /// The default digest algorithm. This may be overridden in subclasses.
         /// for example, to make a different digest algorithm the default for
         /// a particular provider.
         /// </summary>
-        public virtual CryptoAlgorithmID BulkAlgorithmDefault { get; set; } = CryptoAlgorithmID.Default;
+        public abstract CryptoAlgorithmID BulkAlgorithmDefault { get; set; }
 
 
 

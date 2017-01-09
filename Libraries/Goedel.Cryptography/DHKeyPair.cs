@@ -4,7 +4,11 @@ using Goedel.Utilities;
 using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Cryptography {
-    class DHKeyPair : DHKeyPairBase {
+
+    /// <summary>
+    /// Implementation of Diffie Hellman key exchange with proxy re-encryption support.
+    /// </summary>
+    public class DHKeyPair : DHKeyPairBase {
 
         /// <summary>
         /// The internal DH parameters
@@ -63,7 +67,7 @@ namespace Goedel.Cryptography {
         /// <param name="Bulk">The digest algorithm to use</param>
         public override CryptoProviderSignature SignatureProvider(
                     CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) {
-            throw new NYI("To do");
+            throw new InvalidOperation("DHKeyPair does not support signature operations. ");
             }
 
 
@@ -73,9 +77,8 @@ namespace Goedel.Cryptography {
         /// <param name="Bulk">The encryption algorithm to use</param>
         public override CryptoProviderExchange ExchangeProvider(
                     CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) {
-            throw new NYI("To do");
+            return new CryptoProviderExchangeDH(this, Bulk);
             }
-
 
 
         /// <summary>
@@ -98,6 +101,16 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
+        /// Delegate to create a key pair base
+        /// </summary>
+        /// <param name="PKIXParameters"></param>
+        /// <returns>The created key pair</returns>
+        public static new KeyPair KeyPairFactory(DHPublicKey PKIXParameters) {
+            return new DiffeHellmanPublic (PKIXParameters);
+            }
+
+
+        /// <summary>
         /// Retrieve the private key from local storage (if not already available)
         /// </summary>
         public override void GetPrivate() {
@@ -105,7 +118,7 @@ namespace Goedel.Cryptography {
                 return; // Already got the private value
                 }
 
-            var Private = Platform.FindInKeyStore(UDF) as DHKeyPair;
+            var Private = Platform.FindInKeyStore(UDF, CryptoAlgorithmID.DH) as DHKeyPair;
             PublicKey = Private.PublicKey;
             }
 
@@ -149,6 +162,17 @@ namespace Goedel.Cryptography {
         public BigInteger Agreement(DHKeyPair Public) {
             return PrivateKey.Agreement(Public.PublicKey);
             }
+
+        /// <summary>
+        /// Ephemeral DH agreement
+        /// </summary>
+        /// <param name="Public">Public key parameters</param>
+        /// <returns>The key agreement value ZZ</returns>
+        public BigInteger Agreement(out DiffeHellmanPublic Public) {
+            var Result = PublicKey.Agreement(out Public);
+            return Result;
+            }
+
 
         /// <summary>
         /// Perform a Diffie Hellman Key Agreement to a private key

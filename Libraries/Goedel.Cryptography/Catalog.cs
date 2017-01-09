@@ -66,6 +66,26 @@ namespace Goedel.Cryptography {
         /// <summary>The default signature algorithm.</summary>
         public CryptoAlgorithmID AlgorithmSignature { get; set; } = CryptoAlgorithmID.NULL;
 
+
+        /// <summary>
+        /// Set undefined identifier components to default signature and digest.
+        /// </summary>
+        /// <param name="Base">The base id</param>
+        /// <returns></returns>
+        public CryptoAlgorithmID SignatureDefaults (CryptoAlgorithmID Base) {
+            return Base.Default(AlgorithmDigest, AlgorithmSignature);
+            }
+
+        /// <summary>
+        /// Set undefined identifier components to default exchange and encryption.
+        /// </summary>
+        /// <param name="Base">The base id</param>
+        /// <returns></returns>
+        public CryptoAlgorithmID EncryptionDefaults(CryptoAlgorithmID Base) {
+            return Base.Default(AlgorithmExchange, AlgorithmEncryption);
+            }
+
+
         CryptoAlgorithmID SetDefault(CryptoAlgorithmID Current, CryptoAlgorithm New, CryptoAlgorithmID ID,
                 CryptoAlgorithmClass Class) {
 
@@ -75,17 +95,9 @@ namespace Goedel.Cryptography {
             return Current;
             }
 
-        ///// <summary>
-        ///// Array containing the registered algorithms.
-        ///// </summary>
-        //public List<CryptoAlgorithm> Algorithms = new List<CryptoAlgorithm>();
-
-
         /// <summary>Map crypto identifier to crypto algorithm.</summary>
         public Dictionary<CryptoAlgorithmID, CryptoAlgorithm> Dictionary = 
             new Dictionary<CryptoAlgorithmID, CryptoAlgorithm>();
-
-
 
         /// <summary>
         /// Add a cryptographic algorithm provider to the catalog
@@ -116,7 +128,7 @@ namespace Goedel.Cryptography {
             // Look for an exact match first implementing the combined ID
             var Found = Dictionary.TryGetValue(ID, out Meta);
             if (Found) {
-                return Meta.CryptoProviderFactory (Meta.KeySize, CryptoAlgorithmID.NULL);
+                return Meta.CryptoProviderFactory (Meta.KeySize, ID);
                 }
 
             // If not successful, try to construct from a meta and a bulk algorithm
@@ -328,16 +340,6 @@ namespace Goedel.Cryptography {
                             Stream OutputStream = null
                             );
 
-
-        ///// <summary>
-        ///// Perform whatever unwrapping operations are required to process the input
-        ///// data,
-        ///// </summary>
-        ///// <param name="Decoder">A crypto data decoder containing the wrapped key.</param>
-        //public abstract CryptoDataDecoder BindDecoder(
-        //                    CryptoDataDecoder Decoder = null
-        //                    );
-
         /// <summary>
         /// Complete processing at the end of an encoding or decoding operation
         /// </summary>
@@ -348,10 +350,8 @@ namespace Goedel.Cryptography {
             if (MemoryStream != null) {
                 CryptoData.ProcessedData = MemoryStream.ToArray();
                 }
-
             return;
             }
-
 
         /*
          * Convenience methods  

@@ -113,9 +113,10 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="KeySize">Default key size.</param>
         /// <param name="DigestAlgorithm">Default digest algorithm.</param>
-        public CryptoProviderSignatureRSA(int KeySize, CryptoAlgorithmID DigestAlgorithm) {
+        public CryptoProviderSignatureRSA(int KeySize, 
+                    CryptoAlgorithmID DigestAlgorithm = CryptoAlgorithmID.Default) {
             this.KeySize = KeySize;
-            this.BulkAlgorithmDefault = DigestAlgorithm;
+            this.BulkAlgorithmDefault = DigestAlgorithm.DefaultBulk (BulkAlgorithmDefault);
             }
 
 

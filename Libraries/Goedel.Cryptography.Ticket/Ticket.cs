@@ -32,14 +32,14 @@ namespace Goedel.Cryptography.Ticket {
     public class TicketData {
 
         /// <summary></summary>
-        public static Cryptography.Authentication TicketAuthentication = 
-                        Cryptography.Authentication.HS256T128;
+        public static CryptoAlgorithmID TicketAuthentication =
+                        CryptoAlgorithmID.HMAC_SHA_2_512T128;
 
         /// <summary>Number of authentication bytes.</summary>
         protected static int AuthenticationBytes = 0;
 
         /// <summary>Number of master key bytes</summary>
-        protected int MasterKeyBytes = Cryptography.KeyLength (TicketAuthentication) / 8;
+        protected int MasterKeyBytes = 32;  // HACK: Should be calculated ??
 
         static Encoding UTF8Encoding = new UTF8Encoding ();
 
@@ -67,13 +67,13 @@ namespace Goedel.Cryptography.Ticket {
         public Cryptography.Encryption Encryption;
 
         /// <summary>The master encryption key</summary>
-        public Cryptography.Key MasterKey;
+        public byte[] MasterKey;
 
-        /// <summary>The authentication key derrived from the master key.</summary>
-        public Cryptography.Key AuthenticationKey;
+        /// <summary>The authentication key derived from the master key.</summary>
+        public byte[] AuthenticationKey;
 
-        /// <summary>The encryption key derrived from the master key.</summary>
-        public Cryptography.Key EncryptionKey;
+        /// <summary>The encryption key derived from the master key.</summary>
+        public byte[] EncryptionKey;
 
         /// <summary>If true, ticket has been authenticated.</summary>
         public Boolean Authenticated;
@@ -81,8 +81,10 @@ namespace Goedel.Cryptography.Ticket {
 
         /// <summary>Default constructor, initialize new master key.</summary>
         public TicketData() {
-            MasterKey = new Cryptography.Key (TicketAuthentication);
-            // Derrive the Authentication and Encryption Keys
+            // NYI: Generate master key
+            
+            //MasterKey = new Cryptography.Key (TicketAuthentication);
+            // Derive the Authentication and Encryption Keys
             }
 
         /// <summary>Constructor specifying encryption and authentication algorithms.</summary>
@@ -110,11 +112,10 @@ namespace Goedel.Cryptography.Ticket {
             Authentication = (Cryptography.Authentication) Ticket [index++];
             Encryption = (Cryptography.Encryption) Ticket [index++];
 
-            byte [] MasterKeyData = new byte [MasterKeyBytes];
+            byte [] MasterKey = new byte [MasterKeyBytes];
             for (int i = 0; i < MasterKeyBytes; i++) {
-                MasterKeyData [i] = Ticket [index++];
+                MasterKey[i] = Ticket [index++];
                 }
-            MasterKey = new Cryptography.Key (MasterKeyData, Authentication, Encryption);
 
             x = Ticket [index++];
             byte [] AccountIDData = new byte [x];
@@ -161,7 +162,7 @@ namespace Goedel.Cryptography.Ticket {
         /// <param name="Ticket">The raw ticket data.</param>
         /// <param name="SeedKey">The master key for encrypting and authenticating tickets.</param>
         /// <returns>Packed ticket.</returns>
-        public static byte[] Pack(byte[] Ticket, Cryptography.Key SeedKey) {
+        public static byte[] Pack(byte[] Ticket, byte[] SeedKey) {
             //byte [] Result = null;
             //byte [] Hash = null;
 
@@ -195,7 +196,7 @@ namespace Goedel.Cryptography.Ticket {
         /// <param name="SeedKey">The master key.</param>
         /// <param name="Hash">The authentication value.</param>
         /// <returns></returns>
-        public static byte[] UnPack(byte[] Ticket, Cryptography.Key SeedKey, out byte [] Hash) {
+        public static byte[] UnPack(byte[] Ticket, byte[] SeedKey, out byte [] Hash) {
             throw new NYI();
 
 
@@ -248,10 +249,11 @@ namespace Goedel.Cryptography.Ticket {
         /// <param name="Ticket">Raw ticket data.</param>
         /// <param name="SeedKey">Ticket seed key.</param>
         /// <returns></returns>
-        public static bool VerifyTicket (byte[] Ticket, Cryptography.Key SeedKey) {
+        public static bool VerifyTicket (byte[] Ticket, byte[] SeedKey) {
             int Sign = Ticket.Length - AuthenticationBytes;
 
-            byte [] Hash = Cryptography.GetMAC (Ticket, Sign, TicketAuthentication, SeedKey);
+            var BlockProvider = CryptoCatalog.Default.GetAuthentication(TicketAuthentication);
+            var Hash = BlockProvider.ProcessData(Ticket, SeedKey);
 
             for (int i = 0; i < AuthenticationBytes; i++) {
                 if (Hash [i] != Ticket [Sign+i]) throw new Exception ("Bad Ticket");
@@ -266,7 +268,7 @@ namespace Goedel.Cryptography.Ticket {
         /// <param name="WrappedTicket">Binary ticket</param>
         /// <param name="SeedKey">Master key for cryptographic operations.</param>
         /// <returns></returns>
-        public static TicketData MakeTicket(byte[] WrappedTicket, Cryptography.Key SeedKey) {
+        public static TicketData MakeTicket(byte[] WrappedTicket, byte[] SeedKey) {
             byte [] Hash;
             byte[] Ticket = UnPack (WrappedTicket, SeedKey, out Hash);
 
@@ -304,7 +306,7 @@ namespace Goedel.Cryptography.Ticket {
         /// </summary>
         /// <returns>Size of encoded ticket in bytes.</returns>
         public virtual int Length() {
-            return (5 + MasterKey.KeyData.Length + AccountID.Length + AuthenticationBytes);
+            return (5 + MasterKey.Length + AccountID.Length + AuthenticationBytes);
             }
 
         /// <summary>
@@ -318,8 +320,8 @@ namespace Goedel.Cryptography.Ticket {
             Ticket [index++] = 0; //
             Ticket [index++] = (byte) Authentication; //
             Ticket [index++] = (byte) Encryption; //
-            Array.Copy (MasterKey.KeyData, 0, Ticket, index, MasterKey.KeyData.Length); // The master key
-            index += MasterKey.KeyData.Length;
+            Array.Copy (MasterKey, 0, Ticket, index, MasterKey.Length); // The master key
+            index += MasterKey.Length;
             Ticket [index++] = (byte) AccountID.Length; //
             Array.Copy (AccountID, 0, Ticket, index,  AccountID.Length);
             index += AccountID.Length;
@@ -332,7 +334,7 @@ namespace Goedel.Cryptography.Ticket {
         /// </summary>
         /// <param name="MasterKey"></param>
         /// <returns></returns>
-        public byte[] GetTicket(Cryptography.Key MasterKey) {
+        public byte[] GetTicket(byte[] MasterKey) {
             Ticket = new byte [Length()];
 
             return Pack (Ticket, MasterKey);
@@ -397,8 +399,8 @@ namespace Goedel.Cryptography.Ticket {
             Ticket [index++] = 1; //
             Ticket [index++] = (byte) Authentication; //
             Ticket [index++] = (byte) Encryption; //
-            Array.Copy (MasterKey.KeyData, 0, Ticket, index, MasterKey.KeyData.Length); // The master key
-            index += MasterKey.KeyData.Length;
+            Array.Copy (MasterKey, 0, Ticket, index, MasterKey.Length); // The master key
+            index += MasterKey.Length;
             Ticket [index++] = (byte) AccountID.Length; //
             Array.Copy (AccountID, 0, Ticket, index,  AccountID.Length);
             index += AccountID.Length;

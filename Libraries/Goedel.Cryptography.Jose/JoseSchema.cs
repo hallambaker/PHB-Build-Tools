@@ -178,6 +178,22 @@ namespace Goedel.Cryptography.Jose {
 					break;
 					}
 
+
+				case "PublicKeyDH" : {
+					var Result = new PublicKeyDH ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+
+				case "PrivateKeyDH" : {
+					var Result = new PrivateKeyDH ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
 				default : {
 					throw new Exception ("Not supported");
 					}
@@ -203,29 +219,17 @@ namespace Goedel.Cryptography.Jose {
         ///Data not protected by the signature
         /// </summary>
 
-		public virtual Header						Unprotected {
-			get {return _Unprotected;}			
-			set {_Unprotected = value;}
-			}
-		Header						_Unprotected ;
+		public virtual Header						Unprotected  {get; set;}
         /// <summary>
         ///The signed data
         /// </summary>
 
-		public virtual byte[]						Payload {
-			get {return _Payload;}			
-			set {_Payload = value;}
-			}
-		byte[]						_Payload ;
+		public virtual byte[]						Payload  {get; set;}
         /// <summary>
         ///The signature value
         /// </summary>
 
-		public virtual List<Signature>				Signatures {
-			get {return _Signatures;}			
-			set {_Signatures = value;}
-			}
-		List<Signature>				_Signatures;
+		public virtual List<Signature>				Signatures  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -397,8 +401,6 @@ namespace Goedel.Cryptography.Jose {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -457,65 +459,37 @@ namespace Goedel.Cryptography.Jose {
         ///Data protected by the signature
         /// </summary>
 
-		public virtual byte[]						Protected {
-			get {return _Protected;}			
-			set {_Protected = value;}
-			}
-		byte[]						_Protected ;
+		public virtual byte[]						Protected  {get; set;}
         /// <summary>
         ///The initialization vector for the bulk cipher.
         /// </summary>
 
-		public virtual byte[]						IV {
-			get {return _IV;}			
-			set {_IV = value;}
-			}
-		byte[]						_IV ;
+		public virtual byte[]						IV  {get; set;}
         /// <summary>
         ///Per recipient decryption data.
         /// </summary>
 
-		public virtual List<Recipient>				Recipients {
-			get {return _Recipients;}			
-			set {_Recipients = value;}
-			}
-		List<Recipient>				_Recipients;
+		public virtual List<Recipient>				Recipients  {get; set;}
         /// <summary>
         ///The decryption data for use by this recipient.
         /// </summary>
 
-		public virtual byte[]						EncryptedKey {
-			get {return _EncryptedKey;}			
-			set {_EncryptedKey = value;}
-			}
-		byte[]						_EncryptedKey ;
+		public virtual byte[]						EncryptedKey  {get; set;}
         /// <summary>
         ///Additional data that is included in the authentication scope but not the encryption
         /// </summary>
 
-		public virtual byte[]						AdditionalAuthenticatedData {
-			get {return _AdditionalAuthenticatedData;}			
-			set {_AdditionalAuthenticatedData = value;}
-			}
-		byte[]						_AdditionalAuthenticatedData ;
+		public virtual byte[]						AdditionalAuthenticatedData  {get; set;}
         /// <summary>
         ///The encrypted data
         /// </summary>
 
-		public virtual byte[]						CipherText {
-			get {return _CipherText;}			
-			set {_CipherText = value;}
-			}
-		byte[]						_CipherText ;
+		public virtual byte[]						CipherText  {get; set;}
         /// <summary>
         ///Authentication tag
         /// </summary>
 
-		public virtual byte[]						JTag {
-			get {return _JTag;}			
-			set {_JTag = value;}
-			}
-		byte[]						_JTag ;
+		public virtual byte[]						JTag  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -701,8 +675,6 @@ namespace Goedel.Cryptography.Jose {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -776,29 +748,17 @@ namespace Goedel.Cryptography.Jose {
         ///Data protected by the signature
         /// </summary>
 
-		public virtual byte[]						Protected {
-			get {return _Protected;}			
-			set {_Protected = value;}
-			}
-		byte[]						_Protected ;
+		public virtual byte[]						Protected  {get; set;}
         /// <summary>
         ///The authenticated data
         /// </summary>
 
-		public virtual byte[]						Payload {
-			get {return _Payload;}			
-			set {_Payload = value;}
-			}
-		byte[]						_Payload ;
+		public virtual byte[]						Payload  {get; set;}
         /// <summary>
         ///The signature data
         /// </summary>
 
-		public virtual byte[]						Signature {
-			get {return _Signature;}			
-			set {_Signature = value;}
-			}
-		byte[]						_Signature ;
+		public virtual byte[]						Signature  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -951,8 +911,6 @@ namespace Goedel.Cryptography.Jose {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -1001,38 +959,22 @@ namespace Goedel.Cryptography.Jose {
         ///Header
         /// </summary>
 
-		public virtual Header						Header {
-			get {return _Header;}			
-			set {_Header = value;}
-			}
-		Header						_Header ;
+		public virtual Header						Header  {get; set;}
         /// <summary>
         ///The initialization vector for the cipher
         /// </summary>
 
-		public virtual byte[]						IV {
-			get {return _IV;}			
-			set {_IV = value;}
-			}
-		byte[]						_IV ;
+		public virtual byte[]						IV  {get; set;}
         /// <summary>
         ///The encrypted data 
         /// </summary>
 
-		public virtual byte[]						CipherText {
-			get {return _CipherText;}			
-			set {_CipherText = value;}
-			}
-		byte[]						_CipherText ;
+		public virtual byte[]						CipherText  {get; set;}
         /// <summary>
         ///The signature data
         /// </summary>
 
-		public virtual byte[]						Signature {
-			get {return _Signature;}			
-			set {_Signature = value;}
-			}
-		byte[]						_Signature ;
+		public virtual byte[]						Signature  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -1190,8 +1132,6 @@ namespace Goedel.Cryptography.Jose {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -1246,75 +1186,43 @@ namespace Goedel.Cryptography.Jose {
         ///Bulk encryption algorithm for content
         /// </summary>
 
-		public virtual string						enc {
-			get {return _enc;}			
-			set {_enc = value;}
-			}
-		string						_enc ;
+		public virtual string						enc  {get; set;}
         /// <summary>
         ///Digest algorithm hint
         /// </summary>
 
-		public virtual string						dig {
-			get {return _dig;}			
-			set {_dig = value;}
-			}
-		string						_dig ;
+		public virtual string						dig  {get; set;}
         /// <summary>
         ///Key exchange algorithm
         /// </summary>
 
-		public virtual string						alg {
-			get {return _alg;}			
-			set {_alg = value;}
-			}
-		string						_alg ;
+		public virtual string						alg  {get; set;}
         /// <summary>
         ///Key identifier. If a UDF fingerprint is used to identify the 
         ///key it is placed in this field.
         /// </summary>
 
-		public virtual string						kid {
-			get {return _kid;}			
-			set {_kid = value;}
-			}
-		string						_kid ;
+		public virtual string						kid  {get; set;}
         /// <summary>
         ///URL identifying an X.509 public key certificate
         /// </summary>
 
-		public virtual string						x5u {
-			get {return _x5u;}			
-			set {_x5u = value;}
-			}
-		string						_x5u ;
+		public virtual string						x5u  {get; set;}
         /// <summary>
         ///An X.509 public key certificate
         /// </summary>
 
-		public virtual byte[]						x5c {
-			get {return _x5c;}			
-			set {_x5c = value;}
-			}
-		byte[]						_x5c ;
+		public virtual byte[]						x5c  {get; set;}
         /// <summary>
         ///SHA-1 fingerprint of X.509 certificate
         /// </summary>
 
-		public virtual byte[]						x5t {
-			get {return _x5t;}			
-			set {_x5t = value;}
-			}
-		byte[]						_x5t ;
+		public virtual byte[]						x5t  {get; set;}
         /// <summary>
         ///SHA-2-256 fingerprint of X.509 certificate
         /// </summary>
 
-		public virtual byte[]						x5tS256 {
-			get {return _x5tS256;}			
-			set {_x5tS256 = value;}
-			}
-		byte[]						_x5tS256 ;
+		public virtual byte[]						x5tS256  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -1519,9 +1427,21 @@ namespace Goedel.Cryptography.Jose {
 					break;
 					}
 
+				case "PublicKeyDH" : {
+					var Result = new PublicKeyDH ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				case "PrivateKeyDH" : {
+					var Result = new PrivateKeyDH ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -1590,57 +1510,33 @@ namespace Goedel.Cryptography.Jose {
         ///JWK Set URL
         /// </summary>
 
-		public virtual string						jku {
-			get {return _jku;}			
-			set {_jku = value;}
-			}
-		string						_jku ;
+		public virtual string						jku  {get; set;}
         /// <summary>
         ///The key identifier
         /// </summary>
 
-		public virtual string						jwk {
-			get {return _jwk;}			
-			set {_jwk = value;}
-			}
-		string						_jwk ;
+		public virtual string						jwk  {get; set;}
         /// <summary>
         ///Another IANA content type parameter
         /// </summary>
 
-		public virtual string						typ {
-			get {return _typ;}			
-			set {_typ = value;}
-			}
-		string						_typ ;
+		public virtual string						typ  {get; set;}
         /// <summary>
         ///Content type parameter
         /// </summary>
 
-		public virtual string						cty {
-			get {return _cty;}			
-			set {_cty = value;}
-			}
-		string						_cty ;
+		public virtual string						cty  {get; set;}
         /// <summary>
         ///List of header parameters that a recipient MUST understand to interpret
         ///the authentication portion of the JOSE object.
         /// </summary>
 
-		public virtual List<string>				crit {
-			get {return _crit;}			
-			set {_crit = value;}
-			}
-		List<string>				_crit;
+		public virtual List<string>				crit  {get; set;}
         /// <summary>
         ///The digest value
         /// </summary>
 
-		public virtual byte[]						val {
-			get {return _val;}			
-			set {_val = value;}
-			}
-		byte[]						_val ;
+		public virtual byte[]						val  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -1816,8 +1712,6 @@ namespace Goedel.Cryptography.Jose {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -1884,29 +1778,17 @@ namespace Goedel.Cryptography.Jose {
         ///The signature header
         /// </summary>
 
-		public virtual Header						Header {
-			get {return _Header;}			
-			set {_Header = value;}
-			}
-		Header						_Header ;
+		public virtual Header						Header  {get; set;}
         /// <summary>
         ///Data protected by the signature
         /// </summary>
 
-		public virtual byte[]						Protected {
-			get {return _Protected;}			
-			set {_Protected = value;}
-			}
-		byte[]						_Protected ;
+		public virtual byte[]						Protected  {get; set;}
         /// <summary>
         ///The signature value
         /// </summary>
 
-		public virtual byte[]						SignatureValue {
-			get {return _SignatureValue;}			
-			set {_SignatureValue = value;}
-			}
-		byte[]						_SignatureValue ;
+		public virtual byte[]						SignatureValue  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -2059,8 +1941,6 @@ namespace Goedel.Cryptography.Jose {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -2112,38 +1992,22 @@ namespace Goedel.Cryptography.Jose {
         ///Key type
         /// </summary>
 
-		public virtual string						kty {
-			get {return _kty;}			
-			set {_kty = value;}
-			}
-		string						_kty ;
+		public virtual string						kty  {get; set;}
         /// <summary>
         ///Public Key use
         /// </summary>
 
-		public virtual string						use {
-			get {return _use;}			
-			set {_use = value;}
-			}
-		string						_use ;
+		public virtual string						use  {get; set;}
         /// <summary>
         ///Key operations
         /// </summary>
 
-		public virtual string						key_ops {
-			get {return _key_ops;}			
-			set {_key_ops = value;}
-			}
-		string						_key_ops ;
+		public virtual string						key_ops  {get; set;}
         /// <summary>
         ///Symmetric key value.
         /// </summary>
 
-		public virtual byte[]						k {
-			get {return _k;}			
-			set {_k = value;}
-			}
-		byte[]						_k ;
+		public virtual byte[]						k  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -2315,9 +2179,21 @@ namespace Goedel.Cryptography.Jose {
 					break;
 					}
 
+				case "PublicKeyDH" : {
+					var Result = new PublicKeyDH ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				case "PrivateKeyDH" : {
+					var Result = new PrivateKeyDH ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -2371,20 +2247,12 @@ namespace Goedel.Cryptography.Jose {
         ///Specify the recipient and per recipient data
         /// </summary>
 
-		public virtual Header						Header {
-			get {return _Header;}			
-			set {_Header = value;}
-			}
-		Header						_Header ;
+		public virtual Header						Header  {get; set;}
         /// <summary>
         ///The decryption data for use by this recipient.
         /// </summary>
 
-		public virtual byte[]						EncryptedKey {
-			get {return _EncryptedKey;}			
-			set {_EncryptedKey = value;}
-			}
-		byte[]						_EncryptedKey ;
+		public virtual byte[]						EncryptedKey  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -2532,8 +2400,6 @@ namespace Goedel.Cryptography.Jose {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -2580,20 +2446,12 @@ namespace Goedel.Cryptography.Jose {
         ///The public modulus
         /// </summary>
 
-		public virtual byte[]						n {
-			get {return _n;}			
-			set {_n = value;}
-			}
-		byte[]						_n ;
+		public virtual byte[]						n  {get; set;}
         /// <summary>
         ///The public exponent
         /// </summary>
 
-		public virtual byte[]						e {
-			get {return _e;}			
-			set {_e = value;}
-			}
-		byte[]						_e ;
+		public virtual byte[]						e  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -2749,8 +2607,6 @@ namespace Goedel.Cryptography.Jose {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -2796,56 +2652,32 @@ namespace Goedel.Cryptography.Jose {
         ///The parameter d
         /// </summary>
 
-		public virtual byte[]						d {
-			get {return _d;}			
-			set {_d = value;}
-			}
-		byte[]						_d ;
+		public virtual byte[]						d  {get; set;}
         /// <summary>
         ///The parameter p
         /// </summary>
 
-		public virtual byte[]						p {
-			get {return _p;}			
-			set {_p = value;}
-			}
-		byte[]						_p ;
+		public virtual byte[]						p  {get; set;}
         /// <summary>
         ///The parameter q
         /// </summary>
 
-		public virtual byte[]						q {
-			get {return _q;}			
-			set {_q = value;}
-			}
-		byte[]						_q ;
+		public virtual byte[]						q  {get; set;}
         /// <summary>
         ///The parameter dp
         /// </summary>
 
-		public virtual byte[]						dp {
-			get {return _dp;}			
-			set {_dp = value;}
-			}
-		byte[]						_dp ;
+		public virtual byte[]						dp  {get; set;}
         /// <summary>
         ///The parameter dq
         /// </summary>
 
-		public virtual byte[]						dq {
-			get {return _dq;}			
-			set {_dq = value;}
-			}
-		byte[]						_dq ;
+		public virtual byte[]						dq  {get; set;}
         /// <summary>
         ///The parameter QInverse
         /// </summary>
 
-		public virtual byte[]						qi {
-			get {return _qi;}			
-			set {_qi = value;}
-			}
-		byte[]						_qi ;
+		public virtual byte[]						qi  {get; set;}
 
         /// <summary>
         /// Tag identifying this class.
@@ -3014,8 +2846,6 @@ namespace Goedel.Cryptography.Jose {
 					}
 
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}
@@ -3055,6 +2885,397 @@ namespace Goedel.Cryptography.Jose {
 					}
 				case "qi" : {
 					qi = JSONReader.ReadBinary ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// A Diffie Helllman Public key
+	/// </summary>
+	public partial class PublicKeyDH : Key {
+        /// <summary>
+        ///The fingerprint of the domain
+        /// </summary>
+
+		public virtual string						Domain  {get; set;}
+        /// <summary>
+        ///The public key
+        /// </summary>
+
+		public virtual byte[]						Public  {get; set;}
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "PublicKeyDH";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public PublicKeyDH () {
+			_Initialize ();
+			}
+        /// <summary>
+		/// Initialize class from JSONReader stream.
+        /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
+		public PublicKeyDH (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public PublicKeyDH (string _String) {
+			Deserialize (_String);
+			}
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((Key)this).SerializeX(_Writer, false, ref _first);
+			if (Domain != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Domain", 1);
+					_Writer.WriteString (Domain);
+				}
+			if (Public != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Public", 1);
+					_Writer.WriteBinary (Public);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new PublicKeyDH From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new PublicKeyDH From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new PublicKeyDH (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "PublicKeyDH" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new PublicKeyDH FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "PublicKeyDH" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new PublicKeyDH FromTagged (string _Input) {
+			//PublicKeyDH _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
+        public static new PublicKeyDH  FromTagged (JSONReader JSONReader) {
+			PublicKeyDH Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "PublicKeyDH" : {
+					var Result = new PublicKeyDH ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				case "PrivateKeyDH" : {
+					var Result = new PrivateKeyDH ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Domain" : {
+					Domain = JSONReader.ReadString ();
+					break;
+					}
+				case "Public" : {
+					Public = JSONReader.ReadBinary ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Diffie Helllman private key parameters
+	/// </summary>
+	public partial class PrivateKeyDH : PublicKeyDH {
+        /// <summary>
+        ///The private key
+        /// </summary>
+
+		public virtual byte[]						Private  {get; set;}
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "PrivateKeyDH";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public PrivateKeyDH () {
+			_Initialize ();
+			}
+        /// <summary>
+		/// Initialize class from JSONReader stream.
+        /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
+		public PrivateKeyDH (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public PrivateKeyDH (string _String) {
+			Deserialize (_String);
+			}
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((PublicKeyDH)this).SerializeX(_Writer, false, ref _first);
+			if (Private != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Private", 1);
+					_Writer.WriteBinary (Private);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new PrivateKeyDH From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new PrivateKeyDH From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new PrivateKeyDH (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "PrivateKeyDH" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new PrivateKeyDH FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "PrivateKeyDH" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new PrivateKeyDH FromTagged (string _Input) {
+			//PrivateKeyDH _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
+        public static new PrivateKeyDH  FromTagged (JSONReader JSONReader) {
+			PrivateKeyDH Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "PrivateKeyDH" : {
+					var Result = new PrivateKeyDH ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Private" : {
+					Private = JSONReader.ReadBinary ();
 					break;
 					}
 				default : {

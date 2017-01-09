@@ -188,15 +188,10 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("			get {{return Discovery;}}\n{0}", _Indent);
 							_Output.Write ("			}}\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
-							_Output.Write ("		JPCSession _JPCSession;\n{0}", _Indent);
-							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("        /// <summary>\n{0}", _Indent);
 							_Output.Write ("        /// The active JPCSession.\n{0}", _Indent);
 							_Output.Write ("        /// </summary>		\n{0}", _Indent);
-							_Output.Write ("		public virtual JPCSession JPCSession {{\n{0}", _Indent);
-							_Output.Write ("			get {{return _JPCSession;}}\n{0}", _Indent);
-							_Output.Write ("			set {{_JPCSession = value;}}\n{0}", _Indent);
-							_Output.Write ("			}}\n{0}", _Indent);
+							_Output.Write ("		public virtual JPCSession JPCSession {{get; set;}}\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							foreach  (_Choice Entry2 in Protocol.Entries) {
 								switch (Entry2._Tag ()) {
@@ -558,11 +553,7 @@ namespace Goedel.Tool.ProtoGen {
 					 bool Multiple = IsMultiple (Options);
 					if (  Multiple ) {
 						_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
-						_Output.Write ("		public virtual List<{1}>				{2} {{\n{0}", _Indent, Type, Token);
-						_Output.Write ("			get {{return _{1};}}			\n{0}", _Indent, Token);
-						_Output.Write ("			set {{_{1} = value;}}\n{0}", _Indent, Token);
-						_Output.Write ("			}}\n{0}", _Indent);
-						_Output.Write ("		List<{1}>				_{2};\n{0}", _Indent, Type, Token);
+						_Output.Write ("		public virtual List<{1}>				{2}  {{get; set;}}\n{0}", _Indent, Type, Token);
 						} else {
 						if (  !Nullable ) {
 							_Output.Write ("		bool								__{1} = false;\n{0}", _Indent, Token);
@@ -574,11 +565,7 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("			}}\n{0}", _Indent);
 							} else {
 							_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
-							_Output.Write ("		public virtual {1}						{2} {{\n{0}", _Indent, Type, Token);
-							_Output.Write ("			get {{return _{1};}}			\n{0}", _Indent, Token);
-							_Output.Write ("			set {{_{1} = value;}}\n{0}", _Indent, Token);
-							_Output.Write ("			}}\n{0}", _Indent);
-							_Output.Write ("		{1}						_{2} ;\n{0}", _Indent, Type, Token);
+							_Output.Write ("		public virtual {1}						{2}  {{get; set;}}\n{0}", _Indent, Type, Token);
 							}
 						}
 					}
@@ -733,8 +720,6 @@ namespace Goedel.Tool.ProtoGen {
 			_Output.Write ("\n{0}", _Indent);
 			 MapInheritors (Id, STag);
 			_Output.Write ("				default : {{\n{0}", _Indent);
-			_Output.Write ("					//Ignore the unknown data\n{0}", _Indent);
-			_Output.Write ("                    //throw new Exception (\"Not supported\");\n{0}", _Indent);
 			_Output.Write ("                    break;\n{0}", _Indent);
 			_Output.Write ("					}}\n{0}", _Indent);
 			_Output.Write ("				}}\n{0}", _Indent);

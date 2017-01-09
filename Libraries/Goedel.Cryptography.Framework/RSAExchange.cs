@@ -200,34 +200,6 @@ namespace Goedel.Cryptography.Framework {
             return Provider.Decrypt(EncryptedKey, OAEP);
             }
 
-
-        ///// <summary>
-        ///// Decrypt data block.
-        ///// </summary>
-        ///// <param name="Input">Data to decrypt.</param>
-        ///// <returns>Decrypted data.</returns>
-        //public override byte[] Decrypt(byte[] Input) {
-        //    return Provider.Decrypt(Input, OAEP);
-        //    }
-
-
-        ///// <summary>
-        ///// Perform a key wrap operation and return a CryptoDataWrapped instance
-        ///// containing the wrapped key parameters and a bulk provider. 
-        ///// </summary>
-        ///// <param name="Algorithm">The key wrap algorithm</param>
-        ///// <param name="Bulk">The bulk provider to use. If specified, the parameters from
-        ///// the specified provider will be used. Otherwise a new bulk provider will 
-        ///// be created and returned as part of the result.</param>
-        ///// <returns>Instance describing the key agreement parameters.</returns>
-        //public override CryptoDataDecoder SetDecoder(
-        //                    CryptoProviderBulk Bulk = null,
-        //                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
-        //                    Stream OutputStream = null
-        //                    ) {
-        //    throw new NYI("To do");
-        //    }
-
         }
 
 
@@ -243,8 +215,7 @@ namespace Goedel.Cryptography.Framework {
                 return CryptoAlgorithmID.RSAExch_P15;
                 }
             }
-
-
+        
         /// <summary>
         /// RSA provider that defaults to the PKCS#1.5 padding. For compatibility use only.
         /// </summary>
@@ -253,8 +224,7 @@ namespace Goedel.Cryptography.Framework {
         public CryptoProviderExchangeRSAPKCS(int KeySize) : base(KeySize) {
             this.OAEP = false;
             }
-
-
+        
         private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID Ignore) {
             return new CryptoProviderExchangeRSAPKCS(KeySize);
             }

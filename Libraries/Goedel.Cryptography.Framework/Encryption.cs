@@ -79,11 +79,14 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="SymmetricAlgorithm">Cryptographic provider.</param>
         /// <param name="KeySize">Key size in bits.</param>
         /// <param name="CipherMode">Cipher mode to use</param>
+        ///<param name="PaddingMode">Padding mode to use</param>
         protected CryptoProviderEncryption(SymmetricAlgorithm SymmetricAlgorithm,
-                int KeySize, CipherMode CipherMode) {
+                int KeySize, CipherMode CipherMode, 
+                PaddingMode PaddingMode = PaddingMode.PKCS7) {
             this.Provider = SymmetricAlgorithm;
             Provider.KeySize = KeySize;
             Provider.Mode = CipherMode;
+            Provider.Padding = PaddingMode;
             }
 
 
@@ -250,18 +253,47 @@ namespace Goedel.Cryptography.Framework {
         public override CryptoAlgorithm CryptoAlgorithm {
             get {
                 return (Provider.KeySize == 128) ?
-                    CryptoAlgorithm128 : CryptoAlgorithm256;
+                    CryptoAlgorithm128CBC : CryptoAlgorithm256CBC;
                 }
             }
 
+        /// <summary>Return the block size in bits</summary>
+        public override int BlockSize {
+            get {
+                return Provider.BlockSize;
+                }
+            }
+
+        // TIDY: replace these with a Method on CryptoCatalog to make the entry
+
         static CryptoAlgorithm CryptoAlgorithmAny = new CryptoAlgorithm(
-                    Goedel.Cryptography.CryptoAlgorithmID.AES256, 128,
+                    Goedel.Cryptography.CryptoAlgorithmID.AES256, 256,
                             _AlgorithmClass, Factory);
-        static CryptoAlgorithm CryptoAlgorithm128 = new CryptoAlgorithm(
+
+        static CryptoAlgorithm CryptoAlgorithm128CBC = new CryptoAlgorithm(
                     Goedel.Cryptography.CryptoAlgorithmID.AES128CBC, 128, 
                             _AlgorithmClass, Factory);
-        static CryptoAlgorithm CryptoAlgorithm256 = new CryptoAlgorithm(
+        static CryptoAlgorithm CryptoAlgorithm128CTS = new CryptoAlgorithm(
+                    Goedel.Cryptography.CryptoAlgorithmID.AES128CTS, 128,
+                            _AlgorithmClass, Factory);
+        static CryptoAlgorithm CryptoAlgorithm128CBCNone = new CryptoAlgorithm(
+                    Goedel.Cryptography.CryptoAlgorithmID.AES128CBCNone, 128,
+                            _AlgorithmClass, Factory);
+        static CryptoAlgorithm CryptoAlgorithm128ECB = new CryptoAlgorithm(
+                    Goedel.Cryptography.CryptoAlgorithmID.AES128ECB, 128,
+                            _AlgorithmClass, Factory);
+
+        static CryptoAlgorithm CryptoAlgorithm256CBC = new CryptoAlgorithm(
                     Goedel.Cryptography.CryptoAlgorithmID.AES256CBC, 256, 
+                            _AlgorithmClass, Factory);
+        static CryptoAlgorithm CryptoAlgorithm256CTS = new CryptoAlgorithm(
+                    Goedel.Cryptography.CryptoAlgorithmID.AES256CTS, 256,
+                            _AlgorithmClass, Factory);
+        static CryptoAlgorithm CryptoAlgorithm256CBCNone = new CryptoAlgorithm(
+                    Goedel.Cryptography.CryptoAlgorithmID.AES256CBCNone, 256,
+                            _AlgorithmClass, Factory);
+        static CryptoAlgorithm CryptoAlgorithm256ECB = new CryptoAlgorithm(
+                    Goedel.Cryptography.CryptoAlgorithmID.AES256ECB, 256,
                             _AlgorithmClass, Factory);
 
 
@@ -276,14 +308,70 @@ namespace Goedel.Cryptography.Framework {
         /// <returns>Description of the principal algorithm registration.</returns>
         public static CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
             Catalog = Catalog ?? CryptoCatalog.Default;
-            var Default = Catalog.Add(CryptoAlgorithm256);
+            var Default = Catalog.Add(CryptoAlgorithm256CBC);
             Catalog.Add(CryptoAlgorithmAny);
-            Catalog.Add(CryptoAlgorithm128);
+            Catalog.Add(CryptoAlgorithm128CBC);
+
+            Catalog.Add(CryptoAlgorithm128CTS);
+            Catalog.Add(CryptoAlgorithm128CBCNone);
+            Catalog.Add(CryptoAlgorithm128ECB);
+
+            Catalog.Add(CryptoAlgorithm256CTS);
+            Catalog.Add(CryptoAlgorithm256CBCNone);
+            Catalog.Add(CryptoAlgorithm256ECB);
+
             return Default;
             }
 
         private static CryptoProvider Factory(int KeySize,
                             CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) {
+            switch (Bulk) {
+                case CryptoAlgorithmID.Default: {
+                    return new CryptoProviderEncryptAES(KeySize);
+                    }
+                case CryptoAlgorithmID.AES128: {
+                    return new CryptoProviderEncryptAES(128);
+                    }
+                case CryptoAlgorithmID.AES128CBC: {
+                    return new CryptoProviderEncryptAES(128, 
+                            CipherMode.CBC, PaddingMode.PKCS7);
+                    }
+                case CryptoAlgorithmID.AES128CTS: {
+                    return new CryptoProviderEncryptAES(128,
+                            CipherMode.CTS, PaddingMode.PKCS7);
+                    }
+                case CryptoAlgorithmID.AES128CBCNone: {
+                    return new CryptoProviderEncryptAES(128,
+                            CipherMode.CBC, PaddingMode.None);
+                    }
+                case CryptoAlgorithmID.AES128ECB: {
+                    return new CryptoProviderEncryptAES(128,
+                            CipherMode.ECB, PaddingMode.None);
+                    }
+                case CryptoAlgorithmID.AES256: {
+                    return new CryptoProviderEncryptAES(256);
+                    }
+                case CryptoAlgorithmID.AES256CBC: {
+                    return new CryptoProviderEncryptAES(256,
+                            CipherMode.CBC, PaddingMode.PKCS7);
+                    }
+                case CryptoAlgorithmID.AES256CTS: {
+                    return new CryptoProviderEncryptAES(256,
+                            CipherMode.CTS, PaddingMode.PKCS7);
+                    }
+                case CryptoAlgorithmID.AES256CBCNone: {
+                    return new CryptoProviderEncryptAES(256,
+                            CipherMode.CBC, PaddingMode.None);
+                    }
+                case CryptoAlgorithmID.AES256ECB: {
+                    return new CryptoProviderEncryptAES(256,
+                            CipherMode.ECB, PaddingMode.None);
+                    }
+
+                throw new CipherModeNotSupported ();
+                }
+
+
             return new CryptoProviderEncryptAES(KeySize);
             }
 
@@ -297,20 +385,15 @@ namespace Goedel.Cryptography.Framework {
             }
 
         /// <summary>
-        /// Create an AES provider with the specified key size.
-        /// </summary>
-        /// <param name="KeySize">The key size. Valid sizes are 128, 192 and 256 bits.</param>
-        public CryptoProviderEncryptAES(int KeySize)
-            : base(new AesManaged(), KeySize, CipherMode.CBC) {
-            }
-
-        /// <summary>
         /// Create an AES provider with the specified key size and mode.
         /// </summary>
         /// <param name="KeySize">Key Size in bits.</param>
         /// <param name="CipherMode">The cipher mode to use (CBC or CTS).</param>
-        public CryptoProviderEncryptAES(int KeySize, CipherMode CipherMode)
-            : base(new AesManaged(), KeySize, CipherMode) {
+        /// <param name="PaddingMode">The Padding Mode to use (PKCS or None).</param>
+        public CryptoProviderEncryptAES(int KeySize, 
+                        CipherMode CipherMode = CipherMode.CBC,
+                        PaddingMode PaddingMode = PaddingMode.PKCS7)
+            : base(new AesManaged(), KeySize, CipherMode, PaddingMode) {
             }
 
 

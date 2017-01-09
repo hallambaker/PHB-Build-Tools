@@ -16,10 +16,10 @@ namespace Goedel.Cryptography.KeyFile {
     public enum KeyFileFormat {
         /// <summary>PEM private key file, used for many SSH implementations</summary>
         PEMPrivate,
-        /// <summary>PuTTY private key file</summary>
-        PuTTY,
         /// <summary>PEM public key file</summary>
         PEMPublic,
+        /// <summary>PuTTY private key file</summary>
+        PuTTY,
         /// <summary>OpenSSH native format</summary>
         OpenSSH
         }

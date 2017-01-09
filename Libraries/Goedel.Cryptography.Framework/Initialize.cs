@@ -55,6 +55,17 @@ namespace Goedel.Cryptography.Framework {
                 CryptoProviderExchangeDH.Register();
 
                 Platform.FindLocalDelegates.Add(RSAKeyPair.FindLocal);
+
+
+
+
+                //Configure the key pair factories
+                RSAKeyPairBase.KeyPairFactory = RSAKeyPair.KeyPairFactory;
+                DHKeyPairBase.KeyPairFactory = DHKeyPair.KeyPairFactory;
+
+
+
+
                 }
             catch {
                 throw new Goedel.Cryptography.InitializationFailed();

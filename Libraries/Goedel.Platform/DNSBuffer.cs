@@ -114,8 +114,8 @@ namespace Goedel.Platform {
 
 
 
-        // Check to see if there is space in the buffer, resize if possible
-        // Throw exception if not.
+        // Check to see if there is space in the buffer, resize if possible otherwise throw 
+        // exception
         void CheckSpaceWrite (int bytes) {
             if (( Pointer + bytes ) > Buffer.MaxLength) 
                     throw new TBSException ("Buffer Overflow");

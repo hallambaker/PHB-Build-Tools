@@ -44,6 +44,10 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="Exceptions.Exceptional">
+      <Generator>Exceptional</Generator>
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+    </None>
     <None Include="JoseSchema.Protocol">
       <Generator>ProtoGen</Generator>
       <LastGenOutput>JoseSchema.cs</LastGenOutput>
@@ -54,6 +58,11 @@
   <ItemGroup>
     <Compile Include="AlgorithmID.cs" />
     <Compile Include="Dictionary.cs" />
+    <Compile Include="Exceptions.cs">
+      <DependentUpon>Exceptions.Exceptional</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Header.cs" />
     <Compile Include="JOSE.cs" />
     <Compile Include="JoseSchema.cs">
@@ -67,6 +76,7 @@
     <Compile Include="JWSimple.cs" />
     <Compile Include="KeyClasses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DH.cs" />
     <Compile Include="RSA.cs" />
   </ItemGroup>
   <ItemGroup>

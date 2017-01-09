@@ -69,7 +69,22 @@ namespace Goedel.Cryptography {
         /// <param name="Data">The input to process</param>
         /// <param name="Key">The key</param>
         /// <returns>The result of the cryptographic operation.</returns>
-        public abstract byte[] ProcessData(byte[] Data, byte[] Key = null);
+        public virtual byte[] ProcessData(byte[] Data, byte[] Key = null) {
+            return ProcessData(Data, 0, Data.Length, Key);
+            }
+
+
+        /// <summary>
+        /// Processes the specified byte array
+        /// </summary>
+        /// <param name="Data">The input to process</param>
+        /// <param name="Offset">Offset within array</param>
+        /// <param name="Count">Number of bytes to process</param>
+        /// <param name="Key">The key</param>
+        /// <returns>The result of the cryptographic operation.</returns>
+        public abstract byte[] ProcessData(byte[] Data, int Offset,
+            int Count, byte[] Key = null);
+
 
         /// <summary>The crypto algorithm class.</summary>
         protected static CryptoAlgorithmClass _AlgorithmClass =
@@ -95,6 +110,20 @@ namespace Goedel.Cryptography {
         public override CryptoAlgorithmClass AlgorithmClass {
             get { return _AlgorithmClass; }
             }
+
+        /// <summary>
+        /// Create an encoder for a bulk algorithm and optional key wrap or exchange.
+        /// </summary>
+
+        /// <param name="Algorithm">The key wrap algorithm</param>
+        /// <param name="OutputStream">Output stream</param>
+        /// <param name="Key">Encryption Key</param>
+        /// <returns>Instance describing the key agreement parameters.</returns>
+        public abstract CryptoDataEncoder MakeAuthenticator(
+                            byte[] Key = null,
+                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            Stream OutputStream = null);
+
         }
 
     /// <summary>
@@ -107,16 +136,22 @@ namespace Goedel.Cryptography {
         /// <param name="Decoder"></param>
         public abstract void BindDecoder(CryptoDataDecoder Decoder);
 
-
         /// <summary>
-        /// The size of the required key
+        /// The size of the required key in bits
         /// </summary>
         public abstract int KeySize { get; }
 
         /// <summary>
-        /// The size of the required IV. If zero, no IV is required.
+        /// The size of the required IV in bits. If zero, no IV is required.
         /// </summary>
         public abstract int IVSize { get; }
+
+
+        /// <summary>
+        /// The data block size in bits (1 for a stream cipher)
+        /// </summary>
+        public abstract int BlockSize { get; }
+
 
         /// <summary>
         /// Encrypts the specified byte array

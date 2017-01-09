@@ -16,21 +16,21 @@ namespace Goedel.Cryptography {
         /// </summary>
         static readonly Dictionary<string, CryptoAlgorithmID> XMLToID =
             new Dictionary<string, CryptoAlgorithmID> {
-                    {"2001/04/xmldsig-more#rsa-sha256", CryptoAlgorithmID.RSASign |CryptoAlgorithmID.SHA_2_256 },
-                    {"2001/04/xmldsig-more#rsa-sha512", CryptoAlgorithmID.RSASign |CryptoAlgorithmID.SHA_2_512 },
-                    {"2001/04/xmlenc#aes128-cbc", CryptoAlgorithmID.AES128CBC },
-                    {"2001/04/xmlenc#aes256-cbc", CryptoAlgorithmID.AES256CBC },
-                    {"2001/04/xmlenc#kw-aes128", CryptoAlgorithmID.AES128_KW },
-                    {"2001/04/xmlenc#kw-aes256", CryptoAlgorithmID.AES256_KW },
-                    {"2009/xmlenc11#rsa-oaep", CryptoAlgorithmID.RSAExch },
-                    { "2001/04/xmlenc#rsa-1_5", CryptoAlgorithmID.RSAExch_P15 },
-                    {"2001/04/xmlenc#sha256", CryptoAlgorithmID.SHA_2_256 },
-                    {"2001/04/xmlenc#sha512", CryptoAlgorithmID.SHA_2_512 },
-                    {"2007/05/xmldsig-more#sha3-256", CryptoAlgorithmID.SHA_3_256 },
-                    {"2007/05/xmldsig-more#sha3-512", CryptoAlgorithmID.SHA_3_512 },
-                    {"2009/xmlenc11#aes128-gcm", CryptoAlgorithmID.AES128GCM },
-                    {"2009/xmlenc11#aes256-gcm", CryptoAlgorithmID.AES256GCM },
-                    {"2009/xmlenc11#dh-es", CryptoAlgorithmID.DH },
+                    {"http://www.w3.org/2001/04/xmldsig-more#rsa-sha256", CryptoAlgorithmID.RSASign |CryptoAlgorithmID.SHA_2_256 },
+                    {"http://www.w3.org/2001/04/xmldsig-more#rsa-sha512", CryptoAlgorithmID.RSASign |CryptoAlgorithmID.SHA_2_512 },
+                    {"http://www.w3.org/2001/04/xmlenc#aes128-cbc", CryptoAlgorithmID.AES128CBC },
+                    {"http://www.w3.org/2001/04/xmlenc#aes256-cbc", CryptoAlgorithmID.AES256CBC },
+                    {"http://www.w3.org/2001/04/xmlenc#kw-aes128", CryptoAlgorithmID.KW3394_AES128 },
+                    {"http://www.w3.org/2001/04/xmlenc#kw-aes256", CryptoAlgorithmID.KW3394_AES256 },
+                    {"http://www.w3.org/2009/xmlenc11#rsa-oaep", CryptoAlgorithmID.RSAExch },
+                    {"http://www.w3.org/2001/04/xmlenc#rsa-1_5", CryptoAlgorithmID.RSAExch_P15 },
+                    {"http://www.w3.org/2001/04/xmlenc#sha256", CryptoAlgorithmID.SHA_2_256 },
+                    {"http://www.w3.org/2001/04/xmlenc#sha512", CryptoAlgorithmID.SHA_2_512 },
+                    {"http://www.w3.org/2007/05/xmldsig-more#sha3-256", CryptoAlgorithmID.SHA_3_256 },
+                    {"http://www.w3.org/2007/05/xmldsig-more#sha3-512", CryptoAlgorithmID.SHA_3_512 },
+                    {"http://www.w3.org/2009/xmlenc11#aes128-gcm", CryptoAlgorithmID.AES128GCM },
+                    {"http://www.w3.org/2009/xmlenc11#aes256-gcm", CryptoAlgorithmID.AES256GCM },
+                    {"http://www.w3.org/2009/xmlenc11#dh-es", CryptoAlgorithmID.DH },
             };
 
         static readonly Dictionary<CryptoAlgorithmID, string> IDToXML =
@@ -38,15 +38,29 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
-        /// Mapping of OID entries to CryptoAlgorithmID
+        /// Mapping of OID entries to CryptoAlgorithmID. This is populated with values for 
+        /// the common algorithms (SHA-2 / AES / RSA / HMAC. Additional values may be added
+        /// by providers as they register additional algorithms.
         /// </summary>
+        /// 
         static readonly Dictionary<string, CryptoAlgorithmID> OIDToID =
             new Dictionary<string, CryptoAlgorithmID> {
+                    { PKIX.Constants.OIDS__sha256WithRSAEncryption, CryptoAlgorithmID.RSASign_SHA_2_256},
+                    { PKIX.Constants.OIDS__sha512WithRSAEncryption, CryptoAlgorithmID.RSASign_SHA_2_512},
+                    { PKIX.Constants.OIDS__rsaEncryption, CryptoAlgorithmID.RSAExch_P15},
+                    { PKIX.Constants.OIDS__rsaOAEPEncryptionSET, CryptoAlgorithmID.RSAExch},
+                    { PKIX.Constants.OIDS__id_aes128_cbc, CryptoAlgorithmID.AES128CBC},
+                    { PKIX.Constants.OIDS__id_aes128_wrap, CryptoAlgorithmID.KW3394_AES128},
+                    { PKIX.Constants.OIDS__id_aes128_gcm, CryptoAlgorithmID.AES128GCM},
+                    { PKIX.Constants.OIDS__id_aes256_cbc, CryptoAlgorithmID.KW3394_AES256},
+                    { PKIX.Constants.OIDS__id_aes256_wrap, CryptoAlgorithmID.AES256CBC},
+                    { PKIX.Constants.OIDS__id_aes256_gcm, CryptoAlgorithmID.AES256GCM},
+                    { PKIX.Constants.OIDS__id_hmacWithSHA256, CryptoAlgorithmID.HMAC_SHA_2_256},
+                    { PKIX.Constants.OIDS__id_hmacWithSHA512, CryptoAlgorithmID.HMAC_SHA_2_512},
                     { PKIX.Constants.OIDS__id_sha256, CryptoAlgorithmID.SHA_2_256},
                     { PKIX.Constants.OIDS__id_sha512, CryptoAlgorithmID.SHA_2_512}
-                    //{ PKIX.Constants., CryptoAlgorithmID.SHA_3_256},
-                    //{ PKIX.Constants.OIDS__sha1WithRSAEncryption, CryptoAlgorithmID.SHA_3_512},
-            };
+
+            }; 
 
 
         ///// <summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Linq;
 using System.Threading.Tasks;
+using Goedel.ASN;
 
 namespace Goedel.Cryptography.PKIX {
 
@@ -116,15 +117,29 @@ namespace Goedel.Cryptography.PKIX {
                 }
             }
 
+
+
         /// <summary>
         /// The Modulus as a big integer
         /// </summary>
-        public BigInteger BigIntegerP { get; }
+        public BigInteger BigIntegerP {
+            get {
+                _BigIntegerP = _BigIntegerP ?? Modulus.ToBigInteger();
+                return (BigInteger) _BigIntegerP;
+                }
+            }
+        BigInteger? _BigIntegerP;
 
         /// <summary>
         /// The Generator as a big integer
         /// </summary>
-        public BigInteger BigIntegerG { get; }
+        public BigInteger BigIntegerG {
+            get {
+                _BigIntegerG = _BigIntegerG ?? Generator.ToBigInteger();
+                return (BigInteger)_BigIntegerG;
+                }
+            }
+        BigInteger? _BigIntegerG;
 
 
         DHDomain(string Text) : this (Text.HexToBigInteger(), new BigInteger(2)) {
@@ -136,8 +151,8 @@ namespace Goedel.Cryptography.PKIX {
         /// <param name="P">The Modulus value</param>
         /// <param name="G">The generator value</param>
         public DHDomain(BigInteger P, BigInteger G) {
-            BigIntegerP = P;
-            BigIntegerG = G;
+            _BigIntegerP = P;
+            _BigIntegerG = G;
 
             Modulus = BigIntegerP.ToByteArray();
             Generator = BigIntegerG.ToByteArray();

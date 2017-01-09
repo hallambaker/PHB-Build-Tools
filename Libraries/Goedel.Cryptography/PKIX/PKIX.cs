@@ -406,17 +406,28 @@ namespace Goedel.Cryptography.PKIX {
 
 		}
     /// <summary>
-    /// pkcs =  iso(1)  member_body(2)  us(840)  rsadsi(113549)  pkcs(1) 
+    /// rsadsi =  iso(1)  member_body(2)  us(840)  rsadsi(113549) 
     /// </summary>
 	public partial class Constants {
 		/// <summary>
-		/// pkcs as integer sequence
+		/// rsadsi as integer sequence
+		/// </summary>
+		public readonly static int [] OID__rsadsi = new int [] { 1, 2, 840, 113549};
+		/// <summary>
+		/// rsadsi as string
+		/// </summary>
+		public const string OIDS__rsadsi = "1.2.840.113549";
+
+
+		/// <summary>
+		/// pkcs = rsadsi (1) as integer sequence
 		/// </summary>
 		public readonly static int [] OID__pkcs = new int [] { 1, 2, 840, 113549, 1};
 		/// <summary>
-		/// pkcs as string
+		/// pkcs = rsadsi (1) as string
 		/// </summary>
 		public const string OIDS__pkcs = "1.2.840.113549.1";
+
 
 
 		/// <summary>
@@ -460,6 +471,39 @@ namespace Goedel.Cryptography.PKIX {
 		/// rsaEncryption = pkcs_1 (1) as string
 		/// </summary>
 		public const string OIDS__rsaEncryption = "1.2.840.113549.1.1.1";
+
+
+
+		/// <summary>
+		/// rsaOAEPEncryptionSET = pkcs_1 (6) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__rsaOAEPEncryptionSET = new int [] { 1, 2, 840, 113549, 1, 1, 6};
+		/// <summary>
+		/// rsaOAEPEncryptionSET = pkcs_1 (6) as string
+		/// </summary>
+		public const string OIDS__rsaOAEPEncryptionSET = "1.2.840.113549.1.1.6";
+
+
+
+		/// <summary>
+		/// id_RSAES_OAEP = pkcs_1 (7) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_RSAES_OAEP = new int [] { 1, 2, 840, 113549, 1, 1, 7};
+		/// <summary>
+		/// id_RSAES_OAEP = pkcs_1 (7) as string
+		/// </summary>
+		public const string OIDS__id_RSAES_OAEP = "1.2.840.113549.1.1.7";
+
+
+
+		/// <summary>
+		/// rsassa_pss = pkcs_1 (10) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__rsassa_pss = new int [] { 1, 2, 840, 113549, 1, 1, 10};
+		/// <summary>
+		/// rsassa_pss = pkcs_1 (10) as string
+		/// </summary>
+		public const string OIDS__rsassa_pss = "1.2.840.113549.1.1.10";
 
 
 
@@ -614,6 +658,61 @@ namespace Goedel.Cryptography.PKIX {
 		/// pkcs_12_safecontentsbag = pkcs_12_bagtype (6) as string
 		/// </summary>
 		public const string OIDS__pkcs_12_safecontentsbag = "1.2.840.113549.1.12.10.1.6";
+
+
+
+		/// <summary>
+		/// digestAlgorithm = rsadsi (2) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__digestAlgorithm = new int [] { 1, 2, 840, 113549, 2};
+		/// <summary>
+		/// digestAlgorithm = rsadsi (2) as string
+		/// </summary>
+		public const string OIDS__digestAlgorithm = "1.2.840.113549.2";
+
+
+
+		/// <summary>
+		/// id_hmacWithSHA224 = digestAlgorithm (8) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_hmacWithSHA224 = new int [] { 1, 2, 840, 113549, 2, 8};
+		/// <summary>
+		/// id_hmacWithSHA224 = digestAlgorithm (8) as string
+		/// </summary>
+		public const string OIDS__id_hmacWithSHA224 = "1.2.840.113549.2.8";
+
+
+
+		/// <summary>
+		/// id_hmacWithSHA256 = digestAlgorithm (9) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_hmacWithSHA256 = new int [] { 1, 2, 840, 113549, 2, 9};
+		/// <summary>
+		/// id_hmacWithSHA256 = digestAlgorithm (9) as string
+		/// </summary>
+		public const string OIDS__id_hmacWithSHA256 = "1.2.840.113549.2.9";
+
+
+
+		/// <summary>
+		/// id_hmacWithSHA384 = digestAlgorithm (10) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_hmacWithSHA384 = new int [] { 1, 2, 840, 113549, 2, 10};
+		/// <summary>
+		/// id_hmacWithSHA384 = digestAlgorithm (10) as string
+		/// </summary>
+		public const string OIDS__id_hmacWithSHA384 = "1.2.840.113549.2.10";
+
+
+
+		/// <summary>
+		/// id_hmacWithSHA512 = digestAlgorithm (11) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_hmacWithSHA512 = new int [] { 1, 2, 840, 113549, 2, 11};
+		/// <summary>
+		/// id_hmacWithSHA512 = digestAlgorithm (11) as string
+		/// </summary>
+		public const string OIDS__id_hmacWithSHA512 = "1.2.840.113549.2.11";
 
 
 		}
@@ -1067,6 +1166,28 @@ namespace Goedel.Cryptography.PKIX {
 
 
 		/// <summary>
+		/// id_aes128_wrap = nist_aes (5) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes128_wrap = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 5};
+		/// <summary>
+		/// id_aes128_wrap = nist_aes (5) as string
+		/// </summary>
+		public const string OIDS__id_aes128_wrap = "2.16.840.1.101.3.4.1.5";
+
+
+
+		/// <summary>
+		/// id_aes128_gcm = nist_aes (6) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes128_gcm = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 6};
+		/// <summary>
+		/// id_aes128_gcm = nist_aes (6) as string
+		/// </summary>
+		public const string OIDS__id_aes128_gcm = "2.16.840.1.101.3.4.1.6";
+
+
+
+		/// <summary>
 		/// id_aes192_ecb = nist_aes (21) as integer sequence
 		/// </summary>
 		public readonly static int [] OID__id_aes192_ecb = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 21};
@@ -1111,6 +1232,28 @@ namespace Goedel.Cryptography.PKIX {
 
 
 		/// <summary>
+		/// id_aes192_wrap = nist_aes (25) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes192_wrap = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 25};
+		/// <summary>
+		/// id_aes192_wrap = nist_aes (25) as string
+		/// </summary>
+		public const string OIDS__id_aes192_wrap = "2.16.840.1.101.3.4.1.25";
+
+
+
+		/// <summary>
+		/// id_aes192_gcm = nist_aes (26) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes192_gcm = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 26};
+		/// <summary>
+		/// id_aes192_gcm = nist_aes (26) as string
+		/// </summary>
+		public const string OIDS__id_aes192_gcm = "2.16.840.1.101.3.4.1.26";
+
+
+
+		/// <summary>
 		/// id_aes256_ecb = nist_aes (41) as integer sequence
 		/// </summary>
 		public readonly static int [] OID__id_aes256_ecb = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 41};
@@ -1151,6 +1294,28 @@ namespace Goedel.Cryptography.PKIX {
 		/// id_aes256_cfb = nist_aes (44) as string
 		/// </summary>
 		public const string OIDS__id_aes256_cfb = "2.16.840.1.101.3.4.1.44";
+
+
+
+		/// <summary>
+		/// id_aes256_wrap = nist_aes (45) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes256_wrap = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 45};
+		/// <summary>
+		/// id_aes256_wrap = nist_aes (45) as string
+		/// </summary>
+		public const string OIDS__id_aes256_wrap = "2.16.840.1.101.3.4.1.45";
+
+
+
+		/// <summary>
+		/// id_aes256_gcm = nist_aes (46) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_aes256_gcm = new int [] { 2, 16, 840, 1, 101, 3, 4, 1, 46};
+		/// <summary>
+		/// id_aes256_gcm = nist_aes (46) as string
+		/// </summary>
+		public const string OIDS__id_aes256_gcm = "2.16.840.1.101.3.4.1.46";
 
 
 		}
@@ -3851,9 +4016,6 @@ namespace Goedel.Cryptography.PKIX {
 	/// DHPublicKey 
     /// </summary>
 	public partial class DHPublicKey : Goedel.ASN.Root {
-
-
-
 
 		/// <summary>
 		/// ASN.1 member Shared 

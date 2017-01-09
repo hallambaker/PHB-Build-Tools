@@ -69,6 +69,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Array.cs" />
     <Compile Include="Assert.cs" />
     <Compile Include="BaseConvert.cs" />
     <Compile Include="Character.cs" />

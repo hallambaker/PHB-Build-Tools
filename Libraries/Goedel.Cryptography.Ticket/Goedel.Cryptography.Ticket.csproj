@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChallengeResponse.cs" />
-    <Compile Include="Cryoptography.cs" />
+    <Compile Include="Cryptography.cs" />
     <Compile Include="Exceptions.cs">
       <DependentUpon>Exceptions.exceptional</DependentUpon>
       <AutoGen>True</AutoGen>

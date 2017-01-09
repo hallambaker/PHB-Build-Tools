@@ -62,8 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmID.cs" />
+    <Compile Include="CryptoAlgorithmMacro.cs" />
     <Compile Include="CryptoAlgorithmID.cs" />
     <Compile Include="CryptoAlgorithm.cs" />
+    <Compile Include="KeyDerive.cs" />
     <Compile Include="KeyWrap.cs" />
     <Compile Include="PKIX\DHDomain.cs" />
     <Compile Include="DHKeyPair.cs" />

@@ -50,12 +50,13 @@ OID id_ad_caRepository		id_ad 5
 
 // The PKCS parameters.
 
-ROOT pkcs 
+ROOT rsadsi 
 	iso					1 
 	member_body			2
 	us					840
 	rsadsi				113549
-	pkcs				1
+
+OID pkcs rsadsi 1
 
 OID pkcs_9 pkcs 9
 OID pkcs_1 pkcs 1
@@ -136,11 +137,21 @@ OID id_holdinstruction_reject			holdInstruction 3
 // Algorithm Identifiers.
 
 OID rsaEncryption					pkcs_1 1 
+OID rsaOAEPEncryptionSET			pkcs_1 6
+OID id_RSAES_OAEP					pkcs_1 7
+OID rsassa_pss						pkcs_1 10
 OID sha1WithRSAEncryption			pkcs_1 5
 OID sha224WithRSAEncryption			pkcs_1 14 
 OID sha256WithRSAEncryption			pkcs_1 11 
 OID sha384WithRSAEncryption			pkcs_1 12 
 OID sha512WithRSAEncryption			pkcs_1 13 
+
+
+OID digestAlgorithm    rsadsi 2
+OID id_hmacWithSHA224 digestAlgorithm 8
+OID id_hmacWithSHA256 digestAlgorithm 9
+OID id_hmacWithSHA384 digestAlgorithm 10
+OID id_hmacWithSHA512 digestAlgorithm 11
 
 
 ROOT   nistalgorithm
@@ -165,14 +176,25 @@ OID id_aes128_ecb	nist_aes 1
 OID id_aes128_cbc	nist_aes 2
 OID id_aes128_ofb	nist_aes 3
 OID id_aes128_cfb	nist_aes 4
+OID id_aes128_wrap	nist_aes 5
+OID id_aes128_gcm	nist_aes 6
+
 OID id_aes192_ecb	nist_aes 21
 OID id_aes192_cbc	nist_aes 22
 OID id_aes192_ofb	nist_aes 23
 OID id_aes192_cfb	nist_aes 24
+OID id_aes192_wrap	nist_aes 25
+OID id_aes192_gcm	nist_aes 26
+
 OID id_aes256_ecb	nist_aes 41
 OID id_aes256_cbc	nist_aes 42
 OID id_aes256_ofb	nist_aes 43
 OID id_aes256_cfb	nist_aes 44
+OID id_aes256_wrap	nist_aes 45
+OID id_aes256_gcm	nist_aes 46
+
+
+
 
 ROOT dod_arc
 	iso							1 

@@ -36,13 +36,13 @@ namespace Goedel.Cryptography.Ticket {
         public byte[] Ticket;
         
         /// <summary>The master key.</summary>
-        public Cryptography.Key Key;
+        public byte[] Key;
         
         /// <summary>Authentication algorithm identifier.</summary>
-        public Cryptography.Authentication Authentication;
+        public CryptoAlgorithmID Authentication;
 
         /// <summary>Encryption algorithm identifier.</summary>
-        public Cryptography.Encryption Encryption;
+        public CryptoAlgorithmID Encryption;
 
         /// <summary>
         /// Factory method returning a cryptographic context.
@@ -54,17 +54,9 @@ namespace Goedel.Cryptography.Ticket {
         /// <returns>Cryptographic context.</returns>
         public static CryptographicContext MakeCryptographicContext(
             byte[] Ticket, byte[] Key,
-            string AuthenticationIn, string EncryptionIn) {
+            CryptoAlgorithmID AuthenticationIn, CryptoAlgorithmID EncryptionIn) {
 
-            Cryptography.Authentication Authentication =
-                    Cryptography.AuthenticationCode(AuthenticationIn);
-            Cryptography.Encryption Encryption =
-                    Cryptography.EncryptionCode(EncryptionIn);
-
-            if (Authentication == Cryptography.Authentication.Unknown) return null;
-            if (Encryption == Cryptography.Encryption.Unknown) return null;
-
-            return new CryptographicContext(Ticket, Key, Authentication, Encryption);
+            return new CryptographicContext(Ticket, Key, AuthenticationIn, EncryptionIn);
             }
 
 
@@ -76,27 +68,15 @@ namespace Goedel.Cryptography.Ticket {
         /// <param name="AuthenticationIn">Authentication algorithm identifier.</param>
         /// <param name="EncryptionIn">Encryption algorithm identifier.</param>
 
-        public CryptographicContext(byte[] TicketIn, byte[] KeyIn, 
-                        string AuthenticationIn, string EncryptionIn) :
-                this (TicketIn, KeyIn, Cryptography.AuthenticationCode(AuthenticationIn),
-            Cryptography.EncryptionCode(EncryptionIn)) {
-            }
-
-        /// <summary>
-        /// Constructor for specified ticket and key.
-        /// </summary>
-        /// <param name="Ticket">The ticket data.</param>
-        /// <param name="Key">Secret key</param>
-        /// <param name="Authentication">Authentication algorithm identifier.</param>
-        /// <param name="Encryption">Encryption algorithm identifier.</param>
         public CryptographicContext(byte[] Ticket, byte[] Key,
-                    Cryptography.Authentication Authentication,
-                    Cryptography.Encryption Encryption) {
+                        CryptoAlgorithmID Authentication, CryptoAlgorithmID Encryption)  {
+
             this.Ticket = Ticket;
-            this.Key = new Cryptography.Key(Key, Authentication, Encryption);
+            this.Key = Key;
             this.Authentication = Authentication;
             this.Encryption = Encryption;
             }
+
 
         /// <summary>Convert base 64 encoded string to byte array.</summary>
         public static byte[] ConvertFromBase64String(String s) {
@@ -114,11 +94,12 @@ namespace Goedel.Cryptography.Ticket {
         /// <summary>
         /// Get the MAC value of the specified data under the authentication key.
         /// </summary>
-        /// <param name="data">Data to authenticate</param>
+        /// <param name="Data">Data to authenticate</param>
         /// <returns>The MAC value.</returns>
-        public byte[] MAC(byte[] data) {
-
-            return Cryptography.GetMAC(data, data.Length, Authentication, Key);
+        public byte[] MAC(byte[] Data) {
+            var Provider = CryptoCatalog.Default.GetAuthentication(Authentication) as
+                        CryptoProviderAuthentication;
+            return Provider.ProcessData(Data, Key);
             }
 
         /// <summary>
@@ -131,16 +112,6 @@ namespace Goedel.Cryptography.Ticket {
                 + "; Id=" + BaseConvert.ToBase64urlString(Ticket, false);
             }
 
-        ///// <summary>
-        ///// Generate an integrity header - this is to change to the new package format.
-        ///// </summary>
-        ///// <param name="StreamBuffer">Stream to generate integrity value for.</param>
-        ///// <returns>The integrity header.</returns>
-        //public string GetIntegrityHeader(StreamBuffer StreamBuffer) {
-        //    return "Session: Value=" + BaseConvert.ToBase64urlString(
-        //        Cryptography.GetMAC(StreamBuffer, Authentication, Key))
-        //        + "; Id=" + BaseConvert.ToBase64urlString(Ticket);
-        //    }
 
         /// <summary>
         /// Parse integrity header to get MAC and ticket.

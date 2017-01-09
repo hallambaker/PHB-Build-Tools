@@ -49,11 +49,11 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         public byte[] Key {
             set {
-                var KeyedHash = KeyedHashAlgorithm as KeyedHashAlgorithm;
+                var KeyedHash = KeyedHashAlgorithm;
                 KeyedHash.Key = value;
                 }
             get {
-                var KeyedHash = KeyedHashAlgorithm as KeyedHashAlgorithm;
+                var KeyedHash = KeyedHashAlgorithm;
                 return KeyedHash.Key;
                 }
             }
@@ -89,13 +89,36 @@ namespace Goedel.Cryptography.Framework {
             return Result;
             }
 
+
+        /// <summary>
+        /// Create an encoder for a bulk algorithm and optional key wrap or exchange.
+        /// </summary>
+
+        /// <param name="Algorithm">The key wrap algorithm</param>
+        /// <param name="OutputStream">Output stream</param>
+        /// <param name="Key">Encryption Key</param>
+        /// <returns>Instance describing the key agreement parameters.</returns>
+        public override CryptoDataEncoder MakeAuthenticator(
+                            byte[] Key = null,
+                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            Stream OutputStream = null) {
+            var Result = new CryptoDataEncoder(CryptoAlgorithmID, this);
+            Result.OutputStream = OutputStream ?? new MemoryStream();
+            Result.Key = Key;
+            BindEncoder(Result);
+
+            return Result;
+            }
+
+
         /// <summary>
         /// Create a crypto stream from this provider.
         /// </summary>
         /// <param name="Encoder"></param>
         public override void BindEncoder(CryptoDataEncoder Encoder) {
+            KeyedHashAlgorithm.Key = Encoder.Key;
             Encoder.InputStream = new CryptoStream(
-                    null, KeyedHashAlgorithm, CryptoStreamMode.Write);
+                    Encoder.OutputStream, KeyedHashAlgorithm, CryptoStreamMode.Write);
             }
 
 
@@ -103,13 +126,16 @@ namespace Goedel.Cryptography.Framework {
         /// Processes the specified byte array
         /// </summary>
         /// <param name="Data">The input to process</param>
+        /// <param name="Offset">Offset within array</param>
+        /// <param name="Count">Number of bytes to process</param>
         /// <param name="Key">The key</param>
         /// <returns>The result of the cryptographic operation.</returns>
-        public override byte[] ProcessData(byte[] Data, byte[] Key = null) {
+        public override byte[] ProcessData(byte[] Data, int Offset,
+                                                int Count, byte[] Key = null) {
             if (Key != null) {
                 KeyedHashAlgorithm.Key = Key;
                 }
-            return KeyedHashAlgorithm.ComputeHash(Data);
+            return KeyedHashAlgorithm.ComputeHash(Data, Offset, Count);
             }
 
         }
@@ -135,7 +161,7 @@ namespace Goedel.Cryptography.Framework {
             }
 
         static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
-                    _CryptoAlgorithmID, 512, _AlgorithmClass, Factory);
+                    _CryptoAlgorithmID, 256, _AlgorithmClass, Factory);
 
 
         /// <summary>

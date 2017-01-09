@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Numerics;
 using System.Text;
 
 namespace Goedel.ASN {
@@ -103,13 +103,13 @@ namespace Goedel.ASN {
     /// <summary>
     /// Utility class containing static methods.
     /// </summary>
-    public class ASN {
+    public static class ASN {
         static char[] Dot = new char[] { '.' };
 
         /// <summary>Convert an OID value to an array of integers</summary>
         /// <param name="OID">The string value of the OID.</param>
         /// <returns>The integer values of the OID segments.</returns>
-        public static int[] OIDToArray(string OID) {
+        public static int[] OIDToArray(this string OID) {
             var Split = OID.Split(Dot);
             var Result = new int [Split.Length];
             for (var i = 0; i < Split.Length; i++) {
@@ -117,6 +117,16 @@ namespace Goedel.ASN {
                 }
             return Result;
             }
+
+        /// <summary>
+        /// Convert byte array to big integer
+        /// </summary>
+        /// <param name="Array"></param>
+        /// <returns></returns>
+        public static BigInteger ToBigInteger (this byte[] Array) {
+            return new BigInteger(Array);
+            }
+
         }
 
     }

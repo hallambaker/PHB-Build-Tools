@@ -20,8 +20,6 @@ namespace Goedel.Cryptography {
             FindLocalDelegates.Add(DHKeyPair.FindLocal);
             }
 
-
-
         /// <summary>Default SHA-2-512 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
@@ -90,8 +88,10 @@ namespace Goedel.Cryptography {
         /// Retrieve record from the local key store. 
         /// </summary>
         /// <param name="UDF">The key identifier</param>
+        /// <param name="KeyType">Key type, if known</param>
         /// <returns></returns>
-        public delegate KeyPair FindInKeyStoreDelegate(string UDF);
+        public delegate KeyPair FindInKeyStoreDelegate(string UDF, 
+                CryptoAlgorithmID KeyType = CryptoAlgorithmID.Default);
 
         /// <summary>
         /// Retrieve record from the local key store. 

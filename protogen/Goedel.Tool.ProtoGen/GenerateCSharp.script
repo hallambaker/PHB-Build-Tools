@@ -146,15 +146,10 @@ namespace #{Namespace} {
 			get {return Discovery;}
 			}
 
-		JPCSession _JPCSession;
-
         /// <summary>
         /// The active JPCSession.
         /// </summary>		
-		public virtual JPCSession JPCSession {
-			get {return _JPCSession;}
-			set {_JPCSession = value;}
-			}
+		public virtual JPCSession JPCSession {get; set;}
 
 #foreach (_Choice Entry2 in Protocol.Entries)
 #switchcast ProtoStructType Entry2
@@ -462,11 +457,7 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 #% bool Multiple = IsMultiple (Options);
 #if Multiple
 #{CommentSummary(8,Entry.Description)}
-		public virtual List<#{Type}>				#{Token} {
-			get {return _#{Token};}			
-			set {_#{Token} = value;}
-			}
-		List<#{Type}>				_#{Token};
+		public virtual List<#{Type}>				#{Token}  {get; set;}
 #else
 #if !Nullable
 		bool								__#{Token} = false;
@@ -478,11 +469,7 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 			}
 #else 
 #{CommentSummary(8,Entry.Description)}
-		public virtual #{Type}						#{Token} {
-			get {return _#{Token};}			
-			set {_#{Token} = value;}
-			}
-		#{Type}						_#{Token} ;
+		public virtual #{Type}						#{Token}  {get; set;}
 #end if
 #end if
 #end if
@@ -634,8 +621,6 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 
 #% MapInheritors (Id, STag);
 				default : {
-					//Ignore the unknown data
-                    //throw new Exception ("Not supported");
                     break;
 					}
 				}

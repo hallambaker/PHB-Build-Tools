@@ -250,7 +250,7 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="data">The data to convert.</param>
         /// <returns>The resulting string.</returns>
-        public static string ToBase16String(byte[] data) {
+        public static string ToBase16String(this byte[] data) {
             return ToBase16String(data, data.Length);
             }
 
@@ -261,7 +261,7 @@ namespace Goedel.Utilities  {
         /// <param name="data">The data to convert.</param>
         /// <param name="Length">Number of bytes to convert</param>
         /// <returns>The resulting string.</returns>
-        public static string ToBase16String(byte[] data, int Length) {
+        public static string ToBase16String(this byte[] data, int Length) {
             var Builder = new StringBuilder();
             ToBase16String(Builder, data, Length);
             return Builder.ToString();
@@ -274,7 +274,7 @@ namespace Goedel.Utilities  {
         /// <param name="Length">Number of bytes to convert</param>
         /// <param name="Builder">StringBuilder to collect the emitted characteres</param>
         /// <returns>The resulting string.</returns>
-        public static void ToBase16String(StringBuilder Builder, byte[] data, int Length) {
+        public static void ToBase16String(this StringBuilder Builder, byte[] data, int Length) {
             for (int i = 0; i<Length; i++) {
                 int n1 = data[i] >>4;
                 int n2 = data[i] & 0xF;
@@ -289,7 +289,7 @@ namespace Goedel.Utilities  {
         /// <param name="data">The data to convert.</param>
         /// <param name="Length">Number of bytes to convert</param>
         /// <returns>The resulting string.</returns>
-        public static string ToBase32String(byte[] data, int Length) {
+        public static string ToBase32String(this byte[] data, int Length) {
             var Builder = new StringBuilder();
             ToBase32String(Builder, data, Length);
             return Builder.ToString();
@@ -303,7 +303,7 @@ namespace Goedel.Utilities  {
         /// <param name="Length">Number of bytes to convert</param>
         /// <param name="Builder">StringBuilder to collect the emitted characteres</param>
         /// <returns>The resulting string.</returns>
-        public static void ToBase32String(StringBuilder Builder, byte[] data, int Length) {
+        public static void ToBase32String(this StringBuilder Builder, byte[] data, int Length) {
             int offset = 0;
             int a = 0;
 
@@ -333,7 +333,7 @@ namespace Goedel.Utilities  {
         /// <param name="data">The data to convert.</param>
         /// <param name="Length">Number of bytes to convert</param>
         /// <returns>The encoded string</returns>
-        public static string ToBase32sString(byte[] data, int Length) {
+        public static string ToBase32sString(this byte[] data, int Length) {
             string result = "";
             int offset = 0;
             int a = 0;
@@ -373,7 +373,7 @@ namespace Goedel.Utilities  {
         /// <param name="data">The data to take the fingerprint of.</param>
         /// <param name="Precision">The precision in multiples of 25 bits.</param>
         /// <returns>The resulting string.</returns>
-        public static string ToUDF(byte[] data, int Precision) {
+        public static string ToUDF(this byte[] data, int Precision) {
             var Chunks = (Precision + 24) / 25; // number of chunks
             var Characters = (Chunks * 6) - 1;
 
@@ -386,7 +386,7 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="data">The data to convert</param>
         /// <returns>The resulting string.</returns>
-        public static string ToUDF32String(byte[] data) {
+        public static string ToUDF32String(this byte[] data) {
 
             return ToUDF32String(data, data.Length * 16);
             }
@@ -399,7 +399,7 @@ namespace Goedel.Utilities  {
         /// <param name="Length">The maximum number of characters in the output string
         /// (including separactors).</param>
         /// <returns>The resulting string.</returns>
-        public static string ToUDF32String(byte[] data, int Length) {
+        public static string ToUDF32String(this byte[] data, int Length) {
             string result = "";
             int offset = 0;
             int a = 0;
@@ -436,7 +436,7 @@ namespace Goedel.Utilities  {
         /// <param name="data">The data to convert</param>
         /// <param name="Length">The maximum number of characters in the output string</param>
         /// <returns>The resulting string.</returns>
-        public static string ToBase32hsString(byte[] data, int Length) {
+        public static string ToBase32hsString(this byte[] data, int Length) {
             string result = "";
             int offset = 0;
             int a = 0;
@@ -474,7 +474,7 @@ namespace Goedel.Utilities  {
         /// <param name="data">The data to convert</param>
         /// <param name="Newline">If true insert newline characters every 48 characters</param>
         /// <returns>The resulting string.</returns>
-        public static string ToBase64urlString(byte[] data, bool Newline) {
+        public static string ToBase64urlString(this byte[] data, bool Newline) {
             return ToBase64urlString (data, 0, data.Length, Newline);
             }
 
@@ -483,7 +483,7 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="data">The data to convert</param>
         /// <returns>The resulting string.</returns>            
-        public static string ToBase64urlString(byte[] data) {
+        public static string ToBase64urlString(this byte[] data) {
             return ToBase64urlString (data, data.Length);
             }
 
@@ -493,7 +493,7 @@ namespace Goedel.Utilities  {
         /// <param name="data">The data to convert</param>
         /// <param name="Length">The number of bytes from the input stream to convert.</param>
         /// <returns>The resulting string.</returns>
-        public static string ToBase64urlString(byte[] data, int Length) {
+        public static string ToBase64urlString(this byte[] data, int Length) {
             return ToBase64urlString (data, 0, Length, true);
             }
 
@@ -505,7 +505,7 @@ namespace Goedel.Utilities  {
         /// <param name="Length">The number of bytes from the input stream to convert.</param>
         /// <param name="Newline">If true insert newline characters every 48 characters</param>
         /// <returns>The resulting string.</returns>
-        public static string ToBase64urlString(byte[] data, int First, int Length, bool Newline) {
+        public static string ToBase64urlString(this byte[] data, int First, int Length, bool Newline) {
             var Builder = new StringBuilder();
             ToBase64urlString(Builder, data, First, Length, Newline);
             return Builder.ToString();
@@ -520,7 +520,7 @@ namespace Goedel.Utilities  {
         /// <param name="Length">The number of bytes from the input stream to convert.</param>
         /// <param name="Newline">If true insert newline characters every 48 characters</param>
         /// <returns>The resulting string.</returns>
-        public static void ToBase64urlString(StringBuilder Builder, byte[] data, int First, int Length, bool Newline) {
+        public static void ToBase64urlString(this StringBuilder Builder, byte[] data, int First, int Length, bool Newline) {
             int offset = 0;
             int a = 0;
             int Last = First + Length;
@@ -555,7 +555,7 @@ namespace Goedel.Utilities  {
         /// <param name="data">The data to convert</param>
         /// <param name="Newline">If true insert newline characters every 48 characters</param>
         /// <returns>The resulting string.</returns>
-        public static string ToBase64String(byte[] data, bool Newline) {
+        public static string ToBase64String(this byte[] data, bool Newline) {
             return ToBase64String(data, 0, data.Length, Newline);
             }
 
@@ -564,7 +564,7 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="data">The data to convert</param>
         /// <returns>The resulting string.</returns>
-        public static string ToBase64String(byte[] data) {
+        public static string ToBase64String(this byte[] data) {
             return ToBase64String(data, data.Length);
             }
 
@@ -574,7 +574,7 @@ namespace Goedel.Utilities  {
         /// <param name="data">The data to convert</param>
         /// <param name="Length">The number of bytes from the input stream to convert.</param>
         /// <returns>The resulting string.</returns>
-        public static string ToBase64String(byte[] data, int Length) {
+        public static string ToBase64String(this byte[] data, int Length) {
             return ToBase64String(data, 0, Length, true);
             }
 
@@ -586,7 +586,7 @@ namespace Goedel.Utilities  {
         /// <param name="Length">The number of bytes from the input stream to convert.</param>
         /// <param name="Newline">If true insert newline characters every 48 characters</param>
         /// <returns>The resulting string.</returns>
-        public static string ToBase64String(byte[] data, int First, int Length, bool Newline) {
+        public static string ToBase64String(this byte[] data, int First, int Length, bool Newline) {
             var Builder = new StringBuilder();
             ToBase64String(Builder, data, First, Length, Newline);
             return Builder.ToString();
@@ -600,7 +600,7 @@ namespace Goedel.Utilities  {
         /// <param name="First">The first byte in the input stream to convert</param>
         /// <param name="Length">The number of bytes from the input stream to convert.</param>
         /// <param name="Newline">If true insert newline characters every 48 characters</param>
-        public static void ToBase64String(StringBuilder Builder, byte[] data, int First, int Length, bool Newline) {
+        public static void ToBase64String(this StringBuilder Builder, byte[] data, int First, int Length, bool Newline) {
 
             int offset = 0;
             int a = 0;
@@ -646,7 +646,7 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="Data">The string to convert</param>
         /// <returns>The resulting binary data.</returns>
-        public static byte[] FromBase64urlString(string Data) {
+        public static byte[] FromBase64urlString(this string Data) {
             int Bits = 0;
             // count bytes
 
@@ -680,7 +680,7 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="Data">The string to convert</param>
         /// <returns>The resulting binary data.</returns>
-        public static byte[] FromBase32String(string Data) {
+        public static byte[] FromBase32String(this string Data) {
             int Bits = 0;
             // count bytes
 
@@ -714,7 +714,7 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="Data">The string to convert</param>
         /// <returns>The resulting binary data.</returns>
-        public static byte[] FromBase16String(string Data) {
+        public static byte[] FromBase16String(this string Data) {
             int Length = 0;
 
             foreach (var c in Data) {

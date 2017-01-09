@@ -64,16 +64,8 @@ namespace Goedel.Cryptography.Ticket {
         public static byte[] GetPINKey(string PIN, byte[] ClientChallenge,
             Cryptography.Authentication Authentication) {
 
-            throw new NYI();
-
-            //byte [] NPIN = NormalizePIN (PIN);
-
-            //HMACSHA256 MAC = new HMACSHA256(ClientChallenge);
-            //CryptoStream CryptoStream = new CryptoStream(Stream.Null, MAC, CryptoStreamMode.Write);
-            //CryptoStream.Write(NPIN, 0, NPIN.Length);
-            //CryptoStream.Close();
-
-            //return MAC.Hash;
+            byte [] NPIN = NormalizePIN (PIN);
+            return Platform.HMAC_SHA2_512.Process(PIN, ClientChallenge);
             }
 
         /// <summary>
@@ -87,6 +79,7 @@ namespace Goedel.Cryptography.Ticket {
         /// <returns></returns>
         public static byte[] ServerChallengeResponse (string PIN, byte [] ClientChallenge, 
                         string Payload, byte [] Secret, Cryptography.Authentication Authentication) {
+
             UTF8Encoding Encoder = new UTF8Encoding ();
             return ServerChallengeResponse (PIN, ClientChallenge, 
                         Encoder.GetBytes(Payload), Secret, Authentication);
@@ -103,16 +96,9 @@ namespace Goedel.Cryptography.Ticket {
         public static byte[] ServerChallengeResponse (string PIN, byte [] ClientChallenge, 
                         byte [] Payload, byte [] Secret,
                         Cryptography.Authentication Authentication) {
-            throw new NYI();
 
-            //byte [] KPC = GetPINKey (PIN, ClientChallenge, Authentication);
-
-            //HMACSHA256 MAC = new HMACSHA256(KPC);
-            //CryptoStream CryptoStream = new CryptoStream(Stream.Null, MAC, CryptoStreamMode.Write);
-            //CryptoStream.Write(Payload, 0, Payload.Length);
-            //CryptoStream.Close();
-
-            //return MAC.Hash;
+            var KPC = GetPINKey (PIN, ClientChallenge, Authentication);
+            return Platform.HMAC_SHA2_512.Process(Payload, KPC);
             }
 
         /// <summary>
@@ -140,16 +126,9 @@ namespace Goedel.Cryptography.Ticket {
         /// <param name="Authentication">Message Authentication Code provider.</param>
         public static byte[] ClientChallengeResponse(string PIN, byte [] ServerChallenge, 
                     byte [] Payload, byte [] Secret, Cryptography.Authentication Authentication) {
-            throw new NYI();
 
-            //byte [] KPC = GetPINKey (PIN, ServerChallenge, Authentication);
-
-            //HMACSHA256 MAC = new HMACSHA256(KPC);
-            //CryptoStream CryptoStream = new CryptoStream(Stream.Null, MAC, CryptoStreamMode.Write);
-            //CryptoStream.Write(Payload, 0, Payload.Length);
-            //CryptoStream.Close();
-
-            //return MAC.Hash;
+            var KPC = GetPINKey(PIN, ServerChallenge, Authentication);
+            return Platform.HMAC_SHA2_512.Process(Payload, KPC);
             }
         }
     }

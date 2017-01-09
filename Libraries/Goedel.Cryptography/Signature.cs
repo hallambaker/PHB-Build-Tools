@@ -46,6 +46,15 @@ namespace Goedel.Cryptography {
             }
 
         /// <summary>
+        /// The default digest algorithm. This may be overridden in subclasses.
+        /// for example, to make a different digest algorithm the default for
+        /// a particular provider.
+        /// </summary>
+        public override CryptoAlgorithmID BulkAlgorithmDefault { get; set; } =
+                CryptoCatalog.Default.AlgorithmDigest;
+
+
+        /// <summary>
         /// Create a digest encoder that is compatible with this signature provider. The
         /// signature is not added at this stage. 
         /// </summary>

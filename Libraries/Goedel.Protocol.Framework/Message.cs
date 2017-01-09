@@ -82,30 +82,30 @@ namespace Goedel.Protocol.Framework {
             get { return BaseConvert.ToBase64urlString(MAC); }
             }
 
-        /// <summary></summary>
-        public byte[] GetMAC(Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
-            Goedel.Cryptography.Ticket.Cryptography.Key Key) {
-            if (Authentication != Goedel.Cryptography.Ticket.Cryptography.Authentication.Unknown) {
-                return Goedel.Cryptography.Ticket.Cryptography.GetMAC(Payload, Authentication, Key);
-                }
-            else {
-                return null;
-                }
-            }
+        ///// <summary></summary>
+        //public byte[] GetMAC(Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
+        //    Goedel.Cryptography.Ticket.Cryptography.Key Key) {
+        //    if (Authentication != Goedel.Cryptography.Ticket.Cryptography.Authentication.Unknown) {
+        //        return Goedel.Cryptography.Ticket.Cryptography.GetMAC(Payload, Authentication, Key);
+        //        }
+        //    else {
+        //        return null;
+        //        }
+        //    }
 
-        /// <summary></summary>
-        public void MakeMAC(Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
-            Goedel.Cryptography.Ticket.Cryptography.Key Key) {
-            MAC = GetMAC(Authentication, Key);
-            }
+        ///// <summary></summary>
+        //public void MakeMAC(Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
+        //    Goedel.Cryptography.Ticket.Cryptography.Key Key) {
+        //    MAC = GetMAC(Authentication, Key);
+        //    }
 
-        /// <summary></summary>
-        public bool VerifyMAC(Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
-            Goedel.Cryptography.Ticket.Cryptography.Key Key) {
-            byte[] Test = GetMAC(Authentication, Key);
+        ///// <summary></summary>
+        //public bool VerifyMAC(Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
+        //    Goedel.Cryptography.Ticket.Cryptography.Key Key) {
+        //    byte[] Test = GetMAC(Authentication, Key);
 
-            return Goedel.Cryptography.Ticket.Cryptography.ArraysEqual(Test, MAC);
-            }
+        //    return Goedel.Cryptography.Ticket.Cryptography.ArraysEqual(Test, MAC);
+        //    }
 
         /// <summary></summary>
         public BoundMessage(string PayloadIn) {
@@ -113,22 +113,22 @@ namespace Goedel.Protocol.Framework {
             }
 
 
-        /// <summary></summary>
-        public BoundMessage(string PayloadIn, byte[] TicketIn,
-                     Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
-                     Goedel.Cryptography.Ticket.Cryptography.Key Key) {
-            BindMessage(PayloadIn, TicketIn, Authentication, Key);
-            }
+        ///// <summary></summary>
+        //public BoundMessage(string PayloadIn, byte[] TicketIn,
+        //             Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
+        //             Goedel.Cryptography.Ticket.Cryptography.Key Key) {
+        //    BindMessage(PayloadIn, TicketIn, Authentication, Key);
+        //    }
 
-        private void BindMessage(string PayloadIn, byte[] TicketIn,
-                    Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
-                    Goedel.Cryptography.Ticket.Cryptography.Key Key) {
-            Payload = PayloadIn;
-            Ticket = TicketIn;
-            MakeMAC(Authentication, Key);
-            }
+        //private void BindMessage(string PayloadIn, byte[] TicketIn,
+        //            Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
+        //            Goedel.Cryptography.Ticket.Cryptography.Key Key) {
+        //    Payload = PayloadIn;
+        //    Ticket = TicketIn;
+        //    MakeMAC(Authentication, Key);
+        //    }
 
-
+        // NYI: Authentication ticket bindings
 
         }
 
@@ -151,11 +151,11 @@ Content-Length: {2}
         public BoundRequest(string PayloadIn) 
             : base (PayloadIn) { }
 
-        /// <summary></summary>
-        public BoundRequest(string PayloadIn, byte[] TicketIn,
-                     Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
-                     Goedel.Cryptography.Ticket.Cryptography.Key Key)
-            : base(PayloadIn, TicketIn, Authentication, Key) { }
+        ///// <summary></summary>
+        //public BoundRequest(string PayloadIn, byte[] TicketIn,
+        //             Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
+        //             Goedel.Cryptography.Ticket.Cryptography.Key Key)
+        //    : base(PayloadIn, TicketIn, Authentication, Key) { }
 
         /// <summary></summary>
         public override string HTTP () {
@@ -200,11 +200,11 @@ Content-Length: {2}
         public BoundResponse(string PayloadIn) 
             : base (PayloadIn) { }
 
-        /// <summary></summary>
-        public BoundResponse(string PayloadIn, byte[] TicketIn,
-                     Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
-                     Goedel.Cryptography.Ticket.Cryptography.Key Key)
-            : base(PayloadIn, TicketIn, Authentication, Key) { }
+        ///// <summary></summary>
+        //public BoundResponse(string PayloadIn, byte[] TicketIn,
+        //             Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
+        //             Goedel.Cryptography.Ticket.Cryptography.Key Key)
+        //    : base(PayloadIn, TicketIn, Authentication, Key) { }
 
         /// <summary></summary>
         public BoundResponse(int ErrorCode, string Explanation) {
