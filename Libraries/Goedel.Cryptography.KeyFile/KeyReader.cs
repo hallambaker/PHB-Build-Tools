@@ -27,6 +27,12 @@ namespace Goedel.Cryptography.KeyFile{
 			}
         public virtual void Base64 (char c) {
 			}
+        public virtual void StartHeader (char c) {
+			}
+        public virtual void HeaderAdd (char c) {
+			}
+        public virtual void CopyHeader (char c) {
+			}
         public virtual void Count3 (char c) {
 			}
         public virtual void End (char c) {
@@ -105,18 +111,24 @@ namespace Goedel.Cryptography.KeyFile{
             ArmorStart2 = 4,
 			/// <summary>Base64Data</summary>
             Base64Data = 5,
+			/// <summary>IsHeader</summary>
+            IsHeader = 6,
+			/// <summary>HeaderData</summary>
+            HeaderData = 7,
+			/// <summary>HeaderEnd</summary>
+            HeaderEnd = 8,
 			/// <summary>ArmorEnd1</summary>
-            ArmorEnd1 = 6,
+            ArmorEnd1 = 9,
 			/// <summary>TagEndEnd</summary>
-            TagEndEnd = 7,
+            TagEndEnd = 10,
 			/// <summary>TagEnd</summary>
-            TagEnd = 8,
+            TagEnd = 11,
 			/// <summary>ArmorEnd2</summary>
-            ArmorEnd2 = 9,
+            ArmorEnd2 = 12,
 			/// <summary>StartTag</summary>
-            StartTag = 10,
+            StartTag = 13,
 			/// <summary>Fail</summary>
-            Fail = 11
+            Fail = 14
 			};
 
 		/// <summary>Token Types</summary>
@@ -139,25 +151,28 @@ namespace Goedel.Cryptography.KeyFile{
 			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 2 , 0 , 0 , 0 , 0 , 0 , 
 			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 
 			3 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 0 , 4 , 0 , 1 , 
-			5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 0 , 0 , 0 , 1 , 0 , 0 , 
+			5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 6 , 0 , 0 , 1 , 0 , 0 , 
 			0 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 
 			5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 0 , 0 , 0 , 0 , 0 , 
 			0 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 
 			5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 0 , 0 , 0 , 0 , 0   };
 
 		static short [,]  Compressed_Transitions  = new short [,]  {
-			{-2 , -2 , 11 , -2 , 1 , -2 },
-			{-2 , -2 , -2 , 3 , 1 , 2 },
-			{-2 , -2 , -2 , 3 , -2 , 2 },
-			{-2 , -2 , -2 , 3 , 4 , 3 },
-			{-2 , -2 , 5 , -2 , 4 , -2 },
-			{-2 , 5 , 5 , 5 , 6 , 5 },
-			{-2 , -2 , -2 , 8 , 6 , 7 },
-			{-2 , -2 , -2 , 8 , -2 , 7 },
-			{-2 , -2 , -2 , 8 , 9 , 8 },
-			{-2 , -2 , 5 , -2 , 9 , -2 },
-			{-2 , -2 , -2 , -2 , -2 , -2 },
-			{-2 , -2 , -2 , -2 , -2 , -2 }
+			{-2 , -2 , 14 , -2 , 1 , -2 , -2 },
+			{-2 , -2 , -2 , 2 , 1 , 2 , -2 },
+			{-2 , -2 , -2 , 3 , -2 , 2 , -2 },
+			{-2 , -2 , -2 , 3 , 4 , 3 , -2 },
+			{-2 , -2 , 5 , -2 , 4 , -2 , -2 },
+			{-2 , 5 , 5 , 5 , 9 , 5 , 6 },
+			{7 , 7 , 8 , 7 , 7 , 7 , 7 },
+			{7 , 7 , 8 , 7 , 7 , 7 , 7 },
+			{-2 , 5 , 5 , 5 , 9 , 5 , 6 },
+			{-2 , -2 , -2 , 10 , 9 , 10 , -2 },
+			{-2 , -2 , -2 , 11 , -2 , 10 , -2 },
+			{-2 , -2 , -2 , 11 , 12 , 11 , -2 },
+			{-2 , -2 , 5 , -2 , 12 , -2 , -2 },
+			{-2 , -2 , -2 , -2 , -2 , -2 , -2 },
+			{-2 , -2 , -2 , -2 , -2 , -2 , -2 }
 		};
 
 
@@ -167,6 +182,9 @@ namespace Goedel.Cryptography.KeyFile{
 			Token.Armor,
 			Token.Data,
 			Token.Tag,
+			Token.Data,
+			Token.Data,
+			Token.Data,
 			Token.Data,
 			Token.Data,
 			Token.Armor,
@@ -186,6 +204,9 @@ namespace Goedel.Cryptography.KeyFile{
 				Tag1,
 				Count2,
 				Base64,
+				StartHeader,
+				HeaderAdd,
+				CopyHeader,
 				Count3,
 				End,
 				Tag2,

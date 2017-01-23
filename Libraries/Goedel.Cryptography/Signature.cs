@@ -111,19 +111,6 @@ namespace Goedel.Cryptography {
             return Signer;
             }
 
-        ///// <summary>
-        ///// Sign data using the default digest (requires private key).
-        ///// </summary>
-        ///// <param name="Data">Data to be signed.</param>
-        ///// <param name="Digest">Digest algorithm identifier</param>
-        ///// <returns>Signature.</returns>
-        //public bool Verify (byte[] Data, CryptoAlgorithmID Digest = CryptoAlgorithmID.Default) {
-
-        //    var Encoder = MakeDecoder(Algorithm: Digest);
-        //    Encoder.InputStream.Write(Data, 0, Data.Length);
-        //    Encoder.Complete();
-        //    return Encoder.Verify;
-        //    }
 
 
         /// <summary>
@@ -137,9 +124,6 @@ namespace Goedel.Cryptography {
             if (Bulk as CryptoDataEncoder != null) {
                 Sign(CryptoDataSignature);
                 }
-            //if (Bulk as CryptoDataDecoder != null) {
-            //    Verify(CryptoDataSignature);
-            //    }
             }
 
         /// <summary>
@@ -148,10 +132,36 @@ namespace Goedel.Cryptography {
         /// <param name="Text">Text to be converted to UTF8 and signed.</param>
         /// <param name="Digest">Digest algorithm identifier</param>
         /// <returns>Signature.</returns>
-        public CryptoData Sign(string Text, 
+        public CryptoDataSignature Sign(string Text, 
                     CryptoAlgorithmID Digest = CryptoAlgorithmID.Default) {
             return Sign(Encoding.UTF8.GetBytes(Text), Digest);
             }
+
+
+        /// <summary>
+        /// Verify a signature
+        /// </summary>
+        /// <param name="Text">Purported signed data</param>
+        /// <param name="Signature">Signature to verify</param>
+        /// <returns>True if verification succeeded, otherwise false</returns>
+        public virtual bool Verify(string Text, byte[] Signature) {
+            return Verify(Text.ToBytes(), Signature);
+            }
+
+        /// <summary>
+        /// Verify a signature
+        /// </summary>
+        /// <param name="Data">Purported signed data</param>
+        /// <param name="Signature">Signature to verify</param>
+        /// <returns>True if verification succeeded, otherwise false</returns>
+        public virtual bool Verify(byte[] Data, byte[] Signature) {
+            var Encoder = MakeEncoder();
+            Encoder.Write(Data);
+            Encoder.Complete();
+
+            return Verify(Encoder, Signature);
+            }
+
 
         /* 
         * Methods that MUST be implemented in instance classes.
@@ -172,6 +182,8 @@ namespace Goedel.Cryptography {
         /// <returns>True if the verification operation succeeded, otherwise false</returns>
         public abstract bool Verify(CryptoData Bulk, Byte[] Signature,
                 CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default);
+
+
 
         }
 

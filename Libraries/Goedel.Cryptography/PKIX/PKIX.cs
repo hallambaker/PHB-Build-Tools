@@ -1344,6 +1344,75 @@ namespace Goedel.Cryptography.PKIX {
 
 
 		}
+    /// <summary>
+    /// dds_arc =  iso(1)  identified_organization(3)  dod(6)  internet(1)  private(4)  enterprise(1)  number(35405) 
+    /// </summary>
+	public partial class Constants {
+		/// <summary>
+		/// dds_arc as integer sequence
+		/// </summary>
+		public readonly static int [] OID__dds_arc = new int [] { 1, 3, 6, 1, 4, 1, 35405};
+		/// <summary>
+		/// dds_arc as string
+		/// </summary>
+		public const string OIDS__dds_arc = "1.3.6.1.4.1.35405";
+
+
+		/// <summary>
+		/// dds_algorithms = dds_arc (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__dds_algorithms = new int [] { 1, 3, 6, 1, 4, 1, 35405, 1};
+		/// <summary>
+		/// dds_algorithms = dds_arc (1) as string
+		/// </summary>
+		public const string OIDS__dds_algorithms = "1.3.6.1.4.1.35405.1";
+
+
+
+		/// <summary>
+		/// dds_algorithms_dh = dds_algorithms (22) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__dds_algorithms_dh = new int [] { 1, 3, 6, 1, 4, 1, 35405, 1, 22};
+		/// <summary>
+		/// dds_algorithms_dh = dds_algorithms (22) as string
+		/// </summary>
+		public const string OIDS__dds_algorithms_dh = "1.3.6.1.4.1.35405.1.22";
+
+
+
+		/// <summary>
+		/// id_dh_domain = dds_algorithms_dh (0) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_dh_domain = new int [] { 1, 3, 6, 1, 4, 1, 35405, 1, 22, 0};
+		/// <summary>
+		/// id_dh_domain = dds_algorithms_dh (0) as string
+		/// </summary>
+		public const string OIDS__id_dh_domain = "1.3.6.1.4.1.35405.1.22.0";
+
+
+
+		/// <summary>
+		/// id_dh_public = dds_algorithms_dh (1) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_dh_public = new int [] { 1, 3, 6, 1, 4, 1, 35405, 1, 22, 1};
+		/// <summary>
+		/// id_dh_public = dds_algorithms_dh (1) as string
+		/// </summary>
+		public const string OIDS__id_dh_public = "1.3.6.1.4.1.35405.1.22.1";
+
+
+
+		/// <summary>
+		/// id_dh_private = dds_algorithms_dh (2) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_dh_private = new int [] { 1, 3, 6, 1, 4, 1, 35405, 1, 22, 2};
+		/// <summary>
+		/// id_dh_private = dds_algorithms_dh (2) as string
+		/// </summary>
+		public const string OIDS__id_dh_private = "1.3.6.1.4.1.35405.1.22.2";
+
+
+		}
 	}
 
 
@@ -3793,9 +3862,9 @@ namespace Goedel.Cryptography.PKIX {
 
 		}
     /// <summary>
-	/// RSAPublicKey 
+	/// PKIXPublicKeyRSA 
     /// </summary>
-	public partial class RSAPublicKey : Goedel.ASN.Root {
+	public partial class PKIXPublicKeyRSA : Goedel.ASN.Root {
 
 		/// <summary>
 		/// ASN.1 member Modulus 
@@ -3843,9 +3912,9 @@ namespace Goedel.Cryptography.PKIX {
 
 		}
     /// <summary>
-	/// RSAPrivateKey 
+	/// PKIXPrivateKeyRSA 
     /// </summary>
-	public partial class RSAPrivateKey : Goedel.ASN.Root {
+	public partial class PKIXPrivateKeyRSA : Goedel.ASN.Root {
 
 		/// <summary>
 		/// ASN.1 member Version 
@@ -4013,9 +4082,9 @@ namespace Goedel.Cryptography.PKIX {
 
 		}
     /// <summary>
-	/// DHPublicKey 
+	/// PKIXPublicKeyDH 
     /// </summary>
-	public partial class DHPublicKey : Goedel.ASN.Root {
+	public partial class PKIXPublicKeyDH : Goedel.ASN.Root {
 
 		/// <summary>
 		/// ASN.1 member Shared 
@@ -4063,14 +4132,18 @@ namespace Goedel.Cryptography.PKIX {
 
 		}
     /// <summary>
-	/// DHPrivateKey 
+	/// PKIXPrivateKeyDH 
     /// </summary>
-	public partial class DHPrivateKey : Goedel.ASN.Root {
+	public partial class PKIXPrivateKeyDH : Goedel.ASN.Root {
 
 		/// <summary>
 		/// ASN.1 member Shared 
 		/// </summary>
 		public byte []  Shared ;
+		/// <summary>
+		/// ASN.1 member Public 
+		/// </summary>
+		public byte []  Public ;
 		/// <summary>
 		/// ASN.1 member Private 
 		/// </summary>
@@ -4088,6 +4161,9 @@ namespace Goedel.Cryptography.PKIX {
 			Buffer.Encode__BigInteger  (Private, 0, -1);
 			Buffer.Debug ("Private");
 
+			Buffer.Encode__BigInteger  (Public, 0, -1);
+			Buffer.Debug ("Public");
+
 			Buffer.Encode__Octets  (Shared, 0, -1);
 			Buffer.Debug ("Shared");
 			Buffer.Encode__Sequence_End (Position);
@@ -4104,6 +4180,9 @@ namespace Goedel.Cryptography.PKIX {
 
 			Buffer.Decode__Octets  (Shared, 0, -1);
 			Buffer.Debug ("Shared");
+
+			Buffer.Decode__BigInteger  (Public, 0, -1);
+			Buffer.Debug ("Public");
 
 			Buffer.Decode__BigInteger  (Private, 0, -1);
 			Buffer.Debug ("Private");

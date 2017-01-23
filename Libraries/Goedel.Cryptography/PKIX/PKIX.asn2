@@ -212,6 +212,23 @@ OID netscape_smime dod_arc 2
 
 
 
+ROOT dds_arc
+	iso							1 
+	identified_organization		3 
+	dod							6 
+	internet					1	 
+	private						4 
+	enterprise					1 
+	number					35405 
+
+
+
+OID dds_algorithms			dds_arc	1
+OID dds_algorithms_dh		dds_algorithms	22
+OID id_dh_domain			dds_algorithms_dh	0
+OID id_dh_public			dds_algorithms_dh	1
+OID id_dh_private 			dds_algorithms_dh	2
+
 Class Certificate  
 	TBSCertificate			TBSCertificate
 	SignatureAlgorithm		AlgorithmIdentifier
@@ -449,12 +466,12 @@ Class PrivateKeyInfo
 		Code 0
 		Implicit
 
-Class RSAPublicKey 
+Class PKIXPublicKeyRSA 
 	Modulus					BigInteger
 	PublicExponent			BigInteger
 
 
-Class RSAPrivateKey
+Class PKIXPrivateKeyRSA
 	Version					Integer
 	Modulus					BigInteger
 	PublicExponent			BigInteger
@@ -470,12 +487,13 @@ Class DHDomain
 	Modulus					BigInteger
 	Generator				BigInteger
 
-Class DHPublicKey
+Class PKIXPublicKeyDH
 	Shared					Octets
 	Public					BigInteger
 
-Class DHPrivateKey
+Class PKIXPrivateKeyDH
 	Shared					Octets
+	Public					BigInteger
 	Private					BigInteger
 
 

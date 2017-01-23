@@ -51,6 +51,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.Exceptional</DependentUpon>
     </Compile>
+    <Compile Include="KeyReader.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KeyReader.fsm</DependentUpon>
+    </Compile>
     <Compile Include="SSHSerialize.cs" />
     <None Include="Exceptions.Exceptional">
       <Generator>Exceptional</Generator>
@@ -69,11 +74,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>HostsReader.fsm</DependentUpon>
-    </Compile>
-    <Compile Include="KeyReader.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KeyReader.fsm</DependentUpon>
     </Compile>
     <Compile Include="HostsReaderPlus.cs" />
     <Compile Include="KeyReaderPlus.cs" />

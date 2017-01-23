@@ -94,7 +94,10 @@ namespace Goedel.Cryptography {
 
             var Result = Encryption.MakeEncryptor(Key, IV, Algorithm, OutputStream);
             Result.AlgorithmIdentifier = ExchangeAlgorithm | Encryption.CryptoAlgorithmID;
-            Encrypt(Result);
+
+            var Exchange = Encrypt(Result);
+            Result.Exchanges = new List<CryptoDataExchange>();
+            Result.Exchanges.Add (Exchange);
 
             return Result;
             }
@@ -106,7 +109,7 @@ namespace Goedel.Cryptography {
         /// <param name="Data">Data to be encrypted.</param>
         /// <param name="Algorithm">Composite encryption algorithm.</param>
         /// <returns>Signature.</returns>
-        public CryptoData Encrypt(byte[] Data, CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) {
+        public CryptoDataEncoder Encrypt(byte[] Data, CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) {
             var Encoder = MakeEncoder(Algorithm: Algorithm);
             Encoder.InputStream.Write(Data, 0, Data.Length);
             Encoder.Complete();
@@ -119,7 +122,7 @@ namespace Goedel.Cryptography {
         /// <param name="Text">Text to be converted to UTF8 and signed.</param>
         /// <param name="Digest">Digest algorithm identifier</param>
         /// <returns>Signature.</returns>
-        public CryptoData Encrypt(string Text, CryptoAlgorithmID Digest = CryptoAlgorithmID.Default) {
+        public CryptoDataEncoder Encrypt(string Text, CryptoAlgorithmID Digest = CryptoAlgorithmID.Default) {
             return Encrypt(Encoding.UTF8.GetBytes(Text), Digest);
             }
 
@@ -137,10 +140,11 @@ namespace Goedel.Cryptography {
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
         /// </summary>
         /// <param name="EncryptedKey">The encrypted session</param>
+        /// <param name="Ephemeral">Ephemeral key input (if required)</param>
         /// <param name="AlgorithmID">The algorithm to use.</param>
         /// <returns>The decoded data instance</returns>
         public abstract byte[] Decrypt(
-                    byte[] EncryptedKey,
+                    byte[] EncryptedKey, KeyPair Ephemeral = null,
                     CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default);
 
         }

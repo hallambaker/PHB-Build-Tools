@@ -39,7 +39,7 @@ namespace Goedel.Cryptography.Ticket {
         protected static int AuthenticationBytes = 0;
 
         /// <summary>Number of master key bytes</summary>
-        protected int MasterKeyBytes = 32;  // HACK: Should be calculated ??
+        protected int MasterKeyBytes = 32; 
 
         static Encoding UTF8Encoding = new UTF8Encoding ();
 

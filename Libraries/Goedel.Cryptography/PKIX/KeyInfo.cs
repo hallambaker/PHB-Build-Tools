@@ -40,6 +40,19 @@ namespace Goedel.Cryptography.PKIX {
             this.SubjectPublicKey = KeyData;
 
             }
+
+        /// <summary>
+        /// Construct from algorithm identifier and key data.
+        /// </summary>
+        /// <param name="OID">Algorithm identifier.</param>
+        /// <param name="KeyData">Key Data.</param>
+
+        public SubjectPublicKeyInfo(int[] OID, byte[] KeyData) {
+            this.Algorithm = new AlgorithmIdentifier(OID);
+            this.SubjectPublicKey = KeyData;
+
+            }
+
         }
 
 

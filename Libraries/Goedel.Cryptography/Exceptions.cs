@@ -1050,4 +1050,50 @@ namespace Goedel.Cryptography {
         }
 
 
+    /// <summary>
+    /// </summary>
+    public class NotExportable : CryptographicException {
+
+		/// <summary>
+        /// Construct instance for exception "The cryptographic provider does not permit export of the private key parameters"
+        /// </summary>		
+		public NotExportable () : base ("The cryptographic provider does not permit export of the private key parameters") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The cryptographic provider does not permit export of the private key parameters"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public NotExportable (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public NotExportable (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new NotExportable(Reason as string);
+				}
+			else {
+				return new NotExportable();
+				}
+            }
+        }
+
+
 	}

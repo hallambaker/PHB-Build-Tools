@@ -7,7 +7,7 @@ using Goedel.ASN;
 
 namespace Goedel.Cryptography.PKIX {
 
-	public partial class DHPublicKey : Goedel.ASN.Root {
+	public partial class PKIXPublicKeyDH : Goedel.ASN.Root {
         /// <summary>
         /// The shared domain parameters
         /// </summary>
@@ -25,7 +25,7 @@ namespace Goedel.Cryptography.PKIX {
 
         }
 
-	public partial class DHPrivateKey : Goedel.ASN.Root {
+	public partial class PKIXPrivateKeyDH : Goedel.ASN.Root {
         /// <summary>
         /// The shared domain parameters
         /// </summary>
@@ -173,8 +173,7 @@ namespace Goedel.Cryptography.PKIX {
             throw new KeySizeNotSupported();
             }
 
-        /// <summary>
-        /// Test a UDF identifier value for a match.
+        /// <summary>Test a UDF identifier value for a match.
         /// </summary>
         /// <param name="ID">The identifier to compare</param>
         /// <returns>true if the UDF value matches the specified identifier.</returns>

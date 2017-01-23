@@ -2907,7 +2907,7 @@ namespace Goedel.Cryptography.Jose {
         ///The fingerprint of the domain
         /// </summary>
 
-		public virtual string						Domain  {get; set;}
+		public virtual byte[]						Domain  {get; set;}
         /// <summary>
         ///The public key
         /// </summary>
@@ -2973,7 +2973,7 @@ namespace Goedel.Cryptography.Jose {
 			if (Domain != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Domain", 1);
-					_Writer.WriteString (Domain);
+					_Writer.WriteBinary (Domain);
 				}
 			if (Public != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -3086,7 +3086,7 @@ namespace Goedel.Cryptography.Jose {
 			
 			switch (Tag) {
 				case "Domain" : {
-					Domain = JSONReader.ReadString ();
+					Domain = JSONReader.ReadBinary ();
 					break;
 					}
 				case "Public" : {

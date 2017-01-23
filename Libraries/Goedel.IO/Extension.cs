@@ -123,5 +123,36 @@ namespace Goedel.IO {
             return new StreamWriter(FileStream);
             }
 
+
+        /// <summary>
+        /// Create a new file for exclusive write access, overwriting 
+        /// any existing file.
+        /// </summary>
+        /// <param name="Filename">The new file name.</param>
+        /// <param name="Text">Text to write to file.</param>
+        /// <returns>File stream to write to the file.</returns>
+        public static void WriteFileNew(this string Filename, string Text) {
+            using (var OutStream = Filename.OpenFileNew()) {
+                using (var TextWriter = new StreamWriter(OutStream)) {
+                    TextWriter.Write(Text);
+                    }
+                }
+            }
+
+
+        /// <summary>
+        /// Create a new file for exclusive write access, overwriting 
+        /// any existing file.
+        /// </summary>
+        /// <param name="Filename">The new file name.</param>
+        /// <param name="Data">Data to write to file</param>
+        /// <returns>File stream to write to the file.</returns>
+        public static void WriteFileNew(this string Filename, byte[] Data) {
+            using (var OutStream = Filename.OpenFileNew()) {
+                OutStream.Write(Data, 0, Data.Length);
+                }
+            }
+
+
         }
     }

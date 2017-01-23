@@ -311,7 +311,7 @@ namespace Goedel.Cryptography {
         Ephemeral,
 
         /// <summary>
-        /// Key may be exported.
+        /// Key is temporary but may be exported.
         /// </summary>
         Exportable
         }

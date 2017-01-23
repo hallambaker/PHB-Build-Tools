@@ -152,8 +152,8 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="Size">The key size (2048 or 4096), if zero the default is used.</param>
         public override void Generate(KeySecurity KeySecurity, int Size=0) {
             KeySize = (Size == 0) ? KeySize : Size;
-            _RSAKeyPair = new RSAKeyPair(KeySize);
-            _RSAKeyPair.Persist(KeySecurity);
+            _RSAKeyPair = new RSAKeyPair(KeySecurity, KeySize);
+            //_RSAKeyPair.Persist(KeySecurity);
             }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Goedel.Cryptography.Framework {
             }
 
 
-        byte[] KeptKey;
+        //byte[] KeptKey;
 
         /// <summary>
         /// Encrypt the bulk key.
@@ -180,7 +180,7 @@ namespace Goedel.Cryptography.Framework {
             CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, bool Wrap = false) {
 
             var Exchange = Provider.Encrypt(Data.Key, OAEP);
-            KeptKey = Exchange;
+            //KeptKey = Exchange;
 
             return new CryptoDataExchange(Algorithm, Data, this) {
                 Exchange = Exchange,
@@ -192,10 +192,12 @@ namespace Goedel.Cryptography.Framework {
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
         /// </summary>
         /// <param name="EncryptedKey">The encrypted session</param>
+        /// <param name="Ephemeral">Ephemeral key input (unused in RSA)</param>
         /// <param name="AlgorithmID">The algorithm to use.</param>
         /// <returns>The decoded data instance</returns>
         public override byte[] Decrypt(
                     byte[] EncryptedKey,
+                    KeyPair Ephemeral = null,
                     CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
             return Provider.Decrypt(EncryptedKey, OAEP);
             }

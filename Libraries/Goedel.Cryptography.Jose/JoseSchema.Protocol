@@ -240,7 +240,7 @@
 		Description
 			|A Diffie Helllman Public key
 		Inherits Key
-		String Domain
+		Binary Domain
 			Description
 				|The fingerprint of the domain
 		Binary Public

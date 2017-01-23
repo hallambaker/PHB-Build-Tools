@@ -82,7 +82,7 @@ namespace Goedel.Cryptography {
         public override KeyPair KeyPair {
             get { return DHKeyPair; }
             set {
-                var DHKeyPair = KeyPair as DHKeyPair;
+                var DHKeyPair = value as DHKeyPair;
                 Assert.NotNull(DHKeyPair, InvalidKeyPairType.Throw, "DH keypair expected");
                 this.DHKeyPair = DHKeyPair;
                 }
@@ -93,7 +93,8 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="KeyPair">Keypair to construct from</param>
         /// <param name="Bulk">Default encryption algorithm.</param>
-        public CryptoProviderExchangeDH(KeyPair KeyPair, CryptoAlgorithmID Bulk) {
+        public CryptoProviderExchangeDH(KeyPair KeyPair, 
+                    CryptoAlgorithmID Bulk=CryptoAlgorithmID.Default) {
             this.KeyPair = KeyPair;
             this.BulkAlgorithmDefault = Bulk;
             }
@@ -135,39 +136,56 @@ namespace Goedel.Cryptography {
             }
 
 
-        // --------------------------------------
+
+
+        //// From CryptoProviderAgree
+
+        ///// <summary>
+        ///// Perform a key wrap operation and return a CryptoDataWrapped instance
+        ///// containing the wrapped key parameters and a bulk provider. 
+        ///// </summary>
+        ///// <param name="Algorithm">The key wrap algorithm</param>
+        ///// <param name="Bulk">The bulk provider to use. If specified, the parameters from
+        ///// the specified provider will be used. Otherwise a new bulk provider will 
+        ///// be created and returned as part of the result.</param>
+        ///// <param name="OutputStream"></param>
+        ///// <returns>Instance describing the key agreement parameters.</returns>
+        //public override CryptoDataEncoder MakeEncoder(
+        //                    CryptoProviderBulk Bulk = null,
+        //                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+        //                    Stream OutputStream = null
+        //                    ) {
+
+        //    // Generate an ephemeral DH key and perform a Key agreement against it.
+
+        //    var Agreement = DHKeyPair.Agreement();
+        //    var KeyDerive = Agreement.KeyDerive;
+
+        //    var BulkAlgorithm = Algorithm.Bulk();
+        //    BulkAlgorithm = (BulkAlgorithm == CryptoAlgorithmID.Default) ? BulkAlgorithmDefault : BulkAlgorithm;
+
+
+        //    var 
+
+        //    var Encryption = (Bulk as CryptoProviderEncryption) ??
+        //        CryptoCatalog.Default.GetEncryption(BulkAlgorithm);
+
+        //    var Key = Platform.GetRandomBits(Encryption.KeySize);
+        //    var IV = Platform.GetRandomBits(Encryption.IVSize);
+
+        //    var Result = Encryption.MakeEncryptor(Key, IV, Algorithm, OutputStream);
+        //    Result.AlgorithmIdentifier = CryptoAlgorithmID | Encryption.CryptoAlgorithmID;
 
 
 
-        // From CryptoProviderAgree
 
-        /// <summary>
-        /// Perform a key wrap operation and return a CryptoDataWrapped instance
-        /// containing the wrapped key parameters and a bulk provider. 
-        /// </summary>
-        /// <param name="Algorithm">The key wrap algorithm</param>
-        /// <param name="Bulk">The bulk provider to use. If specified, the parameters from
-        /// the specified provider will be used. Otherwise a new bulk provider will 
-        /// be created and returned as part of the result.</param>
-        /// <param name="OutputStream"></param>
-        /// <returns>Instance describing the key agreement parameters.</returns>
-        public override CryptoDataEncoder MakeEncoder(
-                            CryptoProviderBulk Bulk = null,
-                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
-                            Stream OutputStream = null
-                            ) {
+        //    Result.Ephemeral = Agreement.Public;
 
-            // Generate an ephemeral DH key and perform a Key agreement against it.
+        //    return Result;
+        //    }
 
-            DiffeHellmanPublic DiffeHellmanPublic;
-            var Result = DHKeyPair.Agreement(out DiffeHellmanPublic);
 
-            // NYI: Replace this and return the DH Result instance
 
-            // NYI: DH MakeEncoder
-
-            throw new NYI("To do");
-            }
 
         /// <summary>
         /// Encrypt the bulk key.
@@ -176,28 +194,44 @@ namespace Goedel.Cryptography {
         /// <param name="Algorithm">Composite encryption algorithm.</param>
         /// <param name="Wrap">If true create a new CryptoData instance that
         /// wraps the parameters supplied in Data.</param> 
-        public override CryptoDataExchange Encrypt(CryptoData Data, 
-            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, bool Wrap = false){
+        public override CryptoDataExchange Encrypt(CryptoData Data,
+            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, bool Wrap = false) {
 
-            // NYI: DH Encrypt
-            throw new NYI("To do");
+            var Agreement = DHKeyPair.Agreement();
+            var KeyDerive = Agreement.KeyDerive;
+
+            var Exchange = Platform.KeyWrapRFC3394.Wrap(
+                        KeyDerive.ClientToServerEncrypt(Data.Key.Length*8), Data.Key);
+            
+            return new CryptoDataExchange(Algorithm, Data, this) {
+                Exchange = Exchange,
+                Ephemeral = Agreement.Public
+                };
             }
+
+
 
         /// <summary>
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
         /// </summary>
         /// <param name="EncryptedKey">The encrypted session</param>
+        /// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
         /// <param name="AlgorithmID">The algorithm to use.</param>
         /// <returns>The decoded data instance</returns>
         public override byte[] Decrypt(
                     byte[] EncryptedKey,
+                    KeyPair Ephemeral,
                     CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
 
-            // NYI: DH Decrypt
-            throw new NYI("To do");
+            var DHPublic = Ephemeral as DHKeyPair;
+            var Agreement = DHKeyPair.Agreement(DHPublic);
+            var KeyDerive = Agreement.KeyDerive;
+            var KeySize = (EncryptedKey.Length * 8) - 64;
+
+            return Platform.KeyWrapRFC3394.Unwrap(
+                        KeyDerive.ClientToServerEncrypt(KeySize), EncryptedKey);
+
             }
-
-
 
 
         // From CryptoProviderRecryption
@@ -217,6 +251,9 @@ namespace Goedel.Cryptography {
             return DHKeyPair.GenerateRecryptionSet(Shares);
             }
 
+        // --------------------------------------
+
+
 
         /// <summary>
         /// Perform a recryption operation on the input data. A recryption operation
@@ -225,25 +262,14 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="CryptoData"></param>
         /// <returns>The partially decrypted data</returns>
-        public override CryptoDataEncoder Recrypt(CryptoDataEncoder CryptoData) {
+        public override CryptoDataExchange Recrypt(CryptoDataExchange CryptoData) {
             // NYI: DH CryptoDataEncoder
             throw new NYI("To do");
 
-            //var TargetDH = Target as DHKeyPair;
-            //Assert.NotNull(TargetDH, InvalidKeyPairType.Throw);
-
-            //// Calculate the shared parameters
-
-            //BigInteger Agreed;
-
-            //if (Input.Recrypt == null) {
-            //    Agreed = TargetDH.Agreement(DHKeyPair);
-            //    }
-            //else {
-            //    var Carry = new BigInteger(Input.Recrypt);
-            //    Agreed = TargetDH.Agreement(DHKeyPair, Carry);
-            //    }
             }
+
+
+
 
         /// <summary>
         /// Perform a recryption operation on the input data. A recryption operation
@@ -252,7 +278,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="CryptoDatas"></param>
         /// <returns>The partially decrypted data</returns>
-        public override CryptoDataEncoder Recrypt(CryptoDataEncoder[] CryptoDatas) {
+        public override CryptoDataExchange Recrypt(CryptoDataExchange[] CryptoDatas) {
             // NYI: DH CryptoDataEncoder
             throw new NYI("To do");
             }

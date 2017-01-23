@@ -11,47 +11,10 @@ namespace Goedel.Cryptography {
     /// </summary>
     public abstract class CryptoProviderRecryption : CryptoProviderExchange {
 
-
-        ///// <summary>
-        ///// Base provider for public key encryption and symmetric key wrap.
-        ///// 
-        ///// NB these classes do not support bulk encryption.
-        ///// </summary>
-        //public abstract class CryptoProviderAgree : CryptoProviderAsymmetric {
-        //    /// <summary>
-        //    /// The type of algorithm
-        //    /// </summary>
-        //    public override CryptoAlgorithmClass AlgorithmClass { get { return CryptoAlgorithmClass.Exchange; } }
-
-        //    /// <summary>
-        //    /// JSON Key use.
-        //    /// </summary>
-        //    public override string JSONKeyUse { get { return "enc"; } }
-
-            ///// <summary>
-            ///// Encrypt key data.
-            ///// </summary>
-            ///// <param name="Input">The key data to encrypt.</param>
-            ///// <returns>Encrypted data</returns>
-            //public abstract CryptoData Encrypt(CryptoData Input, KeyPair Target);
-
-            ///// <summary>
-            ///// Decrypt data. Note that this is only possibly when the corresponding private
-            ///// key is available on the local machine.
-            ///// </summary>
-            ///// <param name="Input">The data to decrypt.</param>
-            ///// <returns>Decrypted data.</returns>
-            //public abstract CryptoData Decrypt(CryptoData Input);
-            //}
-
-
-
-
         /// <summary>
         /// The maximum number of key shares that the provider will generate.
         /// </summary>
         public abstract int SharesMaximum { get; }
-
 
         /// <summary>
         /// Split the private key into a recryption pair. This is a convenience function
@@ -90,7 +53,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="CryptoData"></param>
         /// <returns>The partially decrypted data</returns>
-        public abstract CryptoDataEncoder Recrypt(CryptoDataEncoder CryptoData);
+        public abstract CryptoDataExchange Recrypt(CryptoDataExchange CryptoData);
 
 
         /// <summary>
@@ -100,7 +63,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="CryptoDatas"></param>
         /// <returns>The partially decrypted data</returns>
-        public abstract CryptoDataEncoder Recrypt(CryptoDataEncoder[] CryptoDatas);
+        public abstract CryptoDataExchange Recrypt(CryptoDataExchange[] CryptoDatas);
 
         }
 

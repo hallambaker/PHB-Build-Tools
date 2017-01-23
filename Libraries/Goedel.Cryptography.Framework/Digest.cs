@@ -49,7 +49,6 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         public HashAlgorithm HashAlgorithm;
         
-
         /// <summary>
         /// Initializes an instance of the hash provider with the specified
         /// implementation.
@@ -58,7 +57,6 @@ namespace Goedel.Cryptography.Framework {
         protected CryptoProviderDigest(HashAlgorithm HashAlgorithm) {
             this.HashAlgorithm = HashAlgorithm;
             }
-
 
         /// <summary>
         /// Register this set of providers to the specified catalog.
@@ -70,16 +68,6 @@ namespace Goedel.Cryptography.Framework {
             CryptoProviderSHA1.Register(Catalog);
             return CryptoProviderSHA2_512.Register(Catalog);
             }
-
-
-        ///// <summary>
-        ///// ASN.1 Object Identifier.
-        ///// </summary>
-        //public override string OID {
-        //    get {
-        //        return CryptoConfig.MapNameToOID(Name);
-        //        }
-        //    }
 
         /// <summary>
         /// Default constructor.
@@ -108,9 +96,6 @@ namespace Goedel.Cryptography.Framework {
             return Result;
             }
 
-
-
-
         /// <summary>
         /// Create a crypto stream from this provider.
         /// </summary>
@@ -120,6 +105,11 @@ namespace Goedel.Cryptography.Framework {
                     Encoder.OutputStream, HashAlgorithm, CryptoStreamMode.Write);
             }
 
+        /// <summary>
+        /// Truncation length. If this value is greater than 0, the output size is 
+        /// truncated to the nearest integer multiple of 8 bits.
+        /// </summary>
+        protected int Truncate { get; set; } = 0;
 
         /// <summary>
         /// Processes the specified byte array
@@ -131,7 +121,8 @@ namespace Goedel.Cryptography.Framework {
         /// <returns>The result of the cryptographic operation.</returns>
         public override byte[] ProcessData(byte[] Data, int Offset,
                             int Count, byte[] Key = null) {
-            return HashAlgorithm.ComputeHash(Data, Offset, Count);
+            var Result = HashAlgorithm.ComputeHash(Data, Offset, Count);
+            return Result.OrTruncated(Truncate);
             }
 
         /// <summary>
@@ -141,7 +132,7 @@ namespace Goedel.Cryptography.Framework {
         public override void Complete(CryptoData CryptoData) {
             var CryptoStream = CryptoData.InputStream as CryptoStream;
             CryptoStream.FlushFinalBlock();
-            CryptoData.Integrity = HashAlgorithm.Hash;
+            CryptoData.Integrity = HashAlgorithm.Hash.OrTruncated(Truncate);
 
             return;
             }
@@ -241,24 +232,17 @@ namespace Goedel.Cryptography.Framework {
     /// </summary>
     public class CryptoProviderSHA2_512 : CryptoProviderDigest {
 
-        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512;
-
+        
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID {
-            get { return _CryptoAlgorithmID; }
-            }
+        public override CryptoAlgorithmID CryptoAlgorithmID {get; }
 
-        /// <summary>
-        /// Return a CryptoAlgorithm structure with properties describing this provider.
-        /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm {
-            get { return _CryptoAlgorithm; } }
-
-
-        static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
-                    _CryptoAlgorithmID, 512, _AlgorithmClass, Factory);
+        ///// <summary>
+        ///// Return a CryptoAlgorithm structure with properties describing this provider.
+        ///// </summary>
+        //public override CryptoAlgorithm CryptoAlgorithm {
+        //    get { return _CryptoAlgorithm; } }
 
 
         /// <summary>
@@ -271,7 +255,11 @@ namespace Goedel.Cryptography.Framework {
         /// <returns>Description of the principal algorithm registration.</returns>
         public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
             Catalog = Catalog ?? CryptoCatalog.Default;
-            return Catalog.Add(_CryptoAlgorithm);
+
+            var Default = Catalog.Add(CryptoAlgorithmID.SHA_2_512, 512, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmID.SHA_2_512T128, 128, _AlgorithmClass, Factory);
+
+            return Default;
             }
 
         /// <summary>
@@ -279,19 +267,27 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         public override int Size {
             get {
-                return 512;
+                return Truncate >0 ? Truncate: 512;
                 }
             }
 
         private static CryptoProvider Factory(int KeySize, 
-                            CryptoAlgorithmID Bulk=CryptoAlgorithmID.Default) {
-            return new CryptoProviderSHA2_512();
+                            CryptoAlgorithmID ID = CryptoAlgorithmID.SHA_2_512) {
+            
+
+            return new CryptoProviderSHA2_512(KeySize, ID);
             }
         
         /// <summary>
         /// Create a SHA-2-256 digest provider.
         /// </summary>
-        public CryptoProviderSHA2_512() : base (new SHA512Cng()) {
+        public CryptoProviderSHA2_512(int KeySize=512, 
+                    CryptoAlgorithmID ID = CryptoAlgorithmID.SHA_2_512) : base (new SHA512Cng()) {
+            CryptoAlgorithmID = ID;
+
+            if (KeySize >0 & KeySize < 512) {
+                Truncate = KeySize;
+                }
             }
         }
 

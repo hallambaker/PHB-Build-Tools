@@ -21,6 +21,11 @@ namespace Goedel.Cryptography.KeyFile {
         StringBuilder BuildTag2 = new StringBuilder();
         StringBuilder BuildBase64 = new StringBuilder();
 
+        StringBuilder BuildHeader = new StringBuilder();
+
+        public List<Header> Headers = new List<Header>();
+        Header CurrentHeader;
+
         /// <summary>
         /// Do nothing
         /// </summary>
@@ -65,7 +70,9 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <param name="c">Character that was read</param>
         public virtual void Tag1(int c) {
-            BuildTag1.Append(c.ToASCII());
+            if (!c.IsWhite()) {
+                BuildTag1.Append(c.ToASCII());
+                }
             }
 
         /// <summary>
@@ -83,7 +90,9 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <param name="c">Character that was read</param>
         public virtual void Tag2(int c) {
-            BuildTag2.Append(c.ToASCII());
+            if (!c.IsWhite()) {
+                BuildTag2.Append(c.ToASCII());
+                }
             }
 
 
@@ -93,8 +102,10 @@ namespace Goedel.Cryptography.KeyFile {
         /// Verify the initial BEGIN tag
         /// </summary>
         /// <param name="c">Character that was read</param>
-        public virtual void Begin (int c) {
-            BuildTagBegin.Append(c.ToASCII());
+        public virtual void Begin(int c) {
+            if (!c.IsWhite()) {
+                BuildTagBegin.Append(c.ToASCII());
+                }
             }
 
         StringBuilder BuildTagEnd = new StringBuilder();
@@ -103,11 +114,13 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <param name="c">Character that was read</param>
         public virtual void End(int c) {
-            BuildTagEnd.Append(c.ToASCII());
+            if (!c.IsWhite()) {
+                BuildTagEnd.Append(c.ToASCII());
+                }
             }
 
         /// <summary>
-        /// Add chatacter to tag
+        /// Add character to tag
         /// </summary>
         /// <param name="c">Character value to add</param>
         public virtual void AddTag(int c) {
@@ -119,6 +132,40 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="c">Character value read</param>
         public virtual void Abort(int c) {
             }
+
+
+        StringBuilder BuildHeaderValue = new StringBuilder();
+        /// <summary>
+        /// Do nothing
+        /// </summary>
+        /// <param name="c">Character value read</param>
+        public virtual void StartHeader(int c) {
+            CurrentHeader = new Header() {
+                Tag = BuildBase64.ToString()
+                };
+            Headers.Add(CurrentHeader);
+            BuildBase64.Clear();
+            }
+
+        /// <summary>
+        /// Do nothing
+        /// </summary>
+        /// <param name="c">Character value read</param>
+        public virtual void HeaderAdd(int c) {
+            BuildHeaderValue.Append(c.ToASCII());
+            }
+
+        /// <summary>
+        /// Do nothing
+        /// </summary>
+        /// <param name="c">Character value read</param>
+        public virtual void CopyHeader(int c) {
+            CurrentHeader.Value = BuildHeaderValue.ToString();
+            BuildHeaderValue.Clear();
+            }
+
+
+
 
         /// <summary>
         /// Process tagged data
@@ -139,7 +186,8 @@ namespace Goedel.Cryptography.KeyFile {
                 Strict = Strict,
                 Count = Armor1,
                 Tag = Tag,
-                Data = Data};
+                Data = Data,
+                Headers = Headers};
 
             return Result;
             }
@@ -148,7 +196,7 @@ namespace Goedel.Cryptography.KeyFile {
 
     /// <summary>Tagged data from file</summary>
     public class TaggedData {
-        /// <summary>If true the file is strictly complieant with the PEM spec,
+        /// <summary>If true the file is strictly compliant with the PEM spec,
         /// the number of dashes at the start and end of the header and footer
         /// armor match.</summary>
         public bool Strict;
@@ -158,6 +206,19 @@ namespace Goedel.Cryptography.KeyFile {
         public string Tag;
         /// <summary>The tagged data converted from Base64.</summary>
         public byte[] Data;
+
+
+        public List<Header> Headers;
+        }
+
+    public class Header {
+
+        /// <summary>The header tag</summary>
+        public string Tag;
+
+        /// <summary>The header value</summary>
+        public string Value;
+
 
         }
 

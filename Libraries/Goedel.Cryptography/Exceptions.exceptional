@@ -120,3 +120,6 @@ Namespace Goedel.Cryptography
 
 		Exception UnknownNamedParameters
 			Console "The named parameters specified in an operation are not known"
+
+		Exception NotExportable
+			Console "The cryptographic provider does not permit export of the private key parameters"

@@ -218,7 +218,8 @@ namespace Goedel.Cryptography.Jose {
             var Header = new Header(ProtectedText);
             var BulkID = Header.enc.FromJoseID();
 
-            var Exchange = DecryptionKey.Decrypt(Recipient.EncryptedKey, BulkID);
+            var Exchange = DecryptionKey.Decrypt(Recipient.EncryptedKey,
+                        AlgorithmID: BulkID);
 
             var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
             //var EncryptEncoder = Provider.MakeDecryptor(Exchange, IV, Algorithm: BulkID);

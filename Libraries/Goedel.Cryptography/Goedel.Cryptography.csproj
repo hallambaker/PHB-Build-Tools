@@ -51,6 +51,7 @@
     </None>
     <None Include="Encoding.md" />
     <None Include="Index.md" />
+    <Compile Include="KeyExtensions.cs" />
     <None Include="Makefile" />
     <None Include="PKIX\PKIX.asn2">
       <Generator>ASN2CS</Generator>
@@ -91,11 +92,12 @@
       <DependentUpon>PKIX.asn2</DependentUpon>
     </Compile>
     <Compile Include="PKIX\PKIXConstants.cs" />
+    <Compile Include="PKIX\PKIXKeys.cs" />
     <Compile Include="PKIX\PKIXName.cs" />
     <Compile Include="PKIX\RFC2631.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PKIX\RSAPrivateKey.cs" />
+    <Compile Include="PKIX\PrivateKeyInfo.cs" />
     <Compile Include="Recrypt.cs" />
     <Compile Include="Signature.cs" />
     <Compile Include="PKIX\TBSCertificate.cs" />

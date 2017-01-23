@@ -61,7 +61,7 @@ namespace Goedel.Cryptography.Framework {
 
                 //Configure the key pair factories
                 RSAKeyPairBase.KeyPairFactory = RSAKeyPair.KeyPairFactory;
-                DHKeyPairBase.KeyPairFactory = DHKeyPair.KeyPairFactory;
+                DHKeyPairBase.KeyPairPublicFactory = DHKeyPair.KeyPairPublicFactory;
 
 
 

@@ -132,7 +132,7 @@ namespace Goedel.Cryptography.PKIX {
         /// Subject Key Identifier
         /// </summary>
         public byte[] SubjectKeyIdentifier {
-            get { return KeyPair.GetUDFBytes(); }
+            get { return KeyPair.PKIXPublicKey.SubjectPublicKeyInfo().DER(); }
             }
 
 

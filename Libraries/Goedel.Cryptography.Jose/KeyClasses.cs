@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using Goedel.Cryptography;
 using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Cryptography.Jose {
@@ -32,11 +31,13 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Extract a KeyPair object from the JOSE data structure.
         /// </summary>
+        /// <param name="Exportable">If true, private key parameters may be exported</param>
         /// <returns>The extracted key pair</returns>
-        public virtual KeyPair GetKeyPair () {
+        public virtual KeyPair GetKeyPair (bool Exportable=false) {
 
             throw new InternalError("GetKeyPair method not implemented in child class");
             }
+
 
         /// <summary>
         /// Return the public portion of the key pair.
@@ -67,6 +68,66 @@ namespace Goedel.Cryptography.Jose {
                 }
             return null;
             }
+
+        /// <summary>
+        /// Convert PKIX parameters to JSON structure.
+        /// </summary>
+        /// <param name="PKIXKey">The PKIX key parameters</param>
+        /// <returns>The JOSE key</returns>
+        public static Key Factory (IPKIXPublicKey PKIXKey) {
+
+            if (PKIXKey as PKIXPrivateKeyRSA != null) {
+                return new PrivateKeyRSA(PKIXKey as PKIXPrivateKeyRSA);
+                }
+            if (PKIXKey as PKIXPrivateKeyDH != null) {
+                return new PrivateKeyDH(PKIXKey as PKIXPrivateKeyDH);
+                }
+            if (PKIXKey as PKIXPublicKeyRSA != null) {
+                return new PublicKeyRSA(PKIXKey as PKIXPublicKeyRSA);
+                }
+            if (PKIXKey as PKIXPublicKeyDH != null) {
+                return new PublicKeyDH(PKIXKey as PKIXPublicKeyDH);
+                }
+            return null;
+            }
+
+        /// <summary>
+        /// Convert PKIX parameters to JSON structure.
+        /// </summary>
+        /// <param name="PKIXKey">The PKIX key parameters</param>
+        /// <returns>The JOSE key</returns>
+        public static Key Factory(IPKIXPrivateKey PKIXKey) {
+
+            if (PKIXKey as PKIXPrivateKeyRSA != null) {
+                return new PrivateKeyRSA(PKIXKey as PKIXPrivateKeyRSA);
+                }
+            if (PKIXKey as PKIXPrivateKeyDH != null) {
+                return new PrivateKeyDH(PKIXKey as PKIXPrivateKeyDH);
+                }
+            return null;
+            }
+
+        ///// <summary>
+        ///// Read the key from the specified file.
+        ///// </summary>
+        ///// <param name="Filename">The file to be read</param>
+        ///// <returns></returns>
+        //public static Key KeyFileRead (string Filename) {
+        //    return null; // NYI Key File Read
+        //    }
+
+        ///// <summary>
+        ///// Write the key to the specified file.
+        ///// </summary>
+        ///// <param name="Filename">The file to write</param>
+        //public void KeyFileWrite (string Filename) {
+
+        //    var Text = ToJson();
+        //    Filename.
+
+
+        //    // NYI Key File write
+        //    }
 
         }
 

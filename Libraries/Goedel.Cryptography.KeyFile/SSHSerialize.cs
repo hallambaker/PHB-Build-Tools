@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Goedel.Utilities;
+using Goedel.Cryptography.PKIX;
+using Goedel.Cryptography;
+using Goedel.Cryptography.Framework;  // NYI remove dependency by putting factory methods on keypairs
 
 namespace Goedel.Cryptography.KeyFile {
 
@@ -171,6 +174,11 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <returns>The encoded data</returns>
         public abstract byte[] Encode();
+
+
+        public virtual KeyPair KeyPair {
+            get { return null;  }  // Feature convert DSS keypair
+            }
         }
 
     /// <summary>
@@ -186,6 +194,22 @@ namespace Goedel.Cryptography.KeyFile {
         public byte[] Exponent;
         /// <summary>RSA public key modulus.</summary>
         public byte[] Modulus;
+
+
+        public PKIXPublicKeyRSA RSAPublicKey {
+            get {
+                return new PKIXPublicKeyRSA() {
+                    Modulus = Modulus,
+                    PublicExponent = Exponent
+                    };
+                }
+            }
+
+        public override KeyPair KeyPair {
+            get {
+                return new RSAKeyPair (RSAPublicKey ); }  // NYI convert DSS keypair
+            }
+
 
         /// <summary>Encode structure</summary>
         /// <returns>Byte array representing structure.</returns>
@@ -214,8 +238,14 @@ namespace Goedel.Cryptography.KeyFile {
             DataBuffer.Decode(out Modulus);
             }
 
-        }
+        /// <summary>
+        /// Constructor, decode the data item from the specified buffer.
+        /// </summary>
+        /// <param name="DataBuffer">Data input.</param>
+        public SSH_RSA(byte[] Data) : this(new DataBuffer(Data)) {
 
+            }
+        }
     /// <summary>
     /// DSS private key in SSH format.
     /// </summary>

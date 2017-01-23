@@ -4,6 +4,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Goedel.Utilities;
+using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Cryptography {
     /// <summary>
@@ -17,7 +18,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         static Platform () {
             // Add the providers defined in the portable library to the catalog.
-            FindLocalDelegates.Add(DHKeyPair.FindLocal);
+            FindLocalDelegates.Add(DHKeyPair.FindLocalDH);
             }
 
         /// <summary>Default SHA-2-512 provider optimized for small data items</summary>
@@ -74,7 +75,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="KeyPair">The key store</param>
         /// <param name="KeySecurity">The storage security level</param>
-        public delegate void WriteToKeyStoreDelegate (KeyPair KeyPair, KeySecurity KeySecurity);
+        public delegate void WriteToKeyStoreDelegate (IPKIXPrivateKey KeyPair, KeySecurity KeySecurity);
 
         /// <summary>
         /// Write a key to the machine keystore
@@ -99,6 +100,23 @@ namespace Goedel.Cryptography {
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
         public static FindInKeyStoreDelegate FindInKeyStore;
+
+
+        /// <summary>
+        /// Retrieve record from the local key store. 
+        /// </summary>
+        /// <param name="UDF">The key identifier</param>
+        /// <param name="KeyType">Key type, if known</param>
+        /// <returns>True if key was found, otherwise false</returns>
+        public delegate bool EraseFromKeyStoreDelegate(string UDF,
+                CryptoAlgorithmID KeyType = CryptoAlgorithmID.Default);
+
+        /// <summary>
+        /// Retrieve record from the local key store. 
+        /// </summary>
+        /// <remarks>This delegate must bound to the platform
+        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
+        public static EraseFromKeyStoreDelegate EraseFromKeyStore;
 
 
         /// <summary>
@@ -176,5 +194,9 @@ namespace Goedel.Cryptography {
             return new BigInteger(Bytes);
             }
 
+        /// <summary>
+        /// Shared RFC 3394 Key Wrap provider.
+        /// </summary>
+        public static KeyWrapRFC3394 KeyWrapRFC3394 = new KeyWrapRFC3394();
         }
     }

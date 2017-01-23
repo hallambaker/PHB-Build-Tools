@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Goedel.Utilities;
 using Goedel.Cryptography.PKIX;
+using System;
 
 namespace Goedel.Cryptography {
 
@@ -10,55 +11,82 @@ namespace Goedel.Cryptography {
     /// </summary>
     public class DHKeyPair : DHKeyPairBase {
 
-        /// <summary>
-        /// The internal DH parameters
-        /// </summary>
-        DiffeHellmanPublic PublicKey { get; set; }
-        DiffeHellmanPrivate PrivateKey { get { return PublicKey as DiffeHellmanPrivate; }  }
+
 
         /// <summary>
-        /// Return private key parameters in PKIX structure
+        /// The private key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
-        public override DHDomain DHDomain { get {
-                return DHPublicKey.Domain;
-                } }
-
-        /// <summary>
-        /// Return private key parameters in PKIX structure
-        /// </summary>
-        public override DHPrivateKey DHPrivateKey {
+        public override IPKIXPrivateKey PKIXPrivateKey {
             get {
-                _DHPrivateKey = _DHPrivateKey ?? new DHPrivateKey() {
-                    Domain = DHDomain,
-                    Private = PrivateKey.Private.ToByteArray()
-                    };
-                return _DHPrivateKey;
+                Assert.NotNull(PKIXPrivateKeyDH, NotExportable.Throw);
+                return PKIXPrivateKeyDH;
                 }
             }
-        DHPrivateKey _DHPrivateKey = null;
+
+
+        /// <summary>
+        /// The private key data formatted as a PKIX KeyInfo data blob.
+        /// </summary>
+        public override IPKIXPublicKey PKIXPublicKey { get { return PKIXPublicKeyDH; }  }
+
+
+        /// <summary>
+        /// The internal Public DH parameters
+        /// </summary>
+        public DiffeHellmanPublic PublicKey { get; private set; }
+
+        /// <summary>
+        /// The internal Private DH parameters
+        /// </summary>
+        DiffeHellmanPrivate PrivateKey { get; set; }
+
+
+        /// <summary>
+        /// Return private key parameters in PKIX structure
+        /// </summary>
+        public override DHDomain DHDomain {
+            get {
+                return PublicKey.DHDomain;
+                }
+            }
+
+        /// <summary>
+        /// Return private key parameters in PKIX structure
+        /// </summary>
+        public override PKIXPrivateKeyDH PKIXPrivateKeyDH { get; }
 
         /// <summary>
         /// Return public key parameters in PKIX structure
         /// </summary>
-        public override DHPublicKey DHPublicKey {
+        public override PKIXPublicKeyDH PKIXPublicKeyDH {
             get {
-                _DHPublicKey = _DHPublicKey ?? new DHPublicKey() {
+                _DHPublicKey = _DHPublicKey ?? new PKIXPublicKeyDH() {
                     Domain = DHDomain,
                     Public = PublicKey.Public.ToByteArray()
                     };
                 return _DHPublicKey;
                 }
             }
-        DHPublicKey _DHPublicKey = null;
+        PKIXPublicKeyDH _DHPublicKey = null;
 
         /// <summary>
         /// The public key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
         public override SubjectPublicKeyInfo KeyInfoData {
             get {
-                return new SubjectPublicKeyInfo(DHKeyPairBase.KeyOIDPublic, DHPublicKey.DER());
+                return PKIXPublicKeyDH.SubjectPublicKeyInfo();
                 }
             }
+
+        /// <summary>
+        /// The public key data formatted as a PKIX KeyInfo data blob.
+        /// </summary>
+        public override SubjectPublicKeyInfo PrivateKeyInfoData {
+            get {
+                return PKIXPrivateKeyDH.SubjectPublicKeyInfo();
+                }
+            }
+
 
         /// <summary>
         /// Stub method to return a signature provider. This provider does not implement
@@ -86,17 +114,37 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="KeySecurity">The key security model</param>
         /// <param name="KeySize">The key size</param>
-        public DHKeyPair(KeySecurity KeySecurity = KeySecurity.Ephemeral, int KeySize = 2048) {
-            var PublicKey = new DiffeHellmanPrivate(KeySize);
-            Platform.WriteToKeyStore(this, KeySecurity);
+        public DHKeyPair(KeySecurity KeySecurity = KeySecurity.Ephemeral, int KeySize = 2048) :
+                    this (new DiffeHellmanPrivate(KeySize), KeySecurity) {
             }
 
         /// <summary>
         /// Create a new DH keypair.
         /// </summary>
         /// <param name="PublicKey">The public key to create a provider for</param>
-        public DHKeyPair(DiffeHellmanPublic PublicKey) {
+        /// <param name="KeySecurity">The key security model</param>
+
+        public DHKeyPair(DiffeHellmanPublic PublicKey, KeySecurity KeySecurity = KeySecurity.Ephemeral) {
             this.PublicKey = PublicKey;
+            PrivateKey = PublicKey as DiffeHellmanPrivate;
+            if (KeySecurity == KeySecurity.Ephemeral) {
+                return; // Work is complete, do not persist or enable export
+                }
+
+            var PKIXPrivateKeyDH = new PKIXPrivateKeyDH() {
+                Domain = DHDomain,
+                Private = PrivateKey.Private.ToByteArray(),
+                Public = PrivateKey.Public.ToByteArray(),
+                };
+
+            if (KeySecurity == KeySecurity.Master | KeySecurity == KeySecurity.Exportable) {
+                this.PKIXPrivateKeyDH = PKIXPrivateKeyDH; // Enable export.
+                }
+
+            if (KeySecurity == KeySecurity.Master | KeySecurity == KeySecurity.Admin |
+                    KeySecurity == KeySecurity.Device) {
+                Platform.WriteToKeyStore(PKIXPrivateKeyDH, KeySecurity);
+                }
             }
 
 
@@ -105,8 +153,25 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="PKIXParameters"></param>
         /// <returns>The created key pair</returns>
-        public static new KeyPair KeyPairFactory(DHPublicKey PKIXParameters) {
-            return new DiffeHellmanPublic (PKIXParameters);
+        public static new KeyPair KeyPairPublicFactory(PKIXPublicKeyDH PKIXParameters) {
+            var DiffeHellmanPublic = new DiffeHellmanPublic(PKIXParameters);
+
+            return new DHKeyPair(DiffeHellmanPublic);
+            }
+
+
+        /// <summary>
+        /// Delegate to create a key pair base
+        /// </summary>
+        /// <param name="PKIXParameters"></param>
+        /// <param name="Exportable">If true, private key parameters may be exported</param>
+        /// <returns>The created key pair</returns>
+        public static new KeyPair KeyPairPrivateFactory(PKIXPrivateKeyDH PKIXParameters,
+                    bool Exportable = false) {
+            var DiffeHellmanPrivate = new DiffeHellmanPrivate(PKIXParameters);
+            var KS = Exportable ? KeySecurity.Exportable : KeySecurity.Ephemeral;
+
+            return new DHKeyPair(DiffeHellmanPrivate, KS);
             }
 
 
@@ -136,7 +201,7 @@ namespace Goedel.Cryptography {
             var Private = PrivateKey.MakeRecryption(Shares);
 
             var Result = new KeyPair[Shares];
-            for (var i=0; i<Shares; i++) {
+            for (var i = 0; i < Shares; i++) {
                 Result[i] = new DHKeyPair(Private[i]);
                 }
 
@@ -159,18 +224,21 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Public">Public key parameters</param>
         /// <returns>The key agreement value ZZ</returns>
-        public BigInteger Agreement(DHKeyPair Public) {
-            return PrivateKey.Agreement(Public.PublicKey);
+        public DiffieHellmanResult Agreement(DHKeyPair Public) {
+            var Agreement = PrivateKey.Agreement(Public.PublicKey); //Bug : not setting private key!
+            return new DiffieHellmanResult() { Agreement = Agreement };
             }
 
+
+
         /// <summary>
-        /// Ephemeral DH agreement
+        /// Create a new ephemeral private key and use it to perform a key
+        /// agreement.
         /// </summary>
-        /// <param name="Public">Public key parameters</param>
-        /// <returns>The key agreement value ZZ</returns>
-        public BigInteger Agreement(out DiffeHellmanPublic Public) {
-            var Result = PublicKey.Agreement(out Public);
-            return Result;
+        /// <returns>The key agreement parameters, the public key value and the
+        /// key agreement.</returns>
+        public DiffieHellmanResult Agreement() {
+            return PublicKey.Agreement();
             }
 
 
@@ -185,5 +253,23 @@ namespace Goedel.Cryptography {
             return PrivateKey.Agreement(Public.PublicKey, Carry);
             }
 
+        /// <summary>
+        /// Erase the key from the local machine
+        /// </summary>
+        public override void EraseFromDevice() {
+            Platform.EraseFromKeyStore(UDF); // NYI: Erase key from store
+            }
+
+
+        /// <summary>
+        /// Search all the local machine stores to find a key pair with the specified
+        /// fingerprint
+        /// </summary>
+        /// <param name="UDF">Fingerprint of key</param>
+        /// <returns>The key pair found</returns>
+        public static KeyPair FindLocalDH(string UDF) {
+
+            return Platform.FindInKeyStore(UDF, CryptoAlgorithmID.DH);
+            }
         }
     }

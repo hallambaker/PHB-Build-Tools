@@ -85,9 +85,9 @@ namespace Goedel.FSR {
         public int NextState = -1;
 
         /// <summary>
-        /// If set tru, debug tracing is enabled
+        /// If set true, debug tracing is enabled
         /// </summary>
-        public bool Trace = false;
+        public static bool Trace = false;
 
         /// <summary>
         /// Get the next token calling all token actions while the

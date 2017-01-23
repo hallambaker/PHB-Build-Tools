@@ -121,11 +121,12 @@ namespace Goedel.ASN {
         /// <param name="Data">Data to write.</param>
         public void Add (byte Data) {
             if (Pointer <= 0) {
-                int NewLength = Buffered.Length * 2 < MaxChunk ?
-                    Buffered.Length * 2 : Buffered.Length + MaxChunk ;
-                byte [] NewBuffer = new byte [NewLength];
-
-                Array.Copy (Buffered, 0, NewBuffer, NewLength-Length, Length);
+                Pointer = Buffered.Length < MaxChunk ?
+                    Buffered.Length : MaxChunk ;
+                // NB CANNOT use resize as new values go at the END
+                var NewBuffer = new byte[Buffered.Length + Pointer];
+                Array.Copy(Buffered, 0, NewBuffer, Pointer, Buffered.Length);
+                Buffered = NewBuffer;
                 }
             Pointer --;
             Buffered [Pointer] = Data;
@@ -244,9 +245,9 @@ namespace Goedel.ASN {
         /// <summary>
         /// Start encoding a sequence
         /// </summary>
-        /// <returns>Position in the buffer</returns>
+        /// <returns>Position in the buffer relative to the buffer end (always negative)</returns>
         public int Encode__Sequence_Start () {
-            return Pointer;
+            return Pointer-Buffered.Length;
             }
 
         /// <summary>
@@ -257,7 +258,7 @@ namespace Goedel.ASN {
         /// <param name="Flags">Flags</param>
         /// <param name="Code">Code</param>
         public void Encode__Sequence_End (int Position, int Flags, int Code) {
-            AddTagLength (Position, Constants.Sequence, TagMode.Constructed, Flags, Code);
+            AddTagLength (Position+Buffered.Length, Constants.Sequence, TagMode.Constructed, Flags, Code);
             }
 
         /// <summary>
@@ -266,15 +267,15 @@ namespace Goedel.ASN {
         /// </summary>
         /// <param name="Position">Buffer position</param>
         public void Encode__Sequence_End (int Position) {
-            AddTagLength (Position, Constants.Sequence, TagMode.Constructed, 0, 0);
+            AddTagLength (Position + Buffered.Length, Constants.Sequence, TagMode.Constructed, 0, 0);
             }
 
         /// <summary>
         /// Start encoding a set
         /// </summary>
-        /// <returns>Position in the buffer</returns>
+        /// <returns>Position in the buffer relative to the buffer end (always negative)</returns>
         public int Encode__Set_Start () {
-            return Pointer;
+            return Pointer - Buffered.Length;
             }
 
         /// <summary>
@@ -285,7 +286,7 @@ namespace Goedel.ASN {
         /// <param name="Flags">Flags</param>
         /// <param name="Code">Code</param>
         public void Encode__Set_End(int Position, int Flags, int Code) {
-            AddTagLength (Position, Constants.Set, TagMode.Constructed, Flags, Code);
+            AddTagLength (Position + Buffered.Length, Constants.Set, TagMode.Constructed, Flags, Code);
             }
        
         /// <summary>
@@ -459,10 +460,10 @@ namespace Goedel.ASN {
                 }
             else {
                 AddBytes( Data, Index, Data.Length-1);
-                int Count = Data.Length - Index;
-                if (Data[0] >= 0x80) {
+                //int Count = Data.Length - Index;
+                if (Data[Index] >= 0x80) {
                     AddByte(0);
-                    Count++;
+                    //Count++;
                     }
                 }
 
@@ -473,6 +474,9 @@ namespace Goedel.ASN {
         private void AddBytes(byte[] Data, int Start, int End) {
             for (int i = End; i >= Start; i--) {
                 AddByte (Data [i]);
+                if (i == 0) {
+                    
+                    }
                 }
             }
 

@@ -38,8 +38,8 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="RSAParameters">Input parameters in System.Security.Cryotography format</param>
         /// <returns>The public key</returns>
-        public RSAPublicKey RSAPublicKey(RSAParameters RSAParameters) {
-            var RSAPublicKey = new RSAPublicKey() {
+        public PKIXPublicKeyRSA RSAPublicKey(RSAParameters RSAParameters) {
+            var RSAPublicKey = new PKIXPublicKeyRSA() {
                 Modulus = RSAParameters.Modulus,
                 PublicExponent = RSAParameters.Exponent
                 };

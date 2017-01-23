@@ -106,16 +106,46 @@ namespace Goedel.Cryptography {
         /// <returns>The catalog entry.</returns>
         public CryptoAlgorithm Add(CryptoAlgorithm CryptoAlgorithm) {
             var ID = CryptoAlgorithm.CryptoAlgorithmID;
-            Dictionary.Add(ID, CryptoAlgorithm);
 
-            AlgorithmDigest = SetDefault(AlgorithmDigest, CryptoAlgorithm, ID, CryptoAlgorithmClass.Digest);
-            AlgorithmMAC = SetDefault(AlgorithmMAC, CryptoAlgorithm, ID, CryptoAlgorithmClass.MAC);
-            AlgorithmEncryption = SetDefault(AlgorithmEncryption, CryptoAlgorithm, ID, CryptoAlgorithmClass.Encryption);
-            AlgorithmSignature = SetDefault(AlgorithmSignature, CryptoAlgorithm, ID, CryptoAlgorithmClass.Signature);
-            AlgorithmExchange = SetDefault(AlgorithmExchange, CryptoAlgorithm, ID, CryptoAlgorithmClass.Exchange);
+            try {
+                Dictionary.Add(ID, CryptoAlgorithm);
+
+
+
+                AlgorithmDigest = SetDefault(AlgorithmDigest, CryptoAlgorithm, ID, CryptoAlgorithmClass.Digest);
+                AlgorithmMAC = SetDefault(AlgorithmMAC, CryptoAlgorithm, ID, CryptoAlgorithmClass.MAC);
+                AlgorithmEncryption = SetDefault(AlgorithmEncryption, CryptoAlgorithm, ID, CryptoAlgorithmClass.Encryption);
+                AlgorithmSignature = SetDefault(AlgorithmSignature, CryptoAlgorithm, ID, CryptoAlgorithmClass.Signature);
+                AlgorithmExchange = SetDefault(AlgorithmExchange, CryptoAlgorithm, ID, CryptoAlgorithmClass.Exchange);
+                }
+            catch {
+                // already added, ignore.
+                }
 
             return CryptoAlgorithm;
             }
+
+        /// <summary>
+        /// Add a cryptographic algorithm provider to the catalog
+        /// </summary>
+        /// <param name="CryptoAlgorithmID">CryptoAlgorithmID Identifier.</param>
+        /// <param name="KeySize">Default algorithm key size.</param>
+        /// <param name="AlgorithmClass">Algorithm type.</param>
+        /// <param name="CryptoProviderFactory CryptoProviderFactory">Delegate returning the default crypto provider.</param>
+        /// <returns>The catalog entry.</returns>
+        public CryptoAlgorithm Add(
+            CryptoAlgorithmID CryptoAlgorithmID,
+            int KeySize,
+            CryptoAlgorithmClass AlgorithmClass,
+            CryptoProviderFactory CryptoProviderFactory) {
+
+            var CryptoAlgorithm = new CryptoAlgorithm(CryptoAlgorithmID, KeySize, AlgorithmClass, CryptoProviderFactory);
+            Add(CryptoAlgorithm);
+            return CryptoAlgorithm;
+
+            }
+
+
 
         /// <summary>
         /// Get a cryptographic provider by combined algorithm identifier

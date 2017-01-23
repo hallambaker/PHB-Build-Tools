@@ -38,8 +38,7 @@ namespace Goedel.Utilities {
             return '.';
             }
 
-        /// <summary>
-        /// Test to see if an input character is a Base64 character.
+        /// <summary>Test to see if an input character is a Base64 character.
         /// </summary>
         /// <param name="c">The input character value</param>
         /// <returns>true if and only if the input corresponds to an ASCII 
@@ -48,6 +47,17 @@ namespace Goedel.Utilities {
         public static bool IsBase64(this int c) {
             return ((c >= 'a' & c <= 'z') | (c >= 'A' & c <= 'Z') |
                 (c >= '0' & c <= '9') | c == '+' | c == '/' | c == '_' | c == '-');
+
+            }
+
+        /// <summary>Test to see if an input character is a Base64 character.
+        /// </summary>
+        /// <param name="c">The input character value</param>
+        /// <returns>true if and only if the input corresponds to an ASCII 
+        /// character used to encode Base64 in traditional or URL encoding
+        /// format.</returns>
+        public static bool IsWhite(this int c) {
+            return (c == ' ' | c == '\t' | c == '\n' | c == '\r');
 
             }
 

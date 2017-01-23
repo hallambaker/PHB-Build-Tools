@@ -50,10 +50,10 @@ namespace Goedel.Cryptography.KeyFile {
         public static string ToPEM (RSAKeyPair RSAKeyPair) {
 
             var Provider = RSAKeyPair.Provider;
-            Assert.Null(Provider, NoProviderSpecified.Throw);
+            Assert.NotNull(Provider, NoProviderSpecified.Throw);
 
             var RSAParameters = Provider.ExportParameters(true);
-            Assert.Null(RSAParameters, PrivateKeyNotAvailable.Throw);
+            Assert.NotNull(RSAParameters, PrivateKeyNotAvailable.Throw);
 
             var NewProvider = new RSACryptoServiceProvider();
             NewProvider.ImportParameters(RSAParameters);

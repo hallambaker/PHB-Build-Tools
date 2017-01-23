@@ -10,21 +10,22 @@ using Goedel.IO;
 
 namespace Goedel.Cryptography.KeyFile {
 
-
+    // Feature: Read Bitvise private key
+    // Feature: Read PuTTY format private keys.
 
     /// <summary>
     /// Encoders and decoders for various key file formats
     /// </summary>
-    public static class KeyFile {
+    public static class KeyFileDecode {
 
         /// <summary>
         /// Decode SSH Authorized Key file format
         /// </summary>
         /// <param name="FileName">File to decode.</param>
-        public static void DecodeAuthHost(string FileName) {
+        public static List<AuthorizedKey> DecodeAuthHost(string FileName) {
             using (var TextReader = FileName.OpenFileReadShared()) {
                 LexReader LexReader = new LexReader(TextReader);
-                DecodeAuthHost(LexReader);
+                return DecodeAuthHost(LexReader);
                 }
             }
 
@@ -32,7 +33,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// Decode an authorized hosts format file.
         /// </summary>
         /// <param name="LexReader">Input</param>
-        public static void DecodeAuthHost(LexReader LexReader) {
+        public static List<AuthorizedKey> DecodeAuthHost(LexReader LexReader) {
             List<AuthorizedKey> Result = new List<AuthorizedKey>();
 
             try {
@@ -49,6 +50,7 @@ namespace Goedel.Cryptography.KeyFile {
                 throw new ParseError(LexReader, Inner);
                 }
 
+            return Result;
             }
 
 
@@ -76,12 +78,13 @@ namespace Goedel.Cryptography.KeyFile {
             return DecodePEM(LexReader);
             }
 
+
         /// <summary>
         /// Decode PEM format key file.
         /// </summary>
         /// <param name="LexReader">Input file.</param>
         /// <returns>Public key information</returns>
-        public static KeyPair DecodePEM (LexReader LexReader) {
+        public static KeyPair DecodePEM(LexReader LexReader) {
             var Lexer = new KeyFileLex(LexReader);
             var Token = Lexer.GetToken();
 
@@ -91,25 +94,26 @@ namespace Goedel.Cryptography.KeyFile {
                     Console.WriteLine("Some yukky data here");
                     }
 
-                if (TaggedData.Tag == " RSA PRIVATE KEY") {
-                    return DecodeRSAKeyPair(TaggedData.Data);
+                if (TaggedData.Tag == "RSAPRIVATEKEY") {
+                    // is ASN.1 format DER modulus/exponent etc.
+
+                    var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
+                    return new RSAKeyPair (RSAPrivate);
+                    }
+                else if (TaggedData.Tag == "RSAPUBLICKEY") {
+                    // is ASN.1 format DER modulus/exponent
+                    var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
+                    return new RSAKeyPair(RSAPrivate);
+                    }
+                else if (TaggedData.Tag == "SSH2PUBLICKEY") {
+                    var SSH_Public_Key = SSHData.Decode (TaggedData.Data);
+                    return SSH_Public_Key.KeyPair;
                     }
                 }
 
             return null;
             }
 
-
-        static KeyPair DecodeRSAKeyPair (byte[] Data) {
-            var PrivateKey = new RSAPrivateKey(Data);
-
-            var RSAParameters = PrivateKey.RSAParameters();
-            RSAParameters.Dump();
-
-            var RSAKeyPair = new RSAKeyPair(RSAParameters);
-
-            return RSAKeyPair;
-            }
 
         }
     }

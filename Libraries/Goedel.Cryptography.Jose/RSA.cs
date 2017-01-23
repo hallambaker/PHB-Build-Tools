@@ -8,7 +8,7 @@ namespace Goedel.Cryptography.Jose {
     /// <summary>
     /// Represents an RSA Public Key.
     /// </summary>
-    public partial class PublicKeyRSA {
+    public partial class PublicKeyRSA : Key {
 
         /// <summary>
         /// Construct from the specified RSA Key
@@ -16,7 +16,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="KeyPair">An RSA key Pair.</param>
         public PublicKeyRSA(RSAKeyPairBase KeyPair) {
             kid = KeyPair.UDF;
-            var RSAPublicKey = KeyPair.RSAPublicKey;
+            var RSAPublicKey = KeyPair.PKIXPublicKeyRSA;
 
             n = RSAPublicKey.Modulus;
             e = RSAPublicKey.PublicExponent;
@@ -26,7 +26,7 @@ namespace Goedel.Cryptography.Jose {
         /// Construct from a PKIX RSAPublicKey structure.
         /// </summary>
         /// <param name="RSAPublicKey">RSA Public Key.</param>
-        public PublicKeyRSA(RSAPublicKey RSAPublicKey) {
+        public PublicKeyRSA(PKIXPublicKeyRSA RSAPublicKey) {
             this.n = RSAPublicKey.Modulus;
             this.e = RSAPublicKey.PublicExponent;
             }
@@ -35,9 +35,9 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the parameters as a PKIX RSAPublicKey structure;
         /// </summary>
-        public virtual RSAPublicKey PKIXParameters {
+        public virtual PKIXPublicKeyRSA PKIXParameters {
             get {
-                return new RSAPublicKey() {
+                return new PKIXPublicKeyRSA() {
                     Modulus = n,
                     PublicExponent = e
                     };
@@ -47,8 +47,9 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Extract a KeyPair object from the JOSE data structure.
         /// </summary>
+        /// <param name="Exportable">If true the private key may be exported.</param>
         /// <returns>The extracted key pair</returns>
-        public override KeyPair GetKeyPair() {
+        public override KeyPair GetKeyPair(bool Exportable = false) {
 
             var PKIXParams = PKIXParameters;
             var KeyPair = RSAKeyPairBase.KeyPairFactory(PKIXParams);
@@ -69,7 +70,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="KeyPair">An RSA key Pair.</param>
         public PrivateKeyRSA(RSAKeyPairBase KeyPair) {
             kid = KeyPair.UDF;
-            var RSAPrivateKey = KeyPair.RSAPrivateKey;
+            var RSAPrivateKey = KeyPair.PKIXPrivateKeyRSA;
             n = RSAPrivateKey.Modulus;
             e = RSAPrivateKey.PublicExponent;
             d = RSAPrivateKey.PrivateExponent;
@@ -85,7 +86,7 @@ namespace Goedel.Cryptography.Jose {
         /// Construct from a PKIX RSAPublicKey structure.
         /// </summary>
         /// <param name="RSAPrivateKey">RSA Public Key.</param>
-        public PrivateKeyRSA(RSAPrivateKey RSAPrivateKey) {
+        public PrivateKeyRSA(PKIXPrivateKeyRSA RSAPrivateKey) {
             n = RSAPrivateKey.Modulus;
             e = RSAPrivateKey.PublicExponent;
             d = RSAPrivateKey.PrivateExponent;
@@ -99,9 +100,9 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the parameters as PKIX RSAPrivateKey structure;
         /// </summary>
-        public virtual RSAPrivateKey RSAPrivateKey {
+        public virtual PKIXPrivateKeyRSA RSAPrivateKey {
             get {
-                return new RSAPrivateKey() {
+                return new PKIXPrivateKeyRSA() {
                     Modulus = n,
                     PublicExponent = e,
                     PrivateExponent = d,

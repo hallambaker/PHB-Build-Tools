@@ -111,8 +111,7 @@ namespace Goedel.Cryptography {
             return Text.GetHashCode();
             }
 
-        /// <summary>
-        /// Test for equality
+        /// <summary>Test for equality
         /// </summary>
         /// <param name="obj">The secret to test against</param>
         /// <returns>true if the parameter has the same key value, false otherwise.</returns>

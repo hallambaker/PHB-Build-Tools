@@ -26,7 +26,7 @@
 		alpha GoTo TagStartBegin
 		ALPHA GoTo TagStartBegin		
 		Digit GoTo TagStartBegin
-		On " " GoTo TagStart
+		On " " GoTo TagStartBegin
 
 	State TagStartBegin Begin Armor
 		ALPHA GoTo TagStartBegin
@@ -50,15 +50,34 @@
 		alpha GoTo Base64Data
 		ALPHA GoTo Base64Data
 		Digit GoTo Base64Data
+		On ":" GoTo IsHeader
 		On "+/ \n\t=" GoTo Base64Data
 		On "-" GoTo ArmorEnd1
+
+
+    State IsHeader StartHeader Data
+		On "\n" GoTo HeaderEnd
+		Any GoTo HeaderData
+			
+	State HeaderData HeaderAdd Data
+		On "\n" GoTo HeaderEnd
+		Any GoTo HeaderData
+
+	State HeaderEnd CopyHeader Data
+		alpha GoTo Base64Data
+		ALPHA GoTo Base64Data
+		Digit GoTo Base64Data
+		On ":" GoTo IsHeader
+		On "+/ \n\t=" GoTo Base64Data
+		On "-" GoTo ArmorEnd1	 
+
 
 	State ArmorEnd1 Count3 Data
 		On "-" GoTo ArmorEnd1
 		alpha GoTo TagEndEnd
 		ALPHA GoTo TagEndEnd		
 		Digit GoTo TagEndEnd
-		On " " GoTo TagEnd
+		On " " GoTo TagEndEnd
 
 
 	State TagEndEnd End Armor

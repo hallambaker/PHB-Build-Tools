@@ -238,16 +238,18 @@ namespace Goedel.Cryptography {
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
         /// </summary>
         /// <param name="EncryptedKey">The encrypted session</param>
+        /// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
         /// <param name="AlgorithmID">The algorithm to use.</param>
         /// <returns>The decoded data instance</returns>
         public virtual byte[] Decrypt(
                     byte[]EncryptedKey,
+                    KeyPair Ephemeral = null,
                     CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
 
             CachedExchangeProvider = CachedExchangeProvider ??
                 ExchangeProvider(AlgorithmID);
 
-            return CachedExchangeProvider.Decrypt(EncryptedKey, CryptoAlgorithmID);
+            return CachedExchangeProvider.Decrypt(EncryptedKey, Ephemeral, CryptoAlgorithmID);
             }
 
 
@@ -281,6 +283,8 @@ namespace Goedel.Cryptography {
         /// <param name="UDF">Fingerprint of key</param>
         /// <returns>The key pair found</returns>
         public static KeyPair FindLocal(string UDF) {
+
+     
             foreach (var Delegate in Platform.FindLocalDelegates) {
                 var KeyPair = Delegate(UDF);
                 if (KeyPair != null) {
@@ -292,9 +296,33 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
+        /// Erase the key from the local machine.
+        /// </summary>
+        public abstract void EraseFromDevice();
+
+        /// <summary>
         /// The public key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
-        public abstract SubjectPublicKeyInfo KeyInfoData { get; } 
+        public abstract SubjectPublicKeyInfo KeyInfoData { get; }
+
+
+        /// <summary>
+        /// The private key data formatted as a PKIX KeyInfo data blob.
+        /// </summary>
+        public abstract SubjectPublicKeyInfo PrivateKeyInfoData { get; }
+
+
+        /// <summary>
+        /// The private key data formatted as a PKIX KeyInfo data blob.
+        /// </summary>
+        public abstract IPKIXPrivateKey PKIXPrivateKey { get; }
+
+
+        /// <summary>
+        /// The private key data formatted as a PKIX KeyInfo data blob.
+        /// </summary>
+        public abstract IPKIXPublicKey PKIXPublicKey { get; }
+
 
         string _UDF = null;
         /// <summary>
@@ -302,21 +330,10 @@ namespace Goedel.Cryptography {
         /// </summary>
         public override string UDF {
             get {
-                if (_UDF == null) _UDF = Goedel.Cryptography.UDF.ToString(GetUDFBytes());
+                if (_UDF == null) _UDF = PKIXPublicKey.UDF();
                 return _UDF;
                 }
             }
-
-
-
-        /// <summary>
-        /// Returns the UDF fingerprint of the current key as a byte array.
-        /// </summary>
-        /// <returns>The UDF fingerprint value of this key.</returns>
-        public byte[] GetUDFBytes() {
-            return Goedel.Cryptography.UDF.FromKeyInfo(KeyInfoData.DER());
-            }
-
 
         }
 
@@ -325,7 +342,7 @@ namespace Goedel.Cryptography {
     /// </summary>
     /// <param name="PKIXParameters"></param>
     /// <returns></returns>
-    public delegate KeyPair DelegateFactoryRSAKeyPair (RSAPublicKey PKIXParameters);
+    public delegate KeyPair DelegateFactoryRSAKeyPair (PKIXPublicKeyRSA PKIXParameters);
 
     /// <summary>
     /// RSA Key Pair
@@ -335,12 +352,12 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Return private key parameters in PKIX structure
         /// </summary>
-        public abstract RSAPrivateKey RSAPrivateKey { get; }
+        public abstract PKIXPrivateKeyRSA PKIXPrivateKeyRSA { get; }
 
         /// <summary>
         /// Return public key parameters in PKIX structure
         /// </summary>
-        public abstract RSAPublicKey RSAPublicKey { get; }
+        public abstract PKIXPublicKeyRSA PKIXPublicKeyRSA { get; }
 
 
         /// <summary>
@@ -353,9 +370,21 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Delegate to create a key pair base
     /// </summary>
-    /// <param name="PKIXParameters"></param>
-    /// <returns></returns>
-    public delegate KeyPair DelegateFactoryDHKeyPair(DHPublicKey PKIXParameters);
+    /// <param name="PKIXParameters">The PKIX parameter structure from which to create
+    /// the key pair</param>
+    /// <returns>The created key pair</returns>
+    public delegate KeyPair DelegateFactoryDHPublicKey(PKIXPublicKeyDH PKIXParameters);
+
+
+    /// <summary>
+    /// Delegate to create a key pair base
+    /// </summary>
+    /// <param name="Exportable">If true, private key parameters may be exported</param>
+    /// <param name="PKIXParameters">The PKIX parameter structure from which to create
+    /// the key pair</param>
+    /// <returns>The created key pair</returns>
+    public delegate KeyPair DelegateFactoryDHPrivateKey(PKIXPrivateKeyDH PKIXParameters,
+        bool Exportable = false);
 
     /// <summary>
     /// RSA Key Pair
@@ -369,7 +398,10 @@ namespace Goedel.Cryptography {
         /// Since this is not standard DH, the OID is in 
         /// PHB's OID space.
         /// </remarks>
-        public const string KeyOIDDomain = "1.3.6.1.4.1.35405.1.22.0";
+        public const string KeyOIDDomain = Constants.OIDS__id_dh_domain;
+            
+            
+            //"1.3.6.1.4.1.35405.1.22.0";
 
         /// <summary>
         /// ASN.1 Object Identifier for the public key parameters.
@@ -378,7 +410,7 @@ namespace Goedel.Cryptography {
         /// Since this is not standard DH, the OID is in 
         /// PHB's OID space.
         /// </remarks>
-        public const string KeyOIDPublic = "1.3.6.1.4.1.35405.1.22.1";
+        public const string KeyOIDPublic = Constants.OIDS__id_dh_public;// "1.3.6.1.4.1.35405.1.22.1";
 
         /// <summary>
         /// ASN.1 Object Identifier for the private key parameters.
@@ -387,7 +419,8 @@ namespace Goedel.Cryptography {
         /// Since this is not standard DH, the OID is in 
         /// PHB's OID space.
         /// </remarks>
-        public const string KeyOIDPrivate = "1.3.6.1.4.1.35405.1.22.2";
+        public const string KeyOIDPrivate = Constants.OIDS__id_dh_private;
+                    // "1.3.6.1.4.1.35405.1.22.2";
 
 
 
@@ -399,18 +432,25 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Return private key parameters in PKIX structure
         /// </summary>
-        public abstract DHPrivateKey DHPrivateKey { get; }
+        public abstract PKIXPrivateKeyDH PKIXPrivateKeyDH { get; }
 
         /// <summary>
         /// Return public key parameters in PKIX structure
         /// </summary>
-        public abstract DHPublicKey DHPublicKey { get; }
+        public abstract PKIXPublicKeyDH PKIXPublicKeyDH { get; }
 
         /// <summary>
         /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
         /// platform provider.
         /// </summary>
-        public static DelegateFactoryDHKeyPair KeyPairFactory = DHKeyPair.KeyPairFactory;
+        public static DelegateFactoryDHPublicKey KeyPairPublicFactory = DHKeyPair.KeyPairPublicFactory;
+
+        /// <summary>
+        /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
+        /// platform provider.
+        /// </summary>
+        public static DelegateFactoryDHPrivateKey KeyPairPrivateFactory = DHKeyPair.KeyPairPrivateFactory;
+
         }
 
 

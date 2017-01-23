@@ -21,8 +21,8 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="RSAParameters">The RSA Parameters in .NET format.</param>
         /// <returns>The private key in Goedel format.</returns> 
-        public static RSAPrivateKey RSAPrivateKey(this RSAParameters RSAParameters) {
-            return new RSAPrivateKey() {
+        public static PKIXPrivateKeyRSA RSAPrivateKey(this RSAParameters RSAParameters) {
+            return new PKIXPrivateKeyRSA() {
 
                 Modulus = RSAParameters.Modulus,
                 PublicExponent = RSAParameters.Exponent,
@@ -40,7 +40,7 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="RSAPrivateKey">RSA key  in System.Security.Cryptography form</param>
         /// <returns>The RSA parameters in PKIX format.</returns>
-        public static RSAParameters RSAParameters(this RSAPrivateKey RSAPrivateKey) {
+        public static RSAParameters RSAParameters(this PKIXPrivateKeyRSA RSAPrivateKey) {
             return new RSAParameters {
                 Modulus = RSAPrivateKey.Modulus,
                 Exponent = RSAPrivateKey.PublicExponent,
@@ -58,8 +58,8 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="RSAParameters">Input parameters  in System.Security.Cryptography form</param>
         /// <returns>The public key in Goedel format.</returns>
-        public static RSAPublicKey RSAPublicKey(this RSAParameters RSAParameters) {
-            return new RSAPublicKey() {
+        public static PKIXPublicKeyRSA RSAPublicKey(this RSAParameters RSAParameters) {
+            return new PKIXPublicKeyRSA() {
 
                 Modulus = RSAParameters.Modulus,
                 PublicExponent = RSAParameters.Exponent
@@ -71,7 +71,7 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="RSAPublicKey">The RSA public key</param>
         /// <returns>The RSA parameters in System.Security.Cryotography. format.</returns>
-        public static RSAParameters RSAParameters(this RSAPublicKey RSAPublicKey) {
+        public static RSAParameters RSAParameters(this PKIXPublicKeyRSA RSAPublicKey) {
             return new RSAParameters {
                 Modulus = RSAPublicKey.Modulus,
                 Exponent = RSAPublicKey.PublicExponent,

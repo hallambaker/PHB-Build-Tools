@@ -167,7 +167,7 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="Decoder"></param>
         public override void BindDecoder(CryptoDataDecoder Decoder) {
-            var Transform = Provider.CreateEncryptor(Decoder.Key, Decoder.IV);
+            var Transform = Provider.CreateDecryptor(Decoder.Key, Decoder.IV);
             Decoder.InputStream = new CryptoStream(
                     Decoder.OutputStream, Transform, CryptoStreamMode.Write);
             }
@@ -247,15 +247,15 @@ namespace Goedel.Cryptography.Framework {
                 }
             }
 
-        /// <summary>
-        /// Return a CryptoAlgorithm structure with properties describing this provider.
-        /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm {
-            get {
-                return (Provider.KeySize == 128) ?
-                    CryptoAlgorithm128CBC : CryptoAlgorithm256CBC;
-                }
-            }
+        ///// <summary>
+        ///// Return a CryptoAlgorithm structure with properties describing this provider.
+        ///// </summary>
+        //public override CryptoAlgorithm CryptoAlgorithm {
+        //    get {
+        //        return (Provider.KeySize == 128) ?
+        //            CryptoAlgorithm128CBC : CryptoAlgorithm256CBC;
+        //        }
+        //    }
 
         /// <summary>Return the block size in bits</summary>
         public override int BlockSize {
@@ -263,39 +263,6 @@ namespace Goedel.Cryptography.Framework {
                 return Provider.BlockSize;
                 }
             }
-
-        // TIDY: replace these with a Method on CryptoCatalog to make the entry
-
-        static CryptoAlgorithm CryptoAlgorithmAny = new CryptoAlgorithm(
-                    Goedel.Cryptography.CryptoAlgorithmID.AES256, 256,
-                            _AlgorithmClass, Factory);
-
-        static CryptoAlgorithm CryptoAlgorithm128CBC = new CryptoAlgorithm(
-                    Goedel.Cryptography.CryptoAlgorithmID.AES128CBC, 128, 
-                            _AlgorithmClass, Factory);
-        static CryptoAlgorithm CryptoAlgorithm128CTS = new CryptoAlgorithm(
-                    Goedel.Cryptography.CryptoAlgorithmID.AES128CTS, 128,
-                            _AlgorithmClass, Factory);
-        static CryptoAlgorithm CryptoAlgorithm128CBCNone = new CryptoAlgorithm(
-                    Goedel.Cryptography.CryptoAlgorithmID.AES128CBCNone, 128,
-                            _AlgorithmClass, Factory);
-        static CryptoAlgorithm CryptoAlgorithm128ECB = new CryptoAlgorithm(
-                    Goedel.Cryptography.CryptoAlgorithmID.AES128ECB, 128,
-                            _AlgorithmClass, Factory);
-
-        static CryptoAlgorithm CryptoAlgorithm256CBC = new CryptoAlgorithm(
-                    Goedel.Cryptography.CryptoAlgorithmID.AES256CBC, 256, 
-                            _AlgorithmClass, Factory);
-        static CryptoAlgorithm CryptoAlgorithm256CTS = new CryptoAlgorithm(
-                    Goedel.Cryptography.CryptoAlgorithmID.AES256CTS, 256,
-                            _AlgorithmClass, Factory);
-        static CryptoAlgorithm CryptoAlgorithm256CBCNone = new CryptoAlgorithm(
-                    Goedel.Cryptography.CryptoAlgorithmID.AES256CBCNone, 256,
-                            _AlgorithmClass, Factory);
-        static CryptoAlgorithm CryptoAlgorithm256ECB = new CryptoAlgorithm(
-                    Goedel.Cryptography.CryptoAlgorithmID.AES256ECB, 256,
-                            _AlgorithmClass, Factory);
-
 
 
         /// <summary>
@@ -308,17 +275,16 @@ namespace Goedel.Cryptography.Framework {
         /// <returns>Description of the principal algorithm registration.</returns>
         public static CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
             Catalog = Catalog ?? CryptoCatalog.Default;
-            var Default = Catalog.Add(CryptoAlgorithm256CBC);
-            Catalog.Add(CryptoAlgorithmAny);
-            Catalog.Add(CryptoAlgorithm128CBC);
+            var Default = Catalog.Add(CryptoAlgorithmID.AES256CBC, 256, _AlgorithmClass, Factory);
 
-            Catalog.Add(CryptoAlgorithm128CTS);
-            Catalog.Add(CryptoAlgorithm128CBCNone);
-            Catalog.Add(CryptoAlgorithm128ECB);
-
-            Catalog.Add(CryptoAlgorithm256CTS);
-            Catalog.Add(CryptoAlgorithm256CBCNone);
-            Catalog.Add(CryptoAlgorithm256ECB);
+            Catalog.Add(CryptoAlgorithmID.AES256, 256, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmID.AES128CBC, 256, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmID.AES128CTS, 256, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmID.AES128CBCNone, 256, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmID.AES128ECB, 256, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmID.AES256CTS, 256, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmID.AES256CBCNone, 256, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmID.AES256ECB, 256, _AlgorithmClass, Factory);
 
             return Default;
             }

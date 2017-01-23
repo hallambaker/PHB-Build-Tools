@@ -34,8 +34,8 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// If set, certificates are marked as test certificates, thus enabling
         /// simple and risk-free cleaning of the cert store(s). Note that
-        /// setting KeyPair.TestMode will automatically set certificate store into
-        /// test mode.
+        /// setting KeyPair.TestMode will automatically set certificate store into test
+        /// mode.
         /// </summary>
         public static bool TestMode  {
             get { return KeyPair.TestMode | _TestMode; }

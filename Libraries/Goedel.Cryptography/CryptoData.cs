@@ -220,6 +220,13 @@ namespace Goedel.Cryptography {
             InputStream.Write(Data, 0, Data.Length);
             }
 
+
+
+        /// <summary>
+        /// Ephemeral key pair used in wrap operation.
+        /// </summary>
+        public KeyPair Ephemeral { get; set; }
+
         }
 
     /// <summary>
@@ -321,6 +328,8 @@ namespace Goedel.Cryptography {
         /// </summary>
         public CryptoProviderExchange ExchangeProvider { get; }
 
+
+        
         /// <summary>
         /// Create and populate a result.
         /// </summary>
