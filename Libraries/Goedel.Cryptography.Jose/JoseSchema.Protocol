@@ -172,6 +172,19 @@
 				|The signature value
 
 
+	Structure KeyContainer
+		Description
+			|A wrapper object for storing key data.
+		Boolean Exportable
+			Description
+				|If false a handler library MUST NOT permit the private key to be exported.
+		Binary KeyData
+			Description
+				|The key data.
+
+			
+
+
 	Structure Key
 		Description
 			|A JOSE key. All fields map onto the equivalent fields defined in

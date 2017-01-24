@@ -263,7 +263,7 @@ namespace Goedel.Cryptography {
         /// <param name="CryptoData"></param>
         /// <returns>The partially decrypted data</returns>
         public override CryptoDataExchange Recrypt(CryptoDataExchange CryptoData) {
-            // NYI: DH CryptoDataEncoder
+            // NYI: DH Recrypt
             throw new NYI("To do");
 
             }
@@ -279,7 +279,7 @@ namespace Goedel.Cryptography {
         /// <param name="CryptoDatas"></param>
         /// <returns>The partially decrypted data</returns>
         public override CryptoDataExchange Recrypt(CryptoDataExchange[] CryptoDatas) {
-            // NYI: DH CryptoDataEncoder
+            // NYI: DH Recrypt
             throw new NYI("To do");
             }
         }

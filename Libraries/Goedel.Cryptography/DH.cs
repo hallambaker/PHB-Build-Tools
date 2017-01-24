@@ -141,12 +141,6 @@ namespace Goedel.Cryptography {
             return Accumulator % Modulus;
             }
 
-        ///// <summary>
-        ///// Erase the key from the local machine
-        ///// </summary>
-        //public override void EraseFromDevice() {
-        //    throw new NotImplementedException(); // NYI: Erase DH key
-        //    }
         }
 
     /// <summary>
@@ -323,14 +317,14 @@ namespace Goedel.Cryptography {
                 }
             }
 
-        /// <summary>
-        /// Convert values to PKIX array.
-        /// </summary>
-        /// <returns></returns>
-        public byte[] ToPKIX () {
+        ///// <summary>
+        ///// Convert values to PKIX array.
+        ///// </summary>
+        ///// <returns></returns>
+        //public byte[] ToPKIX () {
 
-            return null; // NYI write PKI wrapper to make this a binary blob.
-            }
+        //    return null; // NYI write PKI wrapper to make this a binary blob.
+        //    }
         }
 
     }

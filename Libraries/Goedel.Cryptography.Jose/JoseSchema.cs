@@ -147,6 +147,14 @@ namespace Goedel.Cryptography.Jose {
 					}
 
 
+				case "KeyContainer" : {
+					var Result = new KeyContainer ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+
 				case "Key" : {
 					var Result = new Key ();
 					Result.Deserialize (JSONReader);
@@ -1970,6 +1978,208 @@ namespace Goedel.Cryptography.Jose {
 					}
 				case "signature" : {
 					SignatureValue = JSONReader.ReadBinary ();
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// A wrapper object for storing key data.
+	/// </summary>
+	public partial class KeyContainer : Jose {
+		bool								__Exportable = false;
+		private bool						_Exportable;
+        /// <summary>
+        ///If false a handler library MUST NOT permit the private key to be exported.
+        /// </summary>
+
+		public virtual bool						Exportable {
+			get {return _Exportable;}
+			set {_Exportable = value; __Exportable = true; }
+			}
+        /// <summary>
+        ///The key data.
+        /// </summary>
+
+		public virtual byte[]						KeyData  {get; set;}
+
+        /// <summary>
+        /// Tag identifying this class.
+        /// </summary>
+        /// <returns>The tag</returns>
+		public override string Tag () {
+			return "KeyContainer";
+			}
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+		public KeyContainer () {
+			_Initialize ();
+			}
+        /// <summary>
+		/// Initialize class from JSONReader stream.
+        /// </summary>		
+        /// <param name="JSONReader">Input stream</param>	
+		public KeyContainer (JSONReader JSONReader) {
+			Deserialize (JSONReader);
+			}
+
+        /// <summary> 
+		/// Initialize class from a JSON encoded class.
+        /// </summary>		
+        /// <param name="_String">Input string</param>
+		public KeyContainer (string _String) {
+			Deserialize (_String);
+			}
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			if (__Exportable){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Exportable", 1);
+					_Writer.WriteBoolean (Exportable);
+				}
+			if (KeyData != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("KeyData", 1);
+					_Writer.WriteBinary (KeyData);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+
+
+        /// <summary>
+		/// Create a new instance from untagged byte input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new KeyContainer From (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return From (_Input);
+			}
+
+        /// <summary>
+		/// Create a new instance from untagged string input.
+		/// i.e. {... data ... }
+        /// </summary>	
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new KeyContainer From (string _Input) {
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return new KeyContainer (JSONReader);
+			}
+
+        /// <summary>
+		/// Create a new instance from tagged byte input.
+		/// i.e. { "KeyContainer" : {... data ... } }
+        /// </summary>	
+        /// <param name="_Data">The input data.</param>
+        /// <returns>The created object.</returns>				
+		public static new KeyContainer FromTagged (byte[] _Data) {
+			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
+			return FromTagged (_Input);
+			}
+
+        /// <summary>
+        /// Create a new instance from tagged string input.
+		/// i.e. { "KeyContainer" : {... data ... } }
+        /// </summary>
+        /// <param name="_Input">The input data.</param>
+        /// <returns>The created object.</returns>		
+		public static new KeyContainer FromTagged (string _Input) {
+			//KeyContainer _Result;
+			//Deserialize (_Input, out _Result);
+			StringReader _Reader = new StringReader (_Input);
+            JSONReader JSONReader = new JSONReader (_Reader);
+			return FromTagged (JSONReader) ;
+			}
+
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <returns>The created object.</returns>		
+        public static new KeyContainer  FromTagged (JSONReader JSONReader) {
+			KeyContainer Out = null;
+
+			JSONReader.StartObject ();
+            if (JSONReader.EOR) {
+                return null;
+                }
+
+			string token = JSONReader.ReadToken ();
+
+			switch (token) {
+
+				case "KeyContainer" : {
+					var Result = new KeyContainer ();
+					Result.Deserialize (JSONReader);
+					Out = Result;
+					break;
+					}
+
+				default : {
+                    break;
+					}
+				}
+			JSONReader.EndObject ();
+
+			return Out;
+			}
+
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Exportable" : {
+					Exportable = JSONReader.ReadBoolean ();
+					break;
+					}
+				case "KeyData" : {
+					KeyData = JSONReader.ReadBinary ();
 					break;
 					}
 				default : {

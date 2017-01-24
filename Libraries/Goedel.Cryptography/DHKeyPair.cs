@@ -225,7 +225,7 @@ namespace Goedel.Cryptography {
         /// <param name="Public">Public key parameters</param>
         /// <returns>The key agreement value ZZ</returns>
         public DiffieHellmanResult Agreement(DHKeyPair Public) {
-            var Agreement = PrivateKey.Agreement(Public.PublicKey); //Bug : not setting private key!
+            var Agreement = PrivateKey.Agreement(Public.PublicKey);
             return new DiffieHellmanResult() { Agreement = Agreement };
             }
 
@@ -257,7 +257,7 @@ namespace Goedel.Cryptography {
         /// Erase the key from the local machine
         /// </summary>
         public override void EraseFromDevice() {
-            Platform.EraseFromKeyStore(UDF); // NYI: Erase key from store
+            Platform.EraseFromKeyStore(UDF); /
             }
 
 

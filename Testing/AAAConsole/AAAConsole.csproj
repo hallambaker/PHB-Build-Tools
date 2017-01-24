@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DBF69A68-7085-4548-81E7-1EDBDB844BAE}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PHB_Framework_Library1</RootNamespace>
+    <AssemblyName>PHB Framework Library</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConsoleTest.cs" />
+    <Compile Include="Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Exceptions.exceptional">
+      <Generator>exceptional</Generator>
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Framework\Goedel.Cryptography.Framework.csproj">
+      <Project>{b12ad19f-0e50-4d1d-99de-30c63886e718}</Project>
+      <Name>Goedel.Cryptography.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
+      <Project>{a9a97306-a35e-4bc9-91ef-f6880dd7456d}</Project>
+      <Name>Goedel.Cryptography.Jose</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj">
+      <Project>{73d40f24-a492-4081-b58e-b2af30762c78}</Project>
+      <Name>Goedel.Cryptography.KeyFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
+      <Project>{bc1e98e7-f516-41a3-9653-056e20560a22}</Project>
+      <Name>Goedel.Cryptography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
+      <Project>{ccc286f1-6a5b-4946-a382-8a48797192b4}</Project>
+      <Name>Goedel.FSR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.IO\Goedel.IO.csproj">
+      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
+      <Name>Goedel.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Platform.Framework\Goedel.Platform.Framework.csproj">
+      <Project>{168a9984-6dbc-4683-9e43-c3e077066933}</Project>
+      <Name>Goedel.Platform.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Platform\Goedel.Platform.csproj">
+      <Project>{bd2729ca-402f-4e52-9682-3fc6bb8e9c49}</Project>
+      <Name>Goedel.Platform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj">
+      <Project>{93b6b9fd-822f-4fd1-bdad-16eb81b6df25}</Project>
+      <Name>Goedel.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Jose {
 
@@ -107,28 +108,42 @@ namespace Goedel.Cryptography.Jose {
             return null;
             }
 
-        ///// <summary>
-        ///// Read the key from the specified file.
-        ///// </summary>
-        ///// <param name="Filename">The file to be read</param>
-        ///// <returns></returns>
-        //public static Key KeyFileRead (string Filename) {
-        //    return null; // NYI Key File Read
-        //    }
-
-        ///// <summary>
-        ///// Write the key to the specified file.
-        ///// </summary>
-        ///// <param name="Filename">The file to write</param>
-        //public void KeyFileWrite (string Filename) {
-
-        //    var Text = ToJson();
-        //    Filename.
-
-
-        //    // NYI Key File write
-        //    }
 
         }
 
-   }
+    public partial class KeyContainer {
+
+        /// <summary>
+        /// The Key data
+        /// </summary>
+        public Key Key {
+            get {
+                return Key.FromTagged(KeyData.ToUTF8());
+                }
+            }
+
+        string KeyText { get { return KeyData.ToUTF8(); } }
+
+        /// <summary>
+        /// Construct a Key Container with the specified Key security level.
+        /// </summary>
+        /// <param name="Key"></param>
+        /// <param name="KeySecurity"></param>
+        public KeyContainer(Key Key, KeySecurity KeySecurity) :
+                    this (Key.ToJson(true), KeySecurity){
+            }
+
+
+        /// <summary>
+        /// Construct a Key Container with the specified Key security level.
+        /// </summary>
+        /// <param name="KeyData"></param>
+        /// <param name="KeySecurity"></param>
+        public KeyContainer (byte[] KeyData, KeySecurity KeySecurity) {
+            Exportable = KeySecurity.IsExportable();
+            this.KeyData = KeyData;
+            }
+
+        }
+
+    }
