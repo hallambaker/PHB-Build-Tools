@@ -2,7 +2,7 @@
 using System.IO;
 
 namespace Goedel.Protocol.Framework {
-    // This implmentation accesses the file directly.
+    // This implementation accesses the file directly.
 
     /// <summary>
     /// Character stream from file

@@ -52,10 +52,6 @@
       <Project>{bd2729ca-402f-4e52-9682-3fc6bb8e9c49}</Project>
       <Name>Goedel.Platform</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Protocol.Framework\Goedel.Protocol.Framework.csproj">
-      <Project>{c1d2c847-ee62-430c-82dc-a4bd5ab38a44}</Project>
-      <Name>Goedel.Protocol.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{02d75812-6892-45f7-8497-82266b6f0328}</Project>
       <Name>Goedel.Protocol</Name>

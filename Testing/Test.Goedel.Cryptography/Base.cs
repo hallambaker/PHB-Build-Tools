@@ -11,13 +11,13 @@ namespace Goedel.Cryptography.Test {
 
         [AssemblyInitialize]
         public static void Initialize (TestContext Context) {
-            Framework.Cryptography.Initialize();
+            CryptographyFramework.Initialize();
             }
 
 
         [TestMethod]
         public void TestInitialize() {
-            Framework.Cryptography.Initialize();
+            CryptographyFramework.Initialize();
             }
 
 

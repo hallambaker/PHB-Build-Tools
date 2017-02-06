@@ -384,7 +384,7 @@ namespace Goedel.Cryptography.Framework {
         /// Retrieve the private key from local storage.
         /// </summary>
         public override void GetPrivate() {
-            if (Provider.PublicOnly) {
+            if (!Provider.PublicOnly) {
                 return;
                 }
             //Goedel.Debug.Trace.WriteLine("Get Private for {0}", UDF);

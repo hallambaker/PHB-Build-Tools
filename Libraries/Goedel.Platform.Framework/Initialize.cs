@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Goedel.Platform;
+using Goedel.Platform.Framework;
 using System.Security.Cryptography;
 
-namespace Goedel.Platform.Framework {
+namespace Goedel.Platform {
 
     /// <summary>
     /// Network initialization. Bind the .Net implementation methods
     /// to the static delegates in the portable libraries.
     /// </summary>
-    public static partial class Platform {
+    public static partial class PlatformFramework {
         /// <summary>
         /// Initialize the network and cryptography stacks for use with a
         /// .NET Framework or Mono app.
         /// (if this can be found)
         /// </summary>
-        public static void Initialize () {
+        /// <param name="TestMode">If true, the application will be initialized in
+        /// test/debug mode.</param>
+        public static void Initialize (bool TestMode = false) {
             Goedel.Platform.Platform.DNSClient = new DNSClientUDP();
             //Goedel.Platform.Platform.QueryAsyncDelegate = DNSClientUDP.QueryAsync;
             Goedel.Platform.Platform.GetRandomBytesDelegate = GetRandomBytes;

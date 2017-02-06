@@ -5,6 +5,7 @@ To configure the Windows build environment it is necessary to configure the foll
 * Path to the build scripts
 * Developer code signing key (for strong assemblies)
 * Nuget package repository (for referenced code)
+* Install .Net 4.6.2
 
 ==Path to the build scripts
 
@@ -16,8 +17,9 @@ Control Panel\System and Security\System
 Advanced Settings
 Environment variables
 
-Path        add in the path to your personal tools directory>
-ToolPath	Set to the directory where you want tools to be written
+Path				add in the path to your personal tools directory>
+ToolPath			Set to the directory where you want tools to be written
+ToolLibraryPath		Set to the directory where you want to copy the libraries (.dll)
 
 
 ===To enable unrestricted shell scripts to run
@@ -68,6 +70,11 @@ This is described in the Nuget configuration file:
 
  %APPDATA%\Roaming\NuGet\NuGet.Config 
 
-
  https://docs.nuget.org/ndocs/consume-packages/configuring-nuget-behavior
 
+ ==Install .Net 4.6.2
+
+ Even though the libraries don't use .Net 4.6.2 at the moment, it is necessary
+ to install it in order to avoid issues with Visual Studio. The problem being that
+ once a project has been compiled under 4.6.2, VS remembers this and insists
+ on being able to build under 4.6.2 even if that is not selected.

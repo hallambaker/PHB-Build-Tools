@@ -26,7 +26,7 @@ namespace Goedel.Cryptography.Test {
 
         [AssemblyInitialize]
         public static void Initialize (TestContext Context) {
-            Windows.Windows.Initialize();
+            CryptographyWindows.Initialize();
 
             AlicePrivate = new DiffeHellmanPrivate();
             BobPrivate = new DiffeHellmanPrivate();

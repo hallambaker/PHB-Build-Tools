@@ -2,18 +2,19 @@
 using System.Threading;
 using Security.Cryptography;
 using Goedel.Utilities;
-using Goedel.Cryptography;
+using Goedel.Cryptography.Windows;
 
 
 /// <summary>
 /// 
 /// </summary>
-namespace Goedel.Cryptography.Windows {
+namespace Goedel.Cryptography {
 
     /// <summary>
     /// 
     /// </summary>
-    public static class Windows {
+    /// 
+    public static class CryptographyWindows {
 
         static bool Initialized = false;
         static Mutex InitializationLock = new Mutex();
@@ -22,10 +23,12 @@ namespace Goedel.Cryptography.Windows {
         /// Perform initialization of the Goedel.Cryptography portable class
         /// with delegates to the .NET framework methods.
         /// </summary>
-        public static void Initialize() {
+        /// <param name="TestMode">If true, the application will be initialized in
+        /// test/debug mode.</param>
+        public static void Initialize(bool TestMode = false) {
             InitializationLock.WaitOne();
 
-            Framework.Cryptography.Initialize();
+            CryptographyFramework.Initialize(TestMode);
             try {
                 if (Initialized) {
                     return;
@@ -35,6 +38,7 @@ namespace Goedel.Cryptography.Windows {
                 Platform.FindInKeyStore = KeyStore.FindInKeyStore;
                 Platform.WriteToKeyStore = KeyStore.WriteToKeyStore;
                 Platform.EraseFromKeyStore = KeyStore.EraseFromDevice;
+                Platform.EraseTest.Add(KeyContainer.EraseTest);
                 }
             catch {
                 throw new InitializationFailed();

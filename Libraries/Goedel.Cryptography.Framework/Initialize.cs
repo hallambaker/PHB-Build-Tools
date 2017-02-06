@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Security.Cryptography;
-using Goedel.Cryptography;
+using Goedel.Cryptography.Framework;
 
 
-namespace Goedel.Cryptography.Framework {
+namespace Goedel.Cryptography {
     /// <summary>
     /// Initialize the cryptographic framework
     /// </summary>
-    public static class Cryptography {
+    public static class CryptographyFramework {
 
         static bool Initialized = false;
         static Mutex InitializationLock = new Mutex();
@@ -20,7 +20,9 @@ namespace Goedel.Cryptography.Framework {
         /// Perform initialization of the Goedel.Cryptography portable class
         /// with delegates to the .NET framework methods.
         /// </summary>
-        public static void Initialize() {
+        /// <param name="TestMode">If true, the application will be initialized in
+        /// test/debug mode.</param>
+        public static void Initialize(bool TestMode = false) {
 
             InitializationLock.WaitOne();
 
@@ -29,6 +31,8 @@ namespace Goedel.Cryptography.Framework {
                     return;
                     }
                 Initialized = true;
+
+                KeyPair.TestMode = TestMode;
 
                 // This is actually a duplicate of Goedel.Platform but it is 
                 // needed so often as to make this the easiest solution.

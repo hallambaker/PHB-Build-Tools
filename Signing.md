@@ -42,11 +42,12 @@ del SigningKeyDeveloper.snk
 
 ==Setting permissions on the key
 
-This last piece is serious stupid. By default, Visual Studio uses machine
-keys. The keys themselves persist after a reboot but the access credential
-does not.
+This last piece is serious stupid. By default Visual Studio uses machine
+keys. The keys themselves persist after a reboot but in some of the earlier 
+versions of Visual Studio 2015 the access credential does not.
 
-So you need to go into the key store, work out which of the files has the keys 
+This seems to be fixed in the latest release of 2015. But if signing isn't working,
+you need to go into the key store, work out which of the files has the keys 
 you just created (creation date) and change the permissions to grant 
 yourself access rights.
 

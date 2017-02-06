@@ -137,22 +137,10 @@ namespace Goedel.Cryptography {
     public abstract partial class KeyPair : CryptoKey {
 
         /// <summary>
-        /// If set to true, all keys will be generated with a
-        /// prefix to identify them as being for test purposes.
-        /// </summary>
-        protected static bool _TestMode = false;
-
-
-
-
-        /// <summary>
         /// If true, keys will be created in containers prefixed with the name
         /// "test:" to allow them to be easily identified and cleaned up.
         /// </summary>
-        public static bool TestMode {
-            get { return _TestMode; }
-            set { _TestMode = value; }
-            }
+        public static bool TestMode { get; set; } = false;
 
         /// <summary>
         /// Returns a signature provider for the key (if the private portion is available).

@@ -257,7 +257,7 @@ namespace Goedel.Cryptography {
         /// Erase the key from the local machine
         /// </summary>
         public override void EraseFromDevice() {
-            Platform.EraseFromKeyStore(UDF); /
+            Platform.EraseFromKeyStore(UDF); 
             }
 
 

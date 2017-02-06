@@ -14,7 +14,7 @@ namespace Test.Goedel.DNS {
 
         [AssemblyInitialize]
         public static void Initialize(TestContext Context) {
-            global::Goedel.Platform.Framework.Platform.Initialize();
+            PlatformFramework.Initialize();
             }
 
 

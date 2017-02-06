@@ -60,7 +60,7 @@
     <Compile Include="TestKeyLifecycle.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Goedel.Cryptography.Linux\Goedel.Cryptography.Linux.csproj">
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Linux\Goedel.Cryptography.Linux.csproj">
       <Project>{328bd6ee-ed86-4980-8683-b4a6d86bf72c}</Project>
       <Name>Goedel.Cryptography.Linux</Name>
     </ProjectReference>

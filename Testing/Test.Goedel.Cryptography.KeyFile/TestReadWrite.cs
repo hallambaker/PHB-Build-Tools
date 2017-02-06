@@ -16,7 +16,7 @@ namespace Test {
         [AssemblyInitialize]
         public static void Initialize (TestContext Context) {
             Goedel.IO.Debug.Initialize();
-            Goedel.Cryptography.Framework.Cryptography.Initialize();
+            CryptographyFramework.Initialize();
             }
 
         [AssemblyCleanup]

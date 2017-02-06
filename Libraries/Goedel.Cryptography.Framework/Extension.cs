@@ -161,12 +161,24 @@ namespace Goedel.Cryptography.Framework {
     /// Utility class for addressing containers.
     /// </summary>
     public static class Container {
+
+        /// <summary>
+        /// Prefix for test containers
+        /// </summary>
+        public const string PrefixTest = "TEST:mmm:";
+
+        /// <summary>
+        /// Prefix for production containers.
+        /// </summary>
+        public const string PrefixProduction = "mmm:";
+
+
         /// <summary>
         /// Container prefix
         /// </summary>
         /// <returns>The container prefix</returns>
         public static string Prefix() {
-            return Goedel.Cryptography.KeyPair.TestMode ? "TEST:" : "mmm:";
+            return Goedel.Cryptography.KeyPair.TestMode ? PrefixTest : PrefixProduction;
             }
 
         /// <summary>

@@ -120,6 +120,16 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
+        /// Delegate to erase test keys from the machine.
+        /// </summary>
+        public delegate void EraseTestDelegate();
+
+        /// <summary>
+        /// List of registered key erasure delegates
+        /// </summary>
+        public static List<EraseTestDelegate> EraseTest = new List<EraseTestDelegate>();
+
+        /// <summary>
         /// Get a specified number of random bytes.
         /// </summary>
         /// <param name="Length">Number of bytes to get</param>

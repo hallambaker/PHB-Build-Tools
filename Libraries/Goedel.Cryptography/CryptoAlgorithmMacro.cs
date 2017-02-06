@@ -116,7 +116,7 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmID Default = CryptoAlgorithmID.Default) {
             var DefaultedID = ID.Meta();
             DefaultedID = DefaultedID == CryptoAlgorithmID.Default ? 
-                Default.Bulk() : DefaultedID;
+                Default.Meta() : DefaultedID;
             return DefaultedID ;
             }
 

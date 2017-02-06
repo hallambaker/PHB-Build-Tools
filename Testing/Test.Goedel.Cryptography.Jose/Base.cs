@@ -28,7 +28,7 @@ namespace Test.Goedel.Cryptography.Jose {
         [AssemblyInitialize]
         public static void Initialize(TestContext Context) {
             global::Goedel.IO.Debug.Initialize();
-            global::Goedel.Cryptography.Windows.Windows.Initialize();
+            CryptographyWindows.Initialize();
 
             SignerKeyPair = (RSAKeyPairBase)KeyFileDecode.DecodePEM(Directories.TestKey_OpenSSH_Private);
             Signer = SignerKeyPair.SignatureProvider();

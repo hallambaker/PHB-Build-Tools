@@ -93,35 +93,35 @@ namespace Goedel.Cryptography.Test {
             UT.Assert.IsNotNull(NewSigner);
             }
 
-        /// <summary>Test key lifecycles</summary>
-        [TestMethod]
-        public void Test_LifecycleMaster_RSA() {
-            CryptoAlgorithmID.Test_LifecycleMaster();
-            }
+        ///// <summary>Test key lifecycles</summary>
+        //[TestMethod]
+        //public void Test_LifecycleMaster_RSA() {
+        //    CryptoAlgorithmID.Test_LifecycleMaster();
+        //    }
 
-        /// <summary>Test key lifecycles</summary>
-        [TestMethod]
-        public void Test_LifecycleAdmin_RSA() {
-            CryptoAlgorithmID.Test_LifecycleAdmin();
-            }
+        ///// <summary>Test key lifecycles</summary>
+        //[TestMethod]
+        //public void Test_LifecycleAdmin_RSA() {
+        //    CryptoAlgorithmID.Test_LifecycleAdmin();
+        //    }
 
-        /// <summary>Test key lifecycles</summary>
-        [TestMethod]
-        public void Test_LifecycleDevice_RSA() {
-            CryptoAlgorithmID.Test_LifecycleDevice();
-            }
+        ///// <summary>Test key lifecycles</summary>
+        //[TestMethod]
+        //public void Test_LifecycleDevice_RSA() {
+        //    CryptoAlgorithmID.Test_LifecycleDevice();
+        //    }
 
-        /// <summary>Test key lifecycles</summary>
-        [TestMethod]
-        public void Test_LifecycleEphemeral_RSA() {
-            CryptoAlgorithmID.Test_LifecycleEphemeral();
-            }
+        ///// <summary>Test key lifecycles</summary>
+        //[TestMethod]
+        //public void Test_LifecycleEphemeral_RSA() {
+        //    CryptoAlgorithmID.Test_LifecycleEphemeral();
+        //    }
 
-        /// <summary>Test key lifecycles</summary>
-        [TestMethod]
-        public void Test_LifecycleExportable_RSA() {
-            CryptoAlgorithmID.Test_LifecycleExportable();
-            }
+        ///// <summary>Test key lifecycles</summary>
+        //[TestMethod]
+        //public void Test_LifecycleExportable_RSA() {
+        //    CryptoAlgorithmID.Test_LifecycleExportable();
+        //    }
 
         }
     }

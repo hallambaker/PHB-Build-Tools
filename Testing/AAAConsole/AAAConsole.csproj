@@ -55,6 +55,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.ASN\Goedel.ASN.csproj">
+      <Project>{44e8b35d-0394-4f37-b52c-246f8610f031}</Project>
+      <Name>Goedel.ASN</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Framework\Goedel.Cryptography.Framework.csproj">
       <Project>{b12ad19f-0e50-4d1d-99de-30c63886e718}</Project>
       <Name>Goedel.Cryptography.Framework</Name>
@@ -66,6 +70,10 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj">
       <Project>{73d40f24-a492-4081-b58e-b2af30762c78}</Project>
       <Name>Goedel.Cryptography.KeyFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj">
+      <Project>{fd1d6ce2-8a10-45a5-a473-f5517b8ab3d5}</Project>
+      <Name>Goedel.Cryptography.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <Project>{bc1e98e7-f516-41a3-9653-056e20560a22}</Project>

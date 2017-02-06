@@ -203,6 +203,8 @@ namespace Goedel.Cryptography.Framework {
 
             //    }
 
+            KeyPair.GetPrivate();
+
             switch (Data.BulkData.BulkID) {
                 case CryptoAlgorithmID.SHA_2_256: {
                     Data.Signature = Provider.SignHash(Data.BulkData.Integrity, 
