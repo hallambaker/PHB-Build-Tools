@@ -77,5 +77,27 @@ namespace Goedel.Utilities {
             return Result;
             }
 
+
+        /// <summary>
+        /// Wrapper for the Dictionary Add method to signal success or failure by means of a
+        /// boolean return value rather than throwing an error.
+        /// </summary>
+        /// <typeparam name="TKey">The Key type</typeparam>
+        /// <typeparam name="TValue">The Value type</typeparam>
+        /// <param name="Dictionary">The dictionary to add to</param>
+        /// <param name="Key">The key to add</param>
+        /// <param name="Value">The value to add</param>
+        /// <returns></returns>
+        public static bool AddSafe<TKey, TValue> (this IDictionary<TKey, TValue> Dictionary, TKey Key, TValue Value ) {
+            try {
+                Dictionary.Add(Key, Value);
+                return true;
+                }
+            catch {
+                return false;
+                }
+
+            }
+
         }
     }
