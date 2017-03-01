@@ -52,6 +52,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="TestMath.cs" />
+    <Compile Include="TestCurve.cs" />
     <Compile Include="TestSHA.cs" />
     <Compile Include="TestAES.cs" />
     <Compile Include="TestWrap.cs" />

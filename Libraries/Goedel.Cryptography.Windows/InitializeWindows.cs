@@ -23,8 +23,7 @@ namespace Goedel.Cryptography {
         /// Perform initialization of the Goedel.Cryptography portable class
         /// with delegates to the .NET framework methods.
         /// </summary>
-        /// <param name="TestMode">If true, the application will be initialized in
-        /// test/debug mode.</param>
+        /// <param name="TestMode">If true, the application will be initialized in test/debug mode.</param>
         public static void Initialize(bool TestMode = false) {
             InitializationLock.WaitOne();
 

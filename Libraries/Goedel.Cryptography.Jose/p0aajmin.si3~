@@ -124,26 +124,39 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="ContentType">The type of content being encrypted.</param>
         /// <param name="Encrypt">Encryption key are derived.</param>
         /// <param name="Authenticate">Authentication keys are derived.</param>
+
         /// <param name="EncryptID">Bulk ID for encryption</param>
-        /// <param name="AuthenticateID">Bulk ID for authentication</param>
+        /// <param name="SignID">Bulk ID for authentication</param>
         public JoseWebEncryption(byte[] Data,
-                    byte[] Encrypt, byte[] Authenticate=null,
+                    byte[] Encrypt,
                     string ContentType = null,
                     CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID AuthenticateID = CryptoAlgorithmID.Default
+                    CryptoAlgorithmID SignID = CryptoAlgorithmID.Default
                     ) {
 
             var Provider = CryptoCatalog.Default.GetEncryption(EncryptID);
             var EncryptEncoder = Provider.MakeEncoder(Algorithm: EncryptID);
             _CryptoDataEncrypt = EncryptEncoder;
-            EncryptEncoder.Key = Encrypt;
 
-            BindCryptoData(EncryptEncoder, ContentType, null);
+            if (EncryptionKey != null) {
+                AddRecipient(EncryptionKey, EncryptID);
+                }
+
+            var DigestProvider = SigningKey != null ? CryptoCatalog.Default.GetDigest(SignID) : null;
+
+
+            BindCryptoData(EncryptEncoder, ContentType, DigestProvider);
 
             EncryptEncoder.Write(Data);
             EncryptEncoder.Complete();
 
             CipherText = EncryptEncoder.OutputData;
+
+            if (SigningKey != null) {
+
+                _CryptoDataDigest = DigestProvider.Process(CipherText);
+                AddSignature(SigningKey, DigestProvider.CryptoAlgorithmID);
+                }
 
             }
 

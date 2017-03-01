@@ -51,6 +51,9 @@
     </None>
     <None Include="Encoding.md" />
     <None Include="Index.md" />
+    <Compile Include="BigNumber.cs" />
+    <Compile Include="CurveMontgomery.cs" />
+    <Compile Include="CurveEdwards.cs" />
     <Compile Include="KeyExtensions.cs" />
     <None Include="Makefile" />
     <None Include="PKIX\PKIX.asn2">

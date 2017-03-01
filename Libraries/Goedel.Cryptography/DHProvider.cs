@@ -135,58 +135,6 @@ namespace Goedel.Cryptography {
             get { return 16; }
             }
 
-
-
-
-        //// From CryptoProviderAgree
-
-        ///// <summary>
-        ///// Perform a key wrap operation and return a CryptoDataWrapped instance
-        ///// containing the wrapped key parameters and a bulk provider. 
-        ///// </summary>
-        ///// <param name="Algorithm">The key wrap algorithm</param>
-        ///// <param name="Bulk">The bulk provider to use. If specified, the parameters from
-        ///// the specified provider will be used. Otherwise a new bulk provider will 
-        ///// be created and returned as part of the result.</param>
-        ///// <param name="OutputStream"></param>
-        ///// <returns>Instance describing the key agreement parameters.</returns>
-        //public override CryptoDataEncoder MakeEncoder(
-        //                    CryptoProviderBulk Bulk = null,
-        //                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
-        //                    Stream OutputStream = null
-        //                    ) {
-
-        //    // Generate an ephemeral DH key and perform a Key agreement against it.
-
-        //    var Agreement = DHKeyPair.Agreement();
-        //    var KeyDerive = Agreement.KeyDerive;
-
-        //    var BulkAlgorithm = Algorithm.Bulk();
-        //    BulkAlgorithm = (BulkAlgorithm == CryptoAlgorithmID.Default) ? BulkAlgorithmDefault : BulkAlgorithm;
-
-
-        //    var 
-
-        //    var Encryption = (Bulk as CryptoProviderEncryption) ??
-        //        CryptoCatalog.Default.GetEncryption(BulkAlgorithm);
-
-        //    var Key = Platform.GetRandomBits(Encryption.KeySize);
-        //    var IV = Platform.GetRandomBits(Encryption.IVSize);
-
-        //    var Result = Encryption.MakeEncryptor(Key, IV, Algorithm, OutputStream);
-        //    Result.AlgorithmIdentifier = CryptoAlgorithmID | Encryption.CryptoAlgorithmID;
-
-
-
-
-        //    Result.Ephemeral = Agreement.Public;
-
-        //    return Result;
-        //    }
-
-
-
-
         /// <summary>
         /// Encrypt the bulk key.
         /// </summary>
@@ -208,8 +156,6 @@ namespace Goedel.Cryptography {
                 Ephemeral = Agreement.Public
                 };
             }
-
-
 
         /// <summary>
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.

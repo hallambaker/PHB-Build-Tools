@@ -189,21 +189,6 @@ namespace Goedel.Cryptography {
         public static List<FindLocalDelegateType> FindLocalDelegates =
             new List<FindLocalDelegateType>();
 
-
-        /// <summary>
-        /// Create a Big Integer from a text string constant. This is not optimized for
-        /// speed since it is unlikely this will be called very often and may well 
-        /// be optimized away. Note that the caller is responsible for making sure
-        /// that the input is positive
-        /// </summary>
-        /// <param name="Text"></param>
-        /// <returns></returns>
-        public static BigInteger HexToBigInteger (this string Text) {
-            var Bytes = BaseConvert.FromBase16String(Text);
-            Array.Reverse(Bytes);
-            return new BigInteger(Bytes);
-            }
-
         /// <summary>
         /// Shared RFC 3394 Key Wrap provider.
         /// </summary>

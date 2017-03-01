@@ -16,8 +16,7 @@ namespace Goedel.Platform {
         /// .NET Framework or Mono app.
         /// (if this can be found)
         /// </summary>
-        /// <param name="TestMode">If true, the application will be initialized in
-        /// test/debug mode.</param>
+        /// <param name="TestMode">If true, the application will be initialized in test/debug mode.</param>
         public static void Initialize (bool TestMode = false) {
             Goedel.Platform.Platform.DNSClient = new DNSClientUDP();
             //Goedel.Platform.Platform.QueryAsyncDelegate = DNSClientUDP.QueryAsync;
