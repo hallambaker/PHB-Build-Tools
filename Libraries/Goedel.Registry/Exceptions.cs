@@ -1,6 +1,8 @@
 using System;
 using Goedel.Utilities;
 
+using Goedel.Utilities;
+
 
 namespace Goedel.Registry {
 
@@ -37,6 +39,7 @@ namespace Goedel.Registry {
         /// </summary>	
 		public object UserData;
 
+		/// <summary>
         /// Construct instance for exception using a userdata parameter of
 		/// type ExceptionData and the format string "The file {0} could not be read"
         /// </summary>		
@@ -75,7 +78,7 @@ namespace Goedel.Registry {
 				return new FileReadError(Reason as ExceptionData);
 				}
 			else {
-				return new FileReadError("The file could not be read");
+				return new FileReadError();
 				}
             }
         }

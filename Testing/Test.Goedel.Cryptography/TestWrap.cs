@@ -8,8 +8,8 @@ using Goedel.Test;
 using Goedel.Cryptography;
 //using Goedel.Cryptography.Framework;
 
-namespace Goedel.Cryptography.Test {
-    public partial class TestCryptography {
+namespace Test.Goedel.Cryptography {
+    public partial class TestGoedelCryptography {
 
         List<TestVectorWrap> TestVectorsAESWrap = new List<TestVectorWrap>() {
             // 128 Key with 128 KEK

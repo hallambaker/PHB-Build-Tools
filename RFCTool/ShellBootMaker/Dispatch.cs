@@ -47,7 +47,7 @@ namespace Shell.Bootmaker {
 
             var TagCatalog1 = new TagCatalog(Parse);
             //TagCatalog1.DocumentProcess = Goedel.WordLib.Dispatch.Process;
-            //TagCatalog1.Process = Goedel.ImageLib.Dispatch.Process;
+            //TagCatalog1.Process = Goedel.Document.Office.Dispatch.Process;
 
             return TagCatalog1;
             }

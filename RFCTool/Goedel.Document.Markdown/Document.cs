@@ -66,17 +66,20 @@ namespace Goedel.Document.Markdown {
                     }
 
                 else {
-                    // Only processing Markdown right now. 
+                    //Only processing Markdown right now.
+                    Document Document = null;
 
-                    //var Document = TagCatalog.DocumentProcess(this, FileInfo, TagCatalog);
+                    if (TagCatalog.DocumentProcess != null) {
+                        Document = TagCatalog.DocumentProcess(this, FileInfo, TagCatalog);
+                        }
 
-                    //if (Document != null) {
-                    //    Documents.Add(Document);
-                    //    }
-                    //else {
-                    //    var Resource = new Resource(this, FileInfo);
-                    //    Resources.Add(Resource);
-                    //    }
+                    if (Document != null) {
+                        Documents.Add(Document);
+                        }
+                    else {
+                        var Resource = new Resource(this, FileInfo);
+                        Resources.Add(Resource);
+                        }
                     }
 
                 }
@@ -100,7 +103,9 @@ namespace Goedel.Document.Markdown {
                 }
 
             foreach (var Resource in Resources) {
-                TagCatalog.Process(Resource.FullName, TargetDir);
+                if (TagCatalog.Process != null) {
+                    TagCatalog.Process(Resource.FullName, TargetDir);
+                    }
                 }
 
             foreach (var Dir in Directories) {

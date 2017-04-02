@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Registry</RootNamespace>
     <AssemblyName>Goedel.Registry</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -97,9 +97,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
-      <Name>Goedel.Utilities</Name>
+    <ProjectReference Include="..\..\Libraries2\Goedel.Utilities.2\Goedel.Utilities.2.csproj">
+      <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
+      <Name>Goedel.Utilities.2</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

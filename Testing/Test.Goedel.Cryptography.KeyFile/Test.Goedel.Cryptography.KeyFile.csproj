@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Test.Goedel.Cryptography.KeyFile</RootNamespace>
     <AssemblyName>Test.Goedel.Cryptography.KeyFile</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,6 +55,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries2\Goedel.Utilities.2\Goedel.Utilities.2.csproj">
+      <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
+      <Name>Goedel.Utilities.2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.2\Goedel.Cryptography.2.csproj">
+      <Project>{c1a5cf62-88cb-47f9-b9a3-59354ffa6c68}</Project>
+      <Name>Goedel.Cryptography.2</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Framework\Goedel.Cryptography.Framework.csproj">
       <Project>{b12ad19f-0e50-4d1d-99de-30c63886e718}</Project>
       <Name>Goedel.Cryptography.Framework</Name>
@@ -62,13 +71,9 @@
       <Project>{73d40f24-a492-4081-b58e-b2af30762c78}</Project>
       <Name>Goedel.Cryptography.KeyFile</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
-      <Project>{bc1e98e7-f516-41a3-9653-056e20560a22}</Project>
-      <Name>Goedel.Cryptography</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
-      <Project>{ccc286f1-6a5b-4946-a382-8a48797192b4}</Project>
-      <Name>Goedel.FSR</Name>
+    <ProjectReference Include="..\..\Libraries\Goedel.FSR.2\Goedel.FSR.2.csproj">
+      <Project>{24f56184-7dc6-4f7f-b169-6ce384a3b7a4}</Project>
+      <Name>Goedel.FSR.2</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.IO\Goedel.IO.csproj">
       <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
@@ -77,10 +82,6 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj">
       <Project>{93b6b9fd-822f-4fd1-bdad-16eb81b6df25}</Project>
       <Name>Goedel.Test</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
-      <Name>Goedel.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

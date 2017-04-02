@@ -16,15 +16,15 @@ namespace Goedel.Cryptography {
 
 
 
-        /// <summary>The domain parameters</summary>
-        public abstract DomainParameters Domain { get; }
+        ///// <summary>The domain parameters</summary>
+        //public abstract DomainParameters Domain { get; }
 
-        /// <summary>
-        /// Multiply this point by a scalar
-        /// </summary>
-        /// <param name="S">Scalar factor</param>
-        /// <returns>The result of the multiplication</returns>
-        public abstract Curve Multiply(BigInteger S);
+        ///// <summary>
+        ///// Multiply this point by a scalar
+        ///// </summary>
+        ///// <param name="S">Scalar factor</param>
+        ///// <returns>The result of the multiplication</returns>
+        //public abstract Curve Multiply(BigInteger S);
 
         }
 
@@ -40,6 +40,7 @@ namespace Goedel.Cryptography {
         /// <summary>The projected Z coordinate</summary>
         public BigInteger Z { get; }
 
+        public int Bits, p, A24;
         /// <summary>
         /// Create a point from the specified U value.
         /// </summary>
@@ -52,7 +53,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="S">Scalar factor</param>
         /// <returns>The result of the multiplication</returns>
-        public override Curve Multiply(BigInteger S) {
+        public CurveMontgomery Multiply(BigInteger S) {
 
             BigInteger x_1 = U;
             BigInteger x_2 = 1;
@@ -61,7 +62,7 @@ namespace Goedel.Cryptography {
             BigInteger z_3 = 1;
             bool swap = false;
 
-            for (var i = 0; i < Domain.Bits; i++) {
+            for (var i = 0; i < Bits; i++) {
                 //    var k_t = (k >> t) & 1;
                 //    swap ^= k_t;
                 cswap(swap, ref x_2, ref x_3);
@@ -80,12 +81,12 @@ namespace Goedel.Cryptography {
                 x_3 = (DA + CB) ^ 2;
                 z_3 = x_1 * (DA - CB) ^ 2;
                 x_2 = AA * BB;
-                z_2 = E * (AA + Domain.A24 * E);
+                z_2 = E * (AA + A24 * E);
                 }
 
             cswap(swap, ref x_2, ref x_3);
             cswap(swap, ref z_2, ref z_3);
-            var U2 = (x_2 * (BigInteger.ModPow ( z_2,  (Domain.p - 2), Domain.p))) % Domain.p;
+            var U2 = (x_2 * (BigInteger.ModPow ( z_2,  (p - 2), p))) % p;
 
             return Factory(U2);
             }
@@ -113,8 +114,8 @@ namespace Goedel.Cryptography {
     /// </summary>
     public class CurveMontgomery25519 : CurveMontgomery {
 
-        /// <summary>The curve parameters (p, A, A24)</summary>
-        public override DomainParameters Domain { get; } = DomainParameters.Curve25519;
+        ///// <summary>The curve parameters (p, A, A24)</summary>
+        //public override DomainParameters Domain { get; } = DomainParameters.Curve25519;
 
         /// <summary>
         /// Create a point from the specified U value.
@@ -131,8 +132,8 @@ namespace Goedel.Cryptography {
     /// </summary>
     public class CurveMontgomery448 : CurveMontgomery {
 
-        /// <summary>The curve parameters (p, A, A24)</summary>
-        public override DomainParameters Domain { get; } = DomainParameters.Curve448;
+        ///// <summary>The curve parameters (p, A, A24)</summary>
+        //public override DomainParameters Domain { get; } = DomainParameters.Curve448;
 
         /// <summary>
         /// Create a point from the specified U value.

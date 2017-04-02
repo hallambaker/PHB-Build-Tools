@@ -1,4 +1,5 @@
 using System;
+using Goedel.Utilities;
 
 
 
@@ -11,20 +12,20 @@ namespace Goedel.ASN {
     public class ASNDecodingException : global::System.Exception {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "An ASN.1 Decoding exception occurred"
         /// </summary>		
-		public ASNDecodingException () : base () {
+		public ASNDecodingException () : base ("An ASN.1 Decoding exception occurred") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "An ASN.1 Decoding exception occurred"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public ASNDecodingException (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -43,16 +44,14 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new ASNDecodingException(Reason as string);
 				}
-
-
 			else {
-				return new ASNDecodingException("An ASN.1 Decoding exception occurred");
+				return new ASNDecodingException();
 				}
             }
         }
@@ -66,20 +65,20 @@ namespace Goedel.ASN {
     public class Implementation : ASNDecodingException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Implementation restriction"
         /// </summary>		
-		public Implementation () : base () {
+		public Implementation () : base ("Implementation restriction") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Implementation restriction"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public Implementation (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -94,16 +93,14 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new Implementation(Reason as string);
 				}
-
-
 			else {
-				return new Implementation("Implementation restriction");
+				return new Implementation();
 				}
             }
         }
@@ -115,20 +112,20 @@ namespace Goedel.ASN {
     public class InvalidLength : ASNDecodingException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Length invalid"
         /// </summary>		
-		public InvalidLength () : base () {
+		public InvalidLength () : base ("Length invalid") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Length invalid"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public InvalidLength (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -143,16 +140,14 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new InvalidLength(Reason as string);
 				}
-
-
 			else {
-				return new InvalidLength("Length invalid");
+				return new InvalidLength();
 				}
             }
         }
@@ -165,20 +160,20 @@ namespace Goedel.ASN {
     public class IndefiniteLengthInvalid : ASNDecodingException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Indefinite length not valid"
         /// </summary>		
-		public IndefiniteLengthInvalid () : base () {
+		public IndefiniteLengthInvalid () : base ("Indefinite length not valid") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Indefinite length not valid"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public IndefiniteLengthInvalid (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -193,16 +188,14 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new IndefiniteLengthInvalid(Reason as string);
 				}
-
-
 			else {
-				return new IndefiniteLengthInvalid("Indefinite length not valid");
+				return new IndefiniteLengthInvalid();
 				}
             }
         }
@@ -216,20 +209,20 @@ namespace Goedel.ASN {
     public class LengthExceedsInput : ASNDecodingException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Length exceeds data input"
         /// </summary>		
-		public LengthExceedsInput () : base () {
+		public LengthExceedsInput () : base ("Length exceeds data input") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Length exceeds data input"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public LengthExceedsInput (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -244,16 +237,14 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new LengthExceedsInput(Reason as string);
 				}
-
-
 			else {
-				return new LengthExceedsInput("Length exceeds data input");
+				return new LengthExceedsInput();
 				}
             }
         }
@@ -268,20 +259,20 @@ namespace Goedel.ASN {
     public class LengthExceedsStructure : ASNDecodingException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Length exceeds current structure"
         /// </summary>		
-		public LengthExceedsStructure () : base () {
+		public LengthExceedsStructure () : base ("Length exceeds current structure") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Length exceeds current structure"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public LengthExceedsStructure (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -296,16 +287,14 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new LengthExceedsStructure(Reason as string);
 				}
-
-
 			else {
-				return new LengthExceedsStructure("Length exceeds current structure");
+				return new LengthExceedsStructure();
 				}
             }
         }
@@ -317,20 +306,20 @@ namespace Goedel.ASN {
     public class ExpectedSequence : ASNDecodingException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Expected Sequence"
         /// </summary>		
-		public ExpectedSequence () : base () {
+		public ExpectedSequence () : base ("Expected Sequence") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Expected Sequence"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public ExpectedSequence (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -345,16 +334,14 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new ExpectedSequence(Reason as string);
 				}
-
-
 			else {
-				return new ExpectedSequence("Expected Sequence");
+				return new ExpectedSequence();
 				}
             }
         }
@@ -366,20 +353,20 @@ namespace Goedel.ASN {
     public class UnExpectedData : ASNDecodingException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Unexpected Data"
         /// </summary>		
-		public UnExpectedData () : base () {
+		public UnExpectedData () : base ("Unexpected Data") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Unexpected Data"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public UnExpectedData (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -394,16 +381,14 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new UnExpectedData(Reason as string);
 				}
-
-
 			else {
-				return new UnExpectedData("Unexpected Data");
+				return new UnExpectedData();
 				}
             }
         }
@@ -415,20 +400,20 @@ namespace Goedel.ASN {
     public class ExpectedInteger : ASNDecodingException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Expected Integer"
         /// </summary>		
-		public ExpectedInteger () : base () {
+		public ExpectedInteger () : base ("Expected Integer") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Expected Integer"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public ExpectedInteger (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -443,16 +428,14 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new ExpectedInteger(Reason as string);
 				}
-
-
 			else {
-				return new ExpectedInteger("Expected Integer");
+				return new ExpectedInteger();
 				}
             }
         }
@@ -465,20 +448,20 @@ namespace Goedel.ASN {
     public class IntegerOverflow : ASNDecodingException {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Integer too large"
         /// </summary>		
-		public IntegerOverflow () : base () {
+		public IntegerOverflow () : base ("Integer too large") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Integer too large"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public IntegerOverflow (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -493,16 +476,14 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new IntegerOverflow(Reason as string);
 				}
-
-
 			else {
-				return new IntegerOverflow("Integer too large");
+				return new IntegerOverflow();
 				}
             }
         }

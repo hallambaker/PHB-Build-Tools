@@ -153,7 +153,7 @@ namespace Goedel.Cryptography {
             
             return new CryptoDataExchange(Algorithm, Data, this) {
                 Exchange = Exchange,
-                Ephemeral = Agreement.Public
+                Ephemeral = new DHKeyPair(Agreement.DiffeHellmanPublic)
                 };
             }
 

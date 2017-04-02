@@ -5,9 +5,9 @@ using GU=Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Framework;
 
-namespace Goedel.Cryptography.Test {
-    [TestClass]
-    public partial class TestCryptography {
+namespace Test.Goedel.Cryptography {
+
+    public partial class TestGoedelCryptography {
 
         [AssemblyInitialize]
         public static void Initialize (TestContext Context) {

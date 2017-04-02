@@ -11,52 +11,94 @@ namespace Goedel.Cryptography {
 
         byte[] BitField;
 
-        int Byte;
-        int Bit;
-        byte Data;
+        int DownByte;
+        int DownBit;
+        int UpByte;
+        int UpBit;
+        int Length;
+        byte DataDown, DataUp;
+
+        bool CountUp;
 
         /// <summary>
         /// Returns true if there is further work to be completed, otherwise false.
         /// </summary>
-        public bool More {
+        public bool GoingDown {
             get {
-                return (Byte < 1) | (Bit < 0);
+                return (DownByte > 1) | (DownBit > 0);
                 }
             }
+
+        /// <summary>
+        /// Returns true if there is further work to be completed, otherwise false.
+        /// </summary>
+        public bool GoingUp {
+            get {
+                return (UpByte < (Length-1) | UpBit <7) ;
+                }
+            }
+
 
         /// <summary>
         /// Construct from a big integte
         /// </summary>
         /// <param name="Value">The bit field value</param>
         /// <param name="Bits">The number of bits to process</param>
-        public BitIndex(BigInteger Value, int Bits) {
+        /// <param name="Up">If true, count is performed in ascending order</param>
+        public BitIndex(BigInteger Value, int Bits, bool Up = false) {
+            Length = (Bits + 7) / 8;
             Bits--;
-            Byte = Bits / 8;
-            Bit = Bits % 8;
+            DownByte = Bits / 8;
+            DownBit = Bits % 8;
+            UpByte = 0;
+            UpBit = 0;
             BitField = Value.ToByteArray();
-            Data = BitField[Byte];
+            DataDown = BitField[DownByte];
+            DataUp = BitField[0];
+            this.CountUp = Up;
+            }
+
+
+
+        /// <summary>
+        /// Return the value of the next bit as boolean value and advance the indicies
+        /// </summary>
+        /// <returns>True iff the next bit to be read is 1.</returns>
+        public bool Down() {
+            if (DownBit < 0) {
+                DownByte--;
+                DownBit = 7;
+                Assert.True(DownByte >= 0, InvalidOperation.Throw);
+
+                DataDown = BitField[DownByte];
+                }
+            var Result = (DataDown & 0x80) > 0;
+            DataDown = (byte)(DataDown << 1);
+            DownBit--;
+
+            return Result;
             }
 
         /// <summary>
         /// Return the value of the next bit as boolean value and advance the indicies
         /// </summary>
         /// <returns>True iff the next bit to be read is 1.</returns>
-        public bool Next() {
-            if (Bit < 0) {
-                Byte--;
-                Bit = 7;
-                Assert.True(Byte >= 0, InvalidOperation.Throw);
+        public bool Up() {
+            if (UpBit > 7) {
+                UpByte++;
+                UpBit = 0;
+                Assert.True(UpByte < Length, InvalidOperation.Throw);
 
-                Data = BitField[Byte];
+                DataUp = BitField[UpByte];
                 }
-            var Result = (Data & 0x80) > 0;
-            Data = (byte)(Data << 1);
-            Bit--;
+            var Result = (DataUp & 0x01) > 0;
+            DataUp = (byte)(DataUp >> 1);
+            UpBit++;
 
             return Result;
+
             }
         }
-
 
     /// <summary>
     /// Extension methods for manipulating BigIntegers
@@ -83,7 +125,8 @@ namespace Goedel.Cryptography {
         /// <returns>A new array containing a copy of a selected range of the elements in the source.</returns>
         public static byte[] Duplicate(this byte[] Source, int Index, int Length) {
             var Result = new byte[Length];
-            Array.Copy(Source, Index, Result, 0, Source.Length);
+            var CopyBytes = Length < Source.Length ? Length : Source.Length;
+            Array.Copy(Source, Index, Result, 0, CopyBytes);
             return Result;
             }
 
@@ -182,7 +225,7 @@ namespace Goedel.Cryptography {
         /// <returns>x mod p</returns>
         public static BigInteger Mod(this BigInteger x, BigInteger p) {
             var Result = x % p;
-            return Result.Sign > 0 ? Result : Result + p;
+            return Result.Sign >= 0 ? Result : Result + p;
             }
 
         /// <summary>
@@ -196,7 +239,7 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
-        /// Return a Square root of a number modulo the prime. Note that the
+        /// Return a Square root of a number modulo the prime. 
         /// </summary>
         /// <param name="x2">The value</param>
         /// <param name="p">The modulus</param>
@@ -204,7 +247,40 @@ namespace Goedel.Cryptography {
         /// <param name="Odd">If specified, specifies whether X is odd (true) or even (false).</param>
         /// <returns>A value x such that x*x = x2.</returns>
         /// <exception cref="InvalidOperation">Thrown if the value does not have a root.</exception>
+
         public static BigInteger Sqrt(this BigInteger x2, BigInteger p,
+                    BigInteger? SqrtMinus1 = null,
+                    bool? Odd = null) {
+            BigInteger x = 0;
+            if (x2 % 4 == 3) {
+                x = BigInteger.ModPow(x2, (p + 1) / 4, p);
+                }
+            else {
+                x = Sqrt8k5(x2, p, SqrtMinus1, Odd);
+                }
+            //if (x2%8 == 5) {
+            //    return Sqrt8k5(x2, p, SqrtMinus1, Odd);
+            //    }
+            //throw new NYI("Square root not implemented for p%8 = 1");
+
+            if (Odd == null) {
+                return x;
+                }
+            return (x.IsEven ^ (bool)Odd) ? x : p - x;
+            }
+
+
+        /// <summary>
+        /// Return a Square root of a number modulo the prime for the
+        /// special case x2 % 8 == 5.
+        /// </summary>
+        /// <param name="x2">The value</param>
+        /// <param name="p">The modulus</param>
+        /// <param name="SqrtMinus1">The value of the square root -1 mod p.</param>
+        /// <param name="Odd">If specified, specifies whether X is odd (true) or even (false).</param>
+        /// <returns>A value x such that x*x = x2.</returns>
+        /// <exception cref="InvalidOperation">Thrown if the value does not have a root.</exception>
+        public static BigInteger Sqrt8k5(this BigInteger x2, BigInteger p,
                             BigInteger? SqrtMinus1 = null,
                             bool? Odd = null) {
             var x = BigInteger.ModPow(x2, (p + 3) / 8, p);
@@ -213,10 +289,7 @@ namespace Goedel.Cryptography {
                 x = (x * RM1) % p;
                 Assert.True((((x * x - x2) % p) == 0), InvalidOperation.Throw);
                 }
-            if (Odd == null) {
-                return x;
-                }
-            return (x.IsEven ^ (bool)Odd) ? x : p - x;
+            return x;
             }
 
         /// <summary>

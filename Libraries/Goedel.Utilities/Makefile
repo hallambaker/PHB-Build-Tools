@@ -109,14 +109,16 @@ export Custom_TrojanGTK_FLAG	?= /cs
 # The main target 
 
 SourceFiles = \
+     Array.cs\
      Assert.cs\
      BaseConvert.cs\
      Character.cs\
      Exceptions.cs\
+     IsTrue.cs\
      NamespaceDoc.cs\
      NumberSplit.cs\
-     NYI.cs\
-     Properties/AssemblyInfo.cs
+     Properties/AssemblyInfo.cs\
+     TraceX.cs
 
 LinkFiles = 
 

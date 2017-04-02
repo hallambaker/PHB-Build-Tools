@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Cryptography.Framework</RootNamespace>
     <AssemblyName>Goedel.Cryptography.Framework</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -54,17 +54,17 @@
     <Compile Include="RSASignature.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj">
-      <Project>{44e8b35d-0394-4f37-b52c-246f8610f031}</Project>
-      <Name>Goedel.ASN</Name>
+    <ProjectReference Include="..\..\Libraries2\Goedel.Utilities.2\Goedel.Utilities.2.csproj">
+      <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
+      <Name>Goedel.Utilities.2</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj">
-      <Project>{bc1e98e7-f516-41a3-9653-056e20560a22}</Project>
-      <Name>Goedel.Cryptography</Name>
+    <ProjectReference Include="..\Goedel.ASN.2\Goedel.ASN.2.csproj">
+      <Project>{a586aa17-029a-4a2d-8910-5ed7029b37a6}</Project>
+      <Name>Goedel.ASN.2</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
-      <Name>Goedel.Utilities</Name>
+    <ProjectReference Include="..\Goedel.Cryptography.2\Goedel.Cryptography.2.csproj">
+      <Project>{c1a5cf62-88cb-47f9-b9a3-59354ffa6c68}</Project>
+      <Name>Goedel.Cryptography.2</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

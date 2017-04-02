@@ -1,4 +1,5 @@
 using System;
+using Goedel.Utilities;
 
 
 
@@ -6,26 +7,24 @@ namespace Goedel.Protocol {
 
 
     /// <summary>
-    /// Receive chunked data from HTTP source.
     /// </summary>
     public class Dechunking : global::System.Exception {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Key could not be read"
         /// </summary>		
-		public Dechunking () : base () {
+		public Dechunking () : base ("Key could not be read") {
 			}
-
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Key could not be read"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public Dechunking (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -44,16 +43,14 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new Dechunking(Reason as string);
 				}
-
-
 			else {
-				return new Dechunking("Key could not be read");
+				return new Dechunking();
 				}
             }
         }
@@ -65,20 +62,20 @@ namespace Goedel.Protocol {
     public class UnknownOperation : Dechunking {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "The requested operation is not known to this server."
         /// </summary>		
-		public UnknownOperation () : base () {
+		public UnknownOperation () : base ("The requested operation is not known to this server.") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "The requested operation is not known to this server."
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public UnknownOperation (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -93,16 +90,14 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new UnknownOperation(Reason as string);
 				}
-
-
 			else {
-				return new UnknownOperation("The requested operation is not known to this server.");
+				return new UnknownOperation();
 				}
             }
         }
@@ -114,20 +109,20 @@ namespace Goedel.Protocol {
     public class MessageTooBig : Dechunking {
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Message is too big"
         /// </summary>		
-		public MessageTooBig () : base () {
+		public MessageTooBig () : base ("Message is too big") {
 			}
         
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception "Message is too big"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public MessageTooBig (string Description) : base (Description) {
 			}
 
 		/// <summary>
-        /// Create an instance of the exception.
+        /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
@@ -142,16 +137,14 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
 				return new MessageTooBig(Reason as string);
 				}
-
-
 			else {
-				return new MessageTooBig("Message is too big");
+				return new MessageTooBig();
 				}
             }
         }

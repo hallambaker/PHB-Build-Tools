@@ -18,6 +18,11 @@ namespace Goedel.ToolScript.Classifier {
         internal static FileExtensionToContentTypeDefinition scriptFileExtensionDefinition = null;
 
         [Export]
+        [FileExtension(".md")]
+        [ContentType("script")]
+        internal static FileExtensionToContentTypeDefinition mdFileExtensionDefinition = null;
+
+        [Export]
         [FileExtension(".gscript")]
         [ContentType("script")]
         internal static FileExtensionToContentTypeDefinition gscriptFileExtensionDefinition = null;

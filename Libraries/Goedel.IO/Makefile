@@ -109,6 +109,7 @@ export Custom_TrojanGTK_FLAG	?= /cs
 # The main target 
 
 SourceFiles = \
+     Debug.cs\
      Extension.cs\
      Properties/AssemblyInfo.cs
 

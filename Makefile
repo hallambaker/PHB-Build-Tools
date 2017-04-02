@@ -587,6 +587,8 @@ VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe : always
 
 all : MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll
 
+MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+
 MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
 
 MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
@@ -719,11 +721,15 @@ all : RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe
 
 RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
 
+RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+
 RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
 
 RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
 
 RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll
+
+RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : RFCTool/Goedel.Document.Office/$(TARGETBIN)/OfficeLib.dll
 
 RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll
 
@@ -732,6 +738,18 @@ RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : always
 ! echo "" >&2
 ! echo "*** Directory RFCTool/ShellBootMaker" >&2
 ! make NORECURSE=true -C RFCTool/ShellBootMaker
+
+# Project : OfficeLib.dll
+# Item :  RFCTool/Goedel.Document.Office
+# Output :     RFCTool/Goedel.Document.Office/$(TARGETBIN)/OfficeLib.dll
+
+all : RFCTool/Goedel.Document.Office/$(TARGETBIN)/OfficeLib.dll
+
+
+RFCTool/Goedel.Document.Office/$(TARGETBIN)/OfficeLib.dll : always
+! echo "" >&2
+! echo "*** Directory RFCTool/Goedel.Document.Office" >&2
+! make NORECURSE=true -C RFCTool/Goedel.Document.Office
 
 
 
@@ -773,6 +791,7 @@ clean :
 ! make clean NORECURSE=true -C Libraries/Goedel.IO
 ! make clean NORECURSE=true -C Libraries/Goedel.ASN
 ! make clean NORECURSE=true -C RFCTool/ShellBootMaker
+! make clean NORECURSE=true -C RFCTool/Goedel.Document.Office
 
 # publish all projects
 publish : all
@@ -812,6 +831,7 @@ publish : all
 ! make publish NORECURSE=true -C Libraries/Goedel.IO
 ! make publish NORECURSE=true -C Libraries/Goedel.ASN
 ! make publish NORECURSE=true -C RFCTool/ShellBootMaker
+! make publish NORECURSE=true -C RFCTool/Goedel.Document.Office
 
 # install all projects
 install : all
@@ -851,4 +871,5 @@ install : all
 ! make install NORECURSE=true -C Libraries/Goedel.IO
 ! make install NORECURSE=true -C Libraries/Goedel.ASN
 ! make install NORECURSE=true -C RFCTool/ShellBootMaker
+! make install NORECURSE=true -C RFCTool/Goedel.Document.Office
 

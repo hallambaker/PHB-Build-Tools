@@ -13,7 +13,18 @@
 		Remark
 			|Image
 		XML "img" "src"
-			Default "class" "img-responsive"
+			Default "class" "img-fluid"
+
+
+	Block fig
+		Markup "<figure class=\"figure\"><img class=\"img-fluid\" src=\"{0}\"/><figcaption class=\"figure-caption\">"  
+		"<figure class=\"figure\"><img class=\"img-fluid\" src=\"{0}\"/><figcaption class=\"figure-caption\">" "</figcaption></figure>"
+
+	Block figm
+		Markup "<figure class=\"figure\"><img width=\"75%\" class=\"img-fluid\" src=\"{0}\"/><figcaption class=\"figure-caption\">"  
+		"<figure class=\"figure\"><img width=\"75%\" class=\"img-fluid\" src=\"{0}\"/><figcaption class=\"figure-caption\">" "</figcaption></figure>"
+
+
 
 	Block p
 		Level 0
@@ -60,11 +71,17 @@
 		Stack leftmain
 		Stack rightmain
 		Stack sidebar
+		Wrap x8
 		Wrap x6
 		Wrap x4
 		Wrap x3
 		Wrap x2
 		Markup "<div class=\"bd-featurette\"> <div class=\"row\">" "<div class=\"bd-featurette\"> <div class=\"row\">" "</div> </div>"
+
+	Layout x8
+		Stack xl
+		XML "div" "class"
+			Default "class" "col-sm-8 mb-3"
 
 	Layout x6
 		Stack xl
@@ -124,6 +141,16 @@
 		Remark 
 			|Underline
 		XML "u" "class"
+
+	Annotation sup
+		Remark 
+			|Underline
+		XML "sup" "class"
+
+	Annotation sub
+		Remark 
+			|Underline
+		XML "sub" "class"
 		 
 	Annotation s
 		Remark 
@@ -231,7 +258,7 @@
 			|<!-- Bootstrap -->
 			|<meta name="viewport" content="width=device-width, initial-scale=1">
             |<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-			|<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous"/>
+			|<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css" crossorigin="anonymous"/>
 			|<link rel="stylesheet" href="/assets/css/main1.css"/>
 			|<!-- Favicons -->
 			|<link rel="apple-touch-icon" href="/assets/img/Brand180.png"/>
@@ -241,8 +268,8 @@
 
 
 		Entry Trailer
-            |<script src="/assets/bootstrap/jquery/jquery.min.js"></script>
-			|<script src="/assets/bootstrap/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+            |<script src="/assets/jquery/jquery-ui.min.js"></script>
+			|<script src="/assets/bootstrap/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
 
 		Entry NavStart

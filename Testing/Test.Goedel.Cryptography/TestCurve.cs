@@ -7,8 +7,8 @@ using Goedel.Utilities;
 using Goedel.Test;
 using Goedel.Cryptography;
 
-namespace Goedel.Cryptography.Test {
-    public partial class TestCryptography {
+namespace Test.Goedel.Cryptography {
+    public partial class TestGoedelCryptography {
 
 
         public class SignatureTest {
@@ -17,7 +17,7 @@ namespace Goedel.Cryptography.Test {
             public byte[] Message;
             public byte[] Signature;
 
-            public SignatureTest[] Tests448 = new SignatureTest[] {
+            public static SignatureTest[] Tests448 = new SignatureTest[] {
                 new SignatureTest () {
                     SecretKey = ("6c82a562cb808d10d632be89c8513ebf" +
                                 "6c929f34ddfa8c9f63c9960ef6e348a3" +
@@ -45,7 +45,11 @@ namespace Goedel.Cryptography.Test {
 
                 };
 
-            public SignatureTest[] Tests25519 = new SignatureTest[] {
+            /// <summary>
+            /// Test from RFC80...
+            /// Should read in file from http://ed25519.cr.yp.to/python/sign.input
+            /// </summary>
+            public static SignatureTest[] Tests25519 = new SignatureTest[] {
                 new SignatureTest () {
                     SecretKey = ("9d61b19deffd5a60ba844af492ec2cc4" +
                                 "4449c5697b326919703bac031cae7f60").FromBase16String(),
@@ -69,10 +73,38 @@ namespace Goedel.Cryptography.Test {
 
 
         [TestMethod]
-        public void TestVectors() {
+        public void TestEd25519() {
+
+            TestEd25519(SignatureTest.Tests25519[0]);
+
 
             }
 
+        [TestMethod]
+        public void TestEd448() {
+
+            TestEd448(SignatureTest.Tests448[0]);
+
+
+            }
+
+        void TestEd25519 (SignatureTest Test) {
+
+            var Private = new CurveEdwards25519Private(Test.SecretKey);
+            var Public = Private.Public;
+
+            UT.Assert.IsTrue(Public.Encoding.IsEqualTo(Test.PublicKey));
+
+            }
+
+        void TestEd448(SignatureTest Test) {
+
+            var Private = new CurveEdwards448Private(Test.SecretKey);
+            var Public = Private.Public;
+
+            UT.Assert.IsTrue(Public.Encoding.IsEqualTo(Test.PublicKey));
+
+            }
 
 
         }

@@ -68,6 +68,7 @@
     <None Include="PostBuild.bat" />
     <None Include="TagDefinitions.mdsd" />
     <None Include="ToDo.md" />
+    <None Include="VS.Make" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">

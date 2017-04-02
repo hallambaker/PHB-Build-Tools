@@ -8,8 +8,8 @@ using Goedel.Test;
 using Goedel.Cryptography;
 //using Goedel.Cryptography.Framework;
 
-namespace Goedel.Cryptography.Test {
-    public partial class TestCryptography {
+namespace Test.Goedel.Cryptography {
+    public partial class TestGoedelCryptography {
 
         byte[] SHA_Plaintext =
                         ("6bc1bee22e409f96e93d7e117393172a"

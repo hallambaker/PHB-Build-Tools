@@ -56,7 +56,8 @@ namespace Goedel.Utilities {
         /// <param name="Throw">Delegate that creates the exception to be thrown if
         /// Condition is true</param>
         /// <param name="Reason">Reason, for debugging</param>
-        public static void False(bool Condition, ThrowDelegate Throw, object Reason=null) {
+        public static void False(bool Condition, ThrowDelegate Throw=null, object Reason=null) {
+            Throw = Throw ?? NYI.Throw;
             if (Condition) {
                 if (Reason as string != null) {
                     throw Throw(Reason as string);
@@ -74,7 +75,7 @@ namespace Goedel.Utilities {
         /// <param name="Throw">Delegate that creates the exception to be thrown if
         /// Condition is true</param>
         /// <param name="Reason">Reason, for debugging</param>
-        public static void True(bool Condition, ThrowDelegate Throw, string Reason=null) {
+        public static void True(bool Condition, ThrowDelegate Throw=null, string Reason=null) {
             False(!Condition, Throw, Reason);
             }
 
@@ -84,7 +85,7 @@ namespace Goedel.Utilities {
         /// <param name="Throw">Delegate that creates the exception to be thrown if
         /// Condition is true</param>
         /// <param name="Reason">Reason, for debugging</param>
-        public static void Null(object Object, ThrowDelegate Throw, string Reason=null) {
+        public static void Null(object Object, ThrowDelegate Throw=null, string Reason=null) {
             True(Object == null, Throw, Reason);
             }
 
@@ -94,7 +95,7 @@ namespace Goedel.Utilities {
         /// <param name="Throw">Delegate that creates the exception to be thrown if
         /// Condition is true</param>
         /// <param name="Reason">Reason, for debugging</param>
-        public static void NotNull(object Object, ThrowDelegate Throw, string Reason=null) {
+        public static void NotNull(object Object, ThrowDelegate Throw=null, string Reason=null) {
             True(Object != null, Throw, Reason);
             }
 

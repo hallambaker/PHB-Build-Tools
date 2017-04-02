@@ -8,8 +8,8 @@ using Goedel.Test;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Framework;
 
-namespace Goedel.Cryptography.Test {
-    public partial class TestCryptography {
+namespace Test.Goedel.Cryptography {
+    public partial class TestGoedelCryptography {
 
         List<TestVectorHMAC> TestVectors_HMAC_4231 = new List<TestVectorHMAC>() {
             // Case 1
@@ -183,7 +183,8 @@ namespace Goedel.Cryptography.Test {
         public byte[] Result_HMAC_512 { get; set; }
 
 
-        public void Verify (CryptoProviderAuthentication Provider, byte[] Expected) {
+        public void Verify (
+            global::Goedel.Cryptography.CryptoProviderAuthentication Provider, byte[] Expected) {
 
             var Result = Provider.ProcessData(Data, Key);
 

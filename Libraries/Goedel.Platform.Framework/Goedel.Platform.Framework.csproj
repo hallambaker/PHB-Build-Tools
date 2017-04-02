@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Platform.Framework</RootNamespace>
     <AssemblyName>Goedel.Platform.Framework</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -48,17 +48,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.Platform\Goedel.Platform.csproj">
-      <Project>{bd2729ca-402f-4e52-9682-3fc6bb8e9c49}</Project>
-      <Name>Goedel.Platform</Name>
+    <ProjectReference Include="..\..\Libraries2\Goedel.Utilities.2\Goedel.Utilities.2.csproj">
+      <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
+      <Name>Goedel.Utilities.2</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
-      <Project>{02d75812-6892-45f7-8497-82266b6f0328}</Project>
-      <Name>Goedel.Protocol</Name>
+    <ProjectReference Include="..\Goedel.Platform.2\Goedel.Platform.2.csproj">
+      <Project>{46332174-d5ea-4bd5-9ff0-fdccbbf6df83}</Project>
+      <Name>Goedel.Platform.2</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
-      <Name>Goedel.Utilities</Name>
+    <ProjectReference Include="..\Goedel.Protocol.2\Goedel.Protocol.2.csproj">
+      <Project>{55e68ce6-ac29-4837-9d88-5ad99e4cef5a}</Project>
+      <Name>Goedel.Protocol.2</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

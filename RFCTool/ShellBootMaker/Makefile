@@ -109,18 +109,25 @@ export Custom_TrojanGTK_FLAG	?= /cs
 # The main target 
 
 SourceFiles = \
+     Dispatch.cs\
      Main.cs\
      Program.cs\
      Properties/AssemblyInfo.cs
 
 LinkFiles = \
+    $(LIBRARYBIN)/Microsoft.Office.Interop.Excel.dll\
+    $(LIBRARYBIN)/Microsoft.Office.Interop.PowerPoint.dll\
+    $(LIBRARYBIN)/Microsoft.Office.Interop.Visio.dll\
+    $(LIBRARYBIN)/office.dll\
     $(TARGETBIN)/Goedel.FSR.dll\
+    $(TARGETBIN)/Goedel.IO.dll\
     $(TARGETBIN)/Goedel.Registry.dll\
     $(TARGETBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Document.Markdown.dll\
+    $(TARGETBIN)/OfficeLib.dll\
     $(TARGETBIN)/Goedel.Document.OpenXML.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Document.Markdown.dll,$(TARGETBIN)/Goedel.Document.OpenXML.dll
+LinkFilesComma = $(LIBRARYBIN)/Microsoft.Office.Interop.Excel.dll,$(LIBRARYBIN)/Microsoft.Office.Interop.PowerPoint.dll,$(LIBRARYBIN)/Microsoft.Office.Interop.Visio.dll,$(LIBRARYBIN)/office.dll,$(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Document.Markdown.dll,$(TARGETBIN)/OfficeLib.dll,$(TARGETBIN)/Goedel.Document.OpenXML.dll,WindowsBase
 
 
 NugetFiles = 
@@ -175,6 +182,9 @@ ifndef NORECURSE
 ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : recursive
 ! $(MAKE) -C ../../Libraries/Goedel.FSR
 
+../../Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.IO
+
 ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
 ! $(MAKE) -C ../../Libraries/Goedel.Registry
 
@@ -184,6 +194,9 @@ ifndef NORECURSE
 ../Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : recursive
 ! $(MAKE) -C ../Goedel.Document.Markdown
 
+../Goedel.Document.Office/$(TARGETBIN)/OfficeLib.dll : recursive
+! $(MAKE) -C ../Goedel.Document.Office
+
 ../Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : recursive
 ! $(MAKE) -C ../Goedel.Document.OpenXML
 
@@ -192,6 +205,10 @@ endif
 $(TARGETBIN)/Goedel.FSR.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.FSR.dll : ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
 !  cp ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll $(TARGETBIN)/Goedel.FSR.dll
+
+$(TARGETBIN)/Goedel.IO.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.IO.dll : ../../Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+!  cp ../../Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll $(TARGETBIN)/Goedel.IO.dll
 
 $(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Registry.dll : ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
@@ -204,6 +221,10 @@ $(TARGETBIN)/Goedel.Utilities.dll : ../../Libraries/Goedel.Utilities/$(TARGETBIN
 $(TARGETBIN)/Goedel.Document.Markdown.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Document.Markdown.dll : ../Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll
 !  cp ../Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll $(TARGETBIN)/Goedel.Document.Markdown.dll
+
+$(TARGETBIN)/OfficeLib.dll :| $(TARGETBIN)
+$(TARGETBIN)/OfficeLib.dll : ../Goedel.Document.Office/$(TARGETBIN)/OfficeLib.dll
+!  cp ../Goedel.Document.Office/$(TARGETBIN)/OfficeLib.dll $(TARGETBIN)/OfficeLib.dll
 
 $(TARGETBIN)/Goedel.Document.OpenXML.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Document.OpenXML.dll : ../Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll

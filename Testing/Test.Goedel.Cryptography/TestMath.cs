@@ -7,8 +7,8 @@ using Goedel.Utilities;
 using Goedel.Test;
 using Goedel.Cryptography;
 
-namespace Goedel.Cryptography.Test {
-    public partial class TestCryptography {
+namespace Test.Goedel.Cryptography {
+    public partial class TestGoedelCryptography {
 
         [TestMethod]
         public void TestBigIntConvert() {
@@ -42,17 +42,35 @@ namespace Goedel.Cryptography.Test {
         [TestMethod]
         public void TestBitField1() {
 
-            var BitIndex = new BitIndex(new BigInteger(0x80), 8);
+            var BitIndex = new BitIndex(new BigInteger(0x80), 8, Up:false);
 
-            UT.Assert.IsTrue(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
+            UT.Assert.IsTrue(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
 
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            }
+
+
+        [TestMethod]
+        public void TestBitField1Up() {
+
+            var BitIndex = new BitIndex(new BigInteger(0x80), 8, Up:true);
+
+
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsTrue(BitIndex.Up());
             }
 
 
@@ -61,15 +79,15 @@ namespace Goedel.Cryptography.Test {
         public void TestBitField2() {
             var BitIndex = new BitIndex(new BigInteger(0x81), 8);
 
-            UT.Assert.IsTrue(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
+            UT.Assert.IsTrue(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
 
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsTrue(BitIndex.Next());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsTrue(BitIndex.Down());
             }
 
         [TestMethod]
@@ -77,42 +95,73 @@ namespace Goedel.Cryptography.Test {
         public void TestBitField3() {
             var BitIndex = new BitIndex(new BigInteger(0x81), 8);
 
-            UT.Assert.IsTrue(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
+            UT.Assert.IsTrue(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
 
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsTrue(BitIndex.Next());
-            BitIndex.Next();
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsTrue(BitIndex.Down());
+            BitIndex.Down();
             }
 
         [TestMethod]
         public void TestBitField4() {
             var BitIndex = new BitIndex(new BigInteger(0x8118), 16);
 
-            UT.Assert.IsTrue(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
+            UT.Assert.IsTrue(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
 
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsTrue(BitIndex.Next());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsTrue(BitIndex.Down());
 
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsTrue(BitIndex.Next());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsTrue(BitIndex.Down());
 
-            UT.Assert.IsTrue(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
-            UT.Assert.IsFalse(BitIndex.Next());
+            UT.Assert.IsTrue(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
+            UT.Assert.IsFalse(BitIndex.Down());
             }
+
+
+        [TestMethod]
+        public void TestBitField4Up() {
+
+            var BitIndex = new BitIndex(new BigInteger(0x0180), 16, Up: true);
+
+
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsTrue(BitIndex.Up());
+
+            UT.Assert.IsTrue(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+            UT.Assert.IsFalse(BitIndex.Up());
+
+
+            }
+
 
 
         [TestMethod]

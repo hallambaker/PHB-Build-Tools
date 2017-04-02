@@ -45,8 +45,8 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         protected SymmetricAlgorithm Provider { get; set; }
         
-        ICryptoTransform Transform = null;
-        bool Encrypting;
+        //ICryptoTransform Transform = null;
+        //bool Encrypting;
 
         /// <summary>
         /// The size of the required key
