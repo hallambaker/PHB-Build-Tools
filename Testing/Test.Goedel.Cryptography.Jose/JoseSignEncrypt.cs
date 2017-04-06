@@ -5,6 +5,7 @@ using UT = Microsoft.VisualStudio.TestTools.UnitTesting;
 using Goedel.Utilities;
 using Goedel.Test;
 using Goedel.IO;
+using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Framework;
 
@@ -26,11 +27,30 @@ namespace Test.Goedel.Cryptography.Jose {
             var JWEText = JWE.ToString();
             var JWEProt = JWE.Protected.ToUTF8();
 
-            var Data = JWE.Decrypt(EncrypterKeyPair);
+            var JWE2 = JoseWebEncryption.FromTagged(JWEText);
+            var Data = JWE2.Decrypt(EncrypterKeyPair);
             var Text = Data.ToUTF8();
 
             UT.Assert.AreEqual(TestString, Text);
             }
+
+
+
+        [TestMethod]
+        public void Test_Jose_Encrypt_Symmetric() {
+
+            var Key = Platform.GetRandomBits(256);
+            var JWE = new JoseWebEncryption(TestString, Key);
+            var JWEText = JWE.ToString();
+
+            var JWE2 = JoseWebEncryption.FromTagged(JWEText);
+
+            var Data = JWE2.Decrypt(Key);
+            var Text = Data.ToUTF8();
+
+            UT.Assert.AreEqual(TestString, Text);
+            }
+
 
         [TestMethod]
         public void Test_Jose_Sign() {
@@ -41,11 +61,13 @@ namespace Test.Goedel.Cryptography.Jose {
                 var JWSProt = Signer.Protected.ToUTF8();
                 }
 
-            var Verify1 = JWS.Verify(SignerKeyPair);
+            var JWS2 = JoseWebSignature.FromTagged(JWSText);
+
+            var Verify1 = JWS2.Verify(SignerKeyPair);
             UT.Assert.IsTrue(Verify1);
 
-            JWS.Payload = TestStringBad.ToBytes();
-            var Verify2 = JWS.Verify(SignerKeyPair);
+            JWS2.Payload = TestStringBad.ToBytes();
+            var Verify2 = JWS2.Verify(SignerKeyPair);
             UT.Assert.IsFalse(Verify2);
             }
 
@@ -61,11 +83,12 @@ namespace Test.Goedel.Cryptography.Jose {
                 var JWSProt = Signer.Protected.ToUTF8();
                 }
 
+            var JWES2 = JoseWebEncryption.FromTagged(JWESText);
 
-            var Data2 = JWES.Decrypt(EncrypterKeyPair);
+            var Data2 = JWES2.Decrypt(EncrypterKeyPair);
             var Text = Data2.ToUTF8();
 
-            var Verify1 = JWES.Verify(SignerKeyPair);
+            var Verify1 = JWES2.Verify(SignerKeyPair);
 
             UT.Assert.AreEqual(TestString, Text);
             UT.Assert.IsTrue(Verify1);

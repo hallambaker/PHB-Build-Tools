@@ -13,6 +13,7 @@
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <AssemblyVersion>1.0.</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -97,9 +98,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries2\Goedel.Utilities.2\Goedel.Utilities.2.csproj">
+    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
       <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
-      <Name>Goedel.Utilities.2</Name>
+      <Name>Goedel.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

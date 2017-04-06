@@ -1,7 +1,6 @@
 ﻿using System.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using GU = Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Framework;
 using Goedel.Cryptography.KeyFile;

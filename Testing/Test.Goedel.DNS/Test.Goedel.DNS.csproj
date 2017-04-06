@@ -17,6 +17,7 @@
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
     <TargetFrameworkProfile />
+    <AssemblyVersion>1.0.0.36</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,13 +56,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries2\Goedel.Utilities.2\Goedel.Utilities.2.csproj">
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
       <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
-      <Name>Goedel.Utilities.2</Name>
+      <Name>Goedel.Utilities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Platform.2\Goedel.Platform.2.csproj">
+    <ProjectReference Include="..\..\Libraries\Goedel.Platform\Goedel.Platform.csproj">
       <Project>{46332174-d5ea-4bd5-9ff0-fdccbbf6df83}</Project>
-      <Name>Goedel.Platform.2</Name>
+      <Name>Goedel.Platform</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Platform.Framework\Goedel.Platform.Framework.csproj">
       <Project>{168a9984-6dbc-4683-9e43-c3e077066933}</Project>

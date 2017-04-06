@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
-using Security.Cryptography;
 using Goedel.Utilities;
 using Goedel.IO;
 using Goedel.Cryptography.PKIX;
@@ -77,8 +76,8 @@ namespace Goedel.Cryptography.Windows {
             var CipherText = new byte[Length];
             Array.Copy(Data, CipherText, Length);
 
-            string Description;
-            var Plaintext = DPAPI.Decrypt(CipherText, out Description, EntropyBytes);
+            //string Description;
+            var Plaintext = DPAPI.Decrypt(CipherText, out var Description, EntropyBytes);
             var PlaintextText = Plaintext.ToUTF8();
             var JoseKey = Key.FromTagged(PlaintextText);
 

@@ -1,136 +1,49 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BC1E98E7-F516-41A3-9653-056E20560A22}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Goedel.Cryptography</RootNamespace>
+    <TargetFramework>netstandard1.4</TargetFramework>
     <AssemblyName>Goedel.Cryptography</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <RootNamespace>Goedel.Cryptography</RootNamespace>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <SignAssembly>True</SignAssembly>
+    <PrimaryVersionType>AssemblyVersionAttribute</PrimaryVersionType>
+    <AssemblyInfoFilePath>AssemblyInfo.cs</AssemblyInfoFilePath>
+    <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
+    <UpdateAssemblyFileVersion>True</UpdateAssemblyFileVersion>
+    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+    <AssemblyVersionSettings>None.IncrementOnDemand.IncrementOnDemandWithReset.Increment</AssemblyVersionSettings>
+    <AssemblyFileVersionSettings>None.IncrementOnDemand.IncrementOnDemandWithReset.Increment</AssemblyFileVersionSettings>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Goedel.Cryptography.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Goedel.Cryptography.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
-    <OutputPath>bin\Publish\</OutputPath>
-    <DocumentationFile>bin\Publish\Goedel.Cryptography.XML</DocumentationFile>
-    <DefineConstants>DEBUG</DefineConstants>
-  </PropertyGroup>
+
   <ItemGroup>
-    <None Include="Architecture.md" />
-    <None Include="CryptographyLibraries.md" />
-    <None Include="Decoding.md" />
-    <None Include="Exceptions.exceptional">
-      <Generator>exceptional</Generator>
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-    </None>
-    <None Include="Encoding.md" />
-    <None Include="Index.md" />
-    <Compile Include="BigNumber.cs" />
-    <Compile Include="CurveEdwards448.cs" />
-    <Compile Include="CurveMontgomery.cs" />
-    <Compile Include="CurveEdwards.cs" />
-    <Compile Include="KeyExtensions.cs" />
-    <None Include="Makefile" />
-    <None Include="PKIX\PKIX.asn2">
-      <Generator>ASN2CS</Generator>
-      <LastGenOutput>PKIX.cs</LastGenOutput>
-    </None>
-    <None Include="project.json" />
-    <None Include="ToDo.md" />
-    <!-- A reference to the entire .NET Framework is automatically included -->
+    <ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj" />
+    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="AlgorithmID.cs" />
-    <Compile Include="CryptoAlgorithmMacro.cs" />
-    <Compile Include="CryptoAlgorithmID.cs" />
-    <Compile Include="CryptoAlgorithm.cs" />
-    <Compile Include="KeyDerive.cs" />
-    <Compile Include="KeyWrap.cs" />
-    <Compile Include="PKIX\DHDomain.cs" />
-    <Compile Include="DHKeyPair.cs" />
-    <Compile Include="DH.cs" />
-    <Compile Include="Bulk.cs" />
-    <Compile Include="Catalog.cs" />
-    <Compile Include="DHProvider.cs" />
-    <Compile Include="Exceptions.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
+    <Compile Update="Exceptions.cs">
       <DependentUpon>Exceptions.exceptional</DependentUpon>
-    </Compile>
-    <Compile Include="PKIX\Certificate.cs" />
-    <Compile Include="PKIX\CertificateStore.cs" />
-    <Compile Include="CryptoData.cs" />
-    <Compile Include="Exchange.cs" />
-    <Compile Include="PKIX\KeyInfo.cs" />
-    <Compile Include="Keys.cs" />
-    <Compile Include="KeyShare.cs" />
-    <Compile Include="PKIX\PKIX.cs">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PKIX.asn2</DependentUpon>
+      <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="PKIX\PKIXConstants.cs" />
-    <Compile Include="PKIX\PKIXKeys.cs" />
-    <Compile Include="PKIX\PKIXName.cs" />
-    <Compile Include="PKIX\RFC2631.cs" />
-    <Compile Include="Platform.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PKIX\PrivateKeyInfo.cs" />
-    <Compile Include="Recrypt.cs" />
-    <Compile Include="Signature.cs" />
-    <Compile Include="PKIX\TBSCertificate.cs" />
-    <Compile Include="UDF.cs" />
+    <Compile Update="PKIX\PKIX.cs">
+      <DependentUpon>PKIX.asn2</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj">
-      <Project>{44e8b35d-0394-4f37-b52c-246f8610f031}</Project>
-      <Name>Goedel.ASN</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
-      <Name>Goedel.Utilities</Name>
-    </ProjectReference>
+    <None Update="Exceptions.exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>exceptional</Generator>
+    </None>
+    <None Update="PKIX\PKIX.asn2">
+      <LastGenOutput>PKIX.cs</LastGenOutput>
+      <Generator>ASN2CS</Generator>
+    </None>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>powershell publishtarget "$(TargetPath)"
-</PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="powershell publishtarget $(TargetPath)" />
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

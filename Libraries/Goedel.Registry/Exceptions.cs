@@ -1,7 +1,6 @@
 using System;
 using Goedel.Utilities;
 
-using Goedel.Utilities;
 
 
 namespace Goedel.Registry {

@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <AssemblyVersion>1.0.</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,13 +55,13 @@
     <None Include="Makefile" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries2\Goedel.Utilities.2\Goedel.Utilities.2.csproj">
+    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
       <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
-      <Name>Goedel.Utilities.2</Name>
+      <Name>Goedel.Utilities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Protocol.2\Goedel.Protocol.2.csproj">
+    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{55e68ce6-ac29-4837-9d88-5ad99e4cef5a}</Project>
-      <Name>Goedel.Protocol.2</Name>
+      <Name>Goedel.Protocol</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Protocol.Framework\Goedel.Protocol.Framework.csproj">
       <Project>{c1d2c847-ee62-430c-82dc-a4bd5ab38a44}</Project>

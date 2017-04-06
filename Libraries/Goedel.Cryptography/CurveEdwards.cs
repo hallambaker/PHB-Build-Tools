@@ -697,14 +697,14 @@ namespace Goedel.Cryptography {
                 
                 var NewPrivate = Platform.GetRandomBigInteger(CurveEdwards25519.q);
                 Result[i] = new CurveEdwards25519Private(NewPrivate) { IsRecryption = true };
-                Accumulator = (Accumulator + NewPrivate) % (CurveEdwards25519.q);
+                Accumulator = (Accumulator + NewPrivate).Mod (CurveEdwards25519.q);
 
                 }
 
             //Assert.True(Accumulator > 0 & Accumulator < Private, CryptographicException.Throw);
 
             Result[0] = new CurveEdwards25519Private(
-                (CurveEdwards25519.q + Private - Accumulator) %(CurveEdwards25519.q)) {
+                (CurveEdwards25519.q + Private - Accumulator).Mod (CurveEdwards25519.q)) {
                 IsRecryption = true
                 };
             return Result;

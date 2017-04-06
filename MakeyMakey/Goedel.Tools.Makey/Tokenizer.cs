@@ -87,42 +87,62 @@ namespace Goedel.Tool.Makey{
             return GetToken (0);
             }
 
+		/// <summary>State types</summary>
 		public enum State {
+			/// <summary>Initial</summary>
             Initial = 0,
+			/// <summary>Begin</summary>
             Begin = 1,
+			/// <summary>GetTagValue0</summary>
             GetTagValue0 = 2,
+			/// <summary>GetTagValue</summary>
             GetTagValue = 3,
+			/// <summary>HaveOpen</summary>
             HaveOpen = 4,
+			/// <summary>StartKey1</summary>
             StartKey1 = 5,
+			/// <summary>StartParam1</summary>
             StartParam1 = 6,
+			/// <summary>StartParam2</summary>
             StartParam2 = 7,
+			/// <summary>StartItem1</summary>
             StartItem1 = 8,
+			/// <summary>StartItem2</summary>
             StartItem2 = 9,
+			/// <summary>StartItem3</summary>
             StartItem3 = 10,
+			/// <summary>StartComplete</summary>
             StartComplete = 11,
+			/// <summary>EndComplete</summary>
             EndComplete = 12,
+			/// <summary>TagValueComplete</summary>
             TagValueComplete = 13,
+			/// <summary>LineComplete</summary>
             LineComplete = 14,
+			/// <summary>Fail</summary>
             Fail = 15
 			};
 
+		/// <summary>Token Types</summary>
 		public enum Token {
+			/// <summary>Could not find a valid token.</summary>
 			INVALID = -1,
+			/// <summary>Empty</summary>
             Empty = 0,
+			/// <summary>Start</summary>
             Start = 1,
+			/// <summary>End</summary>
             End = 2,
+			/// <summary>Line</summary>
             Line = 3,
+			/// <summary>TagValue</summary>
             TagValue = 4,
+			/// <summary>Invalid</summary>
             Invalid = 5
 			};
 
 
-
-		//#define Goedel.Tool.Makey_Action__Count  10
-		//#define Goedel.Tool.Makey_Token__Count  6
-		//#define Goedel.Tool.Makey_State__Count  16
-
-
+		/// <summary>Mapping of characters to character groups</summary>
 		static byte [] Character_Mapping   =  new byte [] {
 			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 2 , 0 , 0 , 0 , 0 , 0 , 
 			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 
@@ -172,6 +192,8 @@ namespace Goedel.Tool.Makey{
 			Token.Invalid
 			};
 
+		/// <summary>Generated initialization method, is called automatically 
+		/// the FSR to reset </summary>
         public override void Init () {
             Actions = new Action[] {
 				Reset,

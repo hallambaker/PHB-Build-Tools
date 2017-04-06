@@ -1,6 +1,4 @@
-// #script 1.0 
 // Script Syntax Version:  1.0
-// #license MITLicense 
 
 //  Unknown by Unknown
 //  
@@ -23,1221 +21,695 @@
 //  THE SOFTWARE.
 //  
 //  
-// #pclass Goedel.Tool.ASN Generate 
 using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
 namespace Goedel.Tool.ASN {
+	/// <summary>A Goedel script.</summary>
 	public partial class Generate : global::Goedel.Registry.Script {
+		/// <summary>Default constructor.</summary>
 		public Generate () : base () {
 			}
+		/// <summary>Constructor with output stream.</summary>
+		/// <param name="Output">The output stream</param>
 		public Generate (TextWriter Output) : base (Output) {
 			}
 
-		// #% string Namespace = "Goedel.ASN"; 
 		 string Namespace = "Goedel.ASN";
-		//  
-		// #method GenerateCS ASN2 ASN2 
 		
 
 		//
 		// GenerateCS
 		//
 		public void GenerateCS (ASN2 ASN2) {
-			// #pragma warning disable  CS0219 
-			// #% ASN2.Complete (); 
 			 ASN2.Complete ();
-			//  
 			_Output.Write ("\n{0}", _Indent);
-			// using System; 
 			_Output.Write ("using System;\n{0}", _Indent);
-			// using System.Collections.Generic; 
 			_Output.Write ("using System.Collections.Generic;\n{0}", _Indent);
-			// using System.Text; 
 			_Output.Write ("using System.Text;\n{0}", _Indent);
-			// using Goedel.ASN; 
 			_Output.Write ("using Goedel.ASN;\n{0}", _Indent);
-			//  
 			_Output.Write ("\n{0}", _Indent);
-			// // This is the generated code Don't edit. 
 			_Output.Write ("// This is the generated code Don't edit.\n{0}", _Indent);
-			//  
 			_Output.Write ("\n{0}", _Indent);
-			//  
 			_Output.Write ("\n{0}", _Indent);
-			// // Generate OID declarations 
 			_Output.Write ("// Generate OID declarations\n{0}", _Indent);
-			//  
 			_Output.Write ("\n{0}", _Indent);
-			// namespace Goedel.ASN {  // default namespace 
 			_Output.Write ("namespace Goedel.ASN {{  // default namespace\n{0}", _Indent);
-			//  
 			_Output.Write ("\n{0}", _Indent);
-			// #foreach (_Choice Toplevel in ASN2.Top) 
 			foreach  (_Choice Toplevel in ASN2.Top) {
-				// #switchcast ASN2Type Toplevel 
 				switch (Toplevel._Tag ()) {
-					// #casecast Namespace Cast 
 					case ASN2Type.Namespace: {
 					  Namespace Cast = (Namespace) Toplevel; 
-					// #% Namespace = Cast.Name.ToString(); 
 					
 					 Namespace = Cast.Name.ToString();
-					// 	} 
 					_Output.Write ("	}}\n{0}", _Indent);
-					// namespace #{Cast.Name} { 
 					_Output.Write ("namespace {1} {{\n{0}", _Indent, Cast.Name);
-					//  
 					_Output.Write ("\n{0}", _Indent);
-					// #casecast ROOT ROOT 
 					break; }
 					case ASN2Type.ROOT: {
 					  ROOT ROOT = (ROOT) Toplevel; 
-					//     /// <summary> 
 					_Output.Write ("    /// <summary>\n{0}", _Indent);
-					//     /// #{ROOT.Name} = #! 
 					_Output.Write ("    /// {1} = ", _Indent, ROOT.Name);
-					// #foreach (Entry Entry in ROOT.Entries) 
 					foreach  (Entry Entry in ROOT.Entries) {
-						//  #{Entry.Name}(#{Entry.Value}) #! 
 						_Output.Write (" {1}({2}) ", _Indent, Entry.Name, Entry.Value);
-						// #end foreach 
 						}
-					//  
 					_Output.Write ("\n{0}", _Indent);
-					//     /// </summary> 
 					_Output.Write ("    /// </summary>\n{0}", _Indent);
-					// 	public partial class Constants { 
 					_Output.Write ("	public partial class Constants {{\n{0}", _Indent);
-					// 		/// <summary> 
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
-					// 		/// #{ROOT.Name} as integer sequence 
 					_Output.Write ("		/// {1} as integer sequence\n{0}", _Indent, ROOT.Name);
-					// 		/// </summary> 
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
-					// 		public readonly static int [] OID__#{ROOT.Name} = new int [] { #! 
 					_Output.Write ("		public readonly static int [] OID__{1} = new int [] {{ ", _Indent, ROOT.Name);
-					// #% MakeConst(ROOT.Binary) ;	 
 					
 					 MakeConst(ROOT.Binary) ;	
-					// }; 
 					_Output.Write ("}};\n{0}", _Indent);
-					// 		/// <summary> 
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
-					// 		/// #{ROOT.Name} as string 
 					_Output.Write ("		/// {1} as string\n{0}", _Indent, ROOT.Name);
-					// 		/// </summary> 
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
-					// 		public const string OIDS__#{ROOT.Name} = "#! 
 					_Output.Write ("		public const string OIDS__{1} = \"", _Indent, ROOT.Name);
-					// #% MakeString(ROOT.Binary) ;	 
 					
 					 MakeString(ROOT.Binary) ;	
-					// "; 
 					_Output.Write ("\";\n{0}", _Indent);
-					//  
 					_Output.Write ("\n{0}", _Indent);
-					// #% MakeChildren (ROOT); 
 					
 					 MakeChildren (ROOT);
-					// 		} 
 					_Output.Write ("		}}\n{0}", _Indent);
-					// #end switchcast 
 				break; }
 					}
-				// #end foreach 
 				}
-			// 	} 
 			_Output.Write ("	}}\n{0}", _Indent);
-			//  
 			_Output.Write ("\n{0}", _Indent);
-			//  
 			_Output.Write ("\n{0}", _Indent);
-			// // Generate Classes 
 			_Output.Write ("// Generate Classes\n{0}", _Indent);
-			// namespace Goedel.ASN {  // default namespace 
 			_Output.Write ("namespace Goedel.ASN {{  // default namespace\n{0}", _Indent);
-			//  
 			_Output.Write ("\n{0}", _Indent);
-			// #foreach (_Choice Toplevel in ASN2.Top) 
 			foreach  (_Choice Toplevel in ASN2.Top) {
-				// #switchcast ASN2Type Toplevel 
 				switch (Toplevel._Tag ()) {
-					// #casecast Namespace Cast 
 					case ASN2Type.Namespace: {
 					  Namespace Cast = (Namespace) Toplevel; 
-					// #% Namespace = Cast.Name.ToString(); 
 					
 					 Namespace = Cast.Name.ToString();
-					// 	} 
 					_Output.Write ("	}}\n{0}", _Indent);
-					// namespace #{Cast.Name} { 
 					_Output.Write ("namespace {1} {{\n{0}", _Indent, Cast.Name);
-					// #casecast Class Class 
 					break; }
 					case ASN2Type.Class: {
 					  Class Class = (Class) Toplevel; 
-					//     /// <summary> 
 					_Output.Write ("    /// <summary>\n{0}", _Indent);
-					// 	/// #{Class.Name}  
 					_Output.Write ("	/// {1} \n{0}", _Indent, Class.Name);
-					//     /// </summary> 
 					_Output.Write ("    /// </summary>\n{0}", _Indent);
-					// 	public partial class #{Class.Name} : Goedel.ASN.Root { 
 					_Output.Write ("	public partial class {1} : Goedel.ASN.Root {{\n{0}", _Indent, Class.Name);
-					//  
 					_Output.Write ("\n{0}", _Indent);
-					// #foreach (Member Member in Class.Entries) 
 					foreach  (Member Member in Class.Entries) {
-						// #% EntryDeclaration (Member); 
 						 EntryDeclaration (Member);
-						// #end foreach 
 						}
-					//  
 					_Output.Write ("\n{0}", _Indent);
-					// 		/// <summary> 
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
-					// 		/// Encode ASN.1 class members to specified buffer.  
 					_Output.Write ("		/// Encode ASN.1 class members to specified buffer. \n{0}", _Indent);
-					// 		/// 
 					_Output.Write ("		///\n{0}", _Indent);
-					// 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order. 
 					_Output.Write ("		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.\n{0}", _Indent);
-					// 		/// </summary> 
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
-					// 		/// <param name="Buffer">Output buffer</param> 
 					_Output.Write ("		/// <param name=\"Buffer\">Output buffer</param>\n{0}", _Indent);
-					//         public override void Encode (Goedel.ASN.Buffer Buffer) { 
 					_Output.Write ("        public override void Encode (Goedel.ASN.Buffer Buffer) {{\n{0}", _Indent);
-					// 			int Position = Buffer.Encode__Sequence_Start (); 
 					_Output.Write ("			int Position = Buffer.Encode__Sequence_Start ();\n{0}", _Indent);
-					// #foreach (Member Member in Class.ReversedEntries) 
 					foreach  (Member Member in Class.ReversedEntries) {
-						// #% Encode (Member); 
 						 Encode (Member);
-						// 			Buffer.Debug ("#{Member.Name}"); 
 						_Output.Write ("			Buffer.Debug (\"{1}\");\n{0}", _Indent, Member.Name);
-						// #end foreach 
 						}
-					// 			Buffer.Encode__Sequence_End (Position); 
 					_Output.Write ("			Buffer.Encode__Sequence_End (Position);\n{0}", _Indent);
-					//             } 
 					_Output.Write ("            }}\n{0}", _Indent);
-					//  
 					_Output.Write ("\n{0}", _Indent);
-					// 			/* 
 					_Output.Write ("			/*\n{0}", _Indent);
-					// 		/// <summary> 
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
-					// 		/// Decode buffer to populate class members 
 					_Output.Write ("		/// Decode buffer to populate class members\n{0}", _Indent);
-					// 		/// 
 					_Output.Write ("		///\n{0}", _Indent);
-					// 		/// This is done in the forward direction 
 					_Output.Write ("		/// This is done in the forward direction\n{0}", _Indent);
-					// 		/// </summary> 
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
-					//         public override void Decode (Goedel.ASN.Buffer Buffer) { 
 					_Output.Write ("        public override void Decode (Goedel.ASN.Buffer Buffer) {{\n{0}", _Indent);
-					// 			int Position = Buffer.Decode__Sequence_Start (); 
 					_Output.Write ("			int Position = Buffer.Decode__Sequence_Start ();\n{0}", _Indent);
-					// #foreach (Member Member in Class.Entries) 
 					foreach  (Member Member in Class.Entries) {
-						// #% Decode (Member); 
 						 Decode (Member);
-						// 			Buffer.Debug ("#{Member.Name}"); 
 						_Output.Write ("			Buffer.Debug (\"{1}\");\n{0}", _Indent, Member.Name);
-						// #end foreach 
 						}
-					// 			Buffer.Decode__Sequence_End (Position); 
 					_Output.Write ("			Buffer.Decode__Sequence_End (Position);\n{0}", _Indent);
-					//             } 
 					_Output.Write ("            }}\n{0}", _Indent);
-					// 			*/ 
 					_Output.Write ("			*/\n{0}", _Indent);
-					//  
 					_Output.Write ("\n{0}", _Indent);
-					// 		} 
 					_Output.Write ("		}}\n{0}", _Indent);
-					// #casecast Object Object 
 					break; }
 					case ASN2Type.Object: {
 					  Object Object = (Object) Toplevel; 
-					//     /// <summary> 
 					_Output.Write ("    /// <summary>\n{0}", _Indent);
-					// 	/// #{Object.Name}  
 					_Output.Write ("	/// {1} \n{0}", _Indent, Object.Name);
-					//     /// </summary> 
 					_Output.Write ("    /// </summary>\n{0}", _Indent);
-					// 	public partial class #{Object.Name} : Goedel.ASN.Root { 
 					_Output.Write ("	public partial class {1} : Goedel.ASN.Root {{\n{0}", _Indent, Object.Name);
-					// 		/// <summary> 
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
-					// 		/// The OID value 
 					_Output.Write ("		/// The OID value\n{0}", _Indent);
-					// 		/// </summary> 
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
-					// 		public override int [] OID {  
 					_Output.Write ("		public override int [] OID {{ \n{0}", _Indent);
-					// 			get { return Constants.OID__#{Object.OID}; } }   
 					_Output.Write ("			get {{ return Constants.OID__{1}; }} }}  \n{0}", _Indent, Object.OID);
-					//  
 					_Output.Write ("\n{0}", _Indent);
-					// #%  
 					
 					 
-					// #foreach (Member Member in Object.Entries) 
 					foreach  (Member Member in Object.Entries) {
-						// #% EntryDeclaration (Member); 
 						 EntryDeclaration (Member);
-						// #end foreach 
 						}
-					// 		/// <summary> 
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
-					// 		/// Encode ASN.1 class members to specified buffer.  
 					_Output.Write ("		/// Encode ASN.1 class members to specified buffer. \n{0}", _Indent);
-					// 		/// 
 					_Output.Write ("		///\n{0}", _Indent);
-					// 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order. 
 					_Output.Write ("		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.\n{0}", _Indent);
-					// 		/// </summary> 
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
-					// 		/// <param name="Buffer">Output buffer</param> 
 					_Output.Write ("		/// <param name=\"Buffer\">Output buffer</param>\n{0}", _Indent);
-					//         public override void Encode (Goedel.ASN.Buffer Buffer) { 
 					_Output.Write ("        public override void Encode (Goedel.ASN.Buffer Buffer) {{\n{0}", _Indent);
-					// 			int Position = Buffer.Encode__Sequence_Start (); 
 					_Output.Write ("			int Position = Buffer.Encode__Sequence_Start ();\n{0}", _Indent);
-					// #foreach (Member Member in Object.ReversedEntries) 
 					foreach  (Member Member in Object.ReversedEntries) {
-						// #% Encode (Member); 
 						 Encode (Member);
-						// #end foreach 
 						}
-					// 			Buffer.Encode__Sequence_End (Position); 
 					_Output.Write ("			Buffer.Encode__Sequence_End (Position);\n{0}", _Indent);
-					//             } 
 					_Output.Write ("            }}\n{0}", _Indent);
-					//  
 					_Output.Write ("\n{0}", _Indent);
-					// 			/* 
 					_Output.Write ("			/*\n{0}", _Indent);
-					// 		/// <summary> 
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
-					// 		/// Decode buffer to populate class members 
 					_Output.Write ("		/// Decode buffer to populate class members\n{0}", _Indent);
-					// 		/// 
 					_Output.Write ("		///\n{0}", _Indent);
-					// 		/// This is done in the forward direction 
 					_Output.Write ("		/// This is done in the forward direction\n{0}", _Indent);
-					// 		/// </summary> 
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
-					//         public override void Decode (Goedel.ASN.Buffer Buffer) { 
 					_Output.Write ("        public override void Decode (Goedel.ASN.Buffer Buffer) {{\n{0}", _Indent);
-					// 			int Position = Buffer.Decode__Sequence_Start (); 
 					_Output.Write ("			int Position = Buffer.Decode__Sequence_Start ();\n{0}", _Indent);
-					// #foreach (Member Member in Object.Entries) 
 					foreach  (Member Member in Object.Entries) {
-						// #% Decode (Member); 
 						 Decode (Member);
-						// 			Buffer.Debug ("#{Member.Name}"); 
 						_Output.Write ("			Buffer.Debug (\"{1}\");\n{0}", _Indent, Member.Name);
-						// #end foreach 
 						}
-					// 			Buffer.Decode__Sequence_End (Position); 
 					_Output.Write ("			Buffer.Decode__Sequence_End (Position);\n{0}", _Indent);
-					//             } 
 					_Output.Write ("            }}\n{0}", _Indent);
-					// 			*/ 
 					_Output.Write ("			*/\n{0}", _Indent);
-					// 		} 
 					_Output.Write ("		}}\n{0}", _Indent);
-					//  
 					_Output.Write ("\n{0}", _Indent);
-					// #casecast SingularObject SingularObject 
 					break; }
 					case ASN2Type.SingularObject: {
 					  SingularObject SingularObject = (SingularObject) Toplevel; 
-					//  
 					_Output.Write ("\n{0}", _Indent);
-					// 	// Singular, no sequence boundaries 
 					_Output.Write ("	// Singular, no sequence boundaries\n{0}", _Indent);
-					//     /// <summary> 
 					_Output.Write ("    /// <summary>\n{0}", _Indent);
-					// 	/// #{SingularObject.Name}  
 					_Output.Write ("	/// {1} \n{0}", _Indent, SingularObject.Name);
-					//     /// </summary> 
 					_Output.Write ("    /// </summary>\n{0}", _Indent);
-					// 	public partial class #{SingularObject.Name} : Goedel.ASN.Root { 
 					_Output.Write ("	public partial class {1} : Goedel.ASN.Root {{\n{0}", _Indent, SingularObject.Name);
-					// 		/// <summary> 
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
-					// 		/// The OID value 
 					_Output.Write ("		/// The OID value\n{0}", _Indent);
-					// 		/// </summary> 
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
-					// 		public override int [] OID {  
 					_Output.Write ("		public override int [] OID {{ \n{0}", _Indent);
-					// 			get { return Constants.OID__#{SingularObject.OID}; } }   
 					_Output.Write ("			get {{ return Constants.OID__{1}; }} }}  \n{0}", _Indent, SingularObject.OID);
-					//  
 					_Output.Write ("\n{0}", _Indent);
-					// #foreach (Member Member in SingularObject.Entries) 
 					foreach  (Member Member in SingularObject.Entries) {
-						// #% EntryDeclaration (Member); 
 						 EntryDeclaration (Member);
-						// #end foreach 
 						}
-					// 		/// <summary> 
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
-					// 		/// Encode ASN.1 class members to specified buffer.  
 					_Output.Write ("		/// Encode ASN.1 class members to specified buffer. \n{0}", _Indent);
-					// 		/// 
 					_Output.Write ("		///\n{0}", _Indent);
-					// 		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order. 
 					_Output.Write ("		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.\n{0}", _Indent);
-					// 		/// </summary> 
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
-					// 		/// <param name="Buffer">Output buffer</param> 
 					_Output.Write ("		/// <param name=\"Buffer\">Output buffer</param>\n{0}", _Indent);
-					//         public override void Encode (Goedel.ASN.Buffer Buffer) { 
 					_Output.Write ("        public override void Encode (Goedel.ASN.Buffer Buffer) {{\n{0}", _Indent);
-					// #foreach (Member Member in SingularObject.ReversedEntries) 
 					foreach  (Member Member in SingularObject.ReversedEntries) {
-						// #% Encode (Member); 
 						 Encode (Member);
-						// #end foreach 
 						}
-					//             } 
 					_Output.Write ("            }}\n{0}", _Indent);
-					//  
 					_Output.Write ("\n{0}", _Indent);
-					// 			/* 
 					_Output.Write ("			/*\n{0}", _Indent);
-					// 		/// <summary> 
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
-					// 		/// Decode buffer to populate class members 
 					_Output.Write ("		/// Decode buffer to populate class members\n{0}", _Indent);
-					// 		/// 
 					_Output.Write ("		///\n{0}", _Indent);
-					// 		/// This is done in the forward direction 
 					_Output.Write ("		/// This is done in the forward direction\n{0}", _Indent);
-					// 		/// </summary> 
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
-					//         public override void Decode (Goedel.ASN.Buffer Buffer) { 
 					_Output.Write ("        public override void Decode (Goedel.ASN.Buffer Buffer) {{\n{0}", _Indent);
-					// 			int Position = Buffer.Decode__Sequence_Start (); 
 					_Output.Write ("			int Position = Buffer.Decode__Sequence_Start ();\n{0}", _Indent);
-					// #foreach (Member Member in SingularObject.Entries) 
 					foreach  (Member Member in SingularObject.Entries) {
-						// #% Decode (Member); 
 						 Decode (Member);
-						// 			Buffer.Debug ("#{Member.Name}"); 
 						_Output.Write ("			Buffer.Debug (\"{1}\");\n{0}", _Indent, Member.Name);
-						// #end foreach 
 						}
-					// 			Buffer.Decode__Sequence_End (Position); 
 					_Output.Write ("			Buffer.Decode__Sequence_End (Position);\n{0}", _Indent);
-					//             } 
 					_Output.Write ("            }}\n{0}", _Indent);
-					// 			*/ 
 					_Output.Write ("			*/\n{0}", _Indent);
-					//  
 					_Output.Write ("\n{0}", _Indent);
-					// 		} 
 					_Output.Write ("		}}\n{0}", _Indent);
-					//  
 					_Output.Write ("\n{0}", _Indent);
-					// #end switchcast 
 				break; }
 					}
-				// #end foreach 
 				}
-			// 	} 
 			_Output.Write ("	}}\n{0}", _Indent);
-			//  
 			_Output.Write ("\n{0}", _Indent);
-			// #end method 
 			}
-		//  
-		// #method EntryDeclaration Member Member 
 		
 
 		//
 		// EntryDeclaration
 		//
 		public void EntryDeclaration (Member Member) {
-			// #switchcast ASN2Type Member.Spec 
 			switch (Member.Spec._Tag ()) {
-				// #casecast Choice Cast 
 				case ASN2Type.Choice: {
 				  Choice Cast = (Choice) Member.Spec; 
-				// #foreach (Member Entry in Cast.Entries) 
 				foreach  (Member Entry in Cast.Entries) {
-					// #% EntryDeclaration (Entry); 
 					 EntryDeclaration (Entry);
-					// #end foreach 
 					}
-				// #%  break; } default : { 
 				
 				  break; } default : {
-				// 		/// <summary> 
 				_Output.Write ("		/// <summary>\n{0}", _Indent);
-				// 		/// ASN.1 member #{Member.Name}  
 				_Output.Write ("		/// ASN.1 member {1} \n{0}", _Indent, Member.Name);
-				// 		/// </summary> 
 				_Output.Write ("		/// </summary>\n{0}", _Indent);
-				// 		public #! 
 				_Output.Write ("		public ", _Indent);
-				// #% TypeDeclaration (Member.Spec); 
 				
 				 TypeDeclaration (Member.Spec);
-				// #{Member.Name} ; 
 				_Output.Write ("{1} ;\n{0}", _Indent, Member.Name);
-				// #end switchcast 
 			break; }
 				}
-			// #end method 
 			}
-		//  
-		//  
-		// #method TypeDeclaration _Choice Type 
 		
 
 		//
 		// TypeDeclaration
 		//
 		public void TypeDeclaration (_Choice Type) {
-			// #switchcast ASN2Type Type 
 			switch (Type._Tag ()) {
-				// #case ASN2Type.OIDRef 
 				case  ASN2Type.OIDRef: {
-				// int []  #! 
 				_Output.Write ("int []  ", _Indent);
-				// #case ASN2Type.Any  
 				break; }
 				case  ASN2Type.Any : {
-				// byte []  #! 
 				_Output.Write ("byte []  ", _Indent);
-				// #case ASN2Type.Integer  
 				break; }
 				case  ASN2Type.Integer : {
-				// int  #! 
 				_Output.Write ("int  ", _Indent);
-				// #case ASN2Type.BigInteger  
 				break; }
 				case  ASN2Type.BigInteger : {
-				// byte []  #! 
 				_Output.Write ("byte []  ", _Indent);
-				// #case ASN2Type.Boolean  
 				break; }
 				case  ASN2Type.Boolean : {
-				// bool  #! 
 				_Output.Write ("bool  ", _Indent);
-				// #case ASN2Type.Time  
 				break; }
 				case  ASN2Type.Time : {
-				// DateTime  #! 
 				_Output.Write ("DateTime  ", _Indent);
-				// #case ASN2Type.Bits  
 				break; }
 				case  ASN2Type.Bits : {
-				// byte []  #! 
 				_Output.Write ("byte []  ", _Indent);
-				// #case ASN2Type.VBits  
 				break; }
 				case  ASN2Type.VBits : {
-				// byte []  #! 
 				_Output.Write ("byte []  ", _Indent);
-				// #case ASN2Type.Octets  
 				break; }
 				case  ASN2Type.Octets : {
-				// byte []  #! 
 				_Output.Write ("byte []  ", _Indent);
-				// #case ASN2Type.IA5String  
 				break; }
 				case  ASN2Type.IA5String : {
-				// string #! 
 				_Output.Write ("string ", _Indent);
-				// #case ASN2Type.BMPString  
 				break; }
 				case  ASN2Type.BMPString : {
-				// string #! 
 				_Output.Write ("string ", _Indent);
-				// #case ASN2Type.UTF8String  
 				break; }
 				case  ASN2Type.UTF8String : {
-				// string #! 
 				_Output.Write ("string ", _Indent);
-				// #case ASN2Type.PrintableString  
 				break; }
 				case  ASN2Type.PrintableString : {
-				// string #! 
 				_Output.Write ("string ", _Indent);
-				// #casecast _Label Cast 
 				break; }
 				case ASN2Type._Label: {
 				  _Label Cast = (_Label) Type; 
-				// #{Namespace}.#{Cast.Label} #! 
 				_Output.Write ("{1}.{2} ", _Indent, Namespace, Cast.Label);
-				// #casecast List Cast 
 				break; }
 				case ASN2Type.List: {
 				  List Cast = (List) Type; 
-				// List <#! 
 				_Output.Write ("List <", _Indent);
-				// #% TypeDeclaration (Cast.Spec); 
 				
 				 TypeDeclaration (Cast.Spec);
-				// > #! 
 				_Output.Write ("> ", _Indent);
-				// #casecast Set Cast 
 				break; }
 				case ASN2Type.Set: {
 				  Set Cast = (Set) Type; 
-				// List <#! 
 				_Output.Write ("List <", _Indent);
-				// #% TypeDeclaration (Cast.Spec); 
 				
 				 TypeDeclaration (Cast.Spec);
-				// > #! 
 				_Output.Write ("> ", _Indent);
-				// #case ASN2Type.Choice 
 				break; }
 				case  ASN2Type.Choice: {
-				// // Choice declare all the type parts 
 				_Output.Write ("// Choice declare all the type parts\n{0}", _Indent);
-				// #end switchcast 
 			break; }
 				}
-			// #end method 
 			}
-		//  
-		// #method Encode Member Member 
 		
 
 		//
 		// Encode
 		//
 		public void Encode (Member Member) {
-			// #%  Encode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code); 
 			  Encode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
-			// #end method 
 			}
-		//  
-		// #method Decode Member Member 
 		
 
 		//
 		// Decode
 		//
 		public void Decode (Member Member) {
-			// #%  Decode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code); 
 			  Decode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
-			// #end method 
 			}
-		//  
-		// #block 
 		
 
 		//
 		// 
 		//
 
-			// #%  public void Encode (String Name, _Choice Spec, int Flags, int Code) { 
 			  public void Encode (String Name, _Choice Spec, int Flags, int Code) {
-			// #%		Encode (Name, null, Spec, Flags, Code); 
 					Encode (Name, null, Spec, Flags, Code);
-			// #%		} 
 					}
-			// #%  public void Encode (String Name, String Default, _Choice Spec, int Flags, int Code) { 
 			  public void Encode (String Name, String Default, _Choice Spec, int Flags, int Code) {
-			//  
 			_Output.Write ("\n{0}", _Indent);
-			// #% bool Call = false; 
 			 bool Call = false;
-			// #switchcast ASN2Type Spec 
 			switch (Spec._Tag ()) {
-				// #case ASN2Type.OIDRef 
 				case  ASN2Type.OIDRef: {
-				// 			Buffer.Encode__OIDRef #! 
 				_Output.Write ("			Buffer.Encode__OIDRef ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.Any 
 				break; }
 				case  ASN2Type.Any: {
-				// 			Buffer.Encode__Any #! 
 				_Output.Write ("			Buffer.Encode__Any ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.Integer 
 				break; }
 				case  ASN2Type.Integer: {
-				// #if (Default != null) 
 				if (  (Default != null) ) {
-					// 			// Default is #{Default} 
 					_Output.Write ("			// Default is {1}\n{0}", _Indent, Default);
-					// 			if (#{Name} != #{Default}) { 
 					_Output.Write ("			if ({1} != {2}) {{\n{0}", _Indent, Name, Default);
-					// 				Buffer.Encode__Integer (#{Name}, #{Flags}, #{Code}); 
 					_Output.Write ("				Buffer.Encode__Integer ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
-					// 				} 
 					_Output.Write ("				}}\n{0}", _Indent);
-					// #else  
 					} else {
-					// 			Buffer.Encode__Integer #! 
 					_Output.Write ("			Buffer.Encode__Integer ", _Indent);
-					// #% Call = true; 
 					 Call = true;
-					// #end if 
 					}
-				// #case ASN2Type.BigInteger 
 				break; }
 				case  ASN2Type.BigInteger: {
-				// 			Buffer.Encode__BigInteger #! 
 				_Output.Write ("			Buffer.Encode__BigInteger ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.Boolean 
 				break; }
 				case  ASN2Type.Boolean: {
-				// #if (Default != null) 
 				if (  (Default != null) ) {
-					// 			// Default is #{Default} 
 					_Output.Write ("			// Default is {1}\n{0}", _Indent, Default);
-					// 			if (#{Name} != #{Default}) { 
 					_Output.Write ("			if ({1} != {2}) {{\n{0}", _Indent, Name, Default);
-					// 				Buffer.Encode__Boolean (#{Name}, #{Flags}, #{Code}); 
 					_Output.Write ("				Buffer.Encode__Boolean ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
-					// 				} 
 					_Output.Write ("				}}\n{0}", _Indent);
-					// #else  
 					} else {
-					// 			Buffer.Encode__Boolean #! 
 					_Output.Write ("			Buffer.Encode__Boolean ", _Indent);
-					// #% Call = true; 
 					 Call = true;
-					// #end if 
 					}
-				// #case ASN2Type.Time  
 				break; }
 				case  ASN2Type.Time : {
-				// 			Buffer.Encode__Time #! 
 				_Output.Write ("			Buffer.Encode__Time ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.Bits  
 				break; }
 				case  ASN2Type.Bits : {
-				// 			Buffer.Encode__Bits #! 
 				_Output.Write ("			Buffer.Encode__Bits ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.VBits  
 				break; }
 				case  ASN2Type.VBits : {
-				// 			Buffer.Encode__VBits #! 
 				_Output.Write ("			Buffer.Encode__VBits ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.Octets  
 				break; }
 				case  ASN2Type.Octets : {
-				// 			Buffer.Encode__Octets #! 
 				_Output.Write ("			Buffer.Encode__Octets ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.IA5String  
 				break; }
 				case  ASN2Type.IA5String : {
-				// 			Buffer.Encode__IA5String #! 
 				_Output.Write ("			Buffer.Encode__IA5String ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.BMPString  
 				break; }
 				case  ASN2Type.BMPString : {
-				// 			Buffer.Encode__BMPString #! 
 				_Output.Write ("			Buffer.Encode__BMPString ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.UTF8String  
 				break; }
 				case  ASN2Type.UTF8String : {
-				// 			Buffer.Encode__UTF8String #! 
 				_Output.Write ("			Buffer.Encode__UTF8String ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.PrintableString  
 				break; }
 				case  ASN2Type.PrintableString : {
-				// 			Buffer.Encode__PrintableString #! 
 				_Output.Write ("			Buffer.Encode__PrintableString ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type._Label  
 				break; }
 				case  ASN2Type._Label : {
-				// 			Buffer.Encode__Object (#{Name}, #{Flags}, #{Code}); 
 				_Output.Write ("			Buffer.Encode__Object ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
-				// #casecast List Cast 
 				break; }
 				case ASN2Type.List: {
 				  List Cast = (List) Spec; 
-				// 			if (#{Name} == null || #{Name}.Count == 0) { 
 				_Output.Write ("			if ({1} == null || {2}.Count == 0) {{\n{0}", _Indent, Name, Name);
-				// 				Buffer.Encode__Object (null, #{Flags}, #{Code}); 
 				_Output.Write ("				Buffer.Encode__Object (null, {1}, {2});\n{0}", _Indent, Flags, Code);
-				// 				} 
 				_Output.Write ("				}}\n{0}", _Indent);
-				// 			else { 
 				_Output.Write ("			else {{\n{0}", _Indent);
-				// 				int XPosition = Buffer.Encode__Sequence_Start(); 
 				_Output.Write ("				int XPosition = Buffer.Encode__Sequence_Start();\n{0}", _Indent);
-				// 				foreach (#! 
 				_Output.Write ("				foreach (", _Indent);
-				// #% TypeDeclaration (Cast.Spec); 
 				
 				 TypeDeclaration (Cast.Spec);
-				//  _Index in #{Name}) { 
 				_Output.Write (" _Index in {1}) {{\n{0}", _Indent, Name);
-				// 		#! 
 				_Output.Write ("		", _Indent);
-				// #% Encode ("_Index", Cast.Spec, 0, 0); 
 				
 				 Encode ("_Index", Cast.Spec, 0, 0);
-				// 					} 
 				_Output.Write ("					}}\n{0}", _Indent);
-				// 				Buffer.Encode__Sequence_End(XPosition, #{Flags}, #{Code}); 
 				_Output.Write ("				Buffer.Encode__Sequence_End(XPosition, {1}, {2});\n{0}", _Indent, Flags, Code);
-				// 			} 
 				_Output.Write ("			}}\n{0}", _Indent);
-				// #casecast Set Cast 
 				break; }
 				case ASN2Type.Set: {
 				  Set Cast = (Set) Spec; 
-				// 			if (#{Name} == null || #{Name}.Count == 0) { 
 				_Output.Write ("			if ({1} == null || {2}.Count == 0) {{\n{0}", _Indent, Name, Name);
-				// 				Buffer.Encode__Object (null, #{Flags}, #{Code}); 
 				_Output.Write ("				Buffer.Encode__Object (null, {1}, {2});\n{0}", _Indent, Flags, Code);
-				// 				} 
 				_Output.Write ("				}}\n{0}", _Indent);
-				// 			else { 
 				_Output.Write ("			else {{\n{0}", _Indent);
-				// 				int XPosition = Buffer.Encode__Set_Start(); 
 				_Output.Write ("				int XPosition = Buffer.Encode__Set_Start();\n{0}", _Indent);
-				// 				foreach (#! 
 				_Output.Write ("				foreach (", _Indent);
-				// #% TypeDeclaration (Cast.Spec); 
 				
 				 TypeDeclaration (Cast.Spec);
-				//  _Index in #{Name}) { 
 				_Output.Write (" _Index in {1}) {{\n{0}", _Indent, Name);
-				// 		#! 
 				_Output.Write ("		", _Indent);
-				// #% Encode ("_Index", Cast.Spec, 0, 0); 
 				
 				 Encode ("_Index", Cast.Spec, 0, 0);
-				// 					} 
 				_Output.Write ("					}}\n{0}", _Indent);
-				// 				Buffer.Encode__Set_End(XPosition, #{Flags}, #{Code}); 
 				_Output.Write ("				Buffer.Encode__Set_End(XPosition, {1}, {2});\n{0}", _Indent, Flags, Code);
-				// 			} 
 				_Output.Write ("			}}\n{0}", _Indent);
-				// #casecast Choice Cast 
 				break; }
 				case ASN2Type.Choice: {
 				  Choice Cast = (Choice) Spec; 
-				// 	// Do Choice 
 				_Output.Write ("	// Do Choice\n{0}", _Indent);
-				// #foreach (Member ChoiceEntry in Cast.Entries) 
 				foreach  (Member ChoiceEntry in Cast.Entries) {
-					//             // 
 					_Output.Write ("            //\n{0}", _Indent);
-					// #! Encode (ChoiceEntry.Name.ToString(), ChoiceEntry.Spec, ChoiceEntry.Flags, ChoiceEntry.Code); 
 					// Encode (ChoiceEntry.Name.ToString(), ChoiceEntry.Spec, ChoiceEntry.Flags, ChoiceEntry.Code);
-					// #% Encode (ChoiceEntry); 
 					 Encode (ChoiceEntry);
-					// #end foreach 
 					}
-				// #end switchcast 
 			break; }
 				}
-			// #if Call 
 			if (  Call ) {
-				//  (#{Name}, #{Flags}, #{Code}); 
 				_Output.Write (" ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
-				// #end if 
 				}
-			// #% } 
 			 }
-			// #end block 
 		
-		//  
-		//  
-		// #block 
 		
 
 		//
 		// 
 		//
 
-			// #%  public void Decode (String Name, _Choice Spec, int Flags, int Code) { 
 			  public void Decode (String Name, _Choice Spec, int Flags, int Code) {
-			// #%		Decode (Name, null, Spec, Flags, Code); 
 					Decode (Name, null, Spec, Flags, Code);
-			// #%		} 
 					}
-			// #%  public void Decode (String Name, String Default, _Choice Spec, int Flags, int Code) { 
 			  public void Decode (String Name, String Default, _Choice Spec, int Flags, int Code) {
-			//  
 			_Output.Write ("\n{0}", _Indent);
-			// #% bool Call = false; 
 			 bool Call = false;
-			// #switchcast ASN2Type Spec 
 			switch (Spec._Tag ()) {
-				// #case ASN2Type.OIDRef  
 				case  ASN2Type.OIDRef : {
-				// 			Buffer.Decode__OIDRef #! 
 				_Output.Write ("			Buffer.Decode__OIDRef ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.Any  
 				break; }
 				case  ASN2Type.Any : {
-				// 			Buffer.Decode__Any #! 
 				_Output.Write ("			Buffer.Decode__Any ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.Integer  
 				break; }
 				case  ASN2Type.Integer : {
-				// #if (Default != null) 
 				if (  (Default != null) ) {
-					// 			// Default is #{Default} 
 					_Output.Write ("			// Default is {1}\n{0}", _Indent, Default);
-					// 			if (#{Name} != #{Default}) { 
 					_Output.Write ("			if ({1} != {2}) {{\n{0}", _Indent, Name, Default);
-					// 				Buffer.Decode__Integer (#{Name}, #{Flags}, #{Code}); 
 					_Output.Write ("				Buffer.Decode__Integer ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
-					// 				} 
 					_Output.Write ("				}}\n{0}", _Indent);
-					// #else  
 					} else {
-					// 			Buffer.Encode__Integer #! 
 					_Output.Write ("			Buffer.Encode__Integer ", _Indent);
-					// #% Call = true; 
 					 Call = true;
-					// #end if 
 					}
-				// #case ASN2Type.BigInteger  
 				break; }
 				case  ASN2Type.BigInteger : {
-				// 			Buffer.Decode__BigInteger #! 
 				_Output.Write ("			Buffer.Decode__BigInteger ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.Boolean  
 				break; }
 				case  ASN2Type.Boolean : {
-				// #if (Default != null) 
 				if (  (Default != null) ) {
-					// 			// Default is #{Default} 
 					_Output.Write ("			// Default is {1}\n{0}", _Indent, Default);
-					// 			if (#{Name} != #{Default}) { 
 					_Output.Write ("			if ({1} != {2}) {{\n{0}", _Indent, Name, Default);
-					// 				Buffer.Decode__Boolean (#{Name}, #{Flags}, #{Code}); 
 					_Output.Write ("				Buffer.Decode__Boolean ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
-					// 				} 
 					_Output.Write ("				}}\n{0}", _Indent);
-					// #else  
 					} else {
-					// 			Buffer.Decode__Boolean #! 
 					_Output.Write ("			Buffer.Decode__Boolean ", _Indent);
-					// #% Call = true; 
 					 Call = true;
-					// #end if 
 					}
-				// #case ASN2Type.Time  
 				break; }
 				case  ASN2Type.Time : {
-				// 			Buffer.EDecode__Time #! 
 				_Output.Write ("			Buffer.EDecode__Time ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.Bits  
 				break; }
 				case  ASN2Type.Bits : {
-				// 			Buffer.Decode__Bits #! 
 				_Output.Write ("			Buffer.Decode__Bits ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.VBits  
 				break; }
 				case  ASN2Type.VBits : {
-				// 			Buffer.Decode__VBits #! 
 				_Output.Write ("			Buffer.Decode__VBits ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.Octets  
 				break; }
 				case  ASN2Type.Octets : {
-				// 			Buffer.Decode__Octets #! 
 				_Output.Write ("			Buffer.Decode__Octets ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.IA5String  
 				break; }
 				case  ASN2Type.IA5String : {
-				// 			Buffer.Decode__IA5String #! 
 				_Output.Write ("			Buffer.Decode__IA5String ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.BMPString  
 				break; }
 				case  ASN2Type.BMPString : {
-				// 			Buffer.Decode__BMPString #! 
 				_Output.Write ("			Buffer.Decode__BMPString ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.UTF8String  
 				break; }
 				case  ASN2Type.UTF8String : {
-				// 			Buffer.Decode__UTF8String #! 
 				_Output.Write ("			Buffer.Decode__UTF8String ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type.PrintableString  
 				break; }
 				case  ASN2Type.PrintableString : {
-				// 			Buffer.Decode__PrintableString #! 
 				_Output.Write ("			Buffer.Decode__PrintableString ", _Indent);
-				// #% Call = true; 
 				
 				 Call = true;
-				// #case ASN2Type._Label  
 				break; }
 				case  ASN2Type._Label : {
-				// 			Buffer.Decode__Object (#{Name}, #{Flags}, #{Code}); 
 				_Output.Write ("			Buffer.Decode__Object ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
-				// #casecast List Cast 
 				break; }
 				case ASN2Type.List: {
 				  List Cast = (List) Spec; 
-				// 			if (#{Name} == null || #{Name}.Count == 0) { 
 				_Output.Write ("			if ({1} == null || {2}.Count == 0) {{\n{0}", _Indent, Name, Name);
-				// 				Buffer.Decode__Object (null, #{Flags}, #{Code}); 
 				_Output.Write ("				Buffer.Decode__Object (null, {1}, {2});\n{0}", _Indent, Flags, Code);
-				// 				} 
 				_Output.Write ("				}}\n{0}", _Indent);
-				// 			else { 
 				_Output.Write ("			else {{\n{0}", _Indent);
-				// 				int XPosition = Buffer.Decode__Sequence_Start(); 
 				_Output.Write ("				int XPosition = Buffer.Decode__Sequence_Start();\n{0}", _Indent);
-				// 				foreach (#! 
 				_Output.Write ("				foreach (", _Indent);
-				// #% TypeDeclaration (Cast.Spec); 
 				
 				 TypeDeclaration (Cast.Spec);
-				//  _Index in #{Name}) { 
 				_Output.Write (" _Index in {1}) {{\n{0}", _Indent, Name);
-				// 		#! 
 				_Output.Write ("		", _Indent);
-				// #% Encode ("_Index", Cast.Spec, 0, 0); 
 				
 				 Encode ("_Index", Cast.Spec, 0, 0);
-				// 					} 
 				_Output.Write ("					}}\n{0}", _Indent);
-				// 				Buffer.Decode__Sequence_End(XPosition, #{Flags}, #{Code}); 
 				_Output.Write ("				Buffer.Decode__Sequence_End(XPosition, {1}, {2});\n{0}", _Indent, Flags, Code);
-				// 			} 
 				_Output.Write ("			}}\n{0}", _Indent);
-				// #casecast Set Cast 
 				break; }
 				case ASN2Type.Set: {
 				  Set Cast = (Set) Spec; 
-				// 			if (#{Name} == null || #{Name}.Count == 0) { 
 				_Output.Write ("			if ({1} == null || {2}.Count == 0) {{\n{0}", _Indent, Name, Name);
-				// 				Buffer.Decode__Object (null, #{Flags}, #{Code}); 
 				_Output.Write ("				Buffer.Decode__Object (null, {1}, {2});\n{0}", _Indent, Flags, Code);
-				// 				} 
 				_Output.Write ("				}}\n{0}", _Indent);
-				// 			else { 
 				_Output.Write ("			else {{\n{0}", _Indent);
-				// 				int XPosition = Decode.Encode__Set_Start(); 
 				_Output.Write ("				int XPosition = Decode.Encode__Set_Start();\n{0}", _Indent);
-				// 				foreach (#! 
 				_Output.Write ("				foreach (", _Indent);
-				// #% TypeDeclaration (Cast.Spec); 
 				
 				 TypeDeclaration (Cast.Spec);
-				//  _Index in #{Name}) { 
 				_Output.Write (" _Index in {1}) {{\n{0}", _Indent, Name);
-				// 		#! 
 				_Output.Write ("		", _Indent);
-				// #% Encode ("_Index", Cast.Spec, 0, 0); 
 				
 				 Encode ("_Index", Cast.Spec, 0, 0);
-				// 					} 
 				_Output.Write ("					}}\n{0}", _Indent);
-				// 				Buffer.Decode__Set_End(XPosition, #{Flags}, #{Code}); 
 				_Output.Write ("				Buffer.Decode__Set_End(XPosition, {1}, {2});\n{0}", _Indent, Flags, Code);
-				// 			} 
 				_Output.Write ("			}}\n{0}", _Indent);
-				// #casecast Choice Cast 
 				break; }
 				case ASN2Type.Choice: {
 				  Choice Cast = (Choice) Spec; 
-				// 	// Do Choice 
 				_Output.Write ("	// Do Choice\n{0}", _Indent);
-				// #foreach (Member ChoiceEntry in Cast.Entries) 
 				foreach  (Member ChoiceEntry in Cast.Entries) {
-					//             // 
 					_Output.Write ("            //\n{0}", _Indent);
-					// #! Encode (ChoiceEntry.Name.ToString(), ChoiceEntry.Spec, ChoiceEntry.Flags, ChoiceEntry.Code); 
 					// Encode (ChoiceEntry.Name.ToString(), ChoiceEntry.Spec, ChoiceEntry.Flags, ChoiceEntry.Code);
-					// #% Encode (ChoiceEntry); 
 					 Encode (ChoiceEntry);
-					// #end foreach 
 					}
-				// #end switchcast 
 			break; }
 				}
-			// #if Call 
 			if (  Call ) {
-				//  (#{Name}, #{Flags}, #{Code}); 
 				_Output.Write (" ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
-				// #end if 
 				}
-			// #% } 
 			 }
-			// #end block 
 		
-		//  
-		//  
-		//  
-		// #method MakeChildren _Choice Element 
 		
 
 		//
 		// MakeChildren
 		//
 		public void MakeChildren (_Choice Element) {
-			// #foreach (OID OID in Element.Children) 
 			foreach  (OID OID in Element.Children) {
-				//  
 				_Output.Write ("\n{0}", _Indent);
-				// 		/// <summary> 
 				_Output.Write ("		/// <summary>\n{0}", _Indent);
-				// 		/// #{OID.Name} = #{OID.Root} (#{OID.Value}) as integer sequence 
 				_Output.Write ("		/// {1} = {2} ({3}) as integer sequence\n{0}", _Indent, OID.Name, OID.Root, OID.Value);
-				// 		/// </summary> 
 				_Output.Write ("		/// </summary>\n{0}", _Indent);
-				// 		public readonly static int [] OID__#{OID.Name} = new int [] { #! 
 				_Output.Write ("		public readonly static int [] OID__{1} = new int [] {{ ", _Indent, OID.Name);
-				// #% MakeConst(OID.Binary) ;	 
 				 MakeConst(OID.Binary) ;	
-				// }; 
 				_Output.Write ("}};\n{0}", _Indent);
-				// 		/// <summary> 
 				_Output.Write ("		/// <summary>\n{0}", _Indent);
-				// 		/// #{OID.Name} = #{OID.Root} (#{OID.Value}) as string 
 				_Output.Write ("		/// {1} = {2} ({3}) as string\n{0}", _Indent, OID.Name, OID.Root, OID.Value);
-				// 		/// </summary> 
 				_Output.Write ("		/// </summary>\n{0}", _Indent);
-				// 		public const string OIDS__#{OID.Name} = "#! 
 				_Output.Write ("		public const string OIDS__{1} = \"", _Indent, OID.Name);
-				// #% MakeString(OID.Binary) ;	 
 				 MakeString(OID.Binary) ;	
-				// "; 
 				_Output.Write ("\";\n{0}", _Indent);
-				//  
 				_Output.Write ("\n{0}", _Indent);
-				//  
 				_Output.Write ("\n{0}", _Indent);
-				// #% MakeChildren (OID); 
 				 MakeChildren (OID);
-				// #end foreach 
 				}
-			// #end method 
 			}
-		//  
-		// #method MakeConst int[] Array 
 		
 
 		//
 		// MakeConst
 		//
 		public void MakeConst (int[] Array) {
-			// #% bool Comma = false; 
 			 bool Comma = false;
-			// #foreach (int Value in Array) 
 			foreach  (int Value in Array) {
-				// #if Comma 
 				if (  Comma ) {
-					// , #! 
 					_Output.Write (", ", _Indent);
-					// #end if 
 					}
-				// #% Comma = true; 
 				 Comma = true;
-				// #{Value}#! 
 				_Output.Write ("{1}", _Indent, Value);
-				// #end foreach 
 				}
-			// #end method 
 			}
-		//  
-		//  
-		// #method MakeString int[] Array 
 		
 
 		//
 		// MakeString
 		//
 		public void MakeString (int[] Array) {
-			// #% bool Comma = false; 
 			 bool Comma = false;
-			// #foreach (int Value in Array) 
 			foreach  (int Value in Array) {
-				// #if Comma 
 				if (  Comma ) {
-					// .#! 
 					_Output.Write (".", _Indent);
-					// #end if 
 					}
-				// #% Comma = true; 
 				 Comma = true;
-				// #{Value}#! 
 				_Output.Write ("{1}", _Indent, Value);
-				// #end foreach 
 				}
-			// #end method 
 			}
-		//  
-		// #end pclass 
 		}
 	}

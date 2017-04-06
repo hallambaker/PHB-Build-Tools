@@ -184,6 +184,9 @@ namespace Goedel.Cryptography.Framework {
 
             Key = Key ?? Provider.Key;
             IV = IV ?? Provider.IV;
+
+            Console.WriteLine("Encrypt {0}", Key.Base16());
+
             var Transform = Provider.CreateEncryptor(Key, IV);
             return Process(Data, Transform);
             }
@@ -199,8 +202,25 @@ namespace Goedel.Cryptography.Framework {
                         byte[] Key = null, byte[] IV = null) {
             Key = Key ?? Provider.Key;
             IV = IV ?? Provider.IV;
+
+            Console.WriteLine("Decrypt {0}", Key.Base16());
+            Console.WriteLine("IV {0}", IV.Base16());
+            Console.WriteLine("CipherText {0}", Data.Base16(50));
+
             var Transform = Provider.CreateDecryptor(Key, IV);
-            return Process(Data, Transform);
+
+            byte[] Result;
+            using (var Input = new MemoryStream()) {
+                using (var CryptoStream = new CryptoStream(Input, Transform, CryptoStreamMode.Write)) {
+                    CryptoStream.Write(Data, 0, Data.Length);
+                    CryptoStream.Close();
+                    }
+                Result = Input.ToArray();
+                }
+
+            return Result;
+
+            //return Process(Data, Transform);
             }
 
 

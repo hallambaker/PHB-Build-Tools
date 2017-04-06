@@ -35,9 +35,11 @@ namespace Goedel.Utilities  {
         /// Convert data to Base16 (hexadecimal)
         /// </summary>
         /// <param name="Data">The data to be encoded.</param>
+        /// <param name="Length">The number of bytes to be encoded, if negative or unspecified,
+        /// all bytes are encoded.</param>
         /// <returns>The input data converted to a Base16 encoded string</returns>
-        public static string Base16(this byte[] Data) {
-            return BaseConvert.ToBase16String(Data);
+        public static string Base16(this byte[] Data, int Length = -1) {
+            return BaseConvert.ToBase16String(Data, Length);
             }
 
         /// <summary>
@@ -245,14 +247,14 @@ namespace Goedel.Utilities  {
                      49,  50,  51, 255,  255, 255, 255, 255,   // 120-127
         };
 
-        /// <summary>
-        /// Convert the input data to a base16 string.
-        /// </summary>
-        /// <param name="data">The data to convert.</param>
-        /// <returns>The resulting string.</returns>
-        public static string ToBase16String(this byte[] data) {
-            return ToBase16String(data, data.Length);
-            }
+        ///// <summary>
+        ///// Convert the input data to a base16 string.
+        ///// </summary>
+        ///// <param name="data">The data to convert.</param>
+        ///// <returns>The resulting string.</returns>
+        //public static string ToBase16String(this byte[] data) {
+        //    return ToBase16String(data, data.Length);
+        //    }
 
 
         /// <summary>
@@ -261,7 +263,7 @@ namespace Goedel.Utilities  {
         /// <param name="data">The data to convert.</param>
         /// <param name="Length">Number of bytes to convert</param>
         /// <returns>The resulting string.</returns>
-        public static string ToBase16String(this byte[] data, int Length) {
+        public static string ToBase16String(this byte[] data, int Length = -1) {
             var Builder = new StringBuilder();
             ToBase16String(Builder, data, Length);
             return Builder.ToString();
@@ -274,7 +276,8 @@ namespace Goedel.Utilities  {
         /// <param name="Length">Number of bytes to convert</param>
         /// <param name="Builder">StringBuilder to collect the emitted characteres</param>
         /// <returns>The resulting string.</returns>
-        public static void ToBase16String(this StringBuilder Builder, byte[] data, int Length) {
+        public static void ToBase16String(this StringBuilder Builder, byte[] data, int Length = -1) {
+            Length = (Length < 0) | Length > data.Length ? data.Length : Length;
             for (int i = 0; i<Length; i++) {
                 int n1 = data[i] >>4;
                 int n2 = data[i] & 0xF;

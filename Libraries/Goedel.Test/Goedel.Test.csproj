@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <AssemblyVersion>1.0.</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,29 +58,29 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries2\Goedel.Utilities.2\Goedel.Utilities.2.csproj">
-      <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
-      <Name>Goedel.Utilities.2</Name>
+    <ProjectReference Include="..\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj">
+      <Project>{fd1d6ce2-8a10-45a5-a473-f5517b8ab3d5}</Project>
+      <Name>Goedel.Cryptography.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Cryptography.2\Goedel.Cryptography.2.csproj">
+    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <Project>{c1a5cf62-88cb-47f9-b9a3-59354ffa6c68}</Project>
-      <Name>Goedel.Cryptography.2</Name>
+      <Name>Goedel.Cryptography</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Cryptography.Framework\Goedel.Cryptography.Framework.csproj">
       <Project>{b12ad19f-0e50-4d1d-99de-30c63886e718}</Project>
       <Name>Goedel.Cryptography.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj">
-      <Project>{fd1d6ce2-8a10-45a5-a473-f5517b8ab3d5}</Project>
-      <Name>Goedel.Cryptography.Windows</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj">
       <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
       <Name>Goedel.IO</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Platform.2\Goedel.Platform.2.csproj">
+    <ProjectReference Include="..\Goedel.Platform\Goedel.Platform.csproj">
       <Project>{46332174-d5ea-4bd5-9ff0-fdccbbf6df83}</Project>
-      <Name>Goedel.Platform.2</Name>
+      <Name>Goedel.Platform</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

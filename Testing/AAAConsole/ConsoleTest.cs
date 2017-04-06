@@ -4,9 +4,10 @@ using System.Diagnostics;
 using System.Numerics;
 using System.Security.Cryptography;
 using Goedel.Utilities;
-using Goedel.IO;
+using System.IO;
 using Goedel.Test;
 using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Framework;
 using Goedel.Cryptography.Windows;
 
@@ -20,10 +21,31 @@ namespace PHB_Framework_Library1 {
             Goedel.IO.Debug.Initialize();
             CryptographyFramework.Initialize();
             Goedel.FSR.Lexer.Trace = true;
-            var Start = new Start();
+            var Start = new Start2();
             }
         }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Start2 {
+
+        ///<summary></summary>
+        public Start2() {
+
+            var Key = Platform.GetRandomBits(256);
+            var Plaintext = "This is a bigly test".ToUTF8();
+            var EncryptID = CryptoAlgorithmID.AES256CBC;
+
+
+
+
+            var EncryptedData = new JoseWebEncryption(Plaintext, Key, EncryptID: EncryptID);
+
+            var Decrypt = EncryptedData.Decrypt(Key);
+
+            }
+        }
 
     /// <summary>
     /// 

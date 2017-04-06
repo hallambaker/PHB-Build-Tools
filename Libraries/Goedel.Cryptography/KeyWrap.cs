@@ -51,13 +51,22 @@ namespace Goedel.Cryptography {
 
         /// <summary>Wrap a symmetric key</summary>
         /// <param name="Kek">The key encryption key</param>
-        /// <param name="Key">The Key to wrap</param>
+        /// <param name="Plaintext">The Key to wrap</param>
         /// <returns>The wrapped key</returns>
-        public override byte[] Wrap(byte[] Kek, byte[] Key) {
+        public override byte[] Wrap(byte[] Kek, byte[] Plaintext) {
+            return WrapKey(Kek, Plaintext);
+            }
+
+
+        /// <summary>Wrap a symmetric key</summary>
+        /// <param name="Kek">The key encryption key</param>
+        /// <param name="Plaintext">The Key to wrap</param>
+        /// <returns>The wrapped key</returns>
+        public static byte[] WrapKey(byte[] Kek, byte[] Plaintext) {
 
             var Encryptor = Platform.BlockProviderFactoryAes(Kek, true);
 
-            int n = Key.Length / 8; // The length in blocks
+            int n = Plaintext.Length / 8; // The length in blocks
             var R = new Block[n + 1];
 
             //1) Initialize variables.
@@ -69,8 +78,8 @@ namespace Goedel.Cryptography {
             //TraceX.WriteLine("Kek {0}", BaseConvert.ToBase16String(Kek));
             //TraceX.WriteLine("Key {0}", BaseConvert.ToBase16String(Key));
             R[0] = new Block(0xA6);
-            for (var i=0; i<n; i++) {
-                R[i+1] = new Block(Key, i);
+            for (var i = 0; i < n; i++) {
+                R[i + 1] = new Block(Plaintext, i);
                 }
 
             //Trace(R);
@@ -87,7 +96,7 @@ namespace Goedel.Cryptography {
 
             for (var j = 0; j <= 5; j++) {
                 //TraceX.WriteLine("Round #{0}", j);
-                for (var i = 1; i <= n; i ++) {
+                for (var i = 1; i <= n; i++) {
                     long t = (n * j) + i;
                     Block.Concat(R[0], R[i], In);
                     Encryptor.Process(In, 0, B, 0);
@@ -108,12 +117,19 @@ namespace Goedel.Cryptography {
 
             return Result;
             }
-
         /// <summary>Wrap a symmetric key</summary>
         /// <param name="Kek">The key encryption key</param>
         /// <param name="Ciphertext">The encrypted key to unwrap</param>
         /// <returns>The unwrapped key</returns>
         public override byte[] Unwrap(byte[] Kek, byte[] Ciphertext) {
+            return UnwrapKey(Kek, Ciphertext);
+            }
+
+        /// <summary>Wrap a symmetric key</summary>
+        /// <param name="Kek">The key encryption key</param>
+        /// <param name="Ciphertext">The encrypted key to unwrap</param>
+        /// <returns>The unwrapped key</returns>
+        public static byte[] UnwrapKey (byte[] Kek, byte[] Ciphertext) {
 
             var Decryptor = Platform.BlockProviderFactoryAes(Kek, false);
 
