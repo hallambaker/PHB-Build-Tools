@@ -36,7 +36,7 @@ namespace Goedel.Cryptography.Framework {
         /// Return the underlying .NET cryptographic provider.
         /// </summary>
         public AsymmetricAlgorithm AsymmetricAlgorithm {
-            get { return _Provider; }
+            get => _Provider;
             }
 
 
@@ -47,13 +47,13 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The private key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
-        public override IPKIXPrivateKey PKIXPrivateKey { get { return PKIXPrivateKeyRSA; } }
+        public override IPKIXPrivateKey PKIXPrivateKey { get => PKIXPrivateKeyRSA; } 
 
 
         /// <summary>
         /// The private key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
-        public override IPKIXPublicKey PKIXPublicKey { get { return PKIXPublicKeyRSA; } }
+        public override IPKIXPublicKey PKIXPublicKey { get => PKIXPublicKeyRSA; } 
 
 
 
@@ -76,9 +76,7 @@ namespace Goedel.Cryptography.Framework {
         /// Return public key parameters in PKIX structure
         /// </summary>
         public override PKIXPublicKeyRSA PKIXPublicKeyRSA {
-            get {
-                return PublicParameters.RSAPublicKey();
-                }
+            get => PublicParameters.RSAPublicKey();
             }
 
         /// <summary>
@@ -126,7 +124,7 @@ namespace Goedel.Cryptography.Framework {
         /// <returns>RSAKeyPair</returns>
         public static new RSAKeyPair FindLocal(string UDF) {
             var Provider = PlatformLocateRSAProvider(UDF);
-            if (Provider == null) return null;
+            if (Provider == null) { return null; }
             return new RSAKeyPair(Provider);
             }
 
@@ -146,22 +144,16 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
 
         public override SubjectPublicKeyInfo KeyInfoData {
-            get {
-                return new SubjectPublicKeyInfo(CryptoConfig.MapNameToOID("RSA"),
-                        PKIXPublicKeyRSA.DER());
-                }
-            }
+            get => new SubjectPublicKeyInfo(CryptoConfig.MapNameToOID("RSA"),
+                        PKIXPublicKeyRSA.DER()); }
 
         /// <summary>
         /// Return a PKIX SubjectPublicKeyInfo structure for the private key.
         /// </summary>
 
         public override SubjectPublicKeyInfo PrivateKeyInfoData {
-            get {
-                return new SubjectPublicKeyInfo(CryptoConfig.MapNameToOID("RSA"),
-                        PKIXPrivateKeyRSA.DER());
-                }
-            }
+            get => new SubjectPublicKeyInfo(CryptoConfig.MapNameToOID("RSA"),
+                        PKIXPrivateKeyRSA.DER()); }
 
 
         /// <summary>
@@ -201,9 +193,9 @@ namespace Goedel.Cryptography.Framework {
                 }
 
             if (Persist) {
-                var PreCSPParameters = new CspParameters();
-                PreCSPParameters.Flags = CspProviderFlags.UseArchivableKey;
-
+                var PreCSPParameters = new CspParameters() {
+                    Flags = CspProviderFlags.UseArchivableKey
+                    };
                 var TempProvider = new RSACryptoServiceProvider(KeySize, PreCSPParameters);
                 var PrivateParameters = TempProvider.ExportParameters(true);
                 PublicParameters = TempProvider.ExportParameters(false);
@@ -329,7 +321,7 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="KeySecurity">Key protection level to be applied.</param>
         public void Persist(KeySecurity KeySecurity) {
 
-            if (Provider == null) throw new System.Exception("No provider set");
+            Assert.NotNull(Provider, NoProviderSpecified.Throw);
 
             var Parameters = new CspParameters();
             switch (KeySecurity) {
@@ -370,9 +362,10 @@ namespace Goedel.Cryptography.Framework {
         /// <returns>cryptographic provider matching the specified fingerprint</returns>
         static RSACryptoServiceProvider PlatformLocateRSAProvider(string UDF) {
             try {
-                var Parameters = new CspParameters();
-                Parameters.KeyContainerName = Container.Name(UDF);
-                Parameters.Flags = CspProviderFlags.UseExistingKey;
+                var Parameters = new CspParameters() {
+                    KeyContainerName = Container.Name(UDF),
+                    Flags = CspProviderFlags.UseExistingKey
+                    };
                 return new RSACryptoServiceProvider(Parameters);
                 }
             catch (System.Security.Cryptography.CryptographicException) { // Key not found
@@ -389,8 +382,9 @@ namespace Goedel.Cryptography.Framework {
                 }
             //Goedel.Debug.Trace.WriteLine("Get Private for {0}", UDF);
 
-            var cp = new CspParameters();
-            cp.KeyContainerName = Container.Name(UDF);
+            var cp = new CspParameters() {
+                KeyContainerName = Container.Name(UDF)
+                };
 
             _Provider = new RSACryptoServiceProvider(cp);
 
@@ -400,11 +394,13 @@ namespace Goedel.Cryptography.Framework {
         /// Erase the key from the local machine
         /// </summary>
         public override void EraseFromDevice() {
-            var cp = new CspParameters();
-            cp.KeyContainerName = Container.Name(UDF);
+            var cp = new CspParameters() {
+                KeyContainerName = Container.Name(UDF)
+                };
 
-            _Provider = new RSACryptoServiceProvider(cp);
-            _Provider.PersistKeyInCsp = false;
+            _Provider = new RSACryptoServiceProvider(cp) {
+                PersistKeyInCsp = false
+                };
             _Provider.Clear();
             }
 

@@ -20,7 +20,7 @@ namespace Goedel.Platform {
         public static void Initialize (bool TestMode = false) {
             Goedel.Platform.Platform.DNSClient = new DNSClientUDP();
             //Goedel.Platform.Platform.QueryAsyncDelegate = DNSClientUDP.QueryAsync;
-            Goedel.Platform.Platform.GetRandomBytesDelegate = GetRandomBytes;
+            Goedel.Platform.Platform.GetRandomBytesD = GetRandomBytes;
             }
 
         /// <summary>

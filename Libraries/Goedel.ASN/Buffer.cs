@@ -96,18 +96,18 @@ namespace Goedel.ASN {
         /// </summary>
         /// <param name="Tag">Tag to mark to output</param>
         public void Debug(string Tag) {
-            var Builder = new StringBuilder();
-            Builder.Append(Tag);
-            Builder.Append(":");
-            for (int i = Pointer; i < Buffered.Length; i++) {
-                if ((i % 16) == 0) {
-                    SD.Debug.WriteLine(Builder.ToString());
-                    Builder.Clear();
-                    Builder.Append("   ");
-                    }
-                Builder.AppendFormat(" {0:x2}", Buffered[i]);
-                }
-            SD.Debug.WriteLine(Builder.ToString());
+            //var Builder = new StringBuilder();
+            //Builder.Append(Tag);
+            //Builder.Append(":");
+            //for (int i = Pointer; i < Buffered.Length; i++) {
+            //    if ((i % 16) == 0) {
+            //        SD.Debug.WriteLine(Builder.ToString());
+            //        Builder.Clear();
+            //        Builder.Append("   ");
+            //        }
+            //    Builder.AppendFormat(" {0:x2}", Buffered[i]);
+            //    }
+            //SD.Debug.WriteLine(Builder.ToString());
             }
 
         // Convenience function, only ever adds the lowest byte.

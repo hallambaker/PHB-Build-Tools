@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Diagnostics;
 using Goedel.Utilities;
 
 namespace Goedel.Protocol {
@@ -57,7 +57,7 @@ namespace Goedel.Protocol {
         /// </summary>
         protected enum CharType {
             /// <summary></summary>
-            Quote=0,
+            Quote = 0,
             /// <summary></summary>
             LeftBrace = 1,
             /// <summary></summary>
@@ -106,27 +106,27 @@ namespace Goedel.Protocol {
         /// <param name="c">Input character</param>
         /// <returns>Character class</returns>
         protected CharType GetCharType(char c) {
-            if (c == '\"') return CharType.Quote;
-            if (c == '{') return CharType.LeftBrace;
-            if (c == '}') return CharType.RightBrace;
-            if (c == '[') return CharType.LeftSquare;
-            if (c == ']') return CharType.RightSquare;
-            if (c == '0') return CharType.Zero;
-            if ((c >= '0') & (c <= '9')) return CharType.Digit;
-            if (c == '.') return CharType.Period;
-            if (c == ':') return CharType.Colon;
-            if (c == ',') return CharType.Comma;
-            if (c == '-') return CharType.Minus;
-            if (c == '\\') return CharType.Solidus;
-            if (c == '+') return CharType.Plus;            
-            if ((c == 'e') | (c == 'E')) return CharType.Ee;
-            if (c == 'u') return CharType.u;
-            if  ((c == '/') | (c == 't') | (c == 'r') | (c == 'n') | (c == 'f') | (c == 'b'))  return CharType.Escaped;
-            if ((c >= 'a') & (c <= 'f')) return CharType.Hex;
-            if ((c >= 'A') & (c <= 'F')) return CharType.Hex;
-            if ((c >= 'a') & (c <= 'z')) return CharType.Lower;  
-            if ((c == ' ') | (c == '\t') | (c == '\r') | (c == '\n') | (c == '\f') | (c == '\b')) return CharType.WS;
-            if (c == 0x1e) return CharType.EOR;
+            if (c == '\"') { return CharType.Quote; }
+            if (c == '{') { return CharType.LeftBrace; }
+            if (c == '}') { return CharType.RightBrace; }
+            if (c == '[') { return CharType.LeftSquare; }
+            if (c == ']') { return CharType.RightSquare; }
+            if (c == '0') { return CharType.Zero; }
+            if ((c >= '0') & (c <= '9')) { return CharType.Digit; }
+            if (c == '.') { return CharType.Period; }
+            if (c == ':') { return CharType.Colon; }
+            if (c == ',') { return CharType.Comma; }
+            if (c == '-') { return CharType.Minus; }
+            if (c == '\\') {return CharType.Solidus; }
+            if (c == '+') {return CharType.Plus;      }      
+            if ((c == 'e') | (c == 'E')) {return CharType.Ee;}
+            if (c == 'u') {return CharType.u;}
+            if  ((c == '/') | (c == 't') | (c == 'r') | (c == 'n') | (c == 'f') | (c == 'b'))  {return CharType.Escaped;}
+            if ((c >= 'a') & (c <= 'f')) {return CharType.Hex;}
+            if ((c >= 'A') & (c <= 'F')) {return CharType.Hex;}
+            if ((c >= 'a') & (c <= 'z')) {return CharType.Lower;  }
+            if ((c == ' ') | (c == '\t') | (c == '\r') | (c == '\n') | (c == '\f') | (c == '\b')) {return CharType.WS;}
+            if (c == 0x1e) {return CharType.EOR;}
             return CharType.Other;
             }
 
@@ -319,7 +319,7 @@ namespace Goedel.Protocol {
                 TokenString = Lexer (out TokenType);
                 }
             Lookahead = false;
-            //Trace.WriteLine("Got {0} \"{1}\"", TokenType, TokenString);
+            //Debug.WriteLine("Got {0} \"{1}\"", TokenType, TokenString);
             }
 
         /// <summary>Unget a token.</summary>

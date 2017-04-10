@@ -13,10 +13,10 @@ namespace Goedel.Platform {
         public static DNSClient DNSClient;
 
         /// <summary>Fill byte buffer with cryptographically strong random numbers.</summary>
-        public delegate void GetRandomBytesDelegateType(byte[] Data, int Offset, int Count);
+        public delegate void GetRandomBytesDelegate(byte[] Data, int Offset, int Count);
 
         /// <summary>Fill byte buffer with cryptographically strong random numbers</summary>
-        public static GetRandomBytesDelegateType GetRandomBytesDelegate;
+        public static GetRandomBytesDelegate GetRandomBytesD;
 
         /// <summary>
         /// Get a specified number of random bytes.
@@ -25,7 +25,7 @@ namespace Goedel.Platform {
         /// <returns>Random data</returns>
         public static byte[] GetRandomBytes(int Length) {
             var Data = new byte[Length];
-            GetRandomBytesDelegate(Data, 0, Length);
+            GetRandomBytesD(Data, 0, Length);
             return Data;
             }
 

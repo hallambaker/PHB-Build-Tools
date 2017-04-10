@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using Goedel.Utilities;
 
 namespace Goedel.Platform {
 
@@ -117,17 +118,15 @@ namespace Goedel.Platform {
         // Check to see if there is space in the buffer, resize if possible otherwise throw 
         // exception
         void CheckSpaceWrite (int bytes) {
-            if (( Pointer + bytes ) > Buffer.MaxLength) 
-                    throw new TBSException ("Buffer Overflow");
+            Assert.False (( Pointer + bytes ) > Buffer.MaxLength , BufferWriteOverflow.Throw);
+
             if (( Pointer + bytes ) > Buffer.Length) {
                 Array.Resize (ref Buffer.Buffer, Buffer.MaxLength);
                 }
             }
 
         void CheckSpaceRead(int bytes) {
-            if (Pointer + bytes > MaxRead) {
-                throw new TBSException("Read Truncated");
-                }
+            Assert.False(Pointer + bytes > MaxRead, BufferReadOverflow.Throw);
             }
 
 
@@ -171,7 +170,7 @@ namespace Goedel.Platform {
         /// <param name="data">Data to write</param>
         public void WriteIPv4 (IPAddress data) {
             byte [] bytes = data.GetAddressBytes();
-            if (bytes.Length != 4) throw new Exception ("Not a valid IPv4 Address");
+            Assert.True(bytes.Length == 4, InvalidIPv4.Throw);
             WriteData (bytes);
             }
 
@@ -179,7 +178,7 @@ namespace Goedel.Platform {
         /// <param name="data">Data to write</param>
         public void WriteIPv6 (IPAddress data) {
             byte [] bytes = data.GetAddressBytes();
-            if (bytes.Length != 16) throw new Exception ("Not a valid IPv6 Address");
+            Assert.True(bytes.Length == 16, InvalidIPv6.Throw);
             WriteData (bytes);
             }
 
@@ -275,25 +274,27 @@ namespace Goedel.Platform {
                 //Console.WriteLine ("   {0:d3} {1:s}", i, n);
                 if (n == '.') {
                     if (label != 0) { //Ignore zero length labels
-                        if (label > 63) throw new TBSException ("Label too long");
+                        Assert.False(label > 63, LabelTooLong.Throw);
                         Buffer.Buffer[offset] = (byte)label;
                         offset = Pointer;
-                        WriteByte (0);
+                        WriteByte(0);
                         label = 0;
                         }
                     }
-                else if (n == '-' | n == '_' | ( nn >= 65 & nn <= 90 ) | ( nn >= 48 & nn <= 57 )) {
-                    WriteByte ((byte)nn);
+                else if (n == '-' | n == '_' | (nn >= 65 & nn <= 90) | (nn >= 48 & nn <= 57)) {
+                    WriteByte((byte)nn);
                     label++;
                     }
                 else if (nn >= 97 & nn <= 122) {
-                    WriteByte ((byte)( nn - 32 ));
+                    WriteByte((byte)(nn - 32));
                     label++;
                     }
                 else if (nn > 255) {
-                    throw new TBSException ("Unicode Not Supported Yet");
+                    throw new UnicodeNotSupported();
                     }
-                else throw new TBSException ("Illegal character");
+                else {
+                    throw new IllegalCharacter();
+                    }
                 }
             }
 
@@ -301,7 +302,7 @@ namespace Goedel.Platform {
         /// <param name="Tag">Data to write</param>
         public void WriteTag (String Tag) {
             CheckSpaceWrite (Tag.Length);
-            if (Tag.Length>255) throw new TBSException ("Tag Too Long");
+            Assert.False(Tag.Length>255, TagTooLong.Throw);
             foreach (char c in Tag) {
                 Write ((byte)( c & 0x7f ));
                 }
@@ -419,8 +420,7 @@ namespace Goedel.Platform {
         /// <summary>Read Node identifier value</summary>
         /// <returns>The value read</returns>
         public UInt64 ReadNodeID () {
-            ulong data;
-            ReadInt64 (out data);
+            ReadInt64 (out var data);
             return data;
             }
 

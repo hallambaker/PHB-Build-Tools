@@ -1,0 +1,16 @@
+﻿
+Namespace Goedel.Protocol
+    
+	Exception Dechunking
+        Console "Key could not be read"
+
+		Exception UnknownOperation
+			Console "The requested operation is not known to this server."
+			Description
+				|The requested operation is not known to this server.
+
+		Exception MessageTooBig
+			Console "Message is too big"
+			Description
+				|Message exceeds permitted size limit
+

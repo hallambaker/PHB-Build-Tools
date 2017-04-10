@@ -21,7 +21,7 @@ namespace PHB_Framework_Library1 {
             Goedel.IO.Debug.Initialize();
             CryptographyFramework.Initialize();
             Goedel.FSR.Lexer.Trace = true;
-            var Start = new Start2();
+            var Start = new Start();
             }
         }
 
@@ -36,8 +36,8 @@ namespace PHB_Framework_Library1 {
             var Key = Platform.GetRandomBits(256);
             var Plaintext = "This is a bigly test".ToUTF8();
             var EncryptID = CryptoAlgorithmID.AES256CBC;
-
-
+            var CryptoProvider = CryptoCatalog.Default.GetSignature(CryptoAlgorithmID.RSASign);
+            CryptoProvider.Generate(KeySecurity.Ephemeral);
 
 
             var EncryptedData = new JoseWebEncryption(Plaintext, Key, EncryptID: EncryptID);
@@ -54,7 +54,16 @@ namespace PHB_Framework_Library1 {
 
         ///<summary></summary>
         public Start() {
+
+            var In ="hello".ToUTF8();
+            var SHA3 = new SHA3();
+            var Shake = SHA3.Shake256(In, 256);
+            var ShakeText = Shake.ToBase16String();
+
             var c1 = new CurveEdwards448(new BigInteger(1), false);
+
+
+            var match = "1234075ae4a1e77316cf2d8000974581a343b9ebbca7e3d1db83394c30f221626f594e4f0de63902349a5ea5781213215813919f92a4d86d127466e3d07e8be3";
 
             var Curve448BaseY = (
     "298819210078481492676017930443930673437544040154080242095928241" +
@@ -64,6 +73,12 @@ namespace PHB_Framework_Library1 {
 
 
             b2.Double();
+
+
+            var Curve448TestY = CurveEdwards448.Decode (("6c82a562cb808d10d632be89c8513ebf" +
+                   "6c929f34ddfa8c9f63c9960ef6e348a3" +
+                   "528c8a3fcc2f044e39a3fc5b94492f8f" +
+                   "032e7549a20098f95b").FromBase16String());
 
 
 
@@ -202,10 +217,12 @@ namespace PHB_Framework_Library1 {
 
         public void Delete (string Key) {
             try {
-                var CSP = new CspParameters();
-                CSP.KeyContainerName = Key;
-                var RSA = new RSACryptoServiceProvider(CSP);
-                RSA.PersistKeyInCsp = false;
+                var CSP = new CspParameters() {
+                    KeyContainerName = Key
+                    };
+                var RSA = new RSACryptoServiceProvider(CSP) {
+                    PersistKeyInCsp = false
+                    };
                 }
             catch {
 

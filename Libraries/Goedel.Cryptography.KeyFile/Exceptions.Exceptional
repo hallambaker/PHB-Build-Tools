@@ -3,7 +3,7 @@
 Namespace Goedel.Cryptography.KeyFile
     
 	Exception KeyFileException
-        Console "Key could not be read"
+        Console "Key could not be ready"
 		Description
 			|Exception occurred parsing or encoding a key file.
 

@@ -18,6 +18,22 @@
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Exceptions.exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>Exceptional</Generator>
+    </None>
+  </ItemGroup>
+  
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="powershell publishtarget $(TargetPath)" />
   </Target>

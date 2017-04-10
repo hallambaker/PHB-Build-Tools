@@ -284,7 +284,7 @@ namespace Goedel.Cryptography {
         public BigInteger Agreement;
 
         /// <summary>The key agreement result as a byte array</summary>
-        public byte[] IKM { get { return Agreement.ToByteArray(); } }
+        public byte[] IKM { get => Agreement.ToByteArray();  }
 
         /// <summary>Carry from proxy recryption efforts</summary>
         public BigInteger Carry;

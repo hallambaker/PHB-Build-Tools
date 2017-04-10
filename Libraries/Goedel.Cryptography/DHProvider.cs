@@ -17,14 +17,14 @@ namespace Goedel.Cryptography {
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
         public override CryptoAlgorithmID CryptoAlgorithmID {
-            get { return _CryptoAlgorithmID; }
+            get => _CryptoAlgorithmID; 
             }
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
         public override CryptoAlgorithm CryptoAlgorithm {
-            get { return CryptoAlgorithmAny; }
+            get => CryptoAlgorithmAny;
             }
 
         static CryptoAlgorithm CryptoAlgorithmAny = new CryptoAlgorithm(
@@ -48,7 +48,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Default algorithm key or output size.
         /// </summary>
-        public override int Size { get { return 2048; } }
+        public override int Size { get => 2048;  }
 
         /// <summary>
         /// Delegate to create a cryptographic provider with optional key size and/or
@@ -70,7 +70,7 @@ namespace Goedel.Cryptography {
         /// ~\.Mesh\Keys\DH on U*ix based systems.
         /// </remarks>
         public override string UDF {
-            get { return DHKeyPair.UDF; }
+            get => DHKeyPair.UDF; 
             }
 
 
@@ -80,7 +80,7 @@ namespace Goedel.Cryptography {
         /// Return the provider key.
         /// </summary>
         public override KeyPair KeyPair {
-            get { return DHKeyPair; }
+            get => DHKeyPair; 
             set {
                 var DHKeyPair = value as DHKeyPair;
                 Assert.NotNull(DHKeyPair, InvalidKeyPairType.Throw, "DH keypair expected");
@@ -132,7 +132,7 @@ namespace Goedel.Cryptography {
 
         /// <summary>The maximum number of shares into which a key may be split</summary>
         public override int SharesMaximum {
-            get { return 16; }
+            get => 16; 
             }
 
         /// <summary>

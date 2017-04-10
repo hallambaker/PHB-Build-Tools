@@ -2,6 +2,7 @@
 
 Namespace Goedel.VSIX.Binding
 
+
 	ASN2CS Generator ".cs"
 		GUID "21DBBD9C-ACCB-4E74-90C0-E5D06AA47792"
 		Project CSharp

@@ -38,7 +38,7 @@ namespace Goedel.Cryptography.Framework {
         /// The type of algorithm
         /// </summary>
         public override CryptoAlgorithmClass AlgorithmClass {
-            get { return CryptoAlgorithmClass.Encryption; } }
+            get => CryptoAlgorithmClass.Encryption; } 
 
         /// <summary>
         /// The .NET cryptographic provider (for use by sub classes).
@@ -51,12 +51,12 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The size of the required key
         /// </summary>
-        public override int KeySize { get { return Provider.KeySize; } }
+        public override int KeySize { get => Provider.KeySize; } 
 
         /// <summary>
         /// The size of the required IV. If zero, no IV is required.
         /// </summary>
-        public override int IVSize { get { return Provider.IV.Length * 8; } }
+        public override int IVSize { get => Provider.IV.Length * 8; } 
 
         /// <summary>
         /// If set to true, the initialization vector (if used) will be prepended to the
@@ -117,12 +117,13 @@ namespace Goedel.Cryptography.Framework {
         /// <returns>Instance describing the key agreement parameters.</returns>
         public override CryptoDataEncoder MakeEncryptor(
                             byte[] Key = null, byte[] IV = null,
-                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, 
+                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
                             Stream OutputStream = null) {
-            var Result = new CryptoDataEncoder(CryptoAlgorithmID, this);
-            Result.OutputStream = OutputStream ?? new MemoryStream();
-            Result.IV = IV;
-            Result.Key = Key;
+            var Result = new CryptoDataEncoder(CryptoAlgorithmID, this) {
+                OutputStream = OutputStream ?? new MemoryStream(),
+                IV = IV,
+                Key = Key
+                };
             BindEncoder(Result);
 
             return Result;
@@ -140,12 +141,13 @@ namespace Goedel.Cryptography.Framework {
         /// <returns>Instance describing the key agreement parameters.</returns>
         public override CryptoDataDecoder MakeDecryptor(
                             byte[] Key, byte[] IV,
-                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, 
+                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
                             Stream OutputStream = null) {
-            var Result = new CryptoDataDecoder(CryptoAlgorithmID, this);
-            Result.OutputStream = OutputStream ?? new MemoryStream();
-            Result.IV = IV;
-            Result.Key = Key;
+            var Result = new CryptoDataDecoder(CryptoAlgorithmID, this) {
+                OutputStream = OutputStream ?? new MemoryStream(),
+                IV = IV,
+                Key = Key
+                };
             BindDecoder(Result);
 
             return Result;
@@ -185,7 +187,7 @@ namespace Goedel.Cryptography.Framework {
             Key = Key ?? Provider.Key;
             IV = IV ?? Provider.IV;
 
-            Console.WriteLine("Encrypt {0}", Key.Base16());
+            //Console.WriteLine("Encrypt {0}", Key.Base16());
 
             var Transform = Provider.CreateEncryptor(Key, IV);
             return Process(Data, Transform);
@@ -203,9 +205,9 @@ namespace Goedel.Cryptography.Framework {
             Key = Key ?? Provider.Key;
             IV = IV ?? Provider.IV;
 
-            Console.WriteLine("Decrypt {0}", Key.Base16());
-            Console.WriteLine("IV {0}", IV.Base16());
-            Console.WriteLine("CipherText {0}", Data.Base16(50));
+            //Console.WriteLine("Decrypt {0}", Key.Base16());
+            //Console.WriteLine("IV {0}", IV.Base16());
+            //Console.WriteLine("CipherText {0}", Data.Base16(50));
 
             var Transform = Provider.CreateDecryptor(Key, IV);
 
@@ -260,11 +262,8 @@ namespace Goedel.Cryptography.Framework {
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
         public override CryptoAlgorithmID CryptoAlgorithmID {
-            get {
-                return (Provider.KeySize == 128) ? 
-                    Goedel.Cryptography.CryptoAlgorithmID.AES128CBC :
-                    Goedel.Cryptography.CryptoAlgorithmID.AES256CBC;
-                }
+            get => (Provider.KeySize == 128) ? 
+                    CryptoAlgorithmID.AES128CBC : CryptoAlgorithmID.AES256CBC;
             }
 
         ///// <summary>
@@ -279,9 +278,7 @@ namespace Goedel.Cryptography.Framework {
 
         /// <summary>Return the block size in bits</summary>
         public override int BlockSize {
-            get {
-                return Provider.BlockSize;
-                }
+            get => Provider.BlockSize;
             }
 
 
@@ -365,9 +362,7 @@ namespace Goedel.Cryptography.Framework {
         /// Default algorithm key size.
         /// </summary>
         public override int Size {
-            get {
-                return Provider.KeySize;
-                }
+            get => Provider.KeySize;
             }
 
         /// <summary>

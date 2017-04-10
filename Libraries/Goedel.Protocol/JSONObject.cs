@@ -29,6 +29,28 @@ using Goedel.Protocol;
 namespace Goedel.Protocol {
 
     /// <summary>
+    /// Encoding types for unified encoding
+    /// </summary>
+    public enum ObjectEncoding {
+        /// <summary>JSON encoding</summary>
+        JSON,
+        /// <summary>JSON-A encoding</summary>
+        JSON_A,
+        /// <summary>JSON-B encoding</summary>
+        JSON_B,
+        /// <summary>JSON-C encoding</summary>
+        JSON_C,
+        /// <summary>JSON-D encoding</summary>
+        JSON_D,
+        /// <summary>XML encoding</summary>
+        XML,
+        /// <summary>ASN encoding</summary>
+        ASN,
+        /// <summary>RFC822 header style encoding</summary>
+        RFC822
+        }
+
+    /// <summary>
     /// Base class for JSON Objects.
     /// </summary>
     public abstract partial class JSONObject {

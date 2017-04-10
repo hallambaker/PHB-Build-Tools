@@ -273,26 +273,5 @@ namespace Goedel.Protocol {
         }
 
 
-
-    ///// <summary>
-    ///// Generic exception. Thrown when the specified host is not
-    ///// valid.
-    ///// </summary>
-    //public class InvalidHostService : Exception {
-    //    public InvalidHostService() : base() { }
-    //    public InvalidHostService(string message) : base(message) { }
-    //    public InvalidHostService(string message, System.Exception inner) : base(message, inner) { }
-    //    }
-
-    ///// <summary>
-    ///// Generic exception. Thrown when the requested operation is not
-    ///// known to the host.
-    ///// </summary>
-    //public class UnknownOperation : Exception {
-    //    public UnknownOperation() : base() { }
-    //    public UnknownOperation(string message) : base(message) { }
-    //    public UnknownOperation(string message, System.Exception inner) : base(message, inner) { }
-    //    }
-
     }
 

@@ -135,7 +135,7 @@ namespace Goedel.Cryptography.Jose {
         static AlgorithmID() {
 
             foreach (var Entry in StringtoID) {
-                Debug.WriteLine(Entry.Value);
+                //Debug.WriteLine(Entry.Value);
                 IdToString.Add(Entry.Value, Entry.Key);
                 }
             //foreach (var Entry in StringtoClass) {

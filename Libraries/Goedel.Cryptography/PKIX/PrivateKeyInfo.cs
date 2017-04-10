@@ -38,13 +38,13 @@ namespace Goedel.Cryptography.PKIX {
             Buffer.Decode__Sequence_Start();
 
             Version = Buffer.Decode__Integer(0, -1);
-            Buffer.Debug("Version");
+            //Buffer.Debug("Version");
 
             PrivateKeyAlgorithm = Buffer.Decode__Object(0, -1) as AlgorithmIdentifier;
-            Buffer.Debug("PrivateKeyAlgorithm");
+            //Buffer.Debug("PrivateKeyAlgorithm");
 
             PrivateKey = Buffer.Decode__Octets(0, -1);
-            Buffer.Debug("PrivateKey");
+            //Buffer.Debug("PrivateKey");
 
             //if (Attributes == null || Attributes.Count == 0) {
             //    Buffer.Decode__Object(null, 1, 0);
@@ -96,31 +96,31 @@ namespace Goedel.Cryptography.PKIX {
             Buffer.Decode__Sequence_Start();
 
             Version = Buffer.Decode__Integer(0, -1);
-            Buffer.Debug("Version");
+            //Buffer.Debug("Version");
 
             Modulus = Buffer.Decode__BigInteger(0, -1);
-            Buffer.Debug("Modulus");
+            //Buffer.Debug("Modulus");
 
             PublicExponent =Buffer.Decode__BigInteger(0, -1);
-            Buffer.Debug("PublicExponent");
+            //Buffer.Debug("PublicExponent");
 
             PrivateExponent =Buffer.Decode__BigInteger(0, -1);
-            Buffer.Debug("PrivateExponent");
+            //Buffer.Debug("PrivateExponent");
 
             Prime1 = Buffer.Decode__BigInteger(0, -1);
-            Buffer.Debug("Prime1");
+            //Buffer.Debug("Prime1");
 
             Prime2 = Buffer.Decode__BigInteger(0, -1);
-            Buffer.Debug("Prime2");
+            //Buffer.Debug("Prime2");
 
             Exponent1 = Buffer.Decode__BigInteger(0, -1);
-            Buffer.Debug("Exponent1");
+            //Buffer.Debug("Exponent1");
 
             Exponent2 = Buffer.Decode__BigInteger(0, -1);
-            Buffer.Debug("Exponent2");
+            //Buffer.Debug("Exponent2");
 
             Coefficient = Buffer.Decode__BigInteger(0, -1);
-            Buffer.Debug("Coefficient");
+            //Buffer.Debug("Coefficient");
 
             Buffer.Decode__Sequence_End();
             }
@@ -199,13 +199,13 @@ namespace Goedel.Cryptography.PKIX {
             Buffer.Decode__Sequence_Start();
 
             Shared = Buffer.Decode__Octets(0, -1);
-            Buffer.Debug("Shared");
+            //Buffer.Debug("Shared");
 
             Public = Buffer.Decode__BigInteger(0, -1);
-            Buffer.Debug("Public");
+            //Buffer.Debug("Public");
 
             Private = Buffer.Decode__BigInteger(0, -1);
-            Buffer.Debug("Private");
+            //Buffer.Debug("Private");
             Buffer.Decode__Sequence_End();
             }
         }
