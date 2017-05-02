@@ -63,7 +63,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>Current buffered contents as string</returns>
         public string GetUTF8 { 
-            get { return Output.GetUTF8; }}
+            get => Output.GetUTF8; }
 
         /// <summary>
         /// Create a new JSON Writer.

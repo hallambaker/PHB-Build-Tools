@@ -24,7 +24,8 @@ using System;
 using System.Net;
 using System.IO;
 using Goedel.Platform;
-
+using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Protocol.Framework {
 
@@ -59,45 +60,52 @@ namespace Goedel.Protocol.Framework {
         /// <param name="Content">StreamBuffer object containing JSON encoded request.</param>
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
         public override StreamBuffer Post(StreamBuffer Content) {
-            Stream RequestStream = null;
 
-            // Get request object for the URI
-            var Request = WebRequest.CreateHttp(URI);
-            Request.Method = "POST";
-            Request.Host = Domain;
-            Request.ContentType = "application/json;charset=UTF-8";
-            Request.Headers.Add("Cache-Control: no-store");
-            Request.ContentLength = Content.Length;
+            try {
 
-            //Trace.WriteLine("Send Request");
-            //Trace.WriteLine(Content.GetUTF8);
- 
-            RequestStream = Request.GetRequestStream();
+                Stream RequestStream = null;
 
+                // Get request object for the URI
+                var Request = WebRequest.CreateHttp(URI);
+                Request.Method = "POST";
+                Request.Host = Domain;
+                Request.ContentType = "application/json;charset=UTF-8";
+                Request.Headers.Add("Cache-Control: no-store");
+                Request.ContentLength = Content.Length;
 
-            // If using an integrity preamble, put it here.
+                //Trace.WriteLine("Send Request");
+                //Trace.WriteLine(Content.GetUTF8);
 
-            byte[] buffer = Content.GetBytes;
-            RequestStream.Write(Content.GetBytes, 0, Content.Length);
-
-            // If using an integrity postamble, put it here.
-
-            RequestStream.Close();
+                RequestStream = Request.GetRequestStream();
 
 
-            // Request Complete, fetch the response.
-            HttpWebResponse WebResponse = (HttpWebResponse)Request.GetResponse();
-            int Code = (int)WebResponse.StatusCode;
+                // If using an integrity preamble, put it here.
 
-            //Trace.WriteLine("Got a response {0} {1}", Code, WebResponse.StatusDescription);
+                byte[] buffer = Content.GetBytes;
+                RequestStream.Write(Content.GetBytes, 0, Content.Length);
 
-            if (Code > 399) {
-                throw new Exception(WebResponse.StatusDescription);
+                // If using an integrity postamble, put it here.
+
+                RequestStream.Close();
+
+
+                // Request Complete, fetch the response.
+                HttpWebResponse WebResponse = (HttpWebResponse)Request.GetResponse();
+                int Code = (int)WebResponse.StatusCode;
+
+                //Trace.WriteLine("Got a response {0} {1}", Code, WebResponse.StatusDescription);
+
+                if (Code > 399) {
+                    throw new Exception(WebResponse.StatusDescription);
+                    }
+
+                var ReadBuffer = new StreamBuffer(WebResponse.GetResponseStream());
+
+                return ReadBuffer;
                 }
-
-            var ReadBuffer = new StreamBuffer(WebResponse.GetResponseStream());
-
-            return ReadBuffer;
+            catch {
+                throw new ConnectionFail(new ExceptionData() {String = URI});
+                }
             }
 
         }

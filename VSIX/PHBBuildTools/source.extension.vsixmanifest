@@ -2,7 +2,7 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"
                  xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="D93BF07A-0921-43F0-B959-7C7AC4CC72F6" Version="1.7.1" Language="en-US" Publisher="Phillip Hallam-Baker" />
+    <Identity Id="D93BF07A-0921-43F0-B959-7C7AC4CC72F6" Version="1.7.4" Language="en-US" Publisher="Phillip Hallam-Baker" />
     <DisplayName>PHB Code Generation Tools</DisplayName>
     <Description xml:space="preserve">Phill Hallam-Baker's code generation tools.
 
@@ -17,7 +17,6 @@ Note, this version of the tools does not support syntax shading.</Description>
     <Tags>ASN.1, Finite State Recognizer, JSON, RFC, Code Generator</Tags>
   </Metadata>
   <Installation AllUsers="true">
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[10.0]" />
     <InstallationTarget Version="[14.0,16.0]" Id="Microsoft.VisualStudio.Community" />
     <InstallationTarget Version="[14.0,15.0]" Id="Microsoft.VisualStudio.Enterprise" />
     <InstallationTarget Version="[14.0,15.0]" Id="Microsoft.VisualStudio.IntegratedShell" />

@@ -144,7 +144,7 @@ namespace Test.Goedel.Cryptography {
             var KeyA = new CurveEdwards448Private();
             var KeyAPublic = KeyA.Public;
             var KeyAPrivate = KeyA.Private;
-            var Curve1 = KeyAPublic.Public.Multiply(CurveEdwards448.q);
+            var Curve1 = KeyAPublic.Public.Multiply(CurveEdwards448.Q);
             UT.Assert.IsTrue(Curve1.Y0 == 1);
 
             var Base = CurveEdwards448.Base.Copy();

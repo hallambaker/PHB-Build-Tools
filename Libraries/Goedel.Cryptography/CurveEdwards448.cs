@@ -16,24 +16,24 @@ namespace Goedel.Cryptography {
     public class CurveEdwards448 : CurveEdwards {
 
         ///<summary>The modulus, p = 2^448 - 2^224 - 1</summary>
-        readonly static BigInteger p = BigInteger.Pow(2, 448) - BigInteger.Pow(2, 224) - 1;
+        readonly static BigInteger P = BigInteger.Pow(2, 448) - BigInteger.Pow(2, 224) - 1;
 
         ///<summary>The modulus, p = 2^448 - 2^224 - 1</summary>
-        public override BigInteger Prime { get { return p; } }
+        public override BigInteger Prime { get => P; } 
 
 
         ///<summary>The Curve Constant d</summary>
-        public override BigInteger CurveConstrantD { get { return d; } }
+        public override BigInteger CurveConstrantD { get => D; } 
 
         ///<summary>The Curve Constant d</summary>
-        public static readonly BigInteger d = p-39081;
+        public static readonly BigInteger D = P-39081;
 
         ///<summary>The square root of -1.</summary>
-        public override BigInteger SqrtMinus1 { get { return _SqrtMinus1; } }
-        readonly static BigInteger _SqrtMinus1 = p.SqrtMinus1();
+        public override BigInteger SqrtMinus1 { get => _SqrtMinus1; } 
+        readonly static BigInteger _SqrtMinus1 = P.SqrtMinus1();
 
         ///<summary>The small order subgroup q</summary>
-        public static readonly BigInteger q =
+        public static readonly BigInteger Q =
             BigInteger.Pow(2, 446) -
             "13818066809895115352007386748515426880336692474882178609894547503885".DecimalToBigInteger();
 
@@ -48,13 +48,13 @@ namespace Goedel.Cryptography {
         static readonly CurveEdwards448 _Base = new CurveEdwards448(Curve448BaseY, false);
 
         /// <summary>The base point for the subgroup</summary>
-        public static CurveEdwards448 Base { get { return _Base.Copy(); } }
+        public static CurveEdwards448 Base { get => _Base.Copy(); } 
 
         /// <summary>The point P such that P + Q = Q for all Q</summary>
         static readonly CurveEdwards448 _Neutral = new CurveEdwards448() { X = 0, Y = 1, Z = 1};
 
         /// <summary>The point P such that P + Q = Q for all Q</summary>
-        public static CurveEdwards448 Neutral { get { return _Neutral.Copy(); } }
+        public static CurveEdwards448 Neutral { get => _Neutral.Copy(); }
 
         /// <summary>The number of bits to multiply</summary>
         public const int Bits = 448;
@@ -83,9 +83,9 @@ namespace Goedel.Cryptography {
         public override BigInteger RecoverX(bool X0) {
             Assert.True(Y < Prime, InvalidOperation.Throw);
             //var x2 = ((Y * Y - 1) * (CurveConstrantD * Y * Y - 1)).Mod (p);
-            var yy = (Y * Y - 1).Mod(p);
-            var zz = (CurveConstrantD * Y * Y - 1).Mod(p);
-            var x2 = (yy * zz.ModularInverse(p)).Mod(p);
+            var yy = (Y * Y - 1).Mod(P);
+            var zz = (CurveConstrantD * Y * Y - 1).Mod(P);
+            var x2 = (yy * zz.ModularInverse(P)).Mod(P);
 
             return x2.Sqrt(Prime, SqrtMinus1, X0);
             }
@@ -128,17 +128,17 @@ namespace Goedel.Cryptography {
         /// (used to implement multiply)
         /// </summary>
         public override void Double() {
-            var x1s = (X * X).Mod(p);
-            var y1s = (Y * Y).Mod(p);
-            var z1s = (Z * Z).Mod(p);
-            var xys = (X + Y).Mod(p);
-            var F = (x1s + y1s).Mod(p);
-            var J = (F - 2 * z1s).Mod(p);
-            var B = (xys * xys).Mod(p);
+            var x1s = (X * X).Mod(P);
+            var y1s = (Y * Y).Mod(P);
+            var z1s = (Z * Z).Mod(P);
+            var xys = (X + Y).Mod(P);
+            var F = (x1s + y1s).Mod(P);
+            var J = (F - 2 * z1s).Mod(P);
+            var B = (xys * xys).Mod(P);
 
-            X = ((B - F) * J).Mod(p);
-            Y = (F * (x1s - y1s)).Mod(p);
-            Z = (F * J).Mod(p);
+            X = ((B - F) * J).Mod(P);
+            Y = (F * (x1s - y1s)).Mod(P);
+            Z = (F * J).Mod(P);
             }
 
 
@@ -159,13 +159,13 @@ namespace Goedel.Cryptography {
             var B = A * A;
             var C = P1.X * P2.X;
             var D = P1.Y * P2.Y;
-            var E = d * C * D;
+            var E = CurveEdwards448.D * C * D;
             var F = B - E;
             var G = B + E;
             var H = (P1.X + P1.Y) * (P2.X + P2.Y);
-            X3 = (A * F * (H - C - D)) .Mod(p);
-            Y3 = (A * G * (D - C)).Mod(p);
-            Z3 = (F * G).Mod(p);
+            X3 = (A * F * (H - C - D)) .Mod(P);
+            Y3 = (A * G * (D - C)).Mod(P);
+            Z3 = (F * G).Mod(P);
             }
 
         /// <summary>
@@ -174,8 +174,7 @@ namespace Goedel.Cryptography {
         /// <param name="Point">Second point</param>
         /// <returns>The result of the addition.</returns>
         public override CurveEdwards Add(CurveEdwards Point) {
-            BigInteger X3, Y3, Z3;
-            Add(this, Point as CurveEdwards448, out X3, out Y3, out Z3);
+            Add(this, Point as CurveEdwards448, out var X3, out var Y3, out var Z3);
 
             var P2 = new CurveEdwards448() { X = X3, Y = Y3, Z = Z3 };
             return P2;
@@ -188,8 +187,7 @@ namespace Goedel.Cryptography {
         /// <param name="Point">Second point</param>
         /// <returns>The result of the addition.</returns>
         public override void Accumulate(CurveEdwards Point) {
-            BigInteger X3, Y3, Z3;
-            Add(this, Point as CurveEdwards448, out X3, out Y3, out Z3);
+            Add(this, Point as CurveEdwards448, out var X3, out var Y3, out var Z3);
             X = X3;
             Y = Y3;
             Z = Z3;
@@ -210,9 +208,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <returns></returns>
         public byte[] Encode() {
-
-            BigInteger X0, Y0;
-            Translate(out X0, out Y0);
+            Translate(out var X0, out var Y0);
 
             byte[] Buffer = new byte[57];
             var YBuf = Y0.ToByteArray();
@@ -270,7 +266,7 @@ namespace Goedel.Cryptography {
             var Digest = CryptoData.Integrity;
             var Result = Digest.BigIntegerLittleEndian();
 
-            Result = Result % q;
+            Result = Result % Q;
 
             return Result;
             }
@@ -299,7 +295,7 @@ namespace Goedel.Cryptography {
             var Bs = Signature.Duplicate(57, 57);
             var s = Bs.BigIntegerLittleEndian();
 
-            if (s > q) {
+            if (s > Q) {
                 return false;
                 }
 
@@ -574,7 +570,7 @@ namespace Goedel.Cryptography {
             var Rs = R.Encode();
 
             var h = CurveEdwards448.HashModQ(Context, Rs, Public.Encoding, Message);
-            var s = (r + h * Private) % CurveEdwards448.q;
+            var s = (r + h * Private) % CurveEdwards448.Q;
 
             var Bs = s.ToByteArray();
 
@@ -610,16 +606,16 @@ namespace Goedel.Cryptography {
                 //Accumulator -= NewPrivate;
 
 
-                var NewPrivate = Platform.GetRandomBigInteger(CurveEdwards448.q);
+                var NewPrivate = Platform.GetRandomBigInteger(CurveEdwards448.Q);
                 Result[i] = new CurveEdwards448Private(NewPrivate) { IsRecryption = true };
-                Accumulator = (Accumulator + NewPrivate) % (CurveEdwards448.q);
+                Accumulator = (Accumulator + NewPrivate) % (CurveEdwards448.Q);
 
                 }
 
             //Assert.True(Accumulator > 0 & Accumulator < Private, CryptographicException.Throw);
 
             Result[0] = new CurveEdwards448Private(
-                (CurveEdwards448.q + Private - Accumulator) % (CurveEdwards448.q)) {
+                (CurveEdwards448.Q + Private - Accumulator) % (CurveEdwards448.Q)) {
                 IsRecryption = true
                 };
             return Result;
@@ -661,7 +657,7 @@ namespace Goedel.Cryptography {
         public CurveEdwards448 Agreement;
 
         /// <summary>The key agreement result as a byte array</summary>
-        public byte[] IKM { get { return Agreement.Encode(); } }
+        public byte[] IKM { get => Agreement.Encode(); } 
 
         /// <summary>Carry from proxy recryption efforts</summary>
         public CurveEdwards448 Carry;
@@ -675,9 +671,7 @@ namespace Goedel.Cryptography {
         /// <summary>Salt to use in HKDF key derivation. If set will set the 
         /// Key derivation function to HKDF with the specified salt.</summary>
         public string Salt {
-            get {
-                return _Salt;
-                }
+            get => _Salt;
             set {
                 _Salt = value;
                 _KeyDerive = new KeyDeriveHKDF(IKM, _Salt);

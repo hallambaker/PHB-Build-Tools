@@ -42,6 +42,8 @@ namespace Goedel.VSIX.Binding {
     [CodeGeneratorRegistration(typeof(ASN2CS), "ASN2CS", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(ASN2CS), "ASN2CS", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(ASN2CS), "ASN2CS", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class ASN2CS : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
@@ -194,6 +196,8 @@ namespace Goedel.VSIX.Binding {
     [ProvideObject(typeof(DomainerCS))]
     [CodeGeneratorRegistration(typeof(DomainerCS), "DomainerCS", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(DomainerCS), "DomainerCS", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(DomainerCS), "DomainerCS", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class DomainerCS : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
@@ -348,6 +352,8 @@ namespace Goedel.VSIX.Binding {
     [CodeGeneratorRegistration(typeof(RegistryCS), "RegistryCS", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(RegistryCS), "RegistryCS", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(RegistryCS), "RegistryCS", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class RegistryCS : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
@@ -500,6 +506,8 @@ namespace Goedel.VSIX.Binding {
     [ProvideObject(typeof(VSIXBuild))]
     [CodeGeneratorRegistration(typeof(VSIXBuild), "VSIXBuild", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(VSIXBuild), "VSIXBuild", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(VSIXBuild), "VSIXBuild", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class VSIXBuild : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
@@ -654,6 +662,8 @@ namespace Goedel.VSIX.Binding {
     [CodeGeneratorRegistration(typeof(ProtoGen), "ProtoGen", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(ProtoGen), "ProtoGen", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(ProtoGen), "ProtoGen", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class ProtoGen : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
@@ -806,6 +816,8 @@ namespace Goedel.VSIX.Binding {
     [ProvideObject(typeof(TrojanGTK))]
     [CodeGeneratorRegistration(typeof(TrojanGTK), "TrojanGTK", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(TrojanGTK), "TrojanGTK", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(TrojanGTK), "TrojanGTK", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class TrojanGTK : IVsSingleFileGenerator, IObjectWithSite, IDisposable {

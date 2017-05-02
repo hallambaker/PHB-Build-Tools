@@ -63,7 +63,7 @@ namespace PHB_Framework_Library1 {
             var c1 = new CurveEdwards448(new BigInteger(1), false);
 
 
-            var match = "1234075ae4a1e77316cf2d8000974581a343b9ebbca7e3d1db83394c30f221626f594e4f0de63902349a5ea5781213215813919f92a4d86d127466e3d07e8be3";
+            //var match = "1234075ae4a1e77316cf2d8000974581a343b9ebbca7e3d1db83394c30f221626f594e4f0de63902349a5ea5781213215813919f92a4d86d127466e3d07e8be3";
 
             var Curve448BaseY = (
     "298819210078481492676017930443930673437544040154080242095928241" +
@@ -91,8 +91,8 @@ namespace PHB_Framework_Library1 {
             Base2.Accumulate(Base);
             Assert.True(b2.Y0 == Base2.Y0);
 
-            var Curve1 = Base.Multiply(CurveEdwards448.q);
-            var Curve2 = Base.Multiply(CurveEdwards448.q - 1);
+            var Curve1 = Base.Multiply(CurveEdwards448.Q);
+            var Curve2 = Base.Multiply(CurveEdwards448.Q - 1);
 
 
 
@@ -170,7 +170,7 @@ namespace PHB_Framework_Library1 {
 
             var RecryptKeys = KeyA.GenerateRecryptionSet(2);
             var Test = (KeyA.Private - RecryptKeys[0].Private - RecryptKeys[1].Private);
-            var Test2 = Test.Mod(CurveEdwards448.q);
+            var Test2 = Test.Mod(CurveEdwards448.Q);
 
             var Pub5a = KeyBPublic.Public.Multiply(RecryptKeys[0].Private);
             Assert.True(Base.Y == CurveEdwards448.Base.Y);

@@ -140,7 +140,7 @@ namespace Goedel.Tool.Exceptional {
 				_Output.Write ("        /// </summary>		\n{0}", _Indent);
 				_Output.Write ("        /// <param name=\"Object\">User data</param>	\n{0}", _Indent);
 				_Output.Write ("		public {1} ({2} Object) : \n{0}", _Indent, Exception.Id, Object.Type);
-				_Output.Write ("				base (String.Format ({1}", _Indent, Object.Text.Quoted());
+				_Output.Write ("				base (global::System.String.Format ({1}", _Indent, Object.Text.Quoted());
 				foreach  (var Parameter in Object.Parameters) {
 					_Output.Write (",\n{0}", _Indent);
 					_Output.Write ("					Object.{1}", _Indent, Parameter.Name);
@@ -156,7 +156,7 @@ namespace Goedel.Tool.Exceptional {
 				_Output.Write ("        /// <param name=\"Object\">User data</param>	\n{0}", _Indent);
 				_Output.Write ("		/// <param name=\"Inner\">Inner Exception</param>	\n{0}", _Indent);
 				_Output.Write ("		public {1} ({2} Object, System.Exception Inner) : \n{0}", _Indent, Exception.Id, Object.Type);
-				_Output.Write ("				base (String.Format ({1}", _Indent, Object.Text.Quoted());
+				_Output.Write ("				base (global::System.String.Format ({1}", _Indent, Object.Text.Quoted());
 				foreach  (var Parameter in Object.Parameters) {
 					_Output.Write (",\n{0}", _Indent);
 					_Output.Write ("					Object.{1}", _Indent, Parameter.Name);

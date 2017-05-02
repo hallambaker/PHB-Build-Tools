@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Goedel.Cryptography;
+using Goedel.Protocol;
 using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Jose {
@@ -34,7 +34,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// The signed data.
         /// </summary>
-        public virtual byte [] Data {
+        public virtual byte[] Data {
             get { return Payload; }
             set { Payload = value; } }
 
@@ -52,6 +52,22 @@ namespace Goedel.Cryptography.Jose {
                 }
             }
 
+        /// <summary>
+        /// Sign JSON object.
+        /// </summary>
+        /// <param name="JSONObject">The object to sign</param>
+        /// <param name="Encoding">The data encoding to use</param>
+        /// <param name="SigningKey">The signature key</param>
+        /// <param name="ContentType">Optional IANA content type identifier. 
+        /// Omitted if null</param>
+        /// <param name="Algorithm">The signature and encryption algorithm</param>
+        public JoseWebSignature (JSONObject JSONObject,
+                    DataEncoding Encoding  = DataEncoding.JSON,
+                    KeyPair SigningKey = null,
+                    string ContentType = null,
+                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) :
+                this (JSONObject.GetBytes(Encoding), SigningKey, ContentType, Algorithm) {
+            }
 
         /// <summary>
         /// Sign binary data.

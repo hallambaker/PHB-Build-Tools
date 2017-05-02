@@ -9,7 +9,7 @@ namespace Goedel.Protocol {
     /// <summary>
     /// Define extension codes for checking HTTP/SMTP/FTP style status return values
     /// </summary>
-    public static class Extensions {
+    public  static partial class Extensions {
 
         /// <summary>
         /// Extension method to report the success or failure of transaction.

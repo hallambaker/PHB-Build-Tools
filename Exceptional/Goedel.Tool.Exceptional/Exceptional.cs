@@ -53,7 +53,6 @@ using Goedel.Registry;
 //   IdType
 //       NamespaceT
 //       ExceptionT
-//       TypeType
 //   NamespaceType
 //       Goedel.Tool.Exceptional
 //   ClassType
@@ -67,6 +66,7 @@ using Goedel.Registry;
 //       Name
 //       Message
 //   TokenType
+//       TypeType
 
 namespace Goedel.Tool.Exceptional {
 
@@ -199,7 +199,7 @@ namespace Goedel.Tool.Exceptional {
 		}
 
     public partial class Object : _Choice {
-        public ID<_Choice>				Type; 
+        public TOKEN<_Choice>			Type;
 		public string					Text;
         public List <Parameter>           Parameters = new List<Parameter> ();
 
@@ -220,7 +220,7 @@ namespace Goedel.Tool.Exceptional {
 				Output.StartElement ("Object");
 				}
 
-	        Output.WriteId ("Type", Type.ToString()); 
+	        Output.WriteId ("Type", Type.ToString());
 			Output.WriteAttribute ("Text", Text);
 			Output.StartList ("");
 			foreach (Parameter _e in Parameters) {
@@ -234,7 +234,7 @@ namespace Goedel.Tool.Exceptional {
 		}
 
     public partial class Parameter : _Choice {
-        public ID<_Choice>				Name; 
+        public TOKEN<_Choice>			Name;
 
         public override ExceptionsType _Tag () {
             return ExceptionsType.Parameter;
@@ -250,7 +250,7 @@ namespace Goedel.Tool.Exceptional {
 				Output.StartElement ("Parameter");
 				}
 
-	        Output.WriteId ("Name", Name.ToString()); 
+	        Output.WriteId ("Name", Name.ToString());
 			if (tag) {
 				Output.EndElement ("Parameter");
 				}			
@@ -730,7 +730,7 @@ namespace Goedel.Tool.Exceptional {
                     case StateCode.Object_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Exceptional.Object Current_Cast = (Goedel.Tool.Exceptional.Object)Current;
-                            Current_Cast.Type = Registry.ID(Position, Text, TYPE__TypeType, Current_Cast);
+                            Current_Cast.Type = Registry.TOKEN(Position, Text, TYPE__TypeType, Current_Cast);
                             State = StateCode.Object__Type;
                             break;
                             }
@@ -777,7 +777,7 @@ namespace Goedel.Tool.Exceptional {
                     case StateCode.Parameter_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Exceptional.Parameter Current_Cast = (Goedel.Tool.Exceptional.Parameter)Current;
-                            Current_Cast.Name = Registry.ID(Position, Text, TYPE__TypeType, Current_Cast);
+                            Current_Cast.Name = Registry.TOKEN(Position, Text, TYPE__TypeType, Current_Cast);
                             State = StateCode.Parameter__Name;
                             break;
                             }

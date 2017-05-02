@@ -21,12 +21,12 @@ Class Goedel.Tool.Exceptional Exceptions
 			Exception
 					
 	Type Object
-		Type	ID TypeType
+		Type	Token TypeType
 		Text String
 		Parameters List Parameter
 		
 	Type Parameter
-		Name ID TypeType
+		Name Token TypeType
 
     Type Console
 		Message		String 

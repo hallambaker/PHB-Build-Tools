@@ -14,3 +14,10 @@ Namespace Goedel.Protocol
 			Description
 				|Message exceeds permitted size limit
 
+	Exception ConnectionFail
+		Object ExceptionData "Connection to host [{0}] Failed."
+			String
+
+		Console "Connection to host failed."
+		Description
+			|Could not reach the specified host

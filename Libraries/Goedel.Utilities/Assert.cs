@@ -10,9 +10,10 @@ namespace Goedel.Utilities {
     /// <summary>
     /// Delegate that will be thrown as an exception if a condition is met
     /// </summary>
-    /// <param name="Reason"></param>
+    /// <param name="Reason">The reason for raising the exception.</param>
     /// <returns>The exception to throw</returns>
-    public delegate System.Exception ThrowDelegate(string Reason);
+    public delegate System.Exception ThrowDelegate(object Reason = null);
+
 
     /// <summary>
     /// Convenience class for constructing an object on the fly to report exception
@@ -25,19 +26,19 @@ namespace Goedel.Utilities {
         /// <summary>A string value</summary>
         public string String { get; set; }
 
-        /// <summary>
-        /// Factory method to create and return object with specified integer
-        /// and/or string values.
-        /// </summary>
-        /// <param name="Int">The integer value</param>
-        /// <param name="String">The string value</param>
-        /// <returns></returns>
-        public ExceptionData Box (int Int=0, string String="") {
-            return new ExceptionData() {
-                Int = Int,
-                String = String
-                };
-            }
+        ///// <summary>
+        ///// Factory method to create and return object with specified integer
+        ///// and/or string values.
+        ///// </summary>
+        ///// <param name="Int">The integer value</param>
+        ///// <param name="String">The string value</param>
+        ///// <returns></returns>
+        //public ExceptionData Box (int Int=0, string String="") {
+        //    return new ExceptionData() {
+        //        Int = Int,
+        //        String = String
+        //        };
+        //    }
         }
 
 
@@ -55,16 +56,19 @@ namespace Goedel.Utilities {
         /// <param name="Condition">The condition</param>
         /// <param name="Throw">Delegate that creates the exception to be thrown if
         /// Condition is true</param>
-        /// <param name="Reason">Reason, for debugging</param>
-        public static void False(bool Condition, ThrowDelegate Throw=null, object Reason=null) {
+        /// <param name="Reason">Reason data for filling throw template</param>
+        /// <param name="Int">Integer default parameter</param>
+        /// <param name="String">String default parameter</param>
+        public static void False(bool Condition, ThrowDelegate Throw=null, 
+                    object Reason=null, string String = null, int Int = -1) {
+
+            Reason = Reason ?? new ExceptionData() {
+                String = String,
+                Int = Int
+                };
             Throw = Throw ?? NYI.Throw;
             if (Condition) {
-                if (Reason as string != null) {
-                    throw Throw(Reason as string);
-                    }
-                else {
-                    throw Throw("");
-                    }
+                throw Throw(Reason);
                 }
             }
 
@@ -74,8 +78,11 @@ namespace Goedel.Utilities {
         /// <param name="Condition">The condition</param>
         /// <param name="Throw">Delegate that creates the exception to be thrown if
         /// Condition is true</param>
-        /// <param name="Reason">Reason, for debugging</param>
-        public static void True(bool Condition, ThrowDelegate Throw=null, string Reason=null) {
+        /// <param name="Reason">Reason data for filling throw template</param>
+        /// <param name="Int">Integer default parameter</param>
+        /// <param name="String">String default parameter</param>
+        public static void True(bool Condition, ThrowDelegate Throw=null,
+                    object Reason = null, string String = null, int Int = -1) {
             False(!Condition, Throw, Reason);
             }
 
@@ -84,8 +91,11 @@ namespace Goedel.Utilities {
         /// <param name="Object">The condition</param>
         /// <param name="Throw">Delegate that creates the exception to be thrown if
         /// Condition is true</param>
-        /// <param name="Reason">Reason, for debugging</param>
-        public static void Null(object Object, ThrowDelegate Throw=null, string Reason=null) {
+        /// <param name="Reason">Reason data for filling throw template</param>
+        /// <param name="Int">Integer default parameter</param>
+        /// <param name="String">String default parameter</param>
+        public static void Null(object Object, ThrowDelegate Throw=null,
+                    object Reason = null, string String = null, int Int = -1) {
             True(Object == null, Throw, Reason);
             }
 
@@ -94,12 +104,13 @@ namespace Goedel.Utilities {
         /// <param name="Object">The condition</param>
         /// <param name="Throw">Delegate that creates the exception to be thrown if
         /// Condition is true</param>
-        /// <param name="Reason">Reason, for debugging</param>
-        public static void NotNull(object Object, ThrowDelegate Throw=null, string Reason=null) {
+        /// <param name="Reason">Reason data for filling throw template</param>
+        /// <param name="Int">Integer default parameter</param>
+        /// <param name="String">String default parameter</param>
+        public static void NotNull(object Object, ThrowDelegate Throw=null,
+                    object Reason = null, string String = null, int Int = -1) {
             True(Object != null, Throw, Reason);
             }
-
-
 
         }
 

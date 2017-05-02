@@ -88,7 +88,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="Dictionary">Dictionary for encoding tags.</param>
         /// <returns>The encoded data.</returns>
         public byte[] ToJsonC(Dictionary<string, int> Dictionary, bool tag = false) {
-            var JSONWriter = new JSONCWriter(Dictionary);
+            var JSONWriter = new JSONCWriter(TagDictionary: Dictionary);
             Serialize(JSONWriter, tag);
             return JSONWriter.GetBytes;
             }

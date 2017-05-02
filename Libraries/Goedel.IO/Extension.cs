@@ -139,7 +139,6 @@ namespace Goedel.IO {
                 }
             }
 
-
         /// <summary>
         /// Create a new file for exclusive write access, overwriting 
         /// any existing file.
@@ -154,5 +153,8 @@ namespace Goedel.IO {
             }
 
 
+        public static void Write (this FileStream FileStream, byte[] Data) {
+            FileStream.Write(Data, 0, Data.Length);
+            }
         }
     }

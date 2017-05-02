@@ -46,7 +46,7 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>If true, end of file has been reached</summary>
-        protected bool EOF { get { return Input.EOF; } }
+        protected bool EOF { get => Input.EOF; } 
 
         /// <summary>Set the input reader</summary>
         /// <param name="InputIn">Input source</param>
@@ -135,7 +135,7 @@ namespace Goedel.Protocol {
         /// <summary>Convert output stream to byte array</summary>
         /// <returns>Output stream as byte array</returns>
         public byte[] GetBytes {
-            get { return Output.GetBytes; }
+            get => Output.GetBytes; 
             }
 
         /// <summary>Write out the start of a token.</summary>

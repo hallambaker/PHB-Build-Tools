@@ -67,6 +67,8 @@ namespace #{Cast.Name} {
 #if (Project.Value.ToString() =="CSharp") 
     [CodeGeneratorRegistration(typeof(#{Extension.Name}), "#{Extension.Name}", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(#{Extension.Name}), "#{Extension.Name}", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
 #elseif (Project.Value.ToString() =="VisualBasic") 
     [CodeGeneratorRegistration(typeof(#{Extension.Name}), "#{Extension.Name}", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]

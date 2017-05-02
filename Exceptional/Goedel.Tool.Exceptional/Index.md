@@ -22,8 +22,12 @@ Namespace Goedel.Cryptography
 				|not supported or the key parameters were found to be invalid.
 
 		Exception ParseError
-			Object LexReader "The file {0} could not be read"
-				FilePath
+			Object ExceptionData "The file {0} could not be read"
+				String
+			Object LexData "A parse error was encountered in file {0} Line {1} Col {2}"
+				FileName
+				Line
+				Col
 ~~~~
 
 * The Using field imports names from the specified name space allowing
@@ -47,6 +51,24 @@ using Goedel.Utilities;  // For the assertion package
 class Test () {
     
 	Assert (false, NoProviderSpecified.Throw); // throw an exception
+
+    }
+
+~~~~
+
+==With parameters
+
+Parameters may be passed in using two different mechanisms. If the 
+
+~~~~
+using Goedel.Utilities;  // For the assertion package
+
+class Test () {
+    
+	Assert (false, ParseError.Throw, String:"filename" ); 
+
+	var LexData = new LexData () {FileName="Filename", Line=10, Col=23}
+	Assert (false, ParseError.Throw, Reason : LexData ); 
 
     }
 

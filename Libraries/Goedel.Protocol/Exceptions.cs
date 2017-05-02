@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Goedel.Utilities;
 
 
@@ -145,6 +145,83 @@ namespace Goedel.Protocol {
 				}
 			else {
 				return new MessageTooBig();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// Could not reach the specified host
+    /// </summary>
+    public class ConnectionFail : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "Connection to host failed."
+        /// </summary>		
+		public ConnectionFail () : base ("Connection to host failed.") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Connection to host failed."
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public ConnectionFail (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public ConnectionFail (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+		/// <summary>
+        /// Construct instance for exception using a userdata parameter of
+		/// type ExceptionData and the format string "Connection to host [{0}] Failed."
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		public ConnectionFail (ExceptionData Object) : 
+				base (String.Format ("Connection to host [{0}] Failed.",
+					Object.String					)) {
+			UserData = Object;
+			}
+
+		/// <summary>
+        /// Construct instance for exception using a userdata parameter of
+		/// type ExceptionData and the format string "Connection to host [{0}] Failed."
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public ConnectionFail (ExceptionData Object, System.Exception Inner) : 
+				base (String.Format ("Connection to host [{0}] Failed.",
+					Object.String					), Inner) {
+			UserData = Object;
+			}
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new ConnectionFail(Reason as string);
+				}
+			else if (Reason as ExceptionData != null) {
+				return new ConnectionFail(Reason as ExceptionData);
+				}
+			else {
+				return new ConnectionFail();
 				}
             }
         }

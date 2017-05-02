@@ -466,25 +466,50 @@ namespace Goedel.Tool.Command {
 			_Output.Write ("\n{0}", _Indent);
 			foreach  (_Choice Entry in Class.Entries) {
 				switch (Entry._Tag ()) {
+					case CommandParseType.OptionSet: {
+					  OptionSet OptionSet = (OptionSet) Entry; 
+					_Output.Write ("	public interface I{1} {{\n{0}", _Indent, OptionSet.Id);
+					foreach  (_Choice OptionC in OptionSet.Options) {
+						switch (OptionC._Tag ()) {
+							case CommandParseType.Option: {
+							  Option Option = (Option) OptionC; 
+							_Output.Write ("		{1}			{2}{{get; set;}}\n{0}", _Indent, Option.Type, Option.Name);
+						break; }
+							}
+						}
+					_Output.Write ("		}}\n{0}", _Indent);
+					_Output.Write ("\n{0}", _Indent);
+					_Output.Write ("\n{0}", _Indent);
+					break; }
 					case CommandParseType.Command: {
 					  Command Cast = (Command) Entry; 
 					_Output.Write ("\n{0}", _Indent);
-					_Output.Write ("    public class _{1} : {2} {{\n{0}", _Indent, Cast.Id, NameDispatchType);
+					_Output.Write ("    public class _{1} : {2} ", _Indent, Cast.Id, NameDispatchType);
+					foreach  (_Choice OptionC in Cast.Entries) {
+						switch (OptionC._Tag ()) {
+							case CommandParseType.Include: {
+							  Include Include = (Include) OptionC; 
+							_Output.Write (",\n{0}", _Indent);
+							_Output.Write ("							I{1}", _Indent, Include.Id);
+						break; }
+							}
+						}
+					_Output.Write (" {{\n{0}", _Indent);
 					foreach  (_Choice OptionC in Cast.Entries) {
 						switch (OptionC._Tag ()) {
 							case CommandParseType.Parser: {
 							  Parser Parser = (Parser) OptionC; 
-							_Output.Write ("		public ExistingFile					{1} = new ExistingFile (\"{2}\");\n{0}", _Indent, Parser.Class, Parser.Extension);
+							_Output.Write ("		public ExistingFile					{1}{{get; set;}}  = new ExistingFile (\"{2}\");\n{0}", _Indent, Parser.Class, Parser.Extension);
 							break; }
 							case CommandParseType.Generator: { 
 							break; }
 							case CommandParseType.Script: {
 							  Script Script = (Script) OptionC; 
-							_Output.Write ("		public NewFile						{1} = new NewFile (\"{2}\");\n{0}", _Indent, Script.Id, Script.Extension);
+							_Output.Write ("		public NewFile						{1}{{get; set;}}  = new NewFile (\"{2}\");\n{0}", _Indent, Script.Id, Script.Extension);
 							break; }
 							case CommandParseType.Lazy: {
 							  Lazy Lazy = (Lazy) OptionC; 
-							_Output.Write ("		public Flag							{1} = new Flag (\"false\");\n{0}", _Indent, Lazy.Name);
+							_Output.Write ("		public Flag							{1}{{get; set;}}  = new Flag (\"false\");\n{0}", _Indent, Lazy.Name);
 							break; }
 							case CommandParseType.Parameter: {
 							  Parameter Parameter = (Parameter) OptionC; 
@@ -500,14 +525,13 @@ namespace Goedel.Tool.Command {
 									}
 								}
 							if (  DefaultParameter == null ) {
-								_Output.Write ("		public {1}			{2} = new {3} ();\n{0}", _Indent, Parameter.Type, Parameter.Name, Parameter.Type);
+								_Output.Write ("		public {1}			{2}{{get; set;}}  = new {3} ();\n{0}", _Indent, Parameter.Type, Parameter.Name, Parameter.Type);
 								} else {
-								_Output.Write ("		public {1}			{2} = new {3} (\"{4}\");\n{0}", _Indent, Parameter.Type, Parameter.Name, Parameter.Type, DefaultParameter);
+								_Output.Write ("		public {1}			{2}{{get; set;}}  = new {3} (\"{4}\");\n{0}", _Indent, Parameter.Type, Parameter.Name, Parameter.Type, DefaultParameter);
 								}
 							break; }
 							case CommandParseType.Option: {
 							  Option Option = (Option) OptionC; 
-							_Output.Write ("\n{0}", _Indent);
 							
 							 string DefaultOption = null;
 							foreach  (_Choice Modifier in Option.Modifier) {
@@ -520,9 +544,9 @@ namespace Goedel.Tool.Command {
 									}
 								}
 							if (  DefaultOption == null ) {
-								_Output.Write ("		public {1}			{2} = new  {3} ();\n{0}", _Indent, Option.Type, Option.Name, Option.Type);
+								_Output.Write ("		public {1}			{2}{{get; set;}} = new  {3} ();\n{0}", _Indent, Option.Type, Option.Name, Option.Type);
 								} else {
-								_Output.Write ("		public {1}			{2} = new  {3} (\"{4}\");\n{0}", _Indent, Option.Type, Option.Name, Option.Type, DefaultOption);
+								_Output.Write ("		public {1}			{2}{{get; set;}}  = new  {3} (\"{4}\");\n{0}", _Indent, Option.Type, Option.Name, Option.Type, DefaultOption);
 								}
 						break; }
 							}
@@ -538,7 +562,8 @@ namespace Goedel.Tool.Command {
 					}
 				}
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			// This section contains declarations for the builtins and types.
+			//
 			foreach  (ID<_Choice> ID in TypeType.IDs) {
 				_Output.Write ("    // Parameter type {1}\n{0}", _Indent, ID);
 				if (  (ID.ToString() == "NewFile") | (ID.ToString() == "ExistingFile") ) {
@@ -556,15 +581,11 @@ namespace Goedel.Tool.Command {
 				_Output.Write ("\n{0}", _Indent);
 				if (  CommandParse.Builtins ) {
 					if (  (ID.ToString() == "Flag") ) {
-						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("\n{0}", _Indent);
 						} else if (  (ID.ToString() == "NewFile")) {
-						_Output.Write ("\n{0}", _Indent);
 						} else if (  (ID.ToString() == "ExistingFile")) {
-						_Output.Write ("\n{0}", _Indent);
 						} else {
 						_Output.Write ("		public string			Value {{\n{0}", _Indent);
-						_Output.Write ("			get {{return Text;}}\n{0}", _Indent);
+						_Output.Write ("			get => Text;\n{0}", _Indent);
 						_Output.Write ("			}}\n{0}", _Indent);
 						}
 					}

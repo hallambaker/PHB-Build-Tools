@@ -37,7 +37,7 @@ namespace Goedel.Protocol {
         public int              Length = 0;
         /// <summary>Space in the current buffer</summary>
         public int              Space {
-            get { return (Current.Length - Index); }}
+            get  =>Current.Length - Index; }
         
         List <byte []>   BufferList = new List<byte[]>();
         byte [] Current;
@@ -190,7 +190,9 @@ namespace Goedel.Protocol {
         /// <summary>Write string</summary>
         /// <param name="s">Data to write</param>
         public void Write(string s) {
-            foreach (char c in s) Write (c);
+            foreach (char c in s) {
+                Write(c);
+                }
             }
 
         /// <summary>Write out the Date Time as a string in RFC3339 Format</summary>
@@ -248,7 +250,7 @@ namespace Goedel.Protocol {
 
         /// <summary>If true, have rad to end of buffer.</summary>
         public bool EndOfBuffer {
-                get {return (ReadBuffer >= BufferList.Count) & (ReadIndex >= Current.Length); }}
+                get => (ReadBuffer >= BufferList.Count) & (ReadIndex >= Current.Length); }
 
         /// <summary>Read a byte from the buffer.</summary>
         /// <returns>The data value read</returns>

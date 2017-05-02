@@ -352,8 +352,11 @@ namespace Goedel.Platform {
 
                 var RecordTXT = Record as DNSRecord_TXT;
 
-                Debug.WriteLine(String.Format("TXT {0} -> {1}",
-                        Domain, RecordTXT.Text));
+
+                foreach (var Text in RecordTXT.Text) {
+                    Debug.WriteLine(String.Format("TXT {0} -> {1}",
+                            Domain, Text));
+                    }
 
 
                 if (Domain == ServiceDescription.ServiceAddress) {

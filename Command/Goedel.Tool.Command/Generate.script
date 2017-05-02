@@ -355,18 +355,37 @@ namespace #{Class.Namespace} {
 
 #foreach (_Choice Entry in Class.Entries)
 #switchcast CommandParseType Entry
+#casecast OptionSet OptionSet
+	public interface I#{OptionSet.Id} {
+#foreach (_Choice OptionC in OptionSet.Options)
+#switchcast CommandParseType OptionC
+#casecast Option Option
+		#{Option.Type}			#{Option.Name}{get; set;}
+#end switchcast
+#end foreach
+		}
+
+
 #casecast Command Cast
 
-    public class _#{Cast.Id} : #{NameDispatchType} {
+    public class _#{Cast.Id} : #{NameDispatchType} #!
+#foreach (_Choice OptionC in Cast.Entries)
+#switchcast CommandParseType OptionC
+#casecast Include Include
+,
+							I#{Include.Id}#!
+#end switchcast
+#end foreach
+ {
 #foreach (_Choice OptionC in Cast.Entries)
 #switchcast CommandParseType OptionC
 #casecast Parser Parser
-		public ExistingFile					#{Parser.Class} = new ExistingFile ("#{Parser.Extension}");
+		public ExistingFile					#{Parser.Class}{get; set;}  = new ExistingFile ("#{Parser.Extension}");
 #casecast Generator null
 #casecast Script Script
-		public NewFile						#{Script.Id} = new NewFile ("#{Script.Extension}");
+		public NewFile						#{Script.Id}{get; set;}  = new NewFile ("#{Script.Extension}");
 #casecast Lazy Lazy
-		public Flag							#{Lazy.Name} = new Flag ("false");
+		public Flag							#{Lazy.Name}{get; set;}  = new Flag ("false");
 #casecast Parameter Parameter
 #% string DefaultParameter = null;
 #foreach (_Choice Modifier in Parameter.Modifier)
@@ -376,12 +395,11 @@ namespace #{Class.Namespace} {
 #end switchcast
 #end foreach
 #if DefaultParameter == null
-		public #{Parameter.Type}			#{Parameter.Name} = new #{Parameter.Type} ();
+		public #{Parameter.Type}			#{Parameter.Name}{get; set;}  = new #{Parameter.Type} ();
 #else
-		public #{Parameter.Type}			#{Parameter.Name} = new #{Parameter.Type} ("#{DefaultParameter}");
+		public #{Parameter.Type}			#{Parameter.Name}{get; set;}  = new #{Parameter.Type} ("#{DefaultParameter}");
 #end if
 #casecast Option Option
-
 #% string DefaultOption = null;
 #foreach (_Choice Modifier in Option.Modifier)
 #switchcast CommandParseType Modifier
@@ -390,9 +408,9 @@ namespace #{Class.Namespace} {
 #end switchcast
 #end foreach
 #if DefaultOption == null
-		public #{Option.Type}			#{Option.Name} = new  #{Option.Type} ();
+		public #{Option.Type}			#{Option.Name}{get; set;} = new  #{Option.Type} ();
 #else
-		public #{Option.Type}			#{Option.Name} = new  #{Option.Type} ("#{DefaultOption}");
+		public #{Option.Type}			#{Option.Name}{get; set;}  = new  #{Option.Type} ("#{DefaultOption}");
 #end if
 #end switchcast
 #end foreach
@@ -406,7 +424,8 @@ namespace #{Class.Namespace} {
 #end switchcast
 #end foreach
 
-
+#! This section contains declarations for the builtins and types.
+#!
 #foreach (ID<_Choice> ID in TypeType.IDs)
     // Parameter type #{ID}
 #if (ID.ToString() == "NewFile") | (ID.ToString() == "ExistingFile")
@@ -424,15 +443,11 @@ namespace #{Class.Namespace} {
 
 #if CommandParse.Builtins
 #if (ID.ToString() == "Flag")
-
-
 #elseif (ID.ToString() == "NewFile")
-
 #elseif (ID.ToString() == "ExistingFile")
-
 #else
 		public string			Value {
-			get {return Text;}
+			get => Text;
 			}
 #end if
 #end if

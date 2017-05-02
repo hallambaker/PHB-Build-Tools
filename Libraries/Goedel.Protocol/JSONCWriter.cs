@@ -53,39 +53,12 @@ namespace Goedel.Protocol {
         /// an output stream defined, text will be written to the stream.
         /// </summary>
         /// <param name="Output">Output buffer</param>
-        public JSONCWriter(StreamBuffer Output) :
-                this (Output, new Dictionary<string,int>()) {
-            }
-
-        /// <summary>
-        /// Create a new JSON Writer.
-        /// </summary>
-        public JSONCWriter() :
-            this(new StreamBuffer(), new Dictionary<string, int>()) {
-            }
-
-        /// <summary>
-        /// Create a new JSON Writer using the specified output buffer. If the buffer has
-        /// an output stream defined, text will be written to the stream.
-        /// </summary>
         /// <param name="TagDictionary">Tag dictionary to ues for compression</param>
-        public JSONCWriter(Dictionary<string, int> TagDictionary) :
-            this(new StreamBuffer(), TagDictionary) {
+        public JSONCWriter(StreamBuffer Output = null, 
+                    Dictionary<string, int> TagDictionary = null) {
+            this.Output = Output  ?? new StreamBuffer();
+            this.TagDictionary = TagDictionary ?? new Dictionary<string, int>();
             }
-
-
-        /// <summary>
-        /// Create a new JSON Writer using the specified output buffer. If the buffer has
-        /// an output stream defined, text will be written to the stream.
-        /// </summary>
-        /// <param name="Output">Output buffer</param>
-        /// <param name="TagDictionary">Tag dictionary to ues for compression</param>
-        public JSONCWriter(StreamBuffer Output, 
-                    Dictionary<string, int> TagDictionary) {
-            this.Output = Output;
-            this.TagDictionary = TagDictionary;
-            }
-
 
         /// <summary>
         /// Write Tag to the stream
@@ -99,9 +72,8 @@ namespace Goedel.Protocol {
         /// <summary>Write string.</summary>
         /// <param name="Data">Value to write</param>
         public override void WriteString(string Data) {
-            int Index;
 
-            if (TagDictionary.TryGetValue(Data, out Index)) {
+            if (TagDictionary.TryGetValue(Data, out var Index)) {
                 WriteTag(JSONBCD.TagCode, Index);
                 }
             else {

@@ -85,7 +85,7 @@ namespace Goedel.Protocol {
             /// <summary></summary>
             Ee = 13,
             /// <summary></summary>
-            u = 14,
+            L_u = 14,
             /// <summary></summary>
             Escaped = 15,
             /// <summary></summary>
@@ -120,7 +120,7 @@ namespace Goedel.Protocol {
             if (c == '\\') {return CharType.Solidus; }
             if (c == '+') {return CharType.Plus;      }      
             if ((c == 'e') | (c == 'E')) {return CharType.Ee;}
-            if (c == 'u') {return CharType.u;}
+            if (c == 'u') {return CharType.L_u;}
             if  ((c == '/') | (c == 't') | (c == 'r') | (c == 'n') | (c == 'f') | (c == 'b'))  {return CharType.Escaped;}
             if ((c >= 'a') & (c <= 'f')) {return CharType.Hex;}
             if ((c >= 'A') & (c <= 'F')) {return CharType.Hex;}
@@ -294,9 +294,15 @@ namespace Goedel.Protocol {
         /// <param name="c">The hex character</param>
         /// <returns>Integer value.</returns>
         protected int HexCharToInt(char c) {
-            if ((c>='0') & (c<='9')) return ((int)c - (int)'0');
-            if ((c>='a') & (c<='f')) return (10 + (int)c - (int)'a');
-            if ((c>='A') & (c<='F')) return (10 + (int)c - (int)'A');   
+            if ((c >= '0') & (c <= '9')) {
+                return ((int)c - (int)'0');
+                }
+            if ((c >= 'a') & (c <= 'f')) {
+                return (10 + (int)c - (int)'a');
+                }
+            if ((c >= 'A') & (c <= 'F')) {
+                return (10 + (int)c - (int)'A');
+                }
             return -1;
             }
 

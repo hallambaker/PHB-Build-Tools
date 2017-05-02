@@ -21,6 +21,7 @@
 //  
 
 using System.Collections.Generic;
+using Goedel.Protocol;
 using Goedel.Utilities;
 
 
@@ -53,7 +54,7 @@ namespace Goedel.Cryptography.Jose {
         /// The decrypted plaintext as a string.
         /// </summary>
         public string UTF8 {
-            get { return Plaintext.ToString(); }
+            get => Plaintext.ToString();
             }
 
         /// <summary>Caches the CryptoData instance</summary>
@@ -70,6 +71,27 @@ namespace Goedel.Cryptography.Jose {
                 }
             }
 
+        /// <summary>
+        /// Construct a JWE instance from JSON Object
+        /// </summary>
+        /// <param name="JSONObject">The object to sign</param>
+        /// <param name="Encoding">The data encoding to use</param>
+        /// <param name="ContentType">The type of content being encrypted.</param>
+        /// <param name="EncryptionKey">Optional Encryption key.</param>
+        /// <param name="SigningKey">Optional signing key.</param>
+        /// <param name="EncryptID">Composite ID for encryption and key exchange</param>
+        /// <param name="SignID">Composite ID for signature and digest</param>
+        public JoseWebEncryption (JSONObject JSONObject,
+                    DataEncoding Encoding = DataEncoding.JSON,
+                    KeyPair EncryptionKey = null,
+                    KeyPair SigningKey = null,
+                    string ContentType = null,
+                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmID SignID = CryptoAlgorithmID.Default
+                    ) :
+                this (JSONObject.GetBytes(Encoding), 
+                    EncryptionKey, SigningKey, ContentType, EncryptID, SignID) {
+            }
 
         /// <summary>
         /// Construct a JWE instance from binary data. 

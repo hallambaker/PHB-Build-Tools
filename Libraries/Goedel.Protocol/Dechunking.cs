@@ -56,7 +56,9 @@ namespace Goedel.Protocol {
         /// <returns>The array data.</returns>
         public static byte [] ReadBytes (long Length, Stream Stream) {
 
-            if (Length < 0) return ReadChunked(Stream);
+            if (Length < 0) {
+                return ReadChunked(Stream);
+                }
             Assert.False(Length > int.MaxValue, MessageTooBig.Throw);
 
 

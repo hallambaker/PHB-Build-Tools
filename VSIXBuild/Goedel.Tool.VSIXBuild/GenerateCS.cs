@@ -113,6 +113,8 @@ namespace Goedel.Tool.VSIXBuild {
 				if (  (Project.Value.ToString() =="CSharp")  ) {
 					_Output.Write ("    [CodeGeneratorRegistration(typeof({1}), \"{2}\", \n{0}", _Indent, Extension.Name, Extension.Name);
 					_Output.Write ("					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]\n{0}", _Indent);
+					_Output.Write ("    [CodeGeneratorRegistration(typeof({1}), \"{2}\", \n{0}", _Indent, Extension.Name, Extension.Name);
+					_Output.Write ("					\"9A19103F-16F7-4668-BE54-9A1E7A4F7556\", GeneratesDesignTimeSource = true)]\n{0}", _Indent);
 					} else if (  (Project.Value.ToString() =="VisualBasic") ) {
 					_Output.Write ("    [CodeGeneratorRegistration(typeof({1}), \"{2}\", \n{0}", _Indent, Extension.Name, Extension.Name);
 					_Output.Write ("					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]\n{0}", _Indent);
