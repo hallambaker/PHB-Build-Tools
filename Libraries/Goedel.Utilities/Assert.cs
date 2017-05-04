@@ -68,7 +68,7 @@ namespace Goedel.Utilities {
                 };
             Throw = Throw ?? NYI.Throw;
             if (Condition) {
-                throw Throw(Reason);
+                 throw Throw(Reason);
                 }
             }
 

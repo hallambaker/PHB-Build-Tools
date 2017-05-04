@@ -55,12 +55,12 @@ namespace Goedel.Protocol {
     /// </summary>
     public abstract partial class JSONObject {
 
-        /// <summary>
-        /// Initialization constructor. Allows automatically generated 
-        /// constructors to be overriden in child classes.
-        /// </summary>
-        protected virtual void _Initialize () {
-            }
+        ///// <summary>
+        ///// Initialization constructor. Allows automatically generated 
+        ///// constructors to be overriden in child classes.
+        ///// </summary>
+        //protected virtual void _Initialize () {
+        //    }
 
         /// <summary>
         /// Tag value used as substitute for reflection internally.
@@ -74,24 +74,24 @@ namespace Goedel.Protocol {
         /// Base constructor.
         /// </summary>
 		public JSONObject () {
-            _Initialize();
+            //_Initialize();
 			}
 
-        /// <summary>
-        /// Create object from data read from the corresponding reader.
-        /// </summary>
-        /// <param name="JSONReader">The input data</param>
-		public JSONObject (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
+  //      /// <summary>
+  //      /// Create object from data read from the corresponding reader.
+  //      /// </summary>
+  //      /// <param name="JSONReader">The input data</param>
+		//public JSONObject (JSONReader JSONReader) {
+		//	Deserialize (JSONReader);
+		//	}
 
-        /// <summary>
-        /// Create object from data read from the corresponding string.
-        /// </summary>
-        /// <param name="_String">The input data</param>
-        public JSONObject(string _String) {
-			Deserialize (_String);
-			}
+  //      /// <summary>
+  //      /// Create object from data read from the corresponding string.
+  //      /// </summary>
+  //      /// <param name="_String">The input data</param>
+  //      public JSONObject(string _String) {
+		//	Deserialize (_String);
+		//	}
 
         /// <summary>
         /// If implemented in the child class, performs a deep copy of the structure.
@@ -227,10 +227,6 @@ namespace Goedel.Protocol {
             JSONReader JSONReader = new JSONReader (_Reader);
 			Deserialize (JSONReader);
 			}
-
-
-        //public static void FromTagged(JSONReader JSONReader) {
-        //    }
 
         /// <summary>
         /// Deserialize the input string to populate this object

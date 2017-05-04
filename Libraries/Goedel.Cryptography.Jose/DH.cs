@@ -9,6 +9,10 @@ namespace Goedel.Cryptography.Jose {
     /// Represents a Diffie Hellman Public Key.
     /// </summary>
     public partial class PublicKeyDH {
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public PublicKeyDH () { }
 
         /// <summary>
         /// Construct from the specified RSA Key
@@ -33,12 +37,10 @@ namespace Goedel.Cryptography.Jose {
         /// Return the parameters as a PKIX RSAPublicKey structure;
         /// </summary>
         public virtual PKIXPublicKeyDH PKIXParameters {
-            get {
-                return new PKIXPublicKeyDH() {
-                    Public = Public,
-                    Domain = DHDomain.GetByUDF(Domain)
-                    };
-                }
+            get => new PKIXPublicKeyDH() {
+                Public = Public,
+                Domain = DHDomain.GetByUDF(Domain)
+                };
             }
 
         /// <summary>
@@ -59,12 +61,16 @@ namespace Goedel.Cryptography.Jose {
     /// Represents an RSA Private Key.
     /// </summary>
     public partial class PrivateKeyDH {
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public PrivateKeyDH () { }
 
         /// <summary>
         /// Construct from the specified RSA Key
         /// </summary>
         /// <param name="KeyPair">An RSA key Pair.</param>
-        public PrivateKeyDH(DHKeyPairBase KeyPair) : this(KeyPair.PKIXPrivateKeyDH) {
+        public PrivateKeyDH (DHKeyPairBase KeyPair) : this(KeyPair.PKIXPrivateKeyDH) {
             }
 
         /// <summary>
@@ -82,13 +88,11 @@ namespace Goedel.Cryptography.Jose {
         /// Return the parameters as PKIX RSAPrivateKey structure;
         /// </summary>
         public virtual PKIXPrivateKeyDH DHPrivateKey {
-            get {
-                return new PKIXPrivateKeyDH() {
-                    Public = Public,
-                    Private = Private,
-                    Domain = DHDomain.GetByUDF(Domain)
-                    };
-                }
+            get => new PKIXPrivateKeyDH() {
+                Public = Public,
+                Private = Private,
+                Domain = DHDomain.GetByUDF(Domain)
+                };
             }
 
 

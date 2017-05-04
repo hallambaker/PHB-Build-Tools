@@ -116,7 +116,8 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="KeySecurity">Specifies the protection level for the key.</param>
         /// <param name="KeySize">The Key size</param>
-        public override void Generate(KeySecurity KeySecurity, int KeySize = 2046) {
+        public override void Generate(KeySecurity KeySecurity, int KeySize = 2048) {
+            KeySize = KeySize > 0 ? KeySize : 2048;
             DHKeyPair = new DHKeyPair(KeySecurity, KeySize);
             }
 

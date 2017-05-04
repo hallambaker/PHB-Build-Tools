@@ -53,6 +53,11 @@ namespace Goedel.Cryptography.Jose {
             }
 
         /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public JoseWebSignature () { }
+
+        /// <summary>
         /// Sign JSON object.
         /// </summary>
         /// <param name="JSONObject">The object to sign</param>
@@ -187,7 +192,8 @@ namespace Goedel.Cryptography.Jose {
             var Signature = MatchSigner(Public);
 
             var ProtectedText = Signature.Protected.ToUTF8();
-            var Header = new Header(ProtectedText);
+            var Header = new Header();
+            Header.Deserialize(ProtectedText);
 
             var Algorithm = Header.alg.FromJoseID();
             var BulkID = Algorithm.Bulk();

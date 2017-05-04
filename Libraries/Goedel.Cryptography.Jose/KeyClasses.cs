@@ -119,7 +119,12 @@ namespace Goedel.Cryptography.Jose {
         public Key Key {
             get => Key.FromTagged(KeyData.ToUTF8()); }
 
-        string KeyText { get => KeyData.ToUTF8(); } 
+        string KeyText { get => KeyData.ToUTF8(); }
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public KeyContainer () { }
 
         /// <summary>
         /// Construct a Key Container with the specified Key security level.

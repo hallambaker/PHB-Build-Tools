@@ -32,6 +32,11 @@ namespace Goedel.Cryptography.Jose {
     public partial class Header {
 
         /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public Header () { }
+
+        /// <summary>
         /// Initialize the alg parameter to match the specified provider.
         /// </summary>
         /// <param name="Provider">The encryption provider</param>

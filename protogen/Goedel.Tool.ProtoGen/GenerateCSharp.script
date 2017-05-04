@@ -1,6 +1,7 @@
 ﻿#script 1.0
 #license MITLicense
 #xclass Goedel.Tool.ProtoGen Generate
+#% bool OldConstructors = false;
 
 #!
 #!   Code Generator (C#)
@@ -51,6 +52,7 @@ namespace #{Namespace} {
 			return "#{Protocol.Prefix}";
 			}
 
+#if (OldConstructors)
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -75,7 +77,7 @@ namespace #{Namespace} {
 			Deserialize (_String);
 			_Initialize () ;
 			}
-
+#end if
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
@@ -271,7 +273,7 @@ namespace #{Namespace} {
 #switchcast ProtoStructType Entry
 #casecast Message Message
 #% MakeClass (Message.Id, Message.Entries);
-
+#if (OldConstructors)
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>	
@@ -287,12 +289,15 @@ namespace #{Namespace} {
 		public #{Message.Id} (string _String) {
 			Deserialize (_String);
 			}
+#end if
+
 #% var Inherits = HasInherits  (Message.Entries);
 #% MakeSerializers (Message.Id, Message.ID, Message.Entries, Inherits);
 		}
 
 #casecast Structure Structure
 #% MakeClass (Structure.Id, Structure.Entries, Structure.Parameterized);
+#if (OldConstructors)
         /// <summary>
 		/// Initialize class from JSONReader stream.
         /// </summary>		
@@ -308,7 +313,7 @@ namespace #{Namespace} {
 		public #{Structure.Id} (string _String) {
 			Deserialize (_String);
 			}
-
+#end if
 #% var Inherits = HasInherits  (Structure.Entries);
 #% MakeSerializers (Structure.Id, Structure.ID, Structure.Entries, Inherits);
 		}
@@ -399,12 +404,14 @@ public partial class #{Id} : #{Inherits} {
 			return "#{Id}";
 			}
 
+#if (OldConstructors)
         /// <summary>
         /// Default Constructor
         /// </summary>
 		public #{Id} () {
 			_Initialize ();
 			}
+#end if
 #% }
 #end block 
 
@@ -434,12 +441,15 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 			return "#{Id}";
 			}
 
+
+#if (OldConstructors)
         /// <summary>
         /// Default Constructor
         /// </summary>
 		public #{Id} () {
 			_Initialize ();
 			}
+#end if
 #% }
 #end block 
 
@@ -572,7 +582,10 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 		public static new #{Id} From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new #{Id} (JSONReader);
+			var Result = new #{Id} ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new #{Id} (JSONReader);
 			}
 #end if
 
@@ -655,7 +668,9 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 					while (_Going) {
 #if Entry._Tag () == ProtoStructType.Struct
 						// an untagged structure.
-						var _Item = new #{Type} (JSONReader);
+						var _Item = new  #{Type} ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new #{Type} (JSONReader);
 #elseif Entry._Tag () == ProtoStructType.TStruct
 						var _Item = #{Type}.FromTagged (JSONReader); // a tagged structure
 #else
@@ -667,7 +682,8 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 #else
 #if Entry._Tag () == ProtoStructType.Struct
 					// An untagged structure
-					#{Token} = new #{Type} (JSONReader);
+					#{Token} = new #{Type} ();
+					#{Token}.Deserialize (JSONReader);
  
 #elseif Entry._Tag () == ProtoStructType.TStruct
 					#{Token} = #{Type}.FromTagged (JSONReader) ;  // A tagged structure
@@ -836,9 +852,8 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 					Out = null;
 					throw new Exception ("Can't create abstract type");
 #else
-					var Result = new #{Id} ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new #{Id} ();
+					Out.Deserialize (JSONReader);
 					break;
 #end if
 					}
@@ -853,9 +868,8 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 					Out = null;
 					throw new Exception ("Can't create abstract type");
 #else
-					var Result = new #{Id} ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new #{Id} ();
+					Out.Deserialize (JSONReader);
 					break;
 #end if
 					}

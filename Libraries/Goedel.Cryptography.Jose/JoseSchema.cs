@@ -1,4 +1,4 @@
-
+﻿
 //  Copyright (c) 2016 by .
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -48,31 +48,6 @@ namespace Goedel.Cryptography.Jose {
 			return "Jose";
 			}
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-		public Jose () {
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded stream.
-        /// </summary>
-        /// <param name="JSONReader">Input stream</param>
-		public Jose (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			_Initialize () ;
-			}
-
-        /// <summary>
-        /// Construct an instance from a JSON encoded string.
-        /// </summary>
-        /// <param name="_String">Input string</param>
-		public Jose (string _String) {
-			Deserialize (_String);
-			_Initialize () ;
-			}
-
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
@@ -92,113 +67,99 @@ namespace Goedel.Cryptography.Jose {
 			switch (token) {
 
 				case "JoseWebSignature" : {
-					var Result = new JoseWebSignature ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new JoseWebSignature ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "JoseWebEncryption" : {
-					var Result = new JoseWebEncryption ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new JoseWebEncryption ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "Signed" : {
-					var Result = new Signed ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Signed ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "Encrypted" : {
-					var Result = new Encrypted ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Encrypted ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "KeyData" : {
-					var Result = new KeyData ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new KeyData ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "Header" : {
-					var Result = new Header ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Header ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "Signature" : {
-					var Result = new Signature ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Signature ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "KeyContainer" : {
-					var Result = new KeyContainer ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new KeyContainer ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "Key" : {
-					var Result = new Key ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Key ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "Recipient" : {
-					var Result = new Recipient ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Recipient ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "PublicKeyRSA" : {
-					var Result = new PublicKeyRSA ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PublicKeyRSA ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "PrivateKeyRSA" : {
-					var Result = new PrivateKeyRSA ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PrivateKeyRSA ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "PublicKeyDH" : {
-					var Result = new PublicKeyDH ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PublicKeyDH ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 
 				case "PrivateKeyDH" : {
-					var Result = new PrivateKeyDH ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PrivateKeyDH ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -247,27 +208,6 @@ namespace Goedel.Cryptography.Jose {
 			return "JoseWebSignature";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public JoseWebSignature () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public JoseWebSignature (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public JoseWebSignature (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -348,7 +288,10 @@ namespace Goedel.Cryptography.Jose {
 		public static new JoseWebSignature From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new JoseWebSignature (JSONReader);
+			var Result = new JoseWebSignature ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new JoseWebSignature (JSONReader);
 			}
 
         /// <summary>
@@ -395,16 +338,14 @@ namespace Goedel.Cryptography.Jose {
 			switch (token) {
 
 				case "JoseWebSignature" : {
-					var Result = new JoseWebSignature ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new JoseWebSignature ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "JoseWebEncryption" : {
-					var Result = new JoseWebEncryption ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new JoseWebEncryption ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -428,7 +369,8 @@ namespace Goedel.Cryptography.Jose {
 			switch (Tag) {
 				case "unprotected" : {
 					// An untagged structure
-					Unprotected = new Header (JSONReader);
+					Unprotected = new Header ();
+					Unprotected.Deserialize (JSONReader);
  
 					break;
 					}
@@ -442,7 +384,9 @@ namespace Goedel.Cryptography.Jose {
 					Signatures = new List <Signature> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new Signature (JSONReader);
+						var _Item = new  Signature ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new Signature (JSONReader);
 						Signatures.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -507,27 +451,6 @@ namespace Goedel.Cryptography.Jose {
 			return "JoseWebEncryption";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public JoseWebEncryption () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public JoseWebEncryption (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public JoseWebEncryption (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -629,7 +552,10 @@ namespace Goedel.Cryptography.Jose {
 		public static new JoseWebEncryption From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new JoseWebEncryption (JSONReader);
+			var Result = new JoseWebEncryption ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new JoseWebEncryption (JSONReader);
 			}
 
         /// <summary>
@@ -676,9 +602,8 @@ namespace Goedel.Cryptography.Jose {
 			switch (token) {
 
 				case "JoseWebEncryption" : {
-					var Result = new JoseWebEncryption ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new JoseWebEncryption ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -714,7 +639,9 @@ namespace Goedel.Cryptography.Jose {
 					Recipients = new List <Recipient> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new Recipient (JSONReader);
+						var _Item = new  Recipient ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new Recipient (JSONReader);
 						Recipients.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -776,27 +703,6 @@ namespace Goedel.Cryptography.Jose {
 			return "Signed";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public Signed () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public Signed (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public Signed (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -865,7 +771,10 @@ namespace Goedel.Cryptography.Jose {
 		public static new Signed From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new Signed (JSONReader);
+			var Result = new Signed ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new Signed (JSONReader);
 			}
 
         /// <summary>
@@ -912,9 +821,8 @@ namespace Goedel.Cryptography.Jose {
 			switch (token) {
 
 				case "Signed" : {
-					var Result = new Signed ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Signed ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -992,27 +900,6 @@ namespace Goedel.Cryptography.Jose {
 			return "Encrypted";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public Encrypted () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public Encrypted (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public Encrypted (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -1086,7 +973,10 @@ namespace Goedel.Cryptography.Jose {
 		public static new Encrypted From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new Encrypted (JSONReader);
+			var Result = new Encrypted ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new Encrypted (JSONReader);
 			}
 
         /// <summary>
@@ -1133,9 +1023,8 @@ namespace Goedel.Cryptography.Jose {
 			switch (token) {
 
 				case "Encrypted" : {
-					var Result = new Encrypted ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Encrypted ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1159,7 +1048,8 @@ namespace Goedel.Cryptography.Jose {
 			switch (Tag) {
 				case "header" : {
 					// An untagged structure
-					Header = new Header (JSONReader);
+					Header = new Header ();
+					Header.Deserialize (JSONReader);
  
 					break;
 					}
@@ -1240,27 +1130,6 @@ namespace Goedel.Cryptography.Jose {
 			return "KeyData";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public KeyData () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public KeyData (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public KeyData (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -1354,7 +1223,10 @@ namespace Goedel.Cryptography.Jose {
 		public static new KeyData From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new KeyData (JSONReader);
+			var Result = new KeyData ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new KeyData (JSONReader);
 			}
 
         /// <summary>
@@ -1401,51 +1273,44 @@ namespace Goedel.Cryptography.Jose {
 			switch (token) {
 
 				case "KeyData" : {
-					var Result = new KeyData ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new KeyData ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "Header" : {
-					var Result = new Header ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Header ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "Key" : {
-					var Result = new Key ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Key ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "PublicKeyRSA" : {
-					var Result = new PublicKeyRSA ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PublicKeyRSA ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "PrivateKeyRSA" : {
-					var Result = new PrivateKeyRSA ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PrivateKeyRSA ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "PublicKeyDH" : {
-					var Result = new PublicKeyDH ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PublicKeyDH ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "PrivateKeyDH" : {
-					var Result = new PrivateKeyDH ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PrivateKeyDH ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1554,27 +1419,6 @@ namespace Goedel.Cryptography.Jose {
 			return "Header";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public Header () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public Header (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public Header (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -1666,7 +1510,10 @@ namespace Goedel.Cryptography.Jose {
 		public static new Header From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new Header (JSONReader);
+			var Result = new Header ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new Header (JSONReader);
 			}
 
         /// <summary>
@@ -1713,9 +1560,8 @@ namespace Goedel.Cryptography.Jose {
 			switch (token) {
 
 				case "Header" : {
-					var Result = new Header ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Header ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1806,27 +1652,6 @@ namespace Goedel.Cryptography.Jose {
 			return "Signature";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public Signature () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public Signature (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public Signature (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -1895,7 +1720,10 @@ namespace Goedel.Cryptography.Jose {
 		public static new Signature From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new Signature (JSONReader);
+			var Result = new Signature ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new Signature (JSONReader);
 			}
 
         /// <summary>
@@ -1942,9 +1770,8 @@ namespace Goedel.Cryptography.Jose {
 			switch (token) {
 
 				case "Signature" : {
-					var Result = new Signature ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Signature ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -1968,7 +1795,8 @@ namespace Goedel.Cryptography.Jose {
 			switch (Tag) {
 				case "header" : {
 					// An untagged structure
-					Header = new Header (JSONReader);
+					Header = new Header ();
+					Header.Deserialize (JSONReader);
  
 					break;
 					}
@@ -2019,27 +1847,6 @@ namespace Goedel.Cryptography.Jose {
 			return "KeyContainer";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public KeyContainer () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public KeyContainer (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public KeyContainer (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -2103,7 +1910,10 @@ namespace Goedel.Cryptography.Jose {
 		public static new KeyContainer From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new KeyContainer (JSONReader);
+			var Result = new KeyContainer ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new KeyContainer (JSONReader);
 			}
 
         /// <summary>
@@ -2150,9 +1960,8 @@ namespace Goedel.Cryptography.Jose {
 			switch (token) {
 
 				case "KeyContainer" : {
-					var Result = new KeyContainer ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new KeyContainer ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -2227,27 +2036,6 @@ namespace Goedel.Cryptography.Jose {
 			return "Key";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public Key () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public Key (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public Key (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -2322,7 +2110,10 @@ namespace Goedel.Cryptography.Jose {
 		public static new Key From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new Key (JSONReader);
+			var Result = new Key ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new Key (JSONReader);
 			}
 
         /// <summary>
@@ -2369,37 +2160,32 @@ namespace Goedel.Cryptography.Jose {
 			switch (token) {
 
 				case "Key" : {
-					var Result = new Key ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Key ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "PublicKeyRSA" : {
-					var Result = new PublicKeyRSA ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PublicKeyRSA ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "PrivateKeyRSA" : {
-					var Result = new PrivateKeyRSA ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PrivateKeyRSA ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "PublicKeyDH" : {
-					var Result = new PublicKeyDH ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PublicKeyDH ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "PrivateKeyDH" : {
-					var Result = new PrivateKeyDH ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PrivateKeyDH ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -2472,27 +2258,6 @@ namespace Goedel.Cryptography.Jose {
 			return "Recipient";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public Recipient () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public Recipient (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public Recipient (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -2556,7 +2321,10 @@ namespace Goedel.Cryptography.Jose {
 		public static new Recipient From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new Recipient (JSONReader);
+			var Result = new Recipient ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new Recipient (JSONReader);
 			}
 
         /// <summary>
@@ -2603,9 +2371,8 @@ namespace Goedel.Cryptography.Jose {
 			switch (token) {
 
 				case "Recipient" : {
-					var Result = new Recipient ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new Recipient ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -2629,7 +2396,8 @@ namespace Goedel.Cryptography.Jose {
 			switch (Tag) {
 				case "Header" : {
 					// An untagged structure
-					Header = new Header (JSONReader);
+					Header = new Header ();
+					Header.Deserialize (JSONReader);
  
 					break;
 					}
@@ -2671,27 +2439,6 @@ namespace Goedel.Cryptography.Jose {
 			return "PublicKeyRSA";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public PublicKeyRSA () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public PublicKeyRSA (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public PublicKeyRSA (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -2756,7 +2503,10 @@ namespace Goedel.Cryptography.Jose {
 		public static new PublicKeyRSA From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new PublicKeyRSA (JSONReader);
+			var Result = new PublicKeyRSA ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new PublicKeyRSA (JSONReader);
 			}
 
         /// <summary>
@@ -2803,16 +2553,14 @@ namespace Goedel.Cryptography.Jose {
 			switch (token) {
 
 				case "PublicKeyRSA" : {
-					var Result = new PublicKeyRSA ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PublicKeyRSA ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "PrivateKeyRSA" : {
-					var Result = new PrivateKeyRSA ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PrivateKeyRSA ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -2897,27 +2645,6 @@ namespace Goedel.Cryptography.Jose {
 			return "PrivateKeyRSA";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public PrivateKeyRSA () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public PrivateKeyRSA (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public PrivateKeyRSA (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -3002,7 +2729,10 @@ namespace Goedel.Cryptography.Jose {
 		public static new PrivateKeyRSA From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new PrivateKeyRSA (JSONReader);
+			var Result = new PrivateKeyRSA ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new PrivateKeyRSA (JSONReader);
 			}
 
         /// <summary>
@@ -3049,9 +2779,8 @@ namespace Goedel.Cryptography.Jose {
 			switch (token) {
 
 				case "PrivateKeyRSA" : {
-					var Result = new PrivateKeyRSA ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PrivateKeyRSA ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -3132,27 +2861,6 @@ namespace Goedel.Cryptography.Jose {
 			return "PublicKeyDH";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public PublicKeyDH () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public PublicKeyDH (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public PublicKeyDH (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -3217,7 +2925,10 @@ namespace Goedel.Cryptography.Jose {
 		public static new PublicKeyDH From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new PublicKeyDH (JSONReader);
+			var Result = new PublicKeyDH ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new PublicKeyDH (JSONReader);
 			}
 
         /// <summary>
@@ -3264,16 +2975,14 @@ namespace Goedel.Cryptography.Jose {
 			switch (token) {
 
 				case "PublicKeyDH" : {
-					var Result = new PublicKeyDH ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PublicKeyDH ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
 				case "PrivateKeyDH" : {
-					var Result = new PrivateKeyDH ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PrivateKeyDH ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 
@@ -3333,27 +3042,6 @@ namespace Goedel.Cryptography.Jose {
 			return "PrivateKeyDH";
 			}
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public PrivateKeyDH () {
-			_Initialize ();
-			}
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public PrivateKeyDH (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public PrivateKeyDH (string _String) {
-			Deserialize (_String);
-			}
 
 
         /// <summary>
@@ -3413,7 +3101,10 @@ namespace Goedel.Cryptography.Jose {
 		public static new PrivateKeyDH From (string _Input) {
 			StringReader _Reader = new StringReader (_Input);
             JSONReader JSONReader = new JSONReader (_Reader);
-			return new PrivateKeyDH (JSONReader);
+			var Result = new PrivateKeyDH ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			// return new PrivateKeyDH (JSONReader);
 			}
 
         /// <summary>
@@ -3460,9 +3151,8 @@ namespace Goedel.Cryptography.Jose {
 			switch (token) {
 
 				case "PrivateKeyDH" : {
-					var Result = new PrivateKeyDH ();
-					Result.Deserialize (JSONReader);
-					Out = Result;
+					Out = new PrivateKeyDH ();
+					Out.Deserialize (JSONReader);
 					break;
 					}
 

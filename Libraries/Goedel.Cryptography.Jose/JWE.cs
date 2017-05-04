@@ -72,6 +72,11 @@ namespace Goedel.Cryptography.Jose {
             }
 
         /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public JoseWebEncryption () { }
+
+        /// <summary>
         /// Construct a JWE instance from JSON Object
         /// </summary>
         /// <param name="JSONObject">The object to sign</param>
@@ -324,7 +329,8 @@ namespace Goedel.Cryptography.Jose {
             var ExchangeID = AlgorithmJose.FromJoseID();
 
             var ProtectedText = Protected.ToUTF8();
-            var Header = new Header(ProtectedText);
+            var Header = new Header();
+            Header.Deserialize(ProtectedText);
             var BulkID = Header.enc.FromJoseID();
 
             var Exchange = DecryptionKey.Decrypt(Recipient.EncryptedKey,
@@ -345,7 +351,8 @@ namespace Goedel.Cryptography.Jose {
         /// <returns>The decrypted data</returns>
         public byte[] Decrypt(byte[] Secret, string Info = null) {
             var ProtectedText = Protected.ToUTF8();
-            var Header = new Header(ProtectedText);
+            var Header = new Header();
+            Header.Deserialize(ProtectedText);
             var BulkID = Header.enc.FromJoseID();
             var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
 
@@ -389,6 +396,12 @@ namespace Goedel.Cryptography.Jose {
     /// Represents a JWE recipient
     /// </summary>
     public partial class Recipient {
+
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public Recipient () { }
 
         /// <summary>
         /// Encrypt to the specified key of the specified profile.

@@ -33,6 +33,10 @@ namespace Goedel.Cryptography.Jose {
     /// Represents a JOSE KeyData structure
     /// </summary>
     public partial class KeyData {
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public KeyData () { }
 
         /// <summary>
         /// Build a KeyData object from a reference to a key. This may be a certificate,
@@ -59,9 +63,7 @@ namespace Goedel.Cryptography.Jose {
         /// Returns a key handle for the specified Key Data.
         /// </summary>
         public KeyHandle KeyHandle {
-            get {
-                return GetKeyHandle ();
-                }
+            get => GetKeyHandle ();
             }
 
         KeyHandle GetKeyHandle() {

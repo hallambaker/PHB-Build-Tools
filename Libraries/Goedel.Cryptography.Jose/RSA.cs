@@ -9,6 +9,10 @@ namespace Goedel.Cryptography.Jose {
     /// Represents an RSA Public Key.
     /// </summary>
     public partial class PublicKeyRSA : Key {
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public PublicKeyRSA () { }
 
         /// <summary>
         /// Construct from the specified RSA Key
@@ -36,12 +40,10 @@ namespace Goedel.Cryptography.Jose {
         /// Return the parameters as a PKIX RSAPublicKey structure;
         /// </summary>
         public virtual PKIXPublicKeyRSA PKIXParameters {
-            get {
-                return new PKIXPublicKeyRSA() {
-                    Modulus = n,
-                    PublicExponent = e
-                    };
-                }
+            get => new PKIXPublicKeyRSA() {
+                Modulus = n,
+                PublicExponent = e
+                };
             }
 
         /// <summary>
@@ -63,6 +65,10 @@ namespace Goedel.Cryptography.Jose {
     /// Represents an RSA Private Key.
     /// </summary>
     public partial class PrivateKeyRSA {
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public PrivateKeyRSA () { }
 
         /// <summary>
         /// Construct from the specified RSA Key
@@ -101,8 +107,7 @@ namespace Goedel.Cryptography.Jose {
         /// Return the parameters as PKIX RSAPrivateKey structure;
         /// </summary>
         public virtual PKIXPrivateKeyRSA RSAPrivateKey {
-            get {
-                return new PKIXPrivateKeyRSA() {
+            get => new PKIXPrivateKeyRSA() {
                     Modulus = n,
                     PublicExponent = e,
                     PrivateExponent = d,
@@ -112,7 +117,6 @@ namespace Goedel.Cryptography.Jose {
                     Exponent2 = dq,
                     Coefficient = qi
                     };
-                }
             }
 
         }
