@@ -76,6 +76,7 @@
       <Generator>GScript</Generator>
       <LastGenOutput>Generate.cs</LastGenOutput>
     </None>
+    <None Include="Old.script" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">

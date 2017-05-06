@@ -13,62 +13,19 @@
 #!	*	Predispatch call
 #!  *	Allow debug stubs to be turned off to make code compact
 #!
-#!% TYPE<_Choice> OptionSetType;
 #% TYPE<_Choice> TypeType;
 #% CommandParse CommandParse;
-
+#% Separator Separator = new Separator (",");
 #% string NameClassType = "Goedel.Registry.Type";
 #% string NameClassFile = "Goedel.Registry._File";
 #% string NameClassFlag = "Goedel.Registry._Flag";
 #% string NameDispatchType = "Goedel.Registry.Dispatch";
 #% Command DefaultCommand = null;
-#method Normalize List<_Choice> Choices
-#foreach (_Choice Item in Choices)
-#switchcast CommandParseType Item
-#casecast Class Class
-#foreach (_Choice Entry in Class.Entries)
-#switchcast CommandParseType Entry
-#case CommandParseType.Library
-#% CommandParse.Main = false;
-#casecast Command Command
-#% List <_Choice> Extras = new List <_Choice>();
-#foreach (_Choice CommandEntry in Command.Entries)
-#switchcast CommandParseType CommandEntry
-#casecast DefaultCommand null
-#% DefaultCommand = Command;
-#casecast Parameter null
-#casecast Option null
-#casecast Include Include
-#% if (Include.Id.ID == null) {
-#%		throw new System.Exception ("Internal parser error"); }
-#% if (Include.Id.ID.Declared == false) {
-#%		throw new System.Exception ("OptionSet not defined: " + Include.Id.ID.Label); } 
-#% if (Include.Id.ID.Object == null) {
-#%		throw new System.Exception ("OptionSet not defined: " + Include.Id.ID.Label); } 
-#% _Choice Choice = (_Choice) ( Include.Id.ID.Object);
-#switchcast CommandParseType Choice
-#casecast OptionSet OptionSet
-#foreach (_Choice OptionSetEntry in OptionSet.Options)
-#switchcast CommandParseType OptionSetEntry
-#casecast Option Option
-#% Extras.Add (Option);
-#end switchcast
-#end foreach
-#end switchcast
-#%
-#end switchcast
-#end foreach
-#foreach (_Choice Option in Extras)
-#% Command.Entries.Add (Option);
-#end foreach
-#end switchcast
-#end foreach
-#end switchcast
-#end foreach     
-#end method
+
 
 #method Generate CommandParse CommandParseIn
-#! Goedel.Registry.Script.Header (_Output, "//", GenerateTime);
+#% Goedel.Registry.Boilerplate.Header (_Output, "//  ", CommandParseIn.Options.Started);
+
 #! Goedel.Registry.Script.MITLicense (_Output, "//", 
 #!			Goedel.Registry.Script.AssemblyCopyright, Goedel.Registry.Script.AssemblyCompany);
 #% GenerateX (CommandParseIn);
@@ -77,14 +34,14 @@
 
 #method GenerateX CommandParse CommandParseIn
 #% CommandParse = CommandParseIn;
-#call Normalize CommandParse.Top
-#!% OptionSetType = CommandParse.Registry.FindType ("OptionSetType");
+#% CommandParse.Init();
 #% TypeType = CommandParse.Registry.FindType ("TypeType");
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Registry;
+using Goedel.Utilities;
 
 #foreach (_Choice Item in CommandParse.Top)
 #switchcast CommandParseType Item
@@ -95,11 +52,27 @@ using Goedel.Registry;
 
 #end method
 
+#% void GenerateCommandEntries (List<_Choice> Entries) {
+#foreach (_Choice Entry in Entries)
+#switchcast CommandParseType Entry
+#casecast CommandSet Cast
+#{Separator}
+				{"#{Cast.Tag.ToLower()}", DescribeCommandSet_#{Cast.Id}}#!
+#casecast Command Cast
+#{Separator}
+				{"#{Cast.Tag.ToLower()}", _#{Cast.Id}._DescribeCommand }#!
+#casecast About Cast
+#{Separator}
+				{"#{Cast.Tag.ToLower()}", _About }#!
+#end switchcast
+#end foreach
+#% }
+
 #method GenerateClass Class Class
 namespace #{Class.Namespace} {
     public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 
-		static char UsageFlag;
+
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
 
@@ -107,17 +80,66 @@ namespace #{Class.Namespace} {
             return (c == UnixFlag) | (c == WindowsFlag) ;
             }
 
+#foreach (_Choice Entry in Class.Entries)
+#switchcast CommandParseType Entry
+#casecast CommandSet Cast
+#% Separator.IsFirst = true;
+		static DescribeCommandSet DescribeCommandSet_#{Cast.Id} = new DescribeCommandSet () {
+            Identifier = "#{Cast.Tag.ToLower()}",
+			Entries = new  SortedDictionary<string, DescribeCommand> () {#!
+#call GenerateCommandEntries Cast.Entries
+
+				} // End Entries
+			};
+#end switchcast
+#end foreach
+
         static CommandLineInterpreter () {
             System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 
             if (OperatingSystem.Platform == PlatformID.Unix |
                     OperatingSystem.Platform == PlatformID.MacOSX) {
-                UsageFlag = UnixFlag;
+                FlagIndicator = UnixFlag;
                 }
             else {
-                UsageFlag = WindowsFlag;
+                FlagIndicator = WindowsFlag;
                 }
+
+#if (Class.DefaultCommand != null)
+				DefaultCommand = _#{Class.DefaultCommand.Id}._DescribeCommand;
+#end if
+#if (Class.Description != null)
+				Description = "#{Class.Description}";
+#end if
+
+			Entries = new  SortedDictionary<string, DescribeCommand> () {#!
+#% Separator.IsFirst = true;
+#call GenerateCommandEntries Class.Entries
+#{Separator}
+				{"help", _Brief }
+				}; // End Entries
+
+
+
             }
+
+#foreach (_Choice Entry in Class.Entries)
+#switchcast CommandParseType Entry
+#casecast About Cast
+        public static DescribeCommandEntry _About = new DescribeCommandEntry() {
+            Identifier = "about",
+            HandleDelegate = About,
+			Entries = new  List<DescribeEntry> () {}
+            };
+#casecast Brief Cast
+        public static DescribeCommandEntry _Brief = new DescribeCommandEntry() {
+            Identifier = "help",
+            HandleDelegate = Brief,
+			Entries = new  List<DescribeEntry> () {}
+            };
+#end switchcast
+#end foreach
+
 
 #if CommandParse.Main
         static void Main(string[] args) {
@@ -135,56 +157,27 @@ namespace #{Class.Namespace} {
 #if CommandParse.Catcher
 			try {
 #end if
-				if (args.Length == 0) {
-					throw new ParserException ("No command specified");
-					}
+				Assert.False (args.Length == 0, NoCommand.Throw);
 
                 if (IsFlag(args[0][0])) {
-
-
-                    switch (args[0].Substring(1).ToLower()) {
-#foreach (_Choice Entry in Class.Entries)
-#switchcast CommandParseType Entry
-#casecast Command Cast
-						case "#{Cast.Tag.ToLower()}" : {
-							Handle_#{Cast.Id} (Dispatch, args, 1);
-							break;
-							}
-#casecast About Cast
-						case "#{Cast.Tag.ToLower()}" : {
-							FileTools.About ();
-							break;
-							}
-#casecast Brief Cast
-						case "#{Cast.Text.ToLower()}" : {
-							Usage ();
-							break;
-							}
-#end switchcast
-#end foreach
-						default: {
-							throw new ParserException("Unknown Command: " + args[0]);
-                            }
-                        }
+					Dispatcher (Entries, Dispatch, args, 0);
                     }
                 else {
 #if DefaultCommand != null
 					Handle_#{DefaultCommand.Id} (Dispatch, args, 0);
 #else
-                    throw new ParserException ("No command specified");
+                    Assert.True (false, NoCommand.Throw);
 #end if
                     }
 #if CommandParse.Catcher
 				}
 
+            catch (ParserException) {
+			    Brief ();
+				}
 
             catch (System.Exception Exception) {
-                if (Exception.GetType() == typeof (ParserException)) {
-                    Usage ();
-                    }
-                else {
-                   Console.WriteLine("Application: {0}", Exception.Message);
-                    }
+                Console.WriteLine("Application: {0}", Exception.Message);
                 }
 #end if
             } // Main
@@ -193,6 +186,129 @@ namespace #{Class.Namespace} {
 #foreach (_Choice Entry in Class.Entries)
 #switchcast CommandParseType Entry
 #casecast Command Command
+#% CommandHandler (Command, Class);
+#casecast CommandSet CommandSet
+#foreach (var Inner in CommandSet.Entries)
+#switchcast CommandParseType Inner
+#casecast Command Command
+#% CommandHandler (Command, Class);
+#end switchcast
+#end foreach
+#end switchcast
+#end foreach
+
+
+	} // class Main
+
+
+	// The stub class for carrying optional parameters for each command type
+	// As with the main class each consists of an abstract main class 
+	// with partial virtual that can be extended as required.
+
+	// All subclasses inherit from the abstract classes Goedel.Regisrty.Dispatch 
+	// and Goedel.Registry.Type
+
+#foreach (_Choice Entry in Class.Entries)
+#switchcast CommandParseType Entry
+#casecast OptionSet OptionSet
+	public interface I#{OptionSet.Id} {
+#foreach (_Choice OptionC in OptionSet.Options)
+#switchcast CommandParseType OptionC
+#casecast Option Option
+		#{Option.Type}			#{Option.Name}{get; set;}
+#end switchcast
+#end foreach
+		}
+
+#casecast Command Cast
+#call CommandOptionClass Cast
+#casecast CommandSet CommandSet
+#foreach (var Inner in CommandSet.Entries)
+#switchcast CommandParseType Inner
+#casecast Command Command
+#call CommandOptionClass Command
+#end switchcast
+#end foreach
+#end switchcast
+#end foreach
+
+#! This section contains declarations for the builtins and types.
+#!
+#foreach (ID<_Choice> ID in TypeType.IDs)
+    // Parameter type #{ID}
+#if (ID.ToString() == "NewFile") | (ID.ToString() == "ExistingFile")
+    public abstract class _#{ID} : #{NameClassFile} {
+#elseif (ID.ToString() == "Flag")
+    public abstract class _#{ID} : #{NameClassFlag} {
+#else
+    public abstract class _#{ID} : #{NameClassType} {
+#end if
+        public _#{ID}() {
+            }
+
+#if CommandParse.Builtins
+#if (ID.ToString() == "Flag")
+#elseif (ID.ToString() == "NewFile")
+#elseif (ID.ToString() == "ExistingFile")
+#else
+		public string			Value {
+			get => Text;
+			}
+#end if
+#end if
+
+        } // _#{ID}
+
+    public partial class  #{ID} : _#{ID} {
+        public #{ID}() {
+            }
+			
+        public static #{ID} Factory (string Value) {
+            var Result = new #{ID}();
+            Result.Default(Value);
+            return Result;
+            }
+
+        } // #{ID}
+
+
+#end foreach
+
+
+	// The stub class just contains routines that echo their arguments and
+	// write 'not yet implemented'
+
+	// Eventually there will be a compiler option to suppress the debugging
+	// to eliminate the redundant code
+    public class _#{Class.Id} : global::Goedel.Registry.DispatchShell {
+
+#foreach (_Choice Entry in Class.Entries)
+#switchcast CommandParseType Entry
+#casecast Command Command
+#call CommandMethod Command
+#casecast CommandSet CommandSet
+#foreach (var Inner in CommandSet.Entries)
+#switchcast CommandParseType Inner
+#casecast Command Command
+#call CommandMethod Command
+#end switchcast
+#end foreach
+#end switchcast
+#end foreach
+
+        } // class _#{Class.Id}
+
+    public partial class #{Class.Id} : _#{Class.Id} {
+        } // class #{Class.Id}
+
+    } // namespace #{Class.Id}
+
+#end method
+// Types
+//      NewFile   ExistingFile
+//		Flag, String, Integer, enumeration
+
+#method2 CommandHandler Command Command Class Class
 		private enum TagType_#{Command.Id} {
 #foreach (_Choice CommandEntry in Command.Entries)
 #switchcast CommandParseType CommandEntry
@@ -210,275 +326,18 @@ namespace #{Class.Namespace} {
 #end foreach			
 			}
 
-		private static void Handle_#{Command.Id} (
-					#{Class.Id} Dispatch, string[] args, int index) {
+		public static void Handle_#{Command.Id} (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			#{Class.Id} Dispatch =	DispatchIn as #{Class.Id};
 			#{Command.Id}		Options = new #{Command.Id} ();
-
-			var Registry = new Goedel.Registry.Registry ();
-
-#foreach (_Choice CommandEntry in Command.Entries)
-#switchcast CommandParseType CommandEntry
-#casecast Parameter Param
-			Options.#{Param.Name}.Register ("#{Param.Text}", Registry, (int) TagType_#{Command.Id}.#{Param.Name});
-#casecast Parser Param
-			Options.#{Param.Class}.Register ("#{Param.Extension}", Registry, (int) TagType_#{Command.Id}.#{Param.Class});
-#casecast Option Param
-			Options.#{Param.Name}.Register ("#{Param.Command}", Registry, (int) TagType_#{Command.Id}.#{Param.Name});
-#casecast Lazy Param
-			Options.#{Param.Name}.Register ("#{Param.Tag}", Registry, (int) TagType_#{Command.Id}.#{Param.Name});
-#casecast Script Param
-			Options.#{Param.Id}.Register ("#{Param.Extension}", Registry, (int) TagType_#{Command.Id}.#{Param.Id});
-#end switchcast
-#end foreach
-
-#foreach (_Choice CommandEntry in Command.Entries)
-#switchcast CommandParseType CommandEntry
-#casecast Parameter Param
-			// looking for parameter #Param.Name}
-			if (index < args.Length && !IsFlag (args [index][0] )) {
-				// Have got the parameter, call the parameter value method
-				Options.#{Param.Name}.Parameter (args [index]);
-				index++;
-				}
-#casecast Parser Param
-			// looking for parameter #Param.Class}
-			if (index < args.Length && !IsFlag (args [index][0] )) {
-				// Have got the parameter, call the parameter value method
-				Options.#{Param.Class}.Parameter (args [index]);
-				index++;
-				}
-#end switchcast
-#end foreach
-
-##pragma warning disable 162
-			for (int i = index; i< args.Length; i++) {
-				if 	(!IsFlag (args [i][0] )) {
-					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
-				string Rest = args [i].Substring (1);
-
-				TagType_#{Command.Id} TagType = (TagType_#{Command.Id}) Registry.Find (Rest);
-
-				// here have the cases for what to do with it.
-
-				switch (TagType) {
-#foreach (_Choice CommandEntry in Command.Entries)
-#switchcast CommandParseType CommandEntry
-#casecast Option Option
-					case TagType_#{Command.Id}.#{Option.Name} : {
-						int OptionParams = Options.#{Option.Name}.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.#{Option.Name}.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-#casecast Lazy Lazy
-					case TagType_#{Command.Id}.#{Lazy.Name} : {
-						int OptionParams = Options.#{Lazy.Name}.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.#{Lazy.Name}.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-#casecast Script Script
-					case TagType_#{Command.Id}.#{Script.Id} : {
-						int OptionParams = Options.#{Script.Id}.Tag (Rest);
-			
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.#{Script.Id}.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-#end switchcast
-#end foreach
-					default : throw new System.Exception ("Internal error");
-					}
-				}
-
-##pragma warning restore 162
+			ProcessOptions (Args, Index, Options);
 			Dispatch.#{Command.Id} (Options);
-
 			}
-#end switchcast
-#end foreach
+#end method2
 
-		private static void Usage () {
-
-#foreach (_Choice Entry in Class.Entries)
-#switchcast CommandParseType Entry
-#casecast Brief Cast
-				Console.WriteLine ("#{Cast.Text}");
-				Console.WriteLine ("");
-#end switchcast
-#end foreach
-
-#foreach (_Choice Entry in Class.Entries)
-#switchcast CommandParseType Entry
-#casecast Command Command
-#call CommandUsage Command
-
-#end switchcast
-#end foreach
-			} // Usage 
-
-		public class ParserException : System.Exception {
-
-			public ParserException(string message)
-				: base(message) {
-
-				Console.WriteLine (message);
-				}
-			}
-
-
-	} // class Main
-
-
-	// The stub class for carrying optional parameters for each command type
-	// As with the main class each consists of an abstract main class 
-	// with partial virtual that can be extended as required.
-
-	// All subclasses inherit from the abstract classes Goedel.Regisrty.Dispatch 
-	// and Goedel.Registry.Type
-
-
-
-#foreach (_Choice Entry in Class.Entries)
-#switchcast CommandParseType Entry
-#casecast OptionSet OptionSet
-	public interface I#{OptionSet.Id} {
-#foreach (_Choice OptionC in OptionSet.Options)
-#switchcast CommandParseType OptionC
-#casecast Option Option
-		#{Option.Type}			#{Option.Name}{get; set;}
-#end switchcast
-#end foreach
-		}
-
-
-#casecast Command Cast
-
-    public class _#{Cast.Id} : #{NameDispatchType} #!
-#foreach (_Choice OptionC in Cast.Entries)
-#switchcast CommandParseType OptionC
-#casecast Include Include
-,
-							I#{Include.Id}#!
-#end switchcast
-#end foreach
- {
-#foreach (_Choice OptionC in Cast.Entries)
-#switchcast CommandParseType OptionC
-#casecast Parser Parser
-		public ExistingFile					#{Parser.Class}{get; set;}  = new ExistingFile ("#{Parser.Extension}");
-#casecast Generator null
-#casecast Script Script
-		public NewFile						#{Script.Id}{get; set;}  = new NewFile ("#{Script.Extension}");
-#casecast Lazy Lazy
-		public Flag							#{Lazy.Name}{get; set;}  = new Flag ("false");
-#casecast Parameter Parameter
-#% string DefaultParameter = null;
-#foreach (_Choice Modifier in Parameter.Modifier)
-#switchcast CommandParseType Modifier
-#casecast Default Default
-#% DefaultParameter = Default.Text;
-#end switchcast
-#end foreach
-#if DefaultParameter == null
-		public #{Parameter.Type}			#{Parameter.Name}{get; set;}  = new #{Parameter.Type} ();
-#else
-		public #{Parameter.Type}			#{Parameter.Name}{get; set;}  = new #{Parameter.Type} ("#{DefaultParameter}");
-#end if
-#casecast Option Option
-#% string DefaultOption = null;
-#foreach (_Choice Modifier in Option.Modifier)
-#switchcast CommandParseType Modifier
-#casecast Default Default
-#% DefaultOption = Default.Text;
-#end switchcast
-#end foreach
-#if DefaultOption == null
-		public #{Option.Type}			#{Option.Name}{get; set;} = new  #{Option.Type} ();
-#else
-		public #{Option.Type}			#{Option.Name}{get; set;}  = new  #{Option.Type} ("#{DefaultOption}");
-#end if
-#end switchcast
-#end foreach
-
-
-		}
-
-    public partial class #{Cast.Id} : _#{Cast.Id} {
-        } // class #{Cast.Id}
-
-#end switchcast
-#end foreach
-
-#! This section contains declarations for the builtins and types.
-#!
-#foreach (ID<_Choice> ID in TypeType.IDs)
-    // Parameter type #{ID}
-#if (ID.ToString() == "NewFile") | (ID.ToString() == "ExistingFile")
-    public abstract class _#{ID} : #{NameClassFile} {
-#elseif (ID.ToString() == "Flag")
-    public abstract class _#{ID} : #{NameClassFlag} {
-#else
-    public abstract class _#{ID} : #{NameClassType} {
-#end if
-        public _#{ID}() {
-            }
-        public _#{ID}(string Value) {
-			Default (Value);
-            } 
-
-#if CommandParse.Builtins
-#if (ID.ToString() == "Flag")
-#elseif (ID.ToString() == "NewFile")
-#elseif (ID.ToString() == "ExistingFile")
-#else
-		public string			Value {
-			get => Text;
-			}
-#end if
-#end if
-
-        } // _#{ID}
-
-    public partial class  #{ID} : _#{ID} {
-        public #{ID}() {
-            } 
-        public #{ID}(string Value) {
-			Default (Value);
-            } 
-        } // #{ID}
-
-
-#end foreach
-
-
-	// The stub class just contains routines that echo their arguments and
-	// write 'not yet implemented'
-
-	// Eventually there will be a compiler option to suppress the debugging
-	// to eliminate the redundant code
-    public class _#{Class.Id} {
-
-
-#foreach (_Choice Entry in Class.Entries)
+#method CommandMethod Command Command
 #% bool DefaultOutput = true;
 #% string Lazy = null;
-#switchcast CommandParseType Entry
-#casecast Command Command
 #foreach (_Choice CommandEntry in Command.Entries)
 #switchcast CommandParseType CommandEntry
 #casecast Parser null
@@ -491,24 +350,9 @@ namespace #{Class.Namespace} {
 #% Lazy = Cast.Name.ToString ();
 #end switchcast
 #end foreach
-		public virtual void #{Command.Id} ( #{Command.Id} Options
-				) {
-
+		public virtual void #{Command.Id} ( #{Command.Id} Options) {
 #if DefaultOutput
-			char UsageFlag = '-';
-#call CommandUsage Command
-
-#foreach (_Choice CommandEntry in Command.Entries)
-#switchcast CommandParseType CommandEntry
-#casecast Parameter Parameter
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "#{Parameter.Type}", 
-							"#{Parameter.Name}", Options.#{Parameter.Name});
-#casecast Option Option
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "#{Option.Type}", 
-							"#{Option.Name}", Options.#{Option.Name});
-#end switchcast
-#end foreach
-			Console.WriteLine ("Not Yet Implemented");
+			CommandLineInterpreter.DescribeValues (Options);
 #else
 			string inputfile = null;
 
@@ -517,16 +361,15 @@ namespace #{Class.Namespace} {
 #casecast Parser Parser
 			inputfile = Options.#{Parser.Class}.Text;
 
-            #{Parser.Namespace}.#{Parser.Class} Parse = new #{Parser.Namespace}.#{Parser.Class}();
-
-
+            #{Parser.Namespace}.#{Parser.Class} Parse = new #{Parser.Namespace}.#{Parser.Class}() {
 #foreach (_Choice CommandEntry2 in Command.Entries)
 #switchcast CommandParseType CommandEntry2
 #casecast Option Option
-			Parse.#{Option.Name} = Options.#{Option.Name}.Value;
+			    #{Option.Name} = Options.#{Option.Name}.Value,
 #end switchcast
 #end foreach
-			Parse.Options = Options;
+				Options = Options
+				};
         
 			
 			using (Stream infile =
@@ -567,50 +410,66 @@ namespace #{Class.Namespace} {
 #end foreach
 #end if
 			}
-#end switchcast
-#end foreach
-
-        } // class _#{Class.Id}
-
-    public partial class #{Class.Id} : _#{Class.Id} {
-        } // class #{Class.Id}
-
-    } // namespace #{Class.Id}
 
 #end method
-// Types
-//      NewFile   ExistingFile
-//		Flag, String, Integer, enumeration
 
-#method CommandUsage Command Command
-				{
-##pragma warning disable 219
-					#{Command.Id}		Dummy = new #{Command.Id} ();
-##pragma warning restore 219
+#method CommandOptionClass Command Command
 
-					Console.Write ("{0}#{Command.Tag} ", UsageFlag);
-#foreach (_Choice CommandEntry in Command.Entries)
-#switchcast CommandParseType CommandEntry
-#casecast Parameter Parameter
-					Console.Write ("[{0}] ", Dummy.#{Parameter.Name}.Usage (null, "#{Parameter.Text}", UsageFlag));
+    public class _#{Command.Id} : #{NameDispatchType} #!
+#foreach (_Choice OptionC in Command.Entries)
+#switchcast CommandParseType OptionC
+#casecast Include Include
+,
+							I#{Include.Id}#!
 #end switchcast
 #end foreach
-#foreach (_Choice CommandEntry in Command.Entries)
-#switchcast CommandParseType CommandEntry
-#casecast Option Option
-					Console.Write ("[{0}] ", Dummy.#{Option.Name}.Usage ("#{Option.Command}", "value", UsageFlag));
-#end switchcast
-#end foreach
-					Console.WriteLine ();
+ {
 
-#foreach (_Choice CommandEntry in Command.Entries)
-#switchcast CommandParseType CommandEntry
-#casecast Brief CommandBreif
-					Console.WriteLine ("    #{CommandBreif.Text}");
-
-#end switchcast
+		public override Goedel.Registry.Type[] _Data {get; set;} = new Goedel.Registry.Type [] {#!
+#% Separator.IsFirst = true;
+#foreach (var Entry in Command.EntryItems)
+#{Separator}
+			new #{Entry.Type} ()#!
 #end foreach
+			} ;
+
+#foreach (var Entry in Command.EntryItems)
+#% var Item = Entry.Item;
+		/// <summary>Field accessor for #{Entry.IsOption.If("option","parameter")} [#{Entry.Tag}]</summary>
+		public virtual #{Entry.Type} #{Entry.ID} {
+			get => _Data[#{Entry.Index}] as #{Entry.Type};
+			set => _Data[#{Entry.Index}]  = value;
+			}
+#end foreach
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "#{Command.Tag.ToLower()}",
+			Brief =  "#{Command.Brief}",
+			HandleDelegate =  CommandLineInterpreter.Handle_#{Command.Id},
+			Lazy =  #{Command.Lazy.If("true","false")},
+#!			Parser =  "#{Command.Parser}",
+			Entries = new List<DescribeEntry> () {#!
+#% Separator.IsFirst = true;
+#foreach (var EntryItem in Command.EntryItems)
+#% var Item = EntryItem.Item;
+#{Separator}
+				new DescribeEntryParameter () {
+					Identifier = "#{EntryItem.ID}", 
+					Default = "#{EntryItem.Default}",
+					Brief = "#{EntryItem.Brief}",
+					Index = #{EntryItem.Index},
+					Key = "#{EntryItem.Tag.ToLower()}"
+					}#!
+#end foreach
+
 				}
+			};
+
+		}
+
+    public partial class #{Command.Id} : _#{Command.Id} {
+        } // class #{Command.Id}
 #end method
+
 
 #end xclass

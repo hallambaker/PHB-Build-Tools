@@ -25,9 +25,240 @@ using System.Linq;
 using System.Text;
 
 namespace Goedel.Tool.Command {
+    public partial class _Choice {
+        public Command DefaultCommand = null;
+        public string Brief = "<Unspecified>";
+        public string Default = null;
+
+        public void Process (List<_Choice> Options) {
+            foreach (var Entry in Options) {
+                switch (Entry) {
+                    case Brief EntryCast: {
+                        Brief = EntryCast.Text;
+                        break;
+                        }
+                    case Default EntryCast: {
+                        Default = EntryCast.Text;
+                        break;
+                        }
+                    }
+                }
+            }
+        }
+    
     public partial class CommandParse : Goedel.Registry.Parser {
         public bool            Main = true;
         public bool            Builtins = true;
         public bool            Catcher = false;
+
+
+        /// <summary>Initialize.</summary>
+        public override void Init () {
+            _InitChildren();
+            Catcher = false;
+            }
         }
+
+    public partial class Class {
+        public string Description = "<Unknown>";
+
+
+        public override void Init (_Choice Parent) {
+            base.Init(Parent);
+            foreach (var Entry in Entries) {
+                switch (Entry) {
+                    case Brief EntryCast: {
+                        Description = EntryCast.Text;
+                        break;
+                        }
+                    }
+                }
+
+            }
+        }
+    // Bug: need to generate entries for Lazy, etc.
+
+    public partial class Command {
+        public List<EntryItem> EntryItems = new List<EntryItem>();
+        public bool IsDefault;
+        public bool Lazy = false;
+        public Parser Parser = null;
+        public List<Generator> Generator = new List<Generator>();
+        public List<Script> Script = new List<Script>();
+
+        public override void Init (_Choice Parent) {
+            base.Init(Parent);
+
+            int Index = 0;
+            foreach (var Entry in Entries) {
+                switch (Entry) {
+                    case Brief EntryCast: {
+                        Brief = EntryCast.Text;
+                        break;
+                        }
+                    case Include Include: {
+                        var OptionSet = Include.Id.Definition as OptionSet;
+                        foreach (var SubEntry in OptionSet.Options) {
+                            switch (SubEntry) {
+                                case Option Option: {
+                                    EntryItems.Add(new EntryItem(Option) {
+                                        Index = Index++
+                                        });
+                                    break;
+                                    }
+                                }
+                            }
+                        break;
+                        }
+                    case Parameter Parameter: {
+                        EntryItems.Add(new EntryItem(Parameter) {
+                            Index = Index++
+                            });
+                        break;
+                        }
+                    case Option Option: {
+                        EntryItems.Add(new EntryItem(Option) {
+                            Index = Index++
+                            });
+                        break;
+                        }
+                    case DefaultCommand EntryCast: {
+                        Parent.DefaultCommand = this;
+                        IsDefault = true;
+                        break;
+                        }
+                    case Lazy EntryCast: {
+                        Lazy = true;
+                        EntryItems.Add(new EntryItem(EntryCast) {
+                            Index = Index++
+                            });
+                        break;
+                        }
+                    case Parser EntryCast: {
+                        Parser = EntryCast;
+                        EntryItems.Add(new EntryItem(Parser) {
+                            Index = Index++
+                            });
+                        break;
+                        }
+                    case Generator EntryCast: {
+                        Generator.Add(EntryCast);
+                        break;
+                        }
+                    case Script EntryCast: {
+                        EntryItems.Add(new EntryItem(EntryCast) {
+                            Index = Index++
+                            });
+                        Script.Add(EntryCast);
+                        break;
+                        }
+                    }
+                }
+            }
+        }
+
+
+    public class EntryItem {
+        /// <summary>
+        /// 
+        /// </summary>
+        public _Choice Item { get; set; }
+        public int Index { get; set; }
+        public string ID { get; set; }
+        public string Tag { get; set; }
+        public string Type { get; set; }
+        public string Default { get; set; } = "Default";
+        public string Brief { get; set; } = "Brief";
+        public bool IsOption;
+
+        public EntryItem (Option Option) {
+            Item = Option;
+            ID = Option.Name.ToString();
+            Tag = Option.Command;
+            Type = Option.Type.ToString();
+            IsOption = true;
+            Default = Option.Default;
+            Brief = Option.Brief;
+            }
+
+        public EntryItem (Parameter Parameter) {
+            Item = Parameter;
+            ID = Parameter.Name.ToString();
+            Tag = "";
+            Type = Parameter.Type.ToString();
+            IsOption = false;
+            Default = Parameter.Default;
+            Brief = Parameter.Brief;
+            }
+
+        public EntryItem (Script Script) {
+            Item = Script;
+            ID = Script.Id.ToString();
+            Tag = Script.Extension;
+            Type = "NewFile";
+            IsOption = true;
+            Default = Script.Default;
+            Brief = Script.Brief;
+            }
+
+        public EntryItem (Parser Parser) {
+            Item = Parser;
+            ID = Parser.Class.ToString();
+            Tag = "";
+            Type = "ExistingFile";
+            IsOption = false;
+            Default = Parser.Default;
+            Brief = Parser.Brief;
+            }
+
+        public EntryItem (Lazy Lazy) {
+            Item = Lazy;
+            ID = Lazy.Name.ToString();
+            Tag = Lazy.Tag;
+            Type ="Flag";
+            IsOption = false;
+            Default = Lazy.Default;
+            Brief = Lazy.Brief;
+            }
+
+
+
+
+        }
+
+
+    public partial class Parameter {
+        public override void Init (_Choice Parent) {
+            base.Init(Parent);
+            Process(Modifier);
+            }
+        }
+    public partial class Option {
+        public override void Init (_Choice Parent) {
+            base.Init(Parent);
+            Process(Modifier);
+            }
+        }
+
+    public partial class Lazy {
+        public override void Init (_Choice Parent) {
+            base.Init(Parent);
+            Process(Modifier);
+            }
+        }
+
+    public partial class Parser {
+        public override void Init (_Choice Parent) {
+            base.Init(Parent);
+            Process(Modifier);
+            }
+        }
+
+    public partial class Script {
+        public override void Init (_Choice Parent) {
+            base.Init(Parent);
+            Process(Modifier);
+            }
+        }
+
     }

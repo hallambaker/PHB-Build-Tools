@@ -5,6 +5,7 @@
 		Entries List Choice
 			Brief
 			Command		
+			CommandSet
 			OptionSet	
 			Enumerate	
 			Type
@@ -12,6 +13,13 @@
 			Library
 
 	Type Library
+
+	Type	CommandSet
+		Id			ID CommandType
+		Tag			String			
+		Entries List Choice
+			Command
+			Brief
 
 	Type	Command	
 		Id			ID CommandType
