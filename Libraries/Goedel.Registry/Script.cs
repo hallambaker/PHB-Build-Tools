@@ -84,17 +84,17 @@ namespace Goedel.Registry {
 
         /// <summary>The operating system platform name.</summary>
         public static string Platform {
-            get { return OperatingSystem.Platform.ToString (); }
+            get => OperatingSystem.Platform.ToString (); 
             }
 
         /// <summary>The operating system version.</summary>
         public static string PlatformVersion {
-            get { return OperatingSystem.Version.ToString(); }
+            get => OperatingSystem.Version.ToString(); 
             }
 
         /// <summary>The assembly title.</summary>
         public static string AssemblyTitle {
-            get { return GetAssemblyTitle(EntryAssembly); }
+            get => GetAssemblyTitle(EntryAssembly); 
             }
 
         /// <summary>Get assembly title.</summary>
@@ -105,8 +105,9 @@ namespace Goedel.Registry {
                     GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
             if (attributes.Length > 0) {
                 AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                if (titleAttribute.Title != "")
+                if (titleAttribute.Title != "") {
                     return titleAttribute.Title;
+                    }
                 }
             // If there was no Title attribute, or if the Title attribute was the empty string, return the .exe name
             return System.IO.Path.GetFileNameWithoutExtension(Assembly.CodeBase);
@@ -114,10 +115,8 @@ namespace Goedel.Registry {
 
         /// <summary>The assembly version</summary>
         public static string AssemblyVersion {
-            get {
-                return EntryAssembly != null ? GetAssemblyVersion(EntryAssembly) :
+            get => EntryAssembly != null ? GetAssemblyVersion(EntryAssembly) :
                         "Unknown";
-                }
             }
 
         /// <summary>Get assembly version</summary>
@@ -129,10 +128,9 @@ namespace Goedel.Registry {
 
         /// <summary>The Assembly Description</summary>
         public static string AssemblyDescription {
-            get {
-                return EntryAssembly != null ? GetAssemblyDescription(EntryAssembly) :
+            get => EntryAssembly != null ? GetAssemblyDescription(EntryAssembly) :
                         "Unknown";
-                }
+
             }
 
         /// <summary>Get Assembly Description</summary>
@@ -144,8 +142,9 @@ namespace Goedel.Registry {
             object[] attributes = Assembly.
                     GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
             // If there aren't any Description attributes, return an empty string
-            if (attributes.Length == 0)
+            if (attributes.Length == 0) {
                 return "";
+                }
             // If there is a Description attribute, return its value
             return ((AssemblyDescriptionAttribute)attributes[0]).Description;
 
@@ -153,10 +152,8 @@ namespace Goedel.Registry {
 
         /// <summary>The Assembly Product</summary>
         public static string AssemblyProduct {
-            get {
-                return EntryAssembly != null ? GetAssemblyProduct(EntryAssembly) :
+            get => EntryAssembly != null ? GetAssemblyProduct(EntryAssembly) :
                         "Unknown";
-                }
             }
 
         /// <summary>Get Assembly Product</summary>
@@ -167,18 +164,17 @@ namespace Goedel.Registry {
             object[] attributes = Assembly.GetExecutingAssembly().
                 GetCustomAttributes(typeof(AssemblyProductAttribute), false);
             // If there aren't any Product attributes, return an empty string
-            if (attributes.Length == 0)
+            if (attributes.Length == 0) {
                 return "";
+                }
             // If there is a Product attribute, return its value
             return ((AssemblyProductAttribute)attributes[0]).Product;
             }
 
         /// <summary>The Assembly Copyright</summary>
         public static string AssemblyCopyright {
-            get {
-                return EntryAssembly != null ? GetAssemblyCopyright(EntryAssembly) :
+            get => EntryAssembly != null ? GetAssemblyCopyright(EntryAssembly) :
                         "Unknown";
-                }
             }
 
         /// <summary>Get Assembly Copyright</summary>
@@ -189,18 +185,17 @@ namespace Goedel.Registry {
             object[] attributes = Assembly.GetExecutingAssembly().
                 GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
             // If there aren't any Copyright attributes, return an empty string
-            if (attributes.Length == 0)
+            if (attributes.Length == 0) {
                 return "";
+                }
             // If there is a Copyright attribute, return its value
             return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
             }
 
         /// <summary>The Assembly Company</summary>
         public static string AssemblyCompany {
-            get {
-                return EntryAssembly != null ? GetAssemblyCompany(EntryAssembly) :
+            get => EntryAssembly != null ? GetAssemblyCompany(EntryAssembly) :
                         "Unknown";
-                }
             }
 
         /// <summary>Get Assembly Company</summary>
@@ -212,8 +207,9 @@ namespace Goedel.Registry {
             object[] attributes = Assembly.GetExecutingAssembly().
                 GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
             // If there aren't any Company attributes, return an empty string
-            if (attributes.Length == 0)
+            if (attributes.Length == 0) {
                 return "";
+                }
             // If there is a Company attribute, return its value
             return ((AssemblyCompanyAttribute)attributes[0]).Company;
             }

@@ -110,14 +110,11 @@ namespace Goedel.Cryptography {
     /// </summary>
     public abstract class CryptoKey  {
 
-        CryptoAlgorithmID _CryptoAlgorithmID;
-
         /// <summary>
         /// Cryptographic Algorithm Identifier
         /// </summary>
         public CryptoAlgorithmID CryptoAlgorithmID {
-            get { return _CryptoAlgorithmID; }
-            set { _CryptoAlgorithmID = value; }
+            get; set;
             }
 
 
@@ -125,7 +122,7 @@ namespace Goedel.Cryptography {
         /// UDF fingerprint of the key
         /// </summary>
         public virtual string UDF {
-            get { return null; }
+            get => null;
             }
 
         }
@@ -240,9 +237,6 @@ namespace Goedel.Cryptography {
             return CachedExchangeProvider.Decrypt(EncryptedKey, Ephemeral, CryptoAlgorithmID);
             }
 
-
-
-
         /// <summary>
         /// Verify a precomputed digest
         /// </summary>
@@ -271,8 +265,6 @@ namespace Goedel.Cryptography {
         /// <param name="UDF">Fingerprint of key</param>
         /// <returns>The key pair found</returns>
         public static KeyPair FindLocal(string UDF) {
-
-     
             foreach (var Delegate in Platform.FindLocalDelegates) {
                 var KeyPair = Delegate(UDF);
                 if (KeyPair != null) {

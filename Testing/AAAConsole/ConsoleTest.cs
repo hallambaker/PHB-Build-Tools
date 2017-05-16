@@ -10,6 +10,7 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Framework;
 using Goedel.Cryptography.Windows;
+using Goedel.Command;
 
 /// <summary>
 /// 
@@ -20,8 +21,26 @@ namespace PHB_Framework_Library1 {
         static void Main () {
             Goedel.IO.Debug.Initialize();
             CryptographyFramework.Initialize();
-            Goedel.FSR.Lexer.Trace = true;
-            var Start = new Start();
+            //Goedel.FSR.Lexer.Trace = true;
+            var Start = new Start3();
+            }
+        }
+
+
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Start3 {
+
+        
+
+
+        ///<summary></summary>
+        public Start3 () {
+            var UnitTest1 = new UnitTest1();
+            UnitTest1.TestDispatch();
             }
         }
 
@@ -51,6 +70,7 @@ namespace PHB_Framework_Library1 {
     /// 
     /// </summary>
     public class Start {
+
 
         ///<summary></summary>
         public Start() {

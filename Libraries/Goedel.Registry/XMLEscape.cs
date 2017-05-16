@@ -62,7 +62,8 @@ namespace Goedel.Registry {
         Stack<string> StackIndent = new Stack<string>();
         Stack<string> StackTag = new Stack<string>();
 
-        public int Stack {  get { return StackIndent.Count; } }
+        /// <summary></summary>
+        public int Stack {  get => StackIndent.Count; } 
 
         /// <summary>
         /// Defines the indent increment. These are spaces that are prepended to the
@@ -77,6 +78,11 @@ namespace Goedel.Registry {
 
         TextWriter Output;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Output"></param>
+        /// <param name="Header"></param>
         public XMLTextWriter(TextWriter Output, bool Header = true) {
             this.Output = Output;
 
@@ -118,7 +124,11 @@ namespace Goedel.Registry {
             EndLine();
             }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Tag"></param>
+        /// <param name="Attributes"></param>
         public void Start(string Tag, params string[] Attributes) {
             Console.WriteLine("{1}<{0}>", Tag, Indent);
 
@@ -157,6 +167,10 @@ namespace Goedel.Registry {
 
             }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Text"></param>
         public void Comment(string Text) {
             StartLine();
             Output.Write("<!--");
@@ -165,6 +179,10 @@ namespace Goedel.Registry {
             EndLine();
             }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Text"></param>
         public void Write (string Text) {
             Console.Write("{0}:  ", StackTag.Count);
             Console.WriteLine(Text);
@@ -173,7 +191,10 @@ namespace Goedel.Registry {
             EndLine();
             }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Text"></param>
         public void WriteVerbatim(string Text) {
             StartLine();
             Output.Write("<![CDATA[");
@@ -182,6 +203,9 @@ namespace Goedel.Registry {
             EndLine();
             }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void End() {
             
 

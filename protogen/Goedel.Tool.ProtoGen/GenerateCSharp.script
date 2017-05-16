@@ -133,7 +133,7 @@ namespace #{Namespace} {
         /// Well Known service identifier.
         /// </summary>
 		public override string GetWellKnown {
-			get {return WellKnown;}
+			get => WellKnown;
 			}
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace #{Namespace} {
         /// Well Known service identifier.
         /// </summary>
 		public override string GetDiscovery {
-			get {return Discovery;}
+			get => Discovery;
 			}
 
         /// <summary>

@@ -36,10 +36,10 @@ namespace Goedel.Registry {
         public static string Label(this object Base) {
             switch (Target) {
                 case "CS": {
-                    return Base.cs();
+                    return Base.CS();
                     }
                 }
-            return Base.cs();
+            return Base.CS();
             }
 
 
@@ -54,7 +54,7 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="Base">Input string</param>
         /// <returns>Character safe label.</returns>
-        public static string cs (this object Base) {
+        public static string CS (this object Base) {
             return Base.ToString();
             }
 
@@ -78,7 +78,9 @@ namespace Goedel.Registry {
         /// <param name="Base">Unescaped string</param>
         /// <returns>Escaped string.</returns>
         public static string Quoted(this List<string> Base) {
-            if (Base == null) return "\"\"";
+            if (Base == null) {
+                return "\"\"";
+                }
 
             var StringBuilder = new StringBuilder();
             StringBuilder.Append("\"");

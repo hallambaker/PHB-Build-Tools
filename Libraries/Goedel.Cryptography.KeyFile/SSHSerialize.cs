@@ -17,7 +17,7 @@ namespace Goedel.Cryptography.KeyFile {
         uint Length = 0;
         uint Pointer = 0;
 
-        uint Remain { get { return (uint)(Data.Length - Pointer); } }
+        uint Remain { get => (uint)(Data.Length - Pointer); } 
 
         /// <summary>The collected data</summary>
         public byte[] Data;
@@ -177,7 +177,7 @@ namespace Goedel.Cryptography.KeyFile {
 
 
         public virtual KeyPair KeyPair {
-            get { return null;  }  // Feature convert DSS keypair
+            get => null;    // Feature convert DSS keypair
             }
         }
 
@@ -186,9 +186,9 @@ namespace Goedel.Cryptography.KeyFile {
     /// </summary>
     public class SSH_RSA : SSHData {
         /// <summary>The SSH tag</summary>
-        public override string Tag { get { return "ssh-rsa"; } }
+        public override string Tag { get => "ssh-rsa"; } 
         /// <summary>The SSH tag</summary>
-        public static string TagID { get { return "ssh-rsa"; } }
+        public static string TagID { get => "ssh-rsa"; } 
 
         /// <summary>RSA public key exponent.</summary>
         public byte[] Exponent;
@@ -197,17 +197,14 @@ namespace Goedel.Cryptography.KeyFile {
 
 
         public PKIXPublicKeyRSA RSAPublicKey {
-            get {
-                return new PKIXPublicKeyRSA() {
+            get => new PKIXPublicKeyRSA() {
                     Modulus = Modulus,
                     PublicExponent = Exponent
                     };
-                }
             }
 
         public override KeyPair KeyPair {
-            get {
-                return new RSAKeyPair (RSAPublicKey ); }  // NYI convert DSS keypair
+            get => new RSAKeyPair (RSAPublicKey );   // NYI convert DSS keypair
             }
 
 
@@ -252,10 +249,10 @@ namespace Goedel.Cryptography.KeyFile {
     public class SSH_DSS : SSHData {
 
         /// <summary>The SSH tag</summary>
-        public override string Tag { get { return "ssh-dss"; } }
+        public override string Tag { get => "ssh-dss"; } 
 
         /// <summary>The SSH tag</summary>
-        public static string TagID { get { return "ssh-dss"; } }
+        public static string TagID { get => "ssh-dss"; } 
 
         /// <summary>The parameter P</summary>
         public byte[] P;

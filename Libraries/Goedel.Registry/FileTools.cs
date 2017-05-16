@@ -35,7 +35,7 @@ namespace Goedel.Registry {
         /// The flag value.
         /// </summary>
         public bool Value {
-            get { return IsSet; }
+            get => IsSet; 
             }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Goedel.Registry {
         /// <param name="Tag">The tag</param>
         /// <param name="Registry">Registry to add flag to</param>
         /// <param name="Index">flag index</param>
-        public override void Register(string Tag, Goedel.Registry.Registry Registry, int Index) {
+        public override void Register (string Tag, Goedel.Registry.Registry Registry, int Index) {
             Registry.Register(Tag, Index);
             Registry.Register("no" + Tag, Index);
             }
@@ -55,7 +55,7 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="Tag">The tag</param>
         /// <returns>The required number of parameters.</returns>
-        public override int Tag(string Tag) {
+        public override int Tag (string Tag) {
             if ((Tag.Length > 2) && Tag[0] == 'n' && Tag[1] == 'o') {
                 IsSet = false;
                 }
@@ -75,13 +75,18 @@ namespace Goedel.Registry {
             //Text = (Text == null) ? "true" : Text;
             switch (Text.ToLower()) {
                 case "true":
-                case "1":
-                IsSet = true;
-                break;
+                case "1": {
+                    IsSet = true;
+                    break;
+                    }
                 case "false":
-                case "0":
-                IsSet = false;
-                break;
+                case "0": {
+                    IsSet = false;
+                    break;
+                    }
+                case "": {
+                    break;
+                    }
                 default:
                 throw new System.Exception("Flag value not recognized" + Text);
                 }
@@ -144,7 +149,7 @@ namespace Goedel.Registry {
         /// The value.
         /// </summary>
         public string Value {
-            get { return Text; }
+            get => Text; 
             }
 
         /// <summary>
@@ -256,7 +261,9 @@ namespace Goedel.Registry {
         /// <param name="Extension">Default extension.</param>
         /// <returns>The defaulted file.</returns>
         public static string DefaultExtension(string FileName, string Extension) {
-            if (File.Exists (FileName)) return FileName;
+            if (File.Exists(FileName)) {
+                return FileName;
+                }
 
             return FileName + "." + Extension;
             }

@@ -65,6 +65,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command.cs" />
+    <Compile Include="CommandLex.cs">
+      <DependentUpon>CommandLex.fsm</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CommandLexPlus.cs" />
     <Compile Include="Convenience.cs" />
     <Compile Include="Exceptions.cs">
       <AutoGen>True</AutoGen>
@@ -85,6 +91,10 @@
     <Compile Include="XMLEscape.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="CommandLex.fsm">
+      <Generator>fsrcs</Generator>
+      <LastGenOutput>CommandLex.cs</LastGenOutput>
+    </None>
     <None Include="Exceptions.exceptional">
       <Generator>exceptional</Generator>
       <LastGenOutput>Exceptions.cs</LastGenOutput>
@@ -98,6 +108,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Goedel.FSR\Goedel.FSR.csproj">
+      <Project>{24f56184-7dc6-4f7f-b169-6ce384a3b7a4}</Project>
+      <Name>Goedel.FSR</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
       <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
       <Name>Goedel.Utilities</Name>

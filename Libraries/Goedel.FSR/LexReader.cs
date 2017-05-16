@@ -26,7 +26,7 @@ namespace Goedel.FSR {
         public int LastInt;
         /// <summary>Last character read.</summary>
         public char LastChar {
-            get { return LastInt > 0 ? (char)LastInt : '.'; }
+            get => LastInt > 0 ? (char)LastInt : '.'; 
             }
 
         /// <summary>
@@ -73,8 +73,8 @@ namespace Goedel.FSR {
         /// Free resources.
         /// </summary>
         public virtual void Dispose() {
-            if (Stream != null) Stream.Dispose();
-            if (TextReader != null) TextReader.Dispose();
+            if (Stream != null) { Stream.Dispose(); }
+            if (TextReader != null) { TextReader.Dispose(); }
             }
 
         /// <summary>
@@ -130,6 +130,17 @@ namespace Goedel.FSR {
     /// Lexical reader reading from string input.
     /// </summary>
     public class LexStringReader : LexReader {
+
+        /// <summary>
+        /// Set the data value and reset the read index.
+        /// </summary>
+        public string String {
+            set {
+                Data = value;
+                Count = 0;
+                }
+            }
+
         string Data;
         int Count;
 
@@ -138,8 +149,7 @@ namespace Goedel.FSR {
         /// </summary>
         /// <param name="Data">The string to be read.</param>
         public LexStringReader(string Data) {
-            this.Data = Data;
-            Count = 0;
+            String = Data;
             }
 
         /// <summary>

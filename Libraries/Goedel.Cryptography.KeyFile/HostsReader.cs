@@ -51,12 +51,12 @@ namespace Goedel.Cryptography.KeyFile{
         /// <summary>
         /// Maps characters to character sets
         /// </summary>
-        public override byte[] CharacterMappings { get { return Character_Mapping; }  }
+        public override byte[] CharacterMappings { get => Character_Mapping; }  
 
         /// <summary>
         /// State transitions in response to character set
         /// </summary>
-        public override short[,] CompressedTransitions { get { return Compressed_Transitions; } }
+        public override short[,] CompressedTransitions { get => Compressed_Transitions; } 
 
         /// <summary>
         /// Get the next token from the stream

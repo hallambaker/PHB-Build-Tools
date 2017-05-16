@@ -90,12 +90,12 @@ namespace Goedel.Tool.FSRGen {
 					_Output.Write ("        /// <summary>\n{0}", _Indent);
 					_Output.Write ("        /// Maps characters to character sets\n{0}", _Indent);
 					_Output.Write ("        /// </summary>\n{0}", _Indent);
-					_Output.Write ("        public override byte[] CharacterMappings {{ get {{ return Character_Mapping; }}  }}\n{0}", _Indent);
+					_Output.Write ("        public override byte[] CharacterMappings {{ get => Character_Mapping; }}  \n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("        /// <summary>\n{0}", _Indent);
 					_Output.Write ("        /// State transitions in response to character set\n{0}", _Indent);
 					_Output.Write ("        /// </summary>\n{0}", _Indent);
-					_Output.Write ("        public override short[,] CompressedTransitions {{ get {{ return Compressed_Transitions; }} }}\n{0}", _Indent);
+					_Output.Write ("        public override short[,] CompressedTransitions {{ get => Compressed_Transitions; }} \n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("        /// <summary>\n{0}", _Indent);
 					_Output.Write ("        /// Get the next token from the stream\n{0}", _Indent);

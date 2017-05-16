@@ -309,7 +309,7 @@ namespace Goedel.Tool.RFCTool {
             TextWriter.WriteLine("<!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>");
 
             string Category = "info";
-            switch (Document.Category.ToLower()) {
+            switch (Document.Category?.ToLower()) {
                 case "standards track":
                 case "standard":
                 case "std":

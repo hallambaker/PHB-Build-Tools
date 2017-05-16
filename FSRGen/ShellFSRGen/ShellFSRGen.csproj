@@ -71,7 +71,6 @@
       <Generator>CommandCS</Generator>
       <LastGenOutput>FSRGen.cs</LastGenOutput>
     </None>
-    <None Include="JSON.fsr" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">

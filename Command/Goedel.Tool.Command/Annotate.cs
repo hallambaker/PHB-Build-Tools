@@ -30,6 +30,13 @@ namespace Goedel.Tool.Command {
         public string Brief = "<Unspecified>";
         public string Default = null;
 
+        public _Choice Parent;
+        CommandParse _CommandParse;
+        public CommandParse CommandParse {
+            get => _CommandParse ?? Parent.CommandParse;
+            set => _CommandParse = value;
+            }
+
         public void Process (List<_Choice> Options) {
             foreach (var Entry in Options) {
                 switch (Entry) {
@@ -45,25 +52,29 @@ namespace Goedel.Tool.Command {
                 }
             }
         }
-    
-    public partial class CommandParse : Goedel.Registry.Parser {
-        public bool            Main = true;
-        public bool            Builtins = true;
-        public bool            Catcher = false;
 
+    public partial class CommandParse : Goedel.Registry.Parser {
+        public bool Main = true;
+        public bool Builtins = true;
+        public bool Catcher = false;
+        public bool DeclareRegistry = false;
 
         /// <summary>Initialize.</summary>
         public override void Init () {
+            foreach (var Entry in Top) {
+                Entry.CommandParse = this;
+                }
             _InitChildren();
-            Catcher = false;
             }
         }
 
     public partial class Class {
         public string Description = "<Unknown>";
-
+        public About About = null;
+        public bool Main = true;
 
         public override void Init (_Choice Parent) {
+            this.Parent = Parent;
             base.Init(Parent);
             foreach (var Entry in Entries) {
                 switch (Entry) {
@@ -71,12 +82,26 @@ namespace Goedel.Tool.Command {
                         Description = EntryCast.Text;
                         break;
                         }
+                    case About Cast: {
+                        About = Cast;
+                        break;
+                        }
+                    case Library Cast: {
+                        Main = false;
+                        break;
+                        }
                     }
                 }
-
             }
         }
-    // Bug: need to generate entries for Lazy, etc.
+
+    public partial class CommandSet {
+        public override void Init (_Choice Parent) {
+            this.Parent = Parent;
+            base.Init(Parent);
+            }
+        }
+
 
     public partial class Command {
         public List<EntryItem> EntryItems = new List<EntryItem>();
@@ -88,9 +113,10 @@ namespace Goedel.Tool.Command {
 
         public override void Init (_Choice Parent) {
             base.Init(Parent);
-
+            this.Parent = Parent;
             int Index = 0;
             foreach (var Entry in Entries) {
+                Entry.Init(this);
                 switch (Entry) {
                     case Brief EntryCast: {
                         Brief = EntryCast.Text;
@@ -136,16 +162,19 @@ namespace Goedel.Tool.Command {
                         }
                     case Parser EntryCast: {
                         Parser = EntryCast;
+                        CommandParse.DeclareRegistry = true;
                         EntryItems.Add(new EntryItem(Parser) {
                             Index = Index++
                             });
                         break;
                         }
                     case Generator EntryCast: {
+                        CommandParse.DeclareRegistry = true;
                         Generator.Add(EntryCast);
                         break;
                         }
                     case Script EntryCast: {
+                        CommandParse.DeclareRegistry = true;
                         EntryItems.Add(new EntryItem(EntryCast) {
                             Index = Index++
                             });
@@ -170,6 +199,8 @@ namespace Goedel.Tool.Command {
         public string Default { get; set; } = "Default";
         public string Brief { get; set; } = "Brief";
         public bool IsOption;
+        public bool HasEntry = true;
+
 
         public EntryItem (Option Option) {
             Item = Option;
@@ -219,6 +250,7 @@ namespace Goedel.Tool.Command {
             IsOption = false;
             Default = Lazy.Default;
             Brief = Lazy.Brief;
+            HasEntry = false;
             }
 
 
@@ -260,5 +292,6 @@ namespace Goedel.Tool.Command {
             Process(Modifier);
             }
         }
+
 
     }

@@ -40,7 +40,12 @@ namespace Goedel.Registry {
         public DateTime Started = DateTime.Now;
 
         /// <summary>Calculate elapsed time.</summary>
-        public TimeSpan Elapsed { get { return DateTime.Now - Started; } }
+        public TimeSpan Elapsed { get => DateTime.Now - Started;  }
+
+        /// <summary></summary>
+        public virtual Goedel.Registry.Type[] _Data { get; set; }
+
+        public virtual DescribeCommandEntry DescribeCommand { get; set; }
         }
 
 
@@ -163,9 +168,9 @@ namespace Goedel.Registry {
         /// <param name="Text">The name to find</param>
         /// <returns>The type label.</returns>
         public TYPE<T> TYPE (string Text) {
-            TYPE<T> result = new TYPE<T> ();
-
-            result.Label = Text;
+            TYPE<T> result = new TYPE<T>() {
+                Label = Text
+                };
             Types.Add (result);
             return result;
 
@@ -319,7 +324,7 @@ namespace Goedel.Registry {
         /// Get the object being defined.
         /// </summary>
         public T Definition {
-            get { return ID == null ? (T) null : ID.Object; }
+            get => ID?.Object; 
             }
 
         /// <summary>
@@ -354,7 +359,7 @@ namespace Goedel.Registry {
         /// Return the label value
         /// </summary>
         public string Label {
-            get { return ToString(); }
+            get => ToString(); 
             }
         }
 

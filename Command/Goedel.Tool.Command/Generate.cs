@@ -43,19 +43,14 @@ namespace Goedel.Tool.Command {
 		 TYPE<_Choice> TypeType;
 		 CommandParse CommandParse;
 		 Separator Separator = new Separator (",");
-		 string NameClassType = "Goedel.Registry.Type";
-		 string NameClassFile = "Goedel.Registry._File";
-		 string NameClassFlag = "Goedel.Registry._Flag";
-		 string NameDispatchType = "Goedel.Registry.Dispatch";
-		 Command DefaultCommand = null;
+		 string NameDispatchType = "Goedel.Command.Dispatch";
 		
 
 		//
 		// Generate
 		//
 		public void Generate (CommandParse CommandParseIn) {
-			 Goedel.Registry.Boilerplate.Header (_Output, "//  ", CommandParseIn.Options.Started);
-			_Output.Write ("\n{0}", _Indent);
+			// Goedel.Registry.Boilerplate.Header (_Output, "//  ", CommandParseIn.Options.Started);
 			// Goedel.Registry.Script.MITLicense (_Output, "//", 
 			//			Goedel.Registry.Script.AssemblyCopyright, Goedel.Registry.Script.AssemblyCompany);
 			 GenerateX (CommandParseIn);
@@ -73,7 +68,10 @@ namespace Goedel.Tool.Command {
 			_Output.Write ("using System.Collections.Generic;\n{0}", _Indent);
 			_Output.Write ("using System.IO;\n{0}", _Indent);
 			_Output.Write ("using System.Text;\n{0}", _Indent);
-			_Output.Write ("using Goedel.Registry;\n{0}", _Indent);
+			_Output.Write ("using Goedel.Command;\n{0}", _Indent);
+			if (  CommandParse.DeclareRegistry ) {
+				_Output.Write ("using Goedel.Registry;\n{0}", _Indent);
+				}
 			_Output.Write ("using Goedel.Utilities;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			foreach  (_Choice Item in CommandParse.Top) {
@@ -102,11 +100,36 @@ namespace Goedel.Tool.Command {
 				case CommandParseType.About: {
 				  About Cast = (About) Entry; 
 				_Output.Write ("{1}\n{0}", _Indent, Separator);
-				_Output.Write ("				{{\"{1}\", _About }}", _Indent, Cast.Tag.ToLower());
+				_Output.Write ("				{{\"{1}\", DescribeAbout }}", _Indent, Cast.Tag.ToLower());
 			break; }
 				}
 			}
 		 }
+		
+
+		//
+		// GenerateCommandSet
+		//
+		public void GenerateCommandSet (CommandSet CommandSet) {
+			 Separator.IsFirst = true;
+			_Output.Write ("		static DescribeCommandSet DescribeCommandSet_{1} = new DescribeCommandSet () {{\n{0}", _Indent, CommandSet.Id);
+			_Output.Write ("            Identifier = \"{1}\",\n{0}", _Indent, CommandSet.Tag.ToLower());
+			_Output.Write ("			Entries = new  SortedDictionary<string, DescribeCommand> () {{", _Indent);
+			GenerateCommandEntries (CommandSet.Entries);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("				}} // End Entries\n{0}", _Indent);
+			_Output.Write ("			}};\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			foreach  (var Entry in CommandSet.Entries) {
+				switch (Entry._Tag ()) {
+					case CommandParseType.CommandSet: {
+					  CommandSet Cast = (CommandSet) Entry; 
+					
+					GenerateCommandSet (Cast);
+				break; }
+					}
+				}
+			}
 		
 
 		//
@@ -120,6 +143,41 @@ namespace Goedel.Tool.Command {
 			_Output.Write ("		static char UnixFlag = '-';\n{0}", _Indent);
 			_Output.Write ("		static char WindowsFlag = '/';\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("		\n{0}", _Indent);
+			_Output.Write ("        /// <summary>\n{0}", _Indent);
+			_Output.Write ("        /// \n{0}", _Indent);
+			_Output.Write ("        /// </summary>\n{0}", _Indent);
+			_Output.Write ("        /// <param name=\"Dispatch\"></param>\n{0}", _Indent);
+			_Output.Write ("        /// <param name=\"args\"></param>\n{0}", _Indent);
+			_Output.Write ("        /// <param name=\"index\"></param>\n{0}", _Indent);
+			_Output.Write ("        public static void Help (DispatchShell Dispatch, string[] args, int index) {{\n{0}", _Indent);
+			_Output.Write ("            Brief();\n{0}", _Indent);
+			_Output.Write ("            }}\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("        public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {{\n{0}", _Indent);
+			_Output.Write ("            Identifier = \"help\",\n{0}", _Indent);
+			_Output.Write ("            HandleDelegate = Brief,\n{0}", _Indent);
+			_Output.Write ("            Entries = new List<DescribeEntry>() {{ }}\n{0}", _Indent);
+			_Output.Write ("            }};\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			if (  (Class.About != null) ) {
+				_Output.Write ("        /// <summary>\n{0}", _Indent);
+				_Output.Write ("        /// \n{0}", _Indent);
+				_Output.Write ("        /// </summary>\n{0}", _Indent);
+				_Output.Write ("        /// <param name=\"Dispatch\"></param>\n{0}", _Indent);
+				_Output.Write ("        /// <param name=\"args\"></param>\n{0}", _Indent);
+				_Output.Write ("        /// <param name=\"index\"></param>\n{0}", _Indent);
+				_Output.Write ("        public static new void About (DispatchShell Dispatch, string[] args, int index) {{\n{0}", _Indent);
+				_Output.Write ("            FileTools.About();\n{0}", _Indent);
+				_Output.Write ("            }}\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("        public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {{\n{0}", _Indent);
+				_Output.Write ("            Identifier = \"about\",\n{0}", _Indent);
+				_Output.Write ("            HandleDelegate = About,\n{0}", _Indent);
+				_Output.Write ("            Entries = new List<DescribeEntry>() {{ }}\n{0}", _Indent);
+				_Output.Write ("            }};\n{0}", _Indent);
+				}
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        static bool IsFlag(char c) {{\n{0}", _Indent);
 			_Output.Write ("            return (c == UnixFlag) | (c == WindowsFlag) ;\n{0}", _Indent);
 			_Output.Write ("            }}\n{0}", _Indent);
@@ -129,15 +187,7 @@ namespace Goedel.Tool.Command {
 					case CommandParseType.CommandSet: {
 					  CommandSet Cast = (CommandSet) Entry; 
 					
-					 Separator.IsFirst = true;
-					_Output.Write ("		static DescribeCommandSet DescribeCommandSet_{1} = new DescribeCommandSet () {{\n{0}", _Indent, Cast.Id);
-					_Output.Write ("            Identifier = \"{1}\",\n{0}", _Indent, Cast.Tag.ToLower());
-					_Output.Write ("			Entries = new  SortedDictionary<string, DescribeCommand> () {{", _Indent);
-					
-					GenerateCommandEntries (Cast.Entries);
-					_Output.Write ("\n{0}", _Indent);
-					_Output.Write ("				}} // End Entries\n{0}", _Indent);
-					_Output.Write ("			}};\n{0}", _Indent);
+					GenerateCommandSet (Cast);
 				break; }
 					}
 				}
@@ -164,36 +214,14 @@ namespace Goedel.Tool.Command {
 			 Separator.IsFirst = true;
 			GenerateCommandEntries (Class.Entries);
 			_Output.Write ("{1}\n{0}", _Indent, Separator);
-			_Output.Write ("				{{\"help\", _Brief }}\n{0}", _Indent);
+			_Output.Write ("				{{\"help\", DescribeHelp }}\n{0}", _Indent);
 			_Output.Write ("				}}; // End Entries\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("            }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			foreach  (_Choice Entry in Class.Entries) {
-				switch (Entry._Tag ()) {
-					case CommandParseType.About: {
-					  About Cast = (About) Entry; 
-					_Output.Write ("        public static DescribeCommandEntry _About = new DescribeCommandEntry() {{\n{0}", _Indent);
-					_Output.Write ("            Identifier = \"about\",\n{0}", _Indent);
-					_Output.Write ("            HandleDelegate = About,\n{0}", _Indent);
-					_Output.Write ("			Entries = new  List<DescribeEntry> () {{}}\n{0}", _Indent);
-					_Output.Write ("            }};\n{0}", _Indent);
-					break; }
-					case CommandParseType.Brief: {
-					  Brief Cast = (Brief) Entry; 
-					_Output.Write ("        public static DescribeCommandEntry _Brief = new DescribeCommandEntry() {{\n{0}", _Indent);
-					_Output.Write ("            Identifier = \"help\",\n{0}", _Indent);
-					_Output.Write ("            HandleDelegate = Brief,\n{0}", _Indent);
-					_Output.Write ("			Entries = new  List<DescribeEntry> () {{}}\n{0}", _Indent);
-					_Output.Write ("            }};\n{0}", _Indent);
-				break; }
-					}
-				}
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			if (  CommandParse.Main ) {
+			if (  Class.Main ) {
 				_Output.Write ("        static void Main(string[] args) {{\n{0}", _Indent);
 				_Output.Write ("			var CLI = new CommandLineInterpreter ();\n{0}", _Indent);
 				_Output.Write ("			CLI.MainMethod (args);\n{0}", _Indent);
@@ -201,37 +229,28 @@ namespace Goedel.Tool.Command {
 				} else {
 				_Output.Write ("\n{0}", _Indent);
 				}
-			_Output.Write ("        public void MainMethod(string[] args) {{\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("        public void MainMethod(string[] Args) {{\n{0}", _Indent);
 			_Output.Write ("			{1} Dispatch = new {2} ();\n{0}", _Indent, Class.Id, Class.Id);
-			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			if (  CommandParse.Catcher ) {
 				_Output.Write ("			try {{\n{0}", _Indent);
-				}
-			_Output.Write ("				Assert.False (args.Length == 0, NoCommand.Throw);\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("                if (IsFlag(args[0][0])) {{\n{0}", _Indent);
-			_Output.Write ("					Dispatcher (Entries, Dispatch, args, 0);\n{0}", _Indent);
-			_Output.Write ("                    }}\n{0}", _Indent);
-			_Output.Write ("                else {{\n{0}", _Indent);
-			if (  DefaultCommand != null ) {
-				_Output.Write ("					Handle_{1} (Dispatch, args, 0);\n{0}", _Indent, DefaultCommand.Id);
-				} else {
-				_Output.Write ("                    Assert.True (false, NoCommand.Throw);\n{0}", _Indent);
-				}
-			_Output.Write ("                    }}\n{0}", _Indent);
-			if (  CommandParse.Catcher ) {
+				_Output.Write ("				MainMethod (Dispatch, Args);\n{0}", _Indent);
 				_Output.Write ("				}}\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("            catch (ParserException) {{\n{0}", _Indent);
 				_Output.Write ("			    Brief ();\n{0}", _Indent);
 				_Output.Write ("				}}\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("            catch (System.Exception Exception) {{\n{0}", _Indent);
 				_Output.Write ("                Console.WriteLine(\"Application: {{0}}\", Exception.Message);\n{0}", _Indent);
 				_Output.Write ("                }}\n{0}", _Indent);
+				} else {
+				_Output.Write ("			MainMethod (Dispatch, Args);\n{0}", _Indent);
 				}
+			_Output.Write ("			}}\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("        public void MainMethod({1} Dispatch, string[] Args) {{\n{0}", _Indent, Class.Id);
+			_Output.Write ("			Dispatcher (Entries, Dispatch, Args, 0);\n{0}", _Indent);
 			_Output.Write ("            }} // Main\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -244,15 +263,8 @@ namespace Goedel.Tool.Command {
 					break; }
 					case CommandParseType.CommandSet: {
 					  CommandSet CommandSet = (CommandSet) Entry; 
-					foreach  (var Inner in CommandSet.Entries) {
-						switch (Inner._Tag ()) {
-							case CommandParseType.Command: {
-							  Command Command = (Command) Inner; 
-							
-							 CommandHandler (Command, Class);
-						break; }
-							}
-						}
+					
+					 CommandSetHandler (CommandSet, Class);
 				break; }
 					}
 				}
@@ -266,7 +278,7 @@ namespace Goedel.Tool.Command {
 			_Output.Write ("	// with partial virtual that can be extended as required.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("	// All subclasses inherit from the abstract classes Goedel.Regisrty.Dispatch \n{0}", _Indent);
-			_Output.Write ("	// and Goedel.Registry.Type\n{0}", _Indent);
+			_Output.Write ("	// and Goedel.Command.Type\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			foreach  (_Choice Entry in Class.Entries) {
 				switch (Entry._Tag ()) {
@@ -290,16 +302,9 @@ namespace Goedel.Tool.Command {
 					CommandOptionClass (Cast);
 					break; }
 					case CommandParseType.CommandSet: {
-					  CommandSet CommandSet = (CommandSet) Entry; 
-					foreach  (var Inner in CommandSet.Entries) {
-						switch (Inner._Tag ()) {
-							case CommandParseType.Command: {
-							  Command Command = (Command) Inner; 
-							
-							CommandOptionClass (Command);
-						break; }
-							}
-						}
+					  CommandSet Cast = (CommandSet) Entry; 
+					
+					CommandSetOptionClass (Cast);
 				break; }
 					}
 				}
@@ -307,42 +312,14 @@ namespace Goedel.Tool.Command {
 			// This section contains declarations for the builtins and types.
 			//
 			foreach  (ID<_Choice> ID in TypeType.IDs) {
-				_Output.Write ("    // Parameter type {1}\n{0}", _Indent, ID);
-				if (  (ID.ToString() == "NewFile") | (ID.ToString() == "ExistingFile") ) {
-					_Output.Write ("    public abstract class _{1} : {2} {{\n{0}", _Indent, ID, NameClassFile);
-					} else if (  (ID.ToString() == "Flag")) {
-					_Output.Write ("    public abstract class _{1} : {2} {{\n{0}", _Indent, ID, NameClassFlag);
-					} else {
-					_Output.Write ("    public abstract class _{1} : {2} {{\n{0}", _Indent, ID, NameClassType);
-					}
-				_Output.Write ("        public _{1}() {{\n{0}", _Indent, ID);
-				_Output.Write ("            }}\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				if (  CommandParse.Builtins ) {
-					if (  (ID.ToString() == "Flag") ) {
-						} else if (  (ID.ToString() == "NewFile")) {
-						} else if (  (ID.ToString() == "ExistingFile")) {
-						} else {
-						_Output.Write ("		public string			Value {{\n{0}", _Indent);
-						_Output.Write ("			get => Text;\n{0}", _Indent);
-						_Output.Write ("			}}\n{0}", _Indent);
-						}
-					}
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("        }} // _{1}\n{0}", _Indent, ID);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("    public partial class  {1} : _{2} {{\n{0}", _Indent, ID, ID);
-				_Output.Write ("        public {1}() {{\n{0}", _Indent, ID);
-				_Output.Write ("            }}\n{0}", _Indent);
-				_Output.Write ("			\n{0}", _Indent);
 				_Output.Write ("        public static {1} Factory (string Value) {{\n{0}", _Indent, ID);
 				_Output.Write ("            var Result = new {1}();\n{0}", _Indent, ID);
 				_Output.Write ("            Result.Default(Value);\n{0}", _Indent);
 				_Output.Write ("            return Result;\n{0}", _Indent);
 				_Output.Write ("            }}\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("        }} // {1}\n{0}", _Indent, ID);
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				}
 			_Output.Write ("\n{0}", _Indent);
@@ -352,7 +329,7 @@ namespace Goedel.Tool.Command {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("	// Eventually there will be a compiler option to suppress the debugging\n{0}", _Indent);
 			_Output.Write ("	// to eliminate the redundant code\n{0}", _Indent);
-			_Output.Write ("    public class _{1} : global::Goedel.Registry.DispatchShell {{\n{0}", _Indent, Class.Id);
+			_Output.Write ("    public class _{1} : global::Goedel.Command.DispatchShell {{\n{0}", _Indent, Class.Id);
 			_Output.Write ("\n{0}", _Indent);
 			foreach  (_Choice Entry in Class.Entries) {
 				switch (Entry._Tag ()) {
@@ -363,15 +340,8 @@ namespace Goedel.Tool.Command {
 					break; }
 					case CommandParseType.CommandSet: {
 					  CommandSet CommandSet = (CommandSet) Entry; 
-					foreach  (var Inner in CommandSet.Entries) {
-						switch (Inner._Tag ()) {
-							case CommandParseType.Command: {
-							  Command Command = (Command) Inner; 
-							
-							CommandMethod (Command);
-						break; }
-							}
-						}
+					
+					CommandSetMethod (CommandSet);
 				break; }
 					}
 				}
@@ -390,32 +360,6 @@ namespace Goedel.Tool.Command {
 		// CommandHandler
 		//
 		public void CommandHandler (Command Command, Class Class) {
-			_Output.Write ("		private enum TagType_{1} {{\n{0}", _Indent, Command.Id);
-			foreach  (_Choice CommandEntry in Command.Entries) {
-				switch (CommandEntry._Tag ()) {
-					case CommandParseType.Parameter: {
-					  Parameter Param = (Parameter) CommandEntry; 
-					_Output.Write ("			{1},\n{0}", _Indent, Param.Name);
-					break; }
-					case CommandParseType.Parser: {
-					  Parser Param = (Parser) CommandEntry; 
-					_Output.Write ("			{1},\n{0}", _Indent, Param.Class);
-					break; }
-					case CommandParseType.Option: {
-					  Option Param = (Option) CommandEntry; 
-					_Output.Write ("			{1},\n{0}", _Indent, Param.Name);
-					break; }
-					case CommandParseType.Lazy: {
-					  Lazy Param = (Lazy) CommandEntry; 
-					_Output.Write ("			{1},\n{0}", _Indent, Param.Name);
-					break; }
-					case CommandParseType.Script: {
-					  Script Param = (Script) CommandEntry; 
-					_Output.Write ("			{1},\n{0}", _Indent, Param.Id);
-				break; }
-					}
-				}
-			_Output.Write ("			}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("		public static void Handle_{1} (\n{0}", _Indent, Command.Id);
 			_Output.Write ("					DispatchShell  DispatchIn, string[] Args, int Index) {{\n{0}", _Indent);
@@ -475,7 +419,7 @@ namespace Goedel.Tool.Command {
 							break; }
 								}
 							}
-						_Output.Write ("				Options = Options\n{0}", _Indent);
+						_Output.Write ("				NewOptions = Options\n{0}", _Indent);
 						_Output.Write ("				}};\n{0}", _Indent);
 						_Output.Write ("        \n{0}", _Indent);
 						_Output.Write ("			\n{0}", _Indent);
@@ -505,16 +449,16 @@ namespace Goedel.Tool.Command {
 							_Output.Write ("				if (Options.{1}.IsSet & FileTools.UpToDate (inputfile, outputfile)) {{\n{0}", _Indent, Lazy);
 							_Output.Write ("					return;\n{0}", _Indent);
 							_Output.Write ("					}}\n{0}", _Indent);
-							_Output.Write ("				using (Stream outputStream =\n{0}", _Indent);
-							_Output.Write ("							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {{\n{0}", _Indent);
-							_Output.Write ("					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {{\n{0}", _Indent);
-							_Output.Write ("\n{0}", _Indent);
-							_Output.Write ("						{1}.{2} Script = new {3}.{4} (OutputWriter);\n{0}", _Indent, Script.Namespace, Script.Class, Script.Namespace, Script.Class);
-							_Output.Write ("\n{0}", _Indent);
-							_Output.Write ("						Script.{1} (Parse);\n{0}", _Indent, Script.Id);
-							_Output.Write ("						}}\n{0}", _Indent);
-							_Output.Write ("					}}\n{0}", _Indent);
 							}
+						_Output.Write ("				using (Stream outputStream =\n{0}", _Indent);
+						_Output.Write ("							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {{\n{0}", _Indent);
+						_Output.Write ("					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {{\n{0}", _Indent);
+						_Output.Write ("\n{0}", _Indent);
+						_Output.Write ("						{1}.{2} Script = new {3}.{4} (OutputWriter);\n{0}", _Indent, Script.Namespace, Script.Class, Script.Namespace, Script.Class);
+						_Output.Write ("\n{0}", _Indent);
+						_Output.Write ("						Script.{1} (Parse);\n{0}", _Indent, Script.Id);
+						_Output.Write ("						}}\n{0}", _Indent);
+						_Output.Write ("					}}\n{0}", _Indent);
 						_Output.Write ("				}}\n{0}", _Indent);
 					break; }
 						}
@@ -522,6 +466,69 @@ namespace Goedel.Tool.Command {
 				}
 			_Output.Write ("			}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			}
+		
+
+		//
+		// CommandSetMethod
+		//
+		public void CommandSetMethod (CommandSet CommandSet) {
+			foreach  (var Inner in CommandSet.Entries) {
+				switch (Inner._Tag ()) {
+					case CommandParseType.Command: {
+					  Command Cast = (Command) Inner; 
+					
+					CommandMethod (Cast);
+					break; }
+					case CommandParseType.CommandSet: {
+					  CommandSet Cast = (CommandSet) Inner; 
+					
+					CommandSetMethod (Cast);
+				break; }
+					}
+				}
+			}
+		
+
+		//
+		// CommandSetHandler
+		//
+		public void CommandSetHandler (CommandSet CommandSet, Class Class) {
+			foreach  (var Inner in CommandSet.Entries) {
+				switch (Inner._Tag ()) {
+					case CommandParseType.Command: {
+					  Command Command = (Command) Inner; 
+					
+					 CommandHandler (Command, Class);
+					break; }
+					case CommandParseType.CommandSet: {
+					  CommandSet Cast = (CommandSet) Inner; 
+					
+					 CommandSetHandler (Cast, Class);
+				break; }
+					}
+				}
+			}
+		
+
+		//
+		// CommandSetOptionClass
+		//
+		public void CommandSetOptionClass (CommandSet CommandSet) {
+			foreach  (var Inner in CommandSet.Entries) {
+				switch (Inner._Tag ()) {
+					case CommandParseType.Command: {
+					  Command Cast = (Command) Inner; 
+					
+					CommandOptionClass (Cast);
+					break; }
+					case CommandParseType.CommandSet: {
+					  CommandSet Cast = (CommandSet) Inner; 
+					
+					CommandSetOptionClass (Cast);
+				break; }
+					}
+				}
 			}
 		
 
@@ -542,7 +549,7 @@ namespace Goedel.Tool.Command {
 				}
 			_Output.Write (" {{\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("		public override Goedel.Registry.Type[] _Data {{get; set;}} = new Goedel.Registry.Type [] {{", _Indent);
+			_Output.Write ("		public override Goedel.Command.Type[] _Data {{get; set;}} = new Goedel.Command.Type [] {{", _Indent);
 			 Separator.IsFirst = true;
 			foreach  (var Entry in Command.EntryItems) {
 				_Output.Write ("{1}\n{0}", _Indent, Separator);
@@ -557,7 +564,12 @@ namespace Goedel.Tool.Command {
 				_Output.Write ("			get => _Data[{1}] as {2};\n{0}", _Indent, Entry.Index, Entry.Type);
 				_Output.Write ("			set => _Data[{1}]  = value;\n{0}", _Indent, Entry.Index);
 				_Output.Write ("			}}\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("		public virtual string _{1} {{\n{0}", _Indent, Entry.ID);
+				_Output.Write ("			set => _Data[{1}].Parameter (value);\n{0}", _Indent, Entry.Index);
+				_Output.Write ("			}}\n{0}", _Indent);
 				}
+			_Output.Write ("		public override DescribeCommandEntry DescribeCommand {{get; set;}} = _DescribeCommand;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {{\n{0}", _Indent);
 			_Output.Write ("			Identifier = \"{1}\",\n{0}", _Indent, Command.Tag.ToLower());
@@ -569,14 +581,20 @@ namespace Goedel.Tool.Command {
 			 Separator.IsFirst = true;
 			foreach  (var EntryItem in Command.EntryItems) {
 				 var Item = EntryItem.Item;
-				_Output.Write ("{1}\n{0}", _Indent, Separator);
-				_Output.Write ("				new DescribeEntryParameter () {{\n{0}", _Indent);
-				_Output.Write ("					Identifier = \"{1}\", \n{0}", _Indent, EntryItem.ID);
-				_Output.Write ("					Default = \"{1}\",\n{0}", _Indent, EntryItem.Default);
-				_Output.Write ("					Brief = \"{1}\",\n{0}", _Indent, EntryItem.Brief);
-				_Output.Write ("					Index = {1},\n{0}", _Indent, EntryItem.Index);
-				_Output.Write ("					Key = \"{1}\"\n{0}", _Indent, EntryItem.Tag.ToLower());
-				_Output.Write ("					}}", _Indent);
+				if (  EntryItem.HasEntry ) {
+					_Output.Write ("{1}\n{0}", _Indent, Separator);
+					if (  EntryItem.IsOption ) {
+						_Output.Write ("				new DescribeEntryOption () {{\n{0}", _Indent);
+						} else {
+						_Output.Write ("				new DescribeEntryParameter () {{\n{0}", _Indent);
+						}
+					_Output.Write ("					Identifier = \"{1}\", \n{0}", _Indent, EntryItem.ID);
+					_Output.Write ("					Default = \"{1}\",\n{0}", _Indent, EntryItem.Default);
+					_Output.Write ("					Brief = \"{1}\",\n{0}", _Indent, EntryItem.Brief);
+					_Output.Write ("					Index = {1},\n{0}", _Indent, EntryItem.Index);
+					_Output.Write ("					Key = \"{1}\"\n{0}", _Indent, EntryItem.Tag.ToLower());
+					_Output.Write ("					}}", _Indent);
+					}
 				}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("				}}\n{0}", _Indent);

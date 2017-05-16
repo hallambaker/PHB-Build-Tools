@@ -122,7 +122,16 @@ namespace Goedel.IO {
             var FileStream = Filename.OpenFileAppend();
             return new StreamWriter(FileStream);
             }
-
+        /// <summary>
+        /// Open a text writer to the specified file in append mode permitting
+        /// shared reads but not writes.
+        /// </summary>
+        /// <param name="Filename">The file to write to.</param>
+        /// <returns>The text writer.</returns>
+        public static TextWriter OpenTextWriterNew (this string Filename) {
+            var FileStream = Filename.OpenFileNew();
+            return new StreamWriter(FileStream);
+            }
 
         /// <summary>
         /// Create a new file for exclusive write access, overwriting 
@@ -152,7 +161,11 @@ namespace Goedel.IO {
                 }
             }
 
-
+        /// <summary>
+        /// Write binary data to filestream.
+        /// </summary>
+        /// <param name="FileStream">Filestream to write to</param>
+        /// <param name="Data">Data to write.</param>
         public static void Write (this FileStream FileStream, byte[] Data) {
             FileStream.Write(Data, 0, Data.Length);
             }

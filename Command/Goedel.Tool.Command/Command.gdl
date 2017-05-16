@@ -20,6 +20,7 @@
 		Entries List Choice
 			Command
 			Brief
+			CommandSet
 
 	Type	Command	
 		Id			ID CommandType
@@ -34,6 +35,7 @@
 			Parser
 			Generator
 			Script
+
 
 	Type DefaultCommand
 

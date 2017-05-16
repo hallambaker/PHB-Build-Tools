@@ -18,7 +18,7 @@ namespace Goedel.Registry {
         /// Constructor to write to the specified output.
         /// </summary>
         /// <param name="Output">The output stream</param>
-        public ScriptOutput(TextWriter Output) {
+        public ScriptOutput (TextWriter Output) {
             this._Output = Output;
             }
 
@@ -59,7 +59,7 @@ namespace Goedel.Registry {
 
         /// <summary>General parse error</summary>
         /// <param name="Message">Message for user</param>/// 
-        public GoedelParseException(string Message)
+        public GoedelParseException (string Message)
             : base(Message) {
 
 
@@ -69,7 +69,7 @@ namespace Goedel.Registry {
         /// <summary>General parse error</summary>
         /// <param name="Message">Message for user</param>
         /// <param name="Position">position in the file</param>
-        public GoedelParseException(string Message, Position Position) :
+        public GoedelParseException (string Message, Position Position) :
             base(Message + " at Line " + Position.Ln + " Col " + Position.Col + " in file " + Position.File) {
 
             //this.Position = Position;
@@ -209,22 +209,22 @@ namespace Goedel.Registry {
             ActionType.Add      // 18
             };
 
-        static CharType Type(char c) {
-            if (c == ' ' | c == '\t') return CharType.WhiteSpace;
-            if (c >= '0' & c <= '9') return CharType.Digit;
-            if ((c >= 'A' & c <= 'Z')) return CharType.Upper;
-            if ((c >= 'a' & c <= 'z')) return CharType.Lower;
-            if (c == '_') return CharType.Underscore;
-            if (c == '/') return CharType.Slash;
-            if (c == '\\') return CharType.BackSlash;
-            if (c == '\"') return CharType.DoubleQuote;
-            if (c == '@') return CharType.At;
-            if (c == '{') return CharType.Left;
-            if (c == '}') return CharType.Right;
-            if (c == '.') return CharType.Period;
-            if (c == ',') return CharType.Comma;
-            if (c == '|') return CharType.Line;
-            if (c == '\n') return CharType.CR;
+        static CharType Type (char c) {
+            if (c == ' ' | c == '\t') { return CharType.WhiteSpace; }
+            if (c >= '0' & c <= '9') { return CharType.Digit; }
+            if ((c >= 'A' & c <= 'Z')) { return CharType.Upper; }
+            if ((c >= 'a' & c <= 'z')) { return CharType.Lower; }
+            if (c == '_') { return CharType.Underscore; }
+            if (c == '/') { return CharType.Slash; }
+            if (c == '\\') { return CharType.BackSlash; }
+            if (c == '\"') { return CharType.DoubleQuote; }
+            if (c == '@') { return CharType.At; }
+            if (c == '{') { return CharType.Left; }
+            if (c == '}') { return CharType.Right; }
+            if (c == '.') { return CharType.Period; }
+            if (c == ',') { return CharType.Comma; }
+            if (c == '|') { return CharType.Line; }
+            if (c == '\n') { return CharType.CR; }
             return CharType.Other;
             }
 

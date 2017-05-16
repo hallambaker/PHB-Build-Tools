@@ -1254,11 +1254,12 @@ namespace Goedel.Tool.Command {
                             Goedel.Tool.Command.CommandParseType LabelType = _Reserved (Text);
                             if ( false |
 									(LabelType == Goedel.Tool.Command.CommandParseType.Command) |
-									(LabelType == Goedel.Tool.Command.CommandParseType.Brief) ) {
+									(LabelType == Goedel.Tool.Command.CommandParseType.Brief) |
+									(LabelType == Goedel.Tool.Command.CommandParseType.CommandSet) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Command Brief ]");
+								throw new System.Exception("Parser Error Expected [Command Brief CommandSet ]");
 								}
 							}
                         break;

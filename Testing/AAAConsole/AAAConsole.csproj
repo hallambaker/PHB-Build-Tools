@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
-    <AssemblyVersion>1.0.0.95</AssemblyVersion>
+    <AssemblyVersion>1.0.0.141</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,6 +57,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj">
+      <Project>{e7d4d1f4-e41a-44e2-abbd-f6a9e1d3f1ac}</Project>
+      <Name>Goedel.Command</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj">
       <Project>{fd1d6ce2-8a10-45a5-a473-f5517b8ab3d5}</Project>
       <Name>Goedel.Cryptography.Windows</Name>
@@ -64,6 +68,10 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{55e68ce6-ac29-4837-9d88-5ad99e4cef5a}</Project>
       <Name>Goedel.Protocol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
+      <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
+      <Name>Goedel.Registry</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
       <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
@@ -108,6 +116,10 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj">
       <Project>{93b6b9fd-822f-4fd1-bdad-16eb81b6df25}</Project>
       <Name>Goedel.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Test.Goedel.Command\Test.Goedel.Command.csproj">
+      <Project>{319054f1-057b-4ccc-af31-b6dfcac527de}</Project>
+      <Name>Test.Goedel.Command</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
