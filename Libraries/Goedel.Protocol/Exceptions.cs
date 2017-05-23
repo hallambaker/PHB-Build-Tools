@@ -188,7 +188,7 @@ namespace Goedel.Protocol {
         /// </summary>		
         /// <param name="Object">User data</param>	
 		public ConnectionFail (ExceptionData Object) : 
-				base (String.Format ("Connection to host [{0}] Failed.",
+				base (global::System.String.Format ("Connection to host [{0}] Failed.",
 					Object.String					)) {
 			UserData = Object;
 			}
@@ -200,7 +200,7 @@ namespace Goedel.Protocol {
         /// <param name="Object">User data</param>	
 		/// <param name="Inner">Inner Exception</param>	
 		public ConnectionFail (ExceptionData Object, System.Exception Inner) : 
-				base (String.Format ("Connection to host [{0}] Failed.",
+				base (global::System.String.Format ("Connection to host [{0}] Failed.",
 					Object.String					), Inner) {
 			UserData = Object;
 			}
@@ -222,6 +222,156 @@ namespace Goedel.Protocol {
 				}
 			else {
 				return new ConnectionFail();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class CannotCreateAbstract : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "Deserialzer encountered tag describing abstract type"
+        /// </summary>		
+		public CannotCreateAbstract () : base ("Deserialzer encountered tag describing abstract type") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Deserialzer encountered tag describing abstract type"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public CannotCreateAbstract (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public CannotCreateAbstract (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new CannotCreateAbstract(Reason as string);
+				}
+			else {
+				return new CannotCreateAbstract();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class UnknownTag : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "Deserialzer encountered unknown tag"
+        /// </summary>		
+		public UnknownTag () : base ("Deserialzer encountered unknown tag") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Deserialzer encountered unknown tag"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public UnknownTag (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public UnknownTag (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new UnknownTag(Reason as string);
+				}
+			else {
+				return new UnknownTag();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class InvalidInput : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "Deserialzer encountered invalid input"
+        /// </summary>		
+		public InvalidInput () : base ("Deserialzer encountered invalid input") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Deserialzer encountered invalid input"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public InvalidInput (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public InvalidInput (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new InvalidInput(Reason as string);
+				}
+			else {
+				return new InvalidInput();
 				}
             }
         }

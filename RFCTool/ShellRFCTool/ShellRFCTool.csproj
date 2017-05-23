@@ -72,6 +72,10 @@
     <None Include="VS.Make" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj">
+      <Project>{e7d4d1f4-e41a-44e2-abbd-f6a9e1d3f1ac}</Project>
+      <Name>Goedel.Command</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
       <Project>{ccc286f1-6a5b-4946-a382-8a48797192b4}</Project>
       <Name>Goedel.FSR</Name>

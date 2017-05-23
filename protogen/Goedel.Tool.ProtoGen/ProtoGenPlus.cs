@@ -160,7 +160,9 @@ namespace Goedel.Tool.ProtoGen {
         public List <Structure> Structures = new List<Structure> ();
 
         public override void Normalize() {
-            if (Normalized) return;
+            if (Normalized) {
+                return;
+                }
             ID = Id.ToString ();
             foreach (_Choice Entry in Entries) {
                 if (Entry.GetType() == typeof(Message)) {
@@ -187,7 +189,9 @@ namespace Goedel.Tool.ProtoGen {
         public List<_Choice> AllEntriesUnsorted = null;
 
         public override void Normalize() {
-            if (Normalized) return;
+            if (Normalized) {
+                return;
+                }
             ID = Id.ToString();
             AllEntries = _Choice.InheritEntries(Entries);
             AllEntriesUnsorted = _Choice.InheritEntriesUnsorted(Entries);

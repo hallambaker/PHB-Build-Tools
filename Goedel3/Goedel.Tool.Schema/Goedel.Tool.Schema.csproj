@@ -49,6 +49,11 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+    </Compile>
     <Compile Include="Goedel.cs" />
     <Compile Include="Parameters.cs" />
     <Compile Include="ParserGenerator.cs">
@@ -59,6 +64,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Exceptions.exceptional">
+      <Generator>exceptional</Generator>
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+    </None>
     <None Include="Goedel.gdl" />
     <None Include="PreBuild.bat" />
     <None Include="ParserGenerator.script">

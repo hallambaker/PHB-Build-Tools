@@ -2,160 +2,103 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Goedel.Command;
 using Goedel.Registry;
+using Goedel.Utilities;
 
 namespace DomainerShell {
     public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 
-		static char UsageFlag;
+
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
+
+		
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Dispatch"></param>
+        /// <param name="args"></param>
+        /// <param name="index"></param>
+        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+            Brief();
+            }
+
+        public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
+            Identifier = "help",
+            HandleDelegate = Brief,
+            Entries = new List<DescribeEntry>() { }
+            };
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Dispatch"></param>
+        /// <param name="args"></param>
+        /// <param name="index"></param>
+        public static new void About (DispatchShell Dispatch, string[] args, int index) {
+            FileTools.About();
+            }
+
+        public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
+            Identifier = "about",
+            HandleDelegate = About,
+            Entries = new List<DescribeEntry>() { }
+            };
 
         static bool IsFlag(char c) {
             return (c == UnixFlag) | (c == WindowsFlag) ;
             }
+
 
         static CommandLineInterpreter () {
             System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 
             if (OperatingSystem.Platform == PlatformID.Unix |
                     OperatingSystem.Platform == PlatformID.MacOSX) {
-                UsageFlag = UnixFlag;
+                FlagIndicator = UnixFlag;
                 }
             else {
-                UsageFlag = WindowsFlag;
+                FlagIndicator = WindowsFlag;
                 }
+
+				DefaultCommand = _GenerateDomainer._DescribeCommand;
+				Description = "Manage DNS Resource and Query Records";
+
+			Entries = new  SortedDictionary<string, DescribeCommand> () {
+				{"about", DescribeAbout },
+				{"in", _GenerateDomainer._DescribeCommand },
+				{"help", DescribeHelp }
+				}; // End Entries
+
+
+
             }
 
         static void Main(string[] args) {
 			var CLI = new CommandLineInterpreter ();
 			CLI.MainMethod (args);
 			}
-        public void MainMethod(string[] args) {
 
+        public void MainMethod(string[] Args) {
 			DomainerShell Dispatch = new DomainerShell ();
 
-
-				if (args.Length == 0) {
-					throw new ParserException ("No command specified");
-					}
-
-                if (IsFlag(args[0][0])) {
+			MainMethod (Dispatch, Args);
+			}
 
 
-                    switch (args[0].Substring(1).ToLower()) {
-						case "manage dns resource and query records" : {
-							Usage ();
-							break;
-							}
-						case "about" : {
-							FileTools.About ();
-							break;
-							}
-						case "in" : {
-							Handle_Domainer (Dispatch, args, 1);
-							break;
-							}
-						default: {
-							throw new ParserException("Unknown Command: " + args[0]);
-                            }
-                        }
-                    }
-                else {
-					Handle_Domainer (Dispatch, args, 0);
-                    }
+        public void MainMethod(DomainerShell Dispatch, string[] Args) {
+			Dispatcher (Entries, Dispatch, Args, 0);
             } // Main
 
 
-		private enum TagType_Domainer {
-			Lazy,
-			Domainer,
-			GenerateCS,
-			}
 
-		private static void Handle_Domainer (
-					DomainerShell Dispatch, string[] args, int index) {
-			Domainer		Options = new Domainer ();
-
-			var Registry = new Goedel.Registry.Registry ();
-
-			Options.Lazy.Register ("lazy", Registry, (int) TagType_Domainer.Lazy);
-			Options.Domainer.Register ("domainer", Registry, (int) TagType_Domainer.Domainer);
-			Options.GenerateCS.Register ("cs", Registry, (int) TagType_Domainer.GenerateCS);
-
-			// looking for parameter Param.Class}
-			if (index < args.Length && !IsFlag (args [index][0] )) {
-				// Have got the parameter, call the parameter value method
-				Options.Domainer.Parameter (args [index]);
-				index++;
-				}
-
-#pragma warning disable 162
-			for (int i = index; i< args.Length; i++) {
-				if 	(!IsFlag (args [i][0] )) {
-					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
-				string Rest = args [i].Substring (1);
-
-				TagType_Domainer TagType = (TagType_Domainer) Registry.Find (Rest);
-
-				// here have the cases for what to do with it.
-
-				switch (TagType) {
-					case TagType_Domainer.Lazy : {
-						int OptionParams = Options.Lazy.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.Lazy.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Domainer.GenerateCS : {
-						int OptionParams = Options.GenerateCS.Tag (Rest);
-			
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.GenerateCS.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					default : throw new System.Exception ("Internal error");
-					}
-				}
-
-#pragma warning restore 162
-			Dispatch.Domainer (Options);
-
-			}
-
-		private static void Usage () {
-
-				Console.WriteLine ("Manage DNS Resource and Query Records");
-				Console.WriteLine ("");
-
-				{
-#pragma warning disable 219
-					Domainer		Dummy = new Domainer ();
-#pragma warning restore 219
-
-					Console.Write ("{0}in ", UsageFlag);
-					Console.WriteLine ();
-
-				}
-
-			} // Usage 
-
-		public class ParserException : System.Exception {
-
-			public ParserException(string message)
-				: base(message) {
-
-				Console.WriteLine (message);
-				}
+		public static void Handle_GenerateDomainer (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			DomainerShell Dispatch =	DispatchIn as DomainerShell;
+			GenerateDomainer		Options = new GenerateDomainer ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch.GenerateDomainer (Options);
 			}
 
 
@@ -167,87 +110,99 @@ namespace DomainerShell {
 	// with partial virtual that can be extended as required.
 
 	// All subclasses inherit from the abstract classes Goedel.Regisrty.Dispatch 
-	// and Goedel.Registry.Type
+	// and Goedel.Command.Type
 
 
+    public class _GenerateDomainer : Goedel.Command.Dispatch  {
 
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Flag (),
+			new ExistingFile (),
+			new NewFile ()			} ;
 
-    public class _Domainer : Goedel.Registry.Dispatch {
-		public Flag							Lazy = new Flag ("false");
-		public ExistingFile					Domainer = new ExistingFile ("domainer");
-		public NewFile						GenerateCS = new NewFile ("cs");
+		/// <summary>Field accessor for parameter [lazy]</summary>
+		public virtual Flag Lazy {
+			get => _Data[0] as Flag;
+			set => _Data[0]  = value;
+			}
 
+		public virtual string _Lazy {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Domainer {
+			get => _Data[1] as ExistingFile;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Domainer {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [cs]</summary>
+		public virtual NewFile GenerateCS {
+			get => _Data[2] as NewFile;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _GenerateCS {
+			set => _Data[2].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "in",
+			Brief =  "<Unspecified>",
+			HandleDelegate =  CommandLineInterpreter.Handle_GenerateDomainer,
+			Lazy =  true,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Domainer", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "GenerateCS", 
+					Default = null, // null if null
+					Brief = "Generate C# code",
+					Index = 2,
+					Key = "cs"
+					}
+				}
+			};
 
 		}
 
-    public partial class Domainer : _Domainer {
-        } // class Domainer
+    public partial class GenerateDomainer : _GenerateDomainer {
+        } // class GenerateDomainer
 
-
-
-    // Parameter type NewFile
-    public abstract class _NewFile : Goedel.Registry._File {
-        public _NewFile() {
-            }
-        public _NewFile(string Value) {
-			Default (Value);
-            } 
-
-
-
-        } // _NewFile
 
     public partial class  NewFile : _NewFile {
-        public NewFile() {
-            } 
-        public NewFile(string Value) {
-			Default (Value);
-            } 
+        public static NewFile Factory (string Value) {
+            var Result = new NewFile();
+            Result.Default(Value);
+            return Result;
+            }
         } // NewFile
 
 
-    // Parameter type ExistingFile
-    public abstract class _ExistingFile : Goedel.Registry._File {
-        public _ExistingFile() {
-            }
-        public _ExistingFile(string Value) {
-			Default (Value);
-            } 
-
-
-
-        } // _ExistingFile
-
     public partial class  ExistingFile : _ExistingFile {
-        public ExistingFile() {
-            } 
-        public ExistingFile(string Value) {
-			Default (Value);
-            } 
+        public static ExistingFile Factory (string Value) {
+            var Result = new ExistingFile();
+            Result.Default(Value);
+            return Result;
+            }
         } // ExistingFile
 
 
-    // Parameter type Flag
-    public abstract class _Flag : Goedel.Registry._Flag {
-        public _Flag() {
-            }
-        public _Flag(string Value) {
-			Default (Value);
-            } 
-
-
-
-
-        } // _Flag
-
     public partial class  Flag : _Flag {
-        public Flag() {
-            } 
-        public Flag(string Value) {
-			Default (Value);
-            } 
+        public static Flag Factory (string Value) {
+            var Result = new Flag();
+            Result.Default(Value);
+            return Result;
+            }
         } // Flag
-
 
 
 
@@ -256,20 +211,15 @@ namespace DomainerShell {
 
 	// Eventually there will be a compiler option to suppress the debugging
 	// to eliminate the redundant code
-    public class _DomainerShell {
+    public class _DomainerShell : global::Goedel.Command.DispatchShell {
 
-
-		public virtual void Domainer ( Domainer Options
-				) {
-
+		public virtual void GenerateDomainer ( GenerateDomainer Options) {
 			string inputfile = null;
 
 			inputfile = Options.Domainer.Text;
 
-            Goedel.Tool.Domainer.Domainer Parse = new Goedel.Tool.Domainer.Domainer();
-
-
-			Parse.Options = Options;
+            Goedel.Tool.Domainer.Domainer Parse = new Goedel.Tool.Domainer.Domainer() {
+				};
         
 			
 			using (Stream infile =
@@ -285,7 +235,7 @@ namespace DomainerShell {
 			if (Options.GenerateCS.Text != null) {
 				string outputfile = FileTools.DefaultOutput (inputfile, Options.GenerateCS.Text, 
 					Options.GenerateCS.Extension);
-				if (Options.Lazy.IsSet & FileTools.UpToDate (inputfile, outputfile)) {
+				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
 				using (Stream outputStream =
@@ -299,6 +249,7 @@ namespace DomainerShell {
 					}
 				}
 			}
+
 
         } // class _DomainerShell
 

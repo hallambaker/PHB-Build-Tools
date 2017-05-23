@@ -50,6 +50,9 @@ namespace Goedel.Protocol {
         RFC822
         }
 
+
+    public delegate JSONObject JSONFactoryDelegate ();
+
     /// <summary>
     /// Base class for JSON Objects.
     /// </summary>
@@ -67,8 +70,11 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>The object tag.</returns>
 		public virtual string Tag () {
-			return "MeshItem";
+			return null;
 			}
+
+
+        public virtual string _Tag { get; }
 
         /// <summary>
         /// Base constructor.
@@ -76,22 +82,6 @@ namespace Goedel.Protocol {
 		public JSONObject () {
             //_Initialize();
 			}
-
-  //      /// <summary>
-  //      /// Create object from data read from the corresponding reader.
-  //      /// </summary>
-  //      /// <param name="JSONReader">The input data</param>
-		//public JSONObject (JSONReader JSONReader) {
-		//	Deserialize (JSONReader);
-		//	}
-
-  //      /// <summary>
-  //      /// Create object from data read from the corresponding string.
-  //      /// </summary>
-  //      /// <param name="_String">The input data</param>
-  //      public JSONObject(string _String) {
-		//	Deserialize (_String);
-		//	}
 
         /// <summary>
         /// If implemented in the child class, performs a deep copy of the structure.

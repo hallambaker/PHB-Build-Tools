@@ -71,6 +71,9 @@
     <OutputPath>bin\Publish\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Goedel.Command">
+      <HintPath>..\..\..\Library\Goedel.Command.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>

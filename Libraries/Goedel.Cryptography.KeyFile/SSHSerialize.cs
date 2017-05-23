@@ -207,6 +207,15 @@ namespace Goedel.Cryptography.KeyFile {
             get => new RSAKeyPair (RSAPublicKey );   // NYI convert DSS keypair
             }
 
+        /// <summary>
+        /// Construct an SSH_RSA object from an RSAKeyPair
+        /// </summary>
+        /// <param name="RSAKeyPair"></param>
+        public SSH_RSA (RSAKeyPair RSAKeyPair) {
+            var PKIXPublicKeyRSA = RSAKeyPair.PKIXPublicKeyRSA;
+            Exponent = PKIXPublicKeyRSA.PublicExponent;
+            Modulus = PKIXPublicKeyRSA.Modulus;
+            }
 
         /// <summary>Encode structure</summary>
         /// <returns>Byte array representing structure.</returns>

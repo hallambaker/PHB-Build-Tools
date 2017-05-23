@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Registry;
+using Goedel.Utilities;
 
 #foreach (_Choice Item in Goedel.Top)
 #if (Item._Tag() ==  GoedelType.Class)
@@ -307,7 +308,8 @@ namespace #{Class.Namespace} {
 #end foreach
 
 				}
-            throw new System.Exception ("Reserved word not recognized \"" + Label + "\"");
+
+            throw new NotFoundReserved ("Reserved word not recognized \"" + Label + "\"");
             }
 
 
@@ -378,7 +380,7 @@ namespace #{Class.Namespace} {
             }
 
         void Pop () {
-            if (Stack.Count == 0) throw new System.Exception ("Internal Parser Error");
+			Assert.False (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -395,9 +397,10 @@ namespace #{Class.Namespace} {
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |
-                (Token == TokenType.COMMENT)) return;
-            if (Token == TokenType.INVALID)
-                throw new System.Exception("Invalid Token");
+                (Token == TokenType.COMMENT)) {
+				return;
+				}
+			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -412,7 +415,9 @@ namespace #{Class.Namespace} {
                             State = StateCode._Choice;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected START");
+                        else {
+							throw new ExpectedStart ();
+							}
 
                     case StateCode._Choice:                //      LABEL Class | END
                         if (Token == TokenType.LABEL) {
@@ -431,7 +436,7 @@ namespace #{Class.Namespace} {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
-                                throw new System.Exception("Parser Error Expected [Class]");
+                                throw new Expected("Parser Error Expected [Class]");
                                 }
                             break;
                             }
@@ -439,10 +444,13 @@ namespace #{Class.Namespace} {
                             State = StateCode._End;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [Class]");
+                        else {
+							throw new ExpectedClass();
+							}
 
-                    case StateCode._End:                   //      -
-                        throw new System.Exception("Too Many Closing Braces");
+                    case StateCode._End: {                  //      -
+                        throw new TooManyClose();
+						}
 
 #foreach (_Choice Item in Class.Entries)
 #% string ID = null;
@@ -498,7 +506,7 @@ namespace #{Class.Namespace} {
 									}
 #end foreach
 								default : {
-									throw new System.Exception("Parser Error Expected [#!
+									throw new Expected("Parser Error Expected [#!
 #foreach (OptionEntry OEntry in Options.Entries)
 #{OEntry.Type} #!
 #end foreach						
@@ -551,7 +559,7 @@ namespace #{Class.Namespace} {
                                 Current_Cast.#{Entry.Name}.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [#!
+								throw new Expected ("Parser Error Expected [#!
 #foreach (REF<_Choice> Ref in Choice.Entries)
 #{Ref} #!
 #end foreach						
@@ -591,7 +599,7 @@ namespace #{Class.Namespace} {
                                 Current_Cast.#{Entry.Name} = New_Choice(Text);
                                 }
                             else {
-                               throw new System.Exception("Parser Error Expected [#!
+                               throw new Expected ("Parser Error Expected [#!
 #foreach (REF<_Choice> Ref in Entry_Cast.Entries)
 #{Ref} #!
 #end foreach						
@@ -599,7 +607,7 @@ namespace #{Class.Namespace} {
                                 }
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [#!
+                        else throw new Expected("Parser Error Expected [#!
 #foreach (REF<_Choice> Ref in Entry_Cast.Entries)
 #{Ref} #!
 #end foreach						
@@ -633,7 +641,7 @@ namespace #{Class.Namespace} {
                             State = StateCode.#{ID}__#{Entry.Name};
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [#!
+                        else throw new Expected ("Parser Error Expected [#!
 #foreach (REF<_Choice> Ref in Entry_Cast.Entries)
 #{Ref} #!
 #end foreach						
@@ -645,7 +653,7 @@ namespace #{Class.Namespace} {
                             State = StateCode.#{ID}__#{Entry.Name};
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 #casecast REF Entry_Cast
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             #{Class.Namespace}.#{ID} Current_Cast = (#{Class.Namespace}.#{ID})Current;
@@ -653,7 +661,7 @@ namespace #{Class.Namespace} {
                             State = StateCode.#{ID}__#{Entry.Name};
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 #casecast Token Entry_Cast
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             #{Class.Namespace}.#{ID} Current_Cast = (#{Class.Namespace}.#{ID})Current;
@@ -661,7 +669,7 @@ namespace #{Class.Namespace} {
                             State = StateCode.#{ID}__#{Entry.Name};
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 #casecast String null
                         if (Token == TokenType.STRING) {
                             #{Class.Namespace}.#{ID} Current_Cast = (#{Class.Namespace}.#{ID})Current;
@@ -669,7 +677,7 @@ namespace #{Class.Namespace} {
                             State = StateCode.#{ID}__#{Entry.Name};
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 #casecast Text null
                         if (Token == TokenType.BEGIN) {
                             State = StateCode.#{ID}__#{Entry.Name};
@@ -690,7 +698,7 @@ namespace #{Class.Namespace} {
                             Current_Cast.#{Entry.Name}.Add (Text);
                             break;							
                             }
-                       throw new System.Exception("Expected Text");
+                       throw new Expected("Expected Text");
 
 #% IsList = true;
 #casecast Integer null
@@ -700,7 +708,7 @@ namespace #{Class.Namespace} {
                             State = StateCode.#{ID}__#{Entry.Name};
                             break;
                             }
-                        throw new System.Exception("Expected Integer");
+                        throw new Expected("Expected Integer");
 #casecast Boolean null
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL))  {
                             #{Class.Namespace}.#{ID} Current_Cast = (#{Class.Namespace}.#{ID})Current;
@@ -708,7 +716,7 @@ namespace #{Class.Namespace} {
                             State = StateCode.#{ID}__#{Entry.Name};
                             break;
                             }
-                        throw new System.Exception("Expected True or False");						
+                        throw new Expected("Expected True or False");						
 #end switchcast
 
 #if !IsList
@@ -722,8 +730,9 @@ namespace #{Class.Namespace} {
 #end if
 #end foreach
 
-                    default:
-                        throw new System.Exception("Unreachable code reached");
+                    default: {
+                        throw new UnreachableCode();
+						}
                     }
                 }
             }

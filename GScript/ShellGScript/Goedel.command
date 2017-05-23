@@ -1,9 +1,6 @@
 ﻿Class GoedelShell GoedelShell
 	Brief		"Goedel meta-code generation tool"
 
-	Type NewFile			"file"
-	Type ExistingFile		"file"
-	Type ID				"string"
 
 	Command Generate "in"
 		DefaultCommand
@@ -24,11 +21,11 @@
 		Option CS "cs" NewFile
 			Default "cs"
 
-		Option Namespace "namespace" ID
+		Option Namespace "namespace" String
 			Default "Constants"
-		Option Class "class" ID
+		Option Class "class" String
 			Default "Constants"
-		Option Variable "variable" ID
+		Option Variable "variable" String
 			Default "Value"
 
 		Option  Lazy			"lazy"		Flag

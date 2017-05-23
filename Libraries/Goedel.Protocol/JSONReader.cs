@@ -636,6 +636,30 @@ namespace Goedel.Protocol {
                 throw new Exception("Expected , or ]");
                 }
             }
+
+        /// <summary>
+        /// Read a tagged object from this stream.
+        /// </summary>
+        /// <param name="TagDictionary">Dictionary mapping tags to factory methods</param>
+        /// <returns>The deserialized object.</returns>
+        public JSONObject ReadTaggedObject (
+                    Dictionary<string, JSONFactoryDelegate> TagDictionary) {
+            JSONObject Out = null;
+            StartObject();
+            if (EOR) {
+                return null;
+                }
+
+            var Token = ReadToken();
+
+            Assert.True(TagDictionary.TryGetValue(Token, out var Delegate), UnknownTag.Throw);
+            Out = Delegate();
+            Out.Deserialize(this);
+            EndObject();
+            return Out;
+            }
+
+
         }
 
 

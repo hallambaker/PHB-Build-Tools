@@ -29,6 +29,7 @@ namespace Goedel.Tool.ProtoGen {
 	public partial class Generate : global::Goedel.Registry.Script {
 
 		 bool OldConstructors = false;
+		 Separator Separator = new Separator (",");
 		//
 		//   Code Generator (C#)
 		//
@@ -84,71 +85,75 @@ namespace Goedel.Tool.ProtoGen {
 					_Output.Write ("        /// </summary>\n{0}", _Indent);
 					_Output.Write ("        /// <returns>The tag value</returns>\n{0}", _Indent);
 					_Output.Write ("		public {1} string Tag () {{\n{0}", _Indent, InheritsOverride);
-					_Output.Write ("			return \"{1}\";\n{0}", _Indent, Protocol.Prefix);
+					_Output.Write ("			return _Tag;\n{0}", _Indent);
 					_Output.Write ("			}}\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
-					if (  (OldConstructors) ) {
-						_Output.Write ("        /// <summary>\n{0}", _Indent);
-						_Output.Write ("        /// Default constructor.\n{0}", _Indent);
-						_Output.Write ("        /// </summary>\n{0}", _Indent);
-						_Output.Write ("		public {1} () {{\n{0}", _Indent, Protocol.Prefix);
-						_Output.Write ("			_Initialize () ;\n{0}", _Indent);
-						_Output.Write ("			}}\n{0}", _Indent);
-						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("        /// <summary>\n{0}", _Indent);
-						_Output.Write ("        /// Construct an instance from a JSON encoded stream.\n{0}", _Indent);
-						_Output.Write ("        /// </summary>\n{0}", _Indent);
-						_Output.Write ("        /// <param name=\"JSONReader\">Input stream</param>\n{0}", _Indent);
-						_Output.Write ("		public {1} (JSONReader JSONReader) {{\n{0}", _Indent, Protocol.Prefix);
-						_Output.Write ("			Deserialize (JSONReader);\n{0}", _Indent);
-						_Output.Write ("			_Initialize () ;\n{0}", _Indent);
-						_Output.Write ("			}}\n{0}", _Indent);
-						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("        /// <summary>\n{0}", _Indent);
-						_Output.Write ("        /// Construct an instance from a JSON encoded string.\n{0}", _Indent);
-						_Output.Write ("        /// </summary>\n{0}", _Indent);
-						_Output.Write ("        /// <param name=\"_String\">Input string</param>\n{0}", _Indent);
-						_Output.Write ("		public {1} (string _String) {{\n{0}", _Indent, Protocol.Prefix);
-						_Output.Write ("			Deserialize (_String);\n{0}", _Indent);
-						_Output.Write ("			_Initialize () ;\n{0}", _Indent);
-						_Output.Write ("			}}\n{0}", _Indent);
+					_Output.Write ("		/// <summary>\n{0}", _Indent);
+					_Output.Write ("        /// Tag identifying this class\n{0}", _Indent);
+					_Output.Write ("        /// </summary>\n{0}", _Indent);
+					_Output.Write ("		public override string _Tag {{ get; }} = \"{1}\";\n{0}", _Indent, Protocol.Prefix);
+					_Output.Write ("\n{0}", _Indent);
+					_Output.Write ("		/// <summary>\n{0}", _Indent);
+					_Output.Write ("        /// Dictionary mapping tags to factory methods\n{0}", _Indent);
+					_Output.Write ("        /// </summary>\n{0}", _Indent);
+					_Output.Write ("		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = \n{0}", _Indent);
+					_Output.Write ("				new Dictionary<string, JSONFactoryDelegate> () {{\n{0}", _Indent);
+					
+					 Separator.IsFirst = true;
+					foreach  (_Choice Entry in Protocol.Structures) {
+						_Output.Write ("{1}\n{0}", _Indent, Separator);
+						_Output.Write ("			{{\"{1}\", {2}._Factory}}", _Indent, Entry.ID, Entry.ID);
 						}
+					_Output.Write ("			}};\n{0}", _Indent);
+					_Output.Write ("\n{0}", _Indent);
+					_Output.Write ("		/// <summary>\n{0}", _Indent);
+					_Output.Write ("        /// Factory method. Throws exception as this is an abstract class.\n{0}", _Indent);
+					_Output.Write ("        /// </summary>\n{0}", _Indent);
+					_Output.Write ("        /// <returns>Object of this type</returns>\n{0}", _Indent);
+					_Output.Write ("		public static JSONObject _Factory () {{\n{0}", _Indent);
+					_Output.Write ("			throw new CannotCreateAbstract();\n{0}", _Indent);
+					_Output.Write ("			}}\n{0}", _Indent);
+					_Output.Write ("\n{0}", _Indent);
+					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
 					_Output.Write ("        /// Construct an instance from the specified tagged JSONReader stream.\n{0}", _Indent);
 					_Output.Write ("        /// </summary>\n{0}", _Indent);
 					_Output.Write ("        /// <param name=\"JSONReader\">Input stream</param>\n{0}", _Indent);
 					_Output.Write ("        /// <param name=\"Out\">The created object</param>\n{0}", _Indent);
 					_Output.Write ("        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {{\n{0}", _Indent);
-					_Output.Write ("	\n{0}", _Indent);
-					_Output.Write ("			JSONReader.StartObject ();\n{0}", _Indent);
-					_Output.Write ("            if (JSONReader.EOR) {{\n{0}", _Indent);
-					_Output.Write ("                Out = null;\n{0}", _Indent);
-					_Output.Write ("                return;\n{0}", _Indent);
-					_Output.Write ("                }}\n{0}", _Indent);
+					_Output.Write ("			Out = JSONReader.ReadTaggedObject (_TagDictionary);\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
-					_Output.Write ("			string token = JSONReader.ReadToken ();\n{0}", _Indent);
-					_Output.Write ("			Out = null;\n{0}", _Indent);
-					_Output.Write ("\n{0}", _Indent);
-					_Output.Write ("			switch (token) {{\n{0}", _Indent);
-					foreach  (_Choice Entry in Protocol.Entries) {
-						switch (Entry._Tag ()) {
-							case ProtoStructType.Message: {
-							  Message Message = (Message) Entry; 
-							
-							 DeserializeCase (Message.Id,Message.ID);
+					if (  (OldConstructors) ) {
+						_Output.Write ("			JSONReader.StartObject ();\n{0}", _Indent);
+						_Output.Write ("            if (JSONReader.EOR) {{\n{0}", _Indent);
+						_Output.Write ("                Out = null;\n{0}", _Indent);
+						_Output.Write ("                return;\n{0}", _Indent);
+						_Output.Write ("                }}\n{0}", _Indent);
+						_Output.Write ("\n{0}", _Indent);
+						_Output.Write ("			string token = JSONReader.ReadToken ();\n{0}", _Indent);
+						_Output.Write ("			Out = null;\n{0}", _Indent);
+						_Output.Write ("\n{0}", _Indent);
+						_Output.Write ("			switch (token) {{\n{0}", _Indent);
+						foreach  (_Choice Entry in Protocol.Entries) {
+							switch (Entry._Tag ()) {
+								case ProtoStructType.Message: {
+								  Message Message = (Message) Entry; 
+								
+								 DeserializeCase (Message.Id,Message.ID);
+								break; }
+								case ProtoStructType.Structure: {
+								  Structure Structure = (Structure) Entry; 
+								
+								 DeserializeCase (Structure.Id,Structure.ID);
 							break; }
-							case ProtoStructType.Structure: {
-							  Structure Structure = (Structure) Entry; 
-							
-							 DeserializeCase (Structure.Id,Structure.ID);
-						break; }
+								}
 							}
+						_Output.Write ("				default : {{\n{0}", _Indent);
+						_Output.Write ("					throw new Exception (\"Not supported\");\n{0}", _Indent);
+						_Output.Write ("					}}\n{0}", _Indent);
+						_Output.Write ("				}}	\n{0}", _Indent);
+						_Output.Write ("			JSONReader.EndObject ();\n{0}", _Indent);
 						}
-					_Output.Write ("				default : {{\n{0}", _Indent);
-					_Output.Write ("					throw new Exception (\"Not supported\");\n{0}", _Indent);
-					_Output.Write ("					}}\n{0}", _Indent);
-					_Output.Write ("				}}	\n{0}", _Indent);
-					_Output.Write ("			JSONReader.EndObject ();\n{0}", _Indent);
 					_Output.Write ("            }}\n{0}", _Indent);
 					_Output.Write ("		}}\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
@@ -525,14 +530,28 @@ namespace Goedel.Tool.ProtoGen {
 				_Output.Write ("public partial class {1}{2} : {3} {{\n{0}", _Indent, Id, TTT, Inherits);
 				}
 			DeclareMembers ((Entries));
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("        /// <summary>\n{0}", _Indent);
-			_Output.Write ("        /// Tag identifying this class.\n{0}", _Indent);
+			_Output.Write ("		\n{0}", _Indent);
+			_Output.Write ("		/// <summary>\n{0}", _Indent);
+			_Output.Write ("        /// Tag identifying this class\n{0}", _Indent);
 			_Output.Write ("        /// </summary>\n{0}", _Indent);
-			_Output.Write ("        /// <returns>The tag</returns>\n{0}", _Indent);
-			_Output.Write ("		public override string Tag () {{\n{0}", _Indent);
-			_Output.Write ("			return \"{1}\";\n{0}", _Indent, Id);
+			_Output.Write ("		public override string _Tag {{ get; }} = \"{1}\";\n{0}", _Indent, Id);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("		/// <summary>\n{0}", _Indent);
+			if (  (IsAbstract (Entries)) ) {
+				_Output.Write ("        /// Factory method. Throws exception as this is an abstract class.\n{0}", _Indent);
+				} else {
+				_Output.Write ("        /// Factory method\n{0}", _Indent);
+				}
+			_Output.Write ("        /// </summary>\n{0}", _Indent);
+			_Output.Write ("        /// <returns>Object of this type</returns>\n{0}", _Indent);
+			_Output.Write ("		public static new JSONObject _Factory () {{\n{0}", _Indent);
+			if (  (IsAbstract (Entries)) ) {
+				_Output.Write ("			throw new CannotCreateAbstract();\n{0}", _Indent);
+				} else {
+				_Output.Write ("			return new {1}();\n{0}", _Indent, Id);
+				}
 			_Output.Write ("			}}\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			if (  (OldConstructors) ) {
@@ -719,26 +738,30 @@ namespace Goedel.Tool.ProtoGen {
 			_Output.Write ("        /// </summary>\n{0}", _Indent);
 			_Output.Write ("        /// <param name=\"JSONReader\">The input stream</param>\n{0}", _Indent);
 			_Output.Write ("        /// <returns>The created object.</returns>		\n{0}", _Indent);
-			_Output.Write ("        public static new {1}  FromTagged (JSONReader JSONReader) {{\n{0}", _Indent, Id);
-			_Output.Write ("			{1} Out = null;\n{0}", _Indent, Id);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("			JSONReader.StartObject ();\n{0}", _Indent);
-			_Output.Write ("            if (JSONReader.EOR) {{\n{0}", _Indent);
-			_Output.Write ("                return null;\n{0}", _Indent);
-			_Output.Write ("                }}\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("			string token = JSONReader.ReadToken ();\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("			switch (token) {{\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			 MapInheritors (Id, STag);
-			_Output.Write ("				default : {{\n{0}", _Indent);
-			_Output.Write ("                    break;\n{0}", _Indent);
-			_Output.Write ("					}}\n{0}", _Indent);
-			_Output.Write ("				}}\n{0}", _Indent);
-			_Output.Write ("			JSONReader.EndObject ();\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("			return Out;\n{0}", _Indent);
+			_Output.Write ("        public static new {1} FromTagged (JSONReader JSONReader) {{\n{0}", _Indent, Id);
+			_Output.Write ("			var Out = JSONReader.ReadTaggedObject (_TagDictionary);\n{0}", _Indent);
+			_Output.Write ("			return Out as {1};\n{0}", _Indent, Id);
+			if (  (OldConstructors) ) {
+				_Output.Write ("			{1} Out = null;\n{0}", _Indent, Id);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("			JSONReader.StartObject ();\n{0}", _Indent);
+				_Output.Write ("            if (JSONReader.EOR) {{\n{0}", _Indent);
+				_Output.Write ("                return null;\n{0}", _Indent);
+				_Output.Write ("                }}\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("			string token = JSONReader.ReadToken ();\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("			switch (token) {{\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 MapInheritors (Id, STag);
+				_Output.Write ("				default : {{\n{0}", _Indent);
+				_Output.Write ("                    break;\n{0}", _Indent);
+				_Output.Write ("					}}\n{0}", _Indent);
+				_Output.Write ("				}}\n{0}", _Indent);
+				_Output.Write ("			JSONReader.EndObject ();\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("			return Out;\n{0}", _Indent);
+				}
 			_Output.Write ("			}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -1058,6 +1081,7 @@ namespace Goedel.Tool.ProtoGen {
 				_Output.Write ("					Out = null;\n{0}", _Indent);
 				_Output.Write ("					throw new Exception (\"Can't create abstract type\");\n{0}", _Indent);
 				} else {
+				_Output.Write ("					// Out = {1}.Factory ();\n{0}", _Indent, Id);
 				_Output.Write ("					Out = new {1} ();\n{0}", _Indent, Id);
 				_Output.Write ("					Out.Deserialize (JSONReader);\n{0}", _Indent);
 				_Output.Write ("					break;\n{0}", _Indent);
@@ -1078,7 +1102,8 @@ namespace Goedel.Tool.ProtoGen {
 				_Output.Write ("					Out = null;\n{0}", _Indent);
 				_Output.Write ("					throw new Exception (\"Can't create abstract type\");\n{0}", _Indent);
 				} else {
-				_Output.Write ("					Out = new {1} ();\n{0}", _Indent, Id);
+				_Output.Write ("					Out = new {1} (); \n{0}", _Indent, Id);
+				_Output.Write ("					// Out = {1}.Factory ();\n{0}", _Indent, Id);
 				_Output.Write ("					Out.Deserialize (JSONReader);\n{0}", _Indent);
 				_Output.Write ("					break;\n{0}", _Indent);
 				}

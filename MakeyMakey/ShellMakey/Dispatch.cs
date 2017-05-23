@@ -3,7 +3,7 @@ using System.IO;
 
 using System.Collections.Generic;
 using Goedel.IO;
-using Goedel.Registry;
+using Goedel.Command;
 using Goedel.Tool.Makey;
 
 namespace Goedel.Shell.Makey {
@@ -24,7 +24,7 @@ namespace Goedel.Shell.Makey {
                 Outputfile = Path.GetFileNameWithoutExtension(Inputfile) +
                     "." + Options.OutputFile.Extension;
                 }
-            if (Options.Lazy.IsSet & FileTools.UpToDate(Inputfile, Outputfile)) {
+            if (Options.Lazy.Value & FileTools.UpToDate(Inputfile, Outputfile)) {
                 return;
                 }
 

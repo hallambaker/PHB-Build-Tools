@@ -35,3 +35,32 @@ Namespace Goedel.Registry
 			Console "No command specified"
 			Description
 				|No command specified
+
+	Exception SchemaParse
+		Console "The schema could not be parsed"		
+
+		Exception NotFoundReserved
+			Object ExceptionData "Expected reserved word, token {0} was not found"
+				String
+
+		Exception InternalError
+			Console "An internal parser error occurred"
+
+
+		Exception InvalidToken
+			Console "An invalid token was encountered"
+
+		Exception ExpectedStart
+			Console "Start token expected"
+
+		Exception ExpectedClass
+			Console "Parser Error Expected [Class]"
+
+		Exception Expected
+			Console "Parser Error Expected [Class]"
+
+		Exception TooManyClose
+			Console "Too Many Closing Braces"
+
+		Exception UnreachableCode
+			Console "Unreachable code reached"

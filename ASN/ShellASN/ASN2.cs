@@ -2,160 +2,103 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Goedel.Command;
 using Goedel.Registry;
+using Goedel.Utilities;
 
 namespace Goedel.Shell.ASN2 {
     public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 
-		static char UsageFlag;
+
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
+
+		
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Dispatch"></param>
+        /// <param name="args"></param>
+        /// <param name="index"></param>
+        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+            Brief();
+            }
+
+        public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
+            Identifier = "help",
+            HandleDelegate = Brief,
+            Entries = new List<DescribeEntry>() { }
+            };
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Dispatch"></param>
+        /// <param name="args"></param>
+        /// <param name="index"></param>
+        public static new void About (DispatchShell Dispatch, string[] args, int index) {
+            FileTools.About();
+            }
+
+        public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
+            Identifier = "about",
+            HandleDelegate = About,
+            Entries = new List<DescribeEntry>() { }
+            };
 
         static bool IsFlag(char c) {
             return (c == UnixFlag) | (c == WindowsFlag) ;
             }
+
 
         static CommandLineInterpreter () {
             System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 
             if (OperatingSystem.Platform == PlatformID.Unix |
                     OperatingSystem.Platform == PlatformID.MacOSX) {
-                UsageFlag = UnixFlag;
+                FlagIndicator = UnixFlag;
                 }
             else {
-                UsageFlag = WindowsFlag;
+                FlagIndicator = WindowsFlag;
                 }
+
+				DefaultCommand = _Generate._DescribeCommand;
+				Description = "ASN2 Encoder/Decoder";
+
+			Entries = new  SortedDictionary<string, DescribeCommand> () {
+				{"about", DescribeAbout },
+				{"in", _Generate._DescribeCommand },
+				{"help", DescribeHelp }
+				}; // End Entries
+
+
+
             }
 
         static void Main(string[] args) {
 			var CLI = new CommandLineInterpreter ();
 			CLI.MainMethod (args);
 			}
-        public void MainMethod(string[] args) {
 
+        public void MainMethod(string[] Args) {
 			ASN2Shell Dispatch = new ASN2Shell ();
 
-
-				if (args.Length == 0) {
-					throw new ParserException ("No command specified");
-					}
-
-                if (IsFlag(args[0][0])) {
+			MainMethod (Dispatch, Args);
+			}
 
 
-                    switch (args[0].Substring(1).ToLower()) {
-						case "asn2 encoder/decoder" : {
-							Usage ();
-							break;
-							}
-						case "about" : {
-							FileTools.About ();
-							break;
-							}
-						case "in" : {
-							Handle_Generate (Dispatch, args, 1);
-							break;
-							}
-						default: {
-							throw new ParserException("Unknown Command: " + args[0]);
-                            }
-                        }
-                    }
-                else {
-					Handle_Generate (Dispatch, args, 0);
-                    }
+        public void MainMethod(ASN2Shell Dispatch, string[] Args) {
+			Dispatcher (Entries, Dispatch, Args, 0);
             } // Main
 
 
-		private enum TagType_Generate {
-			Lazy,
-			ASN2,
-			GenerateCS,
-			}
 
-		private static void Handle_Generate (
-					ASN2Shell Dispatch, string[] args, int index) {
+		public static void Handle_Generate (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			ASN2Shell Dispatch =	DispatchIn as ASN2Shell;
 			Generate		Options = new Generate ();
-
-			var Registry = new Goedel.Registry.Registry ();
-
-			Options.Lazy.Register ("lazy", Registry, (int) TagType_Generate.Lazy);
-			Options.ASN2.Register ("asn2", Registry, (int) TagType_Generate.ASN2);
-			Options.GenerateCS.Register ("cs", Registry, (int) TagType_Generate.GenerateCS);
-
-			// looking for parameter Param.Class}
-			if (index < args.Length && !IsFlag (args [index][0] )) {
-				// Have got the parameter, call the parameter value method
-				Options.ASN2.Parameter (args [index]);
-				index++;
-				}
-
-#pragma warning disable 162
-			for (int i = index; i< args.Length; i++) {
-				if 	(!IsFlag (args [i][0] )) {
-					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
-				string Rest = args [i].Substring (1);
-
-				TagType_Generate TagType = (TagType_Generate) Registry.Find (Rest);
-
-				// here have the cases for what to do with it.
-
-				switch (TagType) {
-					case TagType_Generate.Lazy : {
-						int OptionParams = Options.Lazy.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.Lazy.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Generate.GenerateCS : {
-						int OptionParams = Options.GenerateCS.Tag (Rest);
-			
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.GenerateCS.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					default : throw new System.Exception ("Internal error");
-					}
-				}
-
-#pragma warning restore 162
+			ProcessOptions (Args, Index, Options);
 			Dispatch.Generate (Options);
-
-			}
-
-		private static void Usage () {
-
-				Console.WriteLine ("ASN2 Encoder/Decoder");
-				Console.WriteLine ("");
-
-				{
-#pragma warning disable 219
-					Generate		Dummy = new Generate ();
-#pragma warning restore 219
-
-					Console.Write ("{0}in ", UsageFlag);
-					Console.WriteLine ();
-
-				}
-
-			} // Usage 
-
-		public class ParserException : System.Exception {
-
-			public ParserException(string message)
-				: base(message) {
-
-				Console.WriteLine (message);
-				}
 			}
 
 
@@ -167,16 +110,67 @@ namespace Goedel.Shell.ASN2 {
 	// with partial virtual that can be extended as required.
 
 	// All subclasses inherit from the abstract classes Goedel.Regisrty.Dispatch 
-	// and Goedel.Registry.Type
+	// and Goedel.Command.Type
 
 
+    public class _Generate : Goedel.Command.Dispatch  {
 
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Flag (),
+			new ExistingFile (),
+			new NewFile ()			} ;
 
-    public class _Generate : Goedel.Registry.Dispatch {
-		public Flag							Lazy = new Flag ("false");
-		public ExistingFile					ASN2 = new ExistingFile ("asn2");
-		public NewFile						GenerateCS = new NewFile ("cs");
+		/// <summary>Field accessor for parameter [lazy]</summary>
+		public virtual Flag Lazy {
+			get => _Data[0] as Flag;
+			set => _Data[0]  = value;
+			}
 
+		public virtual string _Lazy {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile ASN2 {
+			get => _Data[1] as ExistingFile;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _ASN2 {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [cs]</summary>
+		public virtual NewFile GenerateCS {
+			get => _Data[2] as NewFile;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _GenerateCS {
+			set => _Data[2].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "in",
+			Brief =  "<Unspecified>",
+			HandleDelegate =  CommandLineInterpreter.Handle_Generate,
+			Lazy =  true,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "ASN2", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "GenerateCS", 
+					Default = null, // null if null
+					Brief = "Generate C# code",
+					Index = 2,
+					Key = "cs"
+					}
+				}
+			};
 
 		}
 
@@ -184,70 +178,31 @@ namespace Goedel.Shell.ASN2 {
         } // class Generate
 
 
-
-    // Parameter type NewFile
-    public abstract class _NewFile : Goedel.Registry._File {
-        public _NewFile() {
-            }
-        public _NewFile(string Value) {
-			Default (Value);
-            } 
-
-
-
-        } // _NewFile
-
     public partial class  NewFile : _NewFile {
-        public NewFile() {
-            } 
-        public NewFile(string Value) {
-			Default (Value);
-            } 
+        public static NewFile Factory (string Value) {
+            var Result = new NewFile();
+            Result.Default(Value);
+            return Result;
+            }
         } // NewFile
 
 
-    // Parameter type ExistingFile
-    public abstract class _ExistingFile : Goedel.Registry._File {
-        public _ExistingFile() {
-            }
-        public _ExistingFile(string Value) {
-			Default (Value);
-            } 
-
-
-
-        } // _ExistingFile
-
     public partial class  ExistingFile : _ExistingFile {
-        public ExistingFile() {
-            } 
-        public ExistingFile(string Value) {
-			Default (Value);
-            } 
+        public static ExistingFile Factory (string Value) {
+            var Result = new ExistingFile();
+            Result.Default(Value);
+            return Result;
+            }
         } // ExistingFile
 
 
-    // Parameter type Flag
-    public abstract class _Flag : Goedel.Registry._Flag {
-        public _Flag() {
-            }
-        public _Flag(string Value) {
-			Default (Value);
-            } 
-
-
-
-
-        } // _Flag
-
     public partial class  Flag : _Flag {
-        public Flag() {
-            } 
-        public Flag(string Value) {
-			Default (Value);
-            } 
+        public static Flag Factory (string Value) {
+            var Result = new Flag();
+            Result.Default(Value);
+            return Result;
+            }
         } // Flag
-
 
 
 
@@ -256,20 +211,15 @@ namespace Goedel.Shell.ASN2 {
 
 	// Eventually there will be a compiler option to suppress the debugging
 	// to eliminate the redundant code
-    public class _ASN2Shell {
+    public class _ASN2Shell : global::Goedel.Command.DispatchShell {
 
-
-		public virtual void Generate ( Generate Options
-				) {
-
+		public virtual void Generate ( Generate Options) {
 			string inputfile = null;
 
 			inputfile = Options.ASN2.Text;
 
-            Goedel.Tool.ASN.ASN2 Parse = new Goedel.Tool.ASN.ASN2();
-
-
-			Parse.Options = Options;
+            Goedel.Tool.ASN.ASN2 Parse = new Goedel.Tool.ASN.ASN2() {
+				};
         
 			
 			using (Stream infile =
@@ -285,7 +235,7 @@ namespace Goedel.Shell.ASN2 {
 			if (Options.GenerateCS.Text != null) {
 				string outputfile = FileTools.DefaultOutput (inputfile, Options.GenerateCS.Text, 
 					Options.GenerateCS.Extension);
-				if (Options.Lazy.IsSet & FileTools.UpToDate (inputfile, outputfile)) {
+				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
 				using (Stream outputStream =
@@ -299,6 +249,7 @@ namespace Goedel.Shell.ASN2 {
 					}
 				}
 			}
+
 
         } // class _ASN2Shell
 

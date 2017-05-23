@@ -64,20 +64,12 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command.cs" />
-    <Compile Include="CommandLex.cs">
-      <DependentUpon>CommandLex.fsm</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="CommandLexPlus.cs" />
     <Compile Include="Convenience.cs" />
     <Compile Include="Exceptions.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.exceptional</DependentUpon>
     </Compile>
-    <Compile Include="FileTools.cs" />
     <Compile Include="Headers.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -91,10 +83,6 @@
     <Compile Include="XMLEscape.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CommandLex.fsm">
-      <Generator>fsrcs</Generator>
-      <LastGenOutput>CommandLex.cs</LastGenOutput>
-    </None>
     <None Include="Exceptions.exceptional">
       <Generator>exceptional</Generator>
       <LastGenOutput>Exceptions.cs</LastGenOutput>

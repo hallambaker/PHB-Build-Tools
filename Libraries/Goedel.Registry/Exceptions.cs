@@ -323,4 +323,448 @@ namespace Goedel.Registry {
         }
 
 
+    /// <summary>
+    /// </summary>
+    public class SchemaParse : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "The schema could not be parsed"
+        /// </summary>		
+		public SchemaParse () : base ("The schema could not be parsed") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The schema could not be parsed"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public SchemaParse (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public SchemaParse (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new SchemaParse(Reason as string);
+				}
+			else {
+				return new SchemaParse();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class NotFoundReserved : SchemaParse {
+
+		/// <summary>
+        /// Construct instance for exception "An error occurred"
+        /// </summary>		
+		public NotFoundReserved () : base ("An error occurred") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "An error occurred"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public NotFoundReserved (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public NotFoundReserved (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+		/// <summary>
+        /// Construct instance for exception using a userdata parameter of
+		/// type ExceptionData and the format string "Expected reserved word, token {0} was not found"
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		public NotFoundReserved (ExceptionData Object) : 
+				base (global::System.String.Format ("Expected reserved word, token {0} was not found",
+					Object.String					)) {
+			UserData = Object;
+			}
+
+		/// <summary>
+        /// Construct instance for exception using a userdata parameter of
+		/// type ExceptionData and the format string "Expected reserved word, token {0} was not found"
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public NotFoundReserved (ExceptionData Object, System.Exception Inner) : 
+				base (global::System.String.Format ("Expected reserved word, token {0} was not found",
+					Object.String					), Inner) {
+			UserData = Object;
+			}
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new NotFoundReserved(Reason as string);
+				}
+			else if (Reason as ExceptionData != null) {
+				return new NotFoundReserved(Reason as ExceptionData);
+				}
+			else {
+				return new NotFoundReserved();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class InternalError : SchemaParse {
+
+		/// <summary>
+        /// Construct instance for exception "An internal parser error occurred"
+        /// </summary>		
+		public InternalError () : base ("An internal parser error occurred") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "An internal parser error occurred"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public InternalError (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public InternalError (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new InternalError(Reason as string);
+				}
+			else {
+				return new InternalError();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class InvalidToken : SchemaParse {
+
+		/// <summary>
+        /// Construct instance for exception "An invalid token was encountered"
+        /// </summary>		
+		public InvalidToken () : base ("An invalid token was encountered") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "An invalid token was encountered"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public InvalidToken (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public InvalidToken (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new InvalidToken(Reason as string);
+				}
+			else {
+				return new InvalidToken();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class ExpectedStart : SchemaParse {
+
+		/// <summary>
+        /// Construct instance for exception "Start token expected"
+        /// </summary>		
+		public ExpectedStart () : base ("Start token expected") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Start token expected"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public ExpectedStart (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public ExpectedStart (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new ExpectedStart(Reason as string);
+				}
+			else {
+				return new ExpectedStart();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class ExpectedClass : SchemaParse {
+
+		/// <summary>
+        /// Construct instance for exception "Parser Error Expected [Class]"
+        /// </summary>		
+		public ExpectedClass () : base ("Parser Error Expected [Class]") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Parser Error Expected [Class]"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public ExpectedClass (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public ExpectedClass (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new ExpectedClass(Reason as string);
+				}
+			else {
+				return new ExpectedClass();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class Expected : SchemaParse {
+
+		/// <summary>
+        /// Construct instance for exception "Parser Error Expected [Class]"
+        /// </summary>		
+		public Expected () : base ("Parser Error Expected [Class]") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Parser Error Expected [Class]"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public Expected (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public Expected (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new Expected(Reason as string);
+				}
+			else {
+				return new Expected();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class TooManyClose : SchemaParse {
+
+		/// <summary>
+        /// Construct instance for exception "Too Many Closing Braces"
+        /// </summary>		
+		public TooManyClose () : base ("Too Many Closing Braces") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Too Many Closing Braces"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public TooManyClose (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public TooManyClose (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new TooManyClose(Reason as string);
+				}
+			else {
+				return new TooManyClose();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class UnreachableCode : SchemaParse {
+
+		/// <summary>
+        /// Construct instance for exception "Unreachable code reached"
+        /// </summary>		
+		public UnreachableCode () : base ("Unreachable code reached") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Unreachable code reached"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public UnreachableCode (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public UnreachableCode (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new UnreachableCode(Reason as string);
+				}
+			else {
+				return new UnreachableCode();
+				}
+            }
+        }
+
+
 	}

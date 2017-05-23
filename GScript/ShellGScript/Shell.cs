@@ -24,29 +24,25 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using Goedel.Registry;
+using Goedel.Command;
 using Goedel.Tool.Script;
 
 namespace GoedelShell {
-    public partial class ID {
-        public override void Default(string TextIn) {
-            if (Text == null) {
-                Text = TextIn;
-                }
-            }
-        }
+    //public partial class ID {
+    //    public override void Default(string TextIn) {
+    //        if (Text == null) {
+    //            Text = TextIn;
+    //            }
+    //        }
+    //    }
 
     public partial class GoedelShell {
 
-        private string DefaultFile(NewFile Entry, string Default) {
+        private string DefaultFile (NewFile Entry, string Default) {
             if (Entry.Text != null) {
                 return Entry.Text;
                 }
-            if (Entry.TagText != null) {
-                // we have the flag
-
-                return Path.GetFileNameWithoutExtension(Default) + "." + Entry.Extension;
-                }
-            return null;
+            return Path.GetFileNameWithoutExtension(Default) + "." + Entry.Extension;
             }
 
         public override void About(About Options) {
@@ -61,7 +57,7 @@ namespace GoedelShell {
                 outputfile = Path.GetFileNameWithoutExtension(inputfile) +
                     "." + Options.OutputFile.Extension;
                 }
-            if (Options.Lazy.IsSet & FileTools.UpToDate(inputfile, outputfile)) {
+            if (Options.Lazy.Value & FileTools.UpToDate(inputfile, outputfile)) {
                 return;
                 }
 
@@ -85,7 +81,7 @@ namespace GoedelShell {
             string csfile = DefaultFile(Options.CS, inputfile);
 
 
-            if (Options.Lazy.IsSet & FileTools.UpToDate(inputfile, csfile)) {
+            if (Options.Lazy.Value & FileTools.UpToDate(inputfile, csfile)) {
                 return;
                 }
 
@@ -98,7 +94,7 @@ namespace GoedelShell {
                         new FileStream(csfile, FileMode.Create, FileAccess.Write)) {
                         using (TextWriter outputText = new StreamWriter(outputStream)) {
                             DoWrap.CS(inText, outputText,
-                                Options.Namespace.Text, Options.Class.Text, Options.Variable.Text);
+                                Options.Namespace.Value, Options.Class.Text, Options.Variable.Text);
                             }
                         }
                     }

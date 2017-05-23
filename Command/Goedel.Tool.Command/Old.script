@@ -1,0 +1,141 @@
+﻿
+
+
+
+			var Registry = new Goedel.Registry.Registry ();
+
+#foreach (_Choice CommandEntry in Command.Entries)
+#switchcast CommandParseType CommandEntry
+#casecast Parameter Param
+			Options.#{Param.Name}.Register ("#{Param.Text}", Registry, (int) TagType_#{Command.Id}.#{Param.Name});
+#casecast Parser Param
+			Options.#{Param.Class}.Register ("#{Param.Extension}", Registry, (int) TagType_#{Command.Id}.#{Param.Class});
+#casecast Option Param
+			Options.#{Param.Name}.Register ("#{Param.Command}", Registry, (int) TagType_#{Command.Id}.#{Param.Name});
+#casecast Lazy Param
+			Options.#{Param.Name}.Register ("#{Param.Tag}", Registry, (int) TagType_#{Command.Id}.#{Param.Name});
+#casecast Script Param
+			Options.#{Param.Id}.Register ("#{Param.Extension}", Registry, (int) TagType_#{Command.Id}.#{Param.Id});
+#end switchcast
+#end foreach
+
+#foreach (_Choice CommandEntry in Command.Entries)
+#switchcast CommandParseType CommandEntry
+#casecast Parameter Param
+			// looking for parameter #Param.Name}
+			if (index < args.Length && !IsFlag (args [index][0] )) {
+				// Have got the parameter, call the parameter value method
+				Options.#{Param.Name}.Parameter (args [index]);
+				index++;
+				}
+#casecast Parser Param
+			// looking for parameter #Param.Class}
+			if (index < args.Length && !IsFlag (args [index][0] )) {
+				// Have got the parameter, call the parameter value method
+				Options.#{Param.Class}.Parameter (args [index]);
+				index++;
+				}
+#end switchcast
+#end foreach
+
+##pragma warning disable 162
+			for (int i = index; i< args.Length; i++) {
+				if 	(!IsFlag (args [i][0] )) {
+					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
+				string Rest = args [i].Substring (1);
+
+				TagType_#{Command.Id} TagType = (TagType_#{Command.Id}) Registry.Find (Rest);
+
+				// here have the cases for what to do with it.
+
+				switch (TagType) {
+#foreach (_Choice CommandEntry in Command.Entries)
+#switchcast CommandParseType CommandEntry
+#casecast Option Option
+					case TagType_#{Command.Id}.#{Option.Name} : {
+						int OptionParams = Options.#{Option.Name}.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.#{Option.Name}.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+#casecast Lazy Lazy
+					case TagType_#{Command.Id}.#{Lazy.Name} : {
+						int OptionParams = Options.#{Lazy.Name}.Tag (Rest);
+						
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.#{Lazy.Name}.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+#casecast Script Script
+					case TagType_#{Command.Id}.#{Script.Id} : {
+						int OptionParams = Options.#{Script.Id}.Tag (Rest);
+			
+						if (OptionParams>0 && ((i+1) < args.Length)) {
+							if 	(!IsFlag (args [i+1][0] )) {
+								i++;								
+								Options.#{Script.Id}.Parameter (args[i]);
+								}
+							}
+						break;
+						}
+#end switchcast
+#end foreach
+					default : throw new System.Exception ("Internal error");
+					}
+				}
+
+##pragma warning restore 162
+
+
+
+
+++++++++++++++++++++++++++++++
+
+
+
+#foreach (_Choice OptionC in Cast.Entries)
+#switchcast CommandParseType OptionC
+#casecast Parser Parser
+		public ExistingFile					#{Parser.Class}{get; set;}  = ExistingFile.Factory ("#{Parser.Extension}");
+#casecast Generator null
+#casecast Script Script
+		public NewFile						#{Script.Id}{get; set;}  = NewFile.Factory ("#{Script.Extension}");
+#casecast Lazy Lazy
+		public Flag							#{Lazy.Name}{get; set;}  = Flag.Factory ("false");
+#casecast Parameter Parameter
+#% string DefaultParameter = null;
+#foreach (_Choice Modifier in Parameter.Modifier)
+#switchcast CommandParseType Modifier
+#casecast Default Default
+#% DefaultParameter = Default.Text;
+#end switchcast
+#end foreach
+#if DefaultParameter == null
+		public #{Parameter.Type}			#{Parameter.Name}{get; set;}  = new #{Parameter.Type} ();
+#else
+		public #{Parameter.Type}			#{Parameter.Name}{get; set;}  = #{Parameter.Type}.Factory ("#{DefaultParameter}");
+#end if
+#casecast Option Option
+#% string DefaultOption = null;
+#foreach (_Choice Modifier in Option.Modifier)
+#switchcast CommandParseType Modifier
+#casecast Default Default
+#% DefaultOption = Default.Text;
+#end switchcast
+#end foreach
+#if DefaultOption == null
+		public #{Option.Type}			#{Option.Name}{get; set;} = new  #{Option.Type} ();
+#else
+		public #{Option.Type}			#{Option.Name}{get; set;}  = #{Option.Type}.Factory ("#{DefaultOption}");
+#end if
+#end switchcast
+#end foreach

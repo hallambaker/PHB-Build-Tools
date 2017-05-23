@@ -328,7 +328,6 @@ namespace #{Class.Namespace} {
 			    #{Option.Name} = Options.#{Option.Name}.Value,
 #end switchcast
 #end foreach
-				NewOptions = Options
 				};
         
 			
@@ -352,7 +351,7 @@ namespace #{Class.Namespace} {
 				string outputfile = FileTools.DefaultOutput (inputfile, Options.#{Script.Id}.Text, 
 					Options.#{Script.Id}.Extension);
 #if Lazy != null
-				if (Options.#{Lazy}.IsSet & FileTools.UpToDate (inputfile, outputfile)) {
+				if (Options.#{Lazy}.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
 #end if	
@@ -459,8 +458,8 @@ namespace #{Class.Namespace} {
 				new DescribeEntryParameter () {
 #end if
 					Identifier = "#{EntryItem.ID}", 
-					Default = "#{EntryItem.Default}",
-					Brief = "#{EntryItem.Brief}",
+					Default = #{EntryItem.Default.QuotedNull()}, // null if null
+					Brief = #{EntryItem.Brief.Quoted()},
 					Index = #{EntryItem.Index},
 					Key = "#{EntryItem.Tag.ToLower()}"
 					}#!

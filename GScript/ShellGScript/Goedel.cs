@@ -2,351 +2,104 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Goedel.Registry;
+using Goedel.Command;
+using Goedel.Utilities;
 
 namespace GoedelShell {
     public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 
-		static char UsageFlag;
+
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
+
+		
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Dispatch"></param>
+        /// <param name="args"></param>
+        /// <param name="index"></param>
+        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+            Brief();
+            }
+
+        public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
+            Identifier = "help",
+            HandleDelegate = Brief,
+            Entries = new List<DescribeEntry>() { }
+            };
+
 
         static bool IsFlag(char c) {
             return (c == UnixFlag) | (c == WindowsFlag) ;
             }
+
 
         static CommandLineInterpreter () {
             System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 
             if (OperatingSystem.Platform == PlatformID.Unix |
                     OperatingSystem.Platform == PlatformID.MacOSX) {
-                UsageFlag = UnixFlag;
+                FlagIndicator = UnixFlag;
                 }
             else {
-                UsageFlag = WindowsFlag;
+                FlagIndicator = WindowsFlag;
                 }
+
+				DefaultCommand = _Generate._DescribeCommand;
+				Description = "Goedel meta-code generation tool";
+
+			Entries = new  SortedDictionary<string, DescribeCommand> () {
+				{"in", _Generate._DescribeCommand },
+				{"wrap", _Wrap._DescribeCommand },
+				{"about", _About._DescribeCommand },
+				{"help", DescribeHelp }
+				}; // End Entries
+
+
+
             }
 
         static void Main(string[] args) {
 			var CLI = new CommandLineInterpreter ();
 			CLI.MainMethod (args);
 			}
-        public void MainMethod(string[] args) {
 
+        public void MainMethod(string[] Args) {
 			GoedelShell Dispatch = new GoedelShell ();
 
-
-				if (args.Length == 0) {
-					throw new ParserException ("No command specified");
-					}
-
-                if (IsFlag(args[0][0])) {
+			MainMethod (Dispatch, Args);
+			}
 
 
-                    switch (args[0].Substring(1).ToLower()) {
-						case "goedel meta-code generation tool" : {
-							Usage ();
-							break;
-							}
-						case "in" : {
-							Handle_Generate (Dispatch, args, 1);
-							break;
-							}
-						case "wrap" : {
-							Handle_Wrap (Dispatch, args, 1);
-							break;
-							}
-						case "about" : {
-							Handle_About (Dispatch, args, 1);
-							break;
-							}
-						default: {
-							throw new ParserException("Unknown Command: " + args[0]);
-                            }
-                        }
-                    }
-                else {
-					Handle_Generate (Dispatch, args, 0);
-                    }
+        public void MainMethod(GoedelShell Dispatch, string[] Args) {
+			Dispatcher (Entries, Dispatch, Args, 0);
             } // Main
 
 
-		private enum TagType_Generate {
-			InputFile,
-			OutputFile,
-			CommentLine,
-			Directive,
-			Lazy,
-			}
 
-		private static void Handle_Generate (
-					GoedelShell Dispatch, string[] args, int index) {
+		public static void Handle_Generate (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			GoedelShell Dispatch =	DispatchIn as GoedelShell;
 			Generate		Options = new Generate ();
-
-			var Registry = new Goedel.Registry.Registry ();
-
-			Options.InputFile.Register ("input", Registry, (int) TagType_Generate.InputFile);
-			Options.OutputFile.Register ("output", Registry, (int) TagType_Generate.OutputFile);
-			Options.CommentLine.Register ("line", Registry, (int) TagType_Generate.CommentLine);
-			Options.Directive.Register ("link", Registry, (int) TagType_Generate.Directive);
-			Options.Lazy.Register ("lazy", Registry, (int) TagType_Generate.Lazy);
-
-			// looking for parameter Param.Name}
-			if (index < args.Length && !IsFlag (args [index][0] )) {
-				// Have got the parameter, call the parameter value method
-				Options.InputFile.Parameter (args [index]);
-				index++;
-				}
-			// looking for parameter Param.Name}
-			if (index < args.Length && !IsFlag (args [index][0] )) {
-				// Have got the parameter, call the parameter value method
-				Options.OutputFile.Parameter (args [index]);
-				index++;
-				}
-
-#pragma warning disable 162
-			for (int i = index; i< args.Length; i++) {
-				if 	(!IsFlag (args [i][0] )) {
-					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
-				string Rest = args [i].Substring (1);
-
-				TagType_Generate TagType = (TagType_Generate) Registry.Find (Rest);
-
-				// here have the cases for what to do with it.
-
-				switch (TagType) {
-					case TagType_Generate.CommentLine : {
-						int OptionParams = Options.CommentLine.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.CommentLine.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Generate.Directive : {
-						int OptionParams = Options.Directive.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.Directive.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Generate.Lazy : {
-						int OptionParams = Options.Lazy.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.Lazy.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					default : throw new System.Exception ("Internal error");
-					}
-				}
-
-#pragma warning restore 162
+			ProcessOptions (Args, Index, Options);
 			Dispatch.Generate (Options);
-
-			}
-		private enum TagType_Wrap {
-			InputFile,
-			CS,
-			Namespace,
-			Class,
-			Variable,
-			Lazy,
 			}
 
-		private static void Handle_Wrap (
-					GoedelShell Dispatch, string[] args, int index) {
+		public static void Handle_Wrap (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			GoedelShell Dispatch =	DispatchIn as GoedelShell;
 			Wrap		Options = new Wrap ();
-
-			var Registry = new Goedel.Registry.Registry ();
-
-			Options.InputFile.Register ("input", Registry, (int) TagType_Wrap.InputFile);
-			Options.CS.Register ("cs", Registry, (int) TagType_Wrap.CS);
-			Options.Namespace.Register ("namespace", Registry, (int) TagType_Wrap.Namespace);
-			Options.Class.Register ("class", Registry, (int) TagType_Wrap.Class);
-			Options.Variable.Register ("variable", Registry, (int) TagType_Wrap.Variable);
-			Options.Lazy.Register ("lazy", Registry, (int) TagType_Wrap.Lazy);
-
-			// looking for parameter Param.Name}
-			if (index < args.Length && !IsFlag (args [index][0] )) {
-				// Have got the parameter, call the parameter value method
-				Options.InputFile.Parameter (args [index]);
-				index++;
-				}
-
-#pragma warning disable 162
-			for (int i = index; i< args.Length; i++) {
-				if 	(!IsFlag (args [i][0] )) {
-					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
-				string Rest = args [i].Substring (1);
-
-				TagType_Wrap TagType = (TagType_Wrap) Registry.Find (Rest);
-
-				// here have the cases for what to do with it.
-
-				switch (TagType) {
-					case TagType_Wrap.CS : {
-						int OptionParams = Options.CS.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.CS.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Wrap.Namespace : {
-						int OptionParams = Options.Namespace.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.Namespace.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Wrap.Class : {
-						int OptionParams = Options.Class.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.Class.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Wrap.Variable : {
-						int OptionParams = Options.Variable.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.Variable.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Wrap.Lazy : {
-						int OptionParams = Options.Lazy.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.Lazy.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					default : throw new System.Exception ("Internal error");
-					}
-				}
-
-#pragma warning restore 162
+			ProcessOptions (Args, Index, Options);
 			Dispatch.Wrap (Options);
-
-			}
-		private enum TagType_About {
 			}
 
-		private static void Handle_About (
-					GoedelShell Dispatch, string[] args, int index) {
+		public static void Handle_About (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			GoedelShell Dispatch =	DispatchIn as GoedelShell;
 			About		Options = new About ();
-
-			var Registry = new Goedel.Registry.Registry ();
-
-
-
-#pragma warning disable 162
-			for (int i = index; i< args.Length; i++) {
-				if 	(!IsFlag (args [i][0] )) {
-					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
-				string Rest = args [i].Substring (1);
-
-				TagType_About TagType = (TagType_About) Registry.Find (Rest);
-
-				// here have the cases for what to do with it.
-
-				switch (TagType) {
-					default : throw new System.Exception ("Internal error");
-					}
-				}
-
-#pragma warning restore 162
+			ProcessOptions (Args, Index, Options);
 			Dispatch.About (Options);
-
-			}
-
-		private static void Usage () {
-
-				Console.WriteLine ("Goedel meta-code generation tool");
-				Console.WriteLine ("");
-
-				{
-#pragma warning disable 219
-					Generate		Dummy = new Generate ();
-#pragma warning restore 219
-
-					Console.Write ("{0}in ", UsageFlag);
-					Console.Write ("[{0}] ", Dummy.InputFile.Usage (null, "input", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.OutputFile.Usage (null, "output", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.CommentLine.Usage ("line", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Directive.Usage ("link", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Lazy.Usage ("lazy", "value", UsageFlag));
-					Console.WriteLine ();
-
-				}
-
-				{
-#pragma warning disable 219
-					Wrap		Dummy = new Wrap ();
-#pragma warning restore 219
-
-					Console.Write ("{0}wrap ", UsageFlag);
-					Console.Write ("[{0}] ", Dummy.InputFile.Usage (null, "input", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.CS.Usage ("cs", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Namespace.Usage ("namespace", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Class.Usage ("class", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Variable.Usage ("variable", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Lazy.Usage ("lazy", "value", UsageFlag));
-					Console.WriteLine ();
-
-				}
-
-				{
-#pragma warning disable 219
-					About		Dummy = new About ();
-#pragma warning restore 219
-
-					Console.Write ("{0}about ", UsageFlag);
-					Console.WriteLine ();
-
-					Console.WriteLine ("    Report tool version and build date");
-
-				}
-
-			} // Usage 
-
-		public class ParserException : System.Exception {
-
-			public ParserException(string message)
-				: base(message) {
-
-				Console.WriteLine (message);
-				}
 			}
 
 
@@ -358,50 +111,250 @@ namespace GoedelShell {
 	// with partial virtual that can be extended as required.
 
 	// All subclasses inherit from the abstract classes Goedel.Regisrty.Dispatch 
-	// and Goedel.Registry.Type
+	// and Goedel.Command.Type
 
 
+    public class _Generate : Goedel.Command.Dispatch  {
 
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new ExistingFile (),
+			new NewFile (),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
 
-    public class _Generate : Goedel.Registry.Dispatch {
-		public ExistingFile			InputFile = new ExistingFile ();
-		public NewFile			OutputFile = new NewFile ("cs");
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile InputFile {
+			get => _Data[0] as ExistingFile;
+			set => _Data[0]  = value;
+			}
 
-		public Flag			CommentLine = new  Flag ();
+		public virtual string _InputFile {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile OutputFile {
+			get => _Data[1] as NewFile;
+			set => _Data[1]  = value;
+			}
 
-		public Flag			Directive = new  Flag ();
+		public virtual string _OutputFile {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [line]</summary>
+		public virtual Flag CommentLine {
+			get => _Data[2] as Flag;
+			set => _Data[2]  = value;
+			}
 
-		public Flag			Lazy = new  Flag ();
+		public virtual string _CommentLine {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [link]</summary>
+		public virtual Flag Directive {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
 
+		public virtual string _Directive {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [lazy]</summary>
+		public virtual Flag Lazy {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Lazy {
+			set => _Data[4].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "in",
+			Brief =  "<Unspecified>",
+			HandleDelegate =  CommandLineInterpreter.Handle_Generate,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "InputFile", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "OutputFile", 
+					Default = "cs", // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "CommentLine", 
+					Default = null, // null if null
+					Brief = "If set, include source in generated as comments",
+					Index = 2,
+					Key = "line"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Directive", 
+					Default = null, // null if null
+					Brief = "If set, link generated code to source",
+					Index = 3,
+					Key = "link"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Lazy", 
+					Default = null, // null if null
+					Brief = "Only generate code if source or generator have changed",
+					Index = 4,
+					Key = "lazy"
+					}
+				}
+			};
 
 		}
 
     public partial class Generate : _Generate {
         } // class Generate
 
+    public class _Wrap : Goedel.Command.Dispatch  {
 
-    public class _Wrap : Goedel.Registry.Dispatch {
-		public ExistingFile			InputFile = new ExistingFile ();
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new ExistingFile (),
+			new NewFile (),
+			new String (),
+			new String (),
+			new String (),
+			new Flag ()			} ;
 
-		public NewFile			CS = new  NewFile ("cs");
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile InputFile {
+			get => _Data[0] as ExistingFile;
+			set => _Data[0]  = value;
+			}
 
-		public ID			Namespace = new  ID ("Constants");
+		public virtual string _InputFile {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [cs]</summary>
+		public virtual NewFile CS {
+			get => _Data[1] as NewFile;
+			set => _Data[1]  = value;
+			}
 
-		public ID			Class = new  ID ("Constants");
+		public virtual string _CS {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [namespace]</summary>
+		public virtual String Namespace {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
 
-		public ID			Variable = new  ID ("Value");
+		public virtual string _Namespace {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [class]</summary>
+		public virtual String Class {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
 
-		public Flag			Lazy = new  Flag ();
+		public virtual string _Class {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [variable]</summary>
+		public virtual String Variable {
+			get => _Data[4] as String;
+			set => _Data[4]  = value;
+			}
 
+		public virtual string _Variable {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [lazy]</summary>
+		public virtual Flag Lazy {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Lazy {
+			set => _Data[5].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "wrap",
+			Brief =  "<Unspecified>",
+			HandleDelegate =  CommandLineInterpreter.Handle_Wrap,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "InputFile", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "CS", 
+					Default = "cs", // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = "cs"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Namespace", 
+					Default = "Constants", // null if null
+					Brief = "<Unspecified>",
+					Index = 2,
+					Key = "namespace"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Class", 
+					Default = "Constants", // null if null
+					Brief = "<Unspecified>",
+					Index = 3,
+					Key = "class"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Variable", 
+					Default = "Value", // null if null
+					Brief = "<Unspecified>",
+					Index = 4,
+					Key = "variable"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Lazy", 
+					Default = null, // null if null
+					Brief = "Only generate code if source or generator have changed",
+					Index = 5,
+					Key = "lazy"
+					}
+				}
+			};
 
 		}
 
     public partial class Wrap : _Wrap {
         } // class Wrap
 
+    public class _About : Goedel.Command.Dispatch  {
 
-    public class _About : Goedel.Registry.Dispatch {
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {			} ;
 
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "about",
+			Brief =  "Report tool version and build date",
+			HandleDelegate =  CommandLineInterpreter.Handle_About,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				}
+			};
 
 		}
 
@@ -409,93 +362,40 @@ namespace GoedelShell {
         } // class About
 
 
-
-    // Parameter type NewFile
-    public abstract class _NewFile : Goedel.Registry._File {
-        public _NewFile() {
-            }
-        public _NewFile(string Value) {
-			Default (Value);
-            } 
-
-
-
-        } // _NewFile
-
-    public partial class  NewFile : _NewFile {
-        public NewFile() {
-            } 
-        public NewFile(string Value) {
-			Default (Value);
-            } 
-        } // NewFile
-
-
-    // Parameter type ExistingFile
-    public abstract class _ExistingFile : Goedel.Registry._File {
-        public _ExistingFile() {
-            }
-        public _ExistingFile(string Value) {
-			Default (Value);
-            } 
-
-
-
-        } // _ExistingFile
-
     public partial class  ExistingFile : _ExistingFile {
-        public ExistingFile() {
-            } 
-        public ExistingFile(string Value) {
-			Default (Value);
-            } 
+        public static ExistingFile Factory (string Value) {
+            var Result = new ExistingFile();
+            Result.Default(Value);
+            return Result;
+            }
         } // ExistingFile
 
 
-    // Parameter type ID
-    public abstract class _ID : Goedel.Registry.Type {
-        public _ID() {
+    public partial class  NewFile : _NewFile {
+        public static NewFile Factory (string Value) {
+            var Result = new NewFile();
+            Result.Default(Value);
+            return Result;
             }
-        public _ID(string Value) {
-			Default (Value);
-            } 
+        } // NewFile
 
-		public string			Value {
-			get {return Text;}
-			}
-
-        } // _ID
-
-    public partial class  ID : _ID {
-        public ID() {
-            } 
-        public ID(string Value) {
-			Default (Value);
-            } 
-        } // ID
-
-
-    // Parameter type Flag
-    public abstract class _Flag : Goedel.Registry._Flag {
-        public _Flag() {
-            }
-        public _Flag(string Value) {
-			Default (Value);
-            } 
-
-
-
-
-        } // _Flag
 
     public partial class  Flag : _Flag {
-        public Flag() {
-            } 
-        public Flag(string Value) {
-			Default (Value);
-            } 
+        public static Flag Factory (string Value) {
+            var Result = new Flag();
+            Result.Default(Value);
+            return Result;
+            }
         } // Flag
 
+
+    public partial class  String : _String {
+        public static String Factory (string Value) {
+            var Result = new String();
+            Result.Default(Value);
+            return Result;
+            }
+        } // String
 
 
 
@@ -504,92 +404,20 @@ namespace GoedelShell {
 
 	// Eventually there will be a compiler option to suppress the debugging
 	// to eliminate the redundant code
-    public class _GoedelShell {
+    public class _GoedelShell : global::Goedel.Command.DispatchShell {
 
-
-		public virtual void Generate ( Generate Options
-				) {
-
-			char UsageFlag = '-';
-				{
-#pragma warning disable 219
-					Generate		Dummy = new Generate ();
-#pragma warning restore 219
-
-					Console.Write ("{0}in ", UsageFlag);
-					Console.Write ("[{0}] ", Dummy.InputFile.Usage (null, "input", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.OutputFile.Usage (null, "output", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.CommentLine.Usage ("line", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Directive.Usage ("link", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Lazy.Usage ("lazy", "value", UsageFlag));
-					Console.WriteLine ();
-
-				}
-
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "ExistingFile", 
-							"InputFile", Options.InputFile);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "NewFile", 
-							"OutputFile", Options.OutputFile);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
-							"CommentLine", Options.CommentLine);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
-							"Directive", Options.Directive);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
-							"Lazy", Options.Lazy);
-			Console.WriteLine ("Not Yet Implemented");
+		public virtual void Generate ( Generate Options) {
+			CommandLineInterpreter.DescribeValues (Options);
 			}
-		public virtual void Wrap ( Wrap Options
-				) {
 
-			char UsageFlag = '-';
-				{
-#pragma warning disable 219
-					Wrap		Dummy = new Wrap ();
-#pragma warning restore 219
-
-					Console.Write ("{0}wrap ", UsageFlag);
-					Console.Write ("[{0}] ", Dummy.InputFile.Usage (null, "input", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.CS.Usage ("cs", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Namespace.Usage ("namespace", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Class.Usage ("class", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Variable.Usage ("variable", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Lazy.Usage ("lazy", "value", UsageFlag));
-					Console.WriteLine ();
-
-				}
-
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "ExistingFile", 
-							"InputFile", Options.InputFile);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "NewFile", 
-							"CS", Options.CS);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "ID", 
-							"Namespace", Options.Namespace);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "ID", 
-							"Class", Options.Class);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "ID", 
-							"Variable", Options.Variable);
-				Console.WriteLine ("    {0}\t{1} = [{2}]", "Flag", 
-							"Lazy", Options.Lazy);
-			Console.WriteLine ("Not Yet Implemented");
+		public virtual void Wrap ( Wrap Options) {
+			CommandLineInterpreter.DescribeValues (Options);
 			}
-		public virtual void About ( About Options
-				) {
 
-			char UsageFlag = '-';
-				{
-#pragma warning disable 219
-					About		Dummy = new About ();
-#pragma warning restore 219
-
-					Console.Write ("{0}about ", UsageFlag);
-					Console.WriteLine ();
-
-					Console.WriteLine ("    Report tool version and build date");
-
-				}
-
-			Console.WriteLine ("Not Yet Implemented");
+		public virtual void About ( About Options) {
+			CommandLineInterpreter.DescribeValues (Options);
 			}
+
 
         } // class _GoedelShell
 

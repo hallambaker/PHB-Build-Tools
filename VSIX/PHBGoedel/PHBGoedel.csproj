@@ -153,8 +153,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Binding - Copy.vsixbuild" />
-    <None Include="GoedelBinding - Copy.vsixbuild" />
     <None Include="GoedelBinding.vsixbuild">
       <LastGenOutput>GoedelBinding.cs</LastGenOutput>
       <Generator>VSIXBuild</Generator>

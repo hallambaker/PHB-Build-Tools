@@ -39,6 +39,8 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Protocol : _Choice {
 
+
+
         public override void  Complete() {
             //Console.WriteLine ("Completing {0}", Id.ToString());
 
@@ -58,6 +60,11 @@ namespace Goedel.Tool.ProtoGen {
             Complete(Entries);
             }
         }
+
+    public partial class Class : _Choice {
+
+        }
+
 
     public partial class Message : _Choice {
 

@@ -2,225 +2,103 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Goedel.Command;
 using Goedel.Registry;
+using Goedel.Utilities;
 
 namespace ProtoGenShell {
     public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 
-		static char UsageFlag;
+
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
+
+		
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Dispatch"></param>
+        /// <param name="args"></param>
+        /// <param name="index"></param>
+        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+            Brief();
+            }
+
+        public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
+            Identifier = "help",
+            HandleDelegate = Brief,
+            Entries = new List<DescribeEntry>() { }
+            };
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Dispatch"></param>
+        /// <param name="args"></param>
+        /// <param name="index"></param>
+        public static new void About (DispatchShell Dispatch, string[] args, int index) {
+            FileTools.About();
+            }
+
+        public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
+            Identifier = "about",
+            HandleDelegate = About,
+            Entries = new List<DescribeEntry>() { }
+            };
 
         static bool IsFlag(char c) {
             return (c == UnixFlag) | (c == WindowsFlag) ;
             }
+
 
         static CommandLineInterpreter () {
             System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 
             if (OperatingSystem.Platform == PlatformID.Unix |
                     OperatingSystem.Platform == PlatformID.MacOSX) {
-                UsageFlag = UnixFlag;
+                FlagIndicator = UnixFlag;
                 }
             else {
-                UsageFlag = WindowsFlag;
+                FlagIndicator = WindowsFlag;
                 }
+
+				DefaultCommand = _Protocol._DescribeCommand;
+				Description = "Protocol compiler";
+
+			Entries = new  SortedDictionary<string, DescribeCommand> () {
+				{"about", DescribeAbout },
+				{"protocol", _Protocol._DescribeCommand },
+				{"help", DescribeHelp }
+				}; // End Entries
+
+
+
             }
 
         static void Main(string[] args) {
 			var CLI = new CommandLineInterpreter ();
 			CLI.MainMethod (args);
 			}
-        public void MainMethod(string[] args) {
 
+        public void MainMethod(string[] Args) {
 			ProtoGenShell Dispatch = new ProtoGenShell ();
 
-
-				if (args.Length == 0) {
-					throw new ParserException ("No command specified");
-					}
-
-                if (IsFlag(args[0][0])) {
+			MainMethod (Dispatch, Args);
+			}
 
 
-                    switch (args[0].Substring(1).ToLower()) {
-						case "protocol compiler" : {
-							Usage ();
-							break;
-							}
-						case "about" : {
-							FileTools.About ();
-							break;
-							}
-						case "protocol" : {
-							Handle_Protocol (Dispatch, args, 1);
-							break;
-							}
-						default: {
-							throw new ParserException("Unknown Command: " + args[0]);
-                            }
-                        }
-                    }
-                else {
-					Handle_Protocol (Dispatch, args, 0);
-                    }
+        public void MainMethod(ProtoGenShell Dispatch, string[] Args) {
+			Dispatcher (Entries, Dispatch, Args, 0);
             } // Main
 
 
-		private enum TagType_Protocol {
-			Lazy,
-			ProtoStruct,
-			GenerateRFC2XML,
-			GenerateHTML,
-			GenerateMD,
-			GenerateCS,
-			GenerateC,
-			GenerateH,
-			}
 
-		private static void Handle_Protocol (
-					ProtoGenShell Dispatch, string[] args, int index) {
+		public static void Handle_Protocol (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			ProtoGenShell Dispatch =	DispatchIn as ProtoGenShell;
 			Protocol		Options = new Protocol ();
-
-			var Registry = new Goedel.Registry.Registry ();
-
-			Options.Lazy.Register ("lazy", Registry, (int) TagType_Protocol.Lazy);
-			Options.ProtoStruct.Register ("protocol", Registry, (int) TagType_Protocol.ProtoStruct);
-			Options.GenerateRFC2XML.Register ("xml", Registry, (int) TagType_Protocol.GenerateRFC2XML);
-			Options.GenerateHTML.Register ("html", Registry, (int) TagType_Protocol.GenerateHTML);
-			Options.GenerateMD.Register ("md", Registry, (int) TagType_Protocol.GenerateMD);
-			Options.GenerateCS.Register ("cs", Registry, (int) TagType_Protocol.GenerateCS);
-			Options.GenerateC.Register ("c", Registry, (int) TagType_Protocol.GenerateC);
-			Options.GenerateH.Register ("h", Registry, (int) TagType_Protocol.GenerateH);
-
-			// looking for parameter Param.Class}
-			if (index < args.Length && !IsFlag (args [index][0] )) {
-				// Have got the parameter, call the parameter value method
-				Options.ProtoStruct.Parameter (args [index]);
-				index++;
-				}
-
-#pragma warning disable 162
-			for (int i = index; i< args.Length; i++) {
-				if 	(!IsFlag (args [i][0] )) {
-					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
-				string Rest = args [i].Substring (1);
-
-				TagType_Protocol TagType = (TagType_Protocol) Registry.Find (Rest);
-
-				// here have the cases for what to do with it.
-
-				switch (TagType) {
-					case TagType_Protocol.Lazy : {
-						int OptionParams = Options.Lazy.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.Lazy.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Protocol.GenerateRFC2XML : {
-						int OptionParams = Options.GenerateRFC2XML.Tag (Rest);
-			
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.GenerateRFC2XML.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Protocol.GenerateHTML : {
-						int OptionParams = Options.GenerateHTML.Tag (Rest);
-			
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.GenerateHTML.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Protocol.GenerateMD : {
-						int OptionParams = Options.GenerateMD.Tag (Rest);
-			
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.GenerateMD.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Protocol.GenerateCS : {
-						int OptionParams = Options.GenerateCS.Tag (Rest);
-			
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.GenerateCS.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Protocol.GenerateC : {
-						int OptionParams = Options.GenerateC.Tag (Rest);
-			
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.GenerateC.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Protocol.GenerateH : {
-						int OptionParams = Options.GenerateH.Tag (Rest);
-			
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.GenerateH.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					default : throw new System.Exception ("Internal error");
-					}
-				}
-
-#pragma warning restore 162
+			ProcessOptions (Args, Index, Options);
 			Dispatch.Protocol (Options);
-
-			}
-
-		private static void Usage () {
-
-				Console.WriteLine ("Protocol compiler");
-				Console.WriteLine ("");
-
-				{
-#pragma warning disable 219
-					Protocol		Dummy = new Protocol ();
-#pragma warning restore 219
-
-					Console.Write ("{0}protocol ", UsageFlag);
-					Console.WriteLine ();
-
-				}
-
-			} // Usage 
-
-		public class ParserException : System.Exception {
-
-			public ParserException(string message)
-				: base(message) {
-
-				Console.WriteLine (message);
-				}
 			}
 
 
@@ -232,21 +110,152 @@ namespace ProtoGenShell {
 	// with partial virtual that can be extended as required.
 
 	// All subclasses inherit from the abstract classes Goedel.Regisrty.Dispatch 
-	// and Goedel.Registry.Type
+	// and Goedel.Command.Type
 
 
+    public class _Protocol : Goedel.Command.Dispatch  {
 
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Flag (),
+			new ExistingFile (),
+			new NewFile (),
+			new NewFile (),
+			new NewFile (),
+			new NewFile (),
+			new NewFile (),
+			new NewFile ()			} ;
 
-    public class _Protocol : Goedel.Registry.Dispatch {
-		public Flag							Lazy = new Flag ("false");
-		public ExistingFile					ProtoStruct = new ExistingFile ("protocol");
-		public NewFile						GenerateRFC2XML = new NewFile ("xml");
-		public NewFile						GenerateHTML = new NewFile ("html");
-		public NewFile						GenerateMD = new NewFile ("md");
-		public NewFile						GenerateCS = new NewFile ("cs");
-		public NewFile						GenerateC = new NewFile ("c");
-		public NewFile						GenerateH = new NewFile ("h");
+		/// <summary>Field accessor for parameter [lazy]</summary>
+		public virtual Flag Lazy {
+			get => _Data[0] as Flag;
+			set => _Data[0]  = value;
+			}
 
+		public virtual string _Lazy {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile ProtoStruct {
+			get => _Data[1] as ExistingFile;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _ProtoStruct {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [xml]</summary>
+		public virtual NewFile GenerateRFC2XML {
+			get => _Data[2] as NewFile;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _GenerateRFC2XML {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [html]</summary>
+		public virtual NewFile GenerateHTML {
+			get => _Data[3] as NewFile;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _GenerateHTML {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [md]</summary>
+		public virtual NewFile GenerateMD {
+			get => _Data[4] as NewFile;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _GenerateMD {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [cs]</summary>
+		public virtual NewFile GenerateCS {
+			get => _Data[5] as NewFile;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _GenerateCS {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [c]</summary>
+		public virtual NewFile GenerateC {
+			get => _Data[6] as NewFile;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _GenerateC {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [h]</summary>
+		public virtual NewFile GenerateH {
+			get => _Data[7] as NewFile;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _GenerateH {
+			set => _Data[7].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "protocol",
+			Brief =  "<Unspecified>",
+			HandleDelegate =  CommandLineInterpreter.Handle_Protocol,
+			Lazy =  true,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "ProtoStruct", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "GenerateRFC2XML", 
+					Default = null, // null if null
+					Brief = "Generate documentation in RFC2XML format",
+					Index = 2,
+					Key = "xml"
+					},
+				new DescribeEntryOption () {
+					Identifier = "GenerateHTML", 
+					Default = null, // null if null
+					Brief = "Generate documentation in HTML format",
+					Index = 3,
+					Key = "html"
+					},
+				new DescribeEntryOption () {
+					Identifier = "GenerateMD", 
+					Default = null, // null if null
+					Brief = "Generate documentation in MarkDown format",
+					Index = 4,
+					Key = "md"
+					},
+				new DescribeEntryOption () {
+					Identifier = "GenerateCS", 
+					Default = null, // null if null
+					Brief = "Generate C# code",
+					Index = 5,
+					Key = "cs"
+					},
+				new DescribeEntryOption () {
+					Identifier = "GenerateC", 
+					Default = null, // null if null
+					Brief = "Generate C code",
+					Index = 6,
+					Key = "c"
+					},
+				new DescribeEntryOption () {
+					Identifier = "GenerateH", 
+					Default = null, // null if null
+					Brief = "Generate C header",
+					Index = 7,
+					Key = "h"
+					}
+				}
+			};
 
 		}
 
@@ -254,70 +263,31 @@ namespace ProtoGenShell {
         } // class Protocol
 
 
-
-    // Parameter type NewFile
-    public abstract class _NewFile : Goedel.Registry._File {
-        public _NewFile() {
-            }
-        public _NewFile(string Value) {
-			Default (Value);
-            } 
-
-
-
-        } // _NewFile
-
     public partial class  NewFile : _NewFile {
-        public NewFile() {
-            } 
-        public NewFile(string Value) {
-			Default (Value);
-            } 
+        public static NewFile Factory (string Value) {
+            var Result = new NewFile();
+            Result.Default(Value);
+            return Result;
+            }
         } // NewFile
 
 
-    // Parameter type ExistingFile
-    public abstract class _ExistingFile : Goedel.Registry._File {
-        public _ExistingFile() {
-            }
-        public _ExistingFile(string Value) {
-			Default (Value);
-            } 
-
-
-
-        } // _ExistingFile
-
     public partial class  ExistingFile : _ExistingFile {
-        public ExistingFile() {
-            } 
-        public ExistingFile(string Value) {
-			Default (Value);
-            } 
+        public static ExistingFile Factory (string Value) {
+            var Result = new ExistingFile();
+            Result.Default(Value);
+            return Result;
+            }
         } // ExistingFile
 
 
-    // Parameter type Flag
-    public abstract class _Flag : Goedel.Registry._Flag {
-        public _Flag() {
-            }
-        public _Flag(string Value) {
-			Default (Value);
-            } 
-
-
-
-
-        } // _Flag
-
     public partial class  Flag : _Flag {
-        public Flag() {
-            } 
-        public Flag(string Value) {
-			Default (Value);
-            } 
+        public static Flag Factory (string Value) {
+            var Result = new Flag();
+            Result.Default(Value);
+            return Result;
+            }
         } // Flag
-
 
 
 
@@ -326,20 +296,15 @@ namespace ProtoGenShell {
 
 	// Eventually there will be a compiler option to suppress the debugging
 	// to eliminate the redundant code
-    public class _ProtoGenShell {
+    public class _ProtoGenShell : global::Goedel.Command.DispatchShell {
 
-
-		public virtual void Protocol ( Protocol Options
-				) {
-
+		public virtual void Protocol ( Protocol Options) {
 			string inputfile = null;
 
 			inputfile = Options.ProtoStruct.Text;
 
-            Goedel.Tool.ProtoGen.ProtoStruct Parse = new Goedel.Tool.ProtoGen.ProtoStruct();
-
-
-			Parse.Options = Options;
+            Goedel.Tool.ProtoGen.ProtoStruct Parse = new Goedel.Tool.ProtoGen.ProtoStruct() {
+				};
         
 			
 			using (Stream infile =
@@ -355,7 +320,7 @@ namespace ProtoGenShell {
 			if (Options.GenerateRFC2XML.Text != null) {
 				string outputfile = FileTools.DefaultOutput (inputfile, Options.GenerateRFC2XML.Text, 
 					Options.GenerateRFC2XML.Extension);
-				if (Options.Lazy.IsSet & FileTools.UpToDate (inputfile, outputfile)) {
+				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
 				using (Stream outputStream =
@@ -372,7 +337,7 @@ namespace ProtoGenShell {
 			if (Options.GenerateHTML.Text != null) {
 				string outputfile = FileTools.DefaultOutput (inputfile, Options.GenerateHTML.Text, 
 					Options.GenerateHTML.Extension);
-				if (Options.Lazy.IsSet & FileTools.UpToDate (inputfile, outputfile)) {
+				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
 				using (Stream outputStream =
@@ -389,7 +354,7 @@ namespace ProtoGenShell {
 			if (Options.GenerateMD.Text != null) {
 				string outputfile = FileTools.DefaultOutput (inputfile, Options.GenerateMD.Text, 
 					Options.GenerateMD.Extension);
-				if (Options.Lazy.IsSet & FileTools.UpToDate (inputfile, outputfile)) {
+				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
 				using (Stream outputStream =
@@ -406,7 +371,7 @@ namespace ProtoGenShell {
 			if (Options.GenerateCS.Text != null) {
 				string outputfile = FileTools.DefaultOutput (inputfile, Options.GenerateCS.Text, 
 					Options.GenerateCS.Extension);
-				if (Options.Lazy.IsSet & FileTools.UpToDate (inputfile, outputfile)) {
+				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
 				using (Stream outputStream =
@@ -423,7 +388,7 @@ namespace ProtoGenShell {
 			if (Options.GenerateC.Text != null) {
 				string outputfile = FileTools.DefaultOutput (inputfile, Options.GenerateC.Text, 
 					Options.GenerateC.Extension);
-				if (Options.Lazy.IsSet & FileTools.UpToDate (inputfile, outputfile)) {
+				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
 				using (Stream outputStream =
@@ -440,7 +405,7 @@ namespace ProtoGenShell {
 			if (Options.GenerateH.Text != null) {
 				string outputfile = FileTools.DefaultOutput (inputfile, Options.GenerateH.Text, 
 					Options.GenerateH.Extension);
-				if (Options.Lazy.IsSet & FileTools.UpToDate (inputfile, outputfile)) {
+				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
 				using (Stream outputStream =
@@ -454,6 +419,7 @@ namespace ProtoGenShell {
 					}
 				}
 			}
+
 
         } // class _ProtoGenShell
 

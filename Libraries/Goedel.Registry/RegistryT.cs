@@ -42,10 +42,6 @@ namespace Goedel.Registry {
         /// <summary>Calculate elapsed time.</summary>
         public TimeSpan Elapsed { get => DateTime.Now - Started;  }
 
-        /// <summary></summary>
-        public virtual Goedel.Registry.Type[] _Data { get; set; }
-
-        public virtual DescribeCommandEntry DescribeCommand { get; set; }
         }
 
 

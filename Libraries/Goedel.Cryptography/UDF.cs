@@ -53,6 +53,11 @@ namespace Goedel.Cryptography {
         /// Content type for mesh escrowed key
         /// </summary>
         public const string EscrowedKey = "application/mmm-escrowed";
+
+        /// <summary>
+        /// UDF Fingerprint list
+        /// </summary>
+        public const string UDF = "application/udf";
         }
 
     /// <summary>
@@ -78,6 +83,7 @@ namespace Goedel.Cryptography {
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The binary UDF fingerprint.</returns>
         public static byte[] From(string ContentType, byte[] Data, int Bits) {
+            Bits = Bits == 0 ? DefaultBits : Bits;
 
             byte[] HashData = Platform.SHA2_512.Process(Data);
 
@@ -121,7 +127,7 @@ namespace Goedel.Cryptography {
         /// <param name="Data">Data to be fingerprinted.</param>
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The binary UDF fingerprint.</returns>
-        public static byte[] FromEscrowed(byte[] Data, int Bits) {
+        public static byte[] FromEscrowed(byte[] Data, int Bits=0) {
             return From(UDFConstants.EscrowedKey, Data, Bits);
             }
 
@@ -141,9 +147,25 @@ namespace Goedel.Cryptography {
         /// <param name="Data">Data to be fingerprinted.</param>
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The binary UDF fingerprint.</returns>
-        public static byte[] FromKeyInfo(byte[] Data, int Bits) {
+        public static byte[] FromKeyInfo(byte[] Data, int Bits=0) {
             return From(UDFConstants.PKIXKey, Data, Bits);
             }
+
+        /// <summary>
+        /// Calculate a UDF fingerprint from a PKIX KeyInfo blob with specified precision.
+        /// </summary>
+        /// <param name="Data">Data to be fingerprinted.</param>
+        /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
+        /// <returns>The binary UDF fingerprint.</returns>
+        public static string FromUDFPair (string UDF1, string UDF2, int Bits = 0) {
+            var Builder = new StringBuilder();
+            Builder.Append(UDF1);
+            Builder.Append(":");
+            Builder.Append(UDF2);
+            Builder.Append(":");
+            return ToString(UDFConstants.UDF, Builder.ToString().ToUTF8(), Bits);
+            }
+
 
         /// <summary>
         /// Calculate a UDF fingerprint from an OpenPGP key with specified precision.
@@ -152,7 +174,7 @@ namespace Goedel.Cryptography {
         /// <param name="Data">Data to be fingerprinted.</param>
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The binary UDF fingerprint.</returns>
-        public static string ToString(string ContentType, byte[] Data, int Bits) {
+        public static string ToString(string ContentType, byte[] Data, int Bits=0) {
             var Bytes = From(ContentType, Data, Bits);
             return BaseConvert.ToUDF32String(Bytes);
             }

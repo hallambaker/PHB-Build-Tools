@@ -2,7 +2,7 @@
 #license MITLicense
 #xclass Goedel.Tool.ProtoGen Generate
 #% bool OldConstructors = false;
-
+#% Separator Separator = new Separator (",");
 #!
 #!   Code Generator (C#)
 #!
@@ -49,42 +49,44 @@ namespace #{Namespace} {
         /// </summary>
         /// <returns>The tag value</returns>
 		public #{InheritsOverride} string Tag () {
-			return "#{Protocol.Prefix}";
+			return _Tag;
 			}
 
-#if (OldConstructors)
-        /// <summary>
-        /// Default constructor.
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-		public #{Protocol.Prefix} () {
-			_Initialize () ;
+		public override string _Tag { get; } = "#{Protocol.Prefix}";
+
+		/// <summary>
+        /// Dictionary mapping tags to factory methods
+        /// </summary>
+		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
+				new Dictionary<string, JSONFactoryDelegate> () {
+#% Separator.IsFirst = true;
+#foreach (_Choice Entry in Protocol.Structures)
+#{Separator}
+			{"#{Entry.ID}", #{Entry.ID}._Factory}#!
+#end foreach
+			};
+
+		/// <summary>
+        /// Factory method. Throws exception as this is an abstract class.
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static JSONObject _Factory () {
+			throw new CannotCreateAbstract();
 			}
 
-        /// <summary>
-        /// Construct an instance from a JSON encoded stream.
-        /// </summary>
-        /// <param name="JSONReader">Input stream</param>
-		public #{Protocol.Prefix} (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			_Initialize () ;
-			}
 
-        /// <summary>
-        /// Construct an instance from a JSON encoded string.
-        /// </summary>
-        /// <param name="_String">Input string</param>
-		public #{Protocol.Prefix} (string _String) {
-			Deserialize (_String);
-			_Initialize () ;
-			}
-#end if
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
         /// <param name="JSONReader">Input stream</param>
         /// <param name="Out">The created object</param>
         public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
-	
+			Out = JSONReader.ReadTaggedObject (_TagDictionary);
+
+#if (OldConstructors)
 			JSONReader.StartObject ();
             if (JSONReader.EOR) {
                 Out = null;
@@ -108,6 +110,7 @@ namespace #{Namespace} {
 					}
 				}	
 			JSONReader.EndObject ();
+#end if
             }
 		}
 
@@ -432,14 +435,28 @@ public partial class #{Id}#{TTT} : #{CurrentPrefix} {
 public partial class #{Id}#{TTT} : #{Inherits} {
 #end if
 #call DeclareMembers (Entries)
-
-        /// <summary>
-        /// Tag identifying this class.
+		
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "#{Id}";
+		public override string _Tag { get; } = "#{Id}";
+
+		/// <summary>
+#if (IsAbstract (Entries))
+        /// Factory method. Throws exception as this is an abstract class.
+#else
+        /// Factory method
+#end if
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+#if (IsAbstract (Entries))
+			throw new CannotCreateAbstract();
+#else
+			return new #{Id}();
+#end if
 			}
+
 
 
 #if (OldConstructors)
@@ -620,7 +637,10 @@ public partial class #{Id}#{TTT} : #{Inherits} {
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
         /// <returns>The created object.</returns>		
-        public static new #{Id}  FromTagged (JSONReader JSONReader) {
+        public static new #{Id} FromTagged (JSONReader JSONReader) {
+			var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+			return Out as #{Id};
+#if (OldConstructors)
 			#{Id} Out = null;
 
 			JSONReader.StartObject ();
@@ -640,6 +660,7 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 			JSONReader.EndObject ();
 
 			return Out;
+#end if
 			}
 
 
@@ -852,6 +873,7 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 					Out = null;
 					throw new Exception ("Can't create abstract type");
 #else
+					// Out = #{Id}.Factory ();
 					Out = new #{Id} ();
 					Out.Deserialize (JSONReader);
 					break;
@@ -868,7 +890,8 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 					Out = null;
 					throw new Exception ("Can't create abstract type");
 #else
-					Out = new #{Id} ();
+					Out = new #{Id} (); 
+					// Out = #{Id}.Factory ();
 					Out.Deserialize (JSONReader);
 					break;
 #end if

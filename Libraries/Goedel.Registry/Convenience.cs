@@ -63,6 +63,16 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="Base">Unescaped string</param>
         /// <returns>Quoted escaped string.</returns>
+        public static string QuotedNull (this string Base) {
+            return Base == null ? "null": Quoted(Base);
+            }
+
+
+        /// <summary>
+        /// Create a quoted, escaped string in the current language
+        /// </summary>
+        /// <param name="Base">Unescaped string</param>
+        /// <returns>Quoted escaped string.</returns>
         public static string Quoted (this string Base) {
             var StringBuilder = new StringBuilder();
             StringBuilder.Append("\"");

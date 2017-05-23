@@ -2,218 +2,103 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Goedel.Command;
 using Goedel.Registry;
+using Goedel.Utilities;
 
 namespace Command {
     public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 
-		static char UsageFlag;
+
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
+
+		
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Dispatch"></param>
+        /// <param name="args"></param>
+        /// <param name="index"></param>
+        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+            Brief();
+            }
+
+        public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
+            Identifier = "help",
+            HandleDelegate = Brief,
+            Entries = new List<DescribeEntry>() { }
+            };
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Dispatch"></param>
+        /// <param name="args"></param>
+        /// <param name="index"></param>
+        public static new void About (DispatchShell Dispatch, string[] args, int index) {
+            FileTools.About();
+            }
+
+        public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
+            Identifier = "about",
+            HandleDelegate = About,
+            Entries = new List<DescribeEntry>() { }
+            };
 
         static bool IsFlag(char c) {
             return (c == UnixFlag) | (c == WindowsFlag) ;
             }
+
 
         static CommandLineInterpreter () {
             System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 
             if (OperatingSystem.Platform == PlatformID.Unix |
                     OperatingSystem.Platform == PlatformID.MacOSX) {
-                UsageFlag = UnixFlag;
+                FlagIndicator = UnixFlag;
                 }
             else {
-                UsageFlag = WindowsFlag;
+                FlagIndicator = WindowsFlag;
                 }
+
+				DefaultCommand = _Schema._DescribeCommand;
+				Description = "Goedel meta-code generation tool";
+
+			Entries = new  SortedDictionary<string, DescribeCommand> () {
+				{"about", DescribeAbout },
+				{"in", _Schema._DescribeCommand },
+				{"help", DescribeHelp }
+				}; // End Entries
+
+
+
             }
 
         static void Main(string[] args) {
 			var CLI = new CommandLineInterpreter ();
 			CLI.MainMethod (args);
 			}
-        public void MainMethod(string[] args) {
 
+        public void MainMethod(string[] Args) {
 			Command Dispatch = new Command ();
 
-
-				if (args.Length == 0) {
-					throw new ParserException ("No command specified");
-					}
-
-                if (IsFlag(args[0][0])) {
+			MainMethod (Dispatch, Args);
+			}
 
 
-                    switch (args[0].Substring(1).ToLower()) {
-						case "goedel meta-code generation tool" : {
-							Usage ();
-							break;
-							}
-						case "about" : {
-							FileTools.About ();
-							break;
-							}
-						case "in" : {
-							Handle_Schema (Dispatch, args, 1);
-							break;
-							}
-						default: {
-							throw new ParserException("Unknown Command: " + args[0]);
-                            }
-                        }
-                    }
-                else {
-					Handle_Schema (Dispatch, args, 0);
-                    }
+        public void MainMethod(Command Dispatch, string[] Args) {
+			Dispatcher (Entries, Dispatch, Args, 0);
             } // Main
 
 
-		private enum TagType_Schema {
-			Goedel,
-			Lazy,
-			GenerateCS,
-			DebugLexer,
-			DebugParser,
-			DebugStack,
-			Serializer,
-			}
 
-		private static void Handle_Schema (
-					Command Dispatch, string[] args, int index) {
+		public static void Handle_Schema (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Command Dispatch =	DispatchIn as Command;
 			Schema		Options = new Schema ();
-
-			var Registry = new Goedel.Registry.Registry ();
-
-			Options.Goedel.Register ("gdl", Registry, (int) TagType_Schema.Goedel);
-			Options.Lazy.Register ("lazy", Registry, (int) TagType_Schema.Lazy);
-			Options.GenerateCS.Register ("cs", Registry, (int) TagType_Schema.GenerateCS);
-			Options.DebugLexer.Register ("dlexer", Registry, (int) TagType_Schema.DebugLexer);
-			Options.DebugParser.Register ("dparser", Registry, (int) TagType_Schema.DebugParser);
-			Options.DebugStack.Register ("dstack", Registry, (int) TagType_Schema.DebugStack);
-			Options.Serializer.Register ("serial", Registry, (int) TagType_Schema.Serializer);
-
-			// looking for parameter Param.Class}
-			if (index < args.Length && !IsFlag (args [index][0] )) {
-				// Have got the parameter, call the parameter value method
-				Options.Goedel.Parameter (args [index]);
-				index++;
-				}
-
-#pragma warning disable 162
-			for (int i = index; i< args.Length; i++) {
-				if 	(!IsFlag (args [i][0] )) {
-					throw new System.Exception ("Unexpected parameter: " + args[i]);}			
-				string Rest = args [i].Substring (1);
-
-				TagType_Schema TagType = (TagType_Schema) Registry.Find (Rest);
-
-				// here have the cases for what to do with it.
-
-				switch (TagType) {
-					case TagType_Schema.Lazy : {
-						int OptionParams = Options.Lazy.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.Lazy.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Schema.GenerateCS : {
-						int OptionParams = Options.GenerateCS.Tag (Rest);
-			
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.GenerateCS.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Schema.DebugLexer : {
-						int OptionParams = Options.DebugLexer.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.DebugLexer.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Schema.DebugParser : {
-						int OptionParams = Options.DebugParser.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.DebugParser.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Schema.DebugStack : {
-						int OptionParams = Options.DebugStack.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.DebugStack.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					case TagType_Schema.Serializer : {
-						int OptionParams = Options.Serializer.Tag (Rest);
-						
-						if (OptionParams>0 && ((i+1) < args.Length)) {
-							if 	(!IsFlag (args [i+1][0] )) {
-								i++;								
-								Options.Serializer.Parameter (args[i]);
-								}
-							}
-						break;
-						}
-					default : throw new System.Exception ("Internal error");
-					}
-				}
-
-#pragma warning restore 162
+			ProcessOptions (Args, Index, Options);
 			Dispatch.Schema (Options);
-
-			}
-
-		private static void Usage () {
-
-				Console.WriteLine ("Goedel meta-code generation tool");
-				Console.WriteLine ("");
-
-				{
-#pragma warning disable 219
-					Schema		Dummy = new Schema ();
-#pragma warning restore 219
-
-					Console.Write ("{0}in ", UsageFlag);
-					Console.Write ("[{0}] ", Dummy.DebugLexer.Usage ("dlexer", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.DebugParser.Usage ("dparser", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.DebugStack.Usage ("dstack", "value", UsageFlag));
-					Console.Write ("[{0}] ", Dummy.Serializer.Usage ("serial", "value", UsageFlag));
-					Console.WriteLine ();
-
-					Console.WriteLine ("    Convert a Goedel schema file to code");
-
-				}
-
-			} // Usage 
-
-		public class ParserException : System.Exception {
-
-			public ParserException(string message)
-				: base(message) {
-
-				Console.WriteLine (message);
-				}
 			}
 
 
@@ -225,24 +110,135 @@ namespace Command {
 	// with partial virtual that can be extended as required.
 
 	// All subclasses inherit from the abstract classes Goedel.Regisrty.Dispatch 
-	// and Goedel.Registry.Type
+	// and Goedel.Command.Type
 
 
+    public class _Schema : Goedel.Command.Dispatch  {
 
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new ExistingFile (),
+			new Flag (),
+			new NewFile (),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
 
-    public class _Schema : Goedel.Registry.Dispatch {
-		public ExistingFile					Goedel = new ExistingFile ("gdl");
-		public Flag							Lazy = new Flag ("false");
-		public NewFile						GenerateCS = new NewFile ("cs");
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Goedel {
+			get => _Data[0] as ExistingFile;
+			set => _Data[0]  = value;
+			}
 
-		public Flag			DebugLexer = new  Flag ();
+		public virtual string _Goedel {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [lazy]</summary>
+		public virtual Flag Lazy {
+			get => _Data[1] as Flag;
+			set => _Data[1]  = value;
+			}
 
-		public Flag			DebugParser = new  Flag ();
+		public virtual string _Lazy {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [cs]</summary>
+		public virtual NewFile GenerateCS {
+			get => _Data[2] as NewFile;
+			set => _Data[2]  = value;
+			}
 
-		public Flag			DebugStack = new  Flag ();
+		public virtual string _GenerateCS {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [dlexer]</summary>
+		public virtual Flag DebugLexer {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
 
-		public Flag			Serializer = new  Flag ("true");
+		public virtual string _DebugLexer {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [dparser]</summary>
+		public virtual Flag DebugParser {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
 
+		public virtual string _DebugParser {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [dstack]</summary>
+		public virtual Flag DebugStack {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _DebugStack {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [serial]</summary>
+		public virtual Flag Serializer {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Serializer {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "in",
+			Brief =  "Convert a Goedel schema file to code",
+			HandleDelegate =  CommandLineInterpreter.Handle_Schema,
+			Lazy =  true,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Goedel", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "GenerateCS", 
+					Default = null, // null if null
+					Brief = "Generate C# code",
+					Index = 2,
+					Key = "cs"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DebugLexer", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 3,
+					Key = "dlexer"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DebugParser", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 4,
+					Key = "dparser"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DebugStack", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 5,
+					Key = "dstack"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Serializer", 
+					Default = "true", // null if null
+					Brief = "<Unspecified>",
+					Index = 6,
+					Key = "serial"
+					}
+				}
+			};
 
 		}
 
@@ -250,70 +246,31 @@ namespace Command {
         } // class Schema
 
 
-
-    // Parameter type NewFile
-    public abstract class _NewFile : Goedel.Registry._File {
-        public _NewFile() {
-            }
-        public _NewFile(string Value) {
-			Default (Value);
-            } 
-
-
-
-        } // _NewFile
-
     public partial class  NewFile : _NewFile {
-        public NewFile() {
-            } 
-        public NewFile(string Value) {
-			Default (Value);
-            } 
+        public static NewFile Factory (string Value) {
+            var Result = new NewFile();
+            Result.Default(Value);
+            return Result;
+            }
         } // NewFile
 
 
-    // Parameter type ExistingFile
-    public abstract class _ExistingFile : Goedel.Registry._File {
-        public _ExistingFile() {
-            }
-        public _ExistingFile(string Value) {
-			Default (Value);
-            } 
-
-
-
-        } // _ExistingFile
-
     public partial class  ExistingFile : _ExistingFile {
-        public ExistingFile() {
-            } 
-        public ExistingFile(string Value) {
-			Default (Value);
-            } 
+        public static ExistingFile Factory (string Value) {
+            var Result = new ExistingFile();
+            Result.Default(Value);
+            return Result;
+            }
         } // ExistingFile
 
 
-    // Parameter type Flag
-    public abstract class _Flag : Goedel.Registry._Flag {
-        public _Flag() {
-            }
-        public _Flag(string Value) {
-			Default (Value);
-            } 
-
-
-
-
-        } // _Flag
-
     public partial class  Flag : _Flag {
-        public Flag() {
-            } 
-        public Flag(string Value) {
-			Default (Value);
-            } 
+        public static Flag Factory (string Value) {
+            var Result = new Flag();
+            Result.Default(Value);
+            return Result;
+            }
         } // Flag
-
 
 
 
@@ -322,24 +279,19 @@ namespace Command {
 
 	// Eventually there will be a compiler option to suppress the debugging
 	// to eliminate the redundant code
-    public class _Command {
+    public class _Command : global::Goedel.Command.DispatchShell {
 
-
-		public virtual void Schema ( Schema Options
-				) {
-
+		public virtual void Schema ( Schema Options) {
 			string inputfile = null;
 
 			inputfile = Options.Goedel.Text;
 
-            GoedelSchema.Goedel Parse = new GoedelSchema.Goedel();
-
-
-			Parse.DebugLexer = Options.DebugLexer.Value;
-			Parse.DebugParser = Options.DebugParser.Value;
-			Parse.DebugStack = Options.DebugStack.Value;
-			Parse.Serializer = Options.Serializer.Value;
-			Parse.Options = Options;
+            GoedelSchema.Goedel Parse = new GoedelSchema.Goedel() {
+			    DebugLexer = Options.DebugLexer.Value,
+			    DebugParser = Options.DebugParser.Value,
+			    DebugStack = Options.DebugStack.Value,
+			    Serializer = Options.Serializer.Value,
+				};
         
 			
 			using (Stream infile =
@@ -355,7 +307,7 @@ namespace Command {
 			if (Options.GenerateCS.Text != null) {
 				string outputfile = FileTools.DefaultOutput (inputfile, Options.GenerateCS.Text, 
 					Options.GenerateCS.Extension);
-				if (Options.Lazy.IsSet & FileTools.UpToDate (inputfile, outputfile)) {
+				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
 				using (Stream outputStream =
@@ -369,6 +321,7 @@ namespace Command {
 					}
 				}
 			}
+
 
         } // class _Command
 

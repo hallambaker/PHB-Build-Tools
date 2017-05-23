@@ -94,6 +94,7 @@ namespace GoedelSchema {
 			_Output.Write ("using System.IO;\n{0}", _Indent);
 			_Output.Write ("using System.Text;\n{0}", _Indent);
 			_Output.Write ("using Goedel.Registry;\n{0}", _Indent);
+			_Output.Write ("using Goedel.Utilities;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			foreach  (_Choice Item in Goedel.Top) {
 				if (  (Item._Tag() ==  GoedelType.Class) ) {
@@ -368,7 +369,8 @@ namespace GoedelSchema {
 				}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("				}}\n{0}", _Indent);
-			_Output.Write ("            throw new System.Exception (\"Reserved word not recognized \\\"\" + Label + \"\\\"\");\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("            throw new NotFoundReserved (\"Reserved word not recognized \\\"\" + Label + \"\\\"\");\n{0}", _Indent);
 			_Output.Write ("            }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -439,7 +441,7 @@ namespace GoedelSchema {
 			_Output.Write ("            }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        void Pop () {{\n{0}", _Indent);
-			_Output.Write ("            if (Stack.Count == 0) throw new System.Exception (\"Internal Parser Error\");\n{0}", _Indent);
+			_Output.Write ("			Assert.False (Stack.Count == 0, InternalError.Throw);\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("            _StackItem Item = Stack[Stack.Count -1];\n{0}", _Indent);
 			_Output.Write ("            State = Item.State;\n{0}", _Indent);
@@ -456,9 +458,10 @@ namespace GoedelSchema {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("            if ((Token == TokenType.SEPARATOR) |\n{0}", _Indent);
 			_Output.Write ("                (Token == TokenType.NULL) |\n{0}", _Indent);
-			_Output.Write ("                (Token == TokenType.COMMENT)) return;\n{0}", _Indent);
-			_Output.Write ("            if (Token == TokenType.INVALID)\n{0}", _Indent);
-			_Output.Write ("                throw new System.Exception(\"Invalid Token\");\n{0}", _Indent);
+			_Output.Write ("                (Token == TokenType.COMMENT)) {{\n{0}", _Indent);
+			_Output.Write ("				return;\n{0}", _Indent);
+			_Output.Write ("				}}\n{0}", _Indent);
+			_Output.Write ("			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("            bool Represent = true;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -473,7 +476,9 @@ namespace GoedelSchema {
 			_Output.Write ("                            State = StateCode._Choice;\n{0}", _Indent);
 			_Output.Write ("                            break;\n{0}", _Indent);
 			_Output.Write ("                            }}\n{0}", _Indent);
-			_Output.Write ("                        else throw new System.Exception(\"Parser Error Expected START\");\n{0}", _Indent);
+			_Output.Write ("                        else {{\n{0}", _Indent);
+			_Output.Write ("							throw new ExpectedStart ();\n{0}", _Indent);
+			_Output.Write ("							}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("                    case StateCode._Choice:                //      LABEL Class | END\n{0}", _Indent);
 			_Output.Write ("                        if (Token == TokenType.LABEL) {{\n{0}", _Indent);
@@ -492,7 +497,7 @@ namespace GoedelSchema {
 			_Output.Write ("                                Top.Add(New_Choice(Text));\n{0}", _Indent);
 			_Output.Write ("                                }}\n{0}", _Indent);
 			_Output.Write ("                            else {{\n{0}", _Indent);
-			_Output.Write ("                                throw new System.Exception(\"Parser Error Expected [Class]\");\n{0}", _Indent);
+			_Output.Write ("                                throw new Expected(\"Parser Error Expected [Class]\");\n{0}", _Indent);
 			_Output.Write ("                                }}\n{0}", _Indent);
 			_Output.Write ("                            break;\n{0}", _Indent);
 			_Output.Write ("                            }}\n{0}", _Indent);
@@ -500,10 +505,13 @@ namespace GoedelSchema {
 			_Output.Write ("                            State = StateCode._End;\n{0}", _Indent);
 			_Output.Write ("                            break;\n{0}", _Indent);
 			_Output.Write ("                            }}\n{0}", _Indent);
-			_Output.Write ("                        else throw new System.Exception(\"Parser Error Expected [Class]\");\n{0}", _Indent);
+			_Output.Write ("                        else {{\n{0}", _Indent);
+			_Output.Write ("							throw new ExpectedClass();\n{0}", _Indent);
+			_Output.Write ("							}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("                    case StateCode._End:                   //      -\n{0}", _Indent);
-			_Output.Write ("                        throw new System.Exception(\"Too Many Closing Braces\");\n{0}", _Indent);
+			_Output.Write ("                    case StateCode._End: {{                  //      -\n{0}", _Indent);
+			_Output.Write ("                        throw new TooManyClose();\n{0}", _Indent);
+			_Output.Write ("						}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			foreach  (_Choice Item in Class.Entries) {
 				 string ID = null;
@@ -564,7 +572,7 @@ namespace GoedelSchema {
 							_Output.Write ("									}}\n{0}", _Indent);
 							}
 						_Output.Write ("								default : {{\n{0}", _Indent);
-						_Output.Write ("									throw new System.Exception(\"Parser Error Expected [", _Indent);
+						_Output.Write ("									throw new Expected(\"Parser Error Expected [", _Indent);
 						foreach  (OptionEntry OEntry in Options.Entries) {
 							_Output.Write ("{1} ", _Indent, OEntry.Type);
 							}
@@ -623,7 +631,7 @@ namespace GoedelSchema {
 							_Output.Write ("                                Current_Cast.{1}.Add (New_Choice(Text));\n{0}", _Indent, Entry.Name);
 							_Output.Write ("                                }}\n{0}", _Indent);
 							_Output.Write ("                            else {{\n{0}", _Indent);
-							_Output.Write ("								throw new System.Exception(\"Parser Error Expected [", _Indent);
+							_Output.Write ("								throw new Expected (\"Parser Error Expected [", _Indent);
 							foreach  (REF<_Choice> Ref in Choice.Entries) {
 								_Output.Write ("{1} ", _Indent, Ref);
 								}
@@ -674,7 +682,7 @@ namespace GoedelSchema {
 						_Output.Write ("                                Current_Cast.{1} = New_Choice(Text);\n{0}", _Indent, Entry.Name);
 						_Output.Write ("                                }}\n{0}", _Indent);
 						_Output.Write ("                            else {{\n{0}", _Indent);
-						_Output.Write ("                               throw new System.Exception(\"Parser Error Expected [", _Indent);
+						_Output.Write ("                               throw new Expected (\"Parser Error Expected [", _Indent);
 						foreach  (REF<_Choice> Ref in Entry_Cast.Entries) {
 							_Output.Write ("{1} ", _Indent, Ref);
 							}
@@ -682,7 +690,7 @@ namespace GoedelSchema {
 						_Output.Write ("                                }}\n{0}", _Indent);
 						_Output.Write ("                            break;\n{0}", _Indent);
 						_Output.Write ("                            }}\n{0}", _Indent);
-						_Output.Write ("                        else throw new System.Exception(\"Parser Error Expected [", _Indent);
+						_Output.Write ("                        else throw new Expected(\"Parser Error Expected [", _Indent);
 						foreach  (REF<_Choice> Ref in Entry_Cast.Entries) {
 							_Output.Write ("{1} ", _Indent, Ref);
 							}
@@ -718,7 +726,7 @@ namespace GoedelSchema {
 						_Output.Write ("                            State = StateCode.{1}__{2};\n{0}", _Indent, ID, Entry.Name);
 						_Output.Write ("                            break;\n{0}", _Indent);
 						_Output.Write ("                            }}\n{0}", _Indent);
-						_Output.Write ("                        else throw new System.Exception(\"Parser Error Expected [", _Indent);
+						_Output.Write ("                        else throw new Expected (\"Parser Error Expected [", _Indent);
 						foreach  (REF<_Choice> Ref in Entry_Cast.Entries) {
 							_Output.Write ("{1} ", _Indent, Ref);
 							}
@@ -732,7 +740,7 @@ namespace GoedelSchema {
 						_Output.Write ("                            State = StateCode.{1}__{2};\n{0}", _Indent, ID, Entry.Name);
 						_Output.Write ("                            break;\n{0}", _Indent);
 						_Output.Write ("                            }}\n{0}", _Indent);
-						_Output.Write ("                        throw new System.Exception(\"Expected LABEL or LITERAL\");\n{0}", _Indent);
+						_Output.Write ("                        throw new Expected(\"Expected LABEL or LITERAL\");\n{0}", _Indent);
 						break; }
 						case GoedelType.REF: {
 						  REF Entry_Cast = (REF) Entry.Type; 
@@ -742,7 +750,7 @@ namespace GoedelSchema {
 						_Output.Write ("                            State = StateCode.{1}__{2};\n{0}", _Indent, ID, Entry.Name);
 						_Output.Write ("                            break;\n{0}", _Indent);
 						_Output.Write ("                            }}\n{0}", _Indent);
-						_Output.Write ("                        throw new System.Exception(\"Expected LABEL or LITERAL\");\n{0}", _Indent);
+						_Output.Write ("                        throw new Expected(\"Expected LABEL or LITERAL\");\n{0}", _Indent);
 						break; }
 						case GoedelType.Token: {
 						  Token Entry_Cast = (Token) Entry.Type; 
@@ -752,7 +760,7 @@ namespace GoedelSchema {
 						_Output.Write ("                            State = StateCode.{1}__{2};\n{0}", _Indent, ID, Entry.Name);
 						_Output.Write ("                            break;\n{0}", _Indent);
 						_Output.Write ("                            }}\n{0}", _Indent);
-						_Output.Write ("                        throw new System.Exception(\"Expected LABEL or LITERAL\");\n{0}", _Indent);
+						_Output.Write ("                        throw new Expected(\"Expected LABEL or LITERAL\");\n{0}", _Indent);
 						break; }
 						case GoedelType.String: { 
 						_Output.Write ("                        if (Token == TokenType.STRING) {{\n{0}", _Indent);
@@ -761,7 +769,7 @@ namespace GoedelSchema {
 						_Output.Write ("                            State = StateCode.{1}__{2};\n{0}", _Indent, ID, Entry.Name);
 						_Output.Write ("                            break;\n{0}", _Indent);
 						_Output.Write ("                            }}\n{0}", _Indent);
-						_Output.Write ("                        throw new System.Exception(\"Expected String\");\n{0}", _Indent);
+						_Output.Write ("                        throw new Expected(\"Expected String\");\n{0}", _Indent);
 						break; }
 						case GoedelType.Text: { 
 						_Output.Write ("                        if (Token == TokenType.BEGIN) {{\n{0}", _Indent);
@@ -783,7 +791,7 @@ namespace GoedelSchema {
 						_Output.Write ("                            Current_Cast.{1}.Add (Text);\n{0}", _Indent, Entry.Name);
 						_Output.Write ("                            break;							\n{0}", _Indent);
 						_Output.Write ("                            }}\n{0}", _Indent);
-						_Output.Write ("                       throw new System.Exception(\"Expected Text\");\n{0}", _Indent);
+						_Output.Write ("                       throw new Expected(\"Expected Text\");\n{0}", _Indent);
 						_Output.Write ("\n{0}", _Indent);
 						
 						 IsList = true;
@@ -795,7 +803,7 @@ namespace GoedelSchema {
 						_Output.Write ("                            State = StateCode.{1}__{2};\n{0}", _Indent, ID, Entry.Name);
 						_Output.Write ("                            break;\n{0}", _Indent);
 						_Output.Write ("                            }}\n{0}", _Indent);
-						_Output.Write ("                        throw new System.Exception(\"Expected Integer\");\n{0}", _Indent);
+						_Output.Write ("                        throw new Expected(\"Expected Integer\");\n{0}", _Indent);
 						break; }
 						case GoedelType.Boolean: { 
 						_Output.Write ("                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL))  {{\n{0}", _Indent);
@@ -804,7 +812,7 @@ namespace GoedelSchema {
 						_Output.Write ("                            State = StateCode.{1}__{2};\n{0}", _Indent, ID, Entry.Name);
 						_Output.Write ("                            break;\n{0}", _Indent);
 						_Output.Write ("                            }}\n{0}", _Indent);
-						_Output.Write ("                        throw new System.Exception(\"Expected True or False\");						\n{0}", _Indent);
+						_Output.Write ("                        throw new Expected(\"Expected True or False\");						\n{0}", _Indent);
 					break; }
 						}
 					_Output.Write ("\n{0}", _Indent);
@@ -819,8 +827,9 @@ namespace GoedelSchema {
 					}
 				}
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("                    default:\n{0}", _Indent);
-			_Output.Write ("                        throw new System.Exception(\"Unreachable code reached\");\n{0}", _Indent);
+			_Output.Write ("                    default: {{\n{0}", _Indent);
+			_Output.Write ("                        throw new UnreachableCode();\n{0}", _Indent);
+			_Output.Write ("						}}\n{0}", _Indent);
 			_Output.Write ("                    }}\n{0}", _Indent);
 			_Output.Write ("                }}\n{0}", _Indent);
 			_Output.Write ("            }}\n{0}", _Indent);

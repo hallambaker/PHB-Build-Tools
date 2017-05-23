@@ -73,6 +73,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj">
+      <Project>{e7d4d1f4-e41a-44e2-abbd-f6a9e1d3f1ac}</Project>
+      <Name>Goedel.Command</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
       <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
       <Name>Goedel.Registry</Name>

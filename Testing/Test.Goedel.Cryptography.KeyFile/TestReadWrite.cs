@@ -38,7 +38,7 @@ namespace Test {
         public void TestWritePEMRSA() {
             var SignerKeyPair = KeyFileDecode.DecodePEM(Directories.TestKey_OpenSSH_Private);
             var OutFile = Directories.Results + "TestWritePEMRSA.prv";
-            var DataString = SignerKeyPair.ToPEM();
+            var DataString = SignerKeyPair.ToPEMPrivate();
             OutFile.WriteFileNew(DataString);
 
             }

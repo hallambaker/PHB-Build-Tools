@@ -7,7 +7,7 @@
 	
 	About "about"
 
-	Command Generate "in"
+	Command RegistryGenerate "in"
 		Brief "Generate code to serialize/deserialize schema"
 		DefaultCommand
 

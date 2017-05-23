@@ -419,7 +419,6 @@ namespace Goedel.Tool.Command {
 							break; }
 								}
 							}
-						_Output.Write ("				NewOptions = Options\n{0}", _Indent);
 						_Output.Write ("				}};\n{0}", _Indent);
 						_Output.Write ("        \n{0}", _Indent);
 						_Output.Write ("			\n{0}", _Indent);
@@ -446,7 +445,7 @@ namespace Goedel.Tool.Command {
 						_Output.Write ("				string outputfile = FileTools.DefaultOutput (inputfile, Options.{1}.Text, \n{0}", _Indent, Script.Id);
 						_Output.Write ("					Options.{1}.Extension);\n{0}", _Indent, Script.Id);
 						if (  Lazy != null ) {
-							_Output.Write ("				if (Options.{1}.IsSet & FileTools.UpToDate (inputfile, outputfile)) {{\n{0}", _Indent, Lazy);
+							_Output.Write ("				if (Options.{1}.Value & FileTools.UpToDate (inputfile, outputfile)) {{\n{0}", _Indent, Lazy);
 							_Output.Write ("					return;\n{0}", _Indent);
 							_Output.Write ("					}}\n{0}", _Indent);
 							}
@@ -589,8 +588,8 @@ namespace Goedel.Tool.Command {
 						_Output.Write ("				new DescribeEntryParameter () {{\n{0}", _Indent);
 						}
 					_Output.Write ("					Identifier = \"{1}\", \n{0}", _Indent, EntryItem.ID);
-					_Output.Write ("					Default = \"{1}\",\n{0}", _Indent, EntryItem.Default);
-					_Output.Write ("					Brief = \"{1}\",\n{0}", _Indent, EntryItem.Brief);
+					_Output.Write ("					Default = {1}, // null if null\n{0}", _Indent, EntryItem.Default.QuotedNull());
+					_Output.Write ("					Brief = {1},\n{0}", _Indent, EntryItem.Brief.Quoted());
 					_Output.Write ("					Index = {1},\n{0}", _Indent, EntryItem.Index);
 					_Output.Write ("					Key = \"{1}\"\n{0}", _Indent, EntryItem.Tag.ToLower());
 					_Output.Write ("					}}", _Indent);

@@ -1,0 +1,216 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Goedel.Utilities;
+using Goedel.Registry;
+
+namespace Goedel.Command {
+    /// <summary>Base class for Command line parser types. This could do with
+    /// some decrufting to remove implementation artifacts.</summary>
+    public abstract class Type {
+
+        /// <summary>The command line value.</summary>
+        public virtual string Text { get; set; }
+
+        /// <summary>If true, the value was set by default</summary>
+        public bool ByDefault { get; set; } = true;
+
+        /// <summary>
+        /// Convert value to string.
+        /// </summary>
+        /// <returns>The string value.</returns>
+        public override string ToString () {
+            return Text;
+            }
+
+        /// <summary>
+        /// Set parameter text.
+        /// </summary>
+        /// <param name="TextIn">Text to set.</param>
+        public virtual void Parameter (string TextIn) {
+            Text = TextIn;
+            }
+
+        /// <summary>
+        /// Set the default value for the type.
+        /// </summary>
+        /// <param name="TextIn">The default value as it would be given on the command line.</param>
+        public virtual void Default (string TextIn) {
+            Parameter(TextIn);
+            }
+
+        }
+
+    /// <summary>
+    /// Command line boolean type for flags.
+    /// </summary>
+    public abstract class _Flag : Goedel.Command.Type {
+
+        /// <summary>The canonical command line value.</summary>
+        public override string Text {
+            get => Value ? "true" : "false";
+            set => Parameter(value);
+            }
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public _Flag () {
+            }
+
+        /// <summary>
+        /// Construct flag with specified value
+        /// </summary>
+        /// <param name="Value">The flag value to set</param>
+        public _Flag (string Value) {
+            Default(Value);
+            }
+
+        /// <summary>
+        /// The flag value.
+        /// </summary>
+        public virtual bool Value { get; set; }
+
+        /// <summary>
+        /// Set tag value from parameter.
+        /// </summary>
+        /// <param name="Text">The values true and 1 set a true value, 0 and false set a false value.
+        /// Otherwise an exception is thrown.</param>
+        public override void Parameter (string Text) {
+            //Text = (Text == null) ? "true" : Text;
+            switch (Text.ToLower()) {
+                case "true":
+                case "1": {
+                    Value = true;
+                    break;
+                    }
+                case "false":
+                case "0": {
+                    Value = false;
+                    break;
+                    }
+                case "": {
+                    break;
+                    }
+                default:
+                throw new System.Exception("Flag value not recognized" + Text);
+                }
+            }
+
+        /// <summary>
+        /// Convert value to string.
+        /// </summary>
+        /// <returns>the string value</returns>
+        public override string ToString () {
+            return Text;
+            }
+
+        }
+
+
+    /// <summary>
+    /// Command line flag for file.
+    /// </summary>
+    public abstract class _File : Goedel.Command.Type {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public _File () {
+            }
+
+        /// <summary>
+        /// Constructor with specified default value.
+        /// </summary>
+        /// <param name="Value">The default value text for this entry</param>
+        public _File (string Value) {
+            Default(Value);
+            }
+
+        /// <summary>
+        /// The default extension.
+        /// </summary>
+        public string Extension = "";
+
+        /// <summary>
+        /// Set the default.
+        /// </summary>
+        /// <param name="TextIn">The default value text for this entry</param>
+        public override void Default (string TextIn) {
+            Extension = TextIn;
+            }
+
+        /// <summary>
+        /// The value.
+        /// </summary>
+        public string Value {
+            get => Text;
+            }
+
+        /// <summary>
+        /// Construct extension defaulted file name for specified file.
+        /// </summary>
+        /// <param name="Source">The source file.</param>
+        /// <returns>File name.</returns>
+        public string DefaultFile (_File Source) {
+            return DefaultFile(Source.Text);
+            }
+
+        /// <summary>
+        /// Construct extension defaulted file name for specified file.
+        /// </summary>
+        /// <param name="Source">The source file.</param>
+        /// <returns>File name.</returns>
+        public string DefaultFile (string Source) {
+            Text = FileTools.DefaultFile(this, Source);
+            return Text;
+            }
+
+        }
+
+    /// <summary>
+    /// Command line flag for file.
+    /// </summary>
+    public abstract class _NewFile : _File  {
+
+        }
+
+    /// <summary>
+    /// Command line flag for file.
+    /// </summary>
+    public abstract class _ExistingFile : _File {
+
+        }
+
+    /// <summary>
+    /// Command line flag for file.
+    /// </summary>
+    public abstract class _Integer : Type {
+
+        public int Value {
+            get {
+                if (Text == "") {
+                    return 0;
+                    }
+                if (int.TryParse(Text, out var Result)) {
+                    return Result;
+                    }
+                throw new InvalidOption();
+                }
+            }
+        }
+
+    /// <summary>
+    /// Command line flag for file.
+    /// </summary>
+    public abstract class _String : Type {
+        /// <summary>
+        /// The value.
+        /// </summary>
+        public string Value {
+            get => Text;
+            }
+        }
+
+    }

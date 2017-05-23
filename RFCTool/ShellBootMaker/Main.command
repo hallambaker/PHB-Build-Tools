@@ -4,8 +4,6 @@
 	Type ExistingFile		"file"
 	Type Flag				"flag"
 	
-	Type NewDirectory			"directory"
-	Type ExistingDirectory		"directory"
 	Type Flag					"flag"
 
 	About "about"

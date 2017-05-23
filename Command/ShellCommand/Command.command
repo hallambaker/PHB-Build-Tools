@@ -7,7 +7,7 @@
 	
 	About "about"
 
-	Command Generate "in"
+	Command GenerateCommand "in"
 		Brief "Generate a command line inteface parser"
 		DefaultCommand
 

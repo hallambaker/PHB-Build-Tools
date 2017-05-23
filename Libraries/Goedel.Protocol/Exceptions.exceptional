@@ -21,3 +21,14 @@ Namespace Goedel.Protocol
 		Console "Connection to host failed."
 		Description
 			|Could not reach the specified host
+
+
+	Exception CannotCreateAbstract
+		Console "Deserialzer encountered tag describing abstract type"
+
+	Exception UnknownTag
+		Console "Deserialzer encountered unknown tag"
+
+	Exception InvalidInput
+		Console "Deserialzer encountered invalid input"
+
