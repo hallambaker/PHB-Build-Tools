@@ -95,7 +95,7 @@ namespace Goedel.Cryptography.KeyFile {
             }
 
         /// <summary>
-        /// Convert key pair to PEM formatted string.
+        /// Convert key pair to OpenSSH formatted string.
         /// </summary>
         /// <param name="KeyPair">A  Key pair</param>
         /// <returns>Key Pair in PEM format</returns>
