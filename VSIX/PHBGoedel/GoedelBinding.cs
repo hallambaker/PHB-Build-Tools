@@ -32,15 +32,17 @@ namespace Goedel.VSIX.Binding {
 	// can only handle so many module loads and unloads without a reset.
 
     static partial class GuidList {
-        public const string guidCommandCSGeneratorString = "8D382331-6F20-4C3C-A83B-7EEA39FA03AB";
-        public static readonly Guid guidCommandCSGenerator = new Guid(guidCommandCSGeneratorString);
+        public const string GuidCommandCSGeneratorString = "8D382331-6F20-4C3C-A83B-7EEA39FA03AB";
+        public static readonly Guid GuidCommandCSGenerator = new Guid(GuidCommandCSGeneratorString);
         };
 
     [ComVisible(true)]
-    [Guid(GuidList.guidCommandCSGeneratorString)]
+    [Guid(GuidList.GuidCommandCSGeneratorString)]
     [ProvideObject(typeof(CommandCS))]
     [CodeGeneratorRegistration(typeof(CommandCS), "CommandCS", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(CommandCS), "CommandCS", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(CommandCS), "CommandCS", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class CommandCS : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
@@ -52,8 +54,9 @@ namespace Goedel.VSIX.Binding {
             get {
                 if (codeDomProvider == null) {
                     IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);
-                    if (provider != null)
+                    if (provider != null) {
                         codeDomProvider = (CodeDomProvider)provider.CodeDomProvider;
+						}
                     }
                 return codeDomProvider;
                 }
@@ -83,9 +86,9 @@ namespace Goedel.VSIX.Binding {
             }
 
         protected virtual void Dispose(bool disposing)  {
-            if (_disposed)
+            if (_disposed) {
                 return;
-
+				}
             if (disposing) {
                 if (serviceProvider != null) {
 					serviceProvider.Dispose();
@@ -113,8 +116,9 @@ namespace Goedel.VSIX.Binding {
 				IntPtr[] rgbOutputFileContents, 
 				out uint pcbOutput, 
 				IVsGeneratorProgress pGenerateProgress) {
-            if (bstrInputFileContents == null)
+            if (bstrInputFileContents == null) {
                 throw new ArgumentException(bstrInputFileContents);
+				}
 
             var Reader = new StringReader(bstrInputFileContents);
             var Writer = new StringWriter();
@@ -155,8 +159,9 @@ namespace Goedel.VSIX.Binding {
         #region IObjectWithSite
 
         public void GetSite(ref Guid riid, out IntPtr ppvSite) {
-            if (site == null)
+            if (site == null) {
                 Marshal.ThrowExceptionForHR(VSConstants.E_NOINTERFACE);
+				}
 
             // Query for the interface using the site object initially passed to the generator
             IntPtr punk = Marshal.GetIUnknownForObject(site);
@@ -185,15 +190,17 @@ namespace Goedel.VSIX.Binding {
 	// can only handle so many module loads and unloads without a reset.
 
     static partial class GuidList {
-        public const string guidFSRCSGeneratorString = "83A2D491-F2C5-407F-B1A6-1D4FC9B4C053";
-        public static readonly Guid guidFSRCSGenerator = new Guid(guidFSRCSGeneratorString);
+        public const string GuidFSRCSGeneratorString = "83A2D491-F2C5-407F-B1A6-1D4FC9B4C053";
+        public static readonly Guid GuidFSRCSGenerator = new Guid(GuidFSRCSGeneratorString);
         };
 
     [ComVisible(true)]
-    [Guid(GuidList.guidFSRCSGeneratorString)]
+    [Guid(GuidList.GuidFSRCSGeneratorString)]
     [ProvideObject(typeof(FSRCS))]
     [CodeGeneratorRegistration(typeof(FSRCS), "FSRCS", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(FSRCS), "FSRCS", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(FSRCS), "FSRCS", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class FSRCS : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
@@ -205,8 +212,9 @@ namespace Goedel.VSIX.Binding {
             get {
                 if (codeDomProvider == null) {
                     IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);
-                    if (provider != null)
+                    if (provider != null) {
                         codeDomProvider = (CodeDomProvider)provider.CodeDomProvider;
+						}
                     }
                 return codeDomProvider;
                 }
@@ -236,9 +244,9 @@ namespace Goedel.VSIX.Binding {
             }
 
         protected virtual void Dispose(bool disposing)  {
-            if (_disposed)
+            if (_disposed) {
                 return;
-
+				}
             if (disposing) {
                 if (serviceProvider != null) {
 					serviceProvider.Dispose();
@@ -266,8 +274,9 @@ namespace Goedel.VSIX.Binding {
 				IntPtr[] rgbOutputFileContents, 
 				out uint pcbOutput, 
 				IVsGeneratorProgress pGenerateProgress) {
-            if (bstrInputFileContents == null)
+            if (bstrInputFileContents == null) {
                 throw new ArgumentException(bstrInputFileContents);
+				}
 
             var Reader = new StringReader(bstrInputFileContents);
             var Writer = new StringWriter();
@@ -308,8 +317,9 @@ namespace Goedel.VSIX.Binding {
         #region IObjectWithSite
 
         public void GetSite(ref Guid riid, out IntPtr ppvSite) {
-            if (site == null)
+            if (site == null) {
                 Marshal.ThrowExceptionForHR(VSConstants.E_NOINTERFACE);
+				}
 
             // Query for the interface using the site object initially passed to the generator
             IntPtr punk = Marshal.GetIUnknownForObject(site);
@@ -338,15 +348,17 @@ namespace Goedel.VSIX.Binding {
 	// can only handle so many module loads and unloads without a reset.
 
     static partial class GuidList {
-        public const string guidExceptionalGeneratorString = "7F47F99D-A484-4628-8AE4-0D866F7F7C43";
-        public static readonly Guid guidExceptionalGenerator = new Guid(guidExceptionalGeneratorString);
+        public const string GuidExceptionalGeneratorString = "7F47F99D-A484-4628-8AE4-0D866F7F7C43";
+        public static readonly Guid GuidExceptionalGenerator = new Guid(GuidExceptionalGeneratorString);
         };
 
     [ComVisible(true)]
-    [Guid(GuidList.guidExceptionalGeneratorString)]
+    [Guid(GuidList.GuidExceptionalGeneratorString)]
     [ProvideObject(typeof(Exceptional))]
     [CodeGeneratorRegistration(typeof(Exceptional), "Exceptional", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(Exceptional), "Exceptional", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(Exceptional), "Exceptional", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class Exceptional : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
@@ -358,8 +370,9 @@ namespace Goedel.VSIX.Binding {
             get {
                 if (codeDomProvider == null) {
                     IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);
-                    if (provider != null)
+                    if (provider != null) {
                         codeDomProvider = (CodeDomProvider)provider.CodeDomProvider;
+						}
                     }
                 return codeDomProvider;
                 }
@@ -389,9 +402,9 @@ namespace Goedel.VSIX.Binding {
             }
 
         protected virtual void Dispose(bool disposing)  {
-            if (_disposed)
+            if (_disposed) {
                 return;
-
+				}
             if (disposing) {
                 if (serviceProvider != null) {
 					serviceProvider.Dispose();
@@ -419,8 +432,9 @@ namespace Goedel.VSIX.Binding {
 				IntPtr[] rgbOutputFileContents, 
 				out uint pcbOutput, 
 				IVsGeneratorProgress pGenerateProgress) {
-            if (bstrInputFileContents == null)
+            if (bstrInputFileContents == null) {
                 throw new ArgumentException(bstrInputFileContents);
+				}
 
             var Reader = new StringReader(bstrInputFileContents);
             var Writer = new StringWriter();
@@ -461,8 +475,9 @@ namespace Goedel.VSIX.Binding {
         #region IObjectWithSite
 
         public void GetSite(ref Guid riid, out IntPtr ppvSite) {
-            if (site == null)
+            if (site == null) {
                 Marshal.ThrowExceptionForHR(VSConstants.E_NOINTERFACE);
+				}
 
             // Query for the interface using the site object initially passed to the generator
             IntPtr punk = Marshal.GetIUnknownForObject(site);
@@ -491,15 +506,17 @@ namespace Goedel.VSIX.Binding {
 	// can only handle so many module loads and unloads without a reset.
 
     static partial class GuidList {
-        public const string guidGScriptGeneratorString = "038C7FC8-029C-4511-8AEB-B7FC0741C463";
-        public static readonly Guid guidGScriptGenerator = new Guid(guidGScriptGeneratorString);
+        public const string GuidGScriptGeneratorString = "038C7FC8-029C-4511-8AEB-B7FC0741C463";
+        public static readonly Guid GuidGScriptGenerator = new Guid(GuidGScriptGeneratorString);
         };
 
     [ComVisible(true)]
-    [Guid(GuidList.guidGScriptGeneratorString)]
+    [Guid(GuidList.GuidGScriptGeneratorString)]
     [ProvideObject(typeof(GScript))]
     [CodeGeneratorRegistration(typeof(GScript), "GScript", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(GScript), "GScript", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(GScript), "GScript", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class GScript : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
@@ -511,8 +528,9 @@ namespace Goedel.VSIX.Binding {
             get {
                 if (codeDomProvider == null) {
                     IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);
-                    if (provider != null)
+                    if (provider != null) {
                         codeDomProvider = (CodeDomProvider)provider.CodeDomProvider;
+						}
                     }
                 return codeDomProvider;
                 }
@@ -542,9 +560,9 @@ namespace Goedel.VSIX.Binding {
             }
 
         protected virtual void Dispose(bool disposing)  {
-            if (_disposed)
+            if (_disposed) {
                 return;
-
+				}
             if (disposing) {
                 if (serviceProvider != null) {
 					serviceProvider.Dispose();
@@ -572,8 +590,9 @@ namespace Goedel.VSIX.Binding {
 				IntPtr[] rgbOutputFileContents, 
 				out uint pcbOutput, 
 				IVsGeneratorProgress pGenerateProgress) {
-            if (bstrInputFileContents == null)
+            if (bstrInputFileContents == null) {
                 throw new ArgumentException(bstrInputFileContents);
+				}
 
             var Reader = new StringReader(bstrInputFileContents);
             var Writer = new StringWriter();
@@ -610,8 +629,9 @@ namespace Goedel.VSIX.Binding {
         #region IObjectWithSite
 
         public void GetSite(ref Guid riid, out IntPtr ppvSite) {
-            if (site == null)
+            if (site == null) {
                 Marshal.ThrowExceptionForHR(VSConstants.E_NOINTERFACE);
+				}
 
             // Query for the interface using the site object initially passed to the generator
             IntPtr punk = Marshal.GetIUnknownForObject(site);
@@ -640,15 +660,17 @@ namespace Goedel.VSIX.Binding {
 	// can only handle so many module loads and unloads without a reset.
 
     static partial class GuidList {
-        public const string guidGoedel3GeneratorString = "446C3603-F595-41BF-8BF3-0FA7C6895F33";
-        public static readonly Guid guidGoedel3Generator = new Guid(guidGoedel3GeneratorString);
+        public const string GuidGoedel3GeneratorString = "446C3603-F595-41BF-8BF3-0FA7C6895F33";
+        public static readonly Guid GuidGoedel3Generator = new Guid(GuidGoedel3GeneratorString);
         };
 
     [ComVisible(true)]
-    [Guid(GuidList.guidGoedel3GeneratorString)]
+    [Guid(GuidList.GuidGoedel3GeneratorString)]
     [ProvideObject(typeof(Goedel3))]
     [CodeGeneratorRegistration(typeof(Goedel3), "Goedel3", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(Goedel3), "Goedel3", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(Goedel3), "Goedel3", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class Goedel3 : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
@@ -660,8 +682,9 @@ namespace Goedel.VSIX.Binding {
             get {
                 if (codeDomProvider == null) {
                     IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);
-                    if (provider != null)
+                    if (provider != null) {
                         codeDomProvider = (CodeDomProvider)provider.CodeDomProvider;
+						}
                     }
                 return codeDomProvider;
                 }
@@ -691,9 +714,9 @@ namespace Goedel.VSIX.Binding {
             }
 
         protected virtual void Dispose(bool disposing)  {
-            if (_disposed)
+            if (_disposed) {
                 return;
-
+				}
             if (disposing) {
                 if (serviceProvider != null) {
 					serviceProvider.Dispose();
@@ -721,8 +744,9 @@ namespace Goedel.VSIX.Binding {
 				IntPtr[] rgbOutputFileContents, 
 				out uint pcbOutput, 
 				IVsGeneratorProgress pGenerateProgress) {
-            if (bstrInputFileContents == null)
+            if (bstrInputFileContents == null) {
                 throw new ArgumentException(bstrInputFileContents);
+				}
 
             var Reader = new StringReader(bstrInputFileContents);
             var Writer = new StringWriter();
@@ -763,8 +787,9 @@ namespace Goedel.VSIX.Binding {
         #region IObjectWithSite
 
         public void GetSite(ref Guid riid, out IntPtr ppvSite) {
-            if (site == null)
+            if (site == null) {
                 Marshal.ThrowExceptionForHR(VSConstants.E_NOINTERFACE);
+				}
 
             // Query for the interface using the site object initially passed to the generator
             IntPtr punk = Marshal.GetIUnknownForObject(site);

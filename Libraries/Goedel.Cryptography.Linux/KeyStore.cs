@@ -5,6 +5,8 @@ using Goedel.Utilities;
 using Goedel.IO;
 using Goedel.Cryptography.PKIX;
 using Goedel.Cryptography.Jose;
+using Goedel.Protocol;
+
 /// <summary>
 /// 
 /// </summary>
@@ -27,9 +29,8 @@ namespace Goedel.Cryptography.Linux {
             }
 
 
-        static string FileName (string UDF) {
-            return Path.Combine(KeystoreUserPrivate, UDF);
-            }
+        static string FileName (string UDF) => Path.Combine(KeystoreUserPrivate, UDF);
+
 
         /// <summary>
         /// Write a key to the machine keystore
@@ -81,7 +82,7 @@ namespace Goedel.Cryptography.Linux {
 
             var Plaintext = CipherText;// DPAPI.Decrypt(CipherText, out Description, EntropyBytes);
             var PlaintextText = Plaintext.ToUTF8();
-            var Container = KeyContainer.FromTagged(PlaintextText);
+            var Container = KeyContainer.FromJSON(PlaintextText.JSONReader());
             return Container.Key.GetKeyPair(Container.Exportable); 
             }
 

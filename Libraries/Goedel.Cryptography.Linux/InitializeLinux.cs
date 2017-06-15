@@ -12,7 +12,7 @@ namespace Goedel.Cryptography.Linux{
     /// <summary>
     /// Initialize for the Linux style key store
     /// </summary>
-    public static class Linux {
+    public static class CryptographyLinux {
 
         static bool Initialized = false;
         static Mutex InitializationLock = new Mutex();
@@ -21,7 +21,7 @@ namespace Goedel.Cryptography.Linux{
         /// Perform initialization of the Goedel.Cryptography portable class
         /// with delegates to the .NET framework methods.
         /// </summary>
-        public static void Initialize() {
+        public static void Initialize(bool TestMode=false) {
             InitializationLock.WaitOne();
 
             CryptographyFramework.Initialize();

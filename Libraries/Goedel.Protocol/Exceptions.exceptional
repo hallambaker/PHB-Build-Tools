@@ -32,3 +32,6 @@ Namespace Goedel.Protocol
 	Exception InvalidInput
 		Console "Deserialzer encountered invalid input"
 
+	Exception NYI
+		Console "Not Yet Implemented"
+

@@ -435,6 +435,7 @@ namespace #{Class.Namespace} {
 			}
 
 		public virtual string _#{Entry.ID} {
+#!			get => (_Data[#{Entry.Index}] as #{Entry.Type}).Value.To;
 			set => _Data[#{Entry.Index}].Parameter (value);
 			}
 #end foreach

@@ -21,6 +21,11 @@ namespace Goedel.Command {
         /// <summary></summary>
         public static char FlagIndicator = '/';
 
+        //public void MainMethod (string Argument) {
+        //    MainMethod(Argument.Split((char[]) null, StringSplitOptions.RemoveEmptyEntries));
+        //    }
+
+        //public abstract void MainMethod (string[] Argument);
 
         /// <summary>
         /// 
@@ -117,11 +122,13 @@ namespace Goedel.Command {
                     case CommandLex.Token.Value: {
                         var Search = true;
                         for (var j = Parameter; Search & j < Describe.Entries.Count; j++) {
-                            var Entry = Describe.Entries[j] as DescribeEntryParameter;
-                            if (Entry != null) {
-                                SetValue(Options._Data[Entry.Index], CommandLex.Value);
-                                j++;
-                                Search = false;
+                            switch (Describe.Entries[j]) {
+                                case DescribeEntryParameter Entry: {
+                                    SetValue(Options._Data[Entry.Index], CommandLex.Value);
+                                    j++;
+                                    Search = false;
+                                    break;
+                                    }
                                 }
                             }
                         break;

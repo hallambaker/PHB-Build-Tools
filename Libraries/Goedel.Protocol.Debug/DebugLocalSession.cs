@@ -90,7 +90,7 @@ namespace Goedel.Protocol.Debug {
             // Wrap the request object with the transaction name.
             JSONWriter.WriteObjectStart();
             JSONWriter.WriteToken(Tag, 0);
-            Request.Serialize(JSONWriter, true);
+            Request.Serialize(JSONWriter, false);
             JSONWriter.WriteObjectEnd();
 
             // Now prepare a reader so that the data can be unpacked

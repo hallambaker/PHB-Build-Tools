@@ -34,13 +34,12 @@ namespace PHB_Framework_Library1 {
     /// </summary>
     public class Start3 {
 
-        
-
-
         ///<summary></summary>
         public Start3 () {
-            var UnitTest1 = new UnitTest1();
-            UnitTest1.TestDispatch();
+            CommandSplitLex.Trace = true;
+
+            var UnitTest1 = new TestLexer();
+            UnitTest1.TestCommandSplitLex();
             }
         }
 

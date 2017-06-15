@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
+using Goedel.Protocol;
 
 namespace Goedel.Cryptography.Jose {
 
@@ -117,7 +118,7 @@ namespace Goedel.Cryptography.Jose {
         /// The Key data
         /// </summary>
         public Key Key {
-            get => Key.FromTagged(KeyData.ToUTF8()); }
+            get => Key.FromJSON(new JSONReader (KeyData.ToUTF8())); }
 
         string KeyText { get => KeyData.ToUTF8(); }
 

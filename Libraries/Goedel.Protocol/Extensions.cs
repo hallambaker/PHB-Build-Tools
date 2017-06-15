@@ -50,7 +50,27 @@ namespace Goedel.Protocol {
             throw new NYI();
             }
 
+        /// <summary>
+        /// Create a JSONReader for the specified data
+        /// </summary>
+        /// <param name="Data">The data to be read as a UTF8 data stream.</param>
+        /// <returns>The JSONReader</returns>
+        public static JSONReader JSONReader (this byte[] Data) => new JSONReader(Data);
 
+
+        /// <summary>
+        /// Create a JSONReader for the specified data
+        /// </summary>
+        /// <param name="Data">The data to be read as a UTF8 data stream.</param>
+        /// <returns>The JSONReader</returns>
+        public static JSONReader JSONReader (this string Data) => new JSONReader(Data);
+
+        /// <summary>
+        /// Convert object to byte sequence in JSON form.
+        /// </summary>
+        /// <param name="Object">The object to convert</param>
+        /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
+        /// <returns>Data as byte sequence.</returns>
         public static byte[] GetJson (this JSONObject Object, bool Tagged = true) {
             return Object.GetBytes(Tagged);
             }
@@ -58,6 +78,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Convert object to byte sequence in JSON form.
         /// </summary>
+        /// <param name="Object">The object to convert</param>
         /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
         public static byte[] GetJsonA (this JSONObject Object, bool Tagged = true) {
@@ -69,6 +90,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Convert object to byte sequence in JSON form.
         /// </summary>
+        /// <param name="Object">The object to convert</param>
         /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
         public static byte[] GetJsonB (this JSONObject Object, bool Tagged = true) {
@@ -80,6 +102,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Convert object to byte sequence in JSON form.
         /// </summary>
+        /// <param name="Object">The object to convert</param>
         /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
         public static byte[] GetJsonC (this JSONObject Object, bool Tagged = true,
@@ -90,8 +113,9 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>
-        /// Convert object to byte sequence in JSON form.
+        /// Convert object to byte sequence in JSON form using JSON-D encoding
         /// </summary>
+        /// <param name="Object">The object to convert</param>
         /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
         public static byte[] GetJsonD (this JSONObject Object, bool Tagged = true,

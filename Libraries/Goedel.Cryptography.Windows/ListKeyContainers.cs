@@ -46,13 +46,15 @@ namespace Goedel.Cryptography.Windows {
             //uint flags = (uint)(CRYPT_MACHINE_KEYSET | CRYPT_VERIFYCONTEXT);
             uint flags = (uint)( CRYPT_VERIFYCONTEXT);
 
-            if (CryptAcquireContext(ref hProv, null, null, PROV_RSA_FULL, flags) == false)
+            if (CryptAcquireContext(ref hProv, null, null, PROV_RSA_FULL, flags) == false) {
                 throw new Exception("CryptAcquireContext");
+                }
 
             uint bufferLength = 2048;
             StringBuilder stringBuilder = new StringBuilder((int)bufferLength);
-            if (CryptGetProvParam(hProv, PP_ENUMCONTAINERS, stringBuilder, ref bufferLength, CRYPT_FIRST) == false)
+            if (CryptGetProvParam(hProv, PP_ENUMCONTAINERS, stringBuilder, ref bufferLength, CRYPT_FIRST) == false) {
                 return keyContainerNameList;
+                }
 
             keyContainerNameList.Add(stringBuilder.ToString());
 
@@ -82,10 +84,12 @@ namespace Goedel.Cryptography.Windows {
 
         void Delete(string Key) {
             try {
-                var CSP = new CspParameters();
-                CSP.KeyContainerName = Key;
-                var RSA = new RSACryptoServiceProvider(CSP);
-                RSA.PersistKeyInCsp = false;
+                var CSP = new CspParameters() {
+                    KeyContainerName = Key
+                    };
+                var RSA = new RSACryptoServiceProvider(CSP) {
+                    PersistKeyInCsp = false
+                    };
                 }
             catch {
 

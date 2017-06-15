@@ -1,90 +1,36 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.0
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASN", "ASN", "{EA3BE96C-E020-4FF9-A144-90817A257E3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellASN", "ASN\ShellASN\ShellASN.csproj", "{D5944895-3830-4375-9C9C-A71F36FA6C42}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.ASN", "ASN\Goedel.Tool.ASN\Goedel.Tool.ASN.csproj", "{D252E267-BB98-474B-A1E2-D9E5FE7873A6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Command", "Command", "{C03E16DF-435C-49E9-B07F-E18BA01C2823}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Command", "Command\Goedel.Tool.Command\Goedel.Tool.Command.csproj", "{40104BFF-96C2-4F70-AB22-68AEFB023740}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domainer", "Domainer", "{738926F3-25AD-4D3B-8BF4-B3413D940BE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellDomainer", "Domainer\ShellDomainer\ShellDomainer.csproj", "{ED8D0EDE-B517-4194-88A9-E5E1504EA955}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Domainer", "Domainer\Goedel.Tool.Domainer\Goedel.Tool.Domainer.csproj", "{04A6D8BE-5072-486D-832D-D6C2C586C72D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exceptional", "Exceptional", "{251DEDF2-C6B2-46BC-95AB-E96B6A4E3B4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellExceptional", "Exceptional\ShellExceptional\ShellExceptional.csproj", "{2709AC63-6180-4A22-BFD8-148F68D32115}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Exceptional", "Exceptional\Goedel.Tool.Exceptional\Goedel.Tool.Exceptional.csproj", "{9C9C300A-F6B6-440D-82A7-DF457E607FB2}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FSR", "FSR", "{E66E0023-8DD5-48D1-863F-5581B4D9E848}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.FSRGen", "FSRGen\Goedel.Tool.FSRGen\Goedel.Tool.FSRGen.csproj", "{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellFSRGen", "FSRGen\ShellFSRGen\ShellFSRGen.csproj", "{BC6A5895-0F98-4116-985B-29D2F705349B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GScript", "GScript", "{AF82A4C1-0D76-4AD4-9A94-8BCD967B6E18}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Goedel", "Goedel", "{2ADFE3F0-4482-4CF4-B2B9-0FE20275845A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Script", "GScript\Goedel.Tool.Script\Goedel.Tool.Script.csproj", "{75D3ED83-2AE6-47BF-A280-3E82983C975E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptClassifier", "GScript\GScriptClassifier\ScriptClassifier.csproj", "{E7EFCC71-C81A-4D8B-B0B8-037441A5FFA3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellGScript", "GScript\ShellGScript\ShellGScript.csproj", "{74216ED7-EC49-4D82-8BA8-A74327DA453B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellGoedel3", "Goedel3\ShellGoedel3\ShellGoedel3.csproj", "{19B31A95-3C2E-4148-AA60-66F10A09FE98}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProtoGen", "ProtoGen", "{CEBDA735-C664-4DFB-A098-AA4D72CB9857}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.ProtoGen", "Protogen\Goedel.Tool.ProtoGen\Goedel.Tool.ProtoGen.csproj", "{15877B95-FCBE-4970-B833-A1C6A70586B1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellProtoGen", "protogen\ShellProtoGen\ShellProtoGen.csproj", "{7D46CF01-FB6D-440D-B17D-E75CE0E26D5B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Schema", "Goedel3\Goedel.Tool.Schema\Goedel.Tool.Schema.csproj", "{7D41544E-CC2E-436E-9C2F-937B4D516C92}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Document.Markdown", "RFCTool\Goedel.Document.Markdown\Goedel.Document.Markdown.csproj", "{BA3E686D-8404-46B3-B06D-048E6367E4EB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Document.RFC.Convert", "RFCTool\Goedel.Document.RFC.Convert\Goedel.Document.RFC.Convert.csproj", "{EFEFBAB6-A3B4-42DC-AF30-FA14F2A9FF16}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RegistryTools", "RegistryTools", "{0C25B528-D299-46ED-8E95-9D1957D4790A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellRegistryConfig", "RegistryConfig\ShellRegistryConfig\ShellRegistryConfig.csproj", "{AEE9D07B-A366-4923-9931-1F2EA9DDEF32}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.RegistryConfig", "RegistryConfig\Goedel.Tool.RegistryConfig\Goedel.Tool.RegistryConfig.csproj", "{FAD27739-EFF1-4D5E-BC80-BC43A62707C1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Document.RFC", "RFCTool\Goedel.Tool.RFCTool\Goedel.Document.RFC.csproj", "{53284D1C-9B9F-4A44-ADDE-306606F8F0E7}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VSIXBuild", "VSIXBuild", "{C7635E0A-6389-43CA-8B68-1B125D707DE4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.VSIXBuild", "VSIXBuild\Goedel.Tool.VSIXBuild\Goedel.Tool.VSIXBuild.csproj", "{88E55204-D54C-438D-BD47-9D33CCB2580B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DocTools", "DocTools", "{D45013E8-B27D-4469-8547-C22E8CB95981}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Distribution", "Distribution", "{3520B12D-FC1D-4A96-8954-E69F5F7DBA53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellRFCTool", "RFCTool\ShellRFCTool\ShellRFCTool.csproj", "{9FD72649-B35B-48E0-AA01-BD8810566EDD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Document.OpenXML", "RFCTool\Goedel.Document.OpenXML\Goedel.Document.OpenXML.csproj", "{CF4F9F67-550F-494C-88C8-51AB0CB552CB}"
-EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trojan3", "Trojan3", "{1694405C-A46E-4DDE-B318-E19EA3BE587B}"
 	ProjectSection(SolutionItems) = preProject
 		Configuration.md = Configuration.md
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Trojan.Script", "Trojan3\Goedel.Trojan.Script\Goedel.Trojan.Script.csproj", "{343B6836-1C87-4717-BA6F-611E38BCCC82}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellTrojan3", "Trojan3\Trojan3\ShellTrojan3.csproj", "{6E836F20-7DD9-41FD-80D7-796ADFF49516}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F61136C8-EA6D-4458-AF67-E40927C1858D}"
 	ProjectSection(SolutionItems) = preProject
@@ -96,9 +42,65 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Windows.md = Windows.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellVSIXBuild", "VSIXBuild\ShellVSIXBuild\ShellVSIXBuild.csproj", "{6217BCE3-C09B-4125-8B5F-0D4A6EB4AD94}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MakeyMakey", "MakeyMakey", "{5EFE82AA-D2A1-4565-B4EF-5CC736153F06}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{1CEDA244-78DA-46A7-A033-E3409CAA9C92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellASN", "ASN\ShellASN\ShellASN.csproj", "{D5944895-3830-4375-9C9C-A71F36FA6C42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.ASN", "ASN\Goedel.Tool.ASN\Goedel.Tool.ASN.csproj", "{D252E267-BB98-474B-A1E2-D9E5FE7873A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Command", "Command\Goedel.Tool.Command\Goedel.Tool.Command.csproj", "{40104BFF-96C2-4F70-AB22-68AEFB023740}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellDomainer", "Domainer\ShellDomainer\ShellDomainer.csproj", "{ED8D0EDE-B517-4194-88A9-E5E1504EA955}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Domainer", "Domainer\Goedel.Tool.Domainer\Goedel.Tool.Domainer.csproj", "{04A6D8BE-5072-486D-832D-D6C2C586C72D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellExceptional", "Exceptional\ShellExceptional\ShellExceptional.csproj", "{2709AC63-6180-4A22-BFD8-148F68D32115}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Exceptional", "Exceptional\Goedel.Tool.Exceptional\Goedel.Tool.Exceptional.csproj", "{9C9C300A-F6B6-440D-82A7-DF457E607FB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.FSRGen", "FSRGen\Goedel.Tool.FSRGen\Goedel.Tool.FSRGen.csproj", "{8CAD8AFC-C92F-4CB4-AF2C-79933362A63E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellFSRGen", "FSRGen\ShellFSRGen\ShellFSRGen.csproj", "{BC6A5895-0F98-4116-985B-29D2F705349B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Script", "GScript\Goedel.Tool.Script\Goedel.Tool.Script.csproj", "{75D3ED83-2AE6-47BF-A280-3E82983C975E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptClassifier", "GScript\GScriptClassifier\ScriptClassifier.csproj", "{E7EFCC71-C81A-4D8B-B0B8-037441A5FFA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellGScript", "GScript\ShellGScript\ShellGScript.csproj", "{74216ED7-EC49-4D82-8BA8-A74327DA453B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellGoedel3", "Goedel3\ShellGoedel3\ShellGoedel3.csproj", "{19B31A95-3C2E-4148-AA60-66F10A09FE98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.ProtoGen", "Protogen\Goedel.Tool.ProtoGen\Goedel.Tool.ProtoGen.csproj", "{15877B95-FCBE-4970-B833-A1C6A70586B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellProtoGen", "protogen\ShellProtoGen\ShellProtoGen.csproj", "{7D46CF01-FB6D-440D-B17D-E75CE0E26D5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Schema", "Goedel3\Goedel.Tool.Schema\Goedel.Tool.Schema.csproj", "{7D41544E-CC2E-436E-9C2F-937B4D516C92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Document.Markdown", "RFCTool\Goedel.Document.Markdown\Goedel.Document.Markdown.csproj", "{BA3E686D-8404-46B3-B06D-048E6367E4EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Document.RFC.Convert", "RFCTool\Goedel.Document.RFC.Convert\Goedel.Document.RFC.Convert.csproj", "{EFEFBAB6-A3B4-42DC-AF30-FA14F2A9FF16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellRegistryConfig", "RegistryConfig\ShellRegistryConfig\ShellRegistryConfig.csproj", "{AEE9D07B-A366-4923-9931-1F2EA9DDEF32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.RegistryConfig", "RegistryConfig\Goedel.Tool.RegistryConfig\Goedel.Tool.RegistryConfig.csproj", "{FAD27739-EFF1-4D5E-BC80-BC43A62707C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Document.RFC", "RFCTool\Goedel.Tool.RFCTool\Goedel.Document.RFC.csproj", "{53284D1C-9B9F-4A44-ADDE-306606F8F0E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.VSIXBuild", "VSIXBuild\Goedel.Tool.VSIXBuild\Goedel.Tool.VSIXBuild.csproj", "{88E55204-D54C-438D-BD47-9D33CCB2580B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellRFCTool", "RFCTool\ShellRFCTool\ShellRFCTool.csproj", "{9FD72649-B35B-48E0-AA01-BD8810566EDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Document.OpenXML", "RFCTool\Goedel.Document.OpenXML\Goedel.Document.OpenXML.csproj", "{CF4F9F67-550F-494C-88C8-51AB0CB552CB}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Trojan.Script", "Trojan3\Goedel.Trojan.Script\Goedel.Trojan.Script.csproj", "{343B6836-1C87-4717-BA6F-611E38BCCC82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellTrojan3", "Trojan3\Trojan3\ShellTrojan3.csproj", "{6E836F20-7DD9-41FD-80D7-796ADFF49516}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellVSIXBuild", "VSIXBuild\ShellVSIXBuild\ShellVSIXBuild.csproj", "{6217BCE3-C09B-4125-8B5F-0D4A6EB4AD94}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Makey", "MakeyMakey\Goedel.Tools.Makey\Goedel.Tool.Makey.csproj", "{73BE9200-F4AB-4B78-B794-97196856838C}"
 EndProject
@@ -114,17 +116,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PHBBuildTools", "VSIX\PHBBu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PHBRFC", "VSIX\PHBRFC\PHBRFC.csproj", "{DD5B5CD9-B654-4037-BB54-F4CEC90B806D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Utilities", "Libraries\Goedel.Utilities\Goedel.Utilities.csproj", "{E891BC7F-D7BD-4931-931B-42C83CCA68E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Utilities", "Libraries\Goedel.Utilities\Goedel.Utilities.csproj", "{E891BC7F-D7BD-4931-931B-42C83CCA68E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Registry", "Libraries\Goedel.Registry\Goedel.Registry.csproj", "{EBDA947E-D7A9-4A93-AEF1-AEA9D56B9225}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{1CEDA244-78DA-46A7-A033-E3409CAA9C92}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.FSR", "Libraries\Goedel.FSR\Goedel.FSR.csproj", "{CCC286F1-6A5B-4946-A382-8A48797192B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.FSR", "Libraries\Goedel.FSR\Goedel.FSR.csproj", "{CCC286F1-6A5B-4946-A382-8A48797192B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.IO", "Libraries\Goedel.IO\Goedel.IO.csproj", "{C4824513-F416-4EAD-BE82-F2DF23641F6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.ASN", "Libraries\Goedel.ASN\Goedel.ASN.csproj", "{44E8B35D-0394-4F37-B52C-246F8610F031}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.ASN", "Libraries\Goedel.ASN\Goedel.ASN.csproj", "{44E8B35D-0394-4F37-B52C-246F8610F031}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellBootMaker", "RFCTool\ShellBootMaker\ShellBootMaker.csproj", "{C0608853-2513-4BE8-B64A-B6A0B4A504E6}"
 EndProject
@@ -177,6 +177,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCommandParse", "Command\TestCommandParse\TestCommandParse.csproj", "{B529880A-CF06-411F-80A9-BA6730C53D74}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Command", "Libraries\Goedel.Command\Goedel.Command.csproj", "{E7D4D1F4-E41A-44E2-ABBD-F6A9E1D3F1AC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Protocol", "Libraries\Goedel.Protocol\Goedel.Protocol.csproj", "{8861D7EE-232B-46AE-BE79-12E93F767B41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1654,6 +1656,38 @@ Global
 		{E7D4D1F4-E41A-44E2-ABBD-F6A9E1D3F1AC}.Release|x64.Build.0 = Release|Any CPU
 		{E7D4D1F4-E41A-44E2-ABBD-F6A9E1D3F1AC}.Release|x86.ActiveCfg = Release|Any CPU
 		{E7D4D1F4-E41A-44E2-ABBD-F6A9E1D3F1AC}.Release|x86.Build.0 = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Debug|ARM.Build.0 = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Debug|x64.Build.0 = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Debug|x86.Build.0 = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Publish|ARM.ActiveCfg = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Publish|ARM.Build.0 = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Publish|x64.ActiveCfg = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Publish|x64.Build.0 = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Publish|x86.ActiveCfg = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Publish|x86.Build.0 = Debug|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.RaspberryPi|ARM.ActiveCfg = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.RaspberryPi|ARM.Build.0 = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.RaspberryPi|x64.ActiveCfg = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.RaspberryPi|x64.Build.0 = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.RaspberryPi|x86.Build.0 = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Release|ARM.ActiveCfg = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Release|ARM.Build.0 = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Release|x64.ActiveCfg = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Release|x64.Build.0 = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Release|x86.ActiveCfg = Release|Any CPU
+		{8861D7EE-232B-46AE-BE79-12E93F767B41}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1704,5 +1738,6 @@ Global
 		{C436CA2F-E49F-4380-99E9-2FCCBB9C0969} = {D45013E8-B27D-4469-8547-C22E8CB95981}
 		{B529880A-CF06-411F-80A9-BA6730C53D74} = {C03E16DF-435C-49E9-B07F-E18BA01C2823}
 		{E7D4D1F4-E41A-44E2-ABBD-F6A9E1D3F1AC} = {1CEDA244-78DA-46A7-A033-E3409CAA9C92}
+		{8861D7EE-232B-46AE-BE79-12E93F767B41} = {1CEDA244-78DA-46A7-A033-E3409CAA9C92}
 	EndGlobalSection
 EndGlobal

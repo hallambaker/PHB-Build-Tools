@@ -149,8 +149,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="JoseID">Jose Name</param>
         /// <returns>Identifier</returns>
         public static CryptoAlgorithmID FromJoseID (this string JoseID) {
-            CryptoAlgorithmID Result;
-            var Found = StringtoID.TryGetValue(JoseID, out Result);
+            var Found = StringtoID.TryGetValue(JoseID, out CryptoAlgorithmID Result);
             return Found ? Result : CryptoAlgorithmID.NULL;
             }
 
@@ -161,8 +160,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="ID">Identifier</param>
         /// <returns>Jose Name</returns>
         public static string ToJoseID(this CryptoAlgorithmID ID) {
-            string Result;
-            var Found = IdToString.TryGetValue(ID, out Result);
+            var Found = IdToString.TryGetValue(ID, out var Result);
             return Found ? Result : null;
             }
 

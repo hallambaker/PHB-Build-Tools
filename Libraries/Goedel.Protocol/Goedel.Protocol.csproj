@@ -23,6 +23,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="MessageBase.protocol">
+      <Generator>Protogen</Generator>
+    </None>
+  </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="powershell publishtarget $(TargetPath)" />
   </Target>

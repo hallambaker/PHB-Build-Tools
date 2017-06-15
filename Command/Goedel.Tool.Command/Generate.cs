@@ -565,6 +565,7 @@ namespace Goedel.Tool.Command {
 				_Output.Write ("			}}\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("		public virtual string _{1} {{\n{0}", _Indent, Entry.ID);
+				//			get => (_Data[#{Entry.Index}] as #{Entry.Type}).Value.To;
 				_Output.Write ("			set => _Data[{1}].Parameter (value);\n{0}", _Indent, Entry.Index);
 				_Output.Write ("			}}\n{0}", _Indent);
 				}

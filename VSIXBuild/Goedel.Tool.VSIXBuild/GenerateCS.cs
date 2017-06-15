@@ -102,12 +102,12 @@ namespace Goedel.Tool.VSIXBuild {
 			_Output.Write ("	// can only handle so many module loads and unloads without a reset.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    static partial class GuidList {{\n{0}", _Indent);
-			_Output.Write ("        public const string guid{1}GeneratorString = \"{2}\";\n{0}", _Indent, Extension.Name, Generator.GUID.Value);
-			_Output.Write ("        public static readonly Guid guid{1}Generator = new Guid(guid{2}GeneratorString);\n{0}", _Indent, Extension.Name, Extension.Name);
+			_Output.Write ("        public const string Guid{1}GeneratorString = \"{2}\";\n{0}", _Indent, Extension.Name, Generator.GUID.Value);
+			_Output.Write ("        public static readonly Guid Guid{1}Generator = new Guid(Guid{2}GeneratorString);\n{0}", _Indent, Extension.Name, Extension.Name);
 			_Output.Write ("        }};\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    [ComVisible(true)]\n{0}", _Indent);
-			_Output.Write ("    [Guid(GuidList.guid{1}GeneratorString)]\n{0}", _Indent, Extension.Name);
+			_Output.Write ("    [Guid(GuidList.Guid{1}GeneratorString)]\n{0}", _Indent, Extension.Name);
 			_Output.Write ("    [ProvideObject(typeof({1}))]\n{0}", _Indent, Extension.Name);
 			foreach  (var Project in Generator.Project) {
 				if (  (Project.Value.ToString() =="CSharp")  ) {
@@ -135,8 +135,9 @@ namespace Goedel.Tool.VSIXBuild {
 			_Output.Write ("            get {{\n{0}", _Indent);
 			_Output.Write ("                if (codeDomProvider == null) {{\n{0}", _Indent);
 			_Output.Write ("                    IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);\n{0}", _Indent);
-			_Output.Write ("                    if (provider != null)\n{0}", _Indent);
+			_Output.Write ("                    if (provider != null) {{\n{0}", _Indent);
 			_Output.Write ("                        codeDomProvider = (CodeDomProvider)provider.CodeDomProvider;\n{0}", _Indent);
+			_Output.Write ("						}}\n{0}", _Indent);
 			_Output.Write ("                    }}\n{0}", _Indent);
 			_Output.Write ("                return codeDomProvider;\n{0}", _Indent);
 			_Output.Write ("                }}\n{0}", _Indent);
@@ -166,9 +167,9 @@ namespace Goedel.Tool.VSIXBuild {
 			_Output.Write ("            }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        protected virtual void Dispose(bool disposing)  {{\n{0}", _Indent);
-			_Output.Write ("            if (_disposed)\n{0}", _Indent);
+			_Output.Write ("            if (_disposed) {{\n{0}", _Indent);
 			_Output.Write ("                return;\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("				}}\n{0}", _Indent);
 			_Output.Write ("            if (disposing) {{\n{0}", _Indent);
 			_Output.Write ("                if (serviceProvider != null) {{\n{0}", _Indent);
 			_Output.Write ("					serviceProvider.Dispose();\n{0}", _Indent);
@@ -196,8 +197,9 @@ namespace Goedel.Tool.VSIXBuild {
 			_Output.Write ("				IntPtr[] rgbOutputFileContents, \n{0}", _Indent);
 			_Output.Write ("				out uint pcbOutput, \n{0}", _Indent);
 			_Output.Write ("				IVsGeneratorProgress pGenerateProgress) {{\n{0}", _Indent);
-			_Output.Write ("            if (bstrInputFileContents == null)\n{0}", _Indent);
+			_Output.Write ("            if (bstrInputFileContents == null) {{\n{0}", _Indent);
 			_Output.Write ("                throw new ArgumentException(bstrInputFileContents);\n{0}", _Indent);
+			_Output.Write ("				}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("            var Reader = new StringReader(bstrInputFileContents);\n{0}", _Indent);
 			_Output.Write ("            var Writer = new StringWriter();\n{0}", _Indent);
@@ -243,8 +245,9 @@ namespace Goedel.Tool.VSIXBuild {
 			_Output.Write ("        #region IObjectWithSite\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        public void GetSite(ref Guid riid, out IntPtr ppvSite) {{\n{0}", _Indent);
-			_Output.Write ("            if (site == null)\n{0}", _Indent);
+			_Output.Write ("            if (site == null) {{\n{0}", _Indent);
 			_Output.Write ("                Marshal.ThrowExceptionForHR(VSConstants.E_NOINTERFACE);\n{0}", _Indent);
+			_Output.Write ("				}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("            // Query for the interface using the site object initially passed to the generator\n{0}", _Indent);
 			_Output.Write ("            IntPtr punk = Marshal.GetIUnknownForObject(site);\n{0}", _Indent);

@@ -200,14 +200,6 @@ namespace Goedel.Protocol {
             Output.Write(Data);
             }
 
-        /// <summary>Write Date-Time value in RFC3339 format.</summary>
-        /// <param name="Data">Value to write</param>
-        public override void WriteDateTime(DateTime Data) {
-            Output.Write("\"");
-            Output.Write(Data);
-            Output.Write("\"");
-            }
-
         /// <summary>Mark start of array element</summary>
         public override void WriteArrayStart() {
             Output.Write("[");

@@ -80,6 +80,7 @@
       <LastGenOutput>GenerateC.cs</LastGenOutput>
     </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="VS.Make" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Document.script">

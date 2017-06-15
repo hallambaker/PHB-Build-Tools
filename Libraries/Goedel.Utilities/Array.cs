@@ -83,12 +83,16 @@ namespace Goedel.Utilities {
         /// boolean return value rather than throwing an error.
         /// </summary>
         /// <typeparam name="TKey">The Key type</typeparam>
-        /// <typeparam name="TValue">The Value type</typeparam>
+        /// <typeparam name="TValue">The Value type, null values are pruned.</typeparam>
         /// <param name="Dictionary">The dictionary to add to</param>
         /// <param name="Key">The key to add</param>
         /// <param name="Value">The value to add</param>
-        /// <returns></returns>
+        /// <returns>True if a new entry was added, otherwise false.</returns>
         public static bool AddSafe<TKey, TValue> (this IDictionary<TKey, TValue> Dictionary, TKey Key, TValue Value ) {
+            if (Value == null) {
+                return false;
+                }
+
             try {
                 Dictionary.Add(Key, Value);
                 return true;

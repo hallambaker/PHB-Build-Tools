@@ -173,7 +173,7 @@ namespace Goedel.Protocol {
 
         /// <summary>Write integer value token</summary>
         /// <param name="Data">Value to write</param>
-        abstract public void WriteDateTime(DateTime Data);
+        abstract public void WriteDateTime(DateTime? Data);
 
 
         /// <summary>Write array start</summary>

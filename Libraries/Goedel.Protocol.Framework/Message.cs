@@ -54,7 +54,7 @@ namespace Goedel.Protocol.Framework {
 
         /// <summary></summary>
         public string HTTPBinding {
-            get { return HTTP () ;}
+            get => HTTP () ;
             }
 
         /// <summary></summary>
@@ -65,21 +65,21 @@ namespace Goedel.Protocol.Framework {
             Payload = "{NOT-YET-IMPLEMENTED}";
             }
 
-        Encoding UTF8 = new UTF8Encoding(false);
+        System.Text.Encoding UTF8 = new UTF8Encoding(false);
 
         /// <summary></summary>
         public int ByteCount {
-            get { return UTF8.GetByteCount(Payload); }
+            get => UTF8.GetByteCount(Payload); 
             }
 
         /// <summary></summary>
         public string Base64Ticket {
-            get { return BaseConvert.ToBase64urlString(Ticket); }
+            get => BaseConvert.ToBase64urlString(Ticket); 
             }
 
         /// <summary></summary>
         public string Base64Mac {
-            get { return BaseConvert.ToBase64urlString(MAC); }
+            get => BaseConvert.ToBase64urlString(MAC); 
             }
 
         ///// <summary></summary>

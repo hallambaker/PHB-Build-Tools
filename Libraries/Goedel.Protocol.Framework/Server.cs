@@ -356,7 +356,7 @@ namespace Goedel.Protocol.Framework {
                 var ResponseObject = Port.Provider.Dispatch(null, JSONReader);
 
                 var ResponseBody = ResponseObject.ToString();
-                var Buffer = Encoding.UTF8.GetBytes(ResponseBody);
+                var Buffer = System.Text.Encoding.UTF8.GetBytes(ResponseBody);
 
                 var Response = Context.Response;
                 Response.ContentType = "application/json";
@@ -374,8 +374,8 @@ namespace Goedel.Protocol.Framework {
 
             finally {
                 // Make certain all stream objects are cleaned up.
-                if (RequestStream != null) RequestStream.Close();
-                if (ResponseStream != null) ResponseStream.Close();
+                if (RequestStream != null) { RequestStream.Close(); }
+                if (ResponseStream != null) { ResponseStream.Close(); }
                 }
             }
 

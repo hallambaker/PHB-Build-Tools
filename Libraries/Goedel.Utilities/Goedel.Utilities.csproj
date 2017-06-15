@@ -22,6 +22,7 @@
     <AssemblyFileVersionSettings>None.IncrementOnDemand.IncrementOnDemandWithReset.Increment</AssemblyFileVersionSettings>
     <FileVersion>1.1.0.0</FileVersion>
     <AssemblyInfoFilePath>Properties\AssemblyInfo.cs</AssemblyInfoFilePath>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

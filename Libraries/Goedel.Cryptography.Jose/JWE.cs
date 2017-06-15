@@ -314,7 +314,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <returns>The decrypted data</returns>
         public byte[] Decrypt() {
-            throw new NYI();
+            throw new Goedel.Utilities.NYI();
             }
 
         /// <summary>

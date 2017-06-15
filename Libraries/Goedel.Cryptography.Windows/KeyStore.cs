@@ -5,6 +5,7 @@ using Goedel.Utilities;
 using Goedel.IO;
 using Goedel.Cryptography.PKIX;
 using Goedel.Cryptography.Jose;
+using Goedel.Protocol;
 /// <summary>
 /// 
 /// </summary>
@@ -79,7 +80,7 @@ namespace Goedel.Cryptography.Windows {
             //string Description;
             var Plaintext = DPAPI.Decrypt(CipherText, out var Description, EntropyBytes);
             var PlaintextText = Plaintext.ToUTF8();
-            var JoseKey = Key.FromTagged(PlaintextText);
+            var JoseKey = Key.FromJSON(PlaintextText.JSONReader());
 
 
             var Exportable = Description.StartsWith(ExportTrue);

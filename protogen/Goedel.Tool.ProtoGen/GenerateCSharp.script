@@ -70,47 +70,12 @@ namespace #{Namespace} {
 			};
 
 		/// <summary>
-        /// Factory method. Throws exception as this is an abstract class.
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static JSONObject _Factory () {
-			throw new CannotCreateAbstract();
-			}
-
-
-		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
         /// <param name="JSONReader">Input stream</param>
         /// <param name="Out">The created object</param>
         public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
 			Out = JSONReader.ReadTaggedObject (_TagDictionary);
-
-#if (OldConstructors)
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                Out = null;
-                return;
-                }
-
-			string token = JSONReader.ReadToken ();
-			Out = null;
-
-			switch (token) {
-#foreach (_Choice Entry in Protocol.Entries)
-#switchcast ProtoStructType Entry
-#casecast Message Message
-#% DeserializeCase (Message.Id,Message.ID);
-#casecast Structure Structure
-#% DeserializeCase (Structure.Id,Structure.ID);
-#end switchcast
-#end foreach
-				default : {
-					throw new Exception ("Not supported");
-					}
-				}	
-			JSONReader.EndObject ();
-#end if
             }
 		}
 
@@ -210,7 +175,7 @@ namespace #{Namespace} {
                 #{Transaction.Request} Request) {
 
             var ResponseData = JPCRemoteSession.Post("#{Transaction.Id}", Request);
-            var Response = #{Transaction.Response}.FromTagged(ResponseData);
+            var Response = #{Transaction.Response}.FromJSON(ResponseData.JSONReader(), true);
 
             return Response;
             }
@@ -249,7 +214,8 @@ namespace #{Namespace} {
 #switchcast ProtoStructType Entry2
 #casecast Transaction Transaction
 				case "#{Transaction.Id}" : {
-					var Request = #{Transaction.Request}.FromTagged (JSONReader);
+					var Request = new #{Transaction.Request}();
+					Request.Deserialize (JSONReader);
 					Response = Service.#{Transaction.Id} (Request);
 					break;
 					}
@@ -275,48 +241,13 @@ namespace #{Namespace} {
 #foreach (_Choice Entry in Protocol.Entries)
 #switchcast ProtoStructType Entry
 #casecast Message Message
-#% MakeClass (Message.Id, Message.Entries);
-#if (OldConstructors)
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>	
-        /// <param name="JSONReader">Input stream</param>			
-		public #{Message.Id} (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary>
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public #{Message.Id} (string _String) {
-			Deserialize (_String);
-			}
-#end if
-
+#% MakeClass (Message.Id, Message.Entries, Message.Parameterized);
 #% var Inherits = HasInherits  (Message.Entries);
 #% MakeSerializers (Message.Id, Message.ID, Message.Entries, Inherits);
 		}
 
 #casecast Structure Structure
 #% MakeClass (Structure.Id, Structure.Entries, Structure.Parameterized);
-#if (OldConstructors)
-        /// <summary>
-		/// Initialize class from JSONReader stream.
-        /// </summary>		
-        /// <param name="JSONReader">Input stream</param>	
-		public #{Structure.Id} (JSONReader JSONReader) {
-			Deserialize (JSONReader);
-			}
-
-        /// <summary> 
-		/// Initialize class from a JSON encoded class.
-        /// </summary>		
-        /// <param name="_String">Input string</param>
-		public #{Structure.Id} (string _String) {
-			Deserialize (_String);
-			}
-#end if
 #% var Inherits = HasInherits  (Structure.Entries);
 #% MakeSerializers (Structure.Id, Structure.ID, Structure.Entries, Inherits);
 		}
@@ -407,14 +338,6 @@ public partial class #{Id} : #{Inherits} {
 			return "#{Id}";
 			}
 
-#if (OldConstructors)
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public #{Id} () {
-			_Initialize ();
-			}
-#end if
 #% }
 #end block 
 
@@ -457,16 +380,6 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 #end if
 			}
 
-
-
-#if (OldConstructors)
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-		public #{Id} () {
-			_Initialize ();
-			}
-#end if
 #% }
 #end block 
 
@@ -576,93 +489,28 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 				}
 			}
 
-
-#if (!IsAbstract (Entries))
-
-        /// <summary>
-		/// Create a new instance from untagged byte input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new #{Id} From (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return From (_Input);
-			}
-
-        /// <summary>
-		/// Create a new instance from untagged string input.
-		/// i.e. {... data ... }
-        /// </summary>	
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new #{Id} From (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			var Result = new #{Id} ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			// return new #{Id} (JSONReader);
-			}
-#end if
-
-        /// <summary>
-		/// Create a new instance from tagged byte input.
-		/// i.e. { "#{Id}" : {... data ... } }
-        /// </summary>	
-        /// <param name="_Data">The input data.</param>
-        /// <returns>The created object.</returns>				
-		public static new #{Id} FromTagged (byte[] _Data) {
-			var _Input = System.Text.Encoding.UTF8.GetString(_Data);
-			return FromTagged (_Input);
-			}
-
-        /// <summary>
-        /// Create a new instance from tagged string input.
-		/// i.e. { "#{Id}" : {... data ... } }
-        /// </summary>
-        /// <param name="_Input">The input data.</param>
-        /// <returns>The created object.</returns>		
-		public static new #{Id} FromTagged (string _Input) {
-			//#{Id} _Result;
-			//Deserialize (_Input, out _Result);
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			return FromTagged (JSONReader) ;
-			}
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new #{Id} FromTagged (JSONReader JSONReader) {
-			var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-			return Out as #{Id};
-#if (OldConstructors)
-			#{Id} Out = null;
-
-			JSONReader.StartObject ();
-            if (JSONReader.EOR) {
-                return null;
-                }
-
-			string token = JSONReader.ReadToken ();
-
-			switch (token) {
-
-#% MapInheritors (Id, STag);
-				default : {
-                    break;
-					}
+        public static new #{Id} FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
 				}
-			JSONReader.EndObject ();
-
-			return Out;
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as #{Id};
+				}
+#if (!IsAbstract (Entries))
+		    var Result = new #{Id} ();
+			Result.Deserialize (JSONReader);
+			return Result;
+#else
+			throw new CannotCreateAbstract();
 #end if
 			}
-
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
@@ -693,7 +541,7 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 						_Item.Deserialize (JSONReader);
 						// var _Item = new #{Type} (JSONReader);
 #elseif Entry._Tag () == ProtoStructType.TStruct
-						var _Item = #{Type}.FromTagged (JSONReader); // a tagged structure
+						var _Item = #{Type}.FromJSON (JSONReader, true); // a tagged structure
 #else
 						#{Type} _Item = JSONReader.Read#{TType} ();
 #end if
@@ -707,7 +555,7 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 					#{Token}.Deserialize (JSONReader);
  
 #elseif Entry._Tag () == ProtoStructType.TStruct
-					#{Token} = #{Type}.FromTagged (JSONReader) ;  // A tagged structure
+					#{Token} = #{Type}.FromJSON (JSONReader, true) ;  // A tagged structure
 #else
 					#{Token} = JSONReader.Read#{TType} ();
 #end if
@@ -824,7 +672,7 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 #casecast URI Param
 #% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "string";TType = "String";
 #casecast DateTime Param
-#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "DateTime"; Nullable = false; TType = "DateTime";
+#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "DateTime?"; Nullable = true; TType = "DateTime";
 #casecast Struct Param
 #% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = Param.Type.ToString(); TType = Type;
 #casecast TStruct Param

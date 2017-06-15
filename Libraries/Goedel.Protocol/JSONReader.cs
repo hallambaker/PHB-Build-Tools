@@ -453,6 +453,14 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>
+        /// Construct a JSONReader for the specified data buffer.
+        /// </summary>
+        /// <param name="BufferIn">The source.</param>
+        public JSONReader (byte[] DataIn) : this(System.Text.Encoding.UTF8.GetString(DataIn)) {
+            }
+
+
+        /// <summary>
         /// Attempt to read an object start from input.
         /// </summary>
         /// <returns>True if there is an object start item, otherwise 

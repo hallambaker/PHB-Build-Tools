@@ -56,12 +56,12 @@ namespace #{Cast.Name} {
 	// can only handle so many module loads and unloads without a reset.
 
     static partial class GuidList {
-        public const string guid#{Extension.Name}GeneratorString = "#{Generator.GUID.Value}";
-        public static readonly Guid guid#{Extension.Name}Generator = new Guid(guid#{Extension.Name}GeneratorString);
+        public const string Guid#{Extension.Name}GeneratorString = "#{Generator.GUID.Value}";
+        public static readonly Guid Guid#{Extension.Name}Generator = new Guid(Guid#{Extension.Name}GeneratorString);
         };
 
     [ComVisible(true)]
-    [Guid(GuidList.guid#{Extension.Name}GeneratorString)]
+    [Guid(GuidList.Guid#{Extension.Name}GeneratorString)]
     [ProvideObject(typeof(#{Extension.Name}))]
 #foreach (var Project in Generator.Project)
 #if (Project.Value.ToString() =="CSharp") 
@@ -89,8 +89,9 @@ namespace #{Cast.Name} {
             get {
                 if (codeDomProvider == null) {
                     IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);
-                    if (provider != null)
+                    if (provider != null) {
                         codeDomProvider = (CodeDomProvider)provider.CodeDomProvider;
+						}
                     }
                 return codeDomProvider;
                 }
@@ -120,9 +121,9 @@ namespace #{Cast.Name} {
             }
 
         protected virtual void Dispose(bool disposing)  {
-            if (_disposed)
+            if (_disposed) {
                 return;
-
+				}
             if (disposing) {
                 if (serviceProvider != null) {
 					serviceProvider.Dispose();
@@ -150,8 +151,9 @@ namespace #{Cast.Name} {
 				IntPtr[] rgbOutputFileContents, 
 				out uint pcbOutput, 
 				IVsGeneratorProgress pGenerateProgress) {
-            if (bstrInputFileContents == null)
+            if (bstrInputFileContents == null) {
                 throw new ArgumentException(bstrInputFileContents);
+				}
 
             var Reader = new StringReader(bstrInputFileContents);
             var Writer = new StringWriter();
@@ -197,8 +199,9 @@ namespace #{Cast.Name} {
         ##region IObjectWithSite
 
         public void GetSite(ref Guid riid, out IntPtr ppvSite) {
-            if (site == null)
+            if (site == null) {
                 Marshal.ThrowExceptionForHR(VSConstants.E_NOINTERFACE);
+				}
 
             // Query for the interface using the site object initially passed to the generator
             IntPtr punk = Marshal.GetIUnknownForObject(site);

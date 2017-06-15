@@ -42,7 +42,7 @@ namespace Goedel.Protocol {
         /// <returns>Data read from stream</returns>
         public static string ReadString(long Length, Stream Stream) {
             var Buffer = ReadBytes(Length, Stream);
-            return Encoding.UTF8.GetString(Buffer, 0 , Buffer.Length);
+            return System.Text.Encoding.UTF8.GetString(Buffer, 0 , Buffer.Length);
             }
 
         /// <summary>

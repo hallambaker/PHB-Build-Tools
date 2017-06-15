@@ -79,7 +79,7 @@ namespace Goedel.ASN {
         /// <summary>
         /// Object identifier of this structure.
         /// </summary>
-        public virtual int [] OID { get { return null; } }
+        public virtual int [] OID { get => null; } 
 
         /// <summary>
         /// Return the DER encoding of this structure

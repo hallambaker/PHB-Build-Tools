@@ -57,38 +57,41 @@ namespace Goedel.Protocol {
     /// Base class for JSON Objects.
     /// </summary>
     public abstract partial class JSONObject {
-
-        ///// <summary>
-        ///// Initialization constructor. Allows automatically generated 
-        ///// constructors to be overriden in child classes.
-        ///// </summary>
-        //protected virtual void _Initialize () {
-        //    }
+        public virtual string _PrimaryKey { get => null; }
 
         /// <summary>
         /// Tag value used as substitute for reflection internally.
         /// </summary>
         /// <returns>The object tag.</returns>
 		public virtual string Tag () {
-			return null;
-			}
+            return null;
+            }
 
 
         public virtual string _Tag { get; }
+
+
+        /// <summary>
+        /// Factory method. Throws exception as this is an abstract class.
+        /// </summary>
+        /// <returns>Object of this type</returns>
+        public static JSONObject _Factory () {
+            throw new CannotCreateAbstract();
+            }
 
         /// <summary>
         /// Base constructor.
         /// </summary>
 		public JSONObject () {
             //_Initialize();
-			}
+            }
 
         /// <summary>
         /// If implemented in the child class, performs a deep copy of the structure.
         /// </summary>
         /// <returns>Deep copy of the object with all referenced objects
         /// copied.</returns>
-        public virtual JSONObject DeepCopy() {
+        public virtual JSONObject DeepCopy () {
             return null;
             }
 
@@ -97,27 +100,27 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>Data as string.</returns>
 		public override string ToString () {
-			JSONWriter _JSONWriter = new JSONWriter ();
-			Serialize (_JSONWriter, true);
-			return _JSONWriter.GetUTF8;
-			}
+            JSONWriter _JSONWriter = new JSONWriter();
+            Serialize(_JSONWriter, true);
+            return _JSONWriter.GetUTF8;
+            }
 
         /// <summary>
         /// Convert object to string in JSON form.
         /// </summary>
         /// <returns>Data as string.</returns>
-		public virtual  string GetUTF8 () {
-			JSONWriter _JSONWriter = new JSONWriter ();
-			Serialize (_JSONWriter, true);
-			return _JSONWriter.GetUTF8;
-			}
+		public virtual string GetUTF8 () {
+            JSONWriter _JSONWriter = new JSONWriter();
+            Serialize(_JSONWriter, true);
+            return _JSONWriter.GetUTF8;
+            }
 
         /// <summary>
         /// Convert object to byte sequence in JSON form.
         /// </summary>
         /// <param name="tag">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
-        public virtual byte[] GetBytes(bool tag = true) {
+        public virtual byte[] GetBytes (bool tag = true) {
             JSONWriter _JSONWriter = new JSONWriter();
             Serialize(_JSONWriter, tag);
             return _JSONWriter.GetBytes;
@@ -128,19 +131,19 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Writer">Writer to serialize the data to</param>
         /// <param name="tag">If true, serialization is tagged with the object type.</param>
-        public virtual void Serialize (Writer Writer, bool tag=false) {
-			bool first = true;
-			if (tag) {
-				Writer.WriteObjectStart ();
-				Writer.WriteToken(Tag(), 0);
-				}
-			
-			Serialize (Writer, true, ref first);
-			
-			if (tag) {
-				Writer.WriteObjectEnd ();
-				}			
-			}
+        public virtual void Serialize (Writer Writer, bool tag = false) {
+            bool first = true;
+            if (tag) {
+                Writer.WriteObjectStart();
+                Writer.WriteToken(Tag(), 0);
+                }
+
+            Serialize(Writer, true, ref first);
+
+            if (tag) {
+                Writer.WriteObjectEnd();
+                }
+            }
 
         /// <summary>
         /// Serialize to the specified Writer.
@@ -149,7 +152,7 @@ namespace Goedel.Protocol {
         /// <param name="first">This is the first field in the object being serialized. This 
         /// value is set to false on exit.</param>
         /// <param name="wrap">Wrap the objects for formatting.</param>
-		public abstract void Serialize(Writer Writer, bool wrap, ref bool first);
+		public abstract void Serialize (Writer Writer, bool wrap, ref bool first);
 
         /// <summary>
         /// Serialize to the specified Writer. This is a dummy routine
@@ -160,7 +163,7 @@ namespace Goedel.Protocol {
         /// <param name="first">This is the first field in the object being serialized. This 
         /// value is set to false on exit.</param>
         /// <param name="wrap">Wrap the objects for formatting.</param>
-		public void SerializeX(Writer Writer, bool wrap, ref bool first) {
+		public void SerializeX (Writer Writer, bool wrap, ref bool first) {
             }
 
         /// <summary>
@@ -168,7 +171,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="_Data">Source</param>
         /// <returns>Constructed object</returns>
-        public static JSONObject From(byte[] _Data) {
+        public static JSONObject From (byte[] _Data) {
             return null;
             }
 
@@ -177,52 +180,62 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="_Input">Source</param>
         /// <returns>Constructed object</returns>
-        public static JSONObject From(string _Input) {
+        public static JSONObject From (string _Input) {
             return null;
             }
+
+        ///// <summary>
+        ///// Factory method to construct object from tagged byte data.
+        ///// </summary>
+        ///// <param name="_Data">Source</param>
+        ///// <returns>Constructed object</returns>
+        //public static JSONObject FromTagged(byte[] _Data) {
+        //    return null;
+        //    }
+
+        ///// <summary>
+        ///// Factory method to construct object from tagged string data.
+        ///// </summary>
+        ///// <param name="_Input">Source</param>
+        ///// <returns>Constructed object</returns>
+        //public static JSONObject FromTagged(string _Input) {
+        //    return null;
+        //    }
+
+        ///// <summary>
+        ///// Factory method to construct object from tagged string data.
+        ///// </summary>
+        ///// <param name="_Input">Source</param>
+        ///// <returns>Constructed object</returns>
+        //public static JSONObject FromTagged(JSONReader _Input) {
+        //    return null;
+        //    }
+
 
         /// <summary>
-        /// Factory method to construct object from tagged byte data.
+        /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="_Data">Source</param>
-        /// <returns>Constructed object</returns>
-        public static JSONObject FromTagged(byte[] _Data) {
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static JSONObject FromJSON (JSONReader _Input, bool Tagged) {
             return null;
             }
-
-        /// <summary>
-        /// Factory method to construct object from tagged string data.
-        /// </summary>
-        /// <param name="_Input">Source</param>
-        /// <returns>Constructed object</returns>
-        public static JSONObject FromTagged(string _Input) {
-            return null;
-            }
-
-        /// <summary>
-        /// Factory method to construct object from tagged string data.
-        /// </summary>
-        /// <param name="_Input">Source</param>
-        /// <returns>Constructed object</returns>
-        public static JSONObject FromTagged(JSONReader _Input) {
-            return null;
-            }
-
         /// <summary>
         /// Deserialize the input string to populate this object
         /// </summary>
         /// <param name="_Input">Input string</param>
         public virtual void Deserialize (string _Input) {
-			StringReader _Reader = new StringReader (_Input);
-            JSONReader JSONReader = new JSONReader (_Reader);
-			Deserialize (JSONReader);
-			}
+            StringReader _Reader = new StringReader(_Input);
+            JSONReader JSONReader = new JSONReader(_Reader);
+            Deserialize(JSONReader);
+            }
 
         /// <summary>
         /// Deserialize the input string to populate this object
         /// </summary>
         /// <param name="JSONReader">Input data</param>
-        public virtual void Deserialize(JSONReader JSONReader) {
+        public virtual void Deserialize (JSONReader JSONReader) {
 
             bool Going = JSONReader.StartObject();
             while (Going) {
@@ -244,8 +257,35 @@ namespace Goedel.Protocol {
         /// <param name="JSONReader">Input data</param>
         /// <param name="Tag">Input tag</param>
         public virtual void DeserializeToken (JSONReader JSONReader, string Tag) {
-			} 
+            }
 
+        /// <summary>
+        /// Merge two or more token dictionaries to produce a combined dictionary.
+        /// </summary>
+        /// <param name="Dictionary1"></param>
+        /// <param name="Dictionary2"></param>
+        /// <param name="Dictionary2"></param>
+        /// <returns></returns>
+        public static Dictionary<string, JSONFactoryDelegate> Merge (
+                    Dictionary<string, JSONFactoryDelegate> Dictionary1,
+                    Dictionary<string, JSONFactoryDelegate> Dictionary2=null,
+                    Dictionary<string, JSONFactoryDelegate> Dictionary3 = null) {
+            var Result = new Dictionary<string, JSONFactoryDelegate>();
 
+            foreach (var Entry in Dictionary1) {
+                Result.Add(Entry.Key, Entry.Value);
+                }
+            if (Dictionary2 != null) {
+                foreach (var Entry in Dictionary2) {
+                    Result.Add(Entry.Key, Entry.Value);
+                    }
+                }
+            if (Dictionary3 != null) {
+                foreach (var Entry in Dictionary3) {
+                    Result.Add(Entry.Key, Entry.Value);
+                    }
+                }
+            return Result;
+            }
         }
     }

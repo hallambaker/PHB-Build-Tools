@@ -32,15 +32,17 @@ namespace Goedel.VSIX.Binding.RFC {
 	// can only handle so many module loads and unloads without a reset.
 
     static partial class GuidList {
-        public const string guidRFC2TXTGeneratorString = "548687B2-6C67-4F1B-86AA-343F7FD0F429";
-        public static readonly Guid guidRFC2TXTGenerator = new Guid(guidRFC2TXTGeneratorString);
+        public const string GuidRFC2TXTGeneratorString = "548687B2-6C67-4F1B-86AA-343F7FD0F429";
+        public static readonly Guid GuidRFC2TXTGenerator = new Guid(GuidRFC2TXTGeneratorString);
         };
 
     [ComVisible(true)]
-    [Guid(GuidList.guidRFC2TXTGeneratorString)]
+    [Guid(GuidList.GuidRFC2TXTGeneratorString)]
     [ProvideObject(typeof(RFC2TXT))]
     [CodeGeneratorRegistration(typeof(RFC2TXT), "RFC2TXT", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(RFC2TXT), "RFC2TXT", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(RFC2TXT), "RFC2TXT", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class RFC2TXT : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
@@ -52,8 +54,9 @@ namespace Goedel.VSIX.Binding.RFC {
             get {
                 if (codeDomProvider == null) {
                     IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);
-                    if (provider != null)
+                    if (provider != null) {
                         codeDomProvider = (CodeDomProvider)provider.CodeDomProvider;
+						}
                     }
                 return codeDomProvider;
                 }
@@ -83,9 +86,9 @@ namespace Goedel.VSIX.Binding.RFC {
             }
 
         protected virtual void Dispose(bool disposing)  {
-            if (_disposed)
+            if (_disposed) {
                 return;
-
+				}
             if (disposing) {
                 if (serviceProvider != null) {
 					serviceProvider.Dispose();
@@ -113,8 +116,9 @@ namespace Goedel.VSIX.Binding.RFC {
 				IntPtr[] rgbOutputFileContents, 
 				out uint pcbOutput, 
 				IVsGeneratorProgress pGenerateProgress) {
-            if (bstrInputFileContents == null)
+            if (bstrInputFileContents == null) {
                 throw new ArgumentException(bstrInputFileContents);
+				}
 
             var Reader = new StringReader(bstrInputFileContents);
             var Writer = new StringWriter();
@@ -151,8 +155,9 @@ namespace Goedel.VSIX.Binding.RFC {
         #region IObjectWithSite
 
         public void GetSite(ref Guid riid, out IntPtr ppvSite) {
-            if (site == null)
+            if (site == null) {
                 Marshal.ThrowExceptionForHR(VSConstants.E_NOINTERFACE);
+				}
 
             // Query for the interface using the site object initially passed to the generator
             IntPtr punk = Marshal.GetIUnknownForObject(site);
@@ -181,15 +186,17 @@ namespace Goedel.VSIX.Binding.RFC {
 	// can only handle so many module loads and unloads without a reset.
 
     static partial class GuidList {
-        public const string guidRFC2XMLGeneratorString = "8DACB384-6ABA-40E9-83FB-3DD57A4BA597";
-        public static readonly Guid guidRFC2XMLGenerator = new Guid(guidRFC2XMLGeneratorString);
+        public const string GuidRFC2XMLGeneratorString = "8DACB384-6ABA-40E9-83FB-3DD57A4BA597";
+        public static readonly Guid GuidRFC2XMLGenerator = new Guid(GuidRFC2XMLGeneratorString);
         };
 
     [ComVisible(true)]
-    [Guid(GuidList.guidRFC2XMLGeneratorString)]
+    [Guid(GuidList.GuidRFC2XMLGeneratorString)]
     [ProvideObject(typeof(RFC2XML))]
     [CodeGeneratorRegistration(typeof(RFC2XML), "RFC2XML", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(RFC2XML), "RFC2XML", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(RFC2XML), "RFC2XML", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class RFC2XML : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
@@ -201,8 +208,9 @@ namespace Goedel.VSIX.Binding.RFC {
             get {
                 if (codeDomProvider == null) {
                     IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);
-                    if (provider != null)
+                    if (provider != null) {
                         codeDomProvider = (CodeDomProvider)provider.CodeDomProvider;
+						}
                     }
                 return codeDomProvider;
                 }
@@ -232,9 +240,9 @@ namespace Goedel.VSIX.Binding.RFC {
             }
 
         protected virtual void Dispose(bool disposing)  {
-            if (_disposed)
+            if (_disposed) {
                 return;
-
+				}
             if (disposing) {
                 if (serviceProvider != null) {
 					serviceProvider.Dispose();
@@ -262,8 +270,9 @@ namespace Goedel.VSIX.Binding.RFC {
 				IntPtr[] rgbOutputFileContents, 
 				out uint pcbOutput, 
 				IVsGeneratorProgress pGenerateProgress) {
-            if (bstrInputFileContents == null)
+            if (bstrInputFileContents == null) {
                 throw new ArgumentException(bstrInputFileContents);
+				}
 
             var Reader = new StringReader(bstrInputFileContents);
             var Writer = new StringWriter();
@@ -300,8 +309,9 @@ namespace Goedel.VSIX.Binding.RFC {
         #region IObjectWithSite
 
         public void GetSite(ref Guid riid, out IntPtr ppvSite) {
-            if (site == null)
+            if (site == null) {
                 Marshal.ThrowExceptionForHR(VSConstants.E_NOINTERFACE);
+				}
 
             // Query for the interface using the site object initially passed to the generator
             IntPtr punk = Marshal.GetIUnknownForObject(site);
@@ -330,15 +340,17 @@ namespace Goedel.VSIX.Binding.RFC {
 	// can only handle so many module loads and unloads without a reset.
 
     static partial class GuidList {
-        public const string guidRFC2MDGeneratorString = "F2CBE1D3-642A-4348-9CE4-844F11FCDA28";
-        public static readonly Guid guidRFC2MDGenerator = new Guid(guidRFC2MDGeneratorString);
+        public const string GuidRFC2MDGeneratorString = "F2CBE1D3-642A-4348-9CE4-844F11FCDA28";
+        public static readonly Guid GuidRFC2MDGenerator = new Guid(GuidRFC2MDGeneratorString);
         };
 
     [ComVisible(true)]
-    [Guid(GuidList.guidRFC2MDGeneratorString)]
+    [Guid(GuidList.GuidRFC2MDGeneratorString)]
     [ProvideObject(typeof(RFC2MD))]
     [CodeGeneratorRegistration(typeof(RFC2MD), "RFC2MD", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(RFC2MD), "RFC2MD", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(RFC2MD), "RFC2MD", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class RFC2MD : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
@@ -350,8 +362,9 @@ namespace Goedel.VSIX.Binding.RFC {
             get {
                 if (codeDomProvider == null) {
                     IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);
-                    if (provider != null)
+                    if (provider != null) {
                         codeDomProvider = (CodeDomProvider)provider.CodeDomProvider;
+						}
                     }
                 return codeDomProvider;
                 }
@@ -381,9 +394,9 @@ namespace Goedel.VSIX.Binding.RFC {
             }
 
         protected virtual void Dispose(bool disposing)  {
-            if (_disposed)
+            if (_disposed) {
                 return;
-
+				}
             if (disposing) {
                 if (serviceProvider != null) {
 					serviceProvider.Dispose();
@@ -411,8 +424,9 @@ namespace Goedel.VSIX.Binding.RFC {
 				IntPtr[] rgbOutputFileContents, 
 				out uint pcbOutput, 
 				IVsGeneratorProgress pGenerateProgress) {
-            if (bstrInputFileContents == null)
+            if (bstrInputFileContents == null) {
                 throw new ArgumentException(bstrInputFileContents);
+				}
 
             var Reader = new StringReader(bstrInputFileContents);
             var Writer = new StringWriter();
@@ -449,8 +463,9 @@ namespace Goedel.VSIX.Binding.RFC {
         #region IObjectWithSite
 
         public void GetSite(ref Guid riid, out IntPtr ppvSite) {
-            if (site == null)
+            if (site == null) {
                 Marshal.ThrowExceptionForHR(VSConstants.E_NOINTERFACE);
+				}
 
             // Query for the interface using the site object initially passed to the generator
             IntPtr punk = Marshal.GetIUnknownForObject(site);
@@ -479,15 +494,17 @@ namespace Goedel.VSIX.Binding.RFC {
 	// can only handle so many module loads and unloads without a reset.
 
     static partial class GuidList {
-        public const string guidRFC2HTMLGeneratorString = "EF6FDFE2-6947-4A14-AD41-77C062FC0E67";
-        public static readonly Guid guidRFC2HTMLGenerator = new Guid(guidRFC2HTMLGeneratorString);
+        public const string GuidRFC2HTMLGeneratorString = "EF6FDFE2-6947-4A14-AD41-77C062FC0E67";
+        public static readonly Guid GuidRFC2HTMLGenerator = new Guid(GuidRFC2HTMLGeneratorString);
         };
 
     [ComVisible(true)]
-    [Guid(GuidList.guidRFC2HTMLGeneratorString)]
+    [Guid(GuidList.GuidRFC2HTMLGeneratorString)]
     [ProvideObject(typeof(RFC2HTML))]
     [CodeGeneratorRegistration(typeof(RFC2HTML), "RFC2HTML", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(RFC2HTML), "RFC2HTML", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(RFC2HTML), "RFC2HTML", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class RFC2HTML : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
@@ -499,8 +516,9 @@ namespace Goedel.VSIX.Binding.RFC {
             get {
                 if (codeDomProvider == null) {
                     IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);
-                    if (provider != null)
+                    if (provider != null) {
                         codeDomProvider = (CodeDomProvider)provider.CodeDomProvider;
+						}
                     }
                 return codeDomProvider;
                 }
@@ -530,9 +548,9 @@ namespace Goedel.VSIX.Binding.RFC {
             }
 
         protected virtual void Dispose(bool disposing)  {
-            if (_disposed)
+            if (_disposed) {
                 return;
-
+				}
             if (disposing) {
                 if (serviceProvider != null) {
 					serviceProvider.Dispose();
@@ -560,8 +578,9 @@ namespace Goedel.VSIX.Binding.RFC {
 				IntPtr[] rgbOutputFileContents, 
 				out uint pcbOutput, 
 				IVsGeneratorProgress pGenerateProgress) {
-            if (bstrInputFileContents == null)
+            if (bstrInputFileContents == null) {
                 throw new ArgumentException(bstrInputFileContents);
+				}
 
             var Reader = new StringReader(bstrInputFileContents);
             var Writer = new StringWriter();
@@ -598,8 +617,9 @@ namespace Goedel.VSIX.Binding.RFC {
         #region IObjectWithSite
 
         public void GetSite(ref Guid riid, out IntPtr ppvSite) {
-            if (site == null)
+            if (site == null) {
                 Marshal.ThrowExceptionForHR(VSConstants.E_NOINTERFACE);
+				}
 
             // Query for the interface using the site object initially passed to the generator
             IntPtr punk = Marshal.GetIUnknownForObject(site);
@@ -628,15 +648,17 @@ namespace Goedel.VSIX.Binding.RFC {
 	// can only handle so many module loads and unloads without a reset.
 
     static partial class GuidList {
-        public const string guidMD2AMLGeneratorString = "F2E41CD6-A03C-4C86-85E5-06C18F2E9595";
-        public static readonly Guid guidMD2AMLGenerator = new Guid(guidMD2AMLGeneratorString);
+        public const string GuidMD2AMLGeneratorString = "F2E41CD6-A03C-4C86-85E5-06C18F2E9595";
+        public static readonly Guid GuidMD2AMLGenerator = new Guid(GuidMD2AMLGeneratorString);
         };
 
     [ComVisible(true)]
-    [Guid(GuidList.guidMD2AMLGeneratorString)]
+    [Guid(GuidList.GuidMD2AMLGeneratorString)]
     [ProvideObject(typeof(MD2AML))]
     [CodeGeneratorRegistration(typeof(MD2AML), "MD2AML", 
 					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+    [CodeGeneratorRegistration(typeof(MD2AML), "MD2AML", 
+					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(MD2AML), "MD2AML", 
 					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(MD2AML), "MD2AML", 
@@ -650,8 +672,9 @@ namespace Goedel.VSIX.Binding.RFC {
             get {
                 if (codeDomProvider == null) {
                     IVSMDCodeDomProvider provider = (IVSMDCodeDomProvider)SiteServiceProvider.GetService(typeof(IVSMDCodeDomProvider).GUID);
-                    if (provider != null)
+                    if (provider != null) {
                         codeDomProvider = (CodeDomProvider)provider.CodeDomProvider;
+						}
                     }
                 return codeDomProvider;
                 }
@@ -681,9 +704,9 @@ namespace Goedel.VSIX.Binding.RFC {
             }
 
         protected virtual void Dispose(bool disposing)  {
-            if (_disposed)
+            if (_disposed) {
                 return;
-
+				}
             if (disposing) {
                 if (serviceProvider != null) {
 					serviceProvider.Dispose();
@@ -711,8 +734,9 @@ namespace Goedel.VSIX.Binding.RFC {
 				IntPtr[] rgbOutputFileContents, 
 				out uint pcbOutput, 
 				IVsGeneratorProgress pGenerateProgress) {
-            if (bstrInputFileContents == null)
+            if (bstrInputFileContents == null) {
                 throw new ArgumentException(bstrInputFileContents);
+				}
 
             var Reader = new StringReader(bstrInputFileContents);
             var Writer = new StringWriter();
@@ -749,8 +773,9 @@ namespace Goedel.VSIX.Binding.RFC {
         #region IObjectWithSite
 
         public void GetSite(ref Guid riid, out IntPtr ppvSite) {
-            if (site == null)
+            if (site == null) {
                 Marshal.ThrowExceptionForHR(VSConstants.E_NOINTERFACE);
+				}
 
             // Query for the interface using the site object initially passed to the generator
             IntPtr punk = Marshal.GetIUnknownForObject(site);
