@@ -25,14 +25,14 @@ namespace MakeRFC {
             //string bibliography = Options.Bibliography.Text;
             string cache = Options.Cache.Text;
 
-            string htmlfile = Options.HTML.DefaultFile(inputfile);
-            string xmlfile = Options.XML.DefaultFile(inputfile);
-            string txtfile = Options.TXT.DefaultFile(inputfile);
-            string mdfile = Options.MD.DefaultFile(inputfile);
-            string docfile = Options.DOC.DefaultFile(inputfile);
-            string amlfile = Options.AML.DefaultFile(inputfile);
+            string htmlfile = Options.HTML.Value;
+            string xmlfile = Options.XML.Value;
+            string txtfile = Options.TXT.Value;
+            string mdfile = Options.MD.Value;
+            string docfile = Options.DOC.Value;
+            string amlfile = Options.AML.Value;
 
-            string catalog = Options.Catalog.Text;
+            string catalog = Options.Catalog.ByDefault ? null : Options.Catalog.Text;
             var TagCatalog = BridgeLib.Configure.GetTagCatalog(catalog);
 
             bool DoWork = !Options.Lazy.Value;
@@ -55,8 +55,9 @@ namespace MakeRFC {
             // Add in any cache specified on the command line
             if (cache != null) {
                 Document.Catalog.Caches.Add(cache);
-                var Processing = new NewParse.Processing("bibliography", "");
-                Processing.File = cache;
+                var Processing = new NewParse.Processing("bibliography", "") {
+                    File = cache
+                    };
                 new NewParse(Processing, Document);
 
                 }

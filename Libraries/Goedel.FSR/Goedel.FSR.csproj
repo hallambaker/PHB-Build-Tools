@@ -21,6 +21,11 @@
     <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>False</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>

@@ -164,7 +164,7 @@ namespace CommandShell {
 					},
 				new DescribeEntryOption () {
 					Identifier = "Generate", 
-					Default = null, // null if null
+					Default = "cs", // null if null
 					Brief = "Generate code for C#",
 					Index = 2,
 					Key = "cs"
@@ -233,8 +233,7 @@ namespace CommandShell {
 
 			// Script output of type Generate cs
 			if (Options.Generate.Text != null) {
-				string outputfile = FileTools.DefaultOutput (inputfile, Options.Generate.Text, 
-					Options.Generate.Extension);
+				string outputfile = Options.Generate.Text; // Automatically defaults
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}

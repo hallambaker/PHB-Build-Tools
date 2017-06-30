@@ -174,14 +174,14 @@ namespace Goedel.Shell.FSRGen {
 					},
 				new DescribeEntryOption () {
 					Identifier = "GenerateH", 
-					Default = null, // null if null
+					Default = "h", // null if null
 					Brief = "Generate C header",
 					Index = 2,
 					Key = "h"
 					},
 				new DescribeEntryOption () {
 					Identifier = "GenerateCS", 
-					Default = null, // null if null
+					Default = "cs", // null if null
 					Brief = "Generate cs class",
 					Index = 3,
 					Key = "cs"
@@ -250,8 +250,7 @@ namespace Goedel.Shell.FSRGen {
 
 			// Script output of type GenerateH h
 			if (Options.GenerateH.Text != null) {
-				string outputfile = FileTools.DefaultOutput (inputfile, Options.GenerateH.Text, 
-					Options.GenerateH.Extension);
+				string outputfile = Options.GenerateH.Text; // Automatically defaults
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
@@ -267,8 +266,7 @@ namespace Goedel.Shell.FSRGen {
 				}
 			// Script output of type GenerateCS cs
 			if (Options.GenerateCS.Text != null) {
-				string outputfile = FileTools.DefaultOutput (inputfile, Options.GenerateCS.Text, 
-					Options.GenerateCS.Extension);
+				string outputfile = Options.GenerateCS.Text; // Automatically defaults
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}

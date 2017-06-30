@@ -237,7 +237,7 @@ namespace Goedel.Tool.Command {
 				_Output.Write ("			try {{\n{0}", _Indent);
 				_Output.Write ("				MainMethod (Dispatch, Args);\n{0}", _Indent);
 				_Output.Write ("				}}\n{0}", _Indent);
-				_Output.Write ("            catch (ParserException) {{\n{0}", _Indent);
+				_Output.Write ("            catch (Goedel.Command.ParserException) {{\n{0}", _Indent);
 				_Output.Write ("			    Brief ();\n{0}", _Indent);
 				_Output.Write ("				}}\n{0}", _Indent);
 				_Output.Write ("            catch (System.Exception Exception) {{\n{0}", _Indent);
@@ -442,8 +442,7 @@ namespace Goedel.Tool.Command {
 						  Script Script = (Script) CommandEntry; 
 						_Output.Write ("			// Script output of type {1} {2}\n{0}", _Indent, Script.Id, Script.Extension);
 						_Output.Write ("			if (Options.{1}.Text != null) {{\n{0}", _Indent, Script.Id);
-						_Output.Write ("				string outputfile = FileTools.DefaultOutput (inputfile, Options.{1}.Text, \n{0}", _Indent, Script.Id);
-						_Output.Write ("					Options.{1}.Extension);\n{0}", _Indent, Script.Id);
+						_Output.Write ("				string outputfile = Options.{1}.Text; // Automatically defaults\n{0}", _Indent, Script.Id);
 						if (  Lazy != null ) {
 							_Output.Write ("				if (Options.{1}.Value & FileTools.UpToDate (inputfile, outputfile)) {{\n{0}", _Indent, Lazy);
 							_Output.Write ("					return;\n{0}", _Indent);

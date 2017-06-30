@@ -259,13 +259,13 @@ namespace Goedel.Tool.RFCTool {
            };
 
         public string CopyrightNotice {
-            get { return String.Format (CopyrightDate, Year); }
+            get =>String.Format (CopyrightDate, Year); 
             }
         }
 
     public class Author : TextBlock {
 
-        public override BlockType BlockType { get { return BlockType.Author; } }
+        public override BlockType BlockType { get => BlockType.Author; } 
 
         public string                  Name;
         public string Initials;

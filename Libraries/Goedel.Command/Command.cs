@@ -81,9 +81,9 @@ namespace Goedel.Command {
             var Parameter = 0;
 
             // Set all data slots to their default value
-            for (var j = 0; j < Describe.Entries.Count; j++) {
-                if (Describe.Entries[j].Default != null) {
-                    Options._Data[j].Parameter(Describe.Entries[j].Default);
+            foreach (var Description in Describe.Entries) {
+                if (Description.Default != null) {
+                    Options._Data[Description.Index].Default(Description.Default);
                     }
                 }
 
@@ -105,6 +105,8 @@ namespace Goedel.Command {
 
                             SetValue(Data, Args[i]);
                             }
+                        Data.SetFlag(CommandLex.Not);
+
                         if (Data as _Flag != null) {
                             (Data as _Flag).Value = !CommandLex.Not;
                             Data.ByDefault = false;
@@ -125,7 +127,7 @@ namespace Goedel.Command {
                             switch (Describe.Entries[j]) {
                                 case DescribeEntryParameter Entry: {
                                     SetValue(Options._Data[Entry.Index], CommandLex.Value);
-                                    j++;
+                                    Parameter++;
                                     Search = false;
                                     break;
                                     }
@@ -135,6 +137,10 @@ namespace Goedel.Command {
                         }
                     }
                 }
+            foreach (var  Entry in Options._Data) {
+                Entry.Complete(Options._Data);
+                }
+
             }
 
 
@@ -234,6 +240,8 @@ namespace Goedel.Command {
         public string Default { get; set; }
         /// <summary></summary>
         public string Key { get; set; }
+        /// <summary></summary>
+        public int Index { get; set; } // Index into array of Type
         }
 
     /// <summary>
@@ -261,8 +269,25 @@ namespace Goedel.Command {
         //public Parser Parser { get; set; } = null;
         /// <summary></summary>
         public List<DescribeEntry> Entries { get; set; }
-        /// <summary></summary>
-        public int Index;
+
+        public string GetDefault (string Tag) {
+            foreach (var Entry in Entries) {
+                if (Entry.Key == Tag) {
+                    return Entry.Default;
+                    }
+                }
+            return null;
+            }
+
+
+        public void SetDefault (string Tag, string Default) {
+            foreach (var Entry in Entries) {
+                if (Entry.Key == Tag) {
+                    Entry.Default = Default;
+                    }
+                }
+
+            }
 
         /// <summary>
         /// 
@@ -325,8 +350,7 @@ namespace Goedel.Command {
     /// 
     /// </summary>
     public class DescribeEntryValue : DescribeEntry {
-        /// <summary></summary>
-        public int Index { get; set; } // Index into array of Type
+
         }
 
     /// <summary>

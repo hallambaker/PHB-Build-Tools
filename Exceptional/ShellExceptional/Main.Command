@@ -17,3 +17,4 @@
 
 		Script  Goedel.Tool.Exceptional Generate GenerateCS		"cs"
 			Brief "Generate C# code"
+			Default "cs"

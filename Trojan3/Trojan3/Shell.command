@@ -19,4 +19,4 @@
 
 		Script Goedel.Trojan.Script GenerateGTK GenerateCS "cs"
 			Brief "Generate C# code"
-
+			Default "cs"

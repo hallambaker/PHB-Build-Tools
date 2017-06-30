@@ -83,6 +83,11 @@ namespace Goedel.Protocol {
         /// <param name="JSONObject">The object to convert</param>
         /// <returns>The input as a redacted JSON encoded string.</returns>
         public static string Write(JSONObject JSONObject) {
+
+            if (JSONObject == null) {
+                return "$$$$ Empty $$$$";
+                }
+
             var Buffer = new StreamBuffer();
             var JSONWriter = new JSONDebugWriter(Buffer);
             JSONObject.Serialize(JSONWriter, true);

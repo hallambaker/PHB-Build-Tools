@@ -17,6 +17,7 @@
 
 		Script GoedelSchema GenerateParser GenerateCS "cs"
 			Brief "Generate C# code"
+			Default "cs"
 
 		Option	DebugLexer		"dlexer"    Flag
 		Option	DebugParser		"dparser"	Flag

@@ -41,6 +41,18 @@ namespace Goedel.Command {
             Parameter(TextIn);
             }
 
+
+        /// <summary>
+        /// Completion routine. This is called at the end of parameter processing to finalize default values.
+        /// </summary>
+        /// <param name="Data"></param>
+        public virtual void Complete (Type[] Data) {
+            }
+
+
+        public virtual void SetFlag (bool Negated) {
+            }
+
         }
 
     /// <summary>
@@ -99,6 +111,12 @@ namespace Goedel.Command {
                 }
             }
 
+
+        public override void SetFlag (bool Negated) {
+            Parameter (Negated ? "false" : "true");
+            ByDefault = false;
+            }
+
         /// <summary>
         /// Convert value to string.
         /// </summary>
@@ -106,6 +124,8 @@ namespace Goedel.Command {
         public override string ToString () {
             return Text;
             }
+
+
 
         }
 
@@ -167,13 +187,56 @@ namespace Goedel.Command {
             return Text;
             }
 
+        
+
+
         }
 
     /// <summary>
     /// Command line flag for file.
     /// </summary>
     public abstract class _NewFile : _File  {
+        bool Flagged = false;
 
+        public override void SetFlag (bool Negated) {
+            Flagged = true;
+            }
+
+
+        /// <summary>
+        /// Set the default value for the type.
+        /// </summary>
+        /// <param name="TextIn">The default value as it would be given on the command line.</param>
+        public override void Default (string TextIn) {
+            Extension = TextIn;
+            }
+
+
+        /// <summary>
+        /// Completion routine. This is called at the end of parameter processing to finalize default values.
+        /// </summary>
+        /// <param name="Data"></param>
+        public override void Complete (Type[] Data) {
+            if (!ByDefault | !Flagged) {
+                return; // not flagged or explicitly set
+                }
+
+            var Source = Get(Data);
+            if (Source != null) {
+                Parameter(DefaultFile(Source));
+                }
+
+            }
+
+
+        _ExistingFile Get (Type[] Data) {
+            foreach (var Entry in Data) {
+                if (Entry as _ExistingFile != null) {
+                    return Entry as _ExistingFile;
+                    }
+                }
+            return null;
+            }
         }
 
     /// <summary>

@@ -17,3 +17,4 @@
 
 		Script  Goedel.Tool.Domainer Generate GenerateCS		"cs"
 			Brief "Generate C# code"
+			Default "cs"

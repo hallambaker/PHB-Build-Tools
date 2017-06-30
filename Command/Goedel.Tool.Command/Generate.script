@@ -185,7 +185,7 @@ namespace #{Class.Namespace} {
 			try {
 				MainMethod (Dispatch, Args);
 				}
-            catch (ParserException) {
+            catch (Goedel.Command.ParserException) {
 			    Brief ();
 				}
             catch (System.Exception Exception) {
@@ -348,8 +348,7 @@ namespace #{Class.Namespace} {
 #casecast Script Script
 			// Script output of type #{Script.Id} #{Script.Extension}
 			if (Options.#{Script.Id}.Text != null) {
-				string outputfile = FileTools.DefaultOutput (inputfile, Options.#{Script.Id}.Text, 
-					Options.#{Script.Id}.Extension);
+				string outputfile = Options.#{Script.Id}.Text; // Automatically defaults
 #if Lazy != null
 				if (Options.#{Lazy}.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;

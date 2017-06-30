@@ -164,7 +164,7 @@ namespace ExceptionalShell {
 					},
 				new DescribeEntryOption () {
 					Identifier = "GenerateCS", 
-					Default = null, // null if null
+					Default = "cs", // null if null
 					Brief = "Generate C# code",
 					Index = 2,
 					Key = "cs"
@@ -233,8 +233,7 @@ namespace ExceptionalShell {
 
 			// Script output of type GenerateCS cs
 			if (Options.GenerateCS.Text != null) {
-				string outputfile = FileTools.DefaultOutput (inputfile, Options.GenerateCS.Text, 
-					Options.GenerateCS.Extension);
+				string outputfile = Options.GenerateCS.Text; // Automatically defaults
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}

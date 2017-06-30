@@ -606,7 +606,7 @@ namespace Goedel.Protocol {
             if (TokenType != Token.String) {
                 throw new Exception ("Expected \"DateTime\"");
                 }
-            return new DateTime ();
+            return TokenString.FromRFC3339();
             }
 
         /// <summary>

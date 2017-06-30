@@ -18,6 +18,7 @@
 
 		Script  Goedel.Tool.Command GenerateCS Generate "cs"
 			Brief "Generate code for C#"
+			Default "cs"
 
 		Option Main				"main" Flag
 			Default "true"

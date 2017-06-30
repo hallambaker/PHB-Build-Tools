@@ -18,3 +18,4 @@
 
 		Script  Goedel.Tool.RegistryConfig GenerateCS Generate "cs"
 			Brief "Generate code for C#"
+			Default "cs"

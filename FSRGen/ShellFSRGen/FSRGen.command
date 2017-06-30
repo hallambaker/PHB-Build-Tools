@@ -17,6 +17,8 @@
 
 		Script  Goedel.Tool.FSRGen Generate GenerateH			"h"
 			Brief "Generate C header"
+			Default "h"
 
 		Script  Goedel.Tool.FSRGen Generate GenerateCS			"cs"
 			Brief "Generate cs class"
+			Default "cs"

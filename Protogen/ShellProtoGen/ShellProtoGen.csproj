@@ -83,12 +83,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands.cs">
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Protogen.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Commands.command</DependentUpon>
+      <DependentUpon>Protogen.command</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj">
@@ -110,9 +110,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Commands.command">
+    <None Include="Protogen.command">
       <Generator>CommandCS</Generator>
-      <LastGenOutput>Commands.cs</LastGenOutput>
+      <LastGenOutput>Protogen.cs</LastGenOutput>
     </None>
     <None Include="MeshProtocol.md" />
     <None Include="MeshProtocol.Protocol" />

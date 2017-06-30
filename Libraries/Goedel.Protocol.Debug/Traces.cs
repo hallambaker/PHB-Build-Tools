@@ -15,7 +15,6 @@ namespace Goedel.Protocol.Debug {
     /// </summary>
     public class TraceDictionary {
 
-        int _Level;
         TracePoint _Current;
         string _HostName;
         string _URI;
@@ -24,18 +23,16 @@ namespace Goedel.Protocol.Debug {
         /// The Service Host Name
         /// </summary>
         public string HostName {
-            get {
-                return _HostName;
-                }
+            get => _HostName;
+
             }
 
         /// <summary>
         /// The HTTP Web Service URI
         /// </summary>
         public string URI {
-            get {       
-                return _URI;
-                }
+            get => _URI;
+
             }
 
         /// <summary>
@@ -46,14 +43,7 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// Set the level of detail for trace messages
         /// </summary>
-        public int Level {
-            get {
-                return _Level;
-                }
-            set {
-                _Level = value;
-                }
-            }
+        public int Level {get; set; }
 
         /// <summary>
         /// The current trace point.
@@ -97,9 +87,7 @@ namespace Goedel.Protocol.Debug {
         /// <param name="Tag">The trace label to find</param>
         /// <returns>The traces created.</returns>
         public TracePoint Get(string Tag) {
-
-            TracePoint Result;
-            var Found = Traces.TryGetValue(Tag, out Result);
+            var Found = Traces.TryGetValue(Tag, out var Result);
 
             return Found ? Result: null;
 
@@ -122,9 +110,10 @@ namespace Goedel.Protocol.Debug {
         /// <param name="Status">HTTP Status return line</param>
         /// <param name="Payload">The message Payload</param>
         /// <returns>The trace message entry</returns>
-        public TraceMessage Response(string Status, JSONObject Payload) {
-            var Message = new TraceMessage(Current, Payload, DateTime.Now, false);
-            Message.Status = Status;
+        public TraceMessage Response (string Status, JSONObject Payload) {
+            var Message = new TraceMessage(Current, Payload, DateTime.Now, false) {
+                Status = Status
+                };
 
             return Message;
             }
@@ -140,6 +129,8 @@ namespace Goedel.Protocol.Debug {
         List<TraceMessage> _Messages;
 
         string _Tag;
+
+        public string Command { get; set; }
 
         /// <summary>
         /// The text of the message
@@ -158,18 +149,16 @@ namespace Goedel.Protocol.Debug {
         /// Current level of trace detail
         /// </summary>
         public int Level {
-            get {
-                return _TraceDictionary.Level;
-                }
+            get =>TraceDictionary.Level;
+
             }
 
         /// <summary>
         /// The current Trace Dictionary
         /// </summary>
         public TraceDictionary TraceDictionary {
-            get {
-                return _TraceDictionary;
-                }
+            get => _TraceDictionary;
+
             }
 
         /// <summary>
@@ -193,61 +182,29 @@ namespace Goedel.Protocol.Debug {
     public class TraceMessage {
 
         TracePoint TracePoint;
-        JSONObject _Payload;
-
-        string _Status;
-
-        TraceDictionary TraceDictionary {
-            get {
-                return TracePoint.TraceDictionary;
-                }
-            }
-
+        TraceDictionary TraceDictionary { get => TracePoint.TraceDictionary; }
 
         /// <summary>
         /// The text of the message payload
         /// </summary>
-        public JSONObject Payload {
-            get {
-                return _Payload;
-                }
-            }
+        public JSONObject Payload { get; }
 
-
-        DateTime _Time;
         /// <summary>
         /// The time the message was sent
         /// </summary>
-        public DateTime Time {
-            get {
-                return _Time;
-                }
-            }
+        public DateTime Time { get ; }
 
-
-        bool _IsRequest;
         /// <summary>
         /// If true message was a request, otherwise is a response.
         /// </summary>
-        public bool IsRequest {
-            get {
-                return _IsRequest;
-                }
-            }
+        public bool IsRequest { get ; }
 
 
 
         /// <summary>
         /// The HTTP result
         /// </summary>
-        public string Status {
-            get {
-                return _Status;
-                }
-            set {
-                _Status = value;
-                }
-            }
+        public string Status {get; set; }
 
         /// <summary>
         /// Constructor
@@ -260,10 +217,9 @@ namespace Goedel.Protocol.Debug {
         public TraceMessage(TracePoint TracePoint,
                     JSONObject Payload, DateTime Time, bool IsRequest) {
             this.TracePoint = TracePoint;
-
-            _Payload = Payload.DeepCopy();
-            _Time = Time.ToUniversalTime();
-            _IsRequest = IsRequest;
+            this.Payload = Payload.DeepCopy();
+            this.Time = Time.ToUniversalTime();
+            this.IsRequest = IsRequest;
 
             TracePoint.Messages.Add(this);
             }
@@ -333,6 +289,10 @@ namespace Goedel.Protocol.Debug {
         /// limited to a start line and a last line.</param>
         /// <returns>the formatted message</returns>
         public string String(int Level) {
+            if (Payload == null) {
+                return "$$$$ Missing $$$$";
+                }
+
             switch (Level) {
                 case 0: return StringHTTP(false);
                 case 1: return StringHTTP(true);

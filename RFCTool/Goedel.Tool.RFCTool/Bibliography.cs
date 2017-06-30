@@ -103,7 +103,7 @@ namespace Goedel.Tool.RFCTool {
             AddSource("RFC-", "http://xml.resource.org/public/rfc/bibxml/reference.RFC.#D4#.xml");
             AddSource("RFC", "http://xml.resource.org/public/rfc/bibxml/reference.RFC.#D4#.xml");
             AddSource("DRAFT-", "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-#.xml");
-            AddSource("draft-", "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-#.xml");
+            AddSource("draft-", "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-#.xml");
             //AddSource("draft-", "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.#.xml");
             AddSource("I-D.", "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.#.xml");
             AddSource("W3C.", "http://xml.resource.org/public/rfc/bibxml4/reference.W3C.#.xml");
@@ -350,17 +350,21 @@ namespace Goedel.Tool.RFCTool {
 
         WebClient WebClient = new WebClient();
         public void Resolve(Citation Citation, Document Document) {
-            if (Citation.Resolved) return;
+            if (Citation.Resolved) {
+                return;
+                }
 
             string Uri = GetUri(Citation.Label);
-            if (Uri == null) return;
+            if (Uri == null) {
+                return;
+                }
 
-            //Console.WriteLine("{0}  {1}", Citation.Label, Uri);
+            Console.WriteLine("{0}  {1}", Citation.Label, Uri);
 
             try {
                 string Result = WebClient.DownloadString(Uri);
                 Citation.Result = StripDeclaration (Result);
-                //Citation.Resolved = Result != null;
+                Citation.Resolved = Result != null;
                 Citation.Uri = Uri;
                 //Console.WriteLine(Result);
                 //Console.WriteLine();
@@ -370,6 +374,10 @@ namespace Goedel.Tool.RFCTool {
                 // the references parser from the document parser
                 new NewParse (Result, Document);
 
+                // if this blows up it is because the label specified in the citation does not
+                // match the label followed to retrieve it.
+                //
+                // For Internet drafts only labels of the form [!I-D.hallambaker-udf] actually work.
                 var Reference = Document.Catalog.FindReference (Citation.Label);
                 Citation.Reference = Reference;
 
@@ -387,7 +395,11 @@ namespace Goedel.Tool.RFCTool {
 
 
         string GetUri(string Label) {
-            if (!Label.StartsWith(Prefix)) return null;
+
+            //Console.WriteLine("Check {0} / {1}", Prefix, Label);
+            if (!Label.StartsWith(Prefix)) {
+                return null;
+                }
 
             try {
 
