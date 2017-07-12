@@ -12,7 +12,7 @@ namespace Goedel.Tool.RFCTool {
         /// <param name="OutputFile">Output</param>
         /// <param name="Document">Document to write</param>
         public static void WriteHTML(string OutputFile, Document Document) {
-            using (TextWriter TextWriter = new StreamWriter(OutputFile, false, Encoding.ASCII)) {
+            using (TextWriter TextWriter = new StreamWriter(OutputFile, false, Encoding.UTF8)) {
                 WriteHTML(TextWriter, Document);
                 }
             }

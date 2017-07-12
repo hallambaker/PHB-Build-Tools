@@ -4,14 +4,14 @@ using System.IO;
 using System.Text;
 
 namespace Goedel.Tool.RFCTool {
-    public class Xml2RFCOut {
+    public class Html2RFCOutOld {
         TextWriter TextWriter;
 
-        public Xml2RFCOut (TextWriter TextWriter) {
+        public Html2RFCOutOld (TextWriter TextWriter) {
             this.TextWriter = TextWriter;
             }
 
-        string XMLEscape (string In) {
+        string XMLEscape(string In) {
             string Result = "";
 
             foreach (char c in In) {
@@ -27,7 +27,7 @@ namespace Goedel.Tool.RFCTool {
             return Result;
             }
 
-        string XMLAttributeEscape (string In) {
+        string XMLAttributeEscape(string In) {
             string Result = "";
 
             foreach (char c in In) {
@@ -44,7 +44,7 @@ namespace Goedel.Tool.RFCTool {
             return Result;
             }
 
-        bool NotNull (params string[] Strings) {
+        bool NotNull(params string[] Strings) {
             foreach (string S in Strings) {
                 if (S != null) {
                     return true;
@@ -54,16 +54,9 @@ namespace Goedel.Tool.RFCTool {
             }
 
 
-        void WriteIfValueTag (string Tag, params string[] Attributes) {
+        void WriteIfValueTag(string Tag, params string[] Attributes) {
             if (Attributes.Length > 0 && Attributes[0] != null) {
                 WriteValueTag(Tag, Attributes);
-                }
-            }
-        void WriteValueTag (string Tag, List<string> Values) {
-            foreach (var Value in Values) {
-                WriteStartTag(Tag);
-                TextWriter.Write(Value);
-                WriteEndTag(Tag);
                 }
             }
 
@@ -89,7 +82,7 @@ namespace Goedel.Tool.RFCTool {
 
             for (int i = 0; i < (Attributes.Length - 1); i += 2) {
                 if (Attributes[i + 1] != null) {
-                    TextWriter.Write(" {0}=\"{1}\"", Attributes[i], XMLAttributeEscape(Attributes[i + 1]));
+                    TextWriter.Write(" {0}=\"{1}\"", Attributes[i], Attributes[i + 1]);
                     }
                 }
             TextWriter.WriteLine(">");
@@ -116,9 +109,9 @@ namespace Goedel.Tool.RFCTool {
             switch (ListItems[ListPointer]) {
                 case BlockType.Definitions:
                 case BlockType.Term:
-                case BlockType.Data: TextWriter.WriteLine("<t><list style=\"hanging\">"); return;
-                case BlockType.Ordered: TextWriter.WriteLine("<t><list style=\"numbers\">"); return;
-                case BlockType.Symbol: TextWriter.WriteLine("<t><list style=\"symbols\">"); return;
+                case BlockType.Data: TextWriter.WriteLine("<dl>"); return;
+                case BlockType.Ordered: TextWriter.WriteLine("<ol>"); return;
+                case BlockType.Symbol: TextWriter.WriteLine("<ul>"); return;
                 }
 
             }
@@ -128,9 +121,9 @@ namespace Goedel.Tool.RFCTool {
             switch (ListItems[ListPointer]) {
                 case BlockType.Definitions:
                 case BlockType.Term:
-                case BlockType.Data: TextWriter.WriteLine("</list></t>"); break;
-                case BlockType.Ordered: TextWriter.WriteLine("</list></t>"); break;
-                case BlockType.Symbol: TextWriter.WriteLine("</list></t>"); break;
+                case BlockType.Data: TextWriter.WriteLine("</dl>"); break;
+                case BlockType.Ordered: TextWriter.WriteLine("</ol>"); break;
+                case BlockType.Symbol: TextWriter.WriteLine("</ul>"); break;
                 }
 
             ListPointer--;
@@ -165,41 +158,28 @@ namespace Goedel.Tool.RFCTool {
 
         string WrapNull(string Text) => Text ?? "";
 
-
-        string HangText = null;
         void ListLevel(LI LI) {
-
-            if (HangText != null & LI.Type != BlockType.Data) {
-                WriteValueTag("t", " ", "hangText", HangText);
-                HangText = null;
-                }
-
             SetListLevel(LI.Level, LI.Type);
 
             switch (LI.Type) {
-                case BlockType.Data: WriteValueTag("t", LI.Text,
-                   "hangText", WrapNull(HangText)); HangText = null; break;
-                case BlockType.Term: HangText = LI.Text; break;
-                case BlockType.Ordered:
-                case BlockType.Symbol:
-                    WriteValueTag("t", LI.Text); break;
-                }
+                case BlockType.Data: WriteValueTag("dd", LI.Text); break;
+                case BlockType.Term: WriteValueTag("dt", LI.Text); break;
+                case BlockType.Ordered: WriteValueTag("li", LI.Text); break;
+                case BlockType.Symbol: WriteValueTag("li", LI.Text); break;
+                 }
             }
 
         void ListLast() {
-            if (HangText != null) {
-                WriteValueTag("t", " ", "hangText", HangText);
-                HangText = null;
-                }
-
             SetListLevel(-1, BlockType.Data);
             }
 
-        public void WriteSections(List<Section> Sections) {
+        static string[] HeadTags = {"h1", "h2", "h3", "h4", "h5", "h6"};
+
+        public void WriteSections(List<Section> Sections, int Level) {
             foreach (Section Section in Sections) {
                 if (!Section.Automatic) {
 
-                    WriteStartTag("section", "title", Section.Heading, "anchor", Section.ID);
+                    WriteValueTag(HeadTags[Level], Section.Heading, "id", Section.ID);
                     foreach (TextBlock TextBlock in Section.TextBlocks) {
                         if (TextBlock.GetType() == typeof(LI)) {
                             LI LI = (LI)TextBlock;
@@ -211,51 +191,44 @@ namespace Goedel.Tool.RFCTool {
 
                         if (TextBlock.GetType() == typeof(P)) {
                             P P = (P)TextBlock;
-                            WriteValueTag("t", P.Text);
+                            WriteValueTag("p", P.Text, "id", P.ID);
                             }
 
                         if (TextBlock.GetType() == typeof(PRE)) {
                             PRE PRE = (PRE)TextBlock;
-                            if (PRE.ID != null && PRE.ID != "") {
-                                WriteStartTag("figure", "anchor", PRE.ID);
-                                }
-                            else {
-                                WriteStartTag("figure");
-                                }
-                            WriteStartTag("artwork");
+                            WriteStartTag("pre", "id", PRE.ID);
 
                             TextWriter.Write("<![CDATA[");
                             TextWriter.Write(PRE.Text);
                             TextWriter.Write("]]>");
 
-                            WriteEndTag("artwork");
-                            WriteEndTag("figure");
+                            WriteEndTag("pre");
                             }
 
                         if (TextBlock.GetType() == typeof(Table)) {
                             Table Table = (Table)TextBlock;
-                            WriteStartTag("texttable ", "anchor", Table.ID);
+                            WriteStartTag("table", "id", Table.ID);
 
                             for (int Row = 0; Row < Table.Rows.Count; Row++) {
                                 TableRow TableRow = Table.Rows[Row];
                                 int Col = 0;
-                                string Tag = Row == 0 ? "ttcol" : "c";
-
+                                string Tag = Row == 0 ? "th" : "td";
+                                WriteStartTag("tr");
                                 for (; Col < TableRow.Data.Count; Col++) {
                                     WriteValueTag(Tag, TableRow.Data[Col].Text);
                                     }
                                 for (; Col < Table.MaxRow; Col++) {
                                     WriteValueTag(Tag, "");
                                     }
+                                WriteEndTag("tr");
                                 }
 
-                            WriteEndTag("texttable ");
+                            WriteEndTag("table ");
                             }
                         }
                     ListLast();
 
-                    WriteSections(Section.Subsections);
-                    WriteEndTag("section");
+                    WriteSections(Section.Subsections, Level+1);
                     }
                 }
             }
@@ -316,89 +289,62 @@ namespace Goedel.Tool.RFCTool {
         public void Write(Document Document) {
 
             TextWriter.WriteLine("<?xml version='1.0'?>");
-            TextWriter.WriteLine("<!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>");
+            //TextWriter.WriteLine("<!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>");
 
-            string Category = "info";
-            switch (Document.Category?.ToLower()) {
-                case "standards track":
-                case "standard":
-                case "std":
-                    Category = "std"; break;
-                case "informational":
-                case "info":
-                    Category = "info"; break;
-                case "experimental":
-                case "exp":
-                    Category = "exp"; break;
-                case "best current practice":
-                case "bcp":
-                    Category = "bcp"; break;
-                case "historic":
-                    Category = "historic"; break;
-                }
+            WriteStartTag("html");
+            WriteStartTag("head");
+            WriteValueTag("title", Document.TitleAbrrev);
+            WriteEndTag("head");
+            WriteStartTag("body");
 
+            WriteValueTag("h1", Document.Title);
+            // , "abbrev", Document.Abrrev
 
-            WriteStartTag("rfc", 
-                "ipr", Document.Ipr, 
-                "docName", Document.FullDocName,
-                "number", Document.Number,
-                "obsoletes", Document.Obsoletes,
-                "category", Category,
-                "seriesNo", Document.SeriesNumber
-                );
+            //WriteAuthors(Document.Authors);
 
-            // The default set of processing instructions
-            TextWriter.WriteLine(@"<?rfc toc=""yes""?>  ");
-            TextWriter.WriteLine(@"<?rfc symrefs=""yes""?>  ");
-            TextWriter.WriteLine(@"<?rfc sortrefs=""yes""?>  ");
-            TextWriter.WriteLine(@"<?rfc compact=""yes""?>  ");
-            TextWriter.WriteLine(@"<?rfc subcompact=""no""?>  ");
-
-            WriteStartTag("front");
-            WriteValueTag("title", Document.Title, "abbrev", Document.TitleAbrrev);
-            WriteAuthors(Document.Authors);
-
-            WriteValueTag("date", null, "day", Document.Day, "month", Document.Month,
-                "year", Document.Year);
-            WriteValueTag("area", Document.Area);
-            WriteValueTag("workgroup", Document.Workgroup);
-            foreach (string Keyword in Document.Keywords) {
-                WriteValueTag("keyword", Keyword);
-                }
+            //WriteValueTag("date", null, "day", Document.Day, "month", Document.Month,
+            //    "year", Document.Year);
+            //WriteValueTag("area", Document.Area);
+            //WriteValueTag("workgroup", Document.Workgroup);
+            //foreach (string Keyword in Document.Keywords) {
+            //    WriteValueTag("keyword", Keyword);
+            //    }
 
             if (Document.Abstract.Count > 0) {
-                WriteStartTag("abstract");
+                WriteValueTag("h1", "Abstract",
+                    "class", "abstract", "id", "Abstract");
                 foreach (TextBlock TextBlock in Document.Abstract) {
                     if (TextBlock.GetType() == typeof(P)) {
                         P P = (P)TextBlock;
-                        WriteValueTag("t", P.Text);
+                        WriteValueTag("P", P.Text, "class", "abstract");
                         }
                     }
-                WriteEndTag("abstract");
                 }
-            WriteEndTag("front");
-            WriteStartTag("middle");
-            WriteSections(Document.Middle);
-            WriteEndTag("middle");
 
-            WriteStartTag("back");
+
+            WriteSections(Document.Middle, 0);
+
+            if ((Document.Catalog.Normative.Count > 0) |
+                (Document.Catalog.Informative.Count > 0)) {
+                WriteValueTag("h1", "References");
+                }
 
             if (Document.Catalog.Normative.Count > 0) {
-                WriteStartTag("references", "title", "Normative References");
-                WriteReferences(Document.Catalog.Normative);
-                WriteEndTag("references");
+                WriteValueTag("h2", "Normative References",
+                    "class", "references", "id", "NormativeReferences");
+                //WriteReferences(Document.Catalog.Normative);
                 }
 
             if (Document.Catalog.Informative.Count > 0) {
-                WriteStartTag("references", "title", "Informative References");
-                WriteReferences(Document.Catalog.Informative);
-                WriteEndTag("references");
+                WriteValueTag("h2", "Informative References", 
+                    "class", "references", "id", "InformativeReferences");
+                //WriteReferences(Document.Catalog.Informative);
                 }
 
-            WriteSections(Document.Back);
-            WriteEndTag("back");
+            WriteSections(Document.Back, 0);
 
-            WriteEndTag("rfc");
+            WriteEndTag("body");
+            WriteEndTag("html");
             }
         }
     }

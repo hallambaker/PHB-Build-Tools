@@ -52,18 +52,26 @@
   <ItemGroup>
     <Compile Include="Bibliography.cs" />
     <Compile Include="Document.cs" />
+    <Compile Include="Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="FileReader.cs" />
     <Compile Include="HTML.cs" />
+    <Compile Include="Html2RFCOut-Old.cs" />
+    <Compile Include="IndentWriter.cs" />
+    <Compile Include="ListLevel.cs" />
     <Compile Include="MD2RFCOut.cs" />
     <Compile Include="Html2RFCOut.cs" />
     <Compile Include="Merge.cs" />
     <Compile Include="NewParse.cs" />
     <Compile Include="PageWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="rfc2629.cs">
-      <DependentUpon>rfc2629.xsd</DependentUpon>
+    <Compile Include="rfc7791.cs">
+      <DependentUpon>rfc7791.xsd</DependentUpon>
     </Compile>
-    <Compile Include="rfc2629parse.cs" />
+    <Compile Include="rfc7791parse.cs" />
     <Compile Include="TXT.cs" />
     <Compile Include="WriteAML.cs" />
     <Compile Include="XML.cs" />
@@ -71,10 +79,15 @@
     <Compile Include="XMLTextWriterPlus.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="rfc2629.xsd">
+    <None Include="Exceptions.exceptional">
+      <Generator>exceptional</Generator>
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+    </None>
+    <None Include="NextGen.md" />
+    <None Include="rfc7791.xsd">
+      <CustomToolNamespace>Goedel.Tool.RFCTool.RFC7991</CustomToolNamespace>
       <SubType>Designer</SubType>
     </None>
-    <None Include="RFC2HTML.x" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
@@ -89,6 +102,9 @@
       <Project>{ba3e686d-8404-46b3-b06d-048e6367e4eb}</Project>
       <Name>Goedel.Document.Markdown</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="rfc7991.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

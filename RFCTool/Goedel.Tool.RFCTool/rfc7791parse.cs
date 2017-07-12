@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
-
+using Goedel.Tool.RFCTool;
 
 namespace Goedel.Tool.RFCTool {
-    public class Rfc2629Parse {
+    public class Rfc7991Parse {
 
-        Document Document;
+        Goedel.Tool.RFCTool.Document Document;
         TextReader TextReader;
 
-        public static void Parse(string File, Document Document) {
+        public static void Parse(string File, Goedel.Tool.RFCTool.Document Document) {
             using (FileReader FileReader = new FileReader(File)) {
                 Parse(FileReader, Document);
                 }
             }
 
-        public static void Parse(TextReader TextReader, Document Document) {
-            new Rfc2629Parse(TextReader, Document);
+        public static void Parse(TextReader TextReader, Goedel.Tool.RFCTool.Document Document) {
+            new Rfc7991Parse(TextReader, Document);
             }
 
         
-        public Rfc2629Parse(TextReader TextReader, Document Document) {
+        public Rfc7991Parse(TextReader TextReader, Goedel.Tool.RFCTool.Document Document) {
             this.TextReader = TextReader;
             this.Document = Document;
 
@@ -32,47 +32,66 @@ namespace Goedel.Tool.RFCTool {
 
         public void Parse() {
 
-            XmlRootAttribute xRoot = new XmlRootAttribute();
-            xRoot.ElementName = "rfc";
+            XmlRootAttribute xRoot = new XmlRootAttribute() {
+                ElementName = "rfc"
+                };
             //xRoot.Namespace = "http://tempuri.org/rfc2629";
             //xRoot.IsNullable = true;
 
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
             ns.Add("", "http://tempuri.org/rfc2629");
 
-            XmlSerializer XmlSerializer = new XmlSerializer (typeof (rfc), "http://tempuri.org/rfc2629");
+            XmlSerializer XmlSerializer = new XmlSerializer (typeof (rfc), "http://tempuri.org/rfc7991");
 
             rfc rfc = (rfc) XmlSerializer.Deserialize (TextReader);
-
-            Document.Abrrev = rfc.front.title.abbrev;
-            Document.Abstract = MakeTextBlocks (rfc.front.@abstract.t);
-            Document.Area = MakeString(rfc.front.area);
-            Document.Authors = MakeAuthors (rfc.front.author);
-            Document.Back = MakeSections (rfc.back.section, 1);
-            MakeCatalog (Document.Catalog, rfc.back.references);
-            Document.Category = MakeString (rfc.category, rfc.categorySpecified);
-            Document.Day = rfc.front.date.day;
-            Document.Docname = rfc.docName;
-            Document.Ipr = MakeString(rfc.ipr, rfc.iprSpecified);
-            Document.Keywords = MakeKeywords (rfc.front.keyword);
-            Document.Middle =  MakeSections (rfc.middle, 1);
-            Document.Month = rfc.front.date.month;
             Document.Number = rfc.number;
             Document.Obsoletes = rfc.obsoletes;
-            Document.SeriesNumber = rfc.seriesNo;
-            Document.Title = rfc.front.title.Value;
             Document.Updates = rfc.updates;
+            Document.Category = rfc.category;
+            Document.Consensus = rfc.consensus.ToString();
+            Document.SeriesNumber = rfc.seriesNo;
+            Document.Ipr = rfc.ipr;
+            Document.IprExtract = rfc.iprExtract;
+            Document.SubmissionType = rfc.submissionType.ToString();
+            Document.Docname = rfc.docName;
+
             Document.Version = null; // is part of the Docname in rfc2629 format
-            Document.Workgroup = MakeString(rfc.front.workgroup);
-            Document.Year = rfc.front.date.year;
+
+            if (rfc.front != null) {
+                var front = rfc.front;
+                Document.Title = front.title?.Value;
+                Document.TitleAbrrev = front.title?.abbrev;
+                Document.TitleAscii = front.title?.ascii;
+                Document.Authors = MakeAuthors(front.author);
+                Document.Day = rfc.front.date.day;
+                Document.Month = rfc.front.date.month;
+                Document.Year = rfc.front.date.year;
+                Document.Area = MakeString(front.area);
+                Document.Workgroup = MakeString(front.workgroup);
+                Document.Keywords = MakeKeywords(front.keyword);
+
+                Document.Abstract = MakeTextBlocks(front.@abstract.Items);
+                Document.Note = MakeTextBlocks(front.note);
+                Document.Boilerplate = MakeSections(front.boilerplate.section, 2);
+                }
+
+            Document.Middle = MakeSections(rfc.middle.section, 1);
+
+            if (rfc.back != null) {
+                var back = rfc.back;
+
+                Document.Back = MakeSections(back.section, 1);
+                MakeCatalog(Document.Catalog, back.references);
+                }
+            }
 
 
-            // These should probably be eliminated by proper handling of the
-            // ID type tags
-
-            //Document.Publisher = "Fix this";
-            //Document.ID1 = "Internet-Draft";
-            //Document.Status = "Standards Track";
+        List<string> MakeString (List<asciitext> Text) {
+            var Result = new List<string>();
+            foreach (var T in Text) {
+                Result.Add(T.Value);
+                }
+            return Result;
             }
 
 
@@ -83,12 +102,12 @@ namespace Goedel.Tool.RFCTool {
             return s[0];
             }
 
-        List<string> MakeKeywords(string[] keyword) {
+        List<string> MakeKeywords(List<asciitext> keyword) {
             List<string> Result = new List<string>();
 
             if (keyword != null) {
-                foreach (string s in keyword) {
-                    Result.Add(s);
+                foreach (var s in keyword) {
+                    Result.Add(s.Value);
                     }
                 }
 
@@ -96,61 +115,14 @@ namespace Goedel.Tool.RFCTool {
             }
 
 
-
-        string MakeString(rfcCategory enumeration, bool specified) {
-            if (!specified) { return null; }
-            switch (enumeration) {
-                case rfcCategory.std: return "std";
-                case rfcCategory.bcp: return "bcp";
-                case rfcCategory.info: return "info";
-                case rfcCategory.exp: return "exp";
-                case rfcCategory.historic: return "historic";
-                default: return null;
-                }
-            }
-
-        string MakeString(rfcIpr enumeration, bool specified) {
-            if (!specified) { return null; }
-            switch (enumeration) {
-                    case rfcIpr.full2026: return "full2026";
-                    case rfcIpr.noDerivativeWorks2026: return "noDerivativeWorks2026";
-                    case rfcIpr.none: return "none";
-                    case rfcIpr.full3667: return "full3667";
-                    case rfcIpr.noModification3667: return "noModification3667";
-                    case rfcIpr.noDerivatives3667: return "noDerivatives3667";
-                    case rfcIpr.full3978: return "full3978";
-                    case rfcIpr.noModification3978: return "noModification3978";
-                    case rfcIpr.noDerivatives3978: return "noDerivatives3978";
-                    case rfcIpr.trust200811: return "trust200811";
-                    case rfcIpr.noModificationTrust200811: return "noModificationTrust200811";
-                    case rfcIpr.noDerivativesTrust200811: return "noDerivativesTrust200811";
-                    case rfcIpr.trust200902: return "trust200902";
-                    case rfcIpr.noModificationTrust200902: return "noModificationTrust200902";
-                    case rfcIpr.noDerivativesTrust200902: return "noDerivativesTrust200902";
-                    case rfcIpr.pre5378Trust200902: return "pre5378Trust200902";
-                default : return null;
-                }
-            }
-
-        string MakeString(rfcSubmissionType enumeration, bool specified) {
-            if (!specified) { return null; }
-            switch (enumeration) {
-                case rfcSubmissionType.IETF: return "IETF";
-                case rfcSubmissionType.independent: return "independent";
-                default: return null;
-                }
-            }
-
-
-
-
-        List<Author> MakeAuthors(author[] authors) {
+        List<Author> MakeAuthors(List<author> authors) {
             List<Author> Result = new List<Author> ();
 
             foreach (author author in authors) {
-                Author Author = new Author ();
-                Author.Initials = author.initials;
-                Author.Name = author.fullname;
+                Author Author = new Author() {
+                    Initials = author.initials,
+                    Name = author.fullname
+                    };
 
                 if (author.organization != null) {
                     Author.Organization = author.organization.Value;
@@ -160,9 +132,9 @@ namespace Goedel.Tool.RFCTool {
                 Author.Surname = author.surname;
 
                 if (author.address != null) {
-                    Author.Phone = author.address.phone;
-                    Author.URI = author.address.uri;
-                    Author.Email = author.address.email;
+                    Author.Phone = author.address.phone.Value;
+                    Author.URI = author.address.uri.Value;
+                    Author.Email = author.address.email.Value;
                     Author.City = GetAddressAttribute(author.address.postal, "city");
                     Author.Code = GetAddressAttribute(author.address.postal, "code");
                     Author.Country = GetAddressAttribute(author.address.postal, "country");
@@ -178,11 +150,6 @@ namespace Goedel.Tool.RFCTool {
 
         Reference MakeReference(reference reference) {
             Reference Result = new Reference ();
-
-            
-            
-
-            
 
             if (reference.front != null) {
                 Result.Title = reference.front.title.Value;
@@ -201,35 +168,30 @@ namespace Goedel.Tool.RFCTool {
                 // do nothing with the note field
                 }
 
-            Result.SeriesInfos = MakeSeriesInfo (reference.seriesInfo);
-            Result.Formats = MakeFormats (reference.format);
+            Result.SeriesInfos = MakeSeriesInfo (reference.Items);
+            Result.Formats = MakeFormats (reference.Items);
 
 
             Result.ID = reference.anchor;
             Result.Target = reference.target;
 
-            //Result.Version = reference.
-
-
-            //front front
-            // seriesInfo[] seriesInfo
-            // format[] format 
-            // annotation[] annotation
-            //  string anchor
-            // string target
-
             return Result;
             }
 
-        List<SeriesInfo> MakeSeriesInfo(seriesInfo []seriesInfos) {
+        List<SeriesInfo> MakeSeriesInfo(List<object> seriesInfos) {
             List<SeriesInfo> ListSeriesInfo = new List<SeriesInfo> ();
 
             if (seriesInfos != null) {
-                foreach (seriesInfo seriesInfo in seriesInfos) {
-                    SeriesInfo SeriesInfo = new SeriesInfo();
-                    ListSeriesInfo.Add(SeriesInfo);
-                    SeriesInfo.Name = seriesInfo.name;
-                    SeriesInfo.Value = seriesInfo.value;
+                foreach (var obj in seriesInfos) {
+                    switch (obj) {
+                        case seriesInfo seriesInfo: {
+                            SeriesInfo SeriesInfo = new SeriesInfo();
+                            ListSeriesInfo.Add(SeriesInfo);
+                            SeriesInfo.Name = seriesInfo.name;
+                            SeriesInfo.Value = seriesInfo.value;
+                            break;
+                            }
+                        }
                     }
                 }
 
@@ -237,16 +199,22 @@ namespace Goedel.Tool.RFCTool {
             return ListSeriesInfo;
             }
 
-        List<Format> MakeFormats(format []formats) {
-            List<Format> ListFormats = new List<Format> ();
+        List<Format> MakeFormats (List<object> formats) {
+            List<Format> ListFormats = new List<Format>();
 
             if (formats != null) {
-                foreach (format format in formats) {
-                    Format Format = new Format();
-                    ListFormats.Add(Format);
-                    Format.Octets = format.octets;
-                    Format.Target = format.target;
-                    Format.Type = format.type;
+                foreach (var obj in formats) {
+
+                    switch (obj) {
+                        case format format: {
+                            Format Format = new Format();
+                            ListFormats.Add(Format);
+                            Format.Octets = format.octets;
+                            Format.Target = format.target;
+                            Format.Type = format.type;
+                            break;
+                            }
+                        }
                     }
                 }
             return ListFormats;
@@ -254,35 +222,74 @@ namespace Goedel.Tool.RFCTool {
 
 
 
-        void MakeCatalog(Catalog Catalog, references[] referencesArray) {
+        void MakeCatalog (Catalog Catalog, List<references> referencesArray) {
             if (referencesArray != null) {
                 foreach (references references in referencesArray) {
                     References References = new References();
                     Catalog.ReferenceSections.Add(References);
                     References.Title = references.title;
 
-                    foreach (reference reference in references.reference) {
-                        References.Entries.Add(MakeReference(reference));
+                    foreach (var obj in references.Items) {
+                        switch (obj) {
+
+                            case reference reference:
+
+                            References.Entries.Add(MakeReference(reference));
+                            break;
+                            }
                         }
                     }
                 }
             }
 
 
+        void FillTextBlock (List<object> Items, List<TextBlock> TextBlocks) {
+            foreach (object o in Items) {
+                if (o.GetType() == typeof(figure)) {
+                    AddFigureBlock(TextBlocks, (figure)o);
+                    }
+                else if (o.GetType() == typeof(iref)) {
+                    AddIndex(TextBlocks, (iref)o);
+                    }
+                else if (o.GetType() == typeof(t)) {
+                    AddListBlocks(TextBlocks, (t)o);
+                    }
+                else if (o.GetType() == typeof(texttable)) {
+                    AddTableBlock(TextBlocks, (texttable)o);
+                    }
 
+                // ToDo: add in all new textblock like things
+                }
+            }
 
-        List<TextBlock> MakeTextBlocks(t[] ts) {
+        List<TextBlock> MakeTextBlocks (List<note> Notes) {
             List<TextBlock> Result = new List<TextBlock>();
 
-            foreach (t t in ts) {
-                AddListBlocks (Result, t);
+            foreach (var Note in Notes) {
+                FillTextBlock(Note.Items, Result);
                 }
+            return Result;
+            }
 
+
+        List<TextBlock> MakeTextBlocks(List<object> Items) {
+            List<TextBlock> Result = new List<TextBlock>();
+
+            FillTextBlock(Items, Result);
 
             return Result;
             }
 
-        List<Section> MakeSections(section[] sections, int level) {
+        List<TextBlock> MakeTextBlocks (section section) {
+            List<TextBlock> Result = new List<TextBlock>();
+
+            FillTextBlock(section.Items, Result);
+
+            return Result;
+            }
+
+
+        List<Section> MakeSections(List<section> sections, int level) {
             if (level > 6) {
                 throw new Exception("Levels nested too deeply, maximum is 6.");
                 }
@@ -409,7 +416,7 @@ namespace Goedel.Tool.RFCTool {
                 throw new Exception ("List type not supported [" + list.style + "]");
                 }
 
-            if ((list.t == null) || list.t.Length == 0) {
+            if ((list.t == null) || list.t.Count == 0) {
                 return;
                 }
             foreach (t t in list.t) {
@@ -438,24 +445,40 @@ namespace Goedel.Tool.RFCTool {
             }
 
 
+        void AddPre (List<TextBlock> Parent, List<string> Texts, string Anchor) {
+            foreach (var Text in Texts) {
+                PRE PRE = new PRE(Text, Anchor);
+                Parent.Add(PRE);
+                }
+            }
+
 
         void AddFigureBlock(List<TextBlock> Parent, figure figure) {
-            if (figure.artwork != null && figure.artwork.Value != null) {
-                PRE PRE = new PRE(figure.artwork.Value, figure.anchor);
-                Parent.Add (PRE);
+            foreach (var Item in figure.Items) {
+                switch (Item) {
+                    case artwork artwork: {
+                        AddPre(Parent, artwork.Text, figure.anchor);
+                        break;
+                        }
+                    case sourcecode sourcecode: {
+                        break;
+                        }
+                    }
+
                 }
             }
 
         void AddTableBlock(List<TextBlock> Parent, texttable texttable) {
-            Table Table = new Table ();
-
-            Table.ID = texttable.anchor;
+            Table Table = new Table() {
+                ID = texttable.anchor
+                };
             
             TableRow TableRow = new TableRow();
             foreach (ttcol ttcol in texttable.ttcol) {
-                TableData item = new TableData ();
-                item.IsHeading = true;
-                item.Text = ttcol.Value;
+                TableData item = new TableData() {
+                    IsHeading = true,
+                    Text = ttcol.Value
+                    };
                 TableRow.Data.Add (item);
                 }
 
@@ -464,9 +487,10 @@ namespace Goedel.Tool.RFCTool {
 
             int col = Table.MaxRow;
             foreach (c c in texttable.c) {
-                TableData item = new TableData ();
-                item.IsHeading = false;
-                item.Text = MakeString (c.Items, c.Text);
+                TableData item = new TableData() {
+                    IsHeading = false,
+                    Text = MakeString(c.Items,c.Text)
+                    };
 
                 if (col >= Table.MaxRow) {
                     col = 0;
@@ -482,7 +506,7 @@ namespace Goedel.Tool.RFCTool {
             }
 
 
-        string MakeString(object [] items, string[] text) {
+        string MakeString(List<object> items, List<string> text) {
             string Result = "";
 
             if (text != null) {

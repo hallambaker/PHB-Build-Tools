@@ -48,8 +48,9 @@ namespace Goedel.Tool.RFCTool {
 
         public WriteTXT() {
             TextWriter =StreamWriter.Null;  // Was Console.Out
-            PageWriter = new PageWriter(TextWriter);
-            PageWriter.AddFormFeed = false;
+            PageWriter = new PageWriter(TextWriter) {
+                AddFormFeed = false
+                };
             }
 
         public WriteTXT(string OutputFile) {
@@ -96,8 +97,10 @@ namespace Goedel.Tool.RFCTool {
                 HaveRowData = false;
                 for (int i = 0; i < Table.MaxRow; i++) {
                     string Chunk = PageWriter.Consume(ref Cols[i], Widths[i]);
-                    HaveRowData = HaveRowData | (Chunk.Length > 0);                    }
-                if (HaveRowData) Lines ++;
+                    HaveRowData = HaveRowData | (Chunk.Length > 0); }
+                if (HaveRowData) {
+                    Lines++;
+                    }
                 }
 
             if ((PageWriter.Line + Lines + 2)> PageWriter.LastLine) {
@@ -424,7 +427,7 @@ namespace Goedel.Tool.RFCTool {
             PageWriter.FooterCenter = "Expires " + Document.Expires;
 
             PageWriter.HeaderLeft = "Internet-Draft";
-            PageWriter.HeaderCenter = Document.Abrrev;
+            PageWriter.HeaderCenter = Document.TitleAbrrev;
             
             PageWriter.HeaderRight = Document.Month + " " + Document.Year;
 
