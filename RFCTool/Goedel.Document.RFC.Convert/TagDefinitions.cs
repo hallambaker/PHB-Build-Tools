@@ -57,6 +57,12 @@ Class Goedel.MarkLib TagDefinitions
 		Level 1
 		XML ""h1"" ""id""
 
+	Layout table
+	Layout tablerow
+		Stack table
+	Layout tablecell
+		Stack table
+		Stack tablerow
 
 	Layout ul
 		XML ""ul"" ""class""
@@ -137,6 +143,7 @@ Class Goedel.MarkLib TagDefinitions
 			|Reference to an external resource
 		XML ""b"" ""class""
 
+
 	Meta layout 
 		Flag master 
 		Flag navigator 
@@ -144,6 +151,9 @@ Class Goedel.MarkLib TagDefinitions
 		Flag tof 
 		Flag tor 
 		Flag tod  
+
+
+	Meta imgref
 
 	Layout row
 		Markup ""<div class=\""row\"">"" ""<div class=\""row\"">"" ""</div>""
@@ -153,24 +163,20 @@ Class Goedel.MarkLib TagDefinitions
 		Integer count
 		Markup ""<div class=\""span1\"">"" ""<div class=\""span{0}\"">"" ""</div>""
 
-
+	Meta series
+		Meta status
+		Meta stream
 
 	Meta title
 	Meta abbrev
+	Meta consensus
 
 	Meta keyword
 	Meta version
-	
 	Meta meta
 
-
-	Meta ietf
-
 	Meta ipr
-	Meta area
 	Meta workgroup
-	Meta publisher
-	Meta status
 
 	Meta number
 	Meta category

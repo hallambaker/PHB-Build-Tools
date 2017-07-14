@@ -19,7 +19,6 @@ namespace Goedel.Document.OpenXML {
             var ParseRegistryEntry = new GM.ParseRegistryEntry();
             ParseRegistryEntry.Include = Include;
             ParseRegistryEntry.Parse = Parse;
-
             GM.ParseRegistry.Register(".docx", ParseRegistryEntry);
             }
 
@@ -46,9 +45,19 @@ namespace Goedel.Document.OpenXML {
 
             return true;
             }
+        public static bool Img (string FileName, GM.TagCatalog TagCatalog,
+                        GM.Document Document) {
+
+
+            return true;
+            }
+
 
         GM.CatalogEntry CatalogEntryDefault;
         GM.CatalogEntry CatalogEntryPreformatted;
+        GM.CatalogEntry CatalogEntryTable;
+        GM.CatalogEntry CatalogEntryTableRow;
+        GM.CatalogEntry CatalogEntryTableCell;
 
         public BlockParseWord(string FileName, GM.TagCatalog TagCatalog) {
             Source = WordprocessingDocument.Open(FileName, false);
@@ -67,6 +76,9 @@ namespace Goedel.Document.OpenXML {
             this.TagCatalog = TagCatalog;
             CatalogEntryDefault = TagCatalog.Find("p");
             CatalogEntryPreformatted = TagCatalog.Find("pre");
+            CatalogEntryTable = TagCatalog.Find("table");
+            CatalogEntryTableRow = TagCatalog.Find("tablerow");
+            CatalogEntryTableCell = TagCatalog.Find("tablecell");
 
             SourceMain = Source.MainDocumentPart;
             SourceDocument = SourceMain.Document;
@@ -95,10 +107,11 @@ namespace Goedel.Document.OpenXML {
             }
 
         void GetCatalogEntry(Style Style) {
-            if (Style == null) return;
+            if (Style == null) {
+                return;
+                }
 
             var CatalogEntry = TagCatalog.Find(Style.StyleId);
-
 
             if (CatalogEntry == null) {
                 if (Style.StyleParagraphProperties != null) {
@@ -136,16 +149,20 @@ namespace Goedel.Document.OpenXML {
             }
 
         public void ParseChild (OpenXmlElement Child) {
-            var Paragraph = Child as Paragraph;
-            if (Paragraph == null) return;
+            switch (Child) {
+                case Paragraph Paragraph: ParseParagraph(Paragraph); return;
+                case Table Table: ParseTable(Table); return;
+                }
+            }
 
-            //Console.WriteLine("Element {0}", Paragraph.InnerText);
+        public void ParseParagraph (Paragraph Paragraph) {
+            Console.WriteLine("Element {0}", Paragraph.InnerText);
             var Properties = Paragraph.ParagraphProperties;
 
             var StyleId = Properties != null ? Properties.ParagraphStyleId : null;
             var StyleVal = StyleId!= null ? StyleId.Val.ToString(): "p";
 
-            //Console.WriteLine("   Style {0}", StyleVal);
+            Console.WriteLine("   Style {0}", StyleVal);
             var CatalogEntry = GetCatalogEntry(StyleVal);
 
             if (CatalogEntry.ElementType == GM.ElementType.Meta) {
@@ -161,6 +178,32 @@ namespace Goedel.Document.OpenXML {
                     }
                 }
 
+            }
+
+        public void ParseTable (Table Table) {
+            var TableOut = GM.Block.MakeBlock(CatalogEntryTable, null);
+            Document.Blocks.Add(TableOut); // add to the document
+            CurrentBlock = null;   // Force text following table into new paragraph.
+
+            foreach (var Row in Table.ChildElements) {
+                switch (Row) {
+                    case TableRow TableRow :{
+                        var Open = TableOut.AddSegmentOpen(CatalogEntryTableRow, null);
+                        foreach (var Cell in TableRow.ChildElements) {
+                            switch (Cell) {
+                                case TableCell TableCell: {
+                                    var OpenCell = TableOut.AddSegmentOpen(CatalogEntryTableCell, null);
+                                    TableOut.AddSegmentText (TableCell.InnerText);
+                                    TableOut.AddSegmentClose(OpenCell);
+                                    break;
+                                    }
+                                }
+                            }
+                        TableOut.AddSegmentClose(Open);
+                        break;
+                        }
+                    }
+                }
             }
 
 
@@ -238,18 +281,6 @@ namespace Goedel.Document.OpenXML {
             //Console.Write(Result);
             return Result;
             }
-
-
-
-        //public static void Create(string File, HTML2RFC.Document Target) {
-        //    var ReadWord = new ReadWord(File);
-        //    ReadWord.Process(Target);
-        //    }
-
-        //private void Process (HTML2RFC.Document Target) {
-        //    this.Target = Target;
-        //    }
-
 
         }
 

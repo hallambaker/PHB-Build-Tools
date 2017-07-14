@@ -1,0 +1,828 @@
+<?xml version="1.0"  encoding="US-ASCII"?>
+
+<!DOCTYPE rfc SYSTEM 'rfc2629.dtd'[
+<!ENTITY RFC2119 PUBLIC "" "reference.RFC.2119.xml">
+]>
+
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+
+<!-- used by XSLT processors -->
+
+<?rfc toc="yes"?>
+<?rfc tocdepth="4"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes" ?>
+<?rfc compact="yes" ?>
+<?rfc subcompact="no" ?>
+
+
+<rfc number="7642" submissionType="IETF" consensus="yes"
+	category="info" 
+	ipr="trust200902"> 
+
+<front>
+
+<title abbrev="SCIM Requirements">System for Cross-domain Identity Management: Definitions,&nbsp;Overview,&nbsp;Concepts,&nbsp;and&nbsp;Requirements</title>
+
+<author fullname="Kepeng LI" initials="K." 
+            surname="LI" role="editor">
+<organization>Alibaba Group</organization>
+
+      <address> 
+	  <postal>
+          <street>969 Wenyixi Road, Yuhang District</street>
+          <city>Hangzhou</city>
+          <region>Zhejiang</region>
+          <code>311121</code>
+          <country>China</country>
+        </postal>
+        <email>kepeng.lkp@alibaba-inc.com</email>
+      </address>
+ </author>
+
+<author fullname="Phil Hunt" initials="P."
+			surname="Hunt">
+			<organization>Oracle</organization>
+			<address>
+				<email>phil.hunt@oracle.com</email>
+
+				<!-- uri and facsimile elements may also be added -->
+			</address>
+</author>
+		
+<author fullname="Bhumip Khasnabish" initials="B." surname="Khasnabish">
+    <organization> ZTE (TX) Inc.</organization>
+      <address>
+         <postal>
+            <street>55 Madison Ave, Suite 302</street>  
+            <!-- Reorder these if your country does things differently  --> 
+            <city>Morristown</city>  
+            <region>New Jersey</region>  
+            <code>07960</code>  
+            <country>United States</country>
+        </postal>
+     <phone>+001-781-752-8003</phone>
+     <email>vumip1@gmail.com, bhumip.khasnabish@ztetx.com</email>
+     <uri>http://tinyurl.com/bhumip/</uri>
+    </address>
+</author>
+
+<author fullname="Anthony Nadalin" initials="A." 
+            surname="Nadalin">
+      <organization>Microsoft</organization>
+
+      <address>
+         <email>tonynad@microsoft.com</email>
+      </address>
+</author>
+
+
+<author fullname="Zachary Zeltsan" initials="Z." 
+            surname="Zeltsan">
+      <organization>Individual</organization>
+      <address>
+        <email>Zachary.Zeltsan@gmail.com</email>
+      </address>
+</author>
+
+<date month="September" year="2015"/>
+
+<area>Applications</area>
+<workgroup>SCIM WG</workgroup>
+
+
+<keyword>SIM user scenarios, SCIM use cases</keyword>
+
+<abstract>
+<t>This document provides definitions and an overview of the System for
+Cross-domain Identity Management (SCIM). It lays out the system's concepts,
+models, and flows, and it includes user scenarios, use cases, and
+requirements.
+</t>
+</abstract> 
+
+</front>
+
+<middle>
+
+
+<section title="Introduction">
+
+<t>
+This document provides the SCIM definitions, overview, concepts, flows, scenarios, and use cases. 
+It also provides a list of the requirements derived from the use cases.  </t>
+<t>
+The document's objective is to help with understanding of the design and
+applicability of the
+<xref target="RFC7643">SCIM schema</xref> and
+<xref target="RFC7644">SCIM protocol</xref>. 
+</t>
+<t>
+	Unlike the practice of some protocols like Application Bridging for
+   Federated Access Beyond web (ABFAB) and SAML2 WebSSO, SCIM
+	provides provisioning and de-provisioning of resources in a separate
+	context from authentication (aka just-in-time provisioning).
+</t>
+<section title="Terminology">
+<t>
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in <xref target="RFC2119"/> when they
+   appear in ALL CAPS.  These words may also appear in this document in
+   lowercase as plain English words, absent their normative meanings.
+</t>   
+<t>
+ Here is a list of acronyms and abbreviations used in this document:
+</t>
+<t>
+  <list style='symbols'> 
+        <t>COI: Community of Interest </t>
+	<t>CRM: Customer Relationship Management </t>
+	<t>CRUD: Create, Read, Update, Delete </t>
+	<t>CSP: Cloud Service Provider </t>
+	<t>CSU: Cloud Service User </t>
+	<t>ECS: Enterprise Cloud Subscriber </t>
+        <t>IaaS: Infrastructure as a Service </t>
+        <t>JIT: Just In Time </t>
+        <t>PaaS: Platform as a Service </t>	
+	<t>SaaS: Software as a Service </t>
+	<t>SAML: Security Assertion Markup Language </t>
+	<t>SCIM: System for Cross-domain Identity Management</t>
+	<t>SSO: Single Sign-On</t>
+  </list>
+</t>
+</section>   
+
+</section> <!-- Introduction -->
+
+<section title="SCIM User Scenarios" anchor="user-scen">      
+    <section title="Background and Context">       
+    	<t>The System for Cross-domain Identity Management (SCIM) specification is designed to manage user identity 
+		in cloud-based applications and services in a standardized way to enable interoperability, security, and scalability. 
+		The specification suite seeks to build upon experience 
+		with existing schemas and deployments, placing specific emphasis on simplicity of development and 
+		integration, while applying existing authentication, authorization, and privacy models. 
+		The intent of the SCIM specification is to reduce the cost and complexity of user management operations by providing a common 
+		user schema and extension model, as well as binding documents to provide patterns for exchanging 
+		this schema using standard protocols. In essence, make it fast, cheap, and easy to move users in to,
+		out of, and around the cloud.
+		</t> 
+		
+		<t>The SCIM scenarios are overviews of user stories designed to help clarify the intended scope of the 
+		SCIM effort.    
+		</t>   
+
+	</section>  
+	
+	<section title="Model Concepts">      
+    	<section title="Triggers">    
+		    <t>Quite simply, triggers are actions or activities that
+		    start SCIM flows. 
+
+
+Triggers may not be relevant
+			at the protocol level or the schema level; they really serve to help identify the type or activity that resulted 
+			in a SCIM protocol exchange. Triggers make use of the traditional provisioning CRUD (Create, Read, Update,
+			Delete) operations but add additional use-case contexts like SSO (Single-Sign On) as it is designed
+			to capture a class of use case that makes sense to the actor requesting it rather than to describe a 
+			protocol operation. 
+			</t> 
+
+			<t> 
+			   <list style='symbols'> 
+			      <t>Create SCIM Identity Resource - Service On-boarding Trigger: 
+				  A "create SCIM identity resource" trigger is a service on-boarding activity in which a business action 
+				  such as a new hire or new service subscription is initiated by one of the SCIM Actors. 
+				  In the protocol itself, service on-boarding may well be implemented via the same resource 
+				  PUT method as a service change.  This is particular to the implementation, and not to the use 
+				  cases that drive that implementation.  
+				  </t> 
+				  <t>Update SCIM Identity Resource  - Service Change Trigger:  
+				  An "update SCIM identity resource" trigger is a service change activity as a result of an identity 
+				  moving or changing its service level. An "update SCIM identity" trigger might be the result of 
+				  a change in a service subscription level or a change to key identity data used to denote
+				  a service subscription level. Password changes are specifically called out from other 
+				  more general identity attribute changes as they are considered to have specific use-case differences.
+				  </t> 
+				  <t>Delete SCIM Identity Resource - Service Termination Trigger:  
+				  A "delete SCIM identity resource" trigger represents a specific and deliberate action to remove an 
+				  identity from a given SCIM service point. At this stage, it is unclear if the SCIM protocol 
+				  needs to identify a separate protocol
+				  exchange for service suspension actions. 
+
+
+This may 
+				  be relevant as target services usually differentiate between these results and thus may require 
+				  separate resource representations.
+				  </t> 
+				  <t>Single Sign-On (SSO) Trigger - Service Access Request:  
+				  A "Single Sign-On" trigger is a special class of activity in which a Create or Update trigger 
+				  is initiated during an SSO operational flow. The implication here is that, as the 
+				  result of a service access request by the end user (SSO), defined SCIM 
+				  protocol exchanges can be used to initiate
+				  SCIM resource CRUD operations somewhere in the 
+				  service cloud.    
+				  </t> 
+				</list> 
+			</t> 
+		</section>                 <!-- end concepts -->           
+		<section title="Actors">        
+		    <t>Actors are the operating parties that take part in both sides of a SCIM protocol exchange and help 
+			identify the source of a given Trigger. So far, we have identified the following SCIM Actors:
+			</t>          
+			<t> 
+
+			   <list style='symbols'>
+ 			       <t>Cloud Service Provider (CSP): A CSP is the entity operating a given cloud service. In a SaaS 
+				   scenario, this is simply the application provider. In an IaaS or PaaS scenario, the CSP may be 
+				   the underlying IaaS/PaaS infrastructure provider or the owner of the application running on 
+				   that platform. In all cases, the CSP is the thing that holds the identity information being 
+				   operated upon. 
+
+Put another way, the CSP really is the service that the end user interacts with.
+                   </t> 
+				   <t>Enterprise Cloud Subscriber (ECS): An
+				   ECS represents a middle tier of aggregation for related
+				   identity records. In one of our sample enterprise SaaS scenarios, the ECS is "Example.com" that 
+				   subscribes to a cloud-based CRM service "SaaS-CRM Inc." (the CSP) for all of its sales 
+				   staff. 
+
+
+The actual Cloud Service Users (CSUs) are the FooBar Inc. sales staff. The ECS Actor 
+				   is identified to help capture use cases in which a single entity is given administrative 
+				   responsibility for other identity
+				   accounts. 
+
+
+
+SCIM may not address the configuration and setup of 
+				   an ECS within the CSP, but it does address use cases in which SCIM identity resources are grouped
+				   together and administered as part of some broader agreement or operational exchange.
+				   </t>                                
+				   <t>Cloud Service User (CSU): A CSU
+				   represents the real cloud service end user
+				   -- i.e., the 
+				   person logging into and using the cloud service. As described above, and ECS will typically
+				   own or manage multiple CSU identities, whereas the CSU represents the FooBar Inc. employee 
+				   using the cloud service to manage their CRM process.
+				   </t>                                 
+			   </list> 
+		    </t>  
+            <t>
+<figure align="center" anchor="figure_scim_actors" title="SCIM Actors">
+         <artwork>  <![CDATA[         
+                        +---------------------+
+                        |   Cloud Service     |
+                        |   Provider (CSP)    |
+                        +---------------------+
+                                   |
+                 +--------------------------------+
+                 |                                |        
+                 v                                v
+         +----------------+              +----------------+
+         |Enterprise Cloud|              |Enterprise Cloud|
+         |Subscriber (ECS)|              |Subscriber (ECS)| 
+         +----------------+              +----------------+
+                 |                                |
+         +----------------+              +----------------+
+         |                |              |                |  
+         v                v              v                v
+ +-------------+ +-------------+   +-------------+ +-------------+
+ |Cloud Service| |Cloud Service|   |Cloud Service| |Cloud Service|
+ |  User (CSU) | |  User (CSU) |   |  User (CSU) | |  User (CSU) |
+ +-------------+ +-------------+   +-------------+ +-------------+
+        ]]>  </artwork>
+         </figure>   
+            </t>			
+	   </section>         <!-- end actors -->                  
+	   <section title="Modes and Flows">         
+	      <t>Modes identify the functional intent of a data flow initiated in a SCIM scenario.  The modes 
+		  identified so far are 'Push' and 'Pull' referring to pushing data to and pulling 
+		  data from an authoritative identity data store.
+		  </t>  
+
+		  <t>In the SCIM scenarios, modes are often used in the context of a flow between two Actors. 
+		  For example, one might refer to a Cloud-to-Cloud Pull exchange.  Here one Cloud Service Provider 
+		  (CSP) is pulling identity information from another CSP. Commonly referenced flows are:
+		  </t>  
+		  <t> 
+		     <list style='symbols'> 
+			    <t>Cloud Service Provider to Cloud Service Provider (CSP->CSP)</t>
+				<t>Enterprise Cloud Subscriber to Cloud
+				Service Provider (ECS->CSP)</t> 
+
+			 </list> 
+		  </t>  
+		  <t>Modes and flows simply help us understand what is taking place; they are likely to be 
+		  technically meaningless at the protocol level, but they help the reader follow the 
+		  SCIM scenarios and apply them to real-world use cases.
+		  </t>                   
+	   </section>         <!-- end modes -->                        
+	   <section title="Bulk and Batch Operational Semantics">  
+	       <t> It is assumed that each of the trigger actions outlined in this document may be part 
+		   of the larger bulk or batch operation.  Individual SCIM actions should be able to be 
+		   collected together to create single protocol exchanges.  
+		   </t>  
+		   <t>The initial focus of SCIM scenarios is on identifying base flows and single operations. 
+		   The specific complexity of full bulk and batch operations is left to a later version of 
+		   the scenarios or to the main specification.   
+		   </t>  
+		</section>  
+	</section>    
+	<section title="Flows from Cloud Service Provider to Cloud Service
+			Provider (CSP->CSP)" anchor="CSP-CSP">  
+	   <t> These scenarios represent flows between two Cloud Service
+	   Providers (CSPs).  
+
+
+It is assumed 
+	   that each CSP maintains an Identity Data Store for its Cloud Service Users (CSUs).  
+	   These scenarios address various joiner, mover, leaver, and JIT triggers, resulting in push and 
+	   pull data exchanges between the CSPs.  
+	   </t>  
+	   <section title="CSP->CSP: Create Identity (Push)"> 
+	       <t> In this scenario, two CSPs (CSP-1 and CSP-2) have a shared service agreement in place that 
+		   requires the exchange of Cloud Service User (CSU) accounts. CSP-1 receives a Create Identity 
+		   trigger action from its Enterprise Cloud Subscriber (ECS-1). CSP-1 creates a local user account
+		   for the new CSU. CSP-1 then pushes the new CSU joiner push request downstream to CSU-2 and gets 
+		   confirmation that the account was successfully created. After receiving the confirmation from 
+           CSP-2, CSP-1 sends an acknowledgment to the requesting ECS.
+		   </t> 
+		</section>  
+		<section title="CSP->CSP: Update Identity (Push)">
+  		    <t> In this scenario, two CSPs (CSP-1 and CSP-2) have a shared service agreement in place that requires 
+			the exchange of Cloud Service User (CSU) accounts. The Enterprise Cloud Subscriber (ECS-1) has 
+			already created an account with CSP-1 and supplied a critical attribute "department" that is 
+			used by CSP-1 to drive service options. CSP-1 then receives an Update Identity trigger action 
+			from its Enterprise Cloud Subscriber (ECS). CSP-1 updates its local directory account with the 
+			new department value. CSP-1 then initiates a separate SCIM protocol exchange to push the mover 
+			change request downstream to CSP-2.  After receiving the confirmation from CSP-2, CSP-1 sends 
+			an acknowledgment to ECS-1. 
+			</t> 
+		</section>  
+		<section title="CSP->CSP: Delete Identity (Push)"> 
+		    <t> In this scenario, two CSPs (CSP-1 and CSP-2) have a shared service agreement in place that 
+			requires the exchange of Cloud Service User (CSU) accounts. CSP-1 receives a Delete Identity 
+			trigger action from its Enterprise Cloud Subscriber (ECS-1). CSP-1 suspends the local directory 
+			account for the specified CSU account. CSP-1 then pushes a termination request for the specified 
+			CSU account downstream to CSP-2 and gets confirmation that the account was successfully removed. 
+			After receiving the confirmation from CSP-2, CSP-1 finalizes the deletion operation and sends an acknowledgment to the requesting ECS.  
+			</t> 
+			<t>This use case highlights how different CSPs may implement different operational semantics 
+			behind the same SCIM operation.  Note CSP-1 suspends the account representation for its service, 
+			whereas CPS-2 implements a true delete operation.  
+			</t>
+		</section>  
+		<section title="CSP->CSP: SSO Trigger (Push)"> 
+		    <t> In this scenario, two CSPs (CSP-1 and CSP-2) have a shared service agreement in place that 
+			requires the exchange of Cloud Service User (CSU) accounts. However, rather than pre-provisioning 
+			accounts from CSP-1 to CSP-2, CSP-1 waits for a service access request from the end Cloud 
+			Service User (CSU-1) before issuing account creation details to CSP-2. When the CSU completes a 
+			SSO transaction from CSP-1 to CSP-2, CSP-2 then creates an account for the CSU based on information
+			pushed to it from CSP-1. 
+			</t>
+			<t> At the protocol level, this class of scenarios may result in the use of common protocol 
+			exchange patterns between CSP-1 and CSP-2.
+			</t>
+		</section>   
+		<section title="CSP->CSP: SSO Trigger (Pull)"> 
+		    <t> In this scenario, two CSPs (CSP-1 and CSP-2) have a shared service agreement in place that 
+			requires the exchange of Cloud Service User (CSU) accounts. However, rather than pre-provisioning 
+			accounts from CSP-1 to CSP-2, CSP-2 waits for a service access request from the Cloud Service User 
+			(CSU-1) before initiating a Pull request to gather information about the CSU sufficient to create 
+			a local account.  
+			</t> 
+			<t>At the protocol level, this class of scenarios may result in the use of common protocol exchange 
+			patterns between CSP-2 and CSP-1.
+			</t>
+		</section> 
+		<section title="CSP->CSP: Password Reset (Push)"> 
+		    <t> In this scenario, two CSPs (CSP-1 and CSP-2) have a shared service agreement in place that 
+			requires the exchange of Cloud Service User (CSU) accounts.  CSP-1 wants to change the password
+			for a specific Cloud Service User (CSU-1).  CSP-1 sends a request to CSP-2 to reset the password 
+			value for CSU-1.   
+			</t> 
+			<t>At the protocol level, this scenario may result in the same protocol exchange as any other
+			attribute change request.
+			</t>
+		</section> 
+	</section>  
+	<section title="Flows from Enterprise Cloud Subscriber to Cloud Service Provider
+			(ECS->CSP)">  
+	    <t> These scenarios represent flows between an Enterprise Cloud Subscriber (ECS) and a Cloud Service 
+		Providers (CSP).  
+
+
+
+It is assumed that the ECS and the CSP each maintain an information access service 
+		for the relevant
+		Cloud Service Users (CSUs).  These scenarios address various joiner, mover, leaver, and JIT triggers,
+		resulting in push and pull data exchanges between the ECS and the CSP.  
+		</t> 
+		<t> Many of these scenarios are very similar to those defined
+		in <xref target="CSP-CSP"/>.  They are identified separately here so that we may explore any 
+		differences that might emerge.  
+		</t> 
+		<section title="ECS->CSP: Create Identity (Push)"> 
+		    <t> In this scenario, an Enterprise Cloud Subscriber (ECS-1) maintains a service with a Cloud 
+			Service Provider (CSP-1) that requires the sharing of various Cloud Service User (CSU) accounts. 
+			A new user joins ECS-1 and so ECS-1 pushes an account creation request to CSP-1, supplying all
+			required attribute values for the base SCIM schema and
+			additional values for the extended SCIM schema as required. 
+			</t>
+		</section>  
+		<section title="ECS->CSP: Update Identity (Push)"> 
+		    <t> In this scenario, an Enterprise Cloud Subscriber (ECS-1) maintains a service with Cloud Service
+			Provider (CSP-1) that drives service definition from a key account schema attribute called 
+			Department. ECS-1 wishes to move a given CSU from Department A to Department B and so it 
+			pushes an attribute update request to the CSP. 
+			</t> 
+		</section>  
+		<section title="ECS->CSP: Delete Identity (Push)"> 
+		    <t> In this scenario, an Enterprise Cloud Subscriber (ECS-1) maintains a service with a Cloud Service 
+			Provider (CSP-1). 
+
+
+Upon termination of one of its employee's employment agreement, 
+			ECS-1 sends a suspend account request 
+			to CSP-1. One week later, the ECS wishes to complete the process by fully removing 
+			the Cloud Service User (CSU) account, so it sends a terminate account request to CSP-1. 
+			</t> 
+		</section>  
+
+
+
+		<section title="ECS->CSP: SSO Trigger (Pull)"> 
+		    <t> In this scenario, an Enterprise Cloud Subscriber (ECS-1) maintains a service with a Cloud 
+			Service Provider (CSP-1). No accounts are created or exchanged in advance. However, rather than 
+			pre-provisioning accounts from ECS-1 to CSP-1, CSP-1 waits for a service access request from 
+			the Cloud Service User (CSU-1) under the control domain of ECS-1, before issuing an account 
+			Pull request to ECS-1. 
+			</t> 
+		</section>		
+	</section>  
+</section>  <!-- SCIM User Scenarios --> 
+
+<section title="SCIM Use Cases">
+<t>This section lists the SCIM use cases. 
+  </t>
+	  
+<section title="Migration of the Identities">
+<t>
+
+Description: <vspace blankLines="1"/>
+A company SomeEnterprise runs an application ManageThem that relies on the identity information about its employees 
+(e.g., identifiers, attributes). The identity information is stored at the cloud provided by SomeCSP. SomeEnterprise has decided to move 
+identity information to the cloud of a different provider -- AnotherCSP. In addition, SomeEnterprise has purchased a second application 
+ManageThemMore, which also relies on the identity information. SomeEnterprise is able to move identity information to AnotherCSP without 
+changing the format of identity information. 
+The application ManageThemMore is able to use the identity information.</t>
+
+<t>Pre-conditions:
+<list style='symbols'>
+<t>SomeCSP is a cloud service provider for SomeEnterprise. </t>
+<t>SomeCSP has a known attribute name and value for the Enterprise used for managing and transferring data.</t>
+<t>AnotherCSP is a new cloud service provider for SomeEnterprise. </t>
+<t>All involved cloud service providers and applications support the same standard specifying the format for and actions on the user 
+(e.g., employee) identity information.  </t>
+</list>
+</t>
+<t>Post-conditions:
+<list style='symbols'>
+<t>SomeEnterprise has moved its employees' identity information from SomeCSP to AnotherCSP without making any changes to representation of 
+identity information. </t>
+<t>Application ManageThemMore is able to use the identity information. </t>
+</list>
+</t>
+
+<t>Requirements:
+<list style='symbols'>
+
+<t> SomeEnterprise, the applications ManageThem and ManageThemMore, and the providers SomeCSP and AnotherCSP support a common standard for 
+identity information, which specifies the following:
+
+<list style='symbols'>
+<t> Format (or schema) for representing user identity information</t>
+<t>Interfaces and protocol for managing user identity information</t>
+</list>
+</t>
+
+
+<t>Cloud providers shall be able to meet regulatory requirements when migrating
+identity information between jurisdictional regions 
+(e.g., countries and states may have differing regulations on privacy).
+</t>
+<t> Cloud providers shall be able to log all actions related to SomeEnterprise employees' identities. </t>
+<t> The logs should be secure and available for auditing.</t>
+</list>
+</t>
+</section>
+
+<section title="Single Sign-On (SSO) Service">
+<t>
+
+Description: <vspace blankLines="1"/>
+Bob has an account in an application hosted by a cloud service provider SomeCSP. SomeCSP has federated its user identities with a cloud 
+service provider AnotherCSP. Bob requests a service from an application running on AnotherCSP. The application running on AnotherCSP, 
+relying on Bob's authentication by SomeCSP and using identity information provided by SomeCSP, serves Bob's request. 
+</t>
+
+<t>Pre-conditions:
+<list style='symbols'>
+<t>Bob's identity information is stored on SomeCSP.</t>
+<t>SomeCSP and AnotherCSP have established trust and federated their user identities.</t>
+<t>SomeCSP is able to authenticate Bob.</t>
+<t>SomeCSP is able to securely provide the authentication results to AnotherCSP.</t>
+<t>SomeCSP is able to securely provide Bob's identity information (e.g., attributes) to AnotherCSP.</t>
+<t>AnotherCSP is able to verify information provided by SomeCSP.</t>
+<t>SomeCSP is able to process the identity information received from AnotherCSP.</t>
+
+</list>
+</t>
+<t>Post-conditions:
+
+<vspace blankLines="1"/>
+Bob has received the requested service from an application running on AnotherCSP without having to authenticate to that application explicitly.
+</t>
+<t>Requirements:
+<list style='symbols'>
+<t> Bob must have an account with SomeCSP.</t>
+<t>SomeCSP and AnotherCSP must establish trust and federate their user identities.</t>
+<t>SomeCSP must be able to authenticate Bob.</t>
+<t>SomeCSP must be able to securely provide the authentication results to AnotherCSP.</t>
+<t>SomeCSP must be able to securely provide Bob's identity information (e.g., attributes) to AnotherCSP.</t>
+<t>AnotherCSP must be able to verify the identity information provided by SomeCSP.</t>
+<t>SomeCSP must be able to process the identity information received from AnotherCSP.</t>
+<t>SomeCSP and AnotherCSP must log information generated by Bob's actions according to their policies and the trust agreement between them.</t>
+</list>
+
+</t>
+</section>
+
+
+<section title="Provisioning of the User Accounts for a Community of Interest (COI)">
+<t>
+
+Description: <vspace blankLines="1"/>
+Organization YourHR provides Human Resources (HR) services to a Community of Interest (COI) YourCOI. The HR services are offered as 
+Software as a Service (SaaS) on public and private clouds. YourCOI's offices are located all over the world. Their Information Technology 
+(IT) systems may be composed of combinations of the applications running on private and public clouds along with traditional IT systems. 
+The local YourCOI offices are responsible for collecting personal information
+(i.e., user identities and attributes). 
+YourHR services provide means for provisioning and distributing the employee identity information across all YourCOI offices. YourHR also 
+enables individual users (e.g., employees) to manage personal information that they are responsible for (e.g., update of an address 
+or a telephone number).  
+</t>
+
+<t>Pre-conditions:
+<list style='symbols'>
+<t>YourCOI has a complex infrastructure composed of a large number of local offices that rely on diverse IT systems. </t> 
+<t>YourCOI has contracted YourHR to provide the HR services. </t>
+<t>Each local office has a right to establish a personal account for an employee.</t>
+</list>
+</t>
+
+<t>Post-conditions:
+<list style='symbols'>
+<t>All personal accounts are globally available to any authorized user or application across the YourCOI system through the services 
+provided by YourHR. </t> 
+<t>The employees have the ability to manage the part of personal information that is their responsibility. </t>
+</list> 
+</t>
+
+<t>Requirements:
+<list style='symbols'>
+<t> YourHR must ensure that the local offices generate information that is provisioned securely and consider privacy requirements in a timely fashion across systems that may span technical (e.g., protocols and applications), administrative (e.g., corporate), regulatory (e.g., location), and jurisdictional domains. </t>
+<t> Management of personal information must be protected against unauthorized
+access and eavesdropping, and it should be distributed only to authorized parties and services.</t>
+<t>Regulatory requirements shall be met when migrating
+identity information between jurisdictional regions 
+(e.g., countries and states may have differing regulations on privacy).
+</t>
+<t> All operations with identity data must be securely logged.</t>
+<t> The logs should be available for auditing.</t>
+</list>
+</t>
+</section>
+
+<section title="Transfer of Attributes to a Relying Party's Website">
+<t>
+
+
+Description: <vspace blankLines="1"/>
+An end user has an account in a directory service A with one or more
+attributes.  That user then visits the website of relying party B,
+and the website requires attributes of the user. The user selects some attributes and 
+ authorizes the transfer of data via authorization protocols (e.g., OAuth, SAML), so selected attributes of the user 
+ are transferred from the user's account in directory service 
+A to the website of replying party B at the time of the user's first visit to that site. 
+</t>
+
+<t>Pre-conditions:
+<list style='symbols'>
+<t>User has an account in directory service A.</t>
+<t>User has one or more attributes.</t>
+<t>User visits website of relying party B.</t>
+
+</list>
+</t>
+<t>Post-conditions:
+
+<vspace blankLines="1"/>
+Selected attributes of the user are transferred from the user's account in
+directory service A to the website of relying party B at the time 
+of the user's first visit to that site.
+</t>
+
+<t>Requirements:
+ <list style='symbols'>
+  <t> Relying party B must be able to authenticate the end user. </t>
+  <t> Relying party B must be able to securely provide the authentication results to directory service A. </t>
+  <t> Directory service A must be able to securely provide end user's identity information (e.g., attributes) to relying party B. </t>
+  <t> Regulatory requirements shall be met when migrating
+  identity information between jurisdictional regions 
+(e.g., countries and states may have differing regulations on privacy).
+  </t>
+  <t> Relying parties have to be aware of changes to their cached copy, as these would potentially cause a state change in other relying parties. </t>
+  <t> A maximum period should be set for the relying party to cache the information. </t>
+ </list>
+</t>
+
+</section>
+
+<section title="Change Notification">
+<t>
+
+Description: <vspace blankLines="1"/>
+An end user has an account in a directory service A with one or more
+attributes.  That user then visits the web 
+site of relying party B.  The website of relying party B queries directory service A for attributes associated with that user, and related 
+resources.
+<vspace blankLines="1"/>
+The attributes of the user change later in directory service A. For example, the attributes might change if the user changes
+ their name, has their account disabled, or terminates their relationship with directory service A.    Furthermore, other 
+ resources and their attributes might also change.  The directory service A
+ then wishes to notify the website of relying party 
+ B of these changes, as relying party B might (or might not) have a cache of those attributes, and if relying party 
+ B were aware of these changes to their cached copy, it would potentially cause a state change in relying party B.
+ <vspace blankLines="1"/>
+The volume of changes, however, might be substantial, and only some of the changes may be of interest to relying party B, 
+so directory service A does not wish to "push" all the changes to B.  Instead, directory service A wishes to notify B that 
+there are changes potentially of interest, such that B can at an appropriate time subsequently contact directory service A 
+and retrieve just the subset of changes of interest to B.
+<vspace blankLines="1"/>
+Note that the user must authorize directory service A to transfer data to the website, and the user must authorize 
+directory service A to notify the website. 
+</t>
+
+<t>Pre-conditions:
+<list style='symbols'>
+<t>User has an account in directory service A. </t>
+<t>User has one or more attributes.</t>
+<t>User visits the website of relying party B.</t>
+<t>The resource being updated is at the website.</t>
+</list>
+</t>
+<t>Post-conditions:
+
+<vspace blankLines="1"/>
+Directory service A is able to notify relying party B that there are changes potentially of interest.
+</t>
+
+  <t>Requirements:
+    <list style='symbols'>
+      <t> Relying party B must be able to authenticate the end user. </t>
+      <t> Relying party B must be able to securely provide the authentication results to directory service A. </t>
+      <t> Directory service A must be able to securely provide end user's changed identity information (e.g., attributes) to relying party B. </t>
+      <t>Relying party B must be able at an appropriate time to subsequently contact directory service A and retrieve just the subset 
+          of changes of interest to relying party B. </t>
+    </list>
+  </t>
+</section>
+
+</section> <!-- section SCIM use cases -->
+
+<section title="Security Considerations">
+
+<t>
+   Authentication and authorization must be guaranteed for the SCIM operations to ensure that only 
+   authenticated entities can perform the SCIM requests and the requested SCIM operations are authorized.
+</t>
+<t>
+   SCIM resources (e.g., Users and Groups) can contain sensitive
+   information. Thus, data confidentiality MUST be guaranteed at the transport layer. 
+</t>
+<t>   
+   There can be privacy issues that go beyond transport security,
+   e.g., moving personally identifying information (PII) offshore between CSPs.
+   Regulatory requirements shall be met when migrating
+   identity information between jurisdictional regions
+(countries and states may have differing regulations on privacy).
+</t>
+<t>
+	Additionally, privacy-sensitive data elements may be omitted or obscured in SCIM transactions or stored records to 
+	protect these data elements for a user.  For instance, a role-based identifier might be used in place of an individual's name.
+</t>	
+<t>
+   Detailed security considerations are specified in Section 7 of the 
+<xref target="RFC7644">SCIM protocol</xref> and Section 9 of the
+<xref target="RFC7643">SCIM schema</xref>. 
+</t>
+
+</section> <!-- Security Considerations -->
+
+
+</middle>  
+
+<back>
+
+<references title="Normative References">
+      &RFC2119;
+	  
+</references>
+
+<references title='Informative References'>
+
+<reference anchor="RFC7644" target="http://www.rfc-editor.org/info/rfc7644">
+<front>
+<title>System for Cross-domain Identity Management: Protocol</title>
+
+<author initials='P' surname='Hunt' fullname='Phil Hunt' role='editor'>
+    <organization />
+</author>
+
+<author initials='K' surname='Grizzle' fullname='Kelly Grizzle'>
+    <organization />
+</author>
+
+<author initials='M' surname='Ansari' fullname='Morteza Ansari'>
+    <organization />
+</author>
+
+<author initials='E' surname='Wahlstroem' fullname='Erik Wahlstroem'>
+    <organization />
+</author>
+
+<author initials='C' surname='Mortimore' fullname='Chuck Mortimore'>
+    <organization />
+</author>
+
+<date month='September' year='2015' />
+
+</front>
+
+<seriesInfo name='RFC' value='7644'/>
+<seriesInfo name='DOI' value='10.17487/RFC7644'/>
+
+</reference>
+
+
+<reference anchor='RFC7643' target="http://www.rfc-editor.org/info/rfc7643">
+<front>
+<title>System for Cross-domain Identity Management: Core Schema</title>
+
+<author initials='P' surname='Hunt' fullname='Phil Hunt' role='editor'>
+    <organization />
+</author>
+
+<author initials='K' surname='Grizzle' fullname='Kelly Grizzle'>
+    <organization />
+</author>
+
+<author initials='E' surname='Wahlstroem' fullname='Erik Wahlstroem'>
+    <organization />
+</author>
+
+<author initials='C' surname='Mortimore' fullname='Chuck Mortimore'>
+    <organization />
+</author>
+
+<date month='September' year='2015' />
+
+<abstract><t>The System for Cross-domain Identity Management (SCIM) specifications are designed to make identity management in cloud based applications and services easier.  The specification suite builds upon experience with existing schemas and deployments, placing specific emphasis on simplicity of development and integration, while applying existing authentication, authorization, and privacy models.  Its intent is to reduce the cost and complexity of user management operations by providing a common user schema and extension model, as well as binding documents to provide patterns for exchanging this schema using HTTP protocol.  This document provides a platform neutral schema and extension model for representing users and groups and other resource types in JSON format.  This schema is intended for exchange and use with cloud service providers.</t></abstract>
+
+</front>
+
+<seriesInfo name='RFC' value='7643'/>
+<seriesInfo name='DOI' value='10.17487/RFC7643'/>
+</reference>
+
+        </references>
+
+<section title="Acknowledgments" numbered="no">
+<t>
+The authors would like to thank Ray Counterman, Richard Fiekowsky, Bert Greevenbosch, Barry Leiba, 
+Kelly Grizzle, Magnus Nystrom, Stephen Farrell, Kathleen Moriarty, Benoit Claise,
+Dapeng Liu, and Jun Li for their reviews and comments.                                                                                                                 
+</t>
+
+<t>
+Also, thanks to Darran Rolls and Patrick Harding; <xref target="user-scen"/> ("SCIM User Scenarios") is taken from them. 
+</t>
+</section>
+
+
+</back>
+</rfc>
+
+

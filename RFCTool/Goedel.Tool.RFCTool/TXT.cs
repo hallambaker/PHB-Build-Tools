@@ -124,7 +124,9 @@ namespace Goedel.Tool.RFCTool {
                     HaveRowData = HaveRowData | (Chunk.Length > 0);
                     Line = Line + " " + Chunk + "".PadLeft(Widths[i] - Chunk.Length) + " |";
                     }
-                if (HaveRowData) PageWriter.WriteLine(Line);
+                if (HaveRowData) {
+                    PageWriter.WriteLine(Line);
+                    }
                 }
 
 
@@ -295,8 +297,12 @@ namespace Goedel.Tool.RFCTool {
 
         bool PushComma = false;
         private string DeNullifyString (string Text, string Pre, string Post) {
-            if (Text == null) return "";
-            if (Text.Length == 0) return "";
+            if (Text == null) {
+                return "";
+                }
+            if (Text.Length == 0) {
+                return "";
+                }
             if (PushComma) {
                 PushComma = false;
                 return "," + Pre + Text + Post;
@@ -424,16 +430,21 @@ namespace Goedel.Tool.RFCTool {
         public void Write(Document Document) {
 
             PageWriter.FooterLeft=Document.FirstAuthor;
-            PageWriter.FooterCenter = "Expires " + Document.Expires;
+            if (Document.IsDraft) {
+                PageWriter.FooterCenter = "Expires " + Document.Expires;
+                }
+            else {
+                PageWriter.FooterCenter = Document.Docname;
+                }
 
-            PageWriter.HeaderLeft = "Internet-Draft";
+            PageWriter.HeaderLeft = Document.SeriesText;
             PageWriter.HeaderCenter = Document.TitleAbrrev;
             
             PageWriter.HeaderRight = Document.Month + " " + Document.Year;
 
             MastLeft();
 
-            WriteLeft("Internet Engineering Task Force (IETF)");
+            WriteLeft(Document.StreamText);
             if (Document.Number != null) {
                 WriteLeft("Request for Comments" + Document.Number);
                 if (Document.Updates != null) {
@@ -478,13 +489,7 @@ namespace Goedel.Tool.RFCTool {
             WriteHeading(null, "Abstract");
             WriteParagraphs(Document.Abstract);
 
-            WriteHeading(null, "Status of This Memo");
-            WriteParagraphs(Document.StatusOfThisMemo);
-
-
-            WriteHeading(null, "Copyright Notice");
-            WriteParagraph(Document.CopyrightNotice);
-            WriteParagraphs(Document.CopyrightTerms);
+            WriteSections(Document.Boilerplate);
 
             // Always start TOC on a new page
             PageWriter.WritePage();

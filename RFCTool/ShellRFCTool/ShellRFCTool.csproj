@@ -58,8 +58,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="draft-whatever.md" />
-    <None Include="draft_hallambaker_jsonbcd.docx" />
-    <None Include="draft_hallambaker_jsonbcd.md" />
+    <None Include="hallambaker-jsonbcd-new.docx" />
+    <None Include="hallambaker-jsonbcd-new.md" />
+    <None Include="hallambaker-test.md" />
     <None Include="main.command">
       <Generator>CommandCS</Generator>
       <LastGenOutput>main.cs</LastGenOutput>
@@ -113,9 +114,16 @@
     <Content Include="Bib.xml" />
     <Content Include="Bibliography.xml" />
     <Content Include="Cache.xml" />
-    <Content Include="draft_hallambaker_jsonbcd.html" />
-    <Content Include="draft_hallambaker_jsonbcd.txt" />
-    <Content Include="draft_hallambaker_jsonbcd.xml" />
+    <Content Include="hallambaker-jsonbcd-new.html" />
+    <Content Include="hallambaker-jsonbcd-new.txt" />
+    <Content Include="hallambaker-jsonbcd.html" />
+    <Content Include="hallambaker-jsonbcd.txt" />
+    <Content Include="hallambaker-jsonbcd.xml" />
+    <Content Include="hallambaker-test.html" />
+    <Content Include="hallambaker-test.txt" />
+    <Content Include="hallambaker-test.xml" />
+    <Content Include="xml2rfc.css" />
+    <Content Include="xmlrfca.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

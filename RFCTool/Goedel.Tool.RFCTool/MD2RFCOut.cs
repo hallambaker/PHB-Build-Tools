@@ -215,6 +215,9 @@ namespace Goedel.Tool.RFCTool {
             }
 
         public void WriteMeta (string Tag, List<string> Values) {
+            if (Values == null) {
+                return;
+                }
             foreach (var Value in Values) {
                 WriteMeta(Tag, Value, 0);
                 }
@@ -250,8 +253,8 @@ namespace Goedel.Tool.RFCTool {
             WriteMeta("ipr", Document.Ipr);
             WriteMeta("area", Document.Area);
             WriteMeta("workgroup", Document.Workgroup);
-            WriteMeta("publisher", Document.Publisher);
-            WriteMeta("status", Document.Status);
+            //WriteMeta("publisher", Document.Publisher);
+            //WriteMeta("status", Document.Status);
             WriteLine();
 
             WriteMeta("number", Document.Number);

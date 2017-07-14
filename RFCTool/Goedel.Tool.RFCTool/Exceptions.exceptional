@@ -14,4 +14,5 @@ Namespace Goedel.Tool.RFCTool
 			Object ExceptionData "Expected reserved word, token {0} was not found"
 				String
 
-
+	Exception IPRInvalid
+		Console "Invalid IPR term specified"	

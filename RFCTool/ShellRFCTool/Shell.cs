@@ -76,8 +76,9 @@ namespace MakeRFC {
 
                 case ".xml":
                 case ".xml2rfc":
-                case ".rfc2629": {
-                    Rfc2629Parse.Parse(inputfile, Document);
+                case ".rfc2629":
+                case ".rfc7991": {
+                    Rfc7991Parse.Parse(inputfile, Document);
                     break;
                     }
 

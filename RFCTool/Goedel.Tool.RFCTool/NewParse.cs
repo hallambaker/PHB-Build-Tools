@@ -275,8 +275,10 @@ namespace Goedel.Tool.RFCTool {
         public NewParse (String Reference, Document Document) {
             StringReader StringReader = new StringReader(Reference);
             this.Document = Document;
+
             ParseReferences(StringReader);
             }
+            
 
         public NewParse (Processing Processing, Document Document) {
 
@@ -305,6 +307,7 @@ namespace Goedel.Tool.RFCTool {
 
             MakeReferences(Root.Contents);
             }
+
 
         void MakeDocument (Element Root) {
             switch (Root.Tag) {
@@ -960,7 +963,7 @@ namespace Goedel.Tool.RFCTool {
                         Reference.Authors.Add(Author);
                         break;
                         }
-                case "version": Reference.Version = Value; break;
+                //case "version": Reference.Version = Value; break;
                 case "date":
                     Reference.Year = Element.Year;
                     Reference.Month = Element.Month;

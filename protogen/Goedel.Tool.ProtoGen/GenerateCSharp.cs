@@ -28,7 +28,6 @@ using Goedel.Registry;
 namespace Goedel.Tool.ProtoGen {
 	public partial class Generate : global::Goedel.Registry.Script {
 
-		 bool OldConstructors = false;
 		 Separator Separator = new Separator (",");
 		//
 		//   Code Generator (C#)
@@ -479,12 +478,8 @@ namespace Goedel.Tool.ProtoGen {
 
 			 public void DeclareMembers  (List<_Choice> Entries) {
 			foreach  (_Choice Entry in Entries) {
-				 TOKEN<_Choice> Token = null;
-				 string Type = null; string TType = null;
-				 List<_Choice> Options = null;
-				 bool Nullable;
-				 string Tag;
-				 GetType (Entry, out Token, out Type, out TType, out Options, out Nullable, out Tag);
+				 GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
+				    out var Nullable, out var Tag);
 				if (  (Token != null) ) {
 					 bool Multiple = IsMultiple (Options);
 					if (  Multiple ) {
@@ -544,11 +539,8 @@ namespace Goedel.Tool.ProtoGen {
 				_Output.Write ("			(({1})this).SerializeX(_Writer, false, ref _first);\n{0}", _Indent, Inherits);
 				}
 			foreach  (_Choice Entry in Entries) {
-				 TOKEN<_Choice> Token = null;
-				 string Type = null; string TType = null;
-				 List<_Choice> Options = null; bool Nullable;
-				 string Tag;
-				 GetType (Entry, out Token, out Type, out TType, out Options, out Nullable, out Tag);
+				 GetType (Entry, out var Token, out var Type, out var TType, 
+				      out var Options, out var Nullable, out var Tag);
 				if (  (Token != null) ) {
 					 bool Multiple = IsMultiple (Options);
 					if (  Multiple ) {
@@ -616,12 +608,8 @@ namespace Goedel.Tool.ProtoGen {
 			_Output.Write ("			\n{0}", _Indent);
 			_Output.Write ("			switch (Tag) {{\n{0}", _Indent);
 			foreach  (_Choice Entry in Entries) {
-				 TOKEN<_Choice> Token = null;
-				 string Type = null; string TType = null;
-				 List<_Choice> Options = null;
-				 bool Nullable;
-				 string Tag;
-				 GetType(Entry, out Token, out Type, out TType, out Options, out Nullable, out Tag);
+				 GetType(Entry, out var Token, out var Type, out var TType, 
+				    out var Options, out var Nullable, out var Tag);
 				if (  (Token != null) ) {
 					 bool Multiple = IsMultiple (Options);
 					_Output.Write ("				case \"{1}\" : {{\n{0}", _Indent, Tag);

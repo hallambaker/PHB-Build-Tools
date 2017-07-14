@@ -62,6 +62,9 @@ namespace Goedel.Tool.RFCTool {
                 Document.Title = front.title?.Value;
                 Document.TitleAbrrev = front.title?.abbrev;
                 Document.TitleAscii = front.title?.ascii;
+
+                Document.SeriesInfos = MakeSeriesInfo(front.seriesInfo);
+
                 Document.Authors = MakeAuthors(front.author);
                 Document.Day = rfc.front.date.day;
                 Document.Month = rfc.front.date.month;
@@ -176,6 +179,23 @@ namespace Goedel.Tool.RFCTool {
             Result.Target = reference.target;
 
             return Result;
+            }
+
+        List<SeriesInfo> MakeSeriesInfo (List<seriesInfo> seriesInfos) {
+            List<SeriesInfo> ListSeriesInfo = new List<SeriesInfo>();
+
+            if (seriesInfos != null) {
+                foreach (var seriesInfo in seriesInfos) {
+
+                    SeriesInfo SeriesInfo = new SeriesInfo();
+                    ListSeriesInfo.Add(SeriesInfo);
+                    SeriesInfo.Name = seriesInfo.name;
+                    SeriesInfo.Value = seriesInfo.value;
+                    break;
+                    }
+                }
+            return ListSeriesInfo;
+
             }
 
         List<SeriesInfo> MakeSeriesInfo(List<object> seriesInfos) {

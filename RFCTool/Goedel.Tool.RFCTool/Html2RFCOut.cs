@@ -87,7 +87,7 @@ namespace Goedel.Tool.RFCTool {
             Start("table", "class", "ears");
             Start("thead");
             Start("tr");
-            WriteElement("td", "Internet-Draft", "class", "left");
+            WriteElement("td", Document.SeriesText, "class", "left");
             WriteElement("td", Document.TitleAbrrev, "class", "center");
             WriteElement("td", Document.Month + " " + Document.Year, "class", "right");
             End();
@@ -103,16 +103,18 @@ namespace Goedel.Tool.RFCTool {
 
             WriteIdentifiers(Document);
             WriteElement("h1", Document.Title, "id", "title");
+            WriteElement("p", Document.FullDocName, "id", "filename");
 
             WriteAbstract(Document);
-            WriteStatus(Document);
-            WriteCopyright(Document);
+            WriteSections(Document.Boilerplate, 0, true);
             WriteToc(Document);
             
             WriteSections(Document.Middle, 0);
+            WriteReferences(Document.Catalog);
+
             WriteSections(Document.Back, 0);
 
-            WriteReferences(Document.Catalog);
+
             WriteAuthors(Document.Authors);
             WriteColophon();
 
@@ -264,25 +266,32 @@ namespace Goedel.Tool.RFCTool {
             Start("dl", "id", "identifiers");
 
             WriteElement("dt", "Stream:");
+            WriteElement("dd", Document.StreamText, "class", "stream");
 
-            WriteElement("dd", Document.Workgroup, "class", "ID");
-            WriteElement("dd", Document.Area, "class", "ID");
+            if (Document.WorkgroupText != null) {
+                WriteElement("dt", "Workgroup:");
+                WriteElement("dd", Document.WorkgroupText, "class", "workgroup");
+                }
 
-            WriteElement("dt", "Internet-Draft");
-            WriteElement("dd", Document.FullDocName, "class", "ID");
-            WriteElement("dd", Document.Category, "class", "Category");
+            WriteElement("dt", "Series:");
+            WriteElement("dd", Document.SeriesText, "class", "series");
 
+            WriteElement("dt", "Status:");
+            WriteElement("dd", Document.StatusText, "class", "status");
 
             WriteElement("dt", "Published:");
             Start("dd");
             WriteDate(Document.DocDate, "published");
             End();
-            WriteElement("dt", "Expires");
-            Start("dd");
-            WriteDate(Document.Expiring, "expires");
-            End();
-            WriteElement("dt", "Authors:");
 
+            if (Document.IsDraft) {
+                WriteElement("dt", "Expires");
+                Start("dd");
+                WriteDate(Document.Expiring, "expires");
+                End();
+                }
+            
+            WriteElement("dt", Document.Authors.Count > 0 ? "Authors:" : "Author");
             foreach (var Author in Document.Authors) {
                 Start("dd", "class", "authors");
                 WriteSpan("author-name", Author.Name);
@@ -295,8 +304,6 @@ namespace Goedel.Tool.RFCTool {
                     }
                 End();
                 }
-
-
 
             End();
             }
@@ -359,9 +366,9 @@ namespace Goedel.Tool.RFCTool {
         //----------------------
 
         // Write out the sections
-        public void WriteSections (List<Section> Sections, int Level) {
+        public void WriteSections (List<Section> Sections, int Level, bool Always = false) {
             foreach (Section Section in Sections) {
-                if (!Section.Automatic) {
+                if (Always | !Section.Automatic) {
                     StartSection(Section);
                     foreach (TextBlock TextBlock in Section.TextBlocks) {
                         switch (TextBlock) {
@@ -385,19 +392,25 @@ namespace Goedel.Tool.RFCTool {
                                         WriteTable(Table);
                                         break;
                                         }
+                                    case Figure Figure: {
+                                        WriteFigure(Figure);
+                                        break;
+                                        }
                                     }
                                 break;
                                 }
 
                             }
                         }
+
                     EndSection();
                     WriteSections(Section.Subsections, Level + 1);
                     }
                 }
             }
 
-
+        void WriteFigure (Figure Figure) {
+            }
 
 
         void WriteReferences (Catalog Catalog) {

@@ -282,12 +282,17 @@ namespace Goedel.Document.Markdown {
 
                 ParseRegistry.Include(Attributes[0].Value, TagCatalog, Document);
                 }
-
+            //else if (CatalogEntry.Key == "img") {
+            //    Console.WriteLine("Read file {0}", Attributes[0].Value);
+            //    //var IMG = new Figure(CatalogEntry, Attributes);
+            //    }
             else if (CatalogEntry.ElementType == ElementType.Meta) {
-                Meta Meta = new Meta(CatalogEntry, Attributes);
+                Meta Meta = new Meta(CatalogEntry, Attributes) {
+                    BlockType = BlockType.Meta
+                    };
                 Document.MetaDataAdd(CatalogEntry, Meta);
                 CurrentBlock = Meta;
-
+                Document.Blocks.Add(CurrentBlock);
                 }
             else if (CatalogEntry.ElementType == ElementType.Block) {
                 CurrentBlock = Block.MakeBlock(CatalogEntry, Attributes);

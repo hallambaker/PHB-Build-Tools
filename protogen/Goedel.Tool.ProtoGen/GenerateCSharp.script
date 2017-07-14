@@ -1,7 +1,7 @@
 ﻿#script 1.0
 #license MITLicense
 #xclass Goedel.Tool.ProtoGen Generate
-#% bool OldConstructors = false;
+#!% bool OldConstructors = false;
 #% Separator Separator = new Separator (",");
 #!
 #!   Code Generator (C#)
@@ -387,12 +387,8 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 #block ParameterList
 #% public void DeclareMembers  (List<_Choice> Entries) {
 #foreach (_Choice Entry in Entries)
-#% TOKEN<_Choice> Token = null;
-#% string Type = null; string TType = null;
-#% List<_Choice> Options = null;
-#% bool Nullable;
-#% string Tag;
-#% GetType (Entry, out Token, out Type, out TType, out Options, out Nullable, out Tag);
+#% GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
+#%    out var Nullable, out var Tag);
 #if (Token != null)
 #% bool Multiple = IsMultiple (Options);
 #if Multiple
@@ -449,11 +445,8 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 			((#{Inherits})this).SerializeX(_Writer, false, ref _first);
 #end if
 #foreach (_Choice Entry in Entries)
-#% TOKEN<_Choice> Token = null;
-#% string Type = null; string TType = null;
-#% List<_Choice> Options = null; bool Nullable;
-#% string Tag;
-#% GetType (Entry, out Token, out Type, out TType, out Options, out Nullable, out Tag);
+#% GetType (Entry, out var Token, out var Type, out var TType, 
+#%      out var Options, out var Nullable, out var Tag);
 #if (Token != null)
 #% bool Multiple = IsMultiple (Options);
 #if Multiple
@@ -521,12 +514,8 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 			
 			switch (Tag) {
 #foreach (_Choice Entry in Entries)
-#% TOKEN<_Choice> Token = null;
-#% string Type = null; string TType = null;
-#% List<_Choice> Options = null;
-#% bool Nullable;
-#% string Tag;
-#% GetType(Entry, out Token, out Type, out TType, out Options, out Nullable, out Tag);
+#% GetType(Entry, out var Token, out var Type, out var TType, 
+#%    out var Options, out var Nullable, out var Tag);
 #if (Token != null)
 #% bool Multiple = IsMultiple (Options);
 				case "#{Tag}" : {

@@ -103,9 +103,7 @@ namespace Goedel.Document.Markdown {
                 }
 
             foreach (var Resource in Resources) {
-                if (TagCatalog.Process != null) {
-                    TagCatalog.Process(Resource.FullName, TargetDir);
-                    }
+                TagCatalog?.Process(Resource.FullName, TargetDir);
                 }
 
             foreach (var Dir in Directories) {
@@ -191,9 +189,7 @@ namespace Goedel.Document.Markdown {
 
         public string Extension;
 
-        public string FullName {
-            get { return FileInfo.FullName; } 
-            }
+        public string FullName {get => FileInfo.FullName; } 
 
         public Resource() {
             }
@@ -250,7 +246,9 @@ namespace Goedel.Document.Markdown {
             }
 
         public bool Match(string Key) {
-            if (CatalogEntry == null) return false;
+            if (CatalogEntry == null) {
+                return false;
+                }
             return CatalogEntry.Key == Key;
             }
 
@@ -277,7 +275,7 @@ namespace Goedel.Document.Markdown {
                     }
                 }
 
-            if (NewBlock == null) return null;
+            if (NewBlock == null) { return null; }
 
             // Initialize the common parameters
             NewBlock.CatalogEntry = CatalogEntry;
@@ -303,11 +301,6 @@ namespace Goedel.Document.Markdown {
 
     public partial class Layout : Block {
         }
-
-    //public partial class Unknown : Block {
-    //    string Key;
-    //    }
-
 
     public partial class Close : Block {
         public Block Parent;
@@ -430,12 +423,24 @@ namespace Goedel.Document.Markdown {
             }
 
 
+        public List<string> MetaDataGetStrings (string Key, List<string> Default) {
+            var Found = MetaDataLookup(Key, out var Items);
+            if (!Found) {
+                return Default;
+                }
 
+            var Result = new List<string>();
+            foreach (var Item in Items) {
+                Result.Add(Item.Text);
+                }
+
+            return Result;
+            }
 
 
         public string MetaDataGetString(string Key, string Default) {
-            List<Meta> Items;
-            var Found = MetaDataLookup(Key, out Items);
+
+            var Found = MetaDataLookup(Key, out var Items);
 
             return Found ? Items[0].Text : Default;
             }
@@ -454,8 +459,7 @@ namespace Goedel.Document.Markdown {
                 return MetaDataAdd(MetaData, Key.Key, Item);
                 }
             else {
-                List<Meta> Parent;
-                if (!MetaData.TryGetValue(Key.Parent.Key, out Parent)) {
+                if (!MetaData.TryGetValue(Key.Parent.Key, out var Parent)) {
                     Parent = new List<Meta>();
                     MetaData.Add(Key.Parent.Key, Parent);
                     Parent.Add(new Meta());
@@ -472,8 +476,7 @@ namespace Goedel.Document.Markdown {
 
         public List<Meta> MetaDataAdd(Dictionary<string, List<Meta>> MetaData,
                         string Key, Meta Item) {
-            List<Meta> Items;
-            var Found = MetaDataLookup(Key, out Items);
+            var Found = MetaDataLookup(Key, out var Items);
             if (!Found) {
                 Items = new List<Meta>();
                 MetaData.Add(Key, Items);

@@ -9,7 +9,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using HT = Goedel.Tool.RFCTool;
 
 namespace Goedel.Document.OpenXML {
-    public partial class MakeWord { 
+    public partial class MakeWord {
         WordprocessingDocument Target;
         MainDocumentPart TargetMain;
         DocumentFormat.OpenXml.Wordprocessing.Document TargetDocument;
@@ -35,17 +35,23 @@ namespace Goedel.Document.OpenXML {
         Goedel.Tool.RFCTool.Document Source;
 
         private void DumpNumber (StyleParagraphProperties st1) {
-            if (st1 == null) return;
+            if (st1 == null) {
+                return;
+                }
             var np = st1.NumberingProperties;
-            if (np == null) return;
+            if (np == null) {
+                return;
+                }
             var nid = np.NumberingId;
             var nins = np.Inserted;
-            if (nid == null) return;
+            if (nid == null) {
+                return;
+                }
             }
 
 
 
-        private MakeWord(string Filename, Goedel.Tool.RFCTool.Document Source) {
+        private MakeWord (string Filename, Goedel.Tool.RFCTool.Document Source) {
             this.Source = Source;
 
             //ReadTest();
@@ -57,7 +63,7 @@ namespace Goedel.Document.OpenXML {
                 Generate();
                 }
             }
-        
+
         public static MakeWord FromHTML2RFC (string Filename, Goedel.Tool.RFCTool.Document Source) {
             return new MakeWord(Filename, Source);
             }
@@ -67,23 +73,23 @@ namespace Goedel.Document.OpenXML {
             TargetMain = Target.AddMainDocumentPart();
             TargetDocument = new DocumentFormat.OpenXml.Wordprocessing.Document();
             TargetMain.Document = TargetDocument;
-            TargetBody = TargetDocument.AppendChild (new Body());
+            TargetBody = TargetDocument.AppendChild(new Body());
 
             AddStyles();
             AddText();
             }
 
-        private void AddText() {
+        private void AddText () {
             WriteParagraph("title", Source.Title);
-            WriteParagraph("abbrev", Source.Abrrev);
+            WriteParagraph("abbrev", Source.TitleAbrrev);
 
             WriteMeta("ietf", Source.Docname);
             WriteMeta("version", Source.Version);
             WriteMeta("ipr", Source.Ipr);
             WriteMeta("area", Source.Area);
             WriteMeta("workgroup", Source.Workgroup);
-            WriteMeta("publisher", Source.Publisher);
-            WriteMeta("status", Source.Status);
+            //WriteMeta("publisher", Source.Publisher);
+            //WriteMeta("status", Source.Status);
 
             WriteMeta("number", Source.Number);
             WriteMeta("category", Source.Category);
@@ -100,8 +106,8 @@ namespace Goedel.Document.OpenXML {
             if (Source.Abstract.Count > 0) {
                 WriteHeading("Abstract", 1);
                 foreach (HT.TextBlock TextBlock in Source.Abstract) {
-                if (TextBlock.GetType() == typeof(HT.P)) {
-                var P = (HT.P)TextBlock;
+                    if (TextBlock.GetType() == typeof(HT.P)) {
+                        var P = (HT.P)TextBlock;
                         WriteParagraph(P.Text);
                         }
                     }
@@ -110,7 +116,7 @@ namespace Goedel.Document.OpenXML {
             WriteSections(Source.Back, 1);
             }
 
-        public void WriteSections(List<HT.Section> Sections, int Level) {
+        public void WriteSections (List<HT.Section> Sections, int Level) {
             foreach (var Section in Sections) {
                 if (!Section.Automatic) {
                     if (Section.Heading != null) {
@@ -145,24 +151,7 @@ namespace Goedel.Document.OpenXML {
                             }
 
                         if (TextBlock.GetType() == typeof(HT.Table)) {
-                            //Table Table = (Table)TextBlock;
-                            //WriteStartTag("table", "id", Table.ID);
-
-                            //for (int Row = 0; Row < Table.Rows.Count; Row++) {
-                            //    TableRow TableRow = Table.Rows[Row];
-                            //    int Col = 0;
-                            //    string Tag = Row == 0 ? "th" : "td";
-                            //    WriteStartTag("tr");
-                            //    for (; Col < TableRow.Data.Count; Col++) {
-                            //        WriteValueTag(Tag, TableRow.Data[Col].Text);
-                            //        }
-                            //    for (; Col < Table.MaxRow; Col++) {
-                            //        WriteValueTag(Tag, "");
-                            //        }
-                            //    WriteEndTag("tr");
-                            //    }
-
-                            //WriteEndTag("table ");
+                            WriteTable(TextBlock as HT.Table);
                             }
                         }
                     WriteSections(Section.Subsections, Level + 1);
@@ -170,7 +159,26 @@ namespace Goedel.Document.OpenXML {
                 }
             }
 
-        void WriteAuthors(List<HT.Author> Authors) {
+        void WriteTable (HT.Table TableData) {
+            var Table = new Table();
+            foreach (var Row in TableData.Rows) {
+                var tr = new TableRow();
+                foreach (var Cell in Row.Data) {
+                    var tc = new TableCell();
+                    tc.Append(new Paragraph(
+                        new Run(
+                            new Text(Cell.Text))));
+                    tc.Append(new TableCellProperties(
+                        new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc);
+                    }
+                Table.Append(tr);
+                }
+            TargetBody.Append(Table);
+            }
+
+
+        void WriteAuthors (List<HT.Author> Authors) {
             foreach (var Author in Authors) {
                 WriteMeta("author", Author.Name);
                 WriteMeta("initials", Author.Initials, 1);
@@ -196,7 +204,7 @@ namespace Goedel.Document.OpenXML {
             StyleID_h6,
             };
 
-        private void WriteHeading(string Text, int Level) {
+        private void WriteHeading (string Text, int Level) {
             Level = Level > 6 ? 6 : Level;
             var P = StartParagraph(Headings[Level]);
             var Run = P.AppendChild(new Run());
@@ -204,43 +212,50 @@ namespace Goedel.Document.OpenXML {
             }
 
 
-        private void WriteParagraph(string Style, string Text) {
+        private void WriteParagraph (string Style, string Text) {
             var P = StartParagraph(Style);
             var Run = P.AppendChild(new Run());
             Run.AppendChild(new Text(Text));
             }
 
-        private void WriteParagraph(string Text) {
+        private void WriteParagraph (string Text) {
             var P = StartParagraph("Normal");
             var Run = P.AppendChild(new Run());
             Run.AppendChild(new Text(Text));
             }
 
-
-        private void WriteMeta(string Tag, string Text) {
+        private void WriteMeta (string Tag, List<string> Texts) {
+            if (Texts == null) {
+                return;
+                }
+            foreach (var Text in Texts) {
+                WriteMeta(Tag, Text, 0);
+                }
+            }
+        private void WriteMeta (string Tag, string Text) {
             WriteMeta(Tag, Text, 0);
             }
 
-        private void WriteMeta(string Tag, string Text, int Indent) {
-            if (Text == null) return;
+        private void WriteMeta (string Tag, string Text, int Indent) {
+            if (Text == null) { return; }
 
             var P = StartParagraph(StyleID_meta);
             var Run = P.AppendChild(new Run());
-            Run.AppendChild(new Text("<"+Tag+">"+Text));
+            Run.AppendChild(new Text("<" + Tag + ">" + Text));
             }
 
-        private Paragraph StartParagraph(string Style) {
+        private Paragraph StartParagraph (string Style) {
 
             var P = TargetBody.AppendChild(new Paragraph());
             var PPs = MakeParagraphProperties(P);
-            PPs.ParagraphStyleId = new ParagraphStyleId () {
+            PPs.ParagraphStyleId = new ParagraphStyleId() {
                 Val = Style
                 };
 
             return P;
             }
 
-        private ParagraphProperties MakeParagraphProperties(Paragraph p) {
+        private ParagraphProperties MakeParagraphProperties (Paragraph p) {
             var PL = p.Elements<ParagraphProperties>().GetEnumerator();
 
             if (PL.Current != null) {
@@ -253,9 +268,9 @@ namespace Goedel.Document.OpenXML {
             }
 
 
-        private void AddStyles() {
+        private void AddStyles () {
 
-            var NumberingDefinitionsPart = 
+            var NumberingDefinitionsPart =
                 TargetDocument.MainDocumentPart.AddNewPart<NumberingDefinitionsPart>();
             GeneratePartContent(NumberingDefinitionsPart);
 
@@ -281,27 +296,31 @@ namespace Goedel.Document.OpenXML {
 
 
             var Style = MakeStyle(StyleID_li);
-            Style.StyleParagraphProperties.NumberingProperties = 
-                    new NumberingProperties();
-            Style.StyleParagraphProperties.NumberingProperties.NumberingId =
-                    new NumberingId();
-            Style.StyleParagraphProperties.NumberingProperties.NumberingId.Val = 1;
+            Style.StyleParagraphProperties.NumberingProperties =
+                    new NumberingProperties() {
+                        NumberingId = new NumberingId() {
+                            Val = 1
+                            }
+                        };
 
             Style = MakeStyle(StyleID_ni);
             Style.StyleParagraphProperties.NumberingProperties =
-                    new NumberingProperties();
-            Style.StyleParagraphProperties.NumberingProperties.NumberingId =
-                    new NumberingId();
-            Style.StyleParagraphProperties.NumberingProperties.NumberingId.Val = 3;
+                    new NumberingProperties() {
+                        NumberingId = new NumberingId() {
+                            Val = 3
+                            }
+                        };
 
             Style = MakeStyle(StyleID_dt);
             Style.StyleRunProperties.Bold = new Bold();
-            Style.StyleParagraphProperties.Indentation = new Indentation();
-            Style.StyleParagraphProperties.Indentation.Left = "360";
+            Style.StyleParagraphProperties.Indentation = new Indentation() {
+                Left = "360"
+                };
 
             Style = MakeStyle(StyleID_dd);
-            Style.StyleParagraphProperties.Indentation = new Indentation();
-            Style.StyleParagraphProperties.Indentation.Left = "720";
+            Style.StyleParagraphProperties.Indentation = new Indentation() {
+                Left = "720"
+                };
 
             }
 

@@ -39,6 +39,7 @@ namespace Goedel.Registry {
         public static string AsXMLAttribute(this string Text) {
             var Result = new StringBuilder();
 
+            Text = Text ?? "null";
             foreach (char c in Text) {
                 switch (c) {
                     case '<': Result.Append("&lt;"); break;
@@ -76,7 +77,7 @@ namespace Goedel.Registry {
         /// </summary>
         string Indent {get; set; }
 
-        TextWriter Output;
+        protected TextWriter Output;
 
         /// <summary>
         /// 
@@ -91,6 +92,8 @@ namespace Goedel.Registry {
                 }
             }
 
+
+
         /// <summary>
         /// Write out a complete element with start and closing tag. If
         /// the text value is omitted or null an empty tag &lt;Name/&gt;
@@ -99,14 +102,90 @@ namespace Goedel.Registry {
         /// <param name="Tag"></param>
         /// <param name="Text"></param>
         /// <param name="Attributes"></param>
-        public void WriteElement(string Tag, string Text = null, params string[] Attributes) {
+        public void WriteElementEmpty (string Tag,
+            params string[] Attributes) {
             Console.WriteLine("{1}<{0}>", Tag, Indent);
 
             StartLine();
+
+            Output.Write("<");
+            Output.Write(Tag);
+            Write(Attributes);
+            Output.Write(">");
+
+            EndLine();
+            }
+
+        public void WriteElementIfTrim (string Tag,
+                string Text,
+                params string[] Attributes) {
+            if (Text != null) {
+                WriteElement(Tag, Text.Trim(), Attributes);
+                }
+            }
+
+
+        public void WriteElementIf (string Tag,
+                string Text,
+                params string[] Attributes) {
+            if (Text != null) {
+                WriteElement(Tag, Text, Attributes);
+                }
+            }
+
+        /// <summary>
+        /// Write out a complete element with start and closing tag. If
+        /// the text value is omitted or null an empty tag &lt;Name/&gt;
+        /// is produced. Otherwise the tag wraps the supplied text.
+        /// </summary>
+        /// <param name="Tag"></param>
+        /// <param name="Text"></param>
+        /// <param name="Attributes"></param>
+        public void WriteElement (string Tag,
+            string Text = null,
+            params string[] Attributes) {
+            WriteElement(Tag, true, true, Text, Attributes);
+            }
+
+
+        /// <summary>
+        /// Write out a complete element with start and closing tag. If
+        /// the text value is omitted or null an empty tag &lt;Name/&gt;
+        /// is produced. Otherwise the tag wraps the supplied text.
+        /// </summary>
+        /// <param name="Tag"></param>
+        /// <param name="Text"></param>
+        /// <param name="Attributes"></param>
+        public void WriteElement (string Tag,
+            List<string> Texts,
+            params string[] Attributes) {
+            if (Texts == null) {
+                return;
+                }
+            foreach (var Text in Texts) {
+                WriteElement(Tag, true, true, Text, Attributes);
+                }
+            }
+
+        /// <summary>
+        /// Write out a complete element with start and closing tag. If
+        /// the text value is omitted or null an empty tag &lt;Name/&gt;
+        /// is produced. Otherwise the tag wraps the supplied text.
+        /// </summary>
+        /// <param name="Tag"></param>
+        /// <param name="Text"></param>
+        /// <param name="Attributes"></param>
+        public void WriteElement(string Tag,
+            bool Start, bool End,
+            string Text = null, 
+            params string[] Attributes) {
+            Console.WriteLine("{1}<{0}>", Tag, Indent);
+
+            StartLine(Start);
             if (Text == null) {
                 Output.Write("<");
                 Output.Write(Tag);
-                //Atts
+                Write(Attributes);
                 Output.Write("/>");
                 }
             else {
@@ -121,11 +200,45 @@ namespace Goedel.Registry {
                 Output.Write(Tag);
                 Output.Write(">");
                 }
-            EndLine();
+            EndLine(End);
             }
 
         /// <summary>
-        /// 
+        /// Write out a complete element with start and closing tag. If
+        /// the text value is omitted or null an empty tag &lt;Name/&gt;
+        /// is produced. Otherwise the tag wraps the supplied text.
+        /// </summary>
+        /// <param name="Tag"></param>
+        /// <param name="Text"></param>
+        /// <param name="Attributes"></param>
+        public void WriteInlineElement (string Tag,
+            string Text = null,
+            params string[] Attributes) {
+            Console.WriteLine("{1}<{0}>", Tag, Indent);
+
+            if (Text == null) {
+                Output.Write("<");
+                Output.Write(Tag);
+                Write(Attributes);
+                Output.Write("/>");
+                }
+            else {
+                Output.Write("<");
+                Output.Write(Tag);
+                Write(Attributes);
+                Output.Write(">");
+
+                Output.Write(Text);
+
+                Output.Write("</");
+                Output.Write(Tag);
+                Output.Write(">");
+                }
+            }
+
+
+        /// <summary>
+        /// Write an element start tag with optional attributes.
         /// </summary>
         /// <param name="Tag"></param>
         /// <param name="Attributes"></param>
@@ -143,6 +256,27 @@ namespace Goedel.Registry {
             Output.Write(">");
             EndLine();
 
+            Indent += IndentIncrement;
+            }
+
+        /// <summary>
+        /// Write an element start tag with optional attributes.
+        /// </summary>
+        /// <param name="Tag"></param>
+        /// <param name="Attributes"></param>
+        public void Start (string Tag, bool Start, bool End,
+                        params string[] Attributes) {
+            Console.WriteLine("{1}<{0}>", Tag, Indent);
+
+            StackIndent.Push(Indent);
+            StackTag.Push(Tag);
+            StartLine(Start);
+            Output.Write("<");
+            Output.Write(Tag);
+            Write(Attributes);
+            //Atts
+            Output.Write(">");
+            EndLine(End);
             Indent += IndentIncrement;
             }
 
@@ -183,12 +317,12 @@ namespace Goedel.Registry {
         /// 
         /// </summary>
         /// <param name="Text"></param>
-        public void Write (string Text) {
+        public void Write (string Text="", bool Start = true, bool End = true) {
             Console.Write("{0}:  ", StackTag.Count);
             Console.WriteLine(Text);
-            StartLine();
+            StartLine(Start);
             Output.Write(Text.AsXML());
-            EndLine();
+            EndLine(End);
             }
 
         /// <summary>
@@ -204,26 +338,32 @@ namespace Goedel.Registry {
             }
 
         /// <summary>
-        /// 
+        /// Close an open tag
         /// </summary>
-        public void End() {
+        public void End(bool Start=true, bool End=true) {
             
 
             var Tag = StackTag.Pop();
             Indent = StackIndent.Pop();
-            StartLine();
+            StartLine(Start);
             Output.Write("</");
             Output.Write(Tag);
             Output.Write(">");
-            EndLine();
+            EndLine(End);
 
             Console.WriteLine("{1}</{0}>", Tag, Indent);
             }
 
-        private void StartLine() {
+        protected void StartLine(bool Write=true) {
+            if (!Write) {
+                return;
+                }
             Output.Write(Indent);
             }
-        private void EndLine () {
+        protected void EndLine (bool Write = true) {
+            if (!Write) {
+                return;
+                }
             Output.Write("\n");
             }
         }

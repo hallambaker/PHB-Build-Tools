@@ -8,14 +8,10 @@ namespace Goedel.Tool.RFCTool {
 
         public GM.Document Source = null;
 
-
-
-
-
         // Constants for inside the text
-        public string           Publisher = "Internet Engineering Task Force (IETF)";
-        public string           ID1 = "Internet-Draft";
-        public string           Status = "Standards Track";
+        //public string           Publisher = "Internet Engineering Task Force (IETF)";
+        //public string           ID1 = "Internet-Draft";
+        //public string           Status = "Standards Track";
 
 
         // Attributes from tag <RFC>
@@ -27,7 +23,7 @@ namespace Goedel.Tool.RFCTool {
         public string SeriesNumber;
         public string Ipr;
         public string IprExtract;
-        public string SubmissionType;
+        public string SubmissionType; // see seriesinfo
         public string Docname = "";
 
         // I see no reason at all to allow these to be varied. The TOC is
@@ -42,8 +38,6 @@ namespace Goedel.Tool.RFCTool {
         public string Scripts = "Common,Latin";
         public string ExpiresDate = null;
 
-
-
         public List<Link> Links = new List<Link>();
 
         // Collected attributes and elements from <front>
@@ -56,14 +50,15 @@ namespace Goedel.Tool.RFCTool {
         public string Month;
         public string Day;
 
-        public List<string> Area;
-        public List<string> Workgroup;
+        public List<string> Area = new List<string>();      // UNUSED
+        public List<string> Workgroup = new List<string>();
         public List<string> Keywords = new List<string>();
         public List<TextBlock> Abstract = new List<TextBlock>();
         public List<TextBlock> Note = new List<TextBlock>();
         public List<Section> Boilerplate = new List<Section>();
         public List<Section> Middle = new List<Section>();
         public List<Section> Back = new List<Section>();
+        public List<SeriesInfo> SeriesInfos = new List<SeriesInfo>();
 
         // Calculated attributes
         public DateTime DocDate { get => DateTime.Parse(Date); }
@@ -84,6 +79,22 @@ namespace Goedel.Tool.RFCTool {
                 return Parts[Parts.Length - 1];
                 }
             }
+        public bool IsConsensus { get => Consensus == "yes" | Consensus == "true"; }
+        public bool IsDraft { get => Series == "draft"; }
+
+
+        public SeriesInfo SeriesInfo { get => SeriesInfos.Count > 0 ? SeriesInfos[0] : null; }
+        public string Stream { get => SeriesInfo?.Stream ?? "ietf"; }
+        public string Status { get => SeriesInfo?.Status ?? "standard"; }
+        public string Series { get => SeriesInfo?.Name ?? "draft"; }
+
+
+        public string WorkgroupText {
+            get => Workgroup?.Count > 0 ? Workgroup[0] : null;
+            } // ToDo: concatenate working groups       
+        public string StreamText;
+        public string SeriesText;
+        public string StatusText;
 
         public Catalog          Catalog = new Catalog();
 
@@ -130,12 +141,27 @@ namespace Goedel.Tool.RFCTool {
             }
 
         public void MakeAutomatics() {
+            AutoSetVersion();
+            RFCEditorBoilerplate.Set(this);
             Catalog.AddDefaultSources();
             Catalog.ResolveAll (this);  // Resolve any unresolved sources
             AddReferences();
             NumberSections();
             AddAuthors();
             }
+
+
+
+        void AutoSetVersion () {
+            if (!IsDraft | (Version != null & Version != "")) {
+                return; // Already set
+                }
+            Version = RFCTool.Source.GetDraftVersion (Docname);
+            // Docname
+
+            }
+
+
 
         private static int CompareReferences(Reference First, Reference Second) {
             return string.Compare(First.Label, Second.Label);
@@ -147,21 +173,10 @@ namespace Goedel.Tool.RFCTool {
                 return;
                 }// nothing to do
             Section References = new Section("References", "References") {
-                Automatic = true
+                Automatic = true,
+                SuppressNumbering = true
                 };
             Middle.Add(References);
-
-
-            foreach (References RefSection in Catalog.ReferenceSections) {
-                if (RefSection.Entries.Count > 0) {
-                    RefSection.Entries.Sort(CompareReferences);
-                    Section Sub = new Section(RefSection.Title, "NormativeReferences");
-                    References.Subsections.Add(Sub);
-                    foreach (Reference Reference in RefSection.Entries) {
-                        Sub.TextBlocks.Add(Reference);
-                        }
-                    }
-                }
 
             // 
             // These should be removed by making the normative and informative sections 
@@ -171,7 +186,9 @@ namespace Goedel.Tool.RFCTool {
             Catalog.Informative.Sort(CompareReferences);
 
             if (Catalog.Normative.Count > 0) {
-                Section Sub = new Section("Normative References", "NormativeReferences");
+                Section Sub = new Section("Normative References", "NormativeReferences") {
+                    SuppressNumbering = true
+                    };
                 References.Subsections.Add(Sub);
                 foreach (Reference Reference in Catalog.Normative) {
                     Sub.TextBlocks.Add(Reference);
@@ -179,7 +196,9 @@ namespace Goedel.Tool.RFCTool {
 
                 }
             if (Catalog.Informative.Count > 0) {
-                Section Sub = new Section("Informative References", "InformativeReferences");
+                Section Sub = new Section("Informative References", "InformativeReferences") {
+                    SuppressNumbering = true
+                    };
                 References.Subsections.Add(Sub);
                 foreach (Reference Reference in Catalog.Informative) {
                     Sub.TextBlocks.Add(Reference);
@@ -205,6 +224,7 @@ namespace Goedel.Tool.RFCTool {
                 int Number, int Level, string prefix,
                 string Punctuation, string idprefix, string sectionprefix) {
             Section.Level = Level;
+            
             Section.Number = prefix + Punctuation;
             Section.SectionID = "n-" + GetAnchor(Section.Heading);
             Section.NumericID = "s-" + prefix;
@@ -260,44 +280,8 @@ namespace Goedel.Tool.RFCTool {
             return Result; 
             }
 
-
         public virtual void ReportNit (string Nit) {
             Console.Write (Nit);
-            }
-
-        public static String [] StatusOfThisMemo = {
-            "This Internet-Draft is submitted in full conformance with the " +
-            "provisions of BCP 78 and BCP 79.",
-
-            "Internet-Drafts are working documents of the Internet Engineering " +
-            "Task Force (IETF).  Note that other groups may also distribute " +
-            "working documents as Internet-Drafts.  The list of current Internet-" +
-            "Drafts is at http://datatracker.ietf.org/drafts/current/.",
-
-            "Internet-Drafts are draft documents valid for a maximum of six months " +
-            "and may be updated, replaced, or obsoleted by other documents at any " +
-            "time.  It is inappropriate to use Internet-Drafts as reference " +
-            "material or to cite them other than as \"work in progress.\""         
-            };
-
-        public static string CopyrightDate = 
-            "Copyright (c) {0} IETF Trust and the persons identified as the " +
-            "document authors.  All rights reserved.";
-
-        public static string [] CopyrightTerms = {
-            "This document is subject to BCP 78 and the IETF Trust's Legal " +
-            "Provisions Relating to IETF Documents " +
-            "(http://trustee.ietf.org/license-info) in effect on the date of " +
-            "publication of this document. Please review these documents " +
-            "carefully, as they describe your rights and restrictions with respect " +
-            "to this document. Code Components extracted from this document must " +
-            "include Simplified BSD License text as described in Section 4.e of " +
-            "the Trust Legal Provisions and are provided without warranty as " +
-            "described in the Simplified BSD License."
-           };
-
-        public string CopyrightNotice {
-            get =>String.Format (CopyrightDate, Year); 
             }
         }
 
@@ -334,7 +318,13 @@ namespace Goedel.Tool.RFCTool {
         public string                   ID;
         public string                   SectionID;
         public string                   NumericID;
-        public string                   Number;
+
+        string _Number = "";
+        public string Number {
+            get => _Number;
+            set { if (!SuppressNumbering) { _Number = value; } }
+            }
+
         public int                      Page=-1;
         public int                      Line=-1;
         public int Level;
@@ -343,6 +333,7 @@ namespace Goedel.Tool.RFCTool {
 
         public bool Automatic = false;
         public bool RemoveInRFC = false;
+        public bool SuppressNumbering = false;
 
         public Section() : this (null, null) {
             }
@@ -579,8 +570,23 @@ namespace Goedel.Tool.RFCTool {
         }
 
     public class SeriesInfo {
-        public string               Name;
-        public string               Value;
+        public string AsciiName;
+        public string AsciiValue;
+        public string Name;         // series draft/rfc/w3c
+        public string Value;        // identifier in series 822 or dreaft-hallambaker-fred-00
+        public string Status;       // standard/informational/experimental/bcp/fyi/full-standard
+        public string Stream;       // IETF/IAB/IRTF/independent
+
+
+        public string Version {
+            get {
+                if (Name == "rfc") {
+                    return "";
+                    }
+                var Result = Value.Substring(Value.Length - 2);
+                return Result;
+                }
+            }
         }
 
     public class Format {
@@ -590,26 +596,37 @@ namespace Goedel.Tool.RFCTool {
         }
 
     public class Reference : TextBlock {
-        public override BlockType BlockType { get => BlockType.Reference; } 
+        public override BlockType BlockType { get => BlockType.Reference; }
 
-        public string              Label;
+        public string Label;
 
-        public string               Target;
+        public string Target;
 
-        public string               Title;
-        public string               Abbrev;
-        public string               Version; // not needed?
+        public string Title;
+        public string Abbrev;
+
         public List<string> Area;
         public List<string> Workgroup;
-        public List<Author>         Authors = new List<Author>();
-        public string               Year;
-        public string               Month;
-        public string               Day;
-        public List<string>         Keywords = new List<string>();
-        public List<string>         Abstract = new List<string>();
-        public List<SeriesInfo>     SeriesInfos = new List<SeriesInfo>();
-        public List<Format>         Formats = new List<Format>();
-        public List<string>         Annotation = new List<string>();
+        public List<Author> Authors = new List<Author>();
+        public string Year;
+        public string Month;
+        public string Day;
+        public List<string> Keywords = new List<string>();
+        public List<string> Abstract = new List<string>();
+        public List<SeriesInfo> SeriesInfos = new List<SeriesInfo>();
+        public List<Format> Formats = new List<Format>();
+        public List<string> Annotation = new List<string>();
+
+
+        public string Version {
+            get {
+                if (SeriesInfos == null || SeriesInfos?.Count == 0) {
+                    return "??";
+                    }
+                return SeriesInfos[0].Version;
+                }
+            }
+
         }
 
 

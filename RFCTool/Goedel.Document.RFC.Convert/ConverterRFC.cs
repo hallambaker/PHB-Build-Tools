@@ -35,19 +35,19 @@ namespace MakeRFC {
         void Convert() {
             // Pull in metadata from the catalog
             Target.Title = Source.MetaDataGetString("title", "Title");
-            Target.Abrrev = Source.MetaDataGetString("abbrev", Target.Title);
+            Target.TitleAbrrev = Source.MetaDataGetString("abbrev", Target.Title);
             Target.Docname = Source.MetaDataGetString("ietf", "ietf-draft-TBS");
-            Target.Version = Source.MetaDataGetString("version", "00");
+            Target.Version = Source.MetaDataGetString("version", "");
 
             Target.Year = Source.MetaDataGetString("year", Target.Year);
             Target.Month = Source.MetaDataGetString("month", Target.Month);
             Target.Day = Source.MetaDataGetString("day", Target.Day);
 
             Target.Ipr = Source.MetaDataGetString("ipr", null);
-            Target.Area = Source.MetaDataGetString("area", null);
-            Target.Workgroup = Source.MetaDataGetString("workgroup", null);
-            Target.Publisher = Source.MetaDataGetString("publisher", Target.Publisher);
-            Target.Status = Source.MetaDataGetString("status", Target.Status);
+            Target.Area = Source.MetaDataGetStrings("area", null);
+            Target.Workgroup = Source.MetaDataGetStrings("workgroup", null);
+            //Target.Publisher = Source.MetaDataGetString("publisher", Target.Publisher);
+            //Target.Status = Source.MetaDataGetString("status", Target.Status);
 
             Target.Number = Source.MetaDataGetString("number", null);
             Target.Category = Source.MetaDataGetString("category", null);
@@ -55,8 +55,7 @@ namespace MakeRFC {
             Target.Obsoletes = Source.MetaDataGetString("obsoletes", null);
             Target.SeriesNumber = Source.MetaDataGetString("seriesnumber", null);
 
-            List<GM.Meta> Metas;
-            var HaveKeywords = Source.MetaDataLookup("keyword", out Metas);
+            var HaveKeywords = Source.MetaDataLookup("keyword", out var Metas);
             if (HaveKeywords) {
                 foreach (var Meta in Metas) {
                     if (Meta.Text != null) {
@@ -68,8 +67,9 @@ namespace MakeRFC {
             var HaveAuthors = Source.MetaDataLookup("author", out Metas);
             if (HaveAuthors) {
                 foreach (var Meta in Metas) {
-                    var Author = new Goedel.Tool.RFCTool.Author();
-                    Author.Name = Meta.Text;
+                    var Author = new Goedel.Tool.RFCTool.Author() {
+                        Name = Meta.Text
+                        };
                     // add author attributes here
 
                     FillAuthor(Meta, "initials", ref Author.Initials);
@@ -104,11 +104,16 @@ namespace MakeRFC {
             Section CurrentSection = null;
 
             foreach (var Block in Source.Blocks) {
-                //Console.WriteLine("Block {0}", Block.BlockType);
+                Console.WriteLine("Block {0}", Block.BlockType);
 
 
                 if ((Block.GetType() == typeof(Goedel.Document.Markdown.Layout)) |
                     (Block.GetType() == typeof(Goedel.Document.Markdown.Close))){
+
+                    if (Block.CatalogEntry.Key =="table") {
+                        CurrentText.Add(ParseTable(Block));
+                        }
+
                     }
                 else if (Block.CatalogEntry.Level > 0) {
                     //Console.WriteLine("    Heading");
@@ -166,6 +171,14 @@ namespace MakeRFC {
                             CurrentText.Add(TextBlock);
                             break;
                             }
+                        case "imgref": {
+                            if (Block?.Attributes.Count > 0) {
+                                var Figure = new Figure(Block.Attributes[0].Value, null);
+                                CurrentText.Add(Figure);
+                                }
+                            break;
+                            }
+
                         default: {
                             var TextBlock = new Goedel.Tool.RFCTool.P(FilteredText, "");
                             CurrentText.Add(TextBlock);
@@ -184,10 +197,46 @@ namespace MakeRFC {
             return Out.Replace('\r', '\n');
             }
 
-        void FillAuthor(GM.Meta Meta, string Tag, ref string Value) {
-            List<GM.Meta> Metas;
+        Table ParseTable (GM.Block Block) {
+            var Table = new Table ();
+            TableRow Row = null;
+            TableData Data = null;
+            int RowCount = 0;
 
-            if (Meta.Children.TryGetValue(Tag, out Metas)) {
+            foreach (var Segment in Block.Segments) {
+                switch (Segment) {
+                    case GM.TextSegmentOpen Open: {
+                        if (Open.CatalogEntry.Key == "tablerow") {
+                            Row = new TableRow();
+                            Table.Rows.Add(Row);
+                            RowCount++;
+                            }
+                        if (Open.CatalogEntry.Key == "tablecell") {
+                            Data = new TableData();
+                            Row.Data.Add(Data);
+                            Table.MaxRow = Row.Data.Count > Table.MaxRow ? Row.Data.Count : Table.MaxRow;
+                            }
+                        break;
+                        }
+                    case GM.TextSegmentText Text: {
+                        Data.Text = Text.Text;
+                        break;
+                        }
+                    case GM.TextSegmentClose Close: {
+                        break;
+                        }
+                    }
+
+
+                }
+
+            return Table;
+
+            }
+
+
+        void FillAuthor(GM.Meta Meta, string Tag, ref string Value) {
+            if (Meta.Children.TryGetValue(Tag, out var Metas)) {
                 Value = Metas[0].Text;
                 }
 

@@ -37,7 +37,9 @@ namespace Goedel.Document.Markdown {
 
         public static bool Include (string FileName, TagCatalog TagCatalog, Document Document) {
             var Entry = GetEntry(FileName);
-            if (Entry == null) return false;
+            if (Entry == null) {
+                return false;
+                }
 
             Entry.Include(FileName, TagCatalog, Document);
 
@@ -46,7 +48,9 @@ namespace Goedel.Document.Markdown {
 
         public static Document Parse(string FileName, TagCatalog TagCatalog) {
             var Entry = GetEntry(FileName);
-            if (Entry == null) return null;
+            if (Entry == null) {
+                return null;
+                }
 
             var Document = Entry.Parse(FileName, TagCatalog);
 

@@ -102,8 +102,8 @@ namespace Goedel.Tool.RFCTool {
         public void AddDefaultSources() {
             AddSource("RFC-", "http://xml.resource.org/public/rfc/bibxml/reference.RFC.#D4#.xml");
             AddSource("RFC", "http://xml.resource.org/public/rfc/bibxml/reference.RFC.#D4#.xml");
-            AddSource("DRAFT-", "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-#.xml");
-            AddSource("draft-", "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-#.xml");
+            AddSource("DRAFT-", "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.#.xml");
+            AddSource("draft-", "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.#.xml");
             //AddSource("draft-", "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.#.xml");
             AddSource("I-D.", "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.#.xml");
             AddSource("W3C.", "http://xml.resource.org/public/rfc/bibxml4/reference.W3C.#.xml");
@@ -119,6 +119,9 @@ namespace Goedel.Tool.RFCTool {
             AddSource("OASIS.", "http://xml.resource.org/public/rfc/bibxml2/reference.OASIS.#.xml");
             AddSource("PKCS.", "http://xml.resource.org/public/rfc/bibxml2/reference.PKCS.#.xml");
             }
+
+        public const string DraftURI = "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.{0}.xml";
+
 
         public void AddCitation(string Label) {
             AddCitation(Label, true);
@@ -290,8 +293,9 @@ namespace Goedel.Tool.RFCTool {
                 }
             }
 
-
+        public string ForceReferenceID = null;
         public void AddReference (Reference Reference) {
+            Reference.ID = ForceReferenceID ?? Reference.ID;
             if (FindReference (Reference.ID) == null) {
                 References.Add (Reference);
                 }
@@ -348,7 +352,32 @@ namespace Goedel.Tool.RFCTool {
                 }
             }
 
-        WebClient WebClient = new WebClient();
+        static WebClient WebClient = new WebClient();
+
+
+
+        public static string GetDraftVersion (string DocName) {
+            try {
+                var Uri = String.Format(Catalog.DraftURI, DocName.Substring(6));
+                string Result = WebClient.DownloadString(Uri);
+                var Document = new Document();
+                new NewParse(Result, Document);
+                var References = Document?.Catalog?.References;
+                if (References == null | References.Count < 1) {
+                    return "??";
+                    }
+                var Number = Int32.Parse(References[0].Version) + 1;
+                return (Number.ToString ("D2"));
+                }
+
+            catch {
+                return "00";
+                }
+
+
+            }
+
+
         public void Resolve(Citation Citation, Document Document) {
             if (Citation.Resolved) {
                 return;
@@ -362,8 +391,10 @@ namespace Goedel.Tool.RFCTool {
             Console.WriteLine("{0}  {1}", Citation.Label, Uri);
 
             try {
+                Document.Catalog.ForceReferenceID = Citation.Label;
+
                 string Result = WebClient.DownloadString(Uri);
-                Citation.Result = StripDeclaration (Result);
+                Citation.Result = StripDeclaration(Result);
                 Citation.Resolved = Result != null;
                 Citation.Uri = Uri;
                 //Console.WriteLine(Result);
@@ -372,13 +403,13 @@ namespace Goedel.Tool.RFCTool {
                 // This is horribly hack but will do for now.
                 // Should really rewrite the parser to separate
                 // the references parser from the document parser
-                new NewParse (Result, Document);
+                new NewParse(Result, Document);
 
                 // if this blows up it is because the label specified in the citation does not
                 // match the label followed to retrieve it.
                 //
                 // For Internet drafts only labels of the form [!I-D.hallambaker-udf] actually work.
-                var Reference = Document.Catalog.FindReference (Citation.Label);
+                var Reference = Document.Catalog.FindReference(Citation.Label);
                 Citation.Reference = Reference;
 
                 if (Reference != null) {
@@ -388,6 +419,10 @@ namespace Goedel.Tool.RFCTool {
             catch {
                 Console.WriteLine("$04-Not Found");
                 }
+            finally {
+                Document.Catalog.ForceReferenceID = null;
+                }
+
             //Console.WriteLine();
             }
 
