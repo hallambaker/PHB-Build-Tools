@@ -111,17 +111,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Bib.xml" />
-    <Content Include="Bibliography.xml" />
+    <Content Include="Bib.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Bibliography.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Cache.xml" />
+    <Content Include="encodingsets.svg" />
     <Content Include="hallambaker-jsonbcd-new.html" />
     <Content Include="hallambaker-jsonbcd-new.txt" />
     <Content Include="hallambaker-jsonbcd.html" />
     <Content Include="hallambaker-jsonbcd.txt" />
     <Content Include="hallambaker-jsonbcd.xml" />
+    <Content Include="hallambaker-naming.html" />
     <Content Include="hallambaker-test.html" />
     <Content Include="hallambaker-test.txt" />
     <Content Include="hallambaker-test.xml" />
+    <Content Include="hallambaker-tls-eve.html" />
     <Content Include="xml2rfc.css" />
     <Content Include="xmlrfca.css" />
   </ItemGroup>

@@ -7,12 +7,6 @@ Short documentation card
 
 Installer
 
-
-Word Parser
-
-* No tables
-* Do figures for SVG output
-
 MarkDown Parser
 
 * Handle include files

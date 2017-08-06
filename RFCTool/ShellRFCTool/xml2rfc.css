@@ -40,6 +40,11 @@ body {
   margin: 0 0 0.5em 0;
   padding: 1em 0 0.5em;
 }
+.filename
+{
+    font-size: 20px;
+    color: darkgray;
+}
 .author {
   padding-bottom: 4px;
 }
@@ -170,10 +175,13 @@ dl {
 dl > dt {
   float: left;
   margin-right: 1em;
+  font-weight: bold;
 }
-dl.nohang > dt {
-  float: none;
-}
+    dl.nohang > dt
+    {
+        float: none;
+        font-weight: bold;
+    }
 dl > dd {
   margin-bottom: .8em;
   min-height: 1.3em;

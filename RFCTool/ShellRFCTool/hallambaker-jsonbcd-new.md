@@ -1,8 +1,8 @@
 ﻿// This file was converted using RFCTool
-<ietf>ietf-draft-TBS
+<ietf>draft-hallambaker-jsonbcd
 <title>Binary Encodings for JavaScript Object Notation: JSON-B, JSON-C, JSON-D
 <abbrev>JSON-B, JSON-C, JSON-D
-<version>00
+<version>07
 
 <ipr>trust200902
 
@@ -17,87 +17,13 @@
 
 #Abstract
 
-draft-hallambaker-jsonbcd
-
-info
-
-independent
-
-trust200902
-
-
-
-JSON
-
-Binary encoding
-
-Phillip Hallam-Baker    
-
-Hallam-Baker    
-
-P. M.    
-
-Phillip    
-
-Comodo Group Inc.    
-
-philliph@comodo.com
-
-Three binary encodings for JavaScript Object Notation (JSON) are
-presented. JSON-B (Binary) is a strict superset of the JSON encoding that
-permits efficient binary encoding of intrinsic JavaScript data types. JSON-C
-(Compact) is a strict superset of JSON-B that supports compact
-representation of repeated data strings with short numeric codes. JSON-D (Data)
-supports additional binary data types for integer and floating point
-representations for use in scientific applications where conversion between binary
-and decimal representations would cause a loss of precision.
-
 #Definitions
 
 ##Requirements Language
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document
-are to be interpreted as described in [RFC2119].
-
 #Introduction
 
-JavaScript Object Notation (JSON) is a simple text encoding for the
-JavaScript Data model that has found wide application beyond its original
-field of use. In particular JSON has rapidly become a preferred encoding for
-Web Services.
-
-JSON encoding supports just four fundamental data types (integer,
-floating point, string and boolean), arrays and objects which consist of a list
-of tag-value pairs.
-
-Although the JSON encoding is sufficient for many purposes it is not
-always efficient. In particular, there is no efficient representation for
-blocks of binary data. Use of base64 encoding increases data volume by 33%.
-This overhead increases exponentially in applications where nested
-binary encodings are required making use of JSON encoding unsatisfactory in
-cryptographic applications where nested binary structures are frequently
-required.
-
-Another source of inefficiency in JSON encoding is the repeated
-occurrence of object tags. A JSON encoding containing an array of a hundred
-objects such as {"first":1,"second":2} will contain a hundred occurrences of
-the string "first" (seven bytes) and a hundred occurrences of the string
-"second" (eight bytes). Using two byte code sequences in place of strings
-allows a saving of 11 bytes per object without loss of information, a
-saving of 50%.
-
-A third objection to the use of JSON encoding is that floating point
-numbers can only be represented in decimal form and this necessarily
-involves a loss of precision when converting between binary and decimal
-representations. While such issues are rarely important in network applications
-they can be critical in scientific applications. It is not acceptable for
-saving and restoring a data set to change the result of a calculation.
-
 ##Objectives
-
-The following were identified as core objectives for a binary JSON
-encoding:
 
 <ul>
 <ul>
@@ -115,8 +41,6 @@ encoding:
 </ul>
 </ul>
 
-Three binary encodings are defined:
-
 <dl>
 <dl>
 <dt>JSON-B (Binary)
@@ -129,25 +53,11 @@ Three binary encodings are defined:
 
 <dt>JSON-D (Data)
 
-<dd>As JSON-C but with support for representing additional data types without loss of precision. In particular other IEEE 754 floating point formats, both binary and decimal and Intel's 80 bit floating point, plus 128 bit integers and bignum integers.
+<dd>As JSON-C but with support for representing additional data types without loss of precision; IEEE 754 floating point formats, both binary and decimal, Intel's 80 bit floating point, plus 128 bit integers and big integers.
 </dl>
 </dl>
-
-Each encoding is a superset of the preceding one:
 
 #Extended JSON Grammar
-
-The JSON-B, JSON-C and JSON-D encodings are all based on the JSON
-grammar [RFC4627] using the same syntactic structure but different lexical
-encodings.
-
-JSON-B0 and JSON-C0 replace the JSON lexical encodings for strings and
-numbers with binary encodings. JSON-B1 and JSON-C1 allow either lexical
-encoding to be used. Thus any valid JSON encoding is a valid JSON-B1 or
-JSON-C1 encoding.
-
-The grammar of JSON-B, JSON-C and JSON-D is a superset of the JSON
-grammar. The following productions are added to the grammar:
 
 <dl>
 <dl>
@@ -181,9 +91,6 @@ grammar. The following productions are added to the grammar:
 </dl>
 </dl>
 
-The JSON grammar is modified to permit the use of x-value productions in
-place of ( value value-separator ) :
-
 ~~~~
 JSON-text = (object / array)
    
@@ -207,8 +114,6 @@ name-separator  = ws %x3A ws  ; : colon
 value-separator = ws %x2C ws  ; , comma
 ~~~~
 
-The following lexical values are unchanged:
-
 ~~~~
 begin-array     = ws %x5B ws  ; [ left square bracket
 begin-object    = ws %x7B ws  ; { left curly bracket
@@ -221,8 +126,6 @@ false = %x66.61.6c.73.65   ; false
 null  = %x6e.75.6c.6c      ; null
 true  = %x74.72.75.65      ; true
 ~~~~
-
-The productions number and string are defined as before:
 
 ~~~~
 number = [ minus ] int [ frac ] [ exp ]
@@ -248,8 +151,6 @@ unescaped = %x20-21 / %x23-5B / %x5D-10FFFF
 
 #JSON-B
 
-The JSON-B encoding defines the b-value and b-string productions:
-
 ~~~~
 b-value = b-atom | b-string | b-data | b-integer |
 b-float
@@ -262,13 +163,7 @@ n-int8 | n-int16 | n-int32 | n-int64 | n-bignum16
    
 b-float = binary64
 ~~~~
-
-The lexical encodings of the productions are defined in the following
-table where the column 'tag' specifies the byte code that begins the
-production, 'Fixed' specifies the number of data bytes that follow and 'Length'
-specifies the number of bytes used to define the length of a variable
-length field following the data bytes:
-<table=s-4-1>
+<table=s-4-4>
 <thead>
 <tr>
 <td>Production   
@@ -460,13 +355,7 @@ length field following the data bytes:
 <td>Null
 </table>
 
-A data type commonly used in networking that is not defined in this
-scheme is a datetime representation. To define such a data type, a string
-containing a date-time value in Internet type format is typically used.
-
 ##JSON-B Examples
-
-The following examples show examples of using JSON-B encoding:
 
 ~~~~
 A0 2A                            42 (as 8 bit integer)
@@ -490,21 +379,7 @@ B2                               null
 ~~~~
 
 #JSON-C
-
-JSON-C (Compressed) permits numeric code values to be substituted for
-strings and binary data. Tag codes MAY be 8, 16 or 32 bits long encoded in
-network byte order.
-
-Tag codes MUST be defined before they are referenced. A Tag code MAY be
-defined before the corresponding data or string value is used or at the
-same time that it is used.
-
-A dictionary is a list of tag code definitions. An encoding MAY
-incorporate definitions from a dictionary using the dict-hash production. The
-dict hash production specifies a (positive) offset value to be added to the
-entries in the dictionary followed by the UDF fingerprint
-[draft-hallambaker-udf] of the dictionary to be used.
-<table=s-5-1>
+<table=s-5-4>
 <thead>
 <tr>
 <td>Production   
@@ -594,12 +469,7 @@ entries in the dictionary followed by the UDF fingerprint
 <td>UDF fingerprint of dictionary
 </table>
 
-All integer values are encoded in Network Byte Order (most significant
-byte first).
-
 ##JSON-C Examples
-
-The following examples show examples of using JSON-C encoding:
 
 ~~~~
 C8 20 80 05 48 65 6c 6c 6f       "Hello"    20 = "Hello"
@@ -616,25 +486,13 @@ a4 95 99 1b 78 52 b8 55       UDF (C4 21 80 05 48 65 6c 6c 6f)
 
 #JSON-D (Data)
 
-JSON-B and JSON-C only support the two numeric types defined in the
-JavaScript data model: Integers and 64 bit floating point values. JSON-D
-(Data) defines binary encodings for additional data types that are commonly
-used in scientific applications. These comprise positive and negative 128
-bit integers, six additional floating point representations defined by
-IEEE 754 [IEEE-754] and the Intel extended precision 80 bit floating point
-representation.
-
-Should the need arise, even bigger bignums could be defined with the
-length specified as a 32 bit value permitting bignums of up to 2^35 bits to
-be represented.
-
 ~~~~
 d-value = d-integer | d-float
    
 d-float = binary16 | binary32 | binary128 | binary80 |
 decimal32 | decimal64 | decimal 128
 ~~~~
-<table=s-6-1>
+<table=s-6-4>
 <thead>
 <tr>
 <td>Production   
@@ -708,35 +566,6 @@ decimal32 | decimal64 | decimal 128
 
 #Acknowledgements
 
-This work was assisted by conversations with Nico Williams and other
-participants on the applications area mailing list.
-
 #Security Considerations
 
-A correctly implemented data encoding mechanism should not introduce new
-security vulnerabilities. However, experience demonstrates that some
-data encoding approaches are more prone to introduce vulnerabilities when
-incorrectly implemented than others.
-
-In particular, whenever variable length data formats are used, the
-possibility of a buffer overrun vulnerability is introduced. While best
-practice suggests that a coding language with native mechanisms for bounds
-checking is the best protection against such errors, such approaches are not
-always followed. While such vulnerabilities are most commonly seen in the
-design of decoders, it is possible for the same vulnerabilities to be
-exploited in encoders.
-
-A common source of such errors is the case where nested length encodings
-are used. For example, a decoder relies on an outermost length encoding
-that specifies a length on 50 bytes to allocate memory for the entire
-result and then attempts to copy a string with a declared length of 1000
-bytes within the sequence.
-
-The extensions to the JSON encoding described in this document are
-designed to avoid such errors. Length encodings are only used to define the
-length of x-value constructions which are always terminal and cannot have
-nested data entries. 
-
 #IANA Considerations
-
-[TBS list out all the code points that require an IANA registration]
