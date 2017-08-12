@@ -59,7 +59,7 @@ namespace Goedel.Tool.FSRGen {
 					_Output.Write ("	/*\n{0}", _Indent);
 					_Output.Write ("	public partial class {1} {{\n{0}", _Indent, FSR.Prefix);
 					foreach  (Action Action in FSR.Actions) {
-						_Output.Write ("        public virtual void {1} (char c) {{\n{0}", _Indent, Action.Tag);
+						_Output.Write ("        public virtual void {1} (int c) {{\n{0}", _Indent, Action.Tag);
 						_Output.Write ("			}}\n{0}", _Indent);
 						}
 					_Output.Write ("		}}\n{0}", _Indent);
@@ -194,7 +194,7 @@ namespace Goedel.Tool.FSRGen {
 					_Output.Write ("		/// <summary>Generated initialization method, is called automatically \n{0}", _Indent);
 					_Output.Write ("		/// the FSR to reset </summary>\n{0}", _Indent);
 					_Output.Write ("        public override void Init () {{\n{0}", _Indent);
-					_Output.Write ("            Actions = new Action[] {{\n{0}", _Indent);
+					_Output.Write ("            Actions = new ActionDelegate[] {{\n{0}", _Indent);
 					
 					  comma = false;
 					foreach  (var State in FSR.States) {

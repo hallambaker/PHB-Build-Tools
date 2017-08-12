@@ -321,8 +321,8 @@ namespace Goedel.Tool.RFCTool {
         // [RFC2200]	Postel, J., "Internet Official Protocol Standards", 
         // RFC 2200, STD 1, June 1997.
         public void WriteReference(Reference Reference) {
-            string Line = "[" + Reference.ID + "]  "
-                + MakePadding (7 - Reference.ID.Length);
+            string Line = "[" + Reference.GeneratedID + "]  "
+                + MakePadding (7 - Reference.GeneratedID.Length);
             foreach (Author Author in Reference.Authors) {
                 Line += DeNullifyString (Author.Surname, "");
                 Line += DeNullifyString (Author.Initials, ", ");

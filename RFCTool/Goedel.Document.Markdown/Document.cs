@@ -131,7 +131,13 @@ namespace Goedel.Document.Markdown {
 
 
     public abstract class TextSegment {
+        string _Tag;
         public CatalogEntry CatalogEntry = null;
+        public string Tag {
+            get => _Tag ?? CatalogEntry?.Key;
+            set => _Tag = value;
+            }
+
         public List<TagValue> Attributes = null;
 
         public TextSegment() {
@@ -149,6 +155,7 @@ namespace Goedel.Document.Markdown {
     public class TextSegmentText : TextSegment {
         public string Text;
 
+
         public TextSegmentText(string Text) {
             this.Text = Text;
             }
@@ -157,6 +164,11 @@ namespace Goedel.Document.Markdown {
 
     public class TextSegmentOpen : TextSegment {
         public TextSegment Close = null;
+        public string Text;
+        public bool IsEmpty = false;
+
+        public TextSegmentOpen () {
+            }
 
         public TextSegmentOpen(CatalogEntry CatalogEntry, List<TagValue> Attributes)
             : base(CatalogEntry, Attributes) {

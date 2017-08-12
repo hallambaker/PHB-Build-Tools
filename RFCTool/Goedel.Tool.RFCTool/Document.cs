@@ -31,10 +31,12 @@ namespace Goedel.Tool.RFCTool {
         public bool SortRefs = true;
         public bool Symrefs = true;
         public bool TocInclude = true;
+        public bool TofInclude = true;
+        public bool TotInclude = true;
         public int TocDepth = 3;
         public bool IndexInclude = false;
 
-        public string Version = "";
+        
         public string Scripts = "Common,Latin";
         public string ExpiresDate = null;
 
@@ -87,11 +89,15 @@ namespace Goedel.Tool.RFCTool {
         public string Stream { get => SeriesInfo?.Stream ?? "ietf"; }
         public string Status { get => SeriesInfo?.Status ?? "standard"; }
         public string Series { get => SeriesInfo?.Name ?? "draft"; }
-
+        public string Version { get => SeriesInfo?.Version;
+            set { }
+            }
 
         public string WorkgroupText {
             get => Workgroup?.Count > 0 ? Workgroup[0] : null;
             } // ToDo: concatenate working groups       
+
+
         public string StreamText;
         public string SeriesText;
         public string StatusText;
@@ -99,6 +105,11 @@ namespace Goedel.Tool.RFCTool {
         public Catalog          Catalog = new Catalog();
 
         // End data from the schema
+
+
+
+        public List<Figure> TableOfFigures = new List<Figure>();
+        public List<Table> TableOfTables = new List<Table>();
 
 
         static string [] Months = {null, "January", "February", "March", "April", "May", "June", 
@@ -141,7 +152,6 @@ namespace Goedel.Tool.RFCTool {
             }
 
         public void MakeAutomatics() {
-            AutoSetVersion();
             RFCEditorBoilerplate.Set(this);
             Catalog.AddDefaultSources();
             Catalog.ResolveAll (this);  // Resolve any unresolved sources
@@ -152,14 +162,7 @@ namespace Goedel.Tool.RFCTool {
 
 
 
-        void AutoSetVersion () {
-            if (!IsDraft | (Version != null & Version != "")) {
-                return; // Already set
-                }
-            Version = RFCTool.Source.GetDraftVersion (Docname);
-            // Docname
 
-            }
 
 
 
@@ -172,7 +175,7 @@ namespace Goedel.Tool.RFCTool {
                 Catalog.ReferenceSections.Count == 0) {
                 return;
                 }// nothing to do
-            Section References = new Section("References", "References") {
+            Section References = new Section("References", "n-references") {
                 Automatic = true,
                 SuppressNumbering = true
                 };
@@ -186,8 +189,8 @@ namespace Goedel.Tool.RFCTool {
             Catalog.Informative.Sort(CompareReferences);
 
             if (Catalog.Normative.Count > 0) {
-                Section Sub = new Section("Normative References", "NormativeReferences") {
-                    SuppressNumbering = true
+                Section Sub = new Section("Normative References", "n-normative") {
+                    SuppressNumbering = true,
                     };
                 References.Subsections.Add(Sub);
                 foreach (Reference Reference in Catalog.Normative) {
@@ -196,7 +199,7 @@ namespace Goedel.Tool.RFCTool {
 
                 }
             if (Catalog.Informative.Count > 0) {
-                Section Sub = new Section("Informative References", "InformativeReferences") {
+                Section Sub = new Section("Informative References", "n-informative") {
                     SuppressNumbering = true
                     };
                 References.Subsections.Add(Sub);
@@ -206,10 +209,11 @@ namespace Goedel.Tool.RFCTool {
                 }
             }
 
+        public string AuthorSectionTitle;
 
         public void AddAuthors() {
-            string Head = Authors.Count == 1 ? "Author's Address" : "Authors' Addresses";
-            Section Sub = new Section(Head, "AuthorsAddresses") {
+            AuthorSectionTitle = Authors.Count == 1 ? "Author's Address" : "Authors' Addresses";
+            Section Sub = new Section(AuthorSectionTitle, "n-authors") {
                 Automatic = true
                 };
 
@@ -220,49 +224,97 @@ namespace Goedel.Tool.RFCTool {
             Back.Add (Sub);
             }
 
-        public void NumberSection (Section Section, 
-                int Number, int Level, string prefix,
-                string Punctuation, string idprefix, string sectionprefix) {
-            Section.Level = Level;
-            
-            Section.Number = prefix + Punctuation;
-            Section.SectionID = "n-" + GetAnchor(Section.Heading);
-            Section.NumericID = "s-" + prefix;
-            if (Section.ID == null) {
-                Section.ID = idprefix;
+
+        public void NumberTextBlocks (string NumericID, ref List<TextBlock> TextBlocks) {
+
+            // ToDo: keep the blocks but reset the list with a new one with explicit 
+            //    nesting of list items.
+
+            var Index = 0;
+            foreach (TextBlock Text in TextBlocks) {
+                if (Text as Reference == null) {
+                    Index++;
+                    string IS = Index.ToString();
+                    Text.GeneratedID = NumericID + "-" + IS;
+                    }
+
+                if (Text as Figure != null) {
+                    var Figure = Text as Figure;
+                    TableOfFigures.Add(Text as Figure);
+                    Figure.NumericID = TableOfFigures.Count.ToString();
+                    Figure.SetableID = Figure.SetableID ?? "n-" + GetAnchor(Figure.Caption);
+                    }
                 }
+            }
+
+        /// <summary>
+        /// Number a section
+        /// </summary>
+        /// <param name="Section">The section to number</param>
+        /// <param name="Number">The number relative to its peers</param>
+        /// <param name="Level">The depth (for cutting the TOC)</param>
+        /// <param name="NumericIDPrefix">Prefix for the numeric ID</param>
+        /// <param name="TextID">The text representation of Number</param>
+        /// <param name="TextSuffix">Suffix to put after number for display</param>
+
+        /// <param name="TextPrefix">Prefix to put in front of user for display</param>
+        /// <param name="Numeric">If true the number is turned into a numeric section ID</param>
+        public void NumberSection (
+                Section Section,
+            int Number,
+            int Level,
+            string NumericIDPrefix,
+            string TextSuffix,
+            string TextNumber = "",
+            string TextPrefix = "",
+            bool Numeric = true) {
+
+            Section.Level = Level;
+            var NumberAsText = Numeric ? Number.ToString() : "" + ('A' + Number);
+            TextNumber = TextNumber +  NumberAsText + TextSuffix;
+
+            Section.Number = TextSuffix != null ? TextPrefix + TextNumber : "";
+
+            Section.SetableID = Section.SetableID ?? "n-" + GetAnchor(Section.Heading);      // For H1, H2, H3, etc.
+            Section.GeneratedID = NumericIDPrefix + NumberAsText;                      // For the toc ref and sub paras
+
+            //if (Section.GeneratedID == null) {
+            //    Section.GeneratedID = NumericIDPrefix;
+            //    }
 
 
             int Index = 1;
             foreach (Section S in Section.Subsections) {
                 string IS = Index.ToString();
-                NumberSection(S, Index, Level + 1, prefix + Punctuation + IS, "." , 
-                    idprefix + "_" + IS, sectionprefix);
+                    NumberSection(S, Index, Level + 1,
+                    Section.GeneratedID + "_", ".", TextNumber:TextNumber);
                 Index++;
                 }
 
-            Index = 1;
-            foreach (TextBlock Text in Section.TextBlocks) {
-                if (Text as Reference == null) {
-                    string IS = Index.ToString();
-                    Text.ID = Section.NumericID + "-" + IS;
-                    }
-                }
+            NumberTextBlocks(Section.GeneratedID, ref Section.TextBlocks);
             }
 
 
         public void NumberSections() {
+            NumberTextBlocks("s-abstract", ref Abstract);
+            NumberTextBlocks("s-note", ref Note);
+
             int Index = 1;
+
+            foreach (Section S in Boilerplate) {
+                NumberSection(S, Index, 1, "bp-", null);
+                Index++;
+                }
+
+            Index = 1;
+
             foreach (Section S in Middle) {
-                string IS = Index.ToString() ;
-                NumberSection(S, Index, 1, IS, ".", "s-" + IS, GetAnchor(S.Heading));
+                NumberSection(S, Index, 1, "s-", ".");
                 Index++;
                 }
             Index = 0;
             foreach (Section S in Back) {
-                string Letter = "" + (char) ('A' + Index);
-                string IS = "Appendix " + Letter;
-                NumberSection(S, Index, 1, IS, ":", "a-" + Letter, GetAnchor(S.Heading));
+                NumberSection(S, Index, 1, "a-", ":", TextPrefix:"Appendix ", Numeric:false);
                 Index++;
                 }
             }
@@ -292,7 +344,7 @@ namespace Goedel.Tool.RFCTool {
         }
 
     public class Author : TextBlock {
-
+        public override string SectionText { get => null; }
         public override BlockType BlockType { get => BlockType.Author; }
 
         public string Name;
@@ -315,9 +367,11 @@ namespace Goedel.Tool.RFCTool {
 
     public class Section {
         public string                   Heading;
-        public string                   ID;
-        public string                   SectionID;
-        public string                   NumericID;
+        public List<GM.TextSegment> Segments;
+
+        public string                   GeneratedID;
+        public string                   SetableID = null;
+        //public string                   NumericID;
 
         string _Number = "";
         public string Number {
@@ -339,7 +393,8 @@ namespace Goedel.Tool.RFCTool {
             }
 
         public Section(string Heading, string ID) {
-            this.Heading = Heading; this.ID = ID;
+            this.Heading = Heading;
+            this.SetableID = ID;
             TextBlocks = new List<TextBlock>();
             Subsections = new List<Section>();
             }
@@ -385,9 +440,11 @@ namespace Goedel.Tool.RFCTool {
         }
 
     public abstract class TextBlock {
-        public string ID;  // The id used in <p>, <h2>, <h3>, etc.
-        public string SectionID;
-        public string NumericID;
+        public string GeneratedID;  // The id used in <p>, <h2>, <h3>, etc.
+        public string SetableID = null;
+        public string NumericID = "tbs";
+
+        public abstract string SectionText { get; } 
         public int Line, Position;
         public int Page;
 
@@ -398,30 +455,41 @@ namespace Goedel.Tool.RFCTool {
 
     public class Figure : TextBlock {
         public override BlockType BlockType { get => BlockType.Figure; }
+        public override string SectionText { get => "Figure " + NumericID; }
+        public string FigureID { get => "f-" + NumericID; }
 
+        public string Caption;
         public string Filename;
 
         public Figure (string Filename, string ID) {
-            this.ID = ID;
+            this.SetableID = ID;
             this.Filename = Filename;
             }
         }
 
 
     public class P : TextBlock {
+        public override string SectionText { get => "Paragraph " + NumericID; }
+
         public List <Text>              Chunks = new List<Text>();
+        public List<GM.TextSegment> Segments;
+
+
         public string Text { get => _Text; } 
         public string                   _Text;
 
-        public override BlockType BlockType { get => BlockType.Paragraph; } 
+        public override BlockType BlockType { get => BlockType.Paragraph; }
+
+        public P () {
+            }
+
 
         public P(string Text, string ID) {
-            this.ID = ID;
+            this.SetableID = ID;
             this._Text = Text;
             }
 
-        public P(List <Text> Chunks, string ID) {
-            this.ID = ID;
+        public P(List <Text> Chunks) {
             this.Chunks = Chunks;
             }
 
@@ -430,27 +498,11 @@ namespace Goedel.Tool.RFCTool {
             }
 
         public void AddText(string Data) {
-            Text Text = new Text(TextType.Plain) {
+            Text Text = new Text() {
+                //Type = TextType.Plain,
                 Data = Data
                 };
             AddText (Text);
-            }
-
-        public void AddText(TextType TextType, string Data, string Target, string Title) {
-            Text Text = new Text(TextType) {
-                Data = Data,
-                Target = Target,
-                Title = Title
-                };
-            AddText(Text);
-            }
-
-        public void AddIndex(string Index, string SubIndex) {
-            Text Text = new Text(TextType.Index) {
-                Index = Index,
-                SubIndex = SubIndex
-                };
-            AddText(Text);
             }
 
         public string GetText() {
@@ -480,6 +532,9 @@ namespace Goedel.Tool.RFCTool {
             this.Type = Type; this.Level = Level;
             }
 
+        public LI () {
+            }
+
 
         public LI (string Text, string ID, BlockType Type, int Level, int Index) : 
                     this (Text, ID, Type, Level){
@@ -498,7 +553,9 @@ namespace Goedel.Tool.RFCTool {
 
 
     public class Table : TextBlock {
-        public override BlockType BlockType { get => BlockType.Table; } 
+        public override string SectionText { get => "Table " + NumericID; }
+        public override BlockType BlockType { get => BlockType.Table; }
+        public string Caption;
 
         public int MaxRow = 0;
         public List<int>                   Percent = new List<int>();
@@ -507,67 +564,49 @@ namespace Goedel.Tool.RFCTool {
         }
 
     public class TableRow : TextBlock {
+        public override string SectionText { get => null; }
         public override BlockType BlockType { get => BlockType.TableRow; } 
         public List <TableData>            Data = new List<TableData>();
         }
 
     public class TableData : TextBlock {
+        public override string SectionText { get => null; }
         public override BlockType BlockType { get => BlockType.TableData; } 
         public bool                        IsHeading;
         public string               Text;
         }
 
 
+    public class Text {
+        public string              Data;        // What goes in the text
+        public string              Title;       // For mouseover popup text
+        public string Id; // For anything requiring an anchor to this element.
 
-
-    /// <summary>
-    /// Types of text occurring within paragraph blocks.
-    /// </summary>
-    public enum TextType {
-        /// <summary>Standard text type</summary>
-        Plain,
-        /// <summary>Cross reference</summary>
-        CrossRef,
-        /// <summary>Reference to external data</summary>
-        ExternalRef,
-        /// <summary>Index term</summary>
-        Index,
-        /// <summary>Comment</summary>
-        Comment,
-
-        /// <summary>Typically italics</summary>
-        Emphasis,
-        /// <summary>Typically bold</summary>
-        Strong,
-        /// <summary>Identifiers, code, etc.</summary>
-        Code,
-        /// <summary>Human input</summary>
-        Keyboard,
-
-        /// <summary>Definition of term</summary>
-        Definition,
-        /// <summary>Citation of reference</summary>
-        Citation,
-        /// <summary>Normative text</summary>
-        Normative,
-
-
-        /// <summary>Null type</summary>
-        Null
+        //public bool Strong;
+        //public bool Emphasis;
+        //public bool Code;
+        //public bool Comment;
+        //public bool Superscript;
+        //public bool Subscript;
+        //public bool BCP14;
         }
 
-    public class Text {
-        public TextType            Type;
-        public string              Data;        // What goes in the text
-        public string              Target;      // Target of hypertext link
-        public string              Title;       // For mouseover popup text
-        public string              Index;
-        public string              SubIndex;
-        public bool                ReplaceText;
-        public Text(TextType TextType) {
-            Type = TextType;
+    public class TextHyperlink : Text {
+        public string Target;      // Target of hypertext link
+        public string Fragment;     // Fragment
+
+        public string Href {
+            get => Fragment == null ? Target : Target + "#" + Fragment;
             }
         }
+
+    public class TextIndex : Text {
+
+        public string Index;
+        public string SubIndex;
+        }
+
+
 
     public class SeriesInfo {
         public string AsciiName;
@@ -577,8 +616,46 @@ namespace Goedel.Tool.RFCTool {
         public string Status;       // standard/informational/experimental/bcp/fyi/full-standard
         public string Stream;       // IETF/IAB/IRTF/independent
 
-
+        public string _Version = null;
         public string Version {
+            get => _Version ?? GetNextVersion();
+            set => _Version = value;
+            }
+
+        string GetNextVersion () {
+            if (Name != "draft") {
+                return "";
+                }
+            _Version =RFCTool.Source.GetDraftVersion(Value);
+            return _Version;
+            }
+
+
+        public string FullDocName {
+            get {
+                if (Name == "draft") { return Value + "-" + Version; }
+                return Value;
+                }
+            }
+
+        public string DocName {
+            set {
+                if (value.StartsWith("draft")) {
+                    Name = "draft";
+                    Value = value;
+                    }
+                else if (value.StartsWith("rfc")) {
+                    Name = "RFC";
+                    Value = value.Substring(3);
+                    }
+                else if (value.StartsWith("w3c")) {
+                    Name = "W3C";
+                    Value = value.Substring(3);
+                    }
+                }
+            }
+
+        public string ParsedVersion {
             get {
                 if (Name == "rfc") {
                     return "";
@@ -596,6 +673,7 @@ namespace Goedel.Tool.RFCTool {
         }
 
     public class Reference : TextBlock {
+        public override string SectionText { get => null; }
         public override BlockType BlockType { get => BlockType.Reference; }
 
         public string Label;
@@ -623,7 +701,7 @@ namespace Goedel.Tool.RFCTool {
                 if (SeriesInfos == null || SeriesInfos?.Count == 0) {
                     return "??";
                     }
-                return SeriesInfos[0].Version;
+                return SeriesInfos[0].ParsedVersion;
                 }
             }
 

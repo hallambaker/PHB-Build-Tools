@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Goedel.Document.Markdown;
 
 namespace Goedel.Tool.RFCTool {
 
@@ -70,7 +71,7 @@ namespace Goedel.Tool.RFCTool {
 
         public const string Paragraph3 = "Information about the current status of this "+
             "document, any errata, and how to provide feedback on it may be obtained at "+
-            "http://www.rfc-editor.org/{0}/rfc{1}.";
+            "<a=\"http://www.rfc-editor.org/{0}/rfc{1}\">http://www.rfc-editor.org/{0}/rfc{1}</a>.";
 
 
         public struct StringSet {
@@ -106,7 +107,8 @@ namespace Goedel.Tool.RFCTool {
 
         const string DraftStatus2 = "Internet-Drafts are working documents of the Internet Engineering Task " +
             "Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts. " +
-            "The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.";
+            "The list of current Internet-Drafts is at <a=\"http://datatracker.ietf.org/drafts/current/\">" +
+            "http://datatracker.ietf.org/drafts/current/</a>.";
 
         const string DraftStatus3 = "Internet-Drafts are draft documents valid for a maximum of six months and"+
             " may be updated, replaced, or obsoleted by other documents at any time.It is inappropriate "+
@@ -132,8 +134,15 @@ namespace Goedel.Tool.RFCTool {
 
 
         static void AddParagraphs (Section Section, List<string> Texts) {
+
+
             foreach (var Text in Texts) {
-                Section.TextBlocks.Add(new P(Text, null));
+                var Block = new P();
+                var Lexer = new MarkNewParagraph();
+                Lexer.PushEnd(Text);
+                Block.Segments = Lexer.Segments;
+
+                Section.TextBlocks.Add(Block);
                 }
 
             }

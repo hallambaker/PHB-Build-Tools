@@ -52,6 +52,18 @@ namespace Goedel.IO {
             return new StreamReader(FileStream);
             }
 
+
+        /// <summary>
+        /// Create a text reader for a file permitting other processes to
+        /// perform concurrent reads.
+        /// </summary>
+        /// <param name="Filename">The file to read.</param>
+        /// <returns>The text reader.</returns>
+        public static string OpenReadToEnd (this string Filename) {
+            var FileStream = Filename.OpenFileRead();
+            return new StreamReader(FileStream).ReadToEnd();
+            }
+
         /// <summary>
         /// Create a new file for exclusive write access, overwriting 
         /// any existing file.

@@ -18,6 +18,10 @@ namespace Goedel.Tool.RFCTool {
         public delegate void CloseListDelegate (BlockType ListItem);
         public CloseListDelegate CloseListItem;
 
+        public string ID= "TBS";
+
+
+
         void OpenList (BlockType ListItem) {
             //TextWriter.Write(Start);
             ListPointer++;
@@ -38,7 +42,9 @@ namespace Goedel.Tool.RFCTool {
 
 
 
-        public void SetListLevel (int Level, BlockType ListItem) {
+        public void SetListLevel (int Level, BlockType ListItem, string IDRoot="") {
+            ID = IDRoot;
+
             if (Level < ListPointer) {
                 while (Level < ListPointer) {
                     CloseList();

@@ -16,9 +16,10 @@ namespace Goedel.Document.OpenXML {
 
 
         public static void Register() {
-            var ParseRegistryEntry = new GM.ParseRegistryEntry();
-            ParseRegistryEntry.Include = Include;
-            ParseRegistryEntry.Parse = Parse;
+            var ParseRegistryEntry = new GM.ParseRegistryEntry() {
+                Include = Include,
+                Parse = Parse
+                };
             GM.ParseRegistry.Register(".docx", ParseRegistryEntry);
             }
 
@@ -59,6 +60,16 @@ namespace Goedel.Document.OpenXML {
         GM.CatalogEntry CatalogEntryTableRow;
         GM.CatalogEntry CatalogEntryTableCell;
 
+
+        //GM.CatalogEntry CatalogEntryEmphasis;
+        //GM.CatalogEntry CatalogEntryStrong;
+        //GM.CatalogEntry CatalogEntryCode;
+        //GM.CatalogEntry CatalogEntryKeyboard;
+        //GM.CatalogEntry CatalogEntrySubscript;
+        //GM.CatalogEntry CatalogEntrySuperscript;
+        //GM.CatalogEntry CatalogEntryDefinition;
+        //GM.CatalogEntry CatalogEntryNormative;
+
         public BlockParseWord(string FileName, GM.TagCatalog TagCatalog) {
             Source = WordprocessingDocument.Open(FileName, false);
 
@@ -79,6 +90,16 @@ namespace Goedel.Document.OpenXML {
             CatalogEntryTable = TagCatalog.Find("table");
             CatalogEntryTableRow = TagCatalog.Find("tablerow");
             CatalogEntryTableCell = TagCatalog.Find("tablecell");
+
+            //CatalogEntryEmphasis = TagCatalog.Find("i");
+            //CatalogEntryStrong = TagCatalog.Find("b");
+            //CatalogEntryCode = TagCatalog.Find("x");
+            //CatalogEntryKeyboard = TagCatalog.Find("kb");
+            //CatalogEntrySubscript = TagCatalog.Find("sub");
+            //CatalogEntrySuperscript = TagCatalog.Find("sup");
+            //CatalogEntryDefinition = TagCatalog.Find("dfn");
+            //CatalogEntryNormative = TagCatalog.Find("norm");
+
 
             SourceMain = Source.MainDocumentPart;
             SourceDocument = SourceMain.Document;
@@ -119,8 +140,7 @@ namespace Goedel.Document.OpenXML {
 
                     if (Properties.OutlineLevel != null) {
                         // we have a heading here.
-                        int Level;
-                        var Found = int.TryParse(Properties.OutlineLevel.Val, out Level);
+                        var Found = int.TryParse(Properties.OutlineLevel.Val, out var Level);
 
                         if (Found & Level >= 0 & Level < 6) {
                             string Tag = "h" + (Level+1).ToString();
@@ -142,10 +162,9 @@ namespace Goedel.Document.OpenXML {
             }
 
         GM.CatalogEntry GetCatalogEntry (string StyleID) {
-            GM.CatalogEntry Result;
-            StyleDictionary.TryGetValue(StyleID, out Result);
+            StyleDictionary.TryGetValue(StyleID, out var Result);
 
-            return Result != null ? Result : CatalogEntryDefault;
+            return Result ?? CatalogEntryDefault;
             }
 
         public void ParseChild (OpenXmlElement Child) {
@@ -155,11 +174,28 @@ namespace Goedel.Document.OpenXML {
                 }
             }
 
+        // This rather peculiar arrangement required because these are not lists,
+        // they are enumerations of a hidden structure.
+        void DumpRun (OpenXmlElement Element, string Indent) {
+
+            Console.WriteLine("{0}Type {1} Children={2}, Text=<{3}>", Indent, Element.GetType(),
+                        Element.HasChildren, Element.InnerText);
+            if (Element.HasChildren) {
+                foreach (var Child in Element) {
+                    DumpRun(Child, Indent + "  ");
+                    }
+                }
+
+            }
+
+
+
         public void ParseParagraph (Paragraph Paragraph) {
             Console.WriteLine("Element {0}", Paragraph.InnerText);
+
             var Properties = Paragraph.ParagraphProperties;
 
-            var StyleId = Properties != null ? Properties.ParagraphStyleId : null;
+            var StyleId = Properties?.ParagraphStyleId;
             var StyleVal = StyleId!= null ? StyleId.Val.ToString(): "p";
 
             Console.WriteLine("   Style {0}", StyleVal);
@@ -174,11 +210,175 @@ namespace Goedel.Document.OpenXML {
                     ParsePreformatted(Paragraph);
                     }
                 else {
-                    ParseParagraph(Paragraph.InnerText, CatalogEntry);
+                    ParseParagraph(Paragraph, CatalogEntry);
                     }
                 }
-
             }
+
+        string GetHyperlink (string Tag) {
+            foreach (var Entry in Source.MainDocumentPart.HyperlinkRelationships) {
+                if (Tag == Entry.Id) {
+                    return Entry.Uri.OriginalString;
+                    }
+                }
+            
+
+            return null;
+            }
+
+        void Add (GM.MarkNewParagraph Lexer, Hyperlink Hyperlink) {
+            var HREF = GetHyperlink(Hyperlink.Id);
+            var Attributes = new List <GM.TagValue>{ new GM.TagValue ("a","http://whatever")};
+            Lexer.SegmentFull("a", Attributes, Hyperlink.InnerText);
+            }
+
+        struct TextProperty {
+            public bool Open;
+            public bool Close;
+            public bool Value;
+
+            public bool Set (bool New) {
+                if (New == Value) {
+                    Open = false; Close = false; Value = New; return true;
+                    }
+                if (New) {
+                    Open = true; Close = false; Value = New; return true;
+                    }
+                Open = false; Close = true; Value = New; return false;
+                }
+            }
+
+        TextProperty Bold = new TextProperty();
+        TextProperty Italic = new TextProperty();
+        TextProperty Underline = new TextProperty();
+        TextProperty Subscript = new TextProperty();
+        TextProperty Superscript = new TextProperty();
+
+        void Add (GM.MarkNewParagraph Lexer, Run Run) {
+            if (Lexer.XMLTagMode) {
+                Lexer.Push(Run.InnerText);
+                return;
+                }
+
+            var Changed = false;
+
+            var RunProperties = Run.RunProperties;
+            if (RunProperties != null) {
+
+                // We do not process style inside a character style. It is just too complicated.
+                if (RunProperties.RunStyle != null) {
+                    Lexer.PushEnd();
+                    Lexer.SegmentFull(RunProperties.RunStyle.Val, null, Run.InnerText);
+                    Lexer.PushStart();
+                    return;
+                    }
+
+                // Check to see what styles have changed.
+                Changed = Bold.Set(RunProperties.Bold != null);
+                Changed = Changed | Italic.Set(RunProperties.Italic != null);
+                Changed = Changed | Underline.Set(RunProperties.Underline != null);
+
+                var Valign = Run.RunProperties.VerticalTextAlignment;
+                if (Valign != null) {
+                    Changed = Changed | Subscript.Set(Valign.Val == VerticalPositionValues.Subscript);
+                    Changed = Changed | Superscript.Set(Valign.Val == VerticalPositionValues.Superscript);
+                    }
+                else {
+                    Changed = Changed | Subscript.Set(false);
+                    Changed = Changed | Superscript.Set(false);
+                    }
+                }
+            else {
+                // All annotations must have reset.
+                Changed = Bold.Set(false);
+                Changed = Changed | Italic.Set(false);
+                Changed = Changed | Underline.Set(false);
+                Changed = Changed | Subscript.Set(false);
+                Changed = Changed | Superscript.Set(false);
+                }
+
+            // Close all contexts first
+            if (Bold.Close) {
+                PopStack(Lexer, "b");
+                }
+            if (Italic.Close) {
+                PopStack(Lexer, "i");
+                }
+            if (Underline.Close) {
+                PopStack(Lexer, "tt");
+                }
+            if (Subscript.Close) {
+                PopStack(Lexer, "sub");
+                }
+            if (Superscript.Close) {
+                PopStack(Lexer, "sup");
+                }
+
+            // Now open any new ones
+            if (Bold.Open) {
+                PushStack(Lexer, "b");
+                }
+            if (Italic.Open) {
+                PushStack(Lexer, "i");
+                }
+            if (Underline.Open) {
+                PushStack(Lexer, "tt");
+                }
+            if (Subscript.Open) {
+                PushStack(Lexer, "sub");
+                }
+            if (Superscript.Open) {
+                PushStack(Lexer, "sup");
+                }
+
+            if (Lexer.StackAnnotation.Count > 0) {
+                Lexer.SegmentText(Run.InnerText);
+                }
+            else {
+                Lexer.Push(Run.InnerText);
+                }
+            }
+
+
+        void PushStack (GM.MarkNewParagraph Lexer, string tag) {
+            Lexer.MakeSegment();
+            var Segment = Lexer.SegmentStart(tag);
+            Lexer.StackAnnotation.Push(Segment);
+            }
+
+        void PopStack (GM.MarkNewParagraph Lexer, string Tag) {
+            Lexer.MakeSegment();
+            Lexer.PopAnnotation(Tag);
+            }
+
+        public void ParseParagraph (Paragraph Paragraph, GM.CatalogEntry CatalogEntry) {
+            CurrentBlock = null;
+
+            CurrentCatalogEntry = CatalogEntry;
+            MakeParagraphIfNull();
+
+            var Lexer = new GM.MarkNewParagraph(CurrentBlock);
+            foreach (var Child in Paragraph.ChildElements) {
+                switch (Child) {
+
+                    case Hyperlink Hyperlink: {
+                        Add(Lexer, Hyperlink);
+                        break;
+                        }
+
+                    case Run Run: {
+                        Add(Lexer, Run);
+                        break;
+                        }
+                    default: {
+                        break;
+                        }
+                    }
+                }
+            Lexer.PushEnd ();
+            }
+
+
 
         public void ParseTable (Table Table) {
             var TableOut = GM.Block.MakeBlock(CatalogEntryTable, null);
@@ -218,23 +418,13 @@ namespace Goedel.Document.OpenXML {
                 var TagValue = new GM.TagValue(CatalogEntry.Key, null);
                 var Attributes = new List<GM.TagValue> { TagValue};
 
-                var Meta = new GM.Meta(CatalogEntry, Attributes);
-                Meta.Text = Text;
+                var Meta = new GM.Meta(CatalogEntry, Attributes) {
+                    Text = Text
+                    };
 
                 Document.MetaDataAdd(CatalogEntry, Meta);
                 }
             
-            }
-
-        public void ParseParagraph (string Text, GM.CatalogEntry CatalogEntry) {
-            CurrentBlock = null;
-
-            CurrentCatalogEntry = CatalogEntry;
-            MakeParagraphIfNull();
-            //CurrentBlock.AddSegmentText(Text);
-
-            //Parse input to process meta tags, etc.
-            ProcessParagraphText(Text);
             }
 
         public void ParsePreformatted (Paragraph Paragraph) {
@@ -262,19 +452,21 @@ namespace Goedel.Document.OpenXML {
                 }
 
             foreach (var Child in Paragraph.ChildElements) {
-                var ChildRun = Child as Run;
 
-                if (ChildRun != null) {
-                    foreach (var ChildPart in ChildRun) {
-                        if (ChildPart as Text != null) {
-                            StringWriter.Write((ChildPart as Text).Text);
+                switch (Child) {
+                    case Run ChildRun: {
+                        foreach (var ChildPart in ChildRun) {
+                            if (ChildPart as Text != null) {
+                                StringWriter.Write((ChildPart as Text).Text);
+                                }
+                            if (ChildPart as Break != null) {
+                                StringWriter.Write("\n");
+                                }
                             }
-                        if (ChildPart as Break != null) {
-                            StringWriter.Write("\n");
-                            }
+                        break;
                         }
-
                     }
+
                 }
 
             var Result = StringWriter.ToString();

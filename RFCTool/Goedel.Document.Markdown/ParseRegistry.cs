@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Goedel.Document.Markdown {
 
-    public delegate Document Parse(string FileName, TagCatalog TagCatalog);
-    public delegate bool Include(string FileName, TagCatalog TagCatalog, Document Document);
+    public delegate Document ParseDelegate(string FileName, TagCatalog TagCatalog);
+    public delegate bool IncludeDelegate(string FileName, TagCatalog TagCatalog, Document Document);
 
 
     public class ParseRegistryEntry {
-        public Include Include;
-        public Parse Parse;
+        public IncludeDelegate Include;
+        public ParseDelegate Parse;
         }
 
 
@@ -28,8 +28,7 @@ namespace Goedel.Document.Markdown {
         static ParseRegistryEntry GetEntry (string FileName) {
             var Extension = Path.GetExtension(FileName);
 
-            ParseRegistryEntry Entry = null;
-            ByExtension.TryGetValue(Extension, out Entry);
+            ByExtension.TryGetValue(Extension, out var Entry);
 
             return Entry;
             }

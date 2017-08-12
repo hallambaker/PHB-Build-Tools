@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Registry;
+using Goedel.IO;
+using Goedel.Document.RFC;
+using Goedel.Document.Markdown;
 
 namespace Goedel.Tool.RFCTool {
-    public class Html2RFCOut : XMLTextWriter {
+    public partial class Html2RFCOut : XMLTextWriter {
         TextWriter TextWriter;
 
         /// <summary>
@@ -18,14 +21,19 @@ namespace Goedel.Tool.RFCTool {
             TextWriter.WriteLine("<!DOCTYPE html>");
             }
 
+        public string Pilcrow = "&para;"; // "¶"
+
 
         readonly string[] AttributesLinkLicense = new string[] {
             "href", "https://trustee.ietf.org/trust-legal-provisions.html", "rel", "license" }; 
 
         readonly string[] Stylesheets = {
-            "https://rfc-format.github.io/draft-iab-rfc-css-bis/xml2rfc.css",  // ToDo: - final stylesheet
+            //"https://rfc-format.github.io/draft-iab-rfc-css-bis/xml2rfc.css",  // ToDo: - final stylesheet
             "rfc-local.css"
             };
+
+        public bool EmbedFiles = false;
+        public string MainStylesheet = "xml2rfc.css";
 
 
         // ToDo: Should incorporate the stylesheet and linked SVGs into the output as one file.
@@ -77,6 +85,9 @@ namespace Goedel.Tool.RFCTool {
 
             WriteElement("title", Document.Title);
             WriteElementEmpty("link", AttributesLinkLicense); // ToDo: - other licenses
+
+            WriteStyle(MainStylesheet);
+
             foreach (var Stylesheet in Stylesheets) {
                 WriteElementEmpty("link", "href", Stylesheet, "rel", "stylesheet", "type", "text/css");
                 }
@@ -102,12 +113,20 @@ namespace Goedel.Tool.RFCTool {
             End();
 
             WriteIdentifiers(Document);
-            WriteElement("h1", Document.Title, "id", "title");
-            WriteElement("p", Document.FullDocName, "id", "filename");
+            Start("h1", "id", "title");
+            Write(Document.Title.Trim());
+
+            foreach (var SeriesInfo in Document.SeriesInfos) {
+                WriteElement("br");
+                WriteElement("span", SeriesInfo.FullDocName, "id", SeriesInfo.Stream+"-file", "class", "filename");
+                }
+            End();
 
             WriteAbstract(Document);
             WriteSections(Document.Boilerplate, 0, true);
-            WriteToc(Document);
+            if (Document.TocInclude) {
+                WriteToc(Document);
+                }
             
             WriteSections(Document.Middle, 0);
             WriteReferences(Document.Catalog);
@@ -115,7 +134,7 @@ namespace Goedel.Tool.RFCTool {
             WriteSections(Document.Back, 0);
 
 
-            WriteAuthors(Document.Authors);
+            WriteAuthors(Document.AuthorSectionTitle, Document.Authors);
             WriteColophon();
 
             End();
@@ -124,15 +143,15 @@ namespace Goedel.Tool.RFCTool {
 
         //Tagging and bagging paragraph blocks
         void StartSection (Section Section) {
-            Start("section", "id", Section.SectionID);
-            if (Section.Number != null) {
-                Start(HeadTag(Section.Level), "id", Section.NumericID);
-                WriteElement("a", Section.Number, "class", "selfRef", "href", "#" + Section.NumericID);
+            Start("section", "id", Section.SetableID);
+            if (Section.GeneratedID != null) {
+                Start(HeadTag(Section.Level), "id", Section.GeneratedID);
+                WriteElement("a", Section.Number, "class", "selfRef", "href", "#" + Section.GeneratedID);
                 }
             else {
-                Start(HeadTag(Section.Level), "id");
+                Start(HeadTag(Section.Level));
                 }
-            WriteElement("a", Section.Heading, "class", "selfRef", "href", "#" + Section.SectionID);
+            WriteElement("a", Section.Heading, "class", "selfRef", "href", "#" + Section.SetableID);
             End();
             }
         //Level, Section.Number + " " + Section.Heading, Section.ID, Section.SectionID
@@ -155,22 +174,18 @@ namespace Goedel.Tool.RFCTool {
             Write();
             }
 
-        public void WriteParagraph (P P) {
-            Start("p", true, false, "id", P.ID);
-            // ToDo: write ID
-            Write(P.Text.Trim(),false, true);
-            WriteElement("a", "¶", "class", "pilcrow", "href", "#" + P.ID);
 
-            End();
+        public void WriteParagraph (P P) {
+            WriteBlock(P, "p");
             }
 
         public void WritePre (PRE P) {
-            Start("pre", true, false, "id", P.ID);
+            Start("pre", true, false, "id", P.GeneratedID);
             // ToDo: write ID
             Write(P.Text.Trim(), false, false);
-            WriteElement("a", "¶", "class", "pilcrow", "href", "#" + P.ID);
+            WriteElement("a", false, false, Pilcrow, "class", "pilcrow", "href", "#" + P.GeneratedID);
 
-            End();
+            End(false, true);
             }
 
         public void WriteTable (Table Table) {
@@ -178,7 +193,7 @@ namespace Goedel.Tool.RFCTool {
                 return; // no rows so suppress outpout
                 }
 
-            Start ("table", "id", Table.ID);
+            Start ("table", "id", Table.GeneratedID);
             Start("thead");
             Start("tr");
             foreach (var Data in Table.Rows[0].Data) {
@@ -220,8 +235,40 @@ namespace Goedel.Tool.RFCTool {
             Start("nav", "class", "toc");
             WriteToc(Document.Middle);
             WriteToc(Document.Back);
-            End();
 
+            if (Document.TofInclude & Document.TableOfFigures.Count > 0) {
+                Start("h3", "id", "tof");
+                WriteElement("a", "Table of Figures", "class", "selfRef", "href", "#" + "tof");
+                End();
+
+                Start("ul", "class", "toc");
+                foreach (var Figure in Document.TableOfFigures) {
+                    Start("li", "class", "toc");
+                    WriteElement("a", true, false, Figure.SectionText, "href", "#" + Figure.GeneratedID);
+                    Output.Write(": ");
+                    WriteElement("a", false, true, Figure.Caption, "href", "#" + Figure.GeneratedID);
+                    End();
+                    }
+                End();
+                }
+
+            if (Document.TofInclude & Document.TableOfTables.Count > 0) {
+                Start("h3", "id", "tof");
+                WriteElement("a", "Table of Figures", "class", "selfRef", "href", "#" + "tof");
+                End();
+
+                Start("ul", "class", "toc");
+                foreach (var Table in Document.TableOfTables) {
+                    Start("li", "class", "toc");
+                    WriteElement("a", true, false, Table.SectionText, "href", "#" + Table.GeneratedID);
+                    Output.Write(": ");
+                    WriteElement("a", false, true, Table.Caption, "href", "#" + Table.GeneratedID);
+                    End();
+                    }
+                End();
+                }
+
+            End();
             EndSection();
             }
 
@@ -238,8 +285,10 @@ namespace Goedel.Tool.RFCTool {
 
         public void WriteToc (Section Section) {
             Start("li", "class", "toc");
-            WriteElement("a", true, false, Section.Number, "href", "#" + Section.ID);
-            WriteElement("a", false, true, Section.Heading, "href", "#" + Section.SectionID);
+            if (!Section.SuppressNumbering) {
+                WriteElement("a", true, false, Section.Number, "href", "#" + Section.GeneratedID);
+                }
+            WriteElement("a", false, true, Section.Heading, "href", "#" + Section.SetableID);
             WriteToc(Section.Subsections);
             End();
             }
@@ -315,9 +364,9 @@ namespace Goedel.Tool.RFCTool {
             switch (ListItem) {
                 case BlockType.Definitions:
                 case BlockType.Term:
-                case BlockType.Data: Start("dl"); return;
-                case BlockType.Ordered: Start("ol"); return;
-                case BlockType.Symbol: Start("ul"); return;
+                case BlockType.Data: Start("dl", "id", ListLevel.ID + "-"); return;
+                case BlockType.Ordered: Start("ol", "id", ListLevel.ID + "-"); return;
+                case BlockType.Symbol: Start("ul", "id", ListLevel.ID + "-"); return;
                 }
             }
 
@@ -334,23 +383,27 @@ namespace Goedel.Tool.RFCTool {
         string WrapNull (string Text) => Text ?? "";
 
         void ListItem (LI LI) {
-            ListLevel.SetListLevel(LI.Level, LI.Type);
+            ListLevel.SetListLevel(LI.Level-1, LI.Type, LI.GeneratedID);
 
             switch (LI.Type) {
                 case BlockType.Data: {
-                    WriteElement("dd", LI.Text);
+                    WriteBlock(LI, "dd");
+                    //WriteBlock("dd", ListLevel.ID, LI.Text, LI.Chunks);
                     break;
                     }
                 case BlockType.Term: {
-                    WriteElement("dt", LI.Text);
+                    WriteBlock(LI, "dt");
+                    //WriteBlock("dt", ListLevel.ID, LI.Text, LI.Chunks);
                     break;
                     }
                 case BlockType.Ordered: {
-                    WriteElement("li", LI.Text);
+                    WriteBlock(LI, "li");
+                    //WriteBlock("li", ListLevel.ID, LI.Text, LI.Chunks);
                     break;
                     }
                 case BlockType.Symbol: {
-                    WriteElement("li", LI.Text);
+                    WriteBlock(LI, "li");
+                    //WriteBlock("li", ListLevel.ID, LI.Text, LI.Chunks);
                     break;
                     }
                 }
@@ -360,7 +413,33 @@ namespace Goedel.Tool.RFCTool {
             ListLevel.ListLast();
             }
 
+        public void WriteLink (string Filename, string Element, string Attribute) {
 
+            if (!EmbedFiles) { // just write the link out
+                WriteElement(Element, (string)null, Attribute, Filename);
+                return;
+                }
+
+            XMLEmbed.Embed(Filename, Output);
+
+            //var Text = Filename.OpenReadToEnd();
+            //Output.Write(Text);
+
+
+            }
+
+        public void WriteStyle (string Filename) {
+
+            if (!EmbedFiles) { // just write the link out
+                WriteElementEmpty("link", "href", Filename, "rel", "stylesheet", "type", "text/css");
+                return;
+                }
+
+            Start("style", "type", "text/css");
+            var Text = Filename.OpenReadToEnd();
+            Output.Write(Text);
+            End();
+            }
 
 
         //----------------------
@@ -383,7 +462,6 @@ namespace Goedel.Tool.RFCTool {
                                         WritePre(PRE);
                                         break;
                                         }
-
                                     case P P: {
                                         WriteParagraph(P);
                                         break;
@@ -408,9 +486,36 @@ namespace Goedel.Tool.RFCTool {
                     }
                 }
             }
+         
+        void WriteFigureCaption (Figure Figure) {
+            if (Figure.Caption == null) {
+                return;
+                }
+
+            Start("figcaption");
+
+            WriteElement("a", Figure.SectionText, "href", Figure.GeneratedID);
+            Output.Write(":");
+            WriteElement("a", Figure.Caption, "href", Figure.SetableID, "id", Figure.SetableID, "class", "selfRef");
+            
+            End();
+            }
+
 
         void WriteFigure (Figure Figure) {
+            Start("figure", "id", Figure.FigureID);
+            Start("div", "class", "artwork art-svg", "id", Figure.GeneratedID);
+
+            WriteLink(Figure.Filename, "img", "src");
+
+            WriteElement("a", Pilcrow, "class", "pilcrow", "href", "#" + Figure.GeneratedID);
+            End();
+            WriteFigureCaption(Figure);
+
+            End();
             }
+
+
 
 
         void WriteReferences (Catalog Catalog) {
@@ -418,8 +523,8 @@ namespace Goedel.Tool.RFCTool {
                 return;
                 }
             StartSection(0, "References", "n-references");
-            WriteReference(Catalog.Normative, "Normative References", "norm");
-            WriteReference(Catalog.Informative, "Informative References", "informative");
+            WriteReference(Catalog.Normative, "Normative References", "n-normative");
+            WriteReference(Catalog.Informative, "Informative References", "n-informative");
             EndSection();
             }
 
@@ -436,7 +541,7 @@ namespace Goedel.Tool.RFCTool {
             }
 
         void WriteReference (Reference Reference) {
-            WriteElement("dt", "[" +Reference.ID.Trim() + "]" , "id", Reference.ID);
+            WriteElement("dt", "[" +Reference.GeneratedID.Trim() + "]" , "id", Reference.GeneratedID);
             Start("dd");
             WriteAuthorList(Reference.Authors);
 
@@ -526,39 +631,6 @@ namespace Goedel.Tool.RFCTool {
             Start("span", "Class", Class);
             }
 
-        //void WriteReferences (List<Reference> References) {
-        //    foreach (Reference Reference in References) {
-        //        //WriteStartTag("reference", "anchor", Reference.ID);
-        //        //WriteStartTag("front");
-        //        //WriteIfValueTag("title", Reference.Title);
-        //        WriteAuthors(Reference.Authors);
-        //        WriteValueTag("date", null, "day", Reference.Day, "month", Reference.Month,
-        //                "year", Reference.Year);
-        //        foreach (string Keyword in Reference.Keywords) {
-        //            WriteValueTag("keyword", Keyword);
-        //            }
-        //        if (Reference.Abstract.Count > 0) {
-        //            WriteStartTag("abstract");
-        //            foreach (string S in Reference.Abstract) {
-        //                WriteValueTag("t", S);
-        //                }
-        //            WriteEndTag("abstract");
-        //            }
-        //        //WriteEndTag("front");
-        //        foreach (SeriesInfo SeriesInfo in Reference.SeriesInfos) {
-        //            WriteValueTag("seriesInfo", null, "name", SeriesInfo.Name,
-        //                "value", SeriesInfo.Value);
-        //            }
-        //        foreach (Format Format in Reference.Formats) {
-        //            WriteValueTag("format", null, "type", Format.Type,
-        //                "target", Format.Target, "octets", Format.Octets);
-        //            }
-        //        //WriteEndTag("reference");
-        //        }
-        //    }
-
-
-
         void WriteColophon () {
             // The colophon
             var PreparedString = Prepared.ToString("yyyy-MM-dd");
@@ -595,9 +667,9 @@ namespace Goedel.Tool.RFCTool {
 
 
 
-        void WriteAuthors (List<Author> Authors) {
+        void WriteAuthors (string Heading, List<Author> Authors) {
             // ToDo: use &nbsp; as spaces - need to rewrite element handler.
-            StartSection(0, "Authors' Addresses", "author-addresses");
+            StartSection(0, Heading, "n-authors");
             WriteElement("hr", (string) null, "class", "addr");
 
             foreach (var Author in Authors) {
@@ -654,86 +726,191 @@ namespace Goedel.Tool.RFCTool {
             return false;
             }
 
-        //string XMLEscape(string In) {
-        //    string Result = "";
 
-        //    foreach (char c in In) {
-        //        switch (c) {
-        //            case '<': Result += "&lt;"; break;
-        //            case '>': Result += "&gt;"; break;
-        //            case '&': Result += "&amp;"; break;
-        //            case (char)160: Result += "&nbsp;"; break;
-        //            default: Result += c; break;
+        enum Annotations {
+            Strong, Emphasis, Code, Comment, Superscript, Subscript, Norm
+
+            }
+
+
+        //class Annotation {
+        //    XMLTextWriter Writer;
+        //    Text State;
+
+        //    Stack<Annotations> Stack = new Stack<Annotations>();
+
+
+        //    public Annotation (XMLTextWriter Writer) {
+        //        this.Writer = Writer;
+        //        State = new Text();
+        //        }
+
+        //    public void Mark (Text Text) {
+
+        //        // Pop the stack
+        //        if (State.Strong & !Text.Strong) {
+        //            Pop(Annotations.Strong);
+        //            }
+        //        if (State.Emphasis & !Text.Emphasis) {
+        //            Pop(Annotations.Emphasis);
+        //            }
+        //        if (State.Code & !Text.Code) {
+        //            Pop(Annotations.Code);
+        //            }
+        //        if (State.Comment & !Text.Comment) {
+        //            Pop(Annotations.Comment);
+        //            }
+        //        if (State.Superscript & !Text.Superscript) {
+        //            Pop(Annotations.Superscript);
+        //            }
+        //        if (State.Subscript & !Text.Subscript) {
+        //            Pop(Annotations.Subscript);
+        //            }
+        //        if (State.BCP14 & !Text.BCP14) {
+        //            Pop(Annotations.Norm);
+        //            }
+
+        //        // 
+
+        //        if (Text.Strong & !State.Strong) {
+        //            Push(Annotations.Strong);
+        //            }
+        //        if (Text.Emphasis & !State.Emphasis) {
+        //            Push(Annotations.Emphasis);
+        //            }
+        //        if (Text.Code & !State.Code) {
+        //            Push(Annotations.Code);
+        //            }
+        //        if (Text.Comment & !State.Comment) {
+        //            Push(Annotations.Comment);
+        //            }
+        //        if (Text.Superscript & !State.Superscript) {
+        //            Push(Annotations.Superscript);
+        //            }
+        //        if (Text.Subscript & !State.Subscript) {
+        //            Push(Annotations.Subscript);
+        //            }
+        //        if (Text.BCP14 & !State.BCP14) {
+        //            Push(Annotations.Norm);
         //            }
         //        }
 
-        //    return Result;
-        //    }
-
-        //string XMLAttributeEscape(string In) {
-        //    string Result = "";
-
-        //    foreach (char c in In) {
-        //        switch (c) {
-        //            case '<': Result += "&lt;"; break;
-        //            case '>': Result += "&gt;"; break;
-        //            case '&': Result += "&amp;"; break;
-        //            case '\"': Result += "&quot;"; break;
-        //            case (char)160: Result += "&nbsp;"; break;
-        //            default: Result += c; break;
+        //    public void Close () {
+        //        while (Stack.Count > 0) {
+        //            var Popped = Stack.Pop();
+        //            WritePop(Popped);
         //            }
         //        }
 
-        //    return Result;
-        //    }
 
+        //    void Pop (Annotations Item) {
+        //        Annotations Popped;
 
+        //        do {
+        //            Popped = Stack.Pop();
+        //            WritePop(Popped);
+        //            } while (Popped != Item);
 
-
-        //void WriteIfValueTag(string Tag, params string[] Attributes) {
-        //    if (Attributes.Length > 0 && Attributes[0] != null) {
-        //        WriteValueTag(Tag, Attributes);
         //        }
-        //    }
 
-        //void WriteValueTag(string Tag, params string[] Attributes) {
-        //    TextWriter.Write("<{0}", Tag);
-        //    string Value = (Attributes.Length > 0) ? Attributes[0] : null;
+        //    void Push (Annotations Item) {
+        //        Stack.Push(Item);
+        //        WritePush(Item);
+        //        }
 
-        //    for (int i = 1; i < (Attributes.Length - 1); i += 2) {
-        //        if (Attributes[i + 1] != null) {
-        //            TextWriter.Write(" {0}=\"{1}\"", Attributes[i], XMLAttributeEscape(Attributes[i + 1]));
+
+        //    // Output part
+
+        //    void WritePush (Annotations Item) {
+
+        //        switch (Item) {
+        //            case Annotations.Strong: {
+        //                State.Strong = true;
+        //                Writer.Start("strong", false, false);
+        //                break;
+        //                }
+        //            case Annotations.Emphasis: {
+        //                State.Emphasis = true;
+        //                Writer.Start("em", false, false);
+        //                break;
+        //                }
+        //            case Annotations.Code: {
+        //                State.Code = true;
+        //                Writer.Start("code", false, false);
+        //                break;
+        //                }
+        //            case Annotations.Comment: {
+        //                State.Comment = true;
+        //                Writer.Start("code", false, false);
+        //                break;
+        //                }
+        //            case Annotations.Superscript: {
+        //                State.Superscript = true;
+        //                Writer.Start("sup", false, false);
+        //                break;
+        //                }
+        //            case Annotations.Subscript: {
+        //                State.Subscript = true;
+        //                Writer.Start("sub", false, false);
+        //                break;
+        //                }
+        //            case Annotations.Norm: {
+        //                State.BCP14 = true;
+        //                Writer.Start("em", false, false);
+        //                break;
+        //                }
         //            }
-        //        }
-        //    if (Value != null && Value.Length > 0) {
-        //        TextWriter.WriteLine(">{1}</{0}>", Tag, XMLEscape(Value));
-        //        }
-        //    else {
-        //        TextWriter.WriteLine("/>");
-        //        }
-        //    }
 
-        //void WriteStartTag(string Tag, params string[] Attributes) {
-        //    TextWriter.Write("<{0}", Tag);
+        //        }
 
-        //    for (int i = 0; i < (Attributes.Length - 1); i += 2) {
-        //        if (Attributes[i + 1] != null) {
-        //            TextWriter.Write(" {0}=\"{1}\"", Attributes[i], Attributes[i + 1]);
+        //    void WritePop (Annotations Item) {
+        //        switch (Item) {
+        //            case Annotations.Strong: {
+        //                State.Strong = false;
+        //                Writer.End(false, false);
+        //                break;
+        //                }
+        //            case Annotations.Emphasis: {
+        //                State.Emphasis = false;
+        //                Writer.End(false, false);
+        //                break;
+        //                }
+        //            case Annotations.Code: {
+        //                State.Code = false;
+        //                Writer.End(false, false);
+        //                break;
+        //                }
+        //            case Annotations.Comment: {
+        //                State.Comment = false;
+        //                Writer.End(false, false);
+        //                break;
+        //                }
+        //            case Annotations.Superscript: {
+        //                State.Superscript = false;
+        //                Writer.End(false, false);
+        //                break;
+        //                }
+        //            case Annotations.Subscript: {
+        //                State.Subscript = false;
+        //                Writer.End(false, false);
+        //                break;
+        //                }
+        //            case Annotations.Norm: {
+        //                State.BCP14 = false;
+        //                Writer.End(false, false);
+        //                break;
+        //                }
         //            }
+
         //        }
-        //    TextWriter.WriteLine(">");
+
         //    }
-
-        //void WriteEndTag(string Tag) {
-        //    TextWriter.WriteLine("</{0}>", Tag);
-        //    }
-
-
-
-
-
-
 
 
         }
+
+
+    
+
+
     }

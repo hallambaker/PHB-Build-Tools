@@ -60,7 +60,7 @@
     </Compile>
     <Compile Include="FileReader.cs" />
     <Compile Include="HTML.cs" />
-    <Compile Include="Html2RFCOut-Old.cs" />
+    <Compile Include="HTML2RFCSegments.cs" />
     <Compile Include="IndentWriter.cs" />
     <Compile Include="ListLevel.cs" />
     <Compile Include="MD2RFCOut.cs" />
@@ -77,6 +77,7 @@
     <Compile Include="WriteAML.cs" />
     <Compile Include="XML.cs" />
     <Compile Include="Xml2RFCOut.cs" />
+    <Compile Include="XMLEmbed.cs" />
     <Compile Include="XMLTextWriterPlus.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +92,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
+      <Project>{ccc286f1-6a5b-4946-a382-8a48797192b4}</Project>
+      <Name>Goedel.FSR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.IO\Goedel.IO.csproj">
+      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
+      <Name>Goedel.IO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
       <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
       <Name>Goedel.Registry</Name>

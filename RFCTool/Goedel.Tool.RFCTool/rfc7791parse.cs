@@ -175,7 +175,7 @@ namespace Goedel.Tool.RFCTool {
             Result.Formats = MakeFormats (reference.Items);
 
 
-            Result.ID = reference.anchor;
+            Result.GeneratedID = reference.anchor;
             Result.Target = reference.target;
 
             return Result;
@@ -490,7 +490,7 @@ namespace Goedel.Tool.RFCTool {
 
         void AddTableBlock(List<TextBlock> Parent, texttable texttable) {
             Table Table = new Table() {
-                ID = texttable.anchor
+                GeneratedID = texttable.anchor
                 };
             
             TableRow TableRow = new TableRow();

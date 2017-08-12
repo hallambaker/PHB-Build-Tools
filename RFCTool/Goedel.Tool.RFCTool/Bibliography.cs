@@ -89,7 +89,7 @@ namespace Goedel.Tool.RFCTool {
 
         List<Source> Sources = new List<Source>();
 
-        public List<string> Caches = new List <string>();
+        public List<string> Caches = new List<string>() ;
 
         public void AddSource(string Prefix, string UriPattern) {
             Source Source = new Source(Prefix, UriPattern);
@@ -257,13 +257,15 @@ namespace Goedel.Tool.RFCTool {
             foreach (Citation Citation in Citations) {
                 Reference Reference = FindReference(Citation.Label);
                 if (!Citation.Resolved) {
-                    Reference = new Reference ();
-                    Reference.ID = Citation.Label;
-                    Reference.Title = "[Reference Not Found!]";
-                    Author Author = new Author ();
-                    Author.Surname = "";
-                    Author.Initials = "";
-                    Author.Organization = "";
+                    Reference = new Reference() {
+                        GeneratedID = Citation.Label,
+                        Title = "[Reference Not Found!]"
+                        };
+                    Author Author = new Author() {
+                        Surname = "",
+                        Initials = "",
+                        Organization = ""
+                        };
                     Reference.Authors.Add (Author);
                     if (Citation.Normative) {
                         Normative.Add(Reference);
@@ -295,15 +297,15 @@ namespace Goedel.Tool.RFCTool {
 
         public string ForceReferenceID = null;
         public void AddReference (Reference Reference) {
-            Reference.ID = ForceReferenceID ?? Reference.ID;
-            if (FindReference (Reference.ID) == null) {
+            Reference.GeneratedID = ForceReferenceID ?? Reference.GeneratedID;
+            if (FindReference (Reference.GeneratedID) == null) {
                 References.Add (Reference);
                 }
             }
 
         public Reference FindReference(string Label) {
             foreach (Reference Reference in References) {
-                if (Reference.ID == Label) {
+                if (Reference.GeneratedID == Label) {
                     return Reference;
                     }
                 }

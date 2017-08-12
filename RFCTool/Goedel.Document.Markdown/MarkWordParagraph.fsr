@@ -1,0 +1,150 @@
+﻿FSR Goedel.Document.Markdown MarkNewParagraph
+
+
+
+
+	Token Null		""
+	Token Text		"Some Text."
+	Token Open		"<Tag=value Tag=value>"
+	Token Close		"</Tag>"
+	Token Empty		"<Tag=value Tag=value/>"
+
+	Charset Digit		"0" "9"
+	Charset Lower		"a" "z"
+	Charset Upper		"A" "Z"
+
+
+	State Start Reset Null		// Starting state for Text
+		Upper GoTo UpperText
+		On "&" GoTo Escape
+		On "<" GoTo ElementStart
+		Any GoTo AnyText
+
+	State UpperText AddUpper Text
+		Upper GoTo UpperText
+		On " " GoTo UpperSpace
+		On "&" GoTo Escape
+		On "<" GoTo ElementStart
+		Any GoTo AnyText
+
+	State UpperSpace AddUpperSpace Text
+		Upper GoTo UpperText
+		Lower GoTo AnyText
+		Digit GoTo AnyText
+		On "&" GoTo Escape
+		On "<" GoTo ElementStart
+		Any GoTo AnySpace
+
+	State AnyText AddText Text
+		Lower GoTo AnyText
+		Digit GoTo AnyText
+		On "&" GoTo Escape
+		On "<" GoTo ElementStart
+		Any GoTo AnySpace
+
+	State AnySpace AddText Text
+		Upper GoTo UpperText
+		Lower GoTo AnyText
+		Digit GoTo AnyText
+		On "&" GoTo Escape
+		On "<" GoTo ElementStart
+		Any GoTo AnySpace
+
+
+
+	State Escape GotEscape Text
+		Any GoTo eText
+
+	State eText AddeText Text
+		On "&" GoTo Escape
+		On "<" Return Text
+		Any GoTo AnyText
+
+	State ElementStart Null Text
+		On "/" GoTo ElementCloseStart
+		On "<" GoTo eText
+		Upper GoTo NewElementTag
+		Lower GoTo NewElementTag
+		Any GoTo AnyText				
+
+	State NewElementTag StartTag Text
+		Upper GoTo ElementTag
+		Lower GoTo ElementTag
+		Digit GoTo ElementTag
+		On "=" GoTo ElementWaitValue
+		On " " GoTo ElementWS
+		On "\t" GoTo ElementWS
+		On "/" GoTo ElementEmpty
+		On ">" GoTo ElementEnd
+		Any GoTo AnyText
+
+	State ElementTag AddTag Text
+		Upper GoTo ElementTag
+		Lower GoTo ElementTag
+		Digit GoTo ElementTag
+		On "=" GoTo ElementWaitValue
+		On " " GoTo ElementWS
+		On "\t" GoTo ElementWS
+		On "/" GoTo ElementEmpty
+		On ">" GoTo ElementEnd
+		Any GoTo AnyText
+
+	State ElementWS Null Text
+		Upper GoTo NewElementTag
+		Lower GoTo NewElementTag
+		On "=" GoTo ElementWaitValue
+		On " " GoTo ElementWS
+		On "\t" GoTo ElementWS
+		On "/" GoTo ElementEmpty
+		On ">" GoTo ElementEnd
+		Any GoTo AnyText
+
+	State ElementWaitValue Null Text
+		On "\"" GoTo ElementWaitQuotedValue
+		On " " GoTo ElementWaitValue
+		On "\t" GoTo ElementWaitValue
+		On "/" GoTo ElementEmpty
+		On ">" GoTo ElementEnd
+		Any GoTo ElementValue
+
+	State ElementValue AddValue Text
+		On " " GoTo ElementWS
+		On "\t" GoTo ElementWS
+		On "/" GoTo ElementEmpty
+		On ">" GoTo ElementEnd
+		Any GoTo ElementValue		
+
+	State ElementWaitQuotedValue Null Text
+		On "\"" GoTo ElementWS
+		Any GoTo ElementQuotedValue
+
+	State ElementQuotedValue AddValue Text
+		On "\"" GoTo ElementWS
+		Any GoTo ElementQuotedValue
+
+
+	// The various completion states
+	State ElementEnd ElementEnd Open
+		// Element is complete, clear extra 
+
+	State ElementEmpty Null Text
+		On ">" GoTo ElementEmptyEnd
+		On "&" GoTo Escape
+		On "<" GoTo ElementStart
+		Any GoTo AnyText
+
+	State ElementEmptyEnd ElementEnd Empty
+		// Element is complete, clear extra 
+
+	State ElementCloseStart Null Text
+		Upper GoTo ElementClose
+		Lower GoTo ElementClose
+		On ">" GoTo ElementEndClose
+
+	State ElementClose AddCloseTag Text
+		Upper GoTo ElementClose
+		Lower GoTo ElementClose
+		On ">" GoTo ElementEndClose
+
+	State ElementEndClose ElementEnd Close
+		// Element is complete, clear extra 

@@ -60,17 +60,23 @@
     <Compile Include="MarkParagraphPlus.cs" />
     <Compile Include="MarkDownPlus.cs" />
     <Compile Include="BlockParse.cs" />
+    <Compile Include="MarkWordParagraph.cs">
+      <DependentUpon>MarkWordParagraph.fsr</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="MarkWordParagraphPlus.cs" />
     <Compile Include="Parse.cs" />
     <Compile Include="ParseRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reader.cs" />
-    <Compile Include="RichDocument.cs" />
     <Compile Include="Schema.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Schema.gdl</DependentUpon>
     </Compile>
     <Compile Include="SchemaPlus.cs" />
+    <Compile Include="SegmentToHTML.cs" />
     <Compile Include="TagCatalog.cs" />
     <Compile Include="Writer.cs" />
   </ItemGroup>
@@ -84,6 +90,10 @@
     <None Include="MarkDown.fsr">
       <Generator>FSRCS</Generator>
       <LastGenOutput>MarkDown.cs</LastGenOutput>
+    </None>
+    <None Include="MarkWordParagraph.fsr">
+      <Generator>FSRCS</Generator>
+      <LastGenOutput>MarkWordParagraph.cs</LastGenOutput>
     </None>
     <None Include="Schema.gdl">
       <Generator>Goedel3</Generator>

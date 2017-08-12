@@ -134,6 +134,68 @@ namespace Goedel.FSR {
             return StateInt;
             }
 
+
+        /// <summary>
+        /// Process a character of text
+        /// </summary>
+        /// <param name="c">Character to process</param>
+        /// <returns>True if the character was accepted, otherwise must retry</returns>
+        public virtual bool Push (int c) {
+            int ct = ((c >= 0) & (c < CharacterMappings.Length)) ? CharacterMappings[c] : 0;
+
+            if (Trace) {
+                Debug.WriteLine("  {0} {1}:{3} {2}", StateInt, c, ct, (char)c);
+                }
+
+            NextState = CompressedTransitions[StateInt, ct];
+
+            if (NextState >= 0) {
+                Action Action = Actions[(int)NextState];
+                Action(c);
+                StateInt = NextState;
+                return true;
+                }
+
+            StateInt = 0;
+            return false;
+            }
+
+        /// <summary>
+        /// Process a string of text, a character at a time.
+        /// </summary>
+        /// <param name="Text">Text to process</param>
+        public virtual void Push (string Text) {
+            foreach (var c in Text) {
+                var Accepted = Push((int)c);
+                if (!Accepted) {
+                    StateInt = 0;
+                    Actions[0](-1); // call the reset
+                    Push((int)c);
+                    }
+                }
+            }
+
+        /// <summary>
+        /// Called at the start of a Push parser session. May be overriden in subclasses to 
+        /// initialize output.
+        /// </summary>
+        public virtual void PushStart () {
+            StateInt = 0;
+            Actions[0](-1); // call the reset
+            }
+
+        /// <summary>
+        /// Called at the end of a Push parser session. May be overriden in subclasses to 
+        /// flush output.
+        /// </summary>
+        public virtual void PushEnd (string Text = null) {
+            if (Text != null) {
+                Push(Text);
+                }
+            }
+
+
+
         /// <summary>
         /// FSR action
         /// </summary>

@@ -25,7 +25,7 @@ namespace #{FSR.Id}{
 	/*
 	public partial class #{FSR.Prefix} {
 #foreach (Action Action in FSR.Actions)
-        public virtual void #{Action.Tag} (char c) {
+        public virtual void #{Action.Tag} (int c) {
 			}
 #end foreach
 		}
@@ -159,7 +159,7 @@ namespace #{FSR.Id}{
 		/// <summary>Generated initialization method, is called automatically 
 		/// the FSR to reset </summary>
         public override void Init () {
-            Actions = new Action[] {
+            Actions = new ActionDelegate[] {
 #%  comma = false;
 #foreach (var State in FSR.States)
 #if (comma)

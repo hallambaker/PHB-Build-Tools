@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using GM=Goedel.Document.Markdown;
 
 namespace Goedel.Tool.RFCTool {
     public class Xml2RFCOut {
@@ -62,7 +63,7 @@ namespace Goedel.Tool.RFCTool {
         void WriteValueTag (string Tag, List<string> Values) {
             foreach (var Value in Values) {
                 WriteStartTag(Tag);
-                TextWriter.Write(Value);
+                TextWriter.Write(Value.Trim());
                 WriteEndTag(Tag);
                 }
             }
@@ -73,11 +74,11 @@ namespace Goedel.Tool.RFCTool {
 
             for (int i = 1; i < (Attributes.Length - 1); i += 2) {
                 if (Attributes[i + 1] != null) {
-                    TextWriter.Write(" {0}=\"{1}\"", Attributes[i], XMLAttributeEscape(Attributes[i + 1]));
+                    TextWriter.Write(" {0}=\"{1}\"", Attributes[i], XMLAttributeEscape(Attributes[i + 1].Trim()));
                     }
                 }
             if (Value != null && Value.Length > 0) {
-                TextWriter.WriteLine(">{1}</{0}>", Tag, XMLEscape(Value));
+                TextWriter.WriteLine(">{1}</{0}>", Tag, XMLEscape(Value.Trim()));
                 }
             else {
                 TextWriter.WriteLine("/>");
@@ -89,7 +90,7 @@ namespace Goedel.Tool.RFCTool {
 
             for (int i = 0; i < (Attributes.Length - 1); i += 2) {
                 if (Attributes[i + 1] != null) {
-                    TextWriter.Write(" {0}=\"{1}\"", Attributes[i], XMLAttributeEscape(Attributes[i + 1]));
+                    TextWriter.Write(" {0}=\"{1}\"", Attributes[i], XMLAttributeEscape(Attributes[i + 1].Trim()));
                     }
                 }
             TextWriter.WriteLine(">");
@@ -170,19 +171,30 @@ namespace Goedel.Tool.RFCTool {
         void ListLevel(LI LI) {
 
             if (HangText != null & LI.Type != BlockType.Data) {
-                WriteValueTag("t", " ", "hangText", HangText);
+                Write(null, HangText);
+                //WriteValueTag("t", " ", "hangText", HangText);
                 HangText = null;
                 }
 
-            SetListLevel(LI.Level, LI.Type);
+            SetListLevel(LI.Level-1, LI.Type);
 
             switch (LI.Type) {
-                case BlockType.Data: WriteValueTag("t", LI.Text,
-                   "hangText", WrapNull(HangText)); HangText = null; break;
-                case BlockType.Term: HangText = LI.Text; break;
+                case BlockType.Data: {
+                    //WriteValueTag("t", LI.Text,
+                    //"hangText", WrapNull(HangText));
+                    Write(LI.Segments, HangText);
+                    HangText = null;
+                    break;
+                    }
+                case BlockType.Term: {
+                    HangText = LI.Text;
+                    break;
+                    }
                 case BlockType.Ordered:
-                case BlockType.Symbol:
-                    WriteValueTag("t", LI.Text); break;
+                case BlockType.Symbol: {
+                    Write(LI.Segments);
+                    break;
+                    }
                 }
             }
 
@@ -195,11 +207,41 @@ namespace Goedel.Tool.RFCTool {
             SetListLevel(-1, BlockType.Data);
             }
 
+
+        public void Write (List<GM.TextSegment> Segments, string Hangtext=null) {
+            WriteStartTag("t", "hangtext", Hangtext);
+
+            if (Segments != null) {
+                foreach (var Segment in Segments) {
+                    switch (Segment) {
+                        case GM.TextSegmentText Text: {
+                            TextWriter.Write(XMLEscape(Text.Text));
+                            break;
+                            }
+                        case GM.TextSegmentOpen Text: {
+
+                            break;
+                            }
+                        case GM.TextSegmentClose Text: {
+
+                            break;
+                            }
+                        case GM.TextSegmentEmpty Text: {
+
+                            break;
+                            }
+                        }
+                    }
+                }
+            WriteEndTag("t");
+            }
+
+
         public void WriteSections(List<Section> Sections) {
             foreach (Section Section in Sections) {
                 if (!Section.Automatic) {
 
-                    WriteStartTag("section", "title", Section.Heading, "anchor", Section.ID);
+                    WriteStartTag("section", "title", Section.Heading, "anchor", Section.GeneratedID);
                     foreach (TextBlock TextBlock in Section.TextBlocks) {
                         if (TextBlock.GetType() == typeof(LI)) {
                             LI LI = (LI)TextBlock;
@@ -211,13 +253,13 @@ namespace Goedel.Tool.RFCTool {
 
                         if (TextBlock.GetType() == typeof(P)) {
                             P P = (P)TextBlock;
-                            WriteValueTag("t", P.Text);
+                            Write(P.Segments);
                             }
 
                         if (TextBlock.GetType() == typeof(PRE)) {
                             PRE PRE = (PRE)TextBlock;
-                            if (PRE.ID != null && PRE.ID != "") {
-                                WriteStartTag("figure", "anchor", PRE.ID);
+                            if (PRE.GeneratedID != null && PRE.GeneratedID != "") {
+                                WriteStartTag("figure", "anchor", PRE.GeneratedID);
                                 }
                             else {
                                 WriteStartTag("figure");
@@ -234,7 +276,7 @@ namespace Goedel.Tool.RFCTool {
 
                         if (TextBlock.GetType() == typeof(Table)) {
                             Table Table = (Table)TextBlock;
-                            WriteStartTag("texttable ", "anchor", Table.ID);
+                            WriteStartTag("texttable ", "anchor", Table.GeneratedID);
 
                             for (int Row = 0; Row < Table.Rows.Count; Row++) {
                                 TableRow TableRow = Table.Rows[Row];
@@ -262,7 +304,7 @@ namespace Goedel.Tool.RFCTool {
 
         void WriteReferences(List<Reference> References) {
             foreach (Reference Reference in References) {
-                WriteStartTag("reference", "anchor", Reference.ID);
+                WriteStartTag("reference", "anchor", Reference.GeneratedID);
                 WriteStartTag("front");
                 WriteIfValueTag("title", Reference.Title);
                 WriteAuthors(Reference.Authors);

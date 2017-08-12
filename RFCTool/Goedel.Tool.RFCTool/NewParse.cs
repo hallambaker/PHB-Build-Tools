@@ -134,10 +134,11 @@ namespace Goedel.Tool.RFCTool {
                 }
 
 
-            private void TextListAdd (ref List<Text> TextList, List<XML> XMLList, TextMode TextMode, TextType TextType) {
+            //
+            private void TextListAdd (ref List<Text> TextList, List<XML> XMLList, TextMode TextMode) {
                 foreach (XML XML in XMLList) {
                     if (XML.GetType() == typeof(Element)) {
-                        Element Element = (Element)XML;
+                        Element Element = (Element)XML;  // This is broken. Need to use the new Text spans.
 
                         switch (Element.Tag.ToLower()) {
                             case "span": {
@@ -147,21 +148,21 @@ namespace Goedel.Tool.RFCTool {
                                 break;
                                 }
                             case "dfn": {
-                                TextListAdd(ref TextList, Element.Contents, TextMode, TextType.Definition);
+                                //TextListAdd(ref TextList, Element.Contents, TextMode, TextType.Definition);
                                 break;
                                 }
                             case "code":
                             case "kbd":
                             case "var": {
-                                TextListAdd(ref TextList, Element.Contents, TextMode, TextType.Keyboard);
+                                //TextListAdd(ref TextList, Element.Contents, TextMode, TextType.Keyboard);
                                 break;
                                 }
                             case "strong": {
-                                TextListAdd(ref TextList, Element.Contents, TextMode, TextType.Strong);
+                                //TextListAdd(ref TextList, Element.Contents, TextMode, TextType.Strong);
                                 break;
                                 }
                             case "em": {
-                                TextListAdd(ref TextList, Element.Contents, TextMode, TextType.Emphasis);
+                                //TextListAdd(ref TextList, Element.Contents, TextMode, TextType.Emphasis);
                                 break;
                                 }
                             default: {
@@ -187,7 +188,7 @@ namespace Goedel.Tool.RFCTool {
                 get {
                     List<Text> TextList = new List<Text>();
                     TextListAdd(ref TextList, Contents,
-                        (Tag == "pre") ? TextMode.Literal : TextMode.StripSpace, TextType.Plain);
+                        (Tag == "pre") ? TextMode.Literal : TextMode.StripSpace);
                     return TextList;
                     }
                 }
@@ -521,7 +522,7 @@ namespace Goedel.Tool.RFCTool {
 
         void MakeReference(Element Element) {
             Reference Reference = new Reference() {
-                ID = Element.Anchor
+                GeneratedID = Element.Anchor
                 };
 
             for (int Index = 0; Index < Element.Contents.Count; Index++) {
@@ -632,7 +633,7 @@ namespace Goedel.Tool.RFCTool {
                                 TableData TableData = new TableData() {
                                     IsHeading = true,
                                     Text = FilteredText,
-                                    ID = Element.Id
+                                    GeneratedID = Element.Id
                                     };
                                 TableRow.Data.Add(TableData);
                                 break;
@@ -641,7 +642,7 @@ namespace Goedel.Tool.RFCTool {
                                 TableData TableData = new TableData() {
                                     IsHeading = false,
                                     Text = FilteredText,
-                                    ID = Element.Id
+                                    GeneratedID = Element.Id
                                     };
                                 TableRow.Data.Add(TableData);
                                 break;

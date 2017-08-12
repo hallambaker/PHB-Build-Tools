@@ -126,7 +126,7 @@ namespace Goedel.Tool.RFCTool {
 
         public void WriteParagraphLI (LI LI) {
             WriteLine();
-            ListLevel.SetListLevel(LI.Level, LI.Type);
+            ListLevel.SetListLevel(LI.Level, LI.Type, LI.GeneratedID);
             switch (LI.Type) {
                 case BlockType.Data: {
                     TextWriter.WriteLine("<dd>{0}", LI.Text);
@@ -147,7 +147,7 @@ namespace Goedel.Tool.RFCTool {
 
         public void WriteTable (Table Table) {
 
-            TextWriter.WriteLine( "<table={0}>", Table.ID);
+            TextWriter.WriteLine( "<table={0}>", Table.GeneratedID);
             TextWriter.WriteLine("<thead>");
             TextWriter.WriteLine("<tr>");
             foreach (var Data in Table.Rows[0].Data) {
@@ -276,7 +276,8 @@ namespace Goedel.Tool.RFCTool {
                 foreach (TextBlock TextBlock in Document.Abstract) {
                     if (TextBlock.GetType() == typeof(P)) {
                         P P = (P)TextBlock;
-                        WriteParagraph(P.Text);
+                        WriteP(P);
+                        // ToDo - write out proper formatter here.
                         }
                     }
                 }
@@ -301,7 +302,7 @@ namespace Goedel.Tool.RFCTool {
                             ListLevel.ListLast();
                             if (TextBlock.GetType() == typeof(P)) {
                                 P P = (P)TextBlock;
-                                WriteParagraph(P.Text);
+                                WriteP(P);
                                 }
 
                             if (TextBlock.GetType() == typeof(PRE)) {
@@ -322,6 +323,13 @@ namespace Goedel.Tool.RFCTool {
                     }
                 }
             }
+
+        void WriteP (P P) {
+            if (P.Text != null) {
+                WriteParagraph(P.Text);
+                }
+            }
+
 
         void WriteAuthors(List<Author> Authors) {
             foreach (Author Author in Authors) {

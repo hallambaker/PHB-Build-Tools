@@ -23,8 +23,7 @@ namespace Goedel.Document.Markdown {
 
             PopLayoutAll();
 
-            List<Meta> MetaTags;
-            if (Document.MetaDataLookup("title", out MetaTags)) {
+            if (Document.MetaDataLookup("title", out var MetaTags)) {
                 Document.Title = MetaTags[0].Text;
                 Document.ShortTitle = Document.Title;
                 }
@@ -48,7 +47,9 @@ namespace Goedel.Document.Markdown {
 
         protected bool MatchInStack(Stack<Block> Stack, CatalogEntry Key) {
             foreach (var T in Stack) {
-                if (T.CatalogEntry == Key) return true;
+                if (T.CatalogEntry == Key) {
+                    return true;
+                    }
                 }
             return false;
             }
@@ -59,14 +60,18 @@ namespace Goedel.Document.Markdown {
                 }
             foreach (var Key in Keys) {
 
-                if (Stack.Peek().CatalogEntry == Key) return true;
+                if (Stack.Peek().CatalogEntry == Key) {
+                    return true;
+                    }
                 }
             return false;
             }
 
         protected bool MatchInStack(Stack<TextSegmentOpen> Stack, CatalogEntry Key) {
             foreach (var T in Stack) {
-                if (T.CatalogEntry == Key) return true;
+                if (T.CatalogEntry == Key) {
+                    return true;
+                    }
                 }
             return false;
             }
@@ -78,7 +83,9 @@ namespace Goedel.Document.Markdown {
 
         // Utility function for managing the Annotation stack
         protected TextSegmentOpen PopAnnotation() {
-            if (StackAnnotation.Count <= 0) return null;
+            if (StackAnnotation.Count <= 0) {
+                return null;
+                }
             var Top = StackAnnotation.Pop();
             //var Close = new Close(Top);
             //Document.Blocks.Add(Close);
@@ -106,7 +113,9 @@ namespace Goedel.Document.Markdown {
             }
 
         protected Block PopLayout() {
-            if (StackLayout.Count <= 0) return null;
+            if (StackLayout.Count <= 0) {
+                return null;
+                }
             var Top = StackLayout.Pop();
             var Close = new Close(Top);
             Document.Blocks.Add(Close);
@@ -145,7 +154,9 @@ namespace Goedel.Document.Markdown {
         protected void MakeEnclosure(CatalogEntry CatalogEntry) {
             PurgeStack(CatalogEntry);
 
-            if (CatalogEntry.Enclosure == null) return;
+            if (CatalogEntry.Enclosure == null) {
+                return;
+                }
             if (!MatchInStack(StackLayout, CatalogEntry.Enclosures)) {
                 MakeLayout(CatalogEntry.Enclosure, null);
                 CurrentBlock = null;
@@ -160,7 +171,9 @@ namespace Goedel.Document.Markdown {
                     return;
                     }
                 foreach (var Match in CatalogEntry.Enclosures) {
-                    if (Top.CatalogEntry == Match) return;
+                    if (Top.CatalogEntry == Match) {
+                        return;
+                        }
                     }
                 PopLayout();
                 }
@@ -182,8 +195,9 @@ namespace Goedel.Document.Markdown {
             MakeEnclosure(CurrentCatalogEntry);
 
             if (CurrentBlock == null) {
-                CurrentBlock = new Paragraph();
-                CurrentBlock.CatalogEntry = CurrentCatalogEntry;
+                CurrentBlock = new Paragraph() {
+                    CatalogEntry = CurrentCatalogEntry
+                    };
                 Document.Blocks.Add(CurrentBlock);
                 }
             CurrentCatalogEntry = TagCatalog.Defaults[0];
@@ -330,10 +344,11 @@ namespace Goedel.Document.Markdown {
             this.Document = Document;
             }
 
-        public static void Register() {
-            var ParseRegistryEntry = new ParseRegistryEntry();
-            ParseRegistryEntry.Include = Include;
-            ParseRegistryEntry.Parse = Parse;
+        public static void Register () {
+            var ParseRegistryEntry = new ParseRegistryEntry() {
+                Include = Include,
+                Parse = Parse
+                };
 
             ParseRegistry.Register(".md", ParseRegistryEntry);
             }

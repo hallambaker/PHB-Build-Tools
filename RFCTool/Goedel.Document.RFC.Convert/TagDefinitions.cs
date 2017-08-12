@@ -116,15 +116,36 @@ Class Goedel.MarkLib TagDefinitions
 			|Strikethrough
 		XML ""s"" ""class""
 
-	Annotation x
+
+	Annotation sub
+		Remark 
+			|Strikethrough
+		XML ""s"" ""class""
+
+	Annotation sup
+		Remark 
+			|Strikethrough
+		XML ""s"" ""class""
+
+	Annotation tt
 		Remark
 			|Code (monospaced) font
 		XML ""code"" ""class""
 
-	Annotation d
+	Annotation dfn
 		Remark
 			|Definition of a term
 		XML ""d"" ""class""
+
+	Annotation norm
+		Remark
+			|Normative BCP13 language
+		XML ""norm"" ""class""
+
+	Annotation cref
+		Remark
+			|remark
+		XML ""cref"" ""class""
 
 
 	Item img
@@ -154,6 +175,7 @@ Class Goedel.MarkLib TagDefinitions
 
 
 	Meta imgref
+	Meta figuresvg
 
 	Layout row
 		Markup ""<div class=\""row\"">"" ""<div class=\""row\"">"" ""</div>""
@@ -166,15 +188,13 @@ Class Goedel.MarkLib TagDefinitions
 	Meta series
 		Meta status
 		Meta stream
+		Meta version
 
 	Meta title
 	Meta abbrev
 	Meta consensus
-
 	Meta keyword
-	Meta version
 	Meta meta
-
 	Meta ipr
 	Meta workgroup
 
