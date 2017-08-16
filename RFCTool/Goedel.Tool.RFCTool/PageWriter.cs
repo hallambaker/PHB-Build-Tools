@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
 
 
     /// <summary>
@@ -17,7 +17,7 @@ namespace Goedel.Tool.RFCTool {
         static int HeaderMargin = 2;
         static int FooterMargin = 5;
 
-        public int LastLine { get { return MaxLine - FooterMargin; } }
+        public int LastLine { get => MaxLine - FooterMargin; } 
 
         public string HeaderLeft;
         public string HeaderCenter;
@@ -28,10 +28,10 @@ namespace Goedel.Tool.RFCTool {
         public string FooterRight;
 
         public int HeaderLine = 1;
-        public int FooterLine { get { return MaxLine - 1; } }
+        public int FooterLine { get => MaxLine - 1; } 
 
-        public int MustFillLine { 
-            get { return (MaxLine - FooterMargin - 10 ) ; } }  
+        public int MustFillLine {
+            get => (MaxLine - FooterMargin - 10 ) ; }  
 
         public int Line;
         public int Page;
@@ -98,7 +98,9 @@ namespace Goedel.Tool.RFCTool {
 
         static string FlushLeft(ref string Source, int Left, int Right) {
             string Text = Consume(ref Source, Right - Left);
-            if (Text == "") return "";
+            if (Text == "") {
+                return "";
+                }
 
             var Result = Padding(Left) + Text;
             if (Result.Length > 72) {
@@ -109,17 +111,23 @@ namespace Goedel.Tool.RFCTool {
             }
         static string Centered(ref string Source, int Left, int Right) {
             string Text = Consume(ref Source, Right - Left);
-            if (Text == "") return "";
+            if (Text == "") {
+                return "";
+                }
             return Padding(Left + ((Right - Text.Length) / 2)) + Text;
             }
         static string FlushRight(ref string Source, int Left, int Right) {
             string Text = Consume(ref Source, Right - Left);
-            if (Text == "") return "";
+            if (Text == "") {
+                return "";
+                }
             return Padding(Left + Right - Text.Length) + Text;
             }
 
         static bool IsWhitespace(char c) {
-            if (c == ' ') return true;
+            if (c == ' ') {
+                return true;
+                }
             return false;
             }
 
@@ -295,7 +303,9 @@ namespace Goedel.Tool.RFCTool {
         public void Write(string Source, int First, int Left, Format Format, 
                         int Above, int Below) {
 
-            if (Source == "") return; // nothing to write
+            if (Source == "") {
+                return; // nothing to write
+                }
 
             AddBlank(Above);
             DoBlank();
@@ -309,7 +319,9 @@ namespace Goedel.Tool.RFCTool {
                 case Format.Centered: Text = Centered(ref Source, First, Right); break;
                 }
 
-            if (Text == "") return; // nothing to write
+            if (Text == "") {
+                return; // nothing to write
+                }
 
             WriteLine(Text);
 
@@ -336,7 +348,9 @@ namespace Goedel.Tool.RFCTool {
 
             int Remaining = MaxCol - Result.Length - Right.Length - 2;
 
-            if (Remaining < 0) throw new Exception("Header or Footer won't fit");
+            if (Remaining < 0) {
+                throw new Exception("Header or Footer won't fit");
+                }
 
             int PadLeft = (MaxCol - Center.Length) / 2;
             if (PadLeft > Result.Length) {

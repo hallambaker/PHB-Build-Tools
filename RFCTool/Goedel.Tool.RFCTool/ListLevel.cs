@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Goedel.Utilities;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
 
 
     public class ListLevel {

@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using HT = Goedel.Tool.RFCTool;
+using HT = Goedel.Document.RFC;
+using GM = Goedel.Document.Markdown;
 
 namespace Goedel.Document.OpenXML {
-    public partial class MakeWord {
+    public partial class MakeWord : HT.MakeFormat {
         WordprocessingDocument Target;
         MainDocumentPart TargetMain;
         DocumentFormat.OpenXml.Wordprocessing.Document TargetDocument;
@@ -32,7 +33,7 @@ namespace Goedel.Document.OpenXML {
         const string StyleID_li = "li";
         const string StyleID_ni = "ni";
 
-        Goedel.Tool.RFCTool.Document Source;
+        Goedel.Document.RFC.Document Source;
 
         private void DumpNumber (StyleParagraphProperties st1) {
             if (st1 == null) {
@@ -51,7 +52,7 @@ namespace Goedel.Document.OpenXML {
 
 
 
-        private MakeWord (string Filename, Goedel.Tool.RFCTool.Document Source) {
+        private MakeWord (string Filename, Goedel.Document.RFC.Document Source) {
             this.Source = Source;
 
             //ReadTest();
@@ -64,7 +65,7 @@ namespace Goedel.Document.OpenXML {
                 }
             }
 
-        public static MakeWord FromHTML2RFC (string Filename, Goedel.Tool.RFCTool.Document Source) {
+        public static MakeWord FromHTML2RFC (string Filename, Goedel.Document.RFC.Document Source) {
             return new MakeWord(Filename, Source);
             }
 
@@ -80,40 +81,21 @@ namespace Goedel.Document.OpenXML {
             }
 
         private void AddText () {
-            WriteParagraph("title", Source.Title);
-            WriteParagraph("abbrev", Source.TitleAbrrev);
-
-            WriteMeta("ietf", Source.Docname);
-            WriteMeta("version", Source.Version);
-            WriteMeta("ipr", Source.Ipr);
-            WriteMeta("area", Source.Area);
-            WriteMeta("workgroup", Source.Workgroup);
-            //WriteMeta("publisher", Source.Publisher);
-            //WriteMeta("status", Source.Status);
-
-            WriteMeta("number", Source.Number);
-            WriteMeta("category", Source.Category);
-            WriteMeta("updates", Source.Updates);
-            WriteMeta("obsoletes", Source.Obsoletes);
-            WriteMeta("seriesnumber", Source.SeriesNumber);
-
-            WriteAuthors(Source.Authors);
-
-            foreach (var Keyword in Source.Keywords) {
-                WriteMeta("keyword", Keyword);
-                }
+            WriteHeader(Source);
 
             if (Source.Abstract.Count > 0) {
                 WriteHeading("Abstract", 1);
                 foreach (HT.TextBlock TextBlock in Source.Abstract) {
                     if (TextBlock.GetType() == typeof(HT.P)) {
                         var P = (HT.P)TextBlock;
-                        WriteParagraph(P.Text);
+                        WriteParagraph(P.Segments);
                         }
                     }
                 }
+
             WriteSections(Source.Middle, 1);
             WriteSections(Source.Back, 1);
+
             }
 
         public void WriteSections (List<HT.Section> Sections, int Level) {
@@ -127,27 +109,27 @@ namespace Goedel.Document.OpenXML {
                         if (TextBlock.GetType() == typeof(HT.LI)) {
                             var LI = (HT.LI)TextBlock;
                             if (LI.Type == HT.BlockType.Symbol) {
-                                WriteParagraph(StyleID_li, LI.Text);
+                                WriteParagraph(LI.Segments, StyleID_li);
                                 }
                             else if (LI.Type == HT.BlockType.Ordered) {
-                                WriteParagraph(StyleID_ni, LI.Text);
+                                WriteParagraph(LI.Segments, StyleID_ni);
                                 }
                             else if (LI.Type == HT.BlockType.Term) {
-                                WriteParagraph(StyleID_dt, LI.Text);
+                                WriteParagraph(LI.Segments, StyleID_dt);
                                 }
                             else if (LI.Type == HT.BlockType.Data) {
-                                WriteParagraph(StyleID_dd, LI.Text);
+                                WriteParagraph(LI.Segments, StyleID_dd);
                                 }
                             }
 
                         if (TextBlock.GetType() == typeof(HT.P)) {
                             var P = (HT.P)TextBlock;
-                            WriteParagraph(P.Text);
+                            WriteParagraph(P.Segments);
                             }
 
                         if (TextBlock.GetType() == typeof(HT.PRE)) {
                             var PRE = (HT.PRE)TextBlock;
-                            WriteParagraph(StyleID_pre, PRE.Text);
+                            WriteParagraph(PRE.Text, StyleID_pre);
                             }
 
                         if (TextBlock.GetType() == typeof(HT.Table)) {
@@ -178,21 +160,6 @@ namespace Goedel.Document.OpenXML {
             }
 
 
-        void WriteAuthors (List<HT.Author> Authors) {
-            foreach (var Author in Authors) {
-                WriteMeta("author", Author.Name);
-                WriteMeta("initials", Author.Initials, 1);
-                WriteMeta("organization", Author.Organization, 1);
-                WriteMeta("surname", Author.Surname, 1);
-                WriteMeta("phone", Author.Phone, 1);
-                WriteMeta("email", Author.Email, 1);
-                WriteMeta("uri", Author.URI, 1);
-                WriteMeta("street", Author.Street, 1);
-                WriteMeta("city", Author.City, 1);
-                WriteMeta("code", Author.Code, 1);
-                WriteMeta("country", Author.Country, 1);
-                }
-            }
 
         string[] Headings = {
             StyleID_title,
@@ -208,40 +175,76 @@ namespace Goedel.Document.OpenXML {
             Level = Level > 6 ? 6 : Level;
             var P = StartParagraph(Headings[Level]);
             var Run = P.AppendChild(new Run());
-            Run.AppendChild(new Text(Text));
+            Run.AppendChild(MakeTextRun(Text));
             }
 
+        public override void MakeMetaParagraph (string Style, string Text) {
+            WriteParagraph(Style, Text);
+            }
 
-        private void WriteParagraph (string Style, string Text) {
+        public void WriteParagraph (string Style, string Text) {
             var P = StartParagraph(Style);
             var Run = P.AppendChild(new Run());
-            Run.AppendChild(new Text(Text));
+            Run.AppendChild(MakeTextRun(Text));
             }
 
-        private void WriteParagraph (string Text) {
-            var P = StartParagraph("Normal");
+        Text MakeTextRun (string Text) {
+            return new Text() {
+                Text = Text,
+                Space = SpaceProcessingModeValues.Preserve
+                };
+
+            }
+
+
+        private void WriteParagraph (List<GM.TextSegment> Segments, string Style="Normal") {
+            var P = StartParagraph(Style);
             var Run = P.AppendChild(new Run());
-            Run.AppendChild(new Text(Text));
+
+            foreach (var Segment in Segments) {
+                switch (Segment) {
+                    case GM.TextSegmentText Text: {
+                        Run.AppendChild(MakeTextRun(Text.Text));
+                        break;
+                        }
+                    case GM.TextSegmentOpen Text: {
+                        break;
+                        }
+                    case GM.TextSegmentClose Text: {
+                        break;
+                        }
+                    case GM.TextSegmentEmpty Text: {
+                        break;
+                        }
+                    }
+                }           
             }
 
-        private void WriteMeta (string Tag, List<string> Texts) {
-            if (Texts == null) {
-                return;
-                }
-            foreach (var Text in Texts) {
-                WriteMeta(Tag, Text, 0);
-                }
-            }
-        private void WriteMeta (string Tag, string Text) {
-            WriteMeta(Tag, Text, 0);
-            }
 
-        private void WriteMeta (string Tag, string Text, int Indent) {
+
+
+
+        //private void WriteParagraph (string Text) {
+        //    var P = StartParagraph("Normal");
+        //    var Run = P.AppendChild(new Run());
+        //    Run.AppendChild(new Text(Text));
+        //    }
+
+
+
+
+        public override void MakeMeta (string Tag, string Text, int Indent=0) {
             if (Text == null) { return; }
 
             var P = StartParagraph(StyleID_meta);
             var Run = P.AppendChild(new Run());
-            Run.AppendChild(new Text("<" + Tag + ">" + Text));
+
+            var Pad = "";
+            for (var i = 0; i < Indent; i++) {
+                Pad = "    " + Pad;
+                }
+            Text = Pad + "<" + Tag + ">" + Text;
+            Run.AppendChild(MakeTextRun(Text));
             }
 
         private Paragraph StartParagraph (string Style) {

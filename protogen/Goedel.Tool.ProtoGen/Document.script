@@ -60,31 +60,17 @@
 #end method
 
 
-#method GenerateMD2 ProtoStruct ProtoStruct
-#% ProtoStruct.Complete ();
-#%  StartP = ""; EndP = "\n";
-#%  StartParamList = "";
-#%  EndParamList = "";
-#%  StartParam = ":"; MidParam = " :\n::"; EndParam = "\n"; EndParamBlock = "";
-#%  StartSection1 = "#"; MidSection1 = "\n"; EndSection1 = "";
-#%  StartSection2 = "##"; MidSection2 = "\n"; EndSection2 = "";
-#%  StartSection3 = "###"; MidSection3 = "\n"; EndSection3 = "";
-#%  StartTransaction = "*"; MidTransaction = "\n*"; EndTransaction="\n";
-#% AddComments = false;
-#call GenerateBody ProtoStruct
-#end method
-
 #method GenerateMD ProtoStruct ProtoStruct
 #% ProtoStruct.Complete ();
 #%  StartP = ""; EndP = "\n";
 #%  StartParamList = "";
 #%  EndParamList = "";
-#%  StartParam = ""; MidParam = ": "; EndParam = ""; EndParamBlock = "";
+#%  StartParam = "<dl><dt>"; MidParam = ": \n<dd>"; EndParam = "</dl>\n"; EndParamBlock = "";
 #%  StartSection1 = "#"; MidSection1 = "\n"; EndSection1 = "";
 #%  StartSection2 = "##"; MidSection2 = "\n"; EndSection2 = "";
 #%  StartSection3 = "###"; MidSection3 = "\n"; EndSection3 = "";
 #%  StartSection4 = "####"; MidSection4 = "\n"; EndSection4 = "";
-#%  StartTransaction = "*"; MidTransaction = "\n*"; EndTransaction="\n";
+#%  StartTransaction = "<ul>\n<li>"; MidTransaction = "\n<li>"; EndTransaction="\n</ul>";
 #% Sections = new string [,] {
 #%    {StartSection1, MidSection1, EndSection1},
 #%    {StartSection2, MidSection2, EndSection2},
@@ -152,13 +138,9 @@
 #end method
 
 #method MakeService Service Service
-SRV Prefix:
-
-:#{Service.Discovery}
-
-HTTP Well Known Service Prefix:
-
-:/.well-known/#{Service.WellKnown}
+#{StartParam}SRV Prefix#{MidParam}#{Service.Discovery}#{EndParam}
+#{StartParam}HTTP Well Known Service Prefix#{MidParam}/.well-known/#{Service.WellKnown}#{EndParam}
+#{EndParamBlock}
 
 #call DescriptionList Service.Entries
 #end method
@@ -186,7 +168,7 @@ Transaction: #{Transaction.Id}
 
 Request: #{Transaction.Request}
 
-Response:#{Transaction.Response}
+Response: #{Transaction.Response}
 #call MidSection 2
 #call DescriptionList Transaction.Entries
 #call EndSection 2
@@ -322,7 +304,7 @@ Response:#{Transaction.Response}
 #method DescriptionDD _Choice TEntry
 #switchcast ProtoStructType TEntry
 #casecast Description Description
-:#!
+
 #foreach (string s in Description.Text1)
 #{s}
 #end foreach

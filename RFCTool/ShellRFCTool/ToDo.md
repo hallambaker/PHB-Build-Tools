@@ -1,7 +1,39 @@
-﻿Bugs
-====
+﻿#Next Steps
 
-XML output - generate processing instructions.
+* Separate out XDown and Markdown inputs.
+
+* Publish/Edit modes for conversion [Don't include any generated texts in Edit]
+
+* Bookmarks/internal references.
+
+* XML2RFCv3 tools
+
+* Handling of AreaComplete, WorkingGroupComplete
+
+* Document the RFC tool
+
+* Support for tables across all input/output formats
+
+* Support for Xref across all input/output formats
+
+* Compile table of tables
+
+* Compile table of normative language
+
+* Compile index
+
+* Installer Windows
+
+* Installer Ubuntu
+
+* Allow different stylesheet name to be specified.
+
+* fix bibliography tag
+
+#Bugs
+
+
+
 
 Short documentation card
 

@@ -63,6 +63,7 @@
     <Compile Include="HTML2RFCSegments.cs" />
     <Compile Include="IndentWriter.cs" />
     <Compile Include="ListLevel.cs" />
+    <Compile Include="MakeFormat.cs" />
     <Compile Include="MD2RFCOut.cs" />
     <Compile Include="Html2RFCOut.cs" />
     <Compile Include="Merge.cs" />

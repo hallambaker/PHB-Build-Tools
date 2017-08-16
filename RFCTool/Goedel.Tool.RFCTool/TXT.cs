@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using GM = Goedel.Document.Markdown;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
     public partial class Writers {
 
         /// <summary>
@@ -200,11 +201,78 @@ namespace Goedel.Tool.RFCTool {
                 PageWriter.WriteLine(i+1 == Table.Rows.Count ? Rule1 : Rule2);
                 PageWriter.AddBreak(0);
                 }
-
-
-
             PageWriter.AddBlank(1);
             }
+
+        public void Write (GM.TextSegmentOpen Open) {
+            switch (Open.Tag) {
+                case "xref":
+                case "norm":
+                case "info": {
+                    //WriteStartTag("xref", "target", Open.Attributes?[0].Value);
+                    //if (Open.IsEmpty) {
+                    //    TextWriter.Write("[");
+                    //    TextWriter.Write(Open.Attributes?[0].Value);
+                    //    TextWriter.Write("]");
+                    //    }
+                    break;
+                    }
+                case "eref":
+                case "a": {
+                    //WriteStartTag("eref", "target", Open.Attributes?[0].Value);
+                    //if (Open.IsEmpty) {
+                    //    TextWriter.Write(Open.Attributes?[0].Value);
+                    //    }
+                    break;
+                    }
+                }
+            }
+
+        public void Write (GM.TextSegmentClose Close) {
+            switch (Close.Open.Tag) {
+                case "xref":
+                case "norm":
+                case "info": {
+                    //WriteEndTag("xref");
+                    break;
+                    }
+                case "eref":
+                case "a": {
+                    //WriteEndTag("eref");
+                    break;
+                    }
+                }
+            }
+
+        public string WriteToString (List<GM.TextSegment> Segments, string Hangtext = null) {
+            var Buffer = new StringBuilder();
+
+            if (Segments != null) {
+                foreach (var Segment in Segments) {
+                    switch (Segment) {
+                        case GM.TextSegmentText Text: {
+                            Buffer.Append(Text.Text);
+                            break;
+                            }
+                        case GM.TextSegmentOpen Text: {
+                            Write(Text);
+                            break;
+                            }
+                        case GM.TextSegmentClose Text: {
+                            Write(Text);
+                            break;
+                            }
+                        case GM.TextSegmentEmpty Text: {
+
+                            break;
+                            }
+                        }
+                    }
+                }
+            return Buffer.ToString();
+            }
+
+
 
         public void WriteParagraphs(List<TextBlock> Texts) {
             foreach (TextBlock TextBlock in Texts) {
@@ -213,7 +281,8 @@ namespace Goedel.Tool.RFCTool {
                     //TextWriter.WriteLine(P.Text);
                     //PageWriter.WriteLeft (P.Text, 4, 4, 71);
 
-                    PageWriter.Write(P.Text, 3, 3, PageWriter.Format.FlushLeft, 1, 1);
+                    var Text = WriteToString(P.Segments);
+                    PageWriter.Write(Text, 3, 3, PageWriter.Format.FlushLeft, 1, 1);
                     }
 
                 if (TextBlock.GetType() == typeof(PRE)) {
@@ -230,7 +299,9 @@ namespace Goedel.Tool.RFCTool {
 
                 if (TextBlock.GetType() == typeof(LI)) {
                     LI LI = (LI)TextBlock;
-                    int First = 0, Left = 0, Above = 0, Below = 0; string Text = LI.Text; bool Break = true;
+                    var Text = WriteToString(LI.Segments);
+
+                    int First = 0, Left = 0, Above = 0, Below = 0; bool Break = true;
                     if (LI.Type == BlockType.Symbol) {
                         PageWriter.AllowBreak = true;
                         First = 6 + (LI.Level * 3);

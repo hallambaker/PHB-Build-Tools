@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Goedel.Utilities;
+using GM=Goedel.Document.Markdown;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
 
     public partial class Writers {
 
@@ -30,7 +32,7 @@ namespace Goedel.Tool.RFCTool {
 
         }
 
-    public class WriteMD {
+    public class WriteMD : MakeFormat {
         TextWriter TextWriter;
         int Width = 72;
 
@@ -126,19 +128,19 @@ namespace Goedel.Tool.RFCTool {
 
         public void WriteParagraphLI (LI LI) {
             WriteLine();
-            ListLevel.SetListLevel(LI.Level, LI.Type, LI.GeneratedID);
+            ListLevel.SetListLevel(LI.Level-1, LI.Type, LI.GeneratedID);
             switch (LI.Type) {
                 case BlockType.Data: {
-                    TextWriter.WriteLine("<dd>{0}", LI.Text);
+                    Write(LI.Segments, "<dd>");
                     break;
                     }
                 case BlockType.Term: {
-                    TextWriter.WriteLine("<dt>{0}", LI.Text);
+                    Write(LI.Segments, "<dt>");
                     break;
                     }
                 case BlockType.Ordered: 
                 case BlockType.Symbol: {
-                    TextWriter.WriteLine("<li>{0}", LI.Text);
+                    Write(LI.Segments, "<li>");
                     break;
                     }
                 }
@@ -176,10 +178,6 @@ namespace Goedel.Tool.RFCTool {
         public void WriteMetaStart(string Tag, string Value) {
             TextWriter.Write("<");
             TextWriter.Write(Tag);
-            //if (Value != null) {
-            //    TextWriter.Write("=");
-            //    TextWriter.Write(Value);
-            //    }
             }
 
         // for flag attributes where the tag is a boolean
@@ -210,21 +208,8 @@ namespace Goedel.Tool.RFCTool {
             TextWriter.WriteLine();
             }
 
-        public void WriteMeta(string Tag, string Value) {
-            WriteMeta(Tag, Value, 0);
-            }
 
-        public void WriteMeta (string Tag, List<string> Values) {
-            if (Values == null) {
-                return;
-                }
-            foreach (var Value in Values) {
-                WriteMeta(Tag, Value, 0);
-                }
-            }
-
-
-        public void WriteMeta(string Tag, string Value, int Indent) {
+        public override void MakeMeta(string Tag, string Value, int Indent=0) {
             if (Value != null) {
                 for (var i = 0; i < Indent; i++) {
                     TextWriter.Write("    ");
@@ -244,32 +229,9 @@ namespace Goedel.Tool.RFCTool {
             TextWriter.Write("// This file was converted using RFCTool");
             WriteLine();
 
-            WriteMeta("ietf",       Document.Docname);
-            WriteMeta("title", Document.Title);
-            WriteMeta("abbrev", Document.TitleAbrrev);
-            WriteMeta("version", Document.Version);
+            WriteHeader(Document);
+
             WriteLine();
-
-            WriteMeta("ipr", Document.Ipr);
-            WriteMeta("area", Document.Area);
-            WriteMeta("workgroup", Document.Workgroup);
-            //WriteMeta("publisher", Document.Publisher);
-            //WriteMeta("status", Document.Status);
-            WriteLine();
-
-            WriteMeta("number", Document.Number);
-            WriteMeta("category", Document.Category);
-            WriteMeta("updates", Document.Updates);
-            WriteMeta("obsoletes", Document.Obsoletes);
-            WriteMeta("seriesnumber", Document.SeriesNumber);
-
-            WriteAuthors(Document.Authors);
-            WriteLine();
-
-            foreach (var Keyword in Document.Keywords) {
-                WriteMeta("keyword", Keyword);
-                }
-
 
             if (Document.Abstract.Count > 0) {
                 WriteHeading("Abstract", 1);
@@ -324,28 +286,74 @@ namespace Goedel.Tool.RFCTool {
                 }
             }
 
-        void WriteP (P P) {
-            if (P.Text != null) {
-                WriteParagraph(P.Text);
+
+        public void Write (List<GM.TextSegment> Segments, string Tag=null) {
+            var Buffer = new StringBuilder();
+
+            if (Segments == null) {
+                return;
                 }
+            if (Tag != null) {
+                Buffer.Append(Tag);
+                }
+
+            foreach (var Segment in Segments) {
+                switch (Segment) {
+                    case GM.TextSegmentText Text: {
+                        Buffer.Append(Text.Text);
+                        break;
+                        }
+                    case GM.TextSegmentOpen Open: {
+                        Buffer.Append("<");
+                        bool First = true;
+                        foreach (var Attribute in Open.Attributes) {
+                            if (!First) {
+                                Buffer.Append(" ");
+                                }
+                            First = true;
+                            Buffer.Append(Attribute.Tag);
+                            if (Attribute.Value != null) {
+                                Buffer.Append("=\"");
+                                Buffer.Append(Attribute.Value);
+                                Buffer.Append("\"");
+                                }
+                            }
+                        if (Open.IsEmpty) {
+                            Buffer.Append("/");
+                            }
+                        Buffer.Append(">");
+                        //Write(Text);
+                        break;
+                        }
+                    case GM.TextSegmentClose Text: {
+                        var Open = Text.Open;
+                        if (!Open.IsEmpty) {
+                            Buffer.Append("</");
+                            Buffer.Append(Open.Tag);
+                            Buffer.Append(">");
+                            }
+
+                        //Write(Text);
+                        break;
+                        }
+                    case GM.TextSegmentEmpty Text: {
+                        //WriteElement(Text.Tag);
+                        break;
+                        }
+                    }
+                }
+            TextWriter.WriteLine(Buffer.ToString().Wrap());
+
             }
 
 
-        void WriteAuthors(List<Author> Authors) {
-            foreach (Author Author in Authors) {
-                WriteMeta("author", Author.Name);
-                WriteMeta("initials", Author.Initials, 1);
-                WriteMeta("organization", Author.Organization, 1);
-                WriteMeta("surname", Author.Surname, 1);
-                WriteMeta("phone", Author.Phone, 1);
-                WriteMeta("email", Author.Email, 1);
-                WriteMeta("uri", Author.URI, 1);
-                WriteMeta("street", Author.Street, 1);
-                WriteMeta("city", Author.City, 1);
-                WriteMeta("code", Author.Code, 1);
-                WriteMeta("country", Author.Country, 1);
+        public void WriteP (P P) {
+            TextWriter.WriteLine();
+            if (P == null) {
+                return;
                 }
-            }
 
+            Write(P.Segments);
+            }
         }
     }

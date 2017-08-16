@@ -3,7 +3,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using Goedel.Registry;
-using Goedel.Tool.RFCTool;
+using Goedel.Document.RFC;
 using MakeRFC;
 using BridgeLib;
 using GM = Goedel.Document.Markdown;

@@ -15,12 +15,18 @@
 </address>
 </author>
 <date day="12" month="August" year="2017"/>
+<area/>
+<workgroup/>
 <keyword>Naming</keyword>
 <keyword>Mathematical Mesh</keyword>
 <keyword>Authentication</keyword>
 <abstract>
-<t/>
-<t/>
+<t>
+The importance of naming in information systems is explained with reference to a typical use case. Existing Internet naming systems attempt to strike a balance between usability and machine readability. An alternative approach in which separate classes of identifiers are introduced for human and machine interaction is described. Human Interaction Identifiers are interpreted in the context in which they are used and are thus more compact and offer a superior user experience. Strong Internet Names are a form of Machine Interaction Identifier that are backwards compatible with existing Internet names that include a DNS address and are cryptographically bound to a security policy governing interpretation. The application of these approaches in the Mathematical Mesh is described.</t>
+<t>
+This document is also available online at <eref target="http://prismproof.org/Documents/draft-hallambaker-mesh-naming.html">
+http://prismproof.org/Documents/draft-hallambaker-mesh-naming.html</eref>
+.</t>
 </abstract>
 </front>
 <middle>
@@ -37,6 +43,14 @@ It all works so much better in Hollywood.</t>
 An extremely wealthy real-world Alice being followed by a minibus containing a road crew of a half dozen IT support staff might possibly be able to create a similar user experience today but even that is doubtful. Instead of taking pictures of the Golden Gate bridge at sunset, Real-world Alice is far more likely to find herself at the side of the road debugging Perl scripts or more likely, turning all the ?labor-saving? technology off because it simply isn?t worth the hassle. We have all the parts but they just don?t fit together properly and even when they appear to be joined, they often come apart. A ?seamless user experience? that isn?t actually seamless makes things worse, not better.</t>
 <t>
 There are many reasons that the scenario described above remains a pipe dream, not least the commercial interests of the technology providers. But one of the biggest obstacles to providing the seamless integration experienced by Hollywood Alice is the lack of a secure naming infrastructure. Providing Alice with a seamless user experience required seven data exchanges and ten trust relationships. </t>
+<figure>
+<preamble>
+[[This figure is not viewable in this format. The figure is available at <eref target="http://prismproof.org/Documents/draft-hallambaker-mesh-naming.html">http://prismproof.org/Documents/draft-hallambaker-mesh-naming.html</eref>.]]</preamble>
+<artwork>
+</artwork>
+<postamble>
+Information flows in the Hollywood Alice scenario.</postamble>
+</figure>
 <t>
 The only infrastructures currently capable of managing those trust relationships would require Alice to be in constant communication with some form of ?identity provider? and to surrender a large part of her personal control to that infrastructure. </t>
 <t>
@@ -51,7 +65,9 @@ In the field of semiotics, a name is a symbol whose meaning is purely convention
 <t>
 Since a name is merely the result of an agreement, any naming scheme must be governed by an authority, even if that authority is just the one person who uses the names. The question of authority is thus an inescapable one when considering the security properties of naming schemes. </t>
 <t>
-One of the core technologies that made the World Wide Web possible was the realization that the means to resolve any network resource may be specified by means of a triple, {what, where, how}. The Uniform Resource Locator (URL)  is simply a syntax for expressing this triple in a single identifier: how://where/what. It seems intuitively obvious that whether these are expressed as one single unit or three ?should? make no difference. But the lightning success of the World Wide Web proves that combining all the information necessary into a single identifier makes all the difference in the world.</t>
+One of the core technologies that made the World Wide Web possible was the realization that the means to resolve any network resource may be specified by means of a triple, {what, where, how}. The Uniform Resource Locator (URL) <xref target="RFC3986">
+[RFC3986]</xref>
+ is simply a syntax for expressing this triple in a single identifier: how://where/what. It seems intuitively obvious that whether these are expressed as one single unit or three ?should? make no difference. But the lightning success of the World Wide Web proves that combining all the information necessary into a single identifier makes all the difference in the world.</t>
 <t>
 While a URL contains a name component, it is not a pure name: The interpretation of the where component is intersubjectively determined by the choice of ICANN as the ultimate DNS naming authority, the interpretation of what and how is determined by the protocol specifications. Different users attempting to resolve http://example.com/ in different parts of the world may not receive back the same exact sequence of bytes but provided they are connected to ?the Internet? they should receive back a representation of the same ?network resource?. </t>
 <t>
@@ -82,7 +98,9 @@ The identifiers we use in the Internet today represent a compromise between expr
 </section>
 <section title="Identifiers in the Mathematical Mesh." anchor="s-2">
 <t>
-The Mathematical Mesh  is a PPKI that manages two types of identifies: Human-Interaction identifiers which are primarily designed to support human interaction and Machine- Interaction identifiers which are primarily designed to support interactions between machines.</t>
+The Mathematical Mesh <xref target="draft-hallambaker-mesh-architecture">
+[draft-hallambaker-mesh-architecture]</xref>
+ is a PPKI that manages two types of identifies: Human-Interaction identifiers which are primarily designed to support human interaction and Machine- Interaction identifiers which are primarily designed to support interactions between machines.</t>
 <t>
 As we saw in the previous section, these categories are not necessarily exclusive. Most of Internet names used on the Internet today were designed to provide a compromise between human and machine interactions. Such a compromise is not practical in a cryptographic infrastructure such as the Mesh since there is really no way to make an identifier that presents a cryptographic work factor of 2118 or better human friendly except by mapping it to another identifier designed for human use.</t>
 <t>
@@ -101,7 +119,9 @@ An output identifier that is used only to determine if two things are the same. 
 <t>
 Depending on the circumstances in which the identifiers are used, it is generally desirable that input identifiers be as compact as possible while output identifiers may provide more information. If Bob receives the conference request from Carol on his smartphone it is probably desirable for the display to present both the shortcut identifier from his personal contact directory ?Alice? and her full personal name ?Alice Cryptographer?.</t>
 <t>
-While most identifier forms used for input (text, voice) may also be used for output, the reverse is not true. A validated image of a subject?s trademark, as supported by the PKIX logotype extension  provides a powerful means of telling a user which party operates the site they are visiting but would be highly impractical as an input format.</t>
+While most identifier forms used for input (text, voice) may also be used for output, the reverse is not true. A validated image of a subject?s trademark, as supported by the PKIX logotype extension <xref target="RFC3709">
+[RFC3709]</xref>
+ provides a powerful means of telling a user which party operates the site they are visiting but would be highly impractical as an input format.</t>
 <t>
 The Mathematical Mesh makes use of three different types of human-interaction identifier:</t>
 <t><list style="hanging">
@@ -147,21 +167,47 @@ The use of SINs in Mesh enabled applications closely resembles the use of DNS na
 <t>
 To make use of a Human Interaction Identifier, it must be first mapped to Machine Interaction identifier. We consider this mapping to be secure if and only if this translation meets the good-faith expectations of the user. If a user encounters a Human Interaction identifier that leads the user to reasonably expect that they will be interacting with their bank, this expectation must be met or a serious security vulnerability is created. </t>
 <t>
-The terms ?reasonable expectation? and ?good-faith? are of course subjective but not entirely without meaning. The various financial institutions that support the use of non-cash payments in the US operate under rules that absolve the user from blame or loss in almost any circumstance but nevertheless manage to profitably transfer an average of over $500 billion every day .</t>
+The terms ?reasonable expectation? and ?good-faith? are of course subjective but not entirely without meaning. The various financial institutions that support the use of non-cash payments in the US operate under rules that absolve the user from blame or loss in almost any circumstance but nevertheless manage to profitably transfer an average of over $500 billion every day <xref target="FedRes2016">
+[FedRes2016]</xref>
+.</t>
 <t>
 The Mesh does not impose a model for mapping human to machine interaction identifiers but it does allow the user to put that mapping under their personal control. Devices connected to a Mesh Personal Profile share the same view of the world; the same set of bookmarks and contacts for defining personal names and the same set of trust roots for Certification Authorities trusted to provide brokered trust.</t>
 <t>
 In the existing model, mapping of the address https://example.com/ to a secure TLS endpoint takes place in two stages. First the DNS infrastructure is used to resolve the address example.com to an IP address. Next, the client begins making a connection to the host at the specified IP address, receives and validates a PKIX trust chain to a recognized authority and if satisfactory, declares the TLS connection trusted:</t>
+<figure>
+<preamble>
+[[This figure is not viewable in this format. The figure is available at <eref target="http://prismproof.org/Documents/draft-hallambaker-mesh-naming.html">http://prismproof.org/Documents/draft-hallambaker-mesh-naming.html</eref>.]]</preamble>
+<artwork>
+</artwork>
+<postamble>
+Traditional Internet discovery</postamble>
+</figure>
 <t>
 This approach is serviceable for the intended purpose of the WebPKI: Authenticating the Web sites that the user interacts with. It is less satisfactory as the basis for establishing connections in the Hollywood Alice scenario.</t>
 <t>
 One of the biggest problems with the traditional approach is that TLS is only used to authenticate the server to the client. The user experience for client certificates remains unacceptable leaving usernames and passwords as the only available credentialing mechanism.</t>
 <t>
 Consider the role of the camera in the Hollywood Alice scenario. Alice uses the camera to take pictures but this is only one of four interactions involving the camera. If we are to achieve the Hollywood Alice user experience, these other three interactions must take place without any intervention by Alice. But this is impossible if Alice is required to constantly enter passwords.</t>
+<figure>
+<preamble>
+[[This figure is not viewable in this format. The figure is available at <eref target="http://prismproof.org/Documents/draft-hallambaker-mesh-naming.html">http://prismproof.org/Documents/draft-hallambaker-mesh-naming.html</eref>.]]</preamble>
+<artwork>
+</artwork>
+<postamble>
+Information flows involving Alice's DLSR</postamble>
+</figure>
 <t>
 Another limitation of this approach is that the naming role of the Certificate Authority is limited to validating DNS names. This is a major constraint if our goal is moving beyond use of DNS for naming.</t>
 <t>
 To achieve a satisfactory user experience, we need to reverse the order of operations. We make use of trusted authorities when mapping the human interaction identifier to a machine interaction identifier whose interpretation does not depend on a trusted authority. </t>
+<figure>
+<preamble>
+[[This figure is not viewable in this format. The figure is available at <eref target="http://prismproof.org/Documents/draft-hallambaker-mesh-naming.html">http://prismproof.org/Documents/draft-hallambaker-mesh-naming.html</eref>.]]</preamble>
+<artwork>
+</artwork>
+<postamble>
+Use as Trusted Authorities as Introducers.</postamble>
+</figure>
 <t>
 The most important trusted authority for Alice is of course, Alice herself. While a typical Web user may visit hundreds or even thousands of different Web sites in a month, they will only buy from a rather smaller number and will in most cases use one or two financial institutions.</t>
 <t>
@@ -176,10 +222,16 @@ A Strong Internet Name (SIN) is a name containing a DNS label that is cryptograp
 <t>
 The use of fingerprints of cryptographic keys to establish was introduced in PGP. PGP fingerprints provide a secure means of authenticating the public key(s) of an email user but at the cost of introducing a second identifier for each user that senders must manage in addition to their email address. Like many issues in computing, this is a simple matter until faced with application software that does not support it.</t>
 <t>
-Use of a SIN DNS label permits these two pieces of information to be combined in a single identifier that is compliant with existing application software by employing the DNS prefix approach introduced by punycode . It is established that DNS names of the form xx--&lt;data&gt; (where x is any alphabetic character) are reserved. A SIN DNS label has the form mm--&lt;UDF-of-policy&gt; where &lt;UDF-of-policy&gt; is the Uniform Data Fingerprint (UDF) of the controlling security policy as described in the following section.</t>
+Use of a SIN DNS label permits these two pieces of information to be combined in a single identifier that is compliant with existing application software by employing the DNS prefix approach introduced by punycode <xref target="RFC3492">
+[RFC3492]</xref>
+. It is established that DNS names of the form xx--&lt;data&gt; (where x is any alphabetic character) are reserved. A SIN DNS label has the form mm--&lt;UDF-of-policy&gt; where &lt;UDF-of-policy&gt; is the Uniform Data Fingerprint (UDF) of the controlling security policy as described in the following section.</t>
 <section title="UDF Fingerprint" anchor="s-3_1">
 <t>
-The Uniform Data Fingerprint (UDF) format  was designed to provide common format for representing fingerprints of data objects formed using a cryptographic digest function such as SHA-2 that was easier on the eye than existing URI schemes such as ni . A UDF fingerprint is formed using Base32 with optional digit separators to improve readability. The following is an example of a UDF:</t>
+The Uniform Data Fingerprint (UDF) format <xref target="draft-hallambaker-udf">
+[draft-hallambaker-udf]</xref>
+ was designed to provide common format for representing fingerprints of data objects formed using a cryptographic digest function such as SHA-2 that was easier on the eye than existing URI schemes such as ni <xref target="RFC6920">
+[RFC6920]</xref>
+. A UDF fingerprint is formed using Base32 with optional digit separators to improve readability. The following is an example of a UDF:</t>
 <figure anchor="s-3_1-2">
 <artwork>
 <![CDATA[MB2GK-6DUF5-YGYYL-JNY5E-RWSHZ-SV75J]]></artwork>
@@ -247,13 +299,16 @@ _submit._tcp   SRV 0 1 465 \
            smtp.example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz.]]></artwork>
 </figure>
 <t>
-Since the fingerprint mb2gk- is of a PKIX certificate signing certificate, the requirement to use TLS is explicit. This could be specified explicitly by means of a prefixed TXT record as described in .</t>
+Since the fingerprint mb2gk- is of a PKIX certificate signing certificate, the requirement to use TLS is explicit. This could be specified explicitly by means of a prefixed TXT record as described in <xref target="RFC6763">
+[RFC6763]</xref>
+.</t>
 <t>
 For example, Alice is a user of the EXAMPLE service, a version management system used at Example Inc. This is a Web Service described by an SRV record as follows:</t>
 <figure anchor="s-3_3-5">
 <artwork>
 <![CDATA[$origin example.com
-_example._tcp  TXT "tls=mb2gk-6duf5-ygyyl-jny5e-rwshz;min=1.2;max=1.3"
+_example._tcp  TXT \
+           "tls=mb2gk-6duf5-ygyyl-jny5e-rwshz;min=1.2;max=1.3"
 _example._tcp  SRV 0 1 443 host1.example.com
 _example._tcp  SRV 0 1 443 host2.example.com
 _example._tcp.host1 TXT \
@@ -264,7 +319,11 @@ Since the UDF fingerprint is used here as a parameter rather than as an embedded
 <t>
 In this example, there are two separate TXT records describing the EXAMPLE service. The first record applies to all hosts that provide the EXAMPLE service and specifies a PKIX intermediary certificate under which the TLS certificate MUST validate if it is to be accepted. The second TXT record applies only to host1 and contains additional information specific to that host. In this case host1 offers the quic protocol but host2 does not. </t>
 <t>
-It will be noted that this capability allows similar capabilities to the security policy capabilities provided by TLSA records , but in a form that is directly integrated into SRV discovery and offers greater flexibility. A Security Policy specified in a TXT record is not limited to the TLS protocol or even to TLS based key exchanges. The discovery mechanism described in  has proven utility and is widely used. It is surely time to recognize this fact and back the winner rather than continuing to ignore it for the sake of a favored son.</t>
+It will be noted that this capability allows similar capabilities to the security policy capabilities provided by TLSA records <xref target="RFC6698">
+[RFC6698]</xref>
+, but in a form that is directly integrated into SRV discovery and offers greater flexibility. A Security Policy specified in a TXT record is not limited to the TLS protocol or even to TLS based key exchanges. The discovery mechanism described in <xref target="RFC6763">
+[RFC6763]</xref>
+ has proven utility and is widely used. It is surely time to recognize this fact and back the winner rather than continuing to ignore it for the sake of a favored son.</t>
 <t>
 The previous examples demonstrated the use of SINs to perform high level, site wide administration tasks. But the security policy specified in a SIN need not be limited to defining a site wide global root of trust. The following configuration file is used in a robotics project to authenticate command signals between the central controller and various control outputs:</t>
 <figure anchor="s-3_3-10">
@@ -327,7 +386,9 @@ This omission is intentional as there are many circumstances in which we would w
 <t>
 When a synchronous protocol such as VOIP or chat is used, the security policy governing a SIN may be disclosed in-band during the protocol exchange in which the underlying DNS name is used. This approach does not work as well for asynchronous protocols such as email or for network administration.</t>
 <t>
-The Mathematical Mesh provides one possible infrastructure that might be used to resolve SINs to the corresponding security policy, and using a linked notary log approach (aka Blockchain), a mechanism for publishing updates securely. It is not the only infrastructure that might be used, nor is it likely to be the best for every application. For example, a new machine connecting to an enterprise network for the first time might obtain its initial security policy through a DNS CERT record .</t>
+The Mathematical Mesh provides one possible infrastructure that might be used to resolve SINs to the corresponding security policy, and using a linked notary log approach (aka Blockchain), a mechanism for publishing updates securely. It is not the only infrastructure that might be used, nor is it likely to be the best for every application. For example, a new machine connecting to an enterprise network for the first time might obtain its initial security policy through a DNS CERT record <xref target="RFC4398">
+[RFC4398]</xref>
+.</t>
 </section>
 </section>
 <section title="Personal Mesh" anchor="s-4">
@@ -413,7 +474,9 @@ No security infrastructure is invulnerable. Given infinite computing resources, 
 <t>
 Unfortunately, the cryptography used in a security system is rarely the weakest link. Thus, when considering systems rather than algorithms, an estimate of cost (i.e. in dollars or other currency) is more informative. The architecture of the WebPKI was originally developed using a work factor based on the estimated cost of obtaining a false credential and the expected criminal gain. Deterrence is achieved when the apparent cost is greater than the apparent gain.</t>
 <t>
-As noted in a previous paper , linked notary log technology (aka Blockchain) makes the cost of a backdating attack, near infinite. This property may be used to advantage in developing a naming infrastructure. </t>
+As noted in a previous paper <xref target="draft-hallambaker-prismproof-trust">
+[draft-hallambaker-prismproof-trust]</xref>
+, linked notary log technology (aka Blockchain) makes the cost of a backdating attack, near infinite. This property may be used to advantage in developing a naming infrastructure. </t>
 </section>
 <section title="Authority" anchor="s-6_3">
 <t>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
     public class SourceFile {
         //string          Filename;
         //int             Start;
@@ -88,7 +88,9 @@ namespace Goedel.Tool.RFCTool {
             }
 
         private Tokens GetToken(int t) {
-            if (t < 0) return Tokens.Any;
+            if (t < 0) {
+                return Tokens.Any;
+                }
             char c = (char)t;
 
             switch (c) {
@@ -103,8 +105,12 @@ namespace Goedel.Tool.RFCTool {
                 case '\r': return Tokens.WS;
                 }
 
-            if ((c >= 'a') & (c <= 'z')) return Tokens.Alpha;
-            if ((c >= 'A') & (c <= 'Z')) return Tokens.Alpha;
+            if ((c >= 'a') & (c <= 'z')) {
+                return Tokens.Alpha;
+                }
+            if ((c >= 'A') & (c <= 'Z')) {
+                return Tokens.Alpha;
+                }
             return Tokens.Any;
             }
 
@@ -259,17 +265,15 @@ namespace Goedel.Tool.RFCTool {
             }
         
         List<StreamHandle> StreamHandles = new List<StreamHandle> ();
-        StreamHandle CurrentHandle { get { return StreamHandles[StreamHandles.Count - 1]; } }
+        StreamHandle CurrentHandle { get => StreamHandles[StreamHandles.Count - 1]; } 
 
-        public int LineNumber { get { return CurrentHandle.LineNumber; } }
-        public int LinePosition { get { return CurrentHandle.LinePosition; } }
-        public string FileName { get { return CurrentHandle.FileName; } }
+        public int LineNumber { get => CurrentHandle.LineNumber; } 
+        public int LinePosition { get => CurrentHandle.LinePosition; } 
+        public string FileName { get => CurrentHandle.FileName; } 
 
         public string position {
-            get {
-                return String.Format("Line {0} Position {1} of {2}",
+            get => String.Format("Line {0} Position {1} of {2}",
                     LineNumber, LinePosition, FileName);
-                }
             }
 
         public FileReader2(string FileName) {
@@ -277,7 +281,9 @@ namespace Goedel.Tool.RFCTool {
             }
 
         private bool CheckEOS() {
-            if (StreamHandles.Count == 0) return true;
+            if (StreamHandles.Count == 0) {
+                return true;
+                }
 
             if (CurrentHandle.StreamReader.EndOfStream) {
                 StreamHandles.RemoveAt(StreamHandles.Count - 1);
@@ -286,12 +292,16 @@ namespace Goedel.Tool.RFCTool {
             }
 
         public override int Peek() {
-            if (CheckEOS()) return -1;
+            if (CheckEOS()) {
+                return -1;
+                }
             throw new Exception ("Internal XML Parser error");
             }
 
         public override int Read() {
-            if (CheckEOS()) return -1;
+            if (CheckEOS()) {
+                return -1;
+                }
 
             int c = CurrentHandle.StreamReader.Read();
             if (c == '\n') {
@@ -303,7 +313,7 @@ namespace Goedel.Tool.RFCTool {
                 }
 
             if (c > 1) {
-                Console.Write((char) c);
+                //Console.Write((char) c);
                 }
 
             return c;

@@ -87,24 +87,6 @@ namespace Goedel.Tool.ProtoGen {
 		
 
 		//
-		// GenerateMD2
-		//
-		public void GenerateMD2 (ProtoStruct ProtoStruct) {
-			 ProtoStruct.Complete ();
-			  StartP = ""; EndP = "\n";
-			  StartParamList = "";
-			  EndParamList = "";
-			  StartParam = ":"; MidParam = " :\n::"; EndParam = "\n"; EndParamBlock = "";
-			  StartSection1 = "#"; MidSection1 = "\n"; EndSection1 = "";
-			  StartSection2 = "##"; MidSection2 = "\n"; EndSection2 = "";
-			  StartSection3 = "###"; MidSection3 = "\n"; EndSection3 = "";
-			  StartTransaction = "*"; MidTransaction = "\n*"; EndTransaction="\n";
-			 AddComments = false;
-			GenerateBody (ProtoStruct);
-			}
-		
-
-		//
 		// GenerateMD
 		//
 		public void GenerateMD (ProtoStruct ProtoStruct) {
@@ -112,12 +94,12 @@ namespace Goedel.Tool.ProtoGen {
 			  StartP = ""; EndP = "\n";
 			  StartParamList = "";
 			  EndParamList = "";
-			  StartParam = ""; MidParam = ": "; EndParam = ""; EndParamBlock = "";
+			  StartParam = "<dl><dt>"; MidParam = ": \n<dd>"; EndParam = "</dl>\n"; EndParamBlock = "";
 			  StartSection1 = "#"; MidSection1 = "\n"; EndSection1 = "";
 			  StartSection2 = "##"; MidSection2 = "\n"; EndSection2 = "";
 			  StartSection3 = "###"; MidSection3 = "\n"; EndSection3 = "";
 			  StartSection4 = "####"; MidSection4 = "\n"; EndSection4 = "";
-			  StartTransaction = "*"; MidTransaction = "\n*"; EndTransaction="\n";
+			  StartTransaction = "<ul>\n<li>"; MidTransaction = "\n<li>"; EndTransaction="\n</ul>";
 			 Sections = new string [,] {
 			    {StartSection1, MidSection1, EndSection1},
 			    {StartSection2, MidSection2, EndSection2},
@@ -233,13 +215,9 @@ namespace Goedel.Tool.ProtoGen {
 		// MakeService
 		//
 		public void MakeService (Service Service) {
-			_Output.Write ("SRV Prefix:\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write (":{1}\n{0}", _Indent, Service.Discovery);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("HTTP Well Known Service Prefix:\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write (":/.well-known/{1}\n{0}", _Indent, Service.WellKnown);
+			_Output.Write ("{1}SRV Prefix{2}{3}{4}\n{0}", _Indent, StartParam, MidParam, Service.Discovery, EndParam);
+			_Output.Write ("{1}HTTP Well Known Service Prefix{2}/.well-known/{3}{4}\n{0}", _Indent, StartParam, MidParam, Service.WellKnown, EndParam);
+			_Output.Write ("{1}\n{0}", _Indent, EndParamBlock);
 			_Output.Write ("\n{0}", _Indent);
 			DescriptionList (Service.Entries);
 			}
@@ -279,7 +257,7 @@ namespace Goedel.Tool.ProtoGen {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Request: {1}\n{0}", _Indent, Transaction.Request);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Response:{1}\n{0}", _Indent, Transaction.Response);
+			_Output.Write ("Response: {1}\n{0}", _Indent, Transaction.Response);
 			MidSection (2);
 			DescriptionList (Transaction.Entries);
 			EndSection (2);
@@ -474,7 +452,7 @@ namespace Goedel.Tool.ProtoGen {
 			switch (TEntry._Tag ()) {
 				case ProtoStructType.Description: {
 				  Description Description = (Description) TEntry; 
-				_Output.Write (":", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				foreach  (string s in Description.Text1) {
 					_Output.Write ("{1}\n{0}", _Indent, s);
 					}

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Goedel.Tool.RFCTool;
+using Goedel.Document.RFC;
 using GM = Goedel.Document.Markdown;
 using Goedel.Registry;
 
 namespace MakeRFC {
     public class ConverterRFC {
         GM.Document Source;
-        Goedel.Tool.RFCTool.Document Target;
+        Goedel.Document.RFC.Document Target;
 
         enum BlockState {
             Title,
@@ -20,12 +20,12 @@ namespace MakeRFC {
         BlockState State = BlockState.Title;
 
         // Convenience routine as a static function
-        public static ConverterRFC Convert(GM.Document Source, Goedel.Tool.RFCTool.Document Target) {
+        public static ConverterRFC Convert(GM.Document Source, Goedel.Document.RFC.Document Target) {
             return new ConverterRFC(Source, Target);
             }
 
         // Create a converter
-        public ConverterRFC(GM.Document Source, Goedel.Tool.RFCTool.Document Target) {
+        public ConverterRFC(GM.Document Source, Goedel.Document.RFC.Document Target) {
             this.Source = Source;
             this.Target = Target;
             Target.Source = Source;
@@ -43,14 +43,16 @@ namespace MakeRFC {
             Target.Day = Source.MetaDataGetString("day", Target.Day);
 
             Target.Ipr = Source.MetaDataGetString("ipr", null);
-            //Target.Area = Source.MetaDataGetStrings("area", null);
-            //Target.Workgroup = Source.MetaDataGetStrings("workgroup", null);
+            Target.Area = Source.MetaDataGetStrings("area", null);
+            Target.Workgroup = Source.MetaDataGetStrings("workgroup", null);
 
             Target.Number = Source.MetaDataGetString("number", null);
             Target.Category = Source.MetaDataGetString("category", null);
             Target.Updates = Source.MetaDataGetString("updates", null);
             Target.Obsoletes = Source.MetaDataGetString("obsoletes", null);
             Target.SeriesNumber = Source.MetaDataGetString("seriesnumber", null);
+
+            Target.Also = Source.MetaDataGetString("also", null);
 
             var HaveKeywords = Source.MetaDataLookup("keyword", out var Metas);
             if (HaveKeywords) {
@@ -77,11 +79,29 @@ namespace MakeRFC {
                 Target.Docname = "ietf-draft-TBS";
                 }
 
+            var HaveLayout = Source.MetaDataLookup("layout", out Metas);
+            if (HaveLayout) {
+                foreach (var Meta in Metas) {
+                    FillMetaAttributeBool(Meta, "sortrefs", ref Target.SortRefs);
+                    FillMetaAttributeBool(Meta, "symrefs", ref Target.Symrefs);
+                    FillMetaAttributeBool(Meta, "toc", ref Target.TocInclude);
+                    FillMetaAttributeBool(Meta, "tocinclude", ref Target.TocInclude);
+                    FillMetaAttributeBool(Meta, "tof", ref Target.TofInclude);
+                    FillMetaAttributeBool(Meta, "tot", ref Target.TotInclude);
+                    FillMetaAttributeBool(Meta, "ton", ref Target.TonInclude);
+                    FillMetaAttributeBool(Meta, "index", ref Target.IndexInclude);
+                    FillMetaAttributeBool(Meta, "embedstyle", ref Target.EmbedStylesheet);
+                    FillMetaAttributeBool(Meta, "embedsvg", ref Target.EmbedSVG);
+                    FillMetaAttributeInt(Meta, "tocdepth", ref Target.TocDepth);
+
+                    }
+                }
+
 
             var HaveAuthors = Source.MetaDataLookup("author", out Metas);
             if (HaveAuthors) {
                 foreach (var Meta in Metas) {
-                    var Author = new Goedel.Tool.RFCTool.Author() {
+                    var Author = new Goedel.Document.RFC.Author() {
                         Name = Meta.Text
                         };
                     // add author attributes here
@@ -110,7 +130,7 @@ namespace MakeRFC {
             Section CurrentSection = null;
 
             foreach (var Block in Source.Blocks) {
-                Console.WriteLine("Block {0}", Block.BlockType);
+                //Console.WriteLine("Block {0}", Block.BlockType);
 
 
                 if ((Block.GetType() == typeof(Goedel.Document.Markdown.Layout)) |
@@ -194,7 +214,7 @@ namespace MakeRFC {
                             break;
                             }
                         case "pre": {
-                            var TextBlock = new Goedel.Tool.RFCTool.PRE(Preformat(Block.Text), "");
+                            var TextBlock = new Goedel.Document.RFC.PRE(Preformat(Block.Text), "");
                             CurrentText.Add(TextBlock);
                             break;
                             }
@@ -291,52 +311,6 @@ namespace MakeRFC {
             return null;
             }
 
-        //List<Text> MakeChunks (List<GM.TextSegment> Segments) {
-
-        //    var Result = new List<Text>();
-
-        //    foreach (var Segment in Segments) {
-        //        switch (Segment) {
-        //            case GM.TextSegmentText TextSegmentText: {
-        //                var Text = new Text() {
-        //                    //Type = TextType.Plain,
-        //                    Data = TextSegmentText.Text
-        //                    };
-        //                foreach (var Attribute in TextSegmentText.Attributes) {
-        //                    switch (Attribute.Tag) {
-        //                        case "i": {
-        //                            Text.Emphasis = true; break;
-        //                            }
-        //                        case "b": {
-        //                            Text.Strong = true; break;
-        //                            }
-        //                        case "tt": {
-        //                            Text.Code = true; break;
-        //                            }
-        //                        case "sup": {
-        //                            Text.Superscript = true; break;
-        //                            }
-        //                        case "sub": {
-        //                            Text.Subscript = true; break;
-        //                            }
-        //                        case "rem":
-        //                        case "comment":
-        //                        case "cref": {
-        //                            Text.Comment = true; break;
-        //                            }
-        //                        case "bcp":
-        //                        case "bcp14": {
-        //                            Text.BCP14 = true; break;
-        //                            }
-        //                        }
-        //                    }
-        //                Result.Add(Text);
-        //                break;
-        //                }
-        //            }
-        //        }
-        //    return Result;
-        //    }
 
         string Preformat(string In) {
             string Out = In.Replace('\v', '\n');
@@ -380,6 +354,23 @@ namespace MakeRFC {
 
             }
 
+        void FillMetaAttributeInt (GM.Meta Meta, string Tag, ref int Value) {
+            foreach (var Attribute in Meta.Attributes) {
+                if (Attribute.Tag.ToLower() == Tag) {
+                    Int32.TryParse(Attribute.Value, out Value);
+                    return;
+                    }
+                }
+            }
+
+        void FillMetaAttributeBool (GM.Meta Meta, string Tag, ref bool Value) {
+            foreach (var Attribute in Meta.Attributes) {
+                if (Attribute.Tag.ToLower() == Tag) {
+                    Value = Attribute.Value.ToLower() != "false";
+                    return;
+                    }
+                }
+            }
 
         void FillMetaString(GM.Meta Meta, string Tag, ref string Value) {
             if (Meta.Children.TryGetValue(Tag, out var Metas)) {

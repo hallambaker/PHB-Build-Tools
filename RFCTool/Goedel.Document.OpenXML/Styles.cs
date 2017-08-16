@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using HT = Goedel.Tool.RFCTool;
+using HT = Goedel.Document.RFC;
 
 namespace Goedel.Document.OpenXML {
     public partial class MakeWord {
 
         private void AddStylesPartToPackage() {
             TargetStyles = Target.MainDocumentPart.StyleDefinitionsPart;
-            if (TargetStyles != null) return;
+            if (TargetStyles != null) {
+                return;
+                }
 
             TargetStyles = Target.MainDocumentPart.AddNewPart<StyleDefinitionsPart>();
             Styles root = new Styles();

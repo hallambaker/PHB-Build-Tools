@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Goedel.Document.Markdown;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
 
     /// <summary>
     /// Generate boilerplate and ipr statements.
@@ -130,8 +130,22 @@ namespace Goedel.Tool.RFCTool {
 
             Document.Boilerplate.Add(StatusSection);
             Document.Boilerplate.Add(CopyrightSection);
+
+            if (Document.Also != null) {
+                var Block = new P();
+                var Lexer = new MarkNewParagraph();
+                Lexer.Push("This document is also available online at <a=\"");
+                Lexer.Push(Document.Also);
+                Lexer.PushEnd("\"/>.");
+                Block.Segments = Lexer.Segments;
+
+                Document.Abstract.Add(Block);
+                }
+
             }
 
+
+        
 
         static void AddParagraphs (Section Section, List<string> Texts) {
 

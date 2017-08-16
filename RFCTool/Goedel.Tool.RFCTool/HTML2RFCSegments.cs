@@ -7,7 +7,7 @@ using Goedel.IO;
 using Goedel.Document.RFC;
 using Goedel.Document.Markdown;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
     public partial class Html2RFCOut  {
 
         public void WriteBlock (P Block, string Tag) {
@@ -16,7 +16,7 @@ namespace Goedel.Tool.RFCTool {
                 foreach (var Segment in Block.Segments) {
                     switch (Segment) {
                         case TextSegmentText Text: {
-                            Output.Write(Text.Text);
+                            Output.Write(Text.Text.AsXML());
                             break;
                             }
                         case TextSegmentOpen Text: {

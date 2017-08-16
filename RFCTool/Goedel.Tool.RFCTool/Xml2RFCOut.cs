@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using GM=Goedel.Document.Markdown;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
     public class Xml2RFCOut {
         TextWriter TextWriter;
 
@@ -208,6 +208,46 @@ namespace Goedel.Tool.RFCTool {
             }
 
 
+        public void Write (GM.TextSegmentOpen Open) {
+            switch (Open.Tag) {
+                case "xref":
+                case "norm":
+                case "info": {
+                    WriteStartTag("xref", "target", Open.Attributes?[0].Value);
+                    if (Open.IsEmpty) {
+                        TextWriter.Write("[");
+                        TextWriter.Write(Open.Attributes?[0].Value);
+                        TextWriter.Write("]");
+                        }
+                    break;
+                    }
+                case "eref":
+                case "a": {
+                    WriteStartTag("eref", "target", Open.Attributes?[0].Value);
+                    if (Open.IsEmpty) {
+                        TextWriter.Write(Open.Attributes?[0].Value);
+                        }
+                    break;
+                    }
+                }
+            }
+
+        public void Write (GM.TextSegmentClose Close) {
+            switch (Close.Open.Tag) {
+                case "xref":
+                case "norm":
+                case "info": {
+                    WriteEndTag("xref");
+                    break;
+                    }
+                case "eref":
+                case "a": {
+                    WriteEndTag("eref");
+                    break;
+                    }
+                }
+            }
+
         public void Write (List<GM.TextSegment> Segments, string Hangtext=null) {
             WriteStartTag("t", "hangtext", Hangtext);
 
@@ -219,11 +259,11 @@ namespace Goedel.Tool.RFCTool {
                             break;
                             }
                         case GM.TextSegmentOpen Text: {
-
+                            Write(Text);
                             break;
                             }
                         case GM.TextSegmentClose Text: {
-
+                            Write(Text);
                             break;
                             }
                         case GM.TextSegmentEmpty Text: {
@@ -243,56 +283,79 @@ namespace Goedel.Tool.RFCTool {
 
                     WriteStartTag("section", "title", Section.Heading, "anchor", Section.GeneratedID);
                     foreach (TextBlock TextBlock in Section.TextBlocks) {
-                        if (TextBlock.GetType() == typeof(LI)) {
-                            LI LI = (LI)TextBlock;
-                            ListLevel(LI);
-                            }
-                        else {
-                            ListLast();
-                            }
-
-                        if (TextBlock.GetType() == typeof(P)) {
-                            P P = (P)TextBlock;
-                            Write(P.Segments);
-                            }
-
-                        if (TextBlock.GetType() == typeof(PRE)) {
-                            PRE PRE = (PRE)TextBlock;
-                            if (PRE.GeneratedID != null && PRE.GeneratedID != "") {
-                                WriteStartTag("figure", "anchor", PRE.GeneratedID);
+                        switch (TextBlock) {
+                            case LI LI: {
+                                ListLevel(LI);
+                                break;
                                 }
-                            else {
+                            case PRE PRE: {
+                                ListLast();
+                                if (PRE.GeneratedID != null && PRE.GeneratedID != "") {
+                                    WriteStartTag("figure", "anchor", PRE.GeneratedID);
+                                    }
+                                else {
+                                    WriteStartTag("figure");
+                                    }
+                                WriteStartTag("artwork");
+
+                                TextWriter.Write("<![CDATA[");
+                                TextWriter.Write(PRE.Text);
+                                TextWriter.Write("]]>");
+
+                                WriteEndTag("artwork");
+                                WriteEndTag("figure");
+                                break;
+                                }
+                            case P P: {
+                                ListLast();
+                                Write(P.Segments);
+                                break;
+                                }
+                            case Table Table: {
+                                ListLast();
+                                WriteStartTag("texttable ", "anchor", Table.GeneratedID);
+
+                                for (int Row = 0; Row < Table.Rows.Count; Row++) {
+                                    TableRow TableRow = Table.Rows[Row];
+                                    int Col = 0;
+                                    string Tag = Row == 0 ? "ttcol" : "c";
+
+                                    for (; Col < TableRow.Data.Count; Col++) {
+                                        WriteValueTag(Tag, TableRow.Data[Col].Text);
+                                        }
+                                    for (; Col < Table.MaxRow; Col++) {
+                                        WriteValueTag(Tag, "");
+                                        }
+                                    }
+
+                                WriteEndTag("texttable ");
+                                break;
+                                }
+                            case Figure Figure: {
+                                ListLast();
                                 WriteStartTag("figure");
+                                WriteStartTag("preamble");
+                                TextWriter.Write("[[This figure is not viewable in this format.");
+                                if (Document.Also != null) {
+                                    TextWriter.Write(" The figure is available at <eref target=\"");
+                                    TextWriter.Write(Document.Also);
+                                    TextWriter.Write("\">");
+                                    TextWriter.Write(Document.Also);
+                                    TextWriter.Write("</eref>.");
+                                    }
+                                TextWriter.Write("]]");
+                                WriteEndTag("preamble");
+                                WriteStartTag("artwork");
+                                WriteEndTag("artwork");
+                                WriteStartTag("postamble");
+                                TextWriter.Write(Figure.Caption);
+                                WriteEndTag("postamble");
+                                WriteEndTag("figure");
+                                break;
                                 }
-                            WriteStartTag("artwork");
-
-                            TextWriter.Write("<![CDATA[");
-                            TextWriter.Write(PRE.Text);
-                            TextWriter.Write("]]>");
-
-                            WriteEndTag("artwork");
-                            WriteEndTag("figure");
                             }
 
-                        if (TextBlock.GetType() == typeof(Table)) {
-                            Table Table = (Table)TextBlock;
-                            WriteStartTag("texttable ", "anchor", Table.GeneratedID);
 
-                            for (int Row = 0; Row < Table.Rows.Count; Row++) {
-                                TableRow TableRow = Table.Rows[Row];
-                                int Col = 0;
-                                string Tag = Row == 0 ? "ttcol" : "c";
-
-                                for (; Col < TableRow.Data.Count; Col++) {
-                                    WriteValueTag(Tag, TableRow.Data[Col].Text);
-                                    }
-                                for (; Col < Table.MaxRow; Col++) {
-                                    WriteValueTag(Tag, "");
-                                    }
-                                }
-
-                            WriteEndTag("texttable ");
-                            }
                         }
                     ListLast();
 
@@ -301,6 +364,7 @@ namespace Goedel.Tool.RFCTool {
                     }
                 }
             }
+
 
         void WriteReferences(List<Reference> References) {
             foreach (Reference Reference in References) {
@@ -355,7 +419,10 @@ namespace Goedel.Tool.RFCTool {
                 WriteEndTag("author");
                 }
             }
+
+        Document Document;
         public void Write(Document Document) {
+            this.Document = Document;
 
             TextWriter.WriteLine("<?xml version='1.0'?>");
             TextWriter.WriteLine("<!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>");
@@ -402,8 +469,8 @@ namespace Goedel.Tool.RFCTool {
 
             WriteValueTag("date", null, "day", Document.Day, "month", Document.Month,
                 "year", Document.Year);
-            WriteValueTag("area", Document.Area);
-            WriteValueTag("workgroup", Document.Workgroup);
+            WriteValueTag("area", Document.AreaCombined);
+            WriteValueTag("workgroup", Document.WorkgroupCombined);
             foreach (string Keyword in Document.Keywords) {
                 WriteValueTag("keyword", Keyword);
                 }
@@ -413,7 +480,7 @@ namespace Goedel.Tool.RFCTool {
                 foreach (TextBlock TextBlock in Document.Abstract) {
                     if (TextBlock.GetType() == typeof(P)) {
                         P P = (P)TextBlock;
-                        WriteValueTag("t", P.Text);
+                        Write(P.Segments);
                         }
                     }
                 WriteEndTag("abstract");

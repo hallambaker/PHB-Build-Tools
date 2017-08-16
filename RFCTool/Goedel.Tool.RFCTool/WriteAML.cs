@@ -6,7 +6,7 @@ using System.IO;
 using Goedel.Registry;
 using Goedel.Utilities;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
     public partial class Writers {
 
         /// <summary>

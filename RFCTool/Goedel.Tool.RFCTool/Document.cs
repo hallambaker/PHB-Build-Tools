@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using GM = Goedel.Document.Markdown;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
     public partial class Document {
 
         public GM.Document Source = null;
@@ -26,15 +26,22 @@ namespace Goedel.Tool.RFCTool {
         public string SubmissionType; // see seriesinfo
         public string Docname = "";
 
+
+
+
         // I see no reason at all to allow these to be varied. The TOC is
         // for the benefit of the reader, not the writer.
+        public int TocDepth = 3;
+
         public bool SortRefs = true;
         public bool Symrefs = true;
         public bool TocInclude = true;
         public bool TofInclude = true;
         public bool TotInclude = true;
-        public int TocDepth = 3;
+        public bool TonInclude = true;
         public bool IndexInclude = false;
+        public bool EmbedStylesheet = true;
+        public bool EmbedSVG = false;
 
         
         public string Scripts = "Common,Latin";
@@ -61,6 +68,11 @@ namespace Goedel.Tool.RFCTool {
         public List<Section> Middle = new List<Section>();
         public List<Section> Back = new List<Section>();
         public List<SeriesInfo> SeriesInfos = new List<SeriesInfo>();
+
+
+        public string Also = null;
+        public string WorkgroupCombined;
+        public string AreaCombined;
 
         // Calculated attributes
         public DateTime DocDate { get => DateTime.Parse(Date); }
@@ -471,7 +483,7 @@ namespace Goedel.Tool.RFCTool {
     public class P : TextBlock {
         public override string SectionText { get => "Paragraph " + NumericID; }
 
-        public List <Text>              Chunks = new List<Text>();
+        //public List <Text>              Chunks = new List<Text>();
         public List<GM.TextSegment> Segments;
 
 
@@ -489,21 +501,21 @@ namespace Goedel.Tool.RFCTool {
             this._Text = Text;
             }
 
-        public P(List <Text> Chunks) {
-            this.Chunks = Chunks;
-            }
+        //public P(List <Text> Chunks) {
+        //    this.Chunks = Chunks;
+        //    }
 
-        public void AddText(Text Text) {
-            Chunks.Add (Text);
-            }
+        //public void AddText(Text Text) {
+        //    Chunks.Add (Text);
+        //    }
 
-        public void AddText(string Data) {
-            Text Text = new Text() {
-                //Type = TextType.Plain,
-                Data = Data
-                };
-            AddText (Text);
-            }
+        //public void AddText(string Data) {
+        //    Text Text = new Text() {
+        //        //Type = TextType.Plain,
+        //        Data = Data
+        //        };
+        //    AddText (Text);
+        //    }
 
         public string GetText() {
             return null;
@@ -578,8 +590,8 @@ namespace Goedel.Tool.RFCTool {
 
 
     public class Text {
-        public string              Data;        // What goes in the text
-        public string              Title;       // For mouseover popup text
+        public string Data;        // What goes in the text
+        public string Title;       // For mouseover popup text
         public string Id; // For anything requiring an anchor to this element.
 
         //public bool Strong;
@@ -591,20 +603,20 @@ namespace Goedel.Tool.RFCTool {
         //public bool BCP14;
         }
 
-    public class TextHyperlink : Text {
-        public string Target;      // Target of hypertext link
-        public string Fragment;     // Fragment
+    //public class TextHyperlink : Text {
+    //    public string Target;      // Target of hypertext link
+    //    public string Fragment;     // Fragment
 
-        public string Href {
-            get => Fragment == null ? Target : Target + "#" + Fragment;
-            }
-        }
+    //    public string Href {
+    //        get => Fragment == null ? Target : Target + "#" + Fragment;
+    //        }
+    //    }
 
-    public class TextIndex : Text {
+    //public class TextIndex : Text {
 
-        public string Index;
-        public string SubIndex;
-        }
+    //    public string Index;
+    //    public string SubIndex;
+    //    }
 
 
 
@@ -616,17 +628,20 @@ namespace Goedel.Tool.RFCTool {
         public string Status;       // standard/informational/experimental/bcp/fyi/full-standard
         public string Stream;       // IETF/IAB/IRTF/independent
 
+        public string ExplicitVersion = null;
         public string _Version = null;
         public string Version {
             get => _Version ?? GetNextVersion();
-            set => _Version = value;
+            set {
+                _Version = value; ExplicitVersion = value;
+                }
             }
 
         string GetNextVersion () {
             if (Name != "draft") {
                 return "";
                 }
-            _Version =RFCTool.Source.GetDraftVersion(Value);
+            _Version = Goedel.Document.RFC.Source.GetDraftVersion(Value);
             return _Version;
             }
 

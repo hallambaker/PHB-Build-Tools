@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
 
     public partial class Writers {
         public static void Merge (string InputFile, string OutputFile) {
@@ -32,35 +32,35 @@ namespace Goedel.Tool.RFCTool {
                 switch (XmlReader.NodeType) {
                     case XmlNodeType.Element:
                         bool IsEmpty = XmlReader.IsEmptyElement;
-                        Console.Write("<{0}", XmlReader.Name);
+                        //Console.Write("<{0}", XmlReader.Name);
                         XmlWriter.WriteStartElement(XmlReader.Name);
                         if (XmlReader.HasAttributes) {
                             while (XmlReader.MoveToNextAttribute()) {
-                                Console.Write(" {0}=\"{1}\"", XmlReader.Name, XmlReader.Value);
+                                //Console.Write(" {0}=\"{1}\"", XmlReader.Name, XmlReader.Value);
                                 XmlWriter.WriteAttributeString(XmlReader.Name, XmlReader.Value);
                                 }
                             }
                         if (IsEmpty) {
                             XmlWriter.WriteEndElement();
-                            Console.Write("/");
+                            //Console.Write("/");
                             }
-                        Console.Write(">");
+                        //Console.Write(">");
                         // process attributes
                         break;
                     case XmlNodeType.Text:
-                        Console.Write(XmlReader.Value);
+                        //Console.Write(XmlReader.Value);
                         XmlWriter.WriteString (XmlReader.Value);
                         break;
                     case XmlNodeType.Whitespace:
-                        Console.Write(XmlReader.Value);
+                        //Console.Write(XmlReader.Value);
                         XmlWriter.WriteWhitespace (XmlReader.Value);
                         break;
                     case XmlNodeType.CDATA:
-                        Console.Write("<![CDATA[{0}]]>", XmlReader.Value);
+                        //Console.Write("<![CDATA[{0}]]>", XmlReader.Value);
                         XmlWriter.WriteCData (XmlReader.Value);
                         break;
                     case XmlNodeType.ProcessingInstruction:
-                        Console.Write("<?{0} {1}?>", XmlReader.Name, XmlReader.Value);
+                        //Console.Write("<?{0} {1}?>", XmlReader.Name, XmlReader.Value);
                         if (XmlReader.Name == "include") {
                             ProcessInclude(XmlReader.Value, XmlWriter);
                             }
@@ -69,12 +69,12 @@ namespace Goedel.Tool.RFCTool {
                             }
                         break;
                     case XmlNodeType.Comment:
-                        Console.Write("<!--{0}-->", XmlReader.Value);
+                        //Console.Write("<!--{0}-->", XmlReader.Value);
                         XmlWriter.WriteComment (XmlReader.Value);
                         break;
                     case XmlNodeType.XmlDeclaration:
                         if (StartDocument) {
-                            Console.Write("<?xml version='1.0' encoding=\"utf-8\"?>");
+                            //Console.Write("<?xml version='1.0' encoding=\"utf-8\"?>");
                             XmlWriter.WriteStartDocument();
                             }
                         break;
@@ -82,10 +82,10 @@ namespace Goedel.Tool.RFCTool {
                         break;
                     case XmlNodeType.DocumentType:
                         string Name = XmlReader.Name, PUBLIC=null, SYSTEM=null, Subset = XmlReader.Value;
-                        Console.Write("<!DOCTYPE {0} [{1}]>", XmlReader.Name, XmlReader.ToString());
+                        //Console.Write("<!DOCTYPE {0} [{1}]>", XmlReader.Name, XmlReader.ToString());
                         if (XmlReader.HasAttributes) {
                             while (XmlReader.MoveToNextAttribute()) {
-                                Console.Write(" {0}=\"{1}\"", XmlReader.Name, XmlReader.Value);
+                                //Console.Write(" {0}=\"{1}\"", XmlReader.Name, XmlReader.Value);
                                 if (XmlReader.Name == "SYSTEM") {
                                     SYSTEM = XmlReader.Value;
                                     }
@@ -97,15 +97,15 @@ namespace Goedel.Tool.RFCTool {
                         XmlWriter.WriteDocType (Name, PUBLIC, SYSTEM, Subset);
                         break;
                     case XmlNodeType.EntityReference:
-                        Console.Write(XmlReader.Name);
+                        //Console.Write(XmlReader.Name);
                         XmlWriter.WriteEntityRef (XmlReader.Name);
                         break;
                     case XmlNodeType.EndElement:
-                        Console.Write("</{0}>", XmlReader.Name);
+                        //Console.Write("</{0}>", XmlReader.Name);
                         XmlWriter.WriteEndElement ();
                         break;
                     default:
-                        Console.WriteLine ("*******************");
+                        //Console.WriteLine ("*******************");
                         break;
                     }
                 if (ReadNext) {
@@ -123,8 +123,8 @@ namespace Goedel.Tool.RFCTool {
             string AttributeMIME = GetAttributeValue ("mime", String);
             string AttributeSection = GetAttributeValue ("section", String);
 
-            Console.WriteLine ("####Process Include xml={0} mime={1} section={2}", 
-                    AttributeXML, AttributeMIME, AttributeSection);
+            //Console.WriteLine ("####Process Include xml={0} mime={1} section={2}", 
+            //        AttributeXML, AttributeMIME, AttributeSection);
 
             if (AttributeXML != null) {
                 using (XmlTextReader XmlTextReader = new XmlTextReader(AttributeXML)) {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
     public partial class Writers {
 
         public static void WriteXML(string OutputFile, Document Document) {

@@ -7,7 +7,7 @@ using Goedel.IO;
 using Goedel.Document.RFC;
 using Goedel.Document.Markdown;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
     public partial class Html2RFCOut : XMLTextWriter {
         TextWriter TextWriter;
 
@@ -32,7 +32,6 @@ namespace Goedel.Tool.RFCTool {
             "rfc-local.css"
             };
 
-        public bool EmbedFiles = false;
         public string MainStylesheet = "xml2rfc.css";
 
 
@@ -40,8 +39,10 @@ namespace Goedel.Tool.RFCTool {
 
         DateTime Prepared = DateTime.UtcNow;
         DateTime Rendered = DateTime.UtcNow;
+        Document Document;
 
         public void Write (Document Document) {
+            this.Document = Document;
             ListLevel = new ListLevel() { OpenListItem = OpenListItem, CloseListItem = CloseListItem };
 
 
@@ -254,7 +255,7 @@ namespace Goedel.Tool.RFCTool {
 
             if (Document.TofInclude & Document.TableOfTables.Count > 0) {
                 Start("h3", "id", "tof");
-                WriteElement("a", "Table of Figures", "class", "selfRef", "href", "#" + "tof");
+                WriteElement("a", "Table of FigureTables", "class", "selfRef", "href", "#" + "tof");
                 End();
 
                 Start("ul", "class", "toc");
@@ -388,22 +389,18 @@ namespace Goedel.Tool.RFCTool {
             switch (LI.Type) {
                 case BlockType.Data: {
                     WriteBlock(LI, "dd");
-                    //WriteBlock("dd", ListLevel.ID, LI.Text, LI.Chunks);
                     break;
                     }
                 case BlockType.Term: {
                     WriteBlock(LI, "dt");
-                    //WriteBlock("dt", ListLevel.ID, LI.Text, LI.Chunks);
                     break;
                     }
                 case BlockType.Ordered: {
                     WriteBlock(LI, "li");
-                    //WriteBlock("li", ListLevel.ID, LI.Text, LI.Chunks);
                     break;
                     }
                 case BlockType.Symbol: {
                     WriteBlock(LI, "li");
-                    //WriteBlock("li", ListLevel.ID, LI.Text, LI.Chunks);
                     break;
                     }
                 }
@@ -413,9 +410,9 @@ namespace Goedel.Tool.RFCTool {
             ListLevel.ListLast();
             }
 
-        public void WriteLink (string Filename, string Element, string Attribute) {
+        public void WriteLinkSVG (string Filename, string Element, string Attribute) {
 
-            if (!EmbedFiles) { // just write the link out
+            if (!Document.EmbedSVG) { // just write the link out
                 WriteElement(Element, (string)null, Attribute, Filename);
                 return;
                 }
@@ -430,7 +427,7 @@ namespace Goedel.Tool.RFCTool {
 
         public void WriteStyle (string Filename) {
 
-            if (!EmbedFiles) { // just write the link out
+            if (!Document.EmbedStylesheet) { // just write the link out
                 WriteElementEmpty("link", "href", Filename, "rel", "stylesheet", "type", "text/css");
                 return;
                 }
@@ -506,7 +503,7 @@ namespace Goedel.Tool.RFCTool {
             Start("figure", "id", Figure.FigureID);
             Start("div", "class", "artwork art-svg", "id", Figure.GeneratedID);
 
-            WriteLink(Figure.Filename, "img", "src");
+            WriteLinkSVG(Figure.Filename, "img", "src");
 
             WriteElement("a", Pilcrow, "class", "pilcrow", "href", "#" + Figure.GeneratedID);
             End();
@@ -514,8 +511,6 @@ namespace Goedel.Tool.RFCTool {
 
             End();
             }
-
-
 
 
         void WriteReferences (Catalog Catalog) {
@@ -731,186 +726,6 @@ namespace Goedel.Tool.RFCTool {
             Strong, Emphasis, Code, Comment, Superscript, Subscript, Norm
 
             }
-
-
-        //class Annotation {
-        //    XMLTextWriter Writer;
-        //    Text State;
-
-        //    Stack<Annotations> Stack = new Stack<Annotations>();
-
-
-        //    public Annotation (XMLTextWriter Writer) {
-        //        this.Writer = Writer;
-        //        State = new Text();
-        //        }
-
-        //    public void Mark (Text Text) {
-
-        //        // Pop the stack
-        //        if (State.Strong & !Text.Strong) {
-        //            Pop(Annotations.Strong);
-        //            }
-        //        if (State.Emphasis & !Text.Emphasis) {
-        //            Pop(Annotations.Emphasis);
-        //            }
-        //        if (State.Code & !Text.Code) {
-        //            Pop(Annotations.Code);
-        //            }
-        //        if (State.Comment & !Text.Comment) {
-        //            Pop(Annotations.Comment);
-        //            }
-        //        if (State.Superscript & !Text.Superscript) {
-        //            Pop(Annotations.Superscript);
-        //            }
-        //        if (State.Subscript & !Text.Subscript) {
-        //            Pop(Annotations.Subscript);
-        //            }
-        //        if (State.BCP14 & !Text.BCP14) {
-        //            Pop(Annotations.Norm);
-        //            }
-
-        //        // 
-
-        //        if (Text.Strong & !State.Strong) {
-        //            Push(Annotations.Strong);
-        //            }
-        //        if (Text.Emphasis & !State.Emphasis) {
-        //            Push(Annotations.Emphasis);
-        //            }
-        //        if (Text.Code & !State.Code) {
-        //            Push(Annotations.Code);
-        //            }
-        //        if (Text.Comment & !State.Comment) {
-        //            Push(Annotations.Comment);
-        //            }
-        //        if (Text.Superscript & !State.Superscript) {
-        //            Push(Annotations.Superscript);
-        //            }
-        //        if (Text.Subscript & !State.Subscript) {
-        //            Push(Annotations.Subscript);
-        //            }
-        //        if (Text.BCP14 & !State.BCP14) {
-        //            Push(Annotations.Norm);
-        //            }
-        //        }
-
-        //    public void Close () {
-        //        while (Stack.Count > 0) {
-        //            var Popped = Stack.Pop();
-        //            WritePop(Popped);
-        //            }
-        //        }
-
-
-        //    void Pop (Annotations Item) {
-        //        Annotations Popped;
-
-        //        do {
-        //            Popped = Stack.Pop();
-        //            WritePop(Popped);
-        //            } while (Popped != Item);
-
-        //        }
-
-        //    void Push (Annotations Item) {
-        //        Stack.Push(Item);
-        //        WritePush(Item);
-        //        }
-
-
-        //    // Output part
-
-        //    void WritePush (Annotations Item) {
-
-        //        switch (Item) {
-        //            case Annotations.Strong: {
-        //                State.Strong = true;
-        //                Writer.Start("strong", false, false);
-        //                break;
-        //                }
-        //            case Annotations.Emphasis: {
-        //                State.Emphasis = true;
-        //                Writer.Start("em", false, false);
-        //                break;
-        //                }
-        //            case Annotations.Code: {
-        //                State.Code = true;
-        //                Writer.Start("code", false, false);
-        //                break;
-        //                }
-        //            case Annotations.Comment: {
-        //                State.Comment = true;
-        //                Writer.Start("code", false, false);
-        //                break;
-        //                }
-        //            case Annotations.Superscript: {
-        //                State.Superscript = true;
-        //                Writer.Start("sup", false, false);
-        //                break;
-        //                }
-        //            case Annotations.Subscript: {
-        //                State.Subscript = true;
-        //                Writer.Start("sub", false, false);
-        //                break;
-        //                }
-        //            case Annotations.Norm: {
-        //                State.BCP14 = true;
-        //                Writer.Start("em", false, false);
-        //                break;
-        //                }
-        //            }
-
-        //        }
-
-        //    void WritePop (Annotations Item) {
-        //        switch (Item) {
-        //            case Annotations.Strong: {
-        //                State.Strong = false;
-        //                Writer.End(false, false);
-        //                break;
-        //                }
-        //            case Annotations.Emphasis: {
-        //                State.Emphasis = false;
-        //                Writer.End(false, false);
-        //                break;
-        //                }
-        //            case Annotations.Code: {
-        //                State.Code = false;
-        //                Writer.End(false, false);
-        //                break;
-        //                }
-        //            case Annotations.Comment: {
-        //                State.Comment = false;
-        //                Writer.End(false, false);
-        //                break;
-        //                }
-        //            case Annotations.Superscript: {
-        //                State.Superscript = false;
-        //                Writer.End(false, false);
-        //                break;
-        //                }
-        //            case Annotations.Subscript: {
-        //                State.Subscript = false;
-        //                Writer.End(false, false);
-        //                break;
-        //                }
-        //            case Annotations.Norm: {
-        //                State.BCP14 = false;
-        //                Writer.End(false, false);
-        //                break;
-        //                }
-        //            }
-
-        //        }
-
-        //    }
-
-
         }
-
-
-    
-
 
     }

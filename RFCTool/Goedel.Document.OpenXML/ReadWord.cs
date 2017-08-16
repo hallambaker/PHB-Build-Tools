@@ -191,14 +191,14 @@ namespace Goedel.Document.OpenXML {
 
 
         public void ParseParagraph (Paragraph Paragraph) {
-            Console.WriteLine("Element {0}", Paragraph.InnerText);
+            //Console.WriteLine("Element {0}", Paragraph.InnerText);
 
             var Properties = Paragraph.ParagraphProperties;
 
             var StyleId = Properties?.ParagraphStyleId;
             var StyleVal = StyleId!= null ? StyleId.Val.ToString(): "p";
 
-            Console.WriteLine("   Style {0}", StyleVal);
+            //Console.WriteLine("   Style {0}", StyleVal);
             var CatalogEntry = GetCatalogEntry(StyleVal);
 
             if (CatalogEntry.ElementType == GM.ElementType.Meta) {

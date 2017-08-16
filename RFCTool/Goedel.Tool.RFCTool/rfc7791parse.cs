@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
-using Goedel.Tool.RFCTool;
+using Goedel.Document.RFC;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
     public class Rfc7991Parse {
 
-        Goedel.Tool.RFCTool.Document Document;
+        Goedel.Document.RFC.Document Document;
         TextReader TextReader;
 
-        public static void Parse(string File, Goedel.Tool.RFCTool.Document Document) {
+        public static void Parse(string File, Goedel.Document.RFC.Document Document) {
             using (FileReader FileReader = new FileReader(File)) {
                 Parse(FileReader, Document);
                 }
             }
 
-        public static void Parse(TextReader TextReader, Goedel.Tool.RFCTool.Document Document) {
+        public static void Parse(TextReader TextReader, Goedel.Document.RFC.Document Document) {
             new Rfc7991Parse(TextReader, Document);
             }
 
         
-        public Rfc7991Parse(TextReader TextReader, Goedel.Tool.RFCTool.Document Document) {
+        public Rfc7991Parse(TextReader TextReader, Goedel.Document.RFC.Document Document) {
             this.TextReader = TextReader;
             this.Document = Document;
 
@@ -402,7 +402,7 @@ namespace Goedel.Tool.RFCTool {
                         }
                     else if (o.GetType() == typeof(list)) {
                         MakeP (Parent, ref Text, ref ID);
-                        Console.Write("Got list !");
+                        //Console.Write("Got list !");
                         AddListBlocks (Parent, (list) o, 0);
                         }
                     else if (o.GetType() == typeof(figure)) {

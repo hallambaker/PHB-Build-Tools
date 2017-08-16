@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Goedel.Registry;
 
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
     public abstract class XMLTextWriterPlus : XMLTextWriter {
 
 

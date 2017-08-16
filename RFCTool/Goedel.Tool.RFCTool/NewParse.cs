@@ -4,10 +4,10 @@ using System.Xml;
 using System.Xml.Resolvers;
 using System.IO;
 using System.Text;
-using Goedel.Tool.RFCTool;
+using Goedel.Document.RFC;
 using Goedel.Utilities;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
     // New Parser because the old one was getting incomprehensible
     // Read the whole file into memory and process from the resulting tree
     public class NewParse {

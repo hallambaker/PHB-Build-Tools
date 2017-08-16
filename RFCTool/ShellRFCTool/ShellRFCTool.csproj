@@ -59,6 +59,7 @@
     <None Include="App.config" />
     <None Include="draft-whatever.md" />
     <None Include="hallambaker-jsonbcd-new.md" />
+    <None Include="hallambaker-naming.md" />
     <None Include="hallambaker-test.md" />
     <None Include="main.command">
       <Generator>CommandCS</Generator>
@@ -123,6 +124,7 @@
     <Content Include="hallambaker-jsonbcd.txt" />
     <Content Include="hallambaker-jsonbcd.xml" />
     <Content Include="hallambaker-naming.html" />
+    <Content Include="hallambaker-naming.txt" />
     <Content Include="hallambaker-naming.xml" />
     <Content Include="hallambaker-test.html" />
     <Content Include="hallambaker-test.txt" />

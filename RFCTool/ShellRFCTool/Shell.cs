@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Goedel.Command;
-using Goedel.Tool.RFCTool;
+using Goedel.Document.RFC;
 using MakeRFC;
 using Goedel.Document.OpenXML;
 using GM=Goedel.Document.Markdown;
@@ -99,12 +99,12 @@ namespace MakeRFC {
 
             Document.MakeAutomatics();
 
-            if (htmlfile != null) { Goedel.Tool.RFCTool.Writers.WriteHTML(htmlfile, Document); }
-            if (xmlfile != null) { Goedel.Tool.RFCTool.Writers.WriteXML(xmlfile, Document); }
-            if (txtfile != null) { Goedel.Tool.RFCTool.Writers.WriteTXT(txtfile, Document); }
-            if (mdfile != null) { Goedel.Tool.RFCTool.Writers.WriteMD(mdfile, Document); }
+            if (htmlfile != null) { Goedel.Document.RFC.Writers.WriteHTML(htmlfile, Document); }
+            if (xmlfile != null) { Goedel.Document.RFC.Writers.WriteXML(xmlfile, Document); }
+            if (txtfile != null) { Goedel.Document.RFC.Writers.WriteTXT(txtfile, Document); }
+            if (mdfile != null) { Goedel.Document.RFC.Writers.WriteMD(mdfile, Document); }
             if (docfile != null) { Goedel.Document.OpenXML.MakeWord.FromHTML2RFC(docfile, Document); }
-            if (amlfile != null) { Goedel.Tool.RFCTool.Writers.WriteAML(amlfile, Document); }
+            if (amlfile != null) { Goedel.Document.RFC.Writers.WriteAML(amlfile, Document); }
             }
 
         public override void Template (Template Options) {
@@ -117,10 +117,10 @@ namespace MakeRFC {
 
             var Document = NewTemplate.Fill(ID);
 
-            if (htmlfile != null) { Goedel.Tool.RFCTool.Writers.WriteHTML(htmlfile, Document); }
-            if (xmlfile != null) { Goedel.Tool.RFCTool.Writers.WriteXML(xmlfile, Document); }
+            if (htmlfile != null) { Goedel.Document.RFC.Writers.WriteHTML(htmlfile, Document); }
+            if (xmlfile != null) { Goedel.Document.RFC.Writers.WriteXML(xmlfile, Document); }
             if (docfile != null) { Goedel.Document.OpenXML.MakeWord.FromHTML2RFC(docfile, Document); }
-            if (mdfile != null) { Goedel.Tool.RFCTool.Writers.WriteMD(mdfile, Document); }
+            if (mdfile != null) { Goedel.Document.RFC.Writers.WriteMD(mdfile, Document); }
             }
         }
     }

@@ -4,7 +4,7 @@ using System.Net;
 using System.IO;
 using System.Text;
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC  {
 
     /// <summary>
     /// Represents a link to a citation of material to be matched or that has 
@@ -390,7 +390,7 @@ namespace Goedel.Tool.RFCTool {
                 return;
                 }
 
-            Console.WriteLine("{0}  {1}", Citation.Label, Uri);
+            //Console.WriteLine("{0}  {1}", Citation.Label, Uri);
 
             try {
                 Document.Catalog.ForceReferenceID = Citation.Label;
@@ -419,7 +419,7 @@ namespace Goedel.Tool.RFCTool {
                     }
                 }
             catch {
-                Console.WriteLine("$04-Not Found");
+                Console.WriteLine("$04-Not Found {}", Citation.Label);
                 }
             finally {
                 Document.Catalog.ForceReferenceID = null;

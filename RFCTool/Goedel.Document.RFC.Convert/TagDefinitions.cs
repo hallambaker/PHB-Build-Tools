@@ -9,6 +9,7 @@ Class Goedel.MarkLib TagDefinitions
 		Flag plaintext
 
 	Meta bibliography
+	Meta stylesheet
 
 	Meta author
 		Meta firstname
@@ -28,7 +29,7 @@ Class Goedel.MarkLib TagDefinitions
 	Meta bibsource
 	Meta style
 	Meta priority
-
+	Meta also
 
 	Block p
 		Level 0
@@ -197,6 +198,7 @@ Class Goedel.MarkLib TagDefinitions
 	Meta meta
 	Meta ipr
 	Meta workgroup
+	Meta area
 
 	Meta number
 	Meta category

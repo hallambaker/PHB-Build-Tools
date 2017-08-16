@@ -182,7 +182,7 @@ namespace Goedel.Document.Markdown {
         }
 
     public class TextSegmentClose : TextSegment {
-        public TextSegment Open = null;
+        public TextSegmentOpen Open = null;
         public TextSegmentClose(TextSegmentOpen Open){
             if (Open != null) {
                 Open.Close = this;

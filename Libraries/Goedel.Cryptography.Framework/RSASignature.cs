@@ -39,16 +39,14 @@ namespace Goedel.Cryptography.Framework {
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
         public override CryptoAlgorithmID CryptoAlgorithmID {
-            get {
-                return Goedel.Cryptography.CryptoAlgorithmID.RSASign;
-                }
+            get => Goedel.Cryptography.CryptoAlgorithmID.RSASign;
             }
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
         public override CryptoAlgorithm CryptoAlgorithm {
-            get { return CryptoAlgorithmAny; }
+            get => CryptoAlgorithmAny; 
             }
 
         static CryptoAlgorithm CryptoAlgorithmAny = new CryptoAlgorithm(
@@ -76,12 +74,12 @@ namespace Goedel.Cryptography.Framework {
         /// Return the provider key.
         /// </summary>
         public override Goedel.Cryptography.KeyPair KeyPair {
-            get { return _RSAKeyPair; }
-            set { _RSAKeyPair = value as RSAKeyPair; }
+            get => _RSAKeyPair; 
+            set => _RSAKeyPair = value as RSAKeyPair; 
             }
 
         RSACryptoServiceProvider Provider {
-            get { return _RSAKeyPair.Provider; }
+            get => _RSAKeyPair.Provider; 
             }
 
 
@@ -139,19 +137,14 @@ namespace Goedel.Cryptography.Framework {
         /// Default algorithm key size.
         /// </summary>
         public override int Size {
-            get {
-                return KeySize;
-                }
+            get => KeySize;
             }
 
         /// <summary>
         /// The key fingerprint.
         /// </summary>
         public override string UDF {
-            get {
-                if (_RSAKeyPair == null) return null;
-                return _RSAKeyPair.UDF;
-                }
+            get => _RSAKeyPair?.UDF;
             }
 
         /// <summary>

@@ -3,7 +3,7 @@ using Goedel.Utilities;
 
 
 
-namespace Goedel.Tool.RFCTool {
+namespace Goedel.Document.RFC {
 
 
     /// <summary>
