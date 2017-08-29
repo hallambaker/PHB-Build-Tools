@@ -313,8 +313,15 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Key is temporary but may be exported.
         /// </summary>
-        Exportable
+        Exportable,
+
+
+        /// <summary>
+        /// Key is persisted for an application but may be exported.
+        /// </summary>
+        Application
         }
+
 
     /// <summary>
     /// Algorithm classes.

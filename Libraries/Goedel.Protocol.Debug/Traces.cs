@@ -75,8 +75,10 @@ namespace Goedel.Protocol.Debug {
         /// </summary>
         /// <param name="Tag">Label for future retrieval</param>
         /// <returns>The trace point created.</returns>
-        public TracePoint Label(string Tag) {
-            _Current = new TracePoint(this, Tag);
+        public TracePoint Label (string Tag, string Command = null) {
+            _Current = new TracePoint(this, Tag) {
+                Command = Command
+                };
             Traces.Add(Tag, _Current);
             return _Current;
             }

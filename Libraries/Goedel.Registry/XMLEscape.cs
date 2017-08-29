@@ -104,7 +104,7 @@ namespace Goedel.Registry {
         /// <param name="Attributes"></param>
         public void WriteElementEmpty (string Tag,
             params string[] Attributes) {
-            Console.WriteLine("{1}<{0}>", Tag, Indent);
+            //Console.WriteLine("{1}<{0}>", Tag, Indent);
 
             StartLine();
 
@@ -179,7 +179,7 @@ namespace Goedel.Registry {
             bool Start, bool End,
             string Text = null, 
             params string[] Attributes) {
-            Console.WriteLine("{1}<{0}>", Tag, Indent);
+            //Console.WriteLine("{1}<{0}>", Tag, Indent);
 
             StartLine(Start);
             if (Text == null) {
@@ -214,7 +214,7 @@ namespace Goedel.Registry {
         public void WriteInlineElement (string Tag,
             string Text = null,
             params string[] Attributes) {
-            Console.WriteLine("{1}<{0}>", Tag, Indent);
+            //Console.WriteLine("{1}<{0}>", Tag, Indent);
 
             if (Text == null) {
                 Output.Write("<");
@@ -243,7 +243,7 @@ namespace Goedel.Registry {
         /// <param name="Tag"></param>
         /// <param name="Attributes"></param>
         public void Start(string Tag, params string[] Attributes) {
-            Console.WriteLine("{1}<{0}>", Tag, Indent);
+            //Console.WriteLine("{1}<{0}>", Tag, Indent);
 
             StackIndent.Push(Indent);
             StackTag.Push(Tag);
@@ -266,7 +266,7 @@ namespace Goedel.Registry {
         /// <param name="Attributes"></param>
         public void Start (string Tag, bool Start, bool End,
                         params string[] Attributes) {
-            Console.WriteLine("{1}<{0}>", Tag, Indent);
+            //Console.WriteLine("{1}<{0}>", Tag, Indent);
 
             StackIndent.Push(Indent);
             StackTag.Push(Tag);
@@ -322,8 +322,8 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="Text"></param>
         public void Write (string Text="", bool Start = true, bool End = true) {
-            Console.Write("{0}:  ", StackTag.Count);
-            Console.WriteLine(Text);
+            //Console.Write("{0}:  ", StackTag.Count);
+            //Console.WriteLine(Text);
             StartLine(Start);
             Output.Write(Text.AsXML());
             EndLine(End);
@@ -355,7 +355,7 @@ namespace Goedel.Registry {
             Output.Write(">");
             EndLine(End);
 
-            Console.WriteLine("{1}</{0}>", Tag, Indent);
+            //Console.WriteLine("{1}</{0}>", Tag, Indent);
             }
 
         protected void StartLine(bool Write=true) {

@@ -13,11 +13,11 @@ namespace Goedel.Registry {
     /// </summary>
     public partial class Script {
         /// <summary>The script output writer</summary>
-		public TextWriter _Output = null;
+		public TextWriter _Output { get; set; } = null;
         /// <summary>The current indent string, this is prefixed to each line.</summary>
-        public string _Indent = "";
+        public string _Indent { get; set; } = "";
         /// <summary>The output filename.</summary>
-        public string _Filename = null;
+        public string _Filename { get; set; } = null;
 
         /// <summary>
         /// Default constructor

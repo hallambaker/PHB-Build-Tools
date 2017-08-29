@@ -127,7 +127,7 @@ namespace Goedel.Command {
                             switch (Describe.Entries[j]) {
                                 case DescribeEntryParameter Entry: {
                                     SetValue(Options._Data[Entry.Index], CommandLex.Value);
-                                    Parameter++;
+                                    Parameter = j+1;
                                     Search = false;
                                     break;
                                     }

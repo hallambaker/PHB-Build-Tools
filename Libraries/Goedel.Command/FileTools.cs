@@ -71,8 +71,8 @@ namespace Goedel.Command {
         /// <param name="Entry">The command line entry.</param>
         /// <param name="Default">The default file name.</param>
         /// <returns>The defaulted output file.</returns>
-        public static string DefaultFile(_File Entry, string Default) {
-            return Path.GetFileNameWithoutExtension(Default) + "." + Entry.Extension;
+        public static string DefaultFile(string Extension, string Default) {
+            return Path.GetFileNameWithoutExtension(Default) + "." + Extension;
             }
 
 

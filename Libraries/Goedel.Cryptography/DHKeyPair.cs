@@ -27,7 +27,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The private key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
-        public override IPKIXPublicKey PKIXPublicKey { get { return PKIXPublicKeyDH; }  }
+        public override IPKIXPublicKey PKIXPublicKey { get => PKIXPublicKeyDH; }  
 
 
         /// <summary>
@@ -45,9 +45,7 @@ namespace Goedel.Cryptography {
         /// Return private key parameters in PKIX structure
         /// </summary>
         public override DHDomain DHDomain {
-            get {
-                return PublicKey.DHDomain;
-                }
+            get => PublicKey.DHDomain;
             }
 
         /// <summary>
@@ -73,19 +71,16 @@ namespace Goedel.Cryptography {
         /// The public key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
         public override SubjectPublicKeyInfo KeyInfoData {
-            get {
-                return PKIXPublicKeyDH.SubjectPublicKeyInfo();
-                }
+            get => PKIXPublicKeyDH.SubjectPublicKeyInfo();
             }
 
         /// <summary>
         /// The public key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
         public override SubjectPublicKeyInfo PrivateKeyInfoData {
-            get {
-                return PKIXPrivateKeyDH.SubjectPublicKeyInfo();
-                }
+            get => PKIXPrivateKeyDH.SubjectPublicKeyInfo();
             }
+
 
 
         /// <summary>
@@ -137,12 +132,11 @@ namespace Goedel.Cryptography {
                 Public = PrivateKey.Public.ToByteArray(),
                 };
 
-            if (KeySecurity == KeySecurity.Master | KeySecurity == KeySecurity.Exportable) {
+            if (KeySecurity.IsExportable()) {
                 this.PKIXPrivateKeyDH = PKIXPrivateKeyDH; // Enable export.
                 }
 
-            if (KeySecurity == KeySecurity.Master | KeySecurity == KeySecurity.Admin |
-                    KeySecurity == KeySecurity.Device) {
+            if (KeySecurity.IsPersisted()) {
                 Platform.WriteToKeyStore(PKIXPrivateKeyDH, KeySecurity);
                 }
             }
@@ -202,7 +196,7 @@ namespace Goedel.Cryptography {
 
             var Result = new KeyPair[Shares];
             for (var i = 0; i < Shares; i++) {
-                Result[i] = new DHKeyPair(Private[i]);
+                Result[i] = new DHKeyPair(Private[i], KeySecurity: KeySecurity.Exportable);
                 }
 
             return Result;

@@ -85,11 +85,11 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="PKIXParameters"></param>
         public DiffeHellmanPublic (PKIXPublicKeyDH PKIXParameters) {
-            var Domain = PKIXParameters.Domain;
-            Assert.NotNull(Domain, UnknownNamedParameters.Throw);
+            DHDomain = PKIXParameters.Domain;
+            Assert.NotNull(DHDomain, UnknownNamedParameters.Throw);
 
-            Modulus = Domain.BigIntegerP;
-            Generator = Domain.BigIntegerG;
+            Modulus = DHDomain.BigIntegerP;
+            Generator = DHDomain.BigIntegerG;
             Public = PKIXParameters.Public.ToBigInteger();
 
             }

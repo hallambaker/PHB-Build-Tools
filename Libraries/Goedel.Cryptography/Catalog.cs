@@ -44,7 +44,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         public static CryptoCatalog Default {
             get {
-                if (_CryptoCatalog == null) _CryptoCatalog = new CryptoCatalog();
+                _CryptoCatalog = _CryptoCatalog ?? new CryptoCatalog();
                 return _CryptoCatalog;
                 }
             }
@@ -153,10 +153,9 @@ namespace Goedel.Cryptography {
         /// <param name="ID">Combined algorithm identifier.</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
         public CryptoProvider Get(CryptoAlgorithmID ID) {
-            CryptoAlgorithm Meta;
 
             // Look for an exact match first implementing the combined ID
-            var Found = Dictionary.TryGetValue(ID, out Meta);
+            var Found = Dictionary.TryGetValue(ID, out var Meta);
             if (Found) {
                 return Meta.CryptoProviderFactory (Meta.KeySize, ID);
                 }
@@ -246,7 +245,9 @@ namespace Goedel.Cryptography {
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
         public CryptoProviderSignature GetSignature(string UDF) {
             var Key = KeyPair.FindLocal(UDF);
-            if (Key == null) return null;
+            if (Key == null) {
+                return null;
+                }
             return Key.SignatureProvider();
             }
 
@@ -257,7 +258,9 @@ namespace Goedel.Cryptography {
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
         public CryptoProviderExchange GetExchange(string UDF) {
             var Key = KeyPair.FindLocal(UDF);
-            if (Key == null) return null;
+            if (Key == null) {
+                return null;
+                }
             return Key.ExchangeProvider();
             }
 
@@ -298,7 +301,7 @@ namespace Goedel.Cryptography {
     /// <param name="KeySize">Key size parameter (if needed).</param>
     /// <param name="BulkAlgorithmID">Algorithm identifier of bulk algorithm (if needed).</param>
     /// <returns></returns>
-    public delegate CryptoProvider GetCryptoProviderGenerate(int KeySize, CryptoAlgorithmID BulkAlgorithmID);
+    public delegate CryptoProvider GetCryptoProviderGenerateDelegate(int KeySize, CryptoAlgorithmID BulkAlgorithmID);
 
 
     /// <summary>
@@ -307,7 +310,7 @@ namespace Goedel.Cryptography {
     /// </summary>
     /// <param name="Key">Reference to Key</param>
     /// <returns></returns>
-    public delegate CryptoProvider GetCryptoProviderByHandle (KeyHandle Key);
+    public delegate CryptoProvider GetCryptoProviderByHandleDelegate (KeyHandle Key);
 
     /// <summary>
     /// Base class for cryptography providers.
@@ -318,7 +321,7 @@ namespace Goedel.Cryptography {
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
         public virtual CryptoAlgorithm CryptoAlgorithm {
-            get { return null; }
+            get => null; 
             }
 
         /// <summary>
@@ -340,7 +343,7 @@ namespace Goedel.Cryptography {
         /// The UDF fingerprint of the key.
         /// </summary>
         public virtual string UDF {
-            get { return null; }
+            get => null; 
             }
 
         /// <summary>
@@ -375,9 +378,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="CryptoData"></param>
         public virtual void Complete (CryptoData CryptoData) {
-            var MemoryStream = CryptoData.OutputStream as MemoryStream;
-
-            if (MemoryStream != null) {
+            if (CryptoData.OutputStream is MemoryStream MemoryStream) {
                 CryptoData.ProcessedData = MemoryStream.ToArray();
                 }
             return;

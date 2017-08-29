@@ -419,7 +419,7 @@ namespace Goedel.Document.RFC  {
                     }
                 }
             catch {
-                Console.WriteLine("$04-Not Found {}", Citation.Label);
+                Console.WriteLine("$04-Not Found {0}", Citation.Label);
                 }
             finally {
                 Document.Catalog.ForceReferenceID = null;

@@ -213,7 +213,7 @@ namespace Goedel.Document.RFC {
                 Result.Add(TLP6bii_2);
                 }
 
-            switch (Document.Ipr) {
+            switch (Document.Ipr.Trim()) {
                 case "trust200902": {
                     break;
                     }

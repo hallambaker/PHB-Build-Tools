@@ -64,6 +64,19 @@ namespace Goedel.IO {
             return new StreamReader(FileStream).ReadToEnd();
             }
 
+
+        /// <summary>
+        /// Create a text reader for a file permitting other processes to
+        /// perform concurrent reads.
+        /// </summary>
+        /// <param name="Filename">The file to read.</param>
+        /// <returns>The text reader.</returns>
+        public static void OpenReadToEnd (this string Filename, out byte[] Data) {
+            var FileStream = Filename.OpenFileRead();
+            Data = new byte[FileStream.Length];
+            FileStream.Read(Data, 0, (int)FileStream.Length); // NYI support, test 64 bit file lengths
+            }
+
         /// <summary>
         /// Create a new file for exclusive write access, overwriting 
         /// any existing file.

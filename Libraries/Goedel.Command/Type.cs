@@ -182,8 +182,10 @@ namespace Goedel.Command {
         /// </summary>
         /// <param name="Source">The source file.</param>
         /// <returns>File name.</returns>
-        public string DefaultFile (string Source) {
-            Text = FileTools.DefaultFile(this, Source);
+        public string DefaultFile (string Source, string Extension = null) {
+            Extension = Extension ?? this.Extension;
+
+            Text = FileTools.DefaultFile(Extension, Source);
             return Text;
             }
 

@@ -184,34 +184,6 @@ namespace Goedel.Protocol {
             return null;
             }
 
-        ///// <summary>
-        ///// Factory method to construct object from tagged byte data.
-        ///// </summary>
-        ///// <param name="_Data">Source</param>
-        ///// <returns>Constructed object</returns>
-        //public static JSONObject FromTagged(byte[] _Data) {
-        //    return null;
-        //    }
-
-        ///// <summary>
-        ///// Factory method to construct object from tagged string data.
-        ///// </summary>
-        ///// <param name="_Input">Source</param>
-        ///// <returns>Constructed object</returns>
-        //public static JSONObject FromTagged(string _Input) {
-        //    return null;
-        //    }
-
-        ///// <summary>
-        ///// Factory method to construct object from tagged string data.
-        ///// </summary>
-        ///// <param name="_Input">Source</param>
-        ///// <returns>Constructed object</returns>
-        //public static JSONObject FromTagged(JSONReader _Input) {
-        //    return null;
-        //    }
-
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -221,6 +193,7 @@ namespace Goedel.Protocol {
         public static JSONObject FromJSON (JSONReader _Input, bool Tagged) {
             return null;
             }
+
         /// <summary>
         /// Deserialize the input string to populate this object
         /// </summary>

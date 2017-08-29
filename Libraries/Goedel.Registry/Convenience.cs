@@ -145,6 +145,17 @@ namespace Goedel.Registry {
             return Value ? TrueText : FalseText;
             }
 
+        /// <summary>
+        /// To Be Specified stub. Writes out the value to the console an returns the string.
+        /// </summary>
+        /// <param name="Value"></param>
+        /// <returns></returns>
+        public static string TBS (this string Value, bool Bold=true) {
+            var Message = String.Format("TBS: {0}", Value);
+            Console.WriteLine(Message);
+            return Bold ? "<b>" + Message + "</b>" : Message;
+            }
+
         }
 
 

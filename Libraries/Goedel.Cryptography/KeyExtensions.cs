@@ -56,7 +56,8 @@ namespace Goedel.Cryptography {
         /// <param name="KeySecurity"></param>
         /// <returns>True if the value is KeySecurity.Master or Exportable</returns>
         public static bool IsExportable (this KeySecurity KeySecurity) {
-            return (KeySecurity == KeySecurity.Master | KeySecurity == KeySecurity.Exportable);
+            return (KeySecurity == KeySecurity.Master | KeySecurity == KeySecurity.Exportable
+                | KeySecurity == KeySecurity.Application);
             }
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace Goedel.Cryptography {
         /// <returns>True if the value is KeySecurity.Master, Admin or Device</returns>
         public static bool IsPersisted(this KeySecurity KeySecurity) {
             return (KeySecurity == KeySecurity.Master | KeySecurity == KeySecurity.Admin |
-                    KeySecurity == KeySecurity.Device);
+                    KeySecurity == KeySecurity.Device | KeySecurity == KeySecurity.Application);
             }
 
 

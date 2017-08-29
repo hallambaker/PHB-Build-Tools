@@ -106,7 +106,7 @@ namespace Goedel.Cryptography {
         /// <param name="KeySize">The Key size</param>
         public CryptoProviderExchangeDH(KeySecurity KeySecurity= KeySecurity.Ephemeral,
                     int  KeySize=2048) {
-            Generate(KeySecurity.Ephemeral, KeySize);
+            Generate(KeySecurity, KeySize);
             }
 
         // From CryptoProviderAsymmetric
