@@ -46,7 +46,7 @@ namespace Goedel.Cryptography.Jose {
         public KeyData(KeyHandle KeyHandle) {
 
 
-            kid = KeyHandle.UDF; // The Key identifier is always the UDF of the key.
+            Kid = KeyHandle.UDF; // The Key identifier is always the UDF of the key.
 
 
             }

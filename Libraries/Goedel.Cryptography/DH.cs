@@ -58,10 +58,13 @@ namespace Goedel.Cryptography {
         /// a newly constructed generator and public and private keys.
         /// </summary>
         /// <param name="DHDomain">The shared parameters</param>
-        public DiffeHellmanPublic(DHDomain DHDomain)  {
+        public DiffeHellmanPublic(DHDomain DHDomain, BigInteger? Public=null)  {
             this.DHDomain = DHDomain;
             Modulus = DHDomain.BigIntegerP;
             Generator = DHDomain.BigIntegerG;
+            if (Public != null) {
+                this.Public = (BigInteger)Public;
+                }
             }
 
 
@@ -104,9 +107,10 @@ namespace Goedel.Cryptography {
         /// key agreement.</returns>
         public DiffieHellmanResult Agreement() {
             var Private = new DiffeHellmanPrivate(this);
+            var DiffeHellmanPublic = Private.DiffeHellmanPublic;
 
             var Result = new DiffieHellmanResult() {
-                DiffeHellmanPublic = Private.DiffeHellmanPublic,
+                DiffeHellmanPublic = DiffeHellmanPublic,
                 Agreement = Private.Agreement(this)
                 };
 
@@ -162,8 +166,7 @@ namespace Goedel.Cryptography {
         public DiffeHellmanPublic DiffeHellmanPublic {
             get {
                 if (_DiffeHellmanPublic == null) {
-                    _DiffeHellmanPublic = new DiffeHellmanPublic(
-                        Modulus: Modulus, Generator: Generator, Public: Public);
+                    _DiffeHellmanPublic = new DiffeHellmanPublic(DHDomain, Public);
                     }
                 return _DiffeHellmanPublic;
                 }
@@ -201,9 +204,11 @@ namespace Goedel.Cryptography {
         /// <param name="DiffeHellmanPublic">Public key to use to specify the
         /// modulus and generator</param>
         public DiffeHellmanPrivate(DiffeHellmanPublic DiffeHellmanPublic) : 
-                    base(Modulus:DiffeHellmanPublic.Modulus,
-                        Generator:DiffeHellmanPublic.Generator,
-                        Public: null) {
+                    //base(Modulus:DiffeHellmanPublic.Modulus,
+                    //    Generator:DiffeHellmanPublic.Generator,
+                    //    Public: null) {
+                     base(DiffeHellmanPublic.DHDomain) {
+
             Private = Platform.GetRandomBigInteger(Modulus);
             Public = BigInteger.ModPow(Generator, Private, Modulus);
             IsRecryption = false;
@@ -278,7 +283,31 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Represent the result of a Diffie Hellman Key exchange.
     /// </summary>
-    public class DiffieHellmanResult {
+    public class DiffieHellmanResult : KeyAgreementResult {
+
+        /// <summary>Wrap as an ASN.1 Structure</summary>
+        public AgreementDH ASNAgreement {
+            get => new AgreementDH() {
+                Result = Agreement.ToByteArray()
+                };
+            }
+
+
+        public override int[] OID => null;
+
+        public override byte[] DER () => ASNAgreement.DER();
+
+        ///// <summary>Convert to ASN.1 DER form </summary>
+        //public abstract byte[] GetJson { get; }
+
+
+        /// <summary>Default Constructor</summary>
+        public DiffieHellmanResult () { }
+
+        /// <summary>Constructor from ASN.1 parameters</summary>
+        public DiffieHellmanResult (AgreementDH AgreementDH) {
+            Agreement = new BigInteger(AgreementDH.Result);
+            }
 
         /// <summary>The key agreement result</summary>
         public BigInteger Agreement;

@@ -77,7 +77,16 @@ Namespace Goedel.Cryptography
 			Description
 				|A request was made for a cipher mode that the registered provider 
 				|does not support.
-				
+		
+		Exception CryptographicOperationNotSupported
+			Console "The requested cryptographic operation is not supported by the provider"
+			Description
+				|A request was made for a cipher mode that the registered provider 
+				|does not support.			
+
+		Exception KeyTypeMismatch
+			Console "The encryption key type does not match the recryption key type"
+
 
 		Exception NoProviderSpecified
 			Console "No provider specified"

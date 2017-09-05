@@ -318,6 +318,9 @@ namespace Goedel.Protocol {
         /// <summary>If true, have reached the end of the current record.</summary>
         public bool EOR = false;
 
+
+        public static bool Trace = false;
+
         /// <summary>Get the next token.</summary>
         public virtual void GetToken () {
             EOR = false;
@@ -325,7 +328,9 @@ namespace Goedel.Protocol {
                 TokenString = Lexer (out TokenType);
                 }
             Lookahead = false;
-            //Debug.WriteLine("Got {0} \"{1}\"", TokenType, TokenString);
+            if (Trace) {
+                Debug.WriteLine("Got {0} \"{1}\"", TokenType, TokenString);
+                }
             }
 
         /// <summary>Unget a token.</summary>

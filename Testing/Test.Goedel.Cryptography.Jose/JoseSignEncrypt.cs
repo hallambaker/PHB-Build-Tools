@@ -5,6 +5,7 @@ using UT = Microsoft.VisualStudio.TestTools.UnitTesting;
 using Goedel.Utilities;
 using Goedel.Test;
 using Goedel.IO;
+using Goedel.Protocol;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Framework;
@@ -27,7 +28,7 @@ namespace Test.Goedel.Cryptography.Jose {
             var JWEText = JWE.ToString();
             var JWEProt = JWE.Protected.ToUTF8();
 
-            var JWE2 = JoseWebEncryption.FromTagged(JWEText);
+            var JWE2 = JoseWebEncryption.FromJSON(JWEText.JSONReader());
             var Data = JWE2.Decrypt(EncrypterKeyPair);
             var Text = Data.ToUTF8();
 
@@ -43,7 +44,7 @@ namespace Test.Goedel.Cryptography.Jose {
             var JWE = new JoseWebEncryption(TestString, Key);
             var JWEText = JWE.ToString();
 
-            var JWE2 = JoseWebEncryption.FromTagged(JWEText);
+            var JWE2 = JoseWebEncryption.FromJSON(JWEText.JSONReader());
 
             var Data = JWE2.Decrypt(Key);
             var Text = Data.ToUTF8();
@@ -61,7 +62,7 @@ namespace Test.Goedel.Cryptography.Jose {
                 var JWSProt = Signer.Protected.ToUTF8();
                 }
 
-            var JWS2 = JoseWebSignature.FromTagged(JWSText);
+            var JWS2 = JoseWebSignature.FromJSON(JWSText.JSONReader());
 
             var Verify1 = JWS2.Verify(SignerKeyPair);
             UT.Assert.IsTrue(Verify1);
@@ -83,7 +84,7 @@ namespace Test.Goedel.Cryptography.Jose {
                 var JWSProt = Signer.Protected.ToUTF8();
                 }
 
-            var JWES2 = JoseWebEncryption.FromTagged(JWESText);
+            var JWES2 = JoseWebEncryption.FromJSON(JWESText.JSONReader());
 
             var Data2 = JWES2.Decrypt(EncrypterKeyPair);
             var Text = Data2.ToUTF8();

@@ -39,18 +39,13 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID {
-            get {
-                return CryptoAlgorithmID.RSAExch;
-                }
-            }
+        public override CryptoAlgorithmID CryptoAlgorithmID => CryptoAlgorithmID.RSAExch;
+
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm {
-            get { return CryptoAlgorithmAny; }
-            }
+        public override CryptoAlgorithm CryptoAlgorithm => CryptoAlgorithmAny; 
 
         static CryptoAlgorithm CryptoAlgorithmAny = new CryptoAlgorithm(
                     CryptoAlgorithmID.RSAExch, 2048, _AlgorithmClass, Factory);
@@ -82,9 +77,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The wrapped provider class.
         /// </summary>
-        RSACryptoServiceProvider Provider {
-            get { return _RSAKeyPair.Provider; }
-            }
+        RSACryptoServiceProvider Provider =>_RSAKeyPair.Provider; 
 
         /// <summary>
         /// The default key size
@@ -99,12 +92,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The key fingerprint.
         /// </summary>
-        public override string UDF {
-            get {
-                if (KeyPair == null) return null;
-                return KeyPair.UDF;
-                }
-            }
+        public override string UDF => KeyPair?.UDF;
+
 
         /// <summary>
         /// If true (default), OAEP padding will be used. If false, deprecated PKCS#1.5 
@@ -138,11 +127,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Default algorithm key size.
         /// </summary>
-        public override int Size {
-            get {
-                return KeySize;
-                }
-            }
+        public override int Size => KeySize;
+
 
         /// <summary>
         /// Generate a new RSA Key Pair with the Key size specified when the 
@@ -194,11 +180,13 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="EncryptedKey">The encrypted session</param>
         /// <param name="Ephemeral">Ephemeral key input (unused in RSA)</param>
         /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <param name="Partial">Partial result for use in recryption (ignored)</param>
         /// <returns>The decoded data instance</returns>
         public override byte[] Decrypt(
                     byte[] EncryptedKey,
                     KeyPair Ephemeral = null,
-                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
+                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+                    KeyAgreementResult Partial = null) {
             return Provider.Decrypt(EncryptedKey, OAEP);
             }
 
@@ -212,11 +200,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID {
-            get {
-                return CryptoAlgorithmID.RSAExch_P15;
-                }
-            }
+        public override CryptoAlgorithmID CryptoAlgorithmID => CryptoAlgorithmID.RSAExch_P15;
+
         
         /// <summary>
         /// RSA provider that defaults to the PKCS#1.5 padding. For compatibility use only.

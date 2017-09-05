@@ -50,6 +50,37 @@ namespace Goedel.Utilities {
     /// </summary>
     public static class Assert {
 
+
+        /// <summary>Throw an exception if the specified condition is true. 
+        ///Assert.False (test, NYIException.Throw, "test was true")
+        /// </summary>
+        /// <param name="Throw">Delegate that creates the exception to be thrown if
+        /// Condition is true</param>
+        /// <param name="Reason">Reason data for filling throw template</param>
+        /// <param name="Int">Integer default parameter</param>
+        /// <param name="String">String default parameter</param>
+        public static void Fail (ThrowDelegate Throw = null,
+                    object Reason = null, string String = null, int Int = -1) {
+
+            Reason = Reason ?? new ExceptionData() {
+                String = String,
+                Int = Int
+                };
+            Throw = Throw ?? Utilities.NYI.Throw;
+            throw Throw(Reason);
+            }
+
+
+        /// <summary>Throw a Not Yet Implemented exception.
+        /// </summary>
+        /// <param name="Reason">Reason data for filling throw template</param>
+        /// <param name="Int">Integer default parameter</param>
+        /// <param name="String">String default parameter</param>
+        public static void NYI (object Reason = null, string String = null, int Int = -1) {
+
+            Fail(Utilities.NYI.Throw, Reason, String, Int);
+            }
+
         /// <summary>Throw an exception if the specified condition is true. 
         ///Assert.False (test, NYIException.Throw, "test was true")
         /// </summary>
@@ -61,14 +92,8 @@ namespace Goedel.Utilities {
         /// <param name="String">String default parameter</param>
         public static void False(bool Condition, ThrowDelegate Throw=null, 
                     object Reason=null, string String = null, int Int = -1) {
-
-            Reason = Reason ?? new ExceptionData() {
-                String = String,
-                Int = Int
-                };
-            Throw = Throw ?? NYI.Throw;
             if (Condition) {
-                 throw Throw(Reason);
+                Fail(Throw, Reason, String, Int);
                 }
             }
 
@@ -83,7 +108,9 @@ namespace Goedel.Utilities {
         /// <param name="String">String default parameter</param>
         public static void True(bool Condition, ThrowDelegate Throw=null,
                     object Reason = null, string String = null, int Int = -1) {
-            False(!Condition, Throw, Reason);
+            if (!Condition) {
+                Fail(Throw, Reason, String, Int);
+                }
             }
 
         /// <summary>Throw an exception if the specified object is not null. 
@@ -96,7 +123,7 @@ namespace Goedel.Utilities {
         /// <param name="String">String default parameter</param>
         public static void Null(object Object, ThrowDelegate Throw=null,
                     object Reason = null, string String = null, int Int = -1) {
-            True(Object == null, Throw, Reason);
+            True(Object == null, Throw, Reason, String, Int);
             }
 
         /// <summary>Throw an exception if the specified object is not null. 
@@ -109,7 +136,7 @@ namespace Goedel.Utilities {
         /// <param name="String">String default parameter</param>
         public static void NotNull(object Object, ThrowDelegate Throw=null,
                     object Reason = null, string String = null, int Int = -1) {
-            True(Object != null, Throw, Reason);
+            True(Object != null, Throw, Reason, String, Int);
             }
 
         }

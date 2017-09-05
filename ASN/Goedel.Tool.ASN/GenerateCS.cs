@@ -167,7 +167,7 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("		/// The OID value\n{0}", _Indent);
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
 					_Output.Write ("		public override int [] OID {{ \n{0}", _Indent);
-					_Output.Write ("			get {{ return Constants.OID__{1}; }} }}  \n{0}", _Indent, Object.OID);
+					_Output.Write ("			get => Constants.OID__{1}; }}  \n{0}", _Indent, Object.OID);
 					_Output.Write ("\n{0}", _Indent);
 					
 					 
@@ -218,7 +218,7 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("		/// The OID value\n{0}", _Indent);
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
 					_Output.Write ("		public override int [] OID {{ \n{0}", _Indent);
-					_Output.Write ("			get {{ return Constants.OID__{1}; }} }}  \n{0}", _Indent, SingularObject.OID);
+					_Output.Write ("			get => Constants.OID__{1}; }} \n{0}", _Indent, SingularObject.OID);
 					_Output.Write ("\n{0}", _Indent);
 					foreach  (Member Member in SingularObject.Entries) {
 						 EntryDeclaration (Member);

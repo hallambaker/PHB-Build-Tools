@@ -19,11 +19,11 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="KeyPair">An RSA key Pair.</param>
         public PublicKeyRSA(RSAKeyPairBase KeyPair) {
-            kid = KeyPair.UDF;
+            Kid = KeyPair.UDF;
             var RSAPublicKey = KeyPair.PKIXPublicKeyRSA;
 
-            n = RSAPublicKey.Modulus;
-            e = RSAPublicKey.PublicExponent;
+            N = RSAPublicKey.Modulus;
+            E = RSAPublicKey.PublicExponent;
             }
 
         /// <summary>
@@ -31,18 +31,18 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="RSAPublicKey">RSA Public Key.</param>
         public PublicKeyRSA(PKIXPublicKeyRSA RSAPublicKey) {
-            this.n = RSAPublicKey.Modulus;
-            this.e = RSAPublicKey.PublicExponent;
+            this.N = RSAPublicKey.Modulus;
+            this.E = RSAPublicKey.PublicExponent;
             }
 
 
         /// <summary>
         /// Return the parameters as a PKIX RSAPublicKey structure;
         /// </summary>
-        public virtual PKIXPublicKeyRSA PKIXParameters {
+        public virtual PKIXPublicKeyRSA PKIXPublicKeyRSA {
             get => new PKIXPublicKeyRSA() {
-                Modulus = n,
-                PublicExponent = e
+                Modulus = N,
+                PublicExponent = E
                 };
             }
 
@@ -53,8 +53,8 @@ namespace Goedel.Cryptography.Jose {
         /// <returns>The extracted key pair</returns>
         public override KeyPair GetKeyPair(bool Exportable = false) {
 
-            var PKIXParams = PKIXParameters;
-            var KeyPair = RSAKeyPairBase.KeyPairFactory(PKIXParams);
+            var PKIXParams = PKIXPublicKeyRSA;
+            var KeyPair = RSAKeyPairBase.KeyPairPublicFactory(PKIXParams);
 
             return KeyPair;
             }
@@ -75,16 +75,16 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="KeyPair">An RSA key Pair.</param>
         public PrivateKeyRSA(RSAKeyPairBase KeyPair) {
-            kid = KeyPair.UDF;
+            Kid = KeyPair.UDF;
             var RSAPrivateKey = KeyPair.PKIXPrivateKeyRSA;
-            n = RSAPrivateKey.Modulus;
-            e = RSAPrivateKey.PublicExponent;
-            d = RSAPrivateKey.PrivateExponent;
-            p = RSAPrivateKey.Prime1;
-            q = RSAPrivateKey.Prime2;
-            dp = RSAPrivateKey.Exponent1;
-            dq = RSAPrivateKey.Exponent2;
-            qi = RSAPrivateKey.Coefficient;
+            N = RSAPrivateKey.Modulus;
+            E = RSAPrivateKey.PublicExponent;
+            D = RSAPrivateKey.PrivateExponent;
+            P = RSAPrivateKey.Prime1;
+            Q = RSAPrivateKey.Prime2;
+            DP = RSAPrivateKey.Exponent1;
+            DQ = RSAPrivateKey.Exponent2;
+            QI = RSAPrivateKey.Coefficient;
             }
 
 
@@ -93,30 +93,45 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="RSAPrivateKey">RSA Public Key.</param>
         public PrivateKeyRSA(PKIXPrivateKeyRSA RSAPrivateKey) {
-            n = RSAPrivateKey.Modulus;
-            e = RSAPrivateKey.PublicExponent;
-            d = RSAPrivateKey.PrivateExponent;
-            p = RSAPrivateKey.Prime1;
-            q = RSAPrivateKey.Prime2;
-            dp = RSAPrivateKey.Exponent1;
-            dq = RSAPrivateKey.Exponent2;
-            qi = RSAPrivateKey.Coefficient;
+            N = RSAPrivateKey.Modulus;
+            E = RSAPrivateKey.PublicExponent;
+            D = RSAPrivateKey.PrivateExponent;
+            P = RSAPrivateKey.Prime1;
+            Q = RSAPrivateKey.Prime2;
+            DP = RSAPrivateKey.Exponent1;
+            DQ = RSAPrivateKey.Exponent2;
+            QI = RSAPrivateKey.Coefficient;
             }
 
         /// <summary>
         /// Return the parameters as PKIX RSAPrivateKey structure;
         /// </summary>
-        public virtual PKIXPrivateKeyRSA RSAPrivateKey {
+        public virtual PKIXPrivateKeyRSA PKIXPrivateKeyRSA {
             get => new PKIXPrivateKeyRSA() {
-                    Modulus = n,
-                    PublicExponent = e,
-                    PrivateExponent = d,
-                    Prime1 = p,
-                    Prime2 = q,
-                    Exponent1 = dp,
-                    Exponent2 = dq,
-                    Coefficient = qi
+                    Modulus = N,
+                    PublicExponent = E,
+                    PrivateExponent = D,
+                    Prime1 = P,
+                    Prime2 = Q,
+                    Exponent1 = DP,
+                    Exponent2 = DQ,
+                    Coefficient = QI
                     };
+            }
+
+
+
+        /// <summary>
+        /// Extract a KeyPair object from the JOSE data structure.
+        /// </summary>
+        /// <param name="Exportable">If true the private key may be exported.</param>
+        /// <returns>The extracted key pair</returns>
+        public override KeyPair GetKeyPair (bool Exportable = false) {
+
+            var PKIXParams = PKIXPublicKeyRSA;
+            var KeyPair = RSAKeyPairBase.KeyPairPrivateFactory(PKIXPrivateKeyRSA);
+
+            return KeyPair;
             }
 
         }

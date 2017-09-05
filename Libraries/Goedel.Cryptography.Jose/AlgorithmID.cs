@@ -41,6 +41,8 @@ namespace Goedel.Cryptography.Jose {
                 { "RSA-OAEP-256", CryptoAlgorithmID.RSAExch | CryptoAlgorithmID.SHA_2_256},
                 //RSA-OAEP-256	RSAES OAEP using SHA-256 and MGF1 with SHA-256	alg Optional[IESG]  [RFC7518, Section 4.3]
                 { "RSA-OAEP-512", CryptoAlgorithmID.RSAExch | CryptoAlgorithmID.SHA_2_512},
+
+
     
                 //dir Direct use of a shared symmetric key alg Recommended[IESG][RFC7518, Section 4.5]
                 { "dir", CryptoAlgorithmID.Direct},                            
@@ -81,6 +83,11 @@ namespace Goedel.Cryptography.Jose {
                 //A256CBC AES CBC using 256 bit key   JWK Prohibited[W3C_Web_Cryptography_Working_Group]    
                 //[https://www.w3.org/TR/WebCryptoAPI]	[draft-irtf-cfrg-webcrypto-algorithms]
                 { "A256CBC", CryptoAlgorithmID.AES256CBC},
+
+                // Additional algorithms
+
+                // Diffie Hellman using HKDF Key derrivation and RFC3394 Key Wrap
+                { "DH", CryptoAlgorithmID.DH},
 
 
                 // Special

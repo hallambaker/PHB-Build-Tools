@@ -42,9 +42,7 @@ namespace Goedel.Cryptography {
             CryptoAlgorithmClass.Exchange;
 
         /// <summary>Return the crypto algorithm class.</summary>
-        public override CryptoAlgorithmClass AlgorithmClass {
-            get { return _AlgorithmClass; }
-            }
+        public override CryptoAlgorithmClass AlgorithmClass => _AlgorithmClass; 
 
         /// <summary>
         /// Extract the actual algorithm ID from the requested Algorithm ID. This allows
@@ -96,8 +94,7 @@ namespace Goedel.Cryptography {
             Result.AlgorithmIdentifier = ExchangeAlgorithm | Encryption.CryptoAlgorithmID;
 
             var Exchange = Encrypt(Result);
-            Result.Exchanges = new List<CryptoDataExchange>();
-            Result.Exchanges.Add (Exchange);
+            Result.Exchanges = new List<CryptoDataExchange>() { Exchange};
 
             return Result;
             }
@@ -145,7 +142,8 @@ namespace Goedel.Cryptography {
         /// <returns>The decoded data instance</returns>
         public abstract byte[] Decrypt(
                     byte[] EncryptedKey, KeyPair Ephemeral = null,
-                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default);
+                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+                    KeyAgreementResult Partial = null);
 
         }
     }

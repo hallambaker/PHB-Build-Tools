@@ -496,6 +496,8 @@ Class PKIXPrivateKeyDH
 	Public					BigInteger
 	Private					BigInteger
 
+Class AgreementDH
+	Result					BigInteger
 
 Class Endorsement  
 	TBSEndorsement   		TBSEndorsement

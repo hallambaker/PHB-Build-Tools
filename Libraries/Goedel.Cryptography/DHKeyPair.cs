@@ -203,6 +203,16 @@ namespace Goedel.Cryptography {
             }
 
 
+        public override KeyAgreementResult Agreement (KeyPair KeyPair) {
+            var DHKeyPair = KeyPair as DHKeyPair;
+            Assert.NotNull(DHKeyPair, KeyTypeMismatch.Throw);
+
+
+            return Agreement(DHKeyPair);
+            }
+
+
+
         /// <summary>
         /// Perform a Diffie Hellman Key Agreement to a private key
         /// </summary>
@@ -218,8 +228,14 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Public">Public key parameters</param>
         /// <returns>The key agreement value ZZ</returns>
-        public DiffieHellmanResult Agreement(DHKeyPair Public) {
-            var Agreement = PrivateKey.Agreement(Public.PublicKey);
+        public DiffieHellmanResult Agreement(DHKeyPair Public, DiffieHellmanResult Carry = null) {
+            BigInteger Agreement;
+            if (Carry == null) {
+                Agreement = PrivateKey.Agreement(Public.PublicKey);
+                }
+            else {
+                Agreement = PrivateKey.Agreement(Public.PublicKey, Carry.Agreement);
+                }
             return new DiffieHellmanResult() { Agreement = Agreement };
             }
 
@@ -266,4 +282,21 @@ namespace Goedel.Cryptography {
             return Platform.FindInKeyStore(UDF, CryptoAlgorithmID.DH);
             }
         }
+
+    public abstract partial class KeyAgreementResult : IPKIXAgreement {
+        /// <summary>
+        /// Return the DER encoding of this structure
+        /// </summary>
+        /// <returns>The DER encoded value.</returns>
+        public abstract byte[] DER ();
+
+
+        /// <summary>
+        /// Return the algorithm identifier that represents this key
+        /// </summary>
+        public abstract int[] OID { get; }
+
+        }
+
+
     }

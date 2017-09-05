@@ -152,10 +152,11 @@ namespace Goedel.Cryptography {
             var Exchange = Platform.KeyWrapRFC3394.Wrap(
                         KeyDerive.ClientToServerEncrypt(Data.Key.Length*8), Data.Key);
             
-            return new CryptoDataExchange(Algorithm, Data, this) {
+            var Result = new CryptoDataExchange(Algorithm, Data, this) {
                 Exchange = Exchange,
                 Ephemeral = new DHKeyPair(Agreement.DiffeHellmanPublic)
                 };
+            return Result;
             }
 
         /// <summary>
@@ -168,10 +169,11 @@ namespace Goedel.Cryptography {
         public override byte[] Decrypt(
                     byte[] EncryptedKey,
                     KeyPair Ephemeral,
-                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
+                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+                    KeyAgreementResult Partial = null) {
 
             var DHPublic = Ephemeral as DHKeyPair;
-            var Agreement = DHKeyPair.Agreement(DHPublic);
+            var Agreement = DHKeyPair.Agreement(DHPublic, Partial as DiffieHellmanResult);
             var KeyDerive = Agreement.KeyDerive;
             var KeySize = (EncryptedKey.Length * 8) - 64;
 

@@ -124,7 +124,7 @@ namespace Goedel.VSIX.Binding.RFC {
             var Writer = new StringWriter();
 
             // Process the data
-            var Script = new global::Goedel.Tool.RFCToolBinding.BindingRFC();
+            var Script = new global::Goedel.Document.RFCToolBinding.BindingRFC();
             Script.Process2TXT (wszInputFilePath, Reader, Writer);
 
             // Convert writer data to a string and then a byte array
@@ -278,7 +278,7 @@ namespace Goedel.VSIX.Binding.RFC {
             var Writer = new StringWriter();
 
             // Process the data
-            var Script = new global::Goedel.Tool.RFCToolBinding.BindingRFC();
+            var Script = new global::Goedel.Document.RFCToolBinding.BindingRFC();
             Script.Process2XML (wszInputFilePath, Reader, Writer);
 
             // Convert writer data to a string and then a byte array
@@ -432,7 +432,7 @@ namespace Goedel.VSIX.Binding.RFC {
             var Writer = new StringWriter();
 
             // Process the data
-            var Script = new global::Goedel.Tool.RFCToolBinding.BindingRFC();
+            var Script = new global::Goedel.Document.RFCToolBinding.BindingRFC();
             Script.Process2MD (wszInputFilePath, Reader, Writer);
 
             // Convert writer data to a string and then a byte array
@@ -586,7 +586,7 @@ namespace Goedel.VSIX.Binding.RFC {
             var Writer = new StringWriter();
 
             // Process the data
-            var Script = new global::Goedel.Tool.RFCToolBinding.BindingRFC();
+            var Script = new global::Goedel.Document.RFCToolBinding.BindingRFC();
             Script.Process2AML (wszInputFilePath, Reader, Writer);
 
             // Convert writer data to a string and then a byte array
@@ -742,7 +742,7 @@ namespace Goedel.VSIX.Binding.RFC {
             var Writer = new StringWriter();
 
             // Process the data
-            var Script = new global::Goedel.Tool.RFCToolBinding.BindingRFC();
+            var Script = new global::Goedel.Document.RFCToolBinding.BindingRFC();
             Script.Process2XML (wszInputFilePath, Reader, Writer);
 
             // Convert writer data to a string and then a byte array

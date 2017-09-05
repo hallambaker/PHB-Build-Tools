@@ -72,7 +72,9 @@ namespace Goedel.Cryptography.Jose {
 			{"PublicKeyRSA", PublicKeyRSA._Factory},
 			{"PrivateKeyRSA", PrivateKeyRSA._Factory},
 			{"PublicKeyDH", PublicKeyDH._Factory},
-			{"PrivateKeyDH", PrivateKeyDH._Factory}			};
+			{"PrivateKeyDH", PrivateKeyDH._Factory},
+			{"KeyAgreement", KeyAgreement._Factory},
+			{"KeyAgreementDH", KeyAgreementDH._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -183,7 +185,6 @@ namespace Goedel.Cryptography.Jose {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -191,6 +192,9 @@ namespace Goedel.Cryptography.Jose {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new JoseWebSignature FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as JoseWebSignature;
@@ -375,7 +379,6 @@ namespace Goedel.Cryptography.Jose {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -383,6 +386,9 @@ namespace Goedel.Cryptography.Jose {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new JoseWebEncryption FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as JoseWebEncryption;
@@ -528,7 +534,6 @@ namespace Goedel.Cryptography.Jose {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -536,6 +541,9 @@ namespace Goedel.Cryptography.Jose {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Signed FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Signed;
@@ -664,7 +672,6 @@ namespace Goedel.Cryptography.Jose {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -672,6 +679,9 @@ namespace Goedel.Cryptography.Jose {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Encrypted FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Encrypted;
@@ -727,43 +737,43 @@ namespace Goedel.Cryptography.Jose {
         ///Bulk encryption algorithm for content
         /// </summary>
 
-		public virtual string						enc  {get; set;}
+		public virtual string						Enc  {get; set;}
         /// <summary>
         ///Digest algorithm hint
         /// </summary>
 
-		public virtual string						dig  {get; set;}
+		public virtual string						Dig  {get; set;}
         /// <summary>
         ///Key exchange algorithm
         /// </summary>
 
-		public virtual string						alg  {get; set;}
+		public virtual string						Alg  {get; set;}
         /// <summary>
         ///Key identifier. If a UDF fingerprint is used to identify the 
         ///key it is placed in this field.
         /// </summary>
 
-		public virtual string						kid  {get; set;}
+		public virtual string						Kid  {get; set;}
         /// <summary>
         ///URL identifying an X.509 public key certificate
         /// </summary>
 
-		public virtual string						x5u  {get; set;}
+		public virtual string						X5u  {get; set;}
         /// <summary>
         ///An X.509 public key certificate
         /// </summary>
 
-		public virtual byte[]						x5c  {get; set;}
+		public virtual byte[]						X5c  {get; set;}
         /// <summary>
         ///SHA-1 fingerprint of X.509 certificate
         /// </summary>
 
-		public virtual byte[]						x5t  {get; set;}
+		public virtual byte[]						X5t  {get; set;}
         /// <summary>
         ///SHA-2-256 fingerprint of X.509 certificate
         /// </summary>
 
-		public virtual byte[]						x5tS256  {get; set;}
+		public virtual byte[]						X5tS256  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -803,51 +813,50 @@ namespace Goedel.Cryptography.Jose {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			if (enc != null) {
+			if (Enc != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("enc", 1);
-					_Writer.WriteString (enc);
+					_Writer.WriteString (Enc);
 				}
-			if (dig != null) {
+			if (Dig != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("dig", 1);
-					_Writer.WriteString (dig);
+					_Writer.WriteString (Dig);
 				}
-			if (alg != null) {
+			if (Alg != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("alg", 1);
-					_Writer.WriteString (alg);
+					_Writer.WriteString (Alg);
 				}
-			if (kid != null) {
+			if (Kid != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("kid", 1);
-					_Writer.WriteString (kid);
+					_Writer.WriteString (Kid);
 				}
-			if (x5u != null) {
+			if (X5u != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("x5u", 1);
-					_Writer.WriteString (x5u);
+					_Writer.WriteString (X5u);
 				}
-			if (x5c != null) {
+			if (X5c != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("x5c", 1);
-					_Writer.WriteBinary (x5c);
+					_Writer.WriteBinary (X5c);
 				}
-			if (x5t != null) {
+			if (X5t != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("x5t", 1);
-					_Writer.WriteBinary (x5t);
+					_Writer.WriteBinary (X5t);
 				}
-			if (x5tS256 != null) {
+			if (X5tS256 != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("x5t#S256", 1);
-					_Writer.WriteBinary (x5tS256);
+					_Writer.WriteBinary (X5tS256);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
 			}
-
 
         /// <summary>
         /// Deserialize a tagged stream
@@ -856,6 +865,9 @@ namespace Goedel.Cryptography.Jose {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new KeyData FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as KeyData;
@@ -874,35 +886,35 @@ namespace Goedel.Cryptography.Jose {
 			
 			switch (Tag) {
 				case "enc" : {
-					enc = JSONReader.ReadString ();
+					Enc = JSONReader.ReadString ();
 					break;
 					}
 				case "dig" : {
-					dig = JSONReader.ReadString ();
+					Dig = JSONReader.ReadString ();
 					break;
 					}
 				case "alg" : {
-					alg = JSONReader.ReadString ();
+					Alg = JSONReader.ReadString ();
 					break;
 					}
 				case "kid" : {
-					kid = JSONReader.ReadString ();
+					Kid = JSONReader.ReadString ();
 					break;
 					}
 				case "x5u" : {
-					x5u = JSONReader.ReadString ();
+					X5u = JSONReader.ReadString ();
 					break;
 					}
 				case "x5c" : {
-					x5c = JSONReader.ReadBinary ();
+					X5c = JSONReader.ReadBinary ();
 					break;
 					}
 				case "x5t" : {
-					x5t = JSONReader.ReadBinary ();
+					X5t = JSONReader.ReadBinary ();
 					break;
 					}
 				case "x5t#S256" : {
-					x5tS256 = JSONReader.ReadBinary ();
+					X5tS256 = JSONReader.ReadBinary ();
 					break;
 					}
 				default : {
@@ -924,33 +936,38 @@ namespace Goedel.Cryptography.Jose {
         ///JWK Set URL
         /// </summary>
 
-		public virtual string						jku  {get; set;}
+		public virtual string						Jku  {get; set;}
         /// <summary>
-        ///The key identifier
+        ///The key parameters
         /// </summary>
 
-		public virtual string						jwk  {get; set;}
+		public virtual Key						Jwk  {get; set;}
+        /// <summary>
+        ///The key parameters of the ephemeral key
+        /// </summary>
+
+		public virtual Key						Epk  {get; set;}
         /// <summary>
         ///Another IANA content type parameter
         /// </summary>
 
-		public virtual string						typ  {get; set;}
+		public virtual string						Typ  {get; set;}
         /// <summary>
         ///Content type parameter
         /// </summary>
 
-		public virtual string						cty  {get; set;}
+		public virtual string						Cty  {get; set;}
         /// <summary>
         ///List of header parameters that a recipient MUST understand to interpret
         ///the authentication portion of the JOSE object.
         /// </summary>
 
-		public virtual List<string>				crit  {get; set;}
+		public virtual List<string>				Crit  {get; set;}
         /// <summary>
         ///The digest value
         /// </summary>
 
-		public virtual byte[]						val  {get; set;}
+		public virtual byte[]						Val  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -991,48 +1008,68 @@ namespace Goedel.Cryptography.Jose {
 				_Writer.WriteObjectStart ();
 				}
 			((KeyData)this).SerializeX(_Writer, false, ref _first);
-			if (jku != null) {
+			if (Jku != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("jku", 1);
-					_Writer.WriteString (jku);
+					_Writer.WriteString (Jku);
 				}
-			if (jwk != null) {
+			if (Jwk != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("jwk", 1);
-					_Writer.WriteString (jwk);
+					// expand this to a tagged structure
+					//jwk.Serialize (_Writer, false);
+					{
+						_Writer.WriteObjectStart();
+						_Writer.WriteToken(Jwk.Tag(), 1);
+						bool firstinner = true;
+						Jwk.Serialize (_Writer, true, ref firstinner);
+						_Writer.WriteObjectEnd();
+						}
 				}
-			if (typ != null) {
+			if (Epk != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("epk", 1);
+					// expand this to a tagged structure
+					//epk.Serialize (_Writer, false);
+					{
+						_Writer.WriteObjectStart();
+						_Writer.WriteToken(Epk.Tag(), 1);
+						bool firstinner = true;
+						Epk.Serialize (_Writer, true, ref firstinner);
+						_Writer.WriteObjectEnd();
+						}
+				}
+			if (Typ != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("typ", 1);
-					_Writer.WriteString (typ);
+					_Writer.WriteString (Typ);
 				}
-			if (cty != null) {
+			if (Cty != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("cty", 1);
-					_Writer.WriteString (cty);
+					_Writer.WriteString (Cty);
 				}
-			if (crit != null) {
+			if (Crit != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("crit", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in crit) {
+				foreach (var _index in Crit) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					_Writer.WriteString (_index);
 					}
 				_Writer.WriteArrayEnd ();
 				}
 
-			if (val != null) {
+			if (Val != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("val", 1);
-					_Writer.WriteBinary (val);
+					_Writer.WriteBinary (Val);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
 			}
-
 
         /// <summary>
         /// Deserialize a tagged stream
@@ -1041,6 +1078,9 @@ namespace Goedel.Cryptography.Jose {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Header FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Header;
@@ -1059,34 +1099,38 @@ namespace Goedel.Cryptography.Jose {
 			
 			switch (Tag) {
 				case "jku" : {
-					jku = JSONReader.ReadString ();
+					Jku = JSONReader.ReadString ();
 					break;
 					}
 				case "jwk" : {
-					jwk = JSONReader.ReadString ();
+					Jwk = Key.FromJSON (JSONReader, true) ;  // A tagged structure
+					break;
+					}
+				case "epk" : {
+					Epk = Key.FromJSON (JSONReader, true) ;  // A tagged structure
 					break;
 					}
 				case "typ" : {
-					typ = JSONReader.ReadString ();
+					Typ = JSONReader.ReadString ();
 					break;
 					}
 				case "cty" : {
-					cty = JSONReader.ReadString ();
+					Cty = JSONReader.ReadString ();
 					break;
 					}
 				case "crit" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					crit = new List <string> ();
+					Crit = new List <string> ();
 					while (_Going) {
 						string _Item = JSONReader.ReadString ();
-						crit.Add (_Item);
+						Crit.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;
 					}
 				case "val" : {
-					val = JSONReader.ReadBinary ();
+					Val = JSONReader.ReadBinary ();
 					break;
 					}
 				default : {
@@ -1177,7 +1221,6 @@ namespace Goedel.Cryptography.Jose {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -1185,6 +1228,9 @@ namespace Goedel.Cryptography.Jose {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Signature FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Signature;
@@ -1301,7 +1347,6 @@ namespace Goedel.Cryptography.Jose {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -1309,6 +1354,9 @@ namespace Goedel.Cryptography.Jose {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new KeyContainer FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as KeyContainer;
@@ -1354,22 +1402,22 @@ namespace Goedel.Cryptography.Jose {
         ///Key type
         /// </summary>
 
-		public virtual string						kty  {get; set;}
+		public virtual string						Kty  {get; set;}
         /// <summary>
         ///Public Key use
         /// </summary>
 
-		public virtual string						use  {get; set;}
+		public virtual string						Use  {get; set;}
         /// <summary>
         ///Key operations
         /// </summary>
 
-		public virtual string						key_ops  {get; set;}
+		public virtual string						Key_ops  {get; set;}
         /// <summary>
         ///Symmetric key value.
         /// </summary>
 
-		public virtual byte[]						k  {get; set;}
+		public virtual byte[]						K  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1410,31 +1458,30 @@ namespace Goedel.Cryptography.Jose {
 				_Writer.WriteObjectStart ();
 				}
 			((KeyData)this).SerializeX(_Writer, false, ref _first);
-			if (kty != null) {
+			if (Kty != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("kty", 1);
-					_Writer.WriteString (kty);
+					_Writer.WriteString (Kty);
 				}
-			if (use != null) {
+			if (Use != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("use", 1);
-					_Writer.WriteString (use);
+					_Writer.WriteString (Use);
 				}
-			if (key_ops != null) {
+			if (Key_ops != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("key_ops", 1);
-					_Writer.WriteString (key_ops);
+					_Writer.WriteString (Key_ops);
 				}
-			if (k != null) {
+			if (K != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("k", 1);
-					_Writer.WriteBinary (k);
+					_Writer.WriteBinary (K);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
 			}
-
 
         /// <summary>
         /// Deserialize a tagged stream
@@ -1443,6 +1490,9 @@ namespace Goedel.Cryptography.Jose {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Key FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Key;
@@ -1461,19 +1511,19 @@ namespace Goedel.Cryptography.Jose {
 			
 			switch (Tag) {
 				case "kty" : {
-					kty = JSONReader.ReadString ();
+					Kty = JSONReader.ReadString ();
 					break;
 					}
 				case "use" : {
-					use = JSONReader.ReadString ();
+					Use = JSONReader.ReadString ();
 					break;
 					}
 				case "key_ops" : {
-					key_ops = JSONReader.ReadString ();
+					Key_ops = JSONReader.ReadString ();
 					break;
 					}
 				case "k" : {
-					k = JSONReader.ReadBinary ();
+					K = JSONReader.ReadBinary ();
 					break;
 					}
 				default : {
@@ -1556,7 +1606,6 @@ namespace Goedel.Cryptography.Jose {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -1564,6 +1613,9 @@ namespace Goedel.Cryptography.Jose {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new Recipient FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as Recipient;
@@ -1611,12 +1663,12 @@ namespace Goedel.Cryptography.Jose {
         ///The public modulus
         /// </summary>
 
-		public virtual byte[]						n  {get; set;}
+		public virtual byte[]						N  {get; set;}
         /// <summary>
         ///The public exponent
         /// </summary>
 
-		public virtual byte[]						e  {get; set;}
+		public virtual byte[]						E  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1657,21 +1709,20 @@ namespace Goedel.Cryptography.Jose {
 				_Writer.WriteObjectStart ();
 				}
 			((Key)this).SerializeX(_Writer, false, ref _first);
-			if (n != null) {
+			if (N != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("n", 1);
-					_Writer.WriteBinary (n);
+					_Writer.WriteBinary (N);
 				}
-			if (e != null) {
+			if (E != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("e", 1);
-					_Writer.WriteBinary (e);
+					_Writer.WriteBinary (E);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
 			}
-
 
         /// <summary>
         /// Deserialize a tagged stream
@@ -1680,6 +1731,9 @@ namespace Goedel.Cryptography.Jose {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new PublicKeyRSA FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as PublicKeyRSA;
@@ -1698,11 +1752,11 @@ namespace Goedel.Cryptography.Jose {
 			
 			switch (Tag) {
 				case "n" : {
-					n = JSONReader.ReadBinary ();
+					N = JSONReader.ReadBinary ();
 					break;
 					}
 				case "e" : {
-					e = JSONReader.ReadBinary ();
+					E = JSONReader.ReadBinary ();
 					break;
 					}
 				default : {
@@ -1725,32 +1779,32 @@ namespace Goedel.Cryptography.Jose {
         ///The parameter d
         /// </summary>
 
-		public virtual byte[]						d  {get; set;}
+		public virtual byte[]						D  {get; set;}
         /// <summary>
         ///The parameter p
         /// </summary>
 
-		public virtual byte[]						p  {get; set;}
+		public virtual byte[]						P  {get; set;}
         /// <summary>
         ///The parameter q
         /// </summary>
 
-		public virtual byte[]						q  {get; set;}
+		public virtual byte[]						Q  {get; set;}
         /// <summary>
         ///The parameter dp
         /// </summary>
 
-		public virtual byte[]						dp  {get; set;}
+		public virtual byte[]						DP  {get; set;}
         /// <summary>
         ///The parameter dq
         /// </summary>
 
-		public virtual byte[]						dq  {get; set;}
+		public virtual byte[]						DQ  {get; set;}
         /// <summary>
         ///The parameter QInverse
         /// </summary>
 
-		public virtual byte[]						qi  {get; set;}
+		public virtual byte[]						QI  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1791,41 +1845,40 @@ namespace Goedel.Cryptography.Jose {
 				_Writer.WriteObjectStart ();
 				}
 			((PublicKeyRSA)this).SerializeX(_Writer, false, ref _first);
-			if (d != null) {
+			if (D != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("d", 1);
-					_Writer.WriteBinary (d);
+					_Writer.WriteBinary (D);
 				}
-			if (p != null) {
+			if (P != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("p", 1);
-					_Writer.WriteBinary (p);
+					_Writer.WriteBinary (P);
 				}
-			if (q != null) {
+			if (Q != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("q", 1);
-					_Writer.WriteBinary (q);
+					_Writer.WriteBinary (Q);
 				}
-			if (dp != null) {
+			if (DP != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("dp", 1);
-					_Writer.WriteBinary (dp);
+					_Writer.WriteBinary (DP);
 				}
-			if (dq != null) {
+			if (DQ != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("dq", 1);
-					_Writer.WriteBinary (dq);
+					_Writer.WriteBinary (DQ);
 				}
-			if (qi != null) {
+			if (QI != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("qi", 1);
-					_Writer.WriteBinary (qi);
+					_Writer.WriteBinary (QI);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
 			}
-
 
         /// <summary>
         /// Deserialize a tagged stream
@@ -1834,6 +1887,9 @@ namespace Goedel.Cryptography.Jose {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new PrivateKeyRSA FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as PrivateKeyRSA;
@@ -1852,27 +1908,27 @@ namespace Goedel.Cryptography.Jose {
 			
 			switch (Tag) {
 				case "d" : {
-					d = JSONReader.ReadBinary ();
+					D = JSONReader.ReadBinary ();
 					break;
 					}
 				case "p" : {
-					p = JSONReader.ReadBinary ();
+					P = JSONReader.ReadBinary ();
 					break;
 					}
 				case "q" : {
-					q = JSONReader.ReadBinary ();
+					Q = JSONReader.ReadBinary ();
 					break;
 					}
 				case "dp" : {
-					dp = JSONReader.ReadBinary ();
+					DP = JSONReader.ReadBinary ();
 					break;
 					}
 				case "dq" : {
-					dq = JSONReader.ReadBinary ();
+					DQ = JSONReader.ReadBinary ();
 					break;
 					}
 				case "qi" : {
-					qi = JSONReader.ReadBinary ();
+					QI = JSONReader.ReadBinary ();
 					break;
 					}
 				default : {
@@ -1956,7 +2012,6 @@ namespace Goedel.Cryptography.Jose {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -1964,6 +2019,9 @@ namespace Goedel.Cryptography.Jose {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new PublicKeyDH FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as PublicKeyDH;
@@ -2060,7 +2118,6 @@ namespace Goedel.Cryptography.Jose {
 				}
 			}
 
-
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
@@ -2068,6 +2125,9 @@ namespace Goedel.Cryptography.Jose {
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static new PrivateKeyDH FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
 				return Out as PrivateKeyDH;
@@ -2087,6 +2147,194 @@ namespace Goedel.Cryptography.Jose {
 			switch (Tag) {
 				case "Private" : {
 					Private = JSONReader.ReadBinary ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Result of applying a key agreement.
+	/// </summary>
+	public partial class KeyAgreement : Jose {
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag { get; } = "KeyAgreement";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new KeyAgreement();
+			}
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new KeyAgreement FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as KeyAgreement;
+				}
+		    var Result = new KeyAgreement ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Result of applying a key agreement.
+	/// </summary>
+	public partial class KeyAgreementDH : KeyAgreement {
+        /// <summary>
+        ///The result
+        /// </summary>
+
+		public virtual byte[]						Result  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag { get; } = "KeyAgreementDH";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () {
+			return new KeyAgreementDH();
+			}
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+			SerializeX (Writer, wrap, ref first);
+			}
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((KeyAgreement)this).SerializeX(_Writer, false, ref _first);
+			if (Result != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Result", 1);
+					_Writer.WriteBinary (Result);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new KeyAgreementDH FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as KeyAgreementDH;
+				}
+		    var Result = new KeyAgreementDH ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "Result" : {
+					Result = JSONReader.ReadBinary ();
 					break;
 					}
 				default : {

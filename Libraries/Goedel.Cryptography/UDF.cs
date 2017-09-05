@@ -221,5 +221,73 @@ namespace Goedel.Cryptography {
             Assert.False(Test != Value, FingerprintMatchFailed.Throw);
 
             }
+
+
+        public static string MakeStrongName (string Address, string UDF) {
+            return Address + ".mm--" + UDF.ToLower();
+            }
+
+
+        public static void ParseStrongRFC822 (string In, out string Address, out string UDF) {
+            var Split = In.Split('@');
+            UDF = null;
+
+            if ((Split.Length <= 0) | (Split.Length > 2)) {
+                Address = In;
+                return;
+                }
+
+
+
+            if (Split.Length == 1) {
+                Address = Split[0];
+                return;
+                }
+
+            var DNS = Split[1].ToLower().Split('.');
+
+            var Builder = new StringBuilder(Split[0]);
+            Builder.Append('@');
+
+            var First = true;
+            foreach (var Label in DNS) {
+                if (Label.StartsWith("mm--")) {
+                    UDF = Label.Substring(4);
+                    }
+                else {
+                    if (!First) {
+                        Builder.Append('.');
+                        }
+                    First = false;
+                    Builder.Append(Label);
+                    }
+                }
+
+            Address = Builder.ToString();
+            }
+
+
+
+        }
+
+    public static partial class Extension {
+        /// <summary>
+        /// Compare a fingerprint to see that it matches the specified pattern according
+        /// to UDF matching rules. Currently, the method only converts strings to lower 
+        /// case, it does not canonicalize.
+        /// </summary>
+        /// <param name="Pattern">The pattern the candidate is being tested for a match against.</param>
+        /// <param name="UDF">The candidate being tested</param>
+        /// <returns></returns>
+        public static bool CompareUDF (this string Pattern, string UDF) {
+            if (UDF.Length < Pattern.Length) {
+                return false;
+                }
+            if (UDF.Length == Pattern.Length) {
+                return Pattern.ToLower() == UDF.ToLower();
+                }
+            return Pattern.ToLower().StartsWith(UDF.ToLower());
+            }
+
         }
     }

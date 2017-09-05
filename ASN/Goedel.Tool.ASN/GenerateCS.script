@@ -115,7 +115,7 @@ namespace #{Cast.Name} {
 		/// The OID value
 		/// </summary>
 		public override int [] OID { 
-			get { return Constants.OID__#{Object.OID}; } }  
+			get => Constants.OID__#{Object.OID}; }  
 
 #% 
 #foreach (Member Member in Object.Entries)
@@ -163,7 +163,7 @@ namespace #{Cast.Name} {
 		/// The OID value
 		/// </summary>
 		public override int [] OID { 
-			get { return Constants.OID__#{SingularObject.OID}; } }  
+			get => Constants.OID__#{SingularObject.OID}; } 
 
 #foreach (Member Member in SingularObject.Entries)
 #% EntryDeclaration (Member);

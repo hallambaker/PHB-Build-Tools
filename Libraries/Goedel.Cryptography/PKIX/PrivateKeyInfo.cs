@@ -10,19 +10,19 @@ namespace Goedel.Cryptography.PKIX {
     /// <summary>
     /// PrivateKeyInfo 
     /// </summary>
-    public partial class PrivateKeyInfo  {
+    public partial class PrivateKeyInfo {
 
         /// <summary>
         /// Default constructor, create empty structure.
         /// </summary>
-        public PrivateKeyInfo() {
+        public PrivateKeyInfo () {
             }
 
         /// <summary>
         /// Create structure from ASN1 data
         /// </summary>
         /// <param name="Data">The encoded private key data</param>
-        public PrivateKeyInfo(byte[] Data) {
+        public PrivateKeyInfo (byte[] Data) {
             var Buffer = new global::Goedel.ASN.DecodeBuffer(Data);
             Decode(Buffer);
             }
@@ -34,7 +34,7 @@ namespace Goedel.Cryptography.PKIX {
         ///
         /// This is done in the forward direction
         /// </summary>
-        public void Decode(Goedel.ASN.DecodeBuffer Buffer) {
+        public void Decode (Goedel.ASN.DecodeBuffer Buffer) {
             Buffer.Decode__Sequence_Start();
 
             Version = Buffer.Decode__Integer(0, -1);
@@ -66,7 +66,7 @@ namespace Goedel.Cryptography.PKIX {
 
 
 
-    public partial class PKIXPrivateKeyRSA  {
+    public partial class PKIXPrivateKeyRSA {
 
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Goedel.Cryptography.PKIX {
         /// This is done in the forward direction
         /// </summary>
         /// <param name="Buffer">The source buffer</param>
-        public void Decode(global::Goedel.ASN.DecodeBuffer Buffer) {
+        public void Decode (global::Goedel.ASN.DecodeBuffer Buffer) {
             Buffer.Decode__Sequence_Start();
 
             Version = Buffer.Decode__Integer(0, -1);
@@ -101,10 +101,10 @@ namespace Goedel.Cryptography.PKIX {
             Modulus = Buffer.Decode__BigInteger(0, -1);
             //Buffer.Debug("Modulus");
 
-            PublicExponent =Buffer.Decode__BigInteger(0, -1);
+            PublicExponent = Buffer.Decode__BigInteger(0, -1);
             //Buffer.Debug("PublicExponent");
 
-            PrivateExponent =Buffer.Decode__BigInteger(0, -1);
+            PrivateExponent = Buffer.Decode__BigInteger(0, -1);
             //Buffer.Debug("PrivateExponent");
 
             Prime1 = Buffer.Decode__BigInteger(0, -1);
@@ -130,7 +130,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Debugging aid.
         /// </summary>
-        public void Dump() {
+        public void Dump () {
             var BigModulus = new BigInteger(Modulus);
             Debug.WriteLine("Modulus\n {0}", BigModulus.ToString());
 
@@ -177,14 +177,14 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Default constructor, create empty structure.
         /// </summary>
-        public PKIXPrivateKeyDH() {
+        public PKIXPrivateKeyDH () {
             }
 
         /// <summary>
         /// Create structure from ASN1 data
         /// </summary>
         /// <param name="Data">The encoded private key data</param>
-        public PKIXPrivateKeyDH(byte[] Data) {
+        public PKIXPrivateKeyDH (byte[] Data) {
             var Buffer = new global::Goedel.ASN.DecodeBuffer(Data);
             Decode(Buffer);
             }
@@ -195,7 +195,7 @@ namespace Goedel.Cryptography.PKIX {
         ///
         /// This is done in the forward direction
         /// </summary>
-        public void Decode(Goedel.ASN.DecodeBuffer Buffer) {
+        public void Decode (Goedel.ASN.DecodeBuffer Buffer) {
             Buffer.Decode__Sequence_Start();
 
             Shared = Buffer.Decode__Octets(0, -1);
@@ -206,6 +206,21 @@ namespace Goedel.Cryptography.PKIX {
 
             Private = Buffer.Decode__BigInteger(0, -1);
             //Buffer.Debug("Private");
+            Buffer.Decode__Sequence_End();
+            }
+        }
+
+    public partial class AgreementDH : Goedel.ASN.Root {
+        /// <summary>
+        /// Decode buffer to populate class members
+        ///
+        /// This is done in the forward direction
+        /// </summary>
+        public  void Decode (Goedel.ASN.DecodeBuffer Buffer) {
+            Buffer.Decode__Sequence_Start();
+
+            Result = Buffer.Decode__BigInteger(0, -1);
+
             Buffer.Decode__Sequence_End();
             }
         }

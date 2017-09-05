@@ -30,6 +30,9 @@ namespace Goedel.Cryptography.Jose {
 
     public partial class Key {
 
+        public virtual KeyPair KeyPair => GetKeyPair (false);
+
+
         /// <summary>
         /// Extract a KeyPair object from the JOSE data structure.
         /// </summary>
@@ -110,6 +113,16 @@ namespace Goedel.Cryptography.Jose {
             }
 
 
+        public static Key FactoryPrivate (KeyPair KeyPair) {
+            var PKIX = KeyPair?.PKIXPrivateKey;
+            return Factory(PKIX);
+            }
+
+        public static Key FactoryPublic (KeyPair KeyPair) {
+            var PKIX = KeyPair?.PKIXPublicKey;
+            return Factory(PKIX);
+            }
+
         }
 
     public partial class KeyContainer {
@@ -147,6 +160,37 @@ namespace Goedel.Cryptography.Jose {
             this.KeyData = KeyData;
             }
 
+        }
+
+    public partial class KeyAgreement {
+
+        public virtual KeyAgreementResult KeyAgreementResult { get;}
+
+
+        public static KeyAgreement Factory (KeyAgreementResult KeyAgreementResult) {
+            switch (KeyAgreementResult) {
+                case DiffieHellmanResult DiffieHellmanResult: {
+                    return new KeyAgreementDH(DiffieHellmanResult);
+                    }
+                }
+            return null;
+            }
+        }
+
+    public partial class KeyAgreementDH {
+
+        public override KeyAgreementResult KeyAgreementResult =>
+              new DiffieHellmanResult() {
+                  Agreement = Result.BigIntegerLittleEndian ()
+                  };
+
+
+        public KeyAgreementDH () {
+            }
+
+        public KeyAgreementDH (DiffieHellmanResult DiffieHellmanResult) {
+            Result = DiffieHellmanResult.Agreement.ToByteArray();
+            }
         }
 
     }

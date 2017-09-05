@@ -1,10 +1,10 @@
 ﻿using System.IO;
-using Goedel.Tool.RFCTool;
+using Goedel.Document.RFC;
 using MakeRFC;
 using GM = Goedel.Document.Markdown;
 
 
-namespace Goedel.Tool.RFCToolBinding {
+namespace Goedel.Document.RFCToolBinding {
 
     /// <summary>
     /// This class provides entry points into the Goedel.Document.* classes
@@ -24,7 +24,7 @@ namespace Goedel.Tool.RFCToolBinding {
             var Document = ReadDocument(FileName, Reader);
 
             if (Document != null) {
-                Goedel.Tool.RFCTool.Writers.WriteTXT(Writer, Document);
+                Goedel.Document.RFC.Writers.WriteTXT(Writer, Document);
                 }
             }
 
@@ -38,7 +38,7 @@ namespace Goedel.Tool.RFCToolBinding {
             var Document = ReadDocument(FileName, Reader);
 
             if (Document != null) {
-                Goedel.Tool.RFCTool.Writers.WriteXML(Writer, Document);
+                Goedel.Document.RFC.Writers.WriteXML(Writer, Document);
                 }
             }
 
@@ -52,7 +52,7 @@ namespace Goedel.Tool.RFCToolBinding {
             var Document = ReadDocument(FileName, Reader);
 
             if (Document != null) {
-                Goedel.Tool.RFCTool.Writers.WriteHTML(Writer, Document);
+                Goedel.Document.RFC.Writers.WriteHTML(Writer, Document);
                 }
             }
 
@@ -66,7 +66,7 @@ namespace Goedel.Tool.RFCToolBinding {
             var Document = ReadDocument(FileName, Reader);
 
             if (Document != null) {
-                Goedel.Tool.RFCTool.Writers.WriteMD(Writer, Document);
+                Goedel.Document.RFC.Writers.WriteMD(Writer, Document);
                 }
             }
 
@@ -82,7 +82,7 @@ namespace Goedel.Tool.RFCToolBinding {
             var Document = ReadDocument(FileName, Reader);
 
             if (Document != null) {
-                Goedel.Tool.RFCTool.Writers.WriteAML(Writer, Document);
+                Goedel.Document.RFC.Writers.WriteAML(Writer, Document);
                 }
             }
 
@@ -93,10 +93,10 @@ namespace Goedel.Tool.RFCToolBinding {
         /// <param name="FileName">The original document file name.</param>
         /// <param name="Reader">TextReader object containing document source.</param>
         /// <returns></returns>
-        public Goedel.Tool.RFCTool.Document ReadDocument(string FileName, TextReader Reader) {
+        public Goedel.Document.RFC.Document ReadDocument(string FileName, TextReader Reader) {
             // Use the default tag catalog (for now, may support a property page some time
             var TagCatalog = BridgeLib.Configure.GetTagCatalog(null);
-            var Document = new Goedel.Tool.RFCTool.Document();
+            var Document = new Goedel.Document.RFC.Document();
 
             var Extension = Path.GetExtension(FileName).ToLower();
 
@@ -112,14 +112,14 @@ namespace Goedel.Tool.RFCToolBinding {
                         //ConverterRFC.Convert(Source, Document);
                         return null;
                         }
-                case ".xml": {
-                        Rfc2629Parse.Parse(Reader, Document);
-                        return null;
-                        }
-                case ".html": {
-                        NewParse.Parse(Reader, Document);
-                        return null;
-                        }
+                //case ".xml": {
+                //        Rfc2629Parse.Parse(Reader, Document);
+                //        return null;
+                //        }
+                //case ".html": {
+                //        NewParse.Parse(Reader, Document);
+                //        return null;
+                //        }
                 }
             return null;
             }

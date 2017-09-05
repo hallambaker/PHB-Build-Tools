@@ -60,13 +60,11 @@ namespace Goedel.Cryptography {
 
                 Platform.FindLocalDelegates.Add(RSAKeyPair.FindLocal);
 
-
-
-
                 //Configure the key pair factories
-                RSAKeyPairBase.KeyPairFactory = RSAKeyPair.KeyPairFactory;
+                RSAKeyPairBase.KeyPairPublicFactory = RSAKeyPair.KeyPairPublicFactory;
+                RSAKeyPairBase.KeyPairPrivateFactory = RSAKeyPair.KeyPairPrivateFactory;
                 DHKeyPairBase.KeyPairPublicFactory = DHKeyPair.KeyPairPublicFactory;
-
+                DHKeyPairBase.KeyPairPrivateFactory = DHKeyPair.KeyPairPrivateFactory;
 
 
 

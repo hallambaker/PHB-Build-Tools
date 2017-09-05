@@ -26,7 +26,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="DHPublicKey">RSA Public Key.</param>
         public PublicKeyDH(PKIXPublicKeyDH DHPublicKey) {
-            kid = DHPublicKey.UDF();
+            Kid = DHPublicKey.UDF();
             Domain = DHPublicKey.Domain.UDFData;
             Public = DHPublicKey.Public;
 
@@ -78,7 +78,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="PKIXKey">DH Public Key.</param>
         public PrivateKeyDH(PKIXPrivateKeyDH PKIXKey) {
-            kid = PKIXKey.UDF();
+            Kid = PKIXKey.UDF();
             Domain = PKIXKey.Domain.UDFData;
             Public = PKIXKey.Public;
             Private = PKIXKey.Private;

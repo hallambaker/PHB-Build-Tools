@@ -135,15 +135,15 @@ namespace Goedel.Cryptography.Jose {
 
 
             var ProtectedTBE = new Header() {
-                cty = ContentType,
-                val = CryptoDataDigest.Integrity,
-                alg = Alg.ToJoseID()
+                Cty = ContentType,
+                Val = CryptoDataDigest.Integrity,
+                Alg = Alg.ToJoseID()
                 };
             var Protected = ProtectedTBE.ToJson();
             var SignatureData = SignerKey.Sign(Protected, ProviderAlgorithm);
 
             var Header = new Header() {
-                kid = SignerKey.UDF
+                Kid = SignerKey.UDF
                 };
 
             var Signature = new Signature() {
@@ -171,7 +171,7 @@ namespace Goedel.Cryptography.Jose {
             var DigestID = Data.AlgorithmIdentifier.Digest();
 
             Unprotected =  new Header() {
-                dig = DigestID.ToJoseID()
+                Dig = DigestID.ToJoseID()
                 };
             }
 
@@ -198,16 +198,16 @@ namespace Goedel.Cryptography.Jose {
             var Header = new Header();
             Header.Deserialize(ProtectedText);
 
-            var Algorithm = Header.alg.FromJoseID();
+            var Algorithm = Header.Alg.FromJoseID();
             var BulkID = Algorithm.Bulk();
 
             var Encoder = CryptoCatalog.Default.GetDigest(Algorithm);
             var DigestOfData = Encoder.Process(Data);
 
 
-            var Match = Header.val.IsEqualTo(DigestOfData.Integrity);
+            var Match = Header.Val.IsEqualTo(DigestOfData.Integrity);
 
-            if (!Header.val.IsEqualTo(DigestOfData.Integrity)) {
+            if (!Header.Val.IsEqualTo(DigestOfData.Integrity)) {
                 return false; // Digest does not match
                 }
 
@@ -232,7 +232,7 @@ namespace Goedel.Cryptography.Jose {
         /// <returns>The Recipient data for the specified key, if found.</returns>
         public Signature MatchSigner(string UDF) {
             foreach (var Signature in Signatures) {
-                if (Signature?.Header?.kid == UDF) {
+                if (Signature?.Header?.Kid == UDF) {
                     return Signature;
                     }
                 }

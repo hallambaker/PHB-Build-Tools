@@ -41,7 +41,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="Provider">The encryption provider</param>
         public Header(CryptoProviderEncryption Provider) {
-            alg = Provider.CryptoAlgorithmID.ToJoseID();
+            Alg = Provider.CryptoAlgorithmID.ToJoseID();
             }
         }
 
@@ -56,8 +56,8 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="SignatureProvider">The signature provider.</param>
         public SignatureHeader(CryptoProviderSignature SignatureProvider) {
-            kid = SignatureProvider.UDF;
-            alg = SignatureProvider.CryptoAlgorithmID.ToJoseID();
+            Kid = SignatureProvider.UDF;
+            Alg = SignatureProvider.CryptoAlgorithmID.ToJoseID();
 
             }
 
@@ -67,8 +67,8 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="Signature">The signature to add.</param>
         public SignatureHeader(CryptoDataSignature Signature) {
-            kid = Signature.Meta.UDF;
-            alg = Signature.Meta.CryptoAlgorithmID.ToJoseID();
+            Kid = Signature.Meta.UDF;
+            Alg = Signature.Meta.CryptoAlgorithmID.ToJoseID();
 
             }
 

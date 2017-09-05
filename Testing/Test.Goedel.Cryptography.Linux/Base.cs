@@ -25,7 +25,7 @@ namespace Goedel.Cryptography.Test {
         [AssemblyInitialize]
         public static void Initialize (TestContext Context) {
             Goedel.IO.Debug.Initialize();
-            global::Goedel.Cryptography.Linux.Linux.Initialize();
+            global::Goedel.Cryptography.Linux.CryptographyLinux.Initialize();
 
             //SignerKeyPair = (RSAKeyPairBase) KeyFileDecode.DecodePEM(Directories.TestKey_OpenSSH_Private);
             //Signer = SignerKeyPair.SignatureProvider();

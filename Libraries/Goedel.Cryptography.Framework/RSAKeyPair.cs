@@ -306,11 +306,23 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="PKIXParameters"></param>
         /// <returns>The created key pair</returns>
-        public static new KeyPair KeyPairFactory (PKIXPublicKeyRSA PKIXParameters) {
+        public static new KeyPair KeyPairPublicFactory (PKIXPublicKeyRSA PKIXParameters) {
 
             var RSAParameters = PKIXParameters.RSAParameters();
             return new RSAKeyPair(RSAParameters);
             }
+
+        /// <summary>
+        /// Delegate to create a key pair base
+        /// </summary>
+        /// <param name="PKIXParameters"></param>
+        /// <returns>The created key pair</returns>
+        public static new KeyPair KeyPairPrivateFactory (PKIXPrivateKeyRSA PKIXParameters) {
+
+            var RSAParameters = PKIXParameters.RSAParameters();
+            return new RSAKeyPair(RSAParameters);
+            }
+
 
 
 

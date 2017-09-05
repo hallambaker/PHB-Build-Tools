@@ -2307,7 +2307,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// The OID value
 		/// </summary>
 		public override int [] OID { 
-			get { return Constants.OID__id_at; } }  
+			get => Constants.OID__id_at; } 
 
 		/// <summary>
 		/// ASN.1 member Member 
@@ -2421,7 +2421,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// The OID value
 		/// </summary>
 		public override int [] OID { 
-			get { return Constants.OID__id_at; } }  
+			get => Constants.OID__id_at; } 
 
 		/// <summary>
 		/// ASN.1 member IA5String 
@@ -2739,7 +2739,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// The OID value
 		/// </summary>
 		public override int [] OID { 
-			get { return Constants.OID__id_ce_authorityKeyIdentifier; } }  
+			get => Constants.OID__id_ce_authorityKeyIdentifier; }  
 
 		/// <summary>
 		/// ASN.1 member KeyIdentifier 
@@ -2822,7 +2822,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// The OID value
 		/// </summary>
 		public override int [] OID { 
-			get { return Constants.OID__id_ce_subjectKeyIdentifier; } }  
+			get => Constants.OID__id_ce_subjectKeyIdentifier; } 
 
 		/// <summary>
 		/// ASN.1 member Value 
@@ -2866,7 +2866,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// The OID value
 		/// </summary>
 		public override int [] OID { 
-			get { return Constants.OID__id_ce_keyUsage; } }  
+			get => Constants.OID__id_ce_keyUsage; } 
 
 		/// <summary>
 		/// ASN.1 member Value 
@@ -2910,7 +2910,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// The OID value
 		/// </summary>
 		public override int [] OID { 
-			get { return Constants.OID__id_ce_certificatePolicies; } }  
+			get => Constants.OID__id_ce_certificatePolicies; } 
 
 		/// <summary>
 		/// ASN.1 member Value 
@@ -3094,7 +3094,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// The OID value
 		/// </summary>
 		public override int [] OID { 
-			get { return Constants.OID__id_ce_subjectAltName; } }  
+			get => Constants.OID__id_ce_subjectAltName; } 
 
 		/// <summary>
 		/// ASN.1 member Names 
@@ -3158,7 +3158,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// The OID value
 		/// </summary>
 		public override int [] OID { 
-			get { return Constants.OID__id_ce_subjectAltName; } }  
+			get => Constants.OID__id_ce_subjectAltName; } 
 
 		/// <summary>
 		/// ASN.1 member RFC822Name 
@@ -3209,7 +3209,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// The OID value
 		/// </summary>
 		public override int [] OID { 
-			get { return Constants.OID__id_ce_basicConstraints; } }  
+			get => Constants.OID__id_ce_basicConstraints; }  
 
 		/// <summary>
 		/// ASN.1 member CA 
@@ -3267,7 +3267,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// The OID value
 		/// </summary>
 		public override int [] OID { 
-			get { return Constants.OID__id_ce_nameConstraints; } }  
+			get => Constants.OID__id_ce_nameConstraints; }  
 
 		/// <summary>
 		/// ASN.1 member PermittedSubtrees 
@@ -3381,7 +3381,7 @@ namespace Goedel.Cryptography.PKIX {
 		/// The OID value
 		/// </summary>
 		public override int [] OID { 
-			get { return Constants.OID__id_ce_extKeyUsage; } }  
+			get => Constants.OID__id_ce_extKeyUsage; } 
 
 		/// <summary>
 		/// ASN.1 member KeyPurpose 
@@ -4186,6 +4186,46 @@ namespace Goedel.Cryptography.PKIX {
 
 			Buffer.Decode__BigInteger  (Private, 0, -1);
 			Buffer.Debug ("Private");
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
+		}
+    /// <summary>
+	/// AgreementDH 
+    /// </summary>
+	public partial class AgreementDH : Goedel.ASN.Root {
+
+		/// <summary>
+		/// ASN.1 member Result 
+		/// </summary>
+		public byte []  Result ;
+
+		/// <summary>
+		/// Encode ASN.1 class members to specified buffer. 
+		///
+		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
+		/// </summary>
+		/// <param name="Buffer">Output buffer</param>
+        public override void Encode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Encode__Sequence_Start ();
+
+			Buffer.Encode__BigInteger  (Result, 0, -1);
+			Buffer.Debug ("Result");
+			Buffer.Encode__Sequence_End (Position);
+            }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+
+			Buffer.Decode__BigInteger  (Result, 0, -1);
+			Buffer.Debug ("Result");
 			Buffer.Decode__Sequence_End (Position);
             }
 			*/

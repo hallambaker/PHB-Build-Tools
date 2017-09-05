@@ -229,12 +229,14 @@ namespace Goedel.Cryptography {
         public virtual byte[] Decrypt(
                     byte[]EncryptedKey,
                     KeyPair Ephemeral = null,
-                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
+                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+                    KeyAgreementResult Partial= null) {
 
             CachedExchangeProvider = CachedExchangeProvider ??
                 ExchangeProvider(AlgorithmID);
 
-            return CachedExchangeProvider.Decrypt(EncryptedKey, Ephemeral, CryptoAlgorithmID);
+            return CachedExchangeProvider.Decrypt(EncryptedKey, Ephemeral, 
+                CryptoAlgorithmID, Partial: Partial);
             }
 
         /// <summary>
@@ -310,19 +312,35 @@ namespace Goedel.Cryptography {
         /// </summary>
         public override string UDF {
             get {
-                if (_UDF == null) _UDF = PKIXPublicKey.UDF();
+                if (_UDF == null) {
+                    _UDF = PKIXPublicKey.UDF();
+                    }
                 return _UDF;
                 }
             }
 
+        public virtual KeyAgreementResult Agreement (KeyPair KeyPair) {
+            throw new CryptographicOperationNotSupported();
+            }
+
         }
+
+
 
     /// <summary>
     /// Delegate to create a key pair base
     /// </summary>
     /// <param name="PKIXParameters"></param>
     /// <returns></returns>
-    public delegate KeyPair DelegateFactoryRSAKeyPair (PKIXPublicKeyRSA PKIXParameters);
+    public delegate KeyPair FactoryRSAPublicKeyDelegate (PKIXPublicKeyRSA PKIXParameters);
+
+
+    /// <summary>
+    /// Delegate to create a key pair base
+    /// </summary>
+    /// <param name="PKIXParameters"></param>
+    /// <returns></returns>
+    public delegate KeyPair FactoryRSAPrivateKeyDelegate (PKIXPrivateKeyRSA PKIXParameters);
 
     /// <summary>
     /// RSA Key Pair
@@ -339,12 +357,18 @@ namespace Goedel.Cryptography {
         /// </summary>
         public abstract PKIXPublicKeyRSA PKIXPublicKeyRSA { get; }
 
-
         /// <summary>
         /// Construct a KeyPair entry from PKIX parameters. Defaults to the built in
         /// provider.
         /// </summary>
-        public static DelegateFactoryRSAKeyPair KeyPairFactory;
+        public static FactoryRSAPublicKeyDelegate KeyPairPublicFactory;
+
+        /// <summary>
+        /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
+        /// platform provider.
+        /// </summary>
+        public static FactoryRSAPrivateKeyDelegate KeyPairPrivateFactory;
+
         }
 
     /// <summary>
@@ -353,7 +377,7 @@ namespace Goedel.Cryptography {
     /// <param name="PKIXParameters">The PKIX parameter structure from which to create
     /// the key pair</param>
     /// <returns>The created key pair</returns>
-    public delegate KeyPair DelegateFactoryDHPublicKey(PKIXPublicKeyDH PKIXParameters);
+    public delegate KeyPair FactoryDHPublicKeyDelegate(PKIXPublicKeyDH PKIXParameters);
 
 
     /// <summary>
@@ -363,7 +387,7 @@ namespace Goedel.Cryptography {
     /// <param name="PKIXParameters">The PKIX parameter structure from which to create
     /// the key pair</param>
     /// <returns>The created key pair</returns>
-    public delegate KeyPair DelegateFactoryDHPrivateKey(PKIXPrivateKeyDH PKIXParameters,
+    public delegate KeyPair FactoryDHPrivateKeyDelegate(PKIXPrivateKeyDH PKIXParameters,
         bool Exportable = false);
 
     /// <summary>
@@ -423,13 +447,13 @@ namespace Goedel.Cryptography {
         /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
         /// platform provider.
         /// </summary>
-        public static DelegateFactoryDHPublicKey KeyPairPublicFactory = DHKeyPair.KeyPairPublicFactory;
+        public static FactoryDHPublicKeyDelegate KeyPairPublicFactory = DHKeyPair.KeyPairPublicFactory;
 
         /// <summary>
         /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
         /// platform provider.
         /// </summary>
-        public static DelegateFactoryDHPrivateKey KeyPairPrivateFactory = DHKeyPair.KeyPairPrivateFactory;
+        public static FactoryDHPrivateKeyDelegate KeyPairPrivateFactory = DHKeyPair.KeyPairPrivateFactory;
 
         }
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Goedel.Utilities;
 
 
@@ -623,6 +623,100 @@ namespace Goedel.Cryptography {
 				}
 			else {
 				return new CipherModeNotSupported();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// A request was made for a cipher mode that the registered provider 
+    /// does not support.			
+    /// </summary>
+    public class CryptographicOperationNotSupported : CryptographicException {
+
+		/// <summary>
+        /// Construct instance for exception "The requested cryptographic operation is not supported by the provider"
+        /// </summary>		
+		public CryptographicOperationNotSupported () : base ("The requested cryptographic operation is not supported by the provider") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The requested cryptographic operation is not supported by the provider"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public CryptographicOperationNotSupported (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public CryptographicOperationNotSupported (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new CryptographicOperationNotSupported(Reason as string);
+				}
+			else {
+				return new CryptographicOperationNotSupported();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    public class KeyTypeMismatch : CryptographicException {
+
+		/// <summary>
+        /// Construct instance for exception "The encryption key type does not match the recryption key type"
+        /// </summary>		
+		public KeyTypeMismatch () : base ("The encryption key type does not match the recryption key type") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The encryption key type does not match the recryption key type"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public KeyTypeMismatch (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public KeyTypeMismatch (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new KeyTypeMismatch(Reason as string);
+				}
+			else {
+				return new KeyTypeMismatch();
 				}
             }
         }

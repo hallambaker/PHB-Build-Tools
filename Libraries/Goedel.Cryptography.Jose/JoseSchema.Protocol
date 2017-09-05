@@ -103,29 +103,36 @@
 	Structure KeyData
 		Description
 			|Describe a cryptographic key
-		String enc
+		String Enc
+			Tag "enc"
 			Description
 				|Bulk encryption algorithm for content
-		String dig
+		String Dig
+			Tag "dig"
 			Description
 				|Digest algorithm hint
-		String alg
+		String Alg
+			Tag "alg"
 			Description
 				|Key exchange algorithm
-		String kid
+		String Kid
+			Tag "kid"
 			Description
 				|Key identifier. If a UDF fingerprint is used to identify the 
 				|key it is placed in this field.
-		String x5u		
+		String X5u
+			Tag "x5u"
 			Description
 				|URL identifying an X.509 public key certificate
-		Binary x5c
+		Binary X5c
+			Tag "x5c"
 			Description
 				|An X.509 public key certificate
-		Binary x5t
+		Binary X5t
+			Tag "x5t"
 			Description
 				|SHA-1 fingerprint of X.509 certificate
-		Binary x5tS256
+		Binary X5tS256
 			Tag "x5t#S256"
 			Description
 				|SHA-2-256 fingerprint of X.509 certificate
@@ -136,24 +143,34 @@
 			|A JOSE Header.
 		Inherits KeyData
 
-		String jku
+		String Jku
+			Tag "jku"
 			Description
 				|JWK Set URL
-		String jwk
+		TStruct Key Jwk
+			Tag "jwk"
 			Description
-				|The key identifier
-		String typ
+				|The key parameters
+		TStruct Key Epk
+			Tag "epk"
+			Description
+				|The key parameters of the ephemeral key
+		String Typ
+			Tag "typ"
 			Description
 				|Another IANA content type parameter
-		String cty
+		String Cty
+			Tag "cty"
 			Description
 				|Content type parameter
-		String crit
+		String Crit
+			Tag "crit"
 			Multiple
 			Description
 				|List of header parameters that a recipient MUST understand to interpret
 				|the authentication portion of the JOSE object.
-		Binary val
+		Binary Val
+			Tag "val"
 			Description
 				|The digest value
 
@@ -190,16 +207,20 @@
 			|A JOSE key. All fields map onto the equivalent fields defined in
 			|RFC 7517
 		Inherits KeyData		
-		String kty
+		String Kty
+			Tag "kty"
 			Description
 				|Key type
-		String use
+		String Use
+			Tag "use"
 			Description
 				|Public Key use
-		String key_ops
+		String Key_ops
+			Tag "key_ops"
 			Description
 				|Key operations
-		Binary k
+		Binary K
+			Tag "k"
 			Description
 				|Symmetric key value.
 
@@ -219,10 +240,12 @@
 		Description
 			|An RSA Public key
 		Inherits Key
-		Binary n
+		Binary N
+			Tag "n"
 			Description
 				|The public modulus
-		Binary e
+		Binary E
+			Tag "e"
 			Description
 				|The public exponent
 
@@ -230,22 +253,28 @@
 		Description
 			|RSA private key parameters
 		Inherits PublicKeyRSA
-		Binary d
+		Binary D
+			Tag "d"
 			Description
 				|The parameter d
-		Binary p
+		Binary P
+			Tag "p"
 			Description
 				|The parameter p
-		Binary q
+		Binary Q
+			Tag "q"
 			Description
 				|The parameter q
-		Binary dp
+		Binary DP
+			Tag "dp"
 			Description
 				|The parameter dp
-		Binary dq
+		Binary DQ
+			Tag "dq"
 			Description
 				|The parameter dq
-		Binary qi
+		Binary QI
+			Tag "qi"
 			Description
 				|The parameter QInverse
 
@@ -267,3 +296,15 @@
 		Binary Private
 			Description
 				|The private key
+
+	Structure KeyAgreement
+		Description
+			|Result of applying a key agreement.
+
+	Structure KeyAgreementDH
+		Description
+			|Result of applying a key agreement.
+		Inherits KeyAgreement
+		Binary Result
+			Description
+				|The result
