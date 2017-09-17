@@ -114,10 +114,11 @@ SourceFiles = \
      Traces.cs
 
 LinkFiles = \
-    $(LIBRARYBIN)/Goedel.Protocol.dll\
-    $(LIBRARYBIN)/Goedel.Protocol.Extended.dll
+    $(TARGETBIN)/Goedel.Utilities.dll\
+    $(TARGETBIN)/Goedel.Protocol.dll\
+    $(TARGETBIN)/Goedel.Protocol.Framework.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.Protocol.dll,$(LIBRARYBIN)/Goedel.Protocol.Extended.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Protocol.Framework.dll
 
 
 NugetFiles = 
@@ -166,7 +167,28 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
+! $(MAKE) -C ../Goedel.Utilities
+
+../Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : recursive
+! $(MAKE) -C ../Goedel.Protocol
+
+../Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll : recursive
+! $(MAKE) -C ../Goedel.Protocol.Framework
+
 endif
+
+$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Utilities.dll : ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+!  cp ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
+
+$(TARGETBIN)/Goedel.Protocol.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Protocol.dll : ../Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+!  cp ../Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll $(TARGETBIN)/Goedel.Protocol.dll
+
+$(TARGETBIN)/Goedel.Protocol.Framework.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Protocol.Framework.dll : ../Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll
+!  cp ../Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll $(TARGETBIN)/Goedel.Protocol.Framework.dll
 
 
 # Referenced Libraries

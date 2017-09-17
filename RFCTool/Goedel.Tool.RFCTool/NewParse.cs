@@ -705,8 +705,8 @@ namespace Goedel.Document.RFC {
             public List<StackItem> Data = new List<StackItem>();
             int Pointer = 0;
 
-            public StackItem Top { get => Data[Pointer - 1]; } 
-            public StackItem FirstIn { get => Data[0]; } 
+            public StackItem Top => Data[Pointer - 1]; 
+            public StackItem FirstIn => Data[0];  
 
             public Element TopElement {
                 get { return Top.Element; }

@@ -31,6 +31,7 @@ namespace Goedel.Tool.ProtoGen {
 		 public bool MakeTop = false;
 		  public Generate (TextWriter Output) : base (Output) {}
 		 string StartP , EndP ;
+		 string StartDD , EndDD ;
 		 string StartParamList , EndParamList ;
 		 public string StartParam , MidParam , EndParam, EndParamBlock;
 		 string StartSection1 , MidSection1 , EndSection1;
@@ -51,6 +52,7 @@ namespace Goedel.Tool.ProtoGen {
 		public void GenerateRFC2XML (ProtoStruct ProtoStruct) {
 			 ProtoStruct.Complete ();
 			  StartP = "<t>"; EndP = "</t>";
+			  StartDD = "<t>"; EndDD = "</t>";
 			  StartParamList = "<t> <list style=\"hanging\" hangIndent=\"6\">";
 			  EndParamList = "</list></t>";
 			  StartParam = "<t hangText=\""; MidParam = " : "; EndParam = "\"><vspace />";EndParamBlock = "";
@@ -67,6 +69,7 @@ namespace Goedel.Tool.ProtoGen {
 		public void GenerateHTML (ProtoStruct ProtoStruct) {
 			 ProtoStruct.Complete ();
 			  StartP = "<p>"; EndP = "</p>";
+			  StartDD = "<dd>"; EndDD = "</dd>";
 			  StartParamList = "<dl>";
 			  EndParamList = "</dl>";
 			  StartParam = "<dt>"; MidParam = " :</dt><dd>"; EndParam = "<p>"; EndParamBlock = "</dd>";
@@ -92,9 +95,10 @@ namespace Goedel.Tool.ProtoGen {
 		public void GenerateMD (ProtoStruct ProtoStruct) {
 			 ProtoStruct.Complete ();
 			  StartP = ""; EndP = "\n";
-			  StartParamList = "";
-			  EndParamList = "";
-			  StartParam = "<dl><dt>"; MidParam = ": \n<dd>"; EndParam = "</dl>\n"; EndParamBlock = "";
+			  StartDD = "<dd>"; EndDD = "";
+			  StartParamList = "<dl>\n";
+			  EndParamList = "</dl>\n";
+			  StartParam = "<dt>"; MidParam = ": \n<dd>"; EndParam = "\n"; EndParamBlock = "";
 			  StartSection1 = "#"; MidSection1 = "\n"; EndSection1 = "";
 			  StartSection2 = "##"; MidSection2 = "\n"; EndSection2 = "";
 			  StartSection3 = "###"; MidSection3 = "\n"; EndSection3 = "";
@@ -255,9 +259,10 @@ namespace Goedel.Tool.ProtoGen {
 			StartSection (2);
 			_Output.Write ("Transaction: {1}\n{0}", _Indent, Transaction.Id);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Request: {1}\n{0}", _Indent, Transaction.Request);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Response: {1}\n{0}", _Indent, Transaction.Response);
+			_Output.Write ("{1}", _Indent, StartParamList);
+			_Output.Write ("{1}Request{2} {3}{4}{5}", _Indent, StartParam, MidParam, Transaction.Request, EndParam, EndParamBlock);
+			_Output.Write ("{1}Response{2} {3}{4}{5}", _Indent, StartParam, MidParam, Transaction.Response, EndParam, EndParamBlock);
+			_Output.Write ("{1}", _Indent, EndParamList);
 			MidSection (2);
 			DescriptionList (Transaction.Entries);
 			EndSection (2);
@@ -452,11 +457,11 @@ namespace Goedel.Tool.ProtoGen {
 			switch (TEntry._Tag ()) {
 				case ProtoStructType.Description: {
 				  Description Description = (Description) TEntry; 
-				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}", _Indent, StartDD);
 				foreach  (string s in Description.Text1) {
 					_Output.Write ("{1}\n{0}", _Indent, s);
 					}
-				_Output.Write ("{1}", _Indent, EndP);
+				_Output.Write ("{1}", _Indent, EndDD);
 			break; }
 				}
 			}
@@ -504,8 +509,9 @@ namespace Goedel.Tool.ProtoGen {
 				switch (Entry._Tag ()) {
 					case ProtoStructType.Inherits: {
 					  Inherits Inherits = (Inherits) Entry; 
-					_Output.Write ("* Inherits: {1}\n{0}", _Indent, Inherits.Ref);
-					_Output.Write ("\n{0}", _Indent);
+					_Output.Write ("{1}", _Indent, StartParamList);
+					_Output.Write ("{1}Inherits{2} {3}{4}{5}", _Indent, StartParam, MidParam, Inherits.Ref, EndParam, EndParamBlock);
+					_Output.Write ("{1}\n{0}", _Indent, EndParamList);
 					break; }
 					case ProtoStructType.Description: {
 					  Description Desc = (Description) Entry; 
@@ -560,7 +566,7 @@ namespace Goedel.Tool.ProtoGen {
 					}
 				if (  Options != null ) {
 					if (  NullList ) {
-						_Output.Write ("{1}\n{0}", _Indent, StartParamList);
+						_Output.Write ("{1}", _Indent, StartParamList);
 						 NullList = false;
 						}
 					_Output.Write ("{1}{2}{3}{4}", _Indent, StartParam, Name, MidParam, Type);
@@ -570,7 +576,7 @@ namespace Goedel.Tool.ProtoGen {
 			if (  !NullList ) {
 				_Output.Write ("{1}", _Indent, EndParamList);
 				} else {
-				_Output.Write ("[None]\n{0}", _Indent);
+				_Output.Write ("[No fields]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				}
 			 }
@@ -600,18 +606,18 @@ namespace Goedel.Tool.ProtoGen {
 			_Output.Write (" ", _Indent);
 			if (  PMultiple ) {
 				if (  PRequired ) {
-					_Output.Write ("[1..Many]\n{0}", _Indent);
+					_Output.Write ("[1..Many]", _Indent);
 					} else {
-					_Output.Write ("[0..Many]\n{0}", _Indent);
+					_Output.Write ("[0..Many]", _Indent);
 					}
 				} else {
 				if (  PRequired ) {
-					_Output.Write ("(Required)\n{0}", _Indent);
+					_Output.Write ("(Required)", _Indent);
 					} else {
-					_Output.Write ("(Optional)\n{0}", _Indent);
+					_Output.Write ("(Optional)", _Indent);
 					}
 				}
-			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("{1}", _Indent, EndParam);
 			DescriptionListDD (Entries);
 			_Output.Write ("{1}", _Indent, EndParamBlock);
 			 }

@@ -2,7 +2,7 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"
                  xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="D93BF07A-0921-43F0-B959-7C7AC4CC72F6" Version="2.0.2" Language="en-US" Publisher="Phillip Hallam-Baker" />
+    <Identity Id="D93BF07A-0921-43F0-B959-7C7AC4CC72F6" Version="2.0.8" Language="en-US" Publisher="Phillip Hallam-Baker" />
     <DisplayName>PHB Code Generation Tools</DisplayName>
     <Description xml:space="preserve">Phill Hallam-Baker's code generation tools.
 

@@ -14,6 +14,7 @@
 #   * Copy executables
 
 LinkFiles = \
+    Goedel.Command.dll\
     Goedel.FSR.dll\
     Goedel.IO.dll\
     Goedel.Registry.dll\
@@ -25,6 +26,6 @@ prebuild :
     echo "Do Prebuild"
 
 postbuild : 
-	powershell publishtarget bootmaker.exe $(LinkFiles) 
+	powershell publishtarget bootmakermini.exe $(LinkFiles) 
 
 

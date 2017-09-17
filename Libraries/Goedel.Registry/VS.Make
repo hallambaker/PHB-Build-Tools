@@ -14,6 +14,7 @@
 #   * Copy executables
 
 LinkFiles = \
+    Goedel.FSR.dll\
     Goedel.Utilities.dll
 
 prebuild : 

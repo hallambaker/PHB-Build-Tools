@@ -13,6 +13,9 @@
     <AssemblyFileVersionSettings>None.IncrementOnDemand.IncrementOnDemandWithReset.Increment</AssemblyFileVersionSettings>
     <PackageReleaseNotes></PackageReleaseNotes>
     <PostBuildEvent>powershell publishtarget "$(TargetPath)"</PostBuildEvent>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

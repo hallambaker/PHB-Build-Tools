@@ -38,7 +38,7 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// The tract dictionary, maps labels to traces.
         /// </summary>
-        public Dictionary<string, TracePoint> Traces;
+        public Dictionary<string, TracePoint> Traces = new Dictionary<string, TracePoint>();
 
         /// <summary>
         /// Set the level of detail for trace messages

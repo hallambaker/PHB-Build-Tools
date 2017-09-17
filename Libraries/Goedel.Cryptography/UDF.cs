@@ -40,6 +40,12 @@ namespace Goedel.Cryptography {
         public static int KeyIdentifierAlgSHA_3_512 = 144;
 
         /// <summary>
+        /// Key identifier for UDF from random digits
+        /// </summary>
+        public static int KeyIdentifierAlgRandom = 136;
+
+
+        /// <summary>
         /// Content type identifier for PKIX KeyInfo data type
         /// </summary>
         public const string PKIXKey = "application/x509-keyinfo";
@@ -205,7 +211,8 @@ namespace Goedel.Cryptography {
         /// <returns>A randomly generated UDF string.</returns>
         public static string Random (int Bits) {
             var Data = CryptoCatalog.GetBits(Bits);
-            return ToString("application/random", Data, Bits);
+            Data[0] = (byte)UDFConstants.KeyIdentifierAlgRandom;
+            return ToString(Data);
 
 
             }

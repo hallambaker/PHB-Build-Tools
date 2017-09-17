@@ -16,6 +16,7 @@
 LinkFiles = \
     Goedel.FSR.dll\
     Goedel.IO.dll\
+    Goedel.Command.dll\
     Goedel.Registry.dll\
     Goedel.Utilities.dll\
     Goedel.Tool.Makey.dll

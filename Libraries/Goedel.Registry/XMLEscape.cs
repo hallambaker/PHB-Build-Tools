@@ -77,6 +77,7 @@ namespace Goedel.Registry {
         /// </summary>
         string Indent {get; set; }
 
+        /// <summary></summary>
         protected TextWriter Output;
 
         /// <summary>
@@ -100,7 +101,6 @@ namespace Goedel.Registry {
         /// is produced. Otherwise the tag wraps the supplied text.
         /// </summary>
         /// <param name="Tag"></param>
-        /// <param name="Text"></param>
         /// <param name="Attributes"></param>
         public void WriteElementEmpty (string Tag,
             params string[] Attributes) {
@@ -116,6 +116,12 @@ namespace Goedel.Registry {
             EndLine();
             }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Tag"></param>
+        /// <param name="Text"></param>
+        /// <param name="Attributes"></param>
         public void WriteElementIfTrim (string Tag,
                 string Text,
                 params string[] Attributes) {
@@ -124,7 +130,12 @@ namespace Goedel.Registry {
                 }
             }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Tag"></param>
+        /// <param name="Text"></param>
+        /// <param name="Attributes"></param>
         public void WriteElementIf (string Tag,
                 string Text,
                 params string[] Attributes) {
@@ -154,7 +165,7 @@ namespace Goedel.Registry {
         /// is produced. Otherwise the tag wraps the supplied text.
         /// </summary>
         /// <param name="Tag"></param>
-        /// <param name="Text"></param>
+        /// <param name="Texts"></param>
         /// <param name="Attributes"></param>
         public void WriteElement (string Tag,
             List<string> Texts,
@@ -174,6 +185,8 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="Tag"></param>
         /// <param name="Text"></param>
+        /// <param name="Start"></param>
+        /// <param name="End"></param>
         /// <param name="Attributes"></param>
         public void WriteElement(string Tag,
             bool Start, bool End,
@@ -264,6 +277,8 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="Tag"></param>
         /// <param name="Attributes"></param>
+        /// <param name="Start"></param>
+        /// <param name="End"></param>
         public void Start (string Tag, bool Start, bool End,
                         params string[] Attributes) {
             //Console.WriteLine("{1}<{0}>", Tag, Indent);
@@ -321,6 +336,8 @@ namespace Goedel.Registry {
         /// 
         /// </summary>
         /// <param name="Text"></param>
+        /// <param name="Start"></param>
+        /// <param name="End"></param>
         public void Write (string Text="", bool Start = true, bool End = true) {
             //Console.Write("{0}:  ", StackTag.Count);
             //Console.WriteLine(Text);
@@ -358,12 +375,21 @@ namespace Goedel.Registry {
             //Console.WriteLine("{1}</{0}>", Tag, Indent);
             }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Write"></param>
         protected void StartLine(bool Write=true) {
             if (!Write) {
                 return;
                 }
             Output.Write(Indent);
             }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Write"></param>
         protected void EndLine (bool Write = true) {
             if (!Write) {
                 return;

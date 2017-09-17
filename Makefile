@@ -119,13 +119,15 @@ export Custom_TrojanGTK_FLAG	?= /cs
 
 all : ASN/ShellASN/$(TARGETBIN)/asn2.exe
 
-ASN/ShellASN/$(TARGETBIN)/asn2.exe : Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
+ASN/ShellASN/$(TARGETBIN)/asn2.exe : ASN/ShellASN/../../Libraries/$(TARGETBIN)/Goedel.ASN.dll
 
-ASN/ShellASN/$(TARGETBIN)/asn2.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+ASN/ShellASN/$(TARGETBIN)/asn2.exe : ASN/ShellASN/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-ASN/ShellASN/$(TARGETBIN)/asn2.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+ASN/ShellASN/$(TARGETBIN)/asn2.exe : ASN/ShellASN/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-ASN/ShellASN/$(TARGETBIN)/asn2.exe : ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll
+ASN/ShellASN/$(TARGETBIN)/asn2.exe : ASN/ShellASN/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+ASN/ShellASN/$(TARGETBIN)/asn2.exe : ASN/ShellASN/../$(TARGETBIN)/Goedel.Tool.ASN.dll
 
 
 ASN/ShellASN/$(TARGETBIN)/asn2.exe : always
@@ -139,11 +141,11 @@ ASN/ShellASN/$(TARGETBIN)/asn2.exe : always
 
 all : ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll
 
-ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll : Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
+ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll : ASN/Goedel.Tool.ASN/../../Libraries/$(TARGETBIN)/Goedel.ASN.dll
 
-ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll : ASN/Goedel.Tool.ASN/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll : ASN/Goedel.Tool.ASN/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
 
 ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll : always
@@ -157,9 +159,9 @@ ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll : always
 
 all : Command/Goedel.Tool.Command/$(TARGETBIN)/Goedel.Tool.Command.dll
 
-Command/Goedel.Tool.Command/$(TARGETBIN)/Goedel.Tool.Command.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+Command/Goedel.Tool.Command/$(TARGETBIN)/Goedel.Tool.Command.dll : Command/Goedel.Tool.Command/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-Command/Goedel.Tool.Command/$(TARGETBIN)/Goedel.Tool.Command.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+Command/Goedel.Tool.Command/$(TARGETBIN)/Goedel.Tool.Command.dll : Command/Goedel.Tool.Command/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
 
 Command/Goedel.Tool.Command/$(TARGETBIN)/Goedel.Tool.Command.dll : always
@@ -173,11 +175,13 @@ Command/Goedel.Tool.Command/$(TARGETBIN)/Goedel.Tool.Command.dll : always
 
 all : Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe
 
-Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe : Domainer/ShellDomainer/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe : Domainer/ShellDomainer/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe : Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll
+Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe : Domainer/ShellDomainer/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe : Domainer/ShellDomainer/../$(TARGETBIN)/Goedel.Tool.Domainer.dll
 
 
 Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe : always
@@ -191,9 +195,9 @@ Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe : always
 
 all : Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll
 
-Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll : Domainer/Goedel.Tool.Domainer/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll : Domainer/Goedel.Tool.Domainer/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
 
 Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll : always
@@ -207,11 +211,13 @@ Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll : always
 
 all : Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe
 
-Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe : Exceptional/ShellExceptional/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe : Exceptional/ShellExceptional/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe : Exceptional/Goedel.Tool.Exceptional/$(TARGETBIN)/Goedel.Tool.Exceptional.dll
+Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe : Exceptional/ShellExceptional/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe : Exceptional/ShellExceptional/../$(TARGETBIN)/Goedel.Tool.Exceptional.dll
 
 
 Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe : always
@@ -225,9 +231,9 @@ Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe : always
 
 all : Exceptional/Goedel.Tool.Exceptional/$(TARGETBIN)/Goedel.Tool.Exceptional.dll
 
-Exceptional/Goedel.Tool.Exceptional/$(TARGETBIN)/Goedel.Tool.Exceptional.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+Exceptional/Goedel.Tool.Exceptional/$(TARGETBIN)/Goedel.Tool.Exceptional.dll : Exceptional/Goedel.Tool.Exceptional/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-Exceptional/Goedel.Tool.Exceptional/$(TARGETBIN)/Goedel.Tool.Exceptional.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+Exceptional/Goedel.Tool.Exceptional/$(TARGETBIN)/Goedel.Tool.Exceptional.dll : Exceptional/Goedel.Tool.Exceptional/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
 
 Exceptional/Goedel.Tool.Exceptional/$(TARGETBIN)/Goedel.Tool.Exceptional.dll : always
@@ -241,9 +247,9 @@ Exceptional/Goedel.Tool.Exceptional/$(TARGETBIN)/Goedel.Tool.Exceptional.dll : a
 
 all : FSRGen/Goedel.Tool.FSRGen/$(TARGETBIN)/Goedel.Tool.FSRGen.dll
 
-FSRGen/Goedel.Tool.FSRGen/$(TARGETBIN)/Goedel.Tool.FSRGen.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+FSRGen/Goedel.Tool.FSRGen/$(TARGETBIN)/Goedel.Tool.FSRGen.dll : FSRGen/Goedel.Tool.FSRGen/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-FSRGen/Goedel.Tool.FSRGen/$(TARGETBIN)/Goedel.Tool.FSRGen.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+FSRGen/Goedel.Tool.FSRGen/$(TARGETBIN)/Goedel.Tool.FSRGen.dll : FSRGen/Goedel.Tool.FSRGen/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
 
 FSRGen/Goedel.Tool.FSRGen/$(TARGETBIN)/Goedel.Tool.FSRGen.dll : always
@@ -257,11 +263,13 @@ FSRGen/Goedel.Tool.FSRGen/$(TARGETBIN)/Goedel.Tool.FSRGen.dll : always
 
 all : FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe
 
-FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe : FSRGen/ShellFSRGen/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe : FSRGen/ShellFSRGen/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe : FSRGen/Goedel.Tool.FSRGen/$(TARGETBIN)/Goedel.Tool.FSRGen.dll
+FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe : FSRGen/ShellFSRGen/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe : FSRGen/ShellFSRGen/../$(TARGETBIN)/Goedel.Tool.FSRGen.dll
 
 
 FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe : always
@@ -275,9 +283,9 @@ FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe : always
 
 all : GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll
 
-GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll : GScript/Goedel.Tool.Script/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll : GScript/Goedel.Tool.Script/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
 
 GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll : always
@@ -291,11 +299,13 @@ GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll : always
 
 all : GScript/ShellGScript/$(TARGETBIN)/gscript.exe
 
-GScript/ShellGScript/$(TARGETBIN)/gscript.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+GScript/ShellGScript/$(TARGETBIN)/gscript.exe : GScript/ShellGScript/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-GScript/ShellGScript/$(TARGETBIN)/gscript.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+GScript/ShellGScript/$(TARGETBIN)/gscript.exe : GScript/ShellGScript/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-GScript/ShellGScript/$(TARGETBIN)/gscript.exe : GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll
+GScript/ShellGScript/$(TARGETBIN)/gscript.exe : GScript/ShellGScript/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+GScript/ShellGScript/$(TARGETBIN)/gscript.exe : GScript/ShellGScript/../$(TARGETBIN)/Goedel.Tool.Script.dll
 
 
 GScript/ShellGScript/$(TARGETBIN)/gscript.exe : always
@@ -309,11 +319,13 @@ GScript/ShellGScript/$(TARGETBIN)/gscript.exe : always
 
 all : Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe
 
-Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe : Goedel3/ShellGoedel3/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe : Goedel3/ShellGoedel3/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe : Goedel3/Goedel.Tool.Schema/$(TARGETBIN)/Goedel.Tool.Schema.dll
+Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe : Goedel3/ShellGoedel3/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe : Goedel3/ShellGoedel3/../$(TARGETBIN)/Goedel.Tool.Schema.dll
 
 
 Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe : always
@@ -327,9 +339,9 @@ Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe : always
 
 all : Protogen/Goedel.Tool.ProtoGen/$(TARGETBIN)/Goedel.Tool.ProtoGen.dll
 
-Protogen/Goedel.Tool.ProtoGen/$(TARGETBIN)/Goedel.Tool.ProtoGen.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+Protogen/Goedel.Tool.ProtoGen/$(TARGETBIN)/Goedel.Tool.ProtoGen.dll : Protogen/Goedel.Tool.ProtoGen/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-Protogen/Goedel.Tool.ProtoGen/$(TARGETBIN)/Goedel.Tool.ProtoGen.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+Protogen/Goedel.Tool.ProtoGen/$(TARGETBIN)/Goedel.Tool.ProtoGen.dll : Protogen/Goedel.Tool.ProtoGen/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
 
 Protogen/Goedel.Tool.ProtoGen/$(TARGETBIN)/Goedel.Tool.ProtoGen.dll : always
@@ -343,11 +355,13 @@ Protogen/Goedel.Tool.ProtoGen/$(TARGETBIN)/Goedel.Tool.ProtoGen.dll : always
 
 all : protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe
 
-protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe : protogen/ShellProtoGen/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe : protogen/ShellProtoGen/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe : Protogen/Goedel.Tool.ProtoGen/$(TARGETBIN)/Goedel.Tool.ProtoGen.dll
+protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe : protogen/ShellProtoGen/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe : protogen/ShellProtoGen/../$(TARGETBIN)/Goedel.Tool.ProtoGen.dll
 
 
 protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe : always
@@ -361,9 +375,9 @@ protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe : always
 
 all : Goedel3/Goedel.Tool.Schema/$(TARGETBIN)/Goedel.Tool.Schema.dll
 
-Goedel3/Goedel.Tool.Schema/$(TARGETBIN)/Goedel.Tool.Schema.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+Goedel3/Goedel.Tool.Schema/$(TARGETBIN)/Goedel.Tool.Schema.dll : Goedel3/Goedel.Tool.Schema/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-Goedel3/Goedel.Tool.Schema/$(TARGETBIN)/Goedel.Tool.Schema.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+Goedel3/Goedel.Tool.Schema/$(TARGETBIN)/Goedel.Tool.Schema.dll : Goedel3/Goedel.Tool.Schema/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
 
 Goedel3/Goedel.Tool.Schema/$(TARGETBIN)/Goedel.Tool.Schema.dll : always
@@ -377,13 +391,13 @@ Goedel3/Goedel.Tool.Schema/$(TARGETBIN)/Goedel.Tool.Schema.dll : always
 
 all : RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll
 
-RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : RFCTool/Goedel.Document.Markdown/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
 
-RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : RFCTool/Goedel.Document.Markdown/../../Libraries/$(TARGETBIN)/Goedel.IO.dll
 
-RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : RFCTool/Goedel.Document.Markdown/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : RFCTool/Goedel.Document.Markdown/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
 
 RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : always
@@ -397,13 +411,13 @@ RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : alw
 
 all : RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll
 
-RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : RFCTool/Goedel.Document.RFC.Convert/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : RFCTool/Goedel.Document.RFC.Convert/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
-RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll
+RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : RFCTool/Goedel.Document.RFC.Convert/../$(TARGETBIN)/Goedel.Document.Markdown.dll
 
-RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll
+RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : RFCTool/Goedel.Document.RFC.Convert/../$(TARGETBIN)/Goedel.Document.RFC.dll
 
 
 RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : always
@@ -417,11 +431,13 @@ RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll
 
 all : RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe
 
-RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe : RegistryConfig/ShellRegistryConfig/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe : RegistryConfig/ShellRegistryConfig/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe : RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll
+RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe : RegistryConfig/ShellRegistryConfig/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe : RegistryConfig/ShellRegistryConfig/../$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll
 
 
 RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe : always
@@ -435,9 +451,9 @@ RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe : always
 
 all : RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll
 
-RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll : RegistryConfig/Goedel.Tool.RegistryConfig/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll : RegistryConfig/Goedel.Tool.RegistryConfig/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
 
 RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll : always
@@ -451,11 +467,15 @@ RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfi
 
 all : RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll
 
-RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : RFCTool/Goedel.Tool.RFCTool/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
 
-RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : RFCTool/Goedel.Tool.RFCTool/../../Libraries/$(TARGETBIN)/Goedel.IO.dll
 
-RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll
+RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : RFCTool/Goedel.Tool.RFCTool/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
+
+RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : RFCTool/Goedel.Tool.RFCTool/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : RFCTool/Goedel.Tool.RFCTool/../$(TARGETBIN)/Goedel.Document.Markdown.dll
 
 
 RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : always
@@ -469,9 +489,11 @@ RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : always
 
 all : VSIXBuild/Goedel.Tool.VSIXBuild/$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll
 
-VSIXBuild/Goedel.Tool.VSIXBuild/$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+VSIXBuild/Goedel.Tool.VSIXBuild/$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll : VSIXBuild/Goedel.Tool.VSIXBuild/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-VSIXBuild/Goedel.Tool.VSIXBuild/$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+VSIXBuild/Goedel.Tool.VSIXBuild/$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll : VSIXBuild/Goedel.Tool.VSIXBuild/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
+
+VSIXBuild/Goedel.Tool.VSIXBuild/$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll : VSIXBuild/Goedel.Tool.VSIXBuild/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
 
 VSIXBuild/Goedel.Tool.VSIXBuild/$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll : always
@@ -485,21 +507,23 @@ VSIXBuild/Goedel.Tool.VSIXBuild/$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll : always
 
 all : RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe
 
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
 
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../../Libraries/$(TARGETBIN)/Goedel.IO.dll
 
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll
+RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll
+RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../$(TARGETBIN)/Goedel.Document.Markdown.dll
 
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll
+RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../$(TARGETBIN)/Goedel.Document.RFC.Convert.dll
 
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll
+RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../$(TARGETBIN)/Goedel.Document.OpenXML.dll
+
+RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../$(TARGETBIN)/Goedel.Document.RFC.dll
 
 
 RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : always
@@ -513,13 +537,15 @@ RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : always
 
 all : RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll
 
-RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : RFCTool/Goedel.Document.OpenXML/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
 
-RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : RFCTool/Goedel.Document.OpenXML/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll
+RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : RFCTool/Goedel.Document.OpenXML/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
-RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll
+RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : RFCTool/Goedel.Document.OpenXML/../$(TARGETBIN)/Goedel.Document.Markdown.dll
+
+RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : RFCTool/Goedel.Document.OpenXML/../$(TARGETBIN)/Goedel.Document.RFC.dll
 
 
 RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : always
@@ -533,9 +559,9 @@ RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : alway
 
 all : Trojan3/Goedel.Trojan.Script/$(TARGETBIN)/libTrojanScript.dll
 
-Trojan3/Goedel.Trojan.Script/$(TARGETBIN)/libTrojanScript.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+Trojan3/Goedel.Trojan.Script/$(TARGETBIN)/libTrojanScript.dll : Trojan3/Goedel.Trojan.Script/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-Trojan3/Goedel.Trojan.Script/$(TARGETBIN)/libTrojanScript.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+Trojan3/Goedel.Trojan.Script/$(TARGETBIN)/libTrojanScript.dll : Trojan3/Goedel.Trojan.Script/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
 
 Trojan3/Goedel.Trojan.Script/$(TARGETBIN)/libTrojanScript.dll : always
@@ -549,13 +575,15 @@ Trojan3/Goedel.Trojan.Script/$(TARGETBIN)/libTrojanScript.dll : always
 
 all : Trojan3/Trojan3/$(TARGETBIN)/trojan.exe
 
-Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : Trojan3/Trojan3/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : Trojan3/Trojan3/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll
+Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : Trojan3/Trojan3/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
-Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : Trojan3/Goedel.Trojan.Script/$(TARGETBIN)/libTrojanScript.dll
+Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : Trojan3/Trojan3/../../RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll
+
+Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : Trojan3/Trojan3/../$(TARGETBIN)/libTrojanScript.dll
 
 
 Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : always
@@ -569,11 +597,13 @@ Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : always
 
 all : VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe
 
-VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe : VSIXBuild/ShellVSIXBuild/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe : VSIXBuild/ShellVSIXBuild/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe : VSIXBuild/Goedel.Tool.VSIXBuild/$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll
+VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe : VSIXBuild/ShellVSIXBuild/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe : VSIXBuild/ShellVSIXBuild/../$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll
 
 
 VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe : always
@@ -587,11 +617,11 @@ VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe : always
 
 all : MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll
 
-MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : MakeyMakey/Goedel.Tools.Makey/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
 
-MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : MakeyMakey/Goedel.Tools.Makey/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : MakeyMakey/Goedel.Tools.Makey/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
 
 MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : always
@@ -605,11 +635,13 @@ MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : always
 
 all : MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe
 
-MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe : MakeyMakey/ShellMakey/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe : MakeyMakey/ShellMakey/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe : MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll
+MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe : MakeyMakey/ShellMakey/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe : MakeyMakey/ShellMakey/../$(TARGETBIN)/Goedel.Tool.Makey.dll
 
 
 MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe : always
@@ -623,11 +655,13 @@ MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe : always
 
 all : Command/ShellCommand/$(TARGETBIN)/commandparse.exe
 
-Command/ShellCommand/$(TARGETBIN)/commandparse.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+Command/ShellCommand/$(TARGETBIN)/commandparse.exe : Command/ShellCommand/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-Command/ShellCommand/$(TARGETBIN)/commandparse.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+Command/ShellCommand/$(TARGETBIN)/commandparse.exe : Command/ShellCommand/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-Command/ShellCommand/$(TARGETBIN)/commandparse.exe : Command/Goedel.Tool.Command/$(TARGETBIN)/Goedel.Tool.Command.dll
+Command/ShellCommand/$(TARGETBIN)/commandparse.exe : Command/ShellCommand/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+Command/ShellCommand/$(TARGETBIN)/commandparse.exe : Command/ShellCommand/../$(TARGETBIN)/Goedel.Tool.Command.dll
 
 
 Command/ShellCommand/$(TARGETBIN)/commandparse.exe : always
@@ -647,45 +681,21 @@ Packager/$(TARGETBIN)/Packager.exe : always
 ! echo "*** Directory Packager" >&2
 ! make NORECURSE=true -C Packager
 
-# Project : Goedel.Utilities.dll
-# Item :  Libraries/Goedel.Utilities
-# Output :     Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
-
-all : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
-
-
-Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : always
-! echo "" >&2
-! echo "*** Directory Libraries/Goedel.Utilities" >&2
-! make NORECURSE=true -C Libraries/Goedel.Utilities
-
 # Project : Goedel.Registry.dll
 # Item :  Libraries/Goedel.Registry
 # Output :     Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
 
 all : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
 
-Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : Libraries/Goedel.Registry/../$(TARGETBIN)/Goedel.FSR.dll
+
+Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : Libraries/Goedel.Registry/../$(TARGETBIN)/Goedel.Utilities.dll
 
 
 Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : always
 ! echo "" >&2
 ! echo "*** Directory Libraries/Goedel.Registry" >&2
 ! make NORECURSE=true -C Libraries/Goedel.Registry
-
-# Project : Goedel.FSR.dll
-# Item :  Libraries/Goedel.FSR
-# Output :     Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
-
-all : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
-
-Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
-
-
-Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : always
-! echo "" >&2
-! echo "*** Directory Libraries/Goedel.FSR" >&2
-! make NORECURSE=true -C Libraries/Goedel.FSR
 
 # Project : Goedel.IO.dll
 # Item :  Libraries/Goedel.IO
@@ -699,42 +709,28 @@ Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll : always
 ! echo "*** Directory Libraries/Goedel.IO" >&2
 ! make NORECURSE=true -C Libraries/Goedel.IO
 
-# Project : Goedel.ASN.dll
-# Item :  Libraries/Goedel.ASN
-# Output :     Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
-
-all : Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
-
-Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
-
-
-Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll : always
-! echo "" >&2
-! echo "*** Directory Libraries/Goedel.ASN" >&2
-! make NORECURSE=true -C Libraries/Goedel.ASN
-
-# Project : bootmaker.exe
+# Project : bootmakermini.exe
 # Item :  RFCTool/ShellBootMaker
-# Output :     RFCTool/ShellBootMaker/$(TARGETEXE)/bootmaker.exe
+# Output :     RFCTool/ShellBootMaker/$(TARGETEXE)/bootmakermini.exe
 
-all : RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe
+all : RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe
 
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : RFCTool/ShellBootMaker/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
 
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : RFCTool/ShellBootMaker/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
 
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : RFCTool/ShellBootMaker/../../Libraries/$(TARGETBIN)/Goedel.IO.dll
 
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : RFCTool/ShellBootMaker/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
 
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll
+RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : RFCTool/ShellBootMaker/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
 
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : RFCTool/Goedel.Document.Office/$(TARGETBIN)/OfficeLib.dll
+RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : RFCTool/ShellBootMaker/../$(TARGETBIN)/Goedel.Document.Markdown.dll
 
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll
+RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : RFCTool/ShellBootMaker/../$(TARGETBIN)/Goedel.Document.OpenXML.dll
 
 
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmaker.exe : always
+RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : always
 ! echo "" >&2
 ! echo "*** Directory RFCTool/ShellBootMaker" >&2
 ! make NORECURSE=true -C RFCTool/ShellBootMaker
@@ -750,6 +746,292 @@ RFCTool/Goedel.Document.Office/$(TARGETBIN)/OfficeLib.dll : always
 ! echo "" >&2
 ! echo "*** Directory RFCTool/Goedel.Document.Office" >&2
 ! make NORECURSE=true -C RFCTool/Goedel.Document.Office
+
+# Project : bootmaker.exe
+# Item :  RFCTool/ShellBootMakerOffice
+# Output :     RFCTool/ShellBootMakerOffice/$(TARGETEXE)/bootmaker.exe
+
+all : RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe
+
+RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
+
+RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
+
+RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../../Libraries/$(TARGETBIN)/Goedel.IO.dll
+
+RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
+
+RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../$(TARGETBIN)/Goedel.Document.Markdown.dll
+
+RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../$(TARGETBIN)/OfficeLib.dll
+
+RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../$(TARGETBIN)/Goedel.Document.OpenXML.dll
+
+
+RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : always
+! echo "" >&2
+! echo "*** Directory RFCTool/ShellBootMakerOffice" >&2
+! make NORECURSE=true -C RFCTool/ShellBootMakerOffice
+
+# Project : TestCommandParse.exe
+# Item :  Command/TestCommandParse
+# Output :     Command/TestCommandParse/$(TARGETEXE)/TestCommandParse.exe
+
+all : Command/TestCommandParse/$(TARGETBIN)/TestCommandParse.exe
+
+Command/TestCommandParse/$(TARGETBIN)/TestCommandParse.exe : Command/TestCommandParse/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
+
+Command/TestCommandParse/$(TARGETBIN)/TestCommandParse.exe : Command/TestCommandParse/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
+
+Command/TestCommandParse/$(TARGETBIN)/TestCommandParse.exe : Command/TestCommandParse/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+Command/TestCommandParse/$(TARGETBIN)/TestCommandParse.exe : Command/TestCommandParse/../$(TARGETBIN)/Goedel.Tool.Command.dll
+
+
+Command/TestCommandParse/$(TARGETBIN)/TestCommandParse.exe : always
+! echo "" >&2
+! echo "*** Directory Command/TestCommandParse" >&2
+! make NORECURSE=true -C Command/TestCommandParse
+
+# Project : Goedel.Command.dll
+# Item :  Libraries/Goedel.Command
+# Output :     Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
+
+all : Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
+
+Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : Libraries/Goedel.Command/../$(TARGETBIN)/Goedel.FSR.dll
+
+Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : Libraries/Goedel.Command/../$(TARGETBIN)/Goedel.Registry.dll
+
+Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : Libraries/Goedel.Command/../$(TARGETBIN)/Goedel.Utilities.dll
+
+
+Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.Command" >&2
+! make NORECURSE=true -C Libraries/Goedel.Command
+
+# Project : Goedel.Document.Test.dll
+# Item :  RFCTool/Goedel.Document.Test
+# Output :     RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll
+
+all : RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll
+
+RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : RFCTool/Goedel.Document.Test/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
+
+RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : RFCTool/Goedel.Document.Test/../../Libraries/$(TARGETBIN)/Goedel.IO.dll
+
+RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : RFCTool/Goedel.Document.Test/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
+
+RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : RFCTool/Goedel.Document.Test/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : RFCTool/Goedel.Document.Test/../$(TARGETBIN)/Goedel.Document.Markdown.dll
+
+RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : RFCTool/Goedel.Document.Test/../$(TARGETBIN)/Goedel.Document.OpenXML.dll
+
+RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : RFCTool/Goedel.Document.Test/../$(TARGETBIN)/Goedel.Document.RFC.dll
+
+
+RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : always
+! echo "" >&2
+! echo "*** Directory RFCTool/Goedel.Document.Test" >&2
+! make NORECURSE=true -C RFCTool/Goedel.Document.Test
+
+# Project : RunDocs.exe
+# Item :  RunDocs
+# Output :     RunDocs/$(TARGETEXE)/RunDocs.exe
+
+all : RunDocs/$(TARGETBIN)/RunDocs.exe
+
+RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../Libraries/$(TARGETBIN)/Goedel.FSR.dll
+
+RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../Libraries/$(TARGETBIN)/Goedel.IO.dll
+
+RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../RFCTool/$(TARGETBIN)/Goedel.Document.Markdown.dll
+
+RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../RFCTool/$(TARGETBIN)/OfficeLib.dll
+
+RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../RFCTool/$(TARGETBIN)/Goedel.Document.OpenXML.dll
+
+RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../RFCTool/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll
+
+RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../RFCTool/$(TARGETBIN)/Goedel.Document.Test.dll
+
+RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll
+
+
+RunDocs/$(TARGETBIN)/RunDocs.exe : always
+! echo "" >&2
+! echo "*** Directory RunDocs" >&2
+! make NORECURSE=true -C RunDocs
+
+# Project : Goedel.Trace.dll
+# Item :  Trace/Goedel.Trace
+# Output :     Trace/Goedel.Trace/$(TARGETBIN)/Goedel.Trace.dll
+
+all : Trace/Goedel.Trace/$(TARGETBIN)/Goedel.Trace.dll
+
+Trace/Goedel.Trace/$(TARGETBIN)/Goedel.Trace.dll : Trace/Goedel.Trace/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.dll
+
+Trace/Goedel.Trace/$(TARGETBIN)/Goedel.Trace.dll : Trace/Goedel.Trace/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+Trace/Goedel.Trace/$(TARGETBIN)/Goedel.Trace.dll : Trace/Goedel.Trace/../../Libraries/$(TARGETBIN)/Goedel.Protocol.Framework.dll
+
+
+Trace/Goedel.Trace/$(TARGETBIN)/Goedel.Trace.dll : always
+! echo "" >&2
+! echo "*** Directory Trace/Goedel.Trace" >&2
+! make NORECURSE=true -C Trace/Goedel.Trace
+
+# Project : Goedel.Trace.Client.dll
+# Item :  Trace/Goedel.Trace.Client
+# Output :     Trace/Goedel.Trace.Client/$(TARGETBIN)/Goedel.Trace.Client.dll
+
+all : Trace/Goedel.Trace.Client/$(TARGETBIN)/Goedel.Trace.Client.dll
+
+Trace/Goedel.Trace.Client/$(TARGETBIN)/Goedel.Trace.Client.dll : Trace/Goedel.Trace.Client/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.dll
+
+Trace/Goedel.Trace.Client/$(TARGETBIN)/Goedel.Trace.Client.dll : Trace/Goedel.Trace.Client/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+Trace/Goedel.Trace.Client/$(TARGETBIN)/Goedel.Trace.Client.dll : Trace/Goedel.Trace.Client/../../Libraries/$(TARGETBIN)/.dll
+
+Trace/Goedel.Trace.Client/$(TARGETBIN)/Goedel.Trace.Client.dll : Trace/Goedel.Trace.Client/../$(TARGETBIN)/Goedel.Trace.dll
+
+
+Trace/Goedel.Trace.Client/$(TARGETBIN)/Goedel.Trace.Client.dll : always
+! echo "" >&2
+! echo "*** Directory Trace/Goedel.Trace.Client" >&2
+! make NORECURSE=true -C Trace/Goedel.Trace.Client
+
+# Project : Goedel.Trace.Documentation.exe
+# Item :  Trace/Goedel.Trace.Documentation
+# Output :     Trace/Goedel.Trace.Documentation/$(TARGETEXE)/Goedel.Trace.Documentation.exe
+
+all : Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe
+
+Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Command.dll
+
+Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.IO.dll
+
+Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.Debug.dll
+
+Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.dll
+
+Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Registry.dll
+
+Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../$(TARGETBIN)/Goedel.Trace.Client.dll
+
+Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../$(TARGETBIN)/Goedel.Trace.Server.dll
+
+Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../$(TARGETBIN)/Goedel.Trace.dll
+
+
+Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : always
+! echo "" >&2
+! echo "*** Directory Trace/Goedel.Trace.Documentation" >&2
+! make NORECURSE=true -C Trace/Goedel.Trace.Documentation
+
+# Project : Goedel.Trace.Server.dll
+# Item :  Trace/Goedel.Trace.Server
+# Output :     Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll
+
+all : Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll
+
+Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll : Trace/Goedel.Trace.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.IO.dll
+
+Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll : Trace/Goedel.Trace.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.Framework.dll
+
+Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll : Trace/Goedel.Trace.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.dll
+
+Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll : Trace/Goedel.Trace.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll : Trace/Goedel.Trace.Server/../$(TARGETBIN)/Goedel.Trace.dll
+
+
+Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll : always
+! echo "" >&2
+! echo "*** Directory Trace/Goedel.Trace.Server" >&2
+! make NORECURSE=true -C Trace/Goedel.Trace.Server
+
+# Project : TraceServer.exe
+# Item :  Trace/Goedel.Trace.Shell.Server
+# Output :     Trace/Goedel.Trace.Shell.Server/$(TARGETEXE)/TraceServer.exe
+
+all : Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe
+
+Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : Trace/Goedel.Trace.Shell.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Command.dll
+
+Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : Trace/Goedel.Trace.Shell.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.Framework.dll
+
+Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : Trace/Goedel.Trace.Shell.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Registry.dll
+
+Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : Trace/Goedel.Trace.Shell.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+
+Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : Trace/Goedel.Trace.Shell.Server/../../Libraries/$(TARGETBIN)/Goedel.Protocol.dll
+
+Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : Trace/Goedel.Trace.Shell.Server/../$(TARGETBIN)/Goedel.Trace.Server.dll
+
+Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : Trace/Goedel.Trace.Shell.Server/../$(TARGETBIN)/Goedel.Trace.dll
+
+
+Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : always
+! echo "" >&2
+! echo "*** Directory Trace/Goedel.Trace.Shell.Server" >&2
+! make NORECURSE=true -C Trace/Goedel.Trace.Shell.Server
+
+# Project : Goedel.Protocol.Framework.dll
+# Item :  Libraries/Goedel.Protocol.Framework
+# Output :     Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll
+
+all : Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll
+
+Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll : Libraries/Goedel.Protocol.Framework/../$(TARGETBIN)/Goedel.Platform.dll
+
+Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll : Libraries/Goedel.Protocol.Framework/../$(TARGETBIN)/Goedel.Utilities.dll
+
+Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll : Libraries/Goedel.Protocol.Framework/../$(TARGETBIN)/Goedel.Protocol.dll
+
+
+Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.Protocol.Framework" >&2
+! make NORECURSE=true -C Libraries/Goedel.Protocol.Framework
+
+# Project : Goedel.Protocol.Debug.dll
+# Item :  Libraries/Goedel.Protocol.Debug
+# Output :     Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll
+
+all : Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll
+
+Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll : Libraries/Goedel.Protocol.Debug/../$(TARGETBIN)/Goedel.Utilities.dll
+
+Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll : Libraries/Goedel.Protocol.Debug/../$(TARGETBIN)/Goedel.Protocol.dll
+
+Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll : Libraries/Goedel.Protocol.Debug/../$(TARGETBIN)/Goedel.Protocol.Framework.dll
+
+
+Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.Protocol.Debug" >&2
+! make NORECURSE=true -C Libraries/Goedel.Protocol.Debug
+
+# Project : .dll
+# Item :  Libraries/Goedel.Debug
+# Output :     Libraries/Goedel.Debug/$(TARGETBIN)/.dll
+
+all : Libraries/Goedel.Debug/$(TARGETBIN)/.dll
+
+
+Libraries/Goedel.Debug/$(TARGETBIN)/.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.Debug" >&2
+! make NORECURSE=true -C Libraries/Goedel.Debug
 
 
 
@@ -785,13 +1067,23 @@ clean :
 ! make clean NORECURSE=true -C MakeyMakey/ShellMakey
 ! make clean NORECURSE=true -C Command/ShellCommand
 ! make clean NORECURSE=true -C Packager
-! make clean NORECURSE=true -C Libraries/Goedel.Utilities
 ! make clean NORECURSE=true -C Libraries/Goedel.Registry
-! make clean NORECURSE=true -C Libraries/Goedel.FSR
 ! make clean NORECURSE=true -C Libraries/Goedel.IO
-! make clean NORECURSE=true -C Libraries/Goedel.ASN
 ! make clean NORECURSE=true -C RFCTool/ShellBootMaker
 ! make clean NORECURSE=true -C RFCTool/Goedel.Document.Office
+! make clean NORECURSE=true -C RFCTool/ShellBootMakerOffice
+! make clean NORECURSE=true -C Command/TestCommandParse
+! make clean NORECURSE=true -C Libraries/Goedel.Command
+! make clean NORECURSE=true -C RFCTool/Goedel.Document.Test
+! make clean NORECURSE=true -C RunDocs
+! make clean NORECURSE=true -C Trace/Goedel.Trace
+! make clean NORECURSE=true -C Trace/Goedel.Trace.Client
+! make clean NORECURSE=true -C Trace/Goedel.Trace.Documentation
+! make clean NORECURSE=true -C Trace/Goedel.Trace.Server
+! make clean NORECURSE=true -C Trace/Goedel.Trace.Shell.Server
+! make clean NORECURSE=true -C Libraries/Goedel.Protocol.Framework
+! make clean NORECURSE=true -C Libraries/Goedel.Protocol.Debug
+! make clean NORECURSE=true -C Libraries/Goedel.Debug
 
 # publish all projects
 publish : all
@@ -825,13 +1117,23 @@ publish : all
 ! make publish NORECURSE=true -C MakeyMakey/ShellMakey
 ! make publish NORECURSE=true -C Command/ShellCommand
 ! make publish NORECURSE=true -C Packager
-! make publish NORECURSE=true -C Libraries/Goedel.Utilities
 ! make publish NORECURSE=true -C Libraries/Goedel.Registry
-! make publish NORECURSE=true -C Libraries/Goedel.FSR
 ! make publish NORECURSE=true -C Libraries/Goedel.IO
-! make publish NORECURSE=true -C Libraries/Goedel.ASN
 ! make publish NORECURSE=true -C RFCTool/ShellBootMaker
 ! make publish NORECURSE=true -C RFCTool/Goedel.Document.Office
+! make publish NORECURSE=true -C RFCTool/ShellBootMakerOffice
+! make publish NORECURSE=true -C Command/TestCommandParse
+! make publish NORECURSE=true -C Libraries/Goedel.Command
+! make publish NORECURSE=true -C RFCTool/Goedel.Document.Test
+! make publish NORECURSE=true -C RunDocs
+! make publish NORECURSE=true -C Trace/Goedel.Trace
+! make publish NORECURSE=true -C Trace/Goedel.Trace.Client
+! make publish NORECURSE=true -C Trace/Goedel.Trace.Documentation
+! make publish NORECURSE=true -C Trace/Goedel.Trace.Server
+! make publish NORECURSE=true -C Trace/Goedel.Trace.Shell.Server
+! make publish NORECURSE=true -C Libraries/Goedel.Protocol.Framework
+! make publish NORECURSE=true -C Libraries/Goedel.Protocol.Debug
+! make publish NORECURSE=true -C Libraries/Goedel.Debug
 
 # install all projects
 install : all
@@ -865,11 +1167,21 @@ install : all
 ! make install NORECURSE=true -C MakeyMakey/ShellMakey
 ! make install NORECURSE=true -C Command/ShellCommand
 ! make install NORECURSE=true -C Packager
-! make install NORECURSE=true -C Libraries/Goedel.Utilities
 ! make install NORECURSE=true -C Libraries/Goedel.Registry
-! make install NORECURSE=true -C Libraries/Goedel.FSR
 ! make install NORECURSE=true -C Libraries/Goedel.IO
-! make install NORECURSE=true -C Libraries/Goedel.ASN
 ! make install NORECURSE=true -C RFCTool/ShellBootMaker
 ! make install NORECURSE=true -C RFCTool/Goedel.Document.Office
+! make install NORECURSE=true -C RFCTool/ShellBootMakerOffice
+! make install NORECURSE=true -C Command/TestCommandParse
+! make install NORECURSE=true -C Libraries/Goedel.Command
+! make install NORECURSE=true -C RFCTool/Goedel.Document.Test
+! make install NORECURSE=true -C RunDocs
+! make install NORECURSE=true -C Trace/Goedel.Trace
+! make install NORECURSE=true -C Trace/Goedel.Trace.Client
+! make install NORECURSE=true -C Trace/Goedel.Trace.Documentation
+! make install NORECURSE=true -C Trace/Goedel.Trace.Server
+! make install NORECURSE=true -C Trace/Goedel.Trace.Shell.Server
+! make install NORECURSE=true -C Libraries/Goedel.Protocol.Framework
+! make install NORECURSE=true -C Libraries/Goedel.Protocol.Debug
+! make install NORECURSE=true -C Libraries/Goedel.Debug
 

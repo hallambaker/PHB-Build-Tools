@@ -5,37 +5,44 @@ using System.Collections.Generic;
 //using Goedel.Utilities;
 
 namespace Goedel.Tool.Makey {
+    
+    ///// <remarks/>
+    //[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+    ////[System.SerializableAttribute()]
+    //[System.Diagnostics.DebuggerStepThroughAttribute()]
+    //[System.ComponentModel.DesignerCategoryAttribute("code")]
+    //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://schemas.microsoft.com/developer/msbuild/2003", IsNullable = false)]
+
+    [Serializable()]
+    //[System.Xml.Serialization.XmlRoot(ElementName ="Project", Namespace = "http://schemas.microsoft.com/developer/msbuild/2003", IsNullable = false)]
+    [System.Xml.Serialization.XmlRoot(ElementName = "Project", IsNullable = false)]
 
 
 
     public partial class Project {
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute("Sdk")]
+        public string Sdk { get; set; }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("PropertyGroup")]
-        public PropertyGroupType[] PropertyGroup { get; set; }
+        public List<PropertyGroupType> PropertyGroup { get; set; }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ItemGroup")]
-        public ItemGroupType[] ItemGroup { get; set; }
+        public List<ItemGroupType> ItemGroup { get; set; }
         }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
+    ///// <remarks/>
+    //[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+    //[System.SerializableAttribute()]
+    //[System.Diagnostics.DebuggerStepThroughAttribute()]
+    //[System.ComponentModel.DesignerCategoryAttribute("code")]
+
+    [Serializable()]
+    [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
     public partial class PropertyGroupType {
-
-
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ProjectTypeGuids")]
@@ -57,38 +64,42 @@ namespace Goedel.Tool.Makey {
         }
 
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
+    ///// <remarks/>
+    //[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+    //[System.SerializableAttribute()]
+    //[System.Diagnostics.DebuggerStepThroughAttribute()]
+    //[System.ComponentModel.DesignerCategoryAttribute("code")]
+
+    [Serializable()]
+    [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
     public partial class ItemGroupType {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Reference")]
-        public ReferenceType[] Reference { get; set; }
+        public List<ReferenceType> Reference { get; set; }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Compile")]
-        public CompileType[] Compile { get; set; }
+        public List<CompileType> Compile { get; set; }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("None")]
-        public NoneType[] None { get; set; }
+        public List<NoneType> None { get; set; }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ProjectReference")]
-        public ProjectReferenceType[] ProjectReference { get; set; }
+        public List<ProjectReferenceType> ProjectReference { get; set; }
 
         }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
+    ///// <remarks/>
+    //[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+    //[System.SerializableAttribute()]
+    //[System.Diagnostics.DebuggerStepThroughAttribute()]
+    //[System.ComponentModel.DesignerCategoryAttribute("code")]
+
+    [Serializable()]
+    [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
     public partial class ReferenceType {
 
         /// <remarks/>
@@ -103,19 +114,19 @@ namespace Goedel.Tool.Makey {
         [System.Xml.Serialization.XmlElementAttribute("Private")]
         public string Private { get; set; }
 
-        public string Name {
-            get { return HintPath != null ? Path.GetFileName(HintPath) : null; }
-            }
+        public string Name => HintPath != null ? Path.GetFileName(HintPath) : null; 
 
         }
 
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
+    ///// <remarks/>
+    //[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+    //[System.SerializableAttribute()]
+    //[System.Diagnostics.DebuggerStepThroughAttribute()]
+    //[System.ComponentModel.DesignerCategoryAttribute("code")]
+
+    [Serializable()]
+    [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
     public partial class CompileType {
 
         /// <remarks/>
@@ -129,12 +140,14 @@ namespace Goedel.Tool.Makey {
 
         }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
+    ///// <remarks/>
+    //[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+    //[System.SerializableAttribute()]
+    //[System.Diagnostics.DebuggerStepThroughAttribute()]
+    //[System.ComponentModel.DesignerCategoryAttribute("code")]
+
+    [Serializable()]
+    [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
     public partial class NoneType {
 
         /// <remarks/>
@@ -149,12 +162,14 @@ namespace Goedel.Tool.Makey {
         public string LastGenOutput { get; set; }
         }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
+    ///// <remarks/>
+    //[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+    //[System.SerializableAttribute()]
+    //[System.Diagnostics.DebuggerStepThroughAttribute()]
+    //[System.ComponentModel.DesignerCategoryAttribute("code")]
+
+    [Serializable()]
+    [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
     public partial class ProjectReferenceType {
 
         /// <remarks/>

@@ -15,7 +15,7 @@ namespace Goedel.Document.Office {
 
             switch (Extension) {
                 case ".vsd": {
-                    Visio1.Process(InPath, OutPath);
+                    //Visio1.Process(InPath, OutPath);
                     break;
                     }
                 case ".xls":

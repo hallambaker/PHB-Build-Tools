@@ -110,29 +110,38 @@ export Custom_TrojanGTK_FLAG	?= /cs
 
 SourceFiles = \
      Bibliography.cs\
+     Boilerplate.cs\
      Document.cs\
+     Exceptions.cs\
      FileReader.cs\
      HTML.cs\
+     HTML2RFCSegments.cs\
+     IndentWriter.cs\
+     ListLevel.cs\
+     MakeFormat.cs\
      MD2RFCOut.cs\
      Html2RFCOut.cs\
      Merge.cs\
      NewParse.cs\
      PageWriter.cs\
      Properties/AssemblyInfo.cs\
-     rfc2629.cs\
-     rfc2629parse.cs\
+     rfc7791.cs\
+     rfc7791parse.cs\
      TXT.cs\
      WriteAML.cs\
      XML.cs\
      Xml2RFCOut.cs\
+     XMLEmbed.cs\
      XMLTextWriterPlus.cs
 
 LinkFiles = \
+    $(TARGETBIN)/Goedel.FSR.dll\
+    $(TARGETBIN)/Goedel.IO.dll\
     $(TARGETBIN)/Goedel.Registry.dll\
     $(TARGETBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Document.Markdown.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Document.Markdown.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Document.Markdown.dll
 
 
 NugetFiles = 
@@ -169,6 +178,8 @@ $(LIBRARYBIN) :
 
 ifdef PHB_BUILD
 
+Exceptions.cs : Exceptions.exceptional
+!  $(Custom_exceptional) Exceptions.exceptional $(Custom_exceptional_FLAG) Exceptions.cs 
 
 endif
 
@@ -181,6 +192,12 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.FSR
+
+../../Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.IO
+
 ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
 ! $(MAKE) -C ../../Libraries/Goedel.Registry
 
@@ -191,6 +208,14 @@ ifndef NORECURSE
 ! $(MAKE) -C ../Goedel.Document.Markdown
 
 endif
+
+$(TARGETBIN)/Goedel.FSR.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.FSR.dll : ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+!  cp ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll $(TARGETBIN)/Goedel.FSR.dll
+
+$(TARGETBIN)/Goedel.IO.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.IO.dll : ../../Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+!  cp ../../Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll $(TARGETBIN)/Goedel.IO.dll
 
 $(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Registry.dll : ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll

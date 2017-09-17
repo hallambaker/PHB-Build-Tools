@@ -211,7 +211,8 @@ namespace Goedel.Tool.Makey {
 					foreach  (var Dep in Project.ProjectReference) {
 						 var SubProject = Dep.SubProject;
 						 var GUID = SubProject.ProjectGuid;
-						 var SubProjectDir = Solution.ByGuid (GUID).Directory.UnixPath();
+						// var SubProjectDir = Solution.ByGuid (GUID).Directory.UnixPath();
+						 var SubProjectDir = SubProject.Directory.UnixPath();
 						// SubTarget #{SubProject.Target}
 						// SubProject #{SubProjectDir}
 						// GUID #{GUID}

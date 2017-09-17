@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace Goedel.Tool.Makey {
@@ -28,6 +29,13 @@ namespace Goedel.Tool.Makey {
             }
 
         }
+
+    public class SaneXmlTextReader : XmlTextReader {
+        public SaneXmlTextReader (TextReader reader): base(reader) { }
+
+        public override string NamespaceURI => "";
+        }
+
 
     public class VSProject : VSFile  {
 
@@ -104,9 +112,274 @@ namespace Goedel.Tool.Makey {
             Parse(TextReader, true);
             }
 
-        public void Parse (TextReader TextReader, bool Expand) { 
-            var Serializer = new XmlSerializer(typeof(Project));
-            Project = Serializer.Deserialize(TextReader) as Project;
+
+
+        void FuckerParse2 (TextReader TextReader) {
+            Project = new Project();
+            Project.ItemGroup = new List<ItemGroupType>();
+            Project.PropertyGroup = new List<PropertyGroupType>();
+            ItemGroupType ItemGroup = null;
+            PropertyGroupType PropertyGroup = null;
+            ReferenceType Reference = null;
+            CompileType Compile = null;
+            NoneType None = null;
+            ProjectReferenceType ProjectReference = null;
+
+            object Current = Project;
+            var XmlReader = new XmlTextReader(TextReader) { };
+
+
+
+            while (XmlReader.Read()) {
+                if (XmlReader.NodeType== XmlNodeType.Element) {
+                    switch (XmlReader.Name) {
+                        case "PropertyGroup": {
+                            PropertyGroup = new PropertyGroupType();
+                            Project.PropertyGroup.Add(PropertyGroup);
+                            Current = PropertyGroup;
+                            break;
+                            }
+                        case "ItemGroup": {
+                            ItemGroup = new ItemGroupType();
+                            ItemGroup.Reference = new List<ReferenceType>();
+                            ItemGroup.Compile = new List<CompileType>();
+                            ItemGroup.None = new List<NoneType>();
+                            ItemGroup.ProjectReference = new List<ProjectReferenceType>();
+                            Project.ItemGroup.Add(ItemGroup);
+                            Current = ItemGroup;
+                            break;
+                            }
+                        case "Reference": {
+                            Reference = new ReferenceType();
+                            ItemGroup.Reference.Add (Reference);
+                            Reference.Include = XmlReader.GetAttribute("Include");
+                            Current = Reference;
+                            break;
+                            }
+                        case "Compile": {
+                            Compile = new CompileType();
+                            ItemGroup.Compile.Add(Compile);
+                            Compile.Include = XmlReader.GetAttribute("Include");
+                            Current = Compile;
+                            break;
+                            }
+                        case "None": {
+                            None = new NoneType();
+                            ItemGroup.None.Add(None);
+                            None.Include = XmlReader.GetAttribute("Include");
+                            Current = None;
+                            break;
+                            }
+                        case "ProjectReference": {
+                            ProjectReference = new ProjectReferenceType();
+                            ItemGroup.ProjectReference.Add(ProjectReference);
+                            ProjectReference.Include = XmlReader.GetAttribute("Include");
+                            Current = ProjectReference;
+                            break;
+                            }
+
+                        // now the strings
+                        //case "Include": {
+                            
+                        //    if (Current == Reference) {
+                        //        XmlReader.Read();
+                        //        Reference.Include = XmlReader.Value;
+                        //        }
+                        //    if (Current == Compile) {
+                        //        XmlReader.Read();
+                        //        Compile.Include = XmlReader.Value;
+                        //        }
+                        //    if (Current == None) {
+                        //        XmlReader.Read();
+                        //        None.Include = XmlReader.Value;
+                        //        }
+                        //    if (Current == ProjectReference) {
+                        //        XmlReader.Read();
+                        //        ProjectReference.Include = XmlReader.Value;
+                        //        }
+
+
+                        //    break;
+                        //    }
+                        case "Project": {
+                            
+                            if (Current == ProjectReference) {
+                                XmlReader.Read();
+                                ProjectReference.Project = XmlReader.Value;
+                                }
+                            break;
+                            }
+
+                        // one off
+
+                        case "ProjectTypeGuids": {
+                            
+                            if (Current == PropertyGroup) {
+                                XmlReader.Read();
+                                PropertyGroup.ProjectTypeGuids = XmlReader.Value;
+                                }
+
+                            break;
+                            }
+                        case "ProjectGuid": {
+
+                            if (Current == PropertyGroup) {
+                                XmlReader.Read();
+                                PropertyGroup.ProjectGuid = XmlReader.Value;
+                                }
+
+                            break;
+                            }
+                        case "OutputType": {
+
+                            if (Current == PropertyGroup) {
+                                XmlReader.Read();
+                                PropertyGroup.OutputType = XmlReader.Value;
+                                }
+
+                            break;
+                            }
+                        case "AssemblyName": {
+
+                            if (Current == PropertyGroup) {
+                                XmlReader.Read();
+                                PropertyGroup.AssemblyName = XmlReader.Value;
+                                }
+
+                            break;
+                            }
+
+                        case "HintPath": {
+
+                            if (Current == Reference) {
+                                XmlReader.Read();
+                                Reference.HintPath = XmlReader.Value;
+                                }
+
+                            break;
+                            }
+                        case "Private": {
+
+                            if (Current == Reference) {
+                                XmlReader.Read();
+                                Reference.Private = XmlReader.Value;
+                                }
+
+                            break;
+                            }
+                        case "DependentUpon": {
+
+                            if (Current == Compile) {
+                                XmlReader.Read();
+                                Compile.DependentUpon = XmlReader.Value;
+                                }
+
+                            break;
+                            }
+                        case "Generator": {
+
+                            if (Current == None) {
+                                XmlReader.Read();
+                                None.Generator = XmlReader.Value;
+                                }
+
+                            break;
+                            }
+                        case "LastGenOutput": {
+
+                            if (Current == None) {
+                                XmlReader.Read();
+                                None.LastGenOutput = XmlReader.Value;
+                                }
+
+                            break;
+                            }
+                        case "Name": {
+                            if (Current == ProjectReference) {
+                                XmlReader.Read();
+                                ProjectReference.Name = XmlReader.Value;
+                                }
+
+                            break;
+                            }
+                        //default: {
+                        //    Current = null;
+                        //    break;
+                        //    }
+                        }
+
+
+
+                    }
+
+
+
+
+
+                //switch (XmlReader.NodeType) {
+                //    case XmlNodeType.Element:
+                //    Console.Write("<{0}>", XmlReader.Name);
+                //    break;
+
+
+                //    case XmlNodeType.Text:
+                //    Console.Write(XmlReader.Value);
+                //    break;
+
+                //    default: {
+                //        break;
+                //        }
+                //    }
+
+
+
+                }
+
+
+            }
+
+
+
+        // Fucking fuckwittery. XmlSerializer has two modes, throw a stupid
+        // error if the utterly unnecessary namespace is missing if expected and
+        // throw a stupid error if it is encountered unexpectedly. 
+        void FuckerParse (TextReader TextReader) {
+            var ProjectType = typeof(Project);
+            var XmlRootAttribute = new XmlRootAttribute() {
+                ElementName = "Project",
+                IsNullable = false,
+                };
+            var Serializer = new XmlSerializer(ProjectType);
+            var XmlReader = new XmlTextReader(TextReader) { };
+            Project = Serializer.Deserialize(XmlReader) as Project;
+
+
+            //try {
+            //    var XmlRootAttribute = new XmlRootAttribute() {
+            //        ElementName = "Project",
+            //        Namespace = "http://schemas.microsoft.com/developer/msbuild/2003",
+            //        IsNullable = false,
+            //        DataType = "string"
+            //        };
+            //    var Serializer = new XmlSerializer(ProjectType, XmlRootAttribute);
+            //    Project = Serializer.Deserialize(TextReader) as Project;
+            //    }
+
+            //catch {
+            //    var XmlRootAttribute = new XmlRootAttribute() {
+            //        ElementName = "Project",
+            //        IsNullable = false,
+            //        DataType = "string"
+            //        };
+            //    var Serializer = new XmlSerializer(ProjectType, XmlRootAttribute);
+            //    Project = Serializer.Deserialize(TextReader) as Project;
+            //    }
+
+            }
+
+
+        public void Parse (TextReader TextReader, bool Expand) {
+            FuckerParse2(TextReader);
 
             foreach (var PropertyGroup in Project.PropertyGroup) {
                 OutputType = OutputType != null ? OutputType : PropertyGroup.OutputType;
@@ -128,7 +401,8 @@ namespace Goedel.Tool.Makey {
                     break;
                     }
                 default: {
-                    Target = null;
+                    Target = AssemblyName + ".dll";
+                    IsLibrary = true;
                     break;
                     }
                 }
@@ -137,54 +411,54 @@ namespace Goedel.Tool.Makey {
             if (!Expand) {
                 return;
                 }
+            if (Project.ItemGroup != null) {
+                foreach (var ItemGroup in Project.ItemGroup) {
+                    if (ItemGroup.Reference != null) {
+                        foreach (var Item in ItemGroup?.Reference) {
+                            Reference.Add(Item);
 
-            foreach (var ItemGroup in Project.ItemGroup) {
-                if (ItemGroup.Reference != null) {
-                    foreach (var Item in ItemGroup?.Reference) {
-                        Reference.Add(Item);
+                            var Len = Item.Include.IndexOf(',');
+                            var Name = Len > 0 ? Item.Include.Substring(0, Len) : Item.Include;
+                            Console.WriteLine("Library {0}", Name);
 
-                        var Len = Item.Include.IndexOf(',');
-                        var Name = Len >0 ? Item.Include.Substring(0, Len): Item.Include;
-                        Console.WriteLine("Library {0}", Name);
-
-                        if (Item.Private == "True") {
-                            PrivateReference.Add(Item);
-                            Console.WriteLine("Nuget Package Path {0}", Item.HintPath);
-                            }
-                        else if (ManualAddLibraries.Contains(Name)) {
-                            AdditionalLinkDependency.Add(Name);
-                            Console.WriteLine("Assembly library Path {0}", Name);
-                            }
-                        else if (Item.HintPath != null) {
-                            Console.WriteLine("Link library Path {0}", Item.HintPath);
-                            FixedLinkDependency.Add(Path.GetFileName(Item.HintPath));
+                            if (Item.Private == "True") {
+                                PrivateReference.Add(Item);
+                                Console.WriteLine("Nuget Package Path {0}", Item.HintPath);
+                                }
+                            else if (ManualAddLibraries.Contains(Name)) {
+                                AdditionalLinkDependency.Add(Name);
+                                Console.WriteLine("Assembly library Path {0}", Name);
+                                }
+                            else if (Item.HintPath != null) {
+                                Console.WriteLine("Link library Path {0}", Item.HintPath);
+                                FixedLinkDependency.Add(Path.GetFileName(Item.HintPath));
+                                }
                             }
                         }
-                    }
-                if (ItemGroup.Compile != null) {
-                    foreach (var Item in ItemGroup?.Compile) {
-                        Compile.Add(Item);
-                        CompileAll += Item.Include + " ";
-                        SourceDependency.Add(Item.Include);
+                    if (ItemGroup.Compile != null) {
+                        foreach (var Item in ItemGroup?.Compile) {
+                            Compile.Add(Item);
+                            CompileAll += Item.Include + " ";
+                            SourceDependency.Add(Item.Include);
+                            }
                         }
-                    }
-                if (ItemGroup.None != null) {
-                    foreach (var Item in ItemGroup?.None) {
-                        None.Add(Item);
+                    if (ItemGroup.None != null) {
+                        foreach (var Item in ItemGroup?.None) {
+                            None.Add(Item);
+                            }
                         }
-                    }
-                if (ItemGroup.ProjectReference != null) {
-                    foreach (var Item in ItemGroup?.ProjectReference) {
-                        ProjectReference.Add(Item);
+                    if (ItemGroup.ProjectReference != null) {
+                        foreach (var Item in ItemGroup?.ProjectReference) {
+                            ProjectReference.Add(Item);
 
-                        var IncludeFile = Path.Combine(Directory, Item.Include);
+                            var IncludeFile = Path.Combine(Directory, Item.Include);
 
-                        Item.SubProject = new VSProject(IncludeFile, false);
-                        LinkDependency.Add(Item.SubProject.Target);
+                            Item.SubProject = new VSProject(IncludeFile, false);
+                            LinkDependency.Add(Item.SubProject.Target);
+                            }
                         }
                     }
                 }
-
             }
         }
 

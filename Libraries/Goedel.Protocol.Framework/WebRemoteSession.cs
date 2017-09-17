@@ -46,12 +46,17 @@ namespace Goedel.Protocol.Framework {
         /// <param name="UDF">Fingerprint of authentication key.</param>
         public WebRemoteSession(string Domain, string Service, string Account=null, string UDF=null) {
             this.Account = Account;
-            ServiceDescription = DNSClient.ResolveService (Domain, Service: Service);
 
-            var Host = ServiceDescription.Next();
-
-            URI = Host.HTTPEndpoint;
-            this.Domain = Host.Address;
+            if (Domain == null) {
+                URI = "http://127.0.0.1:80/.well-known/"; // + Service + "/";
+                this.Domain = null;
+                }
+            else {
+                ServiceDescription = DNSClient.ResolveService(Domain, Service: Service);
+                var Host = ServiceDescription.Next();
+                URI = Host.HTTPEndpoint;
+                this.Domain = Host.Address;
+                }
             }
 
         /// <summary>
@@ -68,7 +73,9 @@ namespace Goedel.Protocol.Framework {
                 // Get request object for the URI
                 var Request = WebRequest.CreateHttp(URI);
                 Request.Method = "POST";
-                Request.Host = Domain;
+                if (Domain != null) {
+                    Request.Host = Domain;
+                    }
                 Request.ContentType = "application/json;charset=UTF-8";
                 Request.Headers.Add("Cache-Control: no-store");
                 Request.ContentLength = Content.Length;

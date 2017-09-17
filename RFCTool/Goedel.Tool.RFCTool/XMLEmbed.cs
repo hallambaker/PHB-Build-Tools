@@ -5,14 +5,48 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Goedel.IO;
+using Goedel.Utilities;
 
 namespace Goedel.Document.RFC {
+
+    public class Base64Writer : TextWriter {
+        TextWriter Output;
+
+        public Base64Writer (TextWriter Output) {
+            Write("Teeeeeeeeeeeeeeeeeeeeeeeeeeeeest!!!");
+            WriteLine("YESSSSSSSSSSSSSSSSSSSSS!!!");
+            this.Output = Output;
+            }
+
+        public override Encoding Encoding => Output.Encoding;
+
+        public override void Write (string value) {
+            base.Write(value);
+            }
+
+        public override void Write (char value) {
+            base.Write(value);
+            }
+        }
+
     public class XMLEmbed {
 
         public static void Embed (string Filename, TextWriter TextWriter) {
             var TextReader = Filename.OpenTextReader();
             Embed(TextReader, TextWriter);
             }
+
+        public static void EmbedBase64 (string Filename, TextWriter TextWriter) {
+            var TextReader = Filename.OpenTextReader();
+            var Output = new StringWriter();
+            Embed(TextReader, Output);
+
+            var Base64 = Convert.ToBase64String(Output.ToString().ToUTF8());
+            TextWriter.Write("<img src=\"data:image/svg+xml;base64,");
+            TextWriter.Write(Base64);
+            TextWriter.Write("\">");
+            }
+
 
 
         public static void Embed (TextReader TextReader, TextWriter TextWriter) {

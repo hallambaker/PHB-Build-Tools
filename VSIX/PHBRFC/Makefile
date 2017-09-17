@@ -122,52 +122,52 @@ LinkFiles = \
     $(TARGETBIN)/Goedel.Document.OpenXML.dll
 
 LinkFilesComma = $(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Document.RFC.dll,$(TARGETBIN)/Goedel.Document.Markdown.dll,$(TARGETBIN)/Goedel.Document.RFC.Convert.dll,$(TARGETBIN)/Goedel.Document.OpenXML.dll
-#  Nuget Microsoft.VisualStudio.Imaging, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\packages\Microsoft.VisualStudio.Imaging.14.1.24720\lib\net45\Microsoft.VisualStudio.Imaging.dll
-#  Nuget Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a :  ..\packages\Microsoft.VisualStudio.OLE.Interop.7.10.6070\lib\Microsoft.VisualStudio.OLE.Interop.dll
-#  Nuget Microsoft.VisualStudio.Shell.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\packages\Microsoft.VisualStudio.Shell.14.0.14.1.24720\lib\Microsoft.VisualStudio.Shell.14.0.dll
-#  Nuget Microsoft.VisualStudio.Shell.Immutable.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\packages\Microsoft.VisualStudio.Shell.Immutable.11.0.11.0.50727\lib\net45\Microsoft.VisualStudio.Shell.Immutable.11.0.dll
-#  Nuget Microsoft.VisualStudio.Shell.Immutable.12.0, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\packages\Microsoft.VisualStudio.Shell.Immutable.12.0.12.0.21003\lib\net45\Microsoft.VisualStudio.Shell.Immutable.12.0.dll
-#  Nuget Microsoft.VisualStudio.Shell.Immutable.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\packages\Microsoft.VisualStudio.Shell.Immutable.14.0.14.1.24720\lib\net45\Microsoft.VisualStudio.Shell.Immutable.14.0.dll
-#  Nuget Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a :  ..\packages\Microsoft.VisualStudio.Shell.Interop.7.10.6071\lib\Microsoft.VisualStudio.Shell.Interop.dll
-#  Nuget Microsoft.VisualStudio.Shell.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a :  ..\packages\Microsoft.VisualStudio.Shell.Interop.8.0.8.0.50727\lib\Microsoft.VisualStudio.Shell.Interop.8.0.dll
-#  Nuget Microsoft.VisualStudio.Shell.Interop.9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a :  ..\packages\Microsoft.VisualStudio.Shell.Interop.9.0.9.0.30729\lib\Microsoft.VisualStudio.Shell.Interop.9.0.dll
-#  Nuget Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a :  ..\packages\Microsoft.VisualStudio.TextManager.Interop.7.10.6070\lib\Microsoft.VisualStudio.TextManager.Interop.dll
-#  Nuget Microsoft.VisualStudio.TextManager.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a :  ..\packages\Microsoft.VisualStudio.TextManager.Interop.8.0.8.0.50727\lib\Microsoft.VisualStudio.TextManager.Interop.8.0.dll
-#  Nuget Microsoft.VisualStudio.Threading, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\packages\Microsoft.VisualStudio.Threading.14.1.111\lib\net45\Microsoft.VisualStudio.Threading.dll
-#  Nuget Microsoft.VisualStudio.Utilities, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\packages\Microsoft.VisualStudio.Utilities.14.1.24720\lib\net45\Microsoft.VisualStudio.Utilities.dll
-#  Nuget Microsoft.VisualStudio.Validation, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\packages\Microsoft.VisualStudio.Validation.14.1.111\lib\net45\Microsoft.VisualStudio.Validation.dll
+#  Nuget Microsoft.VisualStudio.Imaging, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\..\NugetPackages\Microsoft.VisualStudio.Imaging.14.1.24720\lib\net45\Microsoft.VisualStudio.Imaging.dll
+#  Nuget Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a :  ..\..\NugetPackages\Microsoft.VisualStudio.OLE.Interop.7.10.6070\lib\Microsoft.VisualStudio.OLE.Interop.dll
+#  Nuget Microsoft.VisualStudio.Shell.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\..\NugetPackages\Microsoft.VisualStudio.Shell.14.0.14.1.24720\lib\Microsoft.VisualStudio.Shell.14.0.dll
+#  Nuget Microsoft.VisualStudio.Shell.Immutable.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\..\NugetPackages\Microsoft.VisualStudio.Shell.Immutable.11.0.11.0.50727\lib\net45\Microsoft.VisualStudio.Shell.Immutable.11.0.dll
+#  Nuget Microsoft.VisualStudio.Shell.Immutable.12.0, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\..\NugetPackages\Microsoft.VisualStudio.Shell.Immutable.12.0.12.0.21003\lib\net45\Microsoft.VisualStudio.Shell.Immutable.12.0.dll
+#  Nuget Microsoft.VisualStudio.Shell.Immutable.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\..\NugetPackages\Microsoft.VisualStudio.Shell.Immutable.14.0.14.1.24720\lib\net45\Microsoft.VisualStudio.Shell.Immutable.14.0.dll
+#  Nuget Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a :  ..\..\NugetPackages\Microsoft.VisualStudio.Shell.Interop.7.10.6071\lib\Microsoft.VisualStudio.Shell.Interop.dll
+#  Nuget Microsoft.VisualStudio.Shell.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a :  ..\..\NugetPackages\Microsoft.VisualStudio.Shell.Interop.8.0.8.0.50727\lib\Microsoft.VisualStudio.Shell.Interop.8.0.dll
+#  Nuget Microsoft.VisualStudio.Shell.Interop.9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a :  ..\..\NugetPackages\Microsoft.VisualStudio.Shell.Interop.9.0.9.0.30729\lib\Microsoft.VisualStudio.Shell.Interop.9.0.dll
+#  Nuget Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a :  ..\..\NugetPackages\Microsoft.VisualStudio.TextManager.Interop.7.10.6070\lib\Microsoft.VisualStudio.TextManager.Interop.dll
+#  Nuget Microsoft.VisualStudio.TextManager.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a :  ..\..\NugetPackages\Microsoft.VisualStudio.TextManager.Interop.8.0.8.0.50727\lib\Microsoft.VisualStudio.TextManager.Interop.8.0.dll
+#  Nuget Microsoft.VisualStudio.Threading, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\..\NugetPackages\Microsoft.VisualStudio.Threading.14.1.111\lib\net45\Microsoft.VisualStudio.Threading.dll
+#  Nuget Microsoft.VisualStudio.Utilities, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\..\NugetPackages\Microsoft.VisualStudio.Utilities.14.1.24720\lib\net45\Microsoft.VisualStudio.Utilities.dll
+#  Nuget Microsoft.VisualStudio.Validation, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL :  ..\..\NugetPackages\Microsoft.VisualStudio.Validation.14.1.111\lib\net45\Microsoft.VisualStudio.Validation.dll
 
 
 NugetFiles = \
-    ../packages/Microsoft.VisualStudio.Imaging.14.1.24720/lib/net45/Microsoft.VisualStudio.Imaging.dll\
-    ../packages/Microsoft.VisualStudio.OLE.Interop.7.10.6070/lib/Microsoft.VisualStudio.OLE.Interop.dll\
-    ../packages/Microsoft.VisualStudio.Shell.14.0.14.1.24720/lib/Microsoft.VisualStudio.Shell.14.0.dll\
-    ../packages/Microsoft.VisualStudio.Shell.Immutable.11.0.11.0.50727/lib/net45/Microsoft.VisualStudio.Shell.Immutable.11.0.dll\
-    ../packages/Microsoft.VisualStudio.Shell.Immutable.12.0.12.0.21003/lib/net45/Microsoft.VisualStudio.Shell.Immutable.12.0.dll\
-    ../packages/Microsoft.VisualStudio.Shell.Immutable.14.0.14.1.24720/lib/net45/Microsoft.VisualStudio.Shell.Immutable.14.0.dll\
-    ../packages/Microsoft.VisualStudio.Shell.Interop.7.10.6071/lib/Microsoft.VisualStudio.Shell.Interop.dll\
-    ../packages/Microsoft.VisualStudio.Shell.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.Shell.Interop.8.0.dll\
-    ../packages/Microsoft.VisualStudio.Shell.Interop.9.0.9.0.30729/lib/Microsoft.VisualStudio.Shell.Interop.9.0.dll\
-    ../packages/Microsoft.VisualStudio.TextManager.Interop.7.10.6070/lib/Microsoft.VisualStudio.TextManager.Interop.dll\
-    ../packages/Microsoft.VisualStudio.TextManager.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.TextManager.Interop.8.0.dll\
-    ../packages/Microsoft.VisualStudio.Threading.14.1.111/lib/net45/Microsoft.VisualStudio.Threading.dll\
-    ../packages/Microsoft.VisualStudio.Utilities.14.1.24720/lib/net45/Microsoft.VisualStudio.Utilities.dll\
-    ../packages/Microsoft.VisualStudio.Validation.14.1.111/lib/net45/Microsoft.VisualStudio.Validation.dll
+    ../../NugetPackages/Microsoft.VisualStudio.Imaging.14.1.24720/lib/net45/Microsoft.VisualStudio.Imaging.dll\
+    ../../NugetPackages/Microsoft.VisualStudio.OLE.Interop.7.10.6070/lib/Microsoft.VisualStudio.OLE.Interop.dll\
+    ../../NugetPackages/Microsoft.VisualStudio.Shell.14.0.14.1.24720/lib/Microsoft.VisualStudio.Shell.14.0.dll\
+    ../../NugetPackages/Microsoft.VisualStudio.Shell.Immutable.11.0.11.0.50727/lib/net45/Microsoft.VisualStudio.Shell.Immutable.11.0.dll\
+    ../../NugetPackages/Microsoft.VisualStudio.Shell.Immutable.12.0.12.0.21003/lib/net45/Microsoft.VisualStudio.Shell.Immutable.12.0.dll\
+    ../../NugetPackages/Microsoft.VisualStudio.Shell.Immutable.14.0.14.1.24720/lib/net45/Microsoft.VisualStudio.Shell.Immutable.14.0.dll\
+    ../../NugetPackages/Microsoft.VisualStudio.Shell.Interop.7.10.6071/lib/Microsoft.VisualStudio.Shell.Interop.dll\
+    ../../NugetPackages/Microsoft.VisualStudio.Shell.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.Shell.Interop.8.0.dll\
+    ../../NugetPackages/Microsoft.VisualStudio.Shell.Interop.9.0.9.0.30729/lib/Microsoft.VisualStudio.Shell.Interop.9.0.dll\
+    ../../NugetPackages/Microsoft.VisualStudio.TextManager.Interop.7.10.6070/lib/Microsoft.VisualStudio.TextManager.Interop.dll\
+    ../../NugetPackages/Microsoft.VisualStudio.TextManager.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.TextManager.Interop.8.0.dll\
+    ../../NugetPackages/Microsoft.VisualStudio.Threading.14.1.111/lib/net45/Microsoft.VisualStudio.Threading.dll\
+    ../../NugetPackages/Microsoft.VisualStudio.Utilities.14.1.24720/lib/net45/Microsoft.VisualStudio.Utilities.dll\
+    ../../NugetPackages/Microsoft.VisualStudio.Validation.14.1.111/lib/net45/Microsoft.VisualStudio.Validation.dll
 NugetFilesComa = \
-    ../packages/Microsoft.VisualStudio.Imaging.14.1.24720/lib/net45/Microsoft.VisualStudio.Imaging.dll,\
-    ../packages/Microsoft.VisualStudio.OLE.Interop.7.10.6070/lib/Microsoft.VisualStudio.OLE.Interop.dll,\
-    ../packages/Microsoft.VisualStudio.Shell.14.0.14.1.24720/lib/Microsoft.VisualStudio.Shell.14.0.dll,\
-    ../packages/Microsoft.VisualStudio.Shell.Immutable.11.0.11.0.50727/lib/net45/Microsoft.VisualStudio.Shell.Immutable.11.0.dll,\
-    ../packages/Microsoft.VisualStudio.Shell.Immutable.12.0.12.0.21003/lib/net45/Microsoft.VisualStudio.Shell.Immutable.12.0.dll,\
-    ../packages/Microsoft.VisualStudio.Shell.Immutable.14.0.14.1.24720/lib/net45/Microsoft.VisualStudio.Shell.Immutable.14.0.dll,\
-    ../packages/Microsoft.VisualStudio.Shell.Interop.7.10.6071/lib/Microsoft.VisualStudio.Shell.Interop.dll,\
-    ../packages/Microsoft.VisualStudio.Shell.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.Shell.Interop.8.0.dll,\
-    ../packages/Microsoft.VisualStudio.Shell.Interop.9.0.9.0.30729/lib/Microsoft.VisualStudio.Shell.Interop.9.0.dll,\
-    ../packages/Microsoft.VisualStudio.TextManager.Interop.7.10.6070/lib/Microsoft.VisualStudio.TextManager.Interop.dll,\
-    ../packages/Microsoft.VisualStudio.TextManager.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.TextManager.Interop.8.0.dll,\
-    ../packages/Microsoft.VisualStudio.Threading.14.1.111/lib/net45/Microsoft.VisualStudio.Threading.dll,\
-    ../packages/Microsoft.VisualStudio.Utilities.14.1.24720/lib/net45/Microsoft.VisualStudio.Utilities.dll,\
-    ../packages/Microsoft.VisualStudio.Validation.14.1.111/lib/net45/Microsoft.VisualStudio.Validation.dll
+    ../../NugetPackages/Microsoft.VisualStudio.Imaging.14.1.24720/lib/net45/Microsoft.VisualStudio.Imaging.dll,\
+    ../../NugetPackages/Microsoft.VisualStudio.OLE.Interop.7.10.6070/lib/Microsoft.VisualStudio.OLE.Interop.dll,\
+    ../../NugetPackages/Microsoft.VisualStudio.Shell.14.0.14.1.24720/lib/Microsoft.VisualStudio.Shell.14.0.dll,\
+    ../../NugetPackages/Microsoft.VisualStudio.Shell.Immutable.11.0.11.0.50727/lib/net45/Microsoft.VisualStudio.Shell.Immutable.11.0.dll,\
+    ../../NugetPackages/Microsoft.VisualStudio.Shell.Immutable.12.0.12.0.21003/lib/net45/Microsoft.VisualStudio.Shell.Immutable.12.0.dll,\
+    ../../NugetPackages/Microsoft.VisualStudio.Shell.Immutable.14.0.14.1.24720/lib/net45/Microsoft.VisualStudio.Shell.Immutable.14.0.dll,\
+    ../../NugetPackages/Microsoft.VisualStudio.Shell.Interop.7.10.6071/lib/Microsoft.VisualStudio.Shell.Interop.dll,\
+    ../../NugetPackages/Microsoft.VisualStudio.Shell.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.Shell.Interop.8.0.dll,\
+    ../../NugetPackages/Microsoft.VisualStudio.Shell.Interop.9.0.9.0.30729/lib/Microsoft.VisualStudio.Shell.Interop.9.0.dll,\
+    ../../NugetPackages/Microsoft.VisualStudio.TextManager.Interop.7.10.6070/lib/Microsoft.VisualStudio.TextManager.Interop.dll,\
+    ../../NugetPackages/Microsoft.VisualStudio.TextManager.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.TextManager.Interop.8.0.dll,\
+    ../../NugetPackages/Microsoft.VisualStudio.Threading.14.1.111/lib/net45/Microsoft.VisualStudio.Threading.dll,\
+    ../../NugetPackages/Microsoft.VisualStudio.Utilities.14.1.24720/lib/net45/Microsoft.VisualStudio.Utilities.dll,\
+    ../../NugetPackages/Microsoft.VisualStudio.Validation.14.1.111/lib/net45/Microsoft.VisualStudio.Validation.dll
 
 # A) Main target packaged
 
@@ -262,47 +262,47 @@ $(TARGETBIN)/Goedel.Document.OpenXML.dll : ../../RFCTool/Goedel.Document.OpenXML
 # Referenced Libraries
 #
 $(TARGETBIN)/Microsoft.VisualStudio.Imaging.dll :| $(TARGETBIN)
-$(TARGETBIN)/Microsoft.VisualStudio.Imaging.dll : ../packages/Microsoft.VisualStudio.Imaging.14.1.24720/lib/net45/Microsoft.VisualStudio.Imaging.dll
-!  cp   ../packages/Microsoft.VisualStudio.Imaging.14.1.24720/lib/net45/Microsoft.VisualStudio.Imaging.dll $(TARGETBIN)/Microsoft.VisualStudio.Imaging.dll
+$(TARGETBIN)/Microsoft.VisualStudio.Imaging.dll : ../../NugetPackages/Microsoft.VisualStudio.Imaging.14.1.24720/lib/net45/Microsoft.VisualStudio.Imaging.dll
+!  cp   ../../NugetPackages/Microsoft.VisualStudio.Imaging.14.1.24720/lib/net45/Microsoft.VisualStudio.Imaging.dll $(TARGETBIN)/Microsoft.VisualStudio.Imaging.dll
 $(TARGETBIN)/Microsoft.VisualStudio.OLE.Interop.dll :| $(TARGETBIN)
-$(TARGETBIN)/Microsoft.VisualStudio.OLE.Interop.dll : ../packages/Microsoft.VisualStudio.OLE.Interop.7.10.6070/lib/Microsoft.VisualStudio.OLE.Interop.dll
-!  cp   ../packages/Microsoft.VisualStudio.OLE.Interop.7.10.6070/lib/Microsoft.VisualStudio.OLE.Interop.dll $(TARGETBIN)/Microsoft.VisualStudio.OLE.Interop.dll
+$(TARGETBIN)/Microsoft.VisualStudio.OLE.Interop.dll : ../../NugetPackages/Microsoft.VisualStudio.OLE.Interop.7.10.6070/lib/Microsoft.VisualStudio.OLE.Interop.dll
+!  cp   ../../NugetPackages/Microsoft.VisualStudio.OLE.Interop.7.10.6070/lib/Microsoft.VisualStudio.OLE.Interop.dll $(TARGETBIN)/Microsoft.VisualStudio.OLE.Interop.dll
 $(TARGETBIN)/Microsoft.VisualStudio.Shell.14.0.dll :| $(TARGETBIN)
-$(TARGETBIN)/Microsoft.VisualStudio.Shell.14.0.dll : ../packages/Microsoft.VisualStudio.Shell.14.0.14.1.24720/lib/Microsoft.VisualStudio.Shell.14.0.dll
-!  cp   ../packages/Microsoft.VisualStudio.Shell.14.0.14.1.24720/lib/Microsoft.VisualStudio.Shell.14.0.dll $(TARGETBIN)/Microsoft.VisualStudio.Shell.14.0.dll
+$(TARGETBIN)/Microsoft.VisualStudio.Shell.14.0.dll : ../../NugetPackages/Microsoft.VisualStudio.Shell.14.0.14.1.24720/lib/Microsoft.VisualStudio.Shell.14.0.dll
+!  cp   ../../NugetPackages/Microsoft.VisualStudio.Shell.14.0.14.1.24720/lib/Microsoft.VisualStudio.Shell.14.0.dll $(TARGETBIN)/Microsoft.VisualStudio.Shell.14.0.dll
 $(TARGETBIN)/Microsoft.VisualStudio.Shell.Immutable.11.0.dll :| $(TARGETBIN)
-$(TARGETBIN)/Microsoft.VisualStudio.Shell.Immutable.11.0.dll : ../packages/Microsoft.VisualStudio.Shell.Immutable.11.0.11.0.50727/lib/net45/Microsoft.VisualStudio.Shell.Immutable.11.0.dll
-!  cp   ../packages/Microsoft.VisualStudio.Shell.Immutable.11.0.11.0.50727/lib/net45/Microsoft.VisualStudio.Shell.Immutable.11.0.dll $(TARGETBIN)/Microsoft.VisualStudio.Shell.Immutable.11.0.dll
+$(TARGETBIN)/Microsoft.VisualStudio.Shell.Immutable.11.0.dll : ../../NugetPackages/Microsoft.VisualStudio.Shell.Immutable.11.0.11.0.50727/lib/net45/Microsoft.VisualStudio.Shell.Immutable.11.0.dll
+!  cp   ../../NugetPackages/Microsoft.VisualStudio.Shell.Immutable.11.0.11.0.50727/lib/net45/Microsoft.VisualStudio.Shell.Immutable.11.0.dll $(TARGETBIN)/Microsoft.VisualStudio.Shell.Immutable.11.0.dll
 $(TARGETBIN)/Microsoft.VisualStudio.Shell.Immutable.12.0.dll :| $(TARGETBIN)
-$(TARGETBIN)/Microsoft.VisualStudio.Shell.Immutable.12.0.dll : ../packages/Microsoft.VisualStudio.Shell.Immutable.12.0.12.0.21003/lib/net45/Microsoft.VisualStudio.Shell.Immutable.12.0.dll
-!  cp   ../packages/Microsoft.VisualStudio.Shell.Immutable.12.0.12.0.21003/lib/net45/Microsoft.VisualStudio.Shell.Immutable.12.0.dll $(TARGETBIN)/Microsoft.VisualStudio.Shell.Immutable.12.0.dll
+$(TARGETBIN)/Microsoft.VisualStudio.Shell.Immutable.12.0.dll : ../../NugetPackages/Microsoft.VisualStudio.Shell.Immutable.12.0.12.0.21003/lib/net45/Microsoft.VisualStudio.Shell.Immutable.12.0.dll
+!  cp   ../../NugetPackages/Microsoft.VisualStudio.Shell.Immutable.12.0.12.0.21003/lib/net45/Microsoft.VisualStudio.Shell.Immutable.12.0.dll $(TARGETBIN)/Microsoft.VisualStudio.Shell.Immutable.12.0.dll
 $(TARGETBIN)/Microsoft.VisualStudio.Shell.Immutable.14.0.dll :| $(TARGETBIN)
-$(TARGETBIN)/Microsoft.VisualStudio.Shell.Immutable.14.0.dll : ../packages/Microsoft.VisualStudio.Shell.Immutable.14.0.14.1.24720/lib/net45/Microsoft.VisualStudio.Shell.Immutable.14.0.dll
-!  cp   ../packages/Microsoft.VisualStudio.Shell.Immutable.14.0.14.1.24720/lib/net45/Microsoft.VisualStudio.Shell.Immutable.14.0.dll $(TARGETBIN)/Microsoft.VisualStudio.Shell.Immutable.14.0.dll
+$(TARGETBIN)/Microsoft.VisualStudio.Shell.Immutable.14.0.dll : ../../NugetPackages/Microsoft.VisualStudio.Shell.Immutable.14.0.14.1.24720/lib/net45/Microsoft.VisualStudio.Shell.Immutable.14.0.dll
+!  cp   ../../NugetPackages/Microsoft.VisualStudio.Shell.Immutable.14.0.14.1.24720/lib/net45/Microsoft.VisualStudio.Shell.Immutable.14.0.dll $(TARGETBIN)/Microsoft.VisualStudio.Shell.Immutable.14.0.dll
 $(TARGETBIN)/Microsoft.VisualStudio.Shell.Interop.dll :| $(TARGETBIN)
-$(TARGETBIN)/Microsoft.VisualStudio.Shell.Interop.dll : ../packages/Microsoft.VisualStudio.Shell.Interop.7.10.6071/lib/Microsoft.VisualStudio.Shell.Interop.dll
-!  cp   ../packages/Microsoft.VisualStudio.Shell.Interop.7.10.6071/lib/Microsoft.VisualStudio.Shell.Interop.dll $(TARGETBIN)/Microsoft.VisualStudio.Shell.Interop.dll
+$(TARGETBIN)/Microsoft.VisualStudio.Shell.Interop.dll : ../../NugetPackages/Microsoft.VisualStudio.Shell.Interop.7.10.6071/lib/Microsoft.VisualStudio.Shell.Interop.dll
+!  cp   ../../NugetPackages/Microsoft.VisualStudio.Shell.Interop.7.10.6071/lib/Microsoft.VisualStudio.Shell.Interop.dll $(TARGETBIN)/Microsoft.VisualStudio.Shell.Interop.dll
 $(TARGETBIN)/Microsoft.VisualStudio.Shell.Interop.8.0.dll :| $(TARGETBIN)
-$(TARGETBIN)/Microsoft.VisualStudio.Shell.Interop.8.0.dll : ../packages/Microsoft.VisualStudio.Shell.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.Shell.Interop.8.0.dll
-!  cp   ../packages/Microsoft.VisualStudio.Shell.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.Shell.Interop.8.0.dll $(TARGETBIN)/Microsoft.VisualStudio.Shell.Interop.8.0.dll
+$(TARGETBIN)/Microsoft.VisualStudio.Shell.Interop.8.0.dll : ../../NugetPackages/Microsoft.VisualStudio.Shell.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.Shell.Interop.8.0.dll
+!  cp   ../../NugetPackages/Microsoft.VisualStudio.Shell.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.Shell.Interop.8.0.dll $(TARGETBIN)/Microsoft.VisualStudio.Shell.Interop.8.0.dll
 $(TARGETBIN)/Microsoft.VisualStudio.Shell.Interop.9.0.dll :| $(TARGETBIN)
-$(TARGETBIN)/Microsoft.VisualStudio.Shell.Interop.9.0.dll : ../packages/Microsoft.VisualStudio.Shell.Interop.9.0.9.0.30729/lib/Microsoft.VisualStudio.Shell.Interop.9.0.dll
-!  cp   ../packages/Microsoft.VisualStudio.Shell.Interop.9.0.9.0.30729/lib/Microsoft.VisualStudio.Shell.Interop.9.0.dll $(TARGETBIN)/Microsoft.VisualStudio.Shell.Interop.9.0.dll
+$(TARGETBIN)/Microsoft.VisualStudio.Shell.Interop.9.0.dll : ../../NugetPackages/Microsoft.VisualStudio.Shell.Interop.9.0.9.0.30729/lib/Microsoft.VisualStudio.Shell.Interop.9.0.dll
+!  cp   ../../NugetPackages/Microsoft.VisualStudio.Shell.Interop.9.0.9.0.30729/lib/Microsoft.VisualStudio.Shell.Interop.9.0.dll $(TARGETBIN)/Microsoft.VisualStudio.Shell.Interop.9.0.dll
 $(TARGETBIN)/Microsoft.VisualStudio.TextManager.Interop.dll :| $(TARGETBIN)
-$(TARGETBIN)/Microsoft.VisualStudio.TextManager.Interop.dll : ../packages/Microsoft.VisualStudio.TextManager.Interop.7.10.6070/lib/Microsoft.VisualStudio.TextManager.Interop.dll
-!  cp   ../packages/Microsoft.VisualStudio.TextManager.Interop.7.10.6070/lib/Microsoft.VisualStudio.TextManager.Interop.dll $(TARGETBIN)/Microsoft.VisualStudio.TextManager.Interop.dll
+$(TARGETBIN)/Microsoft.VisualStudio.TextManager.Interop.dll : ../../NugetPackages/Microsoft.VisualStudio.TextManager.Interop.7.10.6070/lib/Microsoft.VisualStudio.TextManager.Interop.dll
+!  cp   ../../NugetPackages/Microsoft.VisualStudio.TextManager.Interop.7.10.6070/lib/Microsoft.VisualStudio.TextManager.Interop.dll $(TARGETBIN)/Microsoft.VisualStudio.TextManager.Interop.dll
 $(TARGETBIN)/Microsoft.VisualStudio.TextManager.Interop.8.0.dll :| $(TARGETBIN)
-$(TARGETBIN)/Microsoft.VisualStudio.TextManager.Interop.8.0.dll : ../packages/Microsoft.VisualStudio.TextManager.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.TextManager.Interop.8.0.dll
-!  cp   ../packages/Microsoft.VisualStudio.TextManager.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.TextManager.Interop.8.0.dll $(TARGETBIN)/Microsoft.VisualStudio.TextManager.Interop.8.0.dll
+$(TARGETBIN)/Microsoft.VisualStudio.TextManager.Interop.8.0.dll : ../../NugetPackages/Microsoft.VisualStudio.TextManager.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.TextManager.Interop.8.0.dll
+!  cp   ../../NugetPackages/Microsoft.VisualStudio.TextManager.Interop.8.0.8.0.50727/lib/Microsoft.VisualStudio.TextManager.Interop.8.0.dll $(TARGETBIN)/Microsoft.VisualStudio.TextManager.Interop.8.0.dll
 $(TARGETBIN)/Microsoft.VisualStudio.Threading.dll :| $(TARGETBIN)
-$(TARGETBIN)/Microsoft.VisualStudio.Threading.dll : ../packages/Microsoft.VisualStudio.Threading.14.1.111/lib/net45/Microsoft.VisualStudio.Threading.dll
-!  cp   ../packages/Microsoft.VisualStudio.Threading.14.1.111/lib/net45/Microsoft.VisualStudio.Threading.dll $(TARGETBIN)/Microsoft.VisualStudio.Threading.dll
+$(TARGETBIN)/Microsoft.VisualStudio.Threading.dll : ../../NugetPackages/Microsoft.VisualStudio.Threading.14.1.111/lib/net45/Microsoft.VisualStudio.Threading.dll
+!  cp   ../../NugetPackages/Microsoft.VisualStudio.Threading.14.1.111/lib/net45/Microsoft.VisualStudio.Threading.dll $(TARGETBIN)/Microsoft.VisualStudio.Threading.dll
 $(TARGETBIN)/Microsoft.VisualStudio.Utilities.dll :| $(TARGETBIN)
-$(TARGETBIN)/Microsoft.VisualStudio.Utilities.dll : ../packages/Microsoft.VisualStudio.Utilities.14.1.24720/lib/net45/Microsoft.VisualStudio.Utilities.dll
-!  cp   ../packages/Microsoft.VisualStudio.Utilities.14.1.24720/lib/net45/Microsoft.VisualStudio.Utilities.dll $(TARGETBIN)/Microsoft.VisualStudio.Utilities.dll
+$(TARGETBIN)/Microsoft.VisualStudio.Utilities.dll : ../../NugetPackages/Microsoft.VisualStudio.Utilities.14.1.24720/lib/net45/Microsoft.VisualStudio.Utilities.dll
+!  cp   ../../NugetPackages/Microsoft.VisualStudio.Utilities.14.1.24720/lib/net45/Microsoft.VisualStudio.Utilities.dll $(TARGETBIN)/Microsoft.VisualStudio.Utilities.dll
 $(TARGETBIN)/Microsoft.VisualStudio.Validation.dll :| $(TARGETBIN)
-$(TARGETBIN)/Microsoft.VisualStudio.Validation.dll : ../packages/Microsoft.VisualStudio.Validation.14.1.111/lib/net45/Microsoft.VisualStudio.Validation.dll
-!  cp   ../packages/Microsoft.VisualStudio.Validation.14.1.111/lib/net45/Microsoft.VisualStudio.Validation.dll $(TARGETBIN)/Microsoft.VisualStudio.Validation.dll
+$(TARGETBIN)/Microsoft.VisualStudio.Validation.dll : ../../NugetPackages/Microsoft.VisualStudio.Validation.14.1.111/lib/net45/Microsoft.VisualStudio.Validation.dll
+!  cp   ../../NugetPackages/Microsoft.VisualStudio.Validation.14.1.111/lib/net45/Microsoft.VisualStudio.Validation.dll $(TARGETBIN)/Microsoft.VisualStudio.Validation.dll
 
 
 # Clean up

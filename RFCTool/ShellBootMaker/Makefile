@@ -1,5 +1,5 @@
 #
-# Makefile for Visual Studio Project bootmaker
+# Makefile for Visual Studio Project bootmakermini
 #
 # This file is generated automatically from the Visual Studio Project
 # File. If you make changes to this file and do not update the project
@@ -115,32 +115,28 @@ SourceFiles = \
      Properties/AssemblyInfo.cs
 
 LinkFiles = \
-    $(LIBRARYBIN)/Microsoft.Office.Interop.Excel.dll\
-    $(LIBRARYBIN)/Microsoft.Office.Interop.PowerPoint.dll\
-    $(LIBRARYBIN)/Microsoft.Office.Interop.Visio.dll\
-    $(LIBRARYBIN)/office.dll\
+    $(TARGETBIN)/Goedel.Command.dll\
     $(TARGETBIN)/Goedel.FSR.dll\
     $(TARGETBIN)/Goedel.IO.dll\
     $(TARGETBIN)/Goedel.Registry.dll\
     $(TARGETBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Document.Markdown.dll\
-    $(TARGETBIN)/OfficeLib.dll\
     $(TARGETBIN)/Goedel.Document.OpenXML.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Microsoft.Office.Interop.Excel.dll,$(LIBRARYBIN)/Microsoft.Office.Interop.PowerPoint.dll,$(LIBRARYBIN)/Microsoft.Office.Interop.Visio.dll,$(LIBRARYBIN)/office.dll,$(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Document.Markdown.dll,$(TARGETBIN)/OfficeLib.dll,$(TARGETBIN)/Goedel.Document.OpenXML.dll,WindowsBase
+LinkFilesComma = $(TARGETBIN)/Goedel.Command.dll,$(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Document.Markdown.dll,$(TARGETBIN)/Goedel.Document.OpenXML.dll,WindowsBase
 
 
 NugetFiles = 
 NugetFilesComa = 
 
 # A) Main target packaged
-$(TARGETEXE)/bootmaker :| $(TARGETEXE)
-$(TARGETEXE)/bootmaker : $(TARGETBIN)/bootmaker.exe 
+$(TARGETEXE)/bootmakermini :| $(TARGETEXE)
+$(TARGETEXE)/bootmakermini : $(TARGETBIN)/bootmakermini.exe 
 ! $(BUNDLE) $@ $^ $(LinkFiles)  $(NugetFiles)
 
 # B) Main target executable
-$(TARGETBIN)/bootmaker.exe :| $(TARGETBIN)
-$(TARGETBIN)/bootmaker.exe : $(SourceFiles) $(LinkFiles) $(NugetFiles)
+$(TARGETBIN)/bootmakermini.exe :| $(TARGETBIN)
+$(TARGETBIN)/bootmakermini.exe : $(SourceFiles) $(LinkFiles) $(NugetFiles)
 ! $(CSHARPEXE) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) 
 
 
@@ -179,6 +175,9 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../../Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Command
+
 ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : recursive
 ! $(MAKE) -C ../../Libraries/Goedel.FSR
 
@@ -194,13 +193,14 @@ ifndef NORECURSE
 ../Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : recursive
 ! $(MAKE) -C ../Goedel.Document.Markdown
 
-../Goedel.Document.Office/$(TARGETBIN)/OfficeLib.dll : recursive
-! $(MAKE) -C ../Goedel.Document.Office
-
 ../Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : recursive
 ! $(MAKE) -C ../Goedel.Document.OpenXML
 
 endif
+
+$(TARGETBIN)/Goedel.Command.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Command.dll : ../../Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
+!  cp ../../Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll $(TARGETBIN)/Goedel.Command.dll
 
 $(TARGETBIN)/Goedel.FSR.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.FSR.dll : ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
@@ -221,10 +221,6 @@ $(TARGETBIN)/Goedel.Utilities.dll : ../../Libraries/Goedel.Utilities/$(TARGETBIN
 $(TARGETBIN)/Goedel.Document.Markdown.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Document.Markdown.dll : ../Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll
 !  cp ../Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll $(TARGETBIN)/Goedel.Document.Markdown.dll
-
-$(TARGETBIN)/OfficeLib.dll :| $(TARGETBIN)
-$(TARGETBIN)/OfficeLib.dll : ../Goedel.Document.Office/$(TARGETBIN)/OfficeLib.dll
-!  cp ../Goedel.Document.Office/$(TARGETBIN)/OfficeLib.dll $(TARGETBIN)/OfficeLib.dll
 
 $(TARGETBIN)/Goedel.Document.OpenXML.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Document.OpenXML.dll : ../Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll
@@ -250,10 +246,10 @@ clean :
 # Install files to a tools directory. Default is ~/.local/bin
 
 
-install : $(INSTALL_PROGRAM)/bootmaker 
+install : $(INSTALL_PROGRAM)/bootmakermini 
 
-$(INSTALL_PROGRAM)/bootmaker  :| $(INSTALL_PROGRAM)
-$(INSTALL_PROGRAM)/bootmaker  : $(TARGETEXE)/bootmaker 
+$(INSTALL_PROGRAM)/bootmakermini  :| $(INSTALL_PROGRAM)
+$(INSTALL_PROGRAM)/bootmakermini  : $(TARGETEXE)/bootmakermini 
 ! cp $^ $@ 
 
 

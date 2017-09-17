@@ -109,10 +109,8 @@ export Custom_TrojanGTK_FLAG	?= /cs
 # The main target 
 
 SourceFiles = \
-     Command.cs\
      Convenience.cs\
      Exceptions.cs\
-     FileTools.cs\
      Headers.cs\
      Lexer.cs\
      Properties/AssemblyInfo.cs\
@@ -122,9 +120,10 @@ SourceFiles = \
      XMLEscape.cs
 
 LinkFiles = \
+    $(TARGETBIN)/Goedel.FSR.dll\
     $(TARGETBIN)/Goedel.Utilities.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.Utilities.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.Utilities.dll
 
 
 NugetFiles = 
@@ -177,10 +176,17 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : recursive
+! $(MAKE) -C ../Goedel.FSR
+
 ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
 ! $(MAKE) -C ../Goedel.Utilities
 
 endif
+
+$(TARGETBIN)/Goedel.FSR.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.FSR.dll : ../Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+!  cp ../Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll $(TARGETBIN)/Goedel.FSR.dll
 
 $(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Utilities.dll : ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll

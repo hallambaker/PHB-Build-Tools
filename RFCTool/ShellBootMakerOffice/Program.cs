@@ -38,9 +38,9 @@ namespace Shell.Bootmaker {
                 Schema.Process(infile, Parse);
                 }
 
-            var TagCatalog1 = new TagCatalog(Parse);
-            //TagCatalog1.DocumentProcess = Goedel.WordLib.Dispatch.Process;
-            TagCatalog1.Process = Goedel.Document.Office.Dispatch.Process;
+            var TagCatalog1 = new TagCatalog(Parse) {
+                Process = Goedel.Document.Office.Dispatch.Process
+                };
 
             return TagCatalog1;
             }

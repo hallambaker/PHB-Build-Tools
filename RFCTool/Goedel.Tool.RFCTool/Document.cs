@@ -41,7 +41,7 @@ namespace Goedel.Document.RFC {
         public bool TonInclude = true;
         public bool IndexInclude = false;
         public bool EmbedStylesheet = true;
-        public bool EmbedSVG = false;
+        public int EmbedSVG = 0;                // Default, embed as data: uri
 
         
         public string Scripts = "Common,Latin";
@@ -332,7 +332,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        string GetAnchor (string Text) => Text.Replace(" ", "-").ToLower();
+        string GetAnchor (string Text) => Text==null? "undefined" : Text.Replace(" ", "-").ToLower();
 
 
         public bool CheckNits() {

@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Goedel.FSR\Goedel.FSR.csproj" />
+    <ProjectReference Include="..\Goedel.Registry\Goedel.Registry.csproj" />
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
 

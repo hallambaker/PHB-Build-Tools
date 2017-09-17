@@ -10,6 +10,7 @@
 #!output GenerateC C c
 #!output 
 #% string StartP , EndP ;
+#% string StartDD , EndDD ;
 #% string StartParamList , EndParamList ;
 #% public string StartParam , MidParam , EndParam, EndParamBlock;
 #% string StartSection1 , MidSection1 , EndSection1;
@@ -27,6 +28,7 @@
 #method GenerateRFC2XML ProtoStruct ProtoStruct
 #% ProtoStruct.Complete ();
 #%  StartP = "<t>"; EndP = "</t>";
+#%  StartDD = "<t>"; EndDD = "</t>";
 #%  StartParamList = "<t> <list style=\"hanging\" hangIndent=\"6\">";
 #%  EndParamList = "</list></t>";
 #%  StartParam = "<t hangText=\""; MidParam = " : "; EndParam = "\"><vspace />";EndParamBlock = "";
@@ -41,6 +43,7 @@
 #method GenerateHTML ProtoStruct ProtoStruct
 #% ProtoStruct.Complete ();
 #%  StartP = "<p>"; EndP = "</p>";
+#%  StartDD = "<dd>"; EndDD = "</dd>";
 #%  StartParamList = "<dl>";
 #%  EndParamList = "</dl>";
 #%  StartParam = "<dt>"; MidParam = " :</dt><dd>"; EndParam = "<p>"; EndParamBlock = "</dd>";
@@ -63,9 +66,10 @@
 #method GenerateMD ProtoStruct ProtoStruct
 #% ProtoStruct.Complete ();
 #%  StartP = ""; EndP = "\n";
-#%  StartParamList = "";
-#%  EndParamList = "";
-#%  StartParam = "<dl><dt>"; MidParam = ": \n<dd>"; EndParam = "</dl>\n"; EndParamBlock = "";
+#%  StartDD = "<dd>"; EndDD = "";
+#%  StartParamList = "<dl>\n";
+#%  EndParamList = "</dl>\n";
+#%  StartParam = "<dt>"; MidParam = ": \n<dd>"; EndParam = "\n"; EndParamBlock = "";
 #%  StartSection1 = "#"; MidSection1 = "\n"; EndSection1 = "";
 #%  StartSection2 = "##"; MidSection2 = "\n"; EndSection2 = "";
 #%  StartSection3 = "###"; MidSection3 = "\n"; EndSection3 = "";
@@ -166,9 +170,10 @@ Structure: #{Structure.Id}
 #call StartSection 2
 Transaction: #{Transaction.Id}
 
-Request: #{Transaction.Request}
-
-Response: #{Transaction.Response}
+#{StartParamList}#!
+#{StartParam}Request#{MidParam} #{Transaction.Request}#{EndParam}#{EndParamBlock}#!
+#{StartParam}Response#{MidParam} #{Transaction.Response}#{EndParam}#{EndParamBlock}#!
+#{EndParamList}#!
 #call MidSection 2
 #call DescriptionList Transaction.Entries
 #call EndSection 2
@@ -304,11 +309,11 @@ Response: #{Transaction.Response}
 #method DescriptionDD _Choice TEntry
 #switchcast ProtoStructType TEntry
 #casecast Description Description
-
+#{StartDD}#!
 #foreach (string s in Description.Text1)
 #{s}
 #end foreach
-#{EndP}#!
+#{EndDD}#!
 #end switchcast
 #end method
 
@@ -341,8 +346,9 @@ Response: #{Transaction.Response}
 #% string Name = null;
 #switchcast ProtoStructType Entry
 #casecast Inherits Inherits
-* Inherits: #{Inherits.Ref}
-
+#{StartParamList}#!
+#{StartParam}Inherits#{MidParam} #{Inherits.Ref}#{EndParam}#{EndParamBlock}#!
+#{EndParamList}
 #casecast Description Desc
 #call Description Desc
 #casecast Boolean Param
@@ -366,7 +372,7 @@ Response: #{Transaction.Response}
 #end switchcast
 #if Options != null
 #if NullList
-#{StartParamList}
+#{StartParamList}#!
 #% NullList = false;
 #end if
 #{StartParam}#{Name}#{MidParam}#{Type}#!
@@ -376,7 +382,7 @@ Response: #{Transaction.Response}
 #if !NullList
 #{EndParamList}#!
 #else
-[None]
+[No fields]
 
 #end if
 #% }
@@ -399,18 +405,18 @@ Response: #{Transaction.Response}
  #!
 #if PMultiple
 #if PRequired
-[1..Many]
+[1..Many]#!
 #else
-[0..Many]
+[0..Many]#!
 #end if
 #else
 #if PRequired
-(Required)
+(Required)#!
 #else
-(Optional)
+(Optional)#!
 #end if
 #end if
-
+#{EndParam}#!
 #call DescriptionListDD Entries
 #{EndParamBlock}#!
 #% }

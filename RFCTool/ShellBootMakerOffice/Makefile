@@ -119,6 +119,7 @@ LinkFiles = \
     $(LIBRARYBIN)/Microsoft.Office.Interop.PowerPoint.dll\
     $(LIBRARYBIN)/Microsoft.Office.Interop.Visio.dll\
     $(LIBRARYBIN)/office.dll\
+    $(TARGETBIN)/Goedel.Command.dll\
     $(TARGETBIN)/Goedel.FSR.dll\
     $(TARGETBIN)/Goedel.IO.dll\
     $(TARGETBIN)/Goedel.Registry.dll\
@@ -127,7 +128,7 @@ LinkFiles = \
     $(TARGETBIN)/OfficeLib.dll\
     $(TARGETBIN)/Goedel.Document.OpenXML.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Microsoft.Office.Interop.Excel.dll,$(LIBRARYBIN)/Microsoft.Office.Interop.PowerPoint.dll,$(LIBRARYBIN)/Microsoft.Office.Interop.Visio.dll,$(LIBRARYBIN)/office.dll,$(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Document.Markdown.dll,$(TARGETBIN)/OfficeLib.dll,$(TARGETBIN)/Goedel.Document.OpenXML.dll,WindowsBase
+LinkFilesComma = $(LIBRARYBIN)/Microsoft.Office.Interop.Excel.dll,$(LIBRARYBIN)/Microsoft.Office.Interop.PowerPoint.dll,$(LIBRARYBIN)/Microsoft.Office.Interop.Visio.dll,$(LIBRARYBIN)/office.dll,$(TARGETBIN)/Goedel.Command.dll,$(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Document.Markdown.dll,$(TARGETBIN)/OfficeLib.dll,$(TARGETBIN)/Goedel.Document.OpenXML.dll,WindowsBase
 
 
 NugetFiles = 
@@ -179,6 +180,9 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../../Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Command
+
 ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : recursive
 ! $(MAKE) -C ../../Libraries/Goedel.FSR
 
@@ -201,6 +205,10 @@ ifndef NORECURSE
 ! $(MAKE) -C ../Goedel.Document.OpenXML
 
 endif
+
+$(TARGETBIN)/Goedel.Command.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Command.dll : ../../Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
+!  cp ../../Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll $(TARGETBIN)/Goedel.Command.dll
 
 $(TARGETBIN)/Goedel.FSR.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.FSR.dll : ../../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll

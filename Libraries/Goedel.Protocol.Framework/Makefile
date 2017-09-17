@@ -1,5 +1,5 @@
 #
-# Makefile for Visual Studio Project Goedel.Protocol.Extended
+# Makefile for Visual Studio Project Goedel.Protocol.Framework
 #
 # This file is generated automatically from the Visual Studio Project
 # File. If you make changes to this file and do not update the project
@@ -109,22 +109,18 @@ export Custom_TrojanGTK_FLAG	?= /cs
 # The main target 
 
 SourceFiles = \
-     ChallengeResponse.cs\
-     Cryoptography.cs\
      FileReaderWriter.cs\
      Message.cs\
      Properties/AssemblyInfo.cs\
-     Security.cs\
      Server.cs\
-     Ticket.cs\
      WebRemoteSession.cs
 
 LinkFiles = \
-    $(TARGETBIN)/Goedel.Debug2.dll\
-    $(TARGETBIN)/Goedel.Protocol.dll\
-    $(TARGETBIN)/Goedel.Utilities.dll
+    $(TARGETBIN)/Goedel.Platform.dll\
+    $(TARGETBIN)/Goedel.Utilities.dll\
+    $(TARGETBIN)/Goedel.Protocol.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.Debug2.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Utilities.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Platform.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Protocol.dll
 
 
 NugetFiles = 
@@ -132,12 +128,12 @@ NugetFilesComa =
 
 # A) Main target packaged
 
-$(TARGETBIN)/Goedel.Protocol.Extended.dll :| $(LIBRARYBIN)
-$(TARGETBIN)/Goedel.Protocol.Extended.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Protocol.Framework.dll :| $(LIBRARYBIN)
+$(TARGETBIN)/Goedel.Protocol.Framework.dll :| $(TARGETBIN)
 
-$(TARGETBIN)/Goedel.Protocol.Extended.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
+$(TARGETBIN)/Goedel.Protocol.Framework.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
 ! $(CSHARPDLL) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) 
-! cp $(TARGETBIN)/Goedel.Protocol.Extended.dll $(LIBRARYBIN)/Goedel.Protocol.Extended.dll
+! cp $(TARGETBIN)/Goedel.Protocol.Framework.dll $(LIBRARYBIN)/Goedel.Protocol.Framework.dll
 
 
 # Directories etc.
@@ -173,28 +169,28 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
-../Goedel.Debug/$(TARGETBIN)/Goedel.Debug2.dll : recursive
-! $(MAKE) -C ../Goedel.Debug
-
-../Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : recursive
-! $(MAKE) -C ../Goedel.Protocol
+../Goedel.Platform/$(TARGETBIN)/Goedel.Platform.dll : recursive
+! $(MAKE) -C ../Goedel.Platform
 
 ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
 ! $(MAKE) -C ../Goedel.Utilities
 
+../Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : recursive
+! $(MAKE) -C ../Goedel.Protocol
+
 endif
 
-$(TARGETBIN)/Goedel.Debug2.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Debug2.dll : ../Goedel.Debug/$(TARGETBIN)/Goedel.Debug2.dll
-!  cp ../Goedel.Debug/$(TARGETBIN)/Goedel.Debug2.dll $(TARGETBIN)/Goedel.Debug2.dll
-
-$(TARGETBIN)/Goedel.Protocol.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Protocol.dll : ../Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
-!  cp ../Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll $(TARGETBIN)/Goedel.Protocol.dll
+$(TARGETBIN)/Goedel.Platform.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Platform.dll : ../Goedel.Platform/$(TARGETBIN)/Goedel.Platform.dll
+!  cp ../Goedel.Platform/$(TARGETBIN)/Goedel.Platform.dll $(TARGETBIN)/Goedel.Platform.dll
 
 $(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Utilities.dll : ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
 !  cp ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
+
+$(TARGETBIN)/Goedel.Protocol.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Protocol.dll : ../Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+!  cp ../Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll $(TARGETBIN)/Goedel.Protocol.dll
 
 
 # Referenced Libraries
@@ -216,10 +212,10 @@ clean :
 # Install files to a tools directory. Default is ~/.local/bin
 
 
-install : $(INSTALL_DATA)/Goedel.Protocol.Extended.dll
+install : $(INSTALL_DATA)/Goedel.Protocol.Framework.dll
 
-$(INSTALL_DATA)/Goedel.Protocol.Extended.dll :| $(INSTALL_DATA)
-$(INSTALL_DATA)/Goedel.Protocol.Extended.dll : $(TARGETBIN)/Goedel.Protocol.Extended.dll
+$(INSTALL_DATA)/Goedel.Protocol.Framework.dll :| $(INSTALL_DATA)
+$(INSTALL_DATA)/Goedel.Protocol.Framework.dll : $(TARGETBIN)/Goedel.Protocol.Framework.dll
 ! cp $^ $@ 
 
 

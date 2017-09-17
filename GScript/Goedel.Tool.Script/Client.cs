@@ -177,6 +177,10 @@ namespace Goedel.Tool.Script {
         const string ScriptText = "// Script Syntax Version: {0}";
 
         const string UsingText = "using {0};";
+
+        const string FileText =
+                "\n\n{4}//\n{4}// {0}\n{4}//\n{4}public static void {0} ({2} {3}) {{ /* File  */\n{4}\tusing (var _Output = new StreamWriter ({1})) {{\n{4}\t\tvar _Indent = \"\"; ";
+
         const string MethodText =
             "\n\n{3}//\n{3}// {0}\n{3}//\n{3}public void {0} ({1} {2}) {{";
 
@@ -240,7 +244,10 @@ namespace Goedel.Tool.Script {
 			new ScriptCommand ("class",		ClassText,	    	"\t\t}\n\t}",	2,		1,		2,		6),
 			new ScriptCommand ("pclass",	PClassText,	    	"\t\t}\n\t}",	2,		1,		2,		6),
 			new ScriptCommand ("xclass",	XClassText,	    	"\t\t}\n\t}",	2,		1,		2,		6),
-			new ScriptCommand ("method",	MethodText,			    "\t}",	3,		2,		1,		1),
+
+            new ScriptCommand ("file",      FileText,             "\t\t}\n\t\t\t}",  4,      2,      2,      1),
+
+            new ScriptCommand ("method",	MethodText,			    "\t}",	3,		2,		1,		1),
 			new ScriptCommand ("method2",	Method2Text,			"\t}",	5,		2,		1,		1),
 			new ScriptCommand ("method3",	Method3Text,			"\t}",	7,		2,		1,		1),
             new ScriptCommand ("block",	    MethodnText,			"",	    1,		2,		1,		1),
@@ -282,7 +289,7 @@ namespace Goedel.Tool.Script {
             };
 
         public  string Indent = "";
-        public  int state = 0;
+        public  int State = 0;
         public  string SwitchVar = null;
         public string SwitchType = null;
 
@@ -306,7 +313,7 @@ namespace Goedel.Tool.Script {
         public void Process(string Filename, TextReader Reader, TextWriter Writer) {
             this.Writer = Writer;
 
-            Stack.Add(new StackItem(0, state, Indent, SwitchVar, SwitchType));
+            Stack.Add(new StackItem(0, State, Indent, SwitchVar, SwitchType));
 
             //ArrayList Stack = new ArrayList();
             for (string line = Reader.ReadLine(); line != null; line = Reader.ReadLine()) {
@@ -315,7 +322,7 @@ namespace Goedel.Tool.Script {
                     //this.Writer.WriteLine("{2}// {0} ", line, state, Indent);
 
                     if (line == "") {
-                        if (state >= 2) {
+                        if (State >= 2) {
                             ProcessLine(line);
                             }
                         }
@@ -334,7 +341,7 @@ namespace Goedel.Tool.Script {
                             ProcessCommand(line);
                             }
                         }
-                    else if (state >= 2) {
+                    else if (State >= 2) {
                         ProcessLine(line);
                         }
                     }
@@ -356,12 +363,12 @@ namespace Goedel.Tool.Script {
 
             for (int i = 0; (i < Commands.Length) & search; i++) {
                 if ((Commands[i].Tag == tag)) {
-                    if (true | AllowedTransitions[Commands[i].Allowed, state]) {
+                    if (true | AllowedTransitions[Commands[i].Allowed, State]) {
                         search = false;
                         StackItem Top = Stack[Stack.Count - 1];
                         if (Commands[i].Stack < 0) {
                             Stack.RemoveAt(Stack.Count - 1);
-                            state = Top.State;
+                            State = Top.State;
                             Indent = Top.Indent;
                             SwitchVar = Top.SwitchVar;
                             SwitchType = Top.SwitchType;
@@ -383,7 +390,7 @@ namespace Goedel.Tool.Script {
                             }
                         else {
                             if (Commands[i].Stack > 0) {
-                                Stack.Add(new StackItem(i, state, Indent, SwitchVar, SwitchType));
+                                Stack.Add(new StackItem(i, State, Indent, SwitchVar, SwitchType));
                                 //Indent = Indent + "\t";
                                 }
                             else {
@@ -398,7 +405,7 @@ namespace Goedel.Tool.Script {
                                 }
 
                             if (Commands[i].Next > 0) {
-                                state = Commands[i].Next;
+                                State = Commands[i].Next;
                                 }
                             Writer.Write(Indent);
 
@@ -502,8 +509,9 @@ namespace Goedel.Tool.Script {
 
         void CheckArguments(int Have, int Need) {
 
-            if (Have-1 != Need)
-                throw new WrongArgumentsException(Have-1, Need);
+            if (Have - 1 != Need) {
+                throw new WrongArgumentsException(Have - 1, Need);
+                }
             }
 
         static string EscapeCharacter(char c) {

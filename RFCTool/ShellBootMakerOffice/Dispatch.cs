@@ -34,7 +34,7 @@ namespace Shell.Bootmaker {
             }
 
 
-        static TagCatalog ReadCatalog() {
+        static TagCatalog ReadCatalog () {
             string inputfile = "TagDefinitions.mdsd";
             var Parse = new Goedel.Document.Markdown.Tags.MarkSchema();
 
@@ -45,10 +45,10 @@ namespace Shell.Bootmaker {
                 Schema.Process(infile, Parse);
                 }
 
-            var TagCatalog1 = new TagCatalog(Parse);
-            //TagCatalog1.DocumentProcess = Goedel.WordLib.Dispatch.Process;
-            TagCatalog1.Process = Goedel.Document.Office.Dispatch.Process;
-
+            var TagCatalog1 = new TagCatalog(Parse) {
+                //TagCatalog1.DocumentProcess = Goedel.WordLib.Dispatch.Process;
+                Process = Goedel.Document.Office.Dispatch.Process
+                };
             return TagCatalog1;
             }
 

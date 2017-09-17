@@ -15,6 +15,7 @@
 
 LinkFiles = \
     Goedel.ASN.dll\
+    Goedel.Command.dll\
     Goedel.Registry.dll\
     Goedel.Utilities.dll\
     Goedel.Tool.ASN.dll

@@ -109,15 +109,16 @@ export Custom_TrojanGTK_FLAG	?= /cs
 # The main target 
 
 SourceFiles = \
-     Commands.cs\
-     Properties/AssemblyInfo.cs
+     Properties/AssemblyInfo.cs\
+     Protogen.cs
 
 LinkFiles = \
+    $(TARGETBIN)/Goedel.Command.dll\
     $(TARGETBIN)/Goedel.Registry.dll\
     $(TARGETBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Tool.ProtoGen.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Tool.ProtoGen.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Command.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Tool.ProtoGen.dll
 
 
 NugetFiles = 
@@ -155,8 +156,8 @@ $(LIBRARYBIN) :
 
 ifdef PHB_BUILD
 
-Commands.cs : Commands.command
-!  $(Custom_CommandCS) Commands.command $(Custom_CommandCS_FLAG) Commands.cs 
+Protogen.cs : Protogen.command
+!  $(Custom_CommandCS) Protogen.command $(Custom_CommandCS_FLAG) Protogen.cs 
 
 endif
 
@@ -169,6 +170,9 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../../Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Command
+
 ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
 ! $(MAKE) -C ../../Libraries/Goedel.Registry
 
@@ -179,6 +183,10 @@ ifndef NORECURSE
 ! $(MAKE) -C ../Goedel.Tool.ProtoGen
 
 endif
+
+$(TARGETBIN)/Goedel.Command.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Command.dll : ../../Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
+!  cp ../../Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll $(TARGETBIN)/Goedel.Command.dll
 
 $(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Registry.dll : ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll

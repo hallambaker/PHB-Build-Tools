@@ -91,7 +91,7 @@ namespace MakeRFC {
                     FillMetaAttributeBool(Meta, "ton", ref Target.TonInclude);
                     FillMetaAttributeBool(Meta, "index", ref Target.IndexInclude);
                     FillMetaAttributeBool(Meta, "embedstyle", ref Target.EmbedStylesheet);
-                    FillMetaAttributeBool(Meta, "embedsvg", ref Target.EmbedSVG);
+                    FillMetaAttributeInt(Meta, "embedsvg", ref Target.EmbedSVG);
                     FillMetaAttributeInt(Meta, "tocdepth", ref Target.TocDepth);
 
                     }

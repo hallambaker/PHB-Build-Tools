@@ -310,12 +310,12 @@ namespace Goedel.Protocol.Framework {
                 Host.Open();
                 }
 
-            Trace.WriteLine("Start Listener");
+            //Trace.WriteLine("Start Listener");
             HttpListener.Start();
             while (Active) {
-                Trace.Write("Wait..");
+                //Trace.Write("Wait..");
                 var Context = HttpListener.GetContext();
-                Trace.WriteLine("Dispatch");
+                //Trace.WriteLine("Dispatch");
                 Handle(Context);
                 }
 

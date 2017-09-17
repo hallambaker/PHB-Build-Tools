@@ -70,6 +70,7 @@ namespace Goedel.IO {
         /// perform concurrent reads.
         /// </summary>
         /// <param name="Filename">The file to read.</param>
+        /// <param name="Data">The data that was read</param>
         /// <returns>The text reader.</returns>
         public static void OpenReadToEnd (this string Filename, out byte[] Data) {
             var FileStream = Filename.OpenFileRead();

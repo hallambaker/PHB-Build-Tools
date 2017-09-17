@@ -1,0 +1,10 @@
+﻿#using System.Text
+#using Goedel.Trace
+#using Goedel.Protocol
+#pclass Goedel.Trace.Documentation ExampleGenerator
+
+#method AdminExamples TraceExamples Example
+
+
+#end method
+#end pclass

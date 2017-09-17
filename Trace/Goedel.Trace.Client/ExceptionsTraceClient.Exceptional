@@ -1,0 +1,4 @@
+﻿Namespace Goedel.Trace.Client
+    
+	Exception TraceClientException
+        Console "Error occurred in Trace library"

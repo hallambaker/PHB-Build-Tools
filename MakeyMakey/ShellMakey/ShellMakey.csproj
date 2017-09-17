@@ -69,6 +69,7 @@
     <None Include="makefile" />
     <Content Include="BuildTools.sln" />
     <Content Include="Shell Makey.test.csproj" />
+    <None Include="VS.Make" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj">

@@ -365,7 +365,10 @@ namespace Goedel.Document.RFC {
             switch (ListItem) {
                 case BlockType.Definitions:
                 case BlockType.Term:
-                case BlockType.Data: Start("dl", "id", ListLevel.ID + "-"); return;
+                case BlockType.Data: {
+                    Start("dl", "id", ListLevel.ID + "-", "class", "nohang");
+                    return;
+                    }
                 case BlockType.Ordered: Start("ol", "id", ListLevel.ID + "-"); return;
                 case BlockType.Symbol: Start("ul", "id", ListLevel.ID + "-"); return;
                 }
@@ -412,15 +415,22 @@ namespace Goedel.Document.RFC {
 
         public void WriteLinkSVG (string Filename, string Element, string Attribute) {
 
-            if (!Document.EmbedSVG) { // just write the link out
-                WriteElement(Element, (string)null, Attribute, Filename);
-                return;
+            switch (Document.EmbedSVG) {
+                case 0: {       // default base64 encode
+                    XMLEmbed.EmbedBase64(Filename, Output);
+                    break;
+                    }
+                case 1: {       // embed SVG
+                    XMLEmbed.Embed(Filename, Output);
+                    break;
+                    }
+                case 2: {       // link to external file
+                    WriteElement(Element, (string)null, Attribute, Filename);
+                    break;
+                    }
                 }
 
-            XMLEmbed.Embed(Filename, Output);
 
-            //var Text = Filename.OpenReadToEnd();
-            //Output.Write(Text);
 
 
             }

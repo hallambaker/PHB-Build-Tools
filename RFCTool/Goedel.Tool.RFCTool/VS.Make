@@ -14,6 +14,8 @@
 #   * Copy executables
 
 LinkFiles = \
+    Goedel.FSR.dll\
+    Goedel.IO.dll\
     Goedel.Registry.dll\
     Goedel.Utilities.dll\
     Goedel.Document.Markdown.dll

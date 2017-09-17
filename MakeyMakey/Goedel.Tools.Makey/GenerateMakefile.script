@@ -175,7 +175,8 @@ all : #{Directory}/$(TARGETBIN)/#{Project.Target}
 #% var SubProject = Dep.SubProject;
 #% var GUID = SubProject.ProjectGuid;
 #!% var SubProjectRef = Solution.ByGuid (GUID);
-#% var SubProjectDir = Solution.ByGuid (GUID).Directory.UnixPath();
+#! var SubProjectDir = Solution.ByGuid (GUID).Directory.UnixPath();
+#% var SubProjectDir = SubProject.Directory.UnixPath();
 #! SubTarget #{SubProject.Target}
 #! SubProject #{SubProjectDir}
 #! GUID #{GUID}

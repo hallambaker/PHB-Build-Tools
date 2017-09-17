@@ -112,11 +112,12 @@ SourceFiles = \
      Commands.cs
 
 LinkFiles = \
+    $(TARGETBIN)/Goedel.Command.dll\
     $(TARGETBIN)/Goedel.Registry.dll\
     $(TARGETBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Tool.Schema.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Tool.Schema.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Command.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Tool.Schema.dll
 
 
 NugetFiles = 
@@ -168,6 +169,9 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../../Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Command
+
 ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
 ! $(MAKE) -C ../../Libraries/Goedel.Registry
 
@@ -178,6 +182,10 @@ ifndef NORECURSE
 ! $(MAKE) -C ../Goedel.Tool.Schema
 
 endif
+
+$(TARGETBIN)/Goedel.Command.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Command.dll : ../../Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
+!  cp ../../Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll $(TARGETBIN)/Goedel.Command.dll
 
 $(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Registry.dll : ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll

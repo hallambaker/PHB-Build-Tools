@@ -193,7 +193,7 @@ namespace Goedel.Document.Markdown {
             Extra.Append((char)c);
             }
 
-        public Token CurrentToken { get => Tokens[NextState]; }
+        public Token CurrentToken  => Tokens[NextState]; 
 
         public virtual void ElementEnd (int c) {
             if (Element != null) {

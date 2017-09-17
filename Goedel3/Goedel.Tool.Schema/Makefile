@@ -109,6 +109,7 @@ export Custom_TrojanGTK_FLAG	?= /cs
 # The main target 
 
 SourceFiles = \
+     Exceptions.cs\
      Goedel.cs\
      Parameters.cs\
      ParserGenerator.cs\
@@ -155,8 +156,8 @@ $(LIBRARYBIN) :
 
 ifdef PHB_BUILD
 
- : Goedel.gdl
-!  $(Custom_Goedel3) Goedel.gdl $(Custom_Goedel3_FLAG)  
+Exceptions.cs : Exceptions.exceptional
+!  $(Custom_exceptional) Exceptions.exceptional $(Custom_exceptional_FLAG) Exceptions.cs 
 ParserGenerator.cs : ParserGenerator.script
 !  $(Custom_GScript) ParserGenerator.script $(Custom_GScript_FLAG) ParserGenerator.cs 
 

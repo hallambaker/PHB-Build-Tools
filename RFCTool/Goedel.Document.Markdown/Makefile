@@ -116,13 +116,15 @@ SourceFiles = \
      MarkParagraphPlus.cs\
      MarkDownPlus.cs\
      BlockParse.cs\
+     MarkWordParagraph.cs\
+     MarkWordParagraphPlus.cs\
      Parse.cs\
      ParseRegistry.cs\
      Properties/AssemblyInfo.cs\
      Reader.cs\
-     RichDocument.cs\
      Schema.cs\
      SchemaPlus.cs\
+     SegmentToHTML.cs\
      TagCatalog.cs\
      Writer.cs
 
@@ -173,6 +175,8 @@ MarkParagraph.cs : MarkParagraph.fsr
 !  $(Custom_FSRCS) MarkParagraph.fsr $(Custom_FSRCS_FLAG) MarkParagraph.cs 
 MarkDown.cs : MarkDown.fsr
 !  $(Custom_FSRCS) MarkDown.fsr $(Custom_FSRCS_FLAG) MarkDown.cs 
+MarkWordParagraph.cs : MarkWordParagraph.fsr
+!  $(Custom_FSRCS) MarkWordParagraph.fsr $(Custom_FSRCS_FLAG) MarkWordParagraph.cs 
 Schema.cs : Schema.gdl
 !  $(Custom_Goedel3) Schema.gdl $(Custom_Goedel3_FLAG) Schema.cs 
 

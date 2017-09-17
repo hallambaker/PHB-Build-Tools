@@ -54,17 +54,13 @@
     <Compile Include="WebRemoteSession.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Goedel.Platform\Goedel.Platform.csproj">
+      <Project>{d6840e5b-e181-4af6-a7a5-96fad3278bf1}</Project>
+      <Name>Goedel.Platform</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
       <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
       <Name>Goedel.Utilities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Cryptography.Ticket\Goedel.Cryptography.Ticket.csproj">
-      <Project>{2c85e8be-a0f2-4ec6-a240-9190272c6ad4}</Project>
-      <Name>Goedel.Cryptography.Ticket</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Platform\Goedel.Platform.csproj">
-      <Project>{46332174-d5ea-4bd5-9ff0-fdccbbf6df83}</Project>
-      <Name>Goedel.Platform</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
       <Project>{55e68ce6-ac29-4837-9d88-5ad99e4cef5a}</Project>

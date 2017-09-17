@@ -148,7 +148,8 @@ namespace Goedel.Registry {
         /// <summary>
         /// To Be Specified stub. Writes out the value to the console an returns the string.
         /// </summary>
-        /// <param name="Value"></param>
+        /// <param name="Value">Value to write</param>
+        /// <param name="Bold">If true, wrap value in bold style tags</param>
         /// <returns></returns>
         public static string TBS (this string Value, bool Bold=true) {
             var Message = String.Format("TBS: {0}", Value);

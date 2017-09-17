@@ -205,7 +205,7 @@ namespace Goedel.Protocol {
             // Wrap the request object with the transaction name.
             JSONWriter.WriteObjectStart();
             JSONWriter.WriteToken(Tag,0);
-            Request.Serialize(JSONWriter, true);
+            Request.Serialize(JSONWriter, false);
             JSONWriter.WriteObjectEnd();
 
             // Send the request

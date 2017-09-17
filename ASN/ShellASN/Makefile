@@ -114,11 +114,12 @@ SourceFiles = \
 
 LinkFiles = \
     $(TARGETBIN)/Goedel.ASN.dll\
+    $(TARGETBIN)/Goedel.Command.dll\
     $(TARGETBIN)/Goedel.Registry.dll\
     $(TARGETBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Tool.ASN.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.ASN.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Tool.ASN.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.ASN.dll,$(TARGETBIN)/Goedel.Command.dll,$(TARGETBIN)/Goedel.Registry.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Tool.ASN.dll
 
 
 NugetFiles = 
@@ -173,6 +174,9 @@ ifndef NORECURSE
 ../../Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll : recursive
 ! $(MAKE) -C ../../Libraries/Goedel.ASN
 
+../../Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Command
+
 ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : recursive
 ! $(MAKE) -C ../../Libraries/Goedel.Registry
 
@@ -187,6 +191,10 @@ endif
 $(TARGETBIN)/Goedel.ASN.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.ASN.dll : ../../Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
 !  cp ../../Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll $(TARGETBIN)/Goedel.ASN.dll
+
+$(TARGETBIN)/Goedel.Command.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Command.dll : ../../Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
+!  cp ../../Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll $(TARGETBIN)/Goedel.Command.dll
 
 $(TARGETBIN)/Goedel.Registry.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Registry.dll : ../../Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
