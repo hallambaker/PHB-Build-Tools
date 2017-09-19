@@ -41,9 +41,7 @@ namespace Goedel.Cryptography {
             CryptoAlgorithmClass.Signature;
 
         /// <summary>Return the crypto algorithm class.</summary>
-        public override CryptoAlgorithmClass AlgorithmClass {
-            get { return _AlgorithmClass; }
-            }
+        public override CryptoAlgorithmClass AlgorithmClass => _AlgorithmClass; 
 
         /// <summary>
         /// The default digest algorithm. This may be overridden in subclasses.
@@ -63,7 +61,7 @@ namespace Goedel.Cryptography {
         /// <param name="Bulk">The bulk provider to use. If specified, the parameters from
         /// the specified provider will be used. Otherwise a new bulk provider will 
         /// be created and returned as part of the result.</param>
-        /// <param name="OutputStream"></param>
+        /// <param name="OutputStream">Output stream, this may be used to enable streaming.</param>
         /// <returns>Instance describing the key agreement parameters.</returns>
         public override CryptoDataEncoder MakeEncoder(
                             CryptoProviderBulk Bulk = null,
@@ -89,8 +87,8 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Create an encoder with a signature data entry for this provider.
         /// </summary>
-        /// <param name="Digest"></param>
-        /// <returns></returns>
+        /// <param name="Digest">The digest algorithm to use.</param>
+        /// <returns>The signature provider</returns>
         public CryptoDataSignature MakeSigner(CryptoAlgorithmID Digest = CryptoAlgorithmID.Default) {
             var Encoder = MakeEncoder(Algorithm: Digest);
             return new CryptoDataSignature(CryptoAlgorithmID, Encoder, this);
@@ -101,7 +99,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Data">Data to be signed.</param>
         /// <param name="Digest">Digest algorithm identifier</param>
-        /// <returns>Signature.</returns>
+        /// <returns>The signature provider</returns>
         public CryptoDataSignature Sign(byte[] Data, CryptoAlgorithmID Digest= CryptoAlgorithmID.Default) {
 
             var Encoder = MakeEncoder(Algorithm:Digest);
@@ -170,7 +168,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Sign the integrity value specified in the CryptoDataEncoder
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Data">Data to be signed.</param>
         public abstract void Sign(CryptoDataSignature Data);
 
         /// <summary>

@@ -51,7 +51,7 @@ namespace Goedel.Cryptography {
         /// is any operation that is not a final decryption operation. When more 
         /// than two recryption keys are used, the 
         /// </summary>
-        /// <param name="CryptoData"></param>
+        /// <param name="CryptoData">The data to recrypt.</param>
         /// <returns>The partially decrypted data</returns>
         public abstract CryptoDataExchange Recrypt(CryptoDataExchange CryptoData);
 
@@ -61,7 +61,7 @@ namespace Goedel.Cryptography {
         /// is any operation that is not a final decryption operation. When more 
         /// than two recryption keys are used, the 
         /// </summary>
-        /// <param name="CryptoDatas"></param>
+        /// <param name="CryptoDatas">The data to recrypt.</param>
         /// <returns>The partially decrypted data</returns>
         public abstract CryptoDataExchange Recrypt(CryptoDataExchange[] CryptoDatas);
 

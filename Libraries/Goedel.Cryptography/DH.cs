@@ -85,9 +85,9 @@ namespace Goedel.Cryptography {
             }
 
         /// <summary>
-        /// Get the public key parameters
+        /// Construct from public key parameters
         /// </summary>
-        /// <param name="PKIXParameters"></param>
+        /// <param name="PKIXParameters">The key parameters</param>
         public DiffeHellmanPublic (PKIXPublicKeyDH PKIXParameters) {
             DHDomain = PKIXParameters.Domain;
             Assert.NotNull(DHDomain, UnknownNamedParameters.Throw);
@@ -122,7 +122,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Check that the Diffie Hellman parameters presented match those of this Key.
         /// </summary>
-        /// <param name="Key"></param>
+        /// <param name="Key">The key to verify</param>
         public void Verify (DiffeHellmanPublic Key) {
             Assert.True(Key.Modulus == Modulus, CryptographicException.Throw);
             Assert.True(Key.Generator == Generator, CryptographicException.Throw);
@@ -296,6 +296,7 @@ namespace Goedel.Cryptography {
         public override int[] OID => null;
 
         /// <summary>The agreement as ASN.1 DER encoding</summary>
+        /// <returns>The DER encoded value.</returns>
         public override byte[] DER () => ASNAgreement.DER();
 
         ///// <summary>Convert to ASN.1 DER form </summary>
@@ -306,6 +307,7 @@ namespace Goedel.Cryptography {
         public DiffieHellmanResult () { }
 
         /// <summary>Constructor from ASN.1 parameters</summary>
+        /// <param name="AgreementDH">The key agreement parameters.</param>
         public DiffieHellmanResult (AgreementDH AgreementDH) {
             Agreement = new BigInteger(AgreementDH.Result);
             }

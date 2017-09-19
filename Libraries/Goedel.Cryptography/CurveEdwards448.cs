@@ -79,7 +79,7 @@ namespace Goedel.Cryptography {
         /// Recover the X coordinate from the Y value and sign of X.
         /// </summary>
         /// <param name="X0">If true X is odd, otherwise, X is even.</param>
-        /// <returns></returns>
+        /// <returns>The X coordinate value.</returns>
         public override BigInteger RecoverX(bool X0) {
             Assert.True(Y < Prime, InvalidOperation.Throw);
             //var x2 = ((Y * Y - 1) * (CurveConstrantD * Y * Y - 1)).Mod (p);
@@ -95,7 +95,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Crete a new point with the same parameters as this.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The copied point.</returns>
         public CurveEdwards448 Copy() {
             return new CurveEdwards448() { X = X, Y = Y, Z = Z };
             }
@@ -206,7 +206,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Encode this point in the compressed buffer representation
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The encoded point.</returns>
         public byte[] Encode() {
             Translate(out var X0, out var Y0);
 
@@ -245,7 +245,7 @@ namespace Goedel.Cryptography {
         /// <param name="A1">Second data input, ignored if null</param>
         /// <param name="A2">Third data input, ignored if null</param>
         /// <param name="A3">Fourth data input, ignored if null</param>
-        /// <returns></returns>
+        /// <returns>The hashed and reduced inputs.</returns>
         public static BigInteger HashModQ(byte[] A0, byte[] A1, byte[] A2, byte[] A3 = null) {
             var SHA512 = Platform.SHA2_512.CryptoProviderDigest();
             if (A0 != null) {
@@ -324,18 +324,18 @@ namespace Goedel.Cryptography {
         public byte[] Encoding { get; }
 
         /// <summary>
-        /// 
+        /// Construct from public key parameters.
         /// </summary>
-        /// <param name="Public"></param>
+        /// <param name="Public">The public key.</param>
         public CurveEdwards448Public(CurveEdwards448 Public) {
             this.Public = Public;
             this.Encoding = Public.Encode();
             }
 
         /// <summary>
-        /// 
+        /// Construct from binary encoded form.
         /// </summary>
-        /// <param name="Encoding"></param>
+        /// <param name="Encoding">The binary encoded public key.</param>
         public CurveEdwards448Public(byte[] Encoding) {
             this.Public = CurveEdwards448.Decode(Encoding);
             this.Encoding = Encoding;
@@ -360,9 +360,9 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
-        /// Check that the Diffie Hellman parameters presented match those of this Key.
+        /// Check that the public key parameters presented match those of this Key.
         /// </summary>
-        /// <param name="Key"></param>
+        /// <param name="Key">The key to verify.</param>
         public void Verify(CurveEdwards448Public Key) {
             throw new NYI(); // NYI:
             }
@@ -513,10 +513,10 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Verify that a witness value was used to construct a public key.
         /// </summary>
-        /// <param name="Blind"></param>
-        /// <param name="Witness"></param>
-        /// <param name="Public"></param>
-        /// <returns></returns>
+        /// <param name="Blind">The blinding value.</param>
+        /// <param name="Witness">The witness value.</param>
+        /// <param name="Public">The resulting private key.</param>
+        /// <returns>True if the value was correctly constructed using the specified witness, otherwise false.</returns>
         public bool VerifyWitness(byte[] Blind, CurveEdwards448 Witness, CurveEdwards448 Public) {
             var SecretBlind = ExtractPrivate(Blind);
             var PublicBlind = CurveEdwards448.GetPublic(SecretBlind);
@@ -531,7 +531,7 @@ namespace Goedel.Cryptography {
         /// hash value.
         /// </summary>
         /// <param name="Hash">The hash value</param>
-        /// <returns></returns>
+        /// <returns>The private key.</returns>
         public BigInteger ExtractPrivate(byte[] Hash) {
             return ValidatePrivateBytes(Hash).BigIntegerLittleEndian();
             }
@@ -542,7 +542,7 @@ namespace Goedel.Cryptography {
         /// hash value.
         /// </summary>
         /// <param name="Hash">The hash value</param>
-        /// <returns></returns>
+        /// <returns>True if the private key is valid, otherwise false.</returns>
         public byte[] ValidatePrivateBytes(byte[] Hash) {
             var Copy = new byte[57];
             Array.Copy(Hash, Copy, 57); // bytes 0-31

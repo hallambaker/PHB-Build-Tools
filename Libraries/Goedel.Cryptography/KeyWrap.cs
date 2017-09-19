@@ -305,7 +305,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Convert the result to an array
         /// </summary>
-        /// <param name="Blocks"></param>
+        /// <param name="Blocks">The blocks to convert</param>
         /// <param name="Offset">Offset from start of array</param>
         /// <returns>The converted blocks.</returns>
         public static byte[] ToByte(Block[] Blocks, int Offset = 0) {

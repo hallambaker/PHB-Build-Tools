@@ -89,10 +89,10 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Set algorithm defaults
         /// </summary>
-        /// <param name="ID"></param>
-        /// <param name="BulkDefault"></param>
-        /// <param name="MetaDefault"></param>
-        /// <returns></returns>
+        /// <param name="ID">The specified algorithm</param>
+        /// <param name="BulkDefault">The default bulk algorithm to apply</param>
+        /// <param name="MetaDefault">The default meta algorithm to apply</param>
+        /// <returns>The defaulted algorithm</returns>
         public static CryptoAlgorithmID Default(
                     this CryptoAlgorithmID ID,
                     CryptoAlgorithmID BulkDefault = CryptoAlgorithmID.Default,

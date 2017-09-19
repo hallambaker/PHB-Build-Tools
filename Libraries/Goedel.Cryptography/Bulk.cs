@@ -131,7 +131,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Create a crypto stream from this provider.
         /// </summary>
-        /// <param name="Decoder"></param>
+        /// <param name="Decoder">The decoder to bind.</param>
         public abstract void BindDecoder(CryptoDataDecoder Decoder);
 
         /// <summary>

@@ -101,11 +101,11 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
-        /// Encrypt data under the keypair
+        /// Encrypt the specified data.
         /// </summary>
         /// <param name="Data">Data to be encrypted.</param>
         /// <param name="Algorithm">Composite encryption algorithm.</param>
-        /// <returns>Signature.</returns>
+        /// <returns>The encoder</returns>
         public CryptoDataEncoder Encrypt(byte[] Data, CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) {
             var Encoder = MakeEncoder(Algorithm: Algorithm);
             Encoder.InputStream.Write(Data, 0, Data.Length);
@@ -114,22 +114,23 @@ namespace Goedel.Cryptography {
             }
 
         /// <summary>
-        /// Sign data using the default digest (requires private key).
+        /// Encrypt the specified data.
         /// </summary>
-        /// <param name="Text">Text to be converted to UTF8 and signed.</param>
-        /// <param name="Digest">Digest algorithm identifier</param>
-        /// <returns>Signature.</returns>
-        public CryptoDataEncoder Encrypt(string Text, CryptoAlgorithmID Digest = CryptoAlgorithmID.Default) {
-            return Encrypt(Encoding.UTF8.GetBytes(Text), Digest);
+        /// <param name="Text">Text to be converted to UTF8 and encrypted.</param>
+        /// <param name="Algorithm">The enncryption algorithm to use.</param>
+        /// <returns>The encoder</returns>
+        public CryptoDataEncoder Encrypt(string Text, CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) {
+            return Encrypt(Encoding.UTF8.GetBytes(Text), Algorithm);
             }
 
         /// <summary>
         /// Encrypt the bulk key.
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Data">The data to encrypt.</param>
         /// <param name="Algorithm">Composite encryption algorithm.</param>
         /// <param name="Wrap">If true create a new CryptoData instance that
         /// wraps the parameters supplied in Data.</param>
+        /// <returns>The encoder</returns>
         public abstract CryptoDataExchange Encrypt(CryptoData Data, 
             CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, bool Wrap =false);
 

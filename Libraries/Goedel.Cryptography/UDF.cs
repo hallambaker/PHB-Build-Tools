@@ -289,7 +289,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Pattern">The pattern the candidate is being tested for a match against.</param>
         /// <param name="UDF">The candidate being tested</param>
-        /// <returns></returns>
+        /// <returns>True if the patterns match, otherwise false.</returns>
         public static bool CompareUDF (this string Pattern, string UDF) {
             if (UDF.Length < Pattern.Length) {
                 return false;

@@ -54,7 +54,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="KeySize">Key size parameter (if needed).</param>
         /// <param name="BulkAlgorithmID">Algorithm identifier of bulk algorithm (if needed).</param>
-        /// <returns></returns>
+        /// <returns>The cryptographic provider created.</returns>
         private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID BulkAlgorithmID) {
             return new CryptoProviderExchangeDH(KeySize:KeySize);
             }
@@ -128,16 +128,17 @@ namespace Goedel.Cryptography {
             }
 
         /// <summary>The maximum number of shares into which a key may be split</summary>
-        public override int SharesMaximum  => 16; 
-  
+        public override int SharesMaximum  => 16;
+
 
         /// <summary>
         /// Encrypt the bulk key.
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Data">The data to encrypt.</param>
         /// <param name="Algorithm">Composite encryption algorithm.</param>
         /// <param name="Wrap">If true create a new CryptoData instance that
         /// wraps the parameters supplied in Data.</param> 
+        /// <returns>The encoder</returns>
         public override CryptoDataExchange Encrypt(CryptoData Data,
             CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, bool Wrap = false) {
 
@@ -205,7 +206,7 @@ namespace Goedel.Cryptography {
         /// is any operation that is not a final decryption operation. Multiple 
         /// recryption operations may be performed in series.
         /// </summary>
-        /// <param name="CryptoData"></param>
+        /// <param name="CryptoData">The data to recrypt.</param>
         /// <returns>The partially decrypted data</returns>
         public override CryptoDataExchange Recrypt(CryptoDataExchange CryptoData) {
             // NYI: DH Recrypt
@@ -221,7 +222,7 @@ namespace Goedel.Cryptography {
         /// is any operation that is not a final decryption operation. When more 
         /// than two recryption keys are used, the 
         /// </summary>
-        /// <param name="CryptoDatas"></param>
+        /// <param name="CryptoDatas">The data to recrypt.</param>
         /// <returns>The partially decrypted data</returns>
         public override CryptoDataExchange Recrypt(CryptoDataExchange[] CryptoDatas) {
             // NYI: DH Recrypt

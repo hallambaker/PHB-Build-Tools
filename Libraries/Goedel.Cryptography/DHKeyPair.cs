@@ -84,6 +84,7 @@ namespace Goedel.Cryptography {
         /// signature and so always returns null. 
         /// </summary>
         /// <param name="Bulk">The digest algorithm to use</param>
+        /// <returns>The cryptographic provider.</returns>
         public override CryptoProviderSignature SignatureProvider(
                     CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) {
             throw new InvalidOperation("DHKeyPair does not support signature operations. ");
@@ -94,6 +95,7 @@ namespace Goedel.Cryptography {
         /// Returns an encryption provider for the key (if the public portion is available)
         /// </summary>
         /// <param name="Bulk">The encryption algorithm to use</param>
+        /// <returns>The cryptographic provider.</returns>
         public override CryptoProviderExchange ExchangeProvider(
                     CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) {
             return new CryptoProviderExchangeDH(this, Bulk);
@@ -141,7 +143,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Delegate to create a key pair base
         /// </summary>
-        /// <param name="PKIXParameters"></param>
+        /// <param name="PKIXParameters">The key parameters</param>
         /// <returns>The created key pair</returns>
         public static new KeyPair KeyPairPublicFactory(PKIXPublicKeyDH PKIXParameters) {
             var DiffeHellmanPublic = new DiffeHellmanPublic(PKIXParameters);
@@ -153,7 +155,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Delegate to create a key pair base
         /// </summary>
-        /// <param name="PKIXParameters"></param>
+        /// <param name="PKIXParameters">The key parameters</param>
         /// <param name="Exportable">If true, private key parameters may be exported</param>
         /// <returns>The created key pair</returns>
         public static new KeyPair KeyPairPrivateFactory(PKIXPrivateKeyDH PKIXParameters,

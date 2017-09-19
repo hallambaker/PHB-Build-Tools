@@ -38,8 +38,8 @@ namespace Goedel.Cryptography {
         public abstract CurveEdwards Add(CurveEdwards P2);
 
         /// <summary>Test to see if two points on a curve are equal</summary>
-        /// <param name="Q"></param>
-        /// <returns></returns>
+        /// <param name="Q">The Q parameter of the curve.</param>
+        /// <returns>True if the points are equal, otherwise false.</returns>
         public bool Equal(CurveEdwards Q) {
             Assert.True(Q.Prime == Prime);
 
@@ -56,7 +56,7 @@ namespace Goedel.Cryptography {
         /// Recover the X coordinate from the Y value and sign of X.
         /// </summary>
         /// <param name="X0">If true X is odd, otherwise, X is even.</param>
-        /// <returns></returns>
+        /// <returns>The X coordinate.</returns>
         public virtual BigInteger RecoverX(bool X0) {
             Assert.True(Y < Prime, InvalidOperation.Throw);
             var x2 = (Y * Y - 1) * (CurveConstrantD * Y * Y + 1).ModularInverse(Prime);
@@ -64,13 +64,13 @@ namespace Goedel.Cryptography {
             }
 
         /// <summary>Modular multiplicative inverse of Z</summary>
-        public BigInteger ZInv { get { return Z.ModularInverse(Prime); } }
+        public BigInteger ZInv => Z.ModularInverse(Prime); 
 
         /// <summary>X translated to fixed coordinates</summary>
-        public BigInteger X0 { get { return (X * ZInv).Mod(Prime); } }
+        public BigInteger X0 => (X * ZInv).Mod(Prime); 
 
         /// <summary>Y translated to fixed coordinates</summary>
-        public BigInteger Y0 { get { return (Y * ZInv).Mod(Prime); } }
+        public BigInteger Y0 => (Y * ZInv).Mod(Prime); 
 
         /// <summary>
         /// Convert back from 3D to 2D representation
@@ -115,18 +115,18 @@ namespace Goedel.Cryptography {
         readonly static BigInteger p = BigInteger.Pow(2, 255) - 19;
 
         ///<summary>The modulus, q = 2^255 - 19</summary>
-        public override BigInteger Prime { get { return p; } }
+        public override BigInteger Prime => p; 
 
 
         ///<summary>The Curve Constant d</summary>
-        public override BigInteger CurveConstrantD { get { return d; } }
+        public override BigInteger CurveConstrantD => d; 
 
         ///<summary>The Curve Constant d</summary>
         public static readonly BigInteger d =
             (-121665 * (121666.ModularInverse(p))).Mod(p);
 
         ///<summary>The square root of -1.</summary>
-        public override BigInteger SqrtMinus1 { get { return _SqrtMinus1;  } }
+        public override BigInteger SqrtMinus1 => _SqrtMinus1;  
         readonly static BigInteger _SqrtMinus1 = p.SqrtMinus1();
 
         ///<summary>The small order subgroup q</summary>
@@ -138,14 +138,14 @@ namespace Goedel.Cryptography {
             new CurveEdwards25519(DomainParameters.Curve25519.By, false);
 
         /// <summary>The base point for the subgroup</summary>
-        public static CurveEdwards25519 Base { get { return _Base.Copy();  } }
+        public static CurveEdwards25519 Base => _Base.Copy(); 
 
         /// <summary>The point P such that P + Q = Q for all Q</summary>
         static readonly CurveEdwards25519 _Neutral =
             new CurveEdwards25519() { X = 0, Y = 1, Z = 1, T = 0 };
 
         /// <summary>The point P such that P + Q = Q for all Q</summary>
-        public static CurveEdwards25519 Neutral { get { return _Neutral.Copy(); } }
+        public static CurveEdwards25519 Neutral => _Neutral.Copy(); 
 
         /// <summary>The number of bits to multiply</summary>
         public const int Bits = 255;
@@ -169,7 +169,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Crete a new point with the same parameters as this.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The new point</returns>
         public CurveEdwards25519 Copy () {
             return new CurveEdwards25519() { X = X, Y = Y, Z = Z, T = T };
             }
@@ -266,8 +266,7 @@ namespace Goedel.Cryptography {
         /// <param name="Point">Second point</param>
         /// <returns>The result of the addition.</returns>
         public override CurveEdwards Add(CurveEdwards Point) {
-            BigInteger X3, Y3, Z3, T3;
-            Add(this, Point as CurveEdwards25519, out X3, out Y3, out Z3, out T3);
+            Add(this, Point as CurveEdwards25519, out var X3, out var Y3, out var Z3, out var T3);
             return new CurveEdwards25519() { X = X3, Y = Y3, Z = Z3, T = T3 };
             }
 
@@ -277,8 +276,7 @@ namespace Goedel.Cryptography {
         /// <param name="Point">Second point</param>
         /// <returns>The result of the addition.</returns>
         public override void Accumulate(CurveEdwards Point) {
-            BigInteger X3, Y3, Z3, T3;
-            Add(this, Point as CurveEdwards25519, out X3, out Y3, out Z3, out T3);
+            Add(this, Point as CurveEdwards25519, out var X3, out var Y3, out var Z3, out var T3);
             X = X3;
             Y = Y3;
             Z = Z3;
@@ -301,11 +299,10 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Encode this point in the compressed buffer representation
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The point encoded in the compressed buffer representation.</returns>
         public byte[] Encode() {
 
-            BigInteger X0, Y0;
-            Translate(out X0, out Y0);
+            Translate(out var X0, out var Y0);
 
             byte[] Buffer = new byte[32];
             var YBuf = Y0.ToByteArray();
@@ -341,7 +338,7 @@ namespace Goedel.Cryptography {
         /// <param name="A1">Second data input, ignored if null</param>
         /// <param name="A2">Third data input, ignored if null</param>
         /// <param name="A3">Fourth data input, ignored if null</param>
-        /// <returns></returns>
+        /// <returns>The SHA-2-512 hash of the inputs as a big integer reduced modulo the sub group</returns>
         public static BigInteger HashModQ(byte[] A0, byte[] A1, byte[] A2, byte[] A3 = null) {
             var SHA512 = Platform.SHA2_512.CryptoProviderDigest();
             if (A0 != null) {
@@ -416,19 +413,19 @@ namespace Goedel.Cryptography {
         public byte[] Encoding { get; }
 
         /// <summary>
-        /// 
+        /// Construct provider from public key parameters.
         /// </summary>
-        /// <param name="Public"></param>
+        /// <param name="Public">The public key values.</param>
         public CurveEdwards25519Public(CurveEdwards25519 Public) {
             this.Public = Public;
             this.Encoding = Public.Encode();
             }
 
         /// <summary>
-        /// 
+        /// Construct provider from public key data.
         /// </summary>
-        /// <param name="Encoding"></param>
-        public CurveEdwards25519Public(byte[] Encoding) {
+        /// <param name="Encoding">The encoded public keyu value.</param>
+        public CurveEdwards25519Public (byte[] Encoding) {
             this.Public = CurveEdwards25519.Decode(Encoding);
             this.Encoding = Encoding;
             }
@@ -454,7 +451,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Check that the Diffie Hellman parameters presented match those of this Key.
         /// </summary>
-        /// <param name="Key"></param>
+        /// <param name="Key">The key to verify.</param>
         public void Verify(CurveEdwards25519Public Key) {
             throw new NYI(); // NYI:
             }
@@ -603,10 +600,10 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Verify that a witness value was used to construct a public key.
         /// </summary>
-        /// <param name="Blind"></param>
-        /// <param name="Witness"></param>
-        /// <param name="Public"></param>
-        /// <returns></returns>
+        /// <param name="Blind">The blinding value.</param>
+        /// <param name="Witness">The witness value.</param>
+        /// <param name="Public">The resulting private key.</param>
+        /// <returns>True if the value was correctly constructed using the specified witness, otherwise false.</returns>
         public bool VerifyWitness (byte[] Blind, CurveEdwards25519 Witness, CurveEdwards25519 Public) {
             var SecretBlind = ExtractPrivate(Blind);
             var PublicBlind = CurveEdwards25519.GetPublic(SecretBlind);
@@ -621,7 +618,7 @@ namespace Goedel.Cryptography {
         /// hash value.
         /// </summary>
         /// <param name="Hash">The hash value</param>
-        /// <returns></returns>
+        /// <returns>The private key.</returns>
         public BigInteger ExtractPrivate(byte[] Hash) {
             return ValidatePrivateBytes(Hash).BigIntegerLittleEndian();
             }
@@ -632,7 +629,7 @@ namespace Goedel.Cryptography {
         /// hash value.
         /// </summary>
         /// <param name="Hash">The hash value</param>
-        /// <returns></returns>
+        /// <returns>The private key.</returns>
         public byte[] ValidatePrivateBytes (byte[] Hash) {
             var Copy = new byte[32];
             Array.Copy(Hash, Copy, 32); // bytes 0-31
@@ -746,7 +743,7 @@ namespace Goedel.Cryptography {
         public CurveEdwards25519 Agreement;
 
         /// <summary>The key agreement result as a byte array</summary>
-        public byte[] IKM { get { return Agreement.Encode(); } }
+        public byte[] IKM => Agreement.Encode();
 
         /// <summary>Carry from proxy recryption efforts</summary>
         public CurveEdwards25519 Carry;

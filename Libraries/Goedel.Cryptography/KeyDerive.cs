@@ -29,21 +29,29 @@ namespace Goedel.Cryptography {
 
         /// <summary>Key used to authenticate messages send by the client, i.e. the initiator
         /// to the server.</summary>
+        /// <param name="Length">The key length in bits</param>
+        /// <returns>The key value</returns>
         public virtual byte[] ClientToServerAuthenticate(int Length) {
             return Derive(SaltClientToServerAuthenticate, Length);
             }
         /// <summary>Key used to authenticate messages send by the server, i.e. the responder
         /// to the client.</summary>
-        public virtual byte[] ClientToSServerToClientAuthenticateerverAuthenticate(int Length) {
+        /// <param name="Length">The key length in bits</param>
+        /// <returns>The key value</returns>
+        public virtual byte[] ClientToServerToClientAuthenticate(int Length) {
             return Derive(SaltServerToClientAuthenticate, Length);
             }
         /// <summary>Key used to encrypt messages send by the client, i.e. the initiator
         /// to the server.</summary>
+        /// <param name="Length">The key length in bits</param>
+        /// <returns>The key value</returns>
         public virtual byte[] ClientToServerEncrypt(int Length) {
             return Derive(SaltClientToServerEncrypt, Length);
             }
         /// <summary>Key used to encrypt messages send by the server, i.e. the responder
         /// to the client.</summary>
+        /// <param name="Length">The key length in bits</param>
+        /// <returns>The key value</returns>
         public virtual byte[] ServerToClientEncrypt(int Length) {
             return Derive(SaltServerToClientEncrypt, Length);
             }
@@ -52,7 +60,7 @@ namespace Goedel.Cryptography {
         /// Key Derivation function
         /// </summary>
         /// <param name="Info">The information to be used to vary this key</param>
-        /// <param name="Length">The length of the key to extract</param>
+        /// <param name="Length">The length of the key to extract in bits</param>
         /// <returns></returns>
         public abstract byte[] Derive(byte[] Info, int Length = 0);
 
@@ -113,7 +121,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Info">The information to be used to vary this key</param>
         /// <param name="Length">The length of the key to extract</param>
-        /// <returns></returns>
+        /// <returns>The derrived key.</returns>
         public override byte[] Derive(byte[] Info, int Length = 0) {
             Length = Length == 0 ? DefaultLength : Length;
 
@@ -125,8 +133,8 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The extraction function
         /// </summary>
-        /// <param name="Provider"></param>
-        /// <param name="IKM"></param>
+        /// <param name="Provider">The authentication provider.</param>
+        /// <param name="IKM">The initial keying material</param>
         /// <param name="Salt">Salt to be used to vary the derived key across domains.</param>
         /// <returns></returns>
         public static byte[] Extract(CryptoProviderAuthentication Provider,
@@ -139,10 +147,10 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The expansion function
         /// </summary>
-        /// <param name="Provider"></param>
-        /// <param name="PRK"></param>
+        /// <param name="Provider">The authentication provider.</param>
+        /// <param name="PRK">The pseudo-random key.</param>
         /// <param name="Length">Length of output key in bits</param>
-        /// <param name="Info"></param>
+        /// <param name="Info">Information data</param>
         /// <returns></returns>
         public static byte[] Expand(CryptoProviderAuthentication Provider,
             byte[] PRK, int Length, byte[] Info = null) {
