@@ -80,7 +80,7 @@ namespace Goedel.Cryptography {
         /// <param name="CryptoAlgorithmID">CryptoAlgorithmID Identifier.</param>
         /// <param name="KeySize">Default algorithm key size.</param>
         /// <param name="AlgorithmClass">Algorithm type.</param>
-        /// <param name="CryptoProviderFactory CryptoProviderFactory">Delegate returning the default crypto provider.</param>
+        /// <param name="CryptoProviderFactory">Delegate returning the default crypto provider.</param>
         public CryptoAlgorithm(
                     CryptoAlgorithmID CryptoAlgorithmID,
                     int KeySize,

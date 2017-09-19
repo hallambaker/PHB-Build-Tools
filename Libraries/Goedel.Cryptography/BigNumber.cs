@@ -23,20 +23,13 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Returns true if there is further work to be completed, otherwise false.
         /// </summary>
-        public bool GoingDown {
-            get {
-                return (DownByte > 1) | (DownBit > 0);
-                }
-            }
+        public bool GoingDown => (DownByte > 1) | (DownBit > 0);
+ 
 
         /// <summary>
         /// Returns true if there is further work to be completed, otherwise false.
         /// </summary>
-        public bool GoingUp {
-            get {
-                return (UpByte < (Length-1) | UpBit <7) ;
-                }
-            }
+        public bool GoingUp => (UpByte < (Length-1) | UpBit <7) ;
 
 
         /// <summary>
@@ -173,8 +166,8 @@ namespace Goedel.Cryptography {
         /// be optimized away. Note that the caller is responsible for making sure
         /// that the input is positive
         /// </summary>
-        /// <param name="Text"></param>
-        /// <returns></returns>
+        /// <param name="Text">The hexadecimal string to convert</param>
+        /// <returns>The resulting integer</returns>
         public static BigInteger HexToBigInteger(this string Text) {
             var Bytes = BaseConvert.FromBase16String(Text);
             Array.Reverse(Bytes);
@@ -187,11 +180,10 @@ namespace Goedel.Cryptography {
         /// be optimized away. Note that the caller is responsible for making sure
         /// that the input is positive
         /// </summary>
-        /// <param name="Text"></param>
-        /// <returns></returns>
+        /// <param name="Text">The decimal value</param>
+        /// <returns>The resulting integer</returns>
         public static BigInteger DecimalToBigInteger(this string Text) {
-            BigInteger Result;
-            BigInteger.TryParse(Text, out Result);
+            BigInteger.TryParse(Text, out var Result);
             return Result;
             }
 

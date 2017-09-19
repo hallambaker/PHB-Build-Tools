@@ -132,8 +132,7 @@ namespace Goedel.Cryptography {
         /// The output data value as a byte array. This is only available if the 
         /// OutputStream is a MemoryStream.
         /// </summary>
-        public byte[] OutputData {
-            get => (OutputStream as MemoryStream).ToArray();  } 
+        public byte[] OutputData => (OutputStream as MemoryStream).ToArray();  
 
         /// <summary>
         /// The Algorithm identifier used to construct this instance.
@@ -151,10 +150,10 @@ namespace Goedel.Cryptography {
             CryptoAlgorithmID.Unknown;
 
         /// <summary>Return the meta algorithm identifier (for debugging)</summary>
-        public CryptoAlgorithmID MetaID { get => AlgorithmIdentifier.Meta(); } 
+        public CryptoAlgorithmID MetaID => AlgorithmIdentifier.Meta(); 
 
         /// <summary>Return the bulk algorithm identifier (for debugging)</summary>
-        public virtual CryptoAlgorithmID BulkID { get => AlgorithmIdentifier.Bulk(); } 
+        public virtual CryptoAlgorithmID BulkID  => AlgorithmIdentifier.Bulk(); 
 
 
         /// <summary>List of signature blobs</summary>
@@ -215,7 +214,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Write the binary data to the input stream.
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Data">The data to write</param>
         public void Write (byte[] Data) {
             if (Data != null) {
                 InputStream.Write(Data, 0, Data.Length);
@@ -248,7 +247,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The Bulk Identifier
         /// </summary>
-        public override CryptoAlgorithmID BulkID { get => BulkData.BulkID; } 
+        public override CryptoAlgorithmID BulkID  => BulkData.BulkID; 
 
         /// <summary>
         /// Create and populate a result.
@@ -276,7 +275,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Crypto provider for keying operations (may be null)
         /// </summary>
-        public override CryptoProvider Meta { get => SignatureProvider; } 
+        public override CryptoProvider Meta => SignatureProvider; 
 
         /// <summary>
         /// Crypto provider for signature
@@ -323,7 +322,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Crypto provider for keying operations (may be null)
         /// </summary>
-        public override CryptoProvider Meta { get => ExchangeProvider; } 
+        public override CryptoProvider Meta => ExchangeProvider; 
 
         /// <summary>
         /// Crypto provider for signature

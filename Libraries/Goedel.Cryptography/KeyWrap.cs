@@ -7,7 +7,7 @@ using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
-    /// <summary></summary>
+    /// <summary>Factory delegate for block processing provider.</summary>
     public delegate BlockProvider BlockProviderFactory(byte[] Key, bool Encrypt);
 
     /// <summary>
@@ -209,24 +209,25 @@ namespace Goedel.Cryptography {
 
         }
 
-    /// <summary></summary>
+    /// <summary>Represents a block of data to be processed by cryptographic operations.
+    /// This is used as a building block in key wrapping and derrivation functions.</summary>
     public struct Block {
 
         byte[] Data;
 
         /// <summary>
-        /// 
+        /// Constructor from binary data.
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Data">The data to process</param>
         public Block(byte[] Data) {
             this.Data = Data;
             }
 
         /// <summary>
-        /// 
+        /// Constructor from integer data.
         /// </summary>
         /// <param name="Value">Data value to initialize the value field.</param>
-        public Block(int Value) {
+        public Block (int Value) {
             this.Data = new byte[8];
             for (var i=0; i<8; i++) {
                 Data[i] = (byte)(Value & 0xff);
@@ -236,8 +237,8 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Construct a data block from the specified source value
         /// </summary>
-        /// <param name="Source"></param>
-        /// <param name="Index"></param>
+        /// <param name="Source">The source value.</param>
+        /// <param name="Index">Offset within the block.</param>
         public Block(byte[] Source, int Index) {
             Data = new byte [8];
             Array.Copy(Source, Index * 8, Data, 0, 8);
@@ -246,8 +247,8 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Check that the sentry value is correct (bytes all the same value
         /// </summary>
-        /// <param name="Value"></param>
-        /// <returns></returns>
+        /// <param name="Value">The sentry value to check.</param>
+        /// <returns>True if the sentry value is correct, false otherwise.</returns>
         public bool Verify (int Value) {
             foreach (var Byte in Data) {
                 if (Byte != Value) {
@@ -264,7 +265,6 @@ namespace Goedel.Cryptography {
         /// <param name="Left">The MSB</param>
         /// <param name="Right">The LSB</param>
         /// <param name="Result">The array to write the result to.</param>
-        /// <returns></returns>
         public static void Concat (Block Left, Block Right, byte[]Result) {
             Array.Copy(Left.Data, 0, Result, 0, 8);
             Array.Copy(Right.Data, 0, Result, 8, 8);
@@ -275,7 +275,6 @@ namespace Goedel.Cryptography {
         /// Update the block value with the specified mask value.
         /// </summary>
         /// <param name="Mask">XOR mask value</param>
-        /// <returns></returns>
         public void XOR (long Mask) {
 
             var Result = new byte[8];
@@ -308,7 +307,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Blocks"></param>
         /// <param name="Offset">Offset from start of array</param>
-        /// <returns></returns>
+        /// <returns>The converted blocks.</returns>
         public static byte[] ToByte(Block[] Blocks, int Offset = 0) {
             var Result = new byte[(Blocks.Length- Offset) * 8];
             for (var i = Offset; i < Blocks.Length; i++) {

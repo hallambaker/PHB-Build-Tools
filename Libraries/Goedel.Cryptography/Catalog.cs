@@ -71,7 +71,7 @@ namespace Goedel.Cryptography {
         /// Set undefined identifier components to default signature and digest.
         /// </summary>
         /// <param name="Base">The base id</param>
-        /// <returns></returns>
+        /// <returns>The defaulted algorithm relative to the base.</returns>
         public CryptoAlgorithmID SignatureDefaults (CryptoAlgorithmID Base) {
             return Base.Default(AlgorithmDigest, AlgorithmSignature);
             }
@@ -80,7 +80,7 @@ namespace Goedel.Cryptography {
         /// Set undefined identifier components to default exchange and encryption.
         /// </summary>
         /// <param name="Base">The base id</param>
-        /// <returns></returns>
+        /// <returns>The defaulted algorithm relative to the base.</returns>
         public CryptoAlgorithmID EncryptionDefaults(CryptoAlgorithmID Base) {
             return Base.Default(AlgorithmExchange, AlgorithmEncryption);
             }
@@ -131,7 +131,7 @@ namespace Goedel.Cryptography {
         /// <param name="CryptoAlgorithmID">CryptoAlgorithmID Identifier.</param>
         /// <param name="KeySize">Default algorithm key size.</param>
         /// <param name="AlgorithmClass">Algorithm type.</param>
-        /// <param name="CryptoProviderFactory CryptoProviderFactory">Delegate returning the default crypto provider.</param>
+        /// <param name="CryptoProviderFactory">Delegate returning the default crypto provider.</param>
         /// <returns>The catalog entry.</returns>
         public CryptoAlgorithm Add(
             CryptoAlgorithmID CryptoAlgorithmID,
@@ -320,9 +320,8 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public virtual CryptoAlgorithm CryptoAlgorithm {
-            get => null; 
-            }
+        public virtual CryptoAlgorithm CryptoAlgorithm => null; 
+
 
         /// <summary>
         /// The type of algorithm
@@ -342,9 +341,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The UDF fingerprint of the key.
         /// </summary>
-        public virtual string UDF {
-            get => null; 
-            }
+        public virtual string UDF  => null; 
 
         /// <summary>
         /// Return the provider key.
@@ -376,7 +373,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Complete processing at the end of an encoding or decoding operation
         /// </summary>
-        /// <param name="CryptoData"></param>
+        /// <param name="CryptoData">The completion data.</param>
         public virtual void Complete (CryptoData CryptoData) {
             if (CryptoData.OutputStream is MemoryStream MemoryStream) {
                 CryptoData.ProcessedData = MemoryStream.ToArray();

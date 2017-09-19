@@ -106,11 +106,11 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
-        /// Set algorithm defaults
+        /// Set algorithm defaults for key exchange / public algorithm.
         /// </summary>
-        /// <param name="ID"></param>
-        /// <param name="Default"></param>
-        /// <returns></returns>
+        /// <param name="ID">The specified algorithm</param>
+        /// <param name="Default">The default to apply</param>
+        /// <returns>The defaulted algorithm</returns>
         public static CryptoAlgorithmID DefaultMeta(
                     this CryptoAlgorithmID ID,
                     CryptoAlgorithmID Default = CryptoAlgorithmID.Default) {
@@ -121,11 +121,11 @@ namespace Goedel.Cryptography {
             }
 
         /// <summary>
-        /// Set algorithm defaults
+        /// Set algorithm defaults for bulk algorithm
         /// </summary>
-        /// <param name="ID"></param>
-        /// <param name="Default"></param>
-        /// <returns></returns>
+        /// <param name="ID">The specified algorithm</param>
+        /// <param name="Default">The default to apply</param>
+        /// <returns>The defaulted algorithm</returns>
         public static CryptoAlgorithmID DefaultBulk(
                     this CryptoAlgorithmID ID,
                     CryptoAlgorithmID Default = CryptoAlgorithmID.Default) {
@@ -139,8 +139,8 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Get the base part of an algorithm
         /// </summary>
-        /// <param name="ID"></param>
-        /// <returns></returns>
+        /// <param name="ID">The identifier to process.</param>
+        /// <returns>The base part.</returns>
         public static CryptoAlgorithmID Base (this CryptoAlgorithmID ID) {
             return ID < 0 ? ID : ID & CryptoAlgorithmID.BaseMask;
             }

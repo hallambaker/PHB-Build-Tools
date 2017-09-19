@@ -33,7 +33,6 @@
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
     </DocumentationSources>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
@@ -64,11 +63,12 @@
     <CatalogProductId>VS</CatalogProductId>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="False" />
-<NamespaceSummaryItem name="Goedel.ASN" isDocumented="True">Support routings for serializing and deserializing ASN.1  DER encoding for classes built with the PHB Tools ASN tool.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.FSR" isDocumented="True">Support routines for Finite State Recognizers built with the PHB Tools FSR tool.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Protocol" isDocumented="True">Support routines for Web Services built with the PHB Tools PROTOGEN tool.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Registry" isDocumented="True">Support routines for various systems built with the PHB Tools Goedel tool.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Utilities" isDocumented="True">Support routines common to all systems built with PHB tools.</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="Goedel.ASN" isDocumented="True">Support routings for serializing and deserializing ASN.1  DER encoding for classes built with the PHB Tools ASN tool.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.FSR" isDocumented="True">Support routines for Finite State Recognizers built with the PHB Tools FSR tool.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Protocol" isDocumented="True">Support routines for Web Services built with the PHB Tools PROTOGEN tool.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Registry" isDocumented="True">Support routines for various systems built with the PHB Tools Goedel tool.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Utilities" isDocumented="True">Support routines common to all systems built with PHB tools.</NamespaceSummaryItem>
+    </NamespaceSummaries>
     <ProjectSummary>Support libraries for code generated with Goedel code synthesis tools.</ProjectSummary>
     <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
     <WorkingPath>..\..\..\scratch\standard\</WorkingPath>

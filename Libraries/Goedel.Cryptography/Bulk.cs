@@ -38,7 +38,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Create a crypto stream from this provider.
         /// </summary>
-        /// <param name="Encoder"></param>
+        /// <param name="Encoder">The encoder to bind.</param>
         public abstract void BindEncoder(CryptoDataEncoder Encoder);
 
 
@@ -91,9 +91,8 @@ namespace Goedel.Cryptography {
             CryptoAlgorithmClass.Digest;
 
         /// <summary>Return the crypto algorithm class.</summary>
-        public override CryptoAlgorithmClass AlgorithmClass {
-            get { return _AlgorithmClass; }
-            }
+        public override CryptoAlgorithmClass AlgorithmClass => _AlgorithmClass; 
+
 
         }
 
@@ -107,9 +106,8 @@ namespace Goedel.Cryptography {
             CryptoAlgorithmClass.MAC;
 
         /// <summary>Return the crypto algorithm class.</summary>
-        public override CryptoAlgorithmClass AlgorithmClass {
-            get { return _AlgorithmClass; }
-            }
+        public override CryptoAlgorithmClass AlgorithmClass => _AlgorithmClass; 
+
 
         /// <summary>
         /// Create an encoder for a bulk algorithm and optional key wrap or exchange.
@@ -173,9 +171,7 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>Return the crypto algorithm class.</summary>
-        public override CryptoAlgorithmClass AlgorithmClass {
-            get { return _AlgorithmClass; }
-            }
+        public override CryptoAlgorithmClass AlgorithmClass => _AlgorithmClass; 
 
         /// <summary>The crypto algorithm class.</summary>
         protected static CryptoAlgorithmClass _AlgorithmClass =
