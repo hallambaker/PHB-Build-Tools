@@ -45,11 +45,14 @@ namespace Goedel.Command {
         /// <summary>
         /// Completion routine. This is called at the end of parameter processing to finalize default values.
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Data">The final data.</param>
         public virtual void Complete (Type[] Data) {
             }
 
-
+        /// <summary>
+        /// Set the flag value.
+        /// </summary>
+        /// <param name="Negated">If true, flag is negated.</param>
         public virtual void SetFlag (bool Negated) {
             }
 
@@ -111,7 +114,10 @@ namespace Goedel.Command {
                 }
             }
 
-
+        /// <summary>
+        /// Set the negated flag
+        /// </summary>
+        /// <param name="Negated">If true, command is negated.</param>
         public override void SetFlag (bool Negated) {
             Parameter (Negated ? "false" : "true");
             ByDefault = false;
@@ -164,9 +170,8 @@ namespace Goedel.Command {
         /// <summary>
         /// The value.
         /// </summary>
-        public string Value {
-            get => Text;
-            }
+        public string Value => Text;
+
 
         /// <summary>
         /// Construct extension defaulted file name for specified file.
@@ -181,6 +186,7 @@ namespace Goedel.Command {
         /// Construct extension defaulted file name for specified file.
         /// </summary>
         /// <param name="Source">The source file.</param>
+        /// <param name="Extension">The extension.</param>
         /// <returns>File name.</returns>
         public string DefaultFile (string Source, string Extension = null) {
             Extension = Extension ?? this.Extension;
@@ -200,6 +206,10 @@ namespace Goedel.Command {
     public abstract class _NewFile : _File  {
         bool Flagged = false;
 
+        /// <summary>
+        /// Set the negated flag
+        /// </summary>
+        /// <param name="Negated">if true, is negated.</param>
         public override void SetFlag (bool Negated) {
             Flagged = true;
             }
@@ -217,7 +227,7 @@ namespace Goedel.Command {
         /// <summary>
         /// Completion routine. This is called at the end of parameter processing to finalize default values.
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Data">The completed data</param>
         public override void Complete (Type[] Data) {
             if (!ByDefault | !Flagged) {
                 return; // not flagged or explicitly set
@@ -253,6 +263,9 @@ namespace Goedel.Command {
     /// </summary>
     public abstract class _Integer : Type {
 
+        /// <summary>
+        /// Return the value as an integer
+        /// </summary>
         public int Value {
             get {
                 if (Text == "") {
@@ -273,9 +286,8 @@ namespace Goedel.Command {
         /// <summary>
         /// The value.
         /// </summary>
-        public string Value {
-            get => Text;
-            }
+        public string Value => Text;
+
         }
 
     }

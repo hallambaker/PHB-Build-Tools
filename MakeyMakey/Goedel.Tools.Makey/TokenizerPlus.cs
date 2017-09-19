@@ -46,7 +46,7 @@ namespace Goedel.Tool.Makey {
                 NextState = CompressedTransitions[StateInt, ct];
 
                 if (NextState >= 0) {
-                    Action Action = Actions[(int)NextState];
+                    ActionDelegate Action = Actions[(int)NextState];
                     Action(Reader.LastInt);
                     Going = Reader.Get();
                     StateInt = NextState;

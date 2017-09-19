@@ -75,7 +75,7 @@ namespace Goedel.Cryptography.Framework {
         protected CryptoProviderDigest() {
             }
 
-
+        /// <summary>Create an encoder for the specified data</summary>
         /// <param name="Algorithm">Ignored</param>
         /// <param name="Bulk">Ignored</param>
         /// <param name="OutputStream">Output stream. Data written to the input 
@@ -89,17 +89,19 @@ namespace Goedel.Cryptography.Framework {
                             ) {
 
 
-            var Result = new CryptoDataEncoder(Algorithm, this);
-            Result.OutputStream = OutputStream ?? Stream.Null;
+            var Result = new CryptoDataEncoder(Algorithm, this) {
+                OutputStream = OutputStream ?? Stream.Null
+                };
             BindEncoder(Result);
 
             return Result;
             }
 
+
         /// <summary>
         /// Create a crypto stream from this provider.
         /// </summary>
-        /// <param name="Encoder"></param>
+        /// <param name="Encoder">The encoder to bind.</param>
         public override void BindEncoder(CryptoDataEncoder Encoder) {
             Encoder.InputStream = new CryptoStream(
                     Encoder.OutputStream, HashAlgorithm, CryptoStreamMode.Write);
@@ -177,16 +179,12 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID {
-            get { return _CryptoAlgorithmID; }
-            }
+        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID; 
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm {
-            get { return _CryptoAlgorithm; }
-            }
+        public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
 
         static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
@@ -209,11 +207,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Default output size.
         /// </summary>
-        public override int Size {
-            get {
-                return 256;
-                }
-            }
+        public override int Size => 256;
+
 
         private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) {
             return new CryptoProviderSHA2_256();
@@ -265,11 +260,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Default output size.
         /// </summary>
-        public override int Size {
-            get {
-                return Truncate >0 ? Truncate: 512;
-                }
-            }
+        public override int Size => Truncate >0 ? Truncate: 512;
 
         private static CryptoProvider Factory(int KeySize, 
                             CryptoAlgorithmID ID = CryptoAlgorithmID.SHA_2_512) {
@@ -281,6 +272,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Create a SHA-2-256 digest provider.
         /// </summary>
+        /// <param name="KeySize">Key size.</param>
+        /// <param name="ID">Cryptgraphic algorithm.</param>
         public CryptoProviderSHA2_512(int KeySize=512, 
                     CryptoAlgorithmID ID = CryptoAlgorithmID.SHA_2_512) : base (new SHA512Cng()) {
             CryptoAlgorithmID = ID;
@@ -302,16 +295,12 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID {
-            get { return _CryptoAlgorithmID; }
-            }
+        public override CryptoAlgorithmID CryptoAlgorithmID=> _CryptoAlgorithmID; 
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm {
-            get { return _CryptoAlgorithm; }
-            }
+        public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm; 
 
         static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
                     _CryptoAlgorithmID, 512, _AlgorithmClass, Factory);
@@ -333,11 +322,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Default output size.
         /// </summary>
-        public override int Size {
-            get {
-                return 160;
-                }
-            }
+        public override int Size => 160;
+
 
 
         private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) {

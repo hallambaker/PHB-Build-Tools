@@ -1,59 +1,60 @@
-﻿using System;
+﻿using Goedel.Utilities;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Goedel.Utilities;
-using Goedel.Registry;
 
 namespace Goedel.Command {
+
+    /// <summary>
+    /// Delegate calling a dispatch routine.
+    /// </summary>
+    /// <param name="Dispatch">The command description.</param>
+    /// <param name="args">The set of arguments.</param>
+    /// <param name="index">The first unparsed argument.</param>
+    public delegate void HandleDelegate (DispatchShell Dispatch, string[] args, int index);
+
 
     /// <summary>
     /// Base class for command line interpreters
     /// </summary>
     public abstract class CommandLineInterpreterBase {
-        /// <summary></summary>
+
+
+        /// <summary>The command entries</summary>
         public static SortedDictionary<string, DescribeCommand> Entries;
-        /// <summary></summary>
+        /// <summary>The default command.</summary>
         public static DescribeCommandEntry DefaultCommand;
-        /// <summary></summary>
+        /// <summary>Description of the comman</summary>
         public static string Description = "<Not specified>";
-        /// <summary></summary>
+        /// <summary>The default flag indicator for display to terminal, this is a forward slash / for Windows
+        /// and a double dash -- for UNIX.</summary>
         public static char FlagIndicator = '/';
 
-        //public void MainMethod (string Argument) {
-        //    MainMethod(Argument.Split((char[]) null, StringSplitOptions.RemoveEmptyEntries));
-        //    }
-
-        //public abstract void MainMethod (string[] Argument);
-
         /// <summary>
-        /// 
+        /// Provide the summary of the command.
         /// </summary>
-        /// <param name="Dispatch"></param>
-        /// <param name="args"></param>
-        /// <param name="index"></param>
+        /// <param name="Dispatch">The command description.</param>
+        /// <param name="args">The set of arguments.</param>
+        /// <param name="index">The first unparsed argument.</param>
         public static void Brief (DispatchShell Dispatch, string[] args, int index) {
             Brief();
             }
 
         /// <summary>
-        /// 
+        /// Describe the application invoked by the command.
         /// </summary>
-        /// <param name="Dispatch"></param>
-        /// <param name="args"></param>
-        /// <param name="index"></param>
+        /// <param name="Dispatch">The command description.</param>
+        /// <param name="args">The set of arguments.</param>
+        /// <param name="index">The first unparsed argument.</param>
         public static void About (DispatchShell Dispatch, string[] args, int index) {
             FileTools.About();
             }
 
 
-
         /// <summary>
-        /// 
+        /// Provide the summary of the command.
         /// </summary>
         public static void Brief () {
-            Console.WriteLine(Description);
+            Console.WriteLine(Description); 
             Console.WriteLine("");
 
             if (DefaultCommand != null) {
@@ -61,19 +62,18 @@ namespace Goedel.Command {
 
                 }
             foreach (var Entry in Entries) {
-                if (!Entry.Value.IsDefault) {
+                if (!Entry.Value.IsDefault) {  // BUG: Is not doing the right thing here.
                     Entry.Value.Describe(FlagIndicator);
                     }
                 }
-
             }
 
         /// <summary>
-        /// 
+        /// Process command options.
         /// </summary>
-        /// <param name="Args"></param>
-        /// <param name="Index"></param>
-        /// <param name="Options"></param>
+        /// <param name="Args">The command line arguments.</param>
+        /// <param name="Index">The first unparsed argument.</param>
+        /// <param name="Options">The option values to set.</param>
         public static void ProcessOptions (string[] Args, int Index, Dispatch Options) {
             var Describe = Options.DescribeCommand;
             var CommandLex = new CommandLex();
@@ -140,9 +140,7 @@ namespace Goedel.Command {
             foreach (var  Entry in Options._Data) {
                 Entry.Complete(Options._Data);
                 }
-
             }
-
 
         static void SetValue (Type Data, string Value) {
             Data.Parameter(Value); // Hack: consolidate
@@ -158,15 +156,19 @@ namespace Goedel.Command {
             return null;
             }
 
-
         /// <summary>
-        /// 
+        /// Describe the values in an command.
         /// </summary>
-        /// <param name="Dispatch"></param>
+        /// <param name="Dispatch">The command to describe.</param>
         public static void DescribeValues (Dispatch Dispatch) {
+            // NYI: This may not be required.
             }
 
-
+        /// <summary>
+        /// Return true iff the text value is flagged.
+        /// </summary>
+        /// <param name="Text">Text to test.</param>
+        /// <returns>Result of the test.</returns>
         public static bool IsFlagged (string Text) {
             if (Text == null) {
                 return false;
@@ -177,20 +179,17 @@ namespace Goedel.Command {
             return Text[0] == '-' | Text[0] == '/';
             }
 
-
         /// <summary>
         /// The main dispatch point
         /// </summary>
-        /// <param name="Entries"></param>
-        /// <param name="Dispatch"></param>
-        /// <param name="Args"></param>
-        /// <param name="Index"></param>
+        /// <param name="Entries">Dictionary describing the shell commands and dispatchers.</param>
+        /// <param name="Dispatch">The command description.</param>
+        /// <param name="Args">The set of arguments.</param>
+        /// <param name="Index">The first unparsed argument.</param>
         public void Dispatcher (SortedDictionary<string, DescribeCommand> Entries,
                 DispatchShell Dispatch, string[] Args, int Index) {
             // NYI: This should really be set up to take a Command set description
             // as the input.
-
-            
 
             if (Args.Length == 0) {
                 Assert.NotNull(DefaultCommand, UnknownCommand.Throw);
@@ -229,47 +228,55 @@ namespace Goedel.Command {
 
 
     /// <summary>
-    /// 
+    /// Describe a command or parameter entry 
     /// </summary>
     public abstract class DescribeEntry {
-        /// <summary></summary>
+        /// <summary>The identifier name.</summary>
         public string Identifier { get; set; }
-        /// <summary></summary>
+        /// <summary>Brief description</summary>
         public string Brief { get; set; }
-        /// <summary></summary>
+        /// <summary>The default value (if specified)</summary>
         public string Default { get; set; }
-        /// <summary></summary>
+        /// <summary>The command line key.</summary>
         public string Key { get; set; }
-        /// <summary></summary>
+        /// <summary>The position in the options array.</summary>
         public int Index { get; set; } // Index into array of Type
         }
 
     /// <summary>
-    /// 
+    /// Describe a command set.
     /// </summary>
     public abstract class DescribeCommand : DescribeEntry {
-        /// <summary></summary>
+        
+        /// <summary>If true, this is the default command.</summary>
         public bool IsDefault = false;
+
         /// <summary>
-        /// 
+        /// Describe the command set.
         /// </summary>
-        /// <param name="FlagIndicator"></param>
+        /// <param name="FlagIndicator">The flag indicator to use when printing the description.</param>
         public abstract void Describe (char FlagIndicator);
         }
 
     /// <summary>
-    /// 
+    /// Describe a command entry
     /// </summary>
     public class DescribeCommandEntry : DescribeCommand {
 
-        /// <summary></summary>
+        /// <summary>Delegate to dispatch if command is selected.</summary>
         public HandleDelegate HandleDelegate { get; set; }
-        /// <summary></summary>
+
+        /// <summary>If true perform lezy evaluation of parameters.</summary>
         public bool Lazy { get; set; } = false;
-        //public Parser Parser { get; set; } = null;
-        /// <summary></summary>
+
+        /// <summary>The command entries.</summary>
         public List<DescribeEntry> Entries { get; set; }
 
+        /// <summary>
+        /// Get the default for the value.
+        /// </summary>
+        /// <param name="Tag">The tag text</param>
+        /// <returns>The default value if it exists, null otherwise.</returns>
         public string GetDefault (string Tag) {
             foreach (var Entry in Entries) {
                 if (Entry.Key == Tag) {
@@ -279,7 +286,11 @@ namespace Goedel.Command {
             return null;
             }
 
-
+        /// <summary>
+        /// Set the default value for the tag
+        /// </summary>
+        /// <param name="Tag">The tag text</param>
+        /// <param name="Default">The value to set as the default.</param>
         public void SetDefault (string Tag, string Default) {
             foreach (var Entry in Entries) {
                 if (Entry.Key == Tag) {
@@ -290,9 +301,9 @@ namespace Goedel.Command {
             }
 
         /// <summary>
-        /// 
+        /// Describe the command to the console.
         /// </summary>
-        /// <param name="FlagIndicator"></param>
+        /// <param name="FlagIndicator">The flag indicator to use in display.</param>
         public override void Describe (char FlagIndicator) {
             Console.WriteLine("{0}{1}", FlagIndicator, Identifier);
             foreach (var Entry in Entries) {
@@ -318,16 +329,17 @@ namespace Goedel.Command {
         }
 
     /// <summary>
-    /// 
+    /// Describe a command set.
     /// </summary>
     public class DescribeCommandSet : DescribeCommand {
-        /// <summary></summary>
+        
+        /// <summary>Dictionary of command entries.</summary>
         public SortedDictionary<string, DescribeCommand> Entries;
 
         /// <summary>
-        /// 
+        /// Describe the command set to the console.
         /// </summary>
-        /// <param name="FlagIndicator"></param>
+        /// <param name="FlagIndicator">The flag indicator to use in display.</param>
         public override void Describe (char FlagIndicator) {
             Console.WriteLine("{0}", Identifier);
             foreach (var Entry in Entries) {
@@ -347,82 +359,30 @@ namespace Goedel.Command {
         }
 
     /// <summary>
-    /// 
+    /// Describe an entry value.
     /// </summary>
     public class DescribeEntryValue : DescribeEntry {
 
         }
 
     /// <summary>
-    /// 
+    /// Describe an option value.
     /// </summary>
     public class DescribeEntryOption : DescribeEntryValue {
         }
 
     /// <summary>
-    /// 
+    /// Describe a parameter value.
     /// </summary>
     public class DescribeEntryParameter : DescribeEntryValue {
         }
 
     /// <summary>
-    /// 
+    /// Describe a shell.
     /// </summary>
     public abstract class DispatchShell : Dispatch{
 
         }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="Dispatch"></param>
-    /// <param name="args"></param>
-    /// <param name="index"></param>
-    public delegate void HandleDelegate (DispatchShell Dispatch, string[] args, int index);
 
-
-
-  //  /// <summary>Type registry entry</summary>
-  //  public class RegistryEntry {
-  //      /// <summary>the tag</summary>
-  //      public string Tag;
-
-  //      /// <summary>Index of the tag</summary>
-  //      public int Index;
-  //      }
-
-  //  /// <summary>Type registry</summary>
-  //  public class Registry {
-
-  //      /// <summary>The tagged registry entries</summary>
-  //      List<RegistryEntry> Entries = new List<RegistryEntry>();
-
-  //      /// <summary>
-  //      /// Register an entry
-  //      /// </summary>
-  //      /// <param name="Tag">The tag value</param>
-  //      /// <param name="Index">The position in the definition array</param>
-  //      public void Register(string Tag, int Index) {
-  //          RegistryEntry Entry = new RegistryEntry() {
-  //              Tag = Tag,
-  //              Index = Index
-  //              };
-  //          Entries.Add(Entry);
-  //          }
-
-  //      /// <summary>
-  //      /// Find the first matching entry
-  //      /// </summary>
-  //      /// <param name="Match">The tag to match</param>
-  //      /// <returns>The match index.</returns>
-		//public int Find(string Match) {
-  //          RegistryEntry Entry = Entries.Find(delegate (RegistryEntry TT) { return TT.Tag == Match; });
-
-  //          if (Entry == null) {
-  //              throw new Exception("Unknown option: " + Match);
-  //              }
-  //          return Entry.Index;
-  //          }
-
-  //      }
     }

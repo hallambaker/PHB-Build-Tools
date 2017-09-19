@@ -7,23 +7,28 @@ using Goedel.Utilities;
 using Goedel.FSR;
 
 namespace Goedel.Command {
+
+    /// <summary>
+    /// Split a command line into parts.
+    /// </summary>
     public partial class CommandSplitLex {
 
         /// <summary>
         /// Split a commandline into entries.
         /// </summary>
-        /// <param name="Text"></param>
-        /// <returns></returns>
+        /// <param name="Text">The command line to split.</param>
+        /// <returns>The command line split into entries.</returns>
         public static string[] Split (string Text) {
             var CommandSplitLex = new CommandSplitLex();
             CommandSplitLex.GetToken(Text);
             return CommandSplitLex.Value.ToArray();
             }
 
+        LexStringReader LexStringReader;
+
         /// <summary>
         /// Construct a parser to read from a string to be specified in GetToken (data)
         /// </summary>
-        LexStringReader LexStringReader;
         public CommandSplitLex () {
             LexStringReader = new LexStringReader(null);
             Reader = LexStringReader;
@@ -33,8 +38,8 @@ namespace Goedel.Command {
         /// Parse the specified string. Note, this is only valid if no LexReader
         /// was specified in the constructor.
         /// </summary>
-        /// <param name="Data"></param>
-        /// <returns></returns>
+        /// <param name="Data">The string to parse.</param>
+        /// <returns>The token value.</returns>
         public Token GetToken (string Data) {
             LexStringReader.String = Data;
             Reset();

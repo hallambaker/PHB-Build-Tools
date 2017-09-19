@@ -77,7 +77,7 @@ namespace Goedel.FSR {
         /// <summary>Compresset transition table maps character group to next state</summary>
         public abstract short[,] CompressedTransitions { get; }
         /// <summary>Actions to perform on transition into specified state.</summary>
-        public Action[] Actions;
+        public ActionDelegate[] Actions;
         /// <summary>The state before the current token was read.</summary>
         public int StateInt;
         /// <summary>The state to transition to. This can be overriden in an action
@@ -120,7 +120,7 @@ namespace Goedel.FSR {
                 NextState = CompressedTransitions[StateInt, ct];
 
                 if (NextState >= 0) {
-                    Action Action = Actions[(int)NextState];
+                    ActionDelegate Action = Actions[(int)NextState];
                     Action(Reader.LastInt);
                     Going = Reader.Get();
                     StateInt = NextState;
@@ -150,7 +150,7 @@ namespace Goedel.FSR {
             NextState = CompressedTransitions[StateInt, ct];
 
             if (NextState >= 0) {
-                Action Action = Actions[(int)NextState];
+                ActionDelegate Action = Actions[(int)NextState];
                 Action(c);
                 StateInt = NextState;
                 return true;
@@ -201,7 +201,7 @@ namespace Goedel.FSR {
         /// FSR action
         /// </summary>
         /// <param name="c">Character that was read to cause the transition.</param>
-        public delegate void Action(int c);
+        public delegate void ActionDelegate(int c);
 
         /// <summary>
         /// Initialization method called when Lexer is created.

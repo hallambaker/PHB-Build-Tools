@@ -195,7 +195,7 @@ namespace Goedel.Tool.Makey{
 		/// <summary>Generated initialization method, is called automatically 
 		/// the FSR to reset </summary>
         public override void Init () {
-            Actions = new Action[] {
+            Actions = new ActionDelegate[] {
 				Reset,
 				AddCurrent,
 				GotTag,

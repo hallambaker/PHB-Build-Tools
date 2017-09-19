@@ -7,9 +7,7 @@ using Goedel.Cryptography.PKIX;
 using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
 
-/// <summary>
-/// 
-/// </summary>
+
 namespace Goedel.Cryptography.Linux {
     class KeyStore {
 
@@ -35,7 +33,7 @@ namespace Goedel.Cryptography.Linux {
         /// <summary>
         /// Write a key to the machine keystore
         /// </summary>
-        /// <param name="PrivateKey">The key store</param>
+        /// <param name="Data">The key store</param>
         /// <param name="KeySecurity">The storage security level</param>
         public static void WriteToKeyStore(IPKIXPrivateKey Data, KeySecurity KeySecurity) {
 

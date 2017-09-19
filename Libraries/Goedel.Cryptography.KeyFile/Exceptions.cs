@@ -13,13 +13,13 @@ namespace Goedel.Cryptography.KeyFile {
     public class KeyFileException : global::System.Exception {
 
 		/// <summary>
-        /// Construct instance for exception "Key could not be read"
+        /// Construct instance for exception "Key could not be ready"
         /// </summary>		
-		public KeyFileException () : base ("Key could not be read") {
+		public KeyFileException () : base ("Key could not be ready") {
 			}
         
 		/// <summary>
-        /// Construct instance for exception "Key could not be read"
+        /// Construct instance for exception "Key could not be ready"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		public KeyFileException (string Description) : base (Description) {
@@ -237,7 +237,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>		
         /// <param name="Object">User data</param>	
 		public ParseError (LexReader Object) : 
-				base (String.Format ("The file {0} could not be read",
+				base (global::System.String.Format ("The file {0} could not be read",
 					Object.FilePath					)) {
 			UserData = Object;
 			}
@@ -249,7 +249,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="Object">User data</param>	
 		/// <param name="Inner">Inner Exception</param>	
 		public ParseError (LexReader Object, System.Exception Inner) : 
-				base (String.Format ("The file {0} could not be read",
+				base (global::System.String.Format ("The file {0} could not be read",
 					Object.FilePath					), Inner) {
 			UserData = Object;
 			}

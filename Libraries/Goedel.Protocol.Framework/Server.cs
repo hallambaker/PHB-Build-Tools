@@ -203,9 +203,9 @@ namespace Goedel.Protocol.Framework {
     /// Represents a specific service provider.
     /// </summary>
     public class ProviderRegistration {
-        /// <summary></summary>
+        /// <summary>The JPC Server</summary>
         public JPCServer JPCServer;
-        /// <summary></summary>
+        /// <summary>The JPC Provider.</summary>
         public JPCProvider JPCProvider;
 
         List<InterfaceRegistration> Interfaces;

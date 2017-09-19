@@ -7,12 +7,16 @@ using Goedel.Utilities;
 using Goedel.FSR;
 
 namespace Goedel.Command {
+
+    /// <summary>
+    /// Lexical analyzer for command line parsing.
+    /// </summary>
     public partial class CommandLex {
+        LexStringReader LexStringReader;
 
         /// <summary>
         /// Construct a parser to read from a string to be specified in GetToken (data)
         /// </summary>
-        LexStringReader LexStringReader;
         public CommandLex () {
             LexStringReader = new LexStringReader(null);
             Reader = LexStringReader;
@@ -22,8 +26,8 @@ namespace Goedel.Command {
         /// Parse the specified string. Note, this is only valid if no LexReader
         /// was specified in the constructor.
         /// </summary>
-        /// <param name="Data"></param>
-        /// <returns></returns>
+        /// <param name="Data">The data to parse</param>
+        /// <returns>The token value.</returns>
         public Token GetToken (string Data) {
             LexStringReader.String = Data;
             Reset();
@@ -34,13 +38,16 @@ namespace Goedel.Command {
         /// <summary>
         /// Return the resulting string value
         /// </summary>
-        public string Value { get => BuildValue.ToString(); }
+        public string Value => BuildValue.ToString(); 
 
         /// <summary>
         /// Return the resulting string value
         /// </summary>
-        public string Flag { get => BuildFlag.ToString(); }
+        public string Flag  => BuildFlag.ToString(); 
 
+        /// <summary>
+        /// If true, flag was negated.
+        /// </summary>
         public bool Not { get; set; }
 
         StringBuilder BuildValue = new StringBuilder();
@@ -85,15 +92,26 @@ namespace Goedel.Command {
             BuildFlag.Append((char)c);
             }
 
+        /// <summary>
+        /// N of possible NO flag
+        /// </summary>
+        /// <param name="c">The character read</param>
         public virtual void AddFlagN (int c) {
             BuildFlag.Append((char)c);
             }
 
+        /// <summary>
+        /// O of possible NO flag
+        /// </summary>
+        /// <param name="c">The character read</param>
         public virtual void AddFlagNo (int c) {
             BuildFlag.Clear(); // delete 'no' prefix
             Not = true;
             }
-
+        /// <summary>
+        /// Abort parsing, the command cannot be read.
+        /// </summary>
+        /// <param name="c">The character read</param>
         public virtual void Abort (int c) {
             }
 

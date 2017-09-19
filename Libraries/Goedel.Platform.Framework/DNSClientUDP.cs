@@ -49,9 +49,8 @@ namespace Goedel.Platform.Framework {
         /// <param name="Server">Address of DNS server</param>
         public DNSClientUDP(string Server) {
             if (Server != null) {
-                IPAddress IPAddress;
-                IPAddress.TryParse(Server, out IPAddress);
-                SetIPAddress(IPAddress);
+                IPAddress.TryParse(Server, out var Address);
+                SetIPAddress(Address);
                 // Should add in code to query against the ICANN root servers...
                 }
             else {
@@ -172,8 +171,8 @@ namespace Goedel.Platform.Framework {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        /// <param name="ListIPAddress"></param>
-        /// <param name="Port"></param>
+        /// <param name="ListIPAddress">List of IP addresses to contact.</param>
+        /// <param name="Port">Port number.</param>
         public DNSContextUDP (List<IPAddress> ListIPAddress, ushort Port) {
             UdpClient = GetUDPClient(ListIPAddress[0], Port);
             TaskListen = GetResponseRawAsync();
@@ -219,6 +218,9 @@ namespace Goedel.Platform.Framework {
             }
 
 
+        /// <summary>
+        /// Get asynchronous raw response.
+        /// </summary>
         /// <returns>The first valid response received.</returns>
         public override async Task<byte[]> GetResponseRawAsync() {
             return (await UdpClient.ReceiveAsync()).Buffer;

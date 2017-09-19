@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Windows {
+
+    /// <summary>Key container class. This makes use of windows specific platform
+    /// encryption to bind keys to the user's log in password in a transparent fashion.</summary>
     public class KeyContainer {
 
         //static long CRYPT_MACHINE_KEYSET = 0x20;
@@ -39,6 +42,10 @@ namespace Goedel.Cryptography.Windows {
            IntPtr hProv,
            Int32 dwFlags);
 
+        /// <summary>
+        /// Get the set of key container names.
+        /// </summary>
+        /// <returns>The set of container names.</returns>
         public static IEnumerable<string> GetKeyContainerNames() {
             var keyContainerNameList = new List<string>();
 
@@ -69,7 +76,7 @@ namespace Goedel.Cryptography.Windows {
             return keyContainerNameList;
             }
 
-
+        /// <summary>Erase all test data from the system. Use with care!</summary>
         public static void EraseTest() {
             if (!KeyPair.TestMode) {
                 var Keys = KeyContainer.GetKeyContainerNames();
@@ -82,7 +89,9 @@ namespace Goedel.Cryptography.Windows {
                 }
             }
 
-        void Delete(string Key) {
+        /// <summary>Delete the specified key</summary>
+        /// <param name="Key">Key to delete.</param>
+        void Delete (string Key) {
             try {
                 var CSP = new CspParameters() {
                     KeyContainerName = Key

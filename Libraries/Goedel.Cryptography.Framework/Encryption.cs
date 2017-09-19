@@ -89,6 +89,7 @@ namespace Goedel.Cryptography.Framework {
             }
 
 
+        /// <summary>Create an encoder for the specified data</summary>
         /// <param name="Algorithm">The key wrap algorithm</param>
         /// <param name="Bulk">The bulk provider to use. If specified, the parameters from
         /// the specified provider will be used. Otherwise a new bulk provider will 
@@ -155,7 +156,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Create a crypto stream from this provider.
         /// </summary>
-        /// <param name="Encoder"></param>
+        /// <param name="Encoder">The encoder to bind.</param>
         public override void BindEncoder(CryptoDataEncoder Encoder) {
             var Transform = Provider.CreateEncryptor(Encoder.Key, Encoder.IV);
             Encoder.InputStream = new CryptoStream(
@@ -166,7 +167,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Create a crypto stream from this provider.
         /// </summary>
-        /// <param name="Decoder"></param>
+        /// <param name="Decoder">The encoder to bind.</param>
         public override void BindDecoder(CryptoDataDecoder Decoder) {
             var Transform = Provider.CreateDecryptor(Decoder.Key, Decoder.IV);
             Decoder.InputStream = new CryptoStream(
@@ -242,7 +243,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Complete processing at the end of an encoding or decoding operation
         /// </summary>
-        /// <param name="CryptoData"></param>
+        /// <param name="CryptoData">Last data.</param>
         public override void Complete(CryptoData CryptoData) {
             (CryptoData.InputStream as CryptoStream).FlushFinalBlock();
             base.Complete(CryptoData);

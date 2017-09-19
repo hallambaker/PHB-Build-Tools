@@ -15,17 +15,17 @@ namespace Goedel.Command{
 
 	/*
 	public partial class CommandSplitLex {
-        public virtual void AddParam (char c) {
+        public virtual void AddParam (int c) {
 			}
-        public virtual void BeginValue (char c) {
+        public virtual void BeginValue (int c) {
 			}
-        public virtual void AddValue (char c) {
+        public virtual void AddValue (int c) {
 			}
-        public virtual void Ignore (char c) {
+        public virtual void Ignore (int c) {
 			}
-        public virtual void AddEscape (char c) {
+        public virtual void AddEscape (int c) {
 			}
-        public virtual void AddEscapedValue (char c) {
+        public virtual void AddEscapedValue (int c) {
 			}
 		}
 	*/
@@ -55,12 +55,12 @@ namespace Goedel.Command{
         /// <summary>
         /// Maps characters to character sets
         /// </summary>
-        public override byte[] CharacterMappings { get => Character_Mapping; }  
+        public override byte[] CharacterMappings  => Character_Mapping; 
 
         /// <summary>
         /// State transitions in response to character set
         /// </summary>
-        public override short[,] CompressedTransitions { get => Compressed_Transitions; } 
+        public override short[,] CompressedTransitions  => Compressed_Transitions; 
 
         /// <summary>
         /// Get the next token from the stream
@@ -155,7 +155,7 @@ namespace Goedel.Command{
 		/// <summary>Generated initialization method, is called automatically 
 		/// the FSR to reset </summary>
         public override void Init () {
-            Actions = new Action[] {
+            Actions = new ActionDelegate[] {
 				AddParam,
 				BeginValue,
 				AddValue,

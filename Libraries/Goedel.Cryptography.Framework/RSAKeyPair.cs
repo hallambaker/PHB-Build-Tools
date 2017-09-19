@@ -35,9 +35,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Return the underlying .NET cryptographic provider.
         /// </summary>
-        public AsymmetricAlgorithm AsymmetricAlgorithm {
-            get => _Provider;
-            }
+        public AsymmetricAlgorithm AsymmetricAlgorithm => _Provider;
 
 
         private RSACryptoServiceProvider _Provider;
@@ -47,13 +45,13 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The private key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
-        public override IPKIXPrivateKey PKIXPrivateKey { get => PKIXPrivateKeyRSA; } 
+        public override IPKIXPrivateKey PKIXPrivateKey => PKIXPrivateKeyRSA; 
 
 
         /// <summary>
         /// The private key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
-        public override IPKIXPublicKey PKIXPublicKey { get => PKIXPublicKeyRSA; } 
+        public override IPKIXPublicKey PKIXPublicKey  => PKIXPublicKeyRSA; 
 
 
 
@@ -75,9 +73,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Return public key parameters in PKIX structure
         /// </summary>
-        public override PKIXPublicKeyRSA PKIXPublicKeyRSA {
-            get => PublicParameters.RSAPublicKey();
-            }
+        public override PKIXPublicKeyRSA PKIXPublicKeyRSA  => PublicParameters.RSAPublicKey();
+
 
         /// <summary>
         /// Stub method to return a signature provider. This provider does not implement
@@ -85,6 +82,7 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="ID">The algorithms to use, if set to  CryptoAlgorithmID.Default,
         /// the default algorithm for the key type is used.</param> 
+        /// <returns>The signature provider.</returns>
         public override CryptoProviderSignature SignatureProvider(
                     CryptoAlgorithmID ID = CryptoAlgorithmID.Default) {
             return new CryptoProviderSignatureRSA(this);
@@ -96,6 +94,7 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         /// <param name="ID">The algorithms to use, if set to  CryptoAlgorithmID.Default,
         /// the default algorithm for the key type is used.</param>
+        /// <returns>The provider</returns>
         public override CryptoProviderExchange ExchangeProvider(
                     CryptoAlgorithmID ID = CryptoAlgorithmID.Default) {
             return new CryptoProviderExchangeRSA(this);
@@ -131,7 +130,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Return the CryptoAlgorithmID that would be used with the specified base parameters.
         /// </summary>
-        /// <param name="Base"></param>
+        /// <param name="Base">The base algorithm</param>
         /// <returns>The computed CryptoAlgorithmID</returns>
         public override CryptoAlgorithmID SignatureAlgorithmID(CryptoAlgorithmID Base) {
             return CryptoAlgorithmID.RSASign | Base.Bulk();
@@ -143,17 +142,15 @@ namespace Goedel.Cryptography.Framework {
         /// Return a PKIX SubjectPublicKeyInfo structure for the public key.
         /// </summary>
 
-        public override SubjectPublicKeyInfo KeyInfoData {
-            get => new SubjectPublicKeyInfo(CryptoConfig.MapNameToOID("RSA"),
-                        PKIXPublicKeyRSA.DER()); }
+        public override SubjectPublicKeyInfo KeyInfoData  => new SubjectPublicKeyInfo(CryptoConfig.MapNameToOID("RSA"),
+                        PKIXPublicKeyRSA.DER()); 
 
         /// <summary>
         /// Return a PKIX SubjectPublicKeyInfo structure for the private key.
         /// </summary>
 
-        public override SubjectPublicKeyInfo PrivateKeyInfoData {
-            get => new SubjectPublicKeyInfo(CryptoConfig.MapNameToOID("RSA"),
-                        PKIXPrivateKeyRSA.DER()); }
+        public override SubjectPublicKeyInfo PrivateKeyInfoData => new SubjectPublicKeyInfo(CryptoConfig.MapNameToOID("RSA"),
+                        PKIXPrivateKeyRSA.DER()); 
 
 
         /// <summary>
@@ -304,7 +301,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Delegate to create a key pair base
         /// </summary>
-        /// <param name="PKIXParameters"></param>
+        /// <param name="PKIXParameters">The parameters to construct from</param>
         /// <returns>The created key pair</returns>
         public static new KeyPair KeyPairPublicFactory (PKIXPublicKeyRSA PKIXParameters) {
 
@@ -315,7 +312,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Delegate to create a key pair base
         /// </summary>
-        /// <param name="PKIXParameters"></param>
+        /// <param name="PKIXParameters">The parameters to construct from</param>
         /// <returns>The created key pair</returns>
         public static new KeyPair KeyPairPrivateFactory (PKIXPrivateKeyRSA PKIXParameters) {
 

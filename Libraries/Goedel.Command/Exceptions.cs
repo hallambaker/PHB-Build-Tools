@@ -324,6 +324,7 @@ namespace Goedel.Command {
 
 
     /// <summary>
+    /// The option value was incorrectly formatted
     /// </summary>
     public class InvalidOption : ParserException {
 

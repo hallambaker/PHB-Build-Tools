@@ -36,7 +36,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The type of algorithm
         /// </summary>
-        public override CryptoAlgorithmClass AlgorithmClass { get { return CryptoAlgorithmClass.MAC; } }
+        public override CryptoAlgorithmClass AlgorithmClass => CryptoAlgorithmClass.MAC; 
 
         /// <summary>
         /// Hash algorithm provider.
@@ -67,6 +67,7 @@ namespace Goedel.Cryptography.Framework {
             this.KeyedHashAlgorithm = KeyedHashAlgorithm;
             }
 
+        /// <summary>Create an encoder for the specified data</summary>
         /// <param name="Algorithm">The key wrap algorithm</param>
         /// <param name="Bulk">The bulk provider to use. If specified, the parameters from
         /// the specified provider will be used. Otherwise a new bulk provider will 
@@ -82,8 +83,9 @@ namespace Goedel.Cryptography.Framework {
             // Key wrap is not yet implemented.
             if (Bulk != null) { throw new NYI("Key wrap"); }
 
-            var Result = new CryptoDataEncoder(CryptoAlgorithmID, this);
-            Result.OutputStream = OutputStream ?? new MemoryStream();
+            var Result = new CryptoDataEncoder(CryptoAlgorithmID, this) {
+                OutputStream = OutputStream ?? new MemoryStream()
+                };
             BindEncoder(Result);
 
             return Result;
@@ -98,13 +100,14 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="OutputStream">Output stream</param>
         /// <param name="Key">Encryption Key</param>
         /// <returns>Instance describing the key agreement parameters.</returns>
-        public override CryptoDataEncoder MakeAuthenticator(
+        public override CryptoDataEncoder MakeAuthenticator (
                             byte[] Key = null,
                             CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
                             Stream OutputStream = null) {
-            var Result = new CryptoDataEncoder(CryptoAlgorithmID, this);
-            Result.OutputStream = OutputStream ?? new MemoryStream();
-            Result.Key = Key;
+            var Result = new CryptoDataEncoder(CryptoAlgorithmID, this) {
+                OutputStream = OutputStream ?? new MemoryStream(),
+                Key = Key
+                };
             BindEncoder(Result);
 
             return Result;
@@ -114,7 +117,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Create a crypto stream from this provider.
         /// </summary>
-        /// <param name="Encoder"></param>
+        /// <param name="Encoder">The encoder to bind.</param>
         public override void BindEncoder(CryptoDataEncoder Encoder) {
             KeyedHashAlgorithm.Key = Encoder.Key;
             Encoder.InputStream = new CryptoStream(
@@ -149,16 +152,12 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID {
-            get { return _CryptoAlgorithmID; }
-            }
+        public override CryptoAlgorithmID CryptoAlgorithmID=> _CryptoAlgorithmID; 
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm {
-            get { return _CryptoAlgorithm; }
-            }
+        public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm; 
 
         static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
                     _CryptoAlgorithmID, 256, _AlgorithmClass, Factory);
@@ -182,11 +181,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Default algorithm key and output size.
         /// </summary>
-        public override int Size {
-            get {
-                return 256;
-                }
-            }
+        public override int Size => 256;
+
 
         private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID Ignore) {
             return new CryptoProviderHMACSHA2_256();
@@ -210,16 +206,14 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID {
-            get { return _CryptoAlgorithmID; }
-            }
+        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID; 
+
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm {
-            get { return _CryptoAlgorithm; }
-            }
+        public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm; 
+
 
         static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
                     _CryptoAlgorithmID, 512, _AlgorithmClass, Factory);
@@ -240,13 +234,15 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Default algorithm key and output size.
         /// </summary>
-        public override int Size {
-            get {
-                return 512;
-                }
-            }
+        public override int Size => 512;
 
-        
+
+        /// <summary>
+        /// Factory method for provider.
+        /// </summary>
+        /// <param name="KeySize">The key size (ignored)</param>
+        /// <param name="Ignore">The cryptographic algorithn (ignored)</param>
+        /// <returns></returns>
         private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID Ignore) {
             return new CryptoProviderHMACSHA2_512();
             }

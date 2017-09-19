@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
-using System.Net.NetworkInformation;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Goedel.Platform.Framework {
 
@@ -59,28 +55,5 @@ namespace Goedel.Platform.Framework {
                 }
 
             }
-
-
-        //public async Task<ResultUDP> ReceiveAsync () {
-
-        //    }
-
-
         }
-
-    ///// <summary>
-    ///// List of UDP results
-    ///// </summary>
-    //public class ResultUDP {
-
-    //    /// <summary>
-    //    /// Data
-    //    /// </summary>
-    //    public byte[] Data;
-
-    //    /// <summary>
-    //    /// Next result
-    //    /// </summary>
-    //    ResultUDP Next;
-    //    }
     }

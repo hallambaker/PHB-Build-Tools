@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Goedel.Utilities;
+﻿using Goedel.Cryptography.Framework;  // NYI remove dependency by putting factory methods on keypairs
 using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Framework;  // NYI remove dependency by putting factory methods on keypairs
+using Goedel.Utilities;
+using System;
+using System.Text;
 
 namespace Goedel.Cryptography.KeyFile {
 
@@ -17,7 +13,7 @@ namespace Goedel.Cryptography.KeyFile {
         uint Length = 0;
         uint Pointer = 0;
 
-        uint Remain { get => (uint)(Data.Length - Pointer); } 
+        uint Remain => (uint)(Data.Length - Pointer);  
 
         /// <summary>The collected data</summary>
         public byte[] Data;
@@ -153,10 +149,10 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="Data">Input</param>
         /// <returns>Parsed data.</returns>
         public static SSHData Decode(byte[] Data) {
-            string Tag2;
+
 
             var DataBuffer = new DataBuffer(Data);
-            DataBuffer.Decode(out Tag2);
+            DataBuffer.Decode(out string Tag2);
 
             if (Tag2 == SSH_RSA.TagID) {
                 return new SSH_RSA(DataBuffer);
@@ -175,10 +171,9 @@ namespace Goedel.Cryptography.KeyFile {
         /// <returns>The encoded data</returns>
         public abstract byte[] Encode();
 
+        /// <summary>The key pair</summary>
+        public virtual KeyPair KeyPair  => null;    // Feature convert DSS keypair
 
-        public virtual KeyPair KeyPair {
-            get => null;    // Feature convert DSS keypair
-            }
         }
 
     /// <summary>
@@ -186,26 +181,24 @@ namespace Goedel.Cryptography.KeyFile {
     /// </summary>
     public class SSH_RSA : SSHData {
         /// <summary>The SSH tag</summary>
-        public override string Tag { get => "ssh-rsa"; } 
+        public override string Tag  => "ssh-rsa"; 
         /// <summary>The SSH tag</summary>
-        public static string TagID { get => "ssh-rsa"; } 
+        public static string TagID => "ssh-rsa"; 
 
         /// <summary>RSA public key exponent.</summary>
         public byte[] Exponent;
         /// <summary>RSA public key modulus.</summary>
         public byte[] Modulus;
 
-
-        public PKIXPublicKeyRSA RSAPublicKey {
-            get => new PKIXPublicKeyRSA() {
+        /// <summary>The RSA Key Pair</summary>
+        public PKIXPublicKeyRSA RSAPublicKey => new PKIXPublicKeyRSA() {
                     Modulus = Modulus,
                     PublicExponent = Exponent
                     };
-            }
 
-        public override KeyPair KeyPair {
-            get => new RSAKeyPair (RSAPublicKey );   // NYI convert DSS keypair
-            }
+        /// <summary>The key pair</summary>
+        public override KeyPair KeyPair => new RSAKeyPair (RSAPublicKey );   // NYI convert DSS keypair
+
 
         /// <summary>
         /// Construct an SSH_RSA object from an RSAKeyPair
@@ -247,8 +240,8 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Constructor, decode the data item from the specified buffer.
         /// </summary>
-        /// <param name="DataBuffer">Data input.</param>
-        public SSH_RSA(byte[] Data) : this(new DataBuffer(Data)) {
+        /// <param name="Data">Data input.</param>
+        public SSH_RSA (byte[] Data) : this(new DataBuffer(Data)) {
 
             }
         }
@@ -258,10 +251,10 @@ namespace Goedel.Cryptography.KeyFile {
     public class SSH_DSS : SSHData {
 
         /// <summary>The SSH tag</summary>
-        public override string Tag { get => "ssh-dss"; } 
+        public override string Tag  => "ssh-dss"; 
 
         /// <summary>The SSH tag</summary>
-        public static string TagID { get => "ssh-dss"; } 
+        public static string TagID  => "ssh-dss"; 
 
         /// <summary>The parameter P</summary>
         public byte[] P;

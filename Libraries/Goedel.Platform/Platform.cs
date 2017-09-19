@@ -33,7 +33,7 @@ namespace Goedel.Platform {
         /// <summary>
         /// Return a randomly assigned UDP port.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The randomly assigned port in the range 4096-65535</returns>
         public static int GetRandomPort() {
             var Bytes = GetRandomBytes(3);
             int Result = Bytes[0] + 256 * Bytes[1];

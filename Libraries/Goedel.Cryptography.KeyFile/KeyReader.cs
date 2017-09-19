@@ -15,35 +15,35 @@ namespace Goedel.Cryptography.KeyFile{
 
 	/*
 	public partial class KeyFileLex {
-        public virtual void Reset (char c) {
+        public virtual void Reset (int c) {
 			}
-        public virtual void Count1 (char c) {
+        public virtual void Count1 (int c) {
 			}
-        public virtual void Begin (char c) {
+        public virtual void Begin (int c) {
 			}
-        public virtual void Tag1 (char c) {
+        public virtual void Tag1 (int c) {
 			}
-        public virtual void Count2 (char c) {
+        public virtual void Count2 (int c) {
 			}
-        public virtual void Base64 (char c) {
+        public virtual void Base64 (int c) {
 			}
-        public virtual void StartHeader (char c) {
+        public virtual void StartHeader (int c) {
 			}
-        public virtual void HeaderAdd (char c) {
+        public virtual void HeaderAdd (int c) {
 			}
-        public virtual void CopyHeader (char c) {
+        public virtual void CopyHeader (int c) {
 			}
-        public virtual void Count3 (char c) {
+        public virtual void Count3 (int c) {
 			}
-        public virtual void End (char c) {
+        public virtual void End (int c) {
 			}
-        public virtual void Tag2 (char c) {
+        public virtual void Tag2 (int c) {
 			}
-        public virtual void Count4 (char c) {
+        public virtual void Count4 (int c) {
 			}
-        public virtual void AddTag (char c) {
+        public virtual void AddTag (int c) {
 			}
-        public virtual void Abort (char c) {
+        public virtual void Abort (int c) {
 			}
 		}
 	*/
@@ -73,12 +73,12 @@ namespace Goedel.Cryptography.KeyFile{
         /// <summary>
         /// Maps characters to character sets
         /// </summary>
-        public override byte[] CharacterMappings { get => Character_Mapping; }  
+        public override byte[] CharacterMappings  => Character_Mapping; 
 
         /// <summary>
         /// State transitions in response to character set
         /// </summary>
-        public override short[,] CompressedTransitions { get => Compressed_Transitions; } 
+        public override short[,] CompressedTransitions  => Compressed_Transitions; 
 
         /// <summary>
         /// Get the next token from the stream
@@ -197,7 +197,7 @@ namespace Goedel.Cryptography.KeyFile{
 		/// <summary>Generated initialization method, is called automatically 
 		/// the FSR to reset </summary>
         public override void Init () {
-            Actions = new Action[] {
+            Actions = new ActionDelegate[] {
 				Reset,
 				Count1,
 				Begin,

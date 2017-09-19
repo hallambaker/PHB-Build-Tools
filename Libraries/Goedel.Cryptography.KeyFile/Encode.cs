@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Security.Cryptography;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Framework;
-using Goedel.Cryptography.PKIX;
+﻿using Goedel.Cryptography.Framework;
 using Goedel.Utilities;
+using System;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Goedel.Cryptography.KeyFile {
 
@@ -31,9 +27,9 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Convert key pair to specified format
         /// </summary>
-        /// <param name="KeyPair"></param>
-        /// <param name="KeyFileFormat"></param>
-        /// <returns></returns>
+        /// <param name="KeyPair">Keypair to convert</param>
+        /// <param name="KeyFileFormat">Format to convert to</param>
+        /// <returns>The keyfile data</returns>
         public static string ToKeyFile (this KeyPair KeyPair, KeyFileFormat KeyFileFormat) {
             switch (KeyFileFormat) {
                 case KeyFileFormat.PEMPrivate: {
@@ -52,7 +48,11 @@ namespace Goedel.Cryptography.KeyFile {
             return null;
             }
 
-
+        /// <summary>
+        /// Convert key pair to OpenSSH format
+        /// </summary>
+        /// <param name="KeyPair"></param>
+        /// <returns>The keyfile data</returns>
         public static string ToOpenSSH (this KeyPair KeyPair) {
             switch (KeyPair) {
                 case RSAKeyPair RSAKeyPair:
@@ -61,6 +61,11 @@ namespace Goedel.Cryptography.KeyFile {
             return null;
             }
 
+        /// <summary>
+        /// Convert key pair to PEMPrivate format
+        /// </summary>
+        /// <param name="KeyPair"></param>
+        /// <returns>The keyfile data</returns>
         public static string ToPEMPrivate (this KeyPair KeyPair) {
             switch (KeyPair) {
                 case RSAKeyPair RSAKeyPair:
@@ -69,6 +74,11 @@ namespace Goedel.Cryptography.KeyFile {
             return null;
             }
 
+        /// <summary>
+        /// Convert key pair to PEMPublic format
+        /// </summary>
+        /// <param name="KeyPair"></param>
+        /// <returns>The keyfile data</returns>
         public static string ToPEMPublic (this KeyPair KeyPair) {
             switch (KeyPair) {
                 case RSAKeyPair RSAKeyPair:
@@ -77,6 +87,11 @@ namespace Goedel.Cryptography.KeyFile {
             return null;
             }
 
+        /// <summary>
+        /// Convert key pair to PuTTY format
+        /// </summary>
+        /// <param name="KeyPair"></param>
+        /// <returns>The keyfile data</returns>
         public static string ToPuTTY (this KeyPair KeyPair) {
             switch (KeyPair) {
                 case RSAKeyPair RSAKeyPair:
@@ -88,7 +103,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Convert key pair to PEM formatted string.
         /// </summary>
-        /// <param name="KeyPair">A  Key pair</param>
+        /// <param name="RSAKeyPair">A  Key pair</param>
         /// <returns>Key Pair in PEM format</returns>
         public static string ToPuTTY (this RSAKeyPair RSAKeyPair) {
             return null;
@@ -97,7 +112,8 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Convert key pair to OpenSSH formatted string.
         /// </summary>
-        /// <param name="KeyPair">A  Key pair</param>
+        /// <param name="RSAKeyPair">A  Key pair</param>
+        /// <param name="Tag">Tag to label key with</param>
         /// <returns>Key Pair in PEM format</returns>
         public static string ToOpenSSH (this RSAKeyPair RSAKeyPair, string Tag = null) {
             var SSH_RSA = new SSH_RSA(RSAKeyPair);
@@ -114,7 +130,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Convert key pair to PEM formatted string.
         /// </summary>
-        /// <param name="KeyPair">A  Key pair</param>
+        /// <param name="RSAKeyPair">A  Key pair</param>
         /// <returns>Key Pair in PEM format</returns>
         public static string ToPEMPublic (this RSAKeyPair RSAKeyPair) {
             
@@ -173,13 +189,9 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="Data">Data to print</param>
         /// <param name="Tag">Tag to prepend to data</param>
         public static void Dump (this byte[] Data, string Tag) {
-            
-
-            //Console.WriteLine("{0} : [{1}]  {2}.{3}.{4} ... {5}.{6}.{7}",
-            //    Tag, Data.Length, Data[0], Data[1], Data[2],
-            //        Data[Data.Length - 3],  Data[Data.Length - 2],  Data[Data.Length - 1]);
-
+            Console.WriteLine("{0} : [{1}]  {2}.{3}.{4} ... {5}.{6}.{7}",
+                Tag, Data.Length, Data[0], Data[1], Data[2],
+                    Data[Data.Length - 3], Data[Data.Length - 2], Data[Data.Length - 1]);
             }
-
         }
     }

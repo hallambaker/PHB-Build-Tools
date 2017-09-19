@@ -13,9 +13,9 @@ namespace Goedel.IO {
 
 
         /// <summary>
-        /// Delete a directory
+        /// Delete a directory ignoring errors.
         /// </summary>
-        /// <param name="Path"></param>
+        /// <param name="Path">The directory to delete.</param>
         public static void DirectoryDelete (string Path) {
             if (!Directory.Exists(Path)) {
                 return;

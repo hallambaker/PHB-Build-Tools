@@ -23,6 +23,7 @@ namespace Goedel.Cryptography.KeyFile {
 
         StringBuilder BuildHeader = new StringBuilder();
 
+        /// <summary>List of headers</summary>
         public List<Header> Headers = new List<Header>();
         Header CurrentHeader;
 
@@ -207,10 +208,11 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>The tagged data converted from Base64.</summary>
         public byte[] Data;
 
-
+        /// <summary>Listy of header values</summary>
         public List<Header> Headers;
         }
 
+    /// <summary>Header value</summary>
     public class Header {
 
         /// <summary>The header tag</summary>

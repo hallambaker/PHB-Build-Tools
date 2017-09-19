@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Goedel.Command {
     /// <summary>Track start and end time of parse.</summary>
@@ -11,11 +7,12 @@ namespace Goedel.Command {
         public DateTime Started = DateTime.Now;
 
         /// <summary>Calculate elapsed time.</summary>
-        public TimeSpan Elapsed { get => DateTime.Now - Started; }
+        public TimeSpan Elapsed  => DateTime.Now - Started;
 
-        /// <summary></summary>
-        public virtual Goedel.Command.Type[] _Data { get; set; }
+        /// <summary>Command type data</summary>
+        public virtual Type[] _Data { get; set; }
 
+        /// <summary>Command description</summary>
         public virtual DescribeCommandEntry DescribeCommand { get; set; }
         }
 

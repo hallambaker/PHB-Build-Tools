@@ -158,10 +158,11 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Encrypt the bulk key.
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Data">The bulk key to encrypt</param>
         /// <param name="Algorithm">Composite encryption algorithm.</param>
         /// <param name="Wrap">If true create a new CryptoData instance that
         /// wraps the parameters supplied in Data.</param> 
+        /// <returns>Cryptographic provider.</returns>
         public override CryptoDataExchange Encrypt(CryptoData Data,
             CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, bool Wrap = false) {
 

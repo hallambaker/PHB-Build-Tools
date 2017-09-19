@@ -42,20 +42,20 @@ namespace Goedel.Protocol.Framework {
     /// </summary>
     public abstract class BoundMessage {
 
-        /// <summary></summary>
+        /// <summary>The payload data</summary>
         public string Payload;
-        /// <summary></summary>
+        /// <summary>The authentication ticket</summary>
         public byte[] Ticket = null;
         //TicketData TicketData = null;
-        /// <summary></summary>
+        /// <summary>The message authentication code.</summary>
         public byte[] MAC = null;
 
-        /// <summary></summary>
-        public string HTTPBinding {
-            get => HTTP () ;
-            }
+        /// <summary>The message as a HTTP string.</summary>
+        public string HTTPBinding => HTTP () ;
 
-        /// <summary></summary>
+
+        /// <summary>Convert message to HTTP</summary>
+        /// <returns>The HTTP message value.</returns>
         public abstract string HTTP() ;
 
         /// <summary>Default constructor.</summary>
@@ -65,20 +65,17 @@ namespace Goedel.Protocol.Framework {
 
         System.Text.Encoding UTF8 = new UTF8Encoding(false);
 
-        /// <summary></summary>
-        public int ByteCount {
-            get => UTF8.GetByteCount(Payload); 
-            }
+        /// <summary>The length of the payload data.</summary>
+        public int ByteCount  => UTF8.GetByteCount(Payload); 
 
-        /// <summary></summary>
-        public string Base64Ticket {
-            get => BaseConvert.ToBase64urlString(Ticket); 
-            }
 
-        /// <summary></summary>
-        public string Base64Mac {
-            get => BaseConvert.ToBase64urlString(MAC); 
-            }
+        /// <summary>The ticket in Base64.</summary>
+        public string Base64Ticket => BaseConvert.ToBase64urlString(Ticket); 
+
+
+        /// <summary>The message authentication code in Base64.</summary>
+        public string Base64Mac  => BaseConvert.ToBase64urlString(MAC); 
+
 
         ///// <summary></summary>
         //public byte[] GetMAC(Goedel.Cryptography.Ticket.Cryptography.Authentication Authentication,
@@ -105,7 +102,8 @@ namespace Goedel.Protocol.Framework {
         //    return Goedel.Cryptography.Ticket.Cryptography.ArraysEqual(Test, MAC);
         //    }
 
-        /// <summary></summary>
+        /// <summary>Construct from a payload string.</summary>
+        /// <param name="PayloadIn">The payload to construct from</param>
         public BoundMessage(string PayloadIn) {
             Payload = PayloadIn;
             }
@@ -131,7 +129,7 @@ namespace Goedel.Protocol.Framework {
         }
 
 
-    /// <summary></summary>
+    /// <summary>The request message</summary>
     public class BoundRequest : BoundMessage {
 
         static string HeaderFormat = @"Post {0} HTTP/1.1
@@ -145,7 +143,9 @@ Content-Length: {2}
 
         //public BoundRequest(string PayloadIn, Cryptographic Cryptographic)
         //    : base(PayloadIn, Cryptographic) { }
-        /// <summary></summary>
+
+        /// <summary>Construct from string payload.</summary>
+        /// <param name="PayloadIn">The string payload to wrap.</param>
         public BoundRequest(string PayloadIn) 
             : base (PayloadIn) { }
 
@@ -155,7 +155,8 @@ Content-Length: {2}
         //             Goedel.Cryptography.Ticket.Cryptography.Key Key)
         //    : base(PayloadIn, TicketIn, Authentication, Key) { }
 
-        /// <summary></summary>
+        /// <summary>Present message as HTTP</summary>
+        /// <returns>The formatted message.</returns>
         public override string HTTP () {
             string Header = String.Format (HeaderFormat, "/", "example.com", Payload.Length);
             string ContentIntegrity = "";
@@ -167,23 +168,23 @@ Content-Length: {2}
             }
         }
 
-    /// <summary></summary>
+    /// <summary>The response message</summary>
     public class BoundResponse : BoundMessage {
 
-        /// <summary></summary>
+        /// <summary>Constant for invalid Mac response.</summary>
         public static BoundResponse ErrorBadMac = new BoundResponse (401, "Not Authorized");
 
-        /// <summary></summary>
+        /// <summary>Constant for invalid message error.</summary>
         public static BoundResponse ErrorUnknown = new BoundResponse (500, "Internal Server Error");
 
-        /// <summary></summary>
+        /// <summary>Constant for bad request.</summary>
         public static BoundResponse ErrorSyntax =  new BoundResponse (400, "Bad Request");
 
 
-        /// <summary></summary>
+        /// <summary>The status value (defaults to 200)</summary>
         public int Status = 200;
 
-        /// <summary></summary>
+        /// <summary>The status description.</summary>
         public string StatusDescription = "OK";
 
         static string HeaderFormat = @"HTTP/1.1 {0} {1}
@@ -194,7 +195,8 @@ Content-Length: {2}
         //public BoundResponse(string PayloadIn, Cryptographic Cryptographic)
         //    : base(PayloadIn, Cryptographic) { }
 
-        /// <summary></summary>
+        /// <summary>Construct response for the specified payload.</summary>
+        /// <param name="PayloadIn">The message payload.</param>
         public BoundResponse(string PayloadIn) 
             : base (PayloadIn) { }
 
@@ -204,13 +206,16 @@ Content-Length: {2}
         //             Goedel.Cryptography.Ticket.Cryptography.Key Key)
         //    : base(PayloadIn, TicketIn, Authentication, Key) { }
 
-        /// <summary></summary>
+        /// <summary>Construct response for the specified result code.</summary>
+        /// <param name="ErrorCode">The error code to return.</param>
+        /// <param name="Explanation">Description of the error.</param>
         public BoundResponse(int ErrorCode, string Explanation) {
             Payload = Explanation;
             Status = ErrorCode;
             }
 
-        /// <summary></summary>
+        /// <summary>Present message as HTTP</summary>
+        /// <returns>The message value.</returns>
         public override string HTTP () {
             string Header = String.Format (HeaderFormat, Status, StatusDescription, Payload.Length);
             string ContentIntegrity = "";

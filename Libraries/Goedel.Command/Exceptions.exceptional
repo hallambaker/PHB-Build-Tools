@@ -14,7 +14,6 @@ Namespace Goedel.Command
 			Object ExceptionData "The file {0} could not be read"
 				String
 
-
 		Exception UnknownCommand
 			Console "Unknown command"
 			Description
@@ -38,3 +37,5 @@ Namespace Goedel.Command
 
 		Exception InvalidOption
 			Console "The option value was incorrectly formatted"
+			Description
+				|The option value was incorrectly formatted

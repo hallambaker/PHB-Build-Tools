@@ -15,13 +15,13 @@ namespace Goedel.Cryptography.KeyFile{
 
 	/*
 	public partial class AuthKeysFileLex {
-        public virtual void Ignore (char c) {
+        public virtual void Ignore (int c) {
 			}
-        public virtual void AddAlgorithm (char c) {
+        public virtual void AddAlgorithm (int c) {
 			}
-        public virtual void AddData (char c) {
+        public virtual void AddData (int c) {
 			}
-        public virtual void AddComment (char c) {
+        public virtual void AddComment (int c) {
 			}
 		}
 	*/
@@ -51,12 +51,12 @@ namespace Goedel.Cryptography.KeyFile{
         /// <summary>
         /// Maps characters to character sets
         /// </summary>
-        public override byte[] CharacterMappings { get => Character_Mapping; }  
+        public override byte[] CharacterMappings  => Character_Mapping; 
 
         /// <summary>
         /// State transitions in response to character set
         /// </summary>
-        public override short[,] CompressedTransitions { get => Compressed_Transitions; } 
+        public override short[,] CompressedTransitions  => Compressed_Transitions; 
 
         /// <summary>
         /// Get the next token from the stream
@@ -141,7 +141,7 @@ namespace Goedel.Cryptography.KeyFile{
 		/// <summary>Generated initialization method, is called automatically 
 		/// the FSR to reset </summary>
         public override void Init () {
-            Actions = new Action[] {
+            Actions = new ActionDelegate[] {
 				Ignore,
 				AddAlgorithm,
 				Ignore,

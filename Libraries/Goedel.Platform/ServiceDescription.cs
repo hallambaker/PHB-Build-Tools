@@ -30,22 +30,21 @@ namespace Goedel.Platform {
         public string Service { get; set; }
 
         /// <summary>The service prefix</summary>
-        public string Prefix { get { return "_" + Service + "._tcp."; } }
+        public string Prefix =>  "_" + Service + "._tcp."; 
 
         /// <summary>The service address being discovered</summary>
-        public string ServiceAddress { get { return (Prefix + Address).ToLower(); } }
+        public string ServiceAddress =>  (Prefix + Address).ToLower(); 
 
         /// <summary>The default path for the Web Service Endpoint</summary>
-        string DefaultPath {
-            get { return "/.well-known/" + Service + "/"; }
-            }
+        string DefaultPath =>  "/.well-known/" + Service + "/"; 
 
         List<string> _TXT = new List<string>();
         /// <summary>Text policy records</summary>
-        public virtual List<string> TXT { get { return _TXT; } }
+        public virtual List<string> TXT => _TXT; 
 
         int Index;
         /// <summary>Returns the next service entry</summary>
+        /// <returns>The next service entry.</returns>
         public ServiceEntry Next() {
             if (Entries.Count <= 0) {
                 return Default;
@@ -60,7 +59,9 @@ namespace Goedel.Platform {
         /// <summary>
         /// Standard constructor, used for when policy description data is found
         /// </summary>
-        public ServiceDescription(string Address, string Service) {
+        /// <param name="Address">DNS address of service</param>
+        /// <param name="Service">Service identifier (without decorations)</param>
+        public ServiceDescription (string Address, string Service) {
             this.Service = Service;
             this.Address = Address;
             }
@@ -238,7 +239,7 @@ namespace Goedel.Platform {
 
         List<string> _TXT = new List<string>();
         /// <summary>Text policy records</summary>
-        public virtual List<string> TXT { get { return _TXT; } }
+        public virtual List<string> TXT => _TXT;
 
         /// <summary>Internal flag used in the sorting algorithm to mark allocated entries. </summary>
         public bool Flag { get; set; } = false;

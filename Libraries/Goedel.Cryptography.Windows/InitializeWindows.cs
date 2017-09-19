@@ -5,15 +5,13 @@ using Goedel.Utilities;
 using Goedel.Cryptography.Windows;
 
 
-/// <summary>
-/// 
-/// </summary>
+
 namespace Goedel.Cryptography {
 
     /// <summary>
-    /// 
+    /// Windows specific cryptographic routines. These are principally the interfaces to
+    /// the registry and the key stores.
     /// </summary>
-    /// 
     public static class CryptographyWindows {
 
         static bool Initialized = false;

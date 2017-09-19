@@ -38,16 +38,13 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID {
-            get => Goedel.Cryptography.CryptoAlgorithmID.RSASign;
-            }
+        public override CryptoAlgorithmID CryptoAlgorithmID => Goedel.Cryptography.CryptoAlgorithmID.RSASign;
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm {
-            get => CryptoAlgorithmAny; 
-            }
+        public override CryptoAlgorithm CryptoAlgorithm  => CryptoAlgorithmAny; 
+
 
         static CryptoAlgorithm CryptoAlgorithmAny = new CryptoAlgorithm(
                     Goedel.Cryptography.CryptoAlgorithmID.RSASign, 2048, _AlgorithmClass, Factory);
@@ -78,9 +75,8 @@ namespace Goedel.Cryptography.Framework {
             set => _RSAKeyPair = value as RSAKeyPair; 
             }
 
-        RSACryptoServiceProvider Provider {
-            get => _RSAKeyPair.Provider; 
-            }
+        RSACryptoServiceProvider Provider  => _RSAKeyPair.Provider; 
+
 
 
 
@@ -136,16 +132,14 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Default algorithm key size.
         /// </summary>
-        public override int Size {
-            get => KeySize;
-            }
+        public override int Size  => KeySize;
+
 
         /// <summary>
         /// The key fingerprint.
         /// </summary>
-        public override string UDF {
-            get => _RSAKeyPair?.UDF;
-            }
+        public override string UDF  => _RSAKeyPair?.UDF;
+
 
         /// <summary>
         /// Generate a new RSA Key Pair with the Key size specified when the 
@@ -185,16 +179,9 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Sign the integrity value specified in the CryptoDataEncoder
         /// </summary>
-        /// <param name="Data"></param>
+        /// <param name="Data">Data to sign.</param>
         public override void Sign(CryptoDataSignature Data) {
 
-            //var SignatureID = CryptoAlgorithmID.Meta().Base();
-            //var DigestID = Data.Identifier;
-
-            //if (SignatureID == CryptoAlgorithmID.RSASign) {
-
-
-            //    }
 
             KeyPair.GetPrivate();
 
