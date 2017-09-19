@@ -35,8 +35,8 @@ namespace Goedel.Cryptography {
     /// algorithm is used.</param>
     /// <param name="Bulk">Bulk cipher, if required.</param>
     /// 
-    /// <returns></returns>
-    public delegate CryptoProvider CryptoProviderFactory(
+    /// <returns>The cryptographic provider created.</returns>
+    public delegate CryptoProvider CryptoProviderFactoryDelegate(
                 int KeySize = 0,
                 CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default);
 
@@ -71,7 +71,7 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>Factory method to create providers</summary>
-        public CryptoProviderFactory CryptoProviderFactory { get; }
+        public CryptoProviderFactoryDelegate CryptoProviderFactory { get; }
 
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmID CryptoAlgorithmID,
                     int KeySize,
                     CryptoAlgorithmClass AlgorithmClass,
-                    CryptoProviderFactory CryptoProviderFactory) {
+                    CryptoProviderFactoryDelegate CryptoProviderFactory) {
             this.CryptoAlgorithmID = CryptoAlgorithmID;
             this.KeySize = KeySize;
             this.AlgorithmClass = AlgorithmClass;

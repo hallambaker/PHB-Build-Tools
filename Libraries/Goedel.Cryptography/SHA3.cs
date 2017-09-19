@@ -32,6 +32,7 @@ namespace Goedel.Cryptography {
         /// <summary>The SHAKE256 function.</summary>
         /// <param name="Message">Message to digest.</param>
         /// <param name="OutLength">Output length.</param>
+        /// <returns>The digest value.</returns>
         public byte[] Shake256(byte[] Message, int OutLength ) {
             return ShaCore(Message, 17, 31, OutLength);
             }

@@ -148,8 +148,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Construct a Key Container with the specified Key security level.
         /// </summary>
-        /// <param name="Key"></param>
-        /// <param name="KeySecurity"></param>
+        /// <param name="Key">The key to constrruct the container for.</param>
+        /// <param name="KeySecurity">The key security level.</param>
         public KeyContainer(Key Key, KeySecurity KeySecurity) :
                     this (Key.ToJson(true), KeySecurity){
             }
@@ -158,8 +158,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Construct a Key Container with the specified Key security level.
         /// </summary>
-        /// <param name="KeyData"></param>
-        /// <param name="KeySecurity"></param>
+        /// <param name="KeyData">The key to constrruct the container for.</param>
+        /// <param name="KeySecurity">The key security level.</param>
         public KeyContainer (byte[] KeyData, KeySecurity KeySecurity) {
             Exportable = KeySecurity.IsExportable();
             this.KeyData = KeyData;

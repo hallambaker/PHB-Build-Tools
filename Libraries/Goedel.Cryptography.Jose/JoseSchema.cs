@@ -1017,7 +1017,7 @@ namespace Goedel.Cryptography.Jose {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("jwk", 1);
 					// expand this to a tagged structure
-					//jwk.Serialize (_Writer, false);
+					//Jwk.Serialize (_Writer, false);
 					{
 						_Writer.WriteObjectStart();
 						_Writer.WriteToken(Jwk.Tag(), 1);
@@ -1030,7 +1030,7 @@ namespace Goedel.Cryptography.Jose {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("epk", 1);
 					// expand this to a tagged structure
-					//epk.Serialize (_Writer, false);
+					//Epk.Serialize (_Writer, false);
 					{
 						_Writer.WriteObjectStart();
 						_Writer.WriteToken(Epk.Tag(), 1);
@@ -1145,6 +1145,8 @@ namespace Goedel.Cryptography.Jose {
 		}
 
 	/// <summary>
+	///
+	/// The signature value
 	/// </summary>
 	public partial class Signature : Jose {
         /// <summary>

@@ -15,8 +15,8 @@ namespace Goedel.Cryptography.PKIX {
         /// Principal constructor
         /// </summary>
         /// 
-        /// <param name="AgreedBits"></param>
-        /// <param name="Agrement"></param>
+        /// <param name="AgreedBits">The number of bits agreed</param>
+        /// <param name="Agrement">The agreement result.</param>
         /// <param name="OID">The digest OID to be used to create the key value</param>
         /// <param name="Nonce">Optional nonce. If present MUST be 512 bits</param>
         /// <param name="KeyBits">The number of bits in the generated key</param>
@@ -28,9 +28,10 @@ namespace Goedel.Cryptography.PKIX {
             AgreementData = Agrement.ToByteArray();
             this.AgreedBits = AgreedBits;
 
-            KeyInfo = new KeySpecificInfo();
-            KeyInfo.Algorithm = OID;
-            KeyInfo.Counter = Count.NetworkByte();
+            KeyInfo = new KeySpecificInfo() {
+                Algorithm = OID,
+                Counter = Count.NetworkByte()
+                };
 
             PartyAInfo = Nonce;
             SuppPubInfo = KeyBits.NetworkByte();
@@ -50,7 +51,7 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         /// <remarks>The counter value is automatically incremented with each
         /// call. Thus the value will change slightly between calls.</remarks>
-        /// <returns></returns>
+        /// <returns>The DER encoded value.</returns>
         public override byte[] DER() {
             var Buffer = new ASN.Buffer();
 

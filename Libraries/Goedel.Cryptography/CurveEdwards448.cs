@@ -19,17 +19,17 @@ namespace Goedel.Cryptography {
         readonly static BigInteger P = BigInteger.Pow(2, 448) - BigInteger.Pow(2, 224) - 1;
 
         ///<summary>The modulus, p = 2^448 - 2^224 - 1</summary>
-        public override BigInteger Prime { get => P; } 
+        public override BigInteger Prime  => P; 
 
 
         ///<summary>The Curve Constant d</summary>
-        public override BigInteger CurveConstrantD { get => D; } 
+        public override BigInteger CurveConstrantD  => D; 
 
         ///<summary>The Curve Constant d</summary>
         public static readonly BigInteger D = P-39081;
 
         ///<summary>The square root of -1.</summary>
-        public override BigInteger SqrtMinus1 { get => _SqrtMinus1; } 
+        public override BigInteger SqrtMinus1  => _SqrtMinus1; 
         readonly static BigInteger _SqrtMinus1 = P.SqrtMinus1();
 
         ///<summary>The small order subgroup q</summary>
@@ -48,13 +48,13 @@ namespace Goedel.Cryptography {
         static readonly CurveEdwards448 _Base = new CurveEdwards448(Curve448BaseY, false);
 
         /// <summary>The base point for the subgroup</summary>
-        public static CurveEdwards448 Base { get => _Base.Copy(); } 
+        public static CurveEdwards448 Base  => _Base.Copy(); 
 
         /// <summary>The point P such that P + Q = Q for all Q</summary>
         static readonly CurveEdwards448 _Neutral = new CurveEdwards448() { X = 0, Y = 1, Z = 1};
 
         /// <summary>The point P such that P + Q = Q for all Q</summary>
-        public static CurveEdwards448 Neutral { get => _Neutral.Copy(); }
+        public static CurveEdwards448 Neutral  => _Neutral.Copy(); 
 
         /// <summary>The number of bits to multiply</summary>
         public const int Bits = 448;
@@ -657,7 +657,7 @@ namespace Goedel.Cryptography {
         public CurveEdwards448 Agreement;
 
         /// <summary>The key agreement result as a byte array</summary>
-        public byte[] IKM { get => Agreement.Encode(); } 
+        public byte[] IKM  => Agreement.Encode(); 
 
         /// <summary>Carry from proxy recryption efforts</summary>
         public CurveEdwards448 Carry;

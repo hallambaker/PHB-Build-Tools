@@ -159,7 +159,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Recalculate the CryptoData object parameters. This causes 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The result of the cryptographic operation.</returns>
         public CryptoData GetCryptoData () {
             return _CryptoDataDigest;
             }

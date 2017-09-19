@@ -677,6 +677,7 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
+    /// The encryption key type does not match the recryption key type
     /// </summary>
     public class KeyTypeMismatch : CryptographicException {
 
@@ -961,6 +962,7 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
+    /// The cryptographic provider does not support the requested operation
     /// </summary>
     public class InvalidOperation : CryptographicException {
 
@@ -1007,6 +1009,7 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
+    /// The operation requested requires a private key that could not be found
     /// </summary>
     public class PrivateKeyNotFound : CryptographicException {
 
@@ -1053,6 +1056,7 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
+    /// The key unwrap operation returned an invalid value.
     /// </summary>
     public class UnwrapFailed : CryptographicException {
 
@@ -1099,6 +1103,7 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
+    /// The named parameters specified in an operation are not known
     /// </summary>
     public class UnknownNamedParameters : CryptographicException {
 
@@ -1145,6 +1150,7 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
+    /// The cryptographic provider does not permit export of the private key parameters
     /// </summary>
     public class NotExportable : CryptographicException {
 

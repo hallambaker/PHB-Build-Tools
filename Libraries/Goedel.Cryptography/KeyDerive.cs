@@ -61,7 +61,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Info">The information to be used to vary this key</param>
         /// <param name="Length">The length of the key to extract in bits</param>
-        /// <returns></returns>
+        /// <returns>The key agreement result.</returns>
         public abstract byte[] Derive(byte[] Info, int Length = 0);
 
         }
@@ -136,7 +136,7 @@ namespace Goedel.Cryptography {
         /// <param name="Provider">The authentication provider.</param>
         /// <param name="IKM">The initial keying material</param>
         /// <param name="Salt">Salt to be used to vary the derived key across domains.</param>
-        /// <returns></returns>
+        /// <returns>The extracted value.</returns>
         public static byte[] Extract(CryptoProviderAuthentication Provider,
                     byte[] IKM, byte[] Salt = null) {
             var Key = Salt ?? new byte[Provider.Size/8];
@@ -151,7 +151,7 @@ namespace Goedel.Cryptography {
         /// <param name="PRK">The pseudo-random key.</param>
         /// <param name="Length">Length of output key in bits</param>
         /// <param name="Info">Information data</param>
-        /// <returns></returns>
+        /// <returns>The expanded value.</returns>
         public static byte[] Expand(CryptoProviderAuthentication Provider,
             byte[] PRK, int Length, byte[] Info = null) {
 

@@ -142,6 +142,7 @@ namespace Goedel.Cryptography {
         /// Returns a signature provider for the key (if the private portion is available).
         /// </summary>
         /// <param name="BulkAlgorithm">The digest algorithm to use</param>
+        /// <returns>The signature provider.</returns>
         public abstract CryptoProviderSignature SignatureProvider(
                     CryptoAlgorithmID BulkAlgorithm = CryptoAlgorithmID.Default);
 
@@ -149,6 +150,7 @@ namespace Goedel.Cryptography {
         /// Returns an encryption provider for the key (if the public portion is available)
         /// </summary>
         /// <param name="BulkAlgorithm">The encryption algorithm to use</param>
+        /// <returns>The encryption provider.</returns>
         public abstract CryptoProviderExchange ExchangeProvider(
                     CryptoAlgorithmID BulkAlgorithm = CryptoAlgorithmID.Default);
 
@@ -159,7 +161,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Return the CryptoAlgorithmID that would be used with the specified base parameters.
         /// </summary>
-        /// <param name="Base"></param>
+        /// <param name="Base">The base identifier.</param>
         /// <returns>The computed CryptoAlgorithmID</returns>
         public virtual CryptoAlgorithmID SignatureAlgorithmID(CryptoAlgorithmID Base) {
             return Base;
@@ -172,7 +174,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Bulk">The provider to wrap.</param>
         /// <param name="AlgorithmID">The algorithm to use.</param>
-        /// <returns></returns>
+        /// <returns>The encryption provider</returns>
         public virtual CryptoDataExchange EncryptKey(CryptoData Bulk,
                 CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
 
@@ -191,7 +193,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Bulk">The provider to wrap.</param>
         /// <param name="AlgorithmID">The algorithm to use.</param>
-        /// <returns></returns>
+        /// <returns>The cryptographic result.</returns>
         public virtual CryptoData Sign(CryptoData Bulk,
                 CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
 
@@ -207,7 +209,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Data">The data to sign.</param>
         /// <param name="AlgorithmID">The algorithm to use.</param>
-        /// <returns></returns>
+        /// <returns>The signature data</returns>
         public virtual CryptoDataSignature Sign(byte [] Data,
                 CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
 
@@ -245,7 +247,7 @@ namespace Goedel.Cryptography {
         /// <param name="Bulk">The provider to wrap.</param>
         /// <param name="Signature">The signature blob value.</param>
         /// <param name="AlgorithmID">The algorithm used.</param>
-        /// <returns></returns>
+        /// <returns>True if the digest is cvalid, otherwise false.</returns>
         public virtual bool Verify(CryptoData Bulk, Byte [] Signature,
                 CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default) {
             CachedSignatureProvider = CachedSignatureProvider ??

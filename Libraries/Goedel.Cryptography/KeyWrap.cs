@@ -8,7 +8,7 @@ using Goedel.Utilities;
 namespace Goedel.Cryptography {
 
     /// <summary>Factory delegate for block processing provider.</summary>
-    public delegate BlockProvider BlockProviderFactory(byte[] Key, bool Encrypt);
+    public delegate BlockProvider BlockProviderFactoryDelegate(byte[] Key, bool Encrypt);
 
     /// <summary>
     /// Base class for block providers

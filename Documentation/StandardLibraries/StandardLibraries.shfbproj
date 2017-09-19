@@ -33,6 +33,7 @@
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
     </DocumentationSources>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
@@ -63,12 +64,14 @@
     <CatalogProductId>VS</CatalogProductId>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="False" />
-      <NamespaceSummaryItem name="Goedel.ASN" isDocumented="True">Support routings for serializing and deserializing ASN.1  DER encoding for classes built with the PHB Tools ASN tool.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.FSR" isDocumented="True">Support routines for Finite State Recognizers built with the PHB Tools FSR tool.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Protocol" isDocumented="True">Support routines for Web Services built with the PHB Tools PROTOGEN tool.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Registry" isDocumented="True">Support routines for various systems built with the PHB Tools Goedel tool.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Utilities" isDocumented="True">Support routines common to all systems built with PHB tools.</NamespaceSummaryItem>
-    </NamespaceSummaries>
+<NamespaceSummaryItem name="Goedel.ASN" isDocumented="True">Support routings for serializing and deserializing ASN.1  DER encoding for classes built with the PHB Tools ASN tool.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.FSR" isDocumented="True">Support routines for Finite State Recognizers built with the PHB Tools FSR tool.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Protocol" isDocumented="True">Support routines for Web Services built with the PHB Tools PROTOGEN tool.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Registry" isDocumented="True">Support routines for various systems built with the PHB Tools Goedel tool.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Utilities" isDocumented="True">Support routines common to all systems built with PHB tools.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Cryptography" isDocumented="True">Platform independent cryptographic functions. These include wrappers for the various Framework APIs to provide consistency across all domains and to provide convenience functions. Also included is support for various cryptographic functions such as key derrivation, key wrap, fingerprint derrivation (UDF), etc.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Cryptography.Jose" isDocumented="True">Cryptographic libraries for JSON Object Signing and Encryption (JOSE) support. These include classes to generate JSON Web Signature, JSON Web Encryption and JSON Web Key structures.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Cryptography.PKIX" isDocumented="True">Crypotographic support functions specific to PKIX that are not exposed in the standard platform runtime. These include certificate generation and various formats for public and private key information.</NamespaceSummaryItem></NamespaceSummaries>
     <ProjectSummary>Support libraries for code generated with Goedel code synthesis tools.</ProjectSummary>
     <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
     <WorkingPath>..\..\..\scratch\standard\</WorkingPath>

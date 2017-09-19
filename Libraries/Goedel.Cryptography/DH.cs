@@ -156,7 +156,7 @@ namespace Goedel.Cryptography {
         /// <summary>Private Key</summary>
         public BigInteger Private { get; set; }
 
-        /// <summary></summary>
+        /// <summary>If true, this key is part of a recryption set.</summary>
         public bool IsRecryption { get; set; }
 
         DiffeHellmanPublic _DiffeHellmanPublic = null;

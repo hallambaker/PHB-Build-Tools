@@ -55,7 +55,7 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>Provider for AES block transform</summary>
-        public static BlockProviderFactory BlockProviderFactoryAes = null;
+        public static BlockProviderFactoryDelegate BlockProviderFactoryAes = null;
 
 
         /// <summary>Fill byte buffer with cryptographically strong random numbers.</summary>

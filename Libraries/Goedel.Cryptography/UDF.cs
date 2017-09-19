@@ -233,11 +233,15 @@ namespace Goedel.Cryptography {
         /// <summary>Convert address and fingerprint value to Strong Internet Name.</summary>
         /// <param name="Address">DNS address.</param>
         /// <param name="UDF">Fingerprint value.</param>
+        /// <returns>The strong name.</returns>
         public static string MakeStrongName (string Address, string UDF) {
             return Address + ".mm--" + UDF.ToLower();
             }
 
         /// <summary>Parse an RFC822 address to extract strong name component if present.</summary>
+        /// <param name="Address">The Internet address.</param>
+        /// <param name="In">The address to parse.</param>
+        /// <param name="UDF">The strong name fingerprint (if found).</param>
         public static void ParseStrongRFC822 (string In, out string Address, out string UDF) {
             var Split = In.Split('@');
             UDF = null;

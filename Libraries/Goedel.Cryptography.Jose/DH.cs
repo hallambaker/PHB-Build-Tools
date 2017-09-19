@@ -36,16 +36,15 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the parameters as a PKIX RSAPublicKey structure;
         /// </summary>
-        public virtual PKIXPublicKeyDH PKIXParameters {
-            get => new PKIXPublicKeyDH() {
+        public virtual PKIXPublicKeyDH PKIXParameters  => new PKIXPublicKeyDH() {
                 Public = Public,
                 Domain = DHDomain.GetByUDF(Domain)
                 };
-            }
 
         /// <summary>
         /// Extract a KeyPair object from the JOSE data structure.
         /// </summary>
+        /// <param name="Exportable">If true, private key parameters may be exported</param>
         /// <returns>The extracted key pair</returns>
         public override KeyPair GetKeyPair(bool Exportable=false) {
 
@@ -87,13 +86,11 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the parameters as PKIX RSAPrivateKey structure;
         /// </summary>
-        public virtual PKIXPrivateKeyDH DHPrivateKey {
-            get => new PKIXPrivateKeyDH() {
+        public virtual PKIXPrivateKeyDH DHPrivateKey => new PKIXPrivateKeyDH() {
                 Public = Public,
                 Private = Private,
                 Domain = DHDomain.GetByUDF(Domain)
                 };
-            }
 
 
         /// <summary>

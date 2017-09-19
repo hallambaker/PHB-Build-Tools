@@ -161,8 +161,8 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Return the domain parameter object by UDF value
         /// </summary>
-        /// <param name="ID"></param>
-        /// <returns></returns>
+        /// <param name="ID">The byte code identifier.</param>
+        /// <returns>The domain parameter.</returns>
         public static DHDomain GetByUDF (byte[] ID) {
             if (DHDomain2048.Match(ID)) {
                 return DHDomain2048;

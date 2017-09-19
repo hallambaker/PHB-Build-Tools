@@ -175,6 +175,8 @@
 				|The digest value
 
 	Structure Signature
+		Description
+			|The signature value
 		Struct Header Header
 			Tag "header"
 			Description

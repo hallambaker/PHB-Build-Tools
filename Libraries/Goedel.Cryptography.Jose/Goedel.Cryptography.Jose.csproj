@@ -53,4 +53,7 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="powershell publishtarget $(TargetPath)" />
   </Target>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="call $(ProjectDir)Prebuild" />
+  </Target>
 </Project>

@@ -478,6 +478,9 @@ namespace Goedel.Cryptography.Jose {
         /// Wrap the specified content encryption key and form the corresponding 
         /// Reccipient object containing the corresponding identifier, etc.
         /// </summary>
+        /// <param name="Algorithm">The algorithm identifier</param>
+        /// <param name="Identifier">The key identifier</param>
+        /// <param name="WrappedKey">The wrapped key</param>
         public Recipient(string Algorithm, string Identifier, byte[] WrappedKey) {
             Header = new Header() {
                 Alg = Algorithm,

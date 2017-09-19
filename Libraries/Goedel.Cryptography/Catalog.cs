@@ -137,7 +137,7 @@ namespace Goedel.Cryptography {
             CryptoAlgorithmID CryptoAlgorithmID,
             int KeySize,
             CryptoAlgorithmClass AlgorithmClass,
-            CryptoProviderFactory CryptoProviderFactory) {
+            CryptoProviderFactoryDelegate CryptoProviderFactory) {
 
             var CryptoAlgorithm = new CryptoAlgorithm(CryptoAlgorithmID, KeySize, AlgorithmClass, CryptoProviderFactory);
             Add(CryptoAlgorithm);

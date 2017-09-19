@@ -112,25 +112,25 @@ namespace Goedel.Cryptography {
         //public override DomainParameters Domain { get; } = DomainParameters.Curve25519;
 
         ///<summary>The modulus, q = 2^255 - 19</summary>
-        readonly static BigInteger p = BigInteger.Pow(2, 255) - 19;
+        readonly static BigInteger P = BigInteger.Pow(2, 255) - 19;
 
         ///<summary>The modulus, q = 2^255 - 19</summary>
-        public override BigInteger Prime => p; 
+        public override BigInteger Prime => P; 
 
 
         ///<summary>The Curve Constant d</summary>
-        public override BigInteger CurveConstrantD => d; 
+        public override BigInteger CurveConstrantD => D; 
 
         ///<summary>The Curve Constant d</summary>
-        public static readonly BigInteger d =
-            (-121665 * (121666.ModularInverse(p))).Mod(p);
+        public static readonly BigInteger D =
+            (-121665 * (121666.ModularInverse(P))).Mod(P);
 
         ///<summary>The square root of -1.</summary>
         public override BigInteger SqrtMinus1 => _SqrtMinus1;  
-        readonly static BigInteger _SqrtMinus1 = p.SqrtMinus1();
+        readonly static BigInteger _SqrtMinus1 = P.SqrtMinus1();
 
         ///<summary>The small order subgroup q</summary>
-        public static readonly BigInteger q =
+        public static readonly BigInteger Q =
             BigInteger.Pow(2, 252) + "27742317777372353535851937790883648493".DecimalToBigInteger();
 
         /// <summary>The base point for the subgroup</summary>
@@ -163,7 +163,7 @@ namespace Goedel.Cryptography {
             this.Y = Y;
             this.Z = 1;
             X = RecoverX(X0);
-            T = (X * Y) % p;
+            T = (X * Y) % P;
             }
 
         /// <summary>
@@ -246,10 +246,10 @@ namespace Goedel.Cryptography {
             Assert.NotNull(P1, NYI.Throw);
             Assert.NotNull(P2, NYI.Throw);
 
-            var A = ((P1.Y - P1.X) * (P2.Y - P2.X)).Mod(p);
-            var B = ((P1.Y + P1.X) * (P2.Y + P2.X)).Mod(p);
-            var C = (P1.T * 2 * d * P2.T).Mod(p);
-            var D = (P1.Z * 2 * P2.Z).Mod(p);
+            var A = ((P1.Y - P1.X) * (P2.Y - P2.X)).Mod(P);
+            var B = ((P1.Y + P1.X) * (P2.Y + P2.X)).Mod(P);
+            var C = (P1.T * 2 * CurveEdwards25519.D * P2.T).Mod(P);
+            var D = (P1.Z * 2 * P2.Z).Mod(P);
             var E = B - A;
             var F = D - C;
             var G = D + C;
@@ -359,7 +359,7 @@ namespace Goedel.Cryptography {
             var Digest = CryptoData.Integrity;
             var Result = Digest.BigIntegerLittleEndian();
 
-            Result = Result % q;
+            Result = Result % Q;
 
             return Result;
             }
@@ -388,7 +388,7 @@ namespace Goedel.Cryptography {
             var Bs = Signature.Duplicate(32, 32);
             var s = Bs.BigIntegerLittleEndian();
 
-            if (s > q) {
+            if (s > Q) {
                 return false;
                 }
 
@@ -656,7 +656,7 @@ namespace Goedel.Cryptography {
             var Rs = R.Encode();
 
             var h = CurveEdwards25519.HashModQ(Context, Rs, Public.Encoding, Message);
-            var s = (r + h * Private) % CurveEdwards25519.q;
+            var s = (r + h * Private) % CurveEdwards25519.Q;
 
             var Bs = s.ToByteArray();
 
@@ -692,16 +692,16 @@ namespace Goedel.Cryptography {
                 //Accumulator -= NewPrivate;
 
                 
-                var NewPrivate = Platform.GetRandomBigInteger(CurveEdwards25519.q);
+                var NewPrivate = Platform.GetRandomBigInteger(CurveEdwards25519.Q);
                 Result[i] = new CurveEdwards25519Private(NewPrivate) { IsRecryption = true };
-                Accumulator = (Accumulator + NewPrivate).Mod (CurveEdwards25519.q);
+                Accumulator = (Accumulator + NewPrivate).Mod (CurveEdwards25519.Q);
 
                 }
 
             //Assert.True(Accumulator > 0 & Accumulator < Private, CryptographicException.Throw);
 
             Result[0] = new CurveEdwards25519Private(
-                (CurveEdwards25519.q + Private - Accumulator).Mod (CurveEdwards25519.q)) {
+                (CurveEdwards25519.Q + Private - Accumulator).Mod (CurveEdwards25519.Q)) {
                 IsRecryption = true
                 };
             return Result;

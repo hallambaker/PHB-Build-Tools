@@ -86,7 +86,8 @@ Namespace Goedel.Cryptography
 
 		Exception KeyTypeMismatch
 			Console "The encryption key type does not match the recryption key type"
-
+			Description
+				|The encryption key type does not match the recryption key type
 
 		Exception NoProviderSpecified
 			Console "No provider specified"
@@ -120,15 +121,25 @@ Namespace Goedel.Cryptography
 
 		Exception InvalidOperation
 			Console "The cryptographic provider does not support the requested operation"
+			Description
+				|The cryptographic provider does not support the requested operation
 
 		Exception PrivateKeyNotFound
 			Console "The operation requested requires a private key that could not be found"
+			Description
+				|The operation requested requires a private key that could not be found
 
 		Exception UnwrapFailed
 			Console "The key unwrap operation returned an invalid value."
+			Description
+				|The key unwrap operation returned an invalid value.
 
 		Exception UnknownNamedParameters
 			Console "The named parameters specified in an operation are not known"
+			Description
+				|The named parameters specified in an operation are not known
 
 		Exception NotExportable
 			Console "The cryptographic provider does not permit export of the private key parameters"
+			Description
+				|The cryptographic provider does not permit export of the private key parameters

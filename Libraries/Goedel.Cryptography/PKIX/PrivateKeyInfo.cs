@@ -34,6 +34,7 @@ namespace Goedel.Cryptography.PKIX {
         ///
         /// This is done in the forward direction
         /// </summary>
+        /// <param name="Buffer">The data to decode.</param>
         public void Decode (Goedel.ASN.DecodeBuffer Buffer) {
             Buffer.Decode__Sequence_Start();
 
@@ -195,6 +196,7 @@ namespace Goedel.Cryptography.PKIX {
         ///
         /// This is done in the forward direction
         /// </summary>
+        /// <param name="Buffer">The data to decode.</param>
         public void Decode (Goedel.ASN.DecodeBuffer Buffer) {
             Buffer.Decode__Sequence_Start();
 
@@ -216,6 +218,7 @@ namespace Goedel.Cryptography.PKIX {
         ///
         /// This is done in the forward direction
         /// </summary>
+        /// <param name="Buffer">Buffer to decode.</param>
         public  void Decode (Goedel.ASN.DecodeBuffer Buffer) {
             Buffer.Decode__Sequence_Start();
 
