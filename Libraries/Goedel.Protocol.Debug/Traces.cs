@@ -22,18 +22,14 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// The Service Host Name
         /// </summary>
-        public string HostName {
-            get => _HostName;
+        public string HostName  => _HostName;
 
-            }
 
         /// <summary>
         /// The HTTP Web Service URI
         /// </summary>
-        public string URI {
-            get => _URI;
+        public string URI => _URI;
 
-            }
 
         /// <summary>
         /// The tract dictionary, maps labels to traces.
@@ -74,6 +70,7 @@ namespace Goedel.Protocol.Debug {
         /// when describing that particular function.
         /// </summary>
         /// <param name="Tag">Label for future retrieval</param>
+        /// <param name="Command">Console command that caused the trace.</param>
         /// <returns>The trace point created.</returns>
         public TracePoint Label (string Tag, string Command = null) {
             _Current = new TracePoint(this, Tag) {
@@ -132,6 +129,9 @@ namespace Goedel.Protocol.Debug {
 
         string _Tag;
 
+        /// <summary>
+        /// The console command issued to cause the result.
+        /// </summary>
         public string Command { get; set; }
 
         /// <summary>
@@ -150,18 +150,15 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// Current level of trace detail
         /// </summary>
-        public int Level {
-            get =>TraceDictionary.Level;
+        public int Level =>TraceDictionary.Level;
 
-            }
+
 
         /// <summary>
         /// The current Trace Dictionary
         /// </summary>
-        public TraceDictionary TraceDictionary {
-            get => _TraceDictionary;
+        public TraceDictionary TraceDictionary => _TraceDictionary;
 
-            }
 
         /// <summary>
         /// Constructor for a trace point.
@@ -184,7 +181,7 @@ namespace Goedel.Protocol.Debug {
     public class TraceMessage {
 
         TracePoint TracePoint;
-        TraceDictionary TraceDictionary { get => TracePoint.TraceDictionary; }
+        TraceDictionary TraceDictionary  => TracePoint.TraceDictionary; 
 
         /// <summary>
         /// The text of the message payload

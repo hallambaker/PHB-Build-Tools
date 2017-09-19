@@ -119,8 +119,8 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Set the values of a byte array from 32 bit integer in big endian order
         /// </summary>
-        /// <param name="Array"></param>
-        /// <param name="Data"></param>
+        /// <param name="Array">Byte array to set, MUST be sufficiently large for input</param>
+        /// <param name="Data">Data value to set</param>
         public static void SetBigEndian (this byte[] Array, int Data) {
             Array[0] = Data.Byte3();
             Array[1] = Data.Byte2();
@@ -131,8 +131,8 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Set the values of a byte array from 32 bit integer in big endian order
         /// </summary>
-        /// <param name="Array"></param>
-        /// <param name="Data"></param>
+        /// <param name="Array">Byte array to set, MUST be sufficiently large for input</param>
+        /// <param name="Data">Data value to set</param>
         public static void SetBigEndian(this byte[] Array, uint Data) {
             Array[0] = Data.Byte3();
             Array[1] = Data.Byte2();
@@ -145,8 +145,8 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Set the values of a byte array from 64 bit integer in big endian order
         /// </summary>
-        /// <param name="Array"></param>
-        /// <param name="Data"></param>
+        /// <param name="Array">Byte array to set, MUST be sufficiently large for input</param>
+        /// <param name="Data">Data value to set</param>
         public static void SetBigEndian(this byte[] Array, ulong Data) {
             Array[0] = Data.Byte7();
             Array[0] = Data.Byte6();
@@ -161,8 +161,8 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Set the values of a byte array from 32 bit integer in big endian order
         /// </summary>
-        /// <param name="Array"></param>
-        /// <param name="Data"></param>
+        /// <param name="Array">Byte array to set, MUST be sufficiently large for input</param>
+        /// <param name="Data">Data value to set</param>
         public static void SetNetworkByte(this byte[] Array, int Data) {
             Array.SetBigEndian(Data);
             }
@@ -171,8 +171,8 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Set the values of a byte array from 32 bit integer in little endian order
         /// </summary>
-        /// <param name="Array"></param>
-        /// <param name="Data"></param>
+        /// <param name="Array">Byte array to set, MUST be sufficiently large for input</param>
+        /// <param name="Data">Data value to set</param>
         public static void SetLittleEndian(this byte[] Array, int Data) {
             Array[0] = Data.Byte0();
             Array[1] = Data.Byte1();

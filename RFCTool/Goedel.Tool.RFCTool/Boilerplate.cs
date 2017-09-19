@@ -204,6 +204,11 @@ namespace Goedel.Document.RFC {
 
 
         public static List<string> Copyright (Document Document) {
+
+            if (Document.Ipr == null) {
+                return new List<string>();
+                }
+
             var Result = new List <string> () { TLP6b_1 };
 
             if (Document.Stream == "ietf") {
@@ -229,7 +234,6 @@ namespace Goedel.Document.RFC {
                     Result.Add(TLP6ciii);
                     break;
                     }
-
                 default: throw new IPRInvalid(Document.Ipr);
                 }
 

@@ -37,17 +37,34 @@ namespace Goedel.Document.RFC {
             }
 
         public static void EmbedBase64 (string Filename, TextWriter TextWriter) {
-            var TextReader = Filename.OpenTextReader();
-            var Output = new StringWriter();
-            Embed(TextReader, Output);
+            try {
+                var TextReader = Filename.OpenTextReader();
+                var Output = new StringWriter();
+                Embed(TextReader, Output);
 
-            var Base64 = Convert.ToBase64String(Output.ToString().ToUTF8());
-            TextWriter.Write("<img src=\"data:image/svg+xml;base64,");
-            TextWriter.Write(Base64);
-            TextWriter.Write("\">");
+                var Base64 = Convert.ToBase64String(Output.ToString().ToUTF8());
+                TextWriter.Write("<img src=\"data:image/svg+xml;base64,");
+                TextWriter.Write(Base64);
+                TextWriter.Write("\">");
+                }
+            catch {
+                // file not found
+                }
             }
 
+        public static void FaviconBase64 (string Filename, TextWriter TextWriter) {
+            try {
+                Filename.OpenReadToEnd(out var Data);
 
+                var Base64 = Convert.ToBase64String(Data);
+                TextWriter.Write("<link rel=\"icon\" href=\"data:image/svg+xml;base64,");
+                TextWriter.Write(Base64);
+                TextWriter.Write("\">");
+                }
+            catch {
+                // file not found
+                }
+            }
 
         public static void Embed (TextReader TextReader, TextWriter TextWriter) {
 

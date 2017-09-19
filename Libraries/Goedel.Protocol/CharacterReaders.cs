@@ -69,7 +69,7 @@ namespace Goedel.Protocol {
         int Position = 0;
 
         /// <summary>If true, end of file has been reached</summary>
-        public override bool EOF { get { return Position >= Source.Length; } }
+        public override bool EOF => Position >= Source.Length; 
 
         /// <summary>Construct stream from string source.</summary>
         /// <param name="Source">Input string</param>
@@ -114,7 +114,7 @@ namespace Goedel.Protocol {
         bool _EOF;
 
         /// <summary>If true, end of file has been reached</summary>
-        public override bool EOF { get { return _EOF; } }
+        public override bool EOF=>  _EOF; 
 
         /// <summary>Create instance from specified source</summary>
         /// <param name="Source">Input stream</param>
@@ -164,7 +164,7 @@ namespace Goedel.Protocol {
         /// <summary>If true, end of file has been reached</summary>
         protected bool _EOF = false;
         /// <summary>If true, end of file has been reached</summary>
-        public override bool EOF { get { return _EOF; } }
+        public override bool EOF => _EOF; 
 
         /// <summary>Return the next character in the stream and advance the stream.</summary>
         /// <returns>The next character in the stream as an integer.</returns>

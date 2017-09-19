@@ -38,7 +38,8 @@ namespace Goedel.Cryptography.Jose {
             get { return Payload; }
             set { Payload = value; } }
 
-        public virtual JSONReader JSONReader { get => new JSONReader(Data); }
+        /// <summary>The JSONReader.</summary>
+        public virtual JSONReader JSONReader  => new JSONReader(Data);
 
 
         /// <summary>Caches the CryptoData instance</summary>

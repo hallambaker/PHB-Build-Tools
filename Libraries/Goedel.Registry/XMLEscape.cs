@@ -63,8 +63,8 @@ namespace Goedel.Registry {
         Stack<string> StackIndent = new Stack<string>();
         Stack<string> StackTag = new Stack<string>();
 
-        /// <summary></summary>
-        public int Stack {  get => StackIndent.Count; } 
+        /// <summary>Tracks the indentation level.</summary>
+        public int Stack => StackIndent.Count;
 
         /// <summary>
         /// Defines the indent increment. These are spaces that are prepended to the
@@ -77,14 +77,14 @@ namespace Goedel.Registry {
         /// </summary>
         string Indent {get; set; }
 
-        /// <summary></summary>
+        /// <summary>The underlying output stream.</summary>
         protected TextWriter Output;
 
         /// <summary>
-        /// 
+        /// Constructor specifying underlying stream.
         /// </summary>
-        /// <param name="Output"></param>
-        /// <param name="Header"></param>
+        /// <param name="Output">The underlying ourput stream to wrap.</param>
+        /// <param name="Header">If true, output an XML header.</param>
         public XMLTextWriter(TextWriter Output, bool Header = true) {
             this.Output = Output;
 
@@ -100,8 +100,8 @@ namespace Goedel.Registry {
         /// the text value is omitted or null an empty tag &lt;Name/&gt;
         /// is produced. Otherwise the tag wraps the supplied text.
         /// </summary>
-        /// <param name="Tag"></param>
-        /// <param name="Attributes"></param>
+        /// <param name="Tag">Tag to wrap text with.</param>
+        /// <param name="Attributes">List of tag/value pairs.</param>
         public void WriteElementEmpty (string Tag,
             params string[] Attributes) {
             //Console.WriteLine("{1}<{0}>", Tag, Indent);
@@ -117,11 +117,11 @@ namespace Goedel.Registry {
             }
 
         /// <summary>
-        /// 
+        /// Write out an XML element if the specified text is not null and trim the text.
         /// </summary>
-        /// <param name="Tag"></param>
-        /// <param name="Text"></param>
-        /// <param name="Attributes"></param>
+        /// <param name="Tag">Tag to wrap text with.</param>
+        /// <param name="Text">The text to wrap (after trimming)</param>
+        /// <param name="Attributes">List of tag/value pairs.</param>
         public void WriteElementIfTrim (string Tag,
                 string Text,
                 params string[] Attributes) {
@@ -131,11 +131,11 @@ namespace Goedel.Registry {
             }
 
         /// <summary>
-        /// 
+        /// Write out an XML element if the specified text is not null writing the verbatim text.
         /// </summary>
-        /// <param name="Tag"></param>
-        /// <param name="Text"></param>
-        /// <param name="Attributes"></param>
+        /// <param name="Tag">Tag to wrap text with.</param>
+        /// <param name="Text">The text to wrap (verbatim)</param>
+        /// <param name="Attributes">List of tag/value pairs.</param>
         public void WriteElementIf (string Tag,
                 string Text,
                 params string[] Attributes) {
@@ -149,9 +149,9 @@ namespace Goedel.Registry {
         /// the text value is omitted or null an empty tag &lt;Name/&gt;
         /// is produced. Otherwise the tag wraps the supplied text.
         /// </summary>
-        /// <param name="Tag"></param>
-        /// <param name="Text"></param>
-        /// <param name="Attributes"></param>
+        /// <param name="Tag">Tag to wrap text with.</param>
+        /// <param name="Text">The text to wrap (verbatim)</param>
+        /// <param name="Attributes">List of tag/value pairs.</param>
         public void WriteElement (string Tag,
             string Text = null,
             params string[] Attributes) {
@@ -164,12 +164,12 @@ namespace Goedel.Registry {
         /// the text value is omitted or null an empty tag &lt;Name/&gt;
         /// is produced. Otherwise the tag wraps the supplied text.
         /// </summary>
-        /// <param name="Tag"></param>
-        /// <param name="Texts"></param>
-        /// <param name="Attributes"></param>
+        /// <param name="Tag">Tag to wrap text with.</param>
+        /// <param name="Texts">List of text strings to wrap, each string being wrapped separately.</param>
+        /// <param name="Attributes">List of tag/value pairs.</param>
         public void WriteElement (string Tag,
-            List<string> Texts,
-            params string[] Attributes) {
+                    List<string> Texts,
+                    params string[] Attributes) {
             if (Texts == null) {
                 return;
                 }
@@ -183,11 +183,11 @@ namespace Goedel.Registry {
         /// the text value is omitted or null an empty tag &lt;Name/&gt;
         /// is produced. Otherwise the tag wraps the supplied text.
         /// </summary>
-        /// <param name="Tag"></param>
-        /// <param name="Text"></param>
-        /// <param name="Start"></param>
-        /// <param name="End"></param>
-        /// <param name="Attributes"></param>
+        /// <param name="Tag">Tag to wrap text with.</param>
+        /// <param name="Text">The text to wrap (verbatim)</param>
+        /// <param name="Start">If true, write out start of line whitespace.</param>
+        /// <param name="End">If true, write out end of line whitespace.</param>
+        /// <param name="Attributes">List of tag/value pairs.</param>
         public void WriteElement(string Tag,
             bool Start, bool End,
             string Text = null, 
@@ -221,9 +221,9 @@ namespace Goedel.Registry {
         /// the text value is omitted or null an empty tag &lt;Name/&gt;
         /// is produced. Otherwise the tag wraps the supplied text.
         /// </summary>
-        /// <param name="Tag"></param>
-        /// <param name="Text"></param>
-        /// <param name="Attributes"></param>
+        /// <param name="Tag">Tag to wrap text with.</param>
+        /// <param name="Text">The text to wrap (verbatim)</param>
+        /// <param name="Attributes">List of tag/value pairs.</param>
         public void WriteInlineElement (string Tag,
             string Text = null,
             params string[] Attributes) {
@@ -253,8 +253,8 @@ namespace Goedel.Registry {
         /// <summary>
         /// Write an element start tag with optional attributes.
         /// </summary>
-        /// <param name="Tag"></param>
-        /// <param name="Attributes"></param>
+        /// <param name="Tag">Tag to wrap text with.</param>
+        /// <param name="Attributes">List of tag/value pairs.</param>
         public void Start(string Tag, params string[] Attributes) {
             //Console.WriteLine("{1}<{0}>", Tag, Indent);
 
@@ -275,10 +275,10 @@ namespace Goedel.Registry {
         /// <summary>
         /// Write an element start tag with optional attributes.
         /// </summary>
-        /// <param name="Tag"></param>
-        /// <param name="Attributes"></param>
-        /// <param name="Start"></param>
-        /// <param name="End"></param>
+        /// <param name="Tag">Tag to wrap text with.</param>
+        /// <param name="Start">If true, write out start of line whitespace.</param>
+        /// <param name="End">If true, write out end of line whitespace.</param>
+        /// <param name="Attributes">List of tag/value pairs.</param>
         public void Start (string Tag, bool Start, bool End,
                         params string[] Attributes) {
             //Console.WriteLine("{1}<{0}>", Tag, Indent);
@@ -312,18 +312,13 @@ namespace Goedel.Registry {
                     }
                 IsTag = !IsTag;
                 }
-
-
             }
 
 
-
-
-
         /// <summary>
-        /// 
+        /// Write out comment text.
         /// </summary>
-        /// <param name="Text"></param>
+        /// <param name="Text">Text to write.</param>
         public void Comment(string Text) {
             StartLine();
             Output.Write("<!--");
@@ -333,11 +328,11 @@ namespace Goedel.Registry {
             }
 
         /// <summary>
-        /// 
+        /// Write out text performing XML escaping.
         /// </summary>
-        /// <param name="Text"></param>
-        /// <param name="Start"></param>
-        /// <param name="End"></param>
+        /// <param name="Text">Text to write.</param>
+        /// <param name="Start">If true, write out start of line whitespace.</param>
+        /// <param name="End">If true, write out end of line whitespace.</param>
         public void Write (string Text="", bool Start = true, bool End = true) {
             //Console.Write("{0}:  ", StackTag.Count);
             //Console.WriteLine(Text);
@@ -347,9 +342,9 @@ namespace Goedel.Registry {
             }
 
         /// <summary>
-        /// 
+        ///  Write out text performing XML escaping as CDATA section.
         /// </summary>
-        /// <param name="Text"></param>
+        /// <param name="Text">Text to write.</param>
         public void WriteVerbatim(string Text) {
             StartLine();
             Output.Write("<![CDATA[");
@@ -361,6 +356,8 @@ namespace Goedel.Registry {
         /// <summary>
         /// Close an open tag
         /// </summary>
+        /// <param name="Start">If true, write out start of line whitespace.</param>
+        /// <param name="End">If true, write out end of line whitespace.</param>        
         public void End(bool Start=true, bool End=true) {
             
 
@@ -376,9 +373,9 @@ namespace Goedel.Registry {
             }
 
         /// <summary>
-        /// 
+        /// Write out the start of line indentation if the condition is true.
         /// </summary>
-        /// <param name="Write"></param>
+        /// <param name="Write">If true write out line start</param>
         protected void StartLine(bool Write=true) {
             if (!Write) {
                 return;
@@ -387,9 +384,9 @@ namespace Goedel.Registry {
             }
 
         /// <summary>
-        /// 
+        /// Write out the end of line sequence if the condition is true.
         /// </summary>
-        /// <param name="Write"></param>
+        /// <param name="Write">If true write out line end.</param>
         protected void EndLine (bool Write = true) {
             if (!Write) {
                 return;

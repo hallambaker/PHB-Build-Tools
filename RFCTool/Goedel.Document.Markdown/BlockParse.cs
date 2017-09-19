@@ -218,7 +218,7 @@ namespace Goedel.Document.Markdown {
             //var LastAttributes = Lexer.Attributes;
 
             while (Token != MarkDownParagraph.Token.Null) {
-                ////Console.WriteLine("   {0} : {1}", Token, Lexer.Data);
+                //Console.WriteLine("   {0} : {1}", Token, Lexer.Data);
                 //foreach (var Tag in Lexer.Attributes) {
                 //    Console.WriteLine("      {0} = {1}", Tag.Tag, Tag.Value);
                 //    }
@@ -251,7 +251,7 @@ namespace Goedel.Document.Markdown {
         void ProcessTextStart(string Text) {
             // Process the text part
 
-            if ((Text != null) && Text.Length > 0) {
+            if ((Text != null) && Text.Trim().Length > 0) {
                 MakeParagraphIfNull();
                 CurrentBlock.AddSegmentText(Text);
                 }

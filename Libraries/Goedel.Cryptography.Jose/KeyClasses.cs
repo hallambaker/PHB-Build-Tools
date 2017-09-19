@@ -30,6 +30,7 @@ namespace Goedel.Cryptography.Jose {
 
     public partial class Key {
 
+        /// <summary>Convert to Goedel.Cryptography.KeyPair</summary>
         public virtual KeyPair KeyPair => GetKeyPair (false);
 
 
@@ -112,12 +113,17 @@ namespace Goedel.Cryptography.Jose {
             return null;
             }
 
-
+        /// <summary>Create private key from Goedel.Cryptography.KeyPair.</summary>
+        /// <param name="KeyPair">Key pair to convert</param>
+        /// <returns>JOSE private Key value</returns>
         public static Key FactoryPrivate (KeyPair KeyPair) {
             var PKIX = KeyPair?.PKIXPrivateKey;
             return Factory(PKIX);
             }
 
+        /// <summary>Create public key from Goedel.Cryptography.KeyPair.</summary>
+        /// <param name="KeyPair">Key pair to convert</param>
+        /// <returns>JOSE public Key value</returns>
         public static Key FactoryPublic (KeyPair KeyPair) {
             var PKIX = KeyPair?.PKIXPublicKey;
             return Factory(PKIX);
@@ -130,10 +136,9 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// The Key data
         /// </summary>
-        public Key Key {
-            get => Key.FromJSON(new JSONReader (KeyData.ToUTF8())); }
+        public Key Key => Key.FromJSON(new JSONReader (KeyData.ToUTF8()));
 
-        string KeyText { get => KeyData.ToUTF8(); }
+        string KeyText  => KeyData.ToUTF8(); 
 
         /// <summary>
         /// Default Constructor
@@ -162,11 +167,19 @@ namespace Goedel.Cryptography.Jose {
 
         }
 
+    /// <summary>Base class for JOSE key agreement result.</summary>
     public partial class KeyAgreement {
 
+        /// <summary>
+        /// Return the Goedel.Cryptography result.
+        /// </summary>
         public virtual KeyAgreementResult KeyAgreementResult { get;}
 
-
+        /// <summary>
+        /// Obtain a Key agreement provider for the specified key agreement result.
+        /// </summary>
+        /// <param name="KeyAgreementResult">The result to return a provider for.</param>
+        /// <returns>The provider (if found).</returns>
         public static KeyAgreement Factory (KeyAgreementResult KeyAgreementResult) {
             switch (KeyAgreementResult) {
                 case DiffieHellmanResult DiffieHellmanResult: {
@@ -177,17 +190,29 @@ namespace Goedel.Cryptography.Jose {
             }
         }
 
+    /// <summary>
+    /// Base class for JOSE Diffie-Hellman key agreement result.
+    /// </summary>
     public partial class KeyAgreementDH {
 
+        /// <summary>
+        /// Return the Goedel.Cryptography result.
+        /// </summary>
         public override KeyAgreementResult KeyAgreementResult =>
               new DiffieHellmanResult() {
                   Agreement = Result.BigIntegerLittleEndian ()
                   };
 
-
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public KeyAgreementDH () {
             }
 
+        /// <summary>
+        /// Constructor from the specified Goedel.Cryptography result.
+        /// </summary>
+        /// <param name="DiffieHellmanResult">The Goedel.Cryptography result.</param>
         public KeyAgreementDH (DiffieHellmanResult DiffieHellmanResult) {
             Result = DiffieHellmanResult.Agreement.ToByteArray();
             }

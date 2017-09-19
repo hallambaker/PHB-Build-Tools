@@ -158,9 +158,10 @@ namespace Goedel.Cryptography {
             }
 
         /// <summary>
-        /// Calculate a UDF fingerprint from a PKIX KeyInfo blob with specified precision.
+        /// Calculate a UDF fingerprint from a pair of fingerprints with specified precision.
         /// </summary>
-        /// <param name="Data">Data to be fingerprinted.</param>
+        /// <param name="UDF1">First fingerprint</param>
+        /// <param name="UDF2">Second fingerprint</param>
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The binary UDF fingerprint.</returns>
         public static string FromUDFPair (string UDF1, string UDF2, int Bits = 0) {
@@ -229,12 +230,14 @@ namespace Goedel.Cryptography {
 
             }
 
-
+        /// <summary>Convert address and fingerprint value to Strong Internet Name.</summary>
+        /// <param name="Address">DNS address.</param>
+        /// <param name="UDF">Fingerprint value.</param>
         public static string MakeStrongName (string Address, string UDF) {
             return Address + ".mm--" + UDF.ToLower();
             }
 
-
+        /// <summary>Parse an RFC822 address to extract strong name component if present.</summary>
         public static void ParseStrongRFC822 (string In, out string Address, out string UDF) {
             var Split = In.Split('@');
             UDF = null;
@@ -277,6 +280,7 @@ namespace Goedel.Cryptography {
 
         }
 
+    /// <summary>Static class containing static extension methods providing convenience functions.</summary>
     public static partial class Extension {
         /// <summary>
         /// Compare a fingerprint to see that it matches the specified pattern according

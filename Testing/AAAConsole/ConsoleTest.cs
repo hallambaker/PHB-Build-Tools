@@ -38,8 +38,8 @@ namespace PHB_Framework_Library1 {
         public Start3 () {
             CommandSplitLex.Trace = true;
 
-            var UnitTest1 = new TestLexer();
-            UnitTest1.TestCommandSplitLex();
+            //var UnitTest1 = new TestLexer();
+            //UnitTest1.TestCommandSplitLex();
             }
         }
 

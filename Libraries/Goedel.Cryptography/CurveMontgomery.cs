@@ -40,11 +40,17 @@ namespace Goedel.Cryptography {
         /// <summary>The projected Z coordinate</summary>
         public BigInteger Z { get; }
 
-        public int Bits, p, A24;
+        /// <summary>Sixe of the modular field in bits.</summary>
+        public int Bits;
+        /// <summary>The paameter p</summary>
+        public int p;
+        /// <summary>The parameter A24</summary>
+        public int A24;
+
         /// <summary>
         /// Create a point from the specified U value.
         /// </summary>
-        /// <param name="U"></param>
+        /// <param name="U">U value to convert</param>
         /// <returns>Created point</returns>
         public abstract CurveMontgomery Factory(BigInteger U);
 

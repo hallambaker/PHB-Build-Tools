@@ -58,6 +58,7 @@ namespace Goedel.Cryptography {
         /// a newly constructed generator and public and private keys.
         /// </summary>
         /// <param name="DHDomain">The shared parameters</param>
+        /// <param name="Public">Optional public value</param>
         public DiffeHellmanPublic(DHDomain DHDomain, BigInteger? Public=null)  {
             this.DHDomain = DHDomain;
             Modulus = DHDomain.BigIntegerP;
@@ -286,15 +287,15 @@ namespace Goedel.Cryptography {
     public class DiffieHellmanResult : KeyAgreementResult {
 
         /// <summary>Wrap as an ASN.1 Structure</summary>
-        public AgreementDH ASNAgreement {
-            get => new AgreementDH() {
+        public AgreementDH ASNAgreement  => new AgreementDH() {
                 Result = Agreement.ToByteArray()
                 };
-            }
 
 
+        /// <summary>The oid value describing the parameters.</summary>
         public override int[] OID => null;
 
+        /// <summary>The agreement as ASN.1 DER encoding</summary>
         public override byte[] DER () => ASNAgreement.DER();
 
         ///// <summary>Convert to ASN.1 DER form </summary>
@@ -313,7 +314,7 @@ namespace Goedel.Cryptography {
         public BigInteger Agreement;
 
         /// <summary>The key agreement result as a byte array</summary>
-        public byte[] IKM { get => Agreement.ToByteArray();  }
+        public byte[] IKM => Agreement.ToByteArray();  
 
         /// <summary>Carry from proxy recryption efforts</summary>
         public BigInteger Carry;

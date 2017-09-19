@@ -53,9 +53,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// The decrypted plaintext as a string.
         /// </summary>
-        public string UTF8 {
-            get => Plaintext.ToString();
-            }
+        public string UTF8 => Plaintext.ToString();
+
 
         /// <summary>Caches the CryptoData instance</summary>
         protected CryptoData _CryptoDataEncrypt = null;
@@ -108,6 +107,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="SigningKey">Optional signing key.</param>
         /// <param name="EncryptID">Composite ID for encryption and key exchange</param>
         /// <param name="SignID">Composite ID for signature and digest</param>
+        /// <param name="KID">Key ID</param>
         public JoseWebEncryption (byte[] Data,
                     KeyPair EncryptionKey = null,
                     KeyPair SigningKey = null,
@@ -229,6 +229,7 @@ namespace Goedel.Cryptography.Jose {
         /// already selected. </remarks>
         /// <param name="EncryptionKey">The recipient key to add.</param>
         /// <param name="ProviderAlgorithm">Algorithm parameters (if supported)</param>
+        /// <param name="KID">Key ID</param>
         /// <returns>The recipient instance</returns>
         public Recipient AddRecipient (KeyPair EncryptionKey, string KID = null,
                 CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default) {
@@ -248,7 +249,8 @@ namespace Goedel.Cryptography.Jose {
         /// <remarks>If custom crypto suites are used, the caller is responsible for 
         /// ensuring that the exchange algorithm is compatible with the bulk algorithm 
         /// already selected. </remarks>
-        /// <param name="EncryptionKey">The recipient key to add.</param>
+        /// <param name="Info">Recipient specific information</param>
+        /// <param name="Secret">The secret.</param>
         /// <param name="ProviderAlgorithm">Algorithm parameters (if supported)</param>
         /// <returns>The recipient instance</returns>
         public Recipient AddRecipient (byte[] Secret, string Info = null,
@@ -348,7 +350,9 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Decrypt the content using the specified private key.
         /// </summary>
+        /// <param name="KeyAgreementResult">The Key agreement result</param>
         /// <param name="DecryptionKey">The decryption key.</param>
+        /// <param name="Recipient">The recipient.</param>
         /// <returns>The decrypted data</returns>
         public byte[] Decrypt (Recipient Recipient, KeyPair DecryptionKey, KeyAgreementResult KeyAgreementResult) {
 
@@ -375,7 +379,8 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Decrypt the content using the specified private key.
         /// </summary>
-        /// <param name="Exchange">The decryption key.</param>
+        /// <param name="Secret">The decryption key.</param>
+        /// <param name="Info">Recipient information</param>
         /// <returns>The decrypted data</returns>
         public byte[] Decrypt(byte[] Secret, string Info = null) {
             var ProtectedText = Protected.ToUTF8();
@@ -418,7 +423,12 @@ namespace Goedel.Cryptography.Jose {
             return null;
             }
 
-
+        /// <summary>
+        /// Return the first address that has a recryption group specified.
+        /// </summary>
+        /// <param name="Address">The address that matched.</param>
+        /// <param name="UDF">The fingerprint of the matching key.</param>
+        /// <returns>The recipient record that was matched.</returns>
         public Recipient GetRecrypted (out string Address, out string UDF) {
             foreach (var Recipient in Recipients) {
                 Cryptography.UDF.ParseStrongRFC822 (Recipient.Header.Kid, out Address, out UDF) ;
@@ -451,6 +461,7 @@ namespace Goedel.Cryptography.Jose {
         /// Encrypt to the specified key of the specified profile.
         /// </summary>
         /// <param name="RecipientData">KeyPair for the recipient.</param>
+        /// <param name="KID">Recipient Key ID.</param>
         public Recipient(CryptoDataExchange RecipientData, string KID=null) {
             var RecipientKey = RecipientData.Meta;
             Header = new Header() {

@@ -79,7 +79,7 @@ namespace Goedel.ASN {
         /// <summary>
         /// Object identifier of this structure.
         /// </summary>
-        public virtual int [] OID { get => null; } 
+        public virtual int [] OID  => null;  
 
         /// <summary>
         /// Return the DER encoding of this structure
@@ -121,8 +121,8 @@ namespace Goedel.ASN {
         /// <summary>
         /// Convert byte array to big integer
         /// </summary>
-        /// <param name="Array"></param>
-        /// <returns></returns>
+        /// <param name="Array">Array to convert</param>
+        /// <returns>Result of conversion</returns>
         public static BigInteger ToBigInteger (this byte[] Array) {
             return new BigInteger(Array);
             }

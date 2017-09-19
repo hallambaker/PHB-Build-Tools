@@ -15,6 +15,10 @@
     <AssemblyFileVersionSettings>None.IncrementOnDemand.IncrementOnDemandWithReset.Increment</AssemblyFileVersionSettings>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.4\Goedel.Platform.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>

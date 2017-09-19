@@ -324,6 +324,7 @@ namespace Goedel.Registry {
 
 
     /// <summary>
+    /// Schema parsing exception
     /// </summary>
     public class SchemaParse : global::System.Exception {
 
@@ -374,6 +375,7 @@ namespace Goedel.Registry {
 
 
     /// <summary>
+    /// A reserved word was expected but a different token was encountered.
     /// </summary>
     public class NotFoundReserved : SchemaParse {
 
@@ -446,6 +448,7 @@ namespace Goedel.Registry {
 
 
     /// <summary>
+    /// An internal parser error occured, this code should not have been reached.
     /// </summary>
     public class InternalError : SchemaParse {
 
@@ -492,6 +495,7 @@ namespace Goedel.Registry {
 
 
     /// <summary>
+    /// The input token was not valid.
     /// </summary>
     public class InvalidToken : SchemaParse {
 
@@ -538,6 +542,7 @@ namespace Goedel.Registry {
 
 
     /// <summary>
+    /// Expected a block start token.
     /// </summary>
     public class ExpectedStart : SchemaParse {
 
@@ -584,6 +589,7 @@ namespace Goedel.Registry {
 
 
     /// <summary>
+    /// A class token was expected.
     /// </summary>
     public class ExpectedClass : SchemaParse {
 
@@ -630,6 +636,7 @@ namespace Goedel.Registry {
 
 
     /// <summary>
+    /// A token was expected.
     /// </summary>
     public class Expected : SchemaParse {
 
@@ -676,6 +683,7 @@ namespace Goedel.Registry {
 
 
     /// <summary>
+    /// More block close tokens were encountered than open tokens.
     /// </summary>
     public class TooManyClose : SchemaParse {
 
@@ -722,6 +730,7 @@ namespace Goedel.Registry {
 
 
     /// <summary>
+    /// Unreachable code was encountered.
     /// </summary>
     public class UnreachableCode : SchemaParse {
 

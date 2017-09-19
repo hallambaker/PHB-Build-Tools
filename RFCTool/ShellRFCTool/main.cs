@@ -138,7 +138,8 @@ namespace MakeRFC {
 			new ExistingFile (),
 			new ExistingFile (),
 			new ExistingFile (),
-			new ExistingFile ()			} ;
+			new ExistingFile (),
+			new Flag ()			} ;
 
 		/// <summary>Field accessor for parameter [lazy]</summary>
 		public virtual Flag Lazy {
@@ -275,6 +276,15 @@ namespace MakeRFC {
 		public virtual string _Boilerplate {
 			set => _Data[14].Parameter (value);
 			}
+		/// <summary>Field accessor for option [auto]</summary>
+		public virtual Flag Auto {
+			get => _Data[15] as Flag;
+			set => _Data[15]  = value;
+			}
+
+		public virtual string _Auto {
+			set => _Data[15].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -380,6 +390,13 @@ namespace MakeRFC {
 					Brief = "<Unspecified>",
 					Index = 14,
 					Key = "boiler"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Auto", 
+					Default = "false", // null if null
+					Brief = "<Unspecified>",
+					Index = 15,
+					Key = "auto"
 					}
 				}
 			};

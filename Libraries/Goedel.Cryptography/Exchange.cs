@@ -139,6 +139,7 @@ namespace Goedel.Cryptography {
         /// <param name="EncryptedKey">The encrypted session</param>
         /// <param name="Ephemeral">Ephemeral key input (if required)</param>
         /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <param name="Partial">Partial key agreementr value (for recryption)</param>
         /// <returns>The decoded data instance</returns>
         public abstract byte[] Decrypt(
                     byte[] EncryptedKey, KeyPair Ephemeral = null,

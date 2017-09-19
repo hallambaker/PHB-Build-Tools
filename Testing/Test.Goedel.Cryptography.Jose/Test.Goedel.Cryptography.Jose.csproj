@@ -114,7 +114,7 @@
       <Name>Goedel.Test</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
+      <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
       <Name>Goedel.Utilities</Name>
     </ProjectReference>
   </ItemGroup>

@@ -98,7 +98,8 @@ namespace Goedel.Tool.ProtoGen {
 			  StartDD = "<dd>"; EndDD = "";
 			  StartParamList = "<dl>\n";
 			  EndParamList = "</dl>\n";
-			  StartParam = "<dt>"; MidParam = ": \n<dd>"; EndParam = "\n"; EndParamBlock = "";
+			//  StartParam = "<dt>"; MidParam = ": \n<dd>"; EndParam = "\n"; EndParamBlock = "";
+			  StartParam = "<dt>"; MidParam = ": "; EndParam = "\n"; EndParamBlock = "";
 			  StartSection1 = "#"; MidSection1 = "\n"; EndSection1 = "";
 			  StartSection2 = "##"; MidSection2 = "\n"; EndSection2 = "";
 			  StartSection3 = "###"; MidSection3 = "\n"; EndSection3 = "";

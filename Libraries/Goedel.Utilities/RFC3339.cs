@@ -13,8 +13,8 @@ namespace Goedel.Utilities {
         /// <summary>
         /// If C is a digit (0-9), return the numeric value. Otherwise return -1
         /// </summary>
-        /// <param name="C"></param>
-        /// <returns></returns>
+        /// <param name="C">Character to convert</param>
+        /// <returns>Integer value of character</returns>
         public static int Digit (char C) {
             var Result = C - '0';
             return (Result >= 0 & Result < 10) ? Result : -1;

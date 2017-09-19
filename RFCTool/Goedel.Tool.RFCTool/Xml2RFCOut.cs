@@ -172,7 +172,7 @@ namespace Goedel.Document.RFC {
 
             if (HangText != null & LI.Type != BlockType.Data) {
                 Write(null, HangText);
-                //WriteValueTag("t", " ", "hangText", HangText);
+                WriteValueTag("t", " ", "hangText", HangText);
                 HangText = null;
                 }
 
@@ -180,14 +180,14 @@ namespace Goedel.Document.RFC {
 
             switch (LI.Type) {
                 case BlockType.Data: {
-                    //WriteValueTag("t", LI.Text,
+                    //WriteValueTag("t", null,
                     //"hangText", WrapNull(HangText));
                     Write(LI.Segments, HangText);
                     HangText = null;
                     break;
                     }
                 case BlockType.Term: {
-                    HangText = LI.Text;
+                    HangText = GetText(LI.Segments);
                     break;
                     }
                 case BlockType.Ordered:
@@ -214,11 +214,11 @@ namespace Goedel.Document.RFC {
                 case "norm":
                 case "info": {
                     WriteStartTag("xref", "target", Open.Attributes?[0].Value);
-                    if (Open.IsEmpty) {
-                        TextWriter.Write("[");
-                        TextWriter.Write(Open.Attributes?[0].Value);
-                        TextWriter.Write("]");
-                        }
+                    //if (Open.IsEmpty) {
+                    //    TextWriter.Write("[");
+                    //    TextWriter.Write(Open.Attributes?[0].Value);
+                    //    TextWriter.Write("]");
+                    //    }
                     break;
                     }
                 case "eref":
@@ -248,8 +248,24 @@ namespace Goedel.Document.RFC {
                 }
             }
 
+
+        public string GetText (List<GM.TextSegment> Segments) {
+            var Buffer = new StringBuilder();
+                {
+                foreach (var Segment in Segments) {
+                    switch (Segment) {
+                        case GM.TextSegmentText Text: {
+                            Buffer.Append(XMLEscape(Text.Text));
+                            break;
+                            }
+                        }
+                    }
+                return Buffer.ToString();
+                }
+            }
+
         public void Write (List<GM.TextSegment> Segments, string Hangtext=null) {
-            WriteStartTag("t", "hangtext", Hangtext);
+            WriteStartTag("t", "hangText", Hangtext);
 
             if (Segments != null) {
                 foreach (var Segment in Segments) {

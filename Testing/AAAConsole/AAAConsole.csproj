@@ -117,10 +117,6 @@
       <Project>{93b6b9fd-822f-4fd1-bdad-16eb81b6df25}</Project>
       <Name>Goedel.Test</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Test.Goedel.Command\Test.Goedel.Command.csproj">
-      <Project>{319054f1-057b-4ccc-af31-b6dfcac527de}</Project>
-      <Name>Test.Goedel.Command</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

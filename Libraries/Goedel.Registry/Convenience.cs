@@ -150,7 +150,7 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="Value">Value to write</param>
         /// <param name="Bold">If true, wrap value in bold style tags</param>
-        /// <returns></returns>
+        /// <returns>The resulting formatted string.</returns>
         public static string TBS (this string Value, bool Bold=true) {
             var Message = String.Format("TBS: {0}", Value);
             Console.WriteLine(Message);

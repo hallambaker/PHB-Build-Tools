@@ -20,9 +20,12 @@
     <TreatSpecificWarningsAsErrors />
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.4\Goedel.Protocol.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Goedel.FSR\Goedel.FSR.csproj" />
-    <ProjectReference Include="..\Goedel.Registry\Goedel.Registry.csproj" />
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
 

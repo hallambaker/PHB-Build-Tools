@@ -63,12 +63,12 @@ namespace Goedel.Cryptography.Ticket {
         /// <summary>
         /// Constructor for specified ticket and key.
         /// </summary>
-        /// <param name="TicketIn">The ticket data.</param>
-        /// <param name="KeyIn">Secret key</param>
-        /// <param name="AuthenticationIn">Authentication algorithm identifier.</param>
-        /// <param name="EncryptionIn">Encryption algorithm identifier.</param>
+        /// <param name="Ticket">The ticket data.</param>
+        /// <param name="Key">Secret key</param>
+        /// <param name="Authentication">Authentication algorithm identifier.</param>
+        /// <param name="Encryption">Encryption algorithm identifier.</param>
 
-        public CryptographicContext(byte[] Ticket, byte[] Key,
+        public CryptographicContext (byte[] Ticket, byte[] Key,
                         CryptoAlgorithmID Authentication, CryptoAlgorithmID Encryption)  {
 
             this.Ticket = Ticket;
@@ -130,9 +130,11 @@ namespace Goedel.Cryptography.Ticket {
                 //Console.WriteLine ("State {0} Char {1}", c, state);
                 switch (state) {
                     case 0: {
-                            if (c == ':') state = 1;
-                            break;
+                        if (c == ':') {
+                            state = 1;
                             }
+                        break;
+                        }
                     case 1:
                         if ((c != ' ') & (c != '\t')) {
                             state = 2;
@@ -142,8 +144,12 @@ namespace Goedel.Cryptography.Ticket {
                     case 2:
                         if (c == '=') {
                             string s = Header.Substring (Start, i-Start);
-                            if (s == "Value") Tag = 0;
-                            else if (s == "Id") Tag = 1;
+                        if (s == "Value") {
+                            Tag = 0;
+                            }
+                        else if (s == "Id") {
+                            Tag = 1;
+                            }
                             state = 3;
                             Start = i+1;
                             }

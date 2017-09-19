@@ -28,7 +28,9 @@
 
 * Allow different stylesheet name to be specified.
 
-* fix bibliography tag
+* Support hang/nohang attribute on DL
+
+* Support nested lists, different numbering schemes.
 
 #Bugs
 

@@ -16,6 +16,7 @@ namespace Goedel.Utilities {
         /// </summary>
         /// <param name="Format">A composite format string </param>
         /// <param name="Arg">An array of objects to write using format</param>
+        /// <returns>The formatted string</returns>
         public static string FormatX(this string Format, params object[] Arg) {
             return String.Format(Format, Arg);
 
@@ -24,7 +25,7 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Mark code as needing fixing.
         /// </summary>
-        /// <param name="Report"></param>
+        /// <param name="Report">Comment to report to the trace output.</param>
         public static void TBS (string Report) {
             Debug.WriteLine("To be Specified [{0}]".FormatX(Report));
             }

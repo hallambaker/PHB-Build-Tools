@@ -27,7 +27,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The private key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
-        public override IPKIXPublicKey PKIXPublicKey { get => PKIXPublicKeyDH; }  
+        public override IPKIXPublicKey PKIXPublicKey => PKIXPublicKeyDH;  
 
 
         /// <summary>
@@ -44,9 +44,8 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Return private key parameters in PKIX structure
         /// </summary>
-        public override DHDomain DHDomain {
-            get => PublicKey.DHDomain;
-            }
+        public override DHDomain DHDomain  => PublicKey.DHDomain;
+
 
         /// <summary>
         /// Return private key parameters in PKIX structure
@@ -70,16 +69,13 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The public key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
-        public override SubjectPublicKeyInfo KeyInfoData {
-            get => PKIXPublicKeyDH.SubjectPublicKeyInfo();
-            }
+        public override SubjectPublicKeyInfo KeyInfoData => PKIXPublicKeyDH.SubjectPublicKeyInfo();
+
 
         /// <summary>
         /// The public key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
-        public override SubjectPublicKeyInfo PrivateKeyInfoData {
-            get => PKIXPrivateKeyDH.SubjectPublicKeyInfo();
-            }
+        public override SubjectPublicKeyInfo PrivateKeyInfoData  => PKIXPrivateKeyDH.SubjectPublicKeyInfo();
 
 
 
@@ -202,12 +198,14 @@ namespace Goedel.Cryptography {
             return Result;
             }
 
-
+        /// <summary>
+        /// Perform key agreement
+        /// </summary>
+        /// <param name="KeyPair">The public key to agree to.</param>
+        /// <returns>The key agreement result.</returns>
         public override KeyAgreementResult Agreement (KeyPair KeyPair) {
             var DHKeyPair = KeyPair as DHKeyPair;
             Assert.NotNull(DHKeyPair, KeyTypeMismatch.Throw);
-
-
             return Agreement(DHKeyPair);
             }
 
@@ -227,6 +225,7 @@ namespace Goedel.Cryptography {
         /// Perform a Diffie Hellman Key Agreement to a private key
         /// </summary>
         /// <param name="Public">Public key parameters</param>
+        /// <param name="Carry">Carried result to add in to the agreement (for recryption)</param>
         /// <returns>The key agreement value ZZ</returns>
         public DiffieHellmanResult Agreement(DHKeyPair Public, DiffieHellmanResult Carry = null) {
             BigInteger Agreement;
@@ -283,6 +282,7 @@ namespace Goedel.Cryptography {
             }
         }
 
+    /// <summary>Represents a key agreement result.</summary>
     public abstract partial class KeyAgreementResult : IPKIXAgreement {
         /// <summary>
         /// Return the DER encoding of this structure

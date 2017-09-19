@@ -16,16 +16,14 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID {
-            get => _CryptoAlgorithmID; 
-            }
+        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID; 
+ 
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm {
-            get => CryptoAlgorithmAny;
-            }
+        public override CryptoAlgorithm CryptoAlgorithm  => CryptoAlgorithmAny;
+ 
 
         static CryptoAlgorithm CryptoAlgorithmAny = new CryptoAlgorithm(
                     Goedel.Cryptography.CryptoAlgorithmID.DH, 2048, _AlgorithmClass, Factory);
@@ -48,7 +46,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Default algorithm key or output size.
         /// </summary>
-        public override int Size { get => 2048;  }
+        public override int Size => 2048; 
 
         /// <summary>
         /// Delegate to create a cryptographic provider with optional key size and/or
@@ -69,10 +67,8 @@ namespace Goedel.Cryptography {
         /// Keys are stored in  %APPDATA%\AppData\Roaming\CryptoMesh\Keys\DH on windows AND
         /// ~\.Mesh\Keys\DH on U*ix based systems.
         /// </remarks>
-        public override string UDF {
-            get => DHKeyPair.UDF; 
-            }
-
+        public override string UDF  => DHKeyPair.UDF; 
+ 
 
         DHKeyPair DHKeyPair;
 
@@ -132,9 +128,8 @@ namespace Goedel.Cryptography {
             }
 
         /// <summary>The maximum number of shares into which a key may be split</summary>
-        public override int SharesMaximum {
-            get => 16; 
-            }
+        public override int SharesMaximum  => 16; 
+  
 
         /// <summary>
         /// Encrypt the bulk key.
@@ -165,6 +160,7 @@ namespace Goedel.Cryptography {
         /// <param name="EncryptedKey">The encrypted session</param>
         /// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
         /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <param name="Partial">Partial key agreement value (for recryption)</param>
         /// <returns>The decoded data instance</returns>
         public override byte[] Decrypt(
                     byte[] EncryptedKey,

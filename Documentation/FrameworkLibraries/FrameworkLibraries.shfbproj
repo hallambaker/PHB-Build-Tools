@@ -13,7 +13,7 @@
     <RootNamespace>FrameworkLibraries</RootNamespace>
     <Name>FrameworkLibraries</Name>
     <!-- SHFB properties -->
-    <FrameworkVersion>.NET Framework 4.6</FrameworkVersion>
+    <FrameworkVersion>.NET Framework 4.6.2</FrameworkVersion>
     <OutputPath>..\..\..\WebPublish\PrismProof\code\framework\</OutputPath>
     <HtmlHelpName>FrameworkLibraries</HtmlHelpName>
     <Language>en-US</Language>
@@ -84,7 +84,14 @@
           </ignoreIfUnresolved>
         </configuration>
       </PlugInConfig>
-<PlugInConfig id="Additional Reference Links" enabled="True"><configuration><targets><target htmlSdkLinkType="None" helpViewerSdkLinkType="Id" websiteSdkLinkType="None" helpFileProject="..\PortableLibraries\PortableLibraries.shfbproj" /></targets></configuration></PlugInConfig></PlugInConfigurations>
+      <PlugInConfig id="Additional Reference Links" enabled="True">
+        <configuration>
+          <targets>
+            <target htmlSdkLinkType="None" helpViewerSdkLinkType="Id" websiteSdkLinkType="None" helpFileProject="..\PortableLibraries\PortableLibraries.shfbproj" />
+          </targets>
+        </configuration>
+      </PlugInConfig>
+    </PlugInConfigurations>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="False">Implementation of cryptographic operations.</NamespaceSummaryItem>
       <NamespaceSummaryItem name="Goedel.Cryptography.Framework" isDocumented="True">Implementation of the Goedel.Cryptography algorithms using the libraries in the .NET Framework and Mono</NamespaceSummaryItem>

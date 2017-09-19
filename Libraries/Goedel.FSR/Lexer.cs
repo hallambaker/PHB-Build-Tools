@@ -188,6 +188,7 @@ namespace Goedel.FSR {
         /// Called at the end of a Push parser session. May be overriden in subclasses to 
         /// flush output.
         /// </summary>
+        /// <param name="Text">Text to push into the parser.</param>
         public virtual void PushEnd (string Text = null) {
             if (Text != null) {
                 Push(Text);

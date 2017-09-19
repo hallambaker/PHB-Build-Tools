@@ -4,6 +4,7 @@ using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
+    /// <summary>Data encoding forms</summary>
     public enum DataEncoding {
         /// <summary>JSON encoding in UTF8</summary>
         JSON,
@@ -24,9 +25,13 @@ namespace Goedel.Protocol {
 
     public static partial class Extensions {
 
-
+        /// <summary>Convert object to bytes in specified encoding.</summary>
+        /// <param name="Object">The object to convert.</param>
+        /// <param name="Encoding">The encoding to convert to (defaults to JSON).</param>
+        /// <param name="Tagged">It true, tag the output value with the object type.</param>
+        /// <returns>The encoded data.</returns>
         public static byte[] GetBytes (this JSONObject Object, 
-                    DataEncoding Encoding, 
+                    DataEncoding Encoding = DataEncoding.JSON, 
                     bool Tagged = true) {
 
             switch (Encoding) {
@@ -104,6 +109,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Object">The object to convert</param>
         /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
+        /// <param name="TagDictionary">Tag dictionary to use to decode type tags.</param>
         /// <returns>Data as byte sequence.</returns>
         public static byte[] GetJsonC (this JSONObject Object, bool Tagged = true,
                     Dictionary<string, int> TagDictionary = null) {
@@ -117,6 +123,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Object">The object to convert</param>
         /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
+        /// <param name="TagDictionary">Tag dictionary to use to decode type tags.</param>
         /// <returns>Data as byte sequence.</returns>
         public static byte[] GetJsonD (this JSONObject Object, bool Tagged = true,
                     Dictionary<string, int> TagDictionary = null) {

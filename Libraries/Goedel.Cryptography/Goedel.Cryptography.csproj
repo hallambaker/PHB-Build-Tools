@@ -17,6 +17,10 @@
     <PreBuildEvent></PreBuildEvent>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.4\Goedel.Cryptography.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj" />
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />

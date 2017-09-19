@@ -121,9 +121,8 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// UDF fingerprint of the key
         /// </summary>
-        public virtual string UDF {
-            get => null;
-            }
+        public virtual string UDF  => null;
+
 
         }
 
@@ -225,6 +224,7 @@ namespace Goedel.Cryptography {
         /// <param name="EncryptedKey">The encrypted session</param>
         /// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
         /// <param name="AlgorithmID">The algorithm to use.</param>
+        /// <param name="Partial">Partial key agreement carry in (for recryption)</param>
         /// <returns>The decoded data instance</returns>
         public virtual byte[] Decrypt(
                     byte[]EncryptedKey,
@@ -319,6 +319,11 @@ namespace Goedel.Cryptography {
                 }
             }
 
+        /// <summary>
+        /// Perform a key agreement on the specified public key.
+        /// </summary>
+        /// <param name="KeyPair">Public key pair to perform agreement to.</param>
+        /// <returns>The result of the key agreement.</returns>
         public virtual KeyAgreementResult Agreement (KeyPair KeyPair) {
             throw new CryptographicOperationNotSupported();
             }

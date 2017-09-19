@@ -36,6 +36,9 @@ namespace MakeRFC {
             var TagCatalog = BridgeLib.Configure.GetTagCatalog(catalog);
 
             bool DoWork = !Options.Lazy.Value;
+
+            DoWork = DoWork | Options.Auto.Value;
+
             if (htmlfile != null) { DoWork = DoWork | !FileTools.UpToDate(inputfile, htmlfile); }
             if (xmlfile != null) { DoWork = DoWork | !FileTools.UpToDate(inputfile, xmlfile); }
             if (txtfile != null) { DoWork = DoWork | !FileTools.UpToDate(inputfile, txtfile); }
@@ -98,6 +101,14 @@ namespace MakeRFC {
 
 
             Document.MakeAutomatics();
+
+            if (Options.Auto.Value) {
+                Writers.WriteHTML(Document.Docname + ".html", Document);
+                Writers.WriteHTML(Document.FullDocName + ".html", Document);
+                Writers.WriteTXT(Document.FullDocName + ".txt", Document);
+                Writers.WriteXML(Document.FullDocName + ".xml", Document);
+                }
+
 
             if (htmlfile != null) { Goedel.Document.RFC.Writers.WriteHTML(htmlfile, Document); }
             if (xmlfile != null) { Goedel.Document.RFC.Writers.WriteXML(xmlfile, Document); }

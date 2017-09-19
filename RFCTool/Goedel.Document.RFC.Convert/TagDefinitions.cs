@@ -71,6 +71,8 @@ Class Goedel.MarkLib TagDefinitions
 		XML ""ol"" ""class""
 	Layout dl
 		XML ""dl"" ""class""
+	Layout dlc
+		XML ""dl"" ""class""
 
 	Block li
 		Stack ul
@@ -84,10 +86,12 @@ Class Goedel.MarkLib TagDefinitions
 
 	Block dt
 		Stack dl
+		Stack dlc
 		Stack row
 		XML ""dt"" ""class""
 	Block dd
 		Stack dl
+		Stack dlc
 		Stack row
 		XML ""dd"" ""class""
 

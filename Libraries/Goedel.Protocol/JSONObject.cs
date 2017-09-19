@@ -50,14 +50,21 @@ namespace Goedel.Protocol {
         RFC822
         }
 
-
+    /// <summary>
+    /// Factory delegate that returns a JSONObject.
+    /// </summary>
+    /// <returns></returns>
     public delegate JSONObject JSONFactoryDelegate ();
 
     /// <summary>
     /// Base class for JSON Objects.
     /// </summary>
     public abstract partial class JSONObject {
-        public virtual string _PrimaryKey { get => null; }
+
+        /// <summary>
+        /// Primary key to use for the object.
+        /// </summary>
+        public virtual string _PrimaryKey  => null; 
 
         /// <summary>
         /// Tag value used as substitute for reflection internally.
@@ -67,7 +74,9 @@ namespace Goedel.Protocol {
             return null;
             }
 
-
+        /// <summary>
+        /// Tag value used as substitute for reflection internally.
+        /// </summary>
         public virtual string _Tag { get; }
 
 
@@ -178,19 +187,19 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Factory method to construct object from string data.
         /// </summary>
-        /// <param name="_Input">Source</param>
+        /// <param name="Input">Source</param>
         /// <returns>Constructed object</returns>
-        public static JSONObject From (string _Input) {
+        public static JSONObject From (string Input) {
             return null;
             }
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Input">The input stream</param>
         /// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static JSONObject FromJSON (JSONReader _Input, bool Tagged) {
+        public static JSONObject FromJSON (JSONReader Input, bool Tagged) {
             return null;
             }
 
@@ -235,10 +244,10 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Merge two or more token dictionaries to produce a combined dictionary.
         /// </summary>
-        /// <param name="Dictionary1"></param>
-        /// <param name="Dictionary2"></param>
-        /// <param name="Dictionary2"></param>
-        /// <returns></returns>
+        /// <param name="Dictionary1">First dictionary to merge</param>
+        /// <param name="Dictionary2">Second dictionary to merge</param>
+        /// <param name="Dictionary3">Third dictionary to merge</param>
+        /// <returns>Merged dictionaries</returns>
         public static Dictionary<string, JSONFactoryDelegate> Merge (
                     Dictionary<string, JSONFactoryDelegate> Dictionary1,
                     Dictionary<string, JSONFactoryDelegate> Dictionary2=null,

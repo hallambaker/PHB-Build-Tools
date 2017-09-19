@@ -34,7 +34,7 @@ using Goedel.Protocol;
 namespace Goedel.Protocol {
 
 
-	/// <summary>
+	/// <summary>Base class for all message classes.
 	/// </summary>
 	public abstract partial class Message : global::Goedel.Protocol.JSONObject {
 

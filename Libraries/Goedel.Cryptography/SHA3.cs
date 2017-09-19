@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Goedel.Cryptography {
+
+    /// <summary>SHA3 Implementation</summary>
     public class SHA3 {
         readonly static int[] Rotations = new int[] {
             0, 1, 62, 28, 27, 36, 44, 6, 55, 20, 3, 10, 43, 25, 39, 41,
@@ -23,9 +25,13 @@ namespace Goedel.Cryptography {
 
         ulong[] s = new ulong[25];
 
+        /// <summary>Default constructor</summary>
         public SHA3 () {
             }
 
+        /// <summary>The SHAKE256 function.</summary>
+        /// <param name="Message">Message to digest.</param>
+        /// <param name="OutLength">Output length.</param>
         public byte[] Shake256(byte[] Message, int OutLength ) {
             return ShaCore(Message, 17, 31, OutLength);
             }

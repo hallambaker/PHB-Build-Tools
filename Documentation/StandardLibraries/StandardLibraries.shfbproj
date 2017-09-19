@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!-- The configuration and platform will be used to determine which assemblies to include from solution and
+				 project documentation sources -->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>51f8045a-51c9-485e-a72d-96646acb19b3</ProjectGuid>
+    <SHFBSchemaVersion>2015.6.5.0</SHFBSchemaVersion>
+    <!-- AssemblyName, Name, and RootNamespace are not used by SHFB but Visual Studio adds them anyway -->
+    <AssemblyName>Sandcastle</AssemblyName>
+    <RootNamespace>Sandcastle</RootNamespace>
+    <Name>Portable Libraries</Name>
+    <!-- SHFB properties -->
+    <FrameworkVersion>.NET Framework 4.6.2</FrameworkVersion>
+    <OutputPath>..\..\..\WebPublish\PrismProof\code\standard\</OutputPath>
+    <HtmlHelpName>GoedelPortable</HtmlHelpName>
+    <Language>en-US</Language>
+    <TransformComponentArguments>
+      <Argument Key="logoFile" Value="Help.png" xmlns="" />
+      <Argument Key="logoHeight" Value="" xmlns="" />
+      <Argument Key="logoWidth" Value="" xmlns="" />
+      <Argument Key="logoAltText" Value="" xmlns="" />
+      <Argument Key="logoPlacement" Value="left" xmlns="" />
+      <Argument Key="logoAlignment" Value="left" xmlns="" />
+      <Argument Key="maxVersionParts" Value="" xmlns="" />
+    </TransformComponentArguments>
+    <DocumentationSources>
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.ASN\Goedel.ASN.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+    </DocumentationSources>
+    <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
+    <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
+    <HelpFileFormat>HtmlHelp1, MSHelpViewer, Website</HelpFileFormat>
+    <IndentHtml>True</IndentHtml>
+    <KeepLogFile>True</KeepLogFile>
+    <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
+    <CleanIntermediates>True</CleanIntermediates>
+    <HelpFileVersion>1.0.0.0</HelpFileVersion>
+    <MaximumGroupParts>2</MaximumGroupParts>
+    <NamespaceGrouping>False</NamespaceGrouping>
+    <SyntaxFilters>Standard</SyntaxFilters>
+    <SdkLinkTarget>Self</SdkLinkTarget>
+    <RootNamespaceContainer>False</RootNamespaceContainer>
+    <PresentationStyle>VS2013</PresentationStyle>
+    <Preliminary>False</Preliminary>
+    <NamingMethod>Guid</NamingMethod>
+    <HelpTitle>Goedel Portable Support Libraries</HelpTitle>
+    <ContentPlacement>AboveNamespaces</ContentPlacement>
+    <TocParentId>-1</TocParentId>
+    <TocParentVersion>100</TocParentVersion>
+    <TopicVersion>100</TopicVersion>
+    <TocOrder>-1</TocOrder>
+    <ProductTitle>Goedel Libraries</ProductTitle>
+    <VendorName>Comodo Group Inc</VendorName>
+    <MSHelpViewerSdkLinkType>Msdn</MSHelpViewerSdkLinkType>
+    <CatalogVersion>100</CatalogVersion>
+    <CatalogProductId>VS</CatalogProductId>
+    <NamespaceSummaries>
+      <NamespaceSummaryItem name="(global)" isDocumented="False" />
+<NamespaceSummaryItem name="Goedel.ASN" isDocumented="True">Support routings for serializing and deserializing ASN.1  DER encoding for classes built with the PHB Tools ASN tool.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.FSR" isDocumented="True">Support routines for Finite State Recognizers built with the PHB Tools FSR tool.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Protocol" isDocumented="True">Support routines for Web Services built with the PHB Tools PROTOGEN tool.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Registry" isDocumented="True">Support routines for various systems built with the PHB Tools Goedel tool.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Utilities" isDocumented="True">Support routines common to all systems built with PHB tools.</NamespaceSummaryItem></NamespaceSummaries>
+    <ProjectSummary>Support libraries for code generated with Goedel code synthesis tools.</ProjectSummary>
+    <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
+    <WorkingPath>..\..\..\scratch\standard\</WorkingPath>
+  </PropertyGroup>
+  <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
+			 the build.  The others are optional common platform types that may appear. -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Win32' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Win32' ">
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Content" />
+    <Folder Include="Content\VersionHistory" />
+    <Folder Include="icons" />
+    <Folder Include="media" />
+    <Folder Include="Markdown" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\CodeStandards.aml" />
+    <None Include="Content\CryptographyLibraries.aml" />
+    <None Include="Content\Documentation.aml" />
+    <None Include="Content\Exceptional.aml" />
+    <None Include="Content\FrameworkLibraries.aml" />
+    <None Include="Content\FSRTool.aml" />
+    <None Include="Content\Libraries.aml" />
+    <None Include="Content\ParserLibraries.aml" />
+    <None Include="Content\ProtocolLibraries.aml" />
+    <None Include="Content\TextConversion.aml" />
+    <None Include="Content\UniversalLibraries.aml" />
+    <None Include="Content\VersionHistory\v1.0.0.0.aml" />
+    <None Include="Content\VersionHistory\VersionHistory.aml" />
+    <None Include="Content\VSIXIntegration.aml" />
+    <None Include="Content\Welcome.aml" />
+    <None Include="PreBuild.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <ContentLayout Include="ContentLayout.content" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Markdown\CodeStandards.md" />
+    <Content Include="Markdown\Documentation.md" />
+    <Content Include="Markdown\VSIXIntegration.md" />
+    <Content Include="Markdown\Libraries.md" />
+    <XamlConfiguration Include="Content\CryptographyLibraries.md" />
+    <Content Include="Cryptography.html" />
+    <Content Include="icons\Help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.ASN\Goedel.ASN.csproj">
+      <Name>Goedel.ASN</Name>
+      <Project>{a586aa17-029a-4a2d-8910-5ed7029b37a6}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
+      <Name>Goedel.Cryptography.Jose</Name>
+      <Project>{d7cfa211-a1be-4af6-8ecf-d2cdd5de5b6d}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
+      <Name>Goedel.Cryptography</Name>
+      <Project>{c1a5cf62-88cb-47f9-b9a3-59354ffa6c68}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
+      <Name>Goedel.FSR</Name>
+      <Project>{24f56184-7dc6-4f7f-b169-6ce384a3b7a4}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Platform\Goedel.Platform.csproj">
+      <Name>Goedel.Platform</Name>
+      <Project>{46332174-d5ea-4bd5-9ff0-fdccbbf6df83}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
+      <Name>Goedel.Protocol</Name>
+      <Project>{55e68ce6-ac29-4837-9d88-5ad99e4cef5a}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Name>Goedel.Utilities</Name>
+      <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <!-- Import the SHFB build targets -->
+  <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />
+  <!-- The pre-build and post-build event properties must appear *after* the targets file import in order to be
+			 evaluated correctly. -->
+  <PropertyGroup>
+    <PreBuildEvent>call Prebuild.bat</PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Publish' ">
+    <OutputPath>..\..\..\WebPublish\PrismProof\code\portable\</OutputPath>
+  </PropertyGroup>
+</Project>

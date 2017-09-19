@@ -34,6 +34,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
     <DebugSymbols>False</DebugSymbols>
+    <DocumentationFile>bin\Release\netstandard1.4\Goedel.Utilities.xml</DocumentationFile>
   </PropertyGroup>
 
 

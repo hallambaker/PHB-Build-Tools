@@ -43,6 +43,8 @@
 		Option Stylesheet "style" ExistingFile
 		Option Boilerplate "boiler" ExistingFile
 
+		Option Auto "auto" Flag
+			Default "false"
 
 
 	Command Template "new"

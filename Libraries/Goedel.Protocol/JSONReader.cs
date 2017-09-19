@@ -318,7 +318,7 @@ namespace Goedel.Protocol {
         /// <summary>If true, have reached the end of the current record.</summary>
         public bool EOR = false;
 
-
+        /// <summary>If true, emit trace value for debugging.</summary>
         public static bool Trace = false;
 
         /// <summary>Get the next token.</summary>
@@ -460,7 +460,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Construct a JSONReader for the specified data buffer.
         /// </summary>
-        /// <param name="BufferIn">The source.</param>
+        /// <param name="DataIn">The source.</param>
         public JSONReader (byte[] DataIn) : this(System.Text.Encoding.UTF8.GetString(DataIn)) {
             }
 

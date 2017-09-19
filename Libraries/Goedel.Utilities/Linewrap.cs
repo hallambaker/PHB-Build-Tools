@@ -12,8 +12,8 @@ namespace Goedel.Utilities {
         /// Wrap text to fit a line without breaking words.
         /// </summary>
         /// <param name="Input">The input string.</param>
-        /// <param name="Length"></param>
-        /// <returns></returns>
+        /// <param name="Length">Maximum line length</param>
+        /// <returns>The wrapped string.</returns>
         public static string Wrap (this string Input, int Length=72) {
             var Buffer = new StringBuilder();
             var Line = new StringBuilder();

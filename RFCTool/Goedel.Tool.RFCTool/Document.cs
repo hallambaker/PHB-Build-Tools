@@ -75,15 +75,13 @@ namespace Goedel.Document.RFC {
         public string AreaCombined;
 
         // Calculated attributes
-        public DateTime DocDate { get => DateTime.Parse(Date); }
-        public DateTime Expiring { get => DocDate.AddDays(185); }
-        public string Expires {
-            get => ToDate(Expiring.Day.ToString(), Months[Expiring.Month], Expiring.Year.ToString());
-            }
-        public string FullDocName {
-            get => Version == null ? Docname : Docname + "-" + Version;
-            }
-        public string Date { get => ToDate(Day, Month, Year); }
+        public DateTime DocDate  => DateTime.Parse(Date); 
+        public DateTime Expiring  => DocDate.AddDays(185); 
+        public string Expires  => ToDate(Expiring.Day.ToString(), Months[Expiring.Month], Expiring.Year.ToString());
+
+        public string FullDocName  => Version == null ? Docname : Docname + "-" + Version;
+
+        public string Date => ToDate(Day, Month, Year); 
         public string FirstAuthor {
             get {
                 if (Authors.Count == 0) {
@@ -93,21 +91,19 @@ namespace Goedel.Document.RFC {
                 return Parts[Parts.Length - 1];
                 }
             }
-        public bool IsConsensus { get => Consensus == "yes" | Consensus == "true"; }
-        public bool IsDraft { get => Series == "draft"; }
+        public bool IsConsensus => Consensus == "yes" | Consensus == "true"; 
+        public bool IsDraft  => Series == "draft"; 
 
 
-        public SeriesInfo SeriesInfo { get => SeriesInfos.Count > 0 ? SeriesInfos[0] : null; }
-        public string Stream { get => SeriesInfo?.Stream ?? "ietf"; }
-        public string Status { get => SeriesInfo?.Status ?? "standard"; }
-        public string Series { get => SeriesInfo?.Name ?? "draft"; }
+        public SeriesInfo SeriesInfo  => SeriesInfos.Count > 0 ? SeriesInfos[0] : null; 
+        public string Stream => SeriesInfo?.Stream ?? "ietf"; 
+        public string Status  => SeriesInfo?.Status ?? "standard"; 
+        public string Series  => SeriesInfo?.Name ?? "draft"; 
         public string Version { get => SeriesInfo?.Version;
             set { }
             }
 
-        public string WorkgroupText {
-            get => Workgroup?.Count > 0 ? Workgroup[0] : null;
-            } // ToDo: concatenate working groups       
+        public string WorkgroupText  => Workgroup?.Count > 0 ? Workgroup[0] : null; // ToDo: concatenate working groups       
 
 
         public string StreamText;
@@ -171,11 +167,6 @@ namespace Goedel.Document.RFC {
             NumberSections();
             AddAuthors();
             }
-
-
-
-
-
 
 
         private static int CompareReferences(Reference First, Reference Second) {
@@ -356,8 +347,8 @@ namespace Goedel.Document.RFC {
         }
 
     public class Author : TextBlock {
-        public override string SectionText { get => null; }
-        public override BlockType BlockType { get => BlockType.Author; }
+        public override string SectionText  => null; 
+        public override BlockType BlockType  => BlockType.Author; 
 
         public string Name;
         public string Initials;
@@ -466,9 +457,9 @@ namespace Goedel.Document.RFC {
 
 
     public class Figure : TextBlock {
-        public override BlockType BlockType { get => BlockType.Figure; }
-        public override string SectionText { get => "Figure " + NumericID; }
-        public string FigureID { get => "f-" + NumericID; }
+        public override BlockType BlockType  => BlockType.Figure; 
+        public override string SectionText  => "Figure " + NumericID; 
+        public string FigureID  => "f-" + NumericID;
 
         public string Caption;
         public string Filename;
@@ -481,16 +472,16 @@ namespace Goedel.Document.RFC {
 
 
     public class P : TextBlock {
-        public override string SectionText { get => "Paragraph " + NumericID; }
+        public override string SectionText  => "Paragraph " + NumericID;
 
         //public List <Text>              Chunks = new List<Text>();
         public List<GM.TextSegment> Segments;
 
 
-        public string Text { get => _Text; } 
+        public string Text => _Text; // Hack -- Kill this
         public string                   _Text;
 
-        public override BlockType BlockType { get => BlockType.Paragraph; }
+        public override BlockType BlockType  => BlockType.Paragraph; 
 
         public P () {
             }
@@ -501,22 +492,6 @@ namespace Goedel.Document.RFC {
             this._Text = Text;
             }
 
-        //public P(List <Text> Chunks) {
-        //    this.Chunks = Chunks;
-        //    }
-
-        //public void AddText(Text Text) {
-        //    Chunks.Add (Text);
-        //    }
-
-        //public void AddText(string Data) {
-        //    Text Text = new Text() {
-        //        //Type = TextType.Plain,
-        //        Data = Data
-        //        };
-        //    AddText (Text);
-        //    }
-
         public string GetText() {
             return null;
             }
@@ -524,7 +499,7 @@ namespace Goedel.Document.RFC {
         }
 
     public class PRE : P  {
-        public override BlockType BlockType { get => BlockType.Verbatim; } 
+        public override BlockType BlockType => BlockType.Verbatim; 
 
         public PRE (string Text, string ID) : base (Text, ID){
 
@@ -537,7 +512,7 @@ namespace Goedel.Document.RFC {
         public BlockType         Type;
         public int              Level;
         public int              Index;
-        public override BlockType BlockType { get => Type; } 
+        public override BlockType BlockType  => Type; 
 
         public LI (string Text, string ID, BlockType Type, int Level) : 
                     base (Text, ID){
@@ -565,8 +540,8 @@ namespace Goedel.Document.RFC {
 
 
     public class Table : TextBlock {
-        public override string SectionText { get => "Table " + NumericID; }
-        public override BlockType BlockType { get => BlockType.Table; }
+        public override string SectionText  => "Table " + NumericID; 
+        public override BlockType BlockType  => BlockType.Table;
         public string Caption;
 
         public int MaxRow = 0;
@@ -576,14 +551,14 @@ namespace Goedel.Document.RFC {
         }
 
     public class TableRow : TextBlock {
-        public override string SectionText { get => null; }
-        public override BlockType BlockType { get => BlockType.TableRow; } 
+        public override string SectionText  => null;
+        public override BlockType BlockType  => BlockType.TableRow; 
         public List <TableData>            Data = new List<TableData>();
         }
 
     public class TableData : TextBlock {
-        public override string SectionText { get => null; }
-        public override BlockType BlockType { get => BlockType.TableData; } 
+        public override string SectionText  => null; 
+        public override BlockType BlockType  => BlockType.TableData; 
         public bool                        IsHeading;
         public string               Text;
         }
@@ -593,31 +568,7 @@ namespace Goedel.Document.RFC {
         public string Data;        // What goes in the text
         public string Title;       // For mouseover popup text
         public string Id; // For anything requiring an anchor to this element.
-
-        //public bool Strong;
-        //public bool Emphasis;
-        //public bool Code;
-        //public bool Comment;
-        //public bool Superscript;
-        //public bool Subscript;
-        //public bool BCP14;
         }
-
-    //public class TextHyperlink : Text {
-    //    public string Target;      // Target of hypertext link
-    //    public string Fragment;     // Fragment
-
-    //    public string Href {
-    //        get => Fragment == null ? Target : Target + "#" + Fragment;
-    //        }
-    //    }
-
-    //public class TextIndex : Text {
-
-    //    public string Index;
-    //    public string SubIndex;
-    //    }
-
 
 
     public class SeriesInfo {
@@ -688,8 +639,8 @@ namespace Goedel.Document.RFC {
         }
 
     public class Reference : TextBlock {
-        public override string SectionText { get => null; }
-        public override BlockType BlockType { get => BlockType.Reference; }
+        public override string SectionText  => null; 
+        public override BlockType BlockType  => BlockType.Reference; 
 
         public string Label;
 

@@ -16,6 +16,10 @@
     <AssemblyFileVersionSettings>None.IncrementOnDemand.IncrementOnDemandWithReset.Increment</AssemblyFileVersionSettings> 
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.4\Goedel.Cryptography.Jose.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />

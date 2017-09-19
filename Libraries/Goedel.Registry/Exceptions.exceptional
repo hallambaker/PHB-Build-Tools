@@ -37,30 +37,49 @@ Namespace Goedel.Registry
 				|No command specified
 
 	Exception SchemaParse
+		Description
+			|Schema parsing exception
 		Console "The schema could not be parsed"		
 
 		Exception NotFoundReserved
+			Description
+				|A reserved word was expected but a different token was encountered.
 			Object ExceptionData "Expected reserved word, token {0} was not found"
 				String
 
 		Exception InternalError
+			Description
+				|An internal parser error occured, this code should not have been reached.
 			Console "An internal parser error occurred"
 
 
 		Exception InvalidToken
+			Description
+				|The input token was not valid.
 			Console "An invalid token was encountered"
 
 		Exception ExpectedStart
+			Description
+				|Expected a block start token.
 			Console "Start token expected"
 
 		Exception ExpectedClass
+			Description
+				|A class token was expected.
 			Console "Parser Error Expected [Class]"
 
 		Exception Expected
+			Description
+				|A token was expected.
 			Console "Parser Error Expected [Class]"
 
 		Exception TooManyClose
+			Description
+				|More block close tokens were encountered than open tokens.
 			Console "Too Many Closing Braces"
 
 		Exception UnreachableCode
+			Description
+				|Unreachable code was encountered.
 			Console "Unreachable code reached"
+

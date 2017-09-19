@@ -7,6 +7,7 @@ namespace Goedel.Protocol {
 
 
     /// <summary>
+    /// A dechunking exception occurred.
     /// </summary>
     public class Dechunking : global::System.Exception {
 
@@ -228,6 +229,7 @@ namespace Goedel.Protocol {
 
 
     /// <summary>
+    /// A serialized data stream contains a type tag describing an abstract type that cannot be constructed.
     /// </summary>
     public class CannotCreateAbstract : global::System.Exception {
 
@@ -278,6 +280,7 @@ namespace Goedel.Protocol {
 
 
     /// <summary>
+    /// An unknown tag was encountered.
     /// </summary>
     public class UnknownTag : global::System.Exception {
 
@@ -328,6 +331,7 @@ namespace Goedel.Protocol {
 
 
     /// <summary>
+    /// The input is not valid in the specified encoding.
     /// </summary>
     public class InvalidInput : global::System.Exception {
 

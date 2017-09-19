@@ -65,7 +65,7 @@ namespace Goedel.Utilities {
         /// </summary>
         /// <param name="Source">The source array</param>
         /// <param name="Length">The truncation length, 0 for no truncation.</param>
-        /// <returns></returns>
+        /// <returns>Truncated value</returns>
         public static byte[] OrTruncated (this byte[] Source, int Length) {
             if (Length <= 0) {
                 return Source;

@@ -37,8 +37,7 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The type of algorithm
         /// </summary>
-        public override CryptoAlgorithmClass AlgorithmClass {
-            get => CryptoAlgorithmClass.Encryption; } 
+        public override CryptoAlgorithmClass AlgorithmClass => CryptoAlgorithmClass.Encryption; 
 
         /// <summary>
         /// The .NET cryptographic provider (for use by sub classes).
@@ -51,12 +50,12 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The size of the required key
         /// </summary>
-        public override int KeySize { get => Provider.KeySize; } 
+        public override int KeySize  => Provider.KeySize; 
 
         /// <summary>
         /// The size of the required IV. If zero, no IV is required.
         /// </summary>
-        public override int IVSize { get => Provider.IV.Length * 8; } 
+        public override int IVSize  => Provider.IV.Length * 8; 
 
         /// <summary>
         /// If set to true, the initialization vector (if used) will be prepended to the
@@ -261,10 +260,9 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID {
-            get => (Provider.KeySize == 128) ? 
+        public override CryptoAlgorithmID CryptoAlgorithmID => (Provider.KeySize == 128) ? 
                     CryptoAlgorithmID.AES128CBC : CryptoAlgorithmID.AES256CBC;
-            }
+            
 
         ///// <summary>
         ///// Return a CryptoAlgorithm structure with properties describing this provider.
@@ -277,9 +275,8 @@ namespace Goedel.Cryptography.Framework {
         //    }
 
         /// <summary>Return the block size in bits</summary>
-        public override int BlockSize {
-            get => Provider.BlockSize;
-            }
+        public override int BlockSize => Provider.BlockSize;
+
 
 
         /// <summary>
@@ -361,9 +358,8 @@ namespace Goedel.Cryptography.Framework {
         /// <summary>
         /// Default algorithm key size.
         /// </summary>
-        public override int Size {
-            get => Provider.KeySize;
-            }
+        public override int Size => Provider.KeySize;
+
 
         /// <summary>
         /// Create an AES provider with the specified key size and mode.

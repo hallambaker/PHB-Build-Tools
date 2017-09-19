@@ -9,7 +9,11 @@ using Goedel.Document.Markdown;
 
 namespace Goedel.Document.RFC {
     public partial class Html2RFCOut : XMLTextWriter {
+        public bool Strict = false;
+
         TextWriter TextWriter;
+
+
 
         /// <summary>
         /// Constructor, this is a subclass of XMLTextWriter
@@ -93,6 +97,17 @@ namespace Goedel.Document.RFC {
                 WriteElementEmpty("link", "href", Stylesheet, "rel", "stylesheet", "type", "text/css");
                 }
             End();
+
+            if (!Strict) {
+                if (Document.EmbedSVG == 0) {
+                    XMLEmbed.FaviconBase64("favicon.png", TextWriter);
+                    }
+                else {
+                    WriteElementEmpty("link", "href", "favicon.png", "rel", "icon");
+                    }
+                }
+
+
             Start("body");
 
             // ToDo: Does not currently support RFC ears.
