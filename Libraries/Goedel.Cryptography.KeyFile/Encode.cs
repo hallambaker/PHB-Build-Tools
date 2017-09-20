@@ -51,7 +51,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Convert key pair to OpenSSH format
         /// </summary>
-        /// <param name="KeyPair"></param>
+        /// <param name="KeyPair">Key pair to convert</param>
         /// <returns>The keyfile data</returns>
         public static string ToOpenSSH (this KeyPair KeyPair) {
             switch (KeyPair) {
@@ -64,7 +64,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Convert key pair to PEMPrivate format
         /// </summary>
-        /// <param name="KeyPair"></param>
+        /// <param name="KeyPair">Key pair to convert</param>
         /// <returns>The keyfile data</returns>
         public static string ToPEMPrivate (this KeyPair KeyPair) {
             switch (KeyPair) {
@@ -77,7 +77,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Convert key pair to PEMPublic format
         /// </summary>
-        /// <param name="KeyPair"></param>
+        /// <param name="KeyPair">Key pair to convert</param>
         /// <returns>The keyfile data</returns>
         public static string ToPEMPublic (this KeyPair KeyPair) {
             switch (KeyPair) {
@@ -90,7 +90,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Convert key pair to PuTTY format
         /// </summary>
-        /// <param name="KeyPair"></param>
+        /// <param name="KeyPair">Key pair to convert</param>
         /// <returns>The keyfile data</returns>
         public static string ToPuTTY (this KeyPair KeyPair) {
             switch (KeyPair) {

@@ -203,7 +203,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <summary>
         /// Construct an SSH_RSA object from an RSAKeyPair
         /// </summary>
-        /// <param name="RSAKeyPair"></param>
+        /// <param name="RSAKeyPair">Keypair to construct from</param>
         public SSH_RSA (RSAKeyPair RSAKeyPair) {
             var PKIXPublicKeyRSA = RSAKeyPair.PKIXPublicKeyRSA;
             Exponent = PKIXPublicKeyRSA.PublicExponent;

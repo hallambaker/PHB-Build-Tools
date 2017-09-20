@@ -22,6 +22,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// Decode SSH Authorized Key file format
         /// </summary>
         /// <param name="FileName">File to decode.</param>
+        /// <returns>List of authorized keys</returns>
         public static List<AuthorizedKey> DecodeAuthHost(string FileName) {
             using (var TextReader = FileName.OpenFileReadShared()) {
                 LexReader LexReader = new LexReader(TextReader);
@@ -33,6 +34,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// Decode an authorized hosts format file.
         /// </summary>
         /// <param name="LexReader">Input</param>
+        /// <returns>List of authorized keys</returns>
         public static List<AuthorizedKey> DecodeAuthHost(LexReader LexReader) {
             List<AuthorizedKey> Result = new List<AuthorizedKey>();
 
