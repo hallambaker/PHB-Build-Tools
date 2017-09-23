@@ -4,11 +4,31 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!--The Abstract-->
     <introduction>
+      <para>
+        The PHB Build Tool Libraries include libraries that are specific to the PHB Build tools and libraries that have more general applicability. 
+      </para>
+      <para>
+        Both sets of libraries apply a consistent set of coding standards where this is machine checkable. 
+      </para>
+      <para>
+        The libraries themselves are built using the PHB Build Tools. These may be used as shell commands with a command line interface or as VSIX plug-ins integrated into the Visual Studio shell. 
+      </para>
     </introduction>
     <!--The Body-->
     <section>
-      <title>Libraries </title>
+      <title>General Utilities </title>
       <content>
+        <para>
+          The general utilites include classes and methods for various text and data manipulations, DNS access and cryptographic functions. 
+        </para>
+      </content>
+    </section>
+    <section>
+      <title>Tool Support </title>
+      <content>
+        <para>
+          The more focused utilities include classes and methods to support exception handling,  development of Web Service Client and Server libraries. 
+        </para>
       </content>
     </section>
     <!--References-->

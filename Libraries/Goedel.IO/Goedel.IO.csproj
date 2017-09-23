@@ -53,6 +53,7 @@
     <Compile Include="Debug.cs" />
     <Compile Include="DeleteDirectory.cs" />
     <Compile Include="Extension.cs" />
+    <Compile Include="NamespaceDoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

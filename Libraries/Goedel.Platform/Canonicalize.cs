@@ -6,7 +6,7 @@ using System.Text;
 namespace Goedel.Platform {
     class Canonicalize {
         StringBuilder   Build;
-        public string   Text { get {return (Build.ToString()); }}
+        public string   Text=> Build.ToString(); 
 
         public Canonicalize (string Result) {
             Build = new StringBuilder ( Result);

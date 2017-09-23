@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="BlockAlgorithms.cs" />
     <Compile Include="Extension.cs" />
+    <Compile Include="NamespaceDoc.cs" />
     <Compile Include="RSAExchange.cs" />
     <Compile Include="Factories.cs" />
     <Compile Include="Authentication.cs" />

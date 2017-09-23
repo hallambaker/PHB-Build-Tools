@@ -58,6 +58,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>KeyReader.fsm</DependentUpon>
     </Compile>
+    <Compile Include="NamespaceDoc.cs" />
     <Compile Include="SSHSerialize.cs" />
     <None Include="Exceptions.Exceptional">
       <Generator>Exceptional</Generator>

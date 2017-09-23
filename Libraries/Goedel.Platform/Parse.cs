@@ -10,7 +10,7 @@ namespace Goedel.Platform {
         public string Buffer;
         int pointer;
         bool _EOF;
-        public bool EOF { get { return _EOF; } }
+        public bool EOF => _EOF; 
 
         public TextBuffer(string Buffer) {
             this.Buffer = Buffer;
@@ -201,20 +201,20 @@ namespace Goedel.Platform {
 
 
         private static CharType Type (char c) {
-            if (c==' ' | c=='\t' | c=='\r') return CharType.White;
-            if (c>='0' & c<='9') return CharType.Digit;
-            if (c>='A' & c<='Z') return CharType.Lower;
-            if (c>='a' & c<='z') return CharType.Upper;
-            if (c=='.') return CharType.Dot;
-            if (c=='_') return CharType.Under;
-            if (c=='-') return CharType.Dash;
-            if (c=='\n') return CharType.Return;
-            if (c=='"') return CharType.Quote;
-            if (c=='$') return CharType.Dollar;
-            if (c==';') return CharType.Semi;
-            if (c=='(') return CharType.Left;
-            if (c==')') return CharType.Right;
-            if (c=='\\') return CharType.Backslash;
+            if (c == ' ' | c == '\t' | c == '\r') { return CharType.White; }
+            if (c >= '0' & c <= '9') { return CharType.Digit; }
+            if (c >= 'A' & c <= 'Z') { return CharType.Lower; }
+            if (c >= 'a' & c <= 'z') { return CharType.Upper; }
+            if (c == '.') { return CharType.Dot; }
+            if (c == '_') { return CharType.Under; }
+            if (c == '-') { return CharType.Dash; }
+            if (c == '\n') { return CharType.Return; }
+            if (c == '"') { return CharType.Quote; }
+            if (c == '$') { return CharType.Dollar; }
+            if (c == ';') { return CharType.Semi; }
+            if (c == '(') { return CharType.Left; }
+            if (c == ')') { return CharType.Right; }
+            if (c == '\\') { return CharType.Backslash; }
             return CharType.Unknown;
             }
 
@@ -224,8 +224,7 @@ namespace Goedel.Platform {
         /// <param name="TokenType">Type of parse token received.</param>
         /// <returns>The token value as a string.</returns>
         public string Token(TokenType TokenType) {
-            TokenType GotTokenType;
-            string result = Token (out GotTokenType);
+            string result = Token (out var GotTokenType);
 
             if ((GotTokenType & TokenType )== GotTokenType) {
                 return result;
@@ -249,14 +248,14 @@ namespace Goedel.Platform {
             
             while (true) {
                 string result = RawToken (out TokenType);
-                if (TokenType == TokenType.EOF) return result;
+                if (TokenType == TokenType.EOF) {return result; }
 
                 if (TokenType == TokenType.Left) {
-                    if (BlockMode) throw new Exception ("Syntax Start Block Mode in Block Mode");
+                    if (BlockMode) { throw new Exception("Syntax Start Block Mode in Block Mode"); }
                     BlockMode = true;
                     }
                 else if (TokenType == TokenType.Right) {
-                    if (!BlockMode) throw new Exception ("Syntax End Block Mode not in Block Mode");
+                    if (!BlockMode) { throw new Exception("Syntax End Block Mode not in Block Mode"); }
                     BlockMode = false;
                     }
                 else if ((TokenType == TokenType.EOL) & BlockMode) {
@@ -275,7 +274,6 @@ namespace Goedel.Platform {
         /// <returns>The token received</returns>
         public string RawToken(out TokenType TokenType) {
             int state = 0;
-            char c;
             string result = "";
 
             if (TextBuffer.EOF) {
@@ -290,7 +288,7 @@ namespace Goedel.Platform {
                     }
                 }
 
-            while (TextBuffer.Get(out c)) {
+            while (TextBuffer.Get(out var c)) {
 
                 CharType CharType = Type(c);
                 int next_state = NextState[state, (int)CharType];
@@ -322,9 +320,7 @@ namespace Goedel.Platform {
         /// </summary>
         /// <returns>The record received.</returns>
         public DNSRecord DNSRecord() {
-            TokenType TokenType;
-            
-            string Tag = Token (out TokenType);
+            string Tag = Token (out var TokenType);
 
             if (TokenType == TokenType.ALabel) {
                 return Goedel.Platform.DNSRecord.Parse(Tag, this);
@@ -420,12 +416,11 @@ namespace Goedel.Platform {
         public List<string> Strings() {
             List<string> ListString = new List<string> ();
             while (true) {
-                TokenType TokenType;
-                string token = Token(out TokenType);
+                string token = Token(out var TokenType);
                 if (TokenType == TokenType.EOL) {
                     return ListString;
                     }
-                if (TokenType != TokenType.String) throw new Exception ("Syntax error expected string or EOL");
+                if (TokenType != TokenType.String) { throw new Exception("Syntax error expected string or EOL"); }
                 ListString.Add (token);
                 }
             }

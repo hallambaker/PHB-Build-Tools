@@ -45,6 +45,7 @@
     </Compile>
     <Compile Include="InitializeLinux.cs" />
     <Compile Include="KeyStore.cs" />
+    <Compile Include="NamespaceDoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

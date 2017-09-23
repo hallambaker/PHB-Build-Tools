@@ -74,7 +74,7 @@
     <CatalogVersion>100</CatalogVersion>
     <CatalogProductId>VS</CatalogProductId>
     <NamespaceSummaries>
-      <NamespaceSummaryItem name="(global)" isDocumented="False" />
+      <NamespaceSummaryItem name="(global)" isDocumented="True" />
 <NamespaceSummaryItem name="Goedel.ASN" isDocumented="True">Support routings for serializing and deserializing ASN.1  DER encoding for classes built with the PHB Tools ASN tool.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="Goedel.FSR" isDocumented="True">Support routines for Finite State Recognizers built with the PHB Tools FSR tool.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="Goedel.Protocol" isDocumented="True">Support routines for Web Services built with the PHB Tools PROTOGEN tool.</NamespaceSummaryItem>
@@ -123,6 +123,7 @@
     <Folder Include="media" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ContentProject\Libraries\AdvancedText.aml" />
     <None Include="ContentProject\Libraries\DNS.aml" />
     <None Include="ContentProject\VSIXIntegration.aml" />
     <None Include="ContentProject\Libraries\FileTools.aml" />
