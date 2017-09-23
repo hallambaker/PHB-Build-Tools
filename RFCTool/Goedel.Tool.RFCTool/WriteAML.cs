@@ -65,6 +65,7 @@ namespace Goedel.Document.RFC {
 
             var Stack = XMLOutput.Stack;
 
+            XMLOutput.Comment("This file was generated using RFCTool");
             XMLOutput.Start("topic", "id", Id, "revisionNumber", Version);
             XMLOutput.Start(ContentType, "xmlns", xmlns, "xmlns:xlink", xmlns_xlink);
 
@@ -178,7 +179,7 @@ namespace Goedel.Document.RFC {
             }
 
         public void Write(PRE Text) {
-            XMLOutput.Start("code", "language", "none");
+            XMLOutput.Start("code", "language", Text.Language ?? "none");
             XMLOutput.WriteVerbatim(Text.Text);
             XMLOutput.End();
             }

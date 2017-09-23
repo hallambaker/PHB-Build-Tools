@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--This file was generated using RFCTool-->
+<topic id="1afdeb2b-c964-42b6-8a19-6296acc0480c" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!--The Abstract-->
+    <introduction>
+      <para>
+        The _Goedel.Utilities_ namespace contains simple text handling tools that do not require the use of a lexical analyzer or support classes. The _Goedel.Registry_ namespace contains more advanced text utilities that do make use of or define additional classes. 
+      </para>
+    </introduction>
+    <!--The Body-->
+    <section>
+      <title>GScript Support Classes </title>
+      <content>
+      </content>
+      <sections>
+        <section>
+          <title>Convert text to language sensitive label </title>
+          <content>
+            <para>
+              These routines are typically used in GScript projects to generate variables that comply with requirements for computing languages such as C#. Since most projects only generate a  single output type, the language target may be defaulted by setting the propery ExtensionMethods._Target 
+            </para>
+            <code language="none">
+              <![CDATA[ExtensionMethods._Target = "cs";
+Console.Write (" Test".Label());]]>
+            </code>
+            <para>
+              Should produce the output  
+            </para>
+            <code language="none">
+              <![CDATA[_Test]]>
+            </code>
+            <para>
+              Alternatively, call the methods directly, this has the advantage of being type safe. 
+            </para>
+            <code language="none">
+              <![CDATA[Console.Write (" Test".CS());]]>
+            </code>
+          </content>
+        </section>
+        <section>
+          <title>Quoted string </title>
+          <content>
+            <para>
+               string Quoted (this string Base) 
+            </para>
+            <para>
+               string Quoted(this List Base) 
+            </para>
+          </content>
+        </section>
+        <section>
+          <title>Conditional Text </title>
+          <content>
+            <definitionTable>
+              <definedTerm>
+                string If(this bool Value, string Text)  
+              </definedTerm>
+              <definition>
+                <para>
+                  return the string value if the condition is met, otherwise an empty string. 
+                </para>
+              </definition>
+              <definedTerm>
+                string If(this bool Value, string TrueText, string FalseText)  
+              </definedTerm>
+              <definition>
+                <para>
+                  Return the first string value if a condition is met, otherwise return the second 
+                </para>
+              </definition>
+              <definedTerm>
+                To Be Specified stub. Writes out the value to the console an returns the string. 
+              </definedTerm>
+              <definition>
+                <para>
+                  string TBS (this string Value, bool Bold=true)  
+                </para>
+              </definition>
+            </definitionTable>
+          </content>
+        </section>
+        <section>
+          <title>Separator Class </title>
+          <content>
+            <para>
+              It is often necessary to create lists that have punctuation (e.g. a comma) between the items without a trailing comma. The separator class allows this to be done with a single line of code rather than having an if/then/else construct every time this is needed. 
+            </para>
+            <para>
+              The constructor for Separator specifies either a Next string or a First string and a Next string. The first time the ToString method is called on the class, the First  string is output (or an empty string if only one string was specified). The second and future times the ToString() method is called, the Next string is returned. 
+            </para>
+            <code language="none">
+              <![CDATA[var Texts = new List&amp;lt;string&amp;gt; {"one", "two", "three"};
+var Separator = new Separator (", ");
+foreach (var Text in Texts) {
+	Console.Write ("{0}{1}", Separator.ToString(), Text);
+    } 
+
+// Output is one,two,three]]>
+            </code>
+            <para>
+              The Separator instance can be reset by setting the IsFirst property to true
+            </para>
+          </content>
+        </section>
+        <section>
+          <title>XMLTextWriter Class </title>
+          <content>
+            <para>
+              The XMLTextWriter class is a simpler and more reliable means of generating XML text  output than the .NET classes. Sorry, but faffing about fighting the tools meant for  convenience to do the right thing gets tedious. 
+            </para>
+          </content>
+        </section>
+        <section>
+          <title>Script Class </title>
+          <content>
+            <para>
+              The Script class is the base class for all script classes generated using GScript. It contains tools that allow line indentation to be set globally and to expose various machine and assembly properties in a convenient fashion. 
+            </para>
+          </content>
+        </section>
+        <section>
+          <title>Boilerplate Class </title>
+          <content>
+            <para>
+              The Boilerplate class generates boilerplate text for the major open source licenses. 
+            </para>
+          </content>
+        </section>
+      </sections>
+    </section>
+    <section>
+      <title>Goedel3 Support Classes. </title>
+      <content>
+      </content>
+      <sections>
+        <section>
+          <title>Lexer Class </title>
+          <content>
+            <para>
+              The Lexer class is the base class for the Goedel schema parser. The code is old and does not use many of the features of the code that was built with it. 
+            </para>
+            <definitionTable>
+              <definedTerm>
+                Source and Position Classes 
+              </definedTerm>
+              <definition>
+                <para>
+                  Tracks source files and the line and column number at which errors occurred. 
+                </para>
+              </definition>
+              <definedTerm>
+                Registry 
+              </definedTerm>
+              <definition>
+                <para>
+                  Tracks Labels, Identifiers and Tokens defined in a schema. A label must occur exactly once. An Identifier may occur any number of times but must be matched by a Label definition. A Token may occur any number of times and may or may not be  matched by a label. 
+                </para>
+              </definition>
+            </definitionTable>
+          </content>
+        </section>
+      </sections>
+    </section>
+    <!--References-->
+    <relatedTopics>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

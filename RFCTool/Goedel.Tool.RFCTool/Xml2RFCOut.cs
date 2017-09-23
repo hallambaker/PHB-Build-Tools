@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using GM=Goedel.Document.Markdown;
+using Goedel.Utilities;
 
 namespace Goedel.Document.RFC {
     public class Xml2RFCOut {
@@ -12,38 +13,7 @@ namespace Goedel.Document.RFC {
             this.TextWriter = TextWriter;
             }
 
-        string XMLEscape (string In) {
-            string Result = "";
 
-            foreach (char c in In) {
-                switch (c) {
-                    case '<': Result += "&lt;"; break;
-                    case '>': Result += "&gt;"; break;
-                    case '&': Result += "&amp;"; break;
-                    case (char)160: Result += "&nbsp;"; break;
-                    default: Result += c; break;
-                    }
-                }
-
-            return Result;
-            }
-
-        string XMLAttributeEscape (string In) {
-            string Result = "";
-
-            foreach (char c in In) {
-                switch (c) {
-                    case '<': Result += "&lt;"; break;
-                    case '>': Result += "&gt;"; break;
-                    case '&': Result += "&amp;"; break;
-                    case '\"': Result += "&quot;"; break;
-                    case (char)160: Result += "&nbsp;"; break;
-                    default: Result += c; break;
-                    }
-                }
-
-            return Result;
-            }
 
         bool NotNull (params string[] Strings) {
             foreach (string S in Strings) {
@@ -74,11 +44,11 @@ namespace Goedel.Document.RFC {
 
             for (int i = 1; i < (Attributes.Length - 1); i += 2) {
                 if (Attributes[i + 1] != null) {
-                    TextWriter.Write(" {0}=\"{1}\"", Attributes[i], XMLAttributeEscape(Attributes[i + 1].Trim()));
+                    TextWriter.Write(" {0}=\"{1}\"", Attributes[i], Attributes[i + 1].Trim().XMLAttributeEscape());
                     }
                 }
             if (Value != null && Value.Length > 0) {
-                TextWriter.WriteLine(">{1}</{0}>", Tag, XMLEscape(Value.Trim()));
+                TextWriter.WriteLine(">{1}</{0}>", Tag, Value.Trim().XMLEscape());
                 }
             else {
                 TextWriter.WriteLine("/>");
@@ -90,7 +60,7 @@ namespace Goedel.Document.RFC {
 
             for (int i = 0; i < (Attributes.Length - 1); i += 2) {
                 if (Attributes[i + 1] != null) {
-                    TextWriter.Write(" {0}=\"{1}\"", Attributes[i], XMLAttributeEscape(Attributes[i + 1].Trim()));
+                    TextWriter.Write(" {0}=\"{1}\"", Attributes[i], Attributes[i + 1].Trim().XMLAttributeEscape());
                     }
                 }
             TextWriter.WriteLine(">");
@@ -187,7 +157,7 @@ namespace Goedel.Document.RFC {
                     break;
                     }
                 case BlockType.Term: {
-                    HangText = GetText(LI.Segments);
+                    HangText = LI.Text;
                     break;
                     }
                 case BlockType.Ordered:
@@ -249,20 +219,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        public string GetText (List<GM.TextSegment> Segments) {
-            var Buffer = new StringBuilder();
-                {
-                foreach (var Segment in Segments) {
-                    switch (Segment) {
-                        case GM.TextSegmentText Text: {
-                            Buffer.Append(XMLEscape(Text.Text));
-                            break;
-                            }
-                        }
-                    }
-                return Buffer.ToString();
-                }
-            }
+
 
         public void Write (List<GM.TextSegment> Segments, string Hangtext=null) {
             WriteStartTag("t", "hangText", Hangtext);
@@ -271,7 +228,7 @@ namespace Goedel.Document.RFC {
                 foreach (var Segment in Segments) {
                     switch (Segment) {
                         case GM.TextSegmentText Text: {
-                            TextWriter.Write(XMLEscape(Text.Text));
+                            TextWriter.Write(Text.Text.XMLEscape());
                             break;
                             }
                         case GM.TextSegmentOpen Text: {

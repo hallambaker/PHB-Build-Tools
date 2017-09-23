@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--This file was generated using RFCTool-->
+<topic id="e6ba006e-7ac9-4132-ae8d-5c080b5f02ce" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!--The Abstract-->
+    <introduction>
+      <para>
+        The DNSClient API is part of the Goedel.Platform library. Since the DNSClient integration needs access to information not provided by the portable library, it is necessary to link to and initialize either the Goedel.Platform.Framework library. 
+      </para>
+      <para>
+        (will remove this restriction soon) 
+      </para>
+    </introduction>
+    <!--The Body-->
+    <section>
+      <title>DNS Client API </title>
+      <content>
+        <para>
+          Example use: 
+        </para>
+        <code language="none">
+          <![CDATA[using Goedel.Platform;
+using Goedel.Platform.Framework;
+
+namespace TestDNS {
+
+    public class Main {
+         public static void main () {
+             //Register DNS Client with the portable libraries            
+             Framework.Initialize();  
+            
+            var service = DNSClient.Resolve("prismproof.org", 
+                "mmm", Fallback:DNSFallback.Prefix);
+
+            //Connect to service
+            }
+        }
+    }]]>
+        </code>
+      </content>
+      <sections>
+        <section>
+          <title>Retry strategy </title>
+          <content>
+            <para>
+              The (planned) retry strategy is based off figures from Windows 10 with the maximum timeout cut down to 5 seconds instead of 10. 
+            </para>
+            <para>
+              If one DNS resolver is configured: 
+            </para>
+            <para>
+               Try resolver A 
+            </para>
+            <para>
+               If no response, wait 1 second, retry resolver A 
+            </para>
+            <para>
+               If no response, wait 2 seconds, retry resolver A 
+            </para>
+            <para>
+               If no response, wait 2 seconds, retry resolver A 
+            </para>
+            <para>
+              If two DNS resolvers are configured: 
+            </para>
+            <para>
+               Try resolver A and B in parallel 
+            </para>
+            <para>
+               If no response, wait 1 second, retry resolver A 
+            </para>
+            <para>
+               If no response, wait 1 seconds, retry resolver B 
+            </para>
+          </content>
+        </section>
+        <section>
+          <title>Not Yet Implemented </title>
+          <content>
+            <para>
+              The DNS classes in Goedel.Platform need to implement 
+            </para>
+            <para>
+               Retry if request not received 
+            </para>
+            <para>
+               DNS TTL values are saved and the retrieved DNS parameters flushed when they become stale. 
+            </para>
+            <para>
+              Another part of the limitation is in  
+            </para>
+            <para>
+              Goedel.Protocol.Framework.WebRemoteSession 
+            </para>
+            <para>
+              This needs to be modified so that the ServiceDescription parameters are  updated properly 
+            </para>
+          </content>
+        </section>
+        <section>
+          <title>Test suite </title>
+          <content>
+            <para>
+              A test suite is needed to perform the following unit test matrix: 
+            </para>
+            <para>
+              Resolver configuration 
+            </para>
+            <para>
+               Unavailable U1=10.6.6.6, U2=10.66.66.66 
+            </para>
+            <para>
+               Available: A1=8.8.8.8, A2=8.8.4.4 
+            </para>
+            <para>
+              The tests need to be run to check for correct behavior in the following  configurations 
+            </para>
+            <para>
+               U1 
+            </para>
+            <para>
+               U1, U2 
+            </para>
+            <para>
+               A1 
+            </para>
+            <para>
+               A1, A2 
+            </para>
+            <para>
+               A1, U1 
+            </para>
+            <para>
+               U1, A1 
+            </para>
+            <para>
+              Zone file: 
+            </para>
+            <definitionTable>
+              <definedTerm>
+                null_test.prismproof.org 
+              </definedTerm>
+              <definition>
+                <para>
+                  No servers reachable 
+                </para>
+              </definition>
+              <definedTerm>
+                default_test.prismproof.org 
+              </definedTerm>
+              <definition>
+                <para>
+                  mmm.default_test 
+                </para>
+              </definition>
+              <definedTerm>
+                srv1_test.prismproof.org 
+              </definedTerm>
+              <definition>
+                <para>
+                  srv-&amp;gt;test1.prismproof.org 
+                </para>
+              </definition>
+              <definedTerm>
+                srv2_test.prismproof.org 
+              </definedTerm>
+              <definition>
+                <para>
+                  srv-&amp;gt;test1.prismproof.org{0,100}, test2.prismproof.org {0,50} 
+                </para>
+              </definition>
+              <definedTerm>
+                srv3_test.prismproof.org 
+              </definedTerm>
+              <definition>
+                <para>
+                  srv-&amp;gt;test1.prismproof.org{0,100}, test2.prismproof.org {0,50}, test3.prismproof.org {1,100} 
+                </para>
+              </definition>
+            </definitionTable>
+            <para>
+              Each test needs to be done multiple times with a check to see that the balancing works. 
+            </para>
+          </content>
+        </section>
+      </sections>
+    </section>
+    <!--References-->
+    <relatedTopics>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

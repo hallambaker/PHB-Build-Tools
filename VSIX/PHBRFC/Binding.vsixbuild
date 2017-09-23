@@ -41,6 +41,6 @@ Namespace Goedel.VSIX.Binding.RFC
 		Project CSharp
 		Project VisualBasic
 		Project SHFB
-		Process Goedel.Document.RFCToolBinding.BindingRFC Process2XML
+		Process Goedel.Document.RFCToolBinding.BindingRFC Process2AML
 		Description
 			|Convert RFC source in Markdown, XML or HTML to XML2RFC format.

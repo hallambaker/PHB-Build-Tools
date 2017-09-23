@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--This file was generated using RFCTool-->
+<topic id="23330bd8-ccd3-4de5-b806-860b84e42380" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!--The Abstract-->
+    <introduction>
+      <para>
+        The Goedel coding system used to build the code automation tools supports deep integration with Visual Studio via VSIX extension plug ins. 
+      </para>
+    </introduction>
+    <!--The Body-->
+    <section>
+      <title>Tool Sets </title>
+      <content>
+        <para>
+          For convenience, the tools are divided into three groups with related functionality which  may be installed separately: 
+        </para>
+        <definitionTable>
+          <definedTerm>
+            PHB Build Tools 
+          </definedTerm>
+          <definition>
+            <para>
+              The principal tools used to build the Mesh applications. 
+            </para>
+          </definition>
+          <definedTerm>
+            Goedel Tools 
+          </definedTerm>
+          <definition>
+            <para>
+              The tool building tools used to build all the other tools, including themselves. 
+            </para>
+          </definition>
+          <definedTerm>
+            Documentation tools 
+          </definedTerm>
+          <definition>
+            <para>
+              Tools used to build documentation. 
+            </para>
+          </definition>
+        </definitionTable>
+        <para>
+          The chief value of using code generation tools is code consistency and mantinability. It is easy enough to write a simple routine to parse a set of command line arguments but trying to read a routine that has been edited twenty times to add or reorganize  functionality is much harder. Using a tool to automate the process means that the same result is achieved every time. 
+        </para>
+      </content>
+    </section>
+    <section>
+      <title> PHB Build Tools </title>
+      <content>
+        <para>
+          The PHB Build Tools set contains code tools that do not depend on other code tools. 
+        </para>
+        <definitionTable>
+          <definedTerm>
+            ASN2CS 
+          </definedTerm>
+          <definition>
+            <para>
+              Tool for generating ASN1 parser/encoder without the hassle of Assinine.One 
+            </para>
+          </definition>
+          <definedTerm>
+            DomainerCS 
+          </definedTerm>
+          <definition>
+            <para>
+              Scripting tool, converts descriptions of DNS resource records to a class providing scripting, serialization and presentation support. 
+            </para>
+          </definition>
+          <definedTerm>
+            ProtoGen 
+          </definedTerm>
+          <definition>
+            <para>
+              Protocol compiler. Generates code for implementing JSON/REST based Web Services in C# or C. 
+            </para>
+          </definition>
+          <definedTerm>
+            RegistryCS 
+          </definedTerm>
+          <definition>
+            <para>
+              Tool for generating code to map a data structure to Windows registry keys. 
+            </para>
+          </definition>
+          <definedTerm>
+            TrojanGTK 
+          </definedTerm>
+          <definition>
+            <para>
+              Tool for generating a GUI interface using GTK# 
+            </para>
+          </definition>
+          <definedTerm>
+            VSIXBuild 
+          </definedTerm>
+          <definition>
+            <para>
+              Tool for generating VSIX manifests for code generators built using Goedel and other tools 
+            </para>
+          </definition>
+        </definitionTable>
+      </content>
+    </section>
+    <section>
+      <title>Goedel Tools </title>
+      <content>
+        <para>
+          The Goedel tool set contains the tools that are used to build the Goedel tool set and all the other tools. These are kept separate from the other tool builds as development of code that writes itself is inherently complicated. Each one of the five tools is dependent on the other five. 
+        </para>
+        <definitionTable>
+          <definedTerm>
+            CommandCS 
+          </definedTerm>
+          <definition>
+            <para>
+              Tool for generating a command line parser. Windows and Unix style command line syntax are supported.  
+            </para>
+          </definition>
+          <definedTerm>
+            Exceptional 
+          </definedTerm>
+          <definition>
+            <para>
+              Tool for generating exception declarations from description file. 
+            </para>
+          </definition>
+          <definedTerm>
+            FSRCS 
+          </definedTerm>
+          <definition>
+            <para>
+              Tool for generating code to implement a Finite State Recognizer from a set of state transitions. Mostly useful for implementing Lexical analysers. 
+            </para>
+          </definition>
+          <definedTerm>
+            Goedel3 
+          </definedTerm>
+          <definition>
+            <para>
+              Scripting tool, converts a file containing scripting commands to C# code that implements the commands. 
+            </para>
+          </definition>
+          <definedTerm>
+            GScript 
+          </definedTerm>
+          <definition>
+            <para>
+              Scripting tool, converts a file containing scripting commands to C# code that implements the commands. 
+            </para>
+          </definition>
+        </definitionTable>
+      </content>
+    </section>
+    <section>
+      <title>Documentation tools </title>
+      <content>
+        <para>
+          The documentation tools are designed to support generation of two types of documentation: 
+        </para>
+        <para>
+           Internet Drafts (and RFCs) 
+        </para>
+        <para>
+           AML files for use with Sandcastle Help File Builder. 
+        </para>
+        <definitionTable>
+          <definedTerm>
+            RFC2TXT 
+          </definedTerm>
+          <definition>
+            <para>
+              Convert RFC source in Markdown, XML or HTML to Plaintext format. 
+            </para>
+          </definition>
+          <definedTerm>
+            RFC2XML 
+          </definedTerm>
+          <definition>
+            <para>
+              Convert RFC source in Markdown, XML or HTML to XML2RFC format. 
+            </para>
+          </definition>
+          <definedTerm>
+            RFC2MD 
+          </definedTerm>
+          <definition>
+            <para>
+              Convert RFC source in Markdown, XML or HTML to Markdown format. 
+            </para>
+          </definition>
+          <definedTerm>
+            RFC2HTML 
+          </definedTerm>
+          <definition>
+            <para>
+              Convert RFC source in Markdown, XML or HTML to HTML 
+            </para>
+          </definition>
+          <definedTerm>
+            MD2AML 
+          </definedTerm>
+          <definition>
+            <para>
+              Convert Markdown, XML or HTML to AML format. 
+            </para>
+          </definition>
+        </definitionTable>
+      </content>
+    </section>
+    <!--References-->
+    <relatedTopics>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

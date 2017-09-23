@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASN", "ASN", "{EA3BE96C-E020-4FF9-A144-90817A257E3C}"
 EndProject
@@ -10,6 +10,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domainer", "Domainer", "{738926F3-25AD-4D3B-8BF4-B3413D940BE5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exceptional", "Exceptional", "{251DEDF2-C6B2-46BC-95AB-E96B6A4E3B4F}"
+	ProjectSection(SolutionItems) = preProject
+		Exceptional\Exceptional.md = Exceptional\Exceptional.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FSR", "FSR", "{E66E0023-8DD5-48D1-863F-5581B4D9E848}"
 EndProject
@@ -26,6 +29,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DocTools", "DocTools", "{D45013E8-B27D-4469-8547-C22E8CB95981}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Distribution", "Distribution", "{3520B12D-FC1D-4A96-8954-E69F5F7DBA53}"
+	ProjectSection(SolutionItems) = preProject
+		VSIX\VSIXIntegration.md = VSIX\VSIXIntegration.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trojan3", "Trojan3", "{1694405C-A46E-4DDE-B318-E19EA3BE587B}"
 	ProjectSection(SolutionItems) = preProject
@@ -45,6 +51,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MakeyMakey", "MakeyMakey", "{5EFE82AA-D2A1-4565-B4EF-5CC736153F06}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{1CEDA244-78DA-46A7-A033-E3409CAA9C92}"
+	ProjectSection(SolutionItems) = preProject
+		Libraries\Libraries.md = Libraries\Libraries.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trace", "Trace", "{455D1C29-1394-483F-84C9-3E8AE3CE86D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellASN", "ASN\ShellASN\ShellASN.csproj", "{D5944895-3830-4375-9C9C-A71F36FA6C42}"
 EndProject
@@ -142,8 +153,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Document.Test", "RFC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunDocs", "RunDocs\RunDocs.csproj", "{D2CA93C3-31B0-483D-9FA6-24C3C5DDA392}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trace", "Trace", "{455D1C29-1394-483F-84C9-3E8AE3CE86D6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Trace", "Trace\Goedel.Trace\Goedel.Trace.csproj", "{FFDC52AB-912A-4F9C-85A7-82D1847D3235}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Trace.Client", "Trace\Goedel.Trace.Client\Goedel.Trace.Client.csproj", "{373D18C0-B3D8-4F95-A9B2-E695179E7E05}"
@@ -158,7 +167,25 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Protocol.Framework",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Protocol.Debug", "Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj", "{0586B4C1-814C-4D98-B6F1-180CD4E2FAAB}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Specification(1)", "Documentation\Specification\", "{316BD3A0-578C-4DB6-9661-5959FBD48801}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Specification", "Documentation\Specification\", "{316BD3A0-578C-4DB6-9661-5959FBD48801}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_54388"
+		Debug.AspNetCompiler.PhysicalPath = "Documentation\Specification\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54388\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_54388"
+		Release.AspNetCompiler.PhysicalPath = "Documentation\Specification\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54388\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "54388"
+	EndProjectSection
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_54388"
@@ -181,7 +208,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Specification(1)", "Documen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Platform", "Libraries\Goedel.Platform\Goedel.Platform.csproj", "{D6840E5B-E181-4AF6-A7A5-96FAD3278BF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Debug", "Libraries\Goedel.Debug\Goedel.Debug.csproj", "{06119B3B-980A-4F6F-B8D7-88F5169F94AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Debug", "Libraries\Goedel.Debug\Goedel.Debug.csproj", "{06119B3B-980A-4F6F-B8D7-88F5169F94AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -2074,5 +2101,8 @@ Global
 		{316BD3A0-578C-4DB6-9661-5959FBD48801} = {F61136C8-EA6D-4458-AF67-E40927C1858D}
 		{D6840E5B-E181-4AF6-A7A5-96FAD3278BF1} = {1CEDA244-78DA-46A7-A033-E3409CAA9C92}
 		{06119B3B-980A-4F6F-B8D7-88F5169F94AD} = {1CEDA244-78DA-46A7-A033-E3409CAA9C92}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5C775BBD-7E70-4077-B923-32BE86251C77}
 	EndGlobalSection
 EndGlobal

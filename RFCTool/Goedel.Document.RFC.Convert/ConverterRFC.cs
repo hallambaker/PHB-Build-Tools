@@ -215,6 +215,13 @@ namespace MakeRFC {
                             }
                         case "pre": {
                             var TextBlock = new Goedel.Document.RFC.PRE(Preformat(Block.Text), "");
+
+                            if (Block.Attributes != null) {
+                                if (Block.Attributes[0].Value != null) {
+                                    TextBlock.Language = Block.Attributes[0].Value;
+                                    }
+                                }
+
                             CurrentText.Add(TextBlock);
                             break;
                             }

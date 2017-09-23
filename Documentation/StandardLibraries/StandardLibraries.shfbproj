@@ -18,13 +18,17 @@
     <HtmlHelpName>GoedelPortable</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
-      <Argument Key="logoFile" Value="Help.png" xmlns="" />
-      <Argument Key="logoHeight" Value="" xmlns="" />
-      <Argument Key="logoWidth" Value="" xmlns="" />
-      <Argument Key="logoAltText" Value="" xmlns="" />
-      <Argument Key="logoPlacement" Value="left" xmlns="" />
-      <Argument Key="logoAlignment" Value="left" xmlns="" />
-      <Argument Key="maxVersionParts" Value="" xmlns="" />
+      <Argument Key="logoFile" Value="Help.png" />
+      <Argument Key="logoHeight" Value="" />
+      <Argument Key="logoWidth" Value="" />
+      <Argument Key="logoAltText" Value="" />
+      <Argument Key="logoPlacement" Value="left" />
+      <Argument Key="logoAlignment" Value="left" />
+      <Argument Key="maxVersionParts" Value="" />
+      <Argument Key="defaultLanguage" Value="cs" />
+      <Argument Key="includeEnumValues" Value="true" />
+      <Argument Key="baseSourceCodeUrl" Value="https://github.com/hallambaker/PHB-Build-Tools/blob/master/src/" />
+      <Argument Key="requestExampleUrl" Value="" />
     </TransformComponentArguments>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
@@ -71,26 +75,26 @@
     <CatalogProductId>VS</CatalogProductId>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="False" />
-      <NamespaceSummaryItem name="Goedel.ASN" isDocumented="True">Support routings for serializing and deserializing ASN.1  DER encoding for classes built with the PHB Tools ASN tool.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.FSR" isDocumented="True">Support routines for Finite State Recognizers built with the PHB Tools FSR tool.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Protocol" isDocumented="True">Support routines for Web Services built with the PHB Tools PROTOGEN tool.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Registry" isDocumented="True">Support routines for various systems built with the PHB Tools Goedel tool.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Utilities" isDocumented="True">Support routines common to all systems built with PHB tools.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Cryptography" isDocumented="True">Platform independent cryptographic functions. These include wrappers for the various Framework APIs to provide consistency across all domains and to provide convenience functions. Also included is support for various cryptographic functions such as key derrivation, key wrap, fingerprint derrivation (UDF), etc.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Cryptography.Jose" isDocumented="True">Cryptographic libraries for JSON Object Signing and Encryption (JOSE) support. These include classes to generate JSON Web Signature, JSON Web Encryption and JSON Web Key structures.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Cryptography.PKIX" isDocumented="True">Crypotographic support functions specific to PKIX that are not exposed in the standard platform runtime. These include certificate generation and various formats for public and private key information.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Command" isDocumented="True">Support routings for command line parsers built with the PHB Tools ASN tool.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Cryptography.Framework" isDocumented="True">Cryptography library using the .NET Framework providers. Will merge into .NET standard.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Cryptography.KeyFile" isDocumented="True">Libraries for serializing and deserializing various cryptographic file formats (PEM, SSH, etc.)</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.IO" isDocumented="True">General support libraries for file operations.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Platform" isDocumented="True">An abstraction layer for access to platform specific features including key storage primitives.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Platform.Framework" isDocumented="True">Implementation of the platform abstractions for .NET Framework</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Protocol.Debug" isDocumented="True">Debugging and documentation classes for PROTOGEN Web Services.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Goedel.Protocol.Framework" isDocumented="True">Implementation of .NET Framework specific protocol features.</NamespaceSummaryItem>
-    </NamespaceSummaries>
+<NamespaceSummaryItem name="Goedel.ASN" isDocumented="True">Support routings for serializing and deserializing ASN.1  DER encoding for classes built with the PHB Tools ASN tool.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.FSR" isDocumented="True">Support routines for Finite State Recognizers built with the PHB Tools FSR tool.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Protocol" isDocumented="True">Support routines for Web Services built with the PHB Tools PROTOGEN tool.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Registry" isDocumented="True">Support routines for various systems built with the PHB Tools Goedel tool.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Utilities" isDocumented="True" />
+<NamespaceSummaryItem name="Goedel.Cryptography" isDocumented="True">Platform independent cryptographic functions. These include wrappers for the various Framework APIs to provide consistency across all domains and to provide convenience functions. Also included is support for various cryptographic functions such as key derrivation, key wrap, fingerprint derrivation (UDF), etc.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Cryptography.Jose" isDocumented="True">Cryptographic libraries for JSON Object Signing and Encryption (JOSE) support. These include classes to generate JSON Web Signature, JSON Web Encryption and JSON Web Key structures.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Cryptography.PKIX" isDocumented="True">Crypotographic support functions specific to PKIX that are not exposed in the standard platform runtime. These include certificate generation and various formats for public and private key information.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Command" isDocumented="True">Support routings for command line parsers built with the PHB Tools ASN tool.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Cryptography.Framework" isDocumented="True">Cryptography library using the .NET Framework providers. Will merge into .NET standard.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Cryptography.KeyFile" isDocumented="True">Libraries for serializing and deserializing various cryptographic file formats (PEM, SSH, etc.)</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.IO" isDocumented="True">General support libraries for file operations.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Platform" isDocumented="True">An abstraction layer for access to platform specific features including key storage primitives.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Platform.Framework" isDocumented="True">Implementation of the platform abstractions for .NET Framework</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Protocol.Debug" isDocumented="True">Debugging and documentation classes for PROTOGEN Web Services.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Goedel.Protocol.Framework" isDocumented="True">Implementation of .NET Framework specific protocol features.</NamespaceSummaryItem></NamespaceSummaries>
     <ProjectSummary>Support libraries for code generated with Goedel code synthesis tools.</ProjectSummary>
     <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
     <WorkingPath>..\..\..\scratch\standard\</WorkingPath>
+    <SourceCodeBasePath>..\..\</SourceCodeBasePath>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
@@ -112,39 +116,32 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Content" />
+    <Folder Include="ContentProject\" />
+    <Folder Include="ContentProject\Libraries\" />
     <Folder Include="Content\VersionHistory" />
     <Folder Include="icons" />
     <Folder Include="media" />
-    <Folder Include="Markdown" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\CodeStandards.aml" />
-    <None Include="Content\CryptographyLibraries.aml" />
-    <None Include="Content\Documentation.aml" />
-    <None Include="Content\Exceptional.aml" />
-    <None Include="Content\FrameworkLibraries.aml" />
-    <None Include="Content\FSRTool.aml" />
-    <None Include="Content\Libraries.aml" />
-    <None Include="Content\ParserLibraries.aml" />
-    <None Include="Content\ProtocolLibraries.aml" />
-    <None Include="Content\TextConversion.aml" />
-    <None Include="Content\UniversalLibraries.aml" />
+    <None Include="ContentProject\Libraries\DNS.aml" />
+    <None Include="ContentProject\VSIXIntegration.aml" />
+    <None Include="ContentProject\Libraries\FileTools.aml" />
+    <None Include="ContentProject\Welcome.aml" />
+    <None Include="ContentProject\Libraries\TextConversion.aml" />
+    <None Include="ContentProject\Libraries\ParserLibraries.aml" />
+    <None Include="ContentProject\Libraries\CryptographyLibraries.aml" />
+    <None Include="ContentProject\Libraries\ProtocolLibraries.aml" />
+    <None Include="ContentProject\Libraries.aml" />
+    <None Include="ContentProject\Exceptional.aml" />
+    <None Include="ContentProject\CodeStandards.aml" />
     <None Include="Content\VersionHistory\v1.0.0.0.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
-    <None Include="Content\VSIXIntegration.aml" />
-    <None Include="Content\Welcome.aml" />
     <None Include="PreBuild.bat" />
   </ItemGroup>
   <ItemGroup>
     <ContentLayout Include="ContentLayout.content" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Markdown\CodeStandards.md" />
-    <Content Include="Markdown\Documentation.md" />
-    <Content Include="Markdown\VSIXIntegration.md" />
-    <Content Include="Markdown\Libraries.md" />
-    <XamlConfiguration Include="Content\CryptographyLibraries.md" />
-    <Content Include="Cryptography.html" />
     <Content Include="icons\Help.png" />
   </ItemGroup>
   <ItemGroup>

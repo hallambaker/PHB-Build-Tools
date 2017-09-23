@@ -83,19 +83,16 @@ namespace Goedel.Registry {
         static System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 
         /// <summary>The operating system platform name.</summary>
-        public static string Platform {
-            get => OperatingSystem.Platform.ToString (); 
-            }
+        public static string Platform => OperatingSystem.Platform.ToString (); 
+ 
 
         /// <summary>The operating system version.</summary>
-        public static string PlatformVersion {
-            get => OperatingSystem.Version.ToString(); 
-            }
+        public static string PlatformVersion  => OperatingSystem.Version.ToString(); 
+
 
         /// <summary>The assembly title.</summary>
-        public static string AssemblyTitle {
-            get => GetAssemblyTitle(EntryAssembly); 
-            }
+        public static string AssemblyTitle  => GetAssemblyTitle(EntryAssembly); 
+
 
         /// <summary>Get assembly title.</summary>
         /// <param name="Assembly">The assembly being queried.</param>
@@ -114,10 +111,9 @@ namespace Goedel.Registry {
             }
 
         /// <summary>The assembly version</summary>
-        public static string AssemblyVersion {
-            get => EntryAssembly != null ? GetAssemblyVersion(EntryAssembly) :
+        public static string AssemblyVersion => EntryAssembly != null ? GetAssemblyVersion(EntryAssembly) :
                         "Unknown";
-            }
+
 
         /// <summary>Get assembly version</summary>
         /// <param name="Assembly">The assembly being queried.</param>
@@ -127,11 +123,9 @@ namespace Goedel.Registry {
             }
 
         /// <summary>The Assembly Description</summary>
-        public static string AssemblyDescription {
-            get => EntryAssembly != null ? GetAssemblyDescription(EntryAssembly) :
+        public static string AssemblyDescription => EntryAssembly != null ? GetAssemblyDescription(EntryAssembly) :
                         "Unknown";
 
-            }
 
         /// <summary>Get Assembly Description</summary>
         /// <param name="Assembly">The assembly being queried.</param>
@@ -151,10 +145,9 @@ namespace Goedel.Registry {
             }
 
         /// <summary>The Assembly Product</summary>
-        public static string AssemblyProduct {
-            get => EntryAssembly != null ? GetAssemblyProduct(EntryAssembly) :
+        public static string AssemblyProduct => EntryAssembly != null ? GetAssemblyProduct(EntryAssembly) :
                         "Unknown";
-            }
+
 
         /// <summary>Get Assembly Product</summary>
         /// <param name="Assembly">The assembly being queried.</param>
@@ -172,10 +165,9 @@ namespace Goedel.Registry {
             }
 
         /// <summary>The Assembly Copyright</summary>
-        public static string AssemblyCopyright {
-            get => EntryAssembly != null ? GetAssemblyCopyright(EntryAssembly) :
+        public static string AssemblyCopyright  => EntryAssembly != null ? GetAssemblyCopyright(EntryAssembly) :
                         "Unknown";
-            }
+
 
         /// <summary>Get Assembly Copyright</summary>
         /// <param name="Assembly">The assembly being queried.</param>
@@ -193,10 +185,9 @@ namespace Goedel.Registry {
             }
 
         /// <summary>The Assembly Company</summary>
-        public static string AssemblyCompany {
-            get => EntryAssembly != null ? GetAssemblyCompany(EntryAssembly) :
+        public static string AssemblyCompany  => EntryAssembly != null ? GetAssemblyCompany(EntryAssembly) :
                         "Unknown";
-            }
+
 
         /// <summary>Get Assembly Company</summary>
         /// <param name="Assembly">The assembly being queried.</param>

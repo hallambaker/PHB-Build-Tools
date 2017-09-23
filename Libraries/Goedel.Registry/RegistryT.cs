@@ -40,7 +40,7 @@ namespace Goedel.Registry {
         public DateTime Started = DateTime.Now;
 
         /// <summary>Calculate elapsed time.</summary>
-        public TimeSpan Elapsed { get => DateTime.Now - Started;  }
+        public TimeSpan Elapsed  => DateTime.Now - Started; 
 
         }
 
@@ -319,9 +319,8 @@ namespace Goedel.Registry {
         /// <summary>
         /// Get the object being defined.
         /// </summary>
-        public T Definition {
-            get => ID?.Object; 
-            }
+        public T Definition => ID?.Object; 
+
 
         /// <summary>
         /// Default constructor.
@@ -354,9 +353,8 @@ namespace Goedel.Registry {
         /// <summary>
         /// Return the label value
         /// </summary>
-        public string Label {
-            get => ToString(); 
-            }
+        public string Label  => ToString(); 
+
         }
 
     /// <summary>

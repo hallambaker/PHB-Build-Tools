@@ -14,7 +14,6 @@ namespace Goedel.Utilities {
     /// <returns>The exception to throw</returns>
     public delegate System.Exception ThrowDelegate(object Reason = null);
 
-
     /// <summary>
     /// Convenience class for constructing an object on the fly to report exception
     /// parameters of type integer or string.
@@ -26,19 +25,19 @@ namespace Goedel.Utilities {
         /// <summary>A string value</summary>
         public string String { get; set; }
 
-        ///// <summary>
-        ///// Factory method to create and return object with specified integer
-        ///// and/or string values.
-        ///// </summary>
-        ///// <param name="Int">The integer value</param>
-        ///// <param name="String">The string value</param>
-        ///// <returns></returns>
-        //public ExceptionData Box (int Int=0, string String="") {
-        //    return new ExceptionData() {
-        //        Int = Int,
-        //        String = String
-        //        };
-        //    }
+        /// <summary>
+        /// Factory method to create and return object with specified integer
+        /// and/or string values.
+        /// </summary>
+        /// <param name="Int">The integer value</param>
+        /// <param name="String">The string value</param>
+        /// <returns>The boxed exception data.</returns>
+        public ExceptionData Box (int Int = 0, string String = "") {
+            return new ExceptionData() {
+                Int = Int,
+                String = String
+                };
+            }
         }
 
 

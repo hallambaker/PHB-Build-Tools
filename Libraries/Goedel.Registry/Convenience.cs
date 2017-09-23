@@ -133,8 +133,7 @@ namespace Goedel.Registry {
             }
 
         /// <summary>
-        /// Return the string value if a condition is met, otherwise return an
-        /// empty string.
+        /// Return the first string value if a condition is met, otherwise return the second
         /// </summary>
         /// <param name="Value">The condition value.</param>
         /// <param name="TrueText">The string to return if Value is true.</param>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using GM = Goedel.Document.Markdown;
+using Goedel.Utilities;
 
 namespace Goedel.Document.RFC {
     public partial class Document {
@@ -478,30 +479,42 @@ namespace Goedel.Document.RFC {
         public List<GM.TextSegment> Segments;
 
 
-        public string Text => _Text; // Hack -- Kill this
-        public string                   _Text;
-
+        public string Text => GetText(); 
         public override BlockType BlockType  => BlockType.Paragraph; 
 
         public P () {
             }
 
 
-        public P(string Text, string ID) {
+        public P (string Text, string ID) {
             this.SetableID = ID;
-            this._Text = Text;
+            Segments = Segments ?? new List<GM.TextSegment>();
+            Segments.Add(new GM.TextSegmentText(Text));
             }
 
         public string GetText() {
-            return null;
+            var Buffer = new StringBuilder();
+
+            foreach (var Segment in Segments) {
+                switch (Segment) {
+                    case GM.TextSegmentText Text: {
+                        Buffer.Append(Text.Text.XMLEscape());
+                        break;
+                        }
+                    }
+                }
+            return Buffer.ToString();
             }
 
         }
 
     public class PRE : P  {
-        public override BlockType BlockType => BlockType.Verbatim; 
 
-        public PRE (string Text, string ID) : base (Text, ID){
+        public string Language = "none";
+
+        public override BlockType BlockType => BlockType.Verbatim;
+
+        public PRE (string Text, string ID) : base(Text, ID) {
 
             }
         }
@@ -512,10 +525,10 @@ namespace Goedel.Document.RFC {
         public BlockType         Type;
         public int              Level;
         public int              Index;
-        public override BlockType BlockType  => Type; 
+        public override BlockType BlockType  => Type;
 
-        public LI (string Text, string ID, BlockType Type, int Level) : 
-                    base (Text, ID){
+        public LI (string Text, string ID, BlockType Type, int Level) :
+                    base(Text, ID) {
             this.Type = Type; this.Level = Level;
             }
 

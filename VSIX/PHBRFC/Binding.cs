@@ -743,7 +743,7 @@ namespace Goedel.VSIX.Binding.RFC {
 
             // Process the data
             var Script = new global::Goedel.Document.RFCToolBinding.BindingRFC();
-            Script.Process2XML (wszInputFilePath, Reader, Writer);
+            Script.Process2AML (wszInputFilePath, Reader, Writer);
 
             // Convert writer data to a string and then a byte array
             var Text = Writer.ToString();

@@ -201,7 +201,7 @@ namespace Goedel.Document.Markdown {
 
         public string Extension;
 
-        public string FullName {get => FileInfo.FullName; } 
+        public string FullName => FileInfo.FullName; 
 
         public Resource() {
             }

@@ -4,7 +4,7 @@ namespace Goedel.Utilities {
 
     /// <summary>
     /// The Goedel.Utilities namespace contains various utilities classes. These include
-    /// <list type=">">
+    /// <list type="bullet">
     /// <item>Methods of converting binary data to/from character strings using
     /// standard encodings.</item>
     /// <item>Testing if a character is of a particular type.</item>

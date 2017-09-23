@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5BB8933C-92BF-4D8F-8B5E-7A170FF18B69}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ContentProject</RootNamespace>
+    <AssemblyName>ContentProject</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CodeStandards.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CodeStandards.md</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CodeStandards.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>CodeStandards.aml</LastGenOutput>
+    </None>
+    <None Include="Libraries\DNS.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DNS.md</DependentUpon>
+    </None>
+    <None Include="Libraries\DNS.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>DNS.aml</LastGenOutput>
+    </None>
+    <None Include="Exceptional.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptional.md</DependentUpon>
+    </None>
+    <None Include="Exceptional.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Exceptional.aml</LastGenOutput>
+    </None>
+    <None Include="Libraries.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Libraries.md</DependentUpon>
+    </None>
+    <None Include="Libraries.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Libraries.aml</LastGenOutput>
+    </None>
+    <None Include="Libraries\CryptographyLibraries.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CryptographyLibraries.md</DependentUpon>
+    </None>
+    <None Include="Libraries\CryptographyLibraries.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>CryptographyLibraries.aml</LastGenOutput>
+    </None>
+    <None Include="Libraries\FileTools.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FileTools.md</DependentUpon>
+    </None>
+    <None Include="Libraries\FileTools.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>FileTools.aml</LastGenOutput>
+    </None>
+    <None Include="Libraries\ParserLibraries.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ParserLibraries.md</DependentUpon>
+    </None>
+    <None Include="Libraries\ParserLibraries.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>ParserLibraries.aml</LastGenOutput>
+    </None>
+    <None Include="Libraries\ProtocolLibraries.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProtocolLibraries.md</DependentUpon>
+    </None>
+    <None Include="Libraries\ProtocolLibraries.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>ProtocolLibraries.aml</LastGenOutput>
+    </None>
+    <None Include="Libraries\AdvancedText.aml">
+      <DependentUpon>AdvancedText.md</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </None>
+    <None Include="Libraries\AdvancedText.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>AdvancedText.aml</LastGenOutput>
+    </None>
+    <None Include="Libraries\TextConversion.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TextConversion.md</DependentUpon>
+    </None>
+    <None Include="Libraries\TextConversion.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>TextConversion.aml</LastGenOutput>
+    </None>
+    <None Include="VSIXIntegration.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VSIXIntegration.md</DependentUpon>
+    </None>
+    <None Include="VSIXIntegration.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>VSIXIntegration.aml</LastGenOutput>
+    </None>
+    <None Include="Welcome.aml">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Welcome.md</DependentUpon>
+    </None>
+    <None Include="Welcome.md">
+      <Generator>MD2AML</Generator>
+      <LastGenOutput>Welcome.aml</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

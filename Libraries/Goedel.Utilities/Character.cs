@@ -77,5 +77,51 @@ namespace Goedel.Utilities {
         public static int ToUTF8(this string Text, byte[] Buffer, int Position) =>
             UTF8Encoding.GetBytes(Text, 0, Text.Length, Buffer, Position);
 
+
+        /// <summary>
+        /// Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
+        /// </summary>
+        /// <param name="In">String to be escaped</param>
+        /// <returns>The escaped string</returns>
+        public static string XMLEscape (this string In) {
+            var Result = new StringBuilder();
+
+            foreach (char c in In) {
+                switch (c) {
+                    case '<': Result.Append ("&lt;"); break;
+                    case '>': Result.Append("&gt;"); break;
+                    case '&': Result.Append("&amp;"); break;
+                    case (char)160: Result.Append("&nbsp;"); break;
+                    default: Result.Append(c); break;
+                    }
+                }
+
+            return Result.ToString();
+            }
+
+        /// <summary>
+        /// Escape text using XML acharacter entity sequences &amp;lt;, &amp;gt;, &amp;amp;
+        /// &amp;quot; and &amp;nbsp;.
+        /// </summary>
+        /// <param name="In">String to be escaped</param>
+        /// <returns>The escaped string</returns>
+        public static string XMLAttributeEscape (this string In) {
+            var Result = new StringBuilder();
+
+            foreach (char c in In) {
+                switch (c) {
+                    case '<': Result.Append("&lt;"); break;
+                    case '>': Result.Append("&gt;"); break;
+                    case '&': Result.Append("&amp;"); break;
+                    case '\"': Result.Append("&quot;"); break;
+                    case (char)160: Result.Append("&nbsp;"); break;
+                    default: Result.Append(c); break;
+                    }
+                }
+
+            return Result.ToString();
+            }
+
+
         }
     }
