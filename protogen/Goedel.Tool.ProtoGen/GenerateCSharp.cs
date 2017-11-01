@@ -137,9 +137,7 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("        /// <summary>\n{0}", _Indent);
 							_Output.Write ("        /// Well Known service identifier.\n{0}", _Indent);
 							_Output.Write ("        /// </summary>\n{0}", _Indent);
-							_Output.Write ("		public override string GetWellKnown {{\n{0}", _Indent);
-							_Output.Write ("			get => WellKnown;\n{0}", _Indent);
-							_Output.Write ("			}}\n{0}", _Indent);
+							_Output.Write ("		public override string GetWellKnown => WellKnown;\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("        /// <summary>\n{0}", _Indent);
 							_Output.Write ("        /// Well Known service identifier.\n{0}", _Indent);
@@ -149,9 +147,7 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("        /// <summary>\n{0}", _Indent);
 							_Output.Write ("        /// Well Known service identifier.\n{0}", _Indent);
 							_Output.Write ("        /// </summary>\n{0}", _Indent);
-							_Output.Write ("		public override string GetDiscovery {{\n{0}", _Indent);
-							_Output.Write ("			get => Discovery;\n{0}", _Indent);
-							_Output.Write ("			}}\n{0}", _Indent);
+							_Output.Write ("		public override string GetDiscovery => Discovery;\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("        /// <summary>\n{0}", _Indent);
 							_Output.Write ("        /// The active JPCSession.\n{0}", _Indent);

@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Registry;
+using Goedel.Utilities;
 
 
 //
@@ -1347,7 +1348,8 @@ namespace Goedel.Tool.Domainer {
                 case "NA": return NewNA();
 
 				}
-            throw new System.Exception ("Reserved word not recognized \"" + Label + "\"");
+
+            throw new NotFoundReserved ("Reserved word not recognized \"" + Label + "\"");
             }
 
 
@@ -1722,7 +1724,7 @@ namespace Goedel.Tool.Domainer {
             }
 
         void Pop () {
-            if (Stack.Count == 0) throw new System.Exception ("Internal Parser Error");
+			Assert.False (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -1739,9 +1741,10 @@ namespace Goedel.Tool.Domainer {
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |
-                (Token == TokenType.COMMENT)) return;
-            if (Token == TokenType.INVALID)
-                throw new System.Exception("Invalid Token");
+                (Token == TokenType.COMMENT)) {
+				return;
+				}
+			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -1756,7 +1759,9 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode._Choice;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected START");
+                        else {
+							throw new ExpectedStart ();
+							}
 
                     case StateCode._Choice:                //      LABEL Class | END
                         if (Token == TokenType.LABEL) {
@@ -1770,7 +1775,7 @@ namespace Goedel.Tool.Domainer {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
-                                throw new System.Exception("Parser Error Expected [Class]");
+                                throw new Expected("Parser Error Expected [Class]");
                                 }
                             break;
                             }
@@ -1778,10 +1783,13 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode._End;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [Class]");
+                        else {
+							throw new ExpectedClass();
+							}
 
-                    case StateCode._End:                   //      -
-                        throw new System.Exception("Too Many Closing Braces");
+                    case StateCode._End: {                  //      -
+                        throw new TooManyClose();
+						}
 
                     case StateCode.Group_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -1790,7 +1798,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Group__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Group__Id:
 
@@ -1826,7 +1834,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.RR__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.RR__Id:
                         if (Token == TokenType.INTEGER) {
@@ -1835,7 +1843,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.RR__Code;
                             break;
                             }
-                        throw new System.Exception("Expected Integer");
+                        throw new Expected("Expected Integer");
 
                     case StateCode.RR__Code:
                         if (Token == TokenType.STRING) {
@@ -1844,7 +1852,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.RR__Description;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.RR__Description:
                         if (Token == TokenType.STRING) {
@@ -1853,7 +1861,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.RR__Reference;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.RR__Reference:
 
@@ -1910,7 +1918,7 @@ namespace Goedel.Tool.Domainer {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Obsolete Pseudo Experimental IPv4 IPv6 Domain Mail NodeID Byte Int16 Int32 Time32 Time48 String Strings OptionalString StringX Binary Binary8 Binary16 LBinary Hex Hex8 Hex16 List Alt LByte LInt16 OptionList Gateway ]");
+								throw new Expected ("Parser Error Expected [Obsolete Pseudo Experimental IPv4 IPv6 Domain Mail NodeID Byte Int16 Int32 Time32 Time48 String Strings OptionalString StringX Binary Binary8 Binary16 LBinary Hex Hex8 Hex16 List Alt LByte LInt16 OptionList Gateway ]");
 								}
 							}
                         break;
@@ -1935,7 +1943,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.IPv4__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.IPv4__Id:
                         Pop ();
@@ -1948,7 +1956,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.IPv6__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.IPv6__Id:
                         Pop ();
@@ -1961,7 +1969,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Domain__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Domain__Id:
                         Pop ();
@@ -1974,7 +1982,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Mail__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Mail__Id:
                         Pop ();
@@ -1987,7 +1995,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.NodeID__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.NodeID__Id:
                         Pop ();
@@ -2000,7 +2008,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Byte__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Byte__Id:
                         Pop ();
@@ -2013,7 +2021,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Int16__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Int16__Id:
                         Pop ();
@@ -2026,7 +2034,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Int32__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Int32__Id:
                         Pop ();
@@ -2039,7 +2047,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Time32__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Time32__Id:
                         Pop ();
@@ -2052,7 +2060,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Time48__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Time48__Id:
                         Pop ();
@@ -2065,7 +2073,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.String__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.String__Id:
                         Pop ();
@@ -2078,7 +2086,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.OptionalString__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.OptionalString__Id:
                         Pop ();
@@ -2091,7 +2099,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Strings__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Strings__Id:
                         Pop ();
@@ -2104,7 +2112,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.StringX__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.StringX__Id:
                         Pop ();
@@ -2117,7 +2125,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Binary__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Binary__Id:
                         Pop ();
@@ -2130,7 +2138,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Binary8__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Binary8__Id:
                         Pop ();
@@ -2143,7 +2151,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Binary16__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Binary16__Id:
                         Pop ();
@@ -2156,7 +2164,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.LBinary__Length;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.LBinary__Length:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -2165,7 +2173,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.LBinary__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.LBinary__Id:
                         Pop ();
@@ -2178,7 +2186,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.LByte__Target;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.LByte__Target:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -2187,7 +2195,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.LByte__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.LByte__Id:
                         Pop ();
@@ -2200,7 +2208,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.LInt16__Target;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.LInt16__Target:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -2209,7 +2217,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.LInt16__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.LInt16__Id:
                         Pop ();
@@ -2222,7 +2230,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Hex__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Hex__Id:
                         Pop ();
@@ -2235,7 +2243,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Hex8__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Hex8__Id:
                         Pop ();
@@ -2248,7 +2256,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Hex16__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Hex16__Id:
                         Pop ();
@@ -2265,7 +2273,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.OptionList__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.OptionList__Id:
                         Pop ();
@@ -2278,7 +2286,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Gateway__Code;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Gateway__Code:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -2287,7 +2295,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Gateway__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Gateway__Id:
                         Pop ();
@@ -2300,7 +2308,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.List__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.List__Id:
 
@@ -2343,7 +2351,7 @@ namespace Goedel.Tool.Domainer {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [IPv4 IPv6 Domain Mail Byte Int16 Int32 String Strings Binary Binary8 Binary16 LBinary Hex Hex8 Hex16 ]");
+								throw new Expected ("Parser Error Expected [IPv4 IPv6 Domain Mail Byte Int16 Int32 String Strings Binary Binary8 Binary16 LBinary Hex Hex8 Hex16 ]");
 								}
 							}
                         break;
@@ -2356,7 +2364,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Alt__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Alt__Id:
 
@@ -2394,7 +2402,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.AltEntry__Code;
                             break;
                             }
-                        throw new System.Exception("Expected Integer");
+                        throw new Expected("Expected Integer");
 
                     case StateCode.AltEntry__Code:
                         if (Token == TokenType.LABEL) {
@@ -2410,11 +2418,11 @@ namespace Goedel.Tool.Domainer {
                                 Current_Cast.Choices = New_Choice(Text);
                                 }
                             else {
-                               throw new System.Exception("Parser Error Expected [Null IPv4 IPv6 Domain Mail ]");
+                               throw new Expected ("Parser Error Expected [Null IPv4 IPv6 Domain Mail ]");
                                 }
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [Null IPv4 IPv6 Domain Mail ]");
+                        else throw new Expected("Parser Error Expected [Null IPv4 IPv6 Domain Mail ]");
 
                     case StateCode.AltEntry__Choices:
                         Pop ();
@@ -2427,7 +2435,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Q__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Q__Id:
                         if (Token == TokenType.INTEGER) {
@@ -2436,7 +2444,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Q__Code;
                             break;
                             }
-                        throw new System.Exception("Expected Integer");
+                        throw new Expected("Expected Integer");
 
                     case StateCode.Q__Code:
                         if (Token == TokenType.STRING) {
@@ -2445,7 +2453,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Q__Description;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Q__Description:
                         if (Token == TokenType.STRING) {
@@ -2454,7 +2462,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.Q__Reference;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Q__Reference:
                         Pop ();
@@ -2467,7 +2475,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.IG__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.IG__Id:
                         if (Token == TokenType.INTEGER) {
@@ -2476,7 +2484,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.IG__Code;
                             break;
                             }
-                        throw new System.Exception("Expected Integer");
+                        throw new Expected("Expected Integer");
 
                     case StateCode.IG__Code:
                         if (Token == TokenType.STRING) {
@@ -2485,7 +2493,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.IG__Description;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.IG__Description:
                         if (Token == TokenType.STRING) {
@@ -2494,7 +2502,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.IG__Reference;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.IG__Reference:
                         Pop ();
@@ -2507,7 +2515,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.NA__Reason;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.NA__Reason:
                         if (Token == TokenType.INTEGER) {
@@ -2516,7 +2524,7 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.NA__First;
                             break;
                             }
-                        throw new System.Exception("Expected Integer");
+                        throw new Expected("Expected Integer");
 
                     case StateCode.NA__First:
                         if (Token == TokenType.INTEGER) {
@@ -2525,15 +2533,16 @@ namespace Goedel.Tool.Domainer {
                             State = StateCode.NA__Last;
                             break;
                             }
-                        throw new System.Exception("Expected Integer");
+                        throw new Expected("Expected Integer");
 
                     case StateCode.NA__Last:
                         Pop ();
                         Represent = true; 
                         break;
 
-                    default:
-                        throw new System.Exception("Unreachable code reached");
+                    default: {
+                        throw new UnreachableCode();
+						}
                     }
                 }
             }

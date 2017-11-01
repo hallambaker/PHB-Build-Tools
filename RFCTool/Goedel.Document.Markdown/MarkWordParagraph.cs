@@ -15,25 +15,25 @@ namespace Goedel.Document.Markdown{
 
 	/*
 	public partial class MarkNewParagraph {
-        public virtual void Reset (char c) {
+        public virtual void Reset (int c) {
 			}
-        public virtual void AddUpper (char c) {
+        public virtual void AddUpper (int c) {
 			}
-        public virtual void AddUpperSpace (char c) {
+        public virtual void AddUpperSpace (int c) {
 			}
-        public virtual void AddText (char c) {
+        public virtual void AddText (int c) {
 			}
-        public virtual void GotEscape (char c) {
+        public virtual void GotEscape (int c) {
 			}
-        public virtual void AddeText (char c) {
+        public virtual void AddeText (int c) {
 			}
-        public virtual void StartTag (char c) {
+        public virtual void StartTag (int c) {
 			}
-        public virtual void AddTag (char c) {
+        public virtual void AddTag (int c) {
 			}
-        public virtual void AddValue (char c) {
+        public virtual void AddValue (int c) {
 			}
-        public virtual void AddCloseTag (char c) {
+        public virtual void AddCloseTag (int c) {
 			}
 		}
 	*/
@@ -63,12 +63,12 @@ namespace Goedel.Document.Markdown{
         /// <summary>
         /// Maps characters to character sets
         /// </summary>
-        public override byte[] CharacterMappings { get => Character_Mapping; }  
+        public override byte[] CharacterMappings  => Character_Mapping; 
 
         /// <summary>
         /// State transitions in response to character set
         /// </summary>
-        public override short[,] CompressedTransitions { get => Compressed_Transitions; } 
+        public override short[,] CompressedTransitions  => Compressed_Transitions; 
 
         /// <summary>
         /// Get the next token from the stream

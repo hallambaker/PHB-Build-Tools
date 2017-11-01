@@ -105,7 +105,7 @@ namespace Goedel.Cryptography.Windows {
         /// <param name="PlainTextBytes">The data to be encrypted</param>
         /// <param name="EntropyBytes">Additional Key material used to salt the key</param>
         /// <param name="Description">Description of the stored data</param>
-        /// <returns></returns>
+        /// <returns>The encrypted data.</returns>
         public static byte[] Encrypt(byte[] PlainTextBytes,
                                 KeyType KeyType=KeyType.UserKey,
                                 string Description = null,
@@ -171,7 +171,7 @@ namespace Goedel.Cryptography.Windows {
         /// <param name="CipherTextBytes">The encrypted data</param>
         /// <param name="Description">Description of the encrypted data</param>
         /// <param name="EntropyBytes">Additional Key material</param>
-        /// <returns></returns>
+        /// <returns>The decrypted data.</returns>
         public static byte[] Decrypt(byte[] CipherTextBytes,
                                 out string Description,
                                 byte[] EntropyBytes = null) {

@@ -1,5 +1,5 @@
 ﻿
-Namespace Goedel.Tool.RFCTool
+Namespace Goedel.Document.RFC
 	Exception HTMLParse
 		Console "HTML Parser error"		
 

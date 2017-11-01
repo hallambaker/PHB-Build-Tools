@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Trace.Server</RootNamespace>
     <AssemblyName>Goedel.Trace.Server</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <AssemblyVersion>1.0.0.49</AssemblyVersion>
@@ -53,21 +53,9 @@
     <None Include="Makefile" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.IO\Goedel.IO.csproj">
-      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
-      <Name>Goedel.IO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol.Framework\Goedel.Protocol.Framework.csproj">
-      <Project>{c1d2c847-ee62-430c-82dc-a4bd5ab38a44}</Project>
-      <Name>Goedel.Protocol.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
-      <Project>{567327ec-fdcd-4b2d-bae3-d19a0bf4e11f}</Project>
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
+      <Project>{4b69fe54-50a2-4f72-bf24-ba9bcd0c0949}</Project>
       <Name>Goedel.Protocol</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\buildtools\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{972ec886-903e-4857-b058-8637d3cba08f}</Project>
-      <Name>Goedel.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Trace\Goedel.Trace.csproj">
       <Project>{ffdc52ab-912a-4f9c-85a7-82d1847d3235}</Project>

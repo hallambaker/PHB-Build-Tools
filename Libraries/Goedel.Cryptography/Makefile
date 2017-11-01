@@ -109,39 +109,52 @@ export Custom_TrojanGTK_FLAG	?= /cs
 # The main target 
 
 SourceFiles = \
-     AlgorithmsPlus.cs\
-     ASNLibrary.cs\
-     Buffer.cs\
+     AlgorithmID.cs\
+     BigNumber.cs\
      Bulk.cs\
-     Certificate.cs\
+     Catalog.cs\
+     Class1.cs\
+     CryptoAlgorithm.cs\
+     CryptoAlgorithmID.cs\
+     CryptoAlgorithmMacro.cs\
      CryptoData.cs\
-     DecodeBuffer.cs\
-     Digest.cs\
-     Authentication.cs\
-     Encryption.cs\
-     KeyInfo.cs\
-     KeyLocate.cs\
+     CurveEdwards.cs\
+     CurveEdwards448.cs\
+     CurveMontgomery.cs\
+     DH.cs\
+     DHKeyPair.cs\
+     DHProvider.cs\
+     Exceptions.cs\
+     Exchange.cs\
+     KeyDerive.cs\
+     KeyExtensions.cs\
      Keys.cs\
      KeyShare.cs\
-     PKIX.cs\
-     RSAPrivateKey.cs\
-     PKIXConstants.cs\
-     PKIXName.cs\
-     Signature.cs\
-     Exchange.cs\
-     Catalog.cs\
+     KeyWrap.cs\
+     NamespaceDoc.cs\
+     PKIX/Certificate.cs\
+     PKIX/CertificateStore.cs\
+     PKIX/DHDomain.cs\
+     PKIX/KeyInfo.cs\
+     PKIX/PKIX.cs\
+     PKIX/PKIXConstants.cs\
+     PKIX/PKIXKeys.cs\
+     PKIX/PKIXName.cs\
+     PKIX/PrivateKeyInfo.cs\
+     PKIX/RFC2631.cs\
+     PKIX/TBSCertificate.cs\
+     Platform.cs\
      Properties/AssemblyInfo.cs\
-     Suites.cs\
-     TBSCertificate.cs\
-     UDF.cs\
-     CertificateStore.cs
+     Recrypt.cs\
+     SHA3.cs\
+     Signature.cs\
+     UDF.cs
 
 LinkFiles = \
-    $(LIBRARYBIN)/Goedel.Registry.dll\
-    $(LIBRARYBIN)/Goedel.Utilities.dll\
-    $(TARGETBIN)/Goedel.Debug.dll
+    $(TARGETBIN)/Goedel.ASN.dll\
+    $(TARGETBIN)/Goedel.Utilities.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.Registry.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Debug.dll,System.Numerics
+LinkFilesComma = $(TARGETBIN)/Goedel.ASN.dll,$(TARGETBIN)/Goedel.Utilities.dll,System.Numerics
 
 
 NugetFiles = 
@@ -178,6 +191,10 @@ $(LIBRARYBIN) :
 
 ifdef PHB_BUILD
 
+Exceptions.cs : Exceptions.exceptional
+!  $(Custom_exceptional) Exceptions.exceptional $(Custom_exceptional_FLAG) Exceptions.cs 
+PKIX.cs : PKIX\PKIX.asn2
+!  $(Custom_ASN2CS) PKIX\PKIX.asn2 $(Custom_ASN2CS_FLAG) PKIX.cs 
 
 endif
 
@@ -190,14 +207,21 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
-../Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll : recursive
-! $(MAKE) -C ../Goedel.Debug
+../Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll : recursive
+! $(MAKE) -C ../Goedel.ASN
+
+../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
+! $(MAKE) -C ../Goedel.Utilities
 
 endif
 
-$(TARGETBIN)/Goedel.Debug.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Debug.dll : ../Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll
-!  cp ../Goedel.Debug/$(TARGETBIN)/Goedel.Debug.dll $(TARGETBIN)/Goedel.Debug.dll
+$(TARGETBIN)/Goedel.ASN.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.ASN.dll : ../Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
+!  cp ../Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll $(TARGETBIN)/Goedel.ASN.dll
+
+$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Utilities.dll : ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+!  cp ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
 
 
 # Referenced Libraries

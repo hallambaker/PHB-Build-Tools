@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Test.Goedel.Cryptography</RootNamespace>
     <AssemblyName>Test.Goedel.Cryptography</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -66,21 +66,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
-      <Name>Goedel.Utilities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
-      <Project>{c1a5cf62-88cb-47f9-b9a3-59354ffa6c68}</Project>
-      <Name>Goedel.Cryptography</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
-      <Project>{d7cfa211-a1be-4af6-8ecf-d2cdd5de5b6d}</Project>
+      <Project>{5b273c47-8653-46d3-97a0-f96858bed256}</Project>
       <Name>Goedel.Cryptography.Jose</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
+      <Project>{16b48fbd-94ee-45b5-8eec-ea234f5774b5}</Project>
+      <Name>Goedel.Cryptography</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
-      <Project>{24f56184-7dc6-4f7f-b169-6ce384a3b7a4}</Project>
+      <Project>{c06a45c9-3d54-40af-af59-ef860c50dd8b}</Project>
       <Name>Goedel.FSR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{71c0dce3-3f2a-4545-af77-1b89bcff7c1e}</Project>
+      <Name>Goedel.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj">
       <Project>{93b6b9fd-822f-4fd1-bdad-16eb81b6df25}</Project>

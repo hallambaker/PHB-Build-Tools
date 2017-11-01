@@ -1,4 +1,4 @@
-﻿namespace Goedel.CryptographyLinux {
+﻿namespace Goedel.Cryptography.Linux {
 
     /// <summary>
     /// Cryptographic implementation bound to the Linux platform. Although the 

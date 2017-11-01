@@ -258,16 +258,25 @@ namespace Goedel.Protocol {
                 Result.Add(Entry.Key, Entry.Value);
                 }
             if (Dictionary2 != null) {
-                foreach (var Entry in Dictionary2) {
-                    Result.Add(Entry.Key, Entry.Value);
-                    }
+                Append(Result, Dictionary2);
                 }
             if (Dictionary3 != null) {
-                foreach (var Entry in Dictionary3) {
-                    Result.Add(Entry.Key, Entry.Value);
-                    }
+                Append(Result, Dictionary3);
                 }
             return Result;
             }
+
+        /// <summary>
+        /// Append elements of one dictionary to another.
+        /// </summary>
+        /// <param name="Base">Base dictionary to merge into</param>
+        /// <param name="Dictionary">Second dictionary to merge</param>
+        public static void Append (Dictionary<string, JSONFactoryDelegate> Base,
+                    Dictionary<string, JSONFactoryDelegate> Dictionary) {
+            foreach (var Entry in Dictionary) {
+                Base.Add(Entry.Key, Entry.Value);
+                }
+            }
+
         }
     }

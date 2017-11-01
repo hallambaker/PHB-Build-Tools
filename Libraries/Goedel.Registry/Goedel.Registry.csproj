@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Registry</RootNamespace>
     <AssemblyName>Goedel.Registry</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <AssemblyVersion>1.0.</AssemblyVersion>
@@ -99,11 +99,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Goedel.FSR\Goedel.FSR.csproj">
-      <Project>{24f56184-7dc6-4f7f-b169-6ce384a3b7a4}</Project>
+      <Project>{c06a45c9-3d54-40af-af59-ef860c50dd8b}</Project>
       <Name>Goedel.FSR</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
+      <Project>{71c0dce3-3f2a-4545-af77-1b89bcff7c1e}</Project>
       <Name>Goedel.Utilities</Name>
     </ProjectReference>
   </ItemGroup>

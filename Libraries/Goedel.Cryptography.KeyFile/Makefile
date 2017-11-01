@@ -110,22 +110,25 @@ export Custom_TrojanGTK_FLAG	?= /cs
 
 SourceFiles = \
      Exceptions.cs\
+     KeyReader.cs\
+     NamespaceDoc.cs\
      SSHSerialize.cs\
      Encode.cs\
      HostsReader.cs\
-     KeyReader.cs\
      HostsReaderPlus.cs\
      KeyReaderPlus.cs\
      Decode.cs\
      Properties/AssemblyInfo.cs
 
 LinkFiles = \
-    $(LIBRARYBIN)/Goedel.FSR.dll\
-    $(LIBRARYBIN)/Goedel.IO.dll\
-    $(LIBRARYBIN)/Goedel.Utilities.dll\
-    $(TARGETBIN)/Goedel.Cryptography.dll
+    $(TARGETBIN)/Goedel.ASN.dll\
+    $(TARGETBIN)/Goedel.Cryptography.dll\
+    $(TARGETBIN)/Goedel.FSR.dll\
+    $(TARGETBIN)/Goedel.Utilities.dll\
+    $(TARGETBIN)/Goedel.Cryptography.Framework.dll\
+    $(TARGETBIN)/Goedel.IO.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Goedel.FSR.dll,$(LIBRARYBIN)/Goedel.IO.dll,$(LIBRARYBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Cryptography.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.ASN.dll,$(TARGETBIN)/Goedel.Cryptography.dll,$(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Cryptography.Framework.dll,$(TARGETBIN)/Goedel.IO.dll
 
 
 NugetFiles = 
@@ -180,14 +183,49 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
+../Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll : recursive
+! $(MAKE) -C ../Goedel.ASN
+
 ../Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll : recursive
 ! $(MAKE) -C ../Goedel.Cryptography
 
+../Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : recursive
+! $(MAKE) -C ../Goedel.FSR
+
+../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
+! $(MAKE) -C ../Goedel.Utilities
+
+../Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll : recursive
+! $(MAKE) -C ../Goedel.Cryptography.Framework
+
+../Goedel.IO/$(TARGETBIN)/Goedel.IO.dll : recursive
+! $(MAKE) -C ../Goedel.IO
+
 endif
+
+$(TARGETBIN)/Goedel.ASN.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.ASN.dll : ../Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
+!  cp ../Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll $(TARGETBIN)/Goedel.ASN.dll
 
 $(TARGETBIN)/Goedel.Cryptography.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Cryptography.dll : ../Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
 !  cp ../Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll $(TARGETBIN)/Goedel.Cryptography.dll
+
+$(TARGETBIN)/Goedel.FSR.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.FSR.dll : ../Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+!  cp ../Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll $(TARGETBIN)/Goedel.FSR.dll
+
+$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Utilities.dll : ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+!  cp ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
+
+$(TARGETBIN)/Goedel.Cryptography.Framework.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Cryptography.Framework.dll : ../Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+!  cp ../Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll $(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+$(TARGETBIN)/Goedel.IO.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.IO.dll : ../Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+!  cp ../Goedel.IO/$(TARGETBIN)/Goedel.IO.dll $(TARGETBIN)/Goedel.IO.dll
 
 
 # Referenced Libraries

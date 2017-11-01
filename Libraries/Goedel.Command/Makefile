@@ -117,6 +117,7 @@ SourceFiles = \
      Dispatch.cs\
      Exceptions.cs\
      FileTools.cs\
+     NamespaceDoc.cs\
      Properties/AssemblyInfo.cs\
      Type.cs
 

@@ -112,6 +112,7 @@ SourceFiles = \
      Debug.cs\
      DeleteDirectory.cs\
      Extension.cs\
+     NamespaceDoc.cs\
      Properties/AssemblyInfo.cs
 
 LinkFiles = 

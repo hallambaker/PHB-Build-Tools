@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>bootmaker</RootNamespace>
     <AssemblyName>bootmakermini</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -85,19 +85,15 @@
       <Name>Goedel.Command</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
-      <Project>{ccc286f1-6a5b-4946-a382-8a48797192b4}</Project>
+      <Project>{c06a45c9-3d54-40af-af59-ef860c50dd8b}</Project>
       <Name>Goedel.FSR</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.IO\Goedel.IO.csproj">
-      <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
-      <Name>Goedel.IO</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
       <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>
       <Name>Goedel.Registry</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{e891bc7f-d7bd-4931-931b-42c83cca68e2}</Project>
+      <Project>{71c0dce3-3f2a-4545-af77-1b89bcff7c1e}</Project>
       <Name>Goedel.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Document.Markdown\Goedel.Document.Markdown.csproj">

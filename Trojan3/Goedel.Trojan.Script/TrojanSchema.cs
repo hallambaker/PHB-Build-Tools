@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Registry;
+using Goedel.Utilities;
 
 
 //
@@ -1406,7 +1407,8 @@ namespace Goedel.Trojan.Script {
                 case "Step": return NewStep();
 
 				}
-            throw new System.Exception ("Reserved word not recognized \"" + Label + "\"");
+
+            throw new NotFoundReserved ("Reserved word not recognized \"" + Label + "\"");
             }
 
 
@@ -1745,7 +1747,7 @@ namespace Goedel.Trojan.Script {
             }
 
         void Pop () {
-            if (Stack.Count == 0) throw new System.Exception ("Internal Parser Error");
+			Assert.False (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -1762,9 +1764,10 @@ namespace Goedel.Trojan.Script {
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |
-                (Token == TokenType.COMMENT)) return;
-            if (Token == TokenType.INVALID)
-                throw new System.Exception("Invalid Token");
+                (Token == TokenType.COMMENT)) {
+				return;
+				}
+			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -1779,7 +1782,9 @@ namespace Goedel.Trojan.Script {
                             State = StateCode._Choice;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected START");
+                        else {
+							throw new ExpectedStart ();
+							}
 
                     case StateCode._Choice:                //      LABEL Class | END
                         if (Token == TokenType.LABEL) {
@@ -1789,7 +1794,7 @@ namespace Goedel.Trojan.Script {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
-                                throw new System.Exception("Parser Error Expected [Class]");
+                                throw new Expected("Parser Error Expected [Class]");
                                 }
                             break;
                             }
@@ -1797,10 +1802,13 @@ namespace Goedel.Trojan.Script {
                             State = StateCode._End;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [Class]");
+                        else {
+							throw new ExpectedClass();
+							}
 
-                    case StateCode._End:                   //      -
-                        throw new System.Exception("Too Many Closing Braces");
+                    case StateCode._End: {                  //      -
+                        throw new TooManyClose();
+						}
 
                     case StateCode.GUI_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -1809,7 +1817,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.GUI__Namespace;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.GUI__Namespace:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -1818,7 +1826,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.GUI__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.GUI__Id:
 
@@ -1851,7 +1859,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [About Command Window Menu Object Wizard ]");
+								throw new Expected ("Parser Error Expected [About Command Window Menu Object Wizard ]");
 								}
 							}
                         break;
@@ -1864,7 +1872,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.About__Title;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.About__Title:
 
@@ -1893,7 +1901,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Text Copyright ]");
+								throw new Expected ("Parser Error Expected [Text Copyright ]");
 								}
 							}
                         break;
@@ -1919,7 +1927,7 @@ namespace Goedel.Trojan.Script {
                             Current_Cast.Data.Add (Text);
                             break;							
                             }
-                       throw new System.Exception("Expected Text");
+                       throw new Expected("Expected Text");
 
 
                     case StateCode.Copyright_Start:
@@ -1929,7 +1937,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Copyright__Data;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Copyright__Data:
                         Pop ();
@@ -1955,7 +1963,7 @@ namespace Goedel.Trojan.Script {
                             Current_Cast.Data.Add (Text);
                             break;							
                             }
-                       throw new System.Exception("Expected Text");
+                       throw new Expected("Expected Text");
 
 
                     case StateCode.Window_Start:
@@ -1965,7 +1973,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Window__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Window__Id:
                         if (Token == TokenType.STRING) {
@@ -1974,7 +1982,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Window__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Window__Tag:
 
@@ -2002,7 +2010,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [ThreePane ]");
+								throw new Expected ("Parser Error Expected [ThreePane ]");
 								}
 							}
                         break;
@@ -2015,7 +2023,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.ThreePane__Menu;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.ThreePane__Menu:
                         Pop ();
@@ -2028,7 +2036,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Menu__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Menu__Id:
                         if (Token == TokenType.STRING) {
@@ -2037,7 +2045,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Menu__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Menu__Tag:
 
@@ -2067,7 +2075,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Action Menu Divider ]");
+								throw new Expected ("Parser Error Expected [Action Menu Divider ]");
 								}
 							}
                         break;
@@ -2084,7 +2092,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Action__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Action__Id:
 
@@ -2112,7 +2120,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Text ]");
+								throw new Expected ("Parser Error Expected [Text ]");
 								}
 							}
                         break;
@@ -2125,7 +2133,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Command__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Command__Id:
                         if (Token == TokenType.STRING) {
@@ -2134,7 +2142,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Command__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Command__Tag:
 
@@ -2164,7 +2172,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Select Tip Text ]");
+								throw new Expected ("Parser Error Expected [Select Tip Text ]");
 								}
 							}
                         break;
@@ -2177,7 +2185,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Select__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Select__Id:
                         Pop ();
@@ -2190,7 +2198,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Object__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Object__Id:
                         if (Token == TokenType.STRING) {
@@ -2199,7 +2207,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Object__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Object__Tag:
 
@@ -2241,7 +2249,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Inherit DateTime String Secret Integer Boolean Option Set Action List Chooser Enumerate Text Tip Item ]");
+								throw new Expected ("Parser Error Expected [Inherit DateTime String Secret Integer Boolean Option Set Action List Chooser Enumerate Text Tip Item ]");
 								}
 							}
                         break;
@@ -2254,7 +2262,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Inherit__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Inherit__Id:
                         Pop ();
@@ -2267,7 +2275,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Item__Of;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Item__Of:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -2276,7 +2284,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Item__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Item__Id:
                         if (Token == TokenType.STRING) {
@@ -2285,7 +2293,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Item__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Item__Tag:
                         Pop ();
@@ -2298,7 +2306,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.List__Of;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.List__Of:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -2307,7 +2315,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.List__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.List__Id:
                         if (Token == TokenType.STRING) {
@@ -2316,7 +2324,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.List__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.List__Tag:
 
@@ -2346,7 +2354,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output Action Tip ]");
+								throw new Expected ("Parser Error Expected [Output Action Tip ]");
 								}
 							}
                         break;
@@ -2359,7 +2367,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Set__Of;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Set__Of:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -2368,7 +2376,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Set__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Set__Id:
                         if (Token == TokenType.STRING) {
@@ -2377,7 +2385,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Set__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Set__Tag:
 
@@ -2407,7 +2415,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output Action Tip ]");
+								throw new Expected ("Parser Error Expected [Output Action Tip ]");
 								}
 							}
                         break;
@@ -2420,7 +2428,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Option__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Option__Id:
                         if (Token == TokenType.STRING) {
@@ -2429,7 +2437,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Option__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Option__Tag:
 
@@ -2470,7 +2478,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [DateTime String Secret Integer Boolean Option Set Action Item List Chooser Text Tip Output ]");
+								throw new Expected ("Parser Error Expected [DateTime String Secret Integer Boolean Option Set Action Item List Chooser Text Tip Output ]");
 								}
 							}
                         break;
@@ -2483,7 +2491,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.DateTime__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.DateTime__Id:
                         if (Token == TokenType.STRING) {
@@ -2492,7 +2500,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.DateTime__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.DateTime__Tag:
 
@@ -2521,7 +2529,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output Tip ]");
+								throw new Expected ("Parser Error Expected [Output Tip ]");
 								}
 							}
                         break;
@@ -2534,7 +2542,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Chooser__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Chooser__Id:
                         if (Token == TokenType.STRING) {
@@ -2543,7 +2551,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Chooser__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Chooser__Tag:
 
@@ -2572,7 +2580,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output Tip ]");
+								throw new Expected ("Parser Error Expected [Output Tip ]");
 								}
 							}
                         break;
@@ -2585,7 +2593,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.String__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.String__Id:
                         if (Token == TokenType.STRING) {
@@ -2594,7 +2602,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.String__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.String__Tag:
 
@@ -2625,7 +2633,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output Tip Length Template ]");
+								throw new Expected ("Parser Error Expected [Output Tip Length Template ]");
 								}
 							}
                         break;
@@ -2638,7 +2646,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Template__Data;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Template__Data:
                         Pop ();
@@ -2651,7 +2659,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Secret__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Secret__Id:
                         if (Token == TokenType.STRING) {
@@ -2660,7 +2668,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Secret__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Secret__Tag:
 
@@ -2688,7 +2696,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output ]");
+								throw new Expected ("Parser Error Expected [Output ]");
 								}
 							}
                         break;
@@ -2701,7 +2709,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Integer__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Integer__Id:
                         if (Token == TokenType.STRING) {
@@ -2710,7 +2718,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Integer__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Integer__Tag:
 
@@ -2742,7 +2750,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output Tip Length Slider Range ]");
+								throw new Expected ("Parser Error Expected [Output Tip Length Slider Range ]");
 								}
 							}
                         break;
@@ -2759,7 +2767,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Length__Data;
                             break;
                             }
-                        throw new System.Exception("Expected Integer");
+                        throw new Expected("Expected Integer");
 
                     case StateCode.Length__Data:
                         Pop ();
@@ -2772,7 +2780,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Range__Lower;
                             break;
                             }
-                        throw new System.Exception("Expected Integer");
+                        throw new Expected("Expected Integer");
 
                     case StateCode.Range__Lower:
                         if (Token == TokenType.INTEGER) {
@@ -2781,7 +2789,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Range__Upper;
                             break;
                             }
-                        throw new System.Exception("Expected Integer");
+                        throw new Expected("Expected Integer");
 
                     case StateCode.Range__Upper:
                         if (Token == TokenType.INTEGER) {
@@ -2790,7 +2798,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Range__Step;
                             break;
                             }
-                        throw new System.Exception("Expected Integer");
+                        throw new Expected("Expected Integer");
 
                     case StateCode.Range__Step:
                         Pop ();
@@ -2803,7 +2811,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Boolean__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Boolean__Id:
                         if (Token == TokenType.STRING) {
@@ -2812,7 +2820,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Boolean__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Boolean__Tag:
 
@@ -2841,7 +2849,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Output Tip ]");
+								throw new Expected ("Parser Error Expected [Output Tip ]");
 								}
 							}
                         break;
@@ -2858,7 +2866,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Enumerate__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Enumerate__Id:
                         if (Token == TokenType.STRING) {
@@ -2867,7 +2875,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Enumerate__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Enumerate__Tag:
 
@@ -2897,7 +2905,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Radio Text Tip ]");
+								throw new Expected ("Parser Error Expected [Radio Text Tip ]");
 								}
 							}
                         break;
@@ -2910,7 +2918,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Radio__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Radio__Id:
                         if (Token == TokenType.STRING) {
@@ -2919,7 +2927,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Radio__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Radio__Tag:
 
@@ -2947,7 +2955,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Tip ]");
+								throw new Expected ("Parser Error Expected [Tip ]");
 								}
 							}
                         break;
@@ -2960,7 +2968,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Wizard__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Wizard__Id:
                         if (Token == TokenType.STRING) {
@@ -2969,7 +2977,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Wizard__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Wizard__Tag:
 
@@ -2998,7 +3006,7 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Step Text ]");
+								throw new Expected ("Parser Error Expected [Step Text ]");
 								}
 							}
                         break;
@@ -3011,7 +3019,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Step__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Step__Id:
                         if (Token == TokenType.STRING) {
@@ -3020,7 +3028,7 @@ namespace Goedel.Trojan.Script {
                             State = StateCode.Step__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Step__Tag:
 
@@ -3049,15 +3057,16 @@ namespace Goedel.Trojan.Script {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Text Tip ]");
+								throw new Expected ("Parser Error Expected [Text Tip ]");
 								}
 							}
                         break;
 
 
 
-                    default:
-                        throw new System.Exception("Unreachable code reached");
+                    default: {
+                        throw new UnreachableCode();
+						}
                     }
                 }
             }

@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Registry;
+using Goedel.Utilities;
 
 
 //
@@ -1115,7 +1116,8 @@ namespace Goedel.Document.Markdown.Tags {
                 case "Any": return NewAny();
 
 				}
-            throw new System.Exception ("Reserved word not recognized \"" + Label + "\"");
+
+            throw new NotFoundReserved ("Reserved word not recognized \"" + Label + "\"");
             }
 
 
@@ -1400,7 +1402,7 @@ namespace Goedel.Document.Markdown.Tags {
             }
 
         void Pop () {
-            if (Stack.Count == 0) throw new System.Exception ("Internal Parser Error");
+			Assert.False (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -1417,9 +1419,10 @@ namespace Goedel.Document.Markdown.Tags {
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |
-                (Token == TokenType.COMMENT)) return;
-            if (Token == TokenType.INVALID)
-                throw new System.Exception("Invalid Token");
+                (Token == TokenType.COMMENT)) {
+				return;
+				}
+			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -1434,7 +1437,9 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode._Choice;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected START");
+                        else {
+							throw new ExpectedStart ();
+							}
 
                     case StateCode._Choice:                //      LABEL Class | END
                         if (Token == TokenType.LABEL) {
@@ -1444,7 +1449,7 @@ namespace Goedel.Document.Markdown.Tags {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
-                                throw new System.Exception("Parser Error Expected [Class]");
+                                throw new Expected("Parser Error Expected [Class]");
                                 }
                             break;
                             }
@@ -1452,10 +1457,13 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode._End;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [Class]");
+                        else {
+							throw new ExpectedClass();
+							}
 
-                    case StateCode._End:                   //      -
-                        throw new System.Exception("Too Many Closing Braces");
+                    case StateCode._End: {                  //      -
+                        throw new TooManyClose();
+						}
 
                     case StateCode.Class_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -1464,7 +1472,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Class__Namespace;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Class__Namespace:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -1473,7 +1481,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Class__Name;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Class__Name:
 
@@ -1507,7 +1515,7 @@ namespace Goedel.Document.Markdown.Tags {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Meta Item Annotation Layout Block Remark Format ]");
+								throw new Expected ("Parser Error Expected [Meta Item Annotation Layout Block Remark Format ]");
 								}
 							}
                         break;
@@ -1522,7 +1530,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Meta__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Meta__Id:
 
@@ -1554,7 +1562,7 @@ namespace Goedel.Document.Markdown.Tags {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Flag String Remark Integer Meta ]");
+								throw new Expected ("Parser Error Expected [Flag String Remark Integer Meta ]");
 								}
 							}
                         break;
@@ -1567,7 +1575,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Layout__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Layout__Id:
 
@@ -1604,7 +1612,7 @@ namespace Goedel.Document.Markdown.Tags {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Flag String Remark Integer Layout Markup XML Stack Wrap Any ]");
+								throw new Expected ("Parser Error Expected [Flag String Remark Integer Layout Markup XML Stack Wrap Any ]");
 								}
 							}
                         break;
@@ -1617,7 +1625,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Block__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Block__Id:
 
@@ -1653,7 +1661,7 @@ namespace Goedel.Document.Markdown.Tags {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Flag String Remark Integer Markup Level XML Stack Wrap ]");
+								throw new Expected ("Parser Error Expected [Flag String Remark Integer Markup Level XML Stack Wrap ]");
 								}
 							}
                         break;
@@ -1666,7 +1674,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Annotation__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Annotation__Id:
 
@@ -1699,7 +1707,7 @@ namespace Goedel.Document.Markdown.Tags {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Flag String Remark Integer Markup XML ]");
+								throw new Expected ("Parser Error Expected [Flag String Remark Integer Markup XML ]");
 								}
 							}
                         break;
@@ -1712,7 +1720,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Item__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Item__Id:
 
@@ -1745,7 +1753,7 @@ namespace Goedel.Document.Markdown.Tags {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Flag String Remark Integer Markup XML ]");
+								throw new Expected ("Parser Error Expected [Flag String Remark Integer Markup XML ]");
 								}
 							}
                         break;
@@ -1758,7 +1766,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Markup__Start;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Markup__Start:
                         if (Token == TokenType.STRING) {
@@ -1767,7 +1775,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Markup__Start1;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Markup__Start1:
                         if (Token == TokenType.STRING) {
@@ -1776,7 +1784,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Markup__End;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Markup__End:
                         Pop ();
@@ -1789,7 +1797,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.XML__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.XML__Tag:
                         if (Token == TokenType.STRING) {
@@ -1798,7 +1806,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.XML__First;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.XML__First:
 
@@ -1826,7 +1834,7 @@ namespace Goedel.Document.Markdown.Tags {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Default ]");
+								throw new Expected ("Parser Error Expected [Default ]");
 								}
 							}
                         break;
@@ -1839,7 +1847,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Default__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Default__Tag:
                         if (Token == TokenType.STRING) {
@@ -1848,7 +1856,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Default__Value;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Default__Value:
                         Pop ();
@@ -1861,7 +1869,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Stack__Wrapper;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Stack__Wrapper:
                         Pop ();
@@ -1874,7 +1882,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Wrap__Wrapper;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Wrap__Wrapper:
                         Pop ();
@@ -1887,7 +1895,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Level__Value;
                             break;
                             }
-                        throw new System.Exception("Expected Integer");
+                        throw new Expected("Expected Integer");
 
                     case StateCode.Level__Value:
                         Pop ();
@@ -1913,7 +1921,7 @@ namespace Goedel.Document.Markdown.Tags {
                             Current_Cast.Text.Add (Text);
                             break;							
                             }
-                       throw new System.Exception("Expected Text");
+                       throw new Expected("Expected Text");
 
 
                     case StateCode.Start_Start:
@@ -1936,7 +1944,7 @@ namespace Goedel.Document.Markdown.Tags {
                             Current_Cast.Text.Add (Text);
                             break;							
                             }
-                       throw new System.Exception("Expected Text");
+                       throw new Expected("Expected Text");
 
 
                     case StateCode.End_Start:
@@ -1959,7 +1967,7 @@ namespace Goedel.Document.Markdown.Tags {
                             Current_Cast.Text.Add (Text);
                             break;							
                             }
-                       throw new System.Exception("Expected Text");
+                       throw new Expected("Expected Text");
 
 
                     case StateCode.String_Start:
@@ -1969,7 +1977,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.String__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.String__Id:
                         Pop ();
@@ -1982,7 +1990,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Flag__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Flag__Id:
                         Pop ();
@@ -1995,7 +2003,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Integer__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Integer__Id:
                         Pop ();
@@ -2008,7 +2016,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Format__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Format__Id:
 
@@ -2036,7 +2044,7 @@ namespace Goedel.Document.Markdown.Tags {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Entry ]");
+								throw new Expected ("Parser Error Expected [Entry ]");
 								}
 							}
                         break;
@@ -2049,7 +2057,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Entry__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Entry__Id:
                         if (Token == TokenType.BEGIN) {
@@ -2071,7 +2079,7 @@ namespace Goedel.Document.Markdown.Tags {
                             Current_Cast.Strings.Add (Text);
                             break;							
                             }
-                       throw new System.Exception("Expected Text");
+                       throw new Expected("Expected Text");
 
 
                     case StateCode.XEmpty_Start:
@@ -2081,7 +2089,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.XEmpty__Label;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.XEmpty__Label:
 
@@ -2119,7 +2127,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.XStart__Label;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.XStart__Label:
 
@@ -2161,7 +2169,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.Template__Text;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Template__Text:
                         Pop ();
@@ -2174,7 +2182,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.TValue__Tag;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.TValue__Tag:
                         if (Token == TokenType.STRING) {
@@ -2183,7 +2191,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.TValue__Value;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.TValue__Value:
                         Pop ();
@@ -2196,7 +2204,7 @@ namespace Goedel.Document.Markdown.Tags {
                             State = StateCode.XString__Text;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.XString__Text:
                         Pop ();
@@ -2207,8 +2215,9 @@ namespace Goedel.Document.Markdown.Tags {
                         Represent = true; 
                         break;
 
-                    default:
-                        throw new System.Exception("Unreachable code reached");
+                    default: {
+                        throw new UnreachableCode();
+						}
                     }
                 }
             }

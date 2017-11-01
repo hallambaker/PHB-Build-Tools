@@ -1,5 +1,6 @@
 ﻿Protocol Goedel.Protocol Message Message
-
+	Description
+		|Base class for all PROTOGEN messages
 
 	Section 2 "Request Messages"
 		Description
@@ -168,3 +169,5 @@
 			Multiple
 			Description
 				|Enumerates alternate protocol version(s) supported
+
+

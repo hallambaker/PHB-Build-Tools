@@ -111,14 +111,16 @@ export Custom_TrojanGTK_FLAG	?= /cs
 SourceFiles = \
      ASNLibrary.cs\
      Buffer.cs\
+     Class1.cs\
      DecodeBuffer.cs\
      Exceptions.cs\
+     NamespaceDoc.cs\
      Properties/AssemblyInfo.cs
 
 LinkFiles = \
     $(TARGETBIN)/Goedel.Utilities.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.Utilities.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Utilities.dll,System.Numerics
 
 
 NugetFiles = 

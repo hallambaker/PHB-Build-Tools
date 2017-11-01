@@ -89,7 +89,7 @@ namespace Goedel.Cryptography.Test {
         [TestMethod]
         public void TestRSA_ReadKey() {
             var SignerPKIX = SignerKeyPair.PKIXPublicKeyRSA;
-            var NewSigner = RSAKeyPairBase.KeyPairFactory (SignerPKIX);
+            var NewSigner = RSAKeyPairBase.KeyPairPublicFactory (SignerPKIX);
             UT.Assert.IsNotNull(NewSigner);
             }
 

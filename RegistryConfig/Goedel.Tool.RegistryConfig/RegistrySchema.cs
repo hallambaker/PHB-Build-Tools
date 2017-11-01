@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Registry;
+using Goedel.Utilities;
 
 
 //
@@ -359,7 +360,8 @@ namespace Goedel.Tool.RegistryConfig {
                 case "Binary": return NewBinary();
 
 				}
-            throw new System.Exception ("Reserved word not recognized \"" + Label + "\"");
+
+            throw new NotFoundReserved ("Reserved word not recognized \"" + Label + "\"");
             }
 
 
@@ -455,7 +457,7 @@ namespace Goedel.Tool.RegistryConfig {
             }
 
         void Pop () {
-            if (Stack.Count == 0) throw new System.Exception ("Internal Parser Error");
+			Assert.False (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -472,9 +474,10 @@ namespace Goedel.Tool.RegistryConfig {
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |
-                (Token == TokenType.COMMENT)) return;
-            if (Token == TokenType.INVALID)
-                throw new System.Exception("Invalid Token");
+                (Token == TokenType.COMMENT)) {
+				return;
+				}
+			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -489,7 +492,9 @@ namespace Goedel.Tool.RegistryConfig {
                             State = StateCode._Choice;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected START");
+                        else {
+							throw new ExpectedStart ();
+							}
 
                     case StateCode._Choice:                //      LABEL Class | END
                         if (Token == TokenType.LABEL) {
@@ -499,7 +504,7 @@ namespace Goedel.Tool.RegistryConfig {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
-                                throw new System.Exception("Parser Error Expected [Class]");
+                                throw new Expected("Parser Error Expected [Class]");
                                 }
                             break;
                             }
@@ -507,10 +512,13 @@ namespace Goedel.Tool.RegistryConfig {
                             State = StateCode._End;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [Class]");
+                        else {
+							throw new ExpectedClass();
+							}
 
-                    case StateCode._End:                   //      -
-                        throw new System.Exception("Too Many Closing Braces");
+                    case StateCode._End: {                  //      -
+                        throw new TooManyClose();
+						}
 
                     case StateCode.Class_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -519,7 +527,7 @@ namespace Goedel.Tool.RegistryConfig {
                             State = StateCode.Class__Namespace;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Class__Namespace:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -528,7 +536,7 @@ namespace Goedel.Tool.RegistryConfig {
                             State = StateCode.Class__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Class__Id:
 
@@ -566,7 +574,7 @@ namespace Goedel.Tool.RegistryConfig {
                             State = StateCode.Field__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Field__Id:
                         if (Token == TokenType.LABEL) {
@@ -580,11 +588,11 @@ namespace Goedel.Tool.RegistryConfig {
                                 Current_Cast.Type = New_Choice(Text);
                                 }
                             else {
-                               throw new System.Exception("Parser Error Expected [String Int Binary ]");
+                               throw new Expected ("Parser Error Expected [String Int Binary ]");
                                 }
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [String Int Binary ]");
+                        else throw new Expected("Parser Error Expected [String Int Binary ]");
 
                     case StateCode.Field__Type:
 
@@ -613,7 +621,7 @@ namespace Goedel.Tool.RegistryConfig {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [AltID AltID ]");
+								throw new Expected ("Parser Error Expected [AltID AltID ]");
 								}
 							}
                         break;
@@ -626,7 +634,7 @@ namespace Goedel.Tool.RegistryConfig {
                             State = StateCode.AltID__Name;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.AltID__Name:
                         Pop ();
@@ -645,8 +653,9 @@ namespace Goedel.Tool.RegistryConfig {
                         Represent = true; 
                         break;
 
-                    default:
-                        throw new System.Exception("Unreachable code reached");
+                    default: {
+                        throw new UnreachableCode();
+						}
                     }
                 }
             }

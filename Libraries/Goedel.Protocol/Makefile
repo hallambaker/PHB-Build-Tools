@@ -109,9 +109,13 @@ export Custom_TrojanGTK_FLAG	?= /cs
 # The main target 
 
 SourceFiles = \
-     ByteBuffer.cs\
+     CharacterReaders.cs\
+     Class1.cs\
      Dechunking.cs\
      DNS.cs\
+     Exceptions.cs\
+     Extensions.cs\
+     FileReaderWriter.cs\
      JPC.cs\
      JSONAWriter.cs\
      JSONBufferedReader.cs\
@@ -122,15 +126,23 @@ SourceFiles = \
      JSONObject.cs\
      JSONReader.cs\
      JSONWriter.cs\
+     Message.cs\
+     MessageBase.cs\
+     MessageBase1.cs\
+     NamespaceDoc.cs\
      Properties/AssemblyInfo.cs\
      ReaderWriter.cs\
+     Server.cs\
+     StatusCodes.cs\
+     StreamBuffer.cs\
+     WebRemoteSession.cs\
      WrapWriter.cs
 
 LinkFiles = \
-    $(TARGETBIN)/Goedel.Debug2.dll\
+    $(TARGETBIN)/Goedel.Discovery.dll\
     $(TARGETBIN)/Goedel.Utilities.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.Debug2.dll,$(TARGETBIN)/Goedel.Utilities.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Discovery.dll,$(TARGETBIN)/Goedel.Utilities.dll
 
 
 NugetFiles = 
@@ -167,6 +179,8 @@ $(LIBRARYBIN) :
 
 ifdef PHB_BUILD
 
+MessageBase1.cs : MessageBase.protocol
+!  $(Custom_Protogen) MessageBase.protocol $(Custom_Protogen_FLAG) MessageBase1.cs 
 
 endif
 
@@ -179,17 +193,17 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
-../Goedel.Debug/$(TARGETBIN)/Goedel.Debug2.dll : recursive
-! $(MAKE) -C ../Goedel.Debug
+../Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll : recursive
+! $(MAKE) -C ../Goedel.Discovery
 
 ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
 ! $(MAKE) -C ../Goedel.Utilities
 
 endif
 
-$(TARGETBIN)/Goedel.Debug2.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Debug2.dll : ../Goedel.Debug/$(TARGETBIN)/Goedel.Debug2.dll
-!  cp ../Goedel.Debug/$(TARGETBIN)/Goedel.Debug2.dll $(TARGETBIN)/Goedel.Debug2.dll
+$(TARGETBIN)/Goedel.Discovery.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Discovery.dll : ../Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll
+!  cp ../Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll $(TARGETBIN)/Goedel.Discovery.dll
 
 $(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Utilities.dll : ../Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll

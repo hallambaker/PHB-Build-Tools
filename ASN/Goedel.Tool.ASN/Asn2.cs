@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Registry;
+using Goedel.Utilities;
 
 
 //
@@ -1094,7 +1095,8 @@ namespace Goedel.Tool.ASN {
                 case "Default": return NewDefault();
 
 				}
-            throw new System.Exception ("Reserved word not recognized \"" + Label + "\"");
+
+            throw new NotFoundReserved ("Reserved word not recognized \"" + Label + "\"");
             }
 
 
@@ -1415,7 +1417,7 @@ namespace Goedel.Tool.ASN {
             }
 
         void Pop () {
-            if (Stack.Count == 0) throw new System.Exception ("Internal Parser Error");
+			Assert.False (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -1432,9 +1434,10 @@ namespace Goedel.Tool.ASN {
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |
-                (Token == TokenType.COMMENT)) return;
-            if (Token == TokenType.INVALID)
-                throw new System.Exception("Invalid Token");
+                (Token == TokenType.COMMENT)) {
+				return;
+				}
+			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -1449,7 +1452,9 @@ namespace Goedel.Tool.ASN {
                             State = StateCode._Choice;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected START");
+                        else {
+							throw new ExpectedStart ();
+							}
 
                     case StateCode._Choice:                //      LABEL Class | END
                         if (Token == TokenType.LABEL) {
@@ -1464,7 +1469,7 @@ namespace Goedel.Tool.ASN {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
-                                throw new System.Exception("Parser Error Expected [Class]");
+                                throw new Expected("Parser Error Expected [Class]");
                                 }
                             break;
                             }
@@ -1472,10 +1477,13 @@ namespace Goedel.Tool.ASN {
                             State = StateCode._End;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [Class]");
+                        else {
+							throw new ExpectedClass();
+							}
 
-                    case StateCode._End:                   //      -
-                        throw new System.Exception("Too Many Closing Braces");
+                    case StateCode._End: {                  //      -
+                        throw new TooManyClose();
+						}
 
                     case StateCode.Namespace_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -1484,7 +1492,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.Namespace__Name;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Namespace__Name:
                         Pop ();
@@ -1497,7 +1505,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.ROOT__Name;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.ROOT__Name:
 
@@ -1535,7 +1543,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.Entry__Name;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Entry__Name:
                         if (Token == TokenType.INTEGER) {
@@ -1544,7 +1552,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.Entry__Value;
                             break;
                             }
-                        throw new System.Exception("Expected Integer");
+                        throw new Expected("Expected Integer");
 
                     case StateCode.Entry__Value:
                         Pop ();
@@ -1557,7 +1565,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.OID__Name;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.OID__Name:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -1566,7 +1574,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.OID__Root;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.OID__Root:
                         if (Token == TokenType.INTEGER) {
@@ -1575,7 +1583,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.OID__Value;
                             break;
                             }
-                        throw new System.Exception("Expected Integer");
+                        throw new Expected("Expected Integer");
 
                     case StateCode.OID__Value:
                         Pop ();
@@ -1588,7 +1596,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.Class__Name;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Class__Name:
 
@@ -1626,7 +1634,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.Object__Name;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Object__Name:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -1635,7 +1643,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.Object__OID;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Object__OID:
 
@@ -1673,7 +1681,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.SingularObject__Name;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.SingularObject__Name:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -1682,7 +1690,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.SingularObject__OID;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.SingularObject__OID:
 
@@ -1720,7 +1728,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.Member__Name;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Member__Name:
                         if (Token == TokenType.LABEL) {
@@ -1762,7 +1770,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.Member__Spec;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [OIDRef Any Bits VBits Octets Integer BigInteger Boolean Time List Set Choice IA5String BMPString UTF8String PrintableString ]");
+                        else throw new Expected ("Parser Error Expected [OIDRef Any Bits VBits Octets Integer BigInteger Boolean Time List Set Choice IA5String BMPString UTF8String PrintableString ]");
 
                     case StateCode.Member__Spec:
 
@@ -1869,7 +1877,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.List__Spec;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [OIDRef Any Bits VBits Octets Integer BigInteger Boolean Time List Set Choice IA5String BMPString UTF8String PrintableString ]");
+                        else throw new Expected ("Parser Error Expected [OIDRef Any Bits VBits Octets Integer BigInteger Boolean Time List Set Choice IA5String BMPString UTF8String PrintableString ]");
 
                     case StateCode.List__Spec:
                         Pop ();
@@ -1915,7 +1923,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.Set__Spec;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [OIDRef Any Bits VBits Octets Integer BigInteger Boolean Time List Set Choice IA5String BMPString UTF8String PrintableString ]");
+                        else throw new Expected ("Parser Error Expected [OIDRef Any Bits VBits Octets Integer BigInteger Boolean Time List Set Choice IA5String BMPString UTF8String PrintableString ]");
 
                     case StateCode.Set__Spec:
                         Pop ();
@@ -1981,11 +1989,11 @@ namespace Goedel.Tool.ASN {
                                 Current_Cast.Entry = New_Choice(Text);
                                 }
                             else {
-                               throw new System.Exception("Parser Error Expected [Code Implicit Explicit Optional Default Context ]");
+                               throw new Expected ("Parser Error Expected [Code Implicit Explicit Optional Default Context ]");
                                 }
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [Code Implicit Explicit Optional Default Context ]");
+                        else throw new Expected("Parser Error Expected [Code Implicit Explicit Optional Default Context ]");
 
                     case StateCode.Qualifier__Entry:
                         Pop ();
@@ -1998,7 +2006,7 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.Code__Value;
                             break;
                             }
-                        throw new System.Exception("Expected Integer");
+                        throw new Expected("Expected Integer");
 
                     case StateCode.Code__Value:
                         Pop ();
@@ -2027,15 +2035,16 @@ namespace Goedel.Tool.ASN {
                             State = StateCode.Default__Value;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Default__Value:
                         Pop ();
                         Represent = true; 
                         break;
 
-                    default:
-                        throw new System.Exception("Unreachable code reached");
+                    default: {
+                        throw new UnreachableCode();
+						}
                     }
                 }
             }

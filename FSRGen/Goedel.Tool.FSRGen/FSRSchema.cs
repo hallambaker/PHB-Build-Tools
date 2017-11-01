@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Registry;
+using Goedel.Utilities;
 
 
 //
@@ -481,7 +482,8 @@ namespace Goedel.Tool.FSRGen {
                 case "Token": return NewToken();
 
 				}
-            throw new System.Exception ("Reserved word not recognized \"" + Label + "\"");
+
+            throw new NotFoundReserved ("Reserved word not recognized \"" + Label + "\"");
             }
 
 
@@ -604,7 +606,7 @@ namespace Goedel.Tool.FSRGen {
             }
 
         void Pop () {
-            if (Stack.Count == 0) throw new System.Exception ("Internal Parser Error");
+			Assert.False (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -621,9 +623,10 @@ namespace Goedel.Tool.FSRGen {
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |
-                (Token == TokenType.COMMENT)) return;
-            if (Token == TokenType.INVALID)
-                throw new System.Exception("Invalid Token");
+                (Token == TokenType.COMMENT)) {
+				return;
+				}
+			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -638,7 +641,9 @@ namespace Goedel.Tool.FSRGen {
                             State = StateCode._Choice;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected START");
+                        else {
+							throw new ExpectedStart ();
+							}
 
                     case StateCode._Choice:                //      LABEL Class | END
                         if (Token == TokenType.LABEL) {
@@ -648,7 +653,7 @@ namespace Goedel.Tool.FSRGen {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
-                                throw new System.Exception("Parser Error Expected [Class]");
+                                throw new Expected("Parser Error Expected [Class]");
                                 }
                             break;
                             }
@@ -656,10 +661,13 @@ namespace Goedel.Tool.FSRGen {
                             State = StateCode._End;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [Class]");
+                        else {
+							throw new ExpectedClass();
+							}
 
-                    case StateCode._End:                   //      -
-                        throw new System.Exception("Too Many Closing Braces");
+                    case StateCode._End: {                  //      -
+                        throw new TooManyClose();
+						}
 
                     case StateCode.FSR_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -668,7 +676,7 @@ namespace Goedel.Tool.FSRGen {
                             State = StateCode.FSR__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.FSR__Id:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -677,7 +685,7 @@ namespace Goedel.Tool.FSRGen {
                             State = StateCode.FSR__Prefix;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.FSR__Prefix:
 
@@ -707,7 +715,7 @@ namespace Goedel.Tool.FSRGen {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Charset State Token ]");
+								throw new Expected ("Parser Error Expected [Charset State Token ]");
 								}
 							}
                         break;
@@ -720,7 +728,7 @@ namespace Goedel.Tool.FSRGen {
                             State = StateCode.Charset__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Charset__Id:
                         if (Token == TokenType.STRING) {
@@ -729,7 +737,7 @@ namespace Goedel.Tool.FSRGen {
                             State = StateCode.Charset__First;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Charset__First:
                         if (Token == TokenType.STRING) {
@@ -738,7 +746,7 @@ namespace Goedel.Tool.FSRGen {
                             State = StateCode.Charset__Last;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Charset__Last:
                         Pop ();
@@ -751,7 +759,7 @@ namespace Goedel.Tool.FSRGen {
                             State = StateCode.State__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.State__Id:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -760,7 +768,7 @@ namespace Goedel.Tool.FSRGen {
                             State = StateCode.State__Action;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.State__Action:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -769,7 +777,7 @@ namespace Goedel.Tool.FSRGen {
                             State = StateCode.State__Token;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.State__Token:
 
@@ -826,7 +834,7 @@ namespace Goedel.Tool.FSRGen {
                             State = StateCode.Entry__Is;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [On Any ]");
+                        else throw new Expected ("Parser Error Expected [On Any ]");
 
                     case StateCode.Entry__Is:
                         if (Token == TokenType.LABEL) {
@@ -839,11 +847,11 @@ namespace Goedel.Tool.FSRGen {
                                 Current_Cast.Action = New_Choice(Text);
                                 }
                             else {
-                               throw new System.Exception("Parser Error Expected [Return GoTo ]");
+                               throw new Expected ("Parser Error Expected [Return GoTo ]");
                                 }
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [Return GoTo ]");
+                        else throw new Expected("Parser Error Expected [Return GoTo ]");
 
                     case StateCode.Entry__Action:
                         Pop ();
@@ -856,7 +864,7 @@ namespace Goedel.Tool.FSRGen {
                             State = StateCode.On__Match;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.On__Match:
                         Pop ();
@@ -873,7 +881,7 @@ namespace Goedel.Tool.FSRGen {
                             State = StateCode.Return__Emit;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Return__Emit:
                         Pop ();
@@ -886,7 +894,7 @@ namespace Goedel.Tool.FSRGen {
                             State = StateCode.GoTo__Next;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.GoTo__Next:
                         Pop ();
@@ -899,15 +907,16 @@ namespace Goedel.Tool.FSRGen {
                             State = StateCode.Token__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Token__Id:
                         Pop ();
                         Represent = true; 
                         break;
 
-                    default:
-                        throw new System.Exception("Unreachable code reached");
+                    default: {
+                        throw new UnreachableCode();
+						}
                     }
                 }
             }

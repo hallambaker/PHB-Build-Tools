@@ -16,7 +16,7 @@ namespace Test.Goedel.Cryptography {
             var KeyA = new CurveEdwards25519Private();
             var KeyAPublic = KeyA.Public;
             var KeyAPrivate = KeyA.Private;
-            var Curve1 = KeyAPublic.Public.Multiply(CurveEdwards25519.q);
+            var Curve1 = KeyAPublic.Public.Multiply(CurveEdwards25519.Q);
             UT.Assert.IsTrue(Curve1.Y0 == 1);
 
             var Base = CurveEdwards25519.Base.Copy();

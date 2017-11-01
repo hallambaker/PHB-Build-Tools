@@ -1,59 +1,100 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
-
-    <AssemblyName>Goedel.Cryptography.Jose</AssemblyName>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5B273C47-8653-46D3-97A0-F96858BED256}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Cryptography.Jose</RootNamespace>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <SignAssembly>True</SignAssembly>
-    <PrimaryVersionType>AssemblyVersionAttribute</PrimaryVersionType>
-    <AssemblyInfoFilePath>AssemblyInfo.cs</AssemblyInfoFilePath>
-    <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
-    <UpdateAssemblyFileVersion>True</UpdateAssemblyFileVersion>
-    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
-    <AssemblyVersionSettings>None.IncrementOnDemand.IncrementOnDemandWithReset.Increment</AssemblyVersionSettings>
-    <AssemblyFileVersionSettings>None.IncrementOnDemand.IncrementOnDemandWithReset.Increment</AssemblyFileVersionSettings> 
+    <AssemblyName>Goedel.Cryptography.Jose</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard1.4\Goedel.Cryptography.Jose.xml</DocumentationFile>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Goedel.Cryptography.Jose.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Numerics" />
   </ItemGroup>
-
   <ItemGroup>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.Exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
+    <Compile Include="AlgorithmID.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="DH.cs" />
+    <Compile Include="Dictionary.cs" />
+    <Compile Include="Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Update="JoseSchema.cs">
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Header.cs" />
+    <Compile Include="JOSE.cs" />
+    <Compile Include="JoseSchema.cs">
       <DependentUpon>JoseSchema.Protocol</DependentUpon>
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="JWE.cs" />
+    <Compile Include="JWK.cs" />
+    <Compile Include="JWS.cs" />
+    <Compile Include="JWSimple.cs" />
+    <Compile Include="KeyClasses.cs" />
+    <Compile Include="NamespaceDoc.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RSA.cs" />
   </ItemGroup>
-
   <ItemGroup>
-    <None Update="Exceptions.Exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
+    <None Include="Exceptions.exceptional">
       <Generator>Exceptional</Generator>
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
     </None>
-    <None Update="JoseSchema.Protocol">
-      <LastGenOutput>JoseSchema.cs</LastGenOutput>
+    <None Include="Index.md" />
+    <None Include="JoseSchema.Protocol">
       <Generator>ProtoGen</Generator>
+      <LastGenOutput>JoseSchema.cs</LastGenOutput>
     </None>
+    <None Include="Prebuild.bat" />
   </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="powershell publishtarget $(TargetPath)" />
-  </Target>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="call $(ProjectDir)Prebuild" />
-  </Target>
+  <ItemGroup>
+    <ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj">
+      <Project>{68e6b0e8-d120-4da9-a5b3-ea64d40fba14}</Project>
+      <Name>Goedel.ASN</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj">
+      <Project>{16b48fbd-94ee-45b5-8eec-ea234f5774b5}</Project>
+      <Name>Goedel.Cryptography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj">
+      <Project>{4b69fe54-50a2-4f72-bf24-ba9bcd0c0949}</Project>
+      <Name>Goedel.Protocol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{71c0dce3-3f2a-4545-af77-1b89bcff7c1e}</Project>
+      <Name>Goedel.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>powershell publishtarget "$(TargetPath)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -80,7 +80,7 @@ namespace Goedel.Cryptography.Windows {
         public static void EraseTest() {
             if (!KeyPair.TestMode) {
                 var Keys = KeyContainer.GetKeyContainerNames();
-                var Prefix = Goedel.Cryptography.Framework.Container.PrefixTest;
+                var Prefix = Goedel.Cryptography.Framework.ContainerFramework.PrefixTest;
                 foreach (var Key in Keys) {
                     if (Key.StartsWith(Prefix)) {
                         //Delete(Key);

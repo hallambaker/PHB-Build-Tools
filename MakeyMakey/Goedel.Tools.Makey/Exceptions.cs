@@ -235,7 +235,7 @@ namespace Goedel.Tool.Makey {
         /// </summary>		
         /// <param name="Object">User data</param>	
 		public ParseError (LexReader Object) : 
-				base (String.Format ("The file {0} could not be read",
+				base (global::System.String.Format ("The file {0} could not be read",
 					Object.FilePath					)) {
 			UserData = Object;
 			}
@@ -247,7 +247,7 @@ namespace Goedel.Tool.Makey {
         /// <param name="Object">User data</param>	
 		/// <param name="Inner">Inner Exception</param>	
 		public ParseError (LexReader Object, System.Exception Inner) : 
-				base (String.Format ("The file {0} could not be read",
+				base (global::System.String.Format ("The file {0} could not be read",
 					Object.FilePath					), Inner) {
 			UserData = Object;
 			}

@@ -911,7 +911,9 @@ namespace GoedelSchema {
             }
 
         void Pop () {
-            if (Stack.Count == 0) throw new Exception ("Internal Parser Error");
+            if (Stack.Count == 0) {
+                throw new Exception("Internal Parser Error");
+                }
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;

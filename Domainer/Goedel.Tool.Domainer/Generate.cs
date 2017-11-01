@@ -44,7 +44,7 @@ namespace Goedel.Tool.Domainer {
 		public void GenerateCS (Domainer Domainer) {
 			_Output.Write ("using System.Net;\n{0}", _Indent);
 			_Output.Write ("using System.Collections.Generic;\n{0}", _Indent);
-			_Output.Write ("namespace Goedel.Platform {{\n{0}", _Indent);
+			_Output.Write ("namespace Goedel.Discovery {{\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    /// <summary>DNS management interface class.</summary>	\n{0}", _Indent);
 			_Output.Write ("	public partial class DNS {{\n{0}", _Indent);
@@ -133,16 +133,13 @@ namespace Goedel.Tool.Domainer {
 			_Output.Write ("	public abstract partial  class DNSRecord {{\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("		/// <summary>The type code</summary>\n{0}", _Indent);
-			_Output.Write ("		public virtual DNSTypeCode			Code {{\n{0}", _Indent);
-			_Output.Write ("			get {{return (0);}} }}\n{0}", _Indent);
+			_Output.Write ("		public virtual DNSTypeCode			Code => (0);\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("		/// <summary>The type text</summary>		\n{0}", _Indent);
-			_Output.Write ("		public virtual string	Label {{\n{0}", _Indent);
-			_Output.Write ("			get {{return (\"Unknown\");}} }}	\n{0}", _Indent);
+			_Output.Write ("		public virtual string	Label => (\"Unknown\");\n{0}", _Indent);
 			_Output.Write ("		\n{0}", _Indent);
 			_Output.Write ("		/// <summary>Description</summary>\n{0}", _Indent);
-			_Output.Write ("		public virtual string	Description {{\n{0}", _Indent);
-			_Output.Write ("			get {{return (\"Record is not defined\");}} }}\n{0}", _Indent);
+			_Output.Write ("		public virtual string	Description=> (\"Record is not defined\");\n{0}", _Indent);
 			_Output.Write ("		\n{0}", _Indent);
 			_Output.Write ("		/// <summary>Decode record or query from buffer</summary>	\n{0}", _Indent);
 			_Output.Write ("        /// <param name=\"Index\">Input data</param>\n{0}", _Indent);
@@ -236,16 +233,13 @@ namespace Goedel.Tool.Domainer {
 						}
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("		/// <summary>The type code</summary>\n{0}", _Indent);
-					_Output.Write ("		public override DNSTypeCode		Code {{\n{0}", _Indent);
-					_Output.Write ("			get {{return (DNSTypeCode.{1});}} }}		\n{0}", _Indent, RR.Id);
+					_Output.Write ("		public override DNSTypeCode		Code => (DNSTypeCode.{1});	\n{0}", _Indent, RR.Id);
 					_Output.Write ("		\n{0}", _Indent);
 					_Output.Write ("		/// <summary>The type text</summary>\n{0}", _Indent);
-					_Output.Write ("		public override string	Label {{\n{0}", _Indent);
-					_Output.Write ("			get {{return (\"{1}\");}} }}\n{0}", _Indent, RR.Id);
+					_Output.Write ("		public override string	Label => (\"{1}\");\n{0}", _Indent, RR.Id);
 					_Output.Write ("			\n{0}", _Indent);
 					_Output.Write ("		/// <summary>Description</summary>	\n{0}", _Indent);
-					_Output.Write ("		public override string	Description {{\n{0}", _Indent);
-					_Output.Write ("			get {{return (\"{1}\");}} }}\n{0}", _Indent, RR.Description);
+					_Output.Write ("		public override string	Description => (\"{1}\");\n{0}", _Indent, RR.Description);
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("        /// <summary>Convert to canonical form</summary>\n{0}", _Indent);
@@ -264,14 +258,13 @@ namespace Goedel.Tool.Domainer {
 					_Output.Write ("        /// <param name=\"Parse\">Input data</param>\n{0}", _Indent);
 					_Output.Write ("        /// <returns>Parsed record.</returns>\n{0}", _Indent);
 					_Output.Write ("        public static DNSRecord_{1} Parse(Parse Parse) {{\n{0}", _Indent, RR.Id);
-					_Output.Write ("			DNSRecord_{1} NewRecord = new DNSRecord_{2} () ;\n{0}", _Indent, RR.Id, RR.Id);
-					_Output.Write ("			\n{0}", _Indent);
+					_Output.Write ("			DNSRecord_{1} NewRecord = new DNSRecord_{2} () {{\n{0}", _Indent, RR.Id, RR.Id);
 					foreach  (_Choice Entry in RR.Entries) {
 						if (  (Entry.Tag != null) ) {
-							_Output.Write ("			NewRecord.{1} = Parse.{2}  ();\n{0}", _Indent, Entry.IdLabel, Entry.Tag);
+							_Output.Write ("			    {1} = Parse.{2}  (),\n{0}", _Indent, Entry.IdLabel, Entry.Tag);
 							}
 						}
-					_Output.Write ("\n{0}", _Indent);
+					_Output.Write ("				}};\n{0}", _Indent);
 					_Output.Write ("			return NewRecord;\n{0}", _Indent);
 					_Output.Write ("            }}\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
@@ -374,69 +367,61 @@ namespace Goedel.Tool.Domainer {
 					_Output.Write ("		/// <param name=\"Length\">Maximum amount of data to read</param>\n{0}", _Indent);
 					_Output.Write ("        /// <returns>Parsed record.</returns>\n{0}", _Indent);
 					_Output.Write ("        public static  DNSRecord_{1} Decode (DNSBufferIndex Index, int Length) {{\n{0}", _Indent, RR.Id);
-					_Output.Write ("			DNSRecord_{1} NewRecord = new DNSRecord_{2} () ;\n{0}", _Indent, RR.Id, RR.Id);
-					_Output.Write ("			NewRecord.Start = Index.Pointer;\n{0}", _Indent);
-					_Output.Write ("\n{0}", _Indent);
+					_Output.Write ("			DNSRecord_{1} NewRecord = new DNSRecord_{2} ()  {{\n{0}", _Indent, RR.Id, RR.Id);
+					_Output.Write ("				Start = Index.Start", _Indent);
 					foreach  (_Choice Entry in RR.Entries) {
 						switch (Entry._Tag ()) {
 							case DomainerType.Binary: { 
-							_Output.Write ("			NewRecord.{1} = Index.ReadData (Length - (Index.Pointer - NewRecord.Start));\n{0}", _Indent, Entry.IdLabel);
+							_Output.Write (",\n{0}", _Indent);
+							_Output.Write ("				{1} = Index.ReadData (Index.Remainder(Length))", _Indent, Entry.IdLabel);
 							break; }
 							case DomainerType.Binary8: { 
-							_Output.Write ("			{{\n{0}", _Indent);
-							_Output.Write ("			int FieldLength = Index.ReadByte ();\n{0}", _Indent);
-							_Output.Write ("			NewRecord.{1} = Index.ReadData (FieldLength);\n{0}", _Indent, Entry.IdLabel);
-							_Output.Write ("			}}\n{0}", _Indent);
+							_Output.Write (",\n{0}", _Indent);
+							_Output.Write ("				{1} = Index.ReadData (Index.ReadByte ())", _Indent, Entry.IdLabel);
 							break; }
 							case DomainerType.Binary16: { 
-							_Output.Write ("			{{\n{0}", _Indent);
-							_Output.Write ("			int FieldLength = Index.ReadInt16 ();\n{0}", _Indent);
-							_Output.Write ("			NewRecord.{1} = Index.ReadData (FieldLength);\n{0}", _Indent, Entry.IdLabel);
-							_Output.Write ("			}}\n{0}", _Indent);
+							_Output.Write (",\n{0}", _Indent);
+							_Output.Write ("				{1} = Index.ReadData (Index.ReadInt16 ())", _Indent, Entry.IdLabel);
 							break; }
 							case DomainerType.LBinary: {
 							  LBinary LBinary = (LBinary) Entry; 
-							_Output.Write ("			// Binary - length specified by {1}\n{0}", _Indent, LBinary.Length);
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("				// Binary - length specified by {1}", _Indent, LBinary.Length);
 							break; }
 							case DomainerType.Hex: { 
-							_Output.Write ("			NewRecord.{1} = Index.ReadData (Length - (Index.Pointer - NewRecord.Start));\n{0}", _Indent, Entry.IdLabel);
+							_Output.Write (",\n{0}", _Indent);
+							_Output.Write ("				{1} = Index.ReadData (Index.Remainder(Length))", _Indent, Entry.IdLabel);
 							break; }
 							case DomainerType.Hex8: { 
-							_Output.Write ("			{{\n{0}", _Indent);
-							_Output.Write ("			int FieldLength = Index.ReadByte ();\n{0}", _Indent);
-							_Output.Write ("			NewRecord.{1} = Index.ReadData (FieldLength);\n{0}", _Indent, Entry.IdLabel);
-							_Output.Write ("			}}\n{0}", _Indent);
+							_Output.Write (",\n{0}", _Indent);
+							_Output.Write ("				{1} = Index.ReadData (Index.ReadByte ())", _Indent, Entry.IdLabel);
 							break; }
 							case DomainerType.Hex16: { 
-							_Output.Write ("			{{\n{0}", _Indent);
-							_Output.Write ("			int FieldLength = Index.ReadInt16 ();\n{0}", _Indent);
-							_Output.Write ("			NewRecord.{1} = Index.ReadData (FieldLength);\n{0}", _Indent, Entry.IdLabel);
-							_Output.Write ("			}}\n{0}", _Indent);
+							_Output.Write (",\n{0}", _Indent);
+							_Output.Write ("				{1} = Index.ReadData (Index.ReadInt16 ())", _Indent, Entry.IdLabel);
 							break; }
 							case DomainerType.Strings: { 
-							_Output.Write ("			NewRecord.{1} = Index.ReadStrings (Length - (Index.Pointer - NewRecord.Start)) ;\n{0}", _Indent, Entry.IdLabel);
+							_Output.Write (",\n{0}", _Indent);
+							_Output.Write ("				{1} = Index.ReadStrings (Index.Remainder(Length)) ", _Indent, Entry.IdLabel);
 							break; }
 							case DomainerType.OptionalString: { 
-							_Output.Write ("			// If there is space left in the record, the optional string will be represented as\n{0}", _Indent);
-							_Output.Write ("			// an octet followed by the string data\n{0}", _Indent);
-							_Output.Write ("			if (Length - (Index.Pointer - NewRecord.Start) > 0) {{\n{0}", _Indent);
-							_Output.Write ("				NewRecord.{1} = Index.ReadString ();\n{0}", _Indent, Entry.IdLabel);
-							_Output.Write ("				}}\n{0}", _Indent);
-							_Output.Write ("			else {{\n{0}", _Indent);
-							_Output.Write ("				NewRecord.{1} = null;\n{0}", _Indent, Entry.IdLabel);
-							_Output.Write ("				}}\n{0}", _Indent);
+							_Output.Write (",\n{0}", _Indent);
+							_Output.Write ("				{1} = (Index.Remainder(Length) > 0) ? Index.ReadString () : null", _Indent, Entry.IdLabel);
 							break; }
 							case DomainerType.StringX: { 
-							_Output.Write ("			NewRecord.{1} = Index.ReadString (Length - (Index.Pointer - NewRecord.Start));\n{0}", _Indent, Entry.IdLabel);
+							_Output.Write (",\n{0}", _Indent);
+							_Output.Write ("				{1} = Index.ReadString (Index.Remainder(Length))", _Indent, Entry.IdLabel);
 							
 							 break; } default: {
 							if (  (Entry.Tag != null) ) {
-								_Output.Write ("			NewRecord.{1} = Index.Read{2} ();\n{0}", _Indent, Entry.IdLabel, Entry.Tag);
+								_Output.Write (",\n{0}", _Indent);
+								_Output.Write ("				{1} = Index.Read{2} ()", _Indent, Entry.IdLabel, Entry.Tag);
 								}
 						break; }
 							}
 						}
-					_Output.Write ("			\n{0}", _Indent);
+					_Output.Write ("\n{0}", _Indent);
+					_Output.Write ("				}};\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("			return NewRecord;\n{0}", _Indent);
 					_Output.Write ("            }}\n{0}", _Indent);

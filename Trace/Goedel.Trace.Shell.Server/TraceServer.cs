@@ -97,8 +97,6 @@ namespace Goedel.Trace.Shell.Server {
 			TraceShell Dispatch =	DispatchIn as TraceShell;
 			Start		Options = new Start ();
 			ProcessOptions (Args, Index, Options);
-
-            //throw new NYI();
 			Dispatch.Start (Options);
 			}
 

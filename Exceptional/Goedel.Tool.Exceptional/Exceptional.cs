@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Registry;
+using Goedel.Utilities;
 
 
 //
@@ -456,7 +457,8 @@ namespace Goedel.Tool.Exceptional {
                 case "Abstract": return NewAbstract();
 
 				}
-            throw new System.Exception ("Reserved word not recognized \"" + Label + "\"");
+
+            throw new NotFoundReserved ("Reserved word not recognized \"" + Label + "\"");
             }
 
 
@@ -570,7 +572,7 @@ namespace Goedel.Tool.Exceptional {
             }
 
         void Pop () {
-            if (Stack.Count == 0) throw new System.Exception ("Internal Parser Error");
+			Assert.False (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -587,9 +589,10 @@ namespace Goedel.Tool.Exceptional {
 
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |
-                (Token == TokenType.COMMENT)) return;
-            if (Token == TokenType.INVALID)
-                throw new System.Exception("Invalid Token");
+                (Token == TokenType.COMMENT)) {
+				return;
+				}
+			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -604,7 +607,9 @@ namespace Goedel.Tool.Exceptional {
                             State = StateCode._Choice;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected START");
+                        else {
+							throw new ExpectedStart ();
+							}
 
                     case StateCode._Choice:                //      LABEL Class | END
                         if (Token == TokenType.LABEL) {
@@ -615,7 +620,7 @@ namespace Goedel.Tool.Exceptional {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
-                                throw new System.Exception("Parser Error Expected [Class]");
+                                throw new Expected("Parser Error Expected [Class]");
                                 }
                             break;
                             }
@@ -623,10 +628,13 @@ namespace Goedel.Tool.Exceptional {
                             State = StateCode._End;
                             break;
                             }
-                        else throw new System.Exception("Parser Error Expected [Class]");
+                        else {
+							throw new ExpectedClass();
+							}
 
-                    case StateCode._End:                   //      -
-                        throw new System.Exception("Too Many Closing Braces");
+                    case StateCode._End: {                  //      -
+                        throw new TooManyClose();
+						}
 
                     case StateCode.Namespace_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -635,7 +643,7 @@ namespace Goedel.Tool.Exceptional {
                             State = StateCode.Namespace__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Namespace__Id:
 
@@ -663,7 +671,7 @@ namespace Goedel.Tool.Exceptional {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Exception ]");
+								throw new Expected ("Parser Error Expected [Exception ]");
 								}
 							}
                         break;
@@ -676,7 +684,7 @@ namespace Goedel.Tool.Exceptional {
                             State = StateCode.Using__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Using__Id:
                         Pop ();
@@ -689,7 +697,7 @@ namespace Goedel.Tool.Exceptional {
                             State = StateCode.Exception__Id;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Exception__Id:
 
@@ -721,7 +729,7 @@ namespace Goedel.Tool.Exceptional {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new System.Exception("Parser Error Expected [Abstract Console Description Object Exception ]");
+								throw new Expected ("Parser Error Expected [Abstract Console Description Object Exception ]");
 								}
 							}
                         break;
@@ -734,7 +742,7 @@ namespace Goedel.Tool.Exceptional {
                             State = StateCode.Object__Type;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Object__Type:
                         if (Token == TokenType.STRING) {
@@ -743,7 +751,7 @@ namespace Goedel.Tool.Exceptional {
                             State = StateCode.Object__Text;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Object__Text:
 
@@ -781,7 +789,7 @@ namespace Goedel.Tool.Exceptional {
                             State = StateCode.Parameter__Name;
                             break;
                             }
-                        throw new System.Exception("Expected LABEL or LITERAL");
+                        throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Parameter__Name:
                         Pop ();
@@ -794,7 +802,7 @@ namespace Goedel.Tool.Exceptional {
                             State = StateCode.Console__Message;
                             break;
                             }
-                        throw new System.Exception("Expected String");
+                        throw new Expected("Expected String");
 
                     case StateCode.Console__Message:
                         Pop ();
@@ -820,7 +828,7 @@ namespace Goedel.Tool.Exceptional {
                             Current_Cast.Text.Add (Text);
                             break;							
                             }
-                       throw new System.Exception("Expected Text");
+                       throw new Expected("Expected Text");
 
 
                     case StateCode.Abstract_Start:
@@ -828,8 +836,9 @@ namespace Goedel.Tool.Exceptional {
                         Represent = true; 
                         break;
 
-                    default:
-                        throw new System.Exception("Unreachable code reached");
+                    default: {
+                        throw new UnreachableCode();
+						}
                     }
                 }
             }

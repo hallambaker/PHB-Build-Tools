@@ -113,6 +113,7 @@ SourceFiles = \
      Exceptions.cs\
      Headers.cs\
      Lexer.cs\
+     NamespaceDoc.cs\
      Properties/AssemblyInfo.cs\
      RegistryT.cs\
      Script.cs\

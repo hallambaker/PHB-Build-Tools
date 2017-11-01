@@ -6,11 +6,15 @@ using System.Security.Cryptography;
 using Goedel.Utilities;
 using System.IO;
 using Goedel.Test;
+using Goedel.IO;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Framework;
 using Goedel.Cryptography.Windows;
+using Goedel.Cryptography.Container;
 using Goedel.Command;
+
+using Test.Goedel.Cryptography.Container;
 
 /// <summary>
 /// 
@@ -22,17 +26,126 @@ namespace PHB_Framework_Library1 {
             Goedel.IO.Debug.Initialize();
             CryptographyFramework.Initialize();
             //Goedel.FSR.Lexer.Trace = true;
-            var Start = new Start3();
+            var Start = new StartContainer();
             }
         }
-
-
-
 
     /// <summary>
     /// 
     /// </summary>
-    public class Start3 {
+    public class StartContainer {
+
+        int Max2 (int x) {
+            x = x / 2;
+            return x == 0 ? 1 : 2 * Max2(x);
+            }
+
+        int MaxTree (int x) {
+            var x2 = x == 0? 0 : Max2(x);
+            return (x2 == x) ? x2/2 : MaxTree(x-x2);
+            }
+
+        int Chain (int x) {
+            var x2 = x == 0 ? 0 : Max2(x);
+            return (x2 == x) ? x2 / 2 : x2+MaxTree(x - x2);
+            }
+
+
+        int MaxTree2 (int x) {
+            int x0 = x;
+            int l = 0;
+            int x2 = Max2(x);
+
+
+            if (x2 + (x2/2) >= x) {
+                return x2 / 2;
+                }
+
+            while (x2 > 0) {
+                if (x > x2) {
+                    x = x - x2;
+                    l = x2;
+                    }
+
+                x2 = x2 / 2;
+                }
+
+            return x0 - 2*l;
+            }
+
+        bool IsOdd (int x) {
+            return (x & 1) == 1;
+            }
+
+        int MagTree3 (int x) {
+            int x2 = x+1;
+            int d = 1;
+
+            while (x2 > 0) {
+                if ((x2 & 1) == 1) {
+                    return x2 == 1 ? (d/2) -1 : x - d ;
+                    }
+                d = d * 2;
+                x2 = x2 / 2;
+                }
+            return 0;
+            }
+
+
+        int MagTree4 (int x) {
+            int x2 = x;
+            int d = 1;
+
+            while (x2 > 0) {
+                if ((x2 & 1) == 1) {
+                    return x2 == 1 ? (d / 2) : x - d ;
+                    }
+                d = d * 2;
+                x2 = x2 / 2;
+                }
+            return 0;
+            }
+
+        ///<summary></summary>
+        public StartContainer () {
+            //MaxTree2(42);
+
+
+            //for (int i = 2; i < 100; i+=1) {
+            //    Console.WriteLine("{0} -> {1}   / {2}={3}", i, MagTree4(i), MagTree4(i+1)-1, MagTree3(i));
+            //    }
+
+
+
+            var TestSimple = new TestSimple();
+
+            var TContainer = MakeContainer("Test1List", ContainerType.List);
+            TestSimple.TestContainer(TContainer, 100, 300);
+
+            TContainer = MakeContainer("Test1Digest", ContainerType.Digest);
+            TestSimple.TestContainer(TContainer, 100, 300);
+
+            TContainer = MakeContainer("Test1Tree", ContainerType.Chain);
+            TestSimple.TestContainer(TContainer, 100, 300);
+            }
+
+
+
+        public Container MakeContainer (string FileName, ContainerType ContainerType = ContainerType.Chain,
+            bool Debug = true) {
+
+
+            var FileStream = FileName.FileStream(FileStatus.Overwrite);
+            var JBCDStream = Debug ? new JBCDStreamDebug(FileStream) :new JBCDStream(FileStream);
+            return Container.NewContainer(JBCDStream, ContainerType);
+
+            }
+        }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Start3 { 
 
         ///<summary></summary>
         public Start3 () {

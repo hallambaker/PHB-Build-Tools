@@ -1,8 +1,4 @@
-﻿
-
-Namespace Goedel.VSIX.Binding.RFC
-
-
+﻿Namespace Goedel.VSIX.Binding.RFC
 
 	RFC2TXT Generator ".txt"
 		GUID "548687B2-6C67-4F1B-86AA-343F7FD0F429"

@@ -15,35 +15,35 @@ namespace Goedel.Document.Markdown{
 
 	/*
 	public partial class MarkDownLex {
-        public virtual void Reset (char c) {
+        public virtual void Reset (int c) {
 			}
-        public virtual void Ignore (char c) {
+        public virtual void Ignore (int c) {
 			}
-        public virtual void AddText (char c) {
+        public virtual void AddText (int c) {
 			}
-        public virtual void StartPre (char c) {
+        public virtual void StartPre (int c) {
 			}
-        public virtual void AddPre (char c) {
+        public virtual void AddPre (int c) {
 			}
-        public virtual void PreClose (char c) {
+        public virtual void PreClose (int c) {
 			}
-        public virtual void CountWhite (char c) {
+        public virtual void CountWhite (int c) {
 			}
-        public virtual void AddSpace (char c) {
+        public virtual void AddSpace (int c) {
 			}
-        public virtual void WasHeading1 (char c) {
+        public virtual void WasHeading1 (int c) {
 			}
-        public virtual void WasHeading2 (char c) {
+        public virtual void WasHeading2 (int c) {
 			}
-        public virtual void AddHeading (char c) {
+        public virtual void AddHeading (int c) {
 			}
-        public virtual void DefinedTerm (char c) {
+        public virtual void DefinedTerm (int c) {
 			}
-        public virtual void DefinedData (char c) {
+        public virtual void DefinedData (int c) {
 			}
-        public virtual void AddNumbered (char c) {
+        public virtual void AddNumbered (int c) {
 			}
-        public virtual void AddBullet (char c) {
+        public virtual void AddBullet (int c) {
 			}
 		}
 	*/
@@ -73,12 +73,12 @@ namespace Goedel.Document.Markdown{
         /// <summary>
         /// Maps characters to character sets
         /// </summary>
-        public override byte[] CharacterMappings { get { return Character_Mapping; }  }
+        public override byte[] CharacterMappings  => Character_Mapping; 
 
         /// <summary>
         /// State transitions in response to character set
         /// </summary>
-        public override short[,] CompressedTransitions { get { return Compressed_Transitions; } }
+        public override short[,] CompressedTransitions  => Compressed_Transitions; 
 
         /// <summary>
         /// Get the next token from the stream

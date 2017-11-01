@@ -14,9 +14,8 @@
 #   * Copy executables
 
 LinkFiles = \
-    Goedel.Utilities.dll\
     Goedel.Protocol.dll\
-    Goedel.Protocol.Framework.dll
+    Goedel.Utilities.dll
 
 prebuild : 
     echo "Do Prebuild"

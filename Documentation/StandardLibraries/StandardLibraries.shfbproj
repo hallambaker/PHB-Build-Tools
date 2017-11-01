@@ -13,7 +13,7 @@
     <RootNamespace>Sandcastle</RootNamespace>
     <Name>Portable Libraries</Name>
     <!-- SHFB properties -->
-    <FrameworkVersion>.NET Framework 4.6.2</FrameworkVersion>
+    <FrameworkVersion>.NET Framework 4.7</FrameworkVersion>
     <OutputPath>..\..\..\WebPublish\PrismProof\code\standard\</OutputPath>
     <HtmlHelpName>GoedelPortable</HtmlHelpName>
     <Language>en-US</Language>
@@ -33,18 +33,21 @@
     <DocumentationSources>
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.ASN\Goedel.ASN.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Command\Goedel.Command.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.IO\Goedel.IO.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Platform\Goedel.Platform.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Platform.Framework\Goedel.Platform.Framework.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol.Framework\Goedel.Protocol.Framework.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Discovery\Goedel.Discovery.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Container\Goedel.Cryptography.Container.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Framework\Goedel.Cryptography.Framework.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Linux\Goedel.Cryptography.Linux.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol.Exchange\Goedel.Protocol.Exchange.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol.Exchange.Server\Goedel.Protocol.Exchange.Server.csproj" />
     </DocumentationSources>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
@@ -75,26 +78,28 @@
     <CatalogProductId>VS</CatalogProductId>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="True" />
-<NamespaceSummaryItem name="Goedel.ASN" isDocumented="True">Support routings for serializing and deserializing ASN.1  DER encoding for classes built with the PHB Tools ASN tool.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.FSR" isDocumented="True">Support routines for Finite State Recognizers built with the PHB Tools FSR tool.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Protocol" isDocumented="True">Support routines for Web Services built with the PHB Tools PROTOGEN tool.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Registry" isDocumented="True">Support routines for various systems built with the PHB Tools Goedel tool.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Utilities" isDocumented="True" />
-<NamespaceSummaryItem name="Goedel.Cryptography" isDocumented="True">Platform independent cryptographic functions. These include wrappers for the various Framework APIs to provide consistency across all domains and to provide convenience functions. Also included is support for various cryptographic functions such as key derrivation, key wrap, fingerprint derrivation (UDF), etc.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Cryptography.Jose" isDocumented="True">Cryptographic libraries for JSON Object Signing and Encryption (JOSE) support. These include classes to generate JSON Web Signature, JSON Web Encryption and JSON Web Key structures.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Cryptography.PKIX" isDocumented="True">Crypotographic support functions specific to PKIX that are not exposed in the standard platform runtime. These include certificate generation and various formats for public and private key information.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Command" isDocumented="True">Support routings for command line parsers built with the PHB Tools ASN tool.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Cryptography.Framework" isDocumented="True">Cryptography library using the .NET Framework providers. Will merge into .NET standard.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Cryptography.KeyFile" isDocumented="True">Libraries for serializing and deserializing various cryptographic file formats (PEM, SSH, etc.)</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.IO" isDocumented="True">General support libraries for file operations.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Platform" isDocumented="True">An abstraction layer for access to platform specific features including key storage primitives.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Platform.Framework" isDocumented="True">Implementation of the platform abstractions for .NET Framework</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Protocol.Debug" isDocumented="True">Debugging and documentation classes for PROTOGEN Web Services.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Goedel.Protocol.Framework" isDocumented="True">Implementation of .NET Framework specific protocol features.</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="Goedel.ASN" isDocumented="True">Support routings for serializing and deserializing ASN.1  DER encoding for classes built with the PHB Tools ASN tool.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.FSR" isDocumented="True">Support routines for Finite State Recognizers built with the PHB Tools FSR tool.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Protocol" isDocumented="True">Support routines for Web Services built with the PHB Tools PROTOGEN tool.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Registry" isDocumented="True">Support routines for various systems built with the PHB Tools Goedel tool.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Utilities" isDocumented="True" />
+      <NamespaceSummaryItem name="Goedel.Cryptography" isDocumented="True">Platform independent cryptographic functions. These include wrappers for the various Framework APIs to provide consistency across all domains and to provide convenience functions. Also included is support for various cryptographic functions such as key derrivation, key wrap, fingerprint derrivation (UDF), etc.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Cryptography.Jose" isDocumented="True">Cryptographic libraries for JSON Object Signing and Encryption (JOSE) support. These include classes to generate JSON Web Signature, JSON Web Encryption and JSON Web Key structures.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Cryptography.PKIX" isDocumented="True">Crypotographic support functions specific to PKIX that are not exposed in the standard platform runtime. These include certificate generation and various formats for public and private key information.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Command" isDocumented="True">Support routings for command line parsers built with the PHB Tools ASN tool.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Cryptography.Framework" isDocumented="True">Cryptography library using the .NET Framework providers. Will merge into .NET standard.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Cryptography.KeyFile" isDocumented="True">Libraries for serializing and deserializing various cryptographic file formats (PEM, SSH, etc.)</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.IO" isDocumented="True">General support libraries for file operations.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Platform" isDocumented="True">An abstraction layer for access to platform specific features including key storage primitives.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Platform.Framework" isDocumented="True">Implementation of the platform abstractions for .NET Framework</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Protocol.Debug" isDocumented="True">Debugging and documentation classes for PROTOGEN Web Services.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Goedel.Protocol.Framework" isDocumented="True">Implementation of .NET Framework specific protocol features.</NamespaceSummaryItem>
+    </NamespaceSummaries>
     <ProjectSummary>Support libraries for code generated with Goedel code synthesis tools.</ProjectSummary>
     <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
     <WorkingPath>..\..\..\scratch\standard\</WorkingPath>
     <SourceCodeBasePath>..\..\</SourceCodeBasePath>
+    <BuildLogFile>..\..\..\mmm\Documentation\SandcastleLibrary.log</BuildLogFile>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
@@ -148,7 +153,17 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Goedel.ASN\Goedel.ASN.csproj">
       <Name>Goedel.ASN</Name>
-      <Project>{a586aa17-029a-4a2d-8910-5ed7029b37a6}</Project>
+      <Project>{68e6b0e8-d120-4da9-a5b3-ea64d40fba14}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj">
+      <Name>Goedel.Command</Name>
+      <Project>{e7d4d1f4-e41a-44e2-abbd-f6a9e1d3f1ac}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Container\Goedel.Cryptography.Container.csproj">
+      <Name>Goedel.Cryptography.Container</Name>
+      <Project>{6bb41505-dedb-46e7-85e5-99f7d99f57e2}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Framework\Goedel.Cryptography.Framework.csproj">
@@ -158,7 +173,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
       <Name>Goedel.Cryptography.Jose</Name>
-      <Project>{d7cfa211-a1be-4af6-8ecf-d2cdd5de5b6d}</Project>
+      <Project>{5b273c47-8653-46d3-97a0-f96858bed256}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj">
@@ -166,14 +181,34 @@
       <Project>{73d40f24-a492-4081-b58e-b2af30762c78}</Project>
       <Private>True</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Linux\Goedel.Cryptography.Linux.csproj">
+      <Name>Goedel.Cryptography.Linux</Name>
+      <Project>{328bd6ee-ed86-4980-8683-b4a6d86bf72c}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Ticket\Goedel.Cryptography.Ticket.csproj">
+      <Name>Goedel.Cryptography.Ticket</Name>
+      <Project>{b0153c20-a394-4d17-8b0b-b90439bbdc06}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj">
+      <Name>Goedel.Cryptography.Windows</Name>
+      <Project>{fd1d6ce2-8a10-45a5-a473-f5517b8ab3d5}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <Name>Goedel.Cryptography</Name>
-      <Project>{c1a5cf62-88cb-47f9-b9a3-59354ffa6c68}</Project>
+      <Project>{16b48fbd-94ee-45b5-8eec-ea234f5774b5}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Discovery\Goedel.Discovery.csproj">
+      <Name>Goedel.Discovery</Name>
+      <Project>{f2ceda09-f5ed-4813-8666-eebdcef55e95}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
       <Name>Goedel.FSR</Name>
-      <Project>{24f56184-7dc6-4f7f-b169-6ce384a3b7a4}</Project>
+      <Project>{c06a45c9-3d54-40af-af59-ef860c50dd8b}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.IO\Goedel.IO.csproj">
@@ -181,29 +216,24 @@
       <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Platform.Framework\Goedel.Platform.Framework.csproj">
-      <Name>Goedel.Platform.Framework</Name>
-      <Project>{168a9984-6dbc-4683-9e43-c3e077066933}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Platform\Goedel.Platform.csproj">
-      <Name>Goedel.Platform</Name>
-      <Project>{46332174-d5ea-4bd5-9ff0-fdccbbf6df83}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
       <Name>Goedel.Protocol.Debug</Name>
       <Project>{0586b4c1-814c-4d98-b6f1-180cd4e2faab}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Framework\Goedel.Protocol.Framework.csproj">
-      <Name>Goedel.Protocol.Framework</Name>
-      <Project>{c1d2c847-ee62-430c-82dc-a4bd5ab38a44}</Project>
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Exchange.Server\Goedel.Protocol.Exchange.Server.csproj">
+      <Name>Goedel.Protocol.Exchange.Server</Name>
+      <Project>{da00c857-80ec-4542-8188-7c2a9982d97f}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Exchange\Goedel.Protocol.Exchange.csproj">
+      <Name>Goedel.Protocol.Exchange</Name>
+      <Project>{3d59c3c8-119d-4a4c-aaa2-7d71024de604}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
       <Name>Goedel.Protocol</Name>
-      <Project>{55e68ce6-ac29-4837-9d88-5ad99e4cef5a}</Project>
+      <Project>{4b69fe54-50a2-4f72-bf24-ba9bcd0c0949}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
@@ -213,9 +243,17 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
       <Name>Goedel.Utilities</Name>
-      <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
+      <Project>{71c0dce3-3f2a-4545-af77-1b89bcff7c1e}</Project>
       <Private>True</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Numerics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <Name>System.Numerics</Name>
+      <AssemblyName>System.Numerics.dll</AssemblyName>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Numerics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />

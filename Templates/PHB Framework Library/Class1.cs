@@ -11,7 +11,7 @@ namespace PHB_Framework_Library {
     /// <summary>
     /// 
     /// </summary>
-    public class Class1 {
+    public class $itemname$ {
         }
 
     }

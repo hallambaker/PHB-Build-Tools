@@ -111,6 +111,7 @@ export Custom_TrojanGTK_FLAG	?= /cs
 SourceFiles = \
      FileReaderWriter.cs\
      Message.cs\
+     NamespaceDoc.cs\
      Properties/AssemblyInfo.cs\
      Server.cs\
      WebRemoteSession.cs

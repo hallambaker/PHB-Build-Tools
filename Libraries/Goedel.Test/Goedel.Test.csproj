@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Goedel.Test</RootNamespace>
     <AssemblyName>Goedel.Test</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <AssemblyVersion>1.0.</AssemblyVersion>
@@ -65,13 +65,17 @@
       <Project>{fd1d6ce2-8a10-45a5-a473-f5517b8ab3d5}</Project>
       <Name>Goedel.Cryptography.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Project>{76a9f15e-3de5-4fb5-b2ca-146e9e5dc48d}</Project>
-      <Name>Goedel.Utilities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj">
-      <Project>{c1a5cf62-88cb-47f9-b9a3-59354ffa6c68}</Project>
+      <Project>{16b48fbd-94ee-45b5-8eec-ea234f5774b5}</Project>
       <Name>Goedel.Cryptography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Discovery\Goedel.Discovery.csproj">
+      <Project>{f2ceda09-f5ed-4813-8666-eebdcef55e95}</Project>
+      <Name>Goedel.Discovery</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Project>{71c0dce3-3f2a-4545-af77-1b89bcff7c1e}</Project>
+      <Name>Goedel.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\Goedel.Cryptography.Framework\Goedel.Cryptography.Framework.csproj">
       <Project>{b12ad19f-0e50-4d1d-99de-30c63886e718}</Project>
@@ -80,10 +84,6 @@
     <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj">
       <Project>{c4824513-f416-4ead-be82-f2df23641f6a}</Project>
       <Name>Goedel.IO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Goedel.Platform\Goedel.Platform.csproj">
-      <Project>{46332174-d5ea-4bd5-9ff0-fdccbbf6df83}</Project>
-      <Name>Goedel.Platform</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

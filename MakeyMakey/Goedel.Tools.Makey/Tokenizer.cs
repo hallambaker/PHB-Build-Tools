@@ -15,25 +15,25 @@ namespace Goedel.Tool.Makey{
 
 	/*
 	public partial class Tokenizer {
-        public virtual void Reset (char c) {
+        public virtual void Reset (int c) {
 			}
-        public virtual void AddCurrent (char c) {
+        public virtual void AddCurrent (int c) {
 			}
-        public virtual void GotTag (char c) {
+        public virtual void GotTag (int c) {
 			}
-        public virtual void GotStartTag (char c) {
+        public virtual void GotStartTag (int c) {
 			}
-        public virtual void Ignore (char c) {
+        public virtual void Ignore (int c) {
 			}
-        public virtual void GotItem (char c) {
+        public virtual void GotItem (int c) {
 			}
-        public virtual void StartFinalize (char c) {
+        public virtual void StartFinalize (int c) {
 			}
-        public virtual void EndFinalize (char c) {
+        public virtual void EndFinalize (int c) {
 			}
-        public virtual void TagValueFinalize (char c) {
+        public virtual void TagValueFinalize (int c) {
 			}
-        public virtual void Abort (char c) {
+        public virtual void Abort (int c) {
 			}
 		}
 	*/
@@ -63,12 +63,12 @@ namespace Goedel.Tool.Makey{
         /// <summary>
         /// Maps characters to character sets
         /// </summary>
-        public override byte[] CharacterMappings { get { return Character_Mapping; }  }
+        public override byte[] CharacterMappings  => Character_Mapping; 
 
         /// <summary>
         /// State transitions in response to character set
         /// </summary>
-        public override short[,] CompressedTransitions { get { return Compressed_Transitions; } }
+        public override short[,] CompressedTransitions  => Compressed_Transitions; 
 
         /// <summary>
         /// Get the next token from the stream

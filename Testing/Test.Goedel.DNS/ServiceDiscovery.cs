@@ -3,8 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UT=Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
-using Goedel.Platform;
-using Goedel.Platform.Framework;
+using Goedel.Discovery;
 using Goedel.Utilities;
 using Goedel.Test;
 

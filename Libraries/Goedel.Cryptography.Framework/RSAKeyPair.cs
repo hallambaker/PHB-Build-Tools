@@ -203,7 +203,7 @@ namespace Goedel.Cryptography.Framework {
                 //var UDFBytes = Goedel.Cryptography.UDF.FromKeyInfo(SubjectPublicKeyInfo.DER());
                 //var UDF = Goedel.Cryptography.UDF.ToString(UDFBytes);
 
-                CSPParameters.KeyContainerName = Container.Name(UDF);
+                CSPParameters.KeyContainerName = ContainerFramework.Name(UDF);
                 var NewProvider = new RSACryptoServiceProvider(CSPParameters);
                 NewProvider.ImportParameters(PrivateParameters);
                 _Provider = NewProvider;
@@ -350,7 +350,7 @@ namespace Goedel.Cryptography.Framework {
                 break;
                 }
 
-            Parameters.KeyContainerName = Container.Name(UDF);
+            Parameters.KeyContainerName = ContainerFramework.Name(UDF);
 
             var NewProvider = new RSACryptoServiceProvider(Parameters);
             var KeyParams = Provider.ExportParameters(true);
@@ -372,7 +372,7 @@ namespace Goedel.Cryptography.Framework {
         static RSACryptoServiceProvider PlatformLocateRSAProvider(string UDF) {
             try {
                 var Parameters = new CspParameters() {
-                    KeyContainerName = Container.Name(UDF),
+                    KeyContainerName = ContainerFramework.Name(UDF),
                     Flags = CspProviderFlags.UseExistingKey
                     };
                 return new RSACryptoServiceProvider(Parameters);
@@ -392,7 +392,7 @@ namespace Goedel.Cryptography.Framework {
             //Goedel.Debug.Trace.WriteLine("Get Private for {0}", UDF);
 
             var cp = new CspParameters() {
-                KeyContainerName = Container.Name(UDF)
+                KeyContainerName = ContainerFramework.Name(UDF)
                 };
 
             _Provider = new RSACryptoServiceProvider(cp);
@@ -404,7 +404,7 @@ namespace Goedel.Cryptography.Framework {
         /// </summary>
         public override void EraseFromDevice() {
             var cp = new CspParameters() {
-                KeyContainerName = Container.Name(UDF)
+                KeyContainerName = ContainerFramework.Name(UDF)
                 };
 
             _Provider = new RSACryptoServiceProvider(cp) {

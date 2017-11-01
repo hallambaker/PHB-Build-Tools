@@ -84,8 +84,7 @@ namespace Goedel.Cryptography.Framework {
         /// <param name="AsymmetricAlgorithm">The algorithm crypto provider</param>
         /// <returns>Crypto provider wrapping the specified key.</returns>
         public static KeyPair KeyPair(this AsymmetricAlgorithm AsymmetricAlgorithm) {
-            var AsRSA = AsymmetricAlgorithm as RSACryptoServiceProvider;
-            if (AsRSA != null) {
+            if (AsymmetricAlgorithm is RSACryptoServiceProvider AsRSA) {
                 return new RSAKeyPair(AsRSA);
                 }
 
@@ -160,7 +159,7 @@ namespace Goedel.Cryptography.Framework {
     /// <summary>
     /// Utility class for addressing containers.
     /// </summary>
-    public static class Container {
+    public static class ContainerFramework {
 
         /// <summary>
         /// Prefix for test containers

@@ -19,6 +19,8 @@ namespace Goedel.Cryptography.Linux{
         /// Perform initialization of the Goedel.Cryptography portable class
         /// with delegates to the .NET framework methods.
         /// </summary>
+        /// <param name="TestMode">If true initialize the system in test mode so that
+        /// settings may be tested and cleared without disrupting user work.</param>
         public static void Initialize(bool TestMode=false) {
             InitializationLock.WaitOne();
 
