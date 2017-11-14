@@ -2,7 +2,7 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"
                  xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="AAECB34E-FA34-4CC1-B2F8-8AE537AF3B56" Version="2.0.13" Language="en-US" Publisher="Phillip Hallam-Baker" />
+        <Identity Id="AAECB34E-FA34-4CC1-B2F8-8AE537AF3B56" Version="2.0.15" Language="en-US" Publisher="Phillip Hallam-Baker" />
         <DisplayName>Goedel Code Meta Synthesizer</DisplayName>
         <Description xml:space="preserve">Phill Hallam-Baker's meta-code generation tools.
 

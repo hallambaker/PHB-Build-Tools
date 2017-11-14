@@ -72,6 +72,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <OutputPath>bin\Publish\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DotNet|x86'">
+    <OutputPath>bin\x86\DotNet\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DotNet|AnyCPU'">
+    <OutputPath>bin\DotNet\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -107,6 +113,10 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj">
       <Project>{e7d4d1f4-e41a-44e2-abbd-f6a9e1d3f1ac}</Project>
       <Name>Goedel.Command</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
+      <Project>{c06a45c9-3d54-40af-af59-ef860c50dd8b}</Project>
+      <Name>Goedel.FSR</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
       <Project>{ebda947e-d7a9-4a93-aef1-aea9d56b9225}</Project>

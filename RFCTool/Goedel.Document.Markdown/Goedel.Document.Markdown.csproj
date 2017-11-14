@@ -41,6 +41,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <OutputPath>bin\Publish\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DotNet|AnyCPU'">
+    <OutputPath>bin\DotNet\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
@@ -66,6 +69,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="MarkWordParagraphPlus.cs" />
+    <Compile Include="NewBlockParse.cs" />
     <Compile Include="Parse.cs" />
     <Compile Include="ParseRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -37,6 +37,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <OutputPath>bin\Publish\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DotNet|AnyCPU'">
+    <OutputPath>bin\DotNet\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Goedel.FSR, Version=1.0.6136.27851, Culture=neutral, PublicKeyToken=9ac84b9f2535680b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

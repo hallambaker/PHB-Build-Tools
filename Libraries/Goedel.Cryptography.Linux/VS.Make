@@ -27,6 +27,6 @@ prebuild :
     echo "Do Prebuild"
 
 postbuild : 
-	powershell publishtarget PHB Framework Library.dll
+	powershell publishtarget Goedel.Cryptography.Linux.dll
 
 

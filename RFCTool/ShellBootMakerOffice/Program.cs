@@ -48,7 +48,10 @@ namespace Shell.Bootmaker {
         static void TestNew(TagCatalog TagCatalog) {
 
             var Document = new Document ("Test.md");
-            var BlockParser = new Goedel.Document.Markdown.BlockParserMarkDown(TagCatalog, Document);
+            var BlockParser = new Goedel.Document.Markdown.BlockParserMarkDown() {
+                TagCatalog = TagCatalog,
+                Document = Document
+                };
             BlockParser.Parse();
 
             Dump(Document);

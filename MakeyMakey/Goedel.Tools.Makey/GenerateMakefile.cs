@@ -101,7 +101,7 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("# Define the default compilers, linkers, packagers, etc.\n{0}", _Indent);
 			_Output.Write ("export CSHARPDLL	?=  mcs /target:library\n{0}", _Indent);
 			_Output.Write ("export CSHARPEXE	?=  mcs /target:exe\n{0}", _Indent);
-			_Output.Write ("export BUNDLE		?=  mkbundle --deps --static -o \n{0}", _Indent);
+			_Output.Write ("export BUNDLE		?=  mkbundle -L /usr/lib/mono/4.7-api --deps --static -o \n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -211,15 +211,11 @@ namespace Goedel.Tool.Makey {
 					foreach  (var Dep in Project.ProjectReference) {
 						 var SubProject = Dep.SubProject;
 						 var GUID = SubProject.ProjectGuid;
-						// var SubProjectDir = Solution.ByGuid (GUID).Directory.UnixPath();
-						 var SubProjectDir = SubProject.Directory.UnixPath();
-						// SubTarget #{SubProject.Target}
-						// SubProject #{SubProjectDir}
-						// GUID #{GUID}
+						 var SubProjectDir = SubProject.Directory.UnixCanonicalPath();
 						if (  (Project.IsExe) ) {
-							_Output.Write ("{1}/$(TARGETBIN)/{2} : {3}/$(TARGETBIN)/{4}\n{0}", _Indent, Directory, Project.Target, SubProjectDir, SubProject.Target);
+							_Output.Write ("{1}/$(TARGETBIN)/{2} : {3}$(TARGETBIN)/{4}\n{0}", _Indent, Directory, Project.Target, SubProjectDir, SubProject.Target);
 							} else if (  (Project.IsLibrary)) {
-							_Output.Write ("{1}/$(TARGETBIN)/{2} : {3}/$(TARGETBIN)/{4}\n{0}", _Indent, Directory, Project.Target, SubProjectDir, SubProject.Target);
+							_Output.Write ("{1}/$(TARGETBIN)/{2} : {3}$(TARGETBIN)/{4}\n{0}", _Indent, Directory, Project.Target, SubProjectDir, SubProject.Target);
 							} else {
 							}
 						_Output.Write ("\n{0}", _Indent);

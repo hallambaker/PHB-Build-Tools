@@ -277,7 +277,7 @@ namespace Goedel.Cryptography {
         /// <param name="Mask">XOR mask value</param>
         public void XOR (long Mask) {
 
-            var Result = new byte[8];
+            //var Result = new byte[8];
             for (var i = 0; i < 8; i++) {
                 Data[i] = (byte) (Data[i] ^ (Mask >> 56));
                 Mask = Mask << 8;

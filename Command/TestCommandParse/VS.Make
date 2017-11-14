@@ -15,6 +15,7 @@
 
 LinkFiles = \
     Goedel.Command.dll\
+    Goedel.IO.dll\
     Goedel.Registry.dll\
     Goedel.Utilities.dll\
     Goedel.Tool.Command.dll

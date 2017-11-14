@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.IO;
 using System.Collections.Generic;
 using System.Xml;
@@ -7,6 +8,45 @@ using System.Xml.Serialization;
 namespace Goedel.Tool.Makey {
 
     public static class Utilities {
+
+
+        public static string UnixCanonicalPath (this string Path) {
+            var Directories = Path.Split('\\');
+
+            for (var i = 0; i < Directories.Length; i++) {
+                if (Directories[i] == "." | Directories[i] == "") {
+                    Directories[i] = null;
+                    }
+                else if (Directories[i] == "..") {
+                    if (StrikeDirectory(Directories, i)) {
+                        Directories[i] = null;
+                        }
+                    }
+
+                }
+
+            var Builder = new StringBuilder();
+            foreach (var Directory in Directories) {
+                if (Directory != null) {
+                    Builder.Append(Directory);
+                    Builder.Append("/");
+                    }
+                }
+
+            return Builder.ToString();
+            }
+
+
+        static bool StrikeDirectory (string[] Directories, int Index) {
+            for (var i = Index - 1; i >= 0; i--) {
+                if (Directories[i] != null) {
+                    Directories[i] = null;
+                    return true;
+                    }
+                }
+            return false;
+
+            }
 
         public static string UnixPath(this string File, string Sub) {
             var FilePath = Path.Combine(File, Sub);

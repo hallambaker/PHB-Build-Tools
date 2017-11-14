@@ -54,10 +54,15 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="KeyPair">Key pair to convert</param>
         /// <returns>The keyfile data</returns>
         public static string ToOpenSSH (this KeyPair KeyPair) {
-            switch (KeyPair) {
-                case RSAKeyPair RSAKeyPair:
-                    return ToOpenSSH(RSAKeyPair);
+            if (KeyPair is RSAKeyPair) {
+                var RSAKeyPair = KeyPair as RSAKeyPair;
+                return ToOpenSSH(RSAKeyPair);
                 }
+
+            //switch (KeyPair) {
+            //    case RSAKeyPair RSAKeyPair:
+            //        return ToOpenSSH(RSAKeyPair);
+            //    }
             return null;
             }
 
@@ -67,10 +72,15 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="KeyPair">Key pair to convert</param>
         /// <returns>The keyfile data</returns>
         public static string ToPEMPrivate (this KeyPair KeyPair) {
-            switch (KeyPair) {
-                case RSAKeyPair RSAKeyPair:
+            if (KeyPair is RSAKeyPair) {
+                var RSAKeyPair = KeyPair as RSAKeyPair;
                 return ToPEMPrivate(RSAKeyPair);
                 }
+
+            //switch (KeyPair) {
+            //    case RSAKeyPair RSAKeyPair:
+            //    return ToPEMPrivate(RSAKeyPair);
+            //    }
             return null;
             }
 
@@ -80,10 +90,15 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="KeyPair">Key pair to convert</param>
         /// <returns>The keyfile data</returns>
         public static string ToPEMPublic (this KeyPair KeyPair) {
-            switch (KeyPair) {
-                case RSAKeyPair RSAKeyPair:
+            if (KeyPair is RSAKeyPair) {
+                var RSAKeyPair = KeyPair as RSAKeyPair;
                 return ToPEMPublic(RSAKeyPair);
                 }
+
+            //switch (KeyPair) {
+            //    case RSAKeyPair RSAKeyPair:
+            //    return ToPEMPublic(RSAKeyPair);
+            //    }
             return null;
             }
 
@@ -93,10 +108,15 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="KeyPair">Key pair to convert</param>
         /// <returns>The keyfile data</returns>
         public static string ToPuTTY (this KeyPair KeyPair) {
-            switch (KeyPair) {
-                case RSAKeyPair RSAKeyPair:
+            if (KeyPair is RSAKeyPair) {
+                var RSAKeyPair = KeyPair as RSAKeyPair;
                 return ToPuTTY(RSAKeyPair);
                 }
+
+            //switch (KeyPair) {
+            //    case RSAKeyPair RSAKeyPair:
+            //    return ToPuTTY(RSAKeyPair);
+            //    }
             return null;
             }
 

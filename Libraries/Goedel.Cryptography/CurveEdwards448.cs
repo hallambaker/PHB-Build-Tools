@@ -290,7 +290,7 @@ namespace Goedel.Cryptography {
             var A = Decode(Public);
 
             var Rs = Signature.Duplicate(0, 57);
-            var R = Decode(Rs);
+            //var R = Decode(Rs);
 
             var Bs = Signature.Duplicate(57, 57);
             var s = Bs.BigIntegerLittleEndian();
@@ -350,7 +350,6 @@ namespace Goedel.Cryptography {
         /// key agreement.</returns>
         public CurveEdwards448Result Agreement() {
             var Private = new CurveEdwards448Private();
-            var Agreement = Private.Agreement(this);
 
             return new CurveEdwards448Result() {
                 Public = Private.Public,

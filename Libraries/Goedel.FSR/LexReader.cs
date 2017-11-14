@@ -25,9 +25,7 @@ namespace Goedel.FSR {
         /// <summary>Last character read (as integer)</summary>
         public int LastInt;
         /// <summary>Last character read.</summary>
-        public char LastChar {
-            get => LastInt > 0 ? (char)LastInt : '.'; 
-            }
+        public char LastChar => LastInt > 0 ? (char)LastInt : '.'; 
 
         /// <summary>
         /// Create new lexical analyzer

@@ -4,7 +4,8 @@
 	Block include
 	Block pre
 		Flag plaintext
-
+		XML "pre" ""
+		
 	Meta bibliography
 	Meta bibsource
 	Meta style
@@ -53,10 +54,13 @@
 	Layout ul
 		XML "ul" "class"
 		Wrap li
+		Wrap ul
+		Wrap ol
 
 	Layout ol
-
 		XML "ol" "class"
+		Wrap ul
+		Wrap ol
 
 	Layout dl
 		Stack leftmain
@@ -246,7 +250,9 @@
 	Block cmd
 		XML "pre" "class"
 			Default "class" "command-prompt"		
-
+	Block result
+		XML "pre" "class"
+			Default "class" "command-prompt"		
 
 	Meta title
 

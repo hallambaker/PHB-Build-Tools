@@ -19,6 +19,7 @@ LinkFiles = \
     Goedel.Tool.FSRGen.dll\
     Goedel.Tool.Schema.dll\
     Goedel.Tool.Script.dll\
+    Goedel.FSR.dll\
     Goedel.Registry.dll\
     Goedel.Utilities.dll
 

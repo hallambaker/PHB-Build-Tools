@@ -14,6 +14,7 @@
 #   * Copy executables
 
 LinkFiles = \
+    Goedel.IO.dll\
     Goedel.Registry.dll\
     Goedel.Utilities.dll
 

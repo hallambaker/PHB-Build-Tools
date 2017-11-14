@@ -14,10 +14,7 @@
 #   * Copy executables
 
 LinkFiles = \
-    Goedel.IO.dll\
-    Goedel.Protocol.Framework.dll\
     Goedel.Protocol.dll\
-    Goedel.Utilities.dll\
     Goedel.Trace.dll
 
 prebuild : 

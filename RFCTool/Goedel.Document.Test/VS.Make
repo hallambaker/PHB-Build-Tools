@@ -17,8 +17,6 @@ LinkFiles = \
     Microsoft.VisualStudio.TestPlatform.TestFramework.dll\
     Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll\
     Goedel.FSR.dll\
-    Goedel.IO.dll\
-    Goedel.Registry.dll\
     Goedel.Utilities.dll\
     Goedel.Document.Markdown.dll\
     Goedel.Document.OpenXML.dll\

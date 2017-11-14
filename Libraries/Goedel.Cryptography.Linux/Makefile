@@ -1,5 +1,5 @@
 #
-# Makefile for Visual Studio Project PHB Framework Library
+# Makefile for Visual Studio Project Goedel.Cryptography.Linux
 #
 # This file is generated automatically from the Visual Studio Project
 # File. If you make changes to this file and do not update the project
@@ -133,12 +133,12 @@ NugetFilesComa =
 
 # A) Main target packaged
 
-$(TARGETBIN)/PHB Framework Library.dll :| $(LIBRARYBIN)
-$(TARGETBIN)/PHB Framework Library.dll :| $(TARGETBIN)
+$(TARGETBIN)/Goedel.Cryptography.Linux.dll :| $(LIBRARYBIN)
+$(TARGETBIN)/Goedel.Cryptography.Linux.dll :| $(TARGETBIN)
 
-$(TARGETBIN)/PHB Framework Library.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
+$(TARGETBIN)/Goedel.Cryptography.Linux.dll :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
 ! $(CSHARPDLL) /out:$@  $(SourceFiles) -reference:$(LinkFilesComma) 
-! cp $(TARGETBIN)/PHB Framework Library.dll $(LIBRARYBIN)/PHB Framework Library.dll
+! cp $(TARGETBIN)/Goedel.Cryptography.Linux.dll $(LIBRARYBIN)/Goedel.Cryptography.Linux.dll
 
 
 # Directories etc.
@@ -254,10 +254,10 @@ clean :
 # Install files to a tools directory. Default is ~/.local/bin
 
 
-install : $(INSTALL_DATA)/PHB Framework Library.dll
+install : $(INSTALL_DATA)/Goedel.Cryptography.Linux.dll
 
-$(INSTALL_DATA)/PHB Framework Library.dll :| $(INSTALL_DATA)
-$(INSTALL_DATA)/PHB Framework Library.dll : $(TARGETBIN)/PHB Framework Library.dll
+$(INSTALL_DATA)/Goedel.Cryptography.Linux.dll :| $(INSTALL_DATA)
+$(INSTALL_DATA)/Goedel.Cryptography.Linux.dll : $(TARGETBIN)/Goedel.Cryptography.Linux.dll
 ! cp $^ $@ 
 
 

@@ -37,20 +37,17 @@ namespace Goedel.Document.Markdown {
         public List<_Choice> PreEnclosures = new List<_Choice> ();
         public List<_Choice> PreWrappers = new List<_Choice>();
 
-        public List<CatalogEntry> Enclosures = new List<CatalogEntry>();
+        public List<CatalogEntry> StackEnclosures = new List<CatalogEntry>();
         public List<CatalogEntry> Wrappers = new List<CatalogEntry>();
         public bool Any = false;
 
+        public bool Plaintext = false;
 
+        public CatalogEntry DefaultStackEnclosure => StackEnclosures.Count > 0 ? StackEnclosures[0] : null;
 
-        public CatalogEntry Enclosure {
-            get {
-                return Enclosures.Count > 0 ? Enclosures[0] : null;
-                }
-            }
 
         public void BackReferences() {
-            foreach (var Item in PreEnclosures) { Enclosures.Add(Item.CatalogEntry); }
+            foreach (var Item in PreEnclosures) { StackEnclosures.Add(Item.CatalogEntry); }
             foreach (var Item in PreWrappers) { Wrappers.Add(Item.CatalogEntry); }
             }
 
@@ -102,50 +99,60 @@ namespace Goedel.Document.Markdown {
         public void Init(Dictionary<string, CatalogEntry> Dictionary, CatalogEntry Parent, 
                     List<_Choice> Items) {
             foreach (var Item in Items) {
-                if (Item.GetType() == typeof(BM.Layout)) {
-                    var NewItem = new CatalogEntry(Dictionary, this, Item);
-                    Children.Add(NewItem);
-                    }
-                else if (Item.GetType() == typeof(BM.Level)) {
-                    var ItemT = (BM.Level)Item;
-                    Level = ItemT.Value;
-                    }
-                else if (Item.GetType() == typeof(BM.Markup)) {
-                    var ItemT = (BM.Markup)Item;
-                    Start = ItemT.Start;
-                    Start1 = ItemT.Start1;
-                    End = ItemT.End;
-                    }
-                else if (Item.GetType() == typeof(BM.XML)) {
-                    var ItemT = (BM.XML)Item;
-                    XMLTag= ItemT.Tag;
-                    XMLFirst = ItemT.First;
-
-                    foreach (var ItemD in ItemT.Entries) {
-                        if (ItemD.GetType() == typeof(BM.Default)) {
-                            var ItemDT = (Default)ItemD;
-                            var Default = new TagValue(ItemDT.Tag, ItemDT.Value);
-                            XMLDefaults.Add(Default);
-                            }
+                switch (Item) {
+                    case BM.Layout ItemT: {
+                        var NewItem = new CatalogEntry(Dictionary, this, Item);
+                        Children.Add(NewItem);
+                        break;
                         }
+                    case BM.Level ItemT: {
+                        Level = ItemT.Value;
+                        break;
+                        }
+                    case BM.Markup ItemT: {
+                        Start = ItemT.Start;
+                        Start1 = ItemT.Start1;
+                        End = ItemT.End;
+                        break;
+                        }
+                    case BM.XML ItemT: {
+                        XMLTag = ItemT.Tag;
+                        XMLFirst = ItemT.First;
 
-                    }
-                else if (Item.GetType() == typeof(BM.Stack)) {
-                    var ItemT = (BM.Stack)Item;
-                    var RefItem = ItemT.Wrapper.Definition;
-                    PreEnclosures.Add(RefItem);
-                    }
-                else if (Item.GetType() == typeof(BM.Wrap)) {
-                    var ItemT = (BM.Wrap)Item;
-                    var RefItem = ItemT.Wrapper.Definition;
-                    PreWrappers.Add(RefItem);
-                    }
-                else if (Item.GetType() == typeof(BM.Meta)) {
-                    var Child = new CatalogEntry(Dictionary, this, Item);
-                    Children.Add(Child);
-                    }
-                else if (Item.GetType() == typeof(BM.Any)) {
-                    Any = true;
+                        foreach (var ItemD in ItemT.Entries) {
+                            if (ItemD.GetType() == typeof(BM.Default)) {
+                                var ItemDT = (Default)ItemD;
+                                var Default = new TagValue(ItemDT.Tag, ItemDT.Value);
+                                XMLDefaults.Add(Default);
+                                }
+                            }
+                        break;
+                        }
+                    case BM.Stack ItemT: {
+                        var RefItem = ItemT.Wrapper.Definition;
+                        PreEnclosures.Add(RefItem);
+                        break;
+                        }
+                    case BM.Wrap ItemT: {
+                        var RefItem = ItemT.Wrapper.Definition;
+                        PreWrappers.Add(RefItem);
+                        break;
+                        }
+                    case BM.Meta ItemT: {
+                        var Child = new CatalogEntry(Dictionary, this, Item);
+                        Children.Add(Child);
+                        break;
+                        }
+                    case BM.Any ItemT: {
+                        Any = true;
+                        break;
+                        }
+                    case BM.Flag ItemT: {
+                        if (ItemT.Id.Label == "plaintext") {
+                            Plaintext = true;
+                            }
+                        break;
+                        }
                     }
                 }
             }
@@ -188,12 +195,12 @@ namespace Goedel.Document.Markdown {
 
     public class TagCatalog {
 
-        public delegate Document DocumentProcessD(DocumentSet Parent, 
+        public delegate Document DocumentProcessDelegate(DocumentSet Parent, 
                     FileInfo FileInfo, TagCatalog TagCatalog);
-        public delegate void ProcessD(string InPath, string OutPath);
+        public delegate void ProcessDelegate(string InPath, string OutPath);
 
-        public DocumentProcessD DocumentProcess;
-        public ProcessD Process;
+        public DocumentProcessDelegate DocumentProcess;
+        public ProcessDelegate Process;
 
         public FormatHTML DefaultFormat = null;
         public Dictionary<string, FormatHTML> Formats = new Dictionary<string, FormatHTML>();
@@ -214,7 +221,7 @@ namespace Goedel.Document.Markdown {
                     if (Entry.GetType() == typeof(BM.Format)) {
                         var Format = Entry as BM.Format;
                         var FormatHTML = new FormatHTML(Format);
-                        DefaultFormat = DefaultFormat == null ? FormatHTML : DefaultFormat;
+                        DefaultFormat = DefaultFormat ?? FormatHTML;
                         Formats.Add(Format.Id.ToString(), FormatHTML);
                         }
                     else {
@@ -230,8 +237,9 @@ namespace Goedel.Document.Markdown {
 
             for (int i = 0; i < 7; i++) {
                 if (Defaults[i] == null) {
-                    Defaults[i] = new CatalogEntry();
-                    Defaults[i].Level = i;
+                    Defaults[i] = new CatalogEntry() {
+                        Level = i
+                        };
                     if (i == 0) {
                         Defaults[i].Start = "<p>";
                         Defaults[i].Start1 = "<p>";
@@ -262,10 +270,11 @@ namespace Goedel.Document.Markdown {
             }
 
         public CatalogEntry Find(string Key) {
-            if (Key == null) return null;
+            if (Key == null) {
+                return null;
+                }
 
-            CatalogEntry Result;
-            var Found = Catalog.TryGetValue(Key.ToLower(), out Result);
+            var Found = Catalog.TryGetValue(Key.ToLower(), out var Result);
             Result = Found ? Result : null;
             return Result;
             }

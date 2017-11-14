@@ -16,7 +16,6 @@
 LinkFiles = \
     Microsoft.Office.Interop.Excel.dll\
     Microsoft.Office.Interop.PowerPoint.dll\
-    Microsoft.Office.Interop.Visio.dll\
     Office.dll
 
 prebuild : 

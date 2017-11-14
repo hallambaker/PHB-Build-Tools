@@ -355,7 +355,7 @@ namespace Goedel.Document.OpenXML {
             CurrentBlock = null;
 
             CurrentCatalogEntry = CatalogEntry;
-            MakeParagraphIfNull();
+            StartNewParagraph();
 
             var Lexer = new GM.MarkNewParagraph(CurrentBlock);
             foreach (var Child in Paragraph.ChildElements) {
@@ -435,7 +435,7 @@ namespace Goedel.Document.OpenXML {
                 CurrentCatalogEntry = CatalogEntryPreformatted;
                 }
 
-            MakeParagraphIfNull();
+            StartNewParagraph();
             CurrentCatalogEntry = CatalogEntryPreformatted;
 
             var Text = ParseParagraph(Break, Paragraph);

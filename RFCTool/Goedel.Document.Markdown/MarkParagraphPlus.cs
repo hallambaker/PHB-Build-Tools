@@ -25,7 +25,7 @@ namespace Goedel.Document.Markdown {
 
         string Buffer;     // Text known to be text
         string Extra;      // Text that might be text or an element
-        public string Data { get => Buffer + Extra; }
+        public string Data  => Buffer + Extra; 
             
 
         public TagValue Element;

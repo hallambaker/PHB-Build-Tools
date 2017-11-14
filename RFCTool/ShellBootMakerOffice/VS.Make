@@ -12,16 +12,14 @@
 #   * Build ilMerge executables
 #   * Postprocess VSIX projects
 #   * Copy executables
-#    ..\..\..\..\..\..\Windows\assembly\GAC_MSIL\office\15.0.0.0__71e9bce111e9429c\office.dll\
-#    ..\..\..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Office.Interop.Excel\15.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Excel.dll\
-#    ..\..\..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Office.Interop.PowerPoint\15.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.PowerPoint.dll\
-#    ..\..\..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Office.Interop.Visio\14.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Visio.dll\
-
 
 LinkFiles = \
+    Microsoft.Office.Interop.Excel.dll\
+    Microsoft.Office.Interop.PowerPoint.dll\
+    Microsoft.Office.Interop.Visio.dll\
+    office.dll\
     Goedel.Command.dll\
     Goedel.FSR.dll\
-    Goedel.IO.dll\
     Goedel.Registry.dll\
     Goedel.Utilities.dll\
     Goedel.Document.Markdown.dll\

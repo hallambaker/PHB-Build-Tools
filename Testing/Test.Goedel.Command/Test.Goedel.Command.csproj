@@ -50,13 +50,20 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestCommands.CS" />
+    <Compile Include="TestCommands.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TestCommands.Command</DependentUpon>
+    </Compile>
     <Compile Include="TestLexer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="TestCommands.Command" />
+    <None Include="TestCommands.Command">
+      <Generator>CommandCS</Generator>
+      <LastGenOutput>TestCommands.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj">

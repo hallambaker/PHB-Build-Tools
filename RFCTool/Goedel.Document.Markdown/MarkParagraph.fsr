@@ -20,7 +20,7 @@
 
 	State ReadText AddText Text
 		On "&" GoTo Escape
-		On "<" GoTo ElementStart
+		On "<" Return Text
 		Any GoTo ReadText
 
 	State Escape GotEscape Text

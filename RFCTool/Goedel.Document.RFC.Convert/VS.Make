@@ -15,7 +15,6 @@
 
 LinkFiles = \
     Goedel.Registry.dll\
-    Goedel.Utilities.dll\
     Goedel.Document.Markdown.dll\
     Goedel.Document.RFC.dll
 

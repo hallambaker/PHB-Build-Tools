@@ -1,17 +1,3 @@
-﻿
-//  This file was automatically generated at 5/15/2017 11:52:44 PM
-//   
-//  Changes to this file may be overwritten without warning
-//  
-//  Generator:  CommandParse version 1.0.6344.42980
-//      Goedel Script Version : 0.1   Generated 
-//      Goedel Schema Version : 0.1   Generated
-//  
-//      Copyright : Copyright ©  2011
-//  
-//  Build Platform: Win32NT 6.2.9200.0
-//  
-//  
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +8,13 @@ using Goedel.Utilities;
 
 namespace Goedel.Command {
     public partial class CommandLineInterpreter : CommandLineInterpreterBase {
-
+        
+		/// <summary>The command entries</summary>
+        public static SortedDictionary<string, DescribeCommand> Entries;
+        /// <summary>The default command.</summary>
+        public static DescribeCommandEntry DefaultCommand;
+        /// <summary>Description of the comman</summary>
+        public static string Description = "<Not specified>";
 
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
@@ -35,22 +27,22 @@ namespace Goedel.Command {
         /// <param name="args"></param>
         /// <param name="index"></param>
         public static void Help (DispatchShell Dispatch, string[] args, int index) {
-            Brief();
+            Brief(Description, DefaultCommand, Entries);
             }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
-            HandleDelegate = Brief,
+            HandleDelegate = Help,
             Entries = new List<DescribeEntry>() { }
             };
 
         /// <summary>
-        /// 
+        /// Describe the application invoked by the command.
         /// </summary>
-        /// <param name="Dispatch"></param>
-        /// <param name="args"></param>
-        /// <param name="index"></param>
-        public static new void About (DispatchShell Dispatch, string[] args, int index) {
+        /// <param name="Dispatch">The command description.</param>
+        /// <param name="args">The set of arguments.</param>
+        /// <param name="index">The first unparsed argument.</param>
+        public static void About (DispatchShell Dispatch, string[] args, int index) {
             FileTools.About();
             }
 
@@ -113,20 +105,12 @@ namespace Goedel.Command {
         public void MainMethod(string[] Args) {
 			Shell Dispatch = new Shell ();
 
-			try {
-				MainMethod (Dispatch, Args);
-				}
-            catch (ParserException) {
-			    Brief ();
-				}
-            catch (System.Exception Exception) {
-                Console.WriteLine("Application: {0}", Exception.Message);
-                }
+			MainMethod (Dispatch, Args);
 			}
 
 
         public void MainMethod(Shell Dispatch, string[] Args) {
-			Dispatcher (Entries, Dispatch, Args, 0);
+			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
             } // Main
 
 
@@ -243,21 +227,21 @@ namespace Goedel.Command {
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
 					Identifier = "P1", 
-					Default = "",
+					Default = null, // null if null
 					Brief = "<Unspecified>",
 					Index = 0,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "P2", 
-					Default = "",
+					Default = null, // null if null
 					Brief = "<Unspecified>",
 					Index = 1,
 					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "O1", 
-					Default = "",
+					Default = null, // null if null
 					Brief = "<Unspecified>",
 					Index = 2,
 					Key = "o1"
@@ -314,21 +298,21 @@ namespace Goedel.Command {
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
 					Identifier = "P1", 
-					Default = "DefaultValue",
+					Default = "DefaultValue", // null if null
 					Brief = "<Unspecified>",
 					Index = 0,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "P2", 
-					Default = "42",
+					Default = "42", // null if null
 					Brief = "<Unspecified>",
 					Index = 1,
 					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "O1", 
-					Default = "true",
+					Default = "true", // null if null
 					Brief = "<Unspecified>",
 					Index = 2,
 					Key = "o1"
@@ -395,14 +379,14 @@ namespace Goedel.Command {
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
 					Identifier = "TestParser", 
-					Default = "",
+					Default = null, // null if null
 					Brief = "<Unspecified>",
 					Index = 0,
 					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "Test", 
-					Default = "",
+					Default = null, // null if null
 					Brief = "<Unspecified>",
 					Index = 1,
 					Key = ".testout"
@@ -547,7 +531,6 @@ namespace Goedel.Command {
 			inputfile = Options.TestParser.Text;
 
             Goedel.Command.TestParser Parse = new Goedel.Command.TestParser() {
-				NewOptions = Options
 				};
         
 			
@@ -562,8 +545,7 @@ namespace Goedel.Command {
 
 			// Script output of type Test .testout
 			if (Options.Test.Text != null) {
-				string outputfile = FileTools.DefaultOutput (inputfile, Options.Test.Text, 
-					Options.Test.Extension);
+				string outputfile = Options.Test.Text; // Automatically defaults
 				using (Stream outputStream =
 							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
 					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {

@@ -19,41 +19,45 @@ namespace Goedel.Command {
     public abstract class CommandLineInterpreterBase {
 
 
-        /// <summary>The command entries</summary>
-        public static SortedDictionary<string, DescribeCommand> Entries;
-        /// <summary>The default command.</summary>
-        public static DescribeCommandEntry DefaultCommand;
-        /// <summary>Description of the comman</summary>
-        public static string Description = "<Not specified>";
+        ///// <summary>The command entries</summary>
+        //public static SortedDictionary<string, DescribeCommand> Entries;
+        ///// <summary>The default command.</summary>
+        //public static DescribeCommandEntry DefaultCommand;
+        ///// <summary>Description of the comman</summary>
+        //public static string Description = "<Not specified>";
+
         /// <summary>The default flag indicator for display to terminal, this is a forward slash / for Windows
         /// and a double dash -- for UNIX.</summary>
         public static char FlagIndicator = '/';
 
+        ///// <summary>
+        ///// Provide the summary of the command.
+        ///// </summary>
+        ///// <param name="Dispatch">The command description.</param>
+        ///// <param name="args">The set of arguments.</param>
+        ///// <param name="index">The first unparsed argument.</param>
+        //public static void Brief (DispatchShell Dispatch, string[] args, int index) {
+        //    Brief();
+        //    }
+
+        ///// <summary>
+        ///// Describe the application invoked by the command.
+        ///// </summary>
+        ///// <param name="Dispatch">The command description.</param>
+        ///// <param name="args">The set of arguments.</param>
+        ///// <param name="index">The first unparsed argument.</param>
+        //public static void About (DispatchShell Dispatch, string[] args, int index) {
+        //    FileTools.About();
+        //    }
+
+
         /// <summary>
         /// Provide the summary of the command.
         /// </summary>
-        /// <param name="Dispatch">The command description.</param>
-        /// <param name="args">The set of arguments.</param>
-        /// <param name="index">The first unparsed argument.</param>
-        public static void Brief (DispatchShell Dispatch, string[] args, int index) {
-            Brief();
-            }
-
-        /// <summary>
-        /// Describe the application invoked by the command.
-        /// </summary>
-        /// <param name="Dispatch">The command description.</param>
-        /// <param name="args">The set of arguments.</param>
-        /// <param name="index">The first unparsed argument.</param>
-        public static void About (DispatchShell Dispatch, string[] args, int index) {
-            FileTools.About();
-            }
-
-
-        /// <summary>
-        /// Provide the summary of the command.
-        /// </summary>
-        public static void Brief () {
+        public static void Brief (
+                    string Description, 
+                    DescribeCommandEntry DefaultCommand,
+                    SortedDictionary<string, DescribeCommand> Entries) {
             Console.WriteLine(Description); 
             Console.WriteLine("");
 
@@ -124,14 +128,23 @@ namespace Goedel.Command {
                     case CommandLex.Token.Value: {
                         var Search = true;
                         for (var j = Parameter; Search & j < Describe.Entries.Count; j++) {
-                            switch (Describe.Entries[j]) {
-                                case DescribeEntryParameter Entry: {
-                                    SetValue(Options._Data[Entry.Index], CommandLex.Value);
-                                    Parameter = j+1;
-                                    Search = false;
-                                    break;
-                                    }
+                            if (Describe.Entries[j] is DescribeEntryParameter) {
+                                DescribeEntryParameter Entry = Describe.Entries[j] as DescribeEntryParameter;
+                                SetValue(Options._Data[Entry.Index], CommandLex.Value);
+                                Parameter = j + 1;
+                                Search = false;
                                 }
+
+
+
+                            //switch (Describe.Entries[j]) {
+                            //    case DescribeEntryParameter Entry: {
+                            //        SetValue(Options._Data[Entry.Index], CommandLex.Value);
+                            //        Parameter = j+1;
+                            //        Search = false;
+                            //        break;
+                            //        }
+                            //    }
                             }
                         break;
                         }
@@ -183,10 +196,12 @@ namespace Goedel.Command {
         /// The main dispatch point
         /// </summary>
         /// <param name="Entries">Dictionary describing the shell commands and dispatchers.</param>
+        /// <param name="DefaultCommand">The default command entry</param>
         /// <param name="Dispatch">The command description.</param>
         /// <param name="Args">The set of arguments.</param>
         /// <param name="Index">The first unparsed argument.</param>
         public void Dispatcher (SortedDictionary<string, DescribeCommand> Entries,
+                DescribeCommandEntry DefaultCommand,
                 DispatchShell Dispatch, string[] Args, int Index) {
             // NYI: This should really be set up to take a Command set description
             // as the input.
@@ -211,17 +226,26 @@ namespace Goedel.Command {
 
             // NYI: no, it could be a default command and an option.
             Assert.True(Entries.TryGetValue(Command, out var DescribeCommand), UnknownCommand.Throw);
-            switch (DescribeCommand) {
-
-                case DescribeCommandEntry DescribeCommandEntry: {
-                    DescribeCommandEntry.HandleDelegate(Dispatch, Args, Index + 1);
-                    break;
-                    }
-                case DescribeCommandSet DescribeCommandSet: {
-                    Dispatcher(DescribeCommandSet.Entries, Dispatch, Args, Index + 1);
-                    break;
-                    }
+            if (DescribeCommand is DescribeCommandEntry) {
+                var DescribeCommandEntry = DescribeCommand as DescribeCommandEntry;
+                DescribeCommandEntry.HandleDelegate(Dispatch, Args, Index + 1);
                 }
+            else if (DescribeCommand is DescribeCommandSet) {
+                var DescribeCommandSet = DescribeCommand as DescribeCommandSet;
+                Dispatcher(DescribeCommandSet.Entries, DefaultCommand, Dispatch, Args, Index + 1);
+                }
+
+            //switch (DescribeCommand) {
+
+            //    case DescribeCommandEntry DescribeCommandEntry: {
+            //        DescribeCommandEntry.HandleDelegate(Dispatch, Args, Index + 1);
+            //        break;
+            //        }
+            //    case DescribeCommandSet DescribeCommandSet: {
+            //        Dispatcher(DescribeCommandSet.Entries, DefaultCommand, Dispatch, Args, Index + 1);
+            //        break;
+            //        }
+            //    }
 
             }
         }
@@ -308,20 +332,34 @@ namespace Goedel.Command {
             Console.WriteLine("{0}{1}", FlagIndicator, Identifier);
             foreach (var Entry in Entries) {
 
-                switch (Entry) {
-                    case DescribeCommandEntry SubCommand: {
-                        Console.WriteLine("    {0}{1}  {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
-                        break;
-                        }
-                    case DescribeEntryParameter Parameter: {
-                        Console.WriteLine("    {0}   {1}", Entry.Key, Parameter.Brief);
-                        break;
-                        }
-                    case DescribeEntryOption Option: {
-                        Console.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, Option.Brief);
-                        break;
-                        }
+                if (Entry is DescribeCommandEntry) {
+                    var SubCommand = Entry as DescribeCommandEntry;
+                    Console.WriteLine("    {0}{1}  {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
                     }
+                else if (Entry is DescribeEntryParameter) {
+                    var Parameter = Entry as DescribeEntryParameter;
+                    Console.WriteLine("    {0}   {1}", Entry.Key, Parameter.Brief);
+                    }
+                else if (Entry is DescribeEntryOption) {
+                    var Option = Entry as DescribeEntryOption;
+                    Console.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, Option.Brief);
+                    }
+                
+
+                    //switch (Entry) {
+                    //case DescribeCommandEntry SubCommand: {
+                    //    Console.WriteLine("    {0}{1}  {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
+                    //    break;
+                    //    }
+                    //case DescribeEntryParameter Parameter: {
+                    //    Console.WriteLine("    {0}   {1}", Entry.Key, Parameter.Brief);
+                    //    break;
+                    //    }
+                    //case DescribeEntryOption Option: {
+                    //    Console.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, Option.Brief);
+                    //    break;
+                    //    }
+                    //}
                 }
             }
 
@@ -343,17 +381,28 @@ namespace Goedel.Command {
         public override void Describe (char FlagIndicator) {
             Console.WriteLine("{0}", Identifier);
             foreach (var Entry in Entries) {
-                switch (Entry.Value) {
-                    case DescribeCommandEntry SubCommand: {
-                        Console.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
-                        break;
-                        }
-                    case DescribeCommandSet Parameter: {
-                        Console.WriteLine("    {0}{1}", Entry.Key, Parameter.Brief);
-                        break;
-                        }
 
+                if (Entry.Value is DescribeCommandEntry) {
+                    var SubCommand = Entry.Value as DescribeCommandEntry;
+                    Console.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
                     }
+                else if (Entry.Value is DescribeCommandSet) {
+                    var Parameter = Entry.Value as DescribeCommandSet;
+                    Console.WriteLine("    {0}{1}", Entry.Key, Parameter.Brief);
+                    }
+                
+
+                    //switch (Entry.Value) {
+                    //case DescribeCommandEntry SubCommand: {
+                    //    Console.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, SubCommand.Brief);
+                    //    break;
+                    //    }
+                    //case DescribeCommandSet Parameter: {
+                    //    Console.WriteLine("    {0}{1}", Entry.Key, Parameter.Brief);
+                    //    break;
+                    //    }
+
+                    //}
                 }
             }
         }

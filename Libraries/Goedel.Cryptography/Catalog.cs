@@ -297,7 +297,6 @@ namespace Goedel.Cryptography {
         /// <param name="Bytes">Number of bytes</param>
         /// <returns>A byte array with the specified number of bytes.</returns>        
         public static byte[] GetBytes(int Bytes) {
-            var Data = new byte[Bytes];
             return Platform.GetRandomBytes(Bytes);
             }
 

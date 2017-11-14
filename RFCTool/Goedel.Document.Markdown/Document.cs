@@ -103,7 +103,9 @@ namespace Goedel.Document.Markdown {
                 }
 
             foreach (var Resource in Resources) {
-                TagCatalog?.Process(Resource.FullName, TargetDir);
+                if (TagCatalog?.Process != null) {
+                    TagCatalog?.Process(Resource.FullName, TargetDir);
+                    }
                 }
 
             foreach (var Dir in Directories) {
@@ -123,8 +125,7 @@ namespace Goedel.Document.Markdown {
         Bullet          = 4,
         Numbered        = 5,
         Meta            = 6,
-        Preformatted    = 7,
-        Tagged          = 8
+        Preformatted    = 7
         }
 
 
@@ -230,6 +231,10 @@ namespace Goedel.Document.Markdown {
         public List<TagValue> Attributes;
         public List<TextSegment> Segments = new List<TextSegment>();
         public CatalogEntry CatalogEntry = null;
+
+        public override string ToString () {
+            return CatalogEntry?.ToString() ?? "Unknown block";
+            }
 
 
         public TextSegmentOpen AddSegmentOpen(CatalogEntry CatalogEntry, List<TagValue> Attributes) {
@@ -430,7 +435,10 @@ namespace Goedel.Document.Markdown {
         private void Init(LexReader Reader, TagCatalog TagCatalog) {
             Parse(Reader);  // Pre parse the source file into blocks
 
-            var BlockParser = new Goedel.Document.Markdown.BlockParserMarkDown(TagCatalog, this);
+            var BlockParser = new BlockParserMarkDown() {
+                TagCatalog = TagCatalog,
+                Document = this
+                };
             BlockParser.Parse(); // Convert blocks into paragraph entries.
             }
 

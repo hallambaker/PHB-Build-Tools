@@ -119,10 +119,9 @@ SourceFiles = \
 LinkFiles = \
     $(LIBRARYBIN)/Microsoft.Office.Interop.Excel.dll\
     $(LIBRARYBIN)/Microsoft.Office.Interop.PowerPoint.dll\
-    $(LIBRARYBIN)/Microsoft.Office.Interop.Visio.dll\
     $(LIBRARYBIN)/Office.dll
 
-LinkFilesComma = $(LIBRARYBIN)/Microsoft.Office.Interop.Excel.dll,$(LIBRARYBIN)/Microsoft.Office.Interop.PowerPoint.dll,$(LIBRARYBIN)/Microsoft.Office.Interop.Visio.dll,$(LIBRARYBIN)/Office.dll,WindowsBase
+LinkFilesComma = $(LIBRARYBIN)/Microsoft.Office.Interop.Excel.dll,$(LIBRARYBIN)/Microsoft.Office.Interop.PowerPoint.dll,$(LIBRARYBIN)/Office.dll,WindowsBase
 
 
 NugetFiles = 

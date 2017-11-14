@@ -15,8 +15,7 @@
 
 LinkFiles = \
     Goedel.Protocol.dll\
-    Goedel.Utilities.dll\
-    Goedel.Protocol.Framework.dll
+    Goedel.Utilities.dll
 
 prebuild : 
     echo "Do Prebuild"

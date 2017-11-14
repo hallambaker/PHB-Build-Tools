@@ -110,7 +110,6 @@ export Custom_TrojanGTK_FLAG	?= /cs
 
 SourceFiles = \
      Canonicalize.cs\
-     Class1.cs\
      ClientUDP.cs\
      DNSBuffer.cs\
      DNSClient.cs\

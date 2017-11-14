@@ -174,8 +174,7 @@ namespace Goedel.Cryptography.Framework {
         //    }
 
 
-        byte[] Stored;
-        byte[] StoreDigest;
+
         /// <summary>
         /// Sign the integrity value specified in the CryptoDataEncoder
         /// </summary>
@@ -196,8 +195,6 @@ namespace Goedel.Cryptography.Framework {
                     Data.Signature = Provider.SignHash(Data.BulkData.Integrity, 
                         HashAlgorithmName.SHA512,
                         RSASignaturePadding.Pkcs1);
-                    StoreDigest = Data.BulkData.Integrity;
-                    Stored = Data.Signature;
                     break;
                     }
 

@@ -15,8 +15,6 @@
 
 LinkFiles = \
     Goedel.Protocol.dll\
-    Goedel.Utilities.dll\
-    .dll\
     Goedel.Trace.dll
 
 prebuild : 

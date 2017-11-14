@@ -4,6 +4,7 @@
 	Block include
 	Block pre
 		Flag plaintext
+		XML "pre" "id"
 
 	Meta bibliography
 	Meta bibsource

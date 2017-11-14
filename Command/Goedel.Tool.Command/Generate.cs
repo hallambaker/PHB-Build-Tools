@@ -138,7 +138,13 @@ namespace Goedel.Tool.Command {
 		public void GenerateClass (Class Class) {
 			_Output.Write ("namespace {1} {{\n{0}", _Indent, Class.Namespace);
 			_Output.Write ("    public partial class CommandLineInterpreter : CommandLineInterpreterBase {{\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("        \n{0}", _Indent);
+			_Output.Write ("		/// <summary>The command entries</summary>\n{0}", _Indent);
+			_Output.Write ("        public static SortedDictionary<string, DescribeCommand> Entries;\n{0}", _Indent);
+			_Output.Write ("        /// <summary>The default command.</summary>\n{0}", _Indent);
+			_Output.Write ("        public static DescribeCommandEntry DefaultCommand;\n{0}", _Indent);
+			_Output.Write ("        /// <summary>Description of the comman</summary>\n{0}", _Indent);
+			_Output.Write ("        public static string Description = \"<Not specified>\";\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("		static char UnixFlag = '-';\n{0}", _Indent);
 			_Output.Write ("		static char WindowsFlag = '/';\n{0}", _Indent);
@@ -151,23 +157,23 @@ namespace Goedel.Tool.Command {
 			_Output.Write ("        /// <param name=\"args\"></param>\n{0}", _Indent);
 			_Output.Write ("        /// <param name=\"index\"></param>\n{0}", _Indent);
 			_Output.Write ("        public static void Help (DispatchShell Dispatch, string[] args, int index) {{\n{0}", _Indent);
-			_Output.Write ("            Brief();\n{0}", _Indent);
+			_Output.Write ("            Brief(Description, DefaultCommand, Entries);\n{0}", _Indent);
 			_Output.Write ("            }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {{\n{0}", _Indent);
 			_Output.Write ("            Identifier = \"help\",\n{0}", _Indent);
-			_Output.Write ("            HandleDelegate = Brief,\n{0}", _Indent);
+			_Output.Write ("            HandleDelegate = Help,\n{0}", _Indent);
 			_Output.Write ("            Entries = new List<DescribeEntry>() {{ }}\n{0}", _Indent);
 			_Output.Write ("            }};\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			if (  (Class.About != null) ) {
 				_Output.Write ("        /// <summary>\n{0}", _Indent);
-				_Output.Write ("        /// \n{0}", _Indent);
+				_Output.Write ("        /// Describe the application invoked by the command.\n{0}", _Indent);
 				_Output.Write ("        /// </summary>\n{0}", _Indent);
-				_Output.Write ("        /// <param name=\"Dispatch\"></param>\n{0}", _Indent);
-				_Output.Write ("        /// <param name=\"args\"></param>\n{0}", _Indent);
-				_Output.Write ("        /// <param name=\"index\"></param>\n{0}", _Indent);
-				_Output.Write ("        public static new void About (DispatchShell Dispatch, string[] args, int index) {{\n{0}", _Indent);
+				_Output.Write ("        /// <param name=\"Dispatch\">The command description.</param>\n{0}", _Indent);
+				_Output.Write ("        /// <param name=\"args\">The set of arguments.</param>\n{0}", _Indent);
+				_Output.Write ("        /// <param name=\"index\">The first unparsed argument.</param>\n{0}", _Indent);
+				_Output.Write ("        public static void About (DispatchShell Dispatch, string[] args, int index) {{\n{0}", _Indent);
 				_Output.Write ("            FileTools.About();\n{0}", _Indent);
 				_Output.Write ("            }}\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -238,7 +244,7 @@ namespace Goedel.Tool.Command {
 				_Output.Write ("				MainMethod (Dispatch, Args);\n{0}", _Indent);
 				_Output.Write ("				}}\n{0}", _Indent);
 				_Output.Write ("            catch (Goedel.Command.ParserException) {{\n{0}", _Indent);
-				_Output.Write ("			    Brief ();\n{0}", _Indent);
+				_Output.Write ("			    Brief(Description, DefaultCommand, Entries);\n{0}", _Indent);
 				_Output.Write ("				}}\n{0}", _Indent);
 				_Output.Write ("            catch (System.Exception Exception) {{\n{0}", _Indent);
 				_Output.Write ("                Console.WriteLine(\"Application: {{0}}\", Exception.Message);\n{0}", _Indent);
@@ -250,7 +256,7 @@ namespace Goedel.Tool.Command {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        public void MainMethod({1} Dispatch, string[] Args) {{\n{0}", _Indent, Class.Id);
-			_Output.Write ("			Dispatcher (Entries, Dispatch, Args, 0);\n{0}", _Indent);
+			_Output.Write ("			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);\n{0}", _Indent);
 			_Output.Write ("            }} // Main\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

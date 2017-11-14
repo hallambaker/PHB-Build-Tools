@@ -18,7 +18,7 @@ namespace Goedel.Cryptography {
         int Length;
         byte DataDown, DataUp;
 
-        bool CountUp;
+        //bool CountUp;
 
         /// <summary>
         /// Returns true if there is further work to be completed, otherwise false.
@@ -48,7 +48,7 @@ namespace Goedel.Cryptography {
             BitField = Value.ToByteArray();
             DataDown = BitField[DownByte];
             DataUp = BitField[0];
-            this.CountUp = Up;
+            //this.CountUp = Up;
             }
 
 

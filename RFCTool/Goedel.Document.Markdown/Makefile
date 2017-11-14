@@ -118,6 +118,7 @@ SourceFiles = \
      BlockParse.cs\
      MarkWordParagraph.cs\
      MarkWordParagraphPlus.cs\
+     NewBlockParse.cs\
      Parse.cs\
      ParseRegistry.cs\
      Properties/AssemblyInfo.cs\

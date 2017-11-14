@@ -43,7 +43,7 @@ namespace Goedel.Cryptography {
 
             // Process blocks
             int Block;
-            var FullBlocks = ReadBytes * (Message.Length / ReadBytes);
+            //var FullBlocks = ReadBytes * (Message.Length / ReadBytes);
             for (Block = 0; Block < (Message.Length - ReadBytes - 1); Block += ReadBytes) {
                 Process(Message, Block, ReadWords);
                 Transform();

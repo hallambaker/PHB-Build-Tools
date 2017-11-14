@@ -116,13 +116,10 @@ SourceFiles = \
      TraceLocalPortal.cs
 
 LinkFiles = \
-    $(TARGETBIN)/Goedel.IO.dll\
-    $(TARGETBIN)/Goedel.Protocol.Framework.dll\
     $(TARGETBIN)/Goedel.Protocol.dll\
-    $(TARGETBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Trace.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.Protocol.Framework.dll,$(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Trace.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.Protocol.dll,$(TARGETBIN)/Goedel.Trace.dll
 
 
 NugetFiles = 
@@ -171,38 +168,17 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
-../../../buildtools/Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.IO
-
-../../../buildtools/Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Protocol.Framework
-
-../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Protocol
-
-../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : recursive
-! $(MAKE) -C ../../../buildtools/Libraries/Goedel.Utilities
+../../Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : recursive
+! $(MAKE) -C ../../Libraries/Goedel.Protocol
 
 ../Goedel.Trace/$(TARGETBIN)/Goedel.Trace.dll : recursive
 ! $(MAKE) -C ../Goedel.Trace
 
 endif
 
-$(TARGETBIN)/Goedel.IO.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.IO.dll : ../../../buildtools/Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
-!  cp ../../../buildtools/Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll $(TARGETBIN)/Goedel.IO.dll
-
-$(TARGETBIN)/Goedel.Protocol.Framework.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Protocol.Framework.dll : ../../../buildtools/Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll
-!  cp ../../../buildtools/Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll $(TARGETBIN)/Goedel.Protocol.Framework.dll
-
 $(TARGETBIN)/Goedel.Protocol.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Protocol.dll : ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
-!  cp ../../../buildtools/Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll $(TARGETBIN)/Goedel.Protocol.dll
-
-$(TARGETBIN)/Goedel.Utilities.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.Utilities.dll : ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
-!  cp ../../../buildtools/Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll $(TARGETBIN)/Goedel.Utilities.dll
+$(TARGETBIN)/Goedel.Protocol.dll : ../../Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+!  cp ../../Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll $(TARGETBIN)/Goedel.Protocol.dll
 
 $(TARGETBIN)/Goedel.Trace.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.Trace.dll : ../Goedel.Trace/$(TARGETBIN)/Goedel.Trace.dll

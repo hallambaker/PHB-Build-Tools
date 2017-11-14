@@ -348,12 +348,10 @@ namespace Goedel.Cryptography.Framework {
                     return new CryptoProviderEncryptAES(256,
                             CipherMode.ECB, PaddingMode.None);
                     }
-
-                throw new CipherModeNotSupported ();
+                default: {
+                    throw new CipherModeNotSupported();
+                    }
                 }
-
-
-            return new CryptoProviderEncryptAES(KeySize);
             }
 
         /// <summary>

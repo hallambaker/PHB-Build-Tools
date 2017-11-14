@@ -59,9 +59,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// The UDF fingerprint of the keyInfo element.
         /// </summary>
-        public string UDF {
-            get { return _UDF; }
-            }
+        public string UDF => _UDF; 
         string _UDF;
 
         /// <summary>
@@ -131,9 +129,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Subject Key Identifier
         /// </summary>
-        public byte[] SubjectKeyIdentifier {
-            get { return KeyPair.PKIXPublicKey.SubjectPublicKeyInfo().DER(); }
-            }
+        public byte[] SubjectKeyIdentifier => KeyPair.PKIXPublicKey.SubjectPublicKeyInfo().DER(); 
 
 
         /// <summary>
@@ -348,11 +344,10 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         /// <param name="Certificate">A certificate prototype.</param>
         public CertificationRequest(Certificate Certificate) {
-            CertificationRequestInfo = new CertificationRequestInfo();
-            CertificationRequestInfo.Subject =
-                Certificate.TBSCertificate.Subject;
-            CertificationRequestInfo.SubjectPublicKeyInfo =
-                Certificate.TBSCertificate.SubjectPublicKeyInfo;
+            CertificationRequestInfo = new CertificationRequestInfo() {
+                Subject = Certificate.TBSCertificate.Subject,
+                SubjectPublicKeyInfo = Certificate.TBSCertificate.SubjectPublicKeyInfo
+                };
             Sign(Certificate.CryptoProviderSignature);
             }
 
@@ -364,7 +359,6 @@ namespace Goedel.Cryptography.PKIX {
         /// <param name="SigningKey">The signing key</param>
         public void Sign(CryptoProviderSignature SigningKey) {
             SignatureAlgorithm = new AlgorithmIdentifier(SigningKey.CryptoAlgorithmID);
-            var SignatureData = SigningKey.Sign(CertificationRequestInfo.DER());
             Signature = SigningKey.Sign(CertificationRequestInfo.DER()).Signature;
             }
 

@@ -113,589 +113,99 @@ export Custom_TrojanGTK_FLAG	?= /cs
 # Need to identify the target directory using UnixPath()
 # This file in directory 
 
-# Project : asn2.exe
-# Item :  ASN/ShellASN
-# Output :     ASN/ShellASN/$(TARGETEXE)/asn2.exe
+# Project : Goedel.Cryptography.Framework.dll
+# Item :  Libraries/Goedel.Cryptography.Framework
+# Output :     Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
 
-all : ASN/ShellASN/$(TARGETBIN)/asn2.exe
+all : Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
 
-ASN/ShellASN/$(TARGETBIN)/asn2.exe : ASN/ShellASN/../../Libraries/$(TARGETBIN)/Goedel.ASN.dll
+Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll : Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
 
-ASN/ShellASN/$(TARGETBIN)/asn2.exe : ASN/ShellASN/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
+Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
 
-ASN/ShellASN/$(TARGETBIN)/asn2.exe : ASN/ShellASN/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-ASN/ShellASN/$(TARGETBIN)/asn2.exe : ASN/ShellASN/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-ASN/ShellASN/$(TARGETBIN)/asn2.exe : ASN/ShellASN/../$(TARGETBIN)/Goedel.Tool.ASN.dll
+Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
 
 
-ASN/ShellASN/$(TARGETBIN)/asn2.exe : always
+Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll : always
 ! echo "" >&2
-! echo "*** Directory ASN/ShellASN" >&2
-! make NORECURSE=true -C ASN/ShellASN
+! echo "*** Directory Libraries/Goedel.Cryptography.Framework" >&2
+! make NORECURSE=true -C Libraries/Goedel.Cryptography.Framework
 
-# Project : Goedel.Tool.ASN.dll
-# Item :  ASN/Goedel.Tool.ASN
-# Output :     ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll
+# Project : Goedel.Cryptography.KeyFile.dll
+# Item :  Libraries/Goedel.Cryptography.KeyFile
+# Output :     Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
 
-all : ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll
+all : Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
 
-ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll : ASN/Goedel.Tool.ASN/../../Libraries/$(TARGETBIN)/Goedel.ASN.dll
+Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll : Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
 
-ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll : ASN/Goedel.Tool.ASN/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
+Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
 
-ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll : ASN/Goedel.Tool.ASN/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+
+Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll : Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
 
 
-ASN/Goedel.Tool.ASN/$(TARGETBIN)/Goedel.Tool.ASN.dll : always
+Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll : always
 ! echo "" >&2
-! echo "*** Directory ASN/Goedel.Tool.ASN" >&2
-! make NORECURSE=true -C ASN/Goedel.Tool.ASN
+! echo "*** Directory Libraries/Goedel.Cryptography.KeyFile" >&2
+! make NORECURSE=true -C Libraries/Goedel.Cryptography.KeyFile
 
-# Project : Goedel.Tool.Command.dll
-# Item :  Command/Goedel.Tool.Command
-# Output :     Command/Goedel.Tool.Command/$(TARGETBIN)/Goedel.Tool.Command.dll
+# Project : Goedel.Cryptography.Windows.dll
+# Item :  Libraries/Goedel.Cryptography.Windows
+# Output :     Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll
 
-all : Command/Goedel.Tool.Command/$(TARGETBIN)/Goedel.Tool.Command.dll
+all : Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll
 
-Command/Goedel.Tool.Command/$(TARGETBIN)/Goedel.Tool.Command.dll : Command/Goedel.Tool.Command/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
+Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll : Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
 
-Command/Goedel.Tool.Command/$(TARGETBIN)/Goedel.Tool.Command.dll : Command/Goedel.Tool.Command/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll : Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+
+Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll : Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
 
 
-Command/Goedel.Tool.Command/$(TARGETBIN)/Goedel.Tool.Command.dll : always
+Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll : always
 ! echo "" >&2
-! echo "*** Directory Command/Goedel.Tool.Command" >&2
-! make NORECURSE=true -C Command/Goedel.Tool.Command
+! echo "*** Directory Libraries/Goedel.Cryptography.Windows" >&2
+! make NORECURSE=true -C Libraries/Goedel.Cryptography.Windows
 
-# Project : domainer.exe
-# Item :  Domainer/ShellDomainer
-# Output :     Domainer/ShellDomainer/$(TARGETEXE)/domainer.exe
+# Project : Goedel.Cryptography.Linux.dll
+# Item :  Libraries/Goedel.Cryptography.Linux
+# Output :     Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll
 
-all : Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe
+all : Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll
 
-Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe : Domainer/ShellDomainer/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
+Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
 
-Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe : Domainer/ShellDomainer/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
+Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
 
-Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe : Domainer/ShellDomainer/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
+Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll
 
-Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe : Domainer/ShellDomainer/../$(TARGETBIN)/Goedel.Tool.Domainer.dll
+Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+
+Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
+
+Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
 
 
-Domainer/ShellDomainer/$(TARGETBIN)/domainer.exe : always
+Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll : always
 ! echo "" >&2
-! echo "*** Directory Domainer/ShellDomainer" >&2
-! make NORECURSE=true -C Domainer/ShellDomainer
-
-# Project : Goedel.Tool.Domainer.dll
-# Item :  Domainer/Goedel.Tool.Domainer
-# Output :     Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll
-
-all : Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll
-
-Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll : Domainer/Goedel.Tool.Domainer/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll : Domainer/Goedel.Tool.Domainer/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-
-Domainer/Goedel.Tool.Domainer/$(TARGETBIN)/Goedel.Tool.Domainer.dll : always
-! echo "" >&2
-! echo "*** Directory Domainer/Goedel.Tool.Domainer" >&2
-! make NORECURSE=true -C Domainer/Goedel.Tool.Domainer
-
-# Project : exceptional.exe
-# Item :  Exceptional/ShellExceptional
-# Output :     Exceptional/ShellExceptional/$(TARGETEXE)/exceptional.exe
-
-all : Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe
-
-Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe : Exceptional/ShellExceptional/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe : Exceptional/ShellExceptional/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe : Exceptional/ShellExceptional/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe : Exceptional/ShellExceptional/../$(TARGETBIN)/Goedel.Tool.Exceptional.dll
-
-
-Exceptional/ShellExceptional/$(TARGETBIN)/exceptional.exe : always
-! echo "" >&2
-! echo "*** Directory Exceptional/ShellExceptional" >&2
-! make NORECURSE=true -C Exceptional/ShellExceptional
-
-# Project : Goedel.Tool.Exceptional.dll
-# Item :  Exceptional/Goedel.Tool.Exceptional
-# Output :     Exceptional/Goedel.Tool.Exceptional/$(TARGETBIN)/Goedel.Tool.Exceptional.dll
-
-all : Exceptional/Goedel.Tool.Exceptional/$(TARGETBIN)/Goedel.Tool.Exceptional.dll
-
-Exceptional/Goedel.Tool.Exceptional/$(TARGETBIN)/Goedel.Tool.Exceptional.dll : Exceptional/Goedel.Tool.Exceptional/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-Exceptional/Goedel.Tool.Exceptional/$(TARGETBIN)/Goedel.Tool.Exceptional.dll : Exceptional/Goedel.Tool.Exceptional/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-
-Exceptional/Goedel.Tool.Exceptional/$(TARGETBIN)/Goedel.Tool.Exceptional.dll : always
-! echo "" >&2
-! echo "*** Directory Exceptional/Goedel.Tool.Exceptional" >&2
-! make NORECURSE=true -C Exceptional/Goedel.Tool.Exceptional
-
-# Project : Goedel.Tool.FSRGen.dll
-# Item :  FSRGen/Goedel.Tool.FSRGen
-# Output :     FSRGen/Goedel.Tool.FSRGen/$(TARGETBIN)/Goedel.Tool.FSRGen.dll
-
-all : FSRGen/Goedel.Tool.FSRGen/$(TARGETBIN)/Goedel.Tool.FSRGen.dll
-
-FSRGen/Goedel.Tool.FSRGen/$(TARGETBIN)/Goedel.Tool.FSRGen.dll : FSRGen/Goedel.Tool.FSRGen/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-FSRGen/Goedel.Tool.FSRGen/$(TARGETBIN)/Goedel.Tool.FSRGen.dll : FSRGen/Goedel.Tool.FSRGen/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-
-FSRGen/Goedel.Tool.FSRGen/$(TARGETBIN)/Goedel.Tool.FSRGen.dll : always
-! echo "" >&2
-! echo "*** Directory FSRGen/Goedel.Tool.FSRGen" >&2
-! make NORECURSE=true -C FSRGen/Goedel.Tool.FSRGen
-
-# Project : fsrgen.exe
-# Item :  FSRGen/ShellFSRGen
-# Output :     FSRGen/ShellFSRGen/$(TARGETEXE)/fsrgen.exe
-
-all : FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe
-
-FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe : FSRGen/ShellFSRGen/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe : FSRGen/ShellFSRGen/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe : FSRGen/ShellFSRGen/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe : FSRGen/ShellFSRGen/../$(TARGETBIN)/Goedel.Tool.FSRGen.dll
-
-
-FSRGen/ShellFSRGen/$(TARGETBIN)/fsrgen.exe : always
-! echo "" >&2
-! echo "*** Directory FSRGen/ShellFSRGen" >&2
-! make NORECURSE=true -C FSRGen/ShellFSRGen
-
-# Project : Goedel.Tool.Script.dll
-# Item :  GScript/Goedel.Tool.Script
-# Output :     GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll
-
-all : GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll
-
-GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll : GScript/Goedel.Tool.Script/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll : GScript/Goedel.Tool.Script/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-
-GScript/Goedel.Tool.Script/$(TARGETBIN)/Goedel.Tool.Script.dll : always
-! echo "" >&2
-! echo "*** Directory GScript/Goedel.Tool.Script" >&2
-! make NORECURSE=true -C GScript/Goedel.Tool.Script
-
-# Project : gscript.exe
-# Item :  GScript/ShellGScript
-# Output :     GScript/ShellGScript/$(TARGETEXE)/gscript.exe
-
-all : GScript/ShellGScript/$(TARGETBIN)/gscript.exe
-
-GScript/ShellGScript/$(TARGETBIN)/gscript.exe : GScript/ShellGScript/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-GScript/ShellGScript/$(TARGETBIN)/gscript.exe : GScript/ShellGScript/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-GScript/ShellGScript/$(TARGETBIN)/gscript.exe : GScript/ShellGScript/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-GScript/ShellGScript/$(TARGETBIN)/gscript.exe : GScript/ShellGScript/../$(TARGETBIN)/Goedel.Tool.Script.dll
-
-
-GScript/ShellGScript/$(TARGETBIN)/gscript.exe : always
-! echo "" >&2
-! echo "*** Directory GScript/ShellGScript" >&2
-! make NORECURSE=true -C GScript/ShellGScript
-
-# Project : goedel3.exe
-# Item :  Goedel3/ShellGoedel3
-# Output :     Goedel3/ShellGoedel3/$(TARGETEXE)/goedel3.exe
-
-all : Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe
-
-Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe : Goedel3/ShellGoedel3/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe : Goedel3/ShellGoedel3/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe : Goedel3/ShellGoedel3/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe : Goedel3/ShellGoedel3/../$(TARGETBIN)/Goedel.Tool.Schema.dll
-
-
-Goedel3/ShellGoedel3/$(TARGETBIN)/goedel3.exe : always
-! echo "" >&2
-! echo "*** Directory Goedel3/ShellGoedel3" >&2
-! make NORECURSE=true -C Goedel3/ShellGoedel3
-
-# Project : Goedel.Tool.ProtoGen.dll
-# Item :  Protogen/Goedel.Tool.ProtoGen
-# Output :     Protogen/Goedel.Tool.ProtoGen/$(TARGETBIN)/Goedel.Tool.ProtoGen.dll
-
-all : Protogen/Goedel.Tool.ProtoGen/$(TARGETBIN)/Goedel.Tool.ProtoGen.dll
-
-Protogen/Goedel.Tool.ProtoGen/$(TARGETBIN)/Goedel.Tool.ProtoGen.dll : Protogen/Goedel.Tool.ProtoGen/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-Protogen/Goedel.Tool.ProtoGen/$(TARGETBIN)/Goedel.Tool.ProtoGen.dll : Protogen/Goedel.Tool.ProtoGen/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-
-Protogen/Goedel.Tool.ProtoGen/$(TARGETBIN)/Goedel.Tool.ProtoGen.dll : always
-! echo "" >&2
-! echo "*** Directory Protogen/Goedel.Tool.ProtoGen" >&2
-! make NORECURSE=true -C Protogen/Goedel.Tool.ProtoGen
-
-# Project : protogen.exe
-# Item :  protogen/ShellProtoGen
-# Output :     protogen/ShellProtoGen/$(TARGETEXE)/protogen.exe
-
-all : protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe
-
-protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe : protogen/ShellProtoGen/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe : protogen/ShellProtoGen/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe : protogen/ShellProtoGen/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe : protogen/ShellProtoGen/../$(TARGETBIN)/Goedel.Tool.ProtoGen.dll
-
-
-protogen/ShellProtoGen/$(TARGETBIN)/protogen.exe : always
-! echo "" >&2
-! echo "*** Directory protogen/ShellProtoGen" >&2
-! make NORECURSE=true -C protogen/ShellProtoGen
-
-# Project : Goedel.Tool.Schema.dll
-# Item :  Goedel3/Goedel.Tool.Schema
-# Output :     Goedel3/Goedel.Tool.Schema/$(TARGETBIN)/Goedel.Tool.Schema.dll
-
-all : Goedel3/Goedel.Tool.Schema/$(TARGETBIN)/Goedel.Tool.Schema.dll
-
-Goedel3/Goedel.Tool.Schema/$(TARGETBIN)/Goedel.Tool.Schema.dll : Goedel3/Goedel.Tool.Schema/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-Goedel3/Goedel.Tool.Schema/$(TARGETBIN)/Goedel.Tool.Schema.dll : Goedel3/Goedel.Tool.Schema/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-
-Goedel3/Goedel.Tool.Schema/$(TARGETBIN)/Goedel.Tool.Schema.dll : always
-! echo "" >&2
-! echo "*** Directory Goedel3/Goedel.Tool.Schema" >&2
-! make NORECURSE=true -C Goedel3/Goedel.Tool.Schema
-
-# Project : Goedel.Document.Markdown.dll
-# Item :  RFCTool/Goedel.Document.Markdown
-# Output :     RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll
-
-all : RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll
-
-RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : RFCTool/Goedel.Document.Markdown/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
-
-RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : RFCTool/Goedel.Document.Markdown/../../Libraries/$(TARGETBIN)/Goedel.IO.dll
-
-RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : RFCTool/Goedel.Document.Markdown/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : RFCTool/Goedel.Document.Markdown/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-
-RFCTool/Goedel.Document.Markdown/$(TARGETBIN)/Goedel.Document.Markdown.dll : always
-! echo "" >&2
-! echo "*** Directory RFCTool/Goedel.Document.Markdown" >&2
-! make NORECURSE=true -C RFCTool/Goedel.Document.Markdown
-
-# Project : Goedel.Document.RFC.Convert.dll
-# Item :  RFCTool/Goedel.Document.RFC.Convert
-# Output :     RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll
-
-all : RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll
-
-RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : RFCTool/Goedel.Document.RFC.Convert/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : RFCTool/Goedel.Document.RFC.Convert/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : RFCTool/Goedel.Document.RFC.Convert/../$(TARGETBIN)/Goedel.Document.Markdown.dll
-
-RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : RFCTool/Goedel.Document.RFC.Convert/../$(TARGETBIN)/Goedel.Document.RFC.dll
-
-
-RFCTool/Goedel.Document.RFC.Convert/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll : always
-! echo "" >&2
-! echo "*** Directory RFCTool/Goedel.Document.RFC.Convert" >&2
-! make NORECURSE=true -C RFCTool/Goedel.Document.RFC.Convert
-
-# Project : registryconfig.exe
-# Item :  RegistryConfig/ShellRegistryConfig
-# Output :     RegistryConfig/ShellRegistryConfig/$(TARGETEXE)/registryconfig.exe
-
-all : RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe
-
-RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe : RegistryConfig/ShellRegistryConfig/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe : RegistryConfig/ShellRegistryConfig/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe : RegistryConfig/ShellRegistryConfig/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe : RegistryConfig/ShellRegistryConfig/../$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll
-
-
-RegistryConfig/ShellRegistryConfig/$(TARGETBIN)/registryconfig.exe : always
-! echo "" >&2
-! echo "*** Directory RegistryConfig/ShellRegistryConfig" >&2
-! make NORECURSE=true -C RegistryConfig/ShellRegistryConfig
-
-# Project : Goedel.Tool.RegistryConfig.dll
-# Item :  RegistryConfig/Goedel.Tool.RegistryConfig
-# Output :     RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll
-
-all : RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll
-
-RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll : RegistryConfig/Goedel.Tool.RegistryConfig/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll : RegistryConfig/Goedel.Tool.RegistryConfig/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-
-RegistryConfig/Goedel.Tool.RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll : always
-! echo "" >&2
-! echo "*** Directory RegistryConfig/Goedel.Tool.RegistryConfig" >&2
-! make NORECURSE=true -C RegistryConfig/Goedel.Tool.RegistryConfig
-
-# Project : Goedel.Document.RFC.dll
-# Item :  RFCTool/Goedel.Tool.RFCTool
-# Output :     RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll
-
-all : RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll
-
-RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : RFCTool/Goedel.Tool.RFCTool/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
-
-RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : RFCTool/Goedel.Tool.RFCTool/../../Libraries/$(TARGETBIN)/Goedel.IO.dll
-
-RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : RFCTool/Goedel.Tool.RFCTool/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : RFCTool/Goedel.Tool.RFCTool/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : RFCTool/Goedel.Tool.RFCTool/../$(TARGETBIN)/Goedel.Document.Markdown.dll
-
-
-RFCTool/Goedel.Tool.RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll : always
-! echo "" >&2
-! echo "*** Directory RFCTool/Goedel.Tool.RFCTool" >&2
-! make NORECURSE=true -C RFCTool/Goedel.Tool.RFCTool
-
-# Project : Goedel.Tool.VSIXBuild.dll
-# Item :  VSIXBuild/Goedel.Tool.VSIXBuild
-# Output :     VSIXBuild/Goedel.Tool.VSIXBuild/$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll
-
-all : VSIXBuild/Goedel.Tool.VSIXBuild/$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll
-
-VSIXBuild/Goedel.Tool.VSIXBuild/$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll : VSIXBuild/Goedel.Tool.VSIXBuild/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-VSIXBuild/Goedel.Tool.VSIXBuild/$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll : VSIXBuild/Goedel.Tool.VSIXBuild/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-VSIXBuild/Goedel.Tool.VSIXBuild/$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll : VSIXBuild/Goedel.Tool.VSIXBuild/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-
-VSIXBuild/Goedel.Tool.VSIXBuild/$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll : always
-! echo "" >&2
-! echo "*** Directory VSIXBuild/Goedel.Tool.VSIXBuild" >&2
-! make NORECURSE=true -C VSIXBuild/Goedel.Tool.VSIXBuild
-
-# Project : rfctool.exe
-# Item :  RFCTool/ShellRFCTool
-# Output :     RFCTool/ShellRFCTool/$(TARGETEXE)/rfctool.exe
-
-all : RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe
-
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
-
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../../Libraries/$(TARGETBIN)/Goedel.IO.dll
-
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../$(TARGETBIN)/Goedel.Document.Markdown.dll
-
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../$(TARGETBIN)/Goedel.Document.RFC.Convert.dll
-
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../$(TARGETBIN)/Goedel.Document.OpenXML.dll
-
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : RFCTool/ShellRFCTool/../$(TARGETBIN)/Goedel.Document.RFC.dll
-
-
-RFCTool/ShellRFCTool/$(TARGETBIN)/rfctool.exe : always
-! echo "" >&2
-! echo "*** Directory RFCTool/ShellRFCTool" >&2
-! make NORECURSE=true -C RFCTool/ShellRFCTool
-
-# Project : Goedel.Document.OpenXML.dll
-# Item :  RFCTool/Goedel.Document.OpenXML
-# Output :     RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll
-
-all : RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll
-
-RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : RFCTool/Goedel.Document.OpenXML/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
-
-RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : RFCTool/Goedel.Document.OpenXML/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : RFCTool/Goedel.Document.OpenXML/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : RFCTool/Goedel.Document.OpenXML/../$(TARGETBIN)/Goedel.Document.Markdown.dll
-
-RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : RFCTool/Goedel.Document.OpenXML/../$(TARGETBIN)/Goedel.Document.RFC.dll
-
-
-RFCTool/Goedel.Document.OpenXML/$(TARGETBIN)/Goedel.Document.OpenXML.dll : always
-! echo "" >&2
-! echo "*** Directory RFCTool/Goedel.Document.OpenXML" >&2
-! make NORECURSE=true -C RFCTool/Goedel.Document.OpenXML
-
-# Project : libTrojanScript.dll
-# Item :  Trojan3/Goedel.Trojan.Script
-# Output :     Trojan3/Goedel.Trojan.Script/$(TARGETBIN)/libTrojanScript.dll
-
-all : Trojan3/Goedel.Trojan.Script/$(TARGETBIN)/libTrojanScript.dll
-
-Trojan3/Goedel.Trojan.Script/$(TARGETBIN)/libTrojanScript.dll : Trojan3/Goedel.Trojan.Script/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-Trojan3/Goedel.Trojan.Script/$(TARGETBIN)/libTrojanScript.dll : Trojan3/Goedel.Trojan.Script/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-
-Trojan3/Goedel.Trojan.Script/$(TARGETBIN)/libTrojanScript.dll : always
-! echo "" >&2
-! echo "*** Directory Trojan3/Goedel.Trojan.Script" >&2
-! make NORECURSE=true -C Trojan3/Goedel.Trojan.Script
-
-# Project : trojan.exe
-# Item :  Trojan3/Trojan3
-# Output :     Trojan3/Trojan3/$(TARGETEXE)/trojan.exe
-
-all : Trojan3/Trojan3/$(TARGETBIN)/trojan.exe
-
-Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : Trojan3/Trojan3/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : Trojan3/Trojan3/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : Trojan3/Trojan3/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : Trojan3/Trojan3/../../RegistryConfig/$(TARGETBIN)/Goedel.Tool.RegistryConfig.dll
-
-Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : Trojan3/Trojan3/../$(TARGETBIN)/libTrojanScript.dll
-
-
-Trojan3/Trojan3/$(TARGETBIN)/trojan.exe : always
-! echo "" >&2
-! echo "*** Directory Trojan3/Trojan3" >&2
-! make NORECURSE=true -C Trojan3/Trojan3
-
-# Project : vsixbuild.exe
-# Item :  VSIXBuild/ShellVSIXBuild
-# Output :     VSIXBuild/ShellVSIXBuild/$(TARGETEXE)/vsixbuild.exe
-
-all : VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe
-
-VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe : VSIXBuild/ShellVSIXBuild/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe : VSIXBuild/ShellVSIXBuild/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe : VSIXBuild/ShellVSIXBuild/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe : VSIXBuild/ShellVSIXBuild/../$(TARGETBIN)/Goedel.Tool.VSIXBuild.dll
-
-
-VSIXBuild/ShellVSIXBuild/$(TARGETBIN)/vsixbuild.exe : always
-! echo "" >&2
-! echo "*** Directory VSIXBuild/ShellVSIXBuild" >&2
-! make NORECURSE=true -C VSIXBuild/ShellVSIXBuild
-
-# Project : Goedel.Tool.Makey.dll
-# Item :  MakeyMakey/Goedel.Tools.Makey
-# Output :     MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll
-
-all : MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll
-
-MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : MakeyMakey/Goedel.Tools.Makey/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
-
-MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : MakeyMakey/Goedel.Tools.Makey/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : MakeyMakey/Goedel.Tools.Makey/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-
-MakeyMakey/Goedel.Tools.Makey/$(TARGETBIN)/Goedel.Tool.Makey.dll : always
-! echo "" >&2
-! echo "*** Directory MakeyMakey/Goedel.Tools.Makey" >&2
-! make NORECURSE=true -C MakeyMakey/Goedel.Tools.Makey
-
-# Project : Makey.exe
-# Item :  MakeyMakey/ShellMakey
-# Output :     MakeyMakey/ShellMakey/$(TARGETEXE)/Makey.exe
-
-all : MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe
-
-MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe : MakeyMakey/ShellMakey/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe : MakeyMakey/ShellMakey/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe : MakeyMakey/ShellMakey/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe : MakeyMakey/ShellMakey/../$(TARGETBIN)/Goedel.Tool.Makey.dll
-
-
-MakeyMakey/ShellMakey/$(TARGETBIN)/Makey.exe : always
-! echo "" >&2
-! echo "*** Directory MakeyMakey/ShellMakey" >&2
-! make NORECURSE=true -C MakeyMakey/ShellMakey
-
-# Project : commandparse.exe
-# Item :  Command/ShellCommand
-# Output :     Command/ShellCommand/$(TARGETEXE)/commandparse.exe
-
-all : Command/ShellCommand/$(TARGETBIN)/commandparse.exe
-
-Command/ShellCommand/$(TARGETBIN)/commandparse.exe : Command/ShellCommand/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-Command/ShellCommand/$(TARGETBIN)/commandparse.exe : Command/ShellCommand/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-Command/ShellCommand/$(TARGETBIN)/commandparse.exe : Command/ShellCommand/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-Command/ShellCommand/$(TARGETBIN)/commandparse.exe : Command/ShellCommand/../$(TARGETBIN)/Goedel.Tool.Command.dll
-
-
-Command/ShellCommand/$(TARGETBIN)/commandparse.exe : always
-! echo "" >&2
-! echo "*** Directory Command/ShellCommand" >&2
-! make NORECURSE=true -C Command/ShellCommand
-
-# Project : Packager.exe
-# Item :  Packager
-# Output :     Packager/$(TARGETEXE)/Packager.exe
-
-all : Packager/$(TARGETBIN)/Packager.exe
-
-
-Packager/$(TARGETBIN)/Packager.exe : always
-! echo "" >&2
-! echo "*** Directory Packager" >&2
-! make NORECURSE=true -C Packager
-
-# Project : Goedel.Registry.dll
-# Item :  Libraries/Goedel.Registry
-# Output :     Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
-
-all : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
-
-Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : Libraries/Goedel.Registry/../$(TARGETBIN)/Goedel.FSR.dll
-
-Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : Libraries/Goedel.Registry/../$(TARGETBIN)/Goedel.Utilities.dll
-
-
-Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : always
-! echo "" >&2
-! echo "*** Directory Libraries/Goedel.Registry" >&2
-! make NORECURSE=true -C Libraries/Goedel.Registry
+! echo "*** Directory Libraries/Goedel.Cryptography.Linux" >&2
+! make NORECURSE=true -C Libraries/Goedel.Cryptography.Linux
 
 # Project : Goedel.IO.dll
 # Item :  Libraries/Goedel.IO
@@ -709,311 +219,15 @@ Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll : always
 ! echo "*** Directory Libraries/Goedel.IO" >&2
 ! make NORECURSE=true -C Libraries/Goedel.IO
 
-# Project : bootmakermini.exe
-# Item :  RFCTool/ShellBootMaker
-# Output :     RFCTool/ShellBootMaker/$(TARGETEXE)/bootmakermini.exe
-
-all : RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe
-
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : RFCTool/ShellBootMaker/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : RFCTool/ShellBootMaker/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
-
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : RFCTool/ShellBootMaker/../../Libraries/$(TARGETBIN)/Goedel.IO.dll
-
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : RFCTool/ShellBootMaker/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : RFCTool/ShellBootMaker/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : RFCTool/ShellBootMaker/../$(TARGETBIN)/Goedel.Document.Markdown.dll
-
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : RFCTool/ShellBootMaker/../$(TARGETBIN)/Goedel.Document.OpenXML.dll
-
-
-RFCTool/ShellBootMaker/$(TARGETBIN)/bootmakermini.exe : always
-! echo "" >&2
-! echo "*** Directory RFCTool/ShellBootMaker" >&2
-! make NORECURSE=true -C RFCTool/ShellBootMaker
-
-# Project : OfficeLib.dll
-# Item :  RFCTool/Goedel.Document.Office
-# Output :     RFCTool/Goedel.Document.Office/$(TARGETBIN)/OfficeLib.dll
-
-all : RFCTool/Goedel.Document.Office/$(TARGETBIN)/OfficeLib.dll
-
-
-RFCTool/Goedel.Document.Office/$(TARGETBIN)/OfficeLib.dll : always
-! echo "" >&2
-! echo "*** Directory RFCTool/Goedel.Document.Office" >&2
-! make NORECURSE=true -C RFCTool/Goedel.Document.Office
-
-# Project : bootmaker.exe
-# Item :  RFCTool/ShellBootMakerOffice
-# Output :     RFCTool/ShellBootMakerOffice/$(TARGETEXE)/bootmaker.exe
-
-all : RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe
-
-RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
-
-RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../../Libraries/$(TARGETBIN)/Goedel.IO.dll
-
-RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../$(TARGETBIN)/Goedel.Document.Markdown.dll
-
-RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../$(TARGETBIN)/OfficeLib.dll
-
-RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : RFCTool/ShellBootMakerOffice/../$(TARGETBIN)/Goedel.Document.OpenXML.dll
-
-
-RFCTool/ShellBootMakerOffice/$(TARGETBIN)/bootmaker.exe : always
-! echo "" >&2
-! echo "*** Directory RFCTool/ShellBootMakerOffice" >&2
-! make NORECURSE=true -C RFCTool/ShellBootMakerOffice
-
-# Project : TestCommandParse.exe
-# Item :  Command/TestCommandParse
-# Output :     Command/TestCommandParse/$(TARGETEXE)/TestCommandParse.exe
-
-all : Command/TestCommandParse/$(TARGETBIN)/TestCommandParse.exe
-
-Command/TestCommandParse/$(TARGETBIN)/TestCommandParse.exe : Command/TestCommandParse/../../Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-Command/TestCommandParse/$(TARGETBIN)/TestCommandParse.exe : Command/TestCommandParse/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-Command/TestCommandParse/$(TARGETBIN)/TestCommandParse.exe : Command/TestCommandParse/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-Command/TestCommandParse/$(TARGETBIN)/TestCommandParse.exe : Command/TestCommandParse/../$(TARGETBIN)/Goedel.Tool.Command.dll
-
-
-Command/TestCommandParse/$(TARGETBIN)/TestCommandParse.exe : always
-! echo "" >&2
-! echo "*** Directory Command/TestCommandParse" >&2
-! make NORECURSE=true -C Command/TestCommandParse
-
-# Project : Goedel.Command.dll
-# Item :  Libraries/Goedel.Command
-# Output :     Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
-
-all : Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
-
-Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : Libraries/Goedel.Command/../$(TARGETBIN)/Goedel.FSR.dll
-
-Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : Libraries/Goedel.Command/../$(TARGETBIN)/Goedel.Registry.dll
-
-Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : Libraries/Goedel.Command/../$(TARGETBIN)/Goedel.Utilities.dll
-
-
-Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : always
-! echo "" >&2
-! echo "*** Directory Libraries/Goedel.Command" >&2
-! make NORECURSE=true -C Libraries/Goedel.Command
-
-# Project : Goedel.Document.Test.dll
-# Item :  RFCTool/Goedel.Document.Test
-# Output :     RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll
-
-all : RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll
-
-RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : RFCTool/Goedel.Document.Test/../../Libraries/$(TARGETBIN)/Goedel.FSR.dll
-
-RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : RFCTool/Goedel.Document.Test/../../Libraries/$(TARGETBIN)/Goedel.IO.dll
-
-RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : RFCTool/Goedel.Document.Test/../../Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : RFCTool/Goedel.Document.Test/../../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : RFCTool/Goedel.Document.Test/../$(TARGETBIN)/Goedel.Document.Markdown.dll
-
-RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : RFCTool/Goedel.Document.Test/../$(TARGETBIN)/Goedel.Document.OpenXML.dll
-
-RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : RFCTool/Goedel.Document.Test/../$(TARGETBIN)/Goedel.Document.RFC.dll
-
-
-RFCTool/Goedel.Document.Test/$(TARGETBIN)/Goedel.Document.Test.dll : always
-! echo "" >&2
-! echo "*** Directory RFCTool/Goedel.Document.Test" >&2
-! make NORECURSE=true -C RFCTool/Goedel.Document.Test
-
-# Project : RunDocs.exe
-# Item :  RunDocs
-# Output :     RunDocs/$(TARGETEXE)/RunDocs.exe
-
-all : RunDocs/$(TARGETBIN)/RunDocs.exe
-
-RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../Libraries/$(TARGETBIN)/Goedel.FSR.dll
-
-RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../Libraries/$(TARGETBIN)/Goedel.IO.dll
-
-RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../RFCTool/$(TARGETBIN)/Goedel.Document.Markdown.dll
-
-RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../RFCTool/$(TARGETBIN)/OfficeLib.dll
-
-RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../RFCTool/$(TARGETBIN)/Goedel.Document.OpenXML.dll
-
-RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../RFCTool/$(TARGETBIN)/Goedel.Document.RFC.Convert.dll
-
-RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../RFCTool/$(TARGETBIN)/Goedel.Document.Test.dll
-
-RunDocs/$(TARGETBIN)/RunDocs.exe : RunDocs/../RFCTool/$(TARGETBIN)/Goedel.Document.RFC.dll
-
-
-RunDocs/$(TARGETBIN)/RunDocs.exe : always
-! echo "" >&2
-! echo "*** Directory RunDocs" >&2
-! make NORECURSE=true -C RunDocs
-
-# Project : Goedel.Trace.dll
-# Item :  Trace/Goedel.Trace
-# Output :     Trace/Goedel.Trace/$(TARGETBIN)/Goedel.Trace.dll
-
-all : Trace/Goedel.Trace/$(TARGETBIN)/Goedel.Trace.dll
-
-Trace/Goedel.Trace/$(TARGETBIN)/Goedel.Trace.dll : Trace/Goedel.Trace/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.dll
-
-Trace/Goedel.Trace/$(TARGETBIN)/Goedel.Trace.dll : Trace/Goedel.Trace/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-Trace/Goedel.Trace/$(TARGETBIN)/Goedel.Trace.dll : Trace/Goedel.Trace/../../Libraries/$(TARGETBIN)/Goedel.Protocol.Framework.dll
-
-
-Trace/Goedel.Trace/$(TARGETBIN)/Goedel.Trace.dll : always
-! echo "" >&2
-! echo "*** Directory Trace/Goedel.Trace" >&2
-! make NORECURSE=true -C Trace/Goedel.Trace
-
-# Project : Goedel.Trace.Client.dll
-# Item :  Trace/Goedel.Trace.Client
-# Output :     Trace/Goedel.Trace.Client/$(TARGETBIN)/Goedel.Trace.Client.dll
-
-all : Trace/Goedel.Trace.Client/$(TARGETBIN)/Goedel.Trace.Client.dll
-
-Trace/Goedel.Trace.Client/$(TARGETBIN)/Goedel.Trace.Client.dll : Trace/Goedel.Trace.Client/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.dll
-
-Trace/Goedel.Trace.Client/$(TARGETBIN)/Goedel.Trace.Client.dll : Trace/Goedel.Trace.Client/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-Trace/Goedel.Trace.Client/$(TARGETBIN)/Goedel.Trace.Client.dll : Trace/Goedel.Trace.Client/../../Libraries/$(TARGETBIN)/.dll
-
-Trace/Goedel.Trace.Client/$(TARGETBIN)/Goedel.Trace.Client.dll : Trace/Goedel.Trace.Client/../$(TARGETBIN)/Goedel.Trace.dll
-
-
-Trace/Goedel.Trace.Client/$(TARGETBIN)/Goedel.Trace.Client.dll : always
-! echo "" >&2
-! echo "*** Directory Trace/Goedel.Trace.Client" >&2
-! make NORECURSE=true -C Trace/Goedel.Trace.Client
-
-# Project : Goedel.Trace.Documentation.exe
-# Item :  Trace/Goedel.Trace.Documentation
-# Output :     Trace/Goedel.Trace.Documentation/$(TARGETEXE)/Goedel.Trace.Documentation.exe
-
-all : Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe
-
-Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.IO.dll
-
-Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.Debug.dll
-
-Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.dll
-
-Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../$(TARGETBIN)/Goedel.Trace.Client.dll
-
-Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../$(TARGETBIN)/Goedel.Trace.Server.dll
-
-Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : Trace/Goedel.Trace.Documentation/../$(TARGETBIN)/Goedel.Trace.dll
-
-
-Trace/Goedel.Trace.Documentation/$(TARGETBIN)/Goedel.Trace.Documentation.exe : always
-! echo "" >&2
-! echo "*** Directory Trace/Goedel.Trace.Documentation" >&2
-! make NORECURSE=true -C Trace/Goedel.Trace.Documentation
-
-# Project : Goedel.Trace.Server.dll
-# Item :  Trace/Goedel.Trace.Server
-# Output :     Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll
-
-all : Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll
-
-Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll : Trace/Goedel.Trace.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.IO.dll
-
-Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll : Trace/Goedel.Trace.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.Framework.dll
-
-Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll : Trace/Goedel.Trace.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.dll
-
-Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll : Trace/Goedel.Trace.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll : Trace/Goedel.Trace.Server/../$(TARGETBIN)/Goedel.Trace.dll
-
-
-Trace/Goedel.Trace.Server/$(TARGETBIN)/Goedel.Trace.Server.dll : always
-! echo "" >&2
-! echo "*** Directory Trace/Goedel.Trace.Server" >&2
-! make NORECURSE=true -C Trace/Goedel.Trace.Server
-
-# Project : TraceServer.exe
-# Item :  Trace/Goedel.Trace.Shell.Server
-# Output :     Trace/Goedel.Trace.Shell.Server/$(TARGETEXE)/TraceServer.exe
-
-all : Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe
-
-Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : Trace/Goedel.Trace.Shell.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Command.dll
-
-Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : Trace/Goedel.Trace.Shell.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Protocol.Framework.dll
-
-Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : Trace/Goedel.Trace.Shell.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Registry.dll
-
-Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : Trace/Goedel.Trace.Shell.Server/../../../buildtools/Libraries/$(TARGETBIN)/Goedel.Utilities.dll
-
-Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : Trace/Goedel.Trace.Shell.Server/../../Libraries/$(TARGETBIN)/Goedel.Protocol.dll
-
-Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : Trace/Goedel.Trace.Shell.Server/../$(TARGETBIN)/Goedel.Trace.Server.dll
-
-Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : Trace/Goedel.Trace.Shell.Server/../$(TARGETBIN)/Goedel.Trace.dll
-
-
-Trace/Goedel.Trace.Shell.Server/$(TARGETBIN)/TraceServer.exe : always
-! echo "" >&2
-! echo "*** Directory Trace/Goedel.Trace.Shell.Server" >&2
-! make NORECURSE=true -C Trace/Goedel.Trace.Shell.Server
-
-# Project : Goedel.Protocol.Framework.dll
-# Item :  Libraries/Goedel.Protocol.Framework
-# Output :     Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll
-
-all : Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll
-
-Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll : Libraries/Goedel.Protocol.Framework/../$(TARGETBIN)/Goedel.Platform.dll
-
-Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll : Libraries/Goedel.Protocol.Framework/../$(TARGETBIN)/Goedel.Utilities.dll
-
-Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll : Libraries/Goedel.Protocol.Framework/../$(TARGETBIN)/Goedel.Protocol.dll
-
-
-Libraries/Goedel.Protocol.Framework/$(TARGETBIN)/Goedel.Protocol.Framework.dll : always
-! echo "" >&2
-! echo "*** Directory Libraries/Goedel.Protocol.Framework" >&2
-! make NORECURSE=true -C Libraries/Goedel.Protocol.Framework
-
 # Project : Goedel.Protocol.Debug.dll
 # Item :  Libraries/Goedel.Protocol.Debug
 # Output :     Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll
 
 all : Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll
 
-Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll : Libraries/Goedel.Protocol.Debug/../$(TARGETBIN)/Goedel.Utilities.dll
+Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll : Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
 
-Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll : Libraries/Goedel.Protocol.Debug/../$(TARGETBIN)/Goedel.Protocol.dll
-
-Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll : Libraries/Goedel.Protocol.Debug/../$(TARGETBIN)/Goedel.Protocol.Framework.dll
+Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
 
 
 Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll : always
@@ -1021,167 +235,676 @@ Libraries/Goedel.Protocol.Debug/$(TARGETBIN)/Goedel.Protocol.Debug.dll : always
 ! echo "*** Directory Libraries/Goedel.Protocol.Debug" >&2
 ! make NORECURSE=true -C Libraries/Goedel.Protocol.Debug
 
-# Project : .dll
-# Item :  Libraries/Goedel.Debug
-# Output :     Libraries/Goedel.Debug/$(TARGETBIN)/.dll
+# Project : Goedel.Registry.dll
+# Item :  Libraries/Goedel.Registry
+# Output :     Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
 
-all : Libraries/Goedel.Debug/$(TARGETBIN)/.dll
+all : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+
+Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+
+Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
 
 
-Libraries/Goedel.Debug/$(TARGETBIN)/.dll : always
+Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll : always
 ! echo "" >&2
-! echo "*** Directory Libraries/Goedel.Debug" >&2
-! make NORECURSE=true -C Libraries/Goedel.Debug
+! echo "*** Directory Libraries/Goedel.Registry" >&2
+! make NORECURSE=true -C Libraries/Goedel.Registry
+
+# Project : Goedel.Test.dll
+# Item :  Libraries/Goedel.Test
+# Output :     Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll
+
+all : Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll
+
+Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll : Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll
+
+Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll : Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll
+
+Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll : Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+
+
+Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.Test" >&2
+! make NORECURSE=true -C Libraries/Goedel.Test
+
+# Project : AAAConsole.exe
+# Item :  Testing/AAAConsole
+# Output :     Testing/AAAConsole/$(TARGETEXE)/AAAConsole.exe
+
+all : Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Libraries/Goedel.Cryptography.Container/$(TARGETBIN)/Goedel.Cryptography.Container.dll
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : Testing/Test.Goedel.Cryptography.Container/$(TARGETBIN)/Test.Goedel.Cryptography.Container.dll
+
+
+Testing/AAAConsole/$(TARGETBIN)/AAAConsole.exe : always
+! echo "" >&2
+! echo "*** Directory Testing/AAAConsole" >&2
+! make NORECURSE=true -C Testing/AAAConsole
+
+# Project : Test.Goedel.ASN.dll
+# Item :  Testing/Test.Goedel.ASN
+# Output :     Testing/Test.Goedel.ASN/$(TARGETBIN)/Test.Goedel.ASN.dll
+
+all : Testing/Test.Goedel.ASN/$(TARGETBIN)/Test.Goedel.ASN.dll
+
+Testing/Test.Goedel.ASN/$(TARGETBIN)/Test.Goedel.ASN.dll : Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
+
+Testing/Test.Goedel.ASN/$(TARGETBIN)/Test.Goedel.ASN.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Testing/Test.Goedel.ASN/$(TARGETBIN)/Test.Goedel.ASN.dll : Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll
+
+Testing/Test.Goedel.ASN/$(TARGETBIN)/Test.Goedel.ASN.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Testing/Test.Goedel.ASN/$(TARGETBIN)/Test.Goedel.ASN.dll : Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+Testing/Test.Goedel.ASN/$(TARGETBIN)/Test.Goedel.ASN.dll : Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll
+
+
+Testing/Test.Goedel.ASN/$(TARGETBIN)/Test.Goedel.ASN.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.ASN" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.ASN
+
+# Project : Test.Goedel.Cryptography.dll
+# Item :  Testing/Test.Goedel.Cryptography
+# Output :     Testing/Test.Goedel.Cryptography/$(TARGETBIN)/Test.Goedel.Cryptography.dll
+
+all : Testing/Test.Goedel.Cryptography/$(TARGETBIN)/Test.Goedel.Cryptography.dll
+
+Testing/Test.Goedel.Cryptography/$(TARGETBIN)/Test.Goedel.Cryptography.dll : Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+Testing/Test.Goedel.Cryptography/$(TARGETBIN)/Test.Goedel.Cryptography.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Testing/Test.Goedel.Cryptography/$(TARGETBIN)/Test.Goedel.Cryptography.dll : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+
+Testing/Test.Goedel.Cryptography/$(TARGETBIN)/Test.Goedel.Cryptography.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Testing/Test.Goedel.Cryptography/$(TARGETBIN)/Test.Goedel.Cryptography.dll : Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll
+
+Testing/Test.Goedel.Cryptography/$(TARGETBIN)/Test.Goedel.Cryptography.dll : Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+
+Testing/Test.Goedel.Cryptography/$(TARGETBIN)/Test.Goedel.Cryptography.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.Cryptography" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.Cryptography
+
+# Project : Test.Goedel.Cryptography.Jose.dll
+# Item :  Testing/Test.Goedel.Cryptography.Jose
+# Output :     Testing/Test.Goedel.Cryptography.Jose/$(TARGETBIN)/Test.Goedel.Cryptography.Jose.dll
+
+all : Testing/Test.Goedel.Cryptography.Jose/$(TARGETBIN)/Test.Goedel.Cryptography.Jose.dll
+
+Testing/Test.Goedel.Cryptography.Jose/$(TARGETBIN)/Test.Goedel.Cryptography.Jose.dll : Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
+
+Testing/Test.Goedel.Cryptography.Jose/$(TARGETBIN)/Test.Goedel.Cryptography.Jose.dll : Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+Testing/Test.Goedel.Cryptography.Jose/$(TARGETBIN)/Test.Goedel.Cryptography.Jose.dll : Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
+
+Testing/Test.Goedel.Cryptography.Jose/$(TARGETBIN)/Test.Goedel.Cryptography.Jose.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Testing/Test.Goedel.Cryptography.Jose/$(TARGETBIN)/Test.Goedel.Cryptography.Jose.dll : Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll
+
+Testing/Test.Goedel.Cryptography.Jose/$(TARGETBIN)/Test.Goedel.Cryptography.Jose.dll : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+
+Testing/Test.Goedel.Cryptography.Jose/$(TARGETBIN)/Test.Goedel.Cryptography.Jose.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Testing/Test.Goedel.Cryptography.Jose/$(TARGETBIN)/Test.Goedel.Cryptography.Jose.dll : Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll
+
+Testing/Test.Goedel.Cryptography.Jose/$(TARGETBIN)/Test.Goedel.Cryptography.Jose.dll : Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+Testing/Test.Goedel.Cryptography.Jose/$(TARGETBIN)/Test.Goedel.Cryptography.Jose.dll : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+
+Testing/Test.Goedel.Cryptography.Jose/$(TARGETBIN)/Test.Goedel.Cryptography.Jose.dll : Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+
+Testing/Test.Goedel.Cryptography.Jose/$(TARGETBIN)/Test.Goedel.Cryptography.Jose.dll : Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll
+
+
+Testing/Test.Goedel.Cryptography.Jose/$(TARGETBIN)/Test.Goedel.Cryptography.Jose.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.Cryptography.Jose" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.Cryptography.Jose
+
+# Project : Test.Goedel.Cryptography.KeyFile.dll
+# Item :  Testing/Test.Goedel.Cryptography.KeyFile
+# Output :     Testing/Test.Goedel.Cryptography.KeyFile/$(TARGETBIN)/Test.Goedel.Cryptography.KeyFile.dll
+
+all : Testing/Test.Goedel.Cryptography.KeyFile/$(TARGETBIN)/Test.Goedel.Cryptography.KeyFile.dll
+
+Testing/Test.Goedel.Cryptography.KeyFile/$(TARGETBIN)/Test.Goedel.Cryptography.KeyFile.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Testing/Test.Goedel.Cryptography.KeyFile/$(TARGETBIN)/Test.Goedel.Cryptography.KeyFile.dll : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+
+Testing/Test.Goedel.Cryptography.KeyFile/$(TARGETBIN)/Test.Goedel.Cryptography.KeyFile.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Testing/Test.Goedel.Cryptography.KeyFile/$(TARGETBIN)/Test.Goedel.Cryptography.KeyFile.dll : Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+Testing/Test.Goedel.Cryptography.KeyFile/$(TARGETBIN)/Test.Goedel.Cryptography.KeyFile.dll : Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
+
+Testing/Test.Goedel.Cryptography.KeyFile/$(TARGETBIN)/Test.Goedel.Cryptography.KeyFile.dll : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+
+Testing/Test.Goedel.Cryptography.KeyFile/$(TARGETBIN)/Test.Goedel.Cryptography.KeyFile.dll : Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll
+
+
+Testing/Test.Goedel.Cryptography.KeyFile/$(TARGETBIN)/Test.Goedel.Cryptography.KeyFile.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.Cryptography.KeyFile" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.Cryptography.KeyFile
+
+# Project : Test.Goedel.Cryptography.Linux.dll
+# Item :  Testing/Test.Goedel.Cryptography.Linux
+# Output :     Testing/Test.Goedel.Cryptography.Linux/$(TARGETBIN)/Test.Goedel.Cryptography.Linux.dll
+
+all : Testing/Test.Goedel.Cryptography.Linux/$(TARGETBIN)/Test.Goedel.Cryptography.Linux.dll
+
+Testing/Test.Goedel.Cryptography.Linux/$(TARGETBIN)/Test.Goedel.Cryptography.Linux.dll : Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+Testing/Test.Goedel.Cryptography.Linux/$(TARGETBIN)/Test.Goedel.Cryptography.Linux.dll : Libraries/Goedel.Cryptography.Linux/$(TARGETBIN)/Goedel.Cryptography.Linux.dll
+
+Testing/Test.Goedel.Cryptography.Linux/$(TARGETBIN)/Test.Goedel.Cryptography.Linux.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Testing/Test.Goedel.Cryptography.Linux/$(TARGETBIN)/Test.Goedel.Cryptography.Linux.dll : Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+
+Testing/Test.Goedel.Cryptography.Linux/$(TARGETBIN)/Test.Goedel.Cryptography.Linux.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Testing/Test.Goedel.Cryptography.Linux/$(TARGETBIN)/Test.Goedel.Cryptography.Linux.dll : Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+Testing/Test.Goedel.Cryptography.Linux/$(TARGETBIN)/Test.Goedel.Cryptography.Linux.dll : Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
+
+Testing/Test.Goedel.Cryptography.Linux/$(TARGETBIN)/Test.Goedel.Cryptography.Linux.dll : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+
+Testing/Test.Goedel.Cryptography.Linux/$(TARGETBIN)/Test.Goedel.Cryptography.Linux.dll : Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll
+
+
+Testing/Test.Goedel.Cryptography.Linux/$(TARGETBIN)/Test.Goedel.Cryptography.Linux.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.Cryptography.Linux" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.Cryptography.Linux
+
+# Project : Test.Goedel.Cryptography.dll
+# Item :  Testing/Test.Goedel.Cryptography.RSA
+# Output :     Testing/Test.Goedel.Cryptography.RSA/$(TARGETBIN)/Test.Goedel.Cryptography.dll
+
+all : Testing/Test.Goedel.Cryptography.RSA/$(TARGETBIN)/Test.Goedel.Cryptography.dll
+
+Testing/Test.Goedel.Cryptography.RSA/$(TARGETBIN)/Test.Goedel.Cryptography.dll : Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
+
+Testing/Test.Goedel.Cryptography.RSA/$(TARGETBIN)/Test.Goedel.Cryptography.dll : Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+Testing/Test.Goedel.Cryptography.RSA/$(TARGETBIN)/Test.Goedel.Cryptography.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Testing/Test.Goedel.Cryptography.RSA/$(TARGETBIN)/Test.Goedel.Cryptography.dll : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+
+Testing/Test.Goedel.Cryptography.RSA/$(TARGETBIN)/Test.Goedel.Cryptography.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Testing/Test.Goedel.Cryptography.RSA/$(TARGETBIN)/Test.Goedel.Cryptography.dll : Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
+
+Testing/Test.Goedel.Cryptography.RSA/$(TARGETBIN)/Test.Goedel.Cryptography.dll : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+
+Testing/Test.Goedel.Cryptography.RSA/$(TARGETBIN)/Test.Goedel.Cryptography.dll : Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll
+
+Testing/Test.Goedel.Cryptography.RSA/$(TARGETBIN)/Test.Goedel.Cryptography.dll : Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+
+Testing/Test.Goedel.Cryptography.RSA/$(TARGETBIN)/Test.Goedel.Cryptography.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.Cryptography.RSA" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.Cryptography.RSA
+
+# Project : Test.Goedel.Cryptography.Windows.dll
+# Item :  Testing/Test.Goedel.Cryptography.Windows
+# Output :     Testing/Test.Goedel.Cryptography.Windows/$(TARGETBIN)/Test.Goedel.Cryptography.Windows.dll
+
+all : Testing/Test.Goedel.Cryptography.Windows/$(TARGETBIN)/Test.Goedel.Cryptography.Windows.dll
+
+Testing/Test.Goedel.Cryptography.Windows/$(TARGETBIN)/Test.Goedel.Cryptography.Windows.dll : Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+Testing/Test.Goedel.Cryptography.Windows/$(TARGETBIN)/Test.Goedel.Cryptography.Windows.dll : Libraries/Goedel.Cryptography.Windows/$(TARGETBIN)/Goedel.Cryptography.Windows.dll
+
+Testing/Test.Goedel.Cryptography.Windows/$(TARGETBIN)/Test.Goedel.Cryptography.Windows.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Testing/Test.Goedel.Cryptography.Windows/$(TARGETBIN)/Test.Goedel.Cryptography.Windows.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Testing/Test.Goedel.Cryptography.Windows/$(TARGETBIN)/Test.Goedel.Cryptography.Windows.dll : Libraries/Goedel.Cryptography.Framework/$(TARGETBIN)/Goedel.Cryptography.Framework.dll
+
+Testing/Test.Goedel.Cryptography.Windows/$(TARGETBIN)/Test.Goedel.Cryptography.Windows.dll : Libraries/Goedel.Cryptography.KeyFile/$(TARGETBIN)/Goedel.Cryptography.KeyFile.dll
+
+Testing/Test.Goedel.Cryptography.Windows/$(TARGETBIN)/Test.Goedel.Cryptography.Windows.dll : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+
+Testing/Test.Goedel.Cryptography.Windows/$(TARGETBIN)/Test.Goedel.Cryptography.Windows.dll : Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll
+
+
+Testing/Test.Goedel.Cryptography.Windows/$(TARGETBIN)/Test.Goedel.Cryptography.Windows.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.Cryptography.Windows" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.Cryptography.Windows
+
+# Project : Test.Goedel.DNS.dll
+# Item :  Testing/Test.Goedel.DNS
+# Output :     Testing/Test.Goedel.DNS/$(TARGETBIN)/Test.Goedel.DNS.dll
+
+all : Testing/Test.Goedel.DNS/$(TARGETBIN)/Test.Goedel.DNS.dll
+
+Testing/Test.Goedel.DNS/$(TARGETBIN)/Test.Goedel.DNS.dll : Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll
+
+Testing/Test.Goedel.DNS/$(TARGETBIN)/Test.Goedel.DNS.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Testing/Test.Goedel.DNS/$(TARGETBIN)/Test.Goedel.DNS.dll : Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll
+
+
+Testing/Test.Goedel.DNS/$(TARGETBIN)/Test.Goedel.DNS.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.DNS" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.DNS
+
+# Project : Goedel.Command.dll
+# Item :  Libraries/Goedel.Command
+# Output :     Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
+
+all : Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
+
+Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+
+Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+
+Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+
+Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.Command" >&2
+! make NORECURSE=true -C Libraries/Goedel.Command
+
+# Project : Test.Goedel.Command.dll
+# Item :  Testing/Test.Goedel.Command
+# Output :     Testing/Test.Goedel.Command/$(TARGETBIN)/Test.Goedel.Command.dll
+
+all : Testing/Test.Goedel.Command/$(TARGETBIN)/Test.Goedel.Command.dll
+
+Testing/Test.Goedel.Command/$(TARGETBIN)/Test.Goedel.Command.dll : Libraries/Goedel.Command/$(TARGETBIN)/Goedel.Command.dll
+
+Testing/Test.Goedel.Command/$(TARGETBIN)/Test.Goedel.Command.dll : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+
+Testing/Test.Goedel.Command/$(TARGETBIN)/Test.Goedel.Command.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Testing/Test.Goedel.Command/$(TARGETBIN)/Test.Goedel.Command.dll : Libraries/Goedel.Registry/$(TARGETBIN)/Goedel.Registry.dll
+
+Testing/Test.Goedel.Command/$(TARGETBIN)/Test.Goedel.Command.dll : Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll
+
+
+Testing/Test.Goedel.Command/$(TARGETBIN)/Test.Goedel.Command.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.Command" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.Command
+
+# Project : ContentProject.dll
+# Item :  Documentation/StandardLibraries/ContentProject
+# Output :     Documentation/StandardLibraries/ContentProject/$(TARGETBIN)/ContentProject.dll
+
+all : Documentation/StandardLibraries/ContentProject/$(TARGETBIN)/ContentProject.dll
+
+
+Documentation/StandardLibraries/ContentProject/$(TARGETBIN)/ContentProject.dll : always
+! echo "" >&2
+! echo "*** Directory Documentation/StandardLibraries/ContentProject" >&2
+! make NORECURSE=true -C Documentation/StandardLibraries/ContentProject
+
+# Project : Goedel.Cryptography.Container.dll
+# Item :  Libraries/Goedel.Cryptography.Container
+# Output :     Libraries/Goedel.Cryptography.Container/$(TARGETBIN)/Goedel.Cryptography.Container.dll
+
+all : Libraries/Goedel.Cryptography.Container/$(TARGETBIN)/Goedel.Cryptography.Container.dll
+
+Libraries/Goedel.Cryptography.Container/$(TARGETBIN)/Goedel.Cryptography.Container.dll : Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+Libraries/Goedel.Cryptography.Container/$(TARGETBIN)/Goedel.Cryptography.Container.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Libraries/Goedel.Cryptography.Container/$(TARGETBIN)/Goedel.Cryptography.Container.dll : Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+
+Libraries/Goedel.Cryptography.Container/$(TARGETBIN)/Goedel.Cryptography.Container.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Libraries/Goedel.Cryptography.Container/$(TARGETBIN)/Goedel.Cryptography.Container.dll : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+
+
+Libraries/Goedel.Cryptography.Container/$(TARGETBIN)/Goedel.Cryptography.Container.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.Cryptography.Container" >&2
+! make NORECURSE=true -C Libraries/Goedel.Cryptography.Container
+
+# Project : Test.Goedel.Cryptography.Container.dll
+# Item :  Testing/Test.Goedel.Cryptography.Container
+# Output :     Testing/Test.Goedel.Cryptography.Container/$(TARGETBIN)/Test.Goedel.Cryptography.Container.dll
+
+all : Testing/Test.Goedel.Cryptography.Container/$(TARGETBIN)/Test.Goedel.Cryptography.Container.dll
+
+Testing/Test.Goedel.Cryptography.Container/$(TARGETBIN)/Test.Goedel.Cryptography.Container.dll : Libraries/Goedel.Cryptography.Container/$(TARGETBIN)/Goedel.Cryptography.Container.dll
+
+Testing/Test.Goedel.Cryptography.Container/$(TARGETBIN)/Test.Goedel.Cryptography.Container.dll : Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+Testing/Test.Goedel.Cryptography.Container/$(TARGETBIN)/Test.Goedel.Cryptography.Container.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Testing/Test.Goedel.Cryptography.Container/$(TARGETBIN)/Test.Goedel.Cryptography.Container.dll : Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+
+Testing/Test.Goedel.Cryptography.Container/$(TARGETBIN)/Test.Goedel.Cryptography.Container.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Testing/Test.Goedel.Cryptography.Container/$(TARGETBIN)/Test.Goedel.Cryptography.Container.dll : Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
+
+Testing/Test.Goedel.Cryptography.Container/$(TARGETBIN)/Test.Goedel.Cryptography.Container.dll : Libraries/Goedel.Test/$(TARGETBIN)/Goedel.Test.dll
+
+
+Testing/Test.Goedel.Cryptography.Container/$(TARGETBIN)/Test.Goedel.Cryptography.Container.dll : always
+! echo "" >&2
+! echo "*** Directory Testing/Test.Goedel.Cryptography.Container" >&2
+! make NORECURSE=true -C Testing/Test.Goedel.Cryptography.Container
+
+# Project : Goedel.Protocol.Exchange.dll
+# Item :  Libraries/Goedel.Protocol.Exchange
+# Output :     Libraries/Goedel.Protocol.Exchange/$(TARGETBIN)/Goedel.Protocol.Exchange.dll
+
+all : Libraries/Goedel.Protocol.Exchange/$(TARGETBIN)/Goedel.Protocol.Exchange.dll
+
+Libraries/Goedel.Protocol.Exchange/$(TARGETBIN)/Goedel.Protocol.Exchange.dll : Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+Libraries/Goedel.Protocol.Exchange/$(TARGETBIN)/Goedel.Protocol.Exchange.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Libraries/Goedel.Protocol.Exchange/$(TARGETBIN)/Goedel.Protocol.Exchange.dll : Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+
+Libraries/Goedel.Protocol.Exchange/$(TARGETBIN)/Goedel.Protocol.Exchange.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+
+Libraries/Goedel.Protocol.Exchange/$(TARGETBIN)/Goedel.Protocol.Exchange.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.Protocol.Exchange" >&2
+! make NORECURSE=true -C Libraries/Goedel.Protocol.Exchange
+
+# Project : Goedel.Protocol.Exchange.Server.dll
+# Item :  Libraries/Goedel.Protocol.Exchange.Server
+# Output :     Libraries/Goedel.Protocol.Exchange.Server/$(TARGETBIN)/Goedel.Protocol.Exchange.Server.dll
+
+all : Libraries/Goedel.Protocol.Exchange.Server/$(TARGETBIN)/Goedel.Protocol.Exchange.Server.dll
+
+Libraries/Goedel.Protocol.Exchange.Server/$(TARGETBIN)/Goedel.Protocol.Exchange.Server.dll : Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+Libraries/Goedel.Protocol.Exchange.Server/$(TARGETBIN)/Goedel.Protocol.Exchange.Server.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Libraries/Goedel.Protocol.Exchange.Server/$(TARGETBIN)/Goedel.Protocol.Exchange.Server.dll : Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+
+Libraries/Goedel.Protocol.Exchange.Server/$(TARGETBIN)/Goedel.Protocol.Exchange.Server.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+Libraries/Goedel.Protocol.Exchange.Server/$(TARGETBIN)/Goedel.Protocol.Exchange.Server.dll : Libraries/Goedel.Protocol.Exchange/$(TARGETBIN)/Goedel.Protocol.Exchange.dll
+
+
+Libraries/Goedel.Protocol.Exchange.Server/$(TARGETBIN)/Goedel.Protocol.Exchange.Server.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.Protocol.Exchange.Server" >&2
+! make NORECURSE=true -C Libraries/Goedel.Protocol.Exchange.Server
+
+# Project : Goedel.Utilities.dll
+# Item :  Libraries/Goedel.Utilities
+# Output :     Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+all : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+
+Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.Utilities" >&2
+! make NORECURSE=true -C Libraries/Goedel.Utilities
+
+# Project : Goedel.ASN.dll
+# Item :  Libraries/Goedel.ASN
+# Output :     Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
+
+all : Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
+
+Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+
+Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.ASN" >&2
+! make NORECURSE=true -C Libraries/Goedel.ASN
+
+# Project : Goedel.Cryptography.dll
+# Item :  Libraries/Goedel.Cryptography
+# Output :     Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+all : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll : Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
+
+Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+
+Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.Cryptography" >&2
+! make NORECURSE=true -C Libraries/Goedel.Cryptography
+
+# Project : Goedel.Cryptography.Jose.dll
+# Item :  Libraries/Goedel.Cryptography.Jose
+# Output :     Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+all : Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll
+
+Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll : Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
+
+Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll : Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+
+Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+
+Libraries/Goedel.Cryptography.Jose/$(TARGETBIN)/Goedel.Cryptography.Jose.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.Cryptography.Jose" >&2
+! make NORECURSE=true -C Libraries/Goedel.Cryptography.Jose
+
+# Project : Goedel.Cryptography.Ticket.dll
+# Item :  Libraries/Goedel.Cryptography.Ticket
+# Output :     Libraries/Goedel.Cryptography.Ticket/$(TARGETBIN)/Goedel.Cryptography.Ticket.dll
+
+all : Libraries/Goedel.Cryptography.Ticket/$(TARGETBIN)/Goedel.Cryptography.Ticket.dll
+
+Libraries/Goedel.Cryptography.Ticket/$(TARGETBIN)/Goedel.Cryptography.Ticket.dll : Libraries/Goedel.ASN/$(TARGETBIN)/Goedel.ASN.dll
+
+Libraries/Goedel.Cryptography.Ticket/$(TARGETBIN)/Goedel.Cryptography.Ticket.dll : Libraries/Goedel.Cryptography/$(TARGETBIN)/Goedel.Cryptography.dll
+
+Libraries/Goedel.Cryptography.Ticket/$(TARGETBIN)/Goedel.Cryptography.Ticket.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+
+Libraries/Goedel.Cryptography.Ticket/$(TARGETBIN)/Goedel.Cryptography.Ticket.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.Cryptography.Ticket" >&2
+! make NORECURSE=true -C Libraries/Goedel.Cryptography.Ticket
+
+# Project : Goedel.FSR.dll
+# Item :  Libraries/Goedel.FSR
+# Output :     Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+
+all : Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
+
+Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+
+Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.FSR" >&2
+! make NORECURSE=true -C Libraries/Goedel.FSR
+
+# Project : Goedel.Discovery.dll
+# Item :  Libraries/Goedel.Discovery
+# Output :     Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll
+
+all : Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll
+
+Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+
+Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.Discovery" >&2
+! make NORECURSE=true -C Libraries/Goedel.Discovery
+
+# Project : Goedel.Protocol.dll
+# Item :  Libraries/Goedel.Protocol
+# Output :     Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+
+all : Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll
+
+Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : Libraries/Goedel.Discovery/$(TARGETBIN)/Goedel.Discovery.dll
+
+Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : Libraries/Goedel.Utilities/$(TARGETBIN)/Goedel.Utilities.dll
+
+
+Libraries/Goedel.Protocol/$(TARGETBIN)/Goedel.Protocol.dll : always
+! echo "" >&2
+! echo "*** Directory Libraries/Goedel.Protocol" >&2
+! make NORECURSE=true -C Libraries/Goedel.Protocol
 
 
 
 # clean all projects
 clean :
-! make clean NORECURSE=true -C ASN/ShellASN
-! make clean NORECURSE=true -C ASN/Goedel.Tool.ASN
-! make clean NORECURSE=true -C Command/Goedel.Tool.Command
-! make clean NORECURSE=true -C Domainer/ShellDomainer
-! make clean NORECURSE=true -C Domainer/Goedel.Tool.Domainer
-! make clean NORECURSE=true -C Exceptional/ShellExceptional
-! make clean NORECURSE=true -C Exceptional/Goedel.Tool.Exceptional
-! make clean NORECURSE=true -C FSRGen/Goedel.Tool.FSRGen
-! make clean NORECURSE=true -C FSRGen/ShellFSRGen
-! make clean NORECURSE=true -C GScript/Goedel.Tool.Script
-! make clean NORECURSE=true -C GScript/ShellGScript
-! make clean NORECURSE=true -C Goedel3/ShellGoedel3
-! make clean NORECURSE=true -C Protogen/Goedel.Tool.ProtoGen
-! make clean NORECURSE=true -C protogen/ShellProtoGen
-! make clean NORECURSE=true -C Goedel3/Goedel.Tool.Schema
-! make clean NORECURSE=true -C RFCTool/Goedel.Document.Markdown
-! make clean NORECURSE=true -C RFCTool/Goedel.Document.RFC.Convert
-! make clean NORECURSE=true -C RegistryConfig/ShellRegistryConfig
-! make clean NORECURSE=true -C RegistryConfig/Goedel.Tool.RegistryConfig
-! make clean NORECURSE=true -C RFCTool/Goedel.Tool.RFCTool
-! make clean NORECURSE=true -C VSIXBuild/Goedel.Tool.VSIXBuild
-! make clean NORECURSE=true -C RFCTool/ShellRFCTool
-! make clean NORECURSE=true -C RFCTool/Goedel.Document.OpenXML
-! make clean NORECURSE=true -C Trojan3/Goedel.Trojan.Script
-! make clean NORECURSE=true -C Trojan3/Trojan3
-! make clean NORECURSE=true -C VSIXBuild/ShellVSIXBuild
-! make clean NORECURSE=true -C MakeyMakey/Goedel.Tools.Makey
-! make clean NORECURSE=true -C MakeyMakey/ShellMakey
-! make clean NORECURSE=true -C Command/ShellCommand
-! make clean NORECURSE=true -C Packager
-! make clean NORECURSE=true -C Libraries/Goedel.Registry
+! make clean NORECURSE=true -C Libraries/Goedel.Cryptography.Framework
+! make clean NORECURSE=true -C Libraries/Goedel.Cryptography.KeyFile
+! make clean NORECURSE=true -C Libraries/Goedel.Cryptography.Windows
+! make clean NORECURSE=true -C Libraries/Goedel.Cryptography.Linux
 ! make clean NORECURSE=true -C Libraries/Goedel.IO
-! make clean NORECURSE=true -C RFCTool/ShellBootMaker
-! make clean NORECURSE=true -C RFCTool/Goedel.Document.Office
-! make clean NORECURSE=true -C RFCTool/ShellBootMakerOffice
-! make clean NORECURSE=true -C Command/TestCommandParse
-! make clean NORECURSE=true -C Libraries/Goedel.Command
-! make clean NORECURSE=true -C RFCTool/Goedel.Document.Test
-! make clean NORECURSE=true -C RunDocs
-! make clean NORECURSE=true -C Trace/Goedel.Trace
-! make clean NORECURSE=true -C Trace/Goedel.Trace.Client
-! make clean NORECURSE=true -C Trace/Goedel.Trace.Documentation
-! make clean NORECURSE=true -C Trace/Goedel.Trace.Server
-! make clean NORECURSE=true -C Trace/Goedel.Trace.Shell.Server
-! make clean NORECURSE=true -C Libraries/Goedel.Protocol.Framework
 ! make clean NORECURSE=true -C Libraries/Goedel.Protocol.Debug
-! make clean NORECURSE=true -C Libraries/Goedel.Debug
+! make clean NORECURSE=true -C Libraries/Goedel.Registry
+! make clean NORECURSE=true -C Libraries/Goedel.Test
+! make clean NORECURSE=true -C Testing/AAAConsole
+! make clean NORECURSE=true -C Testing/Test.Goedel.ASN
+! make clean NORECURSE=true -C Testing/Test.Goedel.Cryptography
+! make clean NORECURSE=true -C Testing/Test.Goedel.Cryptography.Jose
+! make clean NORECURSE=true -C Testing/Test.Goedel.Cryptography.KeyFile
+! make clean NORECURSE=true -C Testing/Test.Goedel.Cryptography.Linux
+! make clean NORECURSE=true -C Testing/Test.Goedel.Cryptography.RSA
+! make clean NORECURSE=true -C Testing/Test.Goedel.Cryptography.Windows
+! make clean NORECURSE=true -C Testing/Test.Goedel.DNS
+! make clean NORECURSE=true -C Libraries/Goedel.Command
+! make clean NORECURSE=true -C Testing/Test.Goedel.Command
+! make clean NORECURSE=true -C Documentation/StandardLibraries/ContentProject
+! make clean NORECURSE=true -C Libraries/Goedel.Cryptography.Container
+! make clean NORECURSE=true -C Testing/Test.Goedel.Cryptography.Container
+! make clean NORECURSE=true -C Libraries/Goedel.Protocol.Exchange
+! make clean NORECURSE=true -C Libraries/Goedel.Protocol.Exchange.Server
+! make clean NORECURSE=true -C Libraries/Goedel.Utilities
+! make clean NORECURSE=true -C Libraries/Goedel.ASN
+! make clean NORECURSE=true -C Libraries/Goedel.Cryptography
+! make clean NORECURSE=true -C Libraries/Goedel.Cryptography.Jose
+! make clean NORECURSE=true -C Libraries/Goedel.Cryptography.Ticket
+! make clean NORECURSE=true -C Libraries/Goedel.FSR
+! make clean NORECURSE=true -C Libraries/Goedel.Discovery
+! make clean NORECURSE=true -C Libraries/Goedel.Protocol
 
 # publish all projects
 publish : all
-! make publish NORECURSE=true -C ASN/ShellASN
-! make publish NORECURSE=true -C ASN/Goedel.Tool.ASN
-! make publish NORECURSE=true -C Command/Goedel.Tool.Command
-! make publish NORECURSE=true -C Domainer/ShellDomainer
-! make publish NORECURSE=true -C Domainer/Goedel.Tool.Domainer
-! make publish NORECURSE=true -C Exceptional/ShellExceptional
-! make publish NORECURSE=true -C Exceptional/Goedel.Tool.Exceptional
-! make publish NORECURSE=true -C FSRGen/Goedel.Tool.FSRGen
-! make publish NORECURSE=true -C FSRGen/ShellFSRGen
-! make publish NORECURSE=true -C GScript/Goedel.Tool.Script
-! make publish NORECURSE=true -C GScript/ShellGScript
-! make publish NORECURSE=true -C Goedel3/ShellGoedel3
-! make publish NORECURSE=true -C Protogen/Goedel.Tool.ProtoGen
-! make publish NORECURSE=true -C protogen/ShellProtoGen
-! make publish NORECURSE=true -C Goedel3/Goedel.Tool.Schema
-! make publish NORECURSE=true -C RFCTool/Goedel.Document.Markdown
-! make publish NORECURSE=true -C RFCTool/Goedel.Document.RFC.Convert
-! make publish NORECURSE=true -C RegistryConfig/ShellRegistryConfig
-! make publish NORECURSE=true -C RegistryConfig/Goedel.Tool.RegistryConfig
-! make publish NORECURSE=true -C RFCTool/Goedel.Tool.RFCTool
-! make publish NORECURSE=true -C VSIXBuild/Goedel.Tool.VSIXBuild
-! make publish NORECURSE=true -C RFCTool/ShellRFCTool
-! make publish NORECURSE=true -C RFCTool/Goedel.Document.OpenXML
-! make publish NORECURSE=true -C Trojan3/Goedel.Trojan.Script
-! make publish NORECURSE=true -C Trojan3/Trojan3
-! make publish NORECURSE=true -C VSIXBuild/ShellVSIXBuild
-! make publish NORECURSE=true -C MakeyMakey/Goedel.Tools.Makey
-! make publish NORECURSE=true -C MakeyMakey/ShellMakey
-! make publish NORECURSE=true -C Command/ShellCommand
-! make publish NORECURSE=true -C Packager
-! make publish NORECURSE=true -C Libraries/Goedel.Registry
+! make publish NORECURSE=true -C Libraries/Goedel.Cryptography.Framework
+! make publish NORECURSE=true -C Libraries/Goedel.Cryptography.KeyFile
+! make publish NORECURSE=true -C Libraries/Goedel.Cryptography.Windows
+! make publish NORECURSE=true -C Libraries/Goedel.Cryptography.Linux
 ! make publish NORECURSE=true -C Libraries/Goedel.IO
-! make publish NORECURSE=true -C RFCTool/ShellBootMaker
-! make publish NORECURSE=true -C RFCTool/Goedel.Document.Office
-! make publish NORECURSE=true -C RFCTool/ShellBootMakerOffice
-! make publish NORECURSE=true -C Command/TestCommandParse
-! make publish NORECURSE=true -C Libraries/Goedel.Command
-! make publish NORECURSE=true -C RFCTool/Goedel.Document.Test
-! make publish NORECURSE=true -C RunDocs
-! make publish NORECURSE=true -C Trace/Goedel.Trace
-! make publish NORECURSE=true -C Trace/Goedel.Trace.Client
-! make publish NORECURSE=true -C Trace/Goedel.Trace.Documentation
-! make publish NORECURSE=true -C Trace/Goedel.Trace.Server
-! make publish NORECURSE=true -C Trace/Goedel.Trace.Shell.Server
-! make publish NORECURSE=true -C Libraries/Goedel.Protocol.Framework
 ! make publish NORECURSE=true -C Libraries/Goedel.Protocol.Debug
-! make publish NORECURSE=true -C Libraries/Goedel.Debug
+! make publish NORECURSE=true -C Libraries/Goedel.Registry
+! make publish NORECURSE=true -C Libraries/Goedel.Test
+! make publish NORECURSE=true -C Testing/AAAConsole
+! make publish NORECURSE=true -C Testing/Test.Goedel.ASN
+! make publish NORECURSE=true -C Testing/Test.Goedel.Cryptography
+! make publish NORECURSE=true -C Testing/Test.Goedel.Cryptography.Jose
+! make publish NORECURSE=true -C Testing/Test.Goedel.Cryptography.KeyFile
+! make publish NORECURSE=true -C Testing/Test.Goedel.Cryptography.Linux
+! make publish NORECURSE=true -C Testing/Test.Goedel.Cryptography.RSA
+! make publish NORECURSE=true -C Testing/Test.Goedel.Cryptography.Windows
+! make publish NORECURSE=true -C Testing/Test.Goedel.DNS
+! make publish NORECURSE=true -C Libraries/Goedel.Command
+! make publish NORECURSE=true -C Testing/Test.Goedel.Command
+! make publish NORECURSE=true -C Documentation/StandardLibraries/ContentProject
+! make publish NORECURSE=true -C Libraries/Goedel.Cryptography.Container
+! make publish NORECURSE=true -C Testing/Test.Goedel.Cryptography.Container
+! make publish NORECURSE=true -C Libraries/Goedel.Protocol.Exchange
+! make publish NORECURSE=true -C Libraries/Goedel.Protocol.Exchange.Server
+! make publish NORECURSE=true -C Libraries/Goedel.Utilities
+! make publish NORECURSE=true -C Libraries/Goedel.ASN
+! make publish NORECURSE=true -C Libraries/Goedel.Cryptography
+! make publish NORECURSE=true -C Libraries/Goedel.Cryptography.Jose
+! make publish NORECURSE=true -C Libraries/Goedel.Cryptography.Ticket
+! make publish NORECURSE=true -C Libraries/Goedel.FSR
+! make publish NORECURSE=true -C Libraries/Goedel.Discovery
+! make publish NORECURSE=true -C Libraries/Goedel.Protocol
 
 # install all projects
 install : all
-! make install NORECURSE=true -C ASN/ShellASN
-! make install NORECURSE=true -C ASN/Goedel.Tool.ASN
-! make install NORECURSE=true -C Command/Goedel.Tool.Command
-! make install NORECURSE=true -C Domainer/ShellDomainer
-! make install NORECURSE=true -C Domainer/Goedel.Tool.Domainer
-! make install NORECURSE=true -C Exceptional/ShellExceptional
-! make install NORECURSE=true -C Exceptional/Goedel.Tool.Exceptional
-! make install NORECURSE=true -C FSRGen/Goedel.Tool.FSRGen
-! make install NORECURSE=true -C FSRGen/ShellFSRGen
-! make install NORECURSE=true -C GScript/Goedel.Tool.Script
-! make install NORECURSE=true -C GScript/ShellGScript
-! make install NORECURSE=true -C Goedel3/ShellGoedel3
-! make install NORECURSE=true -C Protogen/Goedel.Tool.ProtoGen
-! make install NORECURSE=true -C protogen/ShellProtoGen
-! make install NORECURSE=true -C Goedel3/Goedel.Tool.Schema
-! make install NORECURSE=true -C RFCTool/Goedel.Document.Markdown
-! make install NORECURSE=true -C RFCTool/Goedel.Document.RFC.Convert
-! make install NORECURSE=true -C RegistryConfig/ShellRegistryConfig
-! make install NORECURSE=true -C RegistryConfig/Goedel.Tool.RegistryConfig
-! make install NORECURSE=true -C RFCTool/Goedel.Tool.RFCTool
-! make install NORECURSE=true -C VSIXBuild/Goedel.Tool.VSIXBuild
-! make install NORECURSE=true -C RFCTool/ShellRFCTool
-! make install NORECURSE=true -C RFCTool/Goedel.Document.OpenXML
-! make install NORECURSE=true -C Trojan3/Goedel.Trojan.Script
-! make install NORECURSE=true -C Trojan3/Trojan3
-! make install NORECURSE=true -C VSIXBuild/ShellVSIXBuild
-! make install NORECURSE=true -C MakeyMakey/Goedel.Tools.Makey
-! make install NORECURSE=true -C MakeyMakey/ShellMakey
-! make install NORECURSE=true -C Command/ShellCommand
-! make install NORECURSE=true -C Packager
-! make install NORECURSE=true -C Libraries/Goedel.Registry
+! make install NORECURSE=true -C Libraries/Goedel.Cryptography.Framework
+! make install NORECURSE=true -C Libraries/Goedel.Cryptography.KeyFile
+! make install NORECURSE=true -C Libraries/Goedel.Cryptography.Windows
+! make install NORECURSE=true -C Libraries/Goedel.Cryptography.Linux
 ! make install NORECURSE=true -C Libraries/Goedel.IO
-! make install NORECURSE=true -C RFCTool/ShellBootMaker
-! make install NORECURSE=true -C RFCTool/Goedel.Document.Office
-! make install NORECURSE=true -C RFCTool/ShellBootMakerOffice
-! make install NORECURSE=true -C Command/TestCommandParse
-! make install NORECURSE=true -C Libraries/Goedel.Command
-! make install NORECURSE=true -C RFCTool/Goedel.Document.Test
-! make install NORECURSE=true -C RunDocs
-! make install NORECURSE=true -C Trace/Goedel.Trace
-! make install NORECURSE=true -C Trace/Goedel.Trace.Client
-! make install NORECURSE=true -C Trace/Goedel.Trace.Documentation
-! make install NORECURSE=true -C Trace/Goedel.Trace.Server
-! make install NORECURSE=true -C Trace/Goedel.Trace.Shell.Server
-! make install NORECURSE=true -C Libraries/Goedel.Protocol.Framework
 ! make install NORECURSE=true -C Libraries/Goedel.Protocol.Debug
-! make install NORECURSE=true -C Libraries/Goedel.Debug
+! make install NORECURSE=true -C Libraries/Goedel.Registry
+! make install NORECURSE=true -C Libraries/Goedel.Test
+! make install NORECURSE=true -C Testing/AAAConsole
+! make install NORECURSE=true -C Testing/Test.Goedel.ASN
+! make install NORECURSE=true -C Testing/Test.Goedel.Cryptography
+! make install NORECURSE=true -C Testing/Test.Goedel.Cryptography.Jose
+! make install NORECURSE=true -C Testing/Test.Goedel.Cryptography.KeyFile
+! make install NORECURSE=true -C Testing/Test.Goedel.Cryptography.Linux
+! make install NORECURSE=true -C Testing/Test.Goedel.Cryptography.RSA
+! make install NORECURSE=true -C Testing/Test.Goedel.Cryptography.Windows
+! make install NORECURSE=true -C Testing/Test.Goedel.DNS
+! make install NORECURSE=true -C Libraries/Goedel.Command
+! make install NORECURSE=true -C Testing/Test.Goedel.Command
+! make install NORECURSE=true -C Documentation/StandardLibraries/ContentProject
+! make install NORECURSE=true -C Libraries/Goedel.Cryptography.Container
+! make install NORECURSE=true -C Testing/Test.Goedel.Cryptography.Container
+! make install NORECURSE=true -C Libraries/Goedel.Protocol.Exchange
+! make install NORECURSE=true -C Libraries/Goedel.Protocol.Exchange.Server
+! make install NORECURSE=true -C Libraries/Goedel.Utilities
+! make install NORECURSE=true -C Libraries/Goedel.ASN
+! make install NORECURSE=true -C Libraries/Goedel.Cryptography
+! make install NORECURSE=true -C Libraries/Goedel.Cryptography.Jose
+! make install NORECURSE=true -C Libraries/Goedel.Cryptography.Ticket
+! make install NORECURSE=true -C Libraries/Goedel.FSR
+! make install NORECURSE=true -C Libraries/Goedel.Discovery
+! make install NORECURSE=true -C Libraries/Goedel.Protocol
 

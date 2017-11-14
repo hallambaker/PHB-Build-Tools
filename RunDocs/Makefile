@@ -113,7 +113,6 @@ SourceFiles = \
      Properties/AssemblyInfo.cs
 
 LinkFiles = \
-    $(TARGETBIN)/Goedel.FSR.dll\
     $(TARGETBIN)/Goedel.IO.dll\
     $(TARGETBIN)/Goedel.Utilities.dll\
     $(TARGETBIN)/Goedel.Document.Markdown.dll\
@@ -123,7 +122,7 @@ LinkFiles = \
     $(TARGETBIN)/Goedel.Document.Test.dll\
     $(TARGETBIN)/Goedel.Document.RFC.dll
 
-LinkFilesComma = $(TARGETBIN)/Goedel.FSR.dll,$(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Document.Markdown.dll,$(TARGETBIN)/OfficeLib.dll,$(TARGETBIN)/Goedel.Document.OpenXML.dll,$(TARGETBIN)/Goedel.Document.RFC.Convert.dll,$(TARGETBIN)/Goedel.Document.Test.dll,$(TARGETBIN)/Goedel.Document.RFC.dll
+LinkFilesComma = $(TARGETBIN)/Goedel.IO.dll,$(TARGETBIN)/Goedel.Utilities.dll,$(TARGETBIN)/Goedel.Document.Markdown.dll,$(TARGETBIN)/OfficeLib.dll,$(TARGETBIN)/Goedel.Document.OpenXML.dll,$(TARGETBIN)/Goedel.Document.RFC.Convert.dll,$(TARGETBIN)/Goedel.Document.Test.dll,$(TARGETBIN)/Goedel.Document.RFC.dll
 
 
 NugetFiles = 
@@ -173,9 +172,6 @@ endif
 # Recursive make targets, do not execute if the variable NORECURSE is defined
 ifndef NORECURSE
 
-../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll : recursive
-! $(MAKE) -C ../Libraries/Goedel.FSR
-
 ../Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll : recursive
 ! $(MAKE) -C ../Libraries/Goedel.IO
 
@@ -201,10 +197,6 @@ ifndef NORECURSE
 ! $(MAKE) -C ../RFCTool/Goedel.Tool.RFCTool
 
 endif
-
-$(TARGETBIN)/Goedel.FSR.dll :| $(TARGETBIN)
-$(TARGETBIN)/Goedel.FSR.dll : ../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll
-!  cp ../Libraries/Goedel.FSR/$(TARGETBIN)/Goedel.FSR.dll $(TARGETBIN)/Goedel.FSR.dll
 
 $(TARGETBIN)/Goedel.IO.dll :| $(TARGETBIN)
 $(TARGETBIN)/Goedel.IO.dll : ../Libraries/Goedel.IO/$(TARGETBIN)/Goedel.IO.dll
