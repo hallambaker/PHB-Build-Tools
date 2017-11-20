@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <ApplicationIcon>PHBLogo256.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.Tool.Shell\ToolLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="VSIXBuild.cs">
+      <DependentUpon>VSIXBuild.command</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="VSIXBuild.command">
+      <LastGenOutput>VSIXBuild.cs</LastGenOutput>
+      <Generator>CommandCS</Generator>
+    </None>
+  </ItemGroup>
+
+  <Import Project="..\Goedel.Tool.VSIXBuild\Goedel.Tool.VSIXBuild.projitems" Label="Shared" />
+
+</Project>

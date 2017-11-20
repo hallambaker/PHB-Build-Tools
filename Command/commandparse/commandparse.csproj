@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <ApplicationIcon>PHBLogo256.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Default.htm" />
+    <Content Include="ToDo.htm" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.IO\Goedel.IO.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.Tool.Shell\ToolLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Command.cs">
+      <DependentUpon>Command.command</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Command.command">
+      <LastGenOutput>Command.cs</LastGenOutput>
+      <Generator>CommandCS</Generator>
+    </None>
+  </ItemGroup>
+
+  <Import Project="..\Goedel.Tool.Command\Goedel.Tool.Command.projitems" Label="Shared" />
+
+</Project>

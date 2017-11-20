@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>c4be31be-8172-455d-a94f-275410348065</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Goedel.Tool.ASN</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Asn2.cs">
+      <DependentUpon>Asn2.gdl</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)AsnPlus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GenerateCS.cs">
+      <DependentUpon>GenerateCS.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Asn2.gdl">
+      <LastGenOutput>Asn2.cs</LastGenOutput>
+      <Generator>goedel3</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)GenerateCS.script">
+      <LastGenOutput>GenerateCS.cs</LastGenOutput>
+      <Generator>GScript</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Makefile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Design.htm" />
+  </ItemGroup>
+</Project>

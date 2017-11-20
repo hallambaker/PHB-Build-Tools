@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ApplicationIcon>PHBLogo256.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Document.cs">
+      <DependentUpon>Document.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="GenerateC.cs">
+      <DependentUpon>GenerateC.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="GenerateCSharp.cs">
+      <DependentUpon>GenerateCSharp.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="ProtoGen.cs">
+      <DependentUpon>ProtoGen.gdl</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Document.script">
+      <LastGenOutput>Document.cs</LastGenOutput>
+      <Generator>GScript</Generator>
+    </None>
+    <None Update="GenerateC.script">
+      <LastGenOutput>GenerateC.cs</LastGenOutput>
+      <Generator>GScript</Generator>
+    </None>
+    <None Update="GenerateCSharp.script">
+      <LastGenOutput>GenerateCSharp.cs</LastGenOutput>
+      <Generator>GScript</Generator>
+    </None>
+    <None Update="ProtoGen.gdl">
+      <LastGenOutput>ProtoGen.cs</LastGenOutput>
+      <Generator>Goedel3</Generator>
+    </None>
+  </ItemGroup>
+
+</Project>

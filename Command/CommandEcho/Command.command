@@ -1,4 +1,4 @@
-﻿Class Command
+﻿Class Command Command
 	Brief		"Goedel meta-code generation tool"
 
 	Type NewFile			"file"

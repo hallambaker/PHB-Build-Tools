@@ -1,0 +1,147 @@
+﻿FSR Goedel.Document.Markdown MarkDownLex
+
+	// To save effort, we just strip out CR characters as worthless and beneath
+	// contempt before the lexer
+
+	Token Empty		""
+	Token Block		"Some Text."
+
+
+	State BlockStart Reset Empty		// Starting state for block
+		On "\n" GoTo BlockStart
+		On " "	GoTo WhiteSpace
+		On "\t" GoTo WhiteSpace
+		On "=" GoTo Heading
+		On ":" GoTo Defined
+		On "#" GoTo Numbered
+		On "*" GoTo Bullet
+		On "[" GoTo Pre1
+		On "/" Goto Comment1
+		Any GoTo Text
+
+	State Comment1 Ignore Empty
+		On "/" Goto Comment2
+		Any GoTo Text
+
+	State Comment2 Ignore Empty
+		On "\n" GoTo BlockStart
+		Any GoTo Text
+
+	State Pre1 AddText Block
+		On "[" GoTo Pre2
+		On "." GoTo NotPre
+		Any GoTo Text
+
+	State Pre2 StartPre Block
+		On "\n" GoTo Pre3i
+		Any GoTo Pre2
+
+	State Pre3i Ignore Block
+		On "]" GoTo Pre4
+		Any GoTo Pre3
+
+	State Pre3 AddPre Block
+		On "]" GoTo Pre4
+		Any GoTo Pre3
+
+	State Pre4 PreClose Block
+		On "]" GoTo End
+		On "." GoTo Pre5
+		Any GoTo Pre3
+
+	State Pre5 Ignore Block
+		On "]" GoTo Pre4
+		Any GoTo Pre3
+
+	State NotPre Ignore Block
+		On "\n" GoTo TextCR
+		On " "	GoTo TextSpace
+		On "\t" GoTo TextSpace
+		Any GoTo Text
+
+	State WhiteSpace CountWhite Empty		// Starting state for block
+		On " "	GoTo WhiteSpace
+		On "\t" GoTo WhiteSpace
+		On "=" GoTo Heading
+		On ":" GoTo Defined
+		On "#" GoTo Numbered
+		On "*" GoTo Bullet
+		On "/" Goto Comment1
+		Any GoTo Text
+
+	State Text AddText Block
+		On "\n" GoTo TextCR
+		On " "	GoTo TextSpace
+		On "\t" GoTo TextSpace
+		Any GoTo Text
+
+	State TextSpace AddText Block
+		On "\n" GoTo TextCR
+		On " "	GoTo TextMoreSpace
+		On "\t" GoTo TextMoreSpace
+		Any GoTo Text
+
+	State TextMoreSpace Ignore Block
+		On "\n" GoTo TextCR
+		On " "	GoTo TextMoreSpace
+		On "\t" GoTo TextMoreSpace
+		Any GoTo Text
+
+	State TextCR AddSpace Block
+		On " "	GoTo TextCRSpace
+		On "\t" GoTo TextCRSpace
+		On "\n" GoTo End
+		On "#" Return Block
+		On "*" Return Block
+		On ":" Return Block
+		On "=" GoTo TextH1
+		On "-" GoTo TextH2
+		Any GoTo Text
+
+	State TextCRSpace Ignore Block
+		On " "	GoTo TextCRSpace
+		On "\t" GoTo TextCRSpace
+		On "\n" GoTo End
+		On "#" Return Block
+		On "*" Return Block
+		On ":" Return Block
+		On "=" GoTo TextH1
+		On "-" GoTo TextH2
+		Any GoTo Text
+
+	State TextH1 WasHeading1 Block
+		On "\n" GoTo End
+		On "=" GoTo TextH1
+		Any GoTo Text
+
+	State TextH2 WasHeading2 Block
+		On "\n" GoTo End
+		On "-" GoTo TextH2
+		Any GoTo Text
+
+	State Heading AddHeading Block
+		On "=" GoTo Heading
+		On "\n" GoTo TextCR
+		Any GoTo Text
+		
+	State Defined DefinedTerm Block
+		On ":" GoTo Defined2
+		On "\n" GoTo TextCR
+		Any GoTo Text
+
+	State Defined2 DefinedData Block
+		On ":" GoTo Defined2
+		On "\n" GoTo TextCR
+		Any GoTo Text
+
+	State Numbered AddNumbered Block
+		On "#" GoTo Numbered
+		On "\n" GoTo TextCR
+		Any GoTo Text
+
+	State Bullet AddBullet Block
+		On "*" GoTo Bullet
+		On "\n" GoTo TextCR
+		Any GoTo Text
+
+	State End Ignore Block

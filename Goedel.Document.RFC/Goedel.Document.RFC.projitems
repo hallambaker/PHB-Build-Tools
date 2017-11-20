@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>7c30fbe5-8e08-4687-ad68-8028819d5e57</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Goedel.Document.RFC</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Bibliography.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Boilerplate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Document.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)FileReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HTML.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Html2RFCOut.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HTML2RFCSegments.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IndentWriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ListLevel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MakeFormat.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MD2RFCOut.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Merge.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NewParse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PageWriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)rfc7791.cs">
+      <DependentUpon>rfc7791.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)rfc7791parse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TXT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WriteAML.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XML.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Xml2RFCOut.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XMLEmbed.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XMLTextWriterPlus.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Exceptions.exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>exceptional</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)NextGen.md" />
+    <None Include="$(MSBuildThisFileDirectory)PHBLogo256.ico" />
+    <None Include="$(MSBuildThisFileDirectory)rfc7791.xsd">
+      <CustomToolNamespace>Goedel.Tool.RFCTool.RFC7991</CustomToolNamespace>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)rfc7991.txt" />
+  </ItemGroup>
+</Project>

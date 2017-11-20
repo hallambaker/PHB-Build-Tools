@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ApplicationIcon>PHBLogo256.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Design.htm" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="GenerateCS.cs">
+      <DependentUpon>GenerateCS.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="VSIXBuild.cs">
+      <DependentUpon>VSIXBuild.gdl</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="GenerateCS.script">
+      <LastGenOutput>GenerateCS.cs</LastGenOutput>
+      <Generator>GScript</Generator>
+    </None>
+    <None Update="VSIXBuild.gdl">
+      <LastGenOutput>VSIXBuild.cs</LastGenOutput>
+      <Generator>goedel3</Generator>
+    </None>
+  </ItemGroup>
+
+</Project>

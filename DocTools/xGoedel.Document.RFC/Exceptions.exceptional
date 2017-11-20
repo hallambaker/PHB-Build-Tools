@@ -1,0 +1,18 @@
+﻿
+Namespace Goedel.Document.RFC
+	Exception HTMLParse
+		Console "HTML Parser error"		
+
+		Exception HTMLParseNoBody
+			Console "HTML Parser error no HTML body element"	
+		Exception HTMLParseNoH1
+			Console "HTML Parser error no HTML H1 element for title"
+		Exception HTMLParseNoH2
+			Console "HTML Parser error no HTML H2 element for start of document"
+
+		Exception NotFoundReserved
+			Object ExceptionData "Expected reserved word, token {0} was not found"
+				String
+
+	Exception IPRInvalid
+		Console "Invalid IPR term specified"	

@@ -1,5 +1,0 @@
-﻿Namespace Goedel.Trace.Server
-    
-	Exception TraceServerException
-        Console "Error occurred in Mesh library"
-

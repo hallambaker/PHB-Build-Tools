@@ -1,0 +1,151 @@
+﻿#script 1.0
+#license MITLicense
+#pclass Goedel.Tool.Exceptional Generate
+
+
+#method GenerateCS Exceptions Exceptions
+#! Goedel.Registry.Script.Header (_Output, "//", GenerateTime);
+#! Goedel.Registry.Script.MITLicense (_Output, "//", 
+#!     Goedel.Registry.Script.AssemblyCopyright,
+#!     Goedel.Registry.Script.AssemblyCompany);
+#% GenerateCSX (Exceptions);
+#end method
+
+#method GenerateCSX Exceptions Exceptions
+#% Exceptions._InitChildren ();
+using System;
+using Goedel.Utilities;
+
+#foreach (_Choice Toplevel in Exceptions.Top)
+#switchcast ExceptionsType Toplevel
+#casecast Using Using
+using #{Using.Id};
+#end switchcast
+#end foreach
+
+
+#foreach (_Choice Toplevel in Exceptions.Top)
+#switchcast ExceptionsType Toplevel
+#casecast Namespace Namespace
+namespace #{Namespace.Id} {
+
+#% WriteListExceptions (Namespace.Options);
+
+	}
+#end switchcast
+#end foreach
+#end method
+
+
+#method WriteException Exception Exception
+
+    /// <summary>
+#foreach (_Choice Optionlevel in Exception.Options)
+#switchcast ExceptionsType Optionlevel
+#casecast Description Description
+#foreach (String Text in Description.Text)
+    /// #{Text}
+#end foreach
+#end switchcast
+#end foreach
+    /// </summary>
+    public class #{Exception.Id} : #{Exception.BaseClass} {
+
+		/// <summary>
+        /// Construct instance for exception #{Exception.Console.Quoted()}
+        /// </summary>		
+		public #{Exception.Id} () : base (#{Exception.Console.Quoted()}) {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception #{Exception.Console.Quoted()}
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public #{Exception.Id} (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception #{Exception.Console.Quoted()
+		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public #{Exception.Id} (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+#if (Exception.Base)
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+#end if
+
+#foreach (var Object in Exception.Objects)
+		/// <summary>
+        /// Construct instance for exception using a userdata parameter of
+		/// type #{Object.Type} and the format string #{Object.Text.Quoted()}
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		public #{Exception.Id} (#{Object.Type} Object) : 
+				base (global::System.String.Format (#{Object.Text.Quoted()}#!
+#foreach (var Parameter in Object.Parameters)
+,
+					Object.#{Parameter.Name}#!
+#end foreach				
+					)) {
+			UserData = Object;
+			}
+
+		/// <summary>
+        /// Construct instance for exception using a userdata parameter of
+		/// type #{Object.Type} and the format string #{Object.Text.Quoted()}
+        /// </summary>		
+        /// <param name="Object">User data</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public #{Exception.Id} (#{Object.Type} Object, System.Exception Inner) : 
+				base (global::System.String.Format (#{Object.Text.Quoted()}#!
+#foreach (var Parameter in Object.Parameters)
+,
+					Object.#{Parameter.Name}#!
+#end foreach				
+					), Inner) {
+			UserData = Object;
+			}
+
+#end foreach
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static #{Exception.Base.If("", "new ")}global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new #{Exception.Id}(Reason as string);
+				}
+#foreach (var Object in Exception.Objects)
+			else if (Reason as #{Object.Type} != null) {
+				return new #{Exception.Id}(Reason as #{Object.Type});
+				}
+#end foreach
+			else {
+				return new #{Exception.Id}();
+				}
+            }
+        }
+
+#% WriteListExceptions (Exception.Options);
+#end method
+
+#method WriteListExceptions List<_Choice> Exceptions
+#foreach (_Choice Exception in Exceptions)
+#if (Exception as Exception != null)
+#% WriteException (Exception as Exception );
+#end if
+#end foreach
+#end method
+
+#end pclass

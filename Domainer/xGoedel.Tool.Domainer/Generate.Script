@@ -1,0 +1,343 @@
+﻿#script 1.0
+#license MITLicense
+#pclass Goedel.Tool.Domainer Generate
+
+#method GenerateCS Domainer Domainer
+using System.Net;
+using System.Collections.Generic;
+namespace Goedel.Discovery {
+
+    /// <summary>DNS management interface class.</summary>	
+	public partial class DNS {
+		// Dictionary of Type names to codes
+		//
+		// if (DictionaryType.ContainsKey("RR") {
+		//    int value = dictionary["RR"];
+		//    }
+		static Dictionary <string, ushort> DictionaryType = new Dictionary <string, ushort> () {
+#foreach (_Choice Toplevel in Domainer.Top)
+#switchcast DomainerType Toplevel
+#casecast RR RR
+			{"#{RR.Id}", #{RR.Code}},
+#casecast Q Q
+			{"#{Q.Id}", #{Q.Code}},
+#end switchcast
+#end foreach
+			{"*", 255} // End of list * = ALL
+			} ;
+
+		static Dictionary <ushort, string> DictionaryCode = new Dictionary <ushort, string> () {
+#foreach (_Choice Toplevel in Domainer.Top)
+#switchcast DomainerType Toplevel
+#casecast RR RR
+			{#{RR.Code}, "#{RR.Id}"},
+#casecast Q Q
+			{#{Q.Code}, "#{Q.Id}"},
+#end switchcast
+#end foreach
+			{0, ""} // End of list * = ALL
+			} ;
+
+		/// <summary>Convert RR text code to type code.</summary>
+        /// <param name="Tag">DNS text code</param>
+        /// <returns>Type code</returns>
+        public static DNSTypeCode TypeCode(string Tag) {
+            if (Tag != null) {
+                return (DNSTypeCode) DictionaryType[Tag];
+                }
+            return 0;
+            }
+
+		/// <summary>Convert RR type code to text code.</summary>
+        /// <param name="Code">Type code</param>
+        /// <returns>DNS text code</returns>
+        public static string TypeCode(int Code ) {
+            return DictionaryCode[(ushort)Code];
+            }
+		}
+
+	/// <summary>DNT Type codes</summary>
+	public enum DNSTypeCode : ushort {
+#foreach (_Choice Toplevel in Domainer.Top)
+#switchcast DomainerType Toplevel
+#casecast RR RR
+		/// <summary>Resource record #{RR.Id} = #{RR.Code}, #{RR.Description}</summary>
+		#{RR.Id} = #{RR.Code},
+#casecast Q Q
+		/// <summary>Query type #{Q.Id} = #{Q.Code}</summary>
+		#{Q.Id} = #{Q.Code},  // Used in Queries only
+#casecast IG IG
+		/// <summary>Deprecated type #{IG.Id} = #{IG.Code}</summary>
+		#{IG.Id} = #{IG.Code},  // Deprecated, NOT IMPLEMENTED
+#end switchcast
+#end foreach
+		/// Unknown record type.
+		Unknown = 0
+		}
+
+	// All resource record classes are descended from DNSRR
+
+	public abstract partial  class DNSRecord {
+
+		/// <summary>The type code</summary>
+		public virtual DNSTypeCode			Code => (0);
+
+		/// <summary>The type text</summary>		
+		public virtual string	Label => ("Unknown");
+		
+		/// <summary>Description</summary>
+		public virtual string	Description=> ("Record is not defined");
+		
+		/// <summary>Decode record or query from buffer</summary>	
+        /// <param name="Index">Input data</param>
+        /// <returns>Parsed record.</returns>
+        public static DNSRecord Decode(DNSBufferIndex Index) {
+			DNSRecord			DNSRecord;
+			
+			Domain				Domain;
+			DNSTypeCode			RType;
+			DNSClass			RClass;
+			uint				TTL;
+			int				RDLength;
+
+            Domain = Index.ReadDomain ();
+            RType = (DNSTypeCode)Index.ReadInt16 ();
+            RClass = (DNSClass)Index.ReadInt16 ();
+            TTL = Index.ReadInt32 ();
+			RDLength = Index.ReadInt16 ();
+			int NextRecord = Index.Pointer + RDLength;
+
+            //Index.ReadL16Data (out RData);
+
+			switch ((int) RType) {
+#foreach (_Choice Toplevel in Domainer.Top)
+#switchcast DomainerType Toplevel
+#casecast RR RR
+				case (#{RR.Code}) : {
+					DNSRecord = DNSRecord_#{RR.Id}.Decode (Index, RDLength);
+					break;
+					}
+#end switchcast
+#end foreach
+				default : {
+					DNSRecord = DNSRecord_Unknown.Decode (Index, RDLength) ;
+					break;
+					}
+				}
+			DNSRecord.Domain = Domain;
+			DNSRecord.RType = RType;
+			DNSRecord.RClass = RClass;
+			DNSRecord.TTL = TTL;
+			Index.Pointer = NextRecord;
+
+            return DNSRecord;
+            }				
+
+		/// <summary>Dispatch parser to parse text representation of specific DNS record</summary>
+        /// <param name="Tag">Record tag</param>
+        /// <param name="Parse">Parser</param>
+        /// <returns>Parsed record</returns>
+		public static DNSRecord Parse(string Tag, Parse Parse) {
+			switch (Tag) {
+
+#foreach (_Choice Toplevel in Domainer.Top)
+#switchcast DomainerType Toplevel
+#casecast RR RR
+				case ("#{RR.Id}") : {
+					return DNSRecord_#{RR.Id}.Parse (Parse);
+					}
+#end switchcast
+#end foreach
+
+				default : {
+					return null;
+					}
+				}
+			}
+
+		}
+
+
+
+
+#foreach (_Choice Toplevel in Domainer.Top)
+#switchcast DomainerType Toplevel
+#casecast RR RR
+
+	/// <summary> #{RR.Id} #{RR.Code} #{RR.Description} see #{RR.Reference}</summary>
+	public class DNSRecord_#{RR.Id} : DNSRecord {
+
+#foreach (_Choice Entry in RR.Entries)
+#if (Entry.TypeCS != null)
+		/// <summary>#{Entry.IdLabel}</summary>
+		public #{Entry.TypeCS}   #{Entry.IdLabel}  ;
+#end if
+#end foreach
+
+		/// <summary>The type code</summary>
+		public override DNSTypeCode		Code => (DNSTypeCode.#{RR.Id});	
+		
+		/// <summary>The type text</summary>
+		public override string	Label => ("#{RR.Id}");
+			
+		/// <summary>Description</summary>	
+		public override string	Description => ("#{RR.Description}");
+
+
+        /// <summary>Convert to canonical form</summary>
+        /// <returns>Canonical form of record data contents</returns>
+        public override string Canonical () {
+			Canonicalize Canonicalize = new Canonicalize ("#{RR.Id}", Domain);
+#foreach (_Choice Entry in RR.Entries)
+#if (Entry.Tag != null)
+			Canonicalize.#{Entry.Tag}  (#{Entry.IdLabel});
+#end if
+#end foreach
+			return Canonicalize.Text;
+            }
+
+		/// <summary>Parse record or query from string</summary>	
+        /// <param name="Parse">Input data</param>
+        /// <returns>Parsed record.</returns>
+        public static DNSRecord_#{RR.Id} Parse(Parse Parse) {
+			DNSRecord_#{RR.Id} NewRecord = new DNSRecord_#{RR.Id} () {
+#foreach (_Choice Entry in RR.Entries)
+#if (Entry.Tag != null)
+			    #{Entry.IdLabel} = Parse.#{Entry.Tag}  (),
+#end if
+#end foreach
+				};
+			return NewRecord;
+            }
+
+        /// <summary>Convert to wire form</summary>
+		/// <param name="Index">Output buffer</param>
+        /// <returns>Canonical form of record data contents</returns>
+        public override void Encode(DNSBufferIndex Index) {
+
+#foreach (_Choice Entry in RR.Entries)
+#switchcast DomainerType Entry
+#casecast IPv4 null
+			Index.WriteIPv4 (#{Entry.IdLabel});
+#casecast IPv6 null
+			Index.WriteIPv6 (#{Entry.IdLabel});
+#casecast Domain null
+			Index.WriteDomain (#{Entry.IdLabel});
+#casecast Mail null
+			Index.WriteMail (#{Entry.IdLabel});
+#casecast NodeID null
+			Index.WriteInt64 (#{Entry.IdLabel});
+#casecast Byte null
+			Index.WriteByte (#{Entry.IdLabel});
+#casecast Int16 null
+			Index.WriteInt16 (#{Entry.IdLabel});
+#casecast Int32 null
+			Index.WriteInt32 (#{Entry.IdLabel});
+#casecast Time32 null
+			Index.WriteInt32 (#{Entry.IdLabel});
+#casecast Time48 null
+			Index.WriteInt48 (#{Entry.IdLabel});
+#casecast String null
+			Index.WriteString8 (#{Entry.IdLabel});
+#casecast OptionalString null
+			if (#{Entry.IdLabel} != null) {
+				Index.WriteString8 (#{Entry.IdLabel});
+				}
+#casecast Strings null
+			foreach (string s in #{Entry.IdLabel}) {
+				Index.WriteString8 (s);
+				}
+#casecast StringX null
+			Index.WriteString (#{Entry.IdLabel});
+#casecast Binary null
+			Index.WriteData (#{Entry.IdLabel});
+#casecast Binary8 null
+			Index.WriteByte ((byte)#{Entry.IdLabel}.Length);
+			Index.WriteData (#{Entry.IdLabel});
+#casecast Binary16 null
+			Index.WriteInt16 (#{Entry.IdLabel}.Length);
+			Index.WriteData (#{Entry.IdLabel});
+#casecast LBinary Cast
+			Index.Write (#{Cast.Length});
+			Index.WriteData (#{Entry.IdLabel});
+#casecast Hex null
+			Index.WriteData (#{Entry.IdLabel});
+#casecast Hex8 null
+			Index.WriteByte ((byte)#{Entry.IdLabel}.Length);
+			Index.WriteData (#{Entry.IdLabel});
+#casecast Hex16 null
+			Index.WriteInt16 (#{Entry.IdLabel}.Length);
+			Index.WriteData (#{Entry.IdLabel});
+#casecast OptionList null
+			foreach (DNSOption opt in #{Entry.IdLabel}) {
+				Index.WriteInt16 (opt.Code);
+				Index.WriteInt16 (opt.Data.Length);
+				Index.WriteData (opt.Data);
+				}
+#casecast Gateway null
+#end switchcast
+
+#end foreach
+            }
+
+		/// <summary>Decode record or query from byte form buffer</summary>	
+        /// <param name="Index">Input data</param>
+		/// <param name="Length">Maximum amount of data to read</param>
+        /// <returns>Parsed record.</returns>
+        public static  DNSRecord_#{RR.Id} Decode (DNSBufferIndex Index, int Length) {
+			DNSRecord_#{RR.Id} NewRecord = new DNSRecord_#{RR.Id} ()  {
+				Start = Index.Start#!
+#foreach (_Choice Entry in RR.Entries)
+#switchcast DomainerType Entry
+#casecast Binary null
+,
+				#{Entry.IdLabel} = Index.ReadData (Index.Remainder(Length))#!
+#casecast Binary8 null
+,
+				#{Entry.IdLabel} = Index.ReadData (Index.ReadByte ())#!
+#casecast Binary16 null
+,
+				#{Entry.IdLabel} = Index.ReadData (Index.ReadInt16 ())#!
+#casecast LBinary LBinary
+
+				// Binary - length specified by #{LBinary.Length}#!
+#casecast Hex null
+,
+				#{Entry.IdLabel} = Index.ReadData (Index.Remainder(Length))#!
+#casecast Hex8 null
+,
+				#{Entry.IdLabel} = Index.ReadData (Index.ReadByte ())#!
+#casecast Hex16 null
+,
+				#{Entry.IdLabel} = Index.ReadData (Index.ReadInt16 ())#!
+#casecast Strings null
+,
+				#{Entry.IdLabel} = Index.ReadStrings (Index.Remainder(Length)) #!
+#casecast OptionalString null
+,
+				#{Entry.IdLabel} = (Index.Remainder(Length) > 0) ? Index.ReadString () : null#!
+#casecast StringX null
+,
+				#{Entry.IdLabel} = Index.ReadString (Index.Remainder(Length))#!
+#% break; } default: {
+#if (Entry.Tag != null)
+,
+				#{Entry.IdLabel} = Index.Read#{Entry.Tag} ()#!
+#end if
+#end switchcast
+#end foreach
+
+				};
+
+			return NewRecord;
+            }
+
+		}
+#end switchcast
+#end foreach
+
+	}
+
+
+#end method
+#end pclass

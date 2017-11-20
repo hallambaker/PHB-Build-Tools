@@ -1,0 +1,155 @@
+﻿Copyright "2015" "Phillip Hallam-Baker" MITLicense
+
+Class Goedel.Document.Markdown.Tags MarkSchema
+
+
+	TopType Class
+		Namespace	Token NamespaceType
+		Name		Token ClassType
+
+        Entries List Choice
+			Meta
+			Item
+			Annotation
+			Layout
+			Block
+			Remark
+			Format
+
+    Type Meta
+        TBS Remark
+            |Elements that describe properties that relate to a whole document
+            |e.g. the title and name of the author. Like paragraph elements, meta
+            |elements are containers. Unlike paragraph blocks, the content is not
+            |output immediately, it is cached for use by other elements.
+        Id      ID      ElementID
+        Entries List Choice
+            Flag
+            String
+            Remark
+            Integer
+            Meta
+
+
+    Type Layout
+        Id      ID      ElementID    
+        Entries List Choice
+            Flag
+            String
+            Remark
+            Integer
+            Layout
+			Markup
+			XML
+			Stack
+			Wrap
+			Any
+			 
+    Type Block
+        Id      ID      ElementID  
+        Entries List Choice
+            Flag
+            String
+            Remark
+            Integer
+			Markup
+			Level
+			XML
+			Stack
+			Wrap
+
+    Type Annotation
+        Id      ID      ElementID
+        Entries List Choice
+            Flag
+            String
+            Remark
+            Integer
+			Markup
+			XML
+
+    Type Item
+        Id      ID      ElementID
+        Entries List Choice
+            Flag
+            String
+            Remark
+            Integer
+			Markup
+			XML
+
+	Type Markup
+		Start	String
+		Start1	String
+		End		String
+
+	Type XML
+		Tag		String
+		First	String
+		Entries List Choice
+			Default
+			
+	Type Default
+		Tag		String
+		Value	String				
+
+	Type Stack
+		Wrapper	REF ElementID
+
+	Type Wrap
+		Wrapper	REF ElementID
+
+	Type Level
+		Value	Integer
+
+
+    Type Remark
+        Text    Text
+
+    Type Start
+        Text    Text
+
+    Type End
+        Text    Text
+
+    Type String
+        Id      ID      AttributeID
+
+    Type Flag
+        Id      ID      AttributeID
+
+    
+    Type Integer
+        Id      ID      AttributeID
+
+
+	Type Format
+		Id		ID		FormatID
+		Entries	List Choice
+			Entry
+
+	Type Entry
+		Id		Token	FormatField
+		Strings	Text
+
+	Type XEmpty
+		Label			String
+		Attributes		List TValue
+
+	Type XStart
+		Label			String
+		Attributes		List TValue
+
+	Type XClose
+
+	Type Template
+		Text String
+
+	Type TValue
+		Tag		String
+		Value	String
+
+	Type XString
+		Text	String
+
+	Type Any

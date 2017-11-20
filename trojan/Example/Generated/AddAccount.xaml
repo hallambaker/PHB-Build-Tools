@@ -1,8 +1,0 @@
-﻿<Window x:Class="PersonalPrivacyAssistant.Wizard_AddAccount"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Add Account">
-
-    <Frame Name="Main" Width="800" Height="600"/>
-
-</Window>

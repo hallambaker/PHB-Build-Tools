@@ -117,7 +117,9 @@ namespace Goedel.Tool.ASN {
         public override void Complete() {
             //Console.WriteLine ("Completing");
 
-            if (Binary == null) MakeBinary();
+            if (Binary == null) {
+                MakeBinary();
+                }
             }
 
         public override void MakeBinary() {
@@ -133,11 +135,15 @@ namespace Goedel.Tool.ASN {
     public partial class OID {
         public override void Complete() {
             Root.Definition.Children.Add(this);
-            if (Binary == null) MakeBinary();
+            if (Binary == null) {
+                MakeBinary();
+                }
             }
 
         public override void MakeBinary() {
-            if (Root.Definition.Binary == null) Root.Definition.MakeBinary();
+            if (Root.Definition.Binary == null) {
+                Root.Definition.MakeBinary();
+                }
 
             Binary = new int[Root.Definition.Binary.Length + 1];
             for (int i = 0; i < Root.Definition.Binary.Length; i++) {

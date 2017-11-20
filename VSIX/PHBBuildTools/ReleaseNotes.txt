@@ -1,9 +1,0 @@
-﻿//
-// NB: Each of the referenced resources must be added to the 
-// file source.extension.vsixmanifest or the build will fail with
-// odd 'suppressed' errors.
-//
-// Further, the VS tools have a habit of deleting references for 
-// no particular reason. This can often happen during code reorgs,
-// if VS can't see the file because it is in mid copy, it is liable
-// to be deleted from the references.

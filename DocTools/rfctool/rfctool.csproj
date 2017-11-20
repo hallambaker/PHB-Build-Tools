@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <ApplicationIcon>PHBLogo256.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Bib.xml" />
+    <Content Include="xml2rfc.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.7.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.IO\Goedel.IO.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.Tool.Shell\ToolLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="main.cs">
+      <DependentUpon>main.command</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="main.command">
+      <LastGenOutput>main.cs</LastGenOutput>
+      <Generator>CommandCS</Generator>
+    </None>
+  </ItemGroup>
+
+  <Import Project="..\Goedel.Document.Markdown\Goedel.Document.Markdown.projitems" Label="Shared" />
+
+  <Import Project="..\Goedel.Document.OpenXML\Goedel.Document.OpenXML.projitems" Label="Shared" />
+
+  <Import Project="..\..\Goedel.Document.RFC\Goedel.Document.RFC.projitems" Label="Shared" />
+
+  <Import Project="..\..\Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.projitems" Label="Shared" />
+
+</Project>

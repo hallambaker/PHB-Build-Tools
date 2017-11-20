@@ -1,0 +1,532 @@
+﻿#script 1.0
+#license MITLicense
+#pclass Goedel.Tool.ASN Generate
+#% string Namespace = "Goedel.ASN";
+
+#method GenerateCS ASN2 ASN2
+#pragma warning disable  CS0219
+#% ASN2.Complete ();
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Goedel.ASN;
+
+// This is the generated code Don't edit.
+
+
+// Generate OID declarations
+
+namespace Goedel.ASN {  // default namespace
+
+#foreach (_Choice Toplevel in ASN2.Top)
+#switchcast ASN2Type Toplevel
+#casecast Namespace Cast
+#% Namespace = Cast.Name.ToString();
+	}
+namespace #{Cast.Name} {
+
+#casecast ROOT ROOT
+    /// <summary>
+    /// #{ROOT.Name} = #!
+#foreach (Entry Entry in ROOT.Entries)
+ #{Entry.Name}(#{Entry.Value}) #!
+#end foreach
+
+    /// </summary>
+	public partial class Constants {
+		/// <summary>
+		/// #{ROOT.Name} as integer sequence
+		/// </summary>
+		public readonly static int [] OID__#{ROOT.Name} = new int [] { #!
+#% MakeConst(ROOT.Binary) ;	
+};
+		/// <summary>
+		/// #{ROOT.Name} as string
+		/// </summary>
+		public const string OIDS__#{ROOT.Name} = "#!
+#% MakeString(ROOT.Binary) ;	
+";
+
+#% MakeChildren (ROOT);
+		}
+#end switchcast
+#end foreach
+	}
+
+
+// Generate Classes
+namespace Goedel.ASN {  // default namespace
+
+#foreach (_Choice Toplevel in ASN2.Top)
+#switchcast ASN2Type Toplevel
+#casecast Namespace Cast
+#% Namespace = Cast.Name.ToString();
+	}
+namespace #{Cast.Name} {
+#casecast Class Class
+    /// <summary>
+	/// #{Class.Name} 
+    /// </summary>
+	public partial class #{Class.Name} : Goedel.ASN.Root {
+
+#foreach (Member Member in Class.Entries)
+#% EntryDeclaration (Member);
+#end foreach
+
+		/// <summary>
+		/// Encode ASN.1 class members to specified buffer. 
+		///
+		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
+		/// </summary>
+		/// <param name="Buffer">Output buffer</param>
+        public override void Encode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Encode__Sequence_Start ();
+#foreach (Member Member in Class.ReversedEntries)
+#% Encode (Member);
+			Buffer.Debug ("#{Member.Name}");
+#end foreach
+			Buffer.Encode__Sequence_End (Position);
+            }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+#foreach (Member Member in Class.Entries)
+#% Decode (Member);
+			Buffer.Debug ("#{Member.Name}");
+#end foreach
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
+		}
+#casecast Object Object
+    /// <summary>
+	/// #{Object.Name} 
+    /// </summary>
+	public partial class #{Object.Name} : Goedel.ASN.Root {
+		/// <summary>
+		/// The OID value
+		/// </summary>
+		public override int [] OID { 
+			get => Constants.OID__#{Object.OID}; }  
+
+#% 
+#foreach (Member Member in Object.Entries)
+#% EntryDeclaration (Member);
+#end foreach
+		/// <summary>
+		/// Encode ASN.1 class members to specified buffer. 
+		///
+		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
+		/// </summary>
+		/// <param name="Buffer">Output buffer</param>
+        public override void Encode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Encode__Sequence_Start ();
+#foreach (Member Member in Object.ReversedEntries)
+#% Encode (Member);
+#end foreach
+			Buffer.Encode__Sequence_End (Position);
+            }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+#foreach (Member Member in Object.Entries)
+#% Decode (Member);
+			Buffer.Debug ("#{Member.Name}");
+#end foreach
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+		}
+
+#casecast SingularObject SingularObject
+
+	// Singular, no sequence boundaries
+    /// <summary>
+	/// #{SingularObject.Name} 
+    /// </summary>
+	public partial class #{SingularObject.Name} : Goedel.ASN.Root {
+		/// <summary>
+		/// The OID value
+		/// </summary>
+		public override int [] OID { 
+			get => Constants.OID__#{SingularObject.OID}; } 
+
+#foreach (Member Member in SingularObject.Entries)
+#% EntryDeclaration (Member);
+#end foreach
+		/// <summary>
+		/// Encode ASN.1 class members to specified buffer. 
+		///
+		/// NB Assinine ASN.1 DER encoding rules requires members be added in reverse order.
+		/// </summary>
+		/// <param name="Buffer">Output buffer</param>
+        public override void Encode (Goedel.ASN.Buffer Buffer) {
+#foreach (Member Member in SingularObject.ReversedEntries)
+#% Encode (Member);
+#end foreach
+            }
+
+			/*
+		/// <summary>
+		/// Decode buffer to populate class members
+		///
+		/// This is done in the forward direction
+		/// </summary>
+        public override void Decode (Goedel.ASN.Buffer Buffer) {
+			int Position = Buffer.Decode__Sequence_Start ();
+#foreach (Member Member in SingularObject.Entries)
+#% Decode (Member);
+			Buffer.Debug ("#{Member.Name}");
+#end foreach
+			Buffer.Decode__Sequence_End (Position);
+            }
+			*/
+
+		}
+
+#end switchcast
+#end foreach
+	}
+
+#end method
+
+#method EntryDeclaration Member Member
+#switchcast ASN2Type Member.Spec
+#casecast Choice Cast
+#foreach (Member Entry in Cast.Entries)
+#% EntryDeclaration (Entry);
+#end foreach
+#%  break; } default : {
+		/// <summary>
+		/// ASN.1 member #{Member.Name} 
+		/// </summary>
+		public #!
+#% TypeDeclaration (Member.Spec);
+#{Member.Name} ;
+#end switchcast
+#end method
+
+
+#method TypeDeclaration _Choice Type
+#switchcast ASN2Type Type
+#case ASN2Type.OIDRef
+int []  #!
+#case ASN2Type.Any 
+byte []  #!
+#case ASN2Type.Integer 
+int  #!
+#case ASN2Type.BigInteger 
+byte []  #!
+#case ASN2Type.Boolean 
+bool  #!
+#case ASN2Type.Time 
+DateTime  #!
+#case ASN2Type.Bits 
+byte []  #!
+#case ASN2Type.VBits 
+byte []  #!
+#case ASN2Type.Octets 
+byte []  #!
+#case ASN2Type.IA5String 
+string #!
+#case ASN2Type.BMPString 
+string #!
+#case ASN2Type.UTF8String 
+string #!
+#case ASN2Type.PrintableString 
+string #!
+#casecast _Label Cast
+#{Namespace}.#{Cast.Label} #!
+#casecast List Cast
+List <#!
+#% TypeDeclaration (Cast.Spec);
+> #!
+#casecast Set Cast
+List <#!
+#% TypeDeclaration (Cast.Spec);
+> #!
+#case ASN2Type.Choice
+// Choice declare all the type parts
+#end switchcast
+#end method
+
+#method Encode Member Member
+#%  Encode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
+#end method
+
+#method Decode Member Member
+#%  Decode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
+#end method
+
+#block
+#%  public void Encode (String Name, _Choice Spec, int Flags, int Code) {
+#%		Encode (Name, null, Spec, Flags, Code);
+#%		}
+#%  public void Encode (String Name, String Default, _Choice Spec, int Flags, int Code) {
+
+#% bool Call = false;
+#switchcast ASN2Type Spec
+#case ASN2Type.OIDRef
+			Buffer.Encode__OIDRef #!
+#% Call = true;
+#case ASN2Type.Any
+			Buffer.Encode__Any #!
+#% Call = true;
+#case ASN2Type.Integer
+#if (Default != null)
+			// Default is #{Default}
+			if (#{Name} != #{Default}) {
+				Buffer.Encode__Integer (#{Name}, #{Flags}, #{Code});
+				}
+#else 
+			Buffer.Encode__Integer #!
+#% Call = true;
+#end if
+#case ASN2Type.BigInteger
+			Buffer.Encode__BigInteger #!
+#% Call = true;
+#case ASN2Type.Boolean
+#if (Default != null)
+			// Default is #{Default}
+			if (#{Name} != #{Default}) {
+				Buffer.Encode__Boolean (#{Name}, #{Flags}, #{Code});
+				}
+#else 
+			Buffer.Encode__Boolean #!
+#% Call = true;
+#end if
+#case ASN2Type.Time 
+			Buffer.Encode__Time #!
+#% Call = true;
+#case ASN2Type.Bits 
+			Buffer.Encode__Bits #!
+#% Call = true;
+#case ASN2Type.VBits 
+			Buffer.Encode__VBits #!
+#% Call = true;
+#case ASN2Type.Octets 
+			Buffer.Encode__Octets #!
+#% Call = true;
+#case ASN2Type.IA5String 
+			Buffer.Encode__IA5String #!
+#% Call = true;
+#case ASN2Type.BMPString 
+			Buffer.Encode__BMPString #!
+#% Call = true;
+#case ASN2Type.UTF8String 
+			Buffer.Encode__UTF8String #!
+#% Call = true;
+#case ASN2Type.PrintableString 
+			Buffer.Encode__PrintableString #!
+#% Call = true;
+#case ASN2Type._Label 
+			Buffer.Encode__Object (#{Name}, #{Flags}, #{Code});
+#casecast List Cast
+			if (#{Name} == null || #{Name}.Count == 0) {
+				Buffer.Encode__Object (null, #{Flags}, #{Code});
+				}
+			else {
+				int XPosition = Buffer.Encode__Sequence_Start();
+				foreach (#!
+#% TypeDeclaration (Cast.Spec);
+ _Index in #{Name}) {
+		#!
+#% Encode ("_Index", Cast.Spec, 0, 0);
+					}
+				Buffer.Encode__Sequence_End(XPosition, #{Flags}, #{Code});
+			}
+#casecast Set Cast
+			if (#{Name} == null || #{Name}.Count == 0) {
+				Buffer.Encode__Object (null, #{Flags}, #{Code});
+				}
+			else {
+				int XPosition = Buffer.Encode__Set_Start();
+				foreach (#!
+#% TypeDeclaration (Cast.Spec);
+ _Index in #{Name}) {
+		#!
+#% Encode ("_Index", Cast.Spec, 0, 0);
+					}
+				Buffer.Encode__Set_End(XPosition, #{Flags}, #{Code});
+			}
+#casecast Choice Cast
+	// Do Choice
+#foreach (Member ChoiceEntry in Cast.Entries)
+            //
+#! Encode (ChoiceEntry.Name.ToString(), ChoiceEntry.Spec, ChoiceEntry.Flags, ChoiceEntry.Code);
+#% Encode (ChoiceEntry);
+#end foreach
+#end switchcast
+#if Call
+ (#{Name}, #{Flags}, #{Code});
+#end if
+#% }
+#end block
+
+
+#block
+#%  public void Decode (String Name, _Choice Spec, int Flags, int Code) {
+#%		Decode (Name, null, Spec, Flags, Code);
+#%		}
+#%  public void Decode (String Name, String Default, _Choice Spec, int Flags, int Code) {
+
+#% bool Call = false;
+#switchcast ASN2Type Spec
+#case ASN2Type.OIDRef 
+			Buffer.Decode__OIDRef #!
+#% Call = true;
+#case ASN2Type.Any 
+			Buffer.Decode__Any #!
+#% Call = true;
+#case ASN2Type.Integer 
+#if (Default != null)
+			// Default is #{Default}
+			if (#{Name} != #{Default}) {
+				Buffer.Decode__Integer (#{Name}, #{Flags}, #{Code});
+				}
+#else 
+			Buffer.Encode__Integer #!
+#% Call = true;
+#end if
+#case ASN2Type.BigInteger 
+			Buffer.Decode__BigInteger #!
+#% Call = true;
+#case ASN2Type.Boolean 
+#if (Default != null)
+			// Default is #{Default}
+			if (#{Name} != #{Default}) {
+				Buffer.Decode__Boolean (#{Name}, #{Flags}, #{Code});
+				}
+#else 
+			Buffer.Decode__Boolean #!
+#% Call = true;
+#end if
+#case ASN2Type.Time 
+			Buffer.EDecode__Time #!
+#% Call = true;
+#case ASN2Type.Bits 
+			Buffer.Decode__Bits #!
+#% Call = true;
+#case ASN2Type.VBits 
+			Buffer.Decode__VBits #!
+#% Call = true;
+#case ASN2Type.Octets 
+			Buffer.Decode__Octets #!
+#% Call = true;
+#case ASN2Type.IA5String 
+			Buffer.Decode__IA5String #!
+#% Call = true;
+#case ASN2Type.BMPString 
+			Buffer.Decode__BMPString #!
+#% Call = true;
+#case ASN2Type.UTF8String 
+			Buffer.Decode__UTF8String #!
+#% Call = true;
+#case ASN2Type.PrintableString 
+			Buffer.Decode__PrintableString #!
+#% Call = true;
+#case ASN2Type._Label 
+			Buffer.Decode__Object (#{Name}, #{Flags}, #{Code});
+#casecast List Cast
+			if (#{Name} == null || #{Name}.Count == 0) {
+				Buffer.Decode__Object (null, #{Flags}, #{Code});
+				}
+			else {
+				int XPosition = Buffer.Decode__Sequence_Start();
+				foreach (#!
+#% TypeDeclaration (Cast.Spec);
+ _Index in #{Name}) {
+		#!
+#% Encode ("_Index", Cast.Spec, 0, 0);
+					}
+				Buffer.Decode__Sequence_End(XPosition, #{Flags}, #{Code});
+			}
+#casecast Set Cast
+			if (#{Name} == null || #{Name}.Count == 0) {
+				Buffer.Decode__Object (null, #{Flags}, #{Code});
+				}
+			else {
+				int XPosition = Decode.Encode__Set_Start();
+				foreach (#!
+#% TypeDeclaration (Cast.Spec);
+ _Index in #{Name}) {
+		#!
+#% Encode ("_Index", Cast.Spec, 0, 0);
+					}
+				Buffer.Decode__Set_End(XPosition, #{Flags}, #{Code});
+			}
+#casecast Choice Cast
+	// Do Choice
+#foreach (Member ChoiceEntry in Cast.Entries)
+            //
+#! Encode (ChoiceEntry.Name.ToString(), ChoiceEntry.Spec, ChoiceEntry.Flags, ChoiceEntry.Code);
+#% Encode (ChoiceEntry);
+#end foreach
+#end switchcast
+#if Call
+ (#{Name}, #{Flags}, #{Code});
+#end if
+#% }
+#end block
+
+
+
+#method MakeChildren _Choice Element
+#foreach (OID OID in Element.Children)
+
+		/// <summary>
+		/// #{OID.Name} = #{OID.Root} (#{OID.Value}) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__#{OID.Name} = new int [] { #!
+#% MakeConst(OID.Binary) ;	
+};
+		/// <summary>
+		/// #{OID.Name} = #{OID.Root} (#{OID.Value}) as string
+		/// </summary>
+		public const string OIDS__#{OID.Name} = "#!
+#% MakeString(OID.Binary) ;	
+";
+
+
+#% MakeChildren (OID);
+#end foreach
+#end method
+
+#method MakeConst int[] Array
+#% bool Comma = false;
+#foreach (int Value in Array)
+#if Comma
+, #!
+#end if
+#% Comma = true;
+#{Value}#!
+#end foreach
+#end method
+
+
+#method MakeString int[] Array
+#% bool Comma = false;
+#foreach (int Value in Array)
+#if Comma
+.#!
+#end if
+#% Comma = true;
+#{Value}#!
+#end foreach
+#end method
+
+#end pclass

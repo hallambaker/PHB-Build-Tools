@@ -1,0 +1,38 @@
+﻿Copyright "2012-2016" "Default Deny Security Inc." MITLicense
+
+Class Goedel.Tool.Exceptional Exceptions
+    TopType Namespace
+        Id ID NamespaceT
+		Options List Choice
+			Exception
+
+
+	TopType Using
+        Id ID NamespaceT
+
+
+    Type Exception
+        Id  ID ExceptionT
+        Options List Choice
+			Abstract
+			Console
+			Description
+			Object
+			Exception
+					
+	Type Object
+		Type	Token TypeType
+		Text String
+		Parameters List Parameter
+		
+	Type Parameter
+		Name Token TypeType
+
+    Type Console
+		Message		String 
+
+	Type Description
+		Text		Text
+
+	Type Abstract
+

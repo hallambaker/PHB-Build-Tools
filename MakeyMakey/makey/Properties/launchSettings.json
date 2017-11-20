@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "makey": {
+      "commandName": "Project",
+      "commandLineArgs": "mmm.sln",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm"
+    }
+  }
+}

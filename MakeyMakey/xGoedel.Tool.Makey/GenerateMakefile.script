@@ -1,0 +1,441 @@
+﻿#script 1.0
+#license MITLicense
+#xclass Goedel.Tool.Makey Generate
+#%  public Generate (TextWriter Output) : base (Output) {}
+#% string Prefix = "! "; //"\t";
+
+
+#method Preamble VSFile VSFile
+## This file is generated automatically from the Visual Studio Project
+## File. If you make changes to this file and do not update the project
+## file, changes will be lost when the file is regenerated.
+
+## NB: This process will fail if any of the paths have spaces in them
+## While it is possible to work around the lack of support for spaces in 
+## file paths in gmake, it is not possible to do this reliably in the tools
+## that it invokes to build the system. Rather than do half a job, it seems
+## safest to simply reject the corner case
+
+
+## The following targets are defined (well planned)
+##
+## make 			Compile for the current platform
+## make cross		Compile for all platforms
+## make install		Compile and install
+## make clean		Delete all target and intermediate files
+
+## The following build flags are supported
+##
+## make mode= release | debug			Build release or debug version
+## make arch= this | all | <x>			Bundle for the current platform, all platforms
+##										or the specified platform
+
+## Define the default target directories (referenced projects must all follow same scheme)
+##
+## By default, we arrange the mono targets as follows:
+##
+## <Source>					The source code directory
+## <Source>/mono/			Equivalent to VS bin directory
+## <Source>/mono/Debug		Equivalent to VS bin/Debug directory
+## <Source>/mono/Release	Equivalent to VS bin/Debug directory
+##
+## If the target is an executable, the following directories are also created:
+##
+## <Source>/This			The bundled executable for the platform the code was compiled on
+## <Source>/<Arch1>			The bundled executable for the platform <Arch1>	
+##
+## If the install target is selected, the bundles will be installed in
+##
+## ~/Tools/This				The bundled executable for platform the code is built on
+## ~/Tools/<Arch1>			The bundled executable for this platform <Arch1>	
+
+export TARGETROOT		?= mono
+export MODE				?= Release
+export ARCH				?= This
+export Packages			?= $(HOME)/Packages
+export PackagesPath		?= /lib/net40
+export Libraries		?= $(HOME)/Libraries
+export LibrariesPath	?= /Mono
+
+
+export TARGETBIN	= $(TARGETROOT)/$(MODE)
+export TARGETEXE	= $(TARGETROOT)/$(ARCH)
+export LIBRARYBIN	= $(Libraries)$(LibrariesPath)
+
+export DESTDIR		?= $(HOME)/.local
+export bindir		?= /bin
+export libdir		?= /lib
+export INSTALL_PROGRAM	?= $(DESTDIR)$(bindir)
+export INSTALL_DATA		?= $(DESTDIR)$(libdir)
+
+## Define the default compilers, linkers, packagers, etc.
+export CSHARPDLL	?=  mcs /target:library
+export CSHARPEXE	?=  mcs /target:exe
+export BUNDLE		?=  mkbundle -L /usr/lib/mono/4.7-api --deps --static -o 
+
+
+
+## The following tools are used in the goedel build system itself:
+#% PHBTool ("RFC2TXT",		"rfctool /in", "/txt");
+#% PHBTool ("RFC2XML",		"rfctool /in", "/xml");
+#% PHBTool ("RFC2MD",		"rfctool /in", "/md");
+#% PHBTool ("RFC2HTML",		"rfctool /in", "/html");
+#% PHBTool ("CommandCS",	"commandparse /in", "/cs");
+#% PHBTool ("FSRCS",		"fsrgen /in", "/cs");
+#% PHBTool ("Exceptional",	"exceptional /in", "/cs");
+#% PHBTool ("GScript",		"gscript /in", "/cs");
+#% PHBTool ("Goedel3",		"goedel3 /in", "/cs");
+#% PHBTool ("ASN2CS",		"asn2 /in", "/cs");
+#% PHBTool ("DomainerCS",	"domainer /in", "/cs");
+#% PHBTool ("RegistryCS",	"registryconfig /in", "/cs");
+#% PHBTool ("VSIXBuild",	"vsixbuild /in", "/cs");
+#% PHBTool ("ProtoGen",		"protogen /in", "/cs");
+#% PHBTool ("TrojanGTK",	"trojan /gtk", "/cs");
+
+#if (Prefix != "\t")
+## Use the specified character as the prefix character. Note this may not 
+## be supported on versions of make other than gmake.
+.RECIPEPREFIX = #{Prefix}
+#end if
+#end method
+
+#method GenerateVSMakefile VSProject Project
+
+## Supplemental Makefile for Visual Studios Projects
+##
+## Visual Studio is responsible for managing rules for production of
+## code but does not provide support for pre and post build actions.
+## 
+## Prebuild items supported:
+##   [None currently]
+## 
+## PostBuild items supported:
+##   * Copy library to locations on disk
+##   * Build ilMerge executables
+##   * Postprocess VSIX projects
+##   * Copy executables
+
+LinkFiles = #!
+#foreach (var File in Project.FixedLinkDependency)
+\
+    #{File}#!
+#end foreach
+#foreach (var File in Project.LinkDependency)
+\
+    #{File}#!
+#end foreach
+
+
+prebuild : 
+    echo "Do Prebuild"
+
+postbuild : 
+#if (Project.IsExe)
+	powershell publishtarget #{Project.Target} $(LinkFiles) 
+#elseif (Project.IsLibrary)
+	powershell publishtarget #{Project.Target}
+#end if
+
+
+#end method
+
+
+#method GenerateMakefile VSSolution Solution
+##
+## Makefile for Visual Studio Solution ..
+##
+#call Preamble Solution
+
+## The main target
+
+.PHONY : all always clean install publish cross
+
+## Need to identify the target directory using UnixPath()
+## This file in directory #{Solution.Directory}
+
+#foreach (var Item in Solution.Projects)
+#if (Item.MakeUnix())
+#% var  Project = Item.Project;
+#% var Target = Project.Target.UnixFile();
+#% var Directory = Item.Directory.UnixPath();
+## Project : #{Target}
+## Item :  #{Directory}
+#if (Directory.IndexOf(' ') >= 0)
+***** Spaces in file path not supported
+#elseif (Project.IsExe)
+## Output :     #{Directory}/$(TARGETEXE)/#{Target}
+#elseif (Project.IsLibrary)
+## Output :     #{Directory}/$(TARGETBIN)/#{Target}
+#else
+#end if
+
+all : #{Directory}/$(TARGETBIN)/#{Project.Target}
+
+#foreach (var Dep in Project.ProjectReference)
+#% var SubProject = Dep.SubProject;
+#% var GUID = SubProject.ProjectGuid;
+#% var SubProjectDir = SubProject.Directory.UnixCanonicalPath();
+#if (Project.IsExe)
+#{Directory}/$(TARGETBIN)/#{Project.Target} : #{SubProjectDir}$(TARGETBIN)/#{SubProject.Target}
+#elseif (Project.IsLibrary)
+#{Directory}/$(TARGETBIN)/#{Project.Target} : #{SubProjectDir}$(TARGETBIN)/#{SubProject.Target}
+#else
+#end if
+
+#end foreach
+
+#{Directory}/$(TARGETBIN)/#{Project.Target} : always
+#{Prefix}echo "" >&2
+#{Prefix}echo "*** Directory #{Directory}" >&2
+#{Prefix}make NORECURSE=true -C #{Directory}
+
+#end if
+#end foreach
+
+
+## clean all projects
+clean :
+#foreach (var Item in Solution.Projects)
+#if (Item.MakeUnix())
+#% var Directory = Item.Directory.UnixPath();
+#{Prefix}make clean NORECURSE=true -C #{Directory}
+#end if
+#end foreach
+
+## publish all projects
+publish : all
+#foreach (var Item in Solution.Projects)
+#if (Item.MakeUnix())
+#% var Directory = Item.Directory.UnixPath();
+#{Prefix}make publish NORECURSE=true -C #{Directory}
+#end if
+#end foreach
+
+## install all projects
+install : all
+#foreach (var Item in Solution.Projects)
+#if (Item.MakeUnix())
+#% var Directory = Item.Directory.UnixPath();
+#{Prefix}make install NORECURSE=true -C #{Directory}
+#end if
+#end foreach
+
+#end method
+
+
+#method GenerateMakefile VSProject Project
+##
+## Makefile for Visual Studio Project #{Project.AssemblyName}
+##
+#call Preamble Project
+#!% bool HaveSoure = Project.SourceDependency.Count > 0;
+#% bool HaveLink = (Project.LinkDependency.Count > 0) |  (Project.FixedLinkDependency.Count > 0);
+#% bool HavePackage = Project.PrivateReference.Count > 0;
+
+## The main target 
+
+SourceFiles = #!
+#foreach (var File in Project.SourceDependency)
+\
+     #{File.UnixFile()}#!
+#end foreach
+
+
+LinkFiles = #!
+#foreach (var File in Project.FixedLinkDependency)
+\
+    $(LIBRARYBIN)/#{File}#!
+#end foreach
+#foreach (var File in Project.LinkDependency)
+\
+    $(TARGETBIN)/#{File}#!
+#end foreach
+
+
+LinkFilesComma = #!
+#% var LinkSep = new Separator ("", ",");
+#foreach (var File in Project.FixedLinkDependency)
+#{LinkSep}$(LIBRARYBIN)/#{File}#!
+#end foreach
+#foreach (var File in Project.LinkDependency)
+#{LinkSep}$(TARGETBIN)/#{File}#!
+#end foreach
+#foreach (var File in Project.AdditionalLinkDependency)
+#{LinkSep}#{File}#!
+#end foreach
+
+#foreach (var Item in Project.PrivateReference)
+##  Nuget #{Item.Include} :  #{Item.HintPath}
+#end foreach
+
+
+NugetFiles = #!
+#foreach (var Item in Project.PrivateReference)
+\
+    #{Item.HintPath.UnixFile()}#!
+#end foreach
+
+NugetFilesComa = #!
+#% var PkgSep = new Separator ("", ",");
+#foreach (var Item in Project.PrivateReference)
+#{PkgSep}\
+    #{Item.HintPath.UnixFile()}#!
+#end foreach
+
+
+## A) Main target packaged
+#if (Project.IsExe)
+$(TARGETEXE)/#{Project.AssemblyName} :| $(TARGETEXE)
+$(TARGETEXE)/#{Project.AssemblyName} : $(TARGETBIN)/#{Project.AssemblyName}.exe 
+#{Prefix}$(BUNDLE) $@ $^ $(LinkFiles)  $(NugetFiles)
+
+## B) Main target executable
+$(TARGETBIN)/#{Project.Target} :| $(TARGETBIN)
+$(TARGETBIN)/#{Project.Target} : $(SourceFiles) $(LinkFiles) $(NugetFiles)
+#{Prefix}$(CSHARPEXE) /out:$@  $(SourceFiles) #!
+#if HaveLink
+-reference:$(LinkFilesComma) #!
+#end if
+#if HavePackage
+-r:$(NugetFilesComa) #!
+#end if
+
+
+#elseif (Project.IsLibrary)
+
+$(TARGETBIN)/#{Project.Target} :| $(LIBRARYBIN)
+$(TARGETBIN)/#{Project.Target} :| $(TARGETBIN)
+
+$(TARGETBIN)/#{Project.Target} :  $(SourceFiles) $(LinkFiles) $(NugetFiles)
+#{Prefix}$(CSHARPDLL) /out:$@  $(SourceFiles) #!
+#if HaveLink
+-reference:$(LinkFilesComma) #!
+#end if
+#if HavePackage
+-r:$(NugetFilesComa) #!
+#end if
+
+#{Prefix}cp $(TARGETBIN)/#{Project.Target} $(LIBRARYBIN)/#{Project.Target}
+
+#else
+#end if
+
+## Directories etc.
+
+$(INSTALL_PROGRAM) :
+#{Prefix}mkdir -p $(INSTALL_PROGRAM) 
+
+$(INSTALL_DATA) :
+#{Prefix}mkdir -p $(INSTALL_DATA) 
+
+$(TARGETBIN) :
+#{Prefix}mkdir -p $(TARGETBIN) 
+
+$(TARGETEXE) :
+#{Prefix}mkdir -p $(TARGETEXE) 
+
+$(LIBRARYBIN) :
+#{Prefix}mkdir -p $(LIBRARYBIN)
+
+## Generated code
+
+ifdef PHB_BUILD
+
+#foreach (var Item in Project.None)
+#if (Item.Generator != null)
+#{Item.LastGenOutput} : #{Item.Include}
+#{Prefix} $(Custom_#{Item.Generator}) #{Item.Include} $(Custom_#{Item.Generator}_FLAG) #{Item.LastGenOutput} 
+#end if
+#end foreach
+
+endif
+
+.PHONY : clean install publish debian rpm
+
+
+## Referenced projects
+##
+
+## Recursive make targets, do not execute if the variable NORECURSE is defined
+ifndef NORECURSE
+
+#foreach (var Item in Project.ProjectReference)
+#{Item.Include.UnixPath()}/$(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll : recursive
+#{Prefix}$(MAKE) -C #{Item.Include.UnixPath()}
+
+#end foreach
+endif
+
+# copy libraries into the base library
+#foreach (var Item in Project.ProjectReference)
+$(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll :| $(TARGETBIN)
+$(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll : #{Item.Include.UnixPath()}/$(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll
+#{Prefix} cp #{Item.Include.UnixPath()}/$(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll $(TARGETBIN)/#{Item.SubProject.AssemblyName}.dll
+
+#end foreach
+
+## Referenced Libraries
+##
+#foreach (var Item in Project.PrivateReference)
+$(TARGETBIN)/#{Item.Name} :| $(TARGETBIN)
+$(TARGETBIN)/#{Item.Name} : #{Item.HintPath.UnixFile()}
+#{Prefix} cp   #{Item.HintPath.UnixFile()} $(TARGETBIN)/#{Item.Name}
+#end foreach
+
+
+## Clean up
+##
+## At the moment we only delete the currently indicated target. This allows a 
+## developer to do a make clean / make when a problem with a corrupted intermediate
+## file is suspected.
+
+clean : 
+#{Prefix}rm -f $(TARGETBIN)/*
+#{Prefix}rm -f $(TARGETEXE)/*
+
+## Install
+##
+## Install files to a tools directory. Default is ~/.local/bin
+
+
+#if (Project.IsExe)
+install : $(INSTALL_PROGRAM)/#{Project.AssemblyName} 
+
+$(INSTALL_PROGRAM)/#{Project.AssemblyName}  :| $(INSTALL_PROGRAM)
+$(INSTALL_PROGRAM)/#{Project.AssemblyName}  : $(TARGETEXE)/#{Project.AssemblyName} 
+#{Prefix}cp $^ $@ 
+
+#elseif (Project.OutputType == "Library")
+install : $(INSTALL_DATA)/#{Project.AssemblyName}.dll
+
+$(INSTALL_DATA)/#{Project.AssemblyName}.dll :| $(INSTALL_DATA)
+$(INSTALL_DATA)/#{Project.AssemblyName}.dll : $(TARGETBIN)/#{Project.AssemblyName}.dll
+#{Prefix}cp $^ $@ 
+
+#end if
+
+
+
+## To Do List
+##
+## 1) Redo install target
+##    Create a wrapper script and library 
+## 2) Create a Debian target
+## 3) Create a RPM target
+## 4) Create a nuget target
+
+
+#end method
+
+
+
+
+
+
+#method3 PHBTool string Tag string Tool string Flag
+export Custom_#{Tag}		?= #{Tool}
+export Custom_#{Tag}_FLAG	?= #{Flag}
+#end method3
+
+
+#end xclass

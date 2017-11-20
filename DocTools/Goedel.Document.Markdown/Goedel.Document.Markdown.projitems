@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>1326416b-712a-44d0-ae00-ad0ddf7f9258</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Goedel.Document.Markdown</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BlockParse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Document.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MakeWeb.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MarkDown.cs">
+      <DependentUpon>MarkDown.fsr</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)MarkDownPlus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MarkParagraph.cs">
+      <DependentUpon>MarkParagraph.fsr</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)MarkParagraphPlus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MarkWordParagraph.cs">
+      <DependentUpon>MarkWordParagraph.fsr</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)MarkWordParagraphPlus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NewBlockParse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Parse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParseRegistry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Schema.cs">
+      <DependentUpon>Schema.gdl</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)SchemaPlus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SegmentToHTML.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TagCatalog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Writer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Docs.md" />
+    <None Include="$(MSBuildThisFileDirectory)MarkDown.fsr">
+      <LastGenOutput>MarkDown.cs</LastGenOutput>
+      <Generator>FSRCS</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)MarkDownWiki.fsr" />
+    <None Include="$(MSBuildThisFileDirectory)MarkParagraph.fsr">
+      <LastGenOutput>MarkParagraph.cs</LastGenOutput>
+      <Generator>FSRCS</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)MarkWordParagraph.fsr">
+      <LastGenOutput>MarkWordParagraph.cs</LastGenOutput>
+      <Generator>FSRCS</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)PHBLogo256.ico" />
+    <None Include="$(MSBuildThisFileDirectory)Schema.gdl">
+      <LastGenOutput>Schema.cs</LastGenOutput>
+      <Generator>Goedel3</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)TagDefinitions.mdsd" />
+  </ItemGroup>
+</Project>

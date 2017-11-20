@@ -1,0 +1,444 @@
+﻿Class Goedel.Tool.ProtoGen ProtoStruct
+
+	
+    TopType Protocol
+		Namespace	Token NamespaceT
+        Id			ID	Top
+        Prefix		Token  PrefixT
+        Entries		List Choice
+			Section
+			Service
+            Transaction
+            Message
+            Structure
+            Description
+			Using
+			Extern
+			Enumeration
+			Success
+			Warning
+			Error
+			Inherits
+
+
+	Type Using									// Pull in external namespace
+		Id			Token NamespaceType			// The namspace being used
+
+	Type Extern
+		Id		ID	 MessageT					// Identifier to be defined in an external file
+		Entries List Choice
+            Description
+
+	Type Section
+		Level	Integer
+		Title	String
+		Entries List Choice
+            Description
+
+
+	Type Service
+		Id			ID ClassT
+		Discovery	String		
+		WellKnown	String
+		Request		REF MessageT	
+		Response	REF MessageT
+        Entries List Choice
+            Description
+            Status
+
+    Type Transaction
+        Class		REF ClassT
+        Id			ID	 MessageT
+        Request		REF MessageT
+        Response	REF MessageT	 
+        Entries List Choice
+            Description
+            Status
+    
+    Type Message
+        Id		ID	 MessageT		
+        Entries List Choice
+            Description
+            Abstract
+            Inherits
+			External
+            Boolean
+            Integer
+            Binary
+			Float
+            Label
+            Name
+            String
+            URI
+            DateTime
+            Struct
+			TStruct
+			Enum
+            Status
+            Authentication
+			Format
+			Decimal
+			Funct
+			Param
+
+    Type Authentication
+        Mechanism Token AuthenticationT
+
+
+    Type Structure
+        Id		ID	 StructureT		
+        Entries List Choice
+            Description
+            Abstract
+			Inherits
+			External
+            Boolean
+            Integer
+            Binary
+			Float
+            Label
+            Name
+            String
+            URI
+            DateTime
+            Struct
+			TStruct
+			Enum
+			Format
+			Decimal
+			Select
+			Funct
+			Param
+
+    Type Description
+        Text1	Text
+    Type ABNF
+        Text1	Text
+
+    Type Abstract
+
+    Type Inherits
+        Ref		REF MessageT
+
+    Type Request
+        Ref		REF MessageT
+
+    Type Response
+        Ref		REF MessageT
+
+    Type External
+        Ref		Token MessageT
+
+
+	Type Tag
+		Text		String
+
+    Type Boolean
+        Id		Token Variable
+        Options	List Choice
+            Required
+            Multiple
+            Description
+            Default
+
+    Type Integer
+        Id		Token Variable
+        Options	List Choice
+            Required
+            Multiple
+            Description
+            Default
+			LengthBits
+			Tag
+
+	Type Decimal			
+        Id		Token Variable
+        Options	List Choice
+            Required
+            Multiple
+            Description
+			Default
+			Tag
+
+    Type Float
+        Id		Token Variable
+        Options	List Choice
+            Required
+            Multiple
+            Description
+			Default
+			Tag
+						
+    Type Binary
+        Id		Token Variable
+        Options	List Choice
+            Required
+            Multiple
+            Description
+            Default
+			LengthBits
+			LengthFixed
+			Tag
+
+    Type Label
+        Id		Token Variable
+        Options	List Choice
+            Required
+            Multiple
+            Description
+            Default
+			Tag
+
+    Type Name
+        Id		Token Variable
+        Options	List Choice
+            Required
+            Multiple
+            Description
+            Default
+			Tag
+
+    Type String
+        Id		Token Variable
+        Options	List Choice
+            Required
+            Multiple
+            Description
+            Default
+			Quoted
+			Constraint
+			Tag
+
+
+	Type Constraint
+		Id	REF ConstraintType
+
+    Type URI
+        Id		Token Variable 
+        Options	List Choice
+            Required
+            Multiple
+            Description
+            Default
+			Tag
+
+    Type DateTime
+        Id		Token Variable 
+        Options	List Choice
+            Required
+            Multiple
+            Description
+            Default
+			Tag
+
+
+	Type Param
+		Id		Token Variable
+
+	Type Funct
+        Outer	REF StructureT
+        Inner	REF StructureT
+
+    Type TStruct
+        Type	REF StructureT
+        Id		Token Variable
+        Options	List Choice
+            Required
+            Multiple
+            Description
+			LengthBits
+			Tag
+
+    Type Struct
+        Type	REF StructureT
+        Id		Token Variable
+        Options	List Choice
+            Required
+            Multiple
+            Description
+			LengthBits
+			Tag
+
+    Type Enum
+        Type	REF EnumerationType
+        Id		Token Variable
+        Options	List Choice
+            Required
+            Multiple
+            Description
+			Tag
+
+	Type Select
+		Tag		Token Variable
+		Id		Token Variable
+		Entries List TaggedType 
+	
+	Type TaggedType
+		Tag		REF EnumerationLabel
+        Type	REF StructureT
+
+
+	Type Format
+        Id		Token FormatT
+		Options	List Choice
+            Description
+			ABNF
+
+    Type Tagged
+        Type	REF MessageT
+        Id		Token Variable
+        Options	List Choice
+            Required
+            Multiple
+            Description
+
+    Type Required
+    Type Multiple
+	Type Quoted
+
+    Type Require
+        Id	REF	Variable
+
+    TopType Class
+        Id		ID	ClassType
+        Entries List Choice
+            Brief
+            Command		
+            OptionSet	
+            Enumerate	
+            Type		
+
+    Type	Command	
+        Id			ID CommandType
+        Tag			String			
+        Entries List Choice
+            Brief
+            Parameter
+            Option
+            Include
+            Default
+
+
+    Type Brief
+        Text		String
+
+    Type Parameter
+        Name		Token PType
+        Text		String
+        Type		REF	TypeType
+
+    Type Status
+        Id			Token StatusT
+        Entries	List Choice
+            Description
+
+    Type Success
+        Id			Token StatusT
+		Code		Integer		
+        Entries	List Choice
+            Description
+    Type Error
+        Id			Token StatusT
+		Code		Integer		
+        Entries	List Choice
+            Description
+    Type Warning
+        Id			Token StatusT
+		Code		Integer	
+        Entries	List Choice
+            Description
+
+
+    Type Option
+        Name		Token	PType	
+        Command		String		
+        Type		REF	TypeType
+
+    Type Include
+        Id			REF	OptionSetType
+
+    Type	OptionSet
+        Id			ID	OptionSetType
+        Options		List Choice
+            Option
+        
+    Type	Enumerate	
+        Id			ID	TypeType
+        Entries		List Case
+
+    Type Case
+        Id			Token CaseType
+        Tag			String
+
+    Type Type
+        Id			Token TypeType
+        Text		String
+
+    Type Default
+        Value		String
+
+
+	Type Maximum
+		Value		Integer
+	Type Minimum
+		Value		Integer
+
+	Type LengthBits
+		Bits		Integer
+	Type LengthFixed
+		Bytes		Integer
+
+
+	// Currently these are only used in the TLS encoder
+	Type Enumeration
+		Name		ID EnumerationType
+		Maximum Integer					
+		Entries List EnumerationEntry	
+		
+	Type EnumerationEntry
+		Id						ID EnumerationLabel
+		Code					Integer					
+
+
+	// Mapping information used for the RFC822 encoder
+	TopType Mapping
+		Id			Name MappingType
+		Choice
+			Root
+			Language
+
+	Type Root
+		Namespace	Token NamespaceType
+
+	Type Language
+		For Choice
+			C
+			CS
+
+	Type C
+		Entries		List Choice
+			Prefix
+			Binding
+			Stubs
+
+	Type CS
+		Entries		List Choice
+			Binding
+			Stubs
+
+	Type Stubs
+	Type Prefix
+		Tag			Token NamespaceType
+	Type Binding
+		Mapping		String 
+		Type	Choice
+            Boolean
+            Integer
+            Binary
+			Float
+            Label
+            Name
+            String
+            URI
+            DateTime
+
