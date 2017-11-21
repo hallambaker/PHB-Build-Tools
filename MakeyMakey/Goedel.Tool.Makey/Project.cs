@@ -107,6 +107,10 @@ namespace Goedel.Tool.Makey {
         public string Include { get; set; }
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute("Updates")]
+        public string Update { get; set; }
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("HintPath")]
         public string HintPath { get; set; }
 
@@ -134,6 +138,10 @@ namespace Goedel.Tool.Makey {
         public string Include { get; set; }
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute("Updates")]
+        public string Update { get; set; }
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("DependentUpon")]
         public string DependentUpon { get; set; }
 
@@ -153,6 +161,11 @@ namespace Goedel.Tool.Makey {
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute("Include")]
         public string Include { get; set; }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute("Updates")]
+        public string Update { get; set; }
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Generator")]
         public string Generator { get; set; }
@@ -185,5 +198,25 @@ namespace Goedel.Tool.Makey {
         public string Name { get; set; }
 
         }
+
+
+    [Serializable()]
+    [System.Xml.Serialization.XmlType(Namespace = "http://schemas.microsoft.com/developer/msbuild/2003")]
+    public partial class ImportType {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute("Project")]
+        public string Project { get; set; }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Condition")]
+        public string Condition { get; set; }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Label")]
+        public string Label { get; set; }
+
+        }
+
 
     }

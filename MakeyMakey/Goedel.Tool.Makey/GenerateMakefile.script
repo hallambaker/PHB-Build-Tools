@@ -3,7 +3,7 @@
 #xclass Goedel.Tool.Makey Generate
 #%  public Generate (TextWriter Output) : base (Output) {}
 #% string Prefix = "! "; //"\t";
-
+#%
 
 #method Preamble VSFile VSFile
 ## This file is generated automatically from the Visual Studio Project
@@ -115,6 +115,11 @@ export BUNDLE		?=  mkbundle -L /usr/lib/mono/4.7-api --deps --static -o
 ##   * Postprocess VSIX projects
 ##   * Copy executables
 
+
+.PHONY : all always clean install publish prebuild prebuildRecurse postbuild postbuildRecurse
+
+MSBuildThisFileDirectory = 
+
 LinkFiles = #!
 #foreach (var File in Project.FixedLinkDependency)
 \
@@ -126,16 +131,54 @@ LinkFiles = #!
 #end foreach
 
 
-prebuild : 
-    echo "Do Prebuild"
+ToolTargets = #!
+#foreach (var File in Project.None)
+#if (File.BuildTool)
+\
+	#{File.BuildTarget}#!
+#end if
+#end foreach
 
-postbuild : 
-#if (Project.IsExe)
-	powershell publishtarget #{Project.Target} $(LinkFiles) 
-#elseif (Project.IsLibrary)
-	powershell publishtarget #{Project.Target}
+
+#foreach (var File in Project.None)
+#if (File.BuildTool)
+#{File.BuildSource} :  #{File.BuildTarget}
+	#{File.BuildCommand} #{File.BuildSource} #{File.BuildTarget}
+
+#end if
+#end foreach
+
+prebuildRecurse : #!
+#if (Project.ProjectType != ProjectType.shared)
+#foreach (var SharedProject in Project.SharedProject)
+\
+	cd #{SharedProject.Directory} && nmake /c /f VS.make prebuild #!
+#end foreach  
 #end if
 
+
+postbuildRecurse : #!
+#if (Project.ProjectType != ProjectType.shared)
+#foreach (var SharedProject in Project.SharedProject)
+\
+	cd #{SharedProject.Directory} && nmake /c /f VS.make postbuild #!
+#end foreach  
+#end if
+
+
+prebuild : prebuildRecurse $(ToolTargets)
+    echo Completed prebuild $(MAKEDIR)
+
+postbuild : postbuildRecurse
+    echo Completed postbuild $(MAKEDIR)
+
+#!
+#!postbuild : 
+#!#if (Project.IsExe)
+#!	powershell publishtarget #{Project.Target} $(LinkFiles) 
+#!#elseif (Project.IsLibrary)
+#!	powershell publishtarget #{Project.Target}
+#!#end if
 
 #end method
 

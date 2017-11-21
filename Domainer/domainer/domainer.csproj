@@ -10,14 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Main.cs">
-      <DependentUpon>Main.command</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Main.command">
       <LastGenOutput>Main.cs</LastGenOutput>
       <Generator>CommandCS</Generator>

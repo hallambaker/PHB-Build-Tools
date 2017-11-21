@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Unknown by Unknown
+//  Copyright ©  2016 by 
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,7 @@ namespace Goedel.Tool.Makey {
 
 		  public Generate (TextWriter Output) : base (Output) {}
 		 string Prefix = "! "; //"\t";
+		
 		
 
 		//
@@ -149,6 +150,11 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("#   * Postprocess VSIX projects\n{0}", _Indent);
 			_Output.Write ("#   * Copy executables\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write (".PHONY : all always clean install publish prebuild prebuildRecurse postbuild postbuildRecurse\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("MSBuildThisFileDirectory = \n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("LinkFiles = ", _Indent);
 			foreach  (var File in Project.FixedLinkDependency) {
 				_Output.Write ("\\\n{0}", _Indent);
@@ -160,16 +166,50 @@ namespace Goedel.Tool.Makey {
 				}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("prebuild : \n{0}", _Indent);
-			_Output.Write ("    echo \"Do Prebuild\"\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("postbuild : \n{0}", _Indent);
-			if (  (Project.IsExe) ) {
-				_Output.Write ("	powershell publishtarget {1} $(LinkFiles) \n{0}", _Indent, Project.Target);
-				} else if (  (Project.IsLibrary)) {
-				_Output.Write ("	powershell publishtarget {1}\n{0}", _Indent, Project.Target);
+			_Output.Write ("ToolTargets = ", _Indent);
+			foreach  (var File in Project.None) {
+				if (  (File.BuildTool) ) {
+					_Output.Write ("\\\n{0}", _Indent);
+					_Output.Write ("	{1}", _Indent, File.BuildTarget);
+					}
 				}
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			foreach  (var File in Project.None) {
+				if (  (File.BuildTool) ) {
+					_Output.Write ("{1} :  {2}\n{0}", _Indent, File.BuildSource, File.BuildTarget);
+					_Output.Write ("	{1} {2} {3}\n{0}", _Indent, File.BuildCommand, File.BuildSource, File.BuildTarget);
+					_Output.Write ("\n{0}", _Indent);
+					}
+				}
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("prebuildRecurse : ", _Indent);
+			if (  (Project.ProjectType != ProjectType.shared) ) {
+				foreach  (var SharedProject in Project.SharedProject) {
+					_Output.Write ("\\\n{0}", _Indent);
+					_Output.Write ("	cd {1} && nmake /c /f VS.make prebuild ", _Indent, SharedProject.Directory);
+					}
+				}
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("postbuildRecurse : ", _Indent);
+			if (  (Project.ProjectType != ProjectType.shared) ) {
+				foreach  (var SharedProject in Project.SharedProject) {
+					_Output.Write ("\\\n{0}", _Indent);
+					_Output.Write ("	cd {1} && nmake /c /f VS.make postbuild ", _Indent, SharedProject.Directory);
+					}
+				}
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("prebuild : prebuildRecurse $(ToolTargets)\n{0}", _Indent);
+			_Output.Write ("    echo Completed prebuild $(MAKEDIR)\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("postbuild : postbuildRecurse\n{0}", _Indent);
+			_Output.Write ("    echo Completed postbuild $(MAKEDIR)\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			//
+			//	powershell publishtarget #{Project.Target} $(LinkFiles) 
+			//	powershell publishtarget #{Project.Target}
 			_Output.Write ("\n{0}", _Indent);
 			}
 		

@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <ApplicationIcon>PHBLogo256.ico</ApplicationIcon>
+    <AssemblyName>exceptional</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

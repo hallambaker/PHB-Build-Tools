@@ -39,12 +39,12 @@
       <LastGenOutput>GenerateMakefile.cs</LastGenOutput>
       <Generator>GScript</Generator>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)Makefile" />
     <None Include="$(MSBuildThisFileDirectory)Microsoft.Build.Core.xsd" />
     <None Include="$(MSBuildThisFileDirectory)PHBLogo256.ico" />
     <None Include="$(MSBuildThisFileDirectory)Tokenizer.fsr">
       <LastGenOutput>Tokenizer.cs</LastGenOutput>
       <Generator>fsrcs</Generator>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
   </ItemGroup>
 </Project>

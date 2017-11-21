@@ -23,10 +23,16 @@ namespace Goedel.Shell.Makey {
                 var OutputFile = Path.Combine(SolutionPath, "Makefile");
 
                 foreach (var Item in Solution.Projects) {
+                    var ProjectFile = Path.Combine(SolutionPath, Item.Directory);
+                    Console.WriteLine("Make Project {0}\n   {1}", ProjectFile, Item.TypeGUID);
+
+
+
                     if (Item.Recurse) {
-                        var ProjectFile = Path.Combine(SolutionPath, Item.Directory);
+
 
                         Item.Project = new VSProject(ProjectFile, true);
+                        Item.Project.ProjectType = Item.ProjectType;
 
                         var ProjectPath = Path.GetDirectoryName(Item.Directory);
                         var TargetFile = Path.Combine(SolutionPath, ProjectPath, "Makefile");
@@ -41,16 +47,21 @@ namespace Goedel.Shell.Makey {
                         //        }
                         //    }
 
-                        //var TargetFile2 = Path.Combine(SolutionPath, ProjectPath, "VS.Make");
-                        //using (var outputStream = TargetFile2.OpenFileNew()) {
-                        //    using (var outputText = outputStream.OpenTextWriter()) {
-                        //        var Generate = new Generate(outputText);
+                        var TargetFile2 = Path.Combine(SolutionPath, ProjectPath, "VS.Make");
 
-                        //        Generate.GenerateVSMakefile(Item.Project);
-                        //        }
-                        //    }
+                        var Project = (Item.ProjectType == ProjectType.shared) ?
+                                Item.Project.SharedProject[0] : Item.Project;
+
+                        using (var outputStream = TargetFile2.OpenFileNew()) {
+                            using (var outputText = outputStream.OpenTextWriter()) {
+                                var Generate = new Generate(outputText);
+
+                                Generate.GenerateVSMakefile(Project);
+                                }
+                            }
 
                         }
+
                     }
 
                 }

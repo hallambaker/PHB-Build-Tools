@@ -117,6 +117,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Script-Framework", "GScript\Goedel.Tool.Script-Framework\Goedel.Tool.Script-Framework.csproj", "{8D243206-A118-4BA4-8BD6-45593818D35D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Makey-Framework", "MakeyMakey\Goedel.Tool.Makey-Framework\Goedel.Tool.Makey-Framework.csproj", "{CA76E3F9-6732-4064-9CF5-FFE87C6015BC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C22AA4A5-F0A0-4CFF-AB4D-7A02F5DFB59E} = {C22AA4A5-F0A0-4CFF-AB4D-7A02F5DFB59E}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Protogen-Framework", "Protogen\Goedel.Tool.Protogen-Framework\Goedel.Tool.Protogen-Framework.csproj", "{529F25C0-4803-4259-8CFC-F666F0978A1A}"
 EndProject

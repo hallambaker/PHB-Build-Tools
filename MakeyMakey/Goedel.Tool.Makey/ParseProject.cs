@@ -123,6 +123,7 @@ namespace Goedel.Tool.Makey {
         public List<CompileType> Compile { get; set; } = new List<CompileType>();
         public List<NoneType> None { get; set; } = new List<NoneType>();
         public List<ProjectReferenceType> ProjectReference { get; set; } = new List<ProjectReferenceType>();
+        public List<ImportType> ImportList { get; set; } = new List<ImportType>();
 
         public string CompileAll = "";
         public string LinkAll = "";
@@ -131,8 +132,11 @@ namespace Goedel.Tool.Makey {
         public List<string> FixedLinkDependency = new List<string>();
         public List<string> LinkDependency = new List<string>();
         public List<string> AdditionalLinkDependency { get; set; } = new List<string>();
-
+        
         public string Directory;
+        public ProjectType ProjectType;
+
+        public List<VSProject> SharedProject = new List<VSProject>();
 
         public VSProject(string Filename, bool Expand) {
 
@@ -193,6 +197,7 @@ namespace Goedel.Tool.Makey {
                             Reference = new ReferenceType();
                             ItemGroup.Reference.Add (Reference);
                             Reference.Include = XmlReader.GetAttribute("Include");
+                            Reference.Update = XmlReader.GetAttribute("Update");
                             Current = Reference;
                             break;
                             }
@@ -200,13 +205,35 @@ namespace Goedel.Tool.Makey {
                             Compile = new CompileType();
                             ItemGroup.Compile.Add(Compile);
                             Compile.Include = XmlReader.GetAttribute("Include");
+                            Compile.Update = XmlReader.GetAttribute("Update");
                             Current = Compile;
+                            break;
+                            }
+                        case "Import": {
+                            var Import = new ImportType();
+                            ImportList.Add(Import);
+                            Import.Condition = XmlReader.GetAttribute("Condition");
+                            Import.Project = XmlReader.GetAttribute("Project");
+                            Import.Label = XmlReader.GetAttribute("Label");
+                            Current = Import;
+
+                            if (Import.Label == "Shared") {
+                                var File = Path.Combine(Directory, Import.Project);
+                                var Shared = new VSProject(File, true) {
+                                    ProjectType = ProjectType.shared
+                                    };
+                                SharedProject.Add(Shared);
+
+                                }
+
+
                             break;
                             }
                         case "None": {
                             None = new NoneType();
                             ItemGroup.None.Add(None);
                             None.Include = XmlReader.GetAttribute("Include");
+                            None.Update = XmlReader.GetAttribute("Update");
                             Current = None;
                             break;
                             }
@@ -503,6 +530,69 @@ namespace Goedel.Tool.Makey {
         }
 
 
+    public partial class NoneType {
+        public static Dictionary<string, BuildDescription> BuildTypes = new Dictionary<string, BuildDescription>() {
+            { "commandcs", new BuildDescription ("cs", "commandparse") },
+            { "fsrcs", new BuildDescription ("cs", "fsrgen") },
+            { "exceptional", new BuildDescription("cs", "exceptional") },
+            { "gscript", new BuildDescription ("cs", "gscript") },
+            { "goedel3", new BuildDescription ("cs", "goedel3") },
+            { "asn2cs", new BuildDescription ("cs", "asn2") },
+            { "domainercs", new BuildDescription ("cs", "domainer") },
+            { "registrycs", new BuildDescription ("cs", "registryconfig") },
+            { "vsixbuild", new BuildDescription ("cs", "vsixbuild") },
+            { "protogen", new BuildDescription ("cs", "protogen") },
+            { "rfc2txt", new BuildDescription ("txt", "rfctool") },
+            { "rfc2xml", new BuildDescription("xml", "rfctool") },
+            { "rfc2md", new BuildDescription ("md", "rfctool") },
+            { "rfc2html", new BuildDescription ("html", "rfctool") },
+            { "md2aml", new BuildDescription ("aml", "rfctool") },
+            };
+
+        BuildDescription _BuildDescription = null;
+        BuildDescription BuildDescription {
+            get {
+                _BuildDescription = _BuildDescription ?? GetBuildDescription();
+                return _BuildDescription;
+                }
+            }
+
+
+        BuildDescription GetBuildDescription () {
+            if (Generator == null) {
+                return null;
+                }
+            BuildTypes.TryGetValue(Generator.ToLower(), out var Result);
+            return Result;
+            }
+
+
+        public bool BuildTool => BuildDescription != null;
+
+        public string BuildExtension => BuildDescription?.Extension;
+
+        public string BuildCommand => BuildDescription?.Command;
+
+        public string BuildTarget => Path.ChangeExtension(BuildSource, BuildExtension);
+
+        public string BuildSource => Include ?? Update;
+        }
+
+
+
+
+    public partial class BuildDescription {
+        public string Extension;
+
+        public string Command;
+
+        public BuildDescription (string Extension, string Command) {
+
+            this.Extension = Extension;
+            this.Command = Command;
+            }
+
+        }
 
     public partial class ProjectReferenceType {
         [System.Xml.Serialization.XmlIgnore]

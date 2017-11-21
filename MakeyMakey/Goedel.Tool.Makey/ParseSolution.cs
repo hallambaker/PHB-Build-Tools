@@ -21,8 +21,7 @@ namespace Goedel.Tool.Makey {
         portable,
         website,
         vsix,
-        csstandard,
-        cscore,
+        csstandard,  // includes core
         shared
         }
 
@@ -39,19 +38,16 @@ namespace Goedel.Tool.Makey {
     /// </summary>
     public partial class VSSolution : VSFile {
         readonly static public Dictionary<string, ProjectType> MapProject = new Dictionary<string, ProjectType> {
-                { "{2150E333-8FDC-42A3-9474-1A3956D46DE8}", ProjectType.folder},
-                { "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}", ProjectType.csproj},
-                { "{930C7802-8A8C-48F9-8165-68863BCCD9DD}", ProjectType.wixproj},
-                { "{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}", ProjectType.cproj },
-                { "{786C830F-07A1-408B-BD7F-6EE04809D6DB}", ProjectType.portable },
+                { "{2150e333-8fdc-42a3-9474-1a3956d46de8}", ProjectType.folder},
+                { "{fae04ec0-301f-11d3-bf4b-00c04f79efbc}", ProjectType.csproj},
+                { "{930c7802-8a8c-48f9-8165-68863bccd9dd}", ProjectType.wixproj},
+                { "{8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942}", ProjectType.cproj },
+                { "{786c830f-07a1-408b-bd7f-6ee04809d6db}", ProjectType.portable },
                 { "{82b43b9b-a64c-4715-b499-d71e9ca2bd60}", ProjectType.vsix},
-                { "{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", ProjectType.csstandard},
-                { "{420F632D-B323-42B4-954C-DA875083DCC6}", ProjectType.cscore},
-                { "{98F612E7-C4C4-44D3-8D0E-B7A961E2BBAB}", ProjectType.shared},
-                { "{E24C65DC-7377-472B-9ABA-BC803B73C61A}", ProjectType.website}
+                { "{9a19103f-16f7-4668-be54-9a1e7a4f7556}", ProjectType.csstandard},
+                { "{d954291e-2a0b-460d-934e-dc6b0785db48}", ProjectType.shared},
+                { "{e24c65dc-7377-472b-9aba-bc803b73c61a}", ProjectType.website}
             };
-
-
 
 
         public string Directory;
@@ -252,14 +248,14 @@ namespace Goedel.Tool.Makey {
             Directory = Tokenizer.Value1;
             ThisGUID = Tokenizer.Value2;
 
-            VSSolution.MapProject.TryGetValue(TypeGUID, out _ProjectType);
+            VSSolution.MapProject.TryGetValue(TypeGUID.ToLower(), out _ProjectType);
             }
 
         public static bool IsRecurse (ProjectType ProjectType) {
             switch (ProjectType) {
                 case ProjectType.cproj:
+                case ProjectType.csproj:
                 case ProjectType.csstandard:
-                case ProjectType.cscore:
                 case ProjectType.shared: {
                     return true;
                     }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -88,7 +88,15 @@ namespace Goedel.Shell.Makey {
         public void MainMethod(string[] Args) {
 			MakeyShell Dispatch = new MakeyShell ();
 
-			MainMethod (Dispatch, Args);
+			try {
+				MainMethod (Dispatch, Args);
+				}
+            catch (Goedel.Command.ParserException) {
+			    Brief(Description, DefaultCommand, Entries);
+				}
+            catch (System.Exception Exception) {
+                Console.WriteLine("Application: {0}", Exception.Message);
+                }
 			}
 
 
