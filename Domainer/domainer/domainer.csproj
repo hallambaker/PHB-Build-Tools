@@ -9,13 +9,14 @@
     <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.Tool.Shell\ToolLib.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Main.command">
-      <LastGenOutput>Main.cs</LastGenOutput>
-      <Generator>CommandCS</Generator>
-    </None>
-  </ItemGroup>
-
   <Import Project="..\Goedel.Tool.Domainer\Goedel.Tool.Domainer.projitems" Label="Shared" />
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPreBuild" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="VSPostBuild" />
+  </Target>
 
 </Project>

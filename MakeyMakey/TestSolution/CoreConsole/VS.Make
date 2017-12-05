@@ -18,35 +18,23 @@
 
 MSBuildThisFileDirectory = 
 
-LinkFiles = 
+LinkFiles = \
+    StandardLibrary.dll
 
-ToolTargets = \
-	CommandLex.cs\
-	CommandSplit.cs\
-	Exceptions.cs\
-	Main.cs
-
-CommandLex.fsm :  CommandLex.cs
-	fsrgen CommandLex.fsm CommandLex.cs
-
-CommandSplit.fsm :  CommandSplit.cs
-	fsrgen CommandSplit.fsm CommandSplit.cs
-
-Exceptions.exceptional :  Exceptions.cs
-	exceptional Exceptions.exceptional Exceptions.cs
-
-Main.command :  Main.cs
-	commandparse Main.command Main.cs
+ToolTargets = 
 
 
 prebuildRecurse : 
 
-postbuildRecurse : 
+
+postbuildRecurse :
+
 
 prebuild : prebuildRecurse $(ToolTargets)
-    echo Completed prebuild $(MAKEDIR)
 
 postbuild : postbuildRecurse
-    echo Completed postbuild $(MAKEDIR)
 
+
+postbuildwindows : 
+	powershell publishtarget CoreConsole.exe $(LinkFiles) 
 

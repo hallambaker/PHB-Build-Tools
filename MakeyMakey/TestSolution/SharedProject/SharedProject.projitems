@@ -9,52 +9,9 @@
     <Import_RootNamespace>SharedProject</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)CommandLex.fsm">
-      <LastGenOutput>CommandLex.cs</LastGenOutput>
-      <Generator>fsrcs</Generator>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)CommandSplit.fsm">
-      <LastGenOutput>CommandSplit.cs</LastGenOutput>
-      <Generator>fsrcs</Generator>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Exceptions.exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>exceptional</Generator>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Main.command">
-      <LastGenOutput>Main.cs</LastGenOutput>
-      <Generator>CommandCS</Generator>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Parse.md" />
     <None Include="$(MSBuildThisFileDirectory)VS.Make" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Command.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CommandLex.cs">
-      <DependentUpon>CommandLex.fsm</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)CommandLexPlus.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CommandSplit.cs">
-      <DependentUpon>CommandSplit.fsm</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)CommandSplitLexPlus.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Dispatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)FileTools.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Main.cs">
-      <DependentUpon>Main.command</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)NamespaceDoc.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Type.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Class1.cs" />
   </ItemGroup>
 </Project>

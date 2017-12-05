@@ -31,4 +31,12 @@
 
   <Import Project="..\Goedel.Tool.Schema\Goedel.Tool.Schema.projitems" Label="Shared" />
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPreBuild" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="VSPostBuild" />
+  </Target>
+
 </Project>

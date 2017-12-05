@@ -13,31 +13,33 @@
 #   * Postprocess VSIX projects
 #   * Copy executables
 
+
 .PHONY : all always clean install publish prebuild prebuildRecurse postbuild postbuildRecurse
 
+MSBuildThisFileDirectory = 
+
 LinkFiles = \
-    Goedel.FSR.dll\
-    Goedel.Registry.dll\
-    Goedel.Utilities.dll
+    Goedel.Tool.Shell.dll
 
 ToolTargets = \
-	Commands.command
+	Commands.cs
 
-Commands.cs :  Commands.command
-	commandparse Commands.command /cs=Commands.cs
+Commands.cs : Commands.command 
+	commandparse Commands.command Commands.cs
+
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.Makey && nmake /c /f VS.make prebuild
+	cd ..\Goedel.Tool.Makey && nmake /c /f VS.make prebuild 
+	cd ..\..\..\mmm\Libraries\Goedel.IO && nmake /c /f VS.make prebuild 
+
+
+postbuildRecurse :
+	cd ..\Goedel.Tool.Makey && nmake /c /f VS.make postbuild 
+	cd ..\..\..\mmm\Libraries\Goedel.IO && nmake /c /f VS.make postbuild 
+
 
 prebuild : prebuildRecurse $(ToolTargets)
-    echo Completed prebuild $(MAKEDIR)
-
-postbuildRecurse : 
-	cd ..\Goedel.Tool.Makey && nmake /c /f VS.make postbuild
 
 postbuild : postbuildRecurse
-    echo Completed postbuild $(MAKEDIR)
-
-# powershell publishtarget Goedel.Tool.Makey.dll
 
 

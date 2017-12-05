@@ -47,4 +47,10 @@
   <Import Project="..\Goedel.Tool.ASN\Goedel.Tool.ASN.projitems" Label="Shared" />
   <Import Project="..\..\..\mmm\Libraries\Goedel.ASN\Goedel.ASN.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>cd $(ProjectDir) &amp;&amp; VSPreBuild</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>VSPostBuild</PostBuildEvent>
+  </PropertyGroup>
 </Project>

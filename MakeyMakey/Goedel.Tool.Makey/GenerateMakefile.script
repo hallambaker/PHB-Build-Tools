@@ -142,43 +142,39 @@ ToolTargets = #!
 
 #foreach (var File in Project.None)
 #if (File.BuildTool)
-#{File.BuildSource} :  #{File.BuildTarget}
-	#{File.BuildCommand} #{File.BuildSource} #{File.BuildTarget}
+#{File.BuildTarget} : #{File.BuildSource} 
+	#{File.BuildCommand} #{File.BuildSource} #{File.BuildFlag} #{File.BuildTarget}
 
 #end if
 #end foreach
 
-prebuildRecurse : #!
+prebuildRecurse : 
 #if (Project.ProjectType != ProjectType.shared)
 #foreach (var SharedProject in Project.SharedProject)
-\
-	cd #{SharedProject.Directory} && nmake /c /f VS.make prebuild #!
+	cd #{SharedProject.RelativeDirectory} && nmake /c /f VS.make prebuild 
 #end foreach  
 #end if
 
 
-postbuildRecurse : #!
+postbuildRecurse :
 #if (Project.ProjectType != ProjectType.shared)
 #foreach (var SharedProject in Project.SharedProject)
-\
-	cd #{SharedProject.Directory} && nmake /c /f VS.make postbuild #!
+	cd #{SharedProject.RelativeDirectory} && nmake /c /f VS.make postbuild 
 #end foreach  
 #end if
 
 
 prebuild : prebuildRecurse $(ToolTargets)
-    echo Completed prebuild $(MAKEDIR)
 
 postbuild : postbuildRecurse
-    echo Completed postbuild $(MAKEDIR)
 
-#!
-#!postbuild : 
-#!#if (Project.IsExe)
-#!	powershell publishtarget #{Project.Target} $(LinkFiles) 
-#!#elseif (Project.IsLibrary)
-#!	powershell publishtarget #{Project.Target}
-#!#end if
+
+postbuildwindows : 
+#if (Project.IsExe)
+	powershell publishtarget #{Project.Target} $(LinkFiles) 
+#elseif (Project.IsLibrary)
+	powershell publishtarget #{Project.Target}
+#end if
 
 #end method
 

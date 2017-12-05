@@ -26,13 +26,14 @@ namespace Goedel.Shell.Makey {
                     var ProjectFile = Path.Combine(SolutionPath, Item.Directory);
                     Console.WriteLine("Make Project {0}\n   {1}", ProjectFile, Item.TypeGUID);
 
-
+                    
 
                     if (Item.Recurse) {
 
 
-                        Item.Project = new VSProject(ProjectFile, true);
-                        Item.Project.ProjectType = Item.ProjectType;
+                        Item.Project = new VSProject(ProjectFile, true) {
+                            ProjectType = Item.ProjectType
+                            };
 
                         var ProjectPath = Path.GetDirectoryName(Item.Directory);
                         var TargetFile = Path.Combine(SolutionPath, ProjectPath, "Makefile");

@@ -2,8 +2,18 @@
   "profiles": {
     "makey": {
       "commandName": "Project",
-      "commandLineArgs": "TestSolution.sln",
+      "commandLineArgs": "mmm.sln",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm"
+    },
+    "TestSolution": {
+      "commandName": "Project",
+      "commandLineArgs": "testsolution.sln",
       "workingDirectory": "C:\\Users\\hallam\\Work\\buildtools\\MakeyMakey\\TestSolution"
+    },
+    "mmm": {
+      "commandName": "Project",
+      "commandLineArgs": "mmm.sln",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm"
     }
   }
 }

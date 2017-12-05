@@ -1,0 +1,44 @@
+
+# Supplemental Makefile for Visual Studios Projects
+#
+# Visual Studio is responsible for managing rules for production of
+# code but does not provide support for pre and post build actions.
+# 
+# Prebuild items supported:
+#   [None currently]
+# 
+# PostBuild items supported:
+#   * Copy library to locations on disk
+#   * Build ilMerge executables
+#   * Postprocess VSIX projects
+#   * Copy executables
+
+
+.PHONY : all always clean install publish prebuild prebuildRecurse postbuild postbuildRecurse
+
+MSBuildThisFileDirectory = 
+
+LinkFiles = 
+
+ToolTargets = \
+	Generate.cs\
+	RegistrySchema.cs
+
+Generate.cs : Generate.script 
+	gscript Generate.script Generate.cs
+
+RegistrySchema.cs : RegistrySchema.gdl 
+	goedel3 RegistrySchema.gdl RegistrySchema.cs
+
+
+prebuildRecurse : 
+
+
+postbuildRecurse :
+
+
+prebuild : prebuildRecurse $(ToolTargets)
+
+postbuild : postbuildRecurse
+
+

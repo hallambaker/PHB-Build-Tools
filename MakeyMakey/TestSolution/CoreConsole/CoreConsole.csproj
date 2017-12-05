@@ -6,45 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="CommandLex.cs">
-      <DependentUpon>CommandLex.fsm</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="CommandSplit.cs">
-      <DependentUpon>CommandSplit.fsm</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Main.cs">
-      <DependentUpon>Main.command</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <ProjectReference Include="..\StandardLibrary\StandardLibrary.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="CommandLex.fsm">
-      <LastGenOutput>CommandLex.cs</LastGenOutput>
-      <Generator>fsrcs</Generator>
-    </None>
-    <None Update="CommandSplit.fsm">
-      <LastGenOutput>CommandSplit.cs</LastGenOutput>
-      <Generator>fsrcs</Generator>
-    </None>
-    <None Update="Exceptions.exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>exceptional</Generator>
-    </None>
-    <None Update="Main.command">
-      <LastGenOutput>Main.cs</LastGenOutput>
-      <Generator>CommandCS</Generator>
-    </None>
-  </ItemGroup>
+
 
 </Project>

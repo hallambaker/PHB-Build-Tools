@@ -177,39 +177,39 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("\n{0}", _Indent);
 			foreach  (var File in Project.None) {
 				if (  (File.BuildTool) ) {
-					_Output.Write ("{1} :  {2}\n{0}", _Indent, File.BuildSource, File.BuildTarget);
-					_Output.Write ("	{1} {2} {3}\n{0}", _Indent, File.BuildCommand, File.BuildSource, File.BuildTarget);
+					_Output.Write ("{1} : {2} \n{0}", _Indent, File.BuildTarget, File.BuildSource);
+					_Output.Write ("	{1} {2} {3} {4}\n{0}", _Indent, File.BuildCommand, File.BuildSource, File.BuildFlag, File.BuildTarget);
 					_Output.Write ("\n{0}", _Indent);
 					}
 				}
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("prebuildRecurse : ", _Indent);
+			_Output.Write ("prebuildRecurse : \n{0}", _Indent);
 			if (  (Project.ProjectType != ProjectType.shared) ) {
 				foreach  (var SharedProject in Project.SharedProject) {
-					_Output.Write ("\\\n{0}", _Indent);
-					_Output.Write ("	cd {1} && nmake /c /f VS.make prebuild ", _Indent, SharedProject.Directory);
+					_Output.Write ("	cd {1} && nmake /c /f VS.make prebuild \n{0}", _Indent, SharedProject.RelativeDirectory);
 					}
 				}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("postbuildRecurse : ", _Indent);
+			_Output.Write ("postbuildRecurse :\n{0}", _Indent);
 			if (  (Project.ProjectType != ProjectType.shared) ) {
 				foreach  (var SharedProject in Project.SharedProject) {
-					_Output.Write ("\\\n{0}", _Indent);
-					_Output.Write ("	cd {1} && nmake /c /f VS.make postbuild ", _Indent, SharedProject.Directory);
+					_Output.Write ("	cd {1} && nmake /c /f VS.make postbuild \n{0}", _Indent, SharedProject.RelativeDirectory);
 					}
 				}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("prebuild : prebuildRecurse $(ToolTargets)\n{0}", _Indent);
-			_Output.Write ("    echo Completed prebuild $(MAKEDIR)\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("postbuild : postbuildRecurse\n{0}", _Indent);
-			_Output.Write ("    echo Completed postbuild $(MAKEDIR)\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			//
-			//	powershell publishtarget #{Project.Target} $(LinkFiles) 
-			//	powershell publishtarget #{Project.Target}
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("postbuildwindows : \n{0}", _Indent);
+			if (  (Project.IsExe) ) {
+				_Output.Write ("	powershell publishtarget {1} $(LinkFiles) \n{0}", _Indent, Project.Target);
+				} else if (  (Project.IsLibrary)) {
+				_Output.Write ("	powershell publishtarget {1}\n{0}", _Indent, Project.Target);
+				}
 			_Output.Write ("\n{0}", _Indent);
 			}
 		

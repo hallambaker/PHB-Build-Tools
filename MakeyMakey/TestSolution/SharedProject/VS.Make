@@ -20,33 +20,20 @@ MSBuildThisFileDirectory =
 
 LinkFiles = 
 
-ToolTargets = \
-	$(MSBuildThisFileDirectory)CommandLex.cs\
-	$(MSBuildThisFileDirectory)CommandSplit.cs\
-	$(MSBuildThisFileDirectory)Exceptions.cs\
-	$(MSBuildThisFileDirectory)Main.cs
-
-$(MSBuildThisFileDirectory)CommandLex.fsm :  $(MSBuildThisFileDirectory)CommandLex.cs
-	fsrgen $(MSBuildThisFileDirectory)CommandLex.fsm $(MSBuildThisFileDirectory)CommandLex.cs
-
-$(MSBuildThisFileDirectory)CommandSplit.fsm :  $(MSBuildThisFileDirectory)CommandSplit.cs
-	fsrgen $(MSBuildThisFileDirectory)CommandSplit.fsm $(MSBuildThisFileDirectory)CommandSplit.cs
-
-$(MSBuildThisFileDirectory)Exceptions.exceptional :  $(MSBuildThisFileDirectory)Exceptions.cs
-	exceptional $(MSBuildThisFileDirectory)Exceptions.exceptional $(MSBuildThisFileDirectory)Exceptions.cs
-
-$(MSBuildThisFileDirectory)Main.command :  $(MSBuildThisFileDirectory)Main.cs
-	commandparse $(MSBuildThisFileDirectory)Main.command $(MSBuildThisFileDirectory)Main.cs
+ToolTargets = 
 
 
 prebuildRecurse : 
 
-postbuildRecurse : 
+
+postbuildRecurse :
+
 
 prebuild : prebuildRecurse $(ToolTargets)
-    echo Completed prebuild $(MAKEDIR)
 
 postbuild : postbuildRecurse
-    echo Completed postbuild $(MAKEDIR)
 
+
+postbuildwindows : 
+	powershell publishtarget SharedProject.dll
 

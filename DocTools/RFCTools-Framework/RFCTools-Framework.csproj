@@ -52,4 +52,10 @@
   <Import Project="..\Goedel.Document.Markdown\Goedel.Document.Markdown.projitems" Label="Shared" />
   <Import Project="..\..\..\mmm\Libraries\Goedel.IO\Goedel.IO.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>cd $(ProjectDir) &amp;&amp; VSPreBuild</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>VSPostBuild</PostBuildEvent>
+  </PropertyGroup>
 </Project>

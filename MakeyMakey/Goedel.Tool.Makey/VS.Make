@@ -13,23 +13,36 @@
 #   * Postprocess VSIX projects
 #   * Copy executables
 
-LinkFiles = \
-    Goedel.FSR.dll\
-    Goedel.Registry.dll\
-    Goedel.Utilities.dll
+
+.PHONY : all always clean install publish prebuild prebuildRecurse postbuild postbuildRecurse
+
+MSBuildThisFileDirectory = 
+
+LinkFiles = 
 
 ToolTargets = \
-	 GenerateMakefile.cs
+	Exceptions.cs\
+	GenerateMakefile.cs\
+	Tokenizer.cs
 
-GenerateMakefile.cs :  GenerateMakefile.script
+Exceptions.cs : Exceptions.exceptional 
+	exceptional Exceptions.exceptional Exceptions.cs
+
+GenerateMakefile.cs : GenerateMakefile.script 
 	gscript GenerateMakefile.script GenerateMakefile.cs
 
-prebuild : $(ToolTargets)
-    echo "Completed prebuild"
+Tokenizer.cs : Tokenizer.fsr 
+	fsrgen Tokenizer.fsr Tokenizer.cs
 
-postbuild : 
-    echo "Completed postbuild"
 
-# powershell publishtarget Goedel.Tool.Makey.dll
+prebuildRecurse : 
+
+
+postbuildRecurse :
+
+
+prebuild : prebuildRecurse $(ToolTargets)
+
+postbuild : postbuildRecurse
 
 

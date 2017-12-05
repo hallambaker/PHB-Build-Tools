@@ -68,6 +68,15 @@ namespace Goedel.Tool.Makey {
             return FilePath.Replace('\\', '/'); ;
             }
 
+        public static string StripMacro (this string Text) {
+            var Index = Text.LastIndexOf(')');
+            if (Index < 0) {
+                return Text;
+                }
+            return Text.Substring(Index + 1);
+            }
+
+
         }
 
     public class SaneXmlTextReader : XmlTextReader {
@@ -134,6 +143,7 @@ namespace Goedel.Tool.Makey {
         public List<string> AdditionalLinkDependency { get; set; } = new List<string>();
         
         public string Directory;
+        public string RelativeDirectory=null;
         public ProjectType ProjectType;
 
         public List<VSProject> SharedProject = new List<VSProject>();
@@ -147,21 +157,22 @@ namespace Goedel.Tool.Makey {
 
                 using (var TextReader = new StreamReader(scriptfile)) {
 
-                    Parse (TextReader, Expand);
+                    Parse (TextReader, Expand, Filename);
                     }
                 }
             }
 
         public VSProject(TextReader TextReader) {
-            Parse(TextReader, true);
+            Parse(TextReader, true, "");
             }
 
 
 
         void FuckerParse2 (TextReader TextReader) {
-            Project = new Project();
-            Project.ItemGroup = new List<ItemGroupType>();
-            Project.PropertyGroup = new List<PropertyGroupType>();
+            Project = new Project() {
+                ItemGroup = new List<ItemGroupType>(),
+                PropertyGroup = new List<PropertyGroupType>()
+                };
             ItemGroupType ItemGroup = null;
             PropertyGroupType PropertyGroup = null;
             ReferenceType Reference = null;
@@ -184,11 +195,12 @@ namespace Goedel.Tool.Makey {
                             break;
                             }
                         case "ItemGroup": {
-                            ItemGroup = new ItemGroupType();
-                            ItemGroup.Reference = new List<ReferenceType>();
-                            ItemGroup.Compile = new List<CompileType>();
-                            ItemGroup.None = new List<NoneType>();
-                            ItemGroup.ProjectReference = new List<ProjectReferenceType>();
+                            ItemGroup = new ItemGroupType() {
+                                Reference = new List<ReferenceType>(),
+                                Compile = new List<CompileType>(),
+                                None = new List<NoneType>(),
+                                ProjectReference = new List<ProjectReferenceType>()
+                                };
                             Project.ItemGroup.Add(ItemGroup);
                             Current = ItemGroup;
                             break;
@@ -220,7 +232,8 @@ namespace Goedel.Tool.Makey {
                             if (Import.Label == "Shared") {
                                 var File = Path.Combine(Directory, Import.Project);
                                 var Shared = new VSProject(File, true) {
-                                    ProjectType = ProjectType.shared
+                                    ProjectType = ProjectType.shared,
+                                    RelativeDirectory = Path.GetDirectoryName(Import.Project)
                                     };
                                 SharedProject.Add(Shared);
 
@@ -312,7 +325,8 @@ namespace Goedel.Tool.Makey {
                                 XmlReader.Read();
                                 PropertyGroup.AssemblyName = XmlReader.Value;
                                 }
-
+                            if (AssemblyName == "meshman") {
+                                }
                             break;
                             }
 
@@ -445,15 +459,17 @@ namespace Goedel.Tool.Makey {
             }
 
 
-        public void Parse (TextReader TextReader, bool Expand) {
+        public void Parse (TextReader TextReader, bool Expand, string FilePath) {
             FuckerParse2(TextReader);
 
             foreach (var PropertyGroup in Project.PropertyGroup) {
-                OutputType = OutputType != null ? OutputType : PropertyGroup.OutputType;
-                AssemblyName = AssemblyName != null ? AssemblyName : PropertyGroup.AssemblyName;
-                ProjectGuid = ProjectGuid != null ? ProjectGuid : PropertyGroup.ProjectGuid;
-                ProjectTypeGuids = ProjectTypeGuids != null ? ProjectTypeGuids : PropertyGroup.ProjectTypeGuids;
+                OutputType = OutputType ?? PropertyGroup.OutputType;
+                AssemblyName = AssemblyName ?? PropertyGroup.AssemblyName;
+                ProjectGuid = ProjectGuid ?? PropertyGroup.ProjectGuid;
+                ProjectTypeGuids = ProjectTypeGuids ?? PropertyGroup.ProjectTypeGuids;
                 }
+
+            AssemblyName = AssemblyName ?? Path.GetFileNameWithoutExtension(FilePath);
 
             switch (OutputType) {
                 case "Exe":
@@ -536,7 +552,7 @@ namespace Goedel.Tool.Makey {
             { "fsrcs", new BuildDescription ("cs", "fsrgen") },
             { "exceptional", new BuildDescription("cs", "exceptional") },
             { "gscript", new BuildDescription ("cs", "gscript") },
-            { "goedel3", new BuildDescription ("cs", "goedel3") },
+            { "goedel3", new BuildDescription ("cs", "goedel3", " /cs ") },
             { "asn2cs", new BuildDescription ("cs", "asn2") },
             { "domainercs", new BuildDescription ("cs", "domainer") },
             { "registrycs", new BuildDescription ("cs", "registryconfig") },
@@ -573,9 +589,11 @@ namespace Goedel.Tool.Makey {
 
         public string BuildCommand => BuildDescription?.Command;
 
+        public string BuildFlag => BuildDescription?.Flag;
+
         public string BuildTarget => Path.ChangeExtension(BuildSource, BuildExtension);
 
-        public string BuildSource => Include ?? Update;
+        public string BuildSource => (Include ?? Update).StripMacro();
         }
 
 
@@ -586,10 +604,13 @@ namespace Goedel.Tool.Makey {
 
         public string Command;
 
-        public BuildDescription (string Extension, string Command) {
+        public string Flag;
+
+        public BuildDescription (string Extension, string Command, string Flag="") {
 
             this.Extension = Extension;
             this.Command = Command;
+            this.Flag = Flag;
             }
 
         }
