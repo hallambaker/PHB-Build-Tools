@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ApplicationIcon>PHBLogo256.ico</ApplicationIcon>
+    <OutputType>Exe</OutputType>
+    <StartupObject>Goedel.Shell.DNSConfig.CommandLineInterpreter</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.Tool.Shell\ToolLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="DNSConfig.cs">
+      <DependentUpon>DNSConfig.command</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DNSConfig.command">
+      <LastGenOutput>DNSConfig.cs</LastGenOutput>
+      <Generator>CommandCS</Generator>
+    </None>
+  </ItemGroup>
+
+  <Import Project="..\Goedel.Tool.DNSConfig\Goedel.Tool.DNSConfig.projitems" Label="Shared" />
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPreBuild" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="cd $(ProjectDir) &amp;&amp; VSPostBuildWindows $(TargetDir)" />
+  </Target>
+
+</Project>

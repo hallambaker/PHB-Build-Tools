@@ -1,0 +1,76 @@
+﻿// Put the addresses at the start of the file as these may be rewritten.
+// List the IP addresses that might change
+Address host1 "108.7.198.158"
+Address dns1 "178.62.79.124"
+Address dns2 "139.59.200.120"
+
+// First DNS service listed is the default
+DNS Default dns1 "hostmaster@hallambaker.com"
+	// Do NOT specify Serial, this is calculated according to RFC1912
+	Refresh 3600
+	Retry 1800
+	Expire 3600000
+	TTL 600
+	Slave dns2
+	CAA	"issue" "comodoca.com"
+	CAA "issue" "letsencrypt.org"
+	CAA "iodef" "mailto:hostmaster@hallambaker.com"
+
+
+Site bitkitten
+	Domain bitkitten.org
+	Domain dunningkrugerrand.com
+	Web www.bitkitten.org "bitkitten"
+
+
+Site mathmesh
+	Domain mathmesh.com
+		Service "mmm"
+			Host host1 
+			Port 42666
+			TXT "TLS=require"
+		Service "mmmapp"
+			Host host1 
+			Port 42667
+			TXT "TLS=require"
+	Domain mathmesh.net
+	Domain cryptomesh.org
+	Domain prismproof.com
+	Domain prismproof.org
+	Web www.mathmesh.com "prismproof/"
+		 Host host1
+
+
+
+Site hallambaker
+	Domain hallambaker.com
+	Domain defaultdenysecurity.com
+	Domain dotcrimemanifesto.com
+	Domain quantumofstupid.com
+	Domain cyberishard.com
+	Web www.hallambaker.com "hallambaker/"
+
+Site letsauthenticate
+	Domain letsauthenticate.com
+	Domain letsauthenticate.org
+	Web www.letsauthenticate.com "letsauthenticate/"
+
+Site phbooth
+	Domain phbooth.com
+	Web www.phbooth.com "phbooth/"
+
+Site skurnick
+	Domain skurnick.com
+	Web www.skurnick.com "skurnick/"
+
+Site parked
+	Domain fluxator.org
+	Domain fussbook.com
+	Domain internet64.net
+	Domain internet64.org
+	Domain nudeler.com
+	Domain nudeller.com
+	Domain sayanythingtrump.com
+	Domain sayanythingtrump.org
+
+

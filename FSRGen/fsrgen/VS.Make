@@ -25,7 +25,7 @@ ToolTargets = \
 	FSRGen.cs
 
 FSRGen.cs : FSRGen.command 
-	commandparse FSRGen.command FSRGen.cs
+	commandparse FSRGen.command  FSRGen.cs
 
 
 prebuildRecurse : 
@@ -40,4 +40,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget fsrgen.exe $(LinkFiles) 
 

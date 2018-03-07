@@ -25,7 +25,7 @@ ToolTargets = \
 	Shell.cs
 
 Shell.cs : Shell.command 
-	commandparse Shell.command Shell.cs
+	commandparse Shell.command  Shell.cs
 
 
 prebuildRecurse : 
@@ -40,4 +40,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget registryconfig.exe $(LinkFiles) 
 

@@ -25,10 +25,10 @@ ToolTargets = \
 	RegistrySchema.cs
 
 Generate.cs : Generate.script 
-	gscript Generate.script Generate.cs
+	gscript Generate.script  Generate.cs
 
 RegistrySchema.cs : RegistrySchema.gdl 
-	goedel3 RegistrySchema.gdl RegistrySchema.cs
+	goedel3 RegistrySchema.gdl  /cs  RegistrySchema.cs
 
 
 prebuildRecurse : 
@@ -41,4 +41,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget Goedel.Tool.RegistryConfig.dll
 

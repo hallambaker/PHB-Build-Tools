@@ -20,6 +20,7 @@ namespace Goedel.Document.Markdown {
                 };
 
             ParseRegistry.Register(".md", ParseRegistryEntry);
+            ParseRegistry.Register(".mdx", ParseRegistryEntry);
             }
 
         /// <summary>
@@ -64,7 +65,11 @@ namespace Goedel.Document.Markdown {
         /// <returns></returns>
         public static bool Include (string FileName, TagCatalog TagCatalog,
                         Document Document) {
-            var Reader = new LexReader(FileName.OpenTextReader());
+
+            // todo expand path here
+            var FilePath = Path.Combine (Document.Path, FileName);
+
+            var Reader = new LexReader(FilePath.OpenTextReader());
 
             var Included = new Document();
             Included.Parse(Reader);

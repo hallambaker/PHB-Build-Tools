@@ -26,13 +26,13 @@ ToolTargets = \
 	GenerateCS.cs
 
 FSRSchema.cs : FSRSchema.gdl 
-	goedel3 FSRSchema.gdl FSRSchema.cs
+	goedel3 FSRSchema.gdl  /cs  FSRSchema.cs
 
 GenerateC.cs : GenerateC.script 
-	gscript GenerateC.script GenerateC.cs
+	gscript GenerateC.script  GenerateC.cs
 
 GenerateCS.cs : GenerateCS.script 
-	gscript GenerateCS.script GenerateCS.cs
+	gscript GenerateCS.script  GenerateCS.cs
 
 
 prebuildRecurse : 
@@ -45,4 +45,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget Goedel.Tool.FSRGen.dll
 

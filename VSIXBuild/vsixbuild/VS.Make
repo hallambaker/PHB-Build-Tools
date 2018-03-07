@@ -25,7 +25,7 @@ ToolTargets = \
 	VSIXBuild.cs
 
 VSIXBuild.cs : VSIXBuild.command 
-	commandparse VSIXBuild.command VSIXBuild.cs
+	commandparse VSIXBuild.command  VSIXBuild.cs
 
 
 prebuildRecurse : 
@@ -40,4 +40,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget vsixbuild.exe $(LinkFiles) 
 

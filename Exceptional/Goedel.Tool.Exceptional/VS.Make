@@ -25,10 +25,10 @@ ToolTargets = \
 	GenerateCS.cs
 
 Exceptional.cs : Exceptional.gdl 
-	goedel3 Exceptional.gdl Exceptional.cs
+	goedel3 Exceptional.gdl  /cs  Exceptional.cs
 
 GenerateCS.cs : GenerateCS.script 
-	gscript GenerateCS.script GenerateCS.cs
+	gscript GenerateCS.script  GenerateCS.cs
 
 
 prebuildRecurse : 
@@ -41,4 +41,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget Goedel.Tool.Exceptional.dll
 

@@ -22,3 +22,6 @@
 		Script  Goedel.Tool.FSRGen Generate GenerateCS			"cs"
 			Brief "Generate cs class"
 			Default "cs"
+
+
+

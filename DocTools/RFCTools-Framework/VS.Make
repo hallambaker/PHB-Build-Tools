@@ -25,15 +25,15 @@ ToolTargets =
 
 
 prebuildRecurse : 
-	cd ..\..\Goedel.Document.RFCConvert && nmake /c /f VS.make prebuild 
-	cd ..\..\Goedel.Document.RFC && nmake /c /f VS.make prebuild 
+	cd ..\..\DocTools\Goedel.Document.RFCConvert && nmake /c /f VS.make prebuild 
+	cd ..\..\DocTools\Goedel.Document.RFC && nmake /c /f VS.make prebuild 
 	cd ..\Goedel.Document.Markdown && nmake /c /f VS.make prebuild 
 	cd ..\..\..\mmm\Libraries\Goedel.IO && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
-	cd ..\..\Goedel.Document.RFCConvert && nmake /c /f VS.make postbuild 
-	cd ..\..\Goedel.Document.RFC && nmake /c /f VS.make postbuild 
+	cd ..\..\DocTools\Goedel.Document.RFCConvert && nmake /c /f VS.make postbuild 
+	cd ..\..\DocTools\Goedel.Document.RFC && nmake /c /f VS.make postbuild 
 	cd ..\Goedel.Document.Markdown && nmake /c /f VS.make postbuild 
 	cd ..\..\..\mmm\Libraries\Goedel.IO && nmake /c /f VS.make postbuild 
 
@@ -42,4 +42,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget RFCTools-Framework.dll
 

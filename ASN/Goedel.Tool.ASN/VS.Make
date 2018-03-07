@@ -25,10 +25,10 @@ ToolTargets = \
 	GenerateCS.cs
 
 Asn2.cs : Asn2.gdl 
-	goedel3 Asn2.gdl Asn2.cs
+	goedel3 Asn2.gdl  /cs  Asn2.cs
 
 GenerateCS.cs : GenerateCS.script 
-	gscript GenerateCS.script GenerateCS.cs
+	gscript GenerateCS.script  GenerateCS.cs
 
 
 prebuildRecurse : 
@@ -41,4 +41,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget Goedel.Tool.ASN.dll
 

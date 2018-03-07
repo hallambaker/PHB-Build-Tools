@@ -37,3 +37,6 @@ prebuild : prebuildRecurse $(ToolTargets)
 postbuild : postbuildRecurse
 
 
+postbuildwindows : 
+	powershell publishtarget Goedel.Tool.Schema-Framework.dll
+

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tool ASN", "Tool ASN", "{7640A833-1086-4041-90FB-3E3D76F967D4}"
 EndProject
@@ -135,9 +135,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Command-Framewo
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Document.OpenXML", "DocTools\Goedel.Document.OpenXML\Goedel.Document.OpenXML.shproj", "{A25A14DA-8AC5-445E-9562-46C11C54EA15}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Document.RFC", "Goedel.Document.RFC\Goedel.Document.RFC.shproj", "{7C30FBE5-8E08-4687-AD68-8028819D5E57}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Document.RFC", "DocTools\Goedel.Document.RFC\Goedel.Document.RFC.shproj", "{7C30FBE5-8E08-4687-AD68-8028819D5E57}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Document.RFCConvert", "Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.shproj", "{03C081D6-FE5A-4A20-B387-8A960A45E77F}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Document.RFCConvert", "DocTools\Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.shproj", "{03C081D6-FE5A-4A20-B387-8A960A45E77F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSIX", "Release\VSIX\VSIX.csproj", "{136EFD1D-9D36-441E-994F-85E0356DFFD9}"
 EndProject
@@ -159,9 +159,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolLib", "..\mmm\Libraries
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.IO", "..\mmm\Libraries\Core\Goedel.IO\Goedel.IO.csproj", "{8BECC8C8-00BC-4972-919E-283D96953B41}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tool DNSConfig", "Tool DNSConfig", "{8D9AC879-C123-4356-B9B6-BE5393FCBFF8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Tool.DNSConfig", "DNSConfig\Goedel.Tool.DNSConfig\Goedel.Tool.DNSConfig.shproj", "{9C81E246-38A7-4567-B2DB-F1DBDE2A0B65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Domainer-DNSConfig", "DNSConfig\Goedel.Tool.DNSConfig-Framework\Goedel.Tool.Domainer-DNSConfig.csproj", "{65A9786E-96BB-4D81-BD41-E9C81E15DA05}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "srvconf", "DNSConfig\srvconf\srvconf.csproj", "{627A80A7-F304-444E-B1DF-0F5A9515716F}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Discovery-Shared", "..\mmm\Libraries\Goedel.Discovery\Goedel.Discovery-Shared.shproj", "{E0560A9E-5A6C-464D-8114-10E9889882B3}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.projitems*{03c081d6-fe5a-4a20-b387-8a960a45e77f}*SharedItemsImports = 13
+		DocTools\Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.projitems*{03c081d6-fe5a-4a20-b387-8a960a45e77f}*SharedItemsImports = 13
 		Protogen\Goedel.Tool.Protogen\Goedel.Tool.Protogen.projitems*{04206448-ff4b-430d-8270-a4cbfa9d2fa3}*SharedItemsImports = 13
 		Goedel3\Goedel.Tool.Schema\Goedel.Tool.Schema.projitems*{061acd71-2ff0-48c8-96d5-616ced65fa8f}*SharedItemsImports = 4
 		VSIXBuild\Goedel.Tool.VSIXBuild\Goedel.Tool.VSIXBuild.projitems*{07808b38-bcc9-442d-bef7-d0b165127607}*SharedItemsImports = 4
@@ -175,6 +185,7 @@ Global
 		MakeyMakey\Goedel.Tool.Makey\Goedel.Tool.Makey.projitems*{5288bb4f-3685-4f5f-afd0-596dbdf843b5}*SharedItemsImports = 13
 		Protogen\Goedel.Tool.Protogen\Goedel.Tool.Protogen.projitems*{529f25c0-4803-4259-8cfc-f666f0978a1a}*SharedItemsImports = 4
 		..\mmm\Libraries\Goedel.Command\Goedel.Command.projitems*{573f1f3c-c0a9-4272-b054-068caa8ef8aa}*SharedItemsImports = 4
+		..\mmm\Libraries\Goedel.Discovery\Goedel.Discovery.projitems*{573f1f3c-c0a9-4272-b054-068caa8ef8aa}*SharedItemsImports = 4
 		..\mmm\Libraries\Goedel.FSR\Goedel.FSR.projitems*{573f1f3c-c0a9-4272-b054-068caa8ef8aa}*SharedItemsImports = 4
 		..\mmm\Libraries\Goedel.Registry\Goedel.Registry.projitems*{573f1f3c-c0a9-4272-b054-068caa8ef8aa}*SharedItemsImports = 4
 		..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.projitems*{573f1f3c-c0a9-4272-b054-068caa8ef8aa}*SharedItemsImports = 4
@@ -183,13 +194,14 @@ Global
 		Domainer\Goedel.Tool.Domainer\Goedel.Tool.Domainer.projitems*{608732b4-132c-41a3-b785-164ff4239b20}*SharedItemsImports = 13
 		Exceptional\Goedel.Tool.Exceptional\Goedel.Tool.Exceptional.projitems*{64815d6d-201e-4039-b1bd-fe85c44b8126}*SharedItemsImports = 13
 		DocTools\Goedel.Document.Markdown\Goedel.Document.Markdown.projitems*{64e3ba39-e3da-4b2a-a694-7c77e463c249}*SharedItemsImports = 4
-		Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.projitems*{64e3ba39-e3da-4b2a-a694-7c77e463c249}*SharedItemsImports = 4
-		Goedel.Document.RFC\Goedel.Document.RFC.projitems*{64e3ba39-e3da-4b2a-a694-7c77e463c249}*SharedItemsImports = 4
+		DocTools\Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.projitems*{64e3ba39-e3da-4b2a-a694-7c77e463c249}*SharedItemsImports = 4
+		DocTools\Goedel.Document.RFC\Goedel.Document.RFC.projitems*{64e3ba39-e3da-4b2a-a694-7c77e463c249}*SharedItemsImports = 4
 		..\mmm\Libraries\Goedel.IO\Goedel.IO.projitems*{64e3ba39-e3da-4b2a-a694-7c77e463c249}*SharedItemsImports = 4
-		Goedel.Document.RFC\Goedel.Document.RFC.projitems*{7c30fbe5-8e08-4687-ad68-8028819d5e57}*SharedItemsImports = 13
+		DocTools\Goedel.Document.RFC\Goedel.Document.RFC.projitems*{7c30fbe5-8e08-4687-ad68-8028819d5e57}*SharedItemsImports = 13
 		GScript\Goedel.Tool.Script\Goedel.Tool.Script.projitems*{7d3b1b22-f249-4389-ab94-790757144aa2}*SharedItemsImports = 13
 		..\mmm\Libraries\Goedel.FSR\Goedel.FSR.projitems*{8774e85c-f054-4235-a02c-d180ba05e316}*SharedItemsImports = 13
 		GScript\Goedel.Tool.Script\Goedel.Tool.Script.projitems*{8d243206-a118-4ba4-8bd6-45593818d35d}*SharedItemsImports = 4
+		DNSConfig\Goedel.Tool.DNSConfig\Goedel.Tool.DNSConfig.projitems*{9c81e246-38a7-4567-b2db-f1dbde2a0b65}*SharedItemsImports = 13
 		..\mmm\Libraries\Goedel.Registry\Goedel.Registry.projitems*{9e9408ad-aa85-4365-a553-062f9dc98822}*SharedItemsImports = 13
 		..\mmm\Libraries\Goedel.IO\Goedel.IO.projitems*{9fa5a13a-56ec-4dec-a3ee-5963f76c44e5}*SharedItemsImports = 13
 		DocTools\Goedel.Document.OpenXML\Goedel.Document.OpenXML.projitems*{a25a14da-8ac5-445e-9562-46c11c54ea15}*SharedItemsImports = 13
@@ -200,7 +212,9 @@ Global
 		ASN\Goedel.Tool.ASN\Goedel.Tool.ASN.projitems*{d09d4813-55b9-41ed-bc8a-9bc7b79dc51b}*SharedItemsImports = 4
 		..\mmm\Libraries\Goedel.ASN\Goedel.ASN.projitems*{d09d4813-55b9-41ed-bc8a-9bc7b79dc51b}*SharedItemsImports = 4
 		Goedel3\Goedel.Tool.Schema\Goedel.Tool.Schema.projitems*{d276dd3c-b102-49c8-9df5-c22a45d1d05d}*SharedItemsImports = 13
+		..\mmm\Libraries\Goedel.Discovery\Goedel.Discovery.projitems*{e0560a9e-5a6c-464d-8114-10e9889882b3}*SharedItemsImports = 13
 		FSRGen\Goedel.Tool.FSRGen\Goedel.Tool.FSRGen.projitems*{e3bf5cfe-e5b3-4317-b78c-b3ceefe9f889}*SharedItemsImports = 4
+		..\mmm\Libraries\Goedel.Discovery\Goedel.Discovery.projitems*{e81275ea-69bd-4feb-974e-c2f8a4f613f6}*SharedItemsImports = 4
 		..\mmm\Libraries\Goedel.FSR\Goedel.FSR.projitems*{e81275ea-69bd-4feb-974e-c2f8a4f613f6}*SharedItemsImports = 4
 		..\mmm\Libraries\Goedel.Registry\Goedel.Registry.projitems*{e81275ea-69bd-4feb-974e-c2f8a4f613f6}*SharedItemsImports = 4
 		..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.projitems*{e81275ea-69bd-4feb-974e-c2f8a4f613f6}*SharedItemsImports = 4
@@ -465,11 +479,9 @@ Global
 		{CD5C23DD-8EEF-4848-992F-B04088630CC1}.DotNet|x86.ActiveCfg = Debug|Any CPU
 		{CD5C23DD-8EEF-4848-992F-B04088630CC1}.DotNet|x86.Build.0 = Debug|Any CPU
 		{CD5C23DD-8EEF-4848-992F-B04088630CC1}.Publish|Any CPU.ActiveCfg = Release|Any CPU
-		{CD5C23DD-8EEF-4848-992F-B04088630CC1}.Publish|Any CPU.Build.0 = Release|Any CPU
 		{CD5C23DD-8EEF-4848-992F-B04088630CC1}.Publish|x86.ActiveCfg = Release|Any CPU
 		{CD5C23DD-8EEF-4848-992F-B04088630CC1}.Publish|x86.Build.0 = Release|Any CPU
 		{CD5C23DD-8EEF-4848-992F-B04088630CC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD5C23DD-8EEF-4848-992F-B04088630CC1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD5C23DD-8EEF-4848-992F-B04088630CC1}.Release|x86.ActiveCfg = Release|Any CPU
 		{CD5C23DD-8EEF-4848-992F-B04088630CC1}.Release|x86.Build.0 = Release|Any CPU
 		{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}.Debug|Any CPU.ActiveCfg = Debug|x86
@@ -741,6 +753,38 @@ Global
 		{8BECC8C8-00BC-4972-919E-283D96953B41}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8BECC8C8-00BC-4972-919E-283D96953B41}.Release|x86.ActiveCfg = Release|Any CPU
 		{8BECC8C8-00BC-4972-919E-283D96953B41}.Release|x86.Build.0 = Release|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.Debug|x86.Build.0 = Debug|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.DotNet|Any CPU.ActiveCfg = Debug|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.DotNet|Any CPU.Build.0 = Debug|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.DotNet|x86.ActiveCfg = Debug|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.DotNet|x86.Build.0 = Debug|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.Publish|x86.ActiveCfg = Release|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.Publish|x86.Build.0 = Release|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.Release|x86.ActiveCfg = Release|Any CPU
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05}.Release|x86.Build.0 = Release|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.Debug|x86.Build.0 = Debug|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.DotNet|Any CPU.ActiveCfg = Debug|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.DotNet|Any CPU.Build.0 = Debug|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.DotNet|x86.ActiveCfg = Debug|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.DotNet|x86.Build.0 = Debug|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.Publish|x86.ActiveCfg = Debug|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.Publish|x86.Build.0 = Debug|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.Release|x86.ActiveCfg = Release|Any CPU
+		{627A80A7-F304-444E-B1DF-0F5A9515716F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -812,6 +856,11 @@ Global
 		{415214FC-4792-4519-A93F-315F2EA97CFF} = {510C00FB-FB4F-4C9E-A2F6-86D2FA171CD1}
 		{573F1F3C-C0A9-4272-B054-068CAA8EF8AA} = {510C00FB-FB4F-4C9E-A2F6-86D2FA171CD1}
 		{8BECC8C8-00BC-4972-919E-283D96953B41} = {510C00FB-FB4F-4C9E-A2F6-86D2FA171CD1}
+		{8D9AC879-C123-4356-B9B6-BE5393FCBFF8} = {32781FAB-7F7F-4267-9599-479F14195A4B}
+		{9C81E246-38A7-4567-B2DB-F1DBDE2A0B65} = {8D9AC879-C123-4356-B9B6-BE5393FCBFF8}
+		{65A9786E-96BB-4D81-BD41-E9C81E15DA05} = {8D9AC879-C123-4356-B9B6-BE5393FCBFF8}
+		{627A80A7-F304-444E-B1DF-0F5A9515716F} = {8D9AC879-C123-4356-B9B6-BE5393FCBFF8}
+		{E0560A9E-5A6C-464D-8114-10E9889882B3} = {510C00FB-FB4F-4C9E-A2F6-86D2FA171CD1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B0FED20-F156-4724-9241-1F63A97DA43E}

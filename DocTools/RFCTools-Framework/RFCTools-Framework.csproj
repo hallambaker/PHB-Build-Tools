@@ -47,8 +47,8 @@
       <Name>Framework.ToolLib</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\..\Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.projitems" Label="Shared" />
-  <Import Project="..\..\Goedel.Document.RFC\Goedel.Document.RFC.projitems" Label="Shared" />
+  <Import Project="..\..\DocTools\Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.projitems" Label="Shared" />
+  <Import Project="..\..\DocTools\Goedel.Document.RFC\Goedel.Document.RFC.projitems" Label="Shared" />
   <Import Project="..\Goedel.Document.Markdown\Goedel.Document.Markdown.projitems" Label="Shared" />
   <Import Project="..\..\..\mmm\Libraries\Goedel.IO\Goedel.IO.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

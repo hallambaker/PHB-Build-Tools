@@ -27,16 +27,16 @@ ToolTargets = \
 	ProtoGen.cs
 
 Document.cs : Document.script 
-	gscript Document.script Document.cs
+	gscript Document.script  Document.cs
 
 GenerateC.cs : GenerateC.script 
-	gscript GenerateC.script GenerateC.cs
+	gscript GenerateC.script  GenerateC.cs
 
 GenerateCSharp.cs : GenerateCSharp.script 
-	gscript GenerateCSharp.script GenerateCSharp.cs
+	gscript GenerateCSharp.script  GenerateCSharp.cs
 
 ProtoGen.cs : ProtoGen.gdl 
-	goedel3 ProtoGen.gdl ProtoGen.cs
+	goedel3 ProtoGen.gdl  /cs  ProtoGen.cs
 
 
 prebuildRecurse : 
@@ -49,4 +49,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget Goedel.Tool.Protogen.dll
 

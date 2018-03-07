@@ -39,9 +39,9 @@
 
   <Import Project="..\Goedel.Document.OpenXML\Goedel.Document.OpenXML.projitems" Label="Shared" />
 
-  <Import Project="..\..\Goedel.Document.RFC\Goedel.Document.RFC.projitems" Label="Shared" />
+  <Import Project="..\..\DocTools\Goedel.Document.RFC\Goedel.Document.RFC.projitems" Label="Shared" />
 
-  <Import Project="..\..\Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.projitems" Label="Shared" />
+  <Import Project="..\..\DocTools\Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.projitems" Label="Shared" />
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="VSPreBuild" />

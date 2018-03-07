@@ -1,0 +1,123 @@
+; PATH=/etc/bind/named.conf.local
+
+zone "hallambaker.com" {
+    type master;
+    file "/etc/bind/zones/db.hallambaker.com";
+};
+
+zone "defaultdenysecurity.com" {
+    type master;
+    file "/etc/bind/zones/db.defaultdenysecurity.com";
+};
+
+zone "dotcrimemanifesto.com" {
+    type master;
+    file "/etc/bind/zones/db.dotcrimemanifesto.com";
+};
+
+zone "quantumofstupid.com" {
+    type master;
+    file "/etc/bind/zones/db.quantumofstupid.com";
+};
+
+zone "cyberishard.com" {
+    type master;
+    file "/etc/bind/zones/db.cyberishard.com";
+};
+
+zone "mathmesh.com" {
+    type master;
+    file "/etc/bind/zones/db.mathmesh.com";
+};
+
+zone "cryptomesh.org" {
+    type master;
+    file "/etc/bind/zones/db.cryptomesh.org";
+};
+
+zone "mathmesh.net" {
+    type master;
+    file "/etc/bind/zones/db.mathmesh.net";
+};
+
+zone "prismproof.com" {
+    type master;
+    file "/etc/bind/zones/db.prismproof.com";
+};
+
+zone "prismproof.org" {
+    type master;
+    file "/etc/bind/zones/db.prismproof.org";
+};
+
+zone "bitkitten.org" {
+    type master;
+    file "/etc/bind/zones/db.bitkitten.org";
+};
+
+zone "dunningkrugerrand.com" {
+    type master;
+    file "/etc/bind/zones/db.dunningkrugerrand.com";
+};
+
+zone "letsauthenticate.com" {
+    type master;
+    file "/etc/bind/zones/db.letsauthenticate.com";
+};
+
+zone "letsauthenticate.org" {
+    type master;
+    file "/etc/bind/zones/db.letsauthenticate.org";
+};
+
+zone "phbooth.com" {
+    type master;
+    file "/etc/bind/zones/db.phbooth.com";
+};
+
+zone "skurnick.com" {
+    type master;
+    file "/etc/bind/zones/db.skurnick.com";
+};
+
+zone "fluxator.org" {
+    type master;
+    file "/etc/bind/zones/db.fluxator.org";
+};
+
+zone "fussbook.com" {
+    type master;
+    file "/etc/bind/zones/db.fussbook.com";
+};
+
+zone "internet64.net" {
+    type master;
+    file "/etc/bind/zones/db.internet64.net";
+};
+
+zone "internet64.org" {
+    type master;
+    file "/etc/bind/zones/db.internet64.org";
+};
+
+zone "nudeler.com" {
+    type master;
+    file "/etc/bind/zones/db.nudeler.com";
+};
+
+zone "nudeller.com" {
+    type master;
+    file "/etc/bind/zones/db.nudeller.com";
+};
+
+zone "sayanythingtrump.com" {
+    type master;
+    file "/etc/bind/zones/db.sayanythingtrump.com";
+};
+
+zone "sayanythingtrump.org" {
+    type master;
+    file "/etc/bind/zones/db.sayanythingtrump.org";
+};
+
+

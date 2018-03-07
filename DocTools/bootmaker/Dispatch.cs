@@ -15,6 +15,12 @@ namespace Shell.Bootmaker {
     /// </summary>
     public partial class Shell {
 
+
+        static Shell () {
+            BlockParserMarkDown.Register();
+            }
+
+
         /// <summary>
         /// Process a whole site
         /// </summary>

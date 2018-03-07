@@ -25,7 +25,7 @@ ToolTargets = \
 	ASN2.cs
 
 ASN2.cs : ASN2.command 
-	commandparse ASN2.command ASN2.cs
+	commandparse ASN2.command  ASN2.cs
 
 
 prebuildRecurse : 
@@ -42,4 +42,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget asn2.exe $(LinkFiles) 
 

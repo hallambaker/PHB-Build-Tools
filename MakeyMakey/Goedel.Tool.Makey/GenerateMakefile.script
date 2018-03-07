@@ -1,5 +1,6 @@
 ﻿#script 1.0
 #license MITLicense
+#using Goedel.Utilities
 #xclass Goedel.Tool.Makey Generate
 #%  public Generate (TextWriter Output) : base (Output) {}
 #% string Prefix = "! "; //"\t";

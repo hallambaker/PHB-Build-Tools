@@ -19,32 +19,35 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    .dll\
+    Goedel.IO.dll\
     Goedel.Tool.Shell.dll
 
 ToolTargets = \
 	main.cs
 
 main.cs : main.command 
-	commandparse main.command main.cs
+	commandparse main.command  main.cs
 
 
 prebuildRecurse : 
 	cd ..\Goedel.Document.Markdown && nmake /c /f VS.make prebuild 
 	cd ..\Goedel.Document.OpenXML && nmake /c /f VS.make prebuild 
-	cd ..\..\Goedel.Document.RFC && nmake /c /f VS.make prebuild 
-	cd ..\..\Goedel.Document.RFCConvert && nmake /c /f VS.make prebuild 
+	cd ..\..\DocTools\Goedel.Document.RFC && nmake /c /f VS.make prebuild 
+	cd ..\..\DocTools\Goedel.Document.RFCConvert && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
 	cd ..\Goedel.Document.Markdown && nmake /c /f VS.make postbuild 
 	cd ..\Goedel.Document.OpenXML && nmake /c /f VS.make postbuild 
-	cd ..\..\Goedel.Document.RFC && nmake /c /f VS.make postbuild 
-	cd ..\..\Goedel.Document.RFCConvert && nmake /c /f VS.make postbuild 
+	cd ..\..\DocTools\Goedel.Document.RFC && nmake /c /f VS.make postbuild 
+	cd ..\..\DocTools\Goedel.Document.RFCConvert && nmake /c /f VS.make postbuild 
 
 
 prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget rfctool.exe $(LinkFiles) 
 

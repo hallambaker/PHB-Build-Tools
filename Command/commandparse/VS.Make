@@ -19,14 +19,14 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    .dll\
+    Goedel.IO.dll\
     Goedel.Tool.Shell.dll
 
 ToolTargets = \
 	Command.cs
 
 Command.cs : Command.command 
-	commandparse Command.command Command.cs
+	commandparse Command.command  Command.cs
 
 
 prebuildRecurse : 
@@ -41,4 +41,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget commandparse.exe $(LinkFiles) 
 

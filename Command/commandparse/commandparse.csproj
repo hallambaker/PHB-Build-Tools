@@ -38,7 +38,7 @@
   </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="VSPostBuild" />
+    <Exec Command="cd $(ProjectDir) &amp;&amp; VSPostBuildWindows $(TargetDir)" />
   </Target>
 
 </Project>

@@ -433,7 +433,7 @@ namespace Goedel.Document.Markdown {
 
             if (Document.Parent != Document.Root) {
                 Console.WriteLine("Parent: {0}", Document.Parent.Name);
-                HTMLWriter.WriteLine(NavParent, "/", Document.Parent.Name);
+                HTMLWriter.WriteLine(NavParent, Document.Parent.PartPath, Document.Parent.Name);
                 }
 
             HTMLWriter.WriteLine(NavEntryStart);

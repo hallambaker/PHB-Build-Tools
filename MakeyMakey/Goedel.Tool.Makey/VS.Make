@@ -26,13 +26,13 @@ ToolTargets = \
 	Tokenizer.cs
 
 Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional Exceptions.cs
+	exceptional Exceptions.exceptional  Exceptions.cs
 
 GenerateMakefile.cs : GenerateMakefile.script 
-	gscript GenerateMakefile.script GenerateMakefile.cs
+	gscript GenerateMakefile.script  GenerateMakefile.cs
 
 Tokenizer.cs : Tokenizer.fsr 
-	fsrgen Tokenizer.fsr Tokenizer.cs
+	fsrgen Tokenizer.fsr  Tokenizer.cs
 
 
 prebuildRecurse : 
@@ -45,4 +45,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget Goedel.Tool.Makey.dll
 

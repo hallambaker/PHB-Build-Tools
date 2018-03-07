@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "srvconf": {
+      "commandName": "Project",
+      "commandLineArgs": "PHBZones.dns /zone=PHBZones.zone",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\buildtools\\DNSConfig\\srvconf\\Test"
+    }
+  }
+}

@@ -1,0 +1,92 @@
+﻿// First DNS service listed is the default
+
+Machine Home             "108.7.198.158"
+Machine CloudFloating    "139.59.200.120"
+Machine CloudDroplet	 "178.62.79.124"
+
+
+DNS Default "hallam.gmail.com"
+	// Do NOT specify Serial, this is calculated according to RFC1912
+	//Refresh 3600
+	Retry 1800
+	Expire 3600000
+	TTL 600
+	CAA	"issue" "comodoca.com"
+	CAA "issue" "letsencrypt.org"
+	CAA "issuewild " ";"
+	CAA "iodef" "mailto:hostmaster@hallambaker.com"
+	Authoritative dns1 CloudDroplet
+	Authoritative dns2 CloudFloating
+	MX smtp1.hallambaker.com 1
+
+
+// The domain we are using for our DNS hosts.
+Site hallambaker
+	Domain hallambaker.com
+		Address smtp1.hallambaker.com CloudDroplet
+			SMTP
+	Domain defaultdenysecurity.com
+	Domain dotcrimemanifesto.com
+	Domain quantumofstupid.com
+	Domain cyberishard.com
+	Web www.hallambaker.com "hallambaker/"
+		Host host1.mathmesh.com
+
+// At present, the domain mathmesh.com is being serviced by the 
+// dynamic DNS provider. Will switch to using own dynamic in due course.
+Site mathmesh
+	Domain mathmesh.com
+		Address host1.mathmesh.com Home
+	Domain cryptomesh.org
+		Service "mmm"
+			TXT "TLS=require"
+			Host host1.mathmesh.com 
+				Port 42666
+				Priority 1
+				Weight 100
+		Service "mmmapp"
+			TXT "TLS=require"
+			Host host1.mathmesh.com 
+				Port 42667	
+				Priority 1
+				Weight 100
+	Domain mathmesh.net
+	Domain prismproof.com
+	Domain prismproof.org
+	Web www.mathmesh.com "prismproof/"
+		Host host1.mathmesh.com
+
+Site bitkitten
+	Domain bitkitten.org
+	Domain dunningkrugerrand.com
+	Web www.bitkitten.org "bitkitten"
+		Host host1.mathmesh.com
+
+Site letsauthenticate
+	Domain letsauthenticate.com
+	Domain letsauthenticate.org
+	Web www.letsauthenticate.com "letsauthenticate/"
+		Host host1.mathmesh.com
+
+Site phbooth
+	Domain phbooth.com
+	Web www.phbooth.com "phbooth/"
+		Host host1.mathmesh.com
+
+Site skurnick
+	Domain skurnick.com
+	Web www.skurnick.com "skurnick/"
+		Host host1.mathmesh.com
+
+Site parked
+	Domain fluxator.org
+	Domain fussbook.com
+	Domain internet64.net
+	Domain internet64.org
+	Domain nudeler.com
+	Domain nudeller.com
+	Domain sayanythingtrump.com
+	Domain sayanythingtrump.org
+	Web fluxator.org "parked/"
+		Host host1.mathmesh.com
+

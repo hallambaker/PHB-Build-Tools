@@ -37,3 +37,6 @@ prebuild : prebuildRecurse $(ToolTargets)
 postbuild : postbuildRecurse
 
 
+postbuildwindows : 
+	powershell publishtarget domainer.dll
+

@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "bootmaker": {
+      "commandName": "Project",
+      "commandLineArgs": "Sources/prismproof prismproof",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\WebPublish\\"
+    }
+  }
+}

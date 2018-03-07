@@ -25,10 +25,10 @@ ToolTargets = \
 	VSIXBuild.cs
 
 GenerateCS.cs : GenerateCS.script 
-	gscript GenerateCS.script GenerateCS.cs
+	gscript GenerateCS.script  GenerateCS.cs
 
 VSIXBuild.cs : VSIXBuild.gdl 
-	goedel3 VSIXBuild.gdl VSIXBuild.cs
+	goedel3 VSIXBuild.gdl  /cs  VSIXBuild.cs
 
 
 prebuildRecurse : 
@@ -41,4 +41,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget Goedel.Tool.VSIXBuild.dll
 

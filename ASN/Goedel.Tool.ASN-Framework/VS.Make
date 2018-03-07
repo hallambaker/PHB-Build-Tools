@@ -39,3 +39,6 @@ prebuild : prebuildRecurse $(ToolTargets)
 postbuild : postbuildRecurse
 
 
+postbuildwindows : 
+	powershell publishtarget Goedel.Tool.ASN-Framework.dll
+

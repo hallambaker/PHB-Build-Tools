@@ -25,7 +25,7 @@ ToolTargets = \
 	Main.cs
 
 Main.cs : Main.Command 
-	commandparse Main.Command Main.cs
+	commandparse Main.Command  Main.cs
 
 
 prebuildRecurse : 
@@ -40,4 +40,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget exceptional.exe $(LinkFiles) 
 

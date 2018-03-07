@@ -25,10 +25,10 @@ ToolTargets = \
 	Generate.cs
 
 Command.cs : Command.gdl 
-	goedel3 Command.gdl Command.cs
+	goedel3 Command.gdl  /cs  Command.cs
 
 Generate.cs : Generate.script 
-	gscript Generate.script Generate.cs
+	gscript Generate.script  Generate.cs
 
 
 prebuildRecurse : 
@@ -41,4 +41,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget Goedel.Tool.Command.dll
 

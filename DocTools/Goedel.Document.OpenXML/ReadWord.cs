@@ -60,16 +60,6 @@ namespace Goedel.Document.OpenXML {
         GM.CatalogEntry CatalogEntryTableRow;
         GM.CatalogEntry CatalogEntryTableCell;
 
-
-        //GM.CatalogEntry CatalogEntryEmphasis;
-        //GM.CatalogEntry CatalogEntryStrong;
-        //GM.CatalogEntry CatalogEntryCode;
-        //GM.CatalogEntry CatalogEntryKeyboard;
-        //GM.CatalogEntry CatalogEntrySubscript;
-        //GM.CatalogEntry CatalogEntrySuperscript;
-        //GM.CatalogEntry CatalogEntryDefinition;
-        //GM.CatalogEntry CatalogEntryNormative;
-
         public BlockParseWord(string FileName, GM.TagCatalog TagCatalog) {
             Source = WordprocessingDocument.Open(FileName, false);
 
@@ -90,16 +80,6 @@ namespace Goedel.Document.OpenXML {
             CatalogEntryTable = TagCatalog.Find("table");
             CatalogEntryTableRow = TagCatalog.Find("tablerow");
             CatalogEntryTableCell = TagCatalog.Find("tablecell");
-
-            //CatalogEntryEmphasis = TagCatalog.Find("i");
-            //CatalogEntryStrong = TagCatalog.Find("b");
-            //CatalogEntryCode = TagCatalog.Find("x");
-            //CatalogEntryKeyboard = TagCatalog.Find("kb");
-            //CatalogEntrySubscript = TagCatalog.Find("sub");
-            //CatalogEntrySuperscript = TagCatalog.Find("sup");
-            //CatalogEntryDefinition = TagCatalog.Find("dfn");
-            //CatalogEntryNormative = TagCatalog.Find("norm");
-
 
             SourceMain = Source.MainDocumentPart;
             SourceDocument = SourceMain.Document;
@@ -191,14 +171,12 @@ namespace Goedel.Document.OpenXML {
 
 
         public void ParseParagraph (Paragraph Paragraph) {
-            //Console.WriteLine("Element {0}", Paragraph.InnerText);
 
             var Properties = Paragraph.ParagraphProperties;
 
             var StyleId = Properties?.ParagraphStyleId;
             var StyleVal = StyleId!= null ? StyleId.Val.ToString(): "p";
 
-            //Console.WriteLine("   Style {0}", StyleVal);
             var CatalogEntry = GetCatalogEntry(StyleVal);
 
             if (CatalogEntry.ElementType == GM.ElementType.Meta) {
@@ -470,7 +448,6 @@ namespace Goedel.Document.OpenXML {
                 }
 
             var Result = StringWriter.ToString();
-            //Console.Write(Result);
             return Result;
             }
 

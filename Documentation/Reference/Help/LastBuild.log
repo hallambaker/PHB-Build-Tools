@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shfbBuild product="Sandcastle Help File Builder and Tools" version="2017.5.15.0" projectFile="C:\Users\hallam\Work\BuildToolsNew\Documentation\Reference\Reference.shfbproj" started="11/16/2017 2:38:35 AM">
+<shfbBuild product="Sandcastle Help File Builder and Tools" version="2017.5.15.0" projectFile="C:\Users\hallam\Work\buildtools\Documentation\Reference\Reference.shfbproj" started="12/15/2017 4:20:06 PM">
 <buildStep step="Initializing">
 Finding tools...
 The Sandcastle tools are located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\&#39;
 Searching for HTML Help 1 compiler...
 Found HTML Help 1 compiler in &#39;C:\Program Files (x86)\HTML Help Workshop\&#39;
 Locating components in the following folder(s):
-    C:\Users\hallam\Work\BuildToolsNew\Documentation\Reference
+    C:\Users\hallam\Work\buildtools\Documentation\Reference
     C:\ProgramData\EWSoftware\Sandcastle Help File Builder\Components and Plug-Ins\
     C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\
 Using framework reflection data for &#39;Cross-platform (.NET Core/.NET Standard)&#39; located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\Data\.NETFramework&#39;
@@ -20,7 +20,7 @@ Portions Copyright &#169; 2014, Sam Harwell, All Rights Reserved
 Validating and copying documentation source information
 Source: C:\Users\hallam\Work\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.csproj
 SHFB: Warning BE0006: Unable to locate any documentation sources for &#39;C:\Users\hallam\Work\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.csproj&#39; (Configuration: Release Platform: AnyCPU)
-    Last step completed in 00:00:00.0020
+    Last step completed in 00:00:00.0110
 </buildStep>
 <buildStep step="Failed">
 

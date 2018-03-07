@@ -25,7 +25,7 @@ ToolTargets = \
 	Commands.cs
 
 Commands.cs : Commands.command 
-	commandparse Commands.command Commands.cs
+	commandparse Commands.command  Commands.cs
 
 
 prebuildRecurse : 
@@ -42,4 +42,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget makey.exe $(LinkFiles) 
 

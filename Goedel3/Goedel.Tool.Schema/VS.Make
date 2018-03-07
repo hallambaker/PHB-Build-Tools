@@ -25,10 +25,10 @@ ToolTargets = \
 	ParserGenerator.cs
 
 Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional Exceptions.cs
+	exceptional Exceptions.exceptional  Exceptions.cs
 
 ParserGenerator.cs : ParserGenerator.script 
-	gscript ParserGenerator.script ParserGenerator.cs
+	gscript ParserGenerator.script  ParserGenerator.cs
 
 
 prebuildRecurse : 
@@ -41,4 +41,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget Goedel.Tool.Schema.dll
 

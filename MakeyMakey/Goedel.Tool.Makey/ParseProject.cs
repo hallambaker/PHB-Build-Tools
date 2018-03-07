@@ -10,63 +10,6 @@ namespace Goedel.Tool.Makey {
     public static class Utilities {
 
 
-        public static string UnixCanonicalPath (this string Path) {
-            var Directories = Path.Split('\\');
-
-            for (var i = 0; i < Directories.Length; i++) {
-                if (Directories[i] == "." | Directories[i] == "") {
-                    Directories[i] = null;
-                    }
-                else if (Directories[i] == "..") {
-                    if (StrikeDirectory(Directories, i)) {
-                        Directories[i] = null;
-                        }
-                    }
-
-                }
-
-            var Builder = new StringBuilder();
-            foreach (var Directory in Directories) {
-                if (Directory != null) {
-                    Builder.Append(Directory);
-                    Builder.Append("/");
-                    }
-                }
-
-            return Builder.ToString();
-            }
-
-
-        static bool StrikeDirectory (string[] Directories, int Index) {
-            for (var i = Index - 1; i >= 0; i--) {
-                if (Directories[i] != null) {
-                    Directories[i] = null;
-                    return true;
-                    }
-                }
-            return false;
-
-            }
-
-        public static string UnixPath(this string File, string Sub) {
-            var FilePath = Path.Combine(File, Sub);
-            var Directory = Path.GetDirectoryName(FilePath);
-            return Directory.Replace('\\', '/'); ;
-            }
-
-        public static string UnixPath(this string File) {
-            var Directory = Path.GetDirectoryName(File);
-            return Directory.Replace('\\', '/'); ;
-            }
-
-        public static string UnixFile(this string File) {
-            return File.Replace('\\', '/'); ;
-            }
-
-        public static string UnixFile(this string File, string Sub) {
-            var FilePath = Path.Combine(File, Sub);
-            return FilePath.Replace('\\', '/'); ;
-            }
 
         public static string StripMacro (this string Text) {
             var Index = Text.LastIndexOf(')');
@@ -548,16 +491,16 @@ namespace Goedel.Tool.Makey {
 
     public partial class NoneType {
         public static Dictionary<string, BuildDescription> BuildTypes = new Dictionary<string, BuildDescription>() {
-            { "commandcs", new BuildDescription ("cs", "commandparse") },
-            { "fsrcs", new BuildDescription ("cs", "fsrgen") },
-            { "exceptional", new BuildDescription("cs", "exceptional") },
+            { "commandcs", new BuildDescription ("cs", "commandparse", " /cs ") },
+            { "fsrcs", new BuildDescription ("cs", "fsrgen", " /cs ") },
+            { "exceptional", new BuildDescription("cs", "exceptional", " /cs ") },
             { "gscript", new BuildDescription ("cs", "gscript") },
             { "goedel3", new BuildDescription ("cs", "goedel3", " /cs ") },
-            { "asn2cs", new BuildDescription ("cs", "asn2") },
+            { "asn2cs", new BuildDescription ("cs", "asn2", " /cs ") },
             { "domainercs", new BuildDescription ("cs", "domainer") },
             { "registrycs", new BuildDescription ("cs", "registryconfig") },
             { "vsixbuild", new BuildDescription ("cs", "vsixbuild") },
-            { "protogen", new BuildDescription ("cs", "protogen") },
+            { "protogen", new BuildDescription ("cs", "protogen", " /cs ") },
             { "rfc2txt", new BuildDescription ("txt", "rfctool") },
             { "rfc2xml", new BuildDescription("xml", "rfctool") },
             { "rfc2md", new BuildDescription ("md", "rfctool") },

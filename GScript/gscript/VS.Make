@@ -25,7 +25,7 @@ ToolTargets = \
 	Goedel.cs
 
 Goedel.cs : Goedel.command 
-	commandparse Goedel.command Goedel.cs
+	commandparse Goedel.command  Goedel.cs
 
 
 prebuildRecurse : 
@@ -40,4 +40,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget gscript.exe $(LinkFiles) 
 
