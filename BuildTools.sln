@@ -32,6 +32,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tool VSIXBuild", "Tool VSIXBuild", "{9D6EBBBD-F3E1-432A-BD9D-56BDEE86C029}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tool Document", "Tool Document", "{9E6E38F6-13C4-49A0-A278-018742486965}"
+	ProjectSection(SolutionItems) = preProject
+		DocTools\TestWeb\TagDefinitions.mdsd = DocTools\TestWeb\TagDefinitions.mdsd
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandEcho", "Command\CommandEcho\CommandEcho.csproj", "{85063EFC-7090-42AD-B562-006087DE9AA6}"
 EndProject
@@ -168,6 +171,48 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "srvconf", "DNSConfig\srvconf\srvconf.csproj", "{627A80A7-F304-444E-B1DF-0F5A9515716F}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Discovery-Shared", "..\mmm\Libraries\Goedel.Discovery\Goedel.Discovery-Shared.shproj", "{E0560A9E-5A6C-464D-8114-10E9889882B3}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Source", "DocTools\TestWeb\Source\", "{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_56758"
+		Debug.AspNetCompiler.PhysicalPath = "DocTools\TestWeb\Source\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56758\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_56758"
+		Release.AspNetCompiler.PhysicalPath = "DocTools\TestWeb\Source\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56758\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "56758"
+		SlnRelativePath = "DocTools\TestWeb\Source\"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Target", "DocTools\TestWeb\Target\", "{90889A06-1694-4B38-9592-49CF069E4E20}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_56759"
+		Debug.AspNetCompiler.PhysicalPath = "DocTools\TestWeb\Target\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56759\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_56759"
+		Release.AspNetCompiler.PhysicalPath = "DocTools\TestWeb\Target\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56759\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "56759"
+		SlnRelativePath = "DocTools\TestWeb\Target\"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -785,6 +830,38 @@ Global
 		{627A80A7-F304-444E-B1DF-0F5A9515716F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{627A80A7-F304-444E-B1DF-0F5A9515716F}.Release|x86.ActiveCfg = Release|Any CPU
 		{627A80A7-F304-444E-B1DF-0F5A9515716F}.Release|x86.Build.0 = Release|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.Debug|x86.Build.0 = Debug|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.DotNet|Any CPU.ActiveCfg = Debug|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.DotNet|Any CPU.Build.0 = Debug|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.DotNet|x86.ActiveCfg = Debug|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.DotNet|x86.Build.0 = Debug|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.Publish|x86.ActiveCfg = Debug|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.Publish|x86.Build.0 = Debug|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.Release|x86.ActiveCfg = Debug|Any CPU
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5}.Release|x86.Build.0 = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.Debug|x86.Build.0 = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.DotNet|Any CPU.ActiveCfg = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.DotNet|Any CPU.Build.0 = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.DotNet|x86.ActiveCfg = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.DotNet|x86.Build.0 = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.Publish|x86.ActiveCfg = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.Publish|x86.Build.0 = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.Release|x86.ActiveCfg = Debug|Any CPU
+		{90889A06-1694-4B38-9592-49CF069E4E20}.Release|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -861,6 +938,8 @@ Global
 		{65A9786E-96BB-4D81-BD41-E9C81E15DA05} = {8D9AC879-C123-4356-B9B6-BE5393FCBFF8}
 		{627A80A7-F304-444E-B1DF-0F5A9515716F} = {8D9AC879-C123-4356-B9B6-BE5393FCBFF8}
 		{E0560A9E-5A6C-464D-8114-10E9889882B3} = {510C00FB-FB4F-4C9E-A2F6-86D2FA171CD1}
+		{88239AFF-1B8E-4B6C-92C1-DE0357B260B5} = {9E6E38F6-13C4-49A0-A278-018742486965}
+		{90889A06-1694-4B38-9592-49CF069E4E20} = {9E6E38F6-13C4-49A0-A278-018742486965}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B0FED20-F156-4724-9241-1F63A97DA43E}

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Goedel.Registry;
 
+// TODO: Should add a summary of each object/message into the markdown documentation output
+
+
 namespace Goedel.Tool.ProtoGen {
     public partial class ProtoStruct : Parser {
         bool HaveRun = false;

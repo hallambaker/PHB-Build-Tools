@@ -1,4 +1,4 @@
-; PATH=/etc/bind/named.conf.local
+# PATH=/etc/bind/named.conf.local
 
 zone "hallambaker.com" {
     type master;

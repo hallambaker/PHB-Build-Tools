@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "rfctool": {
+      "commandName": "Project",
+      "commandLineArgs": "O:\\Documents\\Mesh\\hallambaker-mesh-reference.docx /txt=delete.txt /cache=bib.xml",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Release\\Documents\\Publish"
+    }
+  }
+}

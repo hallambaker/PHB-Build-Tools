@@ -1,6 +1,8 @@
 ﻿// First DNS service listed is the default
 
 Machine Home             "108.7.198.158"
+
+Machine Voodoo             "192.168.1.21"
 Machine CloudFloating    "139.59.200.120"
 Machine CloudDroplet	 "178.62.79.124"
 
@@ -37,17 +39,31 @@ Site hallambaker
 Site mathmesh
 	Domain mathmesh.com
 		Address host1.mathmesh.com Home
+		
 	Domain cryptomesh.org
+		Address host1.cryptomesh.org Voodoo
 		Service "mmm"
 			TXT "TLS=require"
-			Host host1.mathmesh.com 
-				Port 42666
+			Host host1.cryptomesh.org
+				Port 80
 				Priority 1
 				Weight 100
-		Service "mmmapp"
+		Service "account"
 			TXT "TLS=require"
-			Host host1.mathmesh.com 
-				Port 42667	
+			Host host1.cryptomesh.org
+				Port 80	
+				Priority 1
+				Weight 100
+		Service "recrypt"
+			TXT "TLS=require"
+			Host host1.cryptomesh.org
+				Port 80	
+				Priority 1
+				Weight 100
+		Service "confirm"
+			TXT "TLS=require"
+			Host host1.cryptomesh.org 
+				Port 80	
 				Priority 1
 				Weight 100
 	Domain mathmesh.net

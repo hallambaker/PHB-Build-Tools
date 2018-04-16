@@ -9,6 +9,14 @@ using Goedel.Registry;
 
 namespace Shell.Bootmaker {
     class Program {
+
+        // Bug: The breadcrumbs are being incorrectly set, it goes master->Level2 not master->Level1->Level2
+
+        // ToDo: Work out how to do a decent image closeup in Bootstrap
+
+        // ToDo: Re-enable use of Visio? Word? Powerpoint? handlers
+
+
         //static void Main(string[] args) {
         //    //string InPath = @"C:\Users\Phillip\Google Drive\hallambaker.com\Professional\Architecture\";
         //    //string OutPath = @"O:\hallambaker";

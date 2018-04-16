@@ -53,9 +53,29 @@ namespace Shell.Bootmaker {
 
             var TagCatalog1 = new TagCatalog(Parse);
             //TagCatalog1.DocumentProcess = Goedel.WordLib.Dispatch.Process;
-            //TagCatalog1.Process = Goedel.Document.Office.Dispatch.Process;
+            TagCatalog1.Process = ProcessCopyFile;
 
             return TagCatalog1;
+            }
+
+
+        static readonly Dictionary<string, bool> CopyExtensions = new Dictionary<string, bool> {
+            { ".png", true},
+            { ".jpg", true},
+            { ".svg", true},
+            { ".txt", true},
+            { ".config", true}
+            };
+
+        static void ProcessCopyFile (string InPath, string OutPath) {
+            var Extension = Path.GetExtension(InPath);
+            if (!CopyExtensions.ContainsKey(Extension.ToLower())) {
+                return;
+                }
+
+            var OutFile = Path.Combine(OutPath, Path.GetFileName(InPath));
+
+            System.IO.File.Copy(InPath, OutFile, true);
             }
 
 

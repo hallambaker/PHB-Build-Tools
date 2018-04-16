@@ -195,10 +195,22 @@ namespace Goedel.Document.RFC {
             WriteBlock(P, "p");
             }
 
+
+        void WritePRE (List<TextSegment> Segments) {
+            foreach (var Segment in Segments) {
+                switch (Segment) {
+                    case TextSegmentText TextSegmentText:
+                        Write(TextSegmentText.Text, false, false);
+                        break;
+                    }
+                }
+            }
+
         public void WritePre (PRE P) {
             Start("pre", true, false, "id", P.GeneratedID);
             // ToDo: write ID
-            Write(P.Text.Trim(), false, false);
+            WritePRE(P.Segments);
+            //Write(P.Text.Trim(), false, false);
             WriteElement("a", false, false, Pilcrow, "class", "pilcrow", "href", "#" + P.GeneratedID);
 
             End(false, true);

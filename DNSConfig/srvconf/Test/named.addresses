@@ -1,4 +1,4 @@
-; Machine Home 108.7.198.158
+# Machine Home 108.7.198.158
 
 hallambaker.com.    A 108.7.198.158
 www.hallambaker.com.    A 108.7.198.158
@@ -29,8 +29,6 @@ cryptomesh.org.    A 108.7.198.158
 www.cryptomesh.org.    A 108.7.198.158
 http.cryptomesh.org.    A 108.7.198.158
 https.cryptomesh.org.    A 108.7.198.158
-mmm.cryptomesh.org.    A 108.7.198.158
-mmmapp.cryptomesh.org.    A 108.7.198.158
 mathmesh.net.    A 108.7.198.158
 www.mathmesh.net.    A 108.7.198.158
 http.mathmesh.net.    A 108.7.198.158
@@ -101,7 +99,16 @@ http.sayanythingtrump.org.    A 108.7.198.158
 https.sayanythingtrump.org.    A 108.7.198.158
 
 
-; Machine CloudFloating 139.59.200.120
+# Machine Voodoo 192.168.1.21
+
+host1.cryptomesh.org.    A 192.168.1.21
+mmm.cryptomesh.org.    A 192.168.1.21
+account.cryptomesh.org.    A 192.168.1.21
+recrypt.cryptomesh.org.    A 192.168.1.21
+confirm.cryptomesh.org.    A 192.168.1.21
+
+
+# Machine CloudFloating 139.59.200.120
 
 dns2.hallambaker.com.    A 139.59.200.120
 dns2.defaultdenysecurity.com.    A 139.59.200.120
@@ -129,7 +136,7 @@ dns2.sayanythingtrump.com.    A 139.59.200.120
 dns2.sayanythingtrump.org.    A 139.59.200.120
 
 
-; Machine CloudDroplet 178.62.79.124
+# Machine CloudDroplet 178.62.79.124
 
 dns1.hallambaker.com.    A 178.62.79.124
 smtp1.hallambaker.com.    A 178.62.79.124

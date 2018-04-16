@@ -269,7 +269,7 @@ namespace Goedel.Document.RFC {
 
                             if (TextBlock.GetType() == typeof(PRE)) {
                                 PRE PRE = (PRE)TextBlock;
-                                WriteParagraphPre(PRE.Text);
+                                WriteParagraphPre(PRE.TextSegments);
                                 }
 
                             if (TextBlock.GetType() == typeof(Table)) {

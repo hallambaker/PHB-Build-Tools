@@ -517,6 +517,23 @@ namespace Goedel.Document.RFC {
         public PRE (string Text, string ID) : base(Text, ID) {
 
             }
+
+        public string TextSegments => FromSegments(Segments);
+
+        string FromSegments (List<GM.TextSegment> Segments) {
+            var Builder = new StringBuilder();
+
+            foreach (var Segment in Segments) {
+                switch (Segment) {
+                    case GM.TextSegmentText TextSegmentText:
+                        Builder.Append(TextSegmentText.Text);
+                        break;
+                    }
+                }
+
+            return Builder.ToString();
+            }
+
         }
 
 

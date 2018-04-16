@@ -250,6 +250,16 @@ namespace Goedel.Document.RFC {
             }
 
 
+        void WritePRE (List<GM.TextSegment> Segments) {
+            foreach (var Segment in Segments) {
+                switch (Segment) {
+                    case GM.TextSegmentText TextSegmentText:
+                        TextWriter.Write(TextSegmentText.Text);
+                        break;
+                    }
+                }
+            }
+
         public void WriteSections(List<Section> Sections) {
             foreach (Section Section in Sections) {
                 if (!Section.Automatic) {
@@ -272,7 +282,8 @@ namespace Goedel.Document.RFC {
                                 WriteStartTag("artwork");
 
                                 TextWriter.Write("<![CDATA[");
-                                TextWriter.Write(PRE.Text);
+                                WritePRE(PRE.Segments);
+                                //TextWriter.Write(PRE.Text);
                                 TextWriter.Write("]]>");
 
                                 WriteEndTag("artwork");

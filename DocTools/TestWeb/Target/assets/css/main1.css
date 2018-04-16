@@ -1,0 +1,222 @@
+﻿.phb {
+    color: #008000;
+    background: #000;
+}
+
+nav.navbar-default {
+    color: #008000;
+    background: #000;
+}
+
+.nav-item {
+    color: #008000;
+    background: #000;
+}
+
+.nav-link {
+    color: #008000;
+    background: #000;
+}
+
+.nav-link:hover {
+    color: #bc91e5;
+    background: #000;
+}
+
+.navbar-brand {
+    color: #008000;
+    background: #000;
+}
+
+.navbar-brand:hover {
+    color: #bc91e5;
+    background: #000;
+}
+
+div.bs-docs-header {
+    position: relative;
+    padding: 30px 0;
+    color:  #ddd;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(0,0,0,.1);
+    background-color: #008000;
+}
+
+
+.terminal
+{
+    position: relative;
+    color: #ddd;
+    background: #000;
+    padding: 5px;
+    margin-top: 2.6em;
+    border: 1px solid #aaa;
+    border: 1px solid rgba(110,110,110,0.3);
+    font-family: Menlo,Menlo-Regular,Inconsolata,Monaco,monospace;
+    font-size: 13px;
+    line-height: 1.2em;
+}
+
+.terminal:after
+{
+    display: block;
+    content: "";
+    position: absolute;
+    top: -1.6em;
+    bottom: 0;
+    left: 0;
+    right: 100%;
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    box-shadow: 0 0 25px 0 #aaa;
+}
+
+.terminal:before
+{
+    display: block;
+    position: absolute;
+    content: "Alice's Machine";
+    text-align: center;
+    color: #000;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background: #ccc;
+    background-image: -webkit-linear-gradient(top,#ddd,#aaa);
+    background-image: -moz-linear-gradient(top,#ddd,#aaa);
+    line-height: 1.8em;
+    height: 1.8em;
+    top: -1.8em;
+    left: -1px;
+    right: -1px;
+    font-family: Lucida Grande,sans-serif;
+    font-size: 12px;
+    color: #3a3a53;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+    border: 1px solid rgba(110,110,110,0.3);
+}
+
+
+.terminal2
+{
+    position: relative;
+    color: #ddd;
+    background: #2626ba;
+    padding: 5px;
+    margin-top: 2.6em;
+    border: 1px solid #aaa;
+    border: 1px solid rgba(110,110,110,0.3);
+    font-family: Menlo,Menlo-Regular,Inconsolata,Monaco,monospace;
+    font-size: 13px;
+    line-height: 1.2em;
+}
+
+.terminal2:after {
+    display: block;
+    content: "";
+    position: absolute;
+    top: -1.6em;
+    bottom: 0;
+    left: 0;
+    right: 100%;
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    box-shadow: 0 0 25px 0 #aaa;
+}
+
+.terminal2:before
+{
+    display: block;
+    position: absolute;
+    content: "Machine 2";
+    text-align: center;
+    color: #000;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background: #ccc;
+    background-image: -webkit-linear-gradient(top,#ddd,#aaa);
+    background-image: -moz-linear-gradient(top,#ddd,#aaa);
+    line-height: 1.8em;
+    height: 1.8em;
+    top: -1.8em;
+    left: -1px;
+    right: -1px;
+    font-family: Lucida Grande,sans-serif;
+    font-size: 12px;
+    color: #3a3a53;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+    border: 1px solid rgba(110,110,110,0.3);
+}
+
+
+
+.terminal .green
+{
+    color: #0c0;
+}
+
+
+.color-black {
+    color: #000;
+}
+
+.color-twitter {
+    color: #1da1f2;
+}
+
+.color-youtube {
+    color: #cd201f;
+}
+
+.color-facebook {
+    color: #3b5998;
+}
+
+.color-windows {
+    color: #00bcf2;
+}
+
+.color-apple {
+    color: #000;
+}
+
+.color-linux {
+    color: #2c001e;
+}
+
+.command-prompt
+{
+    color: #FFF;
+}
+
+.command-prompt:before
+{
+    content: "$ ";
+    color: #ddd;
+}
+
+.centered {
+        text-align: center;
+}
+
+.active-prompt
+{
+    -webkit-animation-name: blink;
+    -webkit-animation-direction: normal;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: ease;
+    animation-name: blink;
+    animation-direction: normal;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+}
+
+.active-prompt:after
+{
+    content: "_";
+    color: #FFF;
+}
+

@@ -5,6 +5,23 @@ using System.IO;
 using GM = Goedel.Document.Markdown;
 
 namespace Goedel.Document.RFC {
+
+    // ToDo: Needs a test suite
+
+    // ToDo: Install as a Web Hosted Service
+
+    // BUG: Missing <about> statement to say where to find the online version
+    
+    // BUG: Some references being written as [~RFC...]
+
+    // BUG: Right Flush is not correct, getting spurious spaces
+
+        // BUG: Getting spurious characters, Trust's is Trust?s
+
+        // BUG: Failing to suppress club lines at end of a page correctly
+
+        // TODO: Reduce indent for <DL> lists to 3 characters
+
     public partial class Writers {
 
         /// <summary>
@@ -44,6 +61,7 @@ namespace Goedel.Document.RFC {
 
     public class WriteTXT {
 
+
         TextWriter TextWriter;
         PageWriter PageWriter;
 
@@ -80,7 +98,7 @@ namespace Goedel.Document.RFC {
         public void WritePre(PRE PRE) {
             //PageWriter.Write("[[Insert Preformatted]]", 3, 3, PageWriter.Format.FlushLeft, 1, 1);
 
-            PageWriter.WritePreformated (PRE.Text, 3, 3, 1, 1);
+            PageWriter.WritePreformated (PRE.TextSegments, 3, 3, 1, 1);
             }
 
 

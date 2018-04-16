@@ -12,6 +12,7 @@ namespace Goedel.Document.Markdown {
         public Document Document;
         public TagCatalog TagCatalog;
         protected CatalogEntry CurrentCatalogEntry = null;
+        protected List<TagValue> CurrentAttributes = null;
         protected Block CurrentBlock = null;
 
 
@@ -278,7 +279,8 @@ namespace Goedel.Document.Markdown {
                 return;
                 }
             CurrentBlock = new Paragraph() {
-                CatalogEntry = CurrentCatalogEntry
+                CatalogEntry = CurrentCatalogEntry,
+                Attributes = CurrentAttributes
                 };
             Document.Blocks.Add(CurrentBlock);
             CurrentBlock.AddSegmentText(Text);
@@ -393,6 +395,8 @@ namespace Goedel.Document.Markdown {
                     }
                 case ElementType.Block: {
                     FinishBlock();
+                    CurrentAttributes = Attributes;
+
                     GetCompatibleEnclosure(CatalogEntry);
                     CurrentCatalogEntry = CatalogEntry;
                     break;

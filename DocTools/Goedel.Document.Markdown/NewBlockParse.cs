@@ -8,6 +8,10 @@ using Goedel.IO;
 
 namespace Goedel.Document.Markdown {
 
+    // BUG: When parsing using .mdsd files, empty elements occuring immediately inside layout elements are ignored
+    // e.g. <xl><x4><img="foo.png></xl> produces no output.
+    
+
     /// <summary>
     /// The block parser for markdown.
     /// </summary>

@@ -1,4 +1,4 @@
-; PATH=/etc/bind/named.conf.options 
+# PATH=/etc/bind/named.conf.options 
 
 options {
         directory "/var/cache/bind";

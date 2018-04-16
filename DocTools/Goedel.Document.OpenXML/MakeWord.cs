@@ -129,7 +129,7 @@ namespace Goedel.Document.OpenXML {
 
                         if (TextBlock.GetType() == typeof(HT.PRE)) {
                             var PRE = (HT.PRE)TextBlock;
-                            WriteParagraph(PRE.Text, StyleID_pre);
+                            WriteParagraph(PRE.TextSegments, StyleID_pre);
                             }
 
                         if (TextBlock.GetType() == typeof(HT.Table)) {

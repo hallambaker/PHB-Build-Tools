@@ -17,7 +17,7 @@ namespace Goedel.Document.RFC {
         static int HeaderMargin = 2;
         static int FooterMargin = 5;
 
-        public int LastLine { get => MaxLine - FooterMargin; } 
+        public int LastLine => MaxLine - FooterMargin;
 
         public string HeaderLeft;
         public string HeaderCenter;
@@ -28,10 +28,9 @@ namespace Goedel.Document.RFC {
         public string FooterRight;
 
         public int HeaderLine = 1;
-        public int FooterLine { get => MaxLine - 1; } 
+        public int FooterLine => MaxLine - 1;
 
-        public int MustFillLine {
-            get => (MaxLine - FooterMargin - 10 ) ; }  
+        public int MustFillLine => (MaxLine - FooterMargin - 10);
 
         public int Line;
         public int Page;
@@ -102,26 +101,26 @@ namespace Goedel.Document.RFC {
                 return "";
                 }
 
-            var Result = Padding(Left) + Text;
-            if (Result.Length > 72) {
+            //var Result = Padding(Left) + Text;
+            //if (Result.Length > 72) {
 
-                }
+            //    }
 
-            return Padding(Left) + Text;
+            return Padding(Left) + Text.Trim();
             }
         static string Centered(ref string Source, int Left, int Right) {
             string Text = Consume(ref Source, Right - Left);
             if (Text == "") {
                 return "";
                 }
-            return Padding(Left + ((Right - Text.Length) / 2)) + Text;
+            return Padding(Left + ((Right - Text.Length) / 2)) + Text.Trim();
             }
         static string FlushRight(ref string Source, int Left, int Right) {
             string Text = Consume(ref Source, Right - Left);
             if (Text == "") {
                 return "";
                 }
-            return Padding(Left + Right - Text.Length) + Text;
+            return Padding(Left + Right - Text.Length) + Text.Trim();
             }
 
         static bool IsWhitespace(char c) {
@@ -323,6 +322,7 @@ namespace Goedel.Document.RFC {
                 return; // nothing to write
                 }
 
+            //Console.WriteLine($"[{Text}]");
             WriteLine(Text);
 
             while (Source.Length > 0) {
