@@ -54,7 +54,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fsrgen", "FSRGen\fsrgen\fsr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "goedel3", "Goedel3\goedel3\goedel3.csproj", "{D435A116-81A3-4FA0-AD8F-11B0F49831F9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Release", "Release", "{998DD3DD-D468-4863-8832-AE02EF60B564}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pack", "Pack", "{998DD3DD-D468-4863-8832-AE02EF60B564}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gscript", "GScript\gscript\gscript.csproj", "{F9BA54CA-95E0-4709-8705-AD52673DFBFE}"
 EndProject
@@ -81,7 +81,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{B887
 		Scripts\publishtarget.ps1 = Scripts\publishtarget.ps1
 	EndProjectSection
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Release\Installer\Installer.wixproj", "{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}"
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Pack\Installer\Installer.wixproj", "{AF1A5C5E-4FD1-4BCC-9C96-7D145E5A4EB3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{C6BE0DF9-7483-4F51-B070-285F71E0D3FC}"
 EndProject
@@ -142,7 +142,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Document.RFC", "DocT
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Document.RFCConvert", "DocTools\Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.shproj", "{03C081D6-FE5A-4A20-B387-8A960A45E77F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSIX", "Release\VSIX\VSIX.csproj", "{136EFD1D-9D36-441E-994F-85E0356DFFD9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSIX", "Pack\VSIX\VSIX.csproj", "{136EFD1D-9D36-441E-994F-85E0356DFFD9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Domainer-Framework", "Domainer\Goedel.Tool.Domainer-Framework\Goedel.Tool.Domainer-Framework.csproj", "{AA499CEB-DA59-4035-B869-29522712B4F0}"
 EndProject

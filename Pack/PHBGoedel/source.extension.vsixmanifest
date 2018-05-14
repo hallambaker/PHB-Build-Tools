@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"
+                 xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+    <Metadata>
+        <Identity Id="AAECB34E-FA34-4CC1-B2F8-8AE537AF3B56" Version="2.0.15" Language="en-US" Publisher="Phillip Hallam-Baker" />
+        <DisplayName>Goedel Code Meta Synthesizer</DisplayName>
+        <Description xml:space="preserve">Phill Hallam-Baker's meta-code generation tools.
+
+Tools currently included: Finite State Recognizer, Goedel Schema and scripting tools.
+
+Note, this version of the tools does not support syntax shading.</Description>
+        <MoreInfo>http://www.prismproof.org/</MoreInfo>
+        <License>License.txt</License>
+        <GettingStartedGuide>GettingStarted.txt</GettingStartedGuide>
+        <ReleaseNotes>ReleaseNotes.txt</ReleaseNotes>
+        <PreviewImage>ScriptClassifier_Screenshot.png</PreviewImage>
+        <Tags>Finite State Recognizer, Code Generator</Tags>
+    </Metadata>
+    <Installation AllUsers="true">
+        <InstallationTarget Version="[14.0,15.0]" Id="Microsoft.VisualStudio.Community" />
+        <InstallationTarget Version="[14.0,15.0]" Id="Microsoft.VisualStudio.Enterprise" />
+        <InstallationTarget Version="[14.0,15.0]" Id="Microsoft.VisualStudio.IntegratedShell" />
+    </Installation>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.6,)" />
+    </Dependencies>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+        <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.Script" Path="|Goedel.Tool.Script|" AssemblyName="|Goedel.Tool.Script;AssemblyName|" />
+        <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.Command" Path="|Goedel.Tool.Command|" AssemblyName="|Goedel.Tool.Command;AssemblyName|" />
+        <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.FSRGen" Path="|Goedel.Tool.FSRGen|" AssemblyName="|Goedel.Tool.FSRGen;AssemblyName|" />
+        <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.Exceptional" Path="|Goedel.Tool.Exceptional|" AssemblyName="|Goedel.Tool.Exceptional;AssemblyName|" />
+        <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Tool.Schema" Path="|Goedel.Tool.Schema|" AssemblyName="|Goedel.Tool.Schema;AssemblyName|" />
+        <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Utilities" Path="|Goedel.Utilities|" AssemblyName="|Goedel.Utilities;AssemblyName|" />
+        <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="Goedel.Registry" Path="|Goedel.Registry|" AssemblyName="|Goedel.Registry;AssemblyName|" />
+    </Assets>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.Roslyn.LanguageServices" Version="[15.0.26208.0,16.0)" DisplayName="C# and Visual Basic" />
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0.26208.0,16.0)" DisplayName="Visual Studio core editor" />
+    </Prerequisites>
+</PackageManifest>
+
