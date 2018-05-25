@@ -899,9 +899,10 @@ namespace GoedelSchema {
 
 
         void Push (GoedelSchema._Choice Token) {
-            _StackItem Item = new _StackItem ();
-            Item.State = State;
-            Item.Token = Current;
+            _StackItem Item = new _StackItem {
+                State = State,
+                Token = Current
+                };
 
             Stack.Add (Item);
 
@@ -931,11 +932,17 @@ namespace GoedelSchema {
             CurrentPosition = Position;
             CurrentText = Text;
 
+
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |
-                (Token == TokenType.COMMENT)) return;
-            if (Token == TokenType.INVALID)
+                (Token == TokenType.COMMENT)) {
+                return;
+                }
+
+
+            if (Token == TokenType.INVALID) {
                 throw new Exception("Invalid Token");
+                }
 
             bool Represent = true;
 
@@ -950,7 +957,10 @@ namespace GoedelSchema {
                             State = StateCode._Choice;
                             break;
                             }
-                        else throw new Exception("Parser Error Expected START");
+
+                        else {
+                            throw new Exception("Parser Error Expected START");
+                            }
 
                     case StateCode._Choice:                //      LABEL Class | END
                         if (Token == TokenType.LABEL) {
@@ -969,7 +979,9 @@ namespace GoedelSchema {
                             State = StateCode._End;
                             break;
                             }
-                        else throw new Exception("Parser Error Expected [Class]");
+                        else {
+                            throw new Exception("Parser Error Expected [Class]");
+                            }
 
                     case StateCode._End:                   //      -
                         throw new Exception("Too Many Closing Braces");
@@ -1011,7 +1023,9 @@ namespace GoedelSchema {
                                 }
                             break;
                             }
-                        else throw new Exception("Parser Error Expected [MITLicense BSD2License BSD3License ISCLicense Apache2License OtherLicense ]");
+                        else {
+                            throw new Exception("Parser Error Expected [MITLicense BSD2License BSD3License ISCLicense Apache2License OtherLicense ]");
+                            }
 
                     case StateCode.Copyright__License:
                         Pop ();
@@ -1219,8 +1233,9 @@ namespace GoedelSchema {
                                 Current_Cast.Type = New_Choice(Text);
                                 }
                             else {
-                                GoedelSchema._Label result = new GoedelSchema._Label();
-                                result.Label = Registry.REF(Position, Text, TYPE__TypeType, Current_Cast);
+                                GoedelSchema._Label result = new _Label {
+                                    Label = Registry.REF(Position, Text, TYPE__TypeType, Current_Cast)
+                                    };
                                 Current_Cast.Type = result;
                                 State = StateCode.Entry__Type;
                                 }
@@ -1234,7 +1249,10 @@ namespace GoedelSchema {
                             State = StateCode.Entry__Type;
                             break;
                             }
-                        else throw new Exception("Parser Error Expected [List Choice ID REF Token String Text Integer Boolean ChoiceREF Options Remark ]");
+
+                        else {
+                            throw new Exception("Parser Error Expected [List Choice ID REF Token String Text Integer Boolean ChoiceREF Options Remark ]");
+                            }
 
                     case StateCode.Entry__Type:
                         Pop ();
@@ -1327,7 +1345,9 @@ namespace GoedelSchema {
                                 }
                             break;
                             }
-                        else throw new Exception("Parser Error Expected [Single Multiple ]");
+                        else {
+                            throw new Exception("Parser Error Expected [Single Multiple ]");
+                            }
 
                     case StateCode.OptionEntry__Occurs:
                         Pop ();
@@ -1357,8 +1377,9 @@ namespace GoedelSchema {
                                 Current_Cast.Type = New_Choice(Text);
                                 }
                             else {
-                                GoedelSchema._Label result = new GoedelSchema._Label();
-                                result.Label = Registry.REF(Position, Text, TYPE__TypeType, Current_Cast);
+                                GoedelSchema._Label result = new _Label {
+                                    Label = Registry.REF(Position, Text, TYPE__TypeType, Current_Cast)
+                                    };
                                 Current_Cast.Type = result;
                                 State = StateCode.List__Type;
                                 }
@@ -1372,7 +1393,9 @@ namespace GoedelSchema {
                             State = StateCode.List__Type;
                             break;
                             }
-                        else throw new Exception("Parser Error Expected [Choice ID REF Token String Text Integer ]");
+                        else {
+                            throw new Exception("Parser Error Expected [Choice ID REF Token String Text Integer ]");
+                            }
 
                     case StateCode.List__Type:
                         Pop ();

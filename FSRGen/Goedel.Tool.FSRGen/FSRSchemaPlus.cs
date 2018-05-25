@@ -11,7 +11,11 @@ namespace Goedel.Tool.FSRGen {
         public bool Completed = false;
 
         public virtual void Complete() {
-            if (Completed) return; Completed = true;
+            if (Completed) {
+                return;
+                }
+
+            Completed = true;
 
             foreach (_Choice Choice in Top) {
                 Choice.Parent = this;
@@ -27,7 +31,11 @@ namespace Goedel.Tool.FSRGen {
         public FSRSchema Parent = null;
 
         public virtual void Complete () {
-            if (Completed) return; Completed = true;
+            if (Completed) {
+                return;
+                }
+
+            Completed = true;
             }
         }
 
@@ -36,9 +44,10 @@ namespace Goedel.Tool.FSRGen {
         public int              Index;
 
         public static void Add (List<Token> List, string Tag) {
-            var Token = new Token ();
-            Token.Tag = Tag;
-            Token.Index = List.Count;
+            var Token = new Token {
+                Tag = Tag,
+                Index = List.Count
+                };
             List.Add (Token);
             }
         }
@@ -48,9 +57,10 @@ namespace Goedel.Tool.FSRGen {
         public int              Index;
 
         public static void Add (List<Action> List, string Tag) {
-            var Action = new Action ();
-            Action.Tag = Tag;
-            Action.Index = List.Count;
+            var Action = new Action {
+                Tag = Tag,
+                Index = List.Count
+                };
             List.Add (Action);
             }
         }
@@ -78,6 +88,8 @@ namespace Goedel.Tool.FSRGen {
 
         private void SetState(State State, char c, _Choice Action) {
             int Index = (int) c;
+
+            MaxChar = MaxChar > c ? MaxChar : c;
 
             if (Action._Tag() == FSRSchemaType.GoTo) {
                 var GoTo = (GoTo)Action;
@@ -133,7 +145,11 @@ namespace Goedel.Tool.FSRGen {
 
 
         public override void Complete() {
-            if (Completed) return; Completed = true;
+            if (Completed) {
+                return;
+                }
+
+            Completed = true;
             foreach (var Choice in Entries) {
                 Choice.Complete();
 
@@ -192,12 +208,15 @@ namespace Goedel.Tool.FSRGen {
                     else if (Entry.Is._Tag() == FSRSchemaType._Label) {
                         var Label = (_Label) Entry.Is;  // is a reference to a charset
                         var Charset = (Charset) Label.Label.Definition;
-                        
-                        if (Charset.First.Length < 0 | Charset.Last.Length <0) 
+
+
+                        if (Charset.First.Length < 0 | Charset.Last.Length <0) {
                             throw new Exception ("Null charset specified");
-                        
-                        if (Charset.First[0] > Charset.Last[0]) 
+                            }
+
+                        if (Charset.First[0] > Charset.Last[0]) {
                             throw new Exception ("Bad charset");
+                            }
 
                         for (char c = Charset.First[0]; c <= Charset.Last[0]; c++) {
                             SetState (State, c, Entry.Action);

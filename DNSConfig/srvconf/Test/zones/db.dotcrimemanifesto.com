@@ -6,7 +6,7 @@
 ;
 $TTL 600
 dotcrimemanifesto.com.      IN      SOA     dns1.dotcrimemanifesto.com. hallam.gmail.com. (
-                        2018041301       ; serial, todays date + todays serial 
+                        2018051801       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds

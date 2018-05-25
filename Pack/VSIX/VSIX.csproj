@@ -69,6 +69,7 @@
     <Content Include="index.html" />
     <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="ReleaseNotes.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -85,6 +86,8 @@
     <ProjectReference Include="..\..\..\mmm\Libraries\Framework\Goedel.Tool.Library\Framework.ToolLib.csproj">
       <Project>{e81275ea-69bd-4feb-974e-c2f8a4f613f6}</Project>
       <Name>Framework.ToolLib</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
     <ProjectReference Include="..\..\ASN\Goedel.Tool.ASN-Framework\Goedel.Tool.ASN-Framework.csproj">
       <Project>{d09d4813-55b9-41ed-bc8a-9bc7b79dc51b}</Project>
@@ -101,10 +104,14 @@
     <ProjectReference Include="..\..\DocTools\RFCTools-Framework\RFCTools-Framework.csproj">
       <Project>{64e3ba39-e3da-4b2a-a694-7c77e463c249}</Project>
       <Name>RFCTools-Framework</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
     <ProjectReference Include="..\..\Domainer\Goedel.Tool.Domainer-Framework\Goedel.Tool.Domainer-Framework.csproj">
       <Project>{aa499ceb-da59-4035-b869-29522712b4f0}</Project>
       <Name>Goedel.Tool.Domainer-Framework</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
     <ProjectReference Include="..\..\Exceptional\Goedel.Tool.Exceptional-Framework\Goedel.Tool.Exceptional-Framework.csproj">
       <Project>{5af7d364-3db0-4da2-a8c1-ecc80e1924da}</Project>
@@ -168,7 +175,6 @@
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.14.0, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.VisualStudio.Threading, Version=15.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Utilities, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Validation, Version=15.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />

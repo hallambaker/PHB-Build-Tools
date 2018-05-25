@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Unknown by Unknown
+//  Copyright ©  2017 by 
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -112,18 +112,18 @@ namespace Goedel.Tool.VSIXBuild {
 			foreach  (var Project in Generator.Project) {
 				if (  (Project.Value.ToString() =="CSharp")  ) {
 					_Output.Write ("    [CodeGeneratorRegistration(typeof({1}), \"{2}\", \n{0}", _Indent, Extension.Name, Extension.Name);
-					_Output.Write ("					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]\n{0}", _Indent);
+					_Output.Write ("					 \"{{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}}\", GeneratesDesignTimeSource = true)]\n{0}", _Indent);
 					_Output.Write ("    [CodeGeneratorRegistration(typeof({1}), \"{2}\", \n{0}", _Indent, Extension.Name, Extension.Name);
-					_Output.Write ("					\"9A19103F-16F7-4668-BE54-9A1E7A4F7556\", GeneratesDesignTimeSource = true)]\n{0}", _Indent);
+					_Output.Write ("					\"{{9A19103F-16F7-4668-BE54-9A1E7A4F7556}}\", GeneratesDesignTimeSource = true)]\n{0}", _Indent);
 					} else if (  (Project.Value.ToString() =="VisualBasic") ) {
 					_Output.Write ("    [CodeGeneratorRegistration(typeof({1}), \"{2}\", \n{0}", _Indent, Extension.Name, Extension.Name);
-					_Output.Write ("					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]\n{0}", _Indent);
+					_Output.Write ("					\"{{164B10B9-B200-11D0-8C61-00A0C91E29D5}}\", GeneratesDesignTimeSource = true)]\n{0}", _Indent);
 					} else if (  (Project.Value.ToString() =="Wix") ) {
 					_Output.Write ("    [CodeGeneratorRegistration(typeof({1}), \"{2}\", \n{0}", _Indent, Extension.Name, Extension.Name);
-					_Output.Write ("				    \"E0EE8E7D-F498-459E-9E90-2B3D73124AD5\", GeneratesDesignTimeSource = true)]\n{0}", _Indent);
+					_Output.Write ("				    \"{{E0EE8E7D-F498-459E-9E90-2B3D73124AD5}}\", GeneratesDesignTimeSource = true)]\n{0}", _Indent);
 					} else if (  (Project.Value.ToString() =="SHFB") ) {
 					_Output.Write ("    [CodeGeneratorRegistration(typeof({1}), \"{2}\", \n{0}", _Indent, Extension.Name, Extension.Name);
-					_Output.Write ("				    \"7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4\", GeneratesDesignTimeSource = true)]\n{0}", _Indent);
+					_Output.Write ("				    \"{{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}}\", GeneratesDesignTimeSource = true)]\n{0}", _Indent);
 					}
 				}
 			_Output.Write ("    public class {1} : IVsSingleFileGenerator, IObjectWithSite, IDisposable {{\n{0}", _Indent, Extension.Name);

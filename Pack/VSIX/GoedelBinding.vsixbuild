@@ -2,7 +2,6 @@
 
 Namespace Goedel.VSIX.Binding
 
-
 	CommandCS Generator ".cs"
 		GUID "8D382331-6F20-4C3C-A83B-7EEA39FA03AB"
 		Project CSharp

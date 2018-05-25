@@ -66,18 +66,18 @@ namespace #{Cast.Name} {
 #foreach (var Project in Generator.Project)
 #if (Project.Value.ToString() =="CSharp") 
     [CodeGeneratorRegistration(typeof(#{Extension.Name}), "#{Extension.Name}", 
-					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
+					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(#{Extension.Name}), "#{Extension.Name}", 
-					"9A19103F-16F7-4668-BE54-9A1E7A4F7556", GeneratesDesignTimeSource = true)]
+					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
 #elseif (Project.Value.ToString() =="VisualBasic") 
     [CodeGeneratorRegistration(typeof(#{Extension.Name}), "#{Extension.Name}", 
-					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
+					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
 #elseif (Project.Value.ToString() =="Wix") 
     [CodeGeneratorRegistration(typeof(#{Extension.Name}), "#{Extension.Name}", 
-				    "E0EE8E7D-F498-459E-9E90-2B3D73124AD5", GeneratesDesignTimeSource = true)]
+				    "{E0EE8E7D-F498-459E-9E90-2B3D73124AD5}", GeneratesDesignTimeSource = true)]
 #elseif (Project.Value.ToString() =="SHFB") 
     [CodeGeneratorRegistration(typeof(#{Extension.Name}), "#{Extension.Name}", 
-				    "7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4", GeneratesDesignTimeSource = true)]
+				    "{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}", GeneratesDesignTimeSource = true)]
 #end if
 #end foreach
     public class #{Extension.Name} : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
