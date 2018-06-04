@@ -104,8 +104,7 @@ export BUNDLE		?=  mkbundle -L /usr/lib/mono/4.7-api --deps --static -o
 
 ## Supplemental Makefile for Visual Studios Projects
 ##
-## Visual Studio is responsible for managing rules for production of
-## code but does not provide support for pre and post build actions.
+## Visual Studio runs tools for most projects but not for shared projects.
 ## 
 ## Prebuild items supported:
 ##   [None currently]
@@ -140,7 +139,6 @@ ToolTargets = #!
 #end if
 #end foreach
 
-
 #foreach (var File in Project.None)
 #if (File.BuildTool)
 #{File.BuildTarget} : #{File.BuildSource} 
@@ -148,6 +146,7 @@ ToolTargets = #!
 
 #end if
 #end foreach
+
 
 prebuildRecurse : 
 #if (Project.ProjectType != ProjectType.shared)
@@ -164,8 +163,13 @@ postbuildRecurse :
 #end foreach  
 #end if
 
-
+#if (Project.ProjectType == ProjectType.shared)
+## Shared project, create build rules for custom tools.
 prebuild : prebuildRecurse $(ToolTargets)
+#else
+## Non shared project, nothing to do
+prebuild : prebuildRecurse
+#end if
 
 postbuild : postbuildRecurse
 

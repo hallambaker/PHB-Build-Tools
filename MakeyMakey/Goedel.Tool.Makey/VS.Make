@@ -26,13 +26,13 @@ ToolTargets = \
 	Tokenizer.cs
 
 Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional  Exceptions.cs
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 GenerateMakefile.cs : GenerateMakefile.script 
 	gscript GenerateMakefile.script  GenerateMakefile.cs
 
 Tokenizer.cs : Tokenizer.fsr 
-	fsrgen Tokenizer.fsr  Tokenizer.cs
+	fsrgen Tokenizer.fsr  /cs  Tokenizer.cs
 
 
 prebuildRecurse : 

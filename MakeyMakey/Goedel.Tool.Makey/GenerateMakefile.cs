@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Copyright ©  2016 by 
+//  Copyright ©  2017 by 
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -139,8 +139,7 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("# Supplemental Makefile for Visual Studios Projects\n{0}", _Indent);
 			_Output.Write ("#\n{0}", _Indent);
-			_Output.Write ("# Visual Studio is responsible for managing rules for production of\n{0}", _Indent);
-			_Output.Write ("# code but does not provide support for pre and post build actions.\n{0}", _Indent);
+			_Output.Write ("# Visual Studio runs tools for most projects but not for shared projects.\n{0}", _Indent);
 			_Output.Write ("# \n{0}", _Indent);
 			_Output.Write ("# Prebuild items supported:\n{0}", _Indent);
 			_Output.Write ("#   [None currently]\n{0}", _Indent);
@@ -175,7 +174,6 @@ namespace Goedel.Tool.Makey {
 					}
 				}
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
 			foreach  (var File in Project.None) {
 				if (  (File.BuildTool) ) {
 					_Output.Write ("{1} : {2} \n{0}", _Indent, File.BuildTarget, File.BuildSource);
@@ -183,6 +181,7 @@ namespace Goedel.Tool.Makey {
 					_Output.Write ("\n{0}", _Indent);
 					}
 				}
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("prebuildRecurse : \n{0}", _Indent);
 			if (  (Project.ProjectType != ProjectType.shared) ) {
@@ -199,8 +198,13 @@ namespace Goedel.Tool.Makey {
 					}
 				}
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("prebuild : prebuildRecurse $(ToolTargets)\n{0}", _Indent);
+			if (  (Project.ProjectType == ProjectType.shared) ) {
+				_Output.Write ("# Shared project, create build rules for custom tools.\n{0}", _Indent);
+				_Output.Write ("prebuild : prebuildRecurse $(ToolTargets)\n{0}", _Indent);
+				} else {
+				_Output.Write ("# Non shared project, nothing to do\n{0}", _Indent);
+				_Output.Write ("prebuild : prebuildRecurse\n{0}", _Indent);
+				}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("postbuild : postbuildRecurse\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
