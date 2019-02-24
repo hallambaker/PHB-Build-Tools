@@ -23,9 +23,7 @@ namespace MakeRFC {
             TagCatalog = new GM.TagCatalog(Parse);
             }
 
-        public Import(GM.TagCatalog TagCatalog) {
-            this.TagCatalog = TagCatalog;
-            }
+        public Import(GM.TagCatalog TagCatalog) => this.TagCatalog = TagCatalog;
 
 
         public void MDParse(string File, Goedel.Document.RFC.Document Target) {
