@@ -8,7 +8,7 @@ for W3C and OASIS formats would only require an appropriate output
 module to be written.
 
 
-##Tag Definitions
+## Tag Definitions
 
 
 
@@ -46,7 +46,7 @@ module to be written.
 
 
 
-####Layout control
+#### Layout control
 
 I don't actually believe layout is something that the document author
 should control. These are features provided for the benefit of the 
@@ -60,7 +60,7 @@ reader and the choice of whether they should be displayed belongs to them.
   - tor 
   - tod  
 
-####Specifying an author
+#### Specifying an author
 
 The following tags are used to identify an author:
 

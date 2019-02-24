@@ -28,7 +28,7 @@ Command
 
 DNS
 
-RFCTool
+[RFCTool](DocTools/rfctool)
 
 Domainer
 
