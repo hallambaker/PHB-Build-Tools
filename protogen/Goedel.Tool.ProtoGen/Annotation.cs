@@ -27,10 +27,9 @@ namespace Goedel.Tool.ProtoGen {
         public _Choice          Superclass = null;
         public List<_Choice>    Subclasses = new List<_Choice> () ;
 
-        virtual public void Complete() {
+        virtual public void Complete() =>
             //Console.WriteLine ("Completing");
             Normalize();
-            }
 
         static public void Complete (List<_Choice> Entries) {
             foreach (_Choice Entry in Entries) {
@@ -57,11 +56,10 @@ namespace Goedel.Tool.ProtoGen {
     public partial class Transaction : _Choice {
 
 
-        public override void  Complete() {
+        public override void Complete() =>
             //Console.WriteLine ("Completing Transaction {0}", Id.ToString());
 
             Complete(Entries);
-            }
         }
 
     public partial class Class : _Choice {

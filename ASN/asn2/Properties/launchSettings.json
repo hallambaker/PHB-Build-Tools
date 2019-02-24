@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "asn2": {
+      "commandName": "Project",
+      "commandLineArgs": "PKIX\\PKIX.asn2  /cs  PKIX\\PKIX.cs",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Libraries\\Goedel.Cryptography"
+    }
+  }
+}

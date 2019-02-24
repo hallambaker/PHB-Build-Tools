@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "goedel3": {
+      "commandName": "Project",
+      "commandLineArgs": " Version.gdl  /cs  Version.cs",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Documentation\\MakeRelease"
+    }
+  }
+}

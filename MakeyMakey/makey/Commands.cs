@@ -25,9 +25,8 @@ namespace Goedel.Shell.Makey {
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
             Brief(Description, DefaultCommand, Entries);
-            }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -41,9 +40,9 @@ namespace Goedel.Shell.Makey {
         /// <param name="Dispatch">The command description.</param>
         /// <param name="args">The set of arguments.</param>
         /// <param name="index">The first unparsed argument.</param>
-        public static void About (DispatchShell Dispatch, string[] args, int index) {
+        public static void About (DispatchShell Dispatch, string[] args, int index) =>
             FileTools.About();
-            }
+
 
         public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
             Identifier = "about",
@@ -51,9 +50,9 @@ namespace Goedel.Shell.Makey {
             Entries = new List<DescribeEntry>() { }
             };
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) =>
+            (c == UnixFlag) | (c == WindowsFlag) ;
+
 
 
         static CommandLineInterpreter () {
@@ -100,9 +99,9 @@ namespace Goedel.Shell.Makey {
 			}
 
 
-        public void MainMethod(MakeyShell Dispatch, string[] Args) {
+        public void MainMethod(MakeyShell Dispatch, string[] Args) =>
 			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+
 
 
 
@@ -111,6 +110,7 @@ namespace Goedel.Shell.Makey {
 			MakeyShell Dispatch =	DispatchIn as MakeyShell;
 			Project		Options = new Project ();
 			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
 			Dispatch.Project (Options);
 			}
 
@@ -226,9 +226,8 @@ namespace Goedel.Shell.Makey {
 	// to eliminate the redundant code
     public class _MakeyShell : global::Goedel.Command.DispatchShell {
 
-		public virtual void Project ( Project Options) {
+		public virtual void Project ( Project Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
 
         } // class _MakeyShell

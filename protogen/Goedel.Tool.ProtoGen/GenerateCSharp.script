@@ -13,7 +13,7 @@
 #% var GenerateTime =System.DateTime.UtcNow;
 #!% Boilerplate.Header (_Output, "//  ", GenerateTime);
 #% Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + "2016", ".");
-#% var InheritsOverride = "override"; // "virtual"
+##% var InheritsOverride = "override"; // "virtual"
 #% string Namespace;
 
 using System;
@@ -44,18 +44,15 @@ namespace #{Namespace} {
 	public abstract partial class #{Protocol.Prefix} #{Protocol.ThisInherits} {
 #% CurrentPrefix = Protocol.Prefix.ToString ();
 
-        /// <summary>
-        /// Schema tag.
+		/// <summary>
+        /// Tag identifying this class
         /// </summary>
-        /// <returns>The tag value</returns>
-		public #{InheritsOverride} string Tag () {
-			return _Tag;
-			}
+		public override string _Tag =>__Tag;
 
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "#{Protocol.Prefix}";
+		public new const string __Tag = "#{Protocol.Prefix}";
 
 		/// <summary>
         /// Dictionary mapping tags to factory methods
@@ -74,9 +71,9 @@ namespace #{Namespace} {
         /// </summary>
         /// <param name="JSONReader">Input stream</param>
         /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {
-			Out = JSONReader.ReadTaggedObject (_TagDictionary);
-            }
+        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) => 
+			Out = JSONReader.ReadTaggedObject(_TagDictionary);
+
 		}
 
 
@@ -113,9 +110,9 @@ namespace #{Namespace} {
 		public override string GetDiscovery => Discovery;
 
         /// <summary>
-        /// The active JPCSession.
+        /// The active JpcSession.
         /// </summary>		
-		public virtual JPCSession JPCSession {get; set;}
+		public virtual JpcSession JpcSession {get; set;}
 
 #foreach (_Choice Entry2 in Protocol.Entries)
 #switchcast ProtoStructType Entry2
@@ -125,11 +122,10 @@ namespace #{Namespace} {
 		/// Base method for implementing the transaction  #{Transaction.Id}.
         /// </summary>
         /// <param name="Request">The request object to send to the host.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual #{Transaction.Response} #{Transaction.Id} (
-                #{Transaction.Request} Request) {
-            return null;
-            }
+                #{Transaction.Request} request, JpcSession session) => throw new NotImplementedException();
 #end switchcast
 #end foreach
 
@@ -142,11 +138,11 @@ namespace #{Namespace} {
  		
 		JPCRemoteSession JPCRemoteSession;
         /// <summary>
-        /// The active JPCSession.
+        /// The active JpcSession.
         /// </summary>		
-		public override JPCSession JPCSession {
-			get {return JPCRemoteSession;}
-			set {JPCRemoteSession = value as JPCRemoteSession; }
+		public override JpcSession JpcSession {
+			get => JPCRemoteSession;
+			set => JPCRemoteSession = value as JPCRemoteSession; 
 			}
 
 
@@ -154,9 +150,9 @@ namespace #{Namespace} {
 		/// Create a client connection to the specified service.
         /// </summary>	
         /// <param name="JPCRemoteSession">The remote session to connect to</param>
-		public #{Service.Id}Client (JPCRemoteSession JPCRemoteSession) {
+		public #{Service.Id}Client (JPCRemoteSession JPCRemoteSession) =>
 			this.JPCRemoteSession = JPCRemoteSession;
-			}
+
 
 #foreach (_Choice Entry2 in Protocol.Entries)
 #switchcast ProtoStructType Entry2
@@ -165,15 +161,16 @@ namespace #{Namespace} {
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
-        /// <param name="Request">The request object</param>
+        /// <param name="request">The request object.</param>
+		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override #{Transaction.Response} #{Transaction.Id} (
-                #{Transaction.Request} Request) {
+                #{Transaction.Request} request, JpcSession session) {
 
-            var ResponseData = JPCRemoteSession.Post("#{Transaction.Id}", Request);
-            var Response = #{Transaction.Response}.FromJSON(ResponseData.JSONReader(), true);
+            var responseData = JPCRemoteSession.Post("#{Transaction.Id}", request);
+            var response = #{Transaction.Response}.FromJSON(responseData.JSONReader(), true);
 
-            return Response;
+            return response;
             }
 #end switchcast
 #end foreach
@@ -182,7 +179,7 @@ namespace #{Namespace} {
 
 
     /// <summary>
-	/// Client class for #{Service.Id}.
+	/// Service class for #{Service.Id}.
     /// </summary>		
     public partial class #{Service.Id}Provider : Goedel.Protocol.JPCProvider {
 
@@ -198,7 +195,7 @@ namespace #{Namespace} {
         /// <param name="Session">The client context.</param>
         /// <param name="JSONReader">Reader for data object.</param>
         /// <returns>The response object returned by the corresponding dispatch.</returns>
-		public override Goedel.Protocol.JSONObject Dispatch(JPCSession  Session,  
+		public override Goedel.Protocol.JSONObject Dispatch(JpcSession  Session,  
 								Goedel.Protocol.JSONReader JSONReader) {
 
 			JSONReader.StartObject ();
@@ -212,7 +209,7 @@ namespace #{Namespace} {
 				case "#{Transaction.Id}" : {
 					var Request = new #{Transaction.Request}();
 					Request.Deserialize (JSONReader);
-					Response = Service.#{Transaction.Id} (Request);
+					Response = Service.#{Transaction.Id} (Request, Session);
 					break;
 					}
 #end switchcast
@@ -326,14 +323,6 @@ public partial class #{Id} : #{Inherits} {
 #end if
 #call DeclareMembers (Entries)
 
-        /// <summary>
-        /// Tag identifying this class.
-        /// </summary>
-        /// <returns>The tag</returns>
-		public override string Tag () {
-			return "#{Id}";
-			}
-
 #% }
 #end block 
 
@@ -358,7 +347,12 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag { get; } = "#{Id}";
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "#{Id}";
 
 		/// <summary>
 #if (IsAbstract (Entries))
@@ -368,13 +362,12 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 #end if
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () {
+		public static new JSONObject _Factory () => #!
 #if (IsAbstract (Entries))
-			throw new CannotCreateAbstract();
+throw new CannotCreateAbstract();
 #else
-			return new #{Id}();
+new #{Id}();
 #end if
-			}
 
 #% }
 #end block 
@@ -396,7 +389,7 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 		private #{Type}						_#{Token};
 #{CommentSummary(8,Entry.Description)}
 		public virtual #{Type}						#{Token} {
-			get {return _#{Token};}
+			get => _#{Token};
 			set {_#{Token} = value; __#{Token} = true; }
 			}
 #else 
@@ -420,9 +413,9 @@ public partial class #{Id}#{TTT} : #{Inherits} {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) {
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
 			SerializeX (Writer, wrap, ref first);
-			}
+
 
         /// <summary>
         /// Serialize this object to the specified output stream.
@@ -578,7 +571,7 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 					//#{Tag}.Serialize (_Writer, false);
 					{
 						_Writer.WriteObjectStart();
-						_Writer.WriteToken(#{Tag}.Tag(), 1);
+						_Writer.WriteToken(#{Tag}._Tag, 1);
 						bool firstinner = true;
 						#{Tag}.Serialize (_Writer, true, ref firstinner);
 						_Writer.WriteObjectEnd();
@@ -610,13 +603,13 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 #casecast Struct null
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(#{Tag}.Tag(), 1);
+                    //_Writer.WriteToken(#{Tag}._Tag, 1);
 					bool firstinner = true;
 					#{Tag}.Serialize (_Writer, true, ref firstinner);
                     //_Writer.WriteObjectEnd();
 #casecast TStruct null
                     _Writer.WriteObjectStart();
-                    _Writer.WriteToken(#{Tag}.Tag(), 1);
+                    _Writer.WriteToken(#{Tag}._Tag, 1);
 					bool firstinner = true;
 					#{Tag}.Serialize (_Writer, true, ref firstinner);
                     _Writer.WriteObjectEnd();

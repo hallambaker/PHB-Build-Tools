@@ -11,17 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Protogen.cs">
-      <DependentUpon>Protogen.command</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Protogen.command">
-      <LastGenOutput>Protogen.cs</LastGenOutput>
-      <Generator>CommandCS</Generator>
+      <Generator></Generator>
     </None>
   </ItemGroup>
 

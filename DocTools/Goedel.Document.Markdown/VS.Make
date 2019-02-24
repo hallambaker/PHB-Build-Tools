@@ -27,13 +27,13 @@ ToolTargets = \
 	Schema.cs
 
 MarkDown.cs : MarkDown.fsr 
-	fsrgen MarkDown.fsr  MarkDown.cs
+	fsrgen MarkDown.fsr  /cs  MarkDown.cs
 
 MarkParagraph.cs : MarkParagraph.fsr 
-	fsrgen MarkParagraph.fsr  MarkParagraph.cs
+	fsrgen MarkParagraph.fsr  /cs  MarkParagraph.cs
 
 MarkWordParagraph.cs : MarkWordParagraph.fsr 
-	fsrgen MarkWordParagraph.fsr  MarkWordParagraph.cs
+	fsrgen MarkWordParagraph.fsr  /cs  MarkWordParagraph.cs
 
 Schema.cs : Schema.gdl 
 	goedel3 Schema.gdl  /cs  Schema.cs

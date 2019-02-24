@@ -25,7 +25,7 @@ ToolTargets = \
 	VSIXBuild.cs
 
 VSIXBuild.cs : VSIXBuild.command 
-	commandparse VSIXBuild.command  VSIXBuild.cs
+	commandparse VSIXBuild.command  /cs  VSIXBuild.cs
 
 
 prebuildRecurse : 

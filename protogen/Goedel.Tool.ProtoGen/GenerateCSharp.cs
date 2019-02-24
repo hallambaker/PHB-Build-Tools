@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Unknown by Unknown
+//  Copyright ©  2017 by 
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@ namespace Goedel.Tool.ProtoGen {
 			 ProtoStruct.Complete ();
 			 var GenerateTime =System.DateTime.UtcNow;
 			 Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + "2016", ".");
-			 var InheritsOverride = "override"; // "virtual"
+			_Output.Write ("#% var InheritsOverride = \"override\"; // \"virtual\"\n{0}", _Indent);
 			 string Namespace;
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("using System;\n{0}", _Indent);
@@ -79,18 +79,15 @@ namespace Goedel.Tool.ProtoGen {
 					
 					 CurrentPrefix = Protocol.Prefix.ToString ();
 					_Output.Write ("\n{0}", _Indent);
-					_Output.Write ("        /// <summary>\n{0}", _Indent);
-					_Output.Write ("        /// Schema tag.\n{0}", _Indent);
+					_Output.Write ("		/// <summary>\n{0}", _Indent);
+					_Output.Write ("        /// Tag identifying this class\n{0}", _Indent);
 					_Output.Write ("        /// </summary>\n{0}", _Indent);
-					_Output.Write ("        /// <returns>The tag value</returns>\n{0}", _Indent);
-					_Output.Write ("		public {1} string Tag () {{\n{0}", _Indent, InheritsOverride);
-					_Output.Write ("			return _Tag;\n{0}", _Indent);
-					_Output.Write ("			}}\n{0}", _Indent);
+					_Output.Write ("		public override string _Tag =>__Tag;\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
 					_Output.Write ("        /// Tag identifying this class\n{0}", _Indent);
 					_Output.Write ("        /// </summary>\n{0}", _Indent);
-					_Output.Write ("		public override string _Tag {{ get; }} = \"{1}\";\n{0}", _Indent, Protocol.Prefix);
+					_Output.Write ("		public new const string __Tag = \"{1}\";\n{0}", _Indent, Protocol.Prefix);
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
 					_Output.Write ("        /// Dictionary mapping tags to factory methods\n{0}", _Indent);
@@ -110,9 +107,9 @@ namespace Goedel.Tool.ProtoGen {
 					_Output.Write ("        /// </summary>\n{0}", _Indent);
 					_Output.Write ("        /// <param name=\"JSONReader\">Input stream</param>\n{0}", _Indent);
 					_Output.Write ("        /// <param name=\"Out\">The created object</param>\n{0}", _Indent);
-					_Output.Write ("        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) {{\n{0}", _Indent);
-					_Output.Write ("			Out = JSONReader.ReadTaggedObject (_TagDictionary);\n{0}", _Indent);
-					_Output.Write ("            }}\n{0}", _Indent);
+					_Output.Write ("        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) => \n{0}", _Indent);
+					_Output.Write ("			Out = JSONReader.ReadTaggedObject(_TagDictionary);\n{0}", _Indent);
+					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("		}}\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
@@ -150,9 +147,9 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("		public override string GetDiscovery => Discovery;\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("        /// <summary>\n{0}", _Indent);
-							_Output.Write ("        /// The active JPCSession.\n{0}", _Indent);
+							_Output.Write ("        /// The active JpcSession.\n{0}", _Indent);
 							_Output.Write ("        /// </summary>		\n{0}", _Indent);
-							_Output.Write ("		public virtual JPCSession JPCSession {{get; set;}}\n{0}", _Indent);
+							_Output.Write ("		public virtual JpcSession JpcSession {{get; set;}}\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							foreach  (_Choice Entry2 in Protocol.Entries) {
 								switch (Entry2._Tag ()) {
@@ -163,11 +160,10 @@ namespace Goedel.Tool.ProtoGen {
 									_Output.Write ("		/// Base method for implementing the transaction  {1}.\n{0}", _Indent, Transaction.Id);
 									_Output.Write ("        /// </summary>\n{0}", _Indent);
 									_Output.Write ("        /// <param name=\"Request\">The request object to send to the host.</param>\n{0}", _Indent);
+									_Output.Write ("		/// <param name=\"JpcSession\">The authentication binding.</param>\n{0}", _Indent);
 									_Output.Write ("		/// <returns>The response object from the service</returns>\n{0}", _Indent);
 									_Output.Write ("        public virtual {1} {2} (\n{0}", _Indent, Transaction.Response, Transaction.Id);
-									_Output.Write ("                {1} Request) {{\n{0}", _Indent, Transaction.Request);
-									_Output.Write ("            return null;\n{0}", _Indent);
-									_Output.Write ("            }}\n{0}", _Indent);
+									_Output.Write ("                {1} request, JpcSession session) => throw new NotImplementedException();\n{0}", _Indent, Transaction.Request);
 								break; }
 									}
 								}
@@ -181,11 +177,11 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write (" 		\n{0}", _Indent);
 							_Output.Write ("		JPCRemoteSession JPCRemoteSession;\n{0}", _Indent);
 							_Output.Write ("        /// <summary>\n{0}", _Indent);
-							_Output.Write ("        /// The active JPCSession.\n{0}", _Indent);
+							_Output.Write ("        /// The active JpcSession.\n{0}", _Indent);
 							_Output.Write ("        /// </summary>		\n{0}", _Indent);
-							_Output.Write ("		public override JPCSession JPCSession {{\n{0}", _Indent);
-							_Output.Write ("			get {{return JPCRemoteSession;}}\n{0}", _Indent);
-							_Output.Write ("			set {{JPCRemoteSession = value as JPCRemoteSession; }}\n{0}", _Indent);
+							_Output.Write ("		public override JpcSession JpcSession {{\n{0}", _Indent);
+							_Output.Write ("			get => JPCRemoteSession;\n{0}", _Indent);
+							_Output.Write ("			set => JPCRemoteSession = value as JPCRemoteSession; \n{0}", _Indent);
 							_Output.Write ("			}}\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
@@ -193,9 +189,9 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("		/// Create a client connection to the specified service.\n{0}", _Indent);
 							_Output.Write ("        /// </summary>	\n{0}", _Indent);
 							_Output.Write ("        /// <param name=\"JPCRemoteSession\">The remote session to connect to</param>\n{0}", _Indent);
-							_Output.Write ("		public {1}Client (JPCRemoteSession JPCRemoteSession) {{\n{0}", _Indent, Service.Id);
+							_Output.Write ("		public {1}Client (JPCRemoteSession JPCRemoteSession) =>\n{0}", _Indent, Service.Id);
 							_Output.Write ("			this.JPCRemoteSession = JPCRemoteSession;\n{0}", _Indent);
-							_Output.Write ("			}}\n{0}", _Indent);
+							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							foreach  (_Choice Entry2 in Protocol.Entries) {
 								switch (Entry2._Tag ()) {
@@ -205,15 +201,16 @@ namespace Goedel.Tool.ProtoGen {
 									_Output.Write ("        /// <summary>\n{0}", _Indent);
 									_Output.Write ("		/// Implement the transaction\n{0}", _Indent);
 									_Output.Write ("        /// </summary>		\n{0}", _Indent);
-									_Output.Write ("        /// <param name=\"Request\">The request object</param>\n{0}", _Indent);
+									_Output.Write ("        /// <param name=\"request\">The request object.</param>\n{0}", _Indent);
+									_Output.Write ("		/// <param name=\"JpcSession\">The authentication binding.</param>\n{0}", _Indent);
 									_Output.Write ("		/// <returns>The response object</returns>\n{0}", _Indent);
 									_Output.Write ("        public override {1} {2} (\n{0}", _Indent, Transaction.Response, Transaction.Id);
-									_Output.Write ("                {1} Request) {{\n{0}", _Indent, Transaction.Request);
+									_Output.Write ("                {1} request, JpcSession session) {{\n{0}", _Indent, Transaction.Request);
 									_Output.Write ("\n{0}", _Indent);
-									_Output.Write ("            var ResponseData = JPCRemoteSession.Post(\"{1}\", Request);\n{0}", _Indent, Transaction.Id);
-									_Output.Write ("            var Response = {1}.FromJSON(ResponseData.JSONReader(), true);\n{0}", _Indent, Transaction.Response);
+									_Output.Write ("            var responseData = JPCRemoteSession.Post(\"{1}\", request);\n{0}", _Indent, Transaction.Id);
+									_Output.Write ("            var response = {1}.FromJSON(responseData.JSONReader(), true);\n{0}", _Indent, Transaction.Response);
 									_Output.Write ("\n{0}", _Indent);
-									_Output.Write ("            return Response;\n{0}", _Indent);
+									_Output.Write ("            return response;\n{0}", _Indent);
 									_Output.Write ("            }}\n{0}", _Indent);
 								break; }
 									}
@@ -223,7 +220,7 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("    /// <summary>\n{0}", _Indent);
-							_Output.Write ("	/// Client class for {1}.\n{0}", _Indent, Service.Id);
+							_Output.Write ("	/// Service class for {1}.\n{0}", _Indent, Service.Id);
 							_Output.Write ("    /// </summary>		\n{0}", _Indent);
 							_Output.Write ("    public partial class {1}Provider : Goedel.Protocol.JPCProvider {{\n{0}", _Indent, Service.Id);
 							_Output.Write ("\n{0}", _Indent);
@@ -239,7 +236,7 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("        /// <param name=\"Session\">The client context.</param>\n{0}", _Indent);
 							_Output.Write ("        /// <param name=\"JSONReader\">Reader for data object.</param>\n{0}", _Indent);
 							_Output.Write ("        /// <returns>The response object returned by the corresponding dispatch.</returns>\n{0}", _Indent);
-							_Output.Write ("		public override Goedel.Protocol.JSONObject Dispatch(JPCSession  Session,  \n{0}", _Indent);
+							_Output.Write ("		public override Goedel.Protocol.JSONObject Dispatch(JpcSession  Session,  \n{0}", _Indent);
 							_Output.Write ("								Goedel.Protocol.JSONReader JSONReader) {{\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("			JSONReader.StartObject ();\n{0}", _Indent);
@@ -254,7 +251,7 @@ namespace Goedel.Tool.ProtoGen {
 									_Output.Write ("				case \"{1}\" : {{\n{0}", _Indent, Transaction.Id);
 									_Output.Write ("					var Request = new {1}();\n{0}", _Indent, Transaction.Request);
 									_Output.Write ("					Request.Deserialize (JSONReader);\n{0}", _Indent);
-									_Output.Write ("					Response = Service.{1} (Request);\n{0}", _Indent, Transaction.Id);
+									_Output.Write ("					Response = Service.{1} (Request, Session);\n{0}", _Indent, Transaction.Id);
 									_Output.Write ("					break;\n{0}", _Indent);
 									_Output.Write ("					}}\n{0}", _Indent);
 								break; }
@@ -412,14 +409,6 @@ namespace Goedel.Tool.ProtoGen {
 				}
 			DeclareMembers ((Entries));
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("        /// <summary>\n{0}", _Indent);
-			_Output.Write ("        /// Tag identifying this class.\n{0}", _Indent);
-			_Output.Write ("        /// </summary>\n{0}", _Indent);
-			_Output.Write ("        /// <returns>The tag</returns>\n{0}", _Indent);
-			_Output.Write ("		public override string Tag () {{\n{0}", _Indent);
-			_Output.Write ("			return \"{1}\";\n{0}", _Indent, Id);
-			_Output.Write ("			}}\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
 			 }
 		
 		
@@ -446,7 +435,12 @@ namespace Goedel.Tool.ProtoGen {
 			_Output.Write ("		/// <summary>\n{0}", _Indent);
 			_Output.Write ("        /// Tag identifying this class\n{0}", _Indent);
 			_Output.Write ("        /// </summary>\n{0}", _Indent);
-			_Output.Write ("		public override string _Tag {{ get; }} = \"{1}\";\n{0}", _Indent, Id);
+			_Output.Write ("		public override string _Tag => __Tag;\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("		/// <summary>\n{0}", _Indent);
+			_Output.Write ("        /// Tag identifying this class\n{0}", _Indent);
+			_Output.Write ("        /// </summary>\n{0}", _Indent);
+			_Output.Write ("		public new const string __Tag = \"{1}\";\n{0}", _Indent, Id);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("		/// <summary>\n{0}", _Indent);
 			if (  (IsAbstract (Entries)) ) {
@@ -456,13 +450,12 @@ namespace Goedel.Tool.ProtoGen {
 				}
 			_Output.Write ("        /// </summary>\n{0}", _Indent);
 			_Output.Write ("        /// <returns>Object of this type</returns>\n{0}", _Indent);
-			_Output.Write ("		public static new JSONObject _Factory () {{\n{0}", _Indent);
+			_Output.Write ("		public static new JSONObject _Factory () => ", _Indent);
 			if (  (IsAbstract (Entries)) ) {
-				_Output.Write ("			throw new CannotCreateAbstract();\n{0}", _Indent);
+				_Output.Write ("throw new CannotCreateAbstract();\n{0}", _Indent);
 				} else {
-				_Output.Write ("			return new {1}();\n{0}", _Indent, Id);
+				_Output.Write ("new {1}();\n{0}", _Indent, Id);
 				}
-			_Output.Write ("			}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			 }
 		
@@ -487,7 +480,7 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("		private {1}						_{2};\n{0}", _Indent, Type, Token);
 							_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
 							_Output.Write ("		public virtual {1}						{2} {{\n{0}", _Indent, Type, Token);
-							_Output.Write ("			get {{return _{1};}}\n{0}", _Indent, Token);
+							_Output.Write ("			get => _{1};\n{0}", _Indent, Token);
 							_Output.Write ("			set {{_{1} = value; __{2} = true; }}\n{0}", _Indent, Token, Token);
 							_Output.Write ("			}}\n{0}", _Indent);
 							} else {
@@ -514,9 +507,9 @@ namespace Goedel.Tool.ProtoGen {
 			_Output.Write ("        /// <param name=\"wrap\">If true, output is wrapped with object\n{0}", _Indent);
 			_Output.Write ("        /// start and end sequences '{{ ... }}'.</param>\n{0}", _Indent);
 			_Output.Write ("        /// <param name=\"first\">If true, item is the first entry in a list.</param>\n{0}", _Indent);
-			_Output.Write ("		public override void Serialize (Writer Writer, bool wrap, ref bool first) {{\n{0}", _Indent);
+			_Output.Write ("		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>\n{0}", _Indent);
 			_Output.Write ("			SerializeX (Writer, wrap, ref first);\n{0}", _Indent);
-			_Output.Write ("			}}\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        /// <summary>\n{0}", _Indent);
 			_Output.Write ("        /// Serialize this object to the specified output stream.\n{0}", _Indent);
@@ -680,7 +673,7 @@ namespace Goedel.Tool.ProtoGen {
 				_Output.Write ("					//{1}.Serialize (_Writer, false);\n{0}", _Indent, Tag);
 				_Output.Write ("					{{\n{0}", _Indent);
 				_Output.Write ("						_Writer.WriteObjectStart();\n{0}", _Indent);
-				_Output.Write ("						_Writer.WriteToken({1}.Tag(), 1);\n{0}", _Indent, Tag);
+				_Output.Write ("						_Writer.WriteToken({1}._Tag, 1);\n{0}", _Indent, Tag);
 				_Output.Write ("						bool firstinner = true;\n{0}", _Indent);
 				_Output.Write ("						{1}.Serialize (_Writer, true, ref firstinner);\n{0}", _Indent, Tag);
 				_Output.Write ("						_Writer.WriteObjectEnd();\n{0}", _Indent);
@@ -727,14 +720,14 @@ namespace Goedel.Tool.ProtoGen {
 				case ProtoStructType.Struct: { 
 				_Output.Write ("					// This is an untagged structure. Cannot inherit.\n{0}", _Indent);
 				_Output.Write ("                    //_Writer.WriteObjectStart();\n{0}", _Indent);
-				_Output.Write ("                    //_Writer.WriteToken({1}.Tag(), 1);\n{0}", _Indent, Tag);
+				_Output.Write ("                    //_Writer.WriteToken({1}._Tag, 1);\n{0}", _Indent, Tag);
 				_Output.Write ("					bool firstinner = true;\n{0}", _Indent);
 				_Output.Write ("					{1}.Serialize (_Writer, true, ref firstinner);\n{0}", _Indent, Tag);
 				_Output.Write ("                    //_Writer.WriteObjectEnd();\n{0}", _Indent);
 				break; }
 				case ProtoStructType.TStruct: { 
 				_Output.Write ("                    _Writer.WriteObjectStart();\n{0}", _Indent);
-				_Output.Write ("                    _Writer.WriteToken({1}.Tag(), 1);\n{0}", _Indent, Tag);
+				_Output.Write ("                    _Writer.WriteToken({1}._Tag, 1);\n{0}", _Indent, Tag);
 				_Output.Write ("					bool firstinner = true;\n{0}", _Indent);
 				_Output.Write ("					{1}.Serialize (_Writer, true, ref firstinner);\n{0}", _Indent, Tag);
 				_Output.Write ("                    _Writer.WriteObjectEnd();\n{0}", _Indent);

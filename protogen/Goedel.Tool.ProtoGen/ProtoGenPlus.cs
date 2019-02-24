@@ -2,21 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Goedel.Registry;
+using Goedel.Utilities;
 
 namespace Goedel.Tool.ProtoGen {
     public partial class _Choice {
         public bool Normalized = false;
         public string Default = null;
-        public string DefaultC {
-            get { return Default == null ? "NULL" : "\"" + Default + "\""; }
-            }
+        public string DefaultC => Default == null ? "NULL" : "\"" + Default + "\"";
         public bool Multiple = false;
         public bool Required = false;
 
-        public string RequiredC {
-            get { return Required ? "TRUE" : "FALSE"; }
-            }
+        public string RequiredC => Required ? "TRUE" : "FALSE";
 
         public string ID = null;
 
@@ -57,11 +53,11 @@ namespace Goedel.Tool.ProtoGen {
                         Parent.Normalize();
                         }
 
-                    if (Parent.GetType() == typeof(Message)) {
+                    if (Parent?.GetType() == typeof(Message)) {
                         Message Cast = (Message)Parent;
                         Inheritance = Cast.AllEntries;
                         }
-                    else if (Parent.GetType() == typeof(Structure)) {
+                    else if (Parent?.GetType() == typeof(Structure)) {
                         Structure Cast = (Structure)Parent;
                         Inheritance = Cast.AllEntries;
                         }
@@ -88,7 +84,7 @@ namespace Goedel.Tool.ProtoGen {
             return Result;
             }
 
-        public static List<_Choice> InheritEntriesUnsorted(List<_Choice> Input) {
+        public static List<_Choice> InheritEntriesUnsorted(_Choice Struct, List<_Choice> Input) {
 
             List<_Choice> Result = new List<_Choice>();
 
@@ -102,6 +98,10 @@ namespace Goedel.Tool.ProtoGen {
                     List<_Choice> Inheritance = null;
 
                     _Choice Parent = Inherits.Ref.Definition;
+
+                    Assert.NotNull(Parent, UndefinedParent.Throw, 
+                        new UndefinedParentError() {Class = Struct.ID, Inherits= Inherits.Ref.Label});
+
                     Parent.Normalize();
 
                     if (Parent.GetType() == typeof(Message)) {
@@ -194,7 +194,7 @@ namespace Goedel.Tool.ProtoGen {
                 }
             ID = Id.ToString();
             AllEntries = _Choice.InheritEntries(Entries);
-            AllEntriesUnsorted = _Choice.InheritEntriesUnsorted(Entries);
+            AllEntriesUnsorted = _Choice.InheritEntriesUnsorted(this, Entries);
             foreach (_Choice Entry in AllEntries) {
                 if (Entry.TypeC != null) {
                     CountChildren++;
@@ -210,12 +210,12 @@ namespace Goedel.Tool.ProtoGen {
 
 
         public Structure AsStructure() {
-            Structure Structure = new Structure ();
-
-            Structure.AllEntries = AllEntries;
-            Structure.AllEntriesUnsorted = AllEntriesUnsorted;
-            Structure.Entries = Entries;
-            Structure.Id = Id;
+            Structure Structure = new Structure {
+                AllEntries = AllEntries,
+                AllEntriesUnsorted = AllEntriesUnsorted,
+                Entries = Entries,
+                Id = Id
+                };
             Structure.Normalize ();
 
             return Structure;
@@ -227,11 +227,14 @@ namespace Goedel.Tool.ProtoGen {
         public List<_Choice> AllEntries = null;
         public List<_Choice> AllEntriesUnsorted = null;
         public override void Normalize() {
-            if (Normalized) return;
+            if (Normalized) {
+                return;
+                }
+
             ID = Id.ToString ();
             AllEntries = _Choice.InheritEntries(Entries);
 
-            AllEntriesUnsorted = _Choice.InheritEntriesUnsorted(Entries);
+            AllEntriesUnsorted = _Choice.InheritEntriesUnsorted(this, Entries);
 
             foreach (_Choice Entry in AllEntries) {
                 if (Entry.TypeC != null) {
@@ -249,7 +252,10 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Boolean {
         public override void Normalize() {
-            if (Normalized) return;
+            if (Normalized) {
+                return;
+                }
+
             ID = Id.ToString();
             SetOptions(Options);
             TypeC = "boolean";
@@ -260,7 +266,10 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Integer {
         public override void Normalize() {
-            if (Normalized) return;
+            if (Normalized) {
+                return;
+                }
+
             ID = Id.ToString();
             SetOptions(Options);
             TypeC = "long long";
@@ -270,7 +279,11 @@ namespace Goedel.Tool.ProtoGen {
         }
     public partial class Decimal {
         public override void Normalize() {
-            if (Normalized) return;
+
+            if (Normalized) {
+                return;
+                }
+
             ID = Id.ToString();
             SetOptions(Options);
             TypeC = "long long";
@@ -280,7 +293,10 @@ namespace Goedel.Tool.ProtoGen {
         }
     public partial class Float {
         public override void Normalize() {
-            if (Normalized) return;
+            if (Normalized) {
+                return;
+                }
+
             SetOptions(Options);
             TypeC = "double";
             TypeJ = "Real64";
@@ -289,7 +305,10 @@ namespace Goedel.Tool.ProtoGen {
         }
     public partial class Binary {
         public override void Normalize() {
-            if (Normalized) return;
+            if (Normalized) {
+                return;
+                }
+
             ID = Id.ToString();
             SetOptions(Options);
             TypeC = "JSON_Binary";
@@ -300,7 +319,10 @@ namespace Goedel.Tool.ProtoGen {
         }
     public partial class Label {
         public override void Normalize() {
-            if (Normalized) return;
+            if (Normalized) {
+                return;
+                }
+
             ID = Id.ToString();
             SetOptions(Options);
             TypeC = "JSON_String";
@@ -311,7 +333,10 @@ namespace Goedel.Tool.ProtoGen {
         }
     public partial class Name {
         public override void Normalize() {
-            if (Normalized) return;
+            if (Normalized) {
+                return;
+                }
+
             ID = Id.ToString();
             SetOptions(Options);
             TypeC = "JSON_String";
@@ -322,7 +347,10 @@ namespace Goedel.Tool.ProtoGen {
         }
     public partial class String {
         public override void Normalize() {
-            if (Normalized) return;
+            if (Normalized) {
+                return;
+                }
+
             ID = Id.ToString();
             SetOptions(Options);
             TypeC = "JSON_String";
@@ -333,7 +361,10 @@ namespace Goedel.Tool.ProtoGen {
         }
     public partial class URI {
         public override void Normalize() {
-            if (Normalized) return;
+            if (Normalized) {
+                return;
+                }
+
             ID = Id.ToString();
             SetOptions(Options);
             TypeC = "JSON_String";
@@ -344,7 +375,10 @@ namespace Goedel.Tool.ProtoGen {
         }
     public partial class DateTime {
         public override void Normalize() {
-            if (Normalized) return;
+            if (Normalized) {
+                return;
+                }
+
             ID = Id.ToString();
             SetOptions(Options);
             TypeC = "JSON_DateTime";
@@ -355,7 +389,10 @@ namespace Goedel.Tool.ProtoGen {
         }
     public partial class Struct {
         public override void Normalize() {
-            if (Normalized) return;
+            if (Normalized) {
+                return;
+                }
+
             ID = Id.ToString();
             SetOptions(Options);
             Normalized = true;
@@ -363,7 +400,10 @@ namespace Goedel.Tool.ProtoGen {
         }
     public partial class TStruct {
         public override void Normalize() {
-            if (Normalized) return;
+            if (Normalized) {
+                return;
+                }
+
             ID = Id.ToString();
             SetOptions(Options);
             Normalized = true;
@@ -372,7 +412,10 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Tagged {
         public override void Normalize() {
-            if (Normalized) return;
+            if (Normalized) {
+                return;
+                }
+
             ID = Id.ToString();
             SetOptions(Options);
             Normalized = true;

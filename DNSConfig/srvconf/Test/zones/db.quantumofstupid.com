@@ -6,7 +6,7 @@
 ;
 $TTL 600
 quantumofstupid.com.      IN      SOA     dns1.quantumofstupid.com. hallam.gmail.com. (
-                        2018051801       ; serial, todays date + todays serial 
+                        2018082801       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -30,11 +30,11 @@ quantumofstupid.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 quantumofstupid.com.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 108.7.198.158 
-quantumofstupid.com.    A 108.7.198.158 
-www.quantumofstupid.com.    A 108.7.198.158 
-http.quantumofstupid.com.    A 108.7.198.158
-https.quantumofstupid.com.    A 108.7.198.158 
+; Host host1.mathmesh.com 173.76.191.93 
+quantumofstupid.com.    A 173.76.191.93 
+www.quantumofstupid.com.    A 173.76.191.93 
+http.quantumofstupid.com.    A 173.76.191.93
+https.quantumofstupid.com.    A 173.76.191.93 
 _http._tcp.quantumofstupid.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.quantumofstupid.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 

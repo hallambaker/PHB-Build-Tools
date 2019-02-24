@@ -24,7 +24,8 @@ ToolTargets = \
 	Document.cs\
 	GenerateC.cs\
 	GenerateCSharp.cs\
-	ProtoGen.cs
+	ProtoGen.cs\
+	Exceptions.cs
 
 Document.cs : Document.script 
 	gscript Document.script  Document.cs
@@ -37,7 +38,8 @@ GenerateCSharp.cs : GenerateCSharp.script
 
 ProtoGen.cs : ProtoGen.gdl 
 	goedel3 ProtoGen.gdl  /cs  ProtoGen.cs
-
+Exceptions.cs : Exceptions.exceptional 
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 prebuildRecurse : 
 

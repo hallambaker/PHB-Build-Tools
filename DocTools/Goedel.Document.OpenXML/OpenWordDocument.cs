@@ -16,10 +16,7 @@ namespace Goedel.Document.OpenXML {
         /// <param name="FileInfo">The FileInfo handle of the file to read.</param>
         /// <param name="TagCatalog">The tag catalog to interpret style entries.</param>
         public OpenWordDocument(FileInfo FileInfo, TagCatalog TagCatalog) :
-            base(FileInfo) {
-
-            Parse(FileInfo.FullName, TagCatalog, this);
-            }
+            base(FileInfo) => Parse(FileInfo.FullName, TagCatalog, this);
 
         /// <summary>
         /// Construct a reader for a partial file
@@ -28,10 +25,7 @@ namespace Goedel.Document.OpenXML {
         /// <param name="TagCatalog"></param>
         /// <param name="Document"></param>
         public OpenWordDocument(string FileName, TagCatalog TagCatalog,
-                    Goedel.Document.Markdown.Document Document) {
-
-            Parse(FileName, TagCatalog, Document);
-            }
+                    Goedel.Document.Markdown.Document Document) => Parse(FileName, TagCatalog, Document);
 
 
         /// <summary>

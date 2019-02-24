@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -26,9 +26,8 @@ namespace ProtoGenShell {
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
             Brief(Description, DefaultCommand, Entries);
-            }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -42,9 +41,9 @@ namespace ProtoGenShell {
         /// <param name="Dispatch">The command description.</param>
         /// <param name="args">The set of arguments.</param>
         /// <param name="index">The first unparsed argument.</param>
-        public static void About (DispatchShell Dispatch, string[] args, int index) {
+        public static void About (DispatchShell Dispatch, string[] args, int index) =>
             FileTools.About();
-            }
+
 
         public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
             Identifier = "about",
@@ -52,9 +51,9 @@ namespace ProtoGenShell {
             Entries = new List<DescribeEntry>() { }
             };
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) =>
+            (c == UnixFlag) | (c == WindowsFlag) ;
+
 
 
         static CommandLineInterpreter () {
@@ -93,9 +92,9 @@ namespace ProtoGenShell {
 			}
 
 
-        public void MainMethod(ProtoGenShell Dispatch, string[] Args) {
+        public void MainMethod(ProtoGenShell Dispatch, string[] Args) =>
 			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+
 
 
 
@@ -104,6 +103,7 @@ namespace ProtoGenShell {
 			ProtoGenShell Dispatch =	DispatchIn as ProtoGenShell;
 			Protocol		Options = new Protocol ();
 			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
 			Dispatch.Protocol (Options);
 			}
 
@@ -332,7 +332,7 @@ namespace ProtoGenShell {
 							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
 					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
 
-						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate (OutputWriter);
+						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate () { _Output= OutputWriter };
 
 						Script.GenerateRFC2XML (Parse);
 						}
@@ -348,7 +348,7 @@ namespace ProtoGenShell {
 							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
 					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
 
-						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate (OutputWriter);
+						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate () { _Output= OutputWriter };
 
 						Script.GenerateHTML (Parse);
 						}
@@ -364,7 +364,7 @@ namespace ProtoGenShell {
 							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
 					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
 
-						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate (OutputWriter);
+						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate () { _Output= OutputWriter };
 
 						Script.GenerateMD (Parse);
 						}
@@ -380,7 +380,7 @@ namespace ProtoGenShell {
 							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
 					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
 
-						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate (OutputWriter);
+						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate () { _Output= OutputWriter };
 
 						Script.GenerateCS (Parse);
 						}
@@ -396,7 +396,7 @@ namespace ProtoGenShell {
 							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
 					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
 
-						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate (OutputWriter);
+						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate () { _Output= OutputWriter };
 
 						Script.GenerateC (Parse);
 						}
@@ -412,7 +412,7 @@ namespace ProtoGenShell {
 							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
 					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
 
-						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate (OutputWriter);
+						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate () { _Output= OutputWriter };
 
 						Script.GenerateH (Parse);
 						}

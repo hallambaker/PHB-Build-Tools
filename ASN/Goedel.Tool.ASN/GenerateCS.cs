@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Unknown by Unknown
+//  Copyright ©  2017 by 
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,7 @@ namespace Goedel.Tool.ASN {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("// Generate OID declarations\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("#pragma warning disable IDE0022\n{0}", _Indent);
 			_Output.Write ("namespace Goedel.ASN {{  // default namespace\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			foreach  (_Choice Toplevel in ASN2.Top) {
@@ -166,8 +166,7 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
 					_Output.Write ("		/// The OID value\n{0}", _Indent);
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
-					_Output.Write ("		public override int [] OID {{ \n{0}", _Indent);
-					_Output.Write ("			get => Constants.OID__{1}; }}  \n{0}", _Indent, Object.OID);
+					_Output.Write ("		public override int [] OID => Constants.OID__{1}; \n{0}", _Indent, Object.OID);
 					_Output.Write ("\n{0}", _Indent);
 					
 					 
@@ -217,8 +216,7 @@ namespace Goedel.Tool.ASN {
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
 					_Output.Write ("		/// The OID value\n{0}", _Indent);
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
-					_Output.Write ("		public override int [] OID {{ \n{0}", _Indent);
-					_Output.Write ("			get => Constants.OID__{1}; }} \n{0}", _Indent, SingularObject.OID);
+					_Output.Write ("		public override int [] OID  => Constants.OID__{1};  \n{0}", _Indent, SingularObject.OID);
 					_Output.Write ("\n{0}", _Indent);
 					foreach  (Member Member in SingularObject.Entries) {
 						 EntryDeclaration (Member);
@@ -257,7 +255,7 @@ namespace Goedel.Tool.ASN {
 					}
 				}
 			_Output.Write ("	}}\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("#pragma warning restore IDE0022	\n{0}", _Indent);
 			}
 		
 
@@ -352,32 +350,26 @@ namespace Goedel.Tool.ASN {
 			break; }
 				}
 			}
-		
 
-		//
-		// Encode
-		//
-		public void Encode (Member Member) {
-			  Encode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
-			}
-		
 
-		//
-		// Decode
-		//
-		public void Decode (Member Member) {
-			  Decode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
-			}
-		
+        //
+        // Encode
+        //
+        public void Encode(Member Member) => Encode(Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
 
-		//
-		// 
-		//
 
-			  public void Encode (String Name, _Choice Spec, int Flags, int Code) {
-					Encode (Name, null, Spec, Flags, Code);
-					}
-			  public void Encode (String Name, String Default, _Choice Spec, int Flags, int Code) {
+        //
+        // Decode
+        //
+        public void Decode(Member Member) => Decode(Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
+
+
+        //
+        // 
+        //
+
+        public void Encode(String Name, _Choice Spec, int Flags, int Code) => Encode(Name, null, Spec, Flags, Code);
+        public void Encode (String Name, String Default, _Choice Spec, int Flags, int Code) {
 			_Output.Write ("\n{0}", _Indent);
 			 bool Call = false;
 			switch (Spec._Tag ()) {
@@ -511,17 +503,15 @@ namespace Goedel.Tool.ASN {
 				_Output.Write (" ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
 				}
 			 }
-		
-		
 
-		//
-		// 
-		//
 
-			  public void Decode (String Name, _Choice Spec, int Flags, int Code) {
-					Decode (Name, null, Spec, Flags, Code);
-					}
-			  public void Decode (String Name, String Default, _Choice Spec, int Flags, int Code) {
+
+        //
+        // 
+        //
+
+        public void Decode(String Name, _Choice Spec, int Flags, int Code) => Decode(Name, null, Spec, Flags, Code);
+        public void Decode (String Name, String Default, _Choice Spec, int Flags, int Code) {
 			_Output.Write ("\n{0}", _Indent);
 			 bool Call = false;
 			switch (Spec._Tag ()) {

@@ -65,9 +65,7 @@ namespace Goedel.Document.OpenXML {
                 }
             }
 
-        public static MakeWord FromHTML2RFC (string Filename, Goedel.Document.RFC.Document Source) {
-            return new MakeWord(Filename, Source);
-            }
+        public static MakeWord FromHTML2RFC(string Filename, Goedel.Document.RFC.Document Source) => new MakeWord(Filename, Source);
 
 
         private void Generate () {
@@ -178,9 +176,7 @@ namespace Goedel.Document.OpenXML {
             Run.AppendChild(MakeTextRun(Text));
             }
 
-        public override void MakeMetaParagraph (string Style, string Text) {
-            WriteParagraph(Style, Text);
-            }
+        public override void MakeMetaParagraph(string Style, string Text) => WriteParagraph(Style, Text);
 
         public void WriteParagraph (string Style, string Text) {
             var P = StartParagraph(Style);
@@ -188,13 +184,10 @@ namespace Goedel.Document.OpenXML {
             Run.AppendChild(MakeTextRun(Text));
             }
 
-        Text MakeTextRun (string Text) {
-            return new Text() {
-                Text = Text,
-                Space = SpaceProcessingModeValues.Preserve
-                };
-
-            }
+        Text MakeTextRun(string Text) => new Text() {
+            Text = Text,
+            Space = SpaceProcessingModeValues.Preserve
+            };
 
 
         private void WriteParagraph (List<GM.TextSegment> Segments, string Style="Normal") {

@@ -19,16 +19,14 @@ namespace DomainerShell {
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
 
-		
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
-            Brief(Description, DefaultCommand, Entries);
-            }
+        public static void Help(DispatchShell Dispatch, string[] args, int index) => Brief(Description, DefaultCommand, Entries);
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -42,9 +40,7 @@ namespace DomainerShell {
         /// <param name="Dispatch">The command description.</param>
         /// <param name="args">The set of arguments.</param>
         /// <param name="index">The first unparsed argument.</param>
-        public static void About (DispatchShell Dispatch, string[] args, int index) {
-            FileTools.About();
-            }
+        public static void About(DispatchShell Dispatch, string[] args, int index) => FileTools.About();
 
         public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
             Identifier = "about",
@@ -52,9 +48,7 @@ namespace DomainerShell {
             Entries = new List<DescribeEntry>() { }
             };
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) => (c == UnixFlag) | (c == WindowsFlag);
 
 
         static CommandLineInterpreter () {
@@ -93,13 +87,11 @@ namespace DomainerShell {
 			}
 
 
-        public void MainMethod(DomainerShell Dispatch, string[] Args) {
-			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+        public void MainMethod(DomainerShell Dispatch, string[] Args) => Dispatcher(Entries, DefaultCommand, Dispatch, Args, 0); // Main
 
 
 
-		public static void Handle_GenerateDomainer (
+        public static void Handle_GenerateDomainer (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			DomainerShell Dispatch =	DispatchIn as DomainerShell;
 			GenerateDomainer		Options = new GenerateDomainer ();

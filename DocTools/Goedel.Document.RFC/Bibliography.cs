@@ -23,8 +23,8 @@ namespace Goedel.Document.RFC  {
         /// normative.
         /// </summary>
         public bool Normative {
-            get { return _Normative; }
-            set { _Normative = value | _Normative; } // once true, always true
+            get => _Normative;
+            set => _Normative = value | _Normative;  // once true, always true
             }
 
         private bool _Normative;
@@ -123,14 +123,10 @@ namespace Goedel.Document.RFC  {
         public const string DraftURI = "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.{0}.xml";
 
 
-        public void AddCitation(string Label) {
-            AddCitation(Label, true);
-            }
+        public void AddCitation(string Label) => AddCitation(Label, true);
 
 
-        public string GetCitation(string Text) {
-            return GetCitation(Text, false);
-            }
+        public string GetCitation(string Text) => GetCitation(Text, false);
 
         public string GetCitation(string Text, bool StripNL) {
             int State = 0;

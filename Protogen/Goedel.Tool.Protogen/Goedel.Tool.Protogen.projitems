@@ -15,6 +15,12 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Error.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)GenerateC.cs">
       <DependentUpon>GenerateC.script</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -37,6 +43,10 @@
       <LastGenOutput>Document.cs</LastGenOutput>
       <Generator>GScript</Generator>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)Exceptions.exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>exceptional</Generator>
+    </None>
     <None Include="$(MSBuildThisFileDirectory)GenerateC.script">
       <LastGenOutput>GenerateC.cs</LastGenOutput>
       <Generator>GScript</Generator>
@@ -51,5 +61,6 @@
       <LastGenOutput>ProtoGen.cs</LastGenOutput>
       <Generator>Goedel3</Generator>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
   </ItemGroup>
 </Project>

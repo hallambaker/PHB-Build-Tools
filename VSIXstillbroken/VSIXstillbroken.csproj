@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0A79DF63-79B9-4C25-BE0D-07D10ECD7725}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VSIXstillbroken</RootNamespace>
+    <AssemblyName>VSIXstillbroken</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.Designer.Interfaces, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.Shell.15.0, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Framework, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.Utilities, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Validation, Version=15.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="VSLangProj80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Array - Copy.cs" />
+    <Compile Include="Array.cs" />
+    <Compile Include="Assert - Copy.cs" />
+    <Compile Include="Assert.cs" />
+    <Compile Include="BaseClasses - Copy.cs" />
+    <Compile Include="BaseClasses.cs" />
+    <Compile Include="BaseConvert - Copy.cs" />
+    <Compile Include="BaseConvert.cs" />
+    <Compile Include="BaseConvertStream - Copy.cs" />
+    <Compile Include="BaseConvertStream.cs" />
+    <Compile Include="Character - Copy.cs" />
+    <Compile Include="Character.cs" />
+    <Compile Include="Convenience - Copy.cs" />
+    <Compile Include="Convenience.cs" />
+    <Compile Include="Exceptions - Copy.cs">
+      <DependentUpon>Exceptions - Copy.exceptional</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Exceptions1 - Copy.cs" />
+    <Compile Include="Exceptions1.cs" />
+    <Compile Include="GenerateCS - Copy.cs" />
+    <Compile Include="GenerateCS.cs" />
+    <Compile Include="GoedelBinding - Copy.cs" />
+    <Compile Include="GoedelBinding.cs" />
+    <Compile Include="Headers - Copy.cs">
+      <DependentUpon>Headers - Copy.script</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Headers.cs">
+      <DependentUpon>Headers.script</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="IsTrue - Copy.cs" />
+    <Compile Include="IsTrue.cs" />
+    <Compile Include="Lexer - Copy.cs" />
+    <Compile Include="Lexer.cs" />
+    <Compile Include="Linewrap - Copy.cs" />
+    <Compile Include="Linewrap.cs" />
+    <Compile Include="NumberSplit - Copy.cs" />
+    <Compile Include="NumberSplit.cs" />
+    <Compile Include="PathCombine - Copy.cs" />
+    <Compile Include="PathCombine.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegistryT - Copy.cs" />
+    <Compile Include="RegistryT.cs" />
+    <Compile Include="RFC3339 - Copy.cs" />
+    <Compile Include="RFC3339.cs" />
+    <Compile Include="RFC822 - Copy.cs" />
+    <Compile Include="RFC822.cs" />
+    <Compile Include="Script - Copy.cs" />
+    <Compile Include="Script.cs" />
+    <Compile Include="StructureWriter - Copy.cs" />
+    <Compile Include="StructureWriter.cs" />
+    <Compile Include="TraceX - Copy.cs" />
+    <Compile Include="TraceX.cs" />
+    <Compile Include="VSIXBuild - Copy.cs" />
+    <Compile Include="VSIXBuild.cs" />
+    <Compile Include="XMLEscape - Copy.cs" />
+    <Compile Include="XMLEscape.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Exceptions - Copy.exceptional">
+      <Generator>exceptional</Generator>
+      <LastGenOutput>Exceptions - Copy.cs</LastGenOutput>
+    </None>
+    <None Include="Exceptions.exceptional">
+      <Generator>exceptional</Generator>
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+    </None>
+    <None Include="Goedel.Registry - Copy.nuspec" />
+    <None Include="Goedel.Registry.nuspec" />
+    <None Include="Headers - Copy.script">
+      <Generator>GScript</Generator>
+      <LastGenOutput>Headers - Copy.cs</LastGenOutput>
+    </None>
+    <None Include="Headers.script">
+      <Generator>GScript</Generator>
+      <LastGenOutput>Headers.cs</LastGenOutput>
+    </None>
+    <None Include="Index - Copy.md" />
+    <None Include="Index.md" />
+    <None Include="Makefile" />
+    <None Include="Makefile - Copy" />
+    <None Include="VS - Copy.Make" />
+    <None Include="VS.Make" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

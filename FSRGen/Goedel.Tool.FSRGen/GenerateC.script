@@ -1,7 +1,6 @@
 ﻿#script 1.0
 #license MITLicense
 #xclass Goedel.Tool.FSRGen Generate
-#%  public Generate (TextWriter Output) : base (Output) {}
 #method GenerateH FSRSchema FSRSchema
 #% FSRSchema.Complete ();
 

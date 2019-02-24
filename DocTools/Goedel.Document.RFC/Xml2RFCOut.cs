@@ -9,9 +9,7 @@ namespace Goedel.Document.RFC {
     public class Xml2RFCOut {
         TextWriter TextWriter;
 
-        public Xml2RFCOut (TextWriter TextWriter) {
-            this.TextWriter = TextWriter;
-            }
+        public Xml2RFCOut(TextWriter TextWriter) => this.TextWriter = TextWriter;
 
 
 
@@ -66,9 +64,7 @@ namespace Goedel.Document.RFC {
             TextWriter.WriteLine(">");
             }
 
-        void WriteEndTag(string Tag) {
-            TextWriter.WriteLine("</{0}>", Tag);
-            }
+        void WriteEndTag(string Tag) => TextWriter.WriteLine("</{0}>", Tag);
 
         List<BlockType> ListItems = new List<BlockType>();
         int ListPointer = -1;

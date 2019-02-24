@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -26,9 +26,8 @@ namespace CommandShell {
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
             Brief(Description, DefaultCommand, Entries);
-            }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -42,9 +41,9 @@ namespace CommandShell {
         /// <param name="Dispatch">The command description.</param>
         /// <param name="args">The set of arguments.</param>
         /// <param name="index">The first unparsed argument.</param>
-        public static void About (DispatchShell Dispatch, string[] args, int index) {
+        public static void About (DispatchShell Dispatch, string[] args, int index) =>
             FileTools.About();
-            }
+
 
         public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
             Identifier = "about",
@@ -52,9 +51,9 @@ namespace CommandShell {
             Entries = new List<DescribeEntry>() { }
             };
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) =>
+            (c == UnixFlag) | (c == WindowsFlag) ;
+
 
 
         static CommandLineInterpreter () {
@@ -89,13 +88,21 @@ namespace CommandShell {
         public void MainMethod(string[] Args) {
 			CommandShell Dispatch = new CommandShell ();
 
-			MainMethod (Dispatch, Args);
+			try {
+				MainMethod (Dispatch, Args);
+				}
+            catch (Goedel.Command.ParserException) {
+			    Brief(Description, DefaultCommand, Entries);
+				}
+            catch (System.Exception Exception) {
+                Console.WriteLine("Application: {0}", Exception.Message);
+                }
 			}
 
 
-        public void MainMethod(CommandShell Dispatch, string[] Args) {
+        public void MainMethod(CommandShell Dispatch, string[] Args) =>
 			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+
 
 
 
@@ -104,6 +111,7 @@ namespace CommandShell {
 			CommandShell Dispatch =	DispatchIn as CommandShell;
 			GenerateCommand		Options = new GenerateCommand ();
 			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
 			Dispatch.GenerateCommand (Options);
 			}
 
@@ -301,7 +309,7 @@ namespace CommandShell {
 							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
 					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
 
-						Goedel.Tool.Command.GenerateCS Script = new Goedel.Tool.Command.GenerateCS (OutputWriter);
+						Goedel.Tool.Command.GenerateCS Script = new Goedel.Tool.Command.GenerateCS () { _Output= OutputWriter };
 
 						Script.Generate (Parse);
 						}

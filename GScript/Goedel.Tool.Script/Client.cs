@@ -39,23 +39,15 @@ namespace Goedel.Tool.Script {
     
     public class ParseException : SystemException {
         public string Text;
-        public override string ToString() {
-            return Text;
-            }
+        public override string ToString() => Text;
         }
     public class BadDirectiveException : ParseException {
-        public BadDirectiveException (string TagIn) {
-            Text = "Bad Directive ["+TagIn+"]";
-            }
-        public BadDirectiveException () {
-            Text = "Missing Directive";
-            }
+        public BadDirectiveException(string TagIn) => Text = "Bad Directive [" + TagIn + "]";
+        public BadDirectiveException() => Text = "Missing Directive";
         }
     public class MismatchedEndException : ParseException {
         //public MismatchedEndException() {}
-        public MismatchedEndException(string Start, string End) {
-            Text = "Mismatched End ["+Start+"/"+End+"]";
-            }
+        public MismatchedEndException(string Start, string End) => Text = "Mismatched End [" + Start + "/" + End + "]";
         }
     public class WrongArgumentsException : ParseException {
         public WrongArgumentsException(int Have, int Need) {
@@ -65,9 +57,7 @@ namespace Goedel.Tool.Script {
             }
         }
     public class IncompleteOutputException : ParseException {
-        public IncompleteOutputException (string TagIn) {
-            Text = "Incomplete Output Specifier ["+TagIn+"]";
-            }
+        public IncompleteOutputException(string TagIn) => Text = "Incomplete Output Specifier [" + TagIn + "]";
         }
 
     class StackItem {
@@ -133,39 +123,39 @@ namespace Goedel.Tool.Script {
                 }
             }
 
-        const string ClassText =
-            "using System;\n" +
-            "using System.IO;\n" +
-            "using System.Collections.Generic;\n" +
-            "using Goedel.Registry;\n" +
-            "namespace {0} {{\n" +
-            "\t/// <summary>A Goedel script.</summary>\n" +
-            "\tpublic partial class {1} {{\n" +
-            "\t\tTextWriter _Output;\n" +
-            "\t\t/// <summary>The indent prefix</summary>\n" +
-            "\t\tpublic string _Indent = \"\";\n" +
-            "\t\t/// <summary>Constructor with output stream.</summary>\n" +
-            "\t\t/// <param name=\"Output\">The output stream</param>\n" +
-            "\t\tpublic {1} (TextWriter Output) {{\n" +
-            "\t\t\t_Output = Output;\n" +
-            "\t\t\t}}\n";
+        const string ClassText = XClassText;
+            //"using System;\n" +
+            //"using System.IO;\n" +
+            //"using System.Collections.Generic;\n" +
+            //"using Goedel.Registry;\n" +
+            //"namespace {0} {{\n" +
+            //"\t/// <summary>A Goedel script.</summary>\n" +
+            //"\tpublic partial class {1} {{\n" +
+            //"\t\tTextWriter _Output;\n" +
+            //"\t\t/// <summary>The indent prefix</summary>\n" +
+            //"\t\tpublic string _Indent = \"\";\n" +
+            //"\t\t/// <summary>Constructor with output stream.</summary>\n" +
+            //"\t\t/// <param name=\"Output\">The output stream</param>\n" +
+            //"\t\tpublic {1} (TextWriter Output) {{\n" +
+            //"\t\t\t_Output = Output;\n" +
+            //"\t\t\t}}\n";
 
-        const string PClassText =
-            "using System;\n" +
-            "using System.IO;\n" +
-            "using System.Collections.Generic;\n" +
-            "using Goedel.Registry;\n" +
-            "namespace {0} {{\n" +
-            "\t/// <summary>A Goedel script.</summary>\n" +
-            "\tpublic partial class {1} : global::Goedel.Registry.Script {{\n" +
-            "\t\t/// <summary>Default constructor.</summary>\n" +
-            "\t\tpublic {1} () : base () {{\n" +
-            "\t\t\t}}\n"+
-            "\t\t/// <summary>Constructor with output stream.</summary>\n" +
-            "\t\t/// <param name=\"Output\">The output stream</param>\n" +
-            "\t\tpublic {1} (TextWriter Output) : base (Output) {{\n" +
-            "\t\t\t}}\n";
-        
+        const string PClassText = XClassText;
+            //"using System;\n" +
+            //"using System.IO;\n" +
+            //"using System.Collections.Generic;\n" +
+            //"using Goedel.Registry;\n" +
+            //"namespace {0} {{\n" +
+            //"\t/// <summary>A Goedel script.</summary>\n" +
+            //"\tpublic partial class {1} : global::Goedel.Registry.Script {{\n" +
+            //"\t\t/// <summary>Default constructor.</summary>\n" +
+            //"\t\tpublic {1} () : base () {{\n" +
+            //"\t\t\t}}\n"+
+            //"\t\t/// <summary>Constructor with output stream.</summary>\n" +
+            //"\t\t/// <param name=\"Output\">The output stream</param>\n" +
+            //"\t\tpublic {1} (TextWriter Output) : base (Output) {{\n" +
+            //"\t\t\t}}\n";
+
         const string XClassText =
             "using System;\n" +
             "using System.IO;\n" +
@@ -669,8 +659,6 @@ namespace Goedel.Tool.Script {
                 }
             }
 
-        static void Error(string s, int line) {
-            Console.Error.WriteLine("***ERROR: {0} {1}", s, line);
-            }
+        static void Error(string s, int line) => Console.Error.WriteLine("***ERROR: {0} {1}", s, line);
         }
     }

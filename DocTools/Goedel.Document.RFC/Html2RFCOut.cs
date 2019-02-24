@@ -191,9 +191,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        public void WriteParagraph (P P) {
-            WriteBlock(P, "p");
-            }
+        public void WriteParagraph(P P) => WriteBlock(P, "p");
 
 
         void WritePRE (List<TextSegment> Segments) {
@@ -436,9 +434,7 @@ namespace Goedel.Document.RFC {
                 }
             }
 
-        void ListLast () {
-            ListLevel.ListLast();
-            }
+        void ListLast() => ListLevel.ListLast();
 
         public void WriteLinkSVG (string Filename, string Element, string Attribute) {
 
@@ -655,13 +651,9 @@ namespace Goedel.Document.RFC {
                 }
             }
 
-        void WriteSpan (string Class, string Text) {
-            WriteElementIfTrim("span", Text, "class", Class);
-            }
+        void WriteSpan(string Class, string Text) => WriteElementIfTrim("span", Text, "class", Class);
 
-        void StartSpan (string Class) {
-            Start("span", "Class", Class);
-            }
+        void StartSpan(string Class) => Start("span", "Class", Class);
 
         void WriteColophon () {
             // The colophon

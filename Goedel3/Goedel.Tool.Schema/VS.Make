@@ -25,7 +25,7 @@ ToolTargets = \
 	ParserGenerator.cs
 
 Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional  Exceptions.cs
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 ParserGenerator.cs : ParserGenerator.script 
 	gscript ParserGenerator.script  ParserGenerator.cs

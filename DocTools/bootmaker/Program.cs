@@ -34,9 +34,7 @@ namespace Shell.Bootmaker {
         //    //TestNew(TagCatalog);
         //    }
 
-        static Program () {
-            BlockParserMarkDown.Register();
-            }
+        static Program() => BlockParserMarkDown.Register();
 
 
         static TagCatalog ReadCatalog () {

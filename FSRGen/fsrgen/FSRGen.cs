@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -26,9 +26,8 @@ namespace Goedel.Shell.FSRGen {
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
             Brief(Description, DefaultCommand, Entries);
-            }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -42,9 +41,9 @@ namespace Goedel.Shell.FSRGen {
         /// <param name="Dispatch">The command description.</param>
         /// <param name="args">The set of arguments.</param>
         /// <param name="index">The first unparsed argument.</param>
-        public static void About (DispatchShell Dispatch, string[] args, int index) {
+        public static void About (DispatchShell Dispatch, string[] args, int index) =>
             FileTools.About();
-            }
+
 
         public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
             Identifier = "about",
@@ -52,9 +51,9 @@ namespace Goedel.Shell.FSRGen {
             Entries = new List<DescribeEntry>() { }
             };
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) =>
+            (c == UnixFlag) | (c == WindowsFlag) ;
+
 
 
         static CommandLineInterpreter () {
@@ -89,13 +88,21 @@ namespace Goedel.Shell.FSRGen {
         public void MainMethod(string[] Args) {
 			FSRGenShell Dispatch = new FSRGenShell ();
 
-			MainMethod (Dispatch, Args);
+			try {
+				MainMethod (Dispatch, Args);
+				}
+            catch (Goedel.Command.ParserException) {
+			    Brief(Description, DefaultCommand, Entries);
+				}
+            catch (System.Exception Exception) {
+                Console.WriteLine("Application: {0}", Exception.Message);
+                }
 			}
 
 
-        public void MainMethod(FSRGenShell Dispatch, string[] Args) {
+        public void MainMethod(FSRGenShell Dispatch, string[] Args) =>
 			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+
 
 
 
@@ -104,6 +111,7 @@ namespace Goedel.Shell.FSRGen {
 			FSRGenShell Dispatch =	DispatchIn as FSRGenShell;
 			FSR		Options = new FSR ();
 			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
 			Dispatch.FSR (Options);
 			}
 
@@ -264,7 +272,7 @@ namespace Goedel.Shell.FSRGen {
 							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
 					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
 
-						Goedel.Tool.FSRGen.Generate Script = new Goedel.Tool.FSRGen.Generate (OutputWriter);
+						Goedel.Tool.FSRGen.Generate Script = new Goedel.Tool.FSRGen.Generate () { _Output= OutputWriter };
 
 						Script.GenerateH (Parse);
 						}
@@ -280,7 +288,7 @@ namespace Goedel.Shell.FSRGen {
 							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
 					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
 
-						Goedel.Tool.FSRGen.Generate Script = new Goedel.Tool.FSRGen.Generate (OutputWriter);
+						Goedel.Tool.FSRGen.Generate Script = new Goedel.Tool.FSRGen.Generate () { _Output= OutputWriter };
 
 						Script.GenerateCS (Parse);
 						}

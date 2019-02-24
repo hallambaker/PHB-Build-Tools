@@ -16,9 +16,7 @@ namespace Shell.Bootmaker {
     public partial class Shell {
 
 
-        static Shell () {
-            BlockParserMarkDown.Register();
-            }
+        static Shell() => BlockParserMarkDown.Register();
 
 
         /// <summary>
@@ -35,9 +33,7 @@ namespace Shell.Bootmaker {
         /// Process a file
         /// </summary>
         /// <param name="Options">Command line options</param>
-        public override void File(File Options) {
-            base.File(Options);
-            }
+        public override void File(File Options) => base.File(Options);
 
 
         static TagCatalog ReadCatalog() {

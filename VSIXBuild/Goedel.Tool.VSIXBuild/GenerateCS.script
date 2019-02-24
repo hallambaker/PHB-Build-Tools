@@ -167,7 +167,7 @@ namespace #{Cast.Name} {
             var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
-            var Script = new global::#{Generator.Script.Class}(Writer);
+            var Script = new global::#{Generator.Script.Class}(){ _Output = Writer};
             Script.#{Generator.Script.Method}(Parse);
 #end if
 

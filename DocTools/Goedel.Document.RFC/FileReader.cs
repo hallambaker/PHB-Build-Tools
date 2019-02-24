@@ -265,20 +265,16 @@ namespace Goedel.Document.RFC {
             }
         
         List<StreamHandle> StreamHandles = new List<StreamHandle> ();
-        StreamHandle CurrentHandle { get => StreamHandles[StreamHandles.Count - 1]; } 
+        StreamHandle CurrentHandle => StreamHandles[StreamHandles.Count - 1];
 
-        public int LineNumber { get => CurrentHandle.LineNumber; } 
-        public int LinePosition { get => CurrentHandle.LinePosition; } 
-        public string FileName { get => CurrentHandle.FileName; } 
+        public int LineNumber => CurrentHandle.LineNumber;
+        public int LinePosition => CurrentHandle.LinePosition;
+        public string FileName => CurrentHandle.FileName;
 
-        public string position {
-            get => String.Format("Line {0} Position {1} of {2}",
+        public string position => String.Format("Line {0} Position {1} of {2}",
                     LineNumber, LinePosition, FileName);
-            }
 
-        public FileReader2(string FileName) {
-            Include(FileName);
-            }
+        public FileReader2(string FileName) => Include(FileName);
 
         private bool CheckEOS() {
             if (StreamHandles.Count == 0) {

@@ -157,11 +157,9 @@ namespace GoedelSchema {
 		public string					Holder;
         public _Choice					License;
 
-        public override GoedelType _Tag () {
-            return GoedelType.Copyright;
-            }
+        public override GoedelType _Tag() => GoedelType.Copyright;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			Output.Write (Date);
 			Output.Write (Holder);
 	        License.Serialize (Output, Indent+1, true);
@@ -170,62 +168,50 @@ namespace GoedelSchema {
 
     public partial class MITLicense : _Choice {
 
-        public override GoedelType _Tag () {
-            return GoedelType.MITLicense;
-            }
+        public override GoedelType _Tag() => GoedelType.MITLicense;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			}
 		}
 
     public partial class BSD2License : _Choice {
 
-        public override GoedelType _Tag () {
-            return GoedelType.BSD2License;
-            }
+        public override GoedelType _Tag() => GoedelType.BSD2License;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			}
 		}
 
     public partial class BSD3License : _Choice {
 
-        public override GoedelType _Tag () {
-            return GoedelType.BSD3License;
-            }
+        public override GoedelType _Tag() => GoedelType.BSD3License;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			}
 		}
 
     public partial class ISCLicense : _Choice {
 
-        public override GoedelType _Tag () {
-            return GoedelType.ISCLicense;
-            }
+        public override GoedelType _Tag() => GoedelType.ISCLicense;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			}
 		}
 
     public partial class Apache2License : _Choice {
 
-        public override GoedelType _Tag () {
-            return GoedelType.Apache2License;
-            }
+        public override GoedelType _Tag() => GoedelType.Apache2License;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			}
 		}
 
     public partial class OtherLicense : _Choice {
-		public List <System.String>			Text = new List <System.String> (); 
+		public List <System.String>			Text = new List <System.String> ();
 
-        public override GoedelType _Tag () {
-            return GoedelType.OtherLicense;
-            }
+        public override GoedelType _Tag() => GoedelType.OtherLicense;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			foreach (string _s in Text) {
 				Output.Write (_s);
 				}
@@ -237,11 +223,9 @@ namespace GoedelSchema {
         public TOKEN<_Choice>			Name;
         public List <_Choice>           Entries = new List<_Choice> ();
 
-        public override GoedelType _Tag () {
-            return GoedelType.Class;
-            }
+        public override GoedelType _Tag() => GoedelType.Class;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 	        Output.Write (Namespace);
 	        Output.Write (Name);
 			foreach (_Choice _e in Entries) {
@@ -254,11 +238,9 @@ namespace GoedelSchema {
         public ID<_Choice>				Id; 
         public List <Entry>           Entries = new List<Entry> ();
 
-        public override GoedelType _Tag () {
-            return GoedelType.TopType;
-            }
+        public override GoedelType _Tag() => GoedelType.TopType;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 	        Output.Write (Id); 
 			foreach (Entry _e in Entries) {
 				_e.Serialize (Output, Indent+1, true);
@@ -270,11 +252,9 @@ namespace GoedelSchema {
         public ID<_Choice>				Id; 
         public List <Entry>           Entries = new List<Entry> ();
 
-        public override GoedelType _Tag () {
-            return GoedelType.Type;
-            }
+        public override GoedelType _Tag() => GoedelType.Type;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 	        Output.Write (Id); 
 			foreach (Entry _e in Entries) {
 				_e.Serialize (Output, Indent+1, true);
@@ -286,24 +266,20 @@ namespace GoedelSchema {
         public TOKEN<_Choice>			Name;
         public _Choice					Type;
 
-        public override GoedelType _Tag () {
-            return GoedelType.Entry;
-            }
+        public override GoedelType _Tag() => GoedelType.Entry;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 	        Output.Write (Name);
 	        Type.Serialize (Output, Indent+1, true);
 			}
 		}
 
     public partial class Remark : _Choice {
-		public List <System.String>			Text = new List <System.String> (); 
+		public List <System.String>			Text = new List <System.String> ();
 
-        public override GoedelType _Tag () {
-            return GoedelType.Remark;
-            }
+        public override GoedelType _Tag() => GoedelType.Remark;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			foreach (string _s in Text) {
 				Output.Write (_s);
 				}
@@ -313,11 +289,9 @@ namespace GoedelSchema {
     public partial class Options : _Choice {
         public List <OptionEntry>           Entries = new List<OptionEntry> ();
 
-        public override GoedelType _Tag () {
-            return GoedelType.Options;
-            }
+        public override GoedelType _Tag() => GoedelType.Options;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			foreach (OptionEntry _e in Entries) {
 				_e.Serialize (Output, Indent+1, true);
 				}
@@ -329,11 +303,9 @@ namespace GoedelSchema {
         public REF<_Choice>				Type;
         public _Choice					Occurs;
 
-        public override GoedelType _Tag () {
-            return GoedelType.OptionEntry;
-            }
+        public override GoedelType _Tag() => GoedelType.OptionEntry;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 	        Output.Write (Name);
 	        Output.Write (Type);
 	        Occurs.Serialize (Output, Indent+1, true);
@@ -342,44 +314,34 @@ namespace GoedelSchema {
 
     public partial class Single : _Choice {
 
-        public override GoedelType _Tag () {
-            return GoedelType.Single;
-            }
+        public override GoedelType _Tag() => GoedelType.Single;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			}
 		}
 
     public partial class Multiple : _Choice {
 
-        public override GoedelType _Tag () {
-            return GoedelType.Multiple;
-            }
+        public override GoedelType _Tag() => GoedelType.Multiple;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			}
 		}
 
     public partial class List : _Choice {
         public _Choice					Type;
 
-        public override GoedelType _Tag () {
-            return GoedelType.List;
-            }
+        public override GoedelType _Tag() => GoedelType.List;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
-	        Type.Serialize (Output, Indent+1, true);
-			}
-		}
+        public override void Serialize(TextWriter Output, int Indent, bool tag) => Type.Serialize(Output, Indent + 1, true);
+        }
 
     public partial class Choice : _Choice {
         public List <REF<_Choice>>           Entries = new List<REF<_Choice>> ();
 
-        public override GoedelType _Tag () {
-            return GoedelType.Choice;
-            }
+        public override GoedelType _Tag() => GoedelType.Choice;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			foreach (REF<_Choice> _e in Entries) {
 				Output.Write (_e);
 				}
@@ -390,11 +352,9 @@ namespace GoedelSchema {
         public REF<_Choice>				ID;
         public List <REF<_Choice>>           Entries = new List<REF<_Choice>> ();
 
-        public override GoedelType _Tag () {
-            return GoedelType.ChoiceREF;
-            }
+        public override GoedelType _Tag() => GoedelType.ChoiceREF;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 	        Output.Write (ID);
 			foreach (REF<_Choice> _e in Entries) {
 				Output.Write (_e);
@@ -405,95 +365,69 @@ namespace GoedelSchema {
     public partial class ID : _Choice {
         public REF<_Choice>				Type;
 
-        public override GoedelType _Tag () {
-            return GoedelType.ID;
-            }
+        public override GoedelType _Tag() => GoedelType.ID;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
-	        Output.Write (Type);
-			}
-		}
+        public override void Serialize(TextWriter Output, int Indent, bool tag) => Output.Write(Type);
+        }
 
     public partial class REF : _Choice {
         public REF<_Choice>				Type;
 
-        public override GoedelType _Tag () {
-            return GoedelType.REF;
-            }
+        public override GoedelType _Tag() => GoedelType.REF;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
-	        Output.Write (Type);
-			}
-		}
+        public override void Serialize(TextWriter Output, int Indent, bool tag) => Output.Write(Type);
+        }
 
     public partial class Token : _Choice {
         public TOKEN<_Choice>			Type;
 
-        public override GoedelType _Tag () {
-            return GoedelType.Token;
-            }
+        public override GoedelType _Tag() => GoedelType.Token;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
-	        Output.Write (Type);
-			}
-		}
+        public override void Serialize(TextWriter Output, int Indent, bool tag) => Output.Write(Type);
+        }
 
     public partial class String : _Choice {
 
-        public override GoedelType _Tag () {
-            return GoedelType.String;
-            }
+        public override GoedelType _Tag() => GoedelType.String;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			}
 		}
 
     public partial class Integer : _Choice {
 
-        public override GoedelType _Tag () {
-            return GoedelType.Integer;
-            }
+        public override GoedelType _Tag() => GoedelType.Integer;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			}
 		}
 
     public partial class Text : _Choice {
 
-        public override GoedelType _Tag () {
-            return GoedelType.Text;
-            }
+        public override GoedelType _Tag() => GoedelType.Text;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			}
 		}
 
     public partial class Boolean : _Choice {
 
-        public override GoedelType _Tag () {
-            return GoedelType.Boolean;
-            }
+        public override GoedelType _Tag() => GoedelType.Boolean;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
+        public override void Serialize (TextWriter Output, int Indent, bool tag) {
 			}
 		}
 
     class _Label : _Choice {
         public REF<_Choice>            Label;
 
-		// This method is never called. It exists only to prevent a warning when a
-		// Schema does not contain a ChoiceREF element.
-        public void Reach() {
-            Label = null;
-            }
+        // This method is never called. It exists only to prevent a warning when a
+        // Schema does not contain a ChoiceREF element.
+        public void Reach() => Label = null;
 
-        public override GoedelType _Tag () {
-            return GoedelType._Label;
-            }
+        public override GoedelType _Tag() => GoedelType._Label;
 
-		public override void Serialize (TextWriter Output, int Indent, bool tag) {
-			Output.Write (Label);
-			}
+        public override void Serialize(TextWriter Output, int Indent, bool tag) => Output.Write(Label);
         }
 //	}
 
@@ -566,14 +500,7 @@ namespace GoedelSchema {
     public partial class Goedel : Parser{
         public List <GoedelSchema._Choice>        Top;
         public Registry	<GoedelSchema._Choice>	Registry;
-
-
-
-        bool _StartOfEntry;
-        public bool StartOfEntry {
-            get {return _StartOfEntry;}
-            private set { _StartOfEntry = value; }
-            }
+        public bool StartOfEntry { get; private set; }
 
         StateCode								State;
         GoedelSchema._Choice				Current;
@@ -589,7 +516,7 @@ namespace GoedelSchema {
             Registry = new Registry <GoedelSchema._Choice> ();
             State = StateCode._Start;
             Stack = new List <_StackItem> ();
-            _StartOfEntry = true;
+            StartOfEntry = true;
 
 			TYPE__TopTypeType = Registry.TYPE ("TopTypeType"); 
 			TYPE__TypeType = Registry.TYPE ("TypeType"); 

@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Unknown by Unknown
+//  Copyright ©  2017 by 
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,6 @@ using Goedel.Registry;
 namespace Goedel.Tool.FSRGen {
 	public partial class Generate : global::Goedel.Registry.Script {
 
-		  public Generate (TextWriter Output) : base (Output) {}
 		
 
 		//

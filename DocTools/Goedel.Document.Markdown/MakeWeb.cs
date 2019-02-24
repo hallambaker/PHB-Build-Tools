@@ -18,9 +18,7 @@ namespace Goedel.Document.Markdown {
         HTMLWriter HTMLWriter;
         Stack<ListType> Stack = new Stack<ListType>();
 
-        public TagStack(HTMLWriter HTMLWriter) {
-            this.HTMLWriter = HTMLWriter;
-            }
+        public TagStack(HTMLWriter HTMLWriter) => this.HTMLWriter = HTMLWriter;
 
         public void Set(ListType ListType, int Level) {
             Level = Level > 6 ? 6 : Level; // Cap at six to prevent attacks
@@ -47,9 +45,7 @@ namespace Goedel.Document.Markdown {
                 }
             }
 
-        public void Clear() {
-            Set(ListType.NULL, 0);
-            }
+        public void Clear() => Set(ListType.NULL, 0);
 
         void Push(ListType ListType) {
             Stack.Push (ListType);
@@ -105,9 +101,7 @@ namespace Goedel.Document.Markdown {
         public string[] ParagraphsEnd = { };
 
 
-        public FormatHTML(Tags.Format Format) {
-            ReadFormat(Format);
-            }
+        public FormatHTML(Tags.Format Format) => ReadFormat(Format);
 
         public FormatHTML (TagCatalog TagCatalog) {
 
@@ -173,9 +167,7 @@ namespace Goedel.Document.Markdown {
             }
 
 
-        string [] Bind (Tags.Entry Entry) {
-            return Entry.Strings.ToArray();
-            }
+        string[] Bind(Tags.Entry Entry) => Entry.Strings.ToArray();
 
 
         public void MakeFiles (DocumentSet DocumentSet, string RootPath) {
@@ -264,9 +256,7 @@ namespace Goedel.Document.Markdown {
 
         void WriteStart(HTMLWriter HTMLWriter,
                     CatalogEntry CatalogEntry,
-                    List<TagValue> Attributes) {
-                    WriteStart(HTMLWriter, CatalogEntry, Attributes, false);
-            }
+                    List<TagValue> Attributes) => WriteStart(HTMLWriter, CatalogEntry, Attributes, false);
 
         void WriteStart(HTMLWriter HTMLWriter,
                     CatalogEntry CatalogEntry,

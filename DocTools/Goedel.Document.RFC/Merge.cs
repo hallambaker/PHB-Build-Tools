@@ -136,13 +136,9 @@ namespace Goedel.Document.RFC {
                 }
             }
 
-        private bool IsWhitespace (char c) {
-            return ((c== ' ') | (c== '\t') |(c== '\r') |(c== 'n'));
-            }
+        private bool IsWhitespace(char c) => ((c == ' ') | (c == '\t') | (c == '\r') | (c == 'n'));
 
-        private bool IsTag(char c) {
-            return ((c>='a') & (c <= 'z'));
-            }
+        private bool IsTag(char c) => ((c >= 'a') & (c <= 'z'));
 
         private string GetAttributeValue(string Tag, string String) {
             string result = null;

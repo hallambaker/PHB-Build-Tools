@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -25,9 +25,8 @@ namespace Shell.Bootmaker {
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
             Brief(Description, DefaultCommand, Entries);
-            }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -41,9 +40,9 @@ namespace Shell.Bootmaker {
         /// <param name="Dispatch">The command description.</param>
         /// <param name="args">The set of arguments.</param>
         /// <param name="index">The first unparsed argument.</param>
-        public static void About (DispatchShell Dispatch, string[] args, int index) {
+        public static void About (DispatchShell Dispatch, string[] args, int index) =>
             FileTools.About();
-            }
+
 
         public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
             Identifier = "about",
@@ -51,9 +50,9 @@ namespace Shell.Bootmaker {
             Entries = new List<DescribeEntry>() { }
             };
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) =>
+            (c == UnixFlag) | (c == WindowsFlag) ;
+
 
 
         static CommandLineInterpreter () {
@@ -89,13 +88,21 @@ namespace Shell.Bootmaker {
         public void MainMethod(string[] Args) {
 			Shell Dispatch = new Shell ();
 
-			MainMethod (Dispatch, Args);
+			try {
+				MainMethod (Dispatch, Args);
+				}
+            catch (Goedel.Command.ParserException) {
+			    Brief(Description, DefaultCommand, Entries);
+				}
+            catch (System.Exception Exception) {
+                Console.WriteLine("Application: {0}", Exception.Message);
+                }
 			}
 
 
-        public void MainMethod(Shell Dispatch, string[] Args) {
+        public void MainMethod(Shell Dispatch, string[] Args) =>
 			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+
 
 
 
@@ -104,6 +111,7 @@ namespace Shell.Bootmaker {
 			Shell Dispatch =	DispatchIn as Shell;
 			Site		Options = new Site ();
 			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
 			Dispatch.Site (Options);
 			}
 
@@ -112,6 +120,7 @@ namespace Shell.Bootmaker {
 			Shell Dispatch =	DispatchIn as Shell;
 			File		Options = new File ();
 			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
 			Dispatch.File (Options);
 			}
 
@@ -288,13 +297,11 @@ namespace Shell.Bootmaker {
 	// to eliminate the redundant code
     public class _Shell : global::Goedel.Command.DispatchShell {
 
-		public virtual void Site ( Site Options) {
+		public virtual void Site ( Site Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void File ( File Options) {
+		public virtual void File ( File Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
 
         } // class _Shell

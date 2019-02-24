@@ -77,29 +77,23 @@ namespace Goedel.Document.RFC {
             PageWriter = new PageWriter(TextWriter);
             }
 
-        public WriteTXT(TextWriter TextWriter) {
-            PageWriter = new PageWriter(TextWriter);
-            }
+        public WriteTXT(TextWriter TextWriter) => PageWriter = new PageWriter(TextWriter);
 
-        public void WriteHeading(Section Section, string Heading) {
+        public void WriteHeading(Section Section, string Heading) =>
             // Going to have to feed through the CurrentSection to the Pagewriter to 
             // fill in the Page number
             //TextWriter.WriteLine (Heading);
 
             PageWriter.Write(Heading, 0, 3, PageWriter.Format.Heading, 1, 1);
 
-            }
-
-        public void WriteParagraph(string Text) {
+        public void WriteParagraph(string Text) =>
             //TextWriter.WriteLine (Text);
             PageWriter.Write(Text, 3, 3, PageWriter.Format.FlushLeft, 1, 1);
-            }
 
-        public void WritePre(PRE PRE) {
+        public void WritePre(PRE PRE) =>
             //PageWriter.Write("[[Insert Preformatted]]", 3, 3, PageWriter.Format.FlushLeft, 1, 1);
 
-            PageWriter.WritePreformated (PRE.TextSegments, 3, 3, 1, 1);
-            }
+            PageWriter.WritePreformated(PRE.TextSegments, 3, 3, 1, 1);
 
 
         public void WriteRow(Table Table, TableRow Row, int [] Widths, string Rule1, string Rule2) {
@@ -379,9 +373,7 @@ namespace Goedel.Document.RFC {
                 }
             }
 
-        string MakePadding(int length) {
-            return (length <= 0) ? "" : "".PadLeft (length);
-            }
+        string MakePadding(int length) => (length <= 0) ? "" : "".PadLeft(length);
 
 
         bool PushComma = false;
@@ -399,13 +391,9 @@ namespace Goedel.Document.RFC {
             return Pre + Text + Post;
             }
 
-        private string DeNullifyString (string Text, string Pre) {
-            return DeNullifyString (Text, Pre, "");
-            }
+        private string DeNullifyString(string Text, string Pre) => DeNullifyString(Text, Pre, "");
 
-        private string DeNullifyString(string Text) {
-            return DeNullifyString(Text, "", "");
-            }
+        private string DeNullifyString(string Text) => DeNullifyString(Text, "", "");
 
         // [RFC2200]	Postel, J., "Internet Official Protocol Standards", 
         // RFC 2200, STD 1, June 1997.
@@ -442,19 +430,15 @@ namespace Goedel.Document.RFC {
             PageWriter.AddBreak(0) ; // always allow breaks after paragraphs
             }
 
-        public void WriteLeft(string Text) {
+        public void WriteLeft(string Text) =>
             //TextWriter.WriteLine (Text);
             PageWriter.Write(DeNullifyString(Text), 0, 0, PageWriter.Format.FlushLeft, 0, 0);
-            }
-        public void WriteRight(string Text) {
+        public void WriteRight(string Text) =>
             //TextWriter.WriteLine (Text);
             PageWriter.Write(DeNullifyString(Text), 0, 0, PageWriter.Format.FlushRight, 0, 0);
-            }
-        public void WriteCenter(string Text, int Above, int Below) {
-            PageWriter.Write(DeNullifyString(Text), 0, 0, PageWriter.Format.Centered, Above, Below);
-            }
+        public void WriteCenter(string Text, int Above, int Below) => PageWriter.Write(DeNullifyString(Text), 0, 0, PageWriter.Format.Centered, Above, Below);
 
-        
+
         // The Mast heading has a unique format. Since this will never extend over 
         // more than half a page, we special case it by moving the line pointer 
         // on the PageWriter
@@ -468,10 +452,8 @@ namespace Goedel.Document.RFC {
             PageWriter.Line =0;
             }
 
-        public void MastEnd() {
-            PageWriter.Line = PageWriter.Line > LeftMastLines ? 
+        public void MastEnd() => PageWriter.Line = PageWriter.Line > LeftMastLines ?
                 PageWriter.Line : LeftMastLines;
-            }
 
         public void WriteTOC(List<Section> Sections) {
             

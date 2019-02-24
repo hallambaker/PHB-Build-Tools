@@ -6,7 +6,7 @@
 ;
 $TTL 600
 cyberishard.com.      IN      SOA     dns1.cyberishard.com. hallam.gmail.com. (
-                        2018051801       ; serial, todays date + todays serial 
+                        2018082801       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -30,11 +30,11 @@ cyberishard.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 cyberishard.com.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 108.7.198.158 
-cyberishard.com.    A 108.7.198.158 
-www.cyberishard.com.    A 108.7.198.158 
-http.cyberishard.com.    A 108.7.198.158
-https.cyberishard.com.    A 108.7.198.158 
+; Host host1.mathmesh.com 173.76.191.93 
+cyberishard.com.    A 173.76.191.93 
+www.cyberishard.com.    A 173.76.191.93 
+http.cyberishard.com.    A 173.76.191.93
+https.cyberishard.com.    A 173.76.191.93 
 _http._tcp.cyberishard.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.cyberishard.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 

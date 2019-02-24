@@ -115,9 +115,7 @@ namespace Goedel.Document.RFC {
         /// <summary>
         /// Open a block of textblock output
         /// </summary>
-        public void OpenBlock() {
-            CurrentMode = Mode.None;
-            }
+        public void OpenBlock() => CurrentMode = Mode.None;
 
 
         /// <summary>

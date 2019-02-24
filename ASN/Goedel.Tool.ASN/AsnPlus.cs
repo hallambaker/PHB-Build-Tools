@@ -66,13 +66,11 @@ namespace Goedel.Tool.ASN {
 
         bool Once = true;
 
-        private void SetFlags() {
-            Flags = (int)  ((Optional ? ASNFlags.Optional : ASNFlags.Nil) | 
+        private void SetFlags() => Flags = (int)((Optional ? ASNFlags.Optional : ASNFlags.Nil) |
                     (Implicit ? ASNFlags.Implicit : ASNFlags.Nil) |
                     (Explicit ? ASNFlags.Explicit : ASNFlags.Nil) |
-                    (Context ? ASNFlags.Context : ASNFlags.Nil) 
-                    ) ;
-            }
+                    (Context ? ASNFlags.Context : ASNFlags.Nil)
+                    );
 
         public override void Complete() {
             if (Once) {

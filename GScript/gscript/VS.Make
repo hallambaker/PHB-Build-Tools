@@ -25,7 +25,7 @@ ToolTargets = \
 	Goedel.cs
 
 Goedel.cs : Goedel.command 
-	commandparse Goedel.command  Goedel.cs
+	commandparse Goedel.command  /cs  Goedel.cs
 
 
 prebuildRecurse : 

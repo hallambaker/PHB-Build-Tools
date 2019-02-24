@@ -2,7 +2,6 @@
 #license MITLicense
 #xclass Goedel.Tool.ProtoGen Generate
 #% public bool MakeTop = false;
-#%  public Generate (TextWriter Output) : base (Output) {}
 #!output GenerateHTML HTML html
 #!output GenerateXML2RFC XML2RFC xml
 #!output GenerateCS	CS cs

@@ -41,17 +41,9 @@ namespace Goedel.Document.OpenXML {
             }
 
         public static bool Include(string FileName, GM.TagCatalog TagCatalog,
-                        GM.Document Document) {
-
-
-            return true;
-            }
-        public static bool Img (string FileName, GM.TagCatalog TagCatalog,
-                        GM.Document Document) {
-
-
-            return true;
-            }
+                        GM.Document Document) => true;
+        public static bool Img(string FileName, GM.TagCatalog TagCatalog,
+                        GM.Document Document) => true;
 
 
         GM.CatalogEntry CatalogEntryDefault;

@@ -49,7 +49,8 @@ namespace #{Namespace.Id} {
 #end switchcast
 #end foreach
     /// </summary>
-    public class #{Exception.Id} : #{Exception.BaseClass} {
+    [Serializable]
+	public class #{Exception.Id} : #{Exception.BaseClass} {
 
 		/// <summary>
         /// Construct instance for exception #{Exception.Console.Quoted()}
@@ -93,9 +94,8 @@ namespace #{Namespace.Id} {
 ,
 					Object.#{Parameter.Name}#!
 #end foreach				
-					)) {
-			UserData = Object;
-			}
+					)) => UserData = Object;
+
 
 		/// <summary>
         /// Construct instance for exception using a userdata parameter of
@@ -109,9 +109,7 @@ namespace #{Namespace.Id} {
 ,
 					Object.#{Parameter.Name}#!
 #end foreach				
-					), Inner) {
-			UserData = Object;
-			}
+					), Inner) => UserData = Object;
 
 #end foreach
 

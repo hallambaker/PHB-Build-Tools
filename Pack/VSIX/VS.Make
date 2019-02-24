@@ -33,11 +33,7 @@ LinkFiles = \
     Goedel.Tool.RegistryConfig-Framework.dll\
     Goedel.Tool.VSIXBuild-Framework.dll
 
-ToolTargets = \
-	GoedelBinding.cs
-
-GoedelBinding.cs : GoedelBinding.vsixbuild 
-	vsixbuild GoedelBinding.vsixbuild  GoedelBinding.cs
+ToolTargets = 
 
 
 prebuildRecurse : 

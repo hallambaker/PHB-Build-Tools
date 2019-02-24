@@ -32,5 +32,6 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)Index.md" />
     <None Include="$(MSBuildThisFileDirectory)PHBLogo256.ico" />
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
   </ItemGroup>
 </Project>

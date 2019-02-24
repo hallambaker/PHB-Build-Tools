@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -25,9 +25,8 @@ namespace Command {
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
             Brief(Description, DefaultCommand, Entries);
-            }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -36,9 +35,9 @@ namespace Command {
             };
 
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) =>
+            (c == UnixFlag) | (c == WindowsFlag) ;
+
 
 
         static CommandLineInterpreter () {
@@ -74,13 +73,21 @@ namespace Command {
         public void MainMethod(string[] Args) {
 			Command Dispatch = new Command ();
 
-			MainMethod (Dispatch, Args);
+			try {
+				MainMethod (Dispatch, Args);
+				}
+            catch (Goedel.Command.ParserException) {
+			    Brief(Description, DefaultCommand, Entries);
+				}
+            catch (System.Exception Exception) {
+                Console.WriteLine("Application: {0}", Exception.Message);
+                }
 			}
 
 
-        public void MainMethod(Command Dispatch, string[] Args) {
+        public void MainMethod(Command Dispatch, string[] Args) =>
 			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+
 
 
 
@@ -89,6 +96,7 @@ namespace Command {
 			Command Dispatch =	DispatchIn as Command;
 			Script		Options = new Script ();
 			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
 			Dispatch.Script (Options);
 			}
 
@@ -97,6 +105,7 @@ namespace Command {
 			Command Dispatch =	DispatchIn as Command;
 			Schema		Options = new Schema ();
 			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
 			Dispatch.Schema (Options);
 			}
 
@@ -105,6 +114,7 @@ namespace Command {
 			Command Dispatch =	DispatchIn as Command;
 			About		Options = new About ();
 			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
 			Dispatch.About (Options);
 			}
 
@@ -498,17 +508,14 @@ namespace Command {
 	// to eliminate the redundant code
     public class _Command : global::Goedel.Command.DispatchShell {
 
-		public virtual void Script ( Script Options) {
+		public virtual void Script ( Script Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Schema ( Schema Options) {
+		public virtual void Schema ( Schema Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void About ( About Options) {
+		public virtual void About ( About Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
 
         } // class _Command

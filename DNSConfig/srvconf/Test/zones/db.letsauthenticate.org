@@ -6,7 +6,7 @@
 ;
 $TTL 600
 letsauthenticate.org.      IN      SOA     dns1.letsauthenticate.org. hallam.gmail.com. (
-                        2018051801       ; serial, todays date + todays serial 
+                        2018082801       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -30,11 +30,11 @@ letsauthenticate.org.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 letsauthenticate.org.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 108.7.198.158 
-letsauthenticate.org.    A 108.7.198.158 
-www.letsauthenticate.org.    A 108.7.198.158 
-http.letsauthenticate.org.    A 108.7.198.158
-https.letsauthenticate.org.    A 108.7.198.158 
+; Host host1.mathmesh.com 173.76.191.93 
+letsauthenticate.org.    A 173.76.191.93 
+www.letsauthenticate.org.    A 173.76.191.93 
+http.letsauthenticate.org.    A 173.76.191.93
+https.letsauthenticate.org.    A 173.76.191.93 
 _http._tcp.letsauthenticate.org.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.letsauthenticate.org.   IN   SRV 1 1 443 host1.mathmesh.com.
 

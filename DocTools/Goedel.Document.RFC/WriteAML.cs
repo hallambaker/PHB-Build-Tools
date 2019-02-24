@@ -218,9 +218,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        public void Write(Table Text) {
-            XMLOutput.Comment("No tables yet");
-            }
+        public void Write(Table Text) => XMLOutput.Comment("No tables yet");
         }
 
 

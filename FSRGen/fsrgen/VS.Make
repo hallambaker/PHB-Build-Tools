@@ -25,7 +25,7 @@ ToolTargets = \
 	FSRGen.cs
 
 FSRGen.cs : FSRGen.command 
-	commandparse FSRGen.command  FSRGen.cs
+	commandparse FSRGen.command  /cs  FSRGen.cs
 
 
 prebuildRecurse : 

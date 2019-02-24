@@ -248,9 +248,7 @@ namespace Goedel.Document.RFC {
                 }
             }
 
-        public static void Parse (TextReader TextReader, Document Document) {
-            new NewParse(TextReader, Document);
-            }
+        public static void Parse(TextReader TextReader, Document Document) => new NewParse(TextReader, Document);
 
         public NewParse (TextReader FileReader, Document Document) {
             this.TextReader = FileReader;
@@ -657,9 +655,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        void MakeXmlDocument(Element Root) {
-            throw new Exception("Not Yet Implemented");
-            }
+        void MakeXmlDocument(Element Root) => throw new Exception("Not Yet Implemented");
 
 
         Element GetNextElement(List<XML> XMLs, string Tag, ref int Index) {
@@ -709,8 +705,8 @@ namespace Goedel.Document.RFC {
             public StackItem FirstIn => Data[0];  
 
             public Element TopElement {
-                get { return Top.Element; }
-                set { Top.Element = value; }
+                get => Top.Element;
+                set => Top.Element = value;
                 }
 
 
@@ -728,9 +724,7 @@ namespace Goedel.Document.RFC {
                 return StackItem;
                 }
 
-            public void Pop() {
-                Pointer--;
-                }
+            public void Pop() => Pointer--;
 
             public void Dump() {
 

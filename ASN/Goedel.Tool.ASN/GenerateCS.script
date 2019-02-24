@@ -16,7 +16,7 @@ using Goedel.ASN;
 
 
 // Generate OID declarations
-
+##pragma warning disable IDE0022
 namespace Goedel.ASN {  // default namespace
 
 #foreach (_Choice Toplevel in ASN2.Top)
@@ -114,8 +114,7 @@ namespace #{Cast.Name} {
 		/// <summary>
 		/// The OID value
 		/// </summary>
-		public override int [] OID { 
-			get => Constants.OID__#{Object.OID}; }  
+		public override int [] OID => Constants.OID__#{Object.OID}; 
 
 #% 
 #foreach (Member Member in Object.Entries)
@@ -162,8 +161,7 @@ namespace #{Cast.Name} {
 		/// <summary>
 		/// The OID value
 		/// </summary>
-		public override int [] OID { 
-			get => Constants.OID__#{SingularObject.OID}; } 
+		public override int [] OID  => Constants.OID__#{SingularObject.OID};  
 
 #foreach (Member Member in SingularObject.Entries)
 #% EntryDeclaration (Member);
@@ -201,7 +199,7 @@ namespace #{Cast.Name} {
 #end switchcast
 #end foreach
 	}
-
+##pragma warning restore IDE0022	
 #end method
 
 #method EntryDeclaration Member Member

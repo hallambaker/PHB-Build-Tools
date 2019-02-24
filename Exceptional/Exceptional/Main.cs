@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -26,9 +26,8 @@ namespace ExceptionalShell {
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
             Brief(Description, DefaultCommand, Entries);
-            }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -42,9 +41,9 @@ namespace ExceptionalShell {
         /// <param name="Dispatch">The command description.</param>
         /// <param name="args">The set of arguments.</param>
         /// <param name="index">The first unparsed argument.</param>
-        public static void About (DispatchShell Dispatch, string[] args, int index) {
+        public static void About (DispatchShell Dispatch, string[] args, int index) =>
             FileTools.About();
-            }
+
 
         public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
             Identifier = "about",
@@ -52,9 +51,9 @@ namespace ExceptionalShell {
             Entries = new List<DescribeEntry>() { }
             };
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) =>
+            (c == UnixFlag) | (c == WindowsFlag) ;
+
 
 
         static CommandLineInterpreter () {
@@ -89,13 +88,21 @@ namespace ExceptionalShell {
         public void MainMethod(string[] Args) {
 			ExceptionalShell Dispatch = new ExceptionalShell ();
 
-			MainMethod (Dispatch, Args);
+			try {
+				MainMethod (Dispatch, Args);
+				}
+            catch (Goedel.Command.ParserException) {
+			    Brief(Description, DefaultCommand, Entries);
+				}
+            catch (System.Exception Exception) {
+                Console.WriteLine("Application: {0}", Exception.Message);
+                }
 			}
 
 
-        public void MainMethod(ExceptionalShell Dispatch, string[] Args) {
+        public void MainMethod(ExceptionalShell Dispatch, string[] Args) =>
 			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+
 
 
 
@@ -104,6 +111,7 @@ namespace ExceptionalShell {
 			ExceptionalShell Dispatch =	DispatchIn as ExceptionalShell;
 			Exception		Options = new Exception ();
 			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
 			Dispatch.Exception (Options);
 			}
 
@@ -247,7 +255,7 @@ namespace ExceptionalShell {
 							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
 					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
 
-						Goedel.Tool.Exceptional.Generate Script = new Goedel.Tool.Exceptional.Generate (OutputWriter);
+						Goedel.Tool.Exceptional.Generate Script = new Goedel.Tool.Exceptional.Generate () { _Output= OutputWriter };
 
 						Script.GenerateCS (Parse);
 						}

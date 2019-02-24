@@ -168,7 +168,7 @@ postbuildRecurse :
 prebuild : prebuildRecurse $(ToolTargets)
 #else
 ## Non shared project, nothing to do
-prebuild : prebuildRecurse
+prebuild : prebuildRecurse $(ToolTargets)
 #end if
 
 postbuild : postbuildRecurse

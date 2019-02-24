@@ -32,10 +32,8 @@ namespace Goedel.Document.OpenXML {
             }
 
         private void AddNewStyle(string styleid, string stylename,
-                string Font, int HPS, int Indent) {
-            AddNewStyle(styleid, stylename, Font, HPS,
+                string Font, int HPS, int Indent) => AddNewStyle(styleid, stylename, Font, HPS,
                     null, false, false, Indent, 0, false);
-            }
 
         private void AddHeaderStyle(string styleid, string stylename,
                 int HPS, bool italic, bool bold, int level) {

@@ -42,6 +42,8 @@ using System.Text;
 using Goedel.Registry;
 using Goedel.Utilities;
 
+
+
 #foreach (_Choice Item in Goedel.Top)
 #if (Item._Tag() ==  GoedelType.Class)
 #call GenerateClass (Class)Item
@@ -68,6 +70,7 @@ using Goedel.Utilities;
 #end foreach
 #end foreach
 
+##pragma warning disable IDE0022
 namespace #{Class.Namespace} {
 
 
@@ -128,9 +131,8 @@ namespace #{Class.Namespace} {
 #call DeclareEntry Entry
 #end foreach
 
-        public override #{Class.Name}Type _Tag () {
-            return #{Class.Name}Type.#{ID};
-            }
+        public override #{Class.Name}Type _Tag () =>#{Class.Name}Type.#{ID};
+
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -173,17 +175,11 @@ namespace #{Class.Namespace} {
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
-        public void Reach() {
-            Label = null;
-            }
+        public void Reach() =>  Label = null;
 
-        public override #{Class.Name}Type _Tag () {
-            return #{Class.Name}Type._Label;
-            }
+        public override #{Class.Name}Type _Tag () => #{Class.Name}Type._Label;
 
-		public override void Serialize (StructureWriter Output, bool tag) {
-			Output.WriteId ("ID", Label.ToString());
-			}
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
         }
 
 
@@ -221,13 +217,7 @@ namespace #{Class.Namespace} {
         public List <#{Class.Namespace}._Choice>        Top;
         public Registry	<#{Class.Namespace}._Choice>	Registry;
 
-
-
-        bool _StartOfEntry;
-        public bool StartOfEntry {
-            get {return _StartOfEntry;}
-            private set { _StartOfEntry = value; }
-            }
+        public bool StartOfEntry {get;  private set;}
 
         StateCode								State;
         #{Class.Namespace}._Choice				Current;
@@ -235,8 +225,9 @@ namespace #{Class.Namespace} {
 
 
         public static #{Class.Name} Parse(string File, Goedel.Registry.Dispatch Options) {
-            var Result = new #{Class.Name}();
-            Result.Options = Options;
+            var Result = new #{Class.Name}() {
+				Options = Options
+				};
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
@@ -264,7 +255,7 @@ namespace #{Class.Namespace} {
             Registry = new Registry <#{Class.Namespace}._Choice> ();
             State = StateCode._Start;
             Stack = new List <_StackItem> ();
-            _StartOfEntry = true;
+            StartOfEntry = true;
 
 #! Seems to be a bug here, IDs are only created if there is a reference to a type
 #! 
@@ -352,9 +343,7 @@ namespace #{Class.Namespace} {
             }
 
 
-		public void Serialize (TextWriter Output) {
-			Serialize (Output, OutputFormat.Goedel);
-			}
+		public void Serialize (TextWriter Output)=> Serialize (Output, OutputFormat.Goedel);
 
 		public void Serialize (TextWriter Output, OutputFormat OutputFormat) {
 
@@ -368,9 +357,10 @@ namespace #{Class.Namespace} {
 
 
         void Push (#{Class.Namespace}._Choice Token) {
-            _StackItem Item = new _StackItem ();
-            Item.State = State;
-            Item.Token = Current;
+            _StackItem Item = new _StackItem () {
+					State = State,
+					Token = Current
+					};
 
             Stack.Add (Item);
 
@@ -738,7 +728,7 @@ namespace #{Class.Namespace} {
             }
         }
 	}
-
+##pragma warning restore IDE0022	
 #end method
 
 #method DeclareEntry Entry Entry

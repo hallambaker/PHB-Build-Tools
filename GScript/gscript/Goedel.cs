@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -25,9 +25,8 @@ namespace GoedelShell {
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
             Brief(Description, DefaultCommand, Entries);
-            }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -36,9 +35,9 @@ namespace GoedelShell {
             };
 
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) =>
+            (c == UnixFlag) | (c == WindowsFlag) ;
+
 
 
         static CommandLineInterpreter () {
@@ -74,13 +73,21 @@ namespace GoedelShell {
         public void MainMethod(string[] Args) {
 			GoedelShell Dispatch = new GoedelShell ();
 
-			MainMethod (Dispatch, Args);
+			try {
+				MainMethod (Dispatch, Args);
+				}
+            catch (Goedel.Command.ParserException) {
+			    Brief(Description, DefaultCommand, Entries);
+				}
+            catch (System.Exception Exception) {
+                Console.WriteLine("Application: {0}", Exception.Message);
+                }
 			}
 
 
-        public void MainMethod(GoedelShell Dispatch, string[] Args) {
+        public void MainMethod(GoedelShell Dispatch, string[] Args) =>
 			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+
 
 
 
@@ -89,6 +96,7 @@ namespace GoedelShell {
 			GoedelShell Dispatch =	DispatchIn as GoedelShell;
 			Generate		Options = new Generate ();
 			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
 			Dispatch.Generate (Options);
 			}
 
@@ -97,6 +105,7 @@ namespace GoedelShell {
 			GoedelShell Dispatch =	DispatchIn as GoedelShell;
 			Wrap		Options = new Wrap ();
 			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
 			Dispatch.Wrap (Options);
 			}
 
@@ -105,6 +114,7 @@ namespace GoedelShell {
 			GoedelShell Dispatch =	DispatchIn as GoedelShell;
 			About		Options = new About ();
 			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
 			Dispatch.About (Options);
 			}
 
@@ -412,17 +422,14 @@ namespace GoedelShell {
 	// to eliminate the redundant code
     public class _GoedelShell : global::Goedel.Command.DispatchShell {
 
-		public virtual void Generate ( Generate Options) {
+		public virtual void Generate ( Generate Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void Wrap ( Wrap Options) {
+		public virtual void Wrap ( Wrap Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
-		public virtual void About ( About Options) {
+		public virtual void About ( About Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
-			}
 
 
         } // class _GoedelShell

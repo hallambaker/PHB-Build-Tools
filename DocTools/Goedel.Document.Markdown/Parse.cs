@@ -19,9 +19,7 @@ namespace Goedel.Document.Markdown {
 
     public partial class Document {
 
-        public void Parse(LexReader Reader) {
-            Parse(Reader, Paragraphs);
-            }
+        public void Parse(LexReader Reader) => Parse(Reader, Paragraphs);
 
 
 

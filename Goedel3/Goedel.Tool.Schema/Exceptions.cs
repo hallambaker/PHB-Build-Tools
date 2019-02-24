@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Goedel.Utilities;
 
 
@@ -90,9 +90,8 @@ namespace Goedel.Schema {
         /// <param name="Object">User data</param>	
 		public NotFoundReserved (ExceptionData Object) : 
 				base (global::System.String.Format ("Expected reserved word, token {0} was not found",
-					Object.String					)) {
-			UserData = Object;
-			}
+					Object.String					)) => UserData = Object;
+
 
 		/// <summary>
         /// Construct instance for exception using a userdata parameter of
@@ -102,9 +101,7 @@ namespace Goedel.Schema {
 		/// <param name="Inner">Inner Exception</param>	
 		public NotFoundReserved (ExceptionData Object, System.Exception Inner) : 
 				base (global::System.String.Format ("Expected reserved word, token {0} was not found",
-					Object.String					), Inner) {
-			UserData = Object;
-			}
+					Object.String					), Inner) => UserData = Object;
 
 
 

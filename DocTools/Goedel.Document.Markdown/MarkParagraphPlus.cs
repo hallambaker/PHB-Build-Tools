@@ -53,9 +53,7 @@ namespace Goedel.Document.Markdown {
                 }
             Extra = "";
             }
-        void ToExtra(int c) {
-            Extra = Extra + (char)c;
-            }
+        void ToExtra(int c) => Extra = Extra + (char)c;
 
         public override void Reset() {
             Buffer = "";
@@ -66,21 +64,13 @@ namespace Goedel.Document.Markdown {
             }
 
         // Transitions
-        public virtual void Reset(int c) {
-            Reset();
-            }
+        public virtual void Reset(int c) => Reset();
 
-        public virtual void Null(int c) {
-            ToExtra(c);
-            }
+        public virtual void Null(int c) => ToExtra(c);
 
-        public virtual void AddText(int c) {
-            ToBuffer(c);
-            }
+        public virtual void AddText(int c) => ToBuffer(c);
 
-        public virtual void GotEscape(int c) {
-            ToExtra(c);
-            }
+        public virtual void GotEscape(int c) => ToExtra(c);
 
         public virtual void AddeText(int i) {
             char c = (char)i;

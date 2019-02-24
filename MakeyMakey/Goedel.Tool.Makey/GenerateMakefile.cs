@@ -184,7 +184,7 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("prebuildRecurse : \n{0}", _Indent);
-			if (  (Project.ProjectType != ProjectType.shared) ) {
+			if (  (Project.ProjectType != ProjectType.Shared) ) {
 				foreach  (var SharedProject in Project.SharedProject) {
 					_Output.Write ("	cd {1} && nmake /c /f VS.make prebuild \n{0}", _Indent, SharedProject.RelativeDirectory);
 					}
@@ -192,18 +192,18 @@ namespace Goedel.Tool.Makey {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("postbuildRecurse :\n{0}", _Indent);
-			if (  (Project.ProjectType != ProjectType.shared) ) {
+			if (  (Project.ProjectType != ProjectType.Shared) ) {
 				foreach  (var SharedProject in Project.SharedProject) {
 					_Output.Write ("	cd {1} && nmake /c /f VS.make postbuild \n{0}", _Indent, SharedProject.RelativeDirectory);
 					}
 				}
 			_Output.Write ("\n{0}", _Indent);
-			if (  (Project.ProjectType == ProjectType.shared) ) {
+			if (  (Project.ProjectType == ProjectType.Shared) ) {
 				_Output.Write ("# Shared project, create build rules for custom tools.\n{0}", _Indent);
 				_Output.Write ("prebuild : prebuildRecurse $(ToolTargets)\n{0}", _Indent);
 				} else {
 				_Output.Write ("# Non shared project, nothing to do\n{0}", _Indent);
-				_Output.Write ("prebuild : prebuildRecurse\n{0}", _Indent);
+				_Output.Write ("prebuild : prebuildRecurse $(ToolTargets)\n{0}", _Indent);
 				}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("postbuild : postbuildRecurse\n{0}", _Indent);

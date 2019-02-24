@@ -18,7 +18,10 @@ namespace Goedel.Tool.Makey {
     public partial class Tokenizer {
 
         private static T IfExists<T> (List<T> List, int Index) {
-            if (List == null) return default(T);
+            if (List == null) {
+                return default(T);
+                }
+
             return (List.Count > Index) ? List [Index] : default(T);
             }
 
@@ -65,12 +68,12 @@ namespace Goedel.Tool.Makey {
 
         public string Tag { get; set; }
         public string Key { get; set; }
-        public List<string> Values { get; set; } 
+        public List<string> Values { get; set; }
 
-        public string Value { get { return Value0; }  }
-        public string Value0 { get { return IfExists(Values, 0); } }
-        public string Value1 { get { return IfExists(Values, 1); } }
-        public string Value2 { get { return IfExists(Values, 2); } }
+        public string Value => Value0;
+        public string Value0 => IfExists(Values, 0);
+        public string Value1 => IfExists(Values, 1);
+        public string Value2 => IfExists(Values, 2);
 
         /// <summary>
         /// Reset all buffers and output values for the next token.
@@ -84,30 +87,22 @@ namespace Goedel.Tool.Makey {
         /// <summary>
         /// Reset all buffers.
         /// </summary>
-        void Clear() {
-            Accumulate.Clear();
-            }
+        void Clear() => Accumulate.Clear();
 
         /// <summary>
         /// Get the value of the current item and clear the input buffers.
         /// </summary>
-        string CurrentItem() {
-            return Accumulate.CurrentItem();
-            }
+        string CurrentItem() => Accumulate.CurrentItem();
 
         //Add data to the current input stripping leading and trailing spaces
-        void AddCurrent(int c) {
-            Accumulate.AddCurrent(c);
-            }
+        void AddCurrent(int c) => Accumulate.AddCurrent(c);
 
 
         /// <summary>
         /// Do nothing
         /// </summary>
         /// <param name="c">Character that was read</param>
-        public virtual void Reset(int c) {
-            Reset();
-            }
+        public virtual void Reset(int c) => Reset();
 
         /// <summary>
         /// Complete a start token. This has the pattern 
@@ -128,10 +123,7 @@ namespace Goedel.Tool.Makey {
         /// {Item} = {Item}
         /// </summary>
         /// <param name="c">Character that was read</param>
-        public virtual void TagValueFinalize(int c) {
-            Values.Add(CurrentItem());
-            //Console.WriteLine("Tag: |{0}| = |{1}|", Tag, Value);
-            }
+        public virtual void TagValueFinalize(int c) => Values.Add(CurrentItem());//Console.WriteLine("Tag: |{0}| = |{1}|", Tag, Value);
 
         /// <summary>
         /// Complete an End token This is any line that does not
@@ -177,9 +169,7 @@ namespace Goedel.Tool.Makey {
         /// Do nothing
         /// </summary>
         /// <param name="c">Character that was read</param>
-        public virtual void GotTag(int c) {
-            Tag = CurrentItem();
-            }
+        public virtual void GotTag(int c) => Tag = CurrentItem();
 
 
 
@@ -188,18 +178,14 @@ namespace Goedel.Tool.Makey {
         /// Do nothing
         /// </summary>
         /// <param name="c">Character that was read</param>
-        public virtual void GotStartTag(int c) {
-            Key = CurrentItem();
-            }
+        public virtual void GotStartTag(int c) => Key = CurrentItem();
 
 
         /// <summary>
         /// Do nothing
         /// </summary>
         /// <param name="c">Character that was read</param>
-        public virtual void GotItem(int c) {
-            Values.Add(CurrentItem());
-            }
+        public virtual void GotItem(int c) => Values.Add(CurrentItem());
 
         }
     }

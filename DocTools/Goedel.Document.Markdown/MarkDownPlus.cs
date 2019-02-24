@@ -46,9 +46,7 @@ namespace Goedel.Document.Markdown {
 
 			}
 
-        public virtual void Reset (int c) {
-            Reset();
-			}
+        public virtual void Reset(int c) => Reset();
 
         public virtual void CountWhite (int c) {
 			}
@@ -59,9 +57,7 @@ namespace Goedel.Document.Markdown {
 			}
 
 
-        public virtual void AddSpace(int c) {
-            AddText(' ');
-            }
+        public virtual void AddSpace(int c) => AddText(' ');
 
 
         public virtual void StartPre(int c) {
@@ -75,9 +71,7 @@ namespace Goedel.Document.Markdown {
             XText = "";
             }
 
-        public virtual void PreClose(int c) {
-            XText = XText + (char)c;
-            }
+        public virtual void PreClose(int c) => XText = XText + (char)c;
 
 
         public virtual void AddHeading (int c) {

@@ -1,7 +1,6 @@
 ﻿#script 1.0
 #license MITLicense
 #xclass Goedel.Tool.Command GenerateCS
-#%  public GenerateCS (TextWriter Output) : base (Output) {}
 #!
 #! To Do list:
 #!
@@ -107,9 +106,8 @@ namespace #{Class.Namespace} {
         /// <param name="Dispatch"></param>
         /// <param name="args"></param>
         /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) {
+        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
             Brief(Description, DefaultCommand, Entries);
-            }
 
         public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
             Identifier = "help",
@@ -124,9 +122,9 @@ namespace #{Class.Namespace} {
         /// <param name="Dispatch">The command description.</param>
         /// <param name="args">The set of arguments.</param>
         /// <param name="index">The first unparsed argument.</param>
-        public static void About (DispatchShell Dispatch, string[] args, int index) {
+        public static void About (DispatchShell Dispatch, string[] args, int index) =>
             FileTools.About();
-            }
+
 
         public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
             Identifier = "about",
@@ -135,9 +133,9 @@ namespace #{Class.Namespace} {
             };
 #end if
 
-        static bool IsFlag(char c) {
-            return (c == UnixFlag) | (c == WindowsFlag) ;
-            }
+        static bool IsFlag(char c) =>
+            (c == UnixFlag) | (c == WindowsFlag) ;
+
 
 #foreach (_Choice Entry in Class.Entries)
 #switchcast CommandParseType Entry
@@ -203,9 +201,9 @@ namespace #{Class.Namespace} {
 			}
 
 
-        public void MainMethod(#{Class.Id} Dispatch, string[] Args) {
+        public void MainMethod(#{Class.Id} Dispatch, string[] Args) =>
 			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
-            } // Main
+
 
 
 #foreach (_Choice Entry in Class.Entries)
@@ -297,13 +295,20 @@ namespace #{Class.Namespace} {
 			#{Class.Id} Dispatch =	DispatchIn as #{Class.Id};
 			#{Command.Id}		Options = new #{Command.Id} ();
 			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+#if Class.ReturnType == null
 			Dispatch.#{Command.Id} (Options);
+#else
+			var result = Dispatch.#{Command.Id} (Options);
+			Dispatch._PostProcess (result);
+#end if
 			}
 #end method2
 
 #method CommandMethod Command Command
 #% bool DefaultOutput = true;
 #% string Lazy = null;
+#% var Class = Command.ParentClass;
 #foreach (_Choice CommandEntry in Command.Entries)
 #switchcast CommandParseType CommandEntry
 #casecast Parser null
@@ -316,10 +321,19 @@ namespace #{Class.Namespace} {
 #% Lazy = Cast.Name.ToString ();
 #end switchcast
 #end foreach
-		public virtual void #{Command.Id} ( #{Command.Id} Options) {
+		public virtual #{Class.ReturnType ?? "void"} #{Command.Id} ( #{Command.Id} Options) #!
 #if DefaultOutput
+#if Class.ReturnType != null
+{
 			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
 #else
+=>
+			CommandLineInterpreter.DescribeValues (Options);
+#end if
+#else
+{
 			string inputfile = null;
 
 #foreach (_Choice CommandEntry in Command.Entries)
@@ -364,7 +378,7 @@ namespace #{Class.Namespace} {
 							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
 					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
 
-						#{Script.Namespace}.#{Script.Class} Script = new #{Script.Namespace}.#{Script.Class} (OutputWriter);
+						#{Script.Namespace}.#{Script.Class} Script = new #{Script.Namespace}.#{Script.Class} () { _Output= OutputWriter };
 
 						Script.#{Script.Id} (Parse);
 						}
@@ -372,8 +386,8 @@ namespace #{Class.Namespace} {
 				}
 #end switchcast
 #end foreach
-#end if
 			}
+#end if
 
 #end method
 

@@ -19,13 +19,14 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Goedel.IO.dll\
     Goedel.Tool.Shell.dll
 
 ToolTargets = \
 	DNSConfig.cs
 
 DNSConfig.cs : DNSConfig.command 
-	commandparse DNSConfig.command  DNSConfig.cs
+	commandparse DNSConfig.command  /cs  DNSConfig.cs
 
 
 prebuildRecurse : 

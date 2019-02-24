@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Unknown by Unknown
+//  Copyright ©  2017 by 
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -102,17 +102,14 @@ namespace Goedel.Tool.FSRGen {
 					_Output.Write ("        /// </summary>\n{0}", _Indent);
 					_Output.Write ("        /// <param name=\"StartState\">The initial starting state</param>\n{0}", _Indent);
 					_Output.Write ("        /// <returns>The token detected or -1 if an error occurred</returns>\n{0}", _Indent);
-					_Output.Write ("        public Token GetToken(State StartState) {{\n{0}", _Indent);
-					_Output.Write ("            return Tokens [GetTokenInt((int)StartState)];\n{0}", _Indent);
-					_Output.Write ("            }}\n{0}", _Indent);
+					_Output.Write ("        public Token GetToken(State StartState) => Tokens [GetTokenInt((int)StartState)];\n{0}", _Indent);
+					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("        /// <summary>\n{0}", _Indent);
 					_Output.Write ("        /// Get the next token from the stream\n{0}", _Indent);
 					_Output.Write ("        /// </summary>\n{0}", _Indent);
 					_Output.Write ("        /// <returns>The token detected or -1 if an error occurred</returns>\n{0}", _Indent);
-					_Output.Write ("        public Token GetToken () {{\n{0}", _Indent);
-					_Output.Write ("            return GetToken (0);\n{0}", _Indent);
-					_Output.Write ("            }}\n{0}", _Indent);
+					_Output.Write ("        public Token GetToken () => GetToken (0);\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("		/// <summary>State types</summary>\n{0}", _Indent);
 					_Output.Write ("		public enum State {{\n{0}", _Indent);
@@ -193,7 +190,7 @@ namespace Goedel.Tool.FSRGen {
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("		/// <summary>Generated initialization method, is called automatically \n{0}", _Indent);
 					_Output.Write ("		/// the FSR to reset </summary>\n{0}", _Indent);
-					_Output.Write ("        public override void Init () {{\n{0}", _Indent);
+					_Output.Write ("        public override void Init () =>\n{0}", _Indent);
 					_Output.Write ("            Actions = new ActionDelegate[] {{\n{0}", _Indent);
 					
 					  comma = false;
@@ -204,9 +201,7 @@ namespace Goedel.Tool.FSRGen {
 						 comma = true;
 						_Output.Write ("				{1}", _Indent, State.Action);
 						}
-					_Output.Write ("\n{0}", _Indent);
-					_Output.Write ("				}};\n{0}", _Indent);
-					_Output.Write ("			}}\n{0}", _Indent);
+					_Output.Write ("			}};\n{0}", _Indent);
 					_Output.Write ("		}}\n{0}", _Indent);
 					_Output.Write ("	}}\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);

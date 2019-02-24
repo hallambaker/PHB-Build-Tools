@@ -45,9 +45,7 @@ namespace GoedelShell {
             return Path.GetFileNameWithoutExtension(Default) + "." + Entry.Extension;
             }
 
-        public override void About(About Options) {
-            FileTools.About();
-            }
+        public override void About(About Options) => FileTools.About();
 
         public override void Generate(Generate Options) {
             string inputfile = Options.InputFile.Text;

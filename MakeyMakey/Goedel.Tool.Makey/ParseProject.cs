@@ -105,9 +105,7 @@ namespace Goedel.Tool.Makey {
                 }
             }
 
-        public VSProject(TextReader TextReader) {
-            Parse(TextReader, true, "");
-            }
+        public VSProject(TextReader TextReader) => Parse(TextReader, true, "");
 
 
 
@@ -175,7 +173,7 @@ namespace Goedel.Tool.Makey {
                             if (Import.Label == "Shared") {
                                 var File = Path.Combine(Directory, Import.Project);
                                 var Shared = new VSProject(File, true) {
-                                    ProjectType = ProjectType.shared,
+                                    ProjectType = ProjectType.Shared,
                                     RelativeDirectory = Path.GetDirectoryName(Import.Project)
                                     };
                                 SharedProject.Add(Shared);

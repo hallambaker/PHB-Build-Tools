@@ -170,9 +170,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        private static int CompareReferences(Reference First, Reference Second) {
-            return string.Compare(First.Label, Second.Label);
-            }
+        private static int CompareReferences(Reference First, Reference Second) => string.Compare(First.Label, Second.Label);
 
         public void AddReferences () {
             if ((Catalog.Normative.Count == 0) & (Catalog.Informative.Count == 0) &
@@ -336,9 +334,7 @@ namespace Goedel.Document.RFC {
             return Result; 
             }
 
-        public virtual void ReportNit (string Nit) {
-            Console.Write (Nit);
-            }
+        public virtual void ReportNit(string Nit) => Console.Write(Nit);
         }
 
 
@@ -553,10 +549,8 @@ namespace Goedel.Document.RFC {
             }
 
 
-        public LI (string Text, string ID, BlockType Type, int Level, int Index) : 
-                    this (Text, ID, Type, Level){
-            this.Index = Index;
-            }
+        public LI(string Text, string ID, BlockType Type, int Level, int Index) :
+                    this(Text, ID, Type, Level) => this.Index = Index;
         }
 
 

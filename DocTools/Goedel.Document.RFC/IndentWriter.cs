@@ -15,10 +15,8 @@ namespace Goedel.Document.RFC {
 
         public int Indent { get; set; } = 0;
 
-        public IndentWriter (string OutputFile) : 
-                base (OutputFile, false, Encoding.UTF8) {
-            NewLine = "\n";
-            }
+        public IndentWriter(string OutputFile) :
+                base(OutputFile, false, Encoding.UTF8) => NewLine = "\n";
 
         void MakeIndent () {
             for (var i = 0; i < Indent; i++) {

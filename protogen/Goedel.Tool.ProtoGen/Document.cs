@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Unknown by Unknown
+//  Copyright ©  2017 by 
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,6 @@ namespace Goedel.Tool.ProtoGen {
 	public partial class Generate : global::Goedel.Registry.Script {
 
 		 public bool MakeTop = false;
-		  public Generate (TextWriter Output) : base (Output) {}
 		 string StartP , EndP ;
 		 string StartDD , EndDD ;
 		 string StartParamList , EndParamList ;

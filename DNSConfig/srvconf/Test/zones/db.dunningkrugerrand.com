@@ -6,7 +6,7 @@
 ;
 $TTL 600
 dunningkrugerrand.com.      IN      SOA     dns1.dunningkrugerrand.com. hallam.gmail.com. (
-                        2018051801       ; serial, todays date + todays serial 
+                        2018082801       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -30,11 +30,11 @@ dunningkrugerrand.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 dunningkrugerrand.com.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 108.7.198.158 
-dunningkrugerrand.com.    A 108.7.198.158 
-www.dunningkrugerrand.com.    A 108.7.198.158 
-http.dunningkrugerrand.com.    A 108.7.198.158
-https.dunningkrugerrand.com.    A 108.7.198.158 
+; Host host1.mathmesh.com 173.76.191.93 
+dunningkrugerrand.com.    A 173.76.191.93 
+www.dunningkrugerrand.com.    A 173.76.191.93 
+http.dunningkrugerrand.com.    A 173.76.191.93
+https.dunningkrugerrand.com.    A 173.76.191.93 
 _http._tcp.dunningkrugerrand.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.dunningkrugerrand.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 

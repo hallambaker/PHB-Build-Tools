@@ -31,5 +31,6 @@
       <Generator>gscript</Generator>
     </None>
     <None Include="$(MSBuildThisFileDirectory)PHBLogo256.ico" />
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
   </ItemGroup>
 </Project>

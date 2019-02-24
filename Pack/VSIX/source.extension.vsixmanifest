@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="VSIX.7af5d278-3d22-4ad5-a6d7-c6880b244ed7" Version="2.4" Language="en-US" Publisher="Phill Hallam-Baker" />
-        <DisplayName>PHB Build Tools (Consolidated)</DisplayName>
+        <Identity Id="VSIX.7af5d278-3d22-4ad5-a6d7-c6880b244ed7" Version="3.0.3" Language="en-US" Publisher="Phill Hallam-Baker" />
+        <DisplayName>PHB Build Tools</DisplayName>
         <Description xml:space="preserve">Phill Hallam-Baker's meta-code generation tools.
 
 Tools currently included: Finite State Recognizer, Goedel Schema and scripting tools.
@@ -22,22 +22,13 @@ Note, this version of the tools does not support syntax shading.</Description>
     </Installation>
     <Dependencies>
         <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.7,)" />
+        <Dependency d:Source="Installed" Id="Microsoft.VisualStudio.MPF.15.0" DisplayName="Visual Studio MPF 15.0" Version="[15.0,16.0)" />
     </Dependencies>
     <Assets>
         <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
-        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="Goedel.Tool.ASN-Framework" Path="|Goedel.Tool.ASN-Framework|" />
-        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="Goedel.Tool.Command-Framework" Path="|Goedel.Tool.Command-Framework|" />
-        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="Goedel.Tool.Domainer-Framework" Path="|Goedel.Tool.Domainer-Framework|" />
-        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="Goedel.Tool.Exceptional-Framework" Path="|Goedel.Tool.Exceptional-Framework|" />
-        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="Goedel.Tool.FSRGen-Framework" Path="|Goedel.Tool.FSRGen-Framework|" />
-        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="Goedel.Tool.Schema-Framework" Path="|Goedel.Tool.Schema-Framework|" />
-        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="Goedel.Tool.Script-Framework" Path="|Goedel.Tool.Script-Framework|" />
-        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="Goedel.Tool.Makey-Framework" Path="|Goedel.Tool.Makey-Framework|" />
-        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="Goedel.Tool.Protogen-Framework" Path="|Goedel.Tool.Protogen-Framework|" />
-        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="Goedel.Tool.RegistryConfig-Framework" Path="|Goedel.Tool.RegistryConfig-Framework|" />
-        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="Goedel.Tool.%CurrentProject%Build-Framework" Path="|Goedel.Tool.VSIXBuild-Framework|" />
     </Assets>
     <Prerequisites>
         <Prerequisite Id="Microsoft.VisualStudio.Component.Roslyn.LanguageServices" Version="[15.0,16.0)" DisplayName="C# and Visual Basic" />
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,16.0)" DisplayName="Visual Studio core editor" />
     </Prerequisites>
 </PackageManifest>

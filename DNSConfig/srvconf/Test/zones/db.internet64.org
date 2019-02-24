@@ -6,7 +6,7 @@
 ;
 $TTL 600
 internet64.org.      IN      SOA     dns1.internet64.org. hallam.gmail.com. (
-                        2018051801       ; serial, todays date + todays serial 
+                        2018082801       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -30,11 +30,11 @@ internet64.org.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 internet64.org.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 108.7.198.158 
-internet64.org.    A 108.7.198.158 
-www.internet64.org.    A 108.7.198.158 
-http.internet64.org.    A 108.7.198.158
-https.internet64.org.    A 108.7.198.158 
+; Host host1.mathmesh.com 173.76.191.93 
+internet64.org.    A 173.76.191.93 
+www.internet64.org.    A 173.76.191.93 
+http.internet64.org.    A 173.76.191.93
+https.internet64.org.    A 173.76.191.93 
 _http._tcp.internet64.org.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.internet64.org.   IN   SRV 1 1 443 host1.mathmesh.com.
 

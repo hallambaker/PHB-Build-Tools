@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Unknown by Unknown
+//  Copyright ©  2017 by 
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -96,6 +96,8 @@ namespace GoedelSchema {
 			_Output.Write ("using Goedel.Registry;\n{0}", _Indent);
 			_Output.Write ("using Goedel.Utilities;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			foreach  (_Choice Item in Goedel.Top) {
 				if (  (Item._Tag() ==  GoedelType.Class) ) {
 					GenerateClass ((Class)Item);
@@ -126,6 +128,7 @@ namespace GoedelSchema {
 					}
 				}
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("#pragma warning disable IDE0022\n{0}", _Indent);
 			_Output.Write ("namespace {1} {{\n{0}", _Indent, Class.Namespace);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -186,9 +189,8 @@ namespace GoedelSchema {
 					DeclareEntry (Entry);
 					}
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("        public override {1}Type _Tag () {{\n{0}", _Indent, Class.Name);
-				_Output.Write ("            return {1}Type.{2};\n{0}", _Indent, Class.Name, ID);
-				_Output.Write ("            }}\n{0}", _Indent);
+				_Output.Write ("        public override {1}Type _Tag () =>{2}Type.{3};\n{0}", _Indent, Class.Name, Class.Name, ID);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("		public override void _InitChildren (_Choice Parent) {{\n{0}", _Indent);
 				_Output.Write ("			Init (Parent);\n{0}", _Indent);
@@ -236,17 +238,11 @@ namespace GoedelSchema {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("		// This method is never called. It exists only to prevent a warning when a\n{0}", _Indent);
 			_Output.Write ("		// Schema does not contain a ChoiceREF element.\n{0}", _Indent);
-			_Output.Write ("        public void Reach() {{\n{0}", _Indent);
-			_Output.Write ("            Label = null;\n{0}", _Indent);
-			_Output.Write ("            }}\n{0}", _Indent);
+			_Output.Write ("        public void Reach() =>  Label = null;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("        public override {1}Type _Tag () {{\n{0}", _Indent, Class.Name);
-			_Output.Write ("            return {1}Type._Label;\n{0}", _Indent, Class.Name);
-			_Output.Write ("            }}\n{0}", _Indent);
+			_Output.Write ("        public override {1}Type _Tag () => {2}Type._Label;\n{0}", _Indent, Class.Name, Class.Name);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("		public override void Serialize (StructureWriter Output, bool tag) {{\n{0}", _Indent);
-			_Output.Write ("			Output.WriteId (\"ID\", Label.ToString());\n{0}", _Indent);
-			_Output.Write ("			}}\n{0}", _Indent);
+			_Output.Write ("		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId (\"ID\", Label.ToString());\n{0}", _Indent);
 			_Output.Write ("        }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -284,13 +280,7 @@ namespace GoedelSchema {
 			_Output.Write ("        public List <{1}._Choice>        Top;\n{0}", _Indent, Class.Namespace);
 			_Output.Write ("        public Registry	<{1}._Choice>	Registry;\n{0}", _Indent, Class.Namespace);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("        bool _StartOfEntry;\n{0}", _Indent);
-			_Output.Write ("        public bool StartOfEntry {{\n{0}", _Indent);
-			_Output.Write ("            get {{return _StartOfEntry;}}\n{0}", _Indent);
-			_Output.Write ("            private set {{ _StartOfEntry = value; }}\n{0}", _Indent);
-			_Output.Write ("            }}\n{0}", _Indent);
+			_Output.Write ("        public bool StartOfEntry {{get;  private set;}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        StateCode								State;\n{0}", _Indent);
 			_Output.Write ("        {1}._Choice				Current;\n{0}", _Indent, Class.Namespace);
@@ -298,8 +288,9 @@ namespace GoedelSchema {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        public static {1} Parse(string File, Goedel.Registry.Dispatch Options) {{\n{0}", _Indent, Class.Name);
-			_Output.Write ("            var Result = new {1}();\n{0}", _Indent, Class.Name);
-			_Output.Write ("            Result.Options = Options;\n{0}", _Indent);
+			_Output.Write ("            var Result = new {1}() {{\n{0}", _Indent, Class.Name);
+			_Output.Write ("				Options = Options\n{0}", _Indent);
+			_Output.Write ("				}};\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("            using (Stream infile =\n{0}", _Indent);
 			_Output.Write ("                        new FileStream(File, FileMode.Open, FileAccess.Read)) {{\n{0}", _Indent);
@@ -327,7 +318,7 @@ namespace GoedelSchema {
 			_Output.Write ("            Registry = new Registry <{1}._Choice> ();\n{0}", _Indent, Class.Namespace);
 			_Output.Write ("            State = StateCode._Start;\n{0}", _Indent);
 			_Output.Write ("            Stack = new List <_StackItem> ();\n{0}", _Indent);
-			_Output.Write ("            _StartOfEntry = true;\n{0}", _Indent);
+			_Output.Write ("            StartOfEntry = true;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			// Seems to be a bug here, IDs are only created if there is a reference to a type
 			// 
@@ -413,9 +404,7 @@ namespace GoedelSchema {
 			_Output.Write ("            }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("		public void Serialize (TextWriter Output) {{\n{0}", _Indent);
-			_Output.Write ("			Serialize (Output, OutputFormat.Goedel);\n{0}", _Indent);
-			_Output.Write ("			}}\n{0}", _Indent);
+			_Output.Write ("		public void Serialize (TextWriter Output)=> Serialize (Output, OutputFormat.Goedel);\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("		public void Serialize (TextWriter Output, OutputFormat OutputFormat) {{\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -429,9 +418,10 @@ namespace GoedelSchema {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        void Push ({1}._Choice Token) {{\n{0}", _Indent, Class.Namespace);
-			_Output.Write ("            _StackItem Item = new _StackItem ();\n{0}", _Indent);
-			_Output.Write ("            Item.State = State;\n{0}", _Indent);
-			_Output.Write ("            Item.Token = Current;\n{0}", _Indent);
+			_Output.Write ("            _StackItem Item = new _StackItem () {{\n{0}", _Indent);
+			_Output.Write ("					State = State,\n{0}", _Indent);
+			_Output.Write ("					Token = Current\n{0}", _Indent);
+			_Output.Write ("					}};\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("            Stack.Add (Item);\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -835,7 +825,7 @@ namespace GoedelSchema {
 			_Output.Write ("            }}\n{0}", _Indent);
 			_Output.Write ("        }}\n{0}", _Indent);
 			_Output.Write ("	}}\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("#pragma warning restore IDE0022	\n{0}", _Indent);
 			}
 		
 

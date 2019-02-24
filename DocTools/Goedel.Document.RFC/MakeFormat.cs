@@ -10,9 +10,7 @@ namespace Goedel.Document.RFC {
         
         public abstract void MakeMeta (string Tag, string Text, int Indent=0);
 
-        public virtual void MakeMetaParagraph (string Tag, string Text) {
-            MakeMeta(Tag, Text);
-            }
+        public virtual void MakeMetaParagraph(string Tag, string Text) => MakeMeta(Tag, Text);
 
         public virtual void MakeMeta (string Tag, List<string> Texts) {
             if (Texts == null) {

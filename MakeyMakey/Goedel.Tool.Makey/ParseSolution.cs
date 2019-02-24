@@ -14,15 +14,15 @@ namespace Goedel.Tool.Makey {
 
     public enum ProjectType {
         NULL,
-        folder,
-        csproj,
-        wixproj,
-        cproj,
-        portable,
-        website,
-        vsix,
-        csstandard,  // includes core
-        shared
+        Folder,
+        Csproj,
+        Wixproj,
+        Cproj,
+        Portable,
+        Website,
+        Vsix,
+        Csstandard,  // includes core
+        Shared
         }
 
     /// <summary>
@@ -38,15 +38,15 @@ namespace Goedel.Tool.Makey {
     /// </summary>
     public partial class VSSolution : VSFile {
         readonly static public Dictionary<string, ProjectType> MapProject = new Dictionary<string, ProjectType> {
-                { "{2150e333-8fdc-42a3-9474-1a3956d46de8}", ProjectType.folder},
-                { "{fae04ec0-301f-11d3-bf4b-00c04f79efbc}", ProjectType.csproj},
-                { "{930c7802-8a8c-48f9-8165-68863bccd9dd}", ProjectType.wixproj},
-                { "{8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942}", ProjectType.cproj },
-                { "{786c830f-07a1-408b-bd7f-6ee04809d6db}", ProjectType.portable },
-                { "{82b43b9b-a64c-4715-b499-d71e9ca2bd60}", ProjectType.vsix},
-                { "{9a19103f-16f7-4668-be54-9a1e7a4f7556}", ProjectType.csstandard},
-                { "{d954291e-2a0b-460d-934e-dc6b0785db48}", ProjectType.shared},
-                { "{e24c65dc-7377-472b-9aba-bc803b73c61a}", ProjectType.website}
+                { "{2150e333-8fdc-42a3-9474-1a3956d46de8}", ProjectType.Folder},
+                { "{fae04ec0-301f-11d3-bf4b-00c04f79efbc}", ProjectType.Csproj},
+                { "{930c7802-8a8c-48f9-8165-68863bccd9dd}", ProjectType.Wixproj},
+                { "{8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942}", ProjectType.Cproj },
+                { "{786c830f-07a1-408b-bd7f-6ee04809d6db}", ProjectType.Portable },
+                { "{82b43b9b-a64c-4715-b499-d71e9ca2bd60}", ProjectType.Vsix},
+                { "{9a19103f-16f7-4668-be54-9a1e7a4f7556}", ProjectType.Csstandard},
+                { "{d954291e-2a0b-460d-934e-dc6b0785db48}", ProjectType.Shared},
+                { "{e24c65dc-7377-472b-9aba-bc803b73c61a}", ProjectType.Website}
             };
 
 
@@ -65,9 +65,7 @@ namespace Goedel.Tool.Makey {
 
         public Dictionary<string, SolutionProject> ProjectsByGUID = new Dictionary<string, SolutionProject>();
 
-        public VSSolution(string Filename) {
-            Parse(Filename);
-            }
+        public VSSolution(string Filename) => Parse(Filename);
 
         public void Parse(string Filename) {
             using (var FileStream = new FileStream(
@@ -219,8 +217,7 @@ namespace Goedel.Tool.Makey {
         public SolutionProject ByGuid (string GUID) {
             if (GUID == null) { return null; }
 
-            SolutionProject Result;
-            ProjectsByGUID.TryGetValue(GUID, out Result);
+            ProjectsByGUID.TryGetValue(GUID, out var Result);
 
             return Result;
             }
@@ -253,10 +250,10 @@ namespace Goedel.Tool.Makey {
 
         public static bool IsRecurse (ProjectType ProjectType) {
             switch (ProjectType) {
-                case ProjectType.cproj:
-                case ProjectType.csproj:
-                case ProjectType.csstandard:
-                case ProjectType.shared: {
+                case ProjectType.Cproj:
+                case ProjectType.Csproj:
+                case ProjectType.Csstandard:
+                case ProjectType.Shared: {
                     return true;
                     }
                 }

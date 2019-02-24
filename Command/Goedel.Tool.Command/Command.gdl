@@ -11,8 +11,12 @@
 			Type
 			About
 			Library
+			Return
 
 	Type Library
+
+	Type Return
+		ReturnType String		
 
 	Type	CommandSet
 		Id			ID CommandType

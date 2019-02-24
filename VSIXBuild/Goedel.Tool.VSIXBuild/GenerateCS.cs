@@ -26,15 +26,7 @@ using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
 namespace Goedel.Tool.VSIXBuild {
-	/// <summary>A Goedel script.</summary>
 	public partial class Generate : global::Goedel.Registry.Script {
-		/// <summary>Default constructor.</summary>
-		public Generate () : base () {
-			}
-		/// <summary>Constructor with output stream.</summary>
-		/// <param name="Output">The output stream</param>
-		public Generate (TextWriter Output) : base (Output) {
-			}
 
 		
 
@@ -213,7 +205,7 @@ namespace Goedel.Tool.VSIXBuild {
 				_Output.Write ("            var Schema = new Lexer(wszInputFilePath);\n{0}", _Indent);
 				_Output.Write ("            Schema.Process(Reader, Parse);\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("            var Script = new global::{1}(Writer);\n{0}", _Indent, Generator.Script.Class);
+				_Output.Write ("            var Script = new global::{1}(){{ _Output = Writer}};\n{0}", _Indent, Generator.Script.Class);
 				_Output.Write ("            Script.{1}(Parse);\n{0}", _Indent, Generator.Script.Method);
 				}
 			_Output.Write ("\n{0}", _Indent);

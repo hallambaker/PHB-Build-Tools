@@ -73,9 +73,7 @@ namespace Goedel.Document.RFC {
 
 
 
-        public void ListLast () {
-            SetListLevel(-1, BlockType.Data);
-            }
+        public void ListLast() => SetListLevel(-1, BlockType.Data);
 
 
 

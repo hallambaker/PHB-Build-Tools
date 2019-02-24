@@ -24,9 +24,7 @@ namespace Goedel.Document.Markdown {
             Segments = Block.Segments;
             }
 
-        public MarkNewParagraph (List<TextSegment> Segments=null) {
-            this.Segments = Segments ?? new List<TextSegment>();
-            }
+        public MarkNewParagraph(List<TextSegment> Segments = null) => this.Segments = Segments ?? new List<TextSegment>();
 
         StringBuilder Buffer = new StringBuilder();
         StringBuilder Upper = new StringBuilder();
@@ -64,9 +62,7 @@ namespace Goedel.Document.Markdown {
             Buffer.Append((char)c);
             }
 
-        public virtual void AddUpper (int c) {
-            Upper.Append((char)c);
-            }
+        public virtual void AddUpper(int c) => Upper.Append((char)c);
 
         public virtual void AddUpperSpace (int c) {
             CheckNormative(true);
@@ -143,13 +139,9 @@ namespace Goedel.Document.Markdown {
 
         // Action routines.
 
-        public virtual void Null (int c) {
-            Extra.Append((char)c);
-            }
+        public virtual void Null(int c) => Extra.Append((char)c);
 
-        public virtual void GotEscape (int c) {
-            Extra.Append((char)c);
-            }
+        public virtual void GotEscape(int c) => Extra.Append((char)c);
 
         public virtual void AddeText (int i) {
             char c = (char)i;
@@ -267,9 +259,7 @@ namespace Goedel.Document.Markdown {
             return Start;
             }
 
-        public void SegmentText (string Text) {
-            Segments.Add(new TextSegmentText(Text));
-            }
+        public void SegmentText(string Text) => Segments.Add(new TextSegmentText(Text));
 
         public void SegmentEnd (TextSegmentOpen Start) {
             var End = new TextSegmentClose(Start);

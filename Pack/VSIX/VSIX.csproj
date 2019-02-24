@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="GoedelBinding.vsixbuild">
-      <Generator>VSIXBuild</Generator>
+      <Generator>VSIXBroken</Generator>
       <LastGenOutput>GoedelBinding.cs</LastGenOutput>
     </None>
     <None Include="source.extension.vsixmanifest">

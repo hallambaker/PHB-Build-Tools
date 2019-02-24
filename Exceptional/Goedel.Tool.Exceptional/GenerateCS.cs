@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Unknown by Unknown
+//  Copyright ©  2017 by 
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,15 +26,7 @@ using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
 namespace Goedel.Tool.Exceptional {
-	/// <summary>A Goedel script.</summary>
 	public partial class Generate : global::Goedel.Registry.Script {
-		/// <summary>Default constructor.</summary>
-		public Generate () : base () {
-			}
-		/// <summary>Constructor with output stream.</summary>
-		/// <param name="Output">The output stream</param>
-		public Generate (TextWriter Output) : base (Output) {
-			}
 
 		
 
@@ -101,7 +93,8 @@ namespace Goedel.Tool.Exceptional {
 					}
 				}
 			_Output.Write ("    /// </summary>\n{0}", _Indent);
-			_Output.Write ("    public class {1} : {2} {{\n{0}", _Indent, Exception.Id, Exception.BaseClass);
+			_Output.Write ("    [Serializable]\n{0}", _Indent);
+			_Output.Write ("	public class {1} : {2} {{\n{0}", _Indent, Exception.Id, Exception.BaseClass);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("		/// <summary>\n{0}", _Indent);
 			_Output.Write ("        /// Construct instance for exception {1}\n{0}", _Indent, Exception.Console.Quoted());
@@ -145,9 +138,8 @@ namespace Goedel.Tool.Exceptional {
 					_Output.Write (",\n{0}", _Indent);
 					_Output.Write ("					Object.{1}", _Indent, Parameter.Name);
 					}
-				_Output.Write ("					)) {{\n{0}", _Indent);
-				_Output.Write ("			UserData = Object;\n{0}", _Indent);
-				_Output.Write ("			}}\n{0}", _Indent);
+				_Output.Write ("					)) => UserData = Object;\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("		/// <summary>\n{0}", _Indent);
 				_Output.Write ("        /// Construct instance for exception using a userdata parameter of\n{0}", _Indent);
@@ -161,9 +153,7 @@ namespace Goedel.Tool.Exceptional {
 					_Output.Write (",\n{0}", _Indent);
 					_Output.Write ("					Object.{1}", _Indent, Parameter.Name);
 					}
-				_Output.Write ("					), Inner) {{\n{0}", _Indent);
-				_Output.Write ("			UserData = Object;\n{0}", _Indent);
-				_Output.Write ("			}}\n{0}", _Indent);
+				_Output.Write ("					), Inner) => UserData = Object;\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				}
 			_Output.Write ("\n{0}", _Indent);

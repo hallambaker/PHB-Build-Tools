@@ -50,7 +50,7 @@ namespace Goedel.Shell.Makey {
 
                         var TargetFile2 = Path.Combine(SolutionPath, ProjectPath, "VS.Make");
 
-                        var Project = (Item.ProjectType == ProjectType.shared) ?
+                        var Project = (Item.ProjectType == ProjectType.Shared) ?
                                 Item.Project.SharedProject[0] : Item.Project;
 
                         using (var outputStream = TargetFile2.OpenFileNew()) {

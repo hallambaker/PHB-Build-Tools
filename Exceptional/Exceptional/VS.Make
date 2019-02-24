@@ -25,7 +25,7 @@ ToolTargets = \
 	Main.cs
 
 Main.cs : Main.Command 
-	commandparse Main.Command  Main.cs
+	commandparse Main.Command  /cs  Main.cs
 
 
 prebuildRecurse : 

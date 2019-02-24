@@ -1,0 +1,16 @@
+﻿
+Namespace  Goedel.Tool.ProtoGen
+
+	Exception UndefinedReference
+		Console "Reference to undefined object"
+		Description
+			|The input could not be parsed
+			
+		Exception UndefinedParent
+			Console "The parent is not referenced."
+			Description
+				|The file could not be read.
+
+			Object UndefinedParentError "Class {0} references unknown parent {1}"
+				Class
+				Inherits

@@ -17,11 +17,9 @@ namespace Goedel.Document.RFC {
                 }
             }
 
-        public static void Parse(TextReader TextReader, Goedel.Document.RFC.Document Document) {
-            new Rfc7991Parse(TextReader, Document);
-            }
+        public static void Parse(TextReader TextReader, Goedel.Document.RFC.Document Document) => new Rfc7991Parse(TextReader, Document);
 
-        
+
         public Rfc7991Parse(TextReader TextReader, Goedel.Document.RFC.Document Document) {
             this.TextReader = TextReader;
             this.Document = Document;
@@ -350,9 +348,7 @@ namespace Goedel.Document.RFC {
         ////////////////////////
         // Above is mostly stable
 
-        void AddText(ref string s1, string s2) {
-            s1 = (s1 == null) ? s2 : s1 + s2;
-            }
+        void AddText(ref string s1, string s2) => s1 = (s1 == null) ? s2 : s1 + s2;
 
 
         void MakeP(List<TextBlock> Parent, ref string  Text, ref string ID) {
@@ -545,9 +541,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        string GetAddressAttribute(postal postal, string Tag) {
-            return null;
-            }
+        string GetAddressAttribute(postal postal, string Tag) => null;
 
         }
     }

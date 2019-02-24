@@ -46,9 +46,7 @@ namespace Goedel.Document.RFC {
 
         public int BlankLines = 0;
 
-        public void AddBlank(int Lines) {
-            BlankLines = Lines > BlankLines ? Lines : BlankLines;
-            }
+        public void AddBlank(int Lines) => BlankLines = Lines > BlankLines ? Lines : BlankLines;
 
         public void AddBreak(int Lines) {
             AddBlank(Lines);
@@ -91,9 +89,7 @@ namespace Goedel.Document.RFC {
             Line = 0;
             }
 
-        static string Padding(int chars) {
-            return "".PadLeft(chars);
-            }
+        static string Padding(int chars) => "".PadLeft(chars);
 
         static string FlushLeft(ref string Source, int Left, int Right) {
             string Text = Consume(ref Source, Right - Left);
@@ -215,9 +211,7 @@ namespace Goedel.Document.RFC {
 
         // Write a line of text 
 
-        public void WriteLine() {
-            AdvanceLine();
-            }
+        public void WriteLine() => AdvanceLine();
         public void WriteLine(string Text) {
             //TextWriter.WriteLine (Text);
 
@@ -365,13 +359,9 @@ namespace Goedel.Document.RFC {
             return Result + " " + Right;
             }
 
-        string MakeHeader() {
-            return MakeBanner(HeaderLeft, HeaderCenter, HeaderRight);
-            }
+        string MakeHeader() => MakeBanner(HeaderLeft, HeaderCenter, HeaderRight);
 
-        string MakeFooter() {
-            return MakeBanner(FooterLeft, FooterCenter, String.Format("[Page {0}]", Page));
-            }
+        string MakeFooter() => MakeBanner(FooterLeft, FooterCenter, String.Format("[Page {0}]", Page));
 
 
         public void NewPage() {
@@ -403,9 +393,7 @@ namespace Goedel.Document.RFC {
             TextWriter.Flush ();
             }
 
-        public void WritePage() {
-            WritePage(Lines.Length);
-            }
+        public void WritePage() => WritePage(Lines.Length);
 
         public void WritePage(int WriteLines) {
             Lines[FooterLine - 1] = MakeFooter();

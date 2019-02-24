@@ -19,7 +19,9 @@ namespace Goedel.Tool.Domainer {
         // There are faster ways to do this, but this is the most readable
         static Conversion Lookup(DomainerType Key, IList<Conversion> Items) {
             foreach (Conversion Entry in Items) {
-                if (Entry.Type == Key) return Entry;
+                if (Entry.Type == Key) {
+                    return Entry;
+                    }
                 }
             return null;
             }

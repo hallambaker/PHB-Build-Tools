@@ -25,7 +25,7 @@ ToolTargets = \
 	Command.cs
 
 Command.cs : Command.command 
-	commandparse Command.command  Command.cs
+	commandparse Command.command  /cs  Command.cs
 
 
 prebuildRecurse : 

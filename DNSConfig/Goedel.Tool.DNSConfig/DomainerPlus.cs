@@ -98,13 +98,9 @@ namespace Goedel.Tool.DNSConfig {
         //    return MakeAddress(Data, First, Second?.Label);
         //    }
 
-        public string MakeAddress (Machine Machine, ID<_Choice> First, ID<_Choice> Second = null) {
-            return MakeAddress(Machine, First.Label, Second?.Label);
-            }
+        public string MakeAddress(Machine Machine, ID<_Choice> First, ID<_Choice> Second = null) => MakeAddress(Machine, First.Label, Second?.Label);
 
-        public string MakeAddress (Machine Machine, string First, ID<_Choice> Second = null) {
-            return MakeAddress(Machine, First, Second?.Label);
-            }
+        public string MakeAddress(Machine Machine, string First, ID<_Choice> Second = null) => MakeAddress(Machine, First, Second?.Label);
 
         public string MakeAddress (Machine Machine, string First, string Second = null) {
 

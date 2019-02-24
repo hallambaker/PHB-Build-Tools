@@ -25,7 +25,7 @@ ToolTargets = \
 	Protogen.cs
 
 Protogen.cs : Protogen.command 
-	commandparse Protogen.command  Protogen.cs
+	commandparse Protogen.command  /cs  Protogen.cs /nocatch
 
 
 prebuildRecurse : 

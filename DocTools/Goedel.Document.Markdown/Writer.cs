@@ -10,13 +10,9 @@ namespace Goedel.Document.Markdown {
         protected TextWriter TextWriter = null;
 
         // Public constructors
-        public Writer (FileInfo FileInfo) {
-            Init(FileInfo);
-            }
+        public Writer(FileInfo FileInfo) => Init(FileInfo);
 
-        public Writer (string FilePath) {
-            Init(FilePath);
-            }
+        public Writer(string FilePath) => Init(FilePath);
 
         // The real constructors
         protected void Init (FileInfo FileInfo) {
@@ -24,26 +20,27 @@ namespace Goedel.Document.Markdown {
             Init(FilePath);
             }
 
-        protected void Init (string FilePath) {
-            Init(new FileStream(FilePath, FileMode.Create, FileAccess.Write));
-            }
+        protected void Init(string FilePath) => Init(new FileStream(FilePath, FileMode.Create, FileAccess.Write));
 
         protected void Init (Stream Stream) {
             this.Stream = Stream;
             Init(new StreamWriter(Stream));
             }
 
-        protected void Init (TextWriter TextWriter) {
-            this.TextWriter = TextWriter;
-            }
+        protected void Init(TextWriter TextWriter) => this.TextWriter = TextWriter;
 
 
         public virtual void Dispose () {
-            if (TextWriter != null) TextWriter.Dispose();
-            if (Stream != null) Stream.Dispose();
+            if (TextWriter != null) {
+                TextWriter.Dispose();
+                }
+
+            if (Stream != null) {
+                Stream.Dispose();
+                }
             }
 
-        public Encoding Encoding { get { return TextWriter.Encoding; } }
+        public Encoding Encoding => TextWriter.Encoding;
 
         // Formatting convenience routines
 
@@ -59,29 +56,15 @@ namespace Goedel.Document.Markdown {
             }
 
 
-        public void Write (string format) {
-            TextWriter.Write(format);
-            }
-        public void Write (string format, Object arg) {
-            TextWriter.Write(format, arg);
-            }
-        public void Write (string format, params Object[] arg) {
-            TextWriter.Write(format, arg);
-            }
+        public void Write(string format) => TextWriter.Write(format);
+        public void Write(string format, Object arg) => TextWriter.Write(format, arg);
+        public void Write(string format, params Object[] arg) => TextWriter.Write(format, arg);
 
-        public void WriteLine () {
-            TextWriter.WriteLine();
-            }
+        public void WriteLine() => TextWriter.WriteLine();
 
-        public void WriteLine (string format) {
-            TextWriter.WriteLine(format);
-            }
-        public void WriteLine (string format, Object arg) {
-            TextWriter.WriteLine(format, arg);
-            }
-        public void WriteLine (string format, params Object[] arg) {
-            TextWriter.WriteLine(format, arg);
-            }
+        public void WriteLine(string format) => TextWriter.WriteLine(format);
+        public void WriteLine(string format, Object arg) => TextWriter.WriteLine(format, arg);
+        public void WriteLine(string format, params Object[] arg) => TextWriter.WriteLine(format, arg);
 
         public void WriteLine (string[] formats) {
             foreach (var format in formats) {

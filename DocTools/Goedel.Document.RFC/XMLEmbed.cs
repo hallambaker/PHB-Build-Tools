@@ -20,13 +20,9 @@ namespace Goedel.Document.RFC {
 
         public override Encoding Encoding => Output.Encoding;
 
-        public override void Write (string value) {
-            base.Write(value);
-            }
+        public override void Write(string value) => base.Write(value);
 
-        public override void Write (char value) {
-            base.Write(value);
-            }
+        public override void Write(char value) => base.Write(value);
         }
 
     public class XMLEmbed {

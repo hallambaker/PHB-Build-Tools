@@ -40,11 +40,11 @@ namespace Goedel.VSIX.Binding {
     [Guid(GuidList.GuidCommandCSGeneratorString)]
     [ProvideObject(typeof(CommandCS))]
     [CodeGeneratorRegistration(typeof(CommandCS), "CommandCS", 
-					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(CommandCS), "CommandCS", 
 					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(CommandCS), "CommandCS", 
-					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class CommandCS : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
         private CodeDomProvider codeDomProvider = null;
@@ -128,7 +128,8 @@ namespace Goedel.VSIX.Binding {
             var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
-            var Script = new global::Goedel.Tool.Command.GenerateCS(Writer);
+
+            var Script = new global::Goedel.Tool.Command.GenerateCS() { _Output = Writer};
             Script.Generate(Parse);
 
             // Convert writer data to a string and then a byte array
@@ -198,11 +199,11 @@ namespace Goedel.VSIX.Binding {
     [Guid(GuidList.GuidFSRCSGeneratorString)]
     [ProvideObject(typeof(FSRCS))]
     [CodeGeneratorRegistration(typeof(FSRCS), "FSRCS", 
-					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(FSRCS), "FSRCS", 
 					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(FSRCS), "FSRCS", 
-					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class FSRCS : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
         private CodeDomProvider codeDomProvider = null;
@@ -286,7 +287,7 @@ namespace Goedel.VSIX.Binding {
             var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
-            var Script = new global::Goedel.Tool.FSRGen.Generate(Writer);
+            var Script = new global::Goedel.Tool.FSRGen.Generate() { _Output = Writer };
             Script.GenerateCS(Parse);
 
             // Convert writer data to a string and then a byte array
@@ -356,11 +357,11 @@ namespace Goedel.VSIX.Binding {
     [Guid(GuidList.GuidExceptionalGeneratorString)]
     [ProvideObject(typeof(Exceptional))]
     [CodeGeneratorRegistration(typeof(Exceptional), "Exceptional", 
-					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(Exceptional), "Exceptional", 
 					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(Exceptional), "Exceptional", 
-					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class Exceptional : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
         private CodeDomProvider codeDomProvider = null;
@@ -444,7 +445,7 @@ namespace Goedel.VSIX.Binding {
             var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
-            var Script = new global::Goedel.Tool.Exceptional.Generate(Writer);
+            var Script = new global::Goedel.Tool.Exceptional.Generate() { _Output= Writer };
             Script.GenerateCSX(Parse);
 
             // Convert writer data to a string and then a byte array
@@ -514,11 +515,11 @@ namespace Goedel.VSIX.Binding {
     [Guid(GuidList.GuidGScriptGeneratorString)]
     [ProvideObject(typeof(GScript))]
     [CodeGeneratorRegistration(typeof(GScript), "GScript", 
-					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(GScript), "GScript", 
 					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(GScript), "GScript", 
-					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class GScript : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
         private CodeDomProvider codeDomProvider = null;
@@ -668,11 +669,11 @@ namespace Goedel.VSIX.Binding {
     [Guid(GuidList.GuidGoedel3GeneratorString)]
     [ProvideObject(typeof(Goedel3))]
     [CodeGeneratorRegistration(typeof(Goedel3), "Goedel3", 
-					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(Goedel3), "Goedel3", 
 					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(Goedel3), "Goedel3", 
-					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class Goedel3 : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
         private CodeDomProvider codeDomProvider = null;
@@ -826,11 +827,11 @@ namespace Goedel.VSIX.Binding {
     [Guid(GuidList.GuidASN2CSGeneratorString)]
     [ProvideObject(typeof(ASN2CS))]
     [CodeGeneratorRegistration(typeof(ASN2CS), "ASN2CS", 
-					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(ASN2CS), "ASN2CS", 
 					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(ASN2CS), "ASN2CS", 
-					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class ASN2CS : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
         private CodeDomProvider codeDomProvider = null;
@@ -984,11 +985,11 @@ namespace Goedel.VSIX.Binding {
     [Guid(GuidList.GuidDomainerCSGeneratorString)]
     [ProvideObject(typeof(DomainerCS))]
     [CodeGeneratorRegistration(typeof(DomainerCS), "DomainerCS", 
-					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(DomainerCS), "DomainerCS", 
 					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(DomainerCS), "DomainerCS", 
-					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class DomainerCS : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
         private CodeDomProvider codeDomProvider = null;
@@ -1142,11 +1143,11 @@ namespace Goedel.VSIX.Binding {
     [Guid(GuidList.GuidRegistryCSGeneratorString)]
     [ProvideObject(typeof(RegistryCS))]
     [CodeGeneratorRegistration(typeof(RegistryCS), "RegistryCS", 
-					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(RegistryCS), "RegistryCS", 
 					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(RegistryCS), "RegistryCS", 
-					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class RegistryCS : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
         private CodeDomProvider codeDomProvider = null;
@@ -1300,11 +1301,11 @@ namespace Goedel.VSIX.Binding {
     [Guid(GuidList.GuidVSIXBuildGeneratorString)]
     [ProvideObject(typeof(VSIXBuild))]
     [CodeGeneratorRegistration(typeof(VSIXBuild), "VSIXBuild", 
-					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(VSIXBuild), "VSIXBuild", 
 					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(VSIXBuild), "VSIXBuild", 
-					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class VSIXBuild : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
         private CodeDomProvider codeDomProvider = null;
@@ -1388,7 +1389,7 @@ namespace Goedel.VSIX.Binding {
             var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
-            var Script = new global::Goedel.Tool.VSIXBuild.Generate(Writer);
+            var Script = new global::Goedel.Tool.VSIXBuild.Generate() { _Output = Writer };
             Script.GenerateCS(Parse);
 
             // Convert writer data to a string and then a byte array
@@ -1458,11 +1459,11 @@ namespace Goedel.VSIX.Binding {
     [Guid(GuidList.GuidProtoGenGeneratorString)]
     [ProvideObject(typeof(ProtoGen))]
     [CodeGeneratorRegistration(typeof(ProtoGen), "ProtoGen", 
-					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(ProtoGen), "ProtoGen", 
 					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(ProtoGen), "ProtoGen", 
-					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class ProtoGen : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
         private CodeDomProvider codeDomProvider = null;
@@ -1546,7 +1547,7 @@ namespace Goedel.VSIX.Binding {
             var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
-            var Script = new global::Goedel.Tool.ProtoGen.Generate(Writer);
+            var Script = new global::Goedel.Tool.ProtoGen.Generate() { _Output = Writer };
             Script.GenerateCS(Parse);
 
             // Convert writer data to a string and then a byte array
@@ -1616,11 +1617,11 @@ namespace Goedel.VSIX.Binding {
     [Guid(GuidList.GuidRFC2TXTGeneratorString)]
     [ProvideObject(typeof(RFC2TXT))]
     [CodeGeneratorRegistration(typeof(RFC2TXT), "RFC2TXT", 
-					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(RFC2TXT), "RFC2TXT", 
 					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(RFC2TXT), "RFC2TXT", 
-					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class RFC2TXT : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
         private CodeDomProvider codeDomProvider = null;
@@ -1770,11 +1771,11 @@ namespace Goedel.VSIX.Binding {
     [Guid(GuidList.GuidRFC2XMLGeneratorString)]
     [ProvideObject(typeof(RFC2XML))]
     [CodeGeneratorRegistration(typeof(RFC2XML), "RFC2XML", 
-					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(RFC2XML), "RFC2XML", 
 					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(RFC2XML), "RFC2XML", 
-					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class RFC2XML : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
         private CodeDomProvider codeDomProvider = null;
@@ -1924,11 +1925,11 @@ namespace Goedel.VSIX.Binding {
     [Guid(GuidList.GuidRFC2MDGeneratorString)]
     [ProvideObject(typeof(RFC2MD))]
     [CodeGeneratorRegistration(typeof(RFC2MD), "RFC2MD", 
-					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(RFC2MD), "RFC2MD", 
 					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(RFC2MD), "RFC2MD", 
-					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class RFC2MD : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
         private CodeDomProvider codeDomProvider = null;
@@ -2078,11 +2079,11 @@ namespace Goedel.VSIX.Binding {
     [Guid(GuidList.GuidRFC2HTMLGeneratorString)]
     [ProvideObject(typeof(RFC2HTML))]
     [CodeGeneratorRegistration(typeof(RFC2HTML), "RFC2HTML", 
-					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(RFC2HTML), "RFC2HTML", 
 					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(RFC2HTML), "RFC2HTML", 
-					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     public class RFC2HTML : IVsSingleFileGenerator, IObjectWithSite, IDisposable {
         private object site = null;
         private CodeDomProvider codeDomProvider = null;
@@ -2232,11 +2233,11 @@ namespace Goedel.VSIX.Binding {
     [Guid(GuidList.GuidMD2AMLGeneratorString)]
     [ProvideObject(typeof(MD2AML))]
     [CodeGeneratorRegistration(typeof(MD2AML), "MD2AML", 
-					 "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVCSProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(MD2AML), "MD2AML", 
 					"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}", GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(MD2AML), "MD2AML", 
-					"{164B10B9-B200-11D0-8C61-00A0C91E29D5}", GeneratesDesignTimeSource = true)]
+					vsContextGuids.vsContextGuidVBProject, GeneratesDesignTimeSource = true)]
     [CodeGeneratorRegistration(typeof(MD2AML), "MD2AML", 
 				    "{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}", GeneratesDesignTimeSource = true)]
     public class MD2AML : IVsSingleFileGenerator, IObjectWithSite, IDisposable {

@@ -57,9 +57,7 @@ namespace Goedel.Document.Markdown {
 
         public string Key = null;
 
-        public override string ToString () {
-            return Key;
-            }
+        public override string ToString() => Key;
 
         public CatalogEntry(Dictionary<string, CatalogEntry> Dictionary, 
                     CatalogEntry Parent, _Choice Item) {

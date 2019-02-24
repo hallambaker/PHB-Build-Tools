@@ -23,12 +23,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Goedel.Utilities;
 
 namespace Goedel.Tool.Command {
     public partial class _Choice {
         public Command DefaultCommand = null;
         public string Brief = "<Unspecified>";
         public string Default = null;
+        public virtual Class ParentClass => Parent.ParentClass;
 
         public _Choice Parent;
         CommandParse _CommandParse;
@@ -48,6 +50,7 @@ namespace Goedel.Tool.Command {
                         Default = EntryCast.Text;
                         break;
                         }
+
                     }
                 }
             }
@@ -72,6 +75,8 @@ namespace Goedel.Tool.Command {
         public string Description = "<Unknown>";
         public About About = null;
         public bool Main = true;
+        public string ReturnType = null;
+        public override Class ParentClass => this;
 
         public override void Init (_Choice Parent) {
             this.Parent = Parent;
@@ -88,6 +93,10 @@ namespace Goedel.Tool.Command {
                         }
                     case Library Cast: {
                         Main = false;
+                        break;
+                        }
+                    case Return Cast: {
+                        ReturnType = Cast.ReturnType;
                         break;
                         }
                     }
@@ -111,6 +120,7 @@ namespace Goedel.Tool.Command {
         public List<Generator> Generator = new List<Generator>();
         public List<Script> Script = new List<Script>();
 
+
         public override void Init (_Choice Parent) {
             base.Init(Parent);
             this.Parent = Parent;
@@ -124,6 +134,7 @@ namespace Goedel.Tool.Command {
                         }
                     case Include Include: {
                         var OptionSet = Include.Id.Definition as OptionSet;
+                        Assert.NotNull(NYI.Throw, String: Include.Id.ToString());
                         foreach (var SubEntry in OptionSet.Options) {
                             switch (SubEntry) {
                                 case Option Option: {

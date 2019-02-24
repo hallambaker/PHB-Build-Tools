@@ -25,7 +25,7 @@ ToolTargets = \
 	ASN2.cs
 
 ASN2.cs : ASN2.command 
-	commandparse ASN2.command  ASN2.cs
+	commandparse ASN2.command  /cs  ASN2.cs
 
 
 prebuildRecurse : 

@@ -6,7 +6,7 @@
 ;
 $TTL 600
 prismproof.com.      IN      SOA     dns1.prismproof.com. hallam.gmail.com. (
-                        2018051801       ; serial, todays date + todays serial 
+                        2018082801       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -30,11 +30,11 @@ prismproof.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 prismproof.com.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 108.7.198.158 
-prismproof.com.    A 108.7.198.158 
-www.prismproof.com.    A 108.7.198.158 
-http.prismproof.com.    A 108.7.198.158
-https.prismproof.com.    A 108.7.198.158 
+; Host host1.mathmesh.com 173.76.191.93 
+prismproof.com.    A 173.76.191.93 
+www.prismproof.com.    A 173.76.191.93 
+http.prismproof.com.    A 173.76.191.93
+https.prismproof.com.    A 173.76.191.93 
 _http._tcp.prismproof.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.prismproof.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 

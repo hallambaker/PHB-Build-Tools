@@ -67,12 +67,7 @@ namespace Goedel.Tool.RegistryConfig {
             }
 
         string _Key = null;
-        public string Key {
-            get {
-                return _Key == null ? Id.ToString () : _Key;
-                }
-
-            }
+        public string Key => _Key ?? Id.ToString();
 
 
         public override void Normalize() {

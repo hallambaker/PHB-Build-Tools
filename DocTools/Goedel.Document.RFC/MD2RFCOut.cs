@@ -36,13 +36,9 @@ namespace Goedel.Document.RFC {
         TextWriter TextWriter;
         int Width = 72;
 
-        public WriteMD(TextWriter TextWriter) {
-            this.TextWriter = TextWriter;
-            }
+        public WriteMD(TextWriter TextWriter) => this.TextWriter = TextWriter;
 
-        public void WriteLine() {
-            TextWriter.WriteLine();
-            }
+        public void WriteLine() => TextWriter.WriteLine();
 
         bool IsWhite (char c) => (c == ' ') | (c == '\t');
            
@@ -204,9 +200,7 @@ namespace Goedel.Document.RFC {
                 TextWriter.Write(Value);
                 }
             }
-        public void WriteMetaEnd() {
-            TextWriter.WriteLine();
-            }
+        public void WriteMetaEnd() => TextWriter.WriteLine();
 
 
         public override void MakeMeta(string Tag, string Value, int Indent=0) {

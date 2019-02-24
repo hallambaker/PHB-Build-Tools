@@ -157,9 +157,7 @@ namespace Goedel.Document.Markdown {
         public string Text;
 
 
-        public TextSegmentText(string Text) {
-            this.Text = Text;
-            }
+        public TextSegmentText(string Text) => this.Text = Text;
 
         }
 
@@ -232,9 +230,7 @@ namespace Goedel.Document.Markdown {
         public List<TextSegment> Segments = new List<TextSegment>();
         public CatalogEntry CatalogEntry = null;
 
-        public override string ToString () {
-            return CatalogEntry?.ToString() ?? "Unknown block";
-            }
+        public override string ToString() => CatalogEntry?.ToString() ?? "Unknown block";
 
 
         public TextSegmentOpen AddSegmentOpen(CatalogEntry CatalogEntry, List<TagValue> Attributes) {
@@ -403,9 +399,7 @@ namespace Goedel.Document.Markdown {
 
 
         public Document(FileInfo FileInfo, TagCatalog TagCatalog) :
-            base(FileInfo) {
-            Init(FileInfo, TagCatalog);
-            }
+            base(FileInfo) => Init(FileInfo, TagCatalog);
 
         public Document(Stream Stream, TagCatalog TagCatalog)
             : base() {
@@ -466,13 +460,9 @@ namespace Goedel.Document.Markdown {
             }
 
 
-        public bool MetaDataLookup(CatalogEntry Key, out List<Meta> Items) {
-            return MetaDataLookup(Key.Key, out Items);
-            }
+        public bool MetaDataLookup(CatalogEntry Key, out List<Meta> Items) => MetaDataLookup(Key.Key, out Items);
 
-        public bool MetaDataLookup (string Key, out List<Meta> Items) {
-            return MetaData.TryGetValue (Key, out Items);
-            }
+        public bool MetaDataLookup(string Key, out List<Meta> Items) => MetaData.TryGetValue(Key, out Items);
 
         public List<Meta> MetaDataAdd(CatalogEntry Key, Meta Item) {
             if (Key.Parent == null) {
