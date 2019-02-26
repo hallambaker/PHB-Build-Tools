@@ -32,14 +32,20 @@ namespace Goedel.Document.RFC {
             Embed(TextReader, TextWriter);
             }
 
-        public static void EmbedBase64 (string Filename, TextWriter TextWriter) {
+        public static void EmbedBase64 (string Filename, TextWriter TextWriter, string attributes) {
             try {
                 var TextReader = Filename.OpenTextReader();
                 var Output = new StringWriter();
                 Embed(TextReader, Output);
 
                 var Base64 = Convert.ToBase64String(Output.ToString().ToUTF8());
-                TextWriter.Write("<img src=\"data:image/svg+xml;base64,");
+                TextWriter.Write("<img ");
+                if (attributes != null) {
+                    TextWriter.Write(" ");
+                    TextWriter.Write(attributes);
+                    TextWriter.Write(" ");
+                    }
+                TextWriter.Write("src=\"data:image/svg+xml;base64,");
                 TextWriter.Write(Base64);
                 TextWriter.Write("\">");
                 }

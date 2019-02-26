@@ -436,11 +436,11 @@ namespace Goedel.Document.RFC {
 
         void ListLast() => ListLevel.ListLast();
 
-        public void WriteLinkSVG (string Filename, string Element, string Attribute) {
+        public void WriteLinkSVG (string Filename, string Element, string Attribute, string Attributes) {
 
             switch (Document.EmbedSVG) {
                 case 0: {       // default base64 encode
-                    XMLEmbed.EmbedBase64(Filename, Output);
+                    XMLEmbed.EmbedBase64(Filename, Output, Attributes);
                     break;
                     }
                 case 1: {       // embed SVG
@@ -536,7 +536,9 @@ namespace Goedel.Document.RFC {
             Start("figure", "id", Figure.FigureID);
             Start("div", "class", "artwork art-svg", "id", Figure.GeneratedID);
 
-            WriteLinkSVG(Figure.Filename, "img", "src");
+            var attributes = Figure.Width == null ? null: $"width=\"{Figure.Width}\"";
+
+            WriteLinkSVG(Figure.Filename, "img", "src", attributes);
 
             WriteElement("a", Pilcrow, "class", "pilcrow", "href", "#" + Figure.GeneratedID);
             End();

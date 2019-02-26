@@ -233,6 +233,18 @@ namespace Goedel.Document.Markdown {
         public override string ToString() => CatalogEntry?.ToString() ?? "Unknown block";
 
 
+        public string AttributeValue(string key) {
+            key = key.ToLower();
+            if (Attributes != null) {
+                foreach (var attribute in Attributes) {
+                    if (attribute.Tag.ToLower() == key) {
+                        return attribute.Value;
+                        }
+                    }
+                }
+            return null;
+            }
+
         public TextSegmentOpen AddSegmentOpen(CatalogEntry CatalogEntry, List<TagValue> Attributes) {
             var TextSegment = new TextSegmentOpen(CatalogEntry, Attributes);
             Segments.Add(TextSegment);

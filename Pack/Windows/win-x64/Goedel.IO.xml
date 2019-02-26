@@ -206,6 +206,13 @@
             <param name="filename">The file to write to.</param>
             <returns>File stream to write to the file.</returns>
         </member>
+        <member name="M:Goedel.IO.Extension.OpenFileReadWrite(System.String)">
+            <summary>
+            Open an existing file for exclusive write access, or create new file.
+            </summary>
+            <param name="filename">The file to write to.</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
         <member name="M:Goedel.IO.Extension.OpenFileWriteShare(System.String)">
             <summary>
             Open an existing file for exclusive write access, or create new file.

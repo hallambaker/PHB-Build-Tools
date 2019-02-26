@@ -227,8 +227,10 @@ namespace MakeRFC {
                         case "imgref": {
                             if (Block?.Attributes.Count > 0) {
                                 var ID = GetID(Block);
+                                var width = Block.AttributeValue("width");
                                 var Figure = new Figure(Block.Attributes[0].Value, ID) {
-                                    Caption = Block.Text
+                                    Caption = Block.Text,
+                                    Width = width
                                     };
                                 CurrentText.Add(Figure);
                                 }

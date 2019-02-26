@@ -8,6 +8,25 @@ for W3C and OASIS formats would only require an appropriate output
 module to be written.
 
 
+
+## Formatting
+
+###Citations
+
+''''
+<norm="RFC2119"/>
+<info="RFC4086"/>
+''''
+
+### Including files
+
+''''
+<include="..\Examples\UDFVariousUDF.md">
+<imgref="UDFDigestEARLRAW.jpg">JPEG
+<figuresvg="UDFDigestEARLRAW.svg">QR Code with embedded decryption and location key
+''''
+
+
 ## Tag Definitions
 
 

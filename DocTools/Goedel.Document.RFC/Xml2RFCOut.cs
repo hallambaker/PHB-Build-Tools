@@ -176,6 +176,16 @@ namespace Goedel.Document.RFC {
 
         public void Write (GM.TextSegmentOpen Open) {
             switch (Open.Tag) {
+                case "sub": {
+                    TextWriter.Write("_");
+                    break;
+                    }
+                case "sup": {
+                    TextWriter.Write("^");
+                    break;
+                    }
+                
+
                 case "xref":
                 case "norm":
                 case "info": {
@@ -270,7 +280,7 @@ namespace Goedel.Document.RFC {
                             case PRE PRE: {
                                 ListLast();
                                 if (PRE.GeneratedID != null && PRE.GeneratedID != "") {
-                                    WriteStartTag("figure", "anchor", PRE.GeneratedID);
+                                    WriteStartTag("figure", "anchor", PRE.GeneratedID, "suppress-title", "true");
                                     }
                                 else {
                                     WriteStartTag("figure");

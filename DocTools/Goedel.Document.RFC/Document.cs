@@ -460,6 +460,7 @@ namespace Goedel.Document.RFC {
 
         public string Caption;
         public string Filename;
+        public string Width;
 
         public Figure (string Filename, string ID) {
             this.SetableID = ID;

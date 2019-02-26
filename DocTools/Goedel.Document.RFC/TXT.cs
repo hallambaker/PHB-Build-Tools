@@ -24,6 +24,33 @@ namespace Goedel.Document.RFC {
 
     public partial class Writers {
 
+        public static Dictionary<char, string> Substitions = new Dictionary<char, string> {
+                { '…', "..."},
+                { '‘', "'"},
+                { '’', "'"},
+                { '“', "\""},
+                { '”', "\""},
+                { '®', "(R)"},
+                { '©', "(C)"}
+            };
+
+        public static string ConvertChar(char c) {
+            if (c < 128) {
+                return c.ToString();
+                }
+            if (Substitions.TryGetValue(c, out var result)) {
+                return result;
+                }
+            return "?";
+            }
+
+        public static void Append(StringBuilder buffer, string text) {
+            foreach (var c in text) {
+                buffer.Append(ConvertChar(c));
+                }
+            }
+
+
         /// <summary>
         /// Write document to specified output stream
         /// </summary>
@@ -216,8 +243,18 @@ namespace Goedel.Document.RFC {
             PageWriter.AddBlank(1);
             }
 
-        public void Write (GM.TextSegmentOpen Open) {
+        public void Write (StringBuilder Buffer, GM.TextSegmentOpen Open) {
             switch (Open.Tag) {
+                case "sub": {
+                    Buffer.Append("_");
+                    break;
+                    }
+                case "sup": {
+                    Buffer.Append("^");
+                    break;
+                    }
+
+
                 case "xref":
                 case "norm":
                 case "info": {
@@ -256,6 +293,11 @@ namespace Goedel.Document.RFC {
                 }
             }
 
+
+
+
+
+
         public string WriteToString (List<GM.TextSegment> Segments, string Hangtext = null) {
             var Buffer = new StringBuilder();
 
@@ -263,11 +305,11 @@ namespace Goedel.Document.RFC {
                 foreach (var Segment in Segments) {
                     switch (Segment) {
                         case GM.TextSegmentText Text: {
-                            Buffer.Append(Text.Text);
+                            Writers.Append(Buffer, Text.Text);
                             break;
                             }
                         case GM.TextSegmentOpen Text: {
-                            Write(Text);
+                            Write(Buffer, Text);
                             break;
                             }
                         case GM.TextSegmentClose Text: {
