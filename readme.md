@@ -24,7 +24,7 @@ Each of the tools is documented individually. The current set of tools is:
 
 ASN
 
-Command
+[Command](Command/commandparse)
 
 DNS
 
