@@ -15,9 +15,7 @@
 			Return
 
 	Type Library
-
-	Type Return
-		ReturnType String		
+	
 
 	Type	CommandSet
 		Id			ID CommandType
@@ -40,7 +38,11 @@
 			Parser
 			Generator
 			Script
+			Return
 
+
+	Type Return
+		Class		Label	ReturnType
 
 	Type DefaultCommand
 
@@ -85,15 +87,22 @@
 	Type	OptionSet
 		Id			ID	OptionSetType
 		Options		List Choice
+			Brief
 			Option
+			Enumerate
 		
 	Type	Enumerate	
 		Id			ID	TypeType
-		Entries		List Case
+		Tag			String
+		Modifier List Choice
+			Brief
+			Case
 
 	Type Case
 		Id			Token CaseType
 		Tag			String
+		Modifier List Choice
+			Brief
 
 	Type Type
 		Id			Token TypeType
