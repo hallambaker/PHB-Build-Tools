@@ -10,6 +10,7 @@
 			Enumerate	
 			Type
 			About
+			Help
 			Library
 			Return
 
@@ -103,6 +104,13 @@
 
 	Type About
 		Tag			String
+		Modifier List Choice
+			Brief	
+
+	Type Help
+		Tag			String
+		Modifier List Choice
+			Brief	
 
 	Type Lazy
 		Name		Token PType

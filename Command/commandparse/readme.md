@@ -34,9 +34,9 @@ user editable configuration files (JSON).
 
 ## Example
 
-The following is the '.command' file for commandparse itself.
+The following is the `.command` file for commandparse itself.
 
-''''
+````
 Class CommandShell CommandShell
 	Brief "Command Line Parser Generator"
 
@@ -73,25 +73,25 @@ Class CommandShell CommandShell
 		Option Catcher			"catch" Flag
 			Default "true"
 			Brief "If set, wrap the main calling loop with a try/catch structure."
-''''
+````
 
 We can use the tool to compile its own configuration file as follows:
 
-''''
+````
 commandparse Command.command /cs /nomain /nocatcher
-''''
+````
 
 There is no need to specify the output file, this is implicit from the use of the /cs flag
 to specify that C# output should be generated.
 
 If the tool supported generation of C output, we could generate both outputs simultaneously
-by specifying 'commandparse Command.command /cs /c'
+by specifying `commandparse Command.command /cs /c`
 
 Generated code also accepts input in unix style syntax:
 
-''''
+````
 commandparse Command.command -cs -nomain -nocatcher
-''''
+````
 
 Tools created using the command may be called using Windows or unix style syntax
 regardless of the platform on which they are run. To compile the above verbs, we 
@@ -99,14 +99,14 @@ can use the Windows style syntax:
 
 ## Automatic Commands
 
-The /about and /help command are generated automatically. The entries in the command
+The `/about` and `/help` command are generated automatically. The entries in the command
 description file are there to allow the command names and descriptions to be changed 
 to match locale settings.
 
-The '/about' command gives description of the tool itself including the version number
+The `/about` command gives description of the tool itself including the version number
 and the date and time it was compiled:
 
-''''
+````
 >commandparse /about
 commandparse
 
@@ -114,11 +114,11 @@ commandparse
   Version   : 1.0.0.0
   Compiled  : 2019-02-24 17:43:36 -05:00
 
-''''
+````
 
-The '/help' command gives a description of each command:
+The `/help` command gives a description of each command:
 
-''''
+````
 >commandparse /help
 Command Line Parser Generator
 
@@ -130,7 +130,7 @@ Command Line Parser Generator
     /[no]catch      If set, wrap the main calling loop with a try/catch structure.
 /about          Give the tool version information
 /help           Describe commands
-''''
+````
 
 The same information may be extracted from the API to provide formatted
 output for use in documentation.
@@ -140,24 +140,23 @@ output for use in documentation.
 The command parse tool may be used to create a Goedel domain specific language without
 the need to write any wrapper code.
 
-The 'Parser' declaration specifies the namespace and output class specified in
+The `Parser` declaration specifies the namespace and output class specified in
 the Goedel schema:
 
-''''
+````
 Class Goedel.Tool.Command CommandParse
 	TopType Class
 		Namespace	Token	ClassType
 		...
-''''
+````
 
-The 'Script' declaration specifies the namespace, class and entry point specified
+The `Script` declaration specifies the namespace, class and entry point specified
 in the 'Gscript' file and the default output extension:
 
-''''
+````
 #script 1.0
 #license MITLicense
 #xclass Goedel.Tool.Command GenerateCS
 #method Generate CommandParse CommandParseIn
 ...
-
-''''
+````
