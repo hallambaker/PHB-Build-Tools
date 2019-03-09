@@ -60,16 +60,13 @@ using Goedel.Utilities;
 #casecast Command Cast
 #{Separator}
 				{"#{Cast.Tag.ToLower()}", _#{Cast.Id}._DescribeCommand }#!
-#casecast About Cast
-#{Separator}
-				{"#{Cast.Tag.ToLower()}", DescribeAbout }#!
 #end switchcast
 #end foreach
 #% }
 
 #method GenerateCommandSet CommandSet CommandSet
 #% Separator.IsFirst = true;
-		static DescribeCommandSet DescribeCommandSet_#{CommandSet.Id} = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_#{CommandSet.Id} = new DescribeCommandSet () {
             Identifier = "#{CommandSet.Tag.ToLower()}",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {#!
 #call GenerateCommandEntries CommandSet.Entries
@@ -87,8 +84,30 @@ using Goedel.Utilities;
 
 #method GenerateClass Class Class
 namespace #{Class.Namespace} {
+
+#foreach (var Entry in Class.EnumItems)
+	// Enumeration type
+	public enum #{Entry.Name.Label} {#!
+#% Separator.IsFirst = true;
+#foreach (var item in Entry.Modifier)
+#switchcast CommandParseType item
+#casecast Case Cast
+#{Separator}
+        /// <summary>Case "#{Cast.Tag}": #{Cast.Brief.If()}</summary>
+        #{Cast.Id.Label}#!
+#end switchcast
+#end foreach
+
+		}
+
+#end foreach
+
+
     public partial class CommandLineInterpreter : CommandLineInterpreterBase {
         
+
+
+
 		/// <summary>The command entries</summary>
         public static SortedDictionary<string, DescribeCommand> Entries;
         /// <summary>The default command.</summary>
@@ -99,13 +118,13 @@ namespace #{Class.Namespace} {
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
 
-		
+#if (Class.Help != null)	
         /// <summary>
-        /// 
+        /// Default help dispatch
         /// </summary>
-        /// <param name="Dispatch"></param>
-        /// <param name="args"></param>
-        /// <param name="index"></param>
+        /// <param name="Dispatch">The command description.</param>
+        /// <param name="args">The set of arguments.</param>
+        /// <param name="index">The first unparsed argument.</param>
         public static void Help (DispatchShell Dispatch, string[] args, int index) =>
             Brief(Description, DefaultCommand, Entries);
 
@@ -114,7 +133,7 @@ namespace #{Class.Namespace} {
             HandleDelegate = Help,
             Entries = new List<DescribeEntry>() { }
             };
-
+#end if
 #if (Class.About != null)
         /// <summary>
         /// Describe the application invoked by the command.
@@ -133,8 +152,32 @@ namespace #{Class.Namespace} {
             };
 #end if
 
+#foreach (var Entry in Class.EnumItems)
+		public static DescribeEntryEnumerate Describe#{Entry.Name.Label} = new DescribeEntryEnumerate () {
+            Identifier = "#{Entry.Command}",
+            Brief = "#{Entry.Brief}",
+            Entries = new List<DescribeCase>() { #!
+#% Separator.IsFirst = true;
+#foreach (var item in Entry.Modifier)
+#switchcast CommandParseType item
+#casecast Case Cast
+#{Separator}
+				new DescribeCase () {
+					Identifier = "#{Cast.Tag}",
+					Brief = "#{Cast.Brief}",
+					Value = (int) #{Entry.Name.Label}.#{Cast.Id.Label}
+					}#!
+#end switchcast
+#end foreach
+
+				}
+			};
+#end foreach
+
         static bool IsFlag(char c) =>
             (c == UnixFlag) | (c == WindowsFlag) ;
+
+
 
 
 #foreach (_Choice Entry in Class.Entries)
@@ -165,8 +208,15 @@ namespace #{Class.Namespace} {
 			Entries = new  SortedDictionary<string, DescribeCommand> () {#!
 #% Separator.IsFirst = true;
 #call GenerateCommandEntries Class.Entries
+#if (Class.About != null)
 #{Separator}
-				{"help", DescribeHelp }
+				{"about", DescribeAbout }#!
+#end if
+#if (Class.Help != null)
+#{Separator}
+				{"help", DescribeHelp }#!
+#end if
+
 				}; // End Entries
 
 
@@ -245,20 +295,35 @@ namespace #{Class.Namespace} {
 #end switchcast
 #end foreach
 
-#! This section contains declarations for the builtins and types.
-#!
-#foreach (ID<_Choice> ID in TypeType.IDs)
 
-    public partial class  #{ID} : _#{ID} {
-        public static #{ID} Factory (string Value) {
-            var Result = new #{ID}();
-            Result.Default(Value);
-            return Result;
+    public partial class  Flag : _Flag {
+        public Flag(string value=null) : base (value) {}
+        } // Flag
+
+    public partial class  File : _File {
+	    public File(string value=null) : base (value) {}
+        } // File
+
+    public partial class  NewFile : _NewFile {
+		public NewFile(string value=null) : base (value) {}
+        } // NewFile
+
+    public partial class  ExistingFile : _ExistingFile {
+		public ExistingFile(string value=null) : base (value) {}
+        } // ExistingFile
+
+    public partial class  String : _String {
+		public String(string value=null) : base (value) {}
+        } // String
+
+
+
+
+
+    public partial class  Enumeration<T> : _Enumeration<T> {
+        public Enumeration(DescribeEntryEnumerate description, string value=null) : base(description, value){
             }
-        } // #{ID}
-
-#end foreach
-
+        } // _Enumeration<T>
 
 	// The stub class just contains routines that echo their arguments and
 	// write 'not yet implemented'
@@ -441,9 +506,17 @@ namespace #{Class.Namespace} {
 #% Separator.IsFirst = true;
 #foreach (var Entry in Command.EntryItems)
 #{Separator}
+#if (Entry.IsEnumerate) 
+			new #{Entry.Type} (CommandLineInterpreter.Describe#{Entry.ID})#!
+#else
 			new #{Entry.Type} ()#!
+#end if 
 #end foreach
 			} ;
+
+
+
+
 
 #foreach (var Entry in Command.EntryItems)
 #% var Item = Entry.Item;
@@ -465,7 +538,9 @@ namespace #{Class.Namespace} {
 			Brief =  "#{Command.Brief}",
 			HandleDelegate =  CommandLineInterpreter.Handle_#{Command.Id},
 			Lazy =  #{Command.Lazy.If("true","false")},
-#!			Parser =  "#{Command.Parser}",
+#if (Command.IsDefault)
+            IsDefault = true,
+#end if
 			Entries = new List<DescribeEntry> () {#!
 #% Separator.IsFirst = true;
 #foreach (var EntryItem in Command.EntryItems)
@@ -474,6 +549,8 @@ namespace #{Class.Namespace} {
 #{Separator}
 #if EntryItem.IsOption
 				new DescribeEntryOption () {
+#elseif EntryItem.IsEnumerate
+				new DescribeEntryEnumerate () {
 #else
 				new DescribeEntryParameter () {
 #end if

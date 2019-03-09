@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <Import Project="..\..\..\mmm\Libraries\Goedel.Command\Goedel.Command.projitems" Label="Shared" />
+
+  <Import Project="..\..\..\mmm\Libraries\Goedel.FSR\Goedel.FSR.projitems" Label="Shared" />
+
+  <Import Project="..\..\..\mmm\Libraries\Goedel.Registry\Goedel.Registry.projitems" Label="Shared" />
+
+  <Import Project="..\..\..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.projitems" Label="Shared" />
+
+  <Import Project="..\..\..\mmm\Libraries\Goedel.IO\Goedel.IO.projitems" Label="Shared" />
+
+</Project>

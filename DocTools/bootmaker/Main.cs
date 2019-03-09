@@ -6,8 +6,14 @@ using Goedel.Command;
 using Goedel.Utilities;
 
 namespace Shell.Bootmaker {
+
+
+
     public partial class CommandLineInterpreter : CommandLineInterpreterBase {
         
+
+
+
 		/// <summary>The command entries</summary>
         public static SortedDictionary<string, DescribeCommand> Entries;
         /// <summary>The default command.</summary>
@@ -17,22 +23,6 @@ namespace Shell.Bootmaker {
 
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
-
-		
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Dispatch"></param>
-        /// <param name="args"></param>
-        /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
-            Brief(Description, DefaultCommand, Entries);
-
-        public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
-            Identifier = "help",
-            HandleDelegate = Help,
-            Entries = new List<DescribeEntry>() { }
-            };
 
         /// <summary>
         /// Describe the application invoked by the command.
@@ -50,8 +40,11 @@ namespace Shell.Bootmaker {
             Entries = new List<DescribeEntry>() { }
             };
 
+
         static bool IsFlag(char c) =>
             (c == UnixFlag) | (c == WindowsFlag) ;
+
+
 
 
 
@@ -70,10 +63,9 @@ namespace Shell.Bootmaker {
 				Description = "Process Markdown to create a Bootstrap HTML site";
 
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"about", DescribeAbout },
 				{"site", _Site._DescribeCommand },
 				{"file", _File._DescribeCommand },
-				{"help", DescribeHelp }
+				{"about", DescribeAbout }
 				}; // End Entries
 
 
@@ -143,6 +135,10 @@ namespace Shell.Bootmaker {
 			new NewFile (),
 			new ExistingFile ()			} ;
 
+
+
+
+
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual ExistingFile InputDir {
 			get => _Data[0] as ExistingFile;
@@ -177,6 +173,7 @@ namespace Shell.Bootmaker {
 			Brief =  "<Unspecified>",
 			HandleDelegate =  CommandLineInterpreter.Handle_Site,
 			Lazy =  false,
+            IsDefault = true,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
 					Identifier = "InputDir", 
@@ -212,6 +209,10 @@ namespace Shell.Bootmaker {
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new ExistingFile (),
 			new NewFile ()			} ;
+
+
+
+
 
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual ExistingFile InputFile {
@@ -263,32 +264,42 @@ namespace Shell.Bootmaker {
 
 
     public partial class  ExistingFile : _ExistingFile {
-        public static ExistingFile Factory (string Value) {
-            var Result = new ExistingFile();
-            Result.Default(Value);
-            return Result;
-            }
+        //public static ExistingFile Factory (string Value) {
+        //    var Result = new ExistingFile();
+        //    Result.Default(Value);
+        //    return Result;
+        //    }
         } // ExistingFile
 
 
     public partial class  Flag : _Flag {
-        public static Flag Factory (string Value) {
-            var Result = new Flag();
-            Result.Default(Value);
-            return Result;
-            }
+        //public static Flag Factory (string Value) {
+        //    var Result = new Flag();
+        //    Result.Default(Value);
+        //    return Result;
+        //    }
         } // Flag
 
 
     public partial class  NewFile : _NewFile {
-        public static NewFile Factory (string Value) {
-            var Result = new NewFile();
-            Result.Default(Value);
-            return Result;
-            }
+        //public static NewFile Factory (string Value) {
+        //    var Result = new NewFile();
+        //    Result.Default(Value);
+        //    return Result;
+        //    }
         } // NewFile
 
 
+    public partial class  Enumeration<T> : _Enumeration<T> {
+        public Enumeration(DescribeEntryEnumerate description) : base(description){
+            }
+
+        //public static Enumeration<T> Factory (string Value) {
+        //    var Result = new Enumeration<T>();
+        //    Result.Default(Value);
+        //    return Result;
+        //    }
+        } // _Enumeration<T>
 
 	// The stub class just contains routines that echo their arguments and
 	// write 'not yet implemented'

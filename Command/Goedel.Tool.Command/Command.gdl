@@ -42,7 +42,7 @@
 
 
 	Type Return
-		Class		Label	ReturnType
+		Type		Token	ReturnType
 
 	Type DefaultCommand
 
@@ -92,8 +92,8 @@
 			Enumerate
 		
 	Type	Enumerate	
-		Id			ID	TypeType
-		Tag			String
+		Name		Token	PType	
+		Command		String	
 		Modifier List Choice
 			Brief
 			Case
@@ -103,6 +103,7 @@
 		Tag			String
 		Modifier List Choice
 			Brief
+			Default
 
 	Type Type
 		Id			Token TypeType

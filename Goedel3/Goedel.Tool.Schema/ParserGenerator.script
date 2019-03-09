@@ -430,7 +430,7 @@ namespace #{Class.Namespace} {
                                 }
                             break;
                             }
-                        if (Token == TokenType.END) {
+                        if (Token == TokenType.END) { 
                             State = StateCode._End;
                             break;
                             }
@@ -597,11 +597,13 @@ namespace #{Class.Namespace} {
                                 }
                             break;
                             }
-                        else throw new Expected("Parser Error Expected [#!
+                        else { 
+						    throw new Expected("Parser Error Expected [#!
 #foreach (REF<_Choice> Ref in Entry_Cast.Entries)
 #{Ref} #!
 #end foreach						
 ]");
+                            }
 #casecast ChoiceREF Entry_Cast
                         if (Token == TokenType.LABEL) {
 							#{Class.Namespace}.#{ID} Current_Cast = (#{Class.Namespace}.#{ID})Current;
@@ -631,11 +633,13 @@ namespace #{Class.Namespace} {
                             State = StateCode.#{ID}__#{Entry.Name};
                             break;
                             }
-                        else throw new Expected ("Parser Error Expected [#!
+                        else {
+						    throw new Expected ("Parser Error Expected [#!
 #foreach (REF<_Choice> Ref in Entry_Cast.Entries)
 #{Ref} #!
 #end foreach						
 ]");
+                            }
 #casecast ID Entry_Cast
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             #{Class.Namespace}.#{ID} Current_Cast = (#{Class.Namespace}.#{ID})Current;

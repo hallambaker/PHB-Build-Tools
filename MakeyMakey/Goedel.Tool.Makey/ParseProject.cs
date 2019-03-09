@@ -490,6 +490,7 @@ namespace Goedel.Tool.Makey {
     public partial class NoneType {
         public static Dictionary<string, BuildDescription> BuildTypes = new Dictionary<string, BuildDescription>() {
             { "commandcs", new BuildDescription ("cs", "commandparse", " /cs ") },
+            { "verbcs", new BuildDescription ("cs", "verb", " /cs ") },
             { "fsrcs", new BuildDescription ("cs", "fsrgen", " /cs ") },
             { "exceptional", new BuildDescription("cs", "exceptional", " /cs ") },
             { "gscript", new BuildDescription ("cs", "gscript") },

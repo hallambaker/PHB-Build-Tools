@@ -57,7 +57,6 @@ using Goedel.Utilities;
 //       Namespace
 //       Id
 //       Entries
-//       ReturnType
 //       Tag
 //       Text
 //       Name
@@ -66,6 +65,7 @@ using Goedel.Utilities;
 //       Options
 //   TokenType
 //       ClassType
+//       ReturnType
 //       PType
 //       CaseType
 
@@ -78,9 +78,9 @@ namespace Goedel.Tool.Command {
 
         Class,
         Library,
-        Return,
         CommandSet,
         Command,
+        Return,
         DefaultCommand,
         Brief,
         Parameter,
@@ -178,29 +178,6 @@ namespace Goedel.Tool.Command {
 			}
 		}
 
-    public partial class Return : _Choice {
-		public string					ReturnType;
-
-        public override CommandParseType _Tag () =>CommandParseType.Return;
-
-
-		public override void _InitChildren (_Choice Parent) {
-			Init (Parent);
-			}
-
-		public override void Serialize (StructureWriter Output, bool tag) {
-
-			if (tag) {
-				Output.StartElement ("Return");
-				}
-
-			Output.WriteAttribute ("ReturnType", ReturnType);
-			if (tag) {
-				Output.EndElement ("Return");
-				}			
-			}
-		}
-
     public partial class CommandSet : _Choice {
         public ID<_Choice>				Id; 
 		public string					Tag;
@@ -265,6 +242,29 @@ namespace Goedel.Tool.Command {
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Command");
+				}			
+			}
+		}
+
+    public partial class Return : _Choice {
+        public TOKEN<_Choice>			Type;
+
+        public override CommandParseType _Tag () =>CommandParseType.Return;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Return");
+				}
+
+	        Output.WriteId ("Type", Type.ToString());
+			if (tag) {
+				Output.EndElement ("Return");
 				}			
 			}
 		}
@@ -515,8 +515,8 @@ namespace Goedel.Tool.Command {
 		}
 
     public partial class Enumerate : _Choice {
-        public ID<_Choice>				Id; 
-		public string					Tag;
+        public TOKEN<_Choice>			Name;
+		public string					Command;
         public List <_Choice>           Modifier = new List<_Choice> ();
 
         public override CommandParseType _Tag () =>CommandParseType.Enumerate;
@@ -535,8 +535,8 @@ namespace Goedel.Tool.Command {
 				Output.StartElement ("Enumerate");
 				}
 
-	        Output.WriteId ("Id", Id.ToString()); 
-			Output.WriteAttribute ("Tag", Tag);
+	        Output.WriteId ("Name", Name.ToString());
+			Output.WriteAttribute ("Command", Command);
 			Output.StartList ("");
 			foreach (_Choice _e in Modifier) {
 				_e.Serialize (Output, true);
@@ -783,8 +783,6 @@ namespace Goedel.Tool.Command {
 		Class__Id,				
 		Class__Entries,				
 		Library_Start,
-		Return_Start,
-		Return__ReturnType,				
 		CommandSet_Start,
 		CommandSet__Id,				
 		CommandSet__Tag,				
@@ -793,6 +791,8 @@ namespace Goedel.Tool.Command {
 		Command__Id,				
 		Command__Tag,				
 		Command__Entries,				
+		Return_Start,
+		Return__Type,				
 		DefaultCommand_Start,
 		Brief_Start,
 		Brief__Text,				
@@ -823,8 +823,8 @@ namespace Goedel.Tool.Command {
 		OptionSet__Id,				
 		OptionSet__Options,				
 		Enumerate_Start,
-		Enumerate__Id,				
-		Enumerate__Tag,				
+		Enumerate__Name,				
+		Enumerate__Command,				
 		Enumerate__Modifier,				
 		Case_Start,
 		Case__Id,				
@@ -904,6 +904,7 @@ namespace Goedel.Tool.Command {
 			TYPE__TypeType = Registry.TYPE ("TypeType"); 
 			TYPE__OptionSetType = Registry.TYPE ("OptionSetType"); 
 			TYPE__ClassType = Registry.TYPE ("ClassType"); 
+			TYPE__ReturnType = Registry.TYPE ("ReturnType"); 
 			TYPE__PType = Registry.TYPE ("PType"); 
 			TYPE__CaseType = Registry.TYPE ("CaseType"); 
 
@@ -917,6 +918,7 @@ namespace Goedel.Tool.Command {
         public TYPE<Goedel.Tool.Command._Choice> TYPE__TypeType ;
         public TYPE<Goedel.Tool.Command._Choice> TYPE__OptionSetType ;
         public TYPE<Goedel.Tool.Command._Choice> TYPE__ClassType ;
+        public TYPE<Goedel.Tool.Command._Choice> TYPE__ReturnType ;
         public TYPE<Goedel.Tool.Command._Choice> TYPE__PType ;
         public TYPE<Goedel.Tool.Command._Choice> TYPE__CaseType ;
 
@@ -925,9 +927,9 @@ namespace Goedel.Tool.Command {
 
                 case "Class": return NewClass();
                 case "Library": return NewLibrary();
-                case "Return": return NewReturn();
                 case "CommandSet": return NewCommandSet();
                 case "Command": return NewCommand();
+                case "Return": return NewReturn();
                 case "DefaultCommand": return NewDefaultCommand();
                 case "Brief": return NewBrief();
                 case "Parameter": return NewParameter();
@@ -968,14 +970,6 @@ namespace Goedel.Tool.Command {
             }
 
 
-        private Goedel.Tool.Command.Return NewReturn() {
-            Goedel.Tool.Command.Return result = new Goedel.Tool.Command.Return();
-            Push (result);
-            State = StateCode.Return_Start;
-            return result;
-            }
-
-
         private Goedel.Tool.Command.CommandSet NewCommandSet() {
             Goedel.Tool.Command.CommandSet result = new Goedel.Tool.Command.CommandSet();
             Push (result);
@@ -988,6 +982,14 @@ namespace Goedel.Tool.Command {
             Goedel.Tool.Command.Command result = new Goedel.Tool.Command.Command();
             Push (result);
             State = StateCode.Command_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Command.Return NewReturn() {
+            Goedel.Tool.Command.Return result = new Goedel.Tool.Command.Return();
+            Push (result);
+            State = StateCode.Return_Start;
             return result;
             }
 
@@ -1125,9 +1127,9 @@ namespace Goedel.Tool.Command {
 
                 case "Class": return Goedel.Tool.Command.CommandParseType.Class;
                 case "Library": return Goedel.Tool.Command.CommandParseType.Library;
-                case "Return": return Goedel.Tool.Command.CommandParseType.Return;
                 case "CommandSet": return Goedel.Tool.Command.CommandParseType.CommandSet;
                 case "Command": return Goedel.Tool.Command.CommandParseType.Command;
+                case "Return": return Goedel.Tool.Command.CommandParseType.Return;
                 case "DefaultCommand": return Goedel.Tool.Command.CommandParseType.DefaultCommand;
                 case "Brief": return Goedel.Tool.Command.CommandParseType.Brief;
                 case "Parameter": return Goedel.Tool.Command.CommandParseType.Parameter;
@@ -1303,19 +1305,6 @@ namespace Goedel.Tool.Command {
                         Pop ();
                         Represent = true; 
                         break;
-                    case StateCode.Return_Start:
-                        if (Token == TokenType.STRING) {
-                            Goedel.Tool.Command.Return Current_Cast = (Goedel.Tool.Command.Return)Current;
-                            Current_Cast.ReturnType = Text;
-                            State = StateCode.Return__ReturnType;
-                            break;
-                            }
-                        throw new Expected("Expected String");
-
-                    case StateCode.Return__ReturnType:
-                        Pop ();
-                        Represent = true; 
-                        break;
                     case StateCode.CommandSet_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Command.CommandSet Current_Cast = (Goedel.Tool.Command.CommandSet)Current;
@@ -1416,16 +1405,30 @@ namespace Goedel.Tool.Command {
 									(LabelType == Goedel.Tool.Command.CommandParseType.Lazy) |
 									(LabelType == Goedel.Tool.Command.CommandParseType.Parser) |
 									(LabelType == Goedel.Tool.Command.CommandParseType.Generator) |
-									(LabelType == Goedel.Tool.Command.CommandParseType.Script) ) {
+									(LabelType == Goedel.Tool.Command.CommandParseType.Script) |
+									(LabelType == Goedel.Tool.Command.CommandParseType.Return) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Brief Parameter Option Include DefaultCommand Lazy Parser Generator Script ]");
+								throw new Expected ("Parser Error Expected [Brief Parameter Option Include DefaultCommand Lazy Parser Generator Script Return ]");
 								}
 							}
                         break;
 
 
+                    case StateCode.Return_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Command.Return Current_Cast = (Goedel.Tool.Command.Return)Current;
+                            Current_Cast.Type = Registry.TOKEN(Position, Text, TYPE__ReturnType, Current_Cast);
+                            State = StateCode.Return__Type;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Return__Type:
+                        Pop ();
+                        Represent = true; 
+                        break;
                     case StateCode.DefaultCommand_Start:
                         Pop ();
                         Represent = true; 
@@ -1735,12 +1738,13 @@ namespace Goedel.Tool.Command {
 							Goedel.Tool.Command.OptionSet Current_Cast = (Goedel.Tool.Command.OptionSet)Current;
                             Goedel.Tool.Command.CommandParseType LabelType = _Reserved (Text);
                             if ( false |
+									(LabelType == Goedel.Tool.Command.CommandParseType.Brief) |
 									(LabelType == Goedel.Tool.Command.CommandParseType.Option) |
 									(LabelType == Goedel.Tool.Command.CommandParseType.Enumerate) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Option Enumerate ]");
+								throw new Expected ("Parser Error Expected [Brief Option Enumerate ]");
 								}
 							}
                         break;
@@ -1749,22 +1753,22 @@ namespace Goedel.Tool.Command {
                     case StateCode.Enumerate_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Command.Enumerate Current_Cast = (Goedel.Tool.Command.Enumerate)Current;
-                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__TypeType, Current_Cast);
-                            State = StateCode.Enumerate__Id;
+                            Current_Cast.Name = Registry.TOKEN(Position, Text, TYPE__PType, Current_Cast);
+                            State = StateCode.Enumerate__Name;
                             break;
                             }
                         throw new Expected("Expected LABEL or LITERAL");
 
-                    case StateCode.Enumerate__Id:
+                    case StateCode.Enumerate__Name:
                         if (Token == TokenType.STRING) {
                             Goedel.Tool.Command.Enumerate Current_Cast = (Goedel.Tool.Command.Enumerate)Current;
-                            Current_Cast.Tag = Text;
-                            State = StateCode.Enumerate__Tag;
+                            Current_Cast.Command = Text;
+                            State = StateCode.Enumerate__Command;
                             break;
                             }
                         throw new Expected("Expected String");
 
-                    case StateCode.Enumerate__Tag:
+                    case StateCode.Enumerate__Command:
 
                         if (Token == TokenType.BEGIN) {
                             State = StateCode.Enumerate__Modifier;
@@ -1837,11 +1841,12 @@ namespace Goedel.Tool.Command {
 							Goedel.Tool.Command.Case Current_Cast = (Goedel.Tool.Command.Case)Current;
                             Goedel.Tool.Command.CommandParseType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.Tool.Command.CommandParseType.Brief) ) {
+									(LabelType == Goedel.Tool.Command.CommandParseType.Brief) |
+									(LabelType == Goedel.Tool.Command.CommandParseType.Default) ) {
                                 Current_Cast.Modifier.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Brief ]");
+								throw new Expected ("Parser Error Expected [Brief Default ]");
 								}
 							}
                         break;

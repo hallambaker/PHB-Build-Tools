@@ -26,15 +26,7 @@ using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
 namespace GoedelSchema {
-	/// <summary>A Goedel script.</summary>
 	public partial class GenerateParser : global::Goedel.Registry.Script {
-		/// <summary>Default constructor.</summary>
-		public GenerateParser () : base () {
-			}
-		/// <summary>Constructor with output stream.</summary>
-		/// <param name="Output">The output stream</param>
-		public GenerateParser (TextWriter Output) : base (Output) {
-			}
 
 		 Goedel Goedel;
 		
@@ -491,7 +483,7 @@ namespace GoedelSchema {
 			_Output.Write ("                                }}\n{0}", _Indent);
 			_Output.Write ("                            break;\n{0}", _Indent);
 			_Output.Write ("                            }}\n{0}", _Indent);
-			_Output.Write ("                        if (Token == TokenType.END) {{\n{0}", _Indent);
+			_Output.Write ("                        if (Token == TokenType.END) {{ \n{0}", _Indent);
 			_Output.Write ("                            State = StateCode._End;\n{0}", _Indent);
 			_Output.Write ("                            break;\n{0}", _Indent);
 			_Output.Write ("                            }}\n{0}", _Indent);
@@ -680,11 +672,13 @@ namespace GoedelSchema {
 						_Output.Write ("                                }}\n{0}", _Indent);
 						_Output.Write ("                            break;\n{0}", _Indent);
 						_Output.Write ("                            }}\n{0}", _Indent);
-						_Output.Write ("                        else throw new Expected(\"Parser Error Expected [", _Indent);
+						_Output.Write ("                        else {{ \n{0}", _Indent);
+						_Output.Write ("						    throw new Expected(\"Parser Error Expected [", _Indent);
 						foreach  (REF<_Choice> Ref in Entry_Cast.Entries) {
 							_Output.Write ("{1} ", _Indent, Ref);
 							}
 						_Output.Write ("]\");\n{0}", _Indent);
+						_Output.Write ("                            }}\n{0}", _Indent);
 						break; }
 						case GoedelType.ChoiceREF: {
 						  ChoiceREF Entry_Cast = (ChoiceREF) Entry.Type; 
@@ -716,11 +710,13 @@ namespace GoedelSchema {
 						_Output.Write ("                            State = StateCode.{1}__{2};\n{0}", _Indent, ID, Entry.Name);
 						_Output.Write ("                            break;\n{0}", _Indent);
 						_Output.Write ("                            }}\n{0}", _Indent);
-						_Output.Write ("                        else throw new Expected (\"Parser Error Expected [", _Indent);
+						_Output.Write ("                        else {{\n{0}", _Indent);
+						_Output.Write ("						    throw new Expected (\"Parser Error Expected [", _Indent);
 						foreach  (REF<_Choice> Ref in Entry_Cast.Entries) {
 							_Output.Write ("{1} ", _Indent, Ref);
 							}
 						_Output.Write ("]\");\n{0}", _Indent);
+						_Output.Write ("                            }}\n{0}", _Indent);
 						break; }
 						case GoedelType.ID: {
 						  ID Entry_Cast = (ID) Entry.Type; 

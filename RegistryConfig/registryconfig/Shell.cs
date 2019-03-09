@@ -7,8 +7,14 @@ using Goedel.Registry;
 using Goedel.Utilities;
 
 namespace CommandShell {
+
+
+
     public partial class CommandLineInterpreter : CommandLineInterpreterBase {
         
+
+
+
 		/// <summary>The command entries</summary>
         public static SortedDictionary<string, DescribeCommand> Entries;
         /// <summary>The default command.</summary>
@@ -18,22 +24,6 @@ namespace CommandShell {
 
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
-
-		
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Dispatch"></param>
-        /// <param name="args"></param>
-        /// <param name="index"></param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
-            Brief(Description, DefaultCommand, Entries);
-
-        public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
-            Identifier = "help",
-            HandleDelegate = Help,
-            Entries = new List<DescribeEntry>() { }
-            };
 
         /// <summary>
         /// Describe the application invoked by the command.
@@ -51,8 +41,11 @@ namespace CommandShell {
             Entries = new List<DescribeEntry>() { }
             };
 
+
         static bool IsFlag(char c) =>
             (c == UnixFlag) | (c == WindowsFlag) ;
+
+
 
 
 
@@ -71,9 +64,8 @@ namespace CommandShell {
 				Description = "Windows Registry Coding Tool";
 
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"about", DescribeAbout },
 				{"in", _RegistryGenerate._DescribeCommand },
-				{"help", DescribeHelp }
+				{"about", DescribeAbout }
 				}; // End Entries
 
 
@@ -134,6 +126,10 @@ namespace CommandShell {
 			new ExistingFile (),
 			new NewFile ()			} ;
 
+
+
+
+
 		/// <summary>Field accessor for parameter [lazy]</summary>
 		public virtual Flag Lazy {
 			get => _Data[0] as Flag;
@@ -168,6 +164,7 @@ namespace CommandShell {
 			Brief =  "Generate code to serialize/deserialize schema",
 			HandleDelegate =  CommandLineInterpreter.Handle_RegistryGenerate,
 			Lazy =  true,
+            IsDefault = true,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
 					Identifier = "ConfigItems", 
@@ -193,32 +190,42 @@ namespace CommandShell {
 
 
     public partial class  NewFile : _NewFile {
-        public static NewFile Factory (string Value) {
-            var Result = new NewFile();
-            Result.Default(Value);
-            return Result;
-            }
+        //public static NewFile Factory (string Value) {
+        //    var Result = new NewFile();
+        //    Result.Default(Value);
+        //    return Result;
+        //    }
         } // NewFile
 
 
     public partial class  ExistingFile : _ExistingFile {
-        public static ExistingFile Factory (string Value) {
-            var Result = new ExistingFile();
-            Result.Default(Value);
-            return Result;
-            }
+        //public static ExistingFile Factory (string Value) {
+        //    var Result = new ExistingFile();
+        //    Result.Default(Value);
+        //    return Result;
+        //    }
         } // ExistingFile
 
 
     public partial class  Flag : _Flag {
-        public static Flag Factory (string Value) {
-            var Result = new Flag();
-            Result.Default(Value);
-            return Result;
-            }
+        //public static Flag Factory (string Value) {
+        //    var Result = new Flag();
+        //    Result.Default(Value);
+        //    return Result;
+        //    }
         } // Flag
 
 
+    public partial class  Enumeration<T> : _Enumeration<T> {
+        public Enumeration(DescribeEntryEnumerate description) : base(description){
+            }
+
+        //public static Enumeration<T> Factory (string Value) {
+        //    var Result = new Enumeration<T>();
+        //    Result.Default(Value);
+        //    return Result;
+        //    }
+        } // _Enumeration<T>
 
 	// The stub class just contains routines that echo their arguments and
 	// write 'not yet implemented'

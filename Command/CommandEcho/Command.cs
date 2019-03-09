@@ -6,8 +6,26 @@ using Goedel.Command;
 using Goedel.Utilities;
 
 namespace Command {
+
+	// Enumeration type
+	public enum EnumReporting {
+        /// <summary>Case "report": Report output (default)</summary>
+        Report,
+        /// <summary>Case "silent": Suppress output</summary>
+        Silent,
+        /// <summary>Case "verbose": Verbose reports</summary>
+        Verbose,
+        /// <summary>Case "json": Report output in JSON format</summary>
+        Json
+		}
+
+
+
     public partial class CommandLineInterpreter : CommandLineInterpreterBase {
         
+
+
+
 		/// <summary>The command entries</summary>
         public static SortedDictionary<string, DescribeCommand> Entries;
         /// <summary>The default command.</summary>
@@ -18,13 +36,12 @@ namespace Command {
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
 
-		
         /// <summary>
-        /// 
+        /// Default help dispatch
         /// </summary>
-        /// <param name="Dispatch"></param>
-        /// <param name="args"></param>
-        /// <param name="index"></param>
+        /// <param name="Dispatch">The command description.</param>
+        /// <param name="args">The set of arguments.</param>
+        /// <param name="index">The first unparsed argument.</param>
         public static void Help (DispatchShell Dispatch, string[] args, int index) =>
             Brief(Description, DefaultCommand, Entries);
 
@@ -33,10 +50,53 @@ namespace Command {
             HandleDelegate = Help,
             Entries = new List<DescribeEntry>() { }
             };
+        /// <summary>
+        /// Describe the application invoked by the command.
+        /// </summary>
+        /// <param name="Dispatch">The command description.</param>
+        /// <param name="args">The set of arguments.</param>
+        /// <param name="index">The first unparsed argument.</param>
+        public static void About (DispatchShell Dispatch, string[] args, int index) =>
+            FileTools.About();
 
+
+        public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
+            Identifier = "about",
+            HandleDelegate = About,
+            Entries = new List<DescribeEntry>() { }
+            };
+
+		public static DescribeEntryEnumerate DescribeEnumReporting = new DescribeEntryEnumerate () {
+            Identifier = "report",
+            Brief = "Reporting level",
+            Entries = new List<DescribeCase>() { 
+				new DescribeCase () {
+					Identifier = "report",
+					Brief = "Report output (default)",
+					Value = (int) EnumReporting.Report
+					},
+				new DescribeCase () {
+					Identifier = "silent",
+					Brief = "Suppress output",
+					Value = (int) EnumReporting.Silent
+					},
+				new DescribeCase () {
+					Identifier = "verbose",
+					Brief = "Verbose reports",
+					Value = (int) EnumReporting.Verbose
+					},
+				new DescribeCase () {
+					Identifier = "json",
+					Brief = "Report output in JSON format",
+					Value = (int) EnumReporting.Json
+					}
+				}
+			};
 
         static bool IsFlag(char c) =>
             (c == UnixFlag) | (c == WindowsFlag) ;
+
+
 
 
 
@@ -57,7 +117,7 @@ namespace Command {
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"script", _Script._DescribeCommand },
 				{"schema", _Schema._DescribeCommand },
-				{"about", _About._DescribeCommand },
+				{"about", DescribeAbout },
 				{"help", DescribeHelp }
 				}; // End Entries
 
@@ -109,15 +169,6 @@ namespace Command {
 			Dispatch.Schema (Options);
 			}
 
-		public static void Handle_About (
-					DispatchShell  DispatchIn, string[] Args, int Index) {
-			Command Dispatch =	DispatchIn as Command;
-			About		Options = new About ();
-			ProcessOptions (Args, Index, Options);
-			Dispatch._PreProcess (Options);
-			Dispatch.About (Options);
-			}
-
 
 	} // class Main
 
@@ -131,7 +182,8 @@ namespace Command {
 
 
     public class _Script : Goedel.Command.Dispatch ,
-							ILanguages {
+							ILanguages,
+							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new ExistingFile (),
@@ -139,8 +191,13 @@ namespace Command {
 			new NewFile (),
 			new NewFile (),
 			new Flag (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag ()			} ;
+
+
+
+
 
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual ExistingFile InputFile {
@@ -187,23 +244,32 @@ namespace Command {
 		public virtual string _Lazy {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [line]</summary>
-		public virtual Flag CommentLine {
-			get => _Data[5] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[5] as Enumeration<EnumReporting>;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _CommentLine {
+		public virtual string _EnumReporting {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [link]</summary>
-		public virtual Flag Directive {
+		/// <summary>Field accessor for option [line]</summary>
+		public virtual Flag CommentLine {
 			get => _Data[6] as Flag;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Directive {
+		public virtual string _CommentLine {
 			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [link]</summary>
+		public virtual Flag Directive {
+			get => _Data[7] as Flag;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Directive {
+			set => _Data[7].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -212,54 +278,62 @@ namespace Command {
 			Brief =  "Convert a Goedel script file to code",
 			HandleDelegate =  CommandLineInterpreter.Handle_Script,
 			Lazy =  false,
+            IsDefault = true,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
 					Identifier = "InputFile", 
 					Default = "script", // null if null
-					Brief = "<Unspecified>",
+					Brief = "Input file",
 					Index = 0,
 					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "CSharp", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Default = "cs", // null if null
+					Brief = "Generate C# code",
 					Index = 1,
 					Key = "cs"
 					},
 				new DescribeEntryOption () {
 					Identifier = "C", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Default = "c", // null if null
+					Brief = "Generate C code",
 					Index = 2,
 					Key = "c"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Java", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Default = "java", // null if null
+					Brief = "Generate java code",
 					Index = 3,
 					Key = "java"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Lazy", 
 					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Brief = "Only generate code if source or generator have changed",
 					Index = 4,
 					Key = "lazy"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 5,
+					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "CommentLine", 
 					Default = null, // null if null
 					Brief = "If set, include source in generated as comments",
-					Index = 5,
+					Index = 6,
 					Key = "line"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Directive", 
 					Default = null, // null if null
 					Brief = "If set, link generated code to source",
-					Index = 6,
+					Index = 7,
 					Key = "link"
 					}
 				}
@@ -282,6 +356,10 @@ namespace Command {
 			new Flag (),
 			new Flag (),
 			new Flag ()			} ;
+
+
+
+
 
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual ExistingFile InputFile {
@@ -372,50 +450,50 @@ namespace Command {
 					},
 				new DescribeEntryOption () {
 					Identifier = "CSharp", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Default = "cs", // null if null
+					Brief = "Generate C# code",
 					Index = 1,
 					Key = "cs"
 					},
 				new DescribeEntryOption () {
 					Identifier = "C", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Default = "c", // null if null
+					Brief = "Generate C code",
 					Index = 2,
 					Key = "c"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Java", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Default = "java", // null if null
+					Brief = "Generate java code",
 					Index = 3,
 					Key = "java"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Lazy", 
 					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Brief = "Only generate code if source or generator have changed",
 					Index = 4,
 					Key = "lazy"
 					},
 				new DescribeEntryOption () {
 					Identifier = "DebugLexer", 
 					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Brief = "Report debug output for the lexical analyzer",
 					Index = 5,
 					Key = "dlexer"
 					},
 				new DescribeEntryOption () {
 					Identifier = "DebugParser", 
 					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Brief = "Report debug output for the parser",
 					Index = 6,
 					Key = "dparser"
 					},
 				new DescribeEntryOption () {
 					Identifier = "DebugStack", 
 					Default = null, // null if null
-					Brief = "<Unspecified>",
+					Brief = "Report debug output for the parse stack",
 					Index = 7,
 					Key = "dstack"
 					}
@@ -426,6 +504,9 @@ namespace Command {
 
     public partial class Schema : _Schema {
         } // class Schema
+	public interface IReporting {
+		}
+
 	public interface ILanguages {
 		NewFile			CSharp{get; set;}
 		NewFile			C{get; set;}
@@ -434,72 +515,35 @@ namespace Command {
 		}
 
 
-    public class _About : Goedel.Command.Dispatch  {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {			} ;
+    public partial class  Flag : _Flag {
+        public Flag(string value=null) : base (value) {}
+        } // Flag
 
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "about",
-			Brief =  "Report tool version and build date",
-			HandleDelegate =  CommandLineInterpreter.Handle_About,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				}
-			};
-
-		}
-
-    public partial class About : _About {
-        } // class About
-
+    public partial class  File : _File {
+	    public File(string value=null) : base (value) {}
+        } // File
 
     public partial class  NewFile : _NewFile {
-        public static NewFile Factory (string Value) {
-            var Result = new NewFile();
-            Result.Default(Value);
-            return Result;
-            }
+		public NewFile(string value=null) : base (value) {}
         } // NewFile
 
-
     public partial class  ExistingFile : _ExistingFile {
-        public static ExistingFile Factory (string Value) {
-            var Result = new ExistingFile();
-            Result.Default(Value);
-            return Result;
-            }
+		public ExistingFile(string value=null) : base (value) {}
         } // ExistingFile
 
-
     public partial class  String : _String {
-        public static String Factory (string Value) {
-            var Result = new String();
-            Result.Default(Value);
-            return Result;
-            }
+		public String(string value=null) : base (value) {}
         } // String
 
 
-    public partial class  Integer : _Integer {
-        public static Integer Factory (string Value) {
-            var Result = new Integer();
-            Result.Default(Value);
-            return Result;
+
+
+
+    public partial class  Enumeration<T> : _Enumeration<T> {
+        public Enumeration(DescribeEntryEnumerate description, string value=null) : base(description, value){
             }
-        } // Integer
-
-
-    public partial class  Flag : _Flag {
-        public static Flag Factory (string Value) {
-            var Result = new Flag();
-            Result.Default(Value);
-            return Result;
-            }
-        } // Flag
-
-
+        } // _Enumeration<T>
 
 	// The stub class just contains routines that echo their arguments and
 	// write 'not yet implemented'
@@ -512,9 +556,6 @@ namespace Command {
 			CommandLineInterpreter.DescribeValues (Options);
 
 		public virtual void Schema ( Schema Options) =>
-			CommandLineInterpreter.DescribeValues (Options);
-
-		public virtual void About ( About Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
 
 

@@ -128,8 +128,7 @@ namespace Goedel.VSIX.Binding {
             var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
-
-            var Script = new global::Goedel.Tool.Command.GenerateCS() { _Output = Writer};
+            var Script = new global::Goedel.Tool.Command.GenerateCS(Writer);
             Script.Generate(Parse);
 
             // Convert writer data to a string and then a byte array
@@ -287,7 +286,7 @@ namespace Goedel.VSIX.Binding {
             var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
-            var Script = new global::Goedel.Tool.FSRGen.Generate() { _Output = Writer };
+            var Script = new global::Goedel.Tool.FSRGen.Generate(Writer);
             Script.GenerateCS(Parse);
 
             // Convert writer data to a string and then a byte array
@@ -445,7 +444,7 @@ namespace Goedel.VSIX.Binding {
             var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
-            var Script = new global::Goedel.Tool.Exceptional.Generate() { _Output= Writer };
+            var Script = new global::Goedel.Tool.Exceptional.Generate(Writer);
             Script.GenerateCSX(Parse);
 
             // Convert writer data to a string and then a byte array
@@ -1389,7 +1388,7 @@ namespace Goedel.VSIX.Binding {
             var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
-            var Script = new global::Goedel.Tool.VSIXBuild.Generate() { _Output = Writer };
+            var Script = new global::Goedel.Tool.VSIXBuild.Generate(Writer);
             Script.GenerateCS(Parse);
 
             // Convert writer data to a string and then a byte array
@@ -1547,7 +1546,7 @@ namespace Goedel.VSIX.Binding {
             var Schema = new Lexer(wszInputFilePath);
             Schema.Process(Reader, Parse);
 
-            var Script = new global::Goedel.Tool.ProtoGen.Generate() { _Output = Writer };
+            var Script = new global::Goedel.Tool.ProtoGen.Generate(Writer);
             Script.GenerateCS(Parse);
 
             // Convert writer data to a string and then a byte array

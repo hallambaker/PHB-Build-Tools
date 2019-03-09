@@ -5421,7 +5421,9 @@ namespace Goedel.Tool.ProtoGen {
                                 }
                             break;
                             }
-                        else throw new Expected("Parser Error Expected [Root Language ]");
+                        else { 
+						    throw new Expected("Parser Error Expected [Root Language ]");
+                            }
 
                     case StateCode.Mapping__MappingType:
                         Pop ();
@@ -5455,7 +5457,9 @@ namespace Goedel.Tool.ProtoGen {
                                 }
                             break;
                             }
-                        else throw new Expected("Parser Error Expected [C CS ]");
+                        else { 
+						    throw new Expected("Parser Error Expected [C CS ]");
+                            }
 
                     case StateCode.Language__For:
                         Pop ();
@@ -5576,7 +5580,9 @@ namespace Goedel.Tool.ProtoGen {
                                 }
                             break;
                             }
-                        else throw new Expected("Parser Error Expected [Boolean Integer Binary Float Label Name String URI DateTime ]");
+                        else { 
+						    throw new Expected("Parser Error Expected [Boolean Integer Binary Float Label Name String URI DateTime ]");
+                            }
 
                     case StateCode.Binding__Type:
                         Pop ();

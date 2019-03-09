@@ -24,6 +24,10 @@ or .Net Framework.
 
 * Automatically generate main program code for Goedel domain specific languages.
 
+* Allow creation of captive scripting environments
+
+* Generates code stubs.
+
 
 Planned features
 
@@ -94,8 +98,11 @@ commandparse Command.command -cs -nomain -nocatcher
 ````
 
 Tools created using the command may be called using Windows or unix style syntax
-regardless of the platform on which they are run. To compile the above verbs, we 
-can use the Windows style syntax:
+regardless of the platform on which they are run. In the same way, we can
+specify option values using the forms `/option=value`, `/option:value` or
+even just `/option value`. The only constraint on syntax forms is that they
+must be unambiguous.
+
 
 ## Automatic Commands
 
@@ -122,7 +129,7 @@ The `/help` command gives a description of each command:
 >commandparse /help
 Command Line Parser Generator
 
-<inputfile>     Parse the input file <command>
+<in>           Parse the input file <command>
     /cs	<out>       Generate code for C#
 	/lazy           Only generate code if source or generator have changed
     /[no]main       If set, generate a main class
@@ -135,7 +142,7 @@ Command Line Parser Generator
 The same information may be extracted from the API to provide formatted
 output for use in documentation.
 
-## Using commandparse to create Goedel tools
+## Using commandparse to create domain specific languages using Goedel.
 
 The command parse tool may be used to create a Goedel domain specific language without
 the need to write any wrapper code.

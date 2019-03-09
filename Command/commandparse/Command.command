@@ -5,7 +5,6 @@
 	Type ExistingFile		"file"
 	Type Flag				"flag"
 	
-	About "about"
 
 	Command GenerateCommand "in"
 		Brief "Generate a command line inteface parser"

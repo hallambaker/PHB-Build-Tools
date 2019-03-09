@@ -39,8 +39,8 @@ namespace Goedel.Tool.Command {
             set => _CommandParse = value;
             }
 
-        public void Process (List<_Choice> Options) {
-            foreach (var Entry in Options) {
+        public void Process (List<_Choice> options) {
+            foreach (var Entry in options) {
                 switch (Entry) {
                     case Brief EntryCast: {
                         Brief = EntryCast.Text;
@@ -64,8 +64,8 @@ namespace Goedel.Tool.Command {
 
         /// <summary>Initialize.</summary>
         public override void Init () {
-            foreach (var Entry in Top) {
-                Entry.CommandParse = this;
+            foreach (var entry in Top) {
+                entry.CommandParse = this;
                 }
             _InitChildren();
             }
@@ -74,29 +74,35 @@ namespace Goedel.Tool.Command {
     public partial class Class {
         public string Description = "<Unknown>";
         public About About = null;
+        public Help Help = null;
         public bool Main = true;
         public string ReturnType = null;
         public override Class ParentClass => this;
+        public List<Enumerate> EnumItems = new List<Enumerate>();
 
-        public override void Init (_Choice Parent) {
-            this.Parent = Parent;
-            base.Init(Parent);
+        public override void Init (_Choice parent) {
+            this.Parent = parent;
+            base.Init(parent);
             foreach (var Entry in Entries) {
                 switch (Entry) {
-                    case Brief EntryCast: {
-                        Description = EntryCast.Text;
+                    case Brief entryCast: {
+                        Description = entryCast.Text;
                         break;
                         }
-                    case About Cast: {
-                        About = Cast;
+                    case About cast: {
+                        About = cast;
                         break;
                         }
-                    case Library Cast: {
+                    case Help cast: {
+                        Help = cast;
+                        break;
+                        }
+                    case Library cast: {
                         Main = false;
                         break;
                         }
-                    case Return Cast: {
-                        ReturnType = Cast.ReturnType;
+                    case Return cast: {
+                        ReturnType = cast.Type.Label;
                         break;
                         }
                     }
@@ -105,36 +111,37 @@ namespace Goedel.Tool.Command {
         }
 
     public partial class CommandSet {
-        public override void Init (_Choice Parent) {
-            this.Parent = Parent;
-            base.Init(Parent);
+        public override void Init (_Choice parent) {
+            this.Parent = parent;
+            base.Init(parent);
             }
         }
 
 
     public partial class Command {
         public List<EntryItem> EntryItems = new List<EntryItem>();
+
         public bool IsDefault;
         public bool Lazy = false;
         public Parser Parser = null;
         public List<Generator> Generator = new List<Generator>();
         public List<Script> Script = new List<Script>();
+        public List<Enumerate> EnumItems => ParentClass.EnumItems;
 
-
-        public override void Init (_Choice Parent) {
-            base.Init(Parent);
-            this.Parent = Parent;
+        public override void Init (_Choice parent) {
+            base.Init(parent);
+            Parent = parent;
             int Index = 0;
-            foreach (var Entry in Entries) {
-                Entry.Init(this);
-                switch (Entry) {
-                    case Brief EntryCast: {
-                        Brief = EntryCast.Text;
+            foreach (var entry in Entries) {
+                entry.Init(this);
+                switch (entry) {
+                    case Brief entryCast: {
+                        Brief = entryCast.Text;
                         break;
                         }
-                    case Include Include: {
-                        var OptionSet = Include.Id.Definition as OptionSet;
-                        Assert.NotNull(NYI.Throw, String: Include.Id.ToString());
+                    case Include include: {
+                        var OptionSet = include.Id.Definition as OptionSet;
+                        Assert.NotNull(NYI.Throw, String: include.Id.ToString());
                         foreach (var SubEntry in OptionSet.Options) {
                             switch (SubEntry) {
                                 case Option Option: {
@@ -143,53 +150,68 @@ namespace Goedel.Tool.Command {
                                         });
                                     break;
                                     }
+
+                                case Enumerate Enumerate: {
+                                    var item = new EntryItem(Enumerate) {
+                                        Index = Index++
+                                        };
+                                    EntryItems.Add(item);
+                                    break;
+                                    }
                                 }
                             }
                         break;
                         }
-                    case Parameter Parameter: {
-                        EntryItems.Add(new EntryItem(Parameter) {
+                    case Parameter parameter: {
+                        EntryItems.Add(new EntryItem(parameter) {
                             Index = Index++
                             });
                         break;
                         }
-                    case Option Option: {
-                        EntryItems.Add(new EntryItem(Option) {
+                    case Option option: {
+                        EntryItems.Add(new EntryItem(option) {
                             Index = Index++
                             });
                         break;
                         }
-                    case DefaultCommand EntryCast: {
-                        Parent.DefaultCommand = this;
+                    case Enumerate enumerate: {
+                        var item = new EntryItem(enumerate) {
+                            Index = Index++
+                            };
+                        EntryItems.Add(item);
+                        break;
+                        }
+                    case DefaultCommand entryCast: {
+                        parent.DefaultCommand = this;
                         IsDefault = true;
                         break;
                         }
-                    case Lazy EntryCast: {
+                    case Lazy entryCast: {
                         Lazy = true;
-                        EntryItems.Add(new EntryItem(EntryCast) {
+                        EntryItems.Add(new EntryItem(entryCast) {
                             Index = Index++
                             });
                         break;
                         }
-                    case Parser EntryCast: {
-                        Parser = EntryCast;
+                    case Parser entryCast: {
+                        Parser = entryCast;
                         CommandParse.DeclareRegistry = true;
                         EntryItems.Add(new EntryItem(Parser) {
                             Index = Index++
                             });
                         break;
                         }
-                    case Generator EntryCast: {
+                    case Generator entryCast: {
                         CommandParse.DeclareRegistry = true;
-                        Generator.Add(EntryCast);
+                        Generator.Add(entryCast);
                         break;
                         }
-                    case Script EntryCast: {
+                    case Script entryCast: {
                         CommandParse.DeclareRegistry = true;
-                        EntryItems.Add(new EntryItem(EntryCast) {
+                        EntryItems.Add(new EntryItem(entryCast) {
                             Index = Index++
                             });
-                        Script.Add(EntryCast);
+                        Script.Add(entryCast);
                         break;
                         }
                     }
@@ -207,60 +229,71 @@ namespace Goedel.Tool.Command {
         public string ID { get; set; }
         public string Tag { get; set; }
         public string Type { get; set; }
-        public string Default { get; set; } = "Default";
-        public string Brief { get; set; } = "Brief";
+        public string Default => Item.Default;
+        public string Brief=> Item.Brief;
         public bool IsOption;
+        public bool IsEnumerate;
         public bool HasEntry = true;
 
+        public EntryItem(Enumerate enumerate) {
+            Item = enumerate;
+            ID = enumerate.Name.ToString();
+            Tag = enumerate.Command;
+            Type = "Enumeration<" + enumerate.Name.ToString() + ">";
+            IsEnumerate = true;
+            //Default = enumerate.Default;
+            //Brief = enumerate.Brief;
+            }
 
-        public EntryItem (Option Option) {
-            Item = Option;
-            ID = Option.Name.ToString();
-            Tag = Option.Command;
-            Type = Option.Type.ToString();
+
+        public EntryItem (Option option) {
+            Item = option;
+            ID = option.Name.ToString();
+            Tag = option.Command;
+            Type = option.Type.ToString();
             IsOption = true;
-            Default = Option.Default;
-            Brief = Option.Brief;
+            //Default = option.Default;
+            //Brief = option.Brief;
             }
 
-        public EntryItem (Parameter Parameter) {
-            Item = Parameter;
-            ID = Parameter.Name.ToString();
+        public EntryItem (Parameter parameter) {
+            Item = parameter;
+            ID = parameter.Name.ToString();
             Tag = "";
-            Type = Parameter.Type.ToString();
+            Type = parameter.Type.ToString();
             IsOption = false;
-            Default = Parameter.Default;
-            Brief = Parameter.Brief;
+            //Default = parameter.Default;
+            //Brief = parameter.Brief;
             }
 
-        public EntryItem (Script Script) {
-            Item = Script;
-            ID = Script.Id.ToString();
-            Tag = Script.Extension;
+        public EntryItem (Script script) {
+            Item = script;
+            ID = script.Id.ToString();
+            Tag = script.Extension;
             Type = "NewFile";
             IsOption = true;
-            Default = Script.Default;
-            Brief = Script.Brief;
+            //Default = script.Default;
+            //Brief = script.Brief;
             }
 
-        public EntryItem (Parser Parser) {
-            Item = Parser;
-            ID = Parser.Class.ToString();
+        public EntryItem (Parser parser) {
+            Item = parser;
+            ID = parser.Class.ToString();
             Tag = "";
             Type = "ExistingFile";
             IsOption = false;
-            Default = Parser.Default;
-            Brief = Parser.Brief;
+            //Default = parser.Default;
+            //Brief = parser.Brief;
             }
 
-        public EntryItem (Lazy Lazy) {
-            Item = Lazy;
-            ID = Lazy.Name.ToString();
-            Tag = Lazy.Tag;
+        public EntryItem (Lazy lazy) {
+            Item = lazy;
+            ID = lazy.Name.ToString();
+            Tag = lazy.Tag;
             Type ="Flag";
             IsOption = false;
-            Default = Lazy.Default;
-            Brief = Lazy.Brief;
+            //Default = lazy.Default;
+            //Brief = lazy.Brief;
             HasEntry = false;
             }
 
@@ -271,35 +304,69 @@ namespace Goedel.Tool.Command {
 
 
     public partial class Parameter {
-        public override void Init (_Choice Parent) {
-            base.Init(Parent);
+        public override void Init (_Choice parent) {
+            base.Init(parent);
+            this.Parent = parent;
             Process(Modifier);
             }
         }
     public partial class Option {
-        public override void Init (_Choice Parent) {
-            base.Init(Parent);
+        public override void Init (_Choice parent) {
+            base.Init(parent);
+            this.Parent = parent;
             Process(Modifier);
             }
         }
 
+    public partial class OptionSet {
+        public override void Init(_Choice parent) {
+            this.Parent = parent;
+            base.Init(parent);
+            Process(Options);
+
+            }
+        }
+
+    public partial class Enumerate {
+        public List<Case> Cases = new List<Case>();
+
+        public override void Init(_Choice parent) {
+            base.Init(parent);
+            this.Parent = parent;
+            Process(Modifier);
+            ParentClass.EnumItems.Add(this);
+            }
+        }
+
+    public partial class Case {
+        public override void Init(_Choice parent) {
+            base.Init(parent);
+            this.Parent = parent;
+            Process(Modifier);
+            }
+        }
+
+
     public partial class Lazy {
-        public override void Init (_Choice Parent) {
-            base.Init(Parent);
+        public override void Init (_Choice parent) {
+            base.Init(parent);
+            this.Parent = parent;
             Process(Modifier);
             }
         }
 
     public partial class Parser {
-        public override void Init (_Choice Parent) {
-            base.Init(Parent);
+        public override void Init (_Choice parent) {
+            base.Init(parent);
+            this.Parent = parent;
             Process(Modifier);
             }
         }
 
     public partial class Script {
-        public override void Init (_Choice Parent) {
-            base.Init(Parent);
+        public override void Init (_Choice parent) {
+            base.Init(parent);
+            this.Parent = parent;
             Process(Modifier);
             }
         }

@@ -1,6 +1,5 @@
 ﻿Class Command Command
 	Brief		"Goedel meta-code generation tool"
-	About "about"
 
 	Type NewFile			"file"
 	Type ExistingFile		"file"
