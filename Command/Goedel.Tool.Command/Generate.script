@@ -296,27 +296,29 @@ namespace #{Class.Namespace} {
 #end foreach
 
 
-    public partial class  Flag : _Flag {
+    public partial class  Flag : Goedel.Command._Flag {
         public Flag(string value=null) : base (value) {}
         } // Flag
 
-    public partial class  File : _File {
+    public partial class  File : Goedel.Command._File {
 	    public File(string value=null) : base (value) {}
         } // File
 
-    public partial class  NewFile : _NewFile {
+    public partial class  NewFile : Goedel.Command._NewFile {
 		public NewFile(string value=null) : base (value) {}
         } // NewFile
 
-    public partial class  ExistingFile : _ExistingFile {
+    public partial class  ExistingFile : Goedel.Command._ExistingFile {
 		public ExistingFile(string value=null) : base (value) {}
         } // ExistingFile
 
-    public partial class  String : _String {
+    public partial class  Integer : Goedel.Command._Integer {
+		public Integer(string value=null) : base (value) {}
+        } // Integer
+
+    public partial class  String : Goedel.Command._String {
 		public String(string value=null) : base (value) {}
         } // String
-
-
 
 
 

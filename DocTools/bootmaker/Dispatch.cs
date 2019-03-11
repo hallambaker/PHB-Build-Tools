@@ -33,7 +33,7 @@ namespace Shell.Bootmaker {
         /// Process a file
         /// </summary>
         /// <param name="Options">Command line options</param>
-        public override void File(File Options) => base.File(Options);
+        public override void SingleFile(SingleFile Options) => base.SingleFile(Options);
 
 
         static TagCatalog ReadCatalog() {

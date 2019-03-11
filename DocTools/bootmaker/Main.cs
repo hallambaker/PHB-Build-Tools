@@ -64,7 +64,7 @@ namespace Shell.Bootmaker {
 
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"site", _Site._DescribeCommand },
-				{"file", _File._DescribeCommand },
+				{"file", _SingleFile._DescribeCommand },
 				{"about", DescribeAbout }
 				}; // End Entries
 
@@ -107,13 +107,13 @@ namespace Shell.Bootmaker {
 			Dispatch.Site (Options);
 			}
 
-		public static void Handle_File (
+		public static void Handle_SingleFile (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			File		Options = new File ();
+			SingleFile		Options = new SingleFile ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			Dispatch.File (Options);
+			Dispatch.SingleFile (Options);
 			}
 
 
@@ -204,7 +204,7 @@ namespace Shell.Bootmaker {
     public partial class Site : _Site {
         } // class Site
 
-    public class _File : Goedel.Command.Dispatch  {
+    public class _SingleFile : Goedel.Command.Dispatch  {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new ExistingFile (),
@@ -237,7 +237,7 @@ namespace Shell.Bootmaker {
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "file",
 			Brief =  "<Unspecified>",
-			HandleDelegate =  CommandLineInterpreter.Handle_File,
+			HandleDelegate =  CommandLineInterpreter.Handle_SingleFile,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
@@ -259,46 +259,39 @@ namespace Shell.Bootmaker {
 
 		}
 
-    public partial class File : _File {
-        } // class File
+    public partial class SingleFile : _SingleFile {
+        } // class SingleFile
 
 
-    public partial class  ExistingFile : _ExistingFile {
-        //public static ExistingFile Factory (string Value) {
-        //    var Result = new ExistingFile();
-        //    Result.Default(Value);
-        //    return Result;
-        //    }
-        } // ExistingFile
-
-
-    public partial class  Flag : _Flag {
-        //public static Flag Factory (string Value) {
-        //    var Result = new Flag();
-        //    Result.Default(Value);
-        //    return Result;
-        //    }
+    public partial class  Flag : Goedel.Command._Flag {
+        public Flag(string value=null) : base (value) {}
         } // Flag
 
+    public partial class  File : Goedel.Command._File {
+	    public File(string value=null) : base (value) {}
+        } // File
 
-    public partial class  NewFile : _NewFile {
-        //public static NewFile Factory (string Value) {
-        //    var Result = new NewFile();
-        //    Result.Default(Value);
-        //    return Result;
-        //    }
+    public partial class  NewFile : Goedel.Command._NewFile {
+		public NewFile(string value=null) : base (value) {}
         } // NewFile
+
+    public partial class  ExistingFile : Goedel.Command._ExistingFile {
+		public ExistingFile(string value=null) : base (value) {}
+        } // ExistingFile
+
+    public partial class  Integer : Goedel.Command._Integer {
+		public Integer(string value=null) : base (value) {}
+        } // Integer
+
+    public partial class  String : Goedel.Command._String {
+		public String(string value=null) : base (value) {}
+        } // String
+
 
 
     public partial class  Enumeration<T> : _Enumeration<T> {
-        public Enumeration(DescribeEntryEnumerate description) : base(description){
+        public Enumeration(DescribeEntryEnumerate description, string value=null) : base(description, value){
             }
-
-        //public static Enumeration<T> Factory (string Value) {
-        //    var Result = new Enumeration<T>();
-        //    Result.Default(Value);
-        //    return Result;
-        //    }
         } // _Enumeration<T>
 
 	// The stub class just contains routines that echo their arguments and
@@ -311,7 +304,7 @@ namespace Shell.Bootmaker {
 		public virtual void Site ( Site Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
 
-		public virtual void File ( File Options) =>
+		public virtual void SingleFile ( SingleFile Options) =>
 			CommandLineInterpreter.DescribeValues (Options);
 
 

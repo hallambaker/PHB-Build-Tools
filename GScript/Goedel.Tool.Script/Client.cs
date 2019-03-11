@@ -124,37 +124,10 @@ namespace Goedel.Tool.Script {
             }
 
         const string ClassText = XClassText;
-            //"using System;\n" +
-            //"using System.IO;\n" +
-            //"using System.Collections.Generic;\n" +
-            //"using Goedel.Registry;\n" +
-            //"namespace {0} {{\n" +
-            //"\t/// <summary>A Goedel script.</summary>\n" +
-            //"\tpublic partial class {1} {{\n" +
-            //"\t\tTextWriter _Output;\n" +
-            //"\t\t/// <summary>The indent prefix</summary>\n" +
-            //"\t\tpublic string _Indent = \"\";\n" +
-            //"\t\t/// <summary>Constructor with output stream.</summary>\n" +
-            //"\t\t/// <param name=\"Output\">The output stream</param>\n" +
-            //"\t\tpublic {1} (TextWriter Output) {{\n" +
-            //"\t\t\t_Output = Output;\n" +
-            //"\t\t\t}}\n";
+
 
         const string PClassText = XClassText;
-            //"using System;\n" +
-            //"using System.IO;\n" +
-            //"using System.Collections.Generic;\n" +
-            //"using Goedel.Registry;\n" +
-            //"namespace {0} {{\n" +
-            //"\t/// <summary>A Goedel script.</summary>\n" +
-            //"\tpublic partial class {1} : global::Goedel.Registry.Script {{\n" +
-            //"\t\t/// <summary>Default constructor.</summary>\n" +
-            //"\t\tpublic {1} () : base () {{\n" +
-            //"\t\t\t}}\n"+
-            //"\t\t/// <summary>Constructor with output stream.</summary>\n" +
-            //"\t\t/// <param name=\"Output\">The output stream</param>\n" +
-            //"\t\tpublic {1} (TextWriter Output) : base (Output) {{\n" +
-            //"\t\t\t}}\n";
+
 
         const string XClassText =
             "using System;\n" +
@@ -170,6 +143,32 @@ namespace Goedel.Tool.Script {
 
         const string FileText =
                 "\n\n{4}//\n{4}// {0}\n{4}//\n{4}public static void {0} ({2} {3}) {{ /* File  */\n{4}\tusing (var _Output = new StreamWriter ({1})) {{\n{4}\t\tvar _Indent = \"\"; ";
+
+        //#file 0MakeSiteDocs 1WebKey 2"Guide/key.md" 3CreateWeb 4Examples
+        const string XFileText = "\n\n{5}//\n{5}// {1}\n{5}//\n" +
+            "{5}public static void {1}({3} {4}) {{ /* XFile  */\n" +
+            "{5}\t\tusing (var _Output = new StreamWriter({2})) {{\n" +
+            "{5}\t\tvar obj = new {0}() {{ _Output = _Output, _Indent = \"\", _Filename = {2} }};\n" +
+            "{5}\t\tobj._{1}({4});\n" +
+            "{5}\t\t}}\n" +
+            "{5}\t}}\n" +
+            "{5}public void _{1}({3} {4}) {{\n"
+            ;
+
+
+//        const string XFileText = @"
+
+//{5}///
+//{5}/// {1}
+//{5}///
+//public static void {1}({3} {4}) {{ //* XFile  *//
+//    using (var _Output = new StreamWriter(""{2}"")) {
+//        var obj = new {0}() { _Output = _Output, _Indent = "", _Filename = ""{2}"" };
+//        obj._{1}({4});
+//        }
+//    }
+//public void _{1}({3} {4}) { 
+//";
 
         const string MethodText =
             "\n\n{3}//\n{3}// {0}\n{3}//\n{3}public void {0} ({1} {2}) {{";
@@ -236,7 +235,7 @@ namespace Goedel.Tool.Script {
 			new ScriptCommand ("xclass",	XClassText,	    	"\t\t}\n\t}",	2,		1,		2,		6),
 
             new ScriptCommand ("file",      FileText,             "\t\t}\n\t\t\t}",  4,      2,      2,      1),
-
+            new ScriptCommand ("xfile",     XFileText,            "\t\t\t}",  5,      2,      2,      1),
             new ScriptCommand ("method",	MethodText,			    "\t}",	3,		2,		1,		1),
 			new ScriptCommand ("method2",	Method2Text,			"\t}",	5,		2,		1,		1),
 			new ScriptCommand ("method3",	Method3Text,			"\t}",	7,		2,		1,		1),

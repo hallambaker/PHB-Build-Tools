@@ -1,10 +1,6 @@
 ﻿Class Shell.Bootmaker Shell
 	Brief		"Process Markdown to create a Bootstrap HTML site"
 
-	Type ExistingFile		"file"
-	Type Flag				"flag"
-	
-	Type Flag					"flag"
 
 	About "about"
 
@@ -16,7 +12,7 @@
 		Option Tag "tags" ExistingFile
 			Default "TagDefinitions.mdsd"
 
-	Command File "file"
+	Command SingleFile "file"
 		Parameter InputFile		"input"		ExistingFile
 		Parameter OutputFile	"output"	NewFile
 			Default "html"

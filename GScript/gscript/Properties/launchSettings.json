@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "gscript": {
+      "commandName": "Project",
+      "commandLineArgs": "CommandsetKey.script CommandsetKey.cs",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Documentation\\MakeSiteDocs\\Web"
+    }
+  }
+}

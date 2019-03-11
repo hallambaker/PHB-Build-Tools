@@ -188,42 +188,35 @@ namespace Goedel.Shell.Makey {
         } // class Project
 
 
-    public partial class  NewFile : _NewFile {
-        //public static NewFile Factory (string Value) {
-        //    var Result = new NewFile();
-        //    Result.Default(Value);
-        //    return Result;
-        //    }
+    public partial class  Flag : Goedel.Command._Flag {
+        public Flag(string value=null) : base (value) {}
+        } // Flag
+
+    public partial class  File : Goedel.Command._File {
+	    public File(string value=null) : base (value) {}
+        } // File
+
+    public partial class  NewFile : Goedel.Command._NewFile {
+		public NewFile(string value=null) : base (value) {}
         } // NewFile
 
-
-    public partial class  ExistingFile : _ExistingFile {
-        //public static ExistingFile Factory (string Value) {
-        //    var Result = new ExistingFile();
-        //    Result.Default(Value);
-        //    return Result;
-        //    }
+    public partial class  ExistingFile : Goedel.Command._ExistingFile {
+		public ExistingFile(string value=null) : base (value) {}
         } // ExistingFile
 
+    public partial class  Integer : Goedel.Command._Integer {
+		public Integer(string value=null) : base (value) {}
+        } // Integer
 
-    public partial class  Flag : _Flag {
-        //public static Flag Factory (string Value) {
-        //    var Result = new Flag();
-        //    Result.Default(Value);
-        //    return Result;
-        //    }
-        } // Flag
+    public partial class  String : Goedel.Command._String {
+		public String(string value=null) : base (value) {}
+        } // String
+
 
 
     public partial class  Enumeration<T> : _Enumeration<T> {
-        public Enumeration(DescribeEntryEnumerate description) : base(description){
+        public Enumeration(DescribeEntryEnumerate description, string value=null) : base(description, value){
             }
-
-        //public static Enumeration<T> Factory (string Value) {
-        //    var Result = new Enumeration<T>();
-        //    Result.Default(Value);
-        //    return Result;
-        //    }
         } // _Enumeration<T>
 
 	// The stub class just contains routines that echo their arguments and
