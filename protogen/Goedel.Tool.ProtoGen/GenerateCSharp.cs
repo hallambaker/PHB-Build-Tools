@@ -151,6 +151,9 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("        /// </summary>		\n{0}", _Indent);
 							_Output.Write ("		public virtual JpcSession JpcSession {{get; set;}}\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("		///<summary>Base interface (used to create client wrapper stubs)</summary>\n{0}", _Indent);
+							_Output.Write ("		protected virtual {1} JPCInterface {{get; set;}}\n{0}", _Indent, Service.Id);
+							_Output.Write ("\n{0}", _Indent);
 							foreach  (_Choice Entry2 in Protocol.Entries) {
 								switch (Entry2._Tag ()) {
 									case ProtoStructType.Transaction: {
@@ -163,7 +166,8 @@ namespace Goedel.Tool.ProtoGen {
 									_Output.Write ("		/// <param name=\"JpcSession\">The authentication binding.</param>\n{0}", _Indent);
 									_Output.Write ("		/// <returns>The response object from the service</returns>\n{0}", _Indent);
 									_Output.Write ("        public virtual {1} {2} (\n{0}", _Indent, Transaction.Response, Transaction.Id);
-									_Output.Write ("                {1} request, JpcSession session) => throw new NotImplementedException();\n{0}", _Indent, Transaction.Request);
+									_Output.Write ("                {1} request, JpcSession session=null) => \n{0}", _Indent, Transaction.Request);
+									_Output.Write ("						JPCInterface.{1} (request, session ?? JpcSession);\n{0}", _Indent, Transaction.Id);
 								break; }
 									}
 								}
@@ -205,7 +209,7 @@ namespace Goedel.Tool.ProtoGen {
 									_Output.Write ("		/// <param name=\"JpcSession\">The authentication binding.</param>\n{0}", _Indent);
 									_Output.Write ("		/// <returns>The response object</returns>\n{0}", _Indent);
 									_Output.Write ("        public override {1} {2} (\n{0}", _Indent, Transaction.Response, Transaction.Id);
-									_Output.Write ("                {1} request, JpcSession session) {{\n{0}", _Indent, Transaction.Request);
+									_Output.Write ("                {1} request, JpcSession session=null) {{\n{0}", _Indent, Transaction.Request);
 									_Output.Write ("\n{0}", _Indent);
 									_Output.Write ("            var responseData = JPCRemoteSession.Post(\"{1}\", request);\n{0}", _Indent, Transaction.Id);
 									_Output.Write ("            var response = {1}.FromJSON(responseData.JSONReader(), true);\n{0}", _Indent, Transaction.Response);

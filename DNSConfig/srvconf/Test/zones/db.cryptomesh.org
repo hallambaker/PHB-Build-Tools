@@ -6,7 +6,7 @@
 ;
 $TTL 600
 cryptomesh.org.      IN      SOA     dns1.cryptomesh.org. hallam.gmail.com. (
-                        2018082801       ; serial, todays date + todays serial 
+                        2019031301       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -33,11 +33,11 @@ host1.cryptomesh.org.        IN      TXT    "v=spf1 Voodoo ?all"
 cryptomesh.org.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 173.76.191.93 
-cryptomesh.org.    A 173.76.191.93 
-www.cryptomesh.org.    A 173.76.191.93 
-http.cryptomesh.org.    A 173.76.191.93
-https.cryptomesh.org.    A 173.76.191.93 
+; Host host1.mathmesh.com 96.237.138.82 
+cryptomesh.org.    A 96.237.138.82 
+www.cryptomesh.org.    A 96.237.138.82 
+http.cryptomesh.org.    A 96.237.138.82
+https.cryptomesh.org.    A 96.237.138.82 
 _http._tcp.cryptomesh.org.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.cryptomesh.org.   IN   SRV 1 1 443 host1.mathmesh.com.
 

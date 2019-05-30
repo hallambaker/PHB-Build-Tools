@@ -6,7 +6,7 @@
 ;
 $TTL 600
 hallambaker.com.      IN      SOA     dns1.hallambaker.com. hallam.gmail.com. (
-                        2018082801       ; serial, todays date + todays serial 
+                        2019031301       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -33,11 +33,11 @@ smtp1.hallambaker.com.        IN      TXT    "v=spf1 CloudDroplet ?all"
 hallambaker.com.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 173.76.191.93 
-hallambaker.com.    A 173.76.191.93 
-www.hallambaker.com.    A 173.76.191.93 
-http.hallambaker.com.    A 173.76.191.93
-https.hallambaker.com.    A 173.76.191.93 
+; Host host1.mathmesh.com 96.237.138.82 
+hallambaker.com.    A 96.237.138.82 
+www.hallambaker.com.    A 96.237.138.82 
+http.hallambaker.com.    A 96.237.138.82
+https.hallambaker.com.    A 96.237.138.82 
 _http._tcp.hallambaker.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.hallambaker.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 

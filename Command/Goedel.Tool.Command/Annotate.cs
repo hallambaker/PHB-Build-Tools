@@ -114,6 +114,7 @@ namespace Goedel.Tool.Command {
         public override void Init (_Choice parent) {
             this.Parent = parent;
             base.Init(parent);
+            Process(Entries);
             }
         }
 

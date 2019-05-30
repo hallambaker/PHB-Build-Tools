@@ -99,6 +99,13 @@ namespace Command {
 
 
 
+		public static DescribeCommandSet DescribeCommandSet_Fred = new DescribeCommandSet () {
+            Identifier = "fred",
+			Brief = "Useless",
+			Entries = new  SortedDictionary<string, DescribeCommand> () {
+				} // End Entries
+			};
+
 
         static CommandLineInterpreter () {
             System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
@@ -115,6 +122,7 @@ namespace Command {
 				Description = "Goedel meta-code generation tool";
 
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
+				{"fred", DescribeCommandSet_Fred},
 				{"script", _Script._DescribeCommand },
 				{"schema", _Schema._DescribeCommand },
 				{"about", DescribeAbout },

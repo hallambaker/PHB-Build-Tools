@@ -13,6 +13,9 @@
 	Type Integer			"int"
 	Type Flag				"flag"
 
+	CommandSet Fred "fred"
+		Brief "Useless"
+
 	Command Script "script"
 		DefaultCommand
 		Brief	"Convert a Goedel script file to code"

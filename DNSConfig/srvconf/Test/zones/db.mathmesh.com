@@ -6,7 +6,7 @@
 ;
 $TTL 600
 mathmesh.com.      IN      SOA     dns1.mathmesh.com. hallam.gmail.com. (
-                        2018082801       ; serial, todays date + todays serial 
+                        2019031301       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -25,7 +25,7 @@ mathmesh.com.    IN     CAA 0 issuewild  ";"
 mathmesh.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 
 ; Hardcoded A records
-host1.mathmesh.com.    A 173.76.191.93
+host1.mathmesh.com.    A 96.237.138.82
 
 host1.mathmesh.com.        IN      TXT    "v=spf1 Home ?all"  
 
@@ -33,11 +33,11 @@ host1.mathmesh.com.        IN      TXT    "v=spf1 Home ?all"
 mathmesh.com.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 173.76.191.93 
-mathmesh.com.    A 173.76.191.93 
-www.mathmesh.com.    A 173.76.191.93 
-http.mathmesh.com.    A 173.76.191.93
-https.mathmesh.com.    A 173.76.191.93 
+; Host host1.mathmesh.com 96.237.138.82 
+mathmesh.com.    A 96.237.138.82 
+www.mathmesh.com.    A 96.237.138.82 
+http.mathmesh.com.    A 96.237.138.82
+https.mathmesh.com.    A 96.237.138.82 
 _http._tcp.mathmesh.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.mathmesh.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 

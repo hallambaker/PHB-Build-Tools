@@ -115,19 +115,19 @@
             <param name="output">Stream to write to</param>
             <param name="spaces">Number of spaces to write</param>
         </member>
-        <member name="M:Goedel.IO.Extension.FileMode(Goedel.IO.FileStatus)">
-            <summary>
-            Return the file mode corresponding to the specified status.
-            </summary>
-            <param name="fileStatus">Status to translate</param>
-            <returns>The result</returns>
-        </member>
         <member name="M:Goedel.IO.Extension.FileStream(System.String,Goedel.IO.FileStatus)">
             <summary>
             Open a file stream with the specified file name and status
             </summary>
             <param name="fileName">The file name</param>
             <param name="fileStatus">The file status</param>
+            <returns>The result</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.FileMode(Goedel.IO.FileStatus)">
+            <summary>
+            Return the file mode corresponding to the specified status.
+            </summary>
+            <param name="fileStatus">Status to translate</param>
             <returns>The result</returns>
         </member>
         <member name="M:Goedel.IO.Extension.FileAccess(Goedel.IO.FileStatus)">
@@ -318,6 +318,9 @@
         </member>
         <member name="F:Goedel.IO.FileStatus.OpenOrCreate">
             <summary>Open existing file or create new if it does not exist</summary>
+        </member>
+        <member name="F:Goedel.IO.FileStatus.ConcurrentLocked">
+            <summary>Open existing file or create new if it does not exist with shared write permission</summary>
         </member>
         <member name="T:Goedel.IO.InitializationDelegate">
             <summary>

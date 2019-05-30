@@ -114,6 +114,9 @@ namespace #{Namespace} {
         /// </summary>		
 		public virtual JpcSession JpcSession {get; set;}
 
+		///<summary>Base interface (used to create client wrapper stubs)</summary>
+		protected virtual #{Service.Id} JPCInterface {get; set;}
+
 #foreach (_Choice Entry2 in Protocol.Entries)
 #switchcast ProtoStructType Entry2
 #casecast Transaction Transaction
@@ -125,7 +128,8 @@ namespace #{Namespace} {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual #{Transaction.Response} #{Transaction.Id} (
-                #{Transaction.Request} request, JpcSession session) => throw new NotImplementedException();
+                #{Transaction.Request} request, JpcSession session=null) => 
+						JPCInterface.#{Transaction.Id} (request, session ?? JpcSession);
 #end switchcast
 #end foreach
 
@@ -165,7 +169,7 @@ namespace #{Namespace} {
 		/// <param name="JpcSession">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override #{Transaction.Response} #{Transaction.Id} (
-                #{Transaction.Request} request, JpcSession session) {
+                #{Transaction.Request} request, JpcSession session=null) {
 
             var responseData = JPCRemoteSession.Post("#{Transaction.Id}", request);
             var response = #{Transaction.Response}.FromJSON(responseData.JSONReader(), true);

@@ -155,20 +155,29 @@ namespace Goedel.Tool.Script {
             "{5}public void _{1}({3} {4}) {{\n"
             ;
 
+        //#file 0MakeSiteDocs 1WebKey 2"Guide/key.md" 3CreateWeb 4Examples
+        const string ZFileText = "\n\n{4}//\n{4}// {1}\n{4}//\n" +
+            "{4}public static void {1}({0} {3}) {{ /* XFile  */\n" +
+            "{4}\t\tusing ({3}._Output = new StreamWriter({2})) {{\n" +
+            "{4}\t\t{3}._{1}({3});\n" +
+            "{4}\t\t}}\n" +
+            "{4}\t}}\n" +
+            "{4}public void _{1}({0} {3}) {{\n"
+            ;
 
-//        const string XFileText = @"
+        //        const string XFileText = @"
 
-//{5}///
-//{5}/// {1}
-//{5}///
-//public static void {1}({3} {4}) {{ //* XFile  *//
-//    using (var _Output = new StreamWriter(""{2}"")) {
-//        var obj = new {0}() { _Output = _Output, _Indent = "", _Filename = ""{2}"" };
-//        obj._{1}({4});
-//        }
-//    }
-//public void _{1}({3} {4}) { 
-//";
+        //{5}///
+        //{5}/// {1}
+        //{5}///
+        //public static void {1}({3} {4}) {{ //* XFile  *//
+        //    using (var _Output = new StreamWriter(""{2}"")) {
+        //        var obj = new {0}() { _Output = _Output, _Indent = "", _Filename = ""{2}"" };
+        //        obj._{1}({4});
+        //        }
+        //    }
+        //public void _{1}({3} {4}) { 
+        //";
 
         const string MethodText =
             "\n\n{3}//\n{3}// {0}\n{3}//\n{3}public void {0} ({1} {2}) {{";
@@ -223,47 +232,49 @@ namespace Goedel.Tool.Script {
 
         static ScriptCommand[] Commands = {
 			//					Command		Text				    End		Params	Next,	Stack,	Allowed
-			new ScriptCommand ("!",			CommentText,	    	null,	1,		-1,		0,		0),
-			new ScriptCommand ("%",			InstructionText,	    null,	1,		-1,		0,		3),
-			new ScriptCommand ("//",		DocumentText,	        null,	1,		-1,		0,		3),
-            new ScriptCommand ("script",	ScriptText,		    	null,	1,		0,		0,		6),
-            new ScriptCommand ("license",	"%13",	        		null,	1,		-1,		0,		0),
-            new ScriptCommand ("using",		UsingText,		    	null,	1,		0,		0,		6),
-            new ScriptCommand ("prefix",	PrefixText,		    	 "}",	1,		0,		1,		3),
-			new ScriptCommand ("class",		ClassText,	    	"\t\t}\n\t}",	2,		1,		2,		6),
-			new ScriptCommand ("pclass",	PClassText,	    	"\t\t}\n\t}",	2,		1,		2,		6),
-			new ScriptCommand ("xclass",	XClassText,	    	"\t\t}\n\t}",	2,		1,		2,		6),
+			new ScriptCommand ("!",         CommentText,            null,   1,      -1,     0,      0),
+            new ScriptCommand ("%",         InstructionText,        null,   1,      -1,     0,      3),
+            new ScriptCommand ("//",        DocumentText,           null,   1,      -1,     0,      3),
+            new ScriptCommand ("script",    ScriptText,             null,   1,      0,      0,      6),
+            new ScriptCommand ("license",   "%13",                  null,   1,      -1,     0,      0),
+            new ScriptCommand ("using",     UsingText,              null,   1,      0,      0,      6),
+            new ScriptCommand ("prefix",    PrefixText,              "}",   1,      0,      1,      3),
+            new ScriptCommand ("class",     ClassText,          "\t\t}\n\t}",   2,      1,      2,      6),
+            new ScriptCommand ("pclass",    PClassText,         "\t\t}\n\t}",   2,      1,      2,      6),
+            new ScriptCommand ("xclass",    XClassText,         "\t\t}\n\t}",   2,      1,      2,      6),
 
             new ScriptCommand ("file",      FileText,             "\t\t}\n\t\t\t}",  4,      2,      2,      1),
             new ScriptCommand ("xfile",     XFileText,            "\t\t\t}",  5,      2,      2,      1),
-            new ScriptCommand ("method",	MethodText,			    "\t}",	3,		2,		1,		1),
-			new ScriptCommand ("method2",	Method2Text,			"\t}",	5,		2,		1,		1),
-			new ScriptCommand ("method3",	Method3Text,			"\t}",	7,		2,		1,		1),
-            new ScriptCommand ("block",	    MethodnText,			"",	    1,		2,		1,		1),
-            new ScriptCommand ("if",		IfText,				    "\t}",	1,		3,		1,		3),
-			new ScriptCommand ("elseif",	ElseIfText,		    	null,	1,		3,		0,		4),
-			new ScriptCommand ("else",		ElseText,			    null,	0,		4,		0,		4),
-			new ScriptCommand ("for",		ForText,		    	"\t}",	1,		2,		1,		3),
-			new ScriptCommand ("foreach",	ForEachText,		    "\t}",	1,		2,		1,		3),
-			new ScriptCommand ("filter",	FilterText,		 "\t\t}\n\t}",	3,		2,		1,		3),
-            new ScriptCommand ("switch",	SwitchText,		    	"\t}",	1,		5,		1,		3),
-			new ScriptCommand ("case",		CaseText,	    EndCaseText,	1,		5,		0,		5),
+            new ScriptCommand ("zfile",     ZFileText,            "\t\t\t}",  4,      2,      2,      1),
+
+            new ScriptCommand ("method",    MethodText,             "\t}",  3,      2,      1,      1),
+            new ScriptCommand ("method2",   Method2Text,            "\t}",  5,      2,      1,      1),
+            new ScriptCommand ("method3",   Method3Text,            "\t}",  7,      2,      1,      1),
+            new ScriptCommand ("block",     MethodnText,            "",     1,      2,      1,      1),
+            new ScriptCommand ("if",        IfText,                 "\t}",  1,      3,      1,      3),
+            new ScriptCommand ("elseif",    ElseIfText,             null,   1,      3,      0,      4),
+            new ScriptCommand ("else",      ElseText,               null,   0,      4,      0,      4),
+            new ScriptCommand ("for",       ForText,                "\t}",  1,      2,      1,      3),
+            new ScriptCommand ("foreach",   ForEachText,            "\t}",  1,      2,      1,      3),
+            new ScriptCommand ("filter",    FilterText,      "\t\t}\n\t}",  3,      2,      1,      3),
+            new ScriptCommand ("switch",    SwitchText,             "\t}",  1,      5,      1,      3),
+            new ScriptCommand ("case",      CaseText,       EndCaseText,    1,      5,      0,      5),
 
 
             new ScriptCommand ("ifas",      IfAsText,               "\t}",  3,      7,      1,      3),
             new ScriptCommand ("elseas",    ElseAsText,              null,  3,      7,      0,      7),
 
 
-            new ScriptCommand ("switchcast","%10",		            "\t}",	1,		5,		1,		3),
-			new ScriptCommand ("casecast",	"%11",	        EndCaseText,	2,		5,		0,		5),
+            new ScriptCommand ("switchcast","%10",                  "\t}",  1,      5,      1,      3),
+            new ScriptCommand ("casecast",  "%11",          EndCaseText,    2,      5,      0,      5),
 
-			new ScriptCommand ("default",	DefaultText,	 EndCaseText,	1,		6,		0,		5),
-			new ScriptCommand ("call",		CallText,			    null,	2,		-1,		0,		3),
+            new ScriptCommand ("default",   DefaultText,     EndCaseText,   1,      6,      0,      5),
+            new ScriptCommand ("call",      CallText,               null,   2,      -1,     0,      3),
 
-			new ScriptCommand ("indent",	IndentText,			    null,	0,		-1,		0,		3),
-			new ScriptCommand ("outdent",	OutdentText,			null,	0,		-1,		0,		3),
-            new ScriptCommand ("end",		"}",				    null,	0,		-1,		-1,		2)
-			};
+            new ScriptCommand ("indent",    IndentText,             null,   0,      -1,     0,      3),
+            new ScriptCommand ("outdent",   OutdentText,            null,   0,      -1,     0,      3),
+            new ScriptCommand ("end",       "}",                    null,   0,      -1,     -1,     2)
+            };
 
         static bool[,] AllowedTransitions = {
 			//	0		1		2		3		4		5       6       7
