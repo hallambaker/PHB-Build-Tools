@@ -525,6 +525,7 @@ namespace Goedel.Tool.ProtoGen {
 			_Output.Write ("        /// start and end sequences '{{ ... }}'.</param>\n{0}", _Indent);
 			_Output.Write ("        /// <param name=\"_first\">If true, item is the first entry in a list.</param>\n{0}", _Indent);
 			_Output.Write ("		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {{\n{0}", _Indent);
+			_Output.Write ("			PreEncode();\n{0}", _Indent);
 			_Output.Write ("			if (_wrap) {{\n{0}", _Indent);
 			_Output.Write ("				_Writer.WriteObjectStart ();\n{0}", _Indent);
 			_Output.Write ("				}}\n{0}", _Indent);
@@ -586,6 +587,7 @@ namespace Goedel.Tool.ProtoGen {
 			if (  (!IsAbstract (Entries)) ) {
 				_Output.Write ("		    var Result = new {1} ();\n{0}", _Indent, Id);
 				_Output.Write ("			Result.Deserialize (JSONReader);\n{0}", _Indent);
+				_Output.Write ("			Result.PostDecode();\n{0}", _Indent);
 				_Output.Write ("			return Result;\n{0}", _Indent);
 				} else {
 				_Output.Write ("			throw new CannotCreateAbstract();\n{0}", _Indent);
