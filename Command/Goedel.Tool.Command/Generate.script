@@ -41,6 +41,7 @@ using Goedel.Command;
 using Goedel.Registry;
 #end if 
 using Goedel.Utilities;
+#pragma warning disable IDE1006
 
 #foreach (_Choice Item in CommandParse.Top)
 #switchcast CommandParseType Item
