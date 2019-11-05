@@ -26,15 +26,7 @@ using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
 namespace Goedel.Tool.ASN {
-	/// <summary>A Goedel script.</summary>
 	public partial class Generate : global::Goedel.Registry.Script {
-		/// <summary>Default constructor.</summary>
-		public Generate () : base () {
-			}
-		/// <summary>Constructor with output stream.</summary>
-		/// <param name="Output">The output stream</param>
-		public Generate (TextWriter Output) : base (Output) {
-			}
 
 		 string Namespace = "Goedel.ASN";
 		
@@ -55,6 +47,10 @@ namespace Goedel.Tool.ASN {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("// Generate OID declarations\n{0}", _Indent);
 			_Output.Write ("#pragma warning disable IDE0022\n{0}", _Indent);
+			_Output.Write ("#pragma warning disable CA1707\n{0}", _Indent);
+			_Output.Write ("#pragma warning disable CA1051\n{0}", _Indent);
+			_Output.Write ("#pragma warning disable CA1062\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("namespace Goedel.ASN {{  // default namespace\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			foreach  (_Choice Toplevel in ASN2.Top) {
@@ -76,7 +72,7 @@ namespace Goedel.Tool.ASN {
 						}
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("    /// </summary>\n{0}", _Indent);
-					_Output.Write ("	public partial class Constants {{\n{0}", _Indent);
+					_Output.Write ("	public static partial class Constants {{\n{0}", _Indent);
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
 					_Output.Write ("		/// {1} as integer sequence\n{0}", _Indent, ROOT.Name);
 					_Output.Write ("		/// </summary>\n{0}", _Indent);
@@ -350,26 +346,32 @@ namespace Goedel.Tool.ASN {
 			break; }
 				}
 			}
+		
 
+		//
+		// Encode
+		//
+		public void Encode (Member Member) {
+			  Encode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
+			}
+		
 
-        //
-        // Encode
-        //
-        public void Encode(Member Member) => Encode(Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
+		//
+		// Decode
+		//
+		public void Decode (Member Member) {
+			  Decode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
+			}
+		
 
+		//
+		// 
+		//
 
-        //
-        // Decode
-        //
-        public void Decode(Member Member) => Decode(Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
-
-
-        //
-        // 
-        //
-
-        public void Encode(String Name, _Choice Spec, int Flags, int Code) => Encode(Name, null, Spec, Flags, Code);
-        public void Encode (String Name, String Default, _Choice Spec, int Flags, int Code) {
+			  public void Encode (String Name, _Choice Spec, int Flags, int Code) {
+					Encode (Name, null, Spec, Flags, Code);
+					}
+			  public void Encode (String Name, String Default, _Choice Spec, int Flags, int Code) {
 			_Output.Write ("\n{0}", _Indent);
 			 bool Call = false;
 			switch (Spec._Tag ()) {
@@ -503,15 +505,17 @@ namespace Goedel.Tool.ASN {
 				_Output.Write (" ({1}, {2}, {3});\n{0}", _Indent, Name, Flags, Code);
 				}
 			 }
+		
+		
 
+		//
+		// 
+		//
 
-
-        //
-        // 
-        //
-
-        public void Decode(String Name, _Choice Spec, int Flags, int Code) => Decode(Name, null, Spec, Flags, Code);
-        public void Decode (String Name, String Default, _Choice Spec, int Flags, int Code) {
+			  public void Decode (String Name, _Choice Spec, int Flags, int Code) {
+					Decode (Name, null, Spec, Flags, Code);
+					}
+			  public void Decode (String Name, String Default, _Choice Spec, int Flags, int Code) {
 			_Output.Write ("\n{0}", _Indent);
 			 bool Call = false;
 			switch (Spec._Tag ()) {

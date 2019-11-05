@@ -17,6 +17,10 @@ using Goedel.ASN;
 
 // Generate OID declarations
 ##pragma warning disable IDE0022
+##pragma warning disable CA1707
+##pragma warning disable CA1051
+##pragma warning disable CA1062
+
 namespace Goedel.ASN {  // default namespace
 
 #foreach (_Choice Toplevel in ASN2.Top)
@@ -34,7 +38,7 @@ namespace #{Cast.Name} {
 #end foreach
 
     /// </summary>
-	public partial class Constants {
+	public static partial class Constants {
 		/// <summary>
 		/// #{ROOT.Name} as integer sequence
 		/// </summary>
