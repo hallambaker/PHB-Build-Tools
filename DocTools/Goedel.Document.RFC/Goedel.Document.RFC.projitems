@@ -37,6 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)XML.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Xml2RFCOut.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XMLEmbed.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XmlSchema.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XMLTextWriterPlus.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -48,9 +49,12 @@
     <None Include="$(MSBuildThisFileDirectory)PHBLogo256.ico" />
     <None Include="$(MSBuildThisFileDirectory)rfc7791.xsd">
       <CustomToolNamespace>Goedel.Tool.RFCTool.RFC7991</CustomToolNamespace>
+      <Generator>xsd2codecustomtool</Generator>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)xml2rfcv2.rnc" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)rfc7791-bis-v3.rng.txt" />
     <Content Include="$(MSBuildThisFileDirectory)rfc7991.txt" />
   </ItemGroup>
 </Project>

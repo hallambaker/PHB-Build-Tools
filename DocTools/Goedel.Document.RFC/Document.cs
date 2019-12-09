@@ -233,18 +233,21 @@ namespace Goedel.Document.RFC {
             //    nesting of list items.
 
             var Index = 0;
-            foreach (TextBlock Text in TextBlocks) {
-                if (Text as Reference == null) {
-                    Index++;
-                    string IS = Index.ToString();
-                    Text.GeneratedID = NumericID + "-" + IS;
-                    }
 
-                if (Text as Figure != null) {
-                    var Figure = Text as Figure;
-                    TableOfFigures.Add(Text as Figure);
-                    Figure.NumericID = TableOfFigures.Count.ToString();
-                    Figure.SetableID = Figure.SetableID ?? "n-" + GetAnchor(Figure.Caption);
+            if (TextBlocks != null) {
+                foreach (TextBlock Text in TextBlocks) {
+                    if (Text as Reference == null) {
+                        Index++;
+                        string IS = Index.ToString();
+                        Text.GeneratedID = NumericID + "-" + IS;
+                        }
+
+                    if (Text as Figure != null) {
+                        var Figure = Text as Figure;
+                        TableOfFigures.Add(Text as Figure);
+                        Figure.NumericID = TableOfFigures.Count.ToString();
+                        Figure.SetableID = Figure.SetableID ?? "n-" + GetAnchor(Figure.Caption);
+                        }
                     }
                 }
             }

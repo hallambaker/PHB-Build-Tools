@@ -2,8 +2,8 @@
   "profiles": {
     "rfctool": {
       "commandName": "Project",
-      "commandLineArgs": "hallambaker-udf-faulty.docx /auto",
-      "workingDirectory": "C:\\Users\\hallam\\Test\\TestFiles"
+      "commandLineArgs": "rfc8659.xml /html",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\buildtools\\DocTools\\rfctool\\Test"
     }
   }
 }

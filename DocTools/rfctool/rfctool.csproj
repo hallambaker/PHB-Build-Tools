@@ -1,13 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <ApplicationIcon>PHBLogo256.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Test\xml2rfc.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Bib.xml" />
+    <Content Include="Test\xml2rfc.css" />
     <Content Include="xml2rfc.css" />
   </ItemGroup>
 

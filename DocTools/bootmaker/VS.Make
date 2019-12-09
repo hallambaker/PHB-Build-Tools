@@ -25,8 +25,8 @@ LinkFiles = \
 ToolTargets = \
 	Main.cs
 
-Main.cs : Main.command 
-	commandparse Main.command  /cs  Main.cs
+#Main.cs : Main.command 
+#	commandparse Main.command  /cs  Main.cs
 
 
 prebuildRecurse : 

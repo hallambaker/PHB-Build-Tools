@@ -79,16 +79,16 @@ namespace Shell.Bootmaker {
 
         public void MainMethod(string[] Args) {
 			Shell Dispatch = new Shell ();
-
-			try {
-				MainMethod (Dispatch, Args);
-				}
-            catch (Goedel.Command.ParserException) {
-			    Brief(Description, DefaultCommand, Entries);
-				}
-            catch (System.Exception Exception) {
-                Console.WriteLine("Application: {0}", Exception.Message);
-                }
+			MainMethod(Dispatch, Args);
+			//try {
+			//	MainMethod (Dispatch, Args);
+			//	}
+   //         catch (Goedel.Command.ParserException) {
+			//    Brief(Description, DefaultCommand, Entries);
+			//	}
+   //         catch (System.Exception Exception) {
+   //             Console.WriteLine("Application: {0}", Exception.Message);
+   //             }
 			}
 
 

@@ -39,7 +39,7 @@ namespace Goedel.Document.RFC {
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
             ns.Add("", "http://tempuri.org/rfc2629");
 
-            XmlSerializer XmlSerializer = new XmlSerializer (typeof (rfc), "http://tempuri.org/rfc7991");
+            XmlSerializer XmlSerializer = new XmlSerializer (typeof (rfc));
 
             rfc rfc = (rfc) XmlSerializer.Deserialize (TextReader);
             Document.Number = rfc.number;
@@ -87,7 +87,11 @@ namespace Goedel.Document.RFC {
             }
 
 
-        List<string> MakeString (List<asciitext> Text) {
+        List<string> MakeString (asciitext[] Text) {
+            if (Text == null) {
+                return null;
+                }
+
             var Result = new List<string>();
             foreach (var T in Text) {
                 Result.Add(T.Value);
@@ -103,7 +107,7 @@ namespace Goedel.Document.RFC {
             return s[0];
             }
 
-        List<string> MakeKeywords(List<asciitext> keyword) {
+        List<string> MakeKeywords(asciitext[] keyword) {
             List<string> Result = new List<string>();
 
             if (keyword != null) {
@@ -116,7 +120,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        List<Author> MakeAuthors(List<author> authors) {
+        List<Author> MakeAuthors(author[] authors) {
             List<Author> Result = new List<Author> ();
 
             foreach (author author in authors) {
@@ -133,9 +137,9 @@ namespace Goedel.Document.RFC {
                 Author.Surname = author.surname;
 
                 if (author.address != null) {
-                    Author.Phone = author.address.phone.Value;
-                    Author.URI = author.address.uri.Value;
-                    Author.Email = author.address.email.Value;
+                    Author.Phone = author.address.phone?.Value;
+                    Author.URI = author.address.uri?.Value;
+                    Author.Email = author.address.email?.Value;
                     Author.City = GetAddressAttribute(author.address.postal, "city");
                     Author.Code = GetAddressAttribute(author.address.postal, "code");
                     Author.Country = GetAddressAttribute(author.address.postal, "country");
@@ -179,7 +183,7 @@ namespace Goedel.Document.RFC {
             return Result;
             }
 
-        List<SeriesInfo> MakeSeriesInfo (List<seriesInfo> seriesInfos) {
+        List<SeriesInfo> MakeSeriesInfo (seriesInfo[] seriesInfos) {
             List<SeriesInfo> ListSeriesInfo = new List<SeriesInfo>();
 
             if (seriesInfos != null) {
@@ -196,7 +200,7 @@ namespace Goedel.Document.RFC {
 
             }
 
-        List<SeriesInfo> MakeSeriesInfo(List<object> seriesInfos) {
+        List<SeriesInfo> MakeSeriesInfo(object[] seriesInfos) {
             List<SeriesInfo> ListSeriesInfo = new List<SeriesInfo> ();
 
             if (seriesInfos != null) {
@@ -217,7 +221,7 @@ namespace Goedel.Document.RFC {
             return ListSeriesInfo;
             }
 
-        List<Format> MakeFormats (List<object> formats) {
+        List<Format> MakeFormats (object[] formats) {
             List<Format> ListFormats = new List<Format>();
 
             if (formats != null) {
@@ -240,20 +244,22 @@ namespace Goedel.Document.RFC {
 
 
 
-        void MakeCatalog (Catalog Catalog, List<references> referencesArray) {
+        void MakeCatalog (Catalog Catalog, references[] referencesArray) {
             if (referencesArray != null) {
                 foreach (references references in referencesArray) {
                     References References = new References();
                     Catalog.ReferenceSections.Add(References);
                     References.Title = references.title;
 
-                    foreach (var obj in references.Items) {
-                        switch (obj) {
+                    if (references.Items != null) {
+                        foreach (var obj in references.Items) {
+                            switch (obj) {
 
-                            case reference reference:
+                                case reference reference:
 
-                            References.Entries.Add(MakeReference(reference));
-                            break;
+                                    References.Entries.Add(MakeReference(reference));
+                                    break;
+                                }
                             }
                         }
                     }
@@ -261,7 +267,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        void FillTextBlock (List<object> Items, List<TextBlock> TextBlocks) {
+        void FillTextBlock (object[] Items, List<TextBlock> TextBlocks) {
             foreach (object o in Items) {
                 if (o.GetType() == typeof(figure)) {
                     AddFigureBlock(TextBlocks, (figure)o);
@@ -280,7 +286,11 @@ namespace Goedel.Document.RFC {
                 }
             }
 
-        List<TextBlock> MakeTextBlocks (List<note> Notes) {
+        List<TextBlock> MakeTextBlocks (note[] Notes) {
+            if (Notes == null) {
+                return null;
+                }
+
             List<TextBlock> Result = new List<TextBlock>();
 
             foreach (var Note in Notes) {
@@ -290,7 +300,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        List<TextBlock> MakeTextBlocks(List<object> Items) {
+        List<TextBlock> MakeTextBlocks(object[] Items) {
             List<TextBlock> Result = new List<TextBlock>();
 
             FillTextBlock(Items, Result);
@@ -307,7 +317,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        List<Section> MakeSections(List<section> sections, int level) {
+        List<Section> MakeSections(section[] sections, int level) {
             if (level > 6) {
                 throw new Exception("Levels nested too deeply, maximum is 6.");
                 }
@@ -315,20 +325,32 @@ namespace Goedel.Document.RFC {
             List<Section> Result = new List<Section>();
             if (sections != null) {
                 foreach (section section in sections) {
-                    Section Section = new Section(section.title, section.anchor);
+                    var title = section.title;
+                    if (section.name != null) {
+                        title = MakeString(section.name.Items);
+                        }
+
+
+                    var Section = new Section(title, section.anchor);
                     if (section.Items != null) {
                         foreach (object o in section.Items) {
-                            if (o.GetType() == typeof(figure)) {
-                                AddFigureBlock(Section.TextBlocks, (figure)o);
-                                }
-                            else if (o.GetType() == typeof(iref)) {
-                                AddIndex(Section.TextBlocks, (iref)o);
-                                }
-                            else if (o.GetType() == typeof(t)) {
-                                AddListBlocks(Section.TextBlocks, (t)o);
-                                }
-                            else if (o.GetType() == typeof(texttable)) {
-                                AddTableBlock(Section.TextBlocks, (texttable)o);
+                            switch (o) {
+                                case figure figure: {
+                                    AddFigureBlock(Section.TextBlocks, figure);
+                                    break;
+                                    }
+                                case iref iref: {
+                                    AddIndex(Section.TextBlocks, iref);
+                                    break;
+                                    }
+                                case t t: {
+                                    AddListBlocks(Section.TextBlocks, t);
+                                    break;
+                                    }
+                                case texttable texttable: {
+                                    AddTableBlock(Section.TextBlocks, texttable);
+                                    break;
+                                    }
                                 }
                             }
                         }
@@ -432,7 +454,7 @@ namespace Goedel.Document.RFC {
                 throw new Exception ("List type not supported [" + list.style + "]");
                 }
 
-            if ((list.t == null) || list.t.Count == 0) {
+            if ((list.t == null) || list.t.Length == 0) {
                 return;
                 }
             foreach (t t in list.t) {
@@ -461,11 +483,11 @@ namespace Goedel.Document.RFC {
             }
 
 
-        void AddPre (List<TextBlock> Parent, List<string> Texts, string Anchor) {
-            foreach (var Text in Texts) {
-                PRE PRE = new PRE(Text, Anchor);
-                Parent.Add(PRE);
-                }
+        void AddPre (List<TextBlock> Parent, System.Xml.XmlNode[] Texts, string Anchor) {
+            //foreach (var Text in Texts) {
+            //    PRE PRE = new PRE(Text, Anchor);
+            //    Parent.Add(PRE);
+            //    }
             }
 
 
@@ -473,7 +495,7 @@ namespace Goedel.Document.RFC {
             foreach (var Item in figure.Items) {
                 switch (Item) {
                     case artwork artwork: {
-                        AddPre(Parent, artwork.Text, figure.anchor);
+                        AddPre(Parent, artwork.Any, figure.anchor);
                         break;
                         }
                     case sourcecode sourcecode: {
@@ -521,8 +543,19 @@ namespace Goedel.Document.RFC {
 
             }
 
+        string MakeString(object[] items) {
+            string Result = "";
 
-        string MakeString(List<object> items, List<string> text) {
+            foreach (var item in items) {
+                if (item is string s) {
+                    Result += s;
+                    }
+                }
+
+            return Result;
+            }
+
+        string MakeString(object[] items, string[] text) {
             string Result = "";
 
             if (text != null) {
