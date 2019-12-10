@@ -940,7 +940,7 @@ record and rules for processing CAA records by CAs.<a class="pilcrow" href="#s-a
       </h4>
       <p id="s-1_1-1">
       This is a test of the various paragraph formats    
-      MUST and  and 
+       and  and 
         and  with 
         and . Math elements include e and
           e.
@@ -1083,26 +1083,14 @@ record and rules for processing CAA records by CAs.<a class="pilcrow" href="#s-a
         </thead>
         <tbody>
           <tr>
-            <td>
-              11
-            </td>
-            <td>
-              12
-            </td>
-            <td>
-              13
-            </td>
+            <td/>
+            <td/>
+            <td/>
           </tr>
           <tr>
-            <td>
-              21
-            </td>
-            <td>
-              22
-            </td>
-            <td>
-              23
-            </td>
+            <td/>
+            <td/>
+            <td/>
           </tr>
         </tbody>
       </table>
@@ -1132,9 +1120,9 @@ unintended certificate mis-issue.<a class="pilcrow" href="#s-2-1">&para;</a></p>
         <a class="selfRef" href="#s-3_1">3.1.</a>
         <a class="selfRef" href="#requirements-language">Requirements Language</a>
       </h4>
-      <p id="s-3_1-1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
-"SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",
-"NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document
+      <p id="s-3_1-1">The key words "", "", "", "",
+"", "", "", "",
+"", "", and "" in this document
 are to be interpreted as described in BCP&nbsp;14
  when,
 and only when, they appear in all capitals, as shown here.<a class="pilcrow" href="#s-3_1-1">&para;</a></p>
@@ -1153,17 +1141,17 @@ and only when, they appear in all capitals, as shown here.<a class="pilcrow" hre
         <a class="selfRef" href="#s-4">4.</a>
         <a class="selfRef" href="#relevant-resource-record-set">Relevant Resource Record Set</a>
       </h3>
-      <p id="s-4-1">Before issuing a certificate, a compliant CA MUST check for
+      <p id="s-4-1">Before issuing a certificate, a compliant CA  check for
 publication of a Relevant RRset.  If such an RRset
-exists, a CA MUST&nbsp;NOT issue a certificate unless the CA
+exists, a CA  issue a certificate unless the CA
 determines that either (1)&nbsp;the certificate request is consistent with
 the applicable CAA RRset or (2)&nbsp;an exception specified
 in the relevant CP or CPS applies. If the Relevant RRset for an FQDN
 or Wildcard Domain Name contains no Property Tags that restrict issuance
 (for instance, if it contains only iodef Property Tags or only Property
 Tags unrecognized by the CA), CAA does not restrict issuance.<a class="pilcrow" href="#s-4-1">&para;</a></p>
-      <p id="s-4-2">A certificate request MAY specify more than one FQDN and MAY
-specify Wildcard Domain Names.  Issuers MUST verify authorization for all
+      <p id="s-4-2">A certificate request  specify more than one FQDN and 
+specify Wildcard Domain Names.  Issuers  verify authorization for all
 the FQDNs and Wildcard Domain Names specified in the request.<a class="pilcrow" href="#s-4-2">&para;</a></p>
       <p id="s-4-3">The search for a CAA RRset climbs the DNS name tree from the
 specified label up to, but not including, the DNS root "."
@@ -1185,8 +1173,8 @@ Name *.X, the Relevant RRset RelevantCAASet(X) is determined as follows (in pseu
         <a class="selfRef" href="#syntax">Syntax</a>
       </h4>
       <p id="s-5_1-1">A CAA RR contains a single Property consisting of a tag‑value
-pair. An FQDN MAY have multiple CAA RRs associated with it, and a
-given Property Tag MAY be specified more than once across those RRs.<a class="pilcrow" href="#s-5_1-1">&para;</a></p>
+pair. An FQDN  have multiple CAA RRs associated with it, and a
+given Property Tag  be specified more than once across those RRs.<a class="pilcrow" href="#s-5_1-1">&para;</a></p>
       <p id="s-5_1-2">The RDATA section for a CAA RR contains one Property. A Property
 consists of the following:<a class="pilcrow" href="#s-5_1-2">&para;</a></p>
       <p id="s-5_1-3">Where n is the length specified in the Tag Length field and m is the
@@ -1200,16 +1188,16 @@ Bit. Thus, according to those conventions, the Flags value 1 means that bit 7 is
 set, while a value of 128 means that bit 0 is set.<a class="pilcrow" href="#s-5_1-5">&para;</a></p>
       <p id="s-5_1-6">All other bit positions are reserved for future use.<a class="pilcrow" href="#s-5_1-6">&para;</a></p>
       <p id="s-5_1-7">To ensure compatibility with future extensions to CAA, DNS records
-compliant with this version of the CAA specification MUST clear
+compliant with this version of the CAA specification  clear
 (set to "0") all reserved flag bits.
 
   Applications that interpret
-CAA records MUST ignore the value of all reserved flag bits.<a class="pilcrow" href="#s-5_1-7">&para;</a></p>
-      <p id="s-5_1-8">Tags MAY contain ASCII characters "a" through "z", "A"
-through "Z", and the numbers 0 through 9.  Tags MUST NOT
+CAA records  ignore the value of all reserved flag bits.<a class="pilcrow" href="#s-5_1-7">&para;</a></p>
+      <p id="s-5_1-8">Tags  contain ASCII characters "a" through "z", "A"
+through "Z", and the numbers 0 through 9.  Tags 
 contain any other characters.  Matching of tags is case
 insensitive.<a class="pilcrow" href="#s-5_1-8">&para;</a></p>
-      <p id="s-5_1-9">Tags submitted for registration by IANA MUST NOT contain any
+      <p id="s-5_1-9">Tags submitted for registration by IANA  contain any
 characters other than the (lowercase) ASCII characters "a"
 through "z" and the numbers 0 through 9.<a class="pilcrow" href="#s-5_1-9">&para;</a></p>
       <p id="s-5_1-10">The length of the Value field is specified implicitly as the

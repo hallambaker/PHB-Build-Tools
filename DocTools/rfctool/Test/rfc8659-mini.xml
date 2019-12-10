@@ -52,6 +52,7 @@ record and rules for processing CAA records by CAs.</t>
       <name slugifiedName="tests">Tests</name>      
       <section anchor="test-format" numbered="true">
         <name slugifiedName="test formats">Format Tests</name>
+        <t><bcp14>MUST</bcp14></t>
         <t>
       This is a test of the various paragraph formats    
       <bcp14>MUST</bcp14> and <em>emphasis</em> and <strong>strong</strong>

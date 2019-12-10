@@ -533,7 +533,7 @@ namespace Goedel.Document.RFC {
                 foreach (c c in texttable.c) {
                     TableData item = new TableData() {
                         IsHeading = false,
-                        Text = MakeString(c.Items, c.Text)
+                        // Text = MakeString(c.Items, c.Text)
                         };
 
                     if (col >= Table.MaxRow) {
