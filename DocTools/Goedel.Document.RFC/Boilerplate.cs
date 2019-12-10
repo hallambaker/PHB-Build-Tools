@@ -7,10 +7,36 @@ using Goedel.Document.Markdown;
 
 namespace Goedel.Document.RFC {
 
+    public struct StringSet {
+        public string First;
+        public string Second;
+        public string Third;
+        public string Fourth;
+        public StringSet(string First, string Second = null, string Third = null, string Fourth = null) {
+            this.First = First;
+            this.Second = Second;
+            this.Third = Third;
+            this.Fourth = Fourth;
+            }
+        }
+
     /// <summary>
-    /// Generate boilerplate and ipr statements.
+    /// Generate boilerplate and ipr statements. This should eventually be
+    /// replaced by a configuration file that can be read during processing.
     /// </summary>
     public static class RFCEditorBoilerplate {
+
+        public static readonly string StatusScriptURL =
+            "https://www.rfc-editor.org/js/metadata.min.js";
+
+        public static readonly string DefaultWorkGroup =
+            "Network Working Group";
+        public static readonly string RFCLocationURL =
+            "https://www.rfc-editor.org/rfc/";
+
+        public static readonly string IfApproved =
+            "(if approved)";
+
 
         public static readonly Dictionary<string, StringSet> SeriesTexts =
             new Dictionary<string, StringSet> {
@@ -51,11 +77,11 @@ namespace Goedel.Document.RFC {
 
         public static readonly Dictionary<string, StringSet> StatusTexts =
             new Dictionary<string, StringSet> {
-            {"standard", new StringSet("Standards Track", "This is an Internet Standards Track document.") },
+            {"std", new StringSet("Standards Track", "This is an Internet Standards Track document.") },
             {"bcp", new StringSet("Best Current Practices", "This memo documents an Internet Best Current Practice.") },
-            {"informational", new StringSet("Informational",
+            {"info", new StringSet("Informational",
                 Prefix1 + "it is published for informational purposes.") },
-            {"experimental", new StringSet("Experimental",
+            {"exp", new StringSet("Experimental",
                 Prefix1 + "it is published for informational purposes.",
                 "This document defines an Experimental Protocol for the Internet community.") },
             {"historic", new StringSet("Historic",
@@ -74,18 +100,7 @@ namespace Goedel.Document.RFC {
             "<a=\"http://www.rfc-editor.org/{0}/rfc{1}\">http://www.rfc-editor.org/{0}/rfc{1}</a>.";
 
 
-        public struct StringSet {
-            public string First;
-            public string Second;
-            public string Third;
-            public string Fourth;
-            public StringSet (string First, string Second = null, string Third = null, string Fourth = null) {
-                this.First = First;
-                this.Second = Second;
-                this.Third = Third;
-                this.Fourth = Fourth;
-                }
-            }
+
 
         public static readonly Dictionary<string, List<string>> IPR =
             new Dictionary<string, List<string>> {
@@ -116,30 +131,62 @@ namespace Goedel.Document.RFC {
 
         const string DraftStatus4 = "This Internet-Draft will expire on {0}";
 
-        public static void Set (Document Document) {
+        public static void Set (Document document) {
+            bool haveCopyright = false;
+            bool havestatus = false;
 
-            Section StatusSection = new Section("Status of This Memo", "n-status-of-this-memo") {
-                Automatic = true
-                };
-            AddParagraphs(StatusSection, StatusOfThisDocument(Document));
+            RFCEditorBoilerplate.StreamTexts.TryGetValue(document.Stream.ToLower(), out document.StreamTexts);
+            RFCEditorBoilerplate.StatusTexts.TryGetValue(document.Status.ToLower(), out document.StatusTexts);
+            RFCEditorBoilerplate.SeriesTexts.TryGetValue(document.Series.ToLower(), out document.SeriesTexts);
 
-            Section CopyrightSection = new Section("Copyright Notice", "n-copyright-notice") {
-                Automatic = true
-                };
-            AddParagraphs(CopyrightSection, Copyright(Document));
+            document.SeriesText = document.SeriesTexts.First;
+            document.StatusText = document.StatusTexts.First;
+            document.StreamText = document.StreamTexts.First;
 
-            Document.Boilerplate.Add(StatusSection);
-            Document.Boilerplate.Add(CopyrightSection);
 
-            if (Document.Also != null) {
+            foreach (var section in document.Boilerplate) {
+                switch (section.Heading) {
+                    case "Status of This Memo": {
+                        havestatus = true;
+                        break;
+                        }
+                    case "Copyright Notice": {
+                        haveCopyright = true;
+                        break;
+                        }
+                    }
+                }
+
+
+            if (!havestatus) {
+                Section StatusSection = new Section("Status of This Memo", "n-status-of-this-memo") {
+                    Automatic = true
+                    };
+                AddParagraphs(StatusSection, StatusOfThisDocument(document));
+                document.Boilerplate.Add(StatusSection);
+                }
+
+
+            if (!haveCopyright) {
+                var CopyrightSection = new Section("Copyright Notice", "n-copyright-notice") {
+                    Automatic = true
+                    };
+                AddParagraphs(CopyrightSection, Copyright(document));
+                document.Boilerplate.Add(CopyrightSection);
+                }
+
+
+
+
+            if (document.Also != null) {
                 var Block = new P();
                 var Lexer = new MarkNewParagraph();
                 Lexer.Push("This document is also available online at <a=\"");
-                Lexer.Push(Document.Also);
+                Lexer.Push(document.Also);
                 Lexer.PushEnd("\"/>.");
                 Block.Segments = Lexer.Segments;
 
-                Document.Abstract.Add(Block);
+                document.Abstract.Add(Block);
                 }
 
             }
@@ -147,46 +194,40 @@ namespace Goedel.Document.RFC {
 
         
 
-        static void AddParagraphs (Section Section, List<string> Texts) {
+        static void AddParagraphs (Section section, List<string> texts) {
 
 
-            foreach (var Text in Texts) {
+            foreach (var Text in texts) {
                 var Block = new P();
                 var Lexer = new MarkNewParagraph();
                 Lexer.PushEnd(Text);
                 Block.Segments = Lexer.Segments;
 
-                Section.TextBlocks.Add(Block);
+                section.TextBlocks.Add(Block);
                 }
 
             }
 
-        public static List<string> StatusOfThisDocument (Document Document) {
+        public static List<string> StatusOfThisDocument (Document document) {
             var Result = new List<string>();
-            RFCEditorBoilerplate.StreamTexts.TryGetValue(Document.Stream, out var StreamTexts);
-            RFCEditorBoilerplate.StatusTexts.TryGetValue(Document.Status, out var StatusTexts);
-            RFCEditorBoilerplate.SeriesTexts.TryGetValue(Document.Series, out var SeriesTexts);
 
-            Document.SeriesText = SeriesTexts.First;
-            Document.StatusText = StatusTexts.First;
-            Document.StreamText = StreamTexts.First;
 
-            switch (Document.Series) {
+            switch (document.Series) {
                 case "rfc": {
-                    Result.Add(StatusTexts.First);
+                    Result.Add(document.StatusTexts.First);
 
                     var Paragraph2 = new StringBuilder();
-                    Paragraph2.Append(StreamTexts.First);
+                    Paragraph2.Append(document.StreamTexts.First);
                     Paragraph2.Append(" ");
-                    if (Document.IsConsensus) {
-                        Paragraph2.Append(String.Format(StreamTexts.Second, Document.WorkgroupText));
+                    if (document.IsConsensus) {
+                        Paragraph2.Append(String.Format(document.StreamTexts.Second, document.WorkgroupText));
                         }
                     else {
-                        Paragraph2.Append(String.Format(StreamTexts.Third, Document.WorkgroupText));
+                        Paragraph2.Append(String.Format(document.StreamTexts.Third, document.WorkgroupText));
                         }
                     Result.Add(Paragraph2.ToString());
 
-                    Result.Add(String.Format(Paragraph3, Document.Status, Document.SeriesNumber));
+                    Result.Add(String.Format(Paragraph3, document.Status, document.SeriesNumber));
 
                     break;
                     }
@@ -194,7 +235,7 @@ namespace Goedel.Document.RFC {
                     Result.Add(TLP6a);
                     Result.Add(DraftStatus2);
                     Result.Add(DraftStatus3);
-                    Result.Add(String.Format (DraftStatus4, Document.Expires));
+                    Result.Add(String.Format (DraftStatus4, document.Expires));
                     break;
                     }
                 }
@@ -203,22 +244,22 @@ namespace Goedel.Document.RFC {
             }
 
 
-        public static List<string> Copyright (Document Document) {
+        public static List<string> Copyright (Document document) {
 
-            if (Document.Ipr == null) {
+            if (document.Ipr == null) {
                 return new List<string>();
                 }
 
             var Result = new List <string> () { TLP6b_1 };
 
-            if (Document.Stream == "ietf") {
+            if (document.Stream == "ietf") {
                 Result.Add(TLP6bi_2);
                 }
             else {
                 Result.Add(TLP6bii_2);
                 }
 
-            switch (Document?.Ipr?.Trim()) {
+            switch (document?.Ipr?.Trim()) {
                 case "trust200902": {
                     break;
                     }
@@ -234,7 +275,7 @@ namespace Goedel.Document.RFC {
                     Result.Add(TLP6ciii);
                     break;
                     }
-                default: throw new IPRInvalid(Document.Ipr);
+                default: throw new IPRInvalid(document.Ipr);
                 }
 
             return Result;

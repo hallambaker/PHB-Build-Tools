@@ -28,9 +28,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Merge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NewParse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PageWriter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)rfc7791.cs">
-      <DependentUpon>rfc7791.xsd</DependentUpon>
-    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)rfc7791-corrected.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)rfc7791parse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TXT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WriteAML.cs" />
@@ -47,10 +45,6 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)NextGen.md" />
     <None Include="$(MSBuildThisFileDirectory)PHBLogo256.ico" />
-    <None Include="$(MSBuildThisFileDirectory)rfc7791.xsd">
-      <CustomToolNamespace>Goedel.Tool.RFCTool.RFC7991</CustomToolNamespace>
-      <Generator>xsd2codecustomtool</Generator>
-    </None>
     <None Include="$(MSBuildThisFileDirectory)xml2rfcv2.rnc" />
   </ItemGroup>
   <ItemGroup>

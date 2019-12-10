@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Goedel.Registry;
+using Goedel.Utilities;
 using Goedel.IO;
 using Goedel.Document.RFC;
 using Goedel.Document.Markdown;
@@ -19,7 +20,7 @@ namespace Goedel.Document.RFC {
         /// Constructor, this is a subclass of XMLTextWriter
         /// </summary>
         /// <param name="TextWriter"></param>
-        public Html2RFCOut(TextWriter TextWriter) : base (TextWriter, false) {
+        public Html2RFCOut(TextWriter TextWriter) : base(TextWriter, false) {
             this.TextWriter = TextWriter;
             TextWriter.NewLine = "\n";
             TextWriter.WriteLine("<!DOCTYPE html>");
@@ -29,7 +30,7 @@ namespace Goedel.Document.RFC {
 
 
         readonly string[] AttributesLinkLicense = new string[] {
-            "href", "https://trustee.ietf.org/trust-legal-provisions.html", "rel", "license" }; 
+            "href", "https://trustee.ietf.org/trust-legal-provisions.html", "rel", "license" };
 
         readonly string[] Stylesheets = {
             //"https://rfc-format.github.io/draft-iab-rfc-css-bis/xml2rfc.css",  // ToDo: - final stylesheet
@@ -45,29 +46,25 @@ namespace Goedel.Document.RFC {
         DateTime Rendered = DateTime.UtcNow;
         Document Document;
 
-        public void Write (Document Document) {
+        public void Write(Document Document) {
             this.Document = Document;
             ListLevel = new ListLevel() { OpenListItem = OpenListItem, CloseListItem = CloseListItem };
 
 
             Start("html");
             Start("head");
-            WriteElementEmpty("meta", "class", "RFC", "lang", "en");
             WriteElementEmpty("meta", "charset", "utf-8");
-            WriteElementEmpty("meta", "content", "text/html", "http-equiv", "Content-Type");
-            WriteElementEmpty("meta", "name", "viewport", "content", "width=device-width, initial-scale=1");
-            // ToDo: Keywords
+            WriteElementEmpty("meta", "content", "Common,Latin", "name", "scripts");
+            WriteElementEmpty("meta", "content", "initial-scale=1.0", "name", "viewport");
 
-            if (Document.Keywords != null && Document.Keywords.Count > 0) {
-                var KeyWordList = new StringBuilder();
-                foreach (var Keyword in Document.Keywords) {
-                    if (KeyWordList.Length > 0) {
-                        KeyWordList.Append(",");
-                        }
-                    KeyWordList.Append(Keyword.Trim());
-                    }
-                WriteElementEmpty("meta", "name", "keywords", "content", KeyWordList.ToString());
+            WriteElement("title", Document.TitleFull);
+
+            foreach (var Author in Document.Authors) {
+                WriteElementEmpty("meta", "name", "author", "content", Author.Name.Trim());
                 }
+
+
+
 
             // ToDo: Description
             if (Document.Abstract.Count > 0) {
@@ -76,6 +73,7 @@ namespace Goedel.Document.RFC {
                     switch (TextBlock) {
                         case P P: {
                             DescriptionBuilder.Append(P.Text);
+                            DescriptionBuilder.Append(" ");
                             break;
                             }
                         }
@@ -83,20 +81,37 @@ namespace Goedel.Document.RFC {
                 WriteElementEmpty("meta", "name", "description", "content", DescriptionBuilder.ToString());
                 }
 
-            foreach (var Author in Document.Authors) {
+            WriteElementEmpty("meta", "content", "rfctool 2.0", "name", "generator");
 
-                WriteElementEmpty("meta", "name", "author", "content", Author.Name.Trim());
+            if (Document.Keywords != null && Document.Keywords.Count > 0) {
+                foreach (var Keyword in Document.Keywords) {
+                    WriteElementEmpty("meta", "content", Keyword.Trim(), "name", "keyword");
+                    }
                 }
 
-            WriteElement("title", Document.Title);
-            WriteElementEmpty("link", AttributesLinkLicense); // ToDo: - other licenses
+            if (!Document.IsDraft) {
+                WriteElementEmpty("meta", "content", Document.SeriesInfo.Value, "name", "rfc.number");
+                WriteElementEmpty("link", "href", $"rfc{Document.SeriesInfo.Value}.xml",
+                    "type", "application/rfc+xml", "rel", "alternate");
+                }
 
+            WriteElementEmpty("link", "href", "#copyright", "rel", "license");
+
+            // ToDo: include style of user's choice.
             WriteStyle(MainStylesheet);
 
             foreach (var Stylesheet in Stylesheets) {
                 WriteElementEmpty("link", "href", Stylesheet, "rel", "stylesheet", "type", "text/css");
                 }
-            End();
+
+
+            if (!Document.IsDraft) {
+                WriteElementEmpty("link", "href", 
+                    "https://dx.doi.org/10.17487/rfc"+ Document.SeriesInfo.Value, "rel", "alternate");
+                }
+            WriteElementEmpty("link", "href", "urn:issn:2070-1721", "rel", "alternate");
+
+            // ToDo: Create meta link to previous version.
 
             if (!Strict) {
                 if (Document.EmbedSVG == 0) {
@@ -106,11 +121,60 @@ namespace Goedel.Document.RFC {
                     WriteElementEmpty("link", "href", "favicon.png", "rel", "icon");
                     }
                 }
-
+            End();
 
             Start("body");
 
-            // ToDo: Does not currently support RFC ears.
+            WriteEars();
+
+
+            if (!Document.IsDraft) {
+                Start("script", "src", RFCEditorBoilerplate.StatusScriptURL);
+                End();
+                }
+
+
+            WriteIdentifiers(Document);
+
+
+            if (!Document.IsDraft) {
+                WriteElement("h1", Document.FullDocName, "id", "rfcnum");
+                }
+
+            Start("h1", "id", "title");
+            Write(Document.Title.Trim());
+
+
+            if (Document.IsDraft) {
+                WriteElement("h1", Document.FullDocName, "id", "idnum");
+                }
+
+            //foreach (var SeriesInfo in Document.SeriesInfos) {
+            //    WriteElement("br");
+            //    WriteElement("span", SeriesInfo.FullDocName, "id", SeriesInfo.Stream + "-file", "class", "filename");
+            //    }
+            End();
+
+            WriteAbstract(Document);
+            WriteSections(Document.Boilerplate, 0, true);
+            if (Document.TocInclude) {
+                WriteToc(Document);
+                }
+
+            WriteSections(Document.Middle, 0);
+            WriteReferences(Document.Catalog);
+
+            WriteSections(Document.Back, 0);
+
+
+            WriteAuthors(Document.AuthorSectionTitle, Document.Authors);
+            WriteColophon();
+
+            End();
+            }
+
+
+        void WriteEars() {
             Start("table", "class", "ears");
             Start("thead");
             Start("tr");
@@ -127,38 +191,13 @@ namespace Goedel.Document.RFC {
             End();
             End();
             End();
-
-            WriteIdentifiers(Document);
-            Start("h1", "id", "title");
-            Write(Document.Title.Trim());
-
-            foreach (var SeriesInfo in Document.SeriesInfos) {
-                WriteElement("br");
-                WriteElement("span", SeriesInfo.FullDocName, "id", SeriesInfo.Stream+"-file", "class", "filename");
-                }
-            End();
-
-            WriteAbstract(Document);
-            WriteSections(Document.Boilerplate, 0, true);
-            if (Document.TocInclude) {
-                WriteToc(Document);
-                }
-            
-            WriteSections(Document.Middle, 0);
-            WriteReferences(Document.Catalog);
-
-            WriteSections(Document.Back, 0);
-
-
-            WriteAuthors(Document.AuthorSectionTitle, Document.Authors);
-            WriteColophon();
-
-            End();
             }
 
 
+        #region // Utitlies to make various paragraph blocks
+
         //Tagging and bagging paragraph blocks
-        void StartSection (Section Section) {
+        void StartSection(Section Section) {
             Start("section", "id", Section.SetableID);
             if (Section.GeneratedID != null) {
                 Start(HeadTag(Section.Level), "id", Section.GeneratedID);
@@ -173,7 +212,7 @@ namespace Goedel.Document.RFC {
         //Level, Section.Number + " " + Section.Heading, Section.ID, Section.SectionID
 
         //Tagging and bagging paragraph blocks
-        void StartSection (int Level, string Heading, string SectionId, string Numbered = null) {
+        void StartSection(int Level, string Heading, string SectionId, string Numbered = null) {
             Start("section", "id", SectionId);
             if (Numbered != null) {
                 Start(HeadTag(Level), "id", Numbered);
@@ -185,7 +224,7 @@ namespace Goedel.Document.RFC {
             End();
             }
 
-        void EndSection () {
+        void EndSection() {
             End();
             Write();
             }
@@ -194,7 +233,7 @@ namespace Goedel.Document.RFC {
         public void WriteParagraph(P P) => WriteBlock(P, "p");
 
 
-        void WritePRE (List<TextSegment> Segments) {
+        void WritePRE(List<TextSegment> Segments) {
             foreach (var Segment in Segments) {
                 switch (Segment) {
                     case TextSegmentText TextSegmentText:
@@ -204,7 +243,7 @@ namespace Goedel.Document.RFC {
                 }
             }
 
-        public void WritePre (PRE P) {
+        public void WritePre(PRE P) {
             Start("pre", true, false, "id", P.GeneratedID);
             // ToDo: write ID
             WritePRE(P.Segments);
@@ -214,12 +253,12 @@ namespace Goedel.Document.RFC {
             End(false, true);
             }
 
-        public void WriteTable (Table Table) {
+        public void WriteTable(Table Table) {
             if (Table.Rows.Count == 0) {
                 return; // no rows so suppress outpout
                 }
 
-            Start ("table", "id", Table.GeneratedID);
+            Start("table", "id", Table.GeneratedID);
             Start("thead");
             Start("tr");
             foreach (var Data in Table.Rows[0].Data) {
@@ -239,8 +278,11 @@ namespace Goedel.Document.RFC {
             End();
 
             }
+
+        #endregion
+
         // Replacements for the automatic sections
-        public void WriteAbstract (Document Document) {
+        public void WriteAbstract(Document Document) {
             StartSection(1, "Abstract", "abstract");
 
             foreach (var TextBlock in Document.Abstract) {
@@ -255,7 +297,7 @@ namespace Goedel.Document.RFC {
             EndSection();
             }
 
-        public void WriteToc (Document Document) {
+        public void WriteToc(Document Document) {
             StartSection(1, "Table of Contents", "toc");
 
             Start("nav", "class", "toc");
@@ -298,7 +340,7 @@ namespace Goedel.Document.RFC {
             EndSection();
             }
 
-        public void WriteToc (List<Section> Sections) {
+        public void WriteToc(List<Section> Sections) {
             if (Sections.Count == 0) {
                 return;
                 }
@@ -309,7 +351,7 @@ namespace Goedel.Document.RFC {
             End();
             }
 
-        public void WriteToc (Section Section) {
+        public void WriteToc(Section Section) {
             Start("li", "class", "toc");
             if (!Section.SuppressNumbering) {
                 WriteElement("a", true, false, Section.Number, "href", "#" + Section.GeneratedID);
@@ -320,68 +362,158 @@ namespace Goedel.Document.RFC {
             }
 
 
-        public void WriteStatus (Document Document) {
+        public void WriteStatus(Document Document) {
             StartSection(1, "Status of this Memo", "n-status-of-this-memo");
             EndSection();
             }
 
-        public void WriteCopyright (Document Document) {
+        public void WriteCopyright(Document Document) {
             StartSection(1, "Copyright Notice", "n-copyright-notice");
             EndSection();
             }
 
-        public void WriteDate (DateTime DateTime, string Class) {
+        public void WriteDate(DateTime DateTime, string Class) {
+
             var Numeric = DateTime.ToString("yyyy-MM-dd");
             var Text = DateTime.ToString("d MMMMM yyyy");
             WriteElement("time", Text, "class", Class, "datetime", Numeric);
             }
 
-        public void WriteIdentifiers (Document Document) {
+        public void WriteDateShort(DateTime DateTime, string Class) {
+
+            var Numeric = DateTime.ToString("yyyy-MM");
+            var Text = DateTime.ToString("MMMMM yyyy");
+            WriteElement("time", Text, "class", Class, "datetime", Numeric);
+            }
+
+
+        public void WriteIdentifiers(Document Document) {
             EndLine();
+            Start("div", "id", "external-metadata", "class", "document-information");
+            End(); // external-metadata
+            Start("div", "id", "internal-metadata", "class", "document-information");
+
             Start("dl", "id", "identifiers");
 
-            WriteElement("dt", "Stream:");
-            WriteElement("dd", Document.StreamText, "class", "stream");
 
-            if (Document.WorkgroupText != null) {
-                WriteElement("dt", "Workgroup:");
-                WriteElement("dd", Document.WorkgroupText, "class", "workgroup");
+            if (Document.IsDraft) {
+                WriteElement("dt", "Workgroup:", "class", "label-workgroup");
+                if (!Document.WorkgroupText.IsBlank()) {
+                    WriteElement("dd", Document.WorkgroupText, "class", "workgroup");
+                    }
+                else {
+                    WriteElement("dd", RFCEditorBoilerplate.DefaultWorkGroup, "class", "workgroup");
+                    }
+
+                WriteElement("dt", "Stream:", "class", "label-stream");
+                WriteElement("dd", "Internet-Draft", "class", "stream");
+
+                if (!Document.Obsoletes.IsBlank()) {
+                    WriteElement("dt", "Obsoletes:", "class", "label-obsoletes");
+                    WriteElement("dd", Document.WorkgroupText + " " + RFCEditorBoilerplate.IfApproved, "class", "obsoletes");
+                    }
+                if (!Document.Updates.IsBlank()) {
+                    WriteElement("dt", "Updates:", "class", "label-updates");
+                    WriteElement("dd", Document.WorkgroupText + " " + RFCEditorBoilerplate.IfApproved, "class", "updates");
+                    }
+
+                WriteElement("dt", "Intended status:", "class", "label-category");
+                WriteElement("dd", Document.StatusText, "class", "category");
+
+                }
+            else {
+                WriteElement("dt", "Stream:", "class", "label-stream");
+                WriteElement("dd", Document.StreamText, "class", "stream");
+
+
+                WriteElement("dt", "RFC:", "class", "label-rfc");
+                Start("dd", "class", "rfc");
+                WriteLinkRFC(Document.SeriesInfo.Value);
+                End();
+
+                if (!Document.Obsoletes.IsBlank()) {
+                    WriteElement("dt", "Obsoletes:", "class", "label-obsoletes");
+                    Start("dd", "class", "obsoletes");
+                    WriteLinkRFCs(Document.Obsoletes);
+                    End();
+                    }
+                if (!Document.Updates.IsBlank()) {
+                    WriteElement("dt", "Updates:", "class", "label-updates");
+                    Start("dd", "class", "updates");
+                    WriteLinkRFCs(Document.Updates);
+                    End();
+                    }
+                WriteElement("dt", "Category:", "class", "label-category");
+                WriteElement("dd", Document.StatusText, "class", "category");
                 }
 
-            WriteElement("dt", "Series:");
-            WriteElement("dd", Document.SeriesText, "class", "series");
 
-            WriteElement("dt", "Status:");
-            WriteElement("dd", Document.StatusText, "class", "status");
-
+            // Publication date.
             WriteElement("dt", "Published:");
             Start("dd");
-            WriteDate(Document.DocDate, "published");
+            if (Document.IsDraft) {
+                WriteDate(Document.DocDate, "published");
+                }
+            else {
+                WriteDateShort(Document.DocDate, "published");
+                }
             End();
 
+            // Add in the ISSN boilerplate.
+            WriteElement("dt", "ISSN:", "class", "label-issn");
+            WriteElement("dd", "2070-1721", "class", "issn");
+
+            // Calculate the expiry date.
             if (Document.IsDraft) {
                 WriteElement("dt", "Expires");
                 Start("dd");
                 WriteDate(Document.Expiring, "expires");
                 End();
                 }
-            
-            WriteElement("dt", Document.Authors.Count > 0 ? "Authors:" : "Author");
-            foreach (var Author in Document.Authors) {
+
+            // Append the authors.
+            if (Document.Authors.Count > 0) {
+                WriteElement("dt", Document.Authors.Count > 0 ? "Authors:" : "Author");
                 Start("dd", "class", "authors");
-                WriteSpan("author-name", Author.Name);
-                if (Author.Organization != null) {
-                    StartLine();
-                    Output.Write("(");
-                    WriteInlineElement("span", Author.Organization.Trim(), "class", "org");
-                    Output.Write(")");
-                    EndLine();
+                foreach (var Author in Document.Authors) {
+                    Start("div", "class", "author");
+                    if (Author.Name != null) {
+                        WriteInlineElement("div", Author.Name.Trim(), "class", "author-name");
+                        }
+                    if (Author.Organization != null) {
+                        WriteInlineElement("div", Author.Organization.Trim(), "class", "org");
+                        }
+                    End();
                     }
                 End();
                 }
 
-            End();
+
+            End(); // identifiers
+            End(); // internal-metadata
+
             }
+
+
+        void WriteLinkRFCs(string numbers) {
+            var entries = numbers.SplitByComma();
+            var first = true;
+            foreach (var entry in entries) {
+                if (!first) {
+
+                    Output.Write(",");
+                    }
+                else {
+                    first = false;
+                    }
+                WriteLinkRFC(entry);
+                }
+            }
+        void WriteLinkRFC(string number) {
+            var href = RFCEditorBoilerplate.RFCLocationURL + "rfc" + number;
+            WriteElement("a", number, "href", href, "class", "eref");
+            }
+
 
         // -----------------------
 

@@ -69,7 +69,7 @@ namespace MakeRFC {
                         };
                     FillMetaString(Meta, "stream", ref SeriesInfo.Stream);
                     FillMetaString(Meta, "status", ref SeriesInfo.Status);
-                    FillMetaString(Meta, "version", ref SeriesInfo._Version);
+                    FillMetaString(Meta, "version", ref SeriesInfo.Version);
                     Target.SeriesInfos.Add(SeriesInfo);
                     }
                 }

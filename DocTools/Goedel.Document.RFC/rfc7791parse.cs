@@ -73,7 +73,9 @@ namespace Goedel.Document.RFC {
 
                 Document.Abstract = MakeTextBlocks(front.@abstract.Items);
                 Document.Note = MakeTextBlocks(front.note);
-                Document.Boilerplate = MakeSections(front.boilerplate.section, 2);
+                if (front.boilerplate != null) {
+                    Document.Boilerplate = MakeSections(front.boilerplate.section, 2);
+                    }
                 }
 
             Document.Middle = MakeSections(rfc.middle.section, 1);

@@ -77,6 +77,12 @@ h4
 h5, h6 {
   font-size: 14px;
 }
+/* Styling for title RFC Number */
+h1#rfcnum {
+    clear: both;
+    margin: 0 0 -1em;
+    padding: 1em 0 0 0;
+}
 #n-copyright-notice {
   border-bottom: 1px solid #ddd;
   padding-bottom: 1em;

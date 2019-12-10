@@ -1,0 +1,273 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" version="3" category="std" 
+     consensus="true" docName="draft-ietf-lamps-rfc6844bis-07" 
+     indexInclude="true" ipr="trust200902" number="8659" obsoletes="6844" 
+     prepTime="2019-11-19T22:42:54" scripts="Common,Latin" sortRefs="true" 
+     submissionType="IETF" symRefs="true" tocDepth="3" tocInclude="true" xml:lang="en">
+  <link href="https://datatracker.ietf.org/doc/draft-ietf-lamps-rfc6844bis-07" rel="prev"/>
+  <link href="https://dx.doi.org/10.17487/rfc8659" rel="alternate"/>
+  <link href="urn:issn:2070-1721" rel="alternate"/>
+  <front>
+    <title abbrev="CAA">DNS Certification Authority Authorization (CAA) Resource Record</title>
+    <seriesInfo name="RFC" value="8659" stream="IETF"/>
+    <author initials="P." surname="Hallam-Baker" fullname="Phillip Hallam-Baker">
+      <organization showOnFrontPage="true">Venture Cryptography</organization>
+      <address>
+        <email>phill@hallambaker.com</email>
+      </address>
+    </author>
+    <author initials="R." surname="Stradling" fullname="Rob Stradling">
+      <organization abbrev="Sectigo" showOnFrontPage="true">Sectigo Ltd.</organization>
+      <address>
+        <email>rob@sectigo.com</email>
+      </address>
+    </author>
+    <author initials="J." surname="Hoffman-Andrews" fullname="Jacob Hoffman-Andrews">
+      <organization showOnFrontPage="true">Let's Encrypt</organization>
+      <address>
+        <email>jsha@letsencrypt.org</email>
+      </address>
+    </author>
+    <date month="11" year="2019"/>
+    <keyword>certificate</keyword>
+    <keyword>ca</keyword>
+    <keyword>pki</keyword>
+    <keyword>issue</keyword>
+    <keyword>issuance</keyword>
+    <keyword>wildcard</keyword>
+    <abstract pn="section-abstract">
+      <t pn="section-abstract-1">The Certification Authority Authorization (CAA) DNS Resource Record
+allows a DNS domain name holder to specify one or more Certification
+Authorities (CAs) authorized to issue certificates for that domain name.
+CAA Resource Records allow a public CA to
+implement additional controls to reduce the risk of unintended
+certificate mis-issue.  This document defines the syntax of the CAA
+record and rules for processing CAA records by CAs.</t>
+      <t pn="section-abstract-2">This document obsoletes RFC 6844.</t>
+    </abstract>
+
+  </front>
+  <middle>
+    <section anchor="introduction" numbered="true" toc="include" removeInRFC="false" pn="section-1">
+      <name slugifiedName="name-introduction">Introduction</name>
+      <t pn="section-1-1">The Certification Authority Authorization (CAA) DNS Resource Record
+allows a DNS domain name holder to specify the Certification
+Authorities (CAs) authorized to issue certificates for that domain name.
+Publication of CAA Resource Records allows a public CA to implement additional controls to reduce the risk of
+unintended certificate mis-issue.</t>
+
+    </section>
+    <section anchor="definitions" numbered="true" toc="include" removeInRFC="false" pn="section-2">
+      <name slugifiedName="name-definitions">Definitions</name>
+      <section anchor="requirements-language" numbered="true" toc="include" removeInRFC="false" pn="section-2.1">
+        <name slugifiedName="name-requirements-language">Requirements Language</name>
+        <t pn="section-2.1-1">The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>",
+"<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>",
+"<bcp14>NOT RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document
+are to be interpreted as described in BCP 14
+<xref target="RFC2119" format="default" sectionFormat="of" derivedContent="RFC2119"/> <xref target="RFC8174" format="default" sectionFormat="of" derivedContent="RFC8174"/> when,
+and only when, they appear in all capitals, as shown here.</t>
+      </section>
+      <section anchor="defined-terms" numbered="true" toc="include" removeInRFC="false" pn="section-2.2">
+        <name slugifiedName="name-defined-terms">Defined Terms</name>
+        <t pn="section-2.2-1">The following terms are used in this document:</t>
+        <dl newline="false" spacing="normal" pn="section-2.2-2">
+          <dt pn="section-2.2-2.1">Certificate:</dt>
+          <dd pn="section-2.2-2.2">An X.509 Certificate, as specified in <xref target="RFC5280" format="default" sectionFormat="of" derivedContent="RFC5280"/>.</dd>
+          <dt pn="section-2.2-2.3">Certificate Evaluator:</dt>
+          <dd pn="section-2.2-2.4">A party other than a Relying Party that
+   evaluates the trustworthiness of certificates issued by
+   Certification Authorities.</dd>
+          <dt pn="section-2.2-2.5">Certification Authority (CA):</dt>
+          <dd pn="section-2.2-2.6">An Issuer that issues certificates in
+   accordance with a specified Certificate Policy.</dd>
+          <dt pn="section-2.2-2.7">Certificate Policy (CP):</dt>
+          <dd pn="section-2.2-2.8">Specifies the criteria that a CA
+   undertakes to meet in its issue of certificates.  See
+   <xref target="RFC3647" format="default" sectionFormat="of" derivedContent="RFC3647"/>.</dd>
+          <dt pn="section-2.2-2.9">Certification Practices Statement (CPS):</dt>
+          <dd pn="section-2.2-2.10">Specifies the means by
+   which the criteria of the CP are met.  In most
+   cases, this will be the document against which the operations of
+   the CA are audited.  See <xref target="RFC3647" format="default" sectionFormat="of" derivedContent="RFC3647"/>.</dd>
+          <dt pn="section-2.2-2.11">Domain Name:</dt>
+          <dd pn="section-2.2-2.12">The label assigned to a node in the Domain Name System.</dd>
+          <dt pn="section-2.2-2.13">Domain Name System (DNS):</dt>
+          <dd pn="section-2.2-2.14">The Internet naming system specified in
+   <xref target="RFC1034" format="default" sectionFormat="of" derivedContent="RFC1034"/> and <xref target="RFC1035" format="default" sectionFormat="of" derivedContent="RFC1035"/>.</dd>
+          <dt pn="section-2.2-2.15">DNS Security (DNSSEC):</dt>
+          <dd pn="section-2.2-2.16">Extensions to the DNS that provide
+   authentication services as specified in <xref target="RFC4033" format="default" sectionFormat="of" derivedContent="RFC4033"/>, <xref target="RFC4034" format="default" sectionFormat="of" derivedContent="RFC4034"/>,
+   <xref target="RFC4035" format="default" sectionFormat="of" derivedContent="RFC4035"/>, <xref target="RFC5155" format="default" sectionFormat="of" derivedContent="RFC5155"/>, and
+   any revisions to these specifications.</dd>
+          <dt pn="section-2.2-2.17">Fully Qualified Domain Name (FQDN):</dt>
+          <dd pn="section-2.2-2.18">A domain name that includes the labels of all
+  superior nodes in the DNS.</dd>
+          <dt pn="section-2.2-2.19">Issuer:</dt>
+          <dd pn="section-2.2-2.20">An entity that issues certificates.  See <xref target="RFC5280" format="default" sectionFormat="of" derivedContent="RFC5280"/>.</dd>
+          <dt pn="section-2.2-2.21">Property:</dt>
+          <dd pn="section-2.2-2.22">The tag-value portion of a CAA Resource Record.</dd>
+          <dt pn="section-2.2-2.23">Property Tag:</dt>
+          <dd pn="section-2.2-2.24">The tag portion of a CAA Resource Record.</dd>
+          <dt pn="section-2.2-2.25">Property Value:</dt>
+          <dd pn="section-2.2-2.26">The value portion of a CAA Resource Record.</dd>
+          <dt pn="section-2.2-2.27">Relevant Resource Record Set (Relevant RRset):</dt>
+          <dd pn="section-2.2-2.28">A set of CAA 
+   Resource Records resulting
+   from applying the algorithm in <xref target="relevant-resource-record-set" format="default" sectionFormat="of" derivedContent="Section 3"/> to a specific FQDN or Wildcard Domain Name.</dd>
+          <dt pn="section-2.2-2.29">Relying Party:</dt>
+          <dd pn="section-2.2-2.30">A party that makes use of an application whose
+   operation depends on the use of a certificate for making a security
+   decision.  See <xref target="RFC5280" format="default" sectionFormat="of" derivedContent="RFC5280"/>.</dd>
+          <dt pn="section-2.2-2.31">Resource Record (RR):</dt>
+          <dd pn="section-2.2-2.32">A particular entry in the DNS, including the
+   owner name, class, type, time to live, and data, as defined in
+   <xref target="RFC1034" format="default" sectionFormat="of" derivedContent="RFC1034"/> and <xref target="RFC2181" format="default" sectionFormat="of" derivedContent="RFC2181"/>.</dd>
+          <dt pn="section-2.2-2.33">Resource Record Set (RRset):</dt>
+          <dd pn="section-2.2-2.34">A set of RRs of a
+   particular owner name, class, and type.  The time to live on all
+   RRs within an RRset is always the same, but the data may be
+   different among RRs in the RRset.</dd>
+          <dt pn="section-2.2-2.35">Wildcard Domain Name:</dt>
+          <dd pn="section-2.2-2.36">A domain name consisting of a single asterisk
+   character followed by a single "full stop" character ("*.") followed
+   by an FQDN.</dd>
+        </dl>
+      </section>
+    </section>
+    <section anchor="relevant-resource-record-set" numbered="true" toc="include" removeInRFC="false" pn="section-3">
+      <name slugifiedName="name-relevant-resource-record-se">Relevant Resource Record Set</name>
+      <t pn="section-3-1">Before issuing a certificate, a compliant CA <bcp14>MUST</bcp14> check for
+publication of a Relevant RRset.  If such an RRset
+exists, a CA <bcp14>MUST NOT</bcp14> issue a certificate unless the CA
+determines that either (1) the certificate request is consistent with
+the applicable CAA RRset or (2) an exception specified
+in the relevant CP or CPS applies. If the Relevant RRset for an FQDN
+or Wildcard Domain Name contains no Property Tags that restrict issuance
+(for instance, if it contains only iodef Property Tags or only Property
+Tags unrecognized by the CA), CAA does not restrict issuance.</t>
+      <t pn="section-3-2">A certificate request <bcp14>MAY</bcp14> specify more than one FQDN and <bcp14>MAY</bcp14>
+specify Wildcard Domain Names.  Issuers <bcp14>MUST</bcp14> verify authorization for all
+the FQDNs and Wildcard Domain Names specified in the request.</t>
+      <t pn="section-3-3">The search for a CAA RRset climbs the DNS name tree from the
+specified label up to, but not including, the DNS root "."
+until a CAA RRset is found.</t>
+      <t pn="section-3-4">Given a request for a specific FQDN X or a request for a Wildcard Domain
+Name *.X, the Relevant RRset RelevantCAASet(X) is determined as follows (in pseudocode):</t>
+      <ul empty="true" spacing="normal" bare="false" pn="section-3-5">
+        <li pn="section-3-5.1">Let CAA(X) be the RRset returned by performing a CAA record query for the
+FQDN X, according to the lookup algorithm
+specified in <xref target="RFC1034" sectionFormat="of" section="4.3.2" format="default" derivedLink="https://rfc-editor.org/rfc/rfc1034#section-4.3.2" derivedContent="RFC1034"/> (in particular, chasing
+aliases). Let Parent(X) be the FQDN produced by
+removing the leftmost label of X.</li>
+      </ul>
+      <sourcecode name="pseudocode-1" type="pseudocode" markers="false" pn="section-3-6">
+   RelevantCAASet(domain):
+     while domain is not ".":
+       if CAA(domain) is not Empty:
+         return CAA(domain)
+       domain = Parent(domain)
+     return Empty </sourcecode>
+      <ul empty="true" spacing="normal" bare="false" pn="section-3-7">
+        <li pn="section-3-7.1">For example, processing CAA for the FQDN "X.Y.Z" where there are
+no CAA records at any level in the tree RelevantCAASet would have the
+following steps:</li>
+      </ul>
+      <artwork name="" type="" align="left" alt="" pn="section-3-8">
+   CAA("X.Y.Z.") = Empty; domain = Parent("X.Y.Z.") = "Y.Z."
+   CAA("Y.Z.")   = Empty; domain = Parent("Y.Z.")   = "Z."
+   CAA("Z.")     = Empty; domain = Parent("Z.")     = "."
+   return Empty </artwork>
+      <ul empty="true" spacing="normal" bare="false" pn="section-3-9">
+        <li pn="section-3-9.1">Processing CAA for the FQDN "A.B.C" where there is a CAA record
+"issue example.com" at "B.C" would terminate early upon finding the CAA
+record:</li>
+      </ul>
+      <artwork name="" type="" align="left" alt="" pn="section-3-10">
+   CAA("A.B.C.") = Empty; domain = Parent("A.B.C.") = "B.C."
+   CAA("B.C.")   = "issue example.com"
+   return "issue example.com" </artwork>
+    </section>
+    <section anchor="mechanism" numbered="true" toc="include" removeInRFC="false" pn="section-4">
+      <name slugifiedName="name-mechanism">Mechanism</name>
+      <section anchor="syntax" numbered="true" toc="include" removeInRFC="false" pn="section-4.1">
+        <name slugifiedName="name-syntax">Syntax</name>
+        <t pn="section-4.1-1">A CAA RR contains a single Property consisting of a tag‑value
+pair. An FQDN <bcp14>MAY</bcp14> have multiple CAA RRs associated with it, and a
+given Property Tag <bcp14>MAY</bcp14> be specified more than once across those RRs.</t>
+        <t pn="section-4.1-2">The RDATA section for a CAA RR contains one Property. A Property
+consists of the following:</t>
+        <artwork name="" type="" align="left" alt="" pn="section-4.1-3">
++0-1-2-3-4-5-6-7-|0-1-2-3-4-5-6-7-|
+| Flags          | Tag Length = n |
++----------------|----------------+...+---------------+
+| Tag char 0     | Tag char 1     |...| Tag char n-1  |
++----------------|----------------+...+---------------+
++----------------|----------------+.....+----------------+
+| Value byte 0   | Value byte 1   |.....| Value byte m-1 |
++----------------|----------------+.....+----------------+
+</artwork>
+        <t pn="section-4.1-4">Where n is the length specified in the Tag Length field and m is the
+number of remaining octets in the Value field. They are related by
+(m = d - n - 2)
+where d is the length of the RDATA section.</t>
+        <t pn="section-4.1-5">The fields are defined as follows:</t>
+        <dl newline="false" spacing="normal" pn="section-4.1-6">
+          <dt pn="section-4.1-6.1">Flags:</dt>
+          <dd pn="section-4.1-6.2">
+            <t pn="section-4.1-6.2.1">One octet containing the following field:
+
+            </t>
+            <dl newline="false" spacing="normal" pn="section-4.1-6.2.2">
+              <dt pn="section-4.1-6.2.2.1">Bit 0, Issuer Critical Flag:</dt>
+              <dd pn="section-4.1-6.2.2.2">If the value is set to "1", the
+ Property is critical. A CA <bcp14>MUST NOT</bcp14> issue
+ certificates for any FQDN if the Relevant RRset for
+ that FQDN contains a CAA critical
+ Property for an unknown or unsupported Property Tag.
+
+ </dd>
+            </dl>
+          </dd>
+        </dl>
+        <t pn="section-4.1-7">Note that according to the conventions set out in <xref target="RFC1035" format="default" sectionFormat="of" derivedContent="RFC1035"/>, bit 0
+is the Most Significant Bit and bit 7 is the Least Significant
+Bit. Thus, according to those conventions, the Flags value 1 means that bit 7 is
+set, while a value of 128 means that bit 0 is set.</t>
+        <t pn="section-4.1-8">All other bit positions are reserved for future use.</t>
+        <t pn="section-4.1-9">To ensure compatibility with future extensions to CAA, DNS records
+compliant with this version of the CAA specification <bcp14>MUST</bcp14> clear
+(set to "0") all reserved flag bits.
+
+  Applications that interpret
+CAA records <bcp14>MUST</bcp14> ignore the value of all reserved flag bits.</t>
+        <dl newline="false" spacing="normal" pn="section-4.1-10">
+          <dt pn="section-4.1-10.1">Tag Length:</dt>
+          <dd pn="section-4.1-10.2">A single octet containing an unsigned integer specifying
+the tag length in octets.  The tag length <bcp14>MUST</bcp14> be at least 1.</dd>
+          <dt pn="section-4.1-10.3">Tag:</dt>
+          <dd pn="section-4.1-10.4">The Property identifier -- a sequence of ASCII characters.</dd>
+        </dl>
+        <t pn="section-4.1-11">Tags <bcp14>MAY</bcp14> contain ASCII characters "a" through "z", "A"
+through "Z", and the numbers 0 through 9.  Tags <bcp14>MUST NOT</bcp14>
+contain any other characters.  Matching of tags is case
+insensitive.</t>
+        <t pn="section-4.1-12">Tags submitted for registration by IANA <bcp14>MUST NOT</bcp14> contain any
+characters other than the (lowercase) ASCII characters "a"
+through "z" and the numbers 0 through 9.</t>
+        <dl newline="false" spacing="normal" pn="section-4.1-13">
+          <dt pn="section-4.1-13.1">Value:</dt>
+          <dd pn="section-4.1-13.2">A sequence of octets representing the Property Value.
+Property Values are encoded as binary values and <bcp14>MAY</bcp14> employ
+sub‑formats.</dd>
+        </dl>
+        <t pn="section-4.1-14">The length of the Value field is specified implicitly as the
+remaining length of the enclosing RDATA section.</t>
+
+      </section>
+
+    </section>
+
+  </middle>
+
+</rfc>

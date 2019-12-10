@@ -6,14 +6,7 @@ using Goedel.Utilities;
 
 namespace Goedel.Document.RFC {
     public partial class Document {
-
         public GM.Document Source = null;
-
-        // Constants for inside the text
-        //public string           Publisher = "Internet Engineering Task Force (IETF)";
-        //public string           ID1 = "Internet-Draft";
-        //public string           Status = "Standards Track";
-
 
         // Attributes from tag <RFC>
         public string Number;
@@ -26,9 +19,6 @@ namespace Goedel.Document.RFC {
         public string IprExtract;
         public string SubmissionType; // see seriesinfo
         public string Docname = "";
-
-
-
 
         // I see no reason at all to allow these to be varied. The TOC is
         // for the benefit of the reader, not the writer.
@@ -44,13 +34,15 @@ namespace Goedel.Document.RFC {
         public bool EmbedStylesheet = true;
         public int EmbedSVG = 0;                // Default, embed as data: uri
 
-        
+
         public string Scripts = "Common,Latin";
         public string ExpiresDate = null;
 
         public List<Link> Links = new List<Link>();
 
         // Collected attributes and elements from <front>
+        public string TitleFull => IsDraft ? Title : FullDocName + ": " + Title;
+
         public string Title = "";
         public string TitleAbrrev = "";
         public string TitleAscii = "";
@@ -76,13 +68,15 @@ namespace Goedel.Document.RFC {
         public string AreaCombined;
 
         // Calculated attributes
-        public DateTime DocDate  => DateTime.Parse(Date); 
-        public DateTime Expiring  => DocDate.AddDays(185); 
-        public string Expires  => ToDate(Expiring.Day.ToString(), Months[Expiring.Month], Expiring.Year.ToString());
+        public DateTime DocDate => DateTime.Parse(Date);
+        public DateTime Expiring => DocDate.AddDays(185);
+        public string Expires => ToDate(Expiring.Day.ToString(), Months[Expiring.Month], Expiring.Year.ToString());
 
-        public string FullDocName  => Version == null ? Docname : Docname + "-" + Version;
+        public string FullDocName => IsDraft ?
+            (Version == null ? Docname : Docname + "-" + Version) : "RFC" + SeriesInfo.Value;
 
-        public string Date => ToDate(Day, Month, Year); 
+
+        public string Date => ToDate(Day, Month, Year);
         public string FirstAuthor {
             get {
                 if (Authors.Count == 0) {
@@ -92,26 +86,30 @@ namespace Goedel.Document.RFC {
                 return Parts[Parts.Length - 1];
                 }
             }
-        public bool IsConsensus => Consensus == "yes" | Consensus == "true"; 
-        public bool IsDraft  => Series == "draft"; 
+        public bool IsConsensus => Consensus == "yes" | Consensus == "true";
+        public bool IsDraft => Series == "Internet-Draft";
 
-
-        public SeriesInfo SeriesInfo  => SeriesInfos.Count > 0 ? SeriesInfos[0] : null; 
-        public string Stream => SeriesInfo?.Stream ?? "ietf"; 
-        public string Status  => SeriesInfo?.Status ?? "standard"; 
-        public string Series  => SeriesInfo?.Name ?? "draft"; 
-        public string Version { get => SeriesInfo?.Version;
+        public SeriesInfo SeriesInfo;
+        public string Stream => SeriesInfo?.Stream ?? "ietf";
+        public string Status => SeriesInfo?.Status ?? "standard";
+        public string Series => SeriesInfo?.Name ?? "draft";
+        public string Version {
+            get => SeriesInfo?.AutoVersion;
             set { }
             }
 
-        public string WorkgroupText  => Workgroup?.Count > 0 ? Workgroup[0] : null; // ToDo: concatenate working groups       
+        public string WorkgroupText => Workgroup?.Count > 0 ? Workgroup[0] : null; // ToDo: concatenate working groups       
+
+        public StringSet StreamTexts;
+        public StringSet SeriesTexts;
+        public StringSet StatusTexts;
 
 
         public string StreamText;
         public string SeriesText;
         public string StatusText;
 
-        public Catalog          Catalog = new Catalog();
+        public Catalog Catalog = new Catalog();
 
         // End data from the schema
 
@@ -121,12 +119,12 @@ namespace Goedel.Document.RFC {
         public List<Table> TableOfTables = new List<Table>();
 
 
-        static string [] Months = {null, "January", "February", "March", "April", "May", "June", 
+        static string[] Months = {null, "January", "February", "March", "April", "May", "June",
                                "July", "August", "September", "October", "November", "December"};
 
-        static string ToDate (string Day, string Month, string Year) {
+        static string ToDate(string Day, string Month, string Year) {
             string Format = "{1} {0}, {2}";
-            return String.Format (Format, Day, Month, Year);
+            return String.Format(Format, Day, Month, Year);
             }
 
         public Document() {
@@ -139,40 +137,124 @@ namespace Goedel.Document.RFC {
         public Document(string InputFile, string Format)
             : this() {
 
-            //using (TextReader TextReader = new StreamReader(InputFile)) {
             if (Format == null || (Format.ToLower() == "html" | Format.ToLower() == "html2rfc")) {
                 using (FileReader FileReader = new FileReader(InputFile)) {
-
                     new NewParse(FileReader, this);
                     }
                 }
             else if (Format.ToLower() == "xml" | Format.ToLower() == "xml2rfc"
                     | Format.ToLower() == "rfc2629") {
                 using (FileReader FileReader = new FileReader(InputFile)) {
-
-                    new Rfc7991Parse (FileReader, this);
+                    new Rfc7991Parse(FileReader, this);
                     }
                 }
             else {
-                throw new Exception ("Format not recognized");
+                throw new Exception("Format not recognized");
                 }
 
             MakeAutomatics();
             }
 
+        /// <summary>
+        /// Perform all automated expansions of data to inline, etc. sections.
+        /// </summary>
         public void MakeAutomatics() {
+            ParseSeriesInfos();
             RFCEditorBoilerplate.Set(this);
             Catalog.AddDefaultSources();
-            Catalog.ResolveAll (this);  // Resolve any unresolved sources
+            Catalog.ResolveAll(this);  // Resolve any unresolved sources
             AddReferences();
             NumberSections();
             AddAuthors();
             }
 
+        /// <summary>
+        /// Convert information from the various locations successive schema versions put 
+        /// it to a canonical form.
+        /// </summary>
+        public void ParseSeriesInfos() {
+            SeriesInfo = new SeriesInfo();
+
+            foreach (var seriesInfo in SeriesInfos) {
+                switch (seriesInfo.Name.ToLower()) {
+                    case "rfc": {
+                        SeriesInfo.Name = "RFC";
+                        SeriesInfo.Value = seriesInfo.Value;
+                        break;
+                        }
+                    case "draft":
+                    case "internet-draft": {
+                        SeriesInfo.Name = "Internet-Draft";
+                        SeriesInfo.Value = seriesInfo.Value;
+                        break;
+                        }
+                    case "doi": {
+                        SeriesInfo.DOI = seriesInfo.Value;
+                        break;
+                        }
+                    }
+                SeriesInfo.Status = SeriesInfo.Status ?? seriesInfo.Status?.ToLower();
+                SeriesInfo.Stream = SeriesInfo.Stream ?? seriesInfo.Stream;
+                }
+
+            SeriesInfo.Status = SeriesInfo.Status ?? Category;
+            SeriesInfo.Stream = SeriesInfo.Stream ?? SubmissionType;
+
+            switch (SeriesInfo.Stream.ToLower()) {
+
+                case "iab": {
+                    SeriesInfo.Stream = "IAB";
+                    break;
+                    }
+                case "irtf": {
+                    SeriesInfo.Stream = "IRTF";
+                    break;
+                    }
+                case "independent": {
+                    SeriesInfo.Stream = "independent";
+                    break;
+                    }
+                default: {
+                    SeriesInfo.Stream = "IETF";
+                    break;
+                    }
+                }
+
+            switch (SeriesInfo.Status.ToLower()) {
+                case "standard":
+                case "std": {
+                    SeriesInfo.Status = "std";
+                    break;
+                    }
+                case "bcp": {
+                    SeriesInfo.Status = "bcp";
+                    break;
+                    }
+                case "fyi":
+                case "informational":
+                case "info": {
+                    SeriesInfo.Status = "info";
+                    break;
+                    }
+                case "experimental":
+                case "exp": {
+                    SeriesInfo.Status = "exp";
+                    break;
+                    }
+                case "his":
+                case "historic": {
+                    SeriesInfo.Status = "historic";
+                    break;
+                    }
+                }
+
+
+            }
+
 
         private static int CompareReferences(Reference First, Reference Second) => string.Compare(First.Label, Second.Label);
 
-        public void AddReferences () {
+        public void AddReferences() {
             if ((Catalog.Normative.Count == 0) & (Catalog.Informative.Count == 0) &
                 Catalog.ReferenceSections.Count == 0) {
                 return;
@@ -223,11 +305,11 @@ namespace Goedel.Document.RFC {
             foreach (Author Author in Authors) {
                 Sub.TextBlocks.Add(Author);
                 }
-            Back.Add (Sub);
+            Back.Add(Sub);
             }
 
 
-        public void NumberTextBlocks (string NumericID, ref List<TextBlock> TextBlocks) {
+        public void NumberTextBlocks(string NumericID, ref List<TextBlock> TextBlocks) {
 
             // ToDo: keep the blocks but reset the list with a new one with explicit 
             //    nesting of list items.
@@ -264,7 +346,7 @@ namespace Goedel.Document.RFC {
 
         /// <param name="TextPrefix">Prefix to put in front of user for display</param>
         /// <param name="Numeric">If true the number is turned into a numeric section ID</param>
-        public void NumberSection (
+        public void NumberSection(
                 Section Section,
             int Number,
             int Level,
@@ -276,7 +358,7 @@ namespace Goedel.Document.RFC {
 
             Section.Level = Level;
             var NumberAsText = Numeric ? Number.ToString() : "" + ('A' + Number);
-            TextNumber = TextNumber +  NumberAsText + TextSuffix;
+            TextNumber = TextNumber + NumberAsText + TextSuffix;
 
             Section.Number = TextSuffix != null ? TextPrefix + TextNumber : "";
 
@@ -291,8 +373,8 @@ namespace Goedel.Document.RFC {
             int Index = 1;
             foreach (Section S in Section.Subsections) {
                 string IS = Index.ToString();
-                    NumberSection(S, Index, Level + 1,
-                    Section.GeneratedID + "_", ".", TextNumber:TextNumber);
+                NumberSection(S, Index, Level + 1,
+                Section.GeneratedID + "_", ".", TextNumber: TextNumber);
                 Index++;
                 }
 
@@ -319,22 +401,22 @@ namespace Goedel.Document.RFC {
                 }
             Index = 0;
             foreach (Section S in Back) {
-                NumberSection(S, Index, 1, "a-", ":", TextPrefix:"Appendix ", Numeric:false);
+                NumberSection(S, Index, 1, "a-", ":", TextPrefix: "Appendix ", Numeric: false);
                 Index++;
                 }
             }
 
 
-        string GetAnchor (string Text) => Text==null? "undefined" : Text.Replace(" ", "-").ToLower();
+        string GetAnchor(string Text) => Text == null ? "undefined" : Text.Replace(" ", "-").ToLower();
 
 
         public bool CheckNits() {
             bool Result = true;
 
             if (Authors.Count > 5) {
-                ReportNit ("Too many authors, maximum is 5");
+                ReportNit("Too many authors, maximum is 5");
                 }
-            return Result; 
+            return Result;
             }
 
         public virtual void ReportNit(string Nit) => Console.Write(Nit);
@@ -344,11 +426,12 @@ namespace Goedel.Document.RFC {
     public class Link {
         public string Href;
         public string Class;
+        public string Rel;
         }
 
     public class Author : TextBlock {
-        public override string SectionText  => null; 
-        public override BlockType BlockType  => BlockType.Author; 
+        public override string SectionText => null;
+        public override BlockType BlockType => BlockType.Author;
 
         public string Name;
         public string Initials;
@@ -369,11 +452,11 @@ namespace Goedel.Document.RFC {
         }
 
     public class Section {
-        public string                   Heading;
+        public string Heading;
         public List<GM.TextSegment> Segments;
 
-        public string                   GeneratedID;
-        public string                   SetableID = null;
+        public string GeneratedID;
+        public string SetableID = null;
         //public string                   NumericID;
 
         string _Number = "";
@@ -382,17 +465,17 @@ namespace Goedel.Document.RFC {
             set { if (!SuppressNumbering) { _Number = value; } }
             }
 
-        public int                      Page=-1;
-        public int                      Line=-1;
+        public int Page = -1;
+        public int Line = -1;
         public int Level;
-        public List<TextBlock>         TextBlocks;
-        public List<Section>           Subsections;
+        public List<TextBlock> TextBlocks;
+        public List<Section> Subsections;
 
         public bool Automatic = false;
         public bool RemoveInRFC = false;
         public bool SuppressNumbering = false;
 
-        public Section() : this (null, null) {
+        public Section() : this(null, null) {
             }
 
         public Section(string Heading, string ID) {
@@ -447,25 +530,25 @@ namespace Goedel.Document.RFC {
         public string SetableID = null;
         public string NumericID = "tbs";
 
-        public abstract string SectionText { get; } 
+        public abstract string SectionText { get; }
         public int Line, Position;
         public int Page;
 
-        public abstract BlockType BlockType {get;}
+        public abstract BlockType BlockType { get; }
 
         }
 
 
     public class Figure : TextBlock {
-        public override BlockType BlockType  => BlockType.Figure; 
-        public override string SectionText  => "Figure " + NumericID; 
-        public string FigureID  => "f-" + NumericID;
+        public override BlockType BlockType => BlockType.Figure;
+        public override string SectionText => "Figure " + NumericID;
+        public string FigureID => "f-" + NumericID;
 
         public string Caption;
         public string Filename;
         public string Width;
 
-        public Figure (string Filename, string ID) {
+        public Figure(string Filename, string ID) {
             this.SetableID = ID;
             this.Filename = Filename;
             }
@@ -473,20 +556,20 @@ namespace Goedel.Document.RFC {
 
 
     public class P : TextBlock {
-        public override string SectionText  => "Paragraph " + NumericID;
+        public override string SectionText => "Paragraph " + NumericID;
 
         //public List <Text>              Chunks = new List<Text>();
         public List<GM.TextSegment> Segments;
 
 
-        public string Text => GetText(); 
-        public override BlockType BlockType  => BlockType.Paragraph; 
+        public string Text => GetText();
+        public override BlockType BlockType => BlockType.Paragraph;
 
-        public P () {
+        public P() {
             }
 
 
-        public P (string Text, string ID) {
+        public P(string Text, string ID) {
             this.SetableID = ID;
             Segments = Segments ?? new List<GM.TextSegment>();
             Segments.Add(new GM.TextSegmentText(Text));
@@ -508,19 +591,19 @@ namespace Goedel.Document.RFC {
 
         }
 
-    public class PRE : P  {
+    public class PRE : P {
 
         public string Language = "none";
 
         public override BlockType BlockType => BlockType.Verbatim;
 
-        public PRE (string Text, string ID) : base(Text, ID) {
+        public PRE(string Text, string ID) : base(Text, ID) {
 
             }
 
         public string TextSegments => FromSegments(Segments);
 
-        string FromSegments (List<GM.TextSegment> Segments) {
+        string FromSegments(List<GM.TextSegment> Segments) {
             var Builder = new StringBuilder();
 
             foreach (var Segment in Segments) {
@@ -539,17 +622,17 @@ namespace Goedel.Document.RFC {
 
 
     public class LI : P {
-        public BlockType         Type;
-        public int              Level;
-        public int              Index;
-        public override BlockType BlockType  => Type;
+        public BlockType Type;
+        public int Level;
+        public int Index;
+        public override BlockType BlockType => Type;
 
-        public LI (string Text, string ID, BlockType Type, int Level) :
+        public LI(string Text, string ID, BlockType Type, int Level) :
                     base(Text, ID) {
             this.Type = Type; this.Level = Level;
             }
 
-        public LI () {
+        public LI() {
             }
 
 
@@ -560,35 +643,35 @@ namespace Goedel.Document.RFC {
 
     public class ListBlock : LI {
 
-        public List<TextBlock> Items = new List<TextBlock> ();
-        public ListBlock(string Text, string ID, BlockType Type, int Level) : 
-                base (null, ID, Type, Level) {
+        public List<TextBlock> Items = new List<TextBlock>();
+        public ListBlock(string Text, string ID, BlockType Type, int Level) :
+                base(null, ID, Type, Level) {
             }
         }
 
 
     public class Table : TextBlock {
-        public override string SectionText  => "Table " + NumericID; 
-        public override BlockType BlockType  => BlockType.Table;
+        public override string SectionText => "Table " + NumericID;
+        public override BlockType BlockType => BlockType.Table;
         public string Caption;
 
         public int MaxRow = 0;
-        public List<int>                   Percent = new List<int>();
-        public List<int>                   Width = new List<int>();
-        public List<TableRow>              Rows = new List<TableRow>();
+        public List<int> Percent = new List<int>();
+        public List<int> Width = new List<int>();
+        public List<TableRow> Rows = new List<TableRow>();
         }
 
     public class TableRow : TextBlock {
-        public override string SectionText  => null;
-        public override BlockType BlockType  => BlockType.TableRow; 
-        public List <TableData>            Data = new List<TableData>();
+        public override string SectionText => null;
+        public override BlockType BlockType => BlockType.TableRow;
+        public List<TableData> Data = new List<TableData>();
         }
 
     public class TableData : TextBlock {
-        public override string SectionText  => null; 
-        public override BlockType BlockType  => BlockType.TableData; 
-        public bool                        IsHeading;
-        public string               Text;
+        public override string SectionText => null;
+        public override BlockType BlockType => BlockType.TableData;
+        public bool IsHeading;
+        public string Text;
         }
 
 
@@ -600,19 +683,56 @@ namespace Goedel.Document.RFC {
 
 
     public class SeriesInfo {
+
+        ///<summary>The name of the series. Valid values are "RFC",
+        ///"Internet-Draft", and "W3c".</summary>
+        public string Name;
+
+        ///<summary>identifier in series 822 or dreaft-hallambaker-fred-00</summary>
+        public string Value;
+
+        ///<summary>The status of this document.  The currently known values are
+        ///"standard", "informational", "experimental", "bcp", "fyi", and
+        ///"full-standard".  The RFC Series Editor may change this list in the
+        ///future.</summary>
+        public string Status;
+
+        ///<summary>   The stream (as described in [RFC7841]) that originated the document.
+        ///Valid values are "IETF", "IAB", "IRTF", "independent".
+        ///</summary>
+        public string Stream;
+
+
+
         public string AsciiName;
         public string AsciiValue;
-        public string Name;         // series draft/rfc/w3c
-        public string Value;        // identifier in series 822 or dreaft-hallambaker-fred-00
-        public string Status;       // standard/informational/experimental/bcp/fyi/full-standard
-        public string Stream;       // IETF/IAB/IRTF/independent
 
+        public string FullName {
+            get {
+                switch (Name) {
+                    case "RFC": return "RFC" + Value;
+                    case "Internet-Draft": return Value;
+                    }
+                return "unknown";
+                }
+            }
+
+
+        
+        ///<summary>The DOI identifier</summary>
+        public string DOI;
+
+        ///<summary>The document version if explicitly specified.</summary>
         public string ExplicitVersion = null;
-        public string _Version = null;
-        public string Version {
-            get => _Version ?? GetNextVersion();
+
+        ///<summary>The explicitly specified version.</summary>
+        public string Version = null;
+
+
+        public string AutoVersion {
+            get => Version ?? GetNextVersion();
             set {
-                _Version = value; ExplicitVersion = value;
+                Version = value; ExplicitVersion = value;
                 }
             }
 
@@ -620,15 +740,15 @@ namespace Goedel.Document.RFC {
             if (Name != "draft") {
                 return "";
                 }
-            _Version = Goedel.Document.RFC.Source.GetDraftVersion(Value);
-            return _Version;
+            Version = Goedel.Document.RFC.Source.GetDraftVersion(Value);
+            return Version;
             }
 
 
         public string FullDocName {
             get {
-                if (Name == "draft") { return Value + "-" + Version; }
-                return Value;
+                if (Name == "draft") { return Value + "-" + AutoVersion; }
+                return "RFC" + Value;
                 }
             }
 

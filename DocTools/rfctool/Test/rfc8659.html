@@ -1,23 +1,30 @@
 ﻿<!DOCTYPE html>
 <html>
   <head>
-    <meta class="RFC" lang="en">
     <meta charset="utf-8">
-    <meta content="text/html" http-equiv="Content-Type">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="certificate,ca,pki,issue,issuance,wildcard">
+    <meta content="Common,Latin" name="scripts">
+    <meta content="initial-scale=1.0" name="viewport">
+    <title>RFC8659: DNS Certification Authority Authorization (CAA) Resource Record</title>
+    <meta name="author" content="Phillip Hallam-Baker">
+    <meta name="author" content="Rob Stradling">
+    <meta name="author" content="Jacob Hoffman-Andrews">
     <meta name="description" content="The Certification Authority Authorization (CAA) DNS Resource Record
 allows a DNS domain name holder to specify one or more Certification
 Authorities (CAs) authorized to issue certificates for that domain name.
 CAA Resource Records allow a public CA to
 implement additional controls to reduce the risk of unintended
 certificate mis-issue.  This document defines the syntax of the CAA
-record and rules for processing CAA records by CAs.This document obsoletes RFC 6844.">
-    <meta name="author" content="Phillip Hallam-Baker">
-    <meta name="author" content="Rob Stradling">
-    <meta name="author" content="Jacob Hoffman-Andrews">
-    <title>DNS Certification Authority Authorization (CAA) Resource Record</title>
-    <link href="https://trustee.ietf.org/trust-legal-provisions.html" rel="license">
+record and rules for processing CAA records by CAs. This document obsoletes RFC 6844. ">
+    <meta content="rfctool 2.0" name="generator">
+    <meta content="certificate" name="keyword">
+    <meta content="ca" name="keyword">
+    <meta content="pki" name="keyword">
+    <meta content="issue" name="keyword">
+    <meta content="issuance" name="keyword">
+    <meta content="wildcard" name="keyword">
+    <meta content="8659" name="rfc.number">
+    <link href="rfc8659.xml" type="application/rfc+xml" rel="alternate">
+    <link href="#copyright" rel="license">
     <style type="text/css">
 /* fonts */
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans'); /* Sans-serif */
@@ -97,6 +104,12 @@ h4
 }
 h5, h6 {
   font-size: 14px;
+}
+/* Styling for title RFC Number */
+h1#rfcnum {
+    clear: both;
+    margin: 0 0 -1em;
+    padding: 1em 0 0 0;
 }
 #n-copyright-notice {
   border-bottom: 1px solid #ddd;
@@ -732,12 +745,14 @@ hr.addr {
 }
     </style>
     <link href="rfc-local.css" rel="stylesheet" type="text/css">
+    <link href="https://dx.doi.org/10.17487/rfc8659" rel="alternate">
+    <link href="urn:issn:2070-1721" rel="alternate">
   </head>
   <body>
     <table class="ears">
       <thead>
         <tr>
-          <td class="left"/>
+          <td class="left">RFC</td>
           <td class="center">CAA</td>
           <td class="right">11 2019</td>
         </tr>
@@ -750,36 +765,45 @@ hr.addr {
         </tr>
       </tfoot>
     </table>
+    <script src="https://www.rfc-editor.org/js/metadata.min.js">
+    </script>
 
-    <dl id="identifiers">
-      <dt>Stream:</dt>
-      <dd class="stream">Internet Engineering Task Force</dd>
-      <dt>Series:</dt>
-      <dd class="series"/>
-      <dt>Status:</dt>
-      <dd class="status">Standards Track</dd>
-      <dt>Published:</dt>
-      <dd>
-        <time class="published" datetime="2019-11-01">1 November 2019</time>
-      </dd>
-      <dt>Authors:</dt>
-      <dd class="authors">
-        <span class="author-name">Phillip Hallam-Baker</span>
-        (<span class="org">Venture Cryptography</span>)
-      </dd>
-      <dd class="authors">
-        <span class="author-name">Rob Stradling</span>
-        (<span class="org">Sectigo Ltd.</span>)
-      </dd>
-      <dd class="authors">
-        <span class="author-name">Jacob Hoffman-Andrews</span>
-        (<span class="org">Let's Encrypt</span>)
-      </dd>
-    </dl>
+    <div id="external-metadata" class="document-information">
+    </div>
+    <div id="internal-metadata" class="document-information">
+      <dl id="identifiers">
+        <dt class="label-stream">Stream:</dt>
+        <dd class="stream">Internet Engineering Task Force</dd>
+        <dt class="label-rfc">RFC:</dt>
+        <dd class="rfc">
+          <a href="https://www.rfc-editor.org/rfc/rfc8659" class="eref">8659</a>
+        </dd>
+        <dt class="label-obsoletes">Obsoletes:</dt>
+        <dd class="obsoletes">
+          <a href="https://www.rfc-editor.org/rfc/rfc6844" class="eref">6844</a>
+        </dd>
+        <dt class="label-category">Category:</dt>
+        <dd class="category">Standards Track</dd>
+        <dt>Published:</dt>
+        <dd>
+          <time class="published" datetime="2019-11">November 2019</time>
+        </dd>
+        <dt class="label-issn">ISSN:</dt>
+        <dd class="issn">2070-1721</dd>
+        <dt>Authors:</dt>
+        <dd class="authors">
+          <div class="author">
+<div class="author-name">Phillip Hallam-Baker</div><div class="org">Venture Cryptography</div>          </div>
+          <div class="author">
+<div class="author-name">Rob Stradling</div><div class="org">Sectigo Ltd.</div>          </div>
+          <div class="author">
+<div class="author-name">Jacob Hoffman-Andrews</div><div class="org">Let's Encrypt</div>          </div>
+        </dd>
+      </dl>
+    </div>
+    <h1 id="rfcnum">RFC8659</h1>
     <h1 id="title">
       DNS Certification Authority Authorization (CAA) Resource Record
-      <br/>
-      <span id="-file" class="filename">8659</span>
     </h1>
     <section id="abstract">
       <h3>
@@ -838,22 +862,6 @@ record and rules for processing CAA records by CAs.<a class="pilcrow" href="#s-a
             Section 4.e of the Trust Legal Provisions and are provided without
             warranty as described in the Simplified BSD License.
         <a class="pilcrow" href="#bp-2-2">&para;</a></p>
-    </section>
-    
-    <section id="n-status-of-this-memo">
-      <h3 id="bp-3">
-        <a class="selfRef" href="#bp-3"></a>
-        <a class="selfRef" href="#n-status-of-this-memo">Status of This Memo</a>
-      </h3>
-    </section>
-    
-    <section id="n-copyright-notice">
-      <h3 id="bp-4">
-        <a class="selfRef" href="#bp-4"></a>
-        <a class="selfRef" href="#n-copyright-notice">Copyright Notice</a>
-      </h3>
-      <p id="bp-4-1">Copyright (c) IETF Trust and the persons identified as the document authors. All rights reserved.<a class="pilcrow" href="#bp-4-1">&para;</a></p>
-      <p id="bp-4-2">This document is subject to BCP 78 and the IETF Trust’s Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document. Please review these documents carefully, as they describe your rights and restrictions with respect to this document. Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.<a class="pilcrow" href="#bp-4-2">&para;</a></p>
     </section>
     
     <section id="toc">

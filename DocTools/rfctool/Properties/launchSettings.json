@@ -2,7 +2,7 @@
   "profiles": {
     "rfctool": {
       "commandName": "Project",
-      "commandLineArgs": "rfc8659.xml /html",
+      "commandLineArgs": "rfc8659-mini.xml /html",
       "workingDirectory": "C:\\Users\\hallam\\Work\\buildtools\\DocTools\\rfctool\\Test"
     }
   }
