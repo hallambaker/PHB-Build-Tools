@@ -48,6 +48,258 @@ record and rules for processing CAA records by CAs.</t>
 
   </front>
   <middle>
+    <section anchor="tests" numbered="true">
+      <name slugifiedName="tests">Tests</name>      
+      <section anchor="test-format" numbered="true">
+        <name slugifiedName="test formats">Format Tests</name>
+        <t>
+      This is a test of the various paragraph formats    
+      <bcp14>MUST</bcp14> and <em>emphasis</em> and <strong>strong</strong>
+        and <iref>indexed</iref> with <eref target="http://example.com/"/>
+        and <tt>fixed font</tt>. Math elements include e<sup>super</sup> and
+          e<sub>sub</sub>.
+        <cref>Comments may be included and have formatting <em>emphasis</em>,
+        <strong>strong</strong>
+      </cref>
+        </t>
+        <t>
+          Reference types include 
+          external URIs <eref target="http://example.com/"/>
+          Internal reference <xref  target="overview" format="counter"/>
+          <relref section="2.3" target="RFC9999" displayFormat="bare">targeted text</relref>
+
+        </t>
+        <t>
+          Citations may be normative <xref target="!RFC822"/> or informational <xref target="?RFC821"/>
+        </t>
+        <t>Can also add <vspace/>
+        </t>
+        
+        
+        <t>Deprecated formatting includes the <spanx style="strong">spanx strong</spanx>,
+        <spanx style="emph">spanx emphasis</spanx> and 
+        <spanx style="verb">spanx tt</spanx>
+      </t>
+      </section>
+      <section anchor="tests-lists" numbered="true">
+        <name>List Tests</name>  
+        <section anchor="tests-lists-ol" numbered="true">
+          <name>Ordered List Tests</name>  
+          <t>ordinary numbered</t>
+          <ol>
+            <li>One</li>
+            <li>Two</li>
+            <li>Three</li>
+          </ol>
+          <t>ordinary numbered start at 3</t>
+          <ol start="3">
+
+            <li>Three</li>
+            <li>Four</li>
+            <li>Five</li>          
+          </ol>        
+          <t>uppercase roman numbered</t>
+          <ol type="I">
+            <li>One</li>
+            <li>Two</li>
+            <li>Three</li>
+          </ol>   
+          <t>lowercase roman numbered</t>
+          <ol type="I">
+            <li>One</li>
+            <li>Two</li>
+            <li>Three</li>
+          </ol> 
+          <t>uppercase numbered</t>
+          <ol type="A">
+            <li>One</li>
+            <li>Two</li>
+            <li>Three</li>
+          </ol> 
+          <t>lowercase numbered</t>
+          <ol type="a">
+            <li>One</li>
+            <li>Two</li>
+            <li>Three</li>
+          </ol>
+
+          <t>
+            We are currently omitting the [REQ-%c] type numbering
+          </t>
+        </section>       
+        <section anchor="tests-lists-ul" numbered="true">
+          <name>Unordered List Tests</name>  
+                  <t>ordinary unordered</t>
+          <ul>
+            <li>Bullet one</li>
+            <li>Bullet two</li>
+            <li>Bullet three</li>
+          </ul>
+          <t>compact unordered</t>
+          <ul spacing="compact">
+            <li>Bullet one</li>
+            <li>Bullet two</li>
+            <li>Bullet three</li>
+          </ul>        
+        </section>      
+        <section anchor="tests-lists-dl" numbered="true">
+          <name>Definition List Tests</name>
+          <t>Inline</t>
+          <dl>
+            <dt>The defined term</dt>
+            <dd>The definition</dd>
+          </dl>
+            <t>hanging</t>
+          <dl hanging="false">
+            <dt>The defined term</dt>
+            <dd>The definition</dd>
+          </dl>  
+            <t>spaced</t>
+          <dl hanging="false" spacing="compact">
+            <dt>The defined term</dt>
+            <dd>The definition</dd>
+          </dl>         
+        </section>            
+      </section>
+      <section anchor="tests-blocks" numbered="true">
+        <section anchor="tests-blocks-artwork" numbered="true">
+          <name>Artwork Block Tests</name>
+          <artwork src="myart.svg" align="center" alt="diagram" name="myart.ext.svg" type="svg">
+            
+          </artwork>
+        
+        
+         <artwork align="center" alt="diagram" type="ascii-art">
++-----+
+| Box |
++-----+
+    +-----+
+    | Box |
+    +-----+
+          </artwork>
+        </section>           
+        <section anchor="tests-blocks-aside" numbered="true">
+          <name>Aside Block Tests</name>
+          <aside>
+            I have no idea how this is separate from the comment and t blocks.
+          </aside>
+        </section>            
+        <section anchor="tests-blocks-blockquote" numbered="true">
+          <name>BlockQuote Block Tests</name>
+          <blockquote>
+            <t>
+              A wrapper around a paragraph to make a quotation out of it.
+            </t>
+          </blockquote>
+        </section>
+        <section anchor="tests-blocks-figure" numbered="true">
+          <name>Figure Block Tests</name>
+          <figure>
+            <name>Captioned figure</name>
+            <preamble>Some preamble texty text</preamble>
+            <sourcecode>
+              The figure data (could be an artwork of course)
+            </sourcecode>
+            <postamble>Some follower text</postamble>
+          </figure>
+        </section>
+        <section anchor="tests-blocks-sourcecode" numbered="true">
+          <name>Source Code Block Tests</name>
+          <sourcecode anchor="sourcecode-example" type="json">
+            { "tag" : "value" }
+          </sourcecode>
+        </section>
+        <section anchor="tests-blocks-table" numbered="true">
+          <name>Table Block Tests</name>
+          <table>
+            <name>Named table</name>
+            <thead>
+              <td>head 1</td>
+              <td>head 2</td>
+              <td>head 3</td>                 
+            </thead>
+            <tbody>
+              <tr>
+                <td>text1</td>
+                <td>text2</td>
+                <td>text3</td>            
+              </tr>
+              <tr>
+                <td>text1 b</td>
+                <td>text2 b</td>
+                <td>text3 b</td>            
+              </tr>     
+              <tr>
+                <td colspan="2">text1 c</td>
+                <td>text3 c</td>            
+              </tr>              
+               <tr>
+                <td>text1 d</td>
+                <td rowspan="2">text2 d</td>
+                <td>text3 d</td>            
+              </tr> 
+              <tr>
+                <td>text1 e</td>
+                <td>text3 e</td>            
+              </tr>                   
+            </tbody>
+            <tfoot>
+               <tr>
+                <td>foot 1</td>
+                <td>foot 2</td>
+                <td>foot 3</td>            
+              </tr>             
+            </tfoot>
+        </table>
+        </section>      
+        <section anchor="tests-blocks-texttable" numbered="true">
+          <name>TextTable (deprecated) Block Tests</name>
+          <t>
+            Blank (for checking)
+          </t>
+          <texttable>
+            
+          </texttable>
+        
+          <t>
+            Three cols with two rows
+          </t>
+          <texttable>
+            <ttcol>
+              Head 1
+            </ttcol>
+            <ttcol>
+              Head 2
+            </ttcol>
+            <ttcol>
+              Head 3
+            </ttcol>          
+            <c>
+              11
+            </c>
+            <c>
+              12
+            </c>
+            <c>
+              13
+            </c>
+            <c>
+              21
+            </c>
+            <c>
+              22
+            </c>
+            <c>
+              23
+            </c>          
+          </texttable>      
+        </section>         
+      </section>
+
+    </section>    
+      
+      
+      
     <section anchor="introduction" numbered="true" toc="include" removeInRFC="false" pn="section-1">
       <name slugifiedName="name-introduction">Introduction</name>
       <t pn="section-1-1">The Certification Authority Authorization (CAA) DNS Resource Record

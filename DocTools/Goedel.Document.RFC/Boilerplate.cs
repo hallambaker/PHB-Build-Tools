@@ -208,36 +208,32 @@ namespace Goedel.Document.RFC {
 
             }
 
-        public static List<string> StatusOfThisDocument (Document document) {
+        public static List<string> StatusOfThisDocument(Document document) {
             var Result = new List<string>();
 
 
-            switch (document.Series) {
-                case "rfc": {
-                    Result.Add(document.StatusTexts.First);
+            if (document.IsDraft) {
+                Result.Add(TLP6a);
+                Result.Add(DraftStatus2);
+                Result.Add(DraftStatus3);
+                Result.Add(String.Format(DraftStatus4, document.Expires));
+                }
+            else {
+                Result.Add(document.StatusTexts.First);
 
-                    var Paragraph2 = new StringBuilder();
-                    Paragraph2.Append(document.StreamTexts.First);
-                    Paragraph2.Append(" ");
-                    if (document.IsConsensus) {
-                        Paragraph2.Append(String.Format(document.StreamTexts.Second, document.WorkgroupText));
-                        }
-                    else {
-                        Paragraph2.Append(String.Format(document.StreamTexts.Third, document.WorkgroupText));
-                        }
-                    Result.Add(Paragraph2.ToString());
-
-                    Result.Add(String.Format(Paragraph3, document.Status, document.SeriesNumber));
-
-                    break;
+                var Paragraph2 = new StringBuilder();
+                Paragraph2.Append(document.StreamTexts.First);
+                Paragraph2.Append(" ");
+                if (document.IsConsensus) {
+                    Paragraph2.Append(String.Format(document.StreamTexts.Second, document.WorkgroupText));
                     }
-                case "draft": {
-                    Result.Add(TLP6a);
-                    Result.Add(DraftStatus2);
-                    Result.Add(DraftStatus3);
-                    Result.Add(String.Format (DraftStatus4, document.Expires));
-                    break;
+                else {
+                    Paragraph2.Append(String.Format(document.StreamTexts.Third, document.WorkgroupText));
                     }
+                Result.Add(Paragraph2.ToString());
+
+                Result.Add(String.Format(Paragraph3, document.Status, document.SeriesNumber));
+
                 }
 
             return Result;

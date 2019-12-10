@@ -514,31 +514,36 @@ namespace Goedel.Document.RFC {
                 };
             
             TableRow TableRow = new TableRow();
-            foreach (ttcol ttcol in texttable.ttcol) {
-                TableData item = new TableData() {
-                    IsHeading = true,
-                    Text = ttcol.Value
-                    };
-                TableRow.Data.Add (item);
+
+            if (texttable.ttcol != null) {
+                foreach (ttcol ttcol in texttable.ttcol) {
+                    TableData item = new TableData() {
+                        IsHeading = true,
+                        Text = ttcol.Value
+                        };
+                    TableRow.Data.Add(item);
+                    }
                 }
 
             Table.MaxRow = TableRow.Data.Count;
             Table.Rows.Add (TableRow);
 
-            int col = Table.MaxRow;
-            foreach (c c in texttable.c) {
-                TableData item = new TableData() {
-                    IsHeading = false,
-                    Text = MakeString(c.Items,c.Text)
-                    };
+            if (texttable.c != null) {
+                int col = Table.MaxRow;
+                foreach (c c in texttable.c) {
+                    TableData item = new TableData() {
+                        IsHeading = false,
+                        Text = MakeString(c.Items, c.Text)
+                        };
 
-                if (col >= Table.MaxRow) {
-                    col = 0;
-                    TableRow = new TableRow();
-                    Table.Rows.Add (TableRow);
+                    if (col >= Table.MaxRow) {
+                        col = 0;
+                        TableRow = new TableRow();
+                        Table.Rows.Add(TableRow);
+                        }
+                    col++;
+                    TableRow.Data.Add(item);
                     }
-                col++;
-                TableRow.Data.Add (item);
                 }
             
             Parent.Add (Table);
