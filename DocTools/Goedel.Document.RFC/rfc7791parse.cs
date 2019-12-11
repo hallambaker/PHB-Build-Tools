@@ -319,6 +319,159 @@ namespace Goedel.Document.RFC {
             }
 
 
+        void MakeTextBlockT(TextBlockSequenceBuilder builder, t source) {
+            var block = new P() {
+                Segments = new List<Markdown.TextSegment>()
+                };
+
+            builder.AddBlock(block, block.Segments);
+            AddTextBlocks(builder, source.Items, source.ItemsElementName);
+            }
+
+
+
+        void AddTextBlocks(TextBlockSequenceBuilder builder, object[] Items, ItemsChoiceTextRun[] Tags) {
+
+
+            var index = 0;
+            foreach (var item in Items) {
+                if (item is string s) {
+                    Console.WriteLine($"{item}");
+                    builder.AddText(s); 
+                    }
+                else {
+                    var tag = Tags[index++];
+
+                    switch (tag) {
+                        case ItemsChoiceTextRun.t: {
+                            MakeTextBlockT(builder, item as t);
+                            break;
+                            }
+
+                        // These tags contain text runs which may recurse.
+                        case ItemsChoiceTextRun.em:
+                        case ItemsChoiceTextRun.strong:
+                        case ItemsChoiceTextRun.sub:
+                        case ItemsChoiceTextRun.sup:
+                        case ItemsChoiceTextRun.tt: {
+                            var textrun = item as textrun;
+                            var opener = builder.OpenTextRun(tag);
+                            AddTextBlocks(builder, textrun.Items, textrun.ItemsElementName);
+                            builder.CloseTextRun(opener);
+                            break;
+                            }
+
+                        case ItemsChoiceTextRun.bcp14: {
+                            var opener = builder.OpenTextRun(tag);
+                            builder.AddText((item as Bcp14String).Text);
+                            builder.CloseTextRun(opener);
+                            break;
+                            }
+
+
+                        case ItemsChoiceTextRun.spanx: {
+                            var opener = builder.OpenTextRun(item as spanx);
+                            builder.AddText((item as spanx).Text);
+                            builder.CloseTextRun(opener);
+                            break;
+                            }
+
+                        case ItemsChoiceTextRun.eref: {
+                            var eref = item as eref;
+                            var opener = builder.OpenTextRun(tag, "target", eref.target);
+                            builder.AddText(eref.Text);
+                            builder.CloseTextRun(opener);
+                            break;
+                            }
+
+
+                        case ItemsChoiceTextRun.relref: {
+                            var relref = item as relref;
+                            var opener = builder.OpenTextRun(tag,
+                                "target", relref.target,
+                                "displayFormat", relref.displayFormat.ToString(),
+                                "section", relref.section,
+                                "relative", relref.relative);
+                            builder.AddText(relref.Text);
+                            builder.CloseTextRun(opener);
+                            break;
+                            }
+
+                        case ItemsChoiceTextRun.xref: {
+                            var xref = item as xref;
+                            var opener = builder.OpenTextRun(tag,
+                                "target", xref.target,
+                                "displayFormat", xref.format.ToString());
+                            builder.AddText(xref.Text);
+                            builder.CloseTextRun(opener);
+                            break;
+                            }
+
+                        // cref items are comments and may contain textruns, ref, relref or xref content
+                        case ItemsChoiceTextRun.cref: {
+                            var cref = item as cref;
+                            var opener = builder.OpenTextRun(tag,
+                                "anchor", cref.anchor,
+                                "source", cref.source,
+                                "display", cref.display.ToString());
+                            AddTextBlocks(builder, cref.Items, cref.ItemsElementName);
+                            builder.CloseTextRun(opener);
+                            break;
+                            }
+
+                        // Entries that do not contain content
+                        case ItemsChoiceTextRun.iref: {
+                            var iref = item as iref;
+                            builder.TextEmpty(tag, "item", iref.item, "subitem", iref.subitem);
+                            break;
+                            }
+
+                        // Entries yet to be implemented
+
+                        // List like entities
+                        case ItemsChoiceTextRun.list:
+                        case ItemsChoiceTextRun.dl:
+                        case ItemsChoiceTextRun.ol:
+                        case ItemsChoiceTextRun.ul:
+
+                        // Table like entities
+                        case ItemsChoiceTextRun.table:
+                        case ItemsChoiceTextRun.texttable:
+
+
+                        case ItemsChoiceTextRun.blockquote:
+                        case ItemsChoiceTextRun.sourcecode:
+                        case ItemsChoiceTextRun.figure:
+                        case ItemsChoiceTextRun.artwork: 
+                        case ItemsChoiceTextRun.aside: {
+
+                            // Process reference like things
+
+                            break;
+                            }
+
+                        case ItemsChoiceTextRun.vspace: {
+                            // Vspace is deprecated and we simply elide occurrences.
+                            break;
+                            }
+
+                        }
+
+
+
+
+                    }
+
+
+
+
+                }
+
+
+            }
+
+
+
         List<Section> MakeSections(section[] sections, int level) {
             if (level > 6) {
                 throw new Exception("Levels nested too deeply, maximum is 6.");
@@ -332,37 +485,46 @@ namespace Goedel.Document.RFC {
                         title = MakeString(section.name.Items);
                         }
 
+                    var outSection = new Section(title, section.anchor);
 
-                    var Section = new Section(title, section.anchor);
                     if (section.Items != null) {
-                        foreach (object o in section.Items) {
-                            switch (o) {
-                                case figure figure: {
-                                    AddFigureBlock(Section.TextBlocks, figure);
-                                    break;
-                                    }
-                                case iref iref: {
-                                    AddIndex(Section.TextBlocks, iref);
-                                    break;
-                                    }
-                                case t t: {
-                                    AddListBlocks(Section.TextBlocks, t);
-                                    break;
-                                    }
-                                case texttable texttable: {
-                                    AddTableBlock(Section.TextBlocks, texttable);
-                                    break;
-                                    }
-                                }
-                            }
+                        var builder = new TextBlockSequenceBuilder();
+                        outSection.TextBlocks = builder.Blocks;
+                        AddTextBlocks(builder, section.Items, section.ItemsElementName);
                         }
+
+                    
+
+
+                    //if (section.Items != null) {
+                    //    foreach (object o in section.Items) {
+                    //        switch (o) {
+                    //            case figure figure: {
+                    //                AddFigureBlock(outSection.TextBlocks, figure);
+                    //                break;
+                    //                }
+                    //            case iref iref: {
+                    //                AddIndex(outSection.TextBlocks, iref);
+                    //                break;
+                    //                }
+                    //            case t t: {
+                    //                AddListBlocks(outSection.TextBlocks, t);
+                    //                break;
+                    //                }
+                    //            case texttable texttable: {
+                    //                AddTableBlock(outSection.TextBlocks, texttable);
+                    //                break;
+                    //                }
+                    //            }
+                    //        }
+                    //    }
 
                     // Recurse
                     if (section.section1 != null) {
-                        Section.Subsections = MakeSections(section.section1, level + 1);
+                        outSection.Subsections = MakeSections(section.section1, level + 1);
                         }
 
-                    Result.Add(Section);
+                    Result.Add(outSection);
                     }
                 }
             return Result;

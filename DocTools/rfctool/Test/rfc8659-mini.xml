@@ -73,8 +73,6 @@ record and rules for processing CAA records by CAs.</t>
         <t>
           Citations may be normative <xref target="!RFC822"/> or informational <xref target="?RFC821"/>
         </t>
-        <t>Can also add <vspace/>
-        </t>
         
         
         <t>Deprecated formatting includes the <spanx style="strong">spanx strong</spanx>,

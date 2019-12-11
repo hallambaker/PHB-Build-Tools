@@ -91,13 +91,13 @@ namespace Goedel.Document.RFC {
 
         public const string StatusNonIETF = "Documents approved for publication by the {0} are not " +
             "a candidate for any level of Internet Standard; see Section 2 of [!RFC 7841].";
-        public const string StatusIETFStdBcp = "Further information on (BCPs or Internet Standards) is available in Section 2 of [!RFC 7841].";
+        public const string StatusIETFStdBcp = "Further information on (BCPs or Internet Standards) is available in Section 2 of RFC 7841.";
 
         public const string StatusIAB = "The IAB members at the time this memo was approved were (in alphabetical order):";
 
         public const string Paragraph3 = "Information about the current status of this "+
             "document, any errata, and how to provide feedback on it may be obtained at "+
-            "<a=\"http://www.rfc-editor.org/{0}/rfc{1}\">http://www.rfc-editor.org/{0}/rfc{1}</a>.";
+            "<a=\"https://www.rfc-editor.org/{0}/rfc{1}\">https://www.rfc-editor.org/{0}/rfc{1}</a>.";
 
 
 
@@ -219,20 +219,24 @@ namespace Goedel.Document.RFC {
                 Result.Add(String.Format(DraftStatus4, document.Expires));
                 }
             else {
-                Result.Add(document.StatusTexts.First);
+                Result.Add(document.StatusTexts.Second);
 
                 var Paragraph2 = new StringBuilder();
-                Paragraph2.Append(document.StreamTexts.First);
+                Paragraph2.Append(document.StreamTexts.Second);
                 Paragraph2.Append(" ");
                 if (document.IsConsensus) {
-                    Paragraph2.Append(String.Format(document.StreamTexts.Second, document.WorkgroupText));
-                    }
-                else {
                     Paragraph2.Append(String.Format(document.StreamTexts.Third, document.WorkgroupText));
                     }
+                else {
+                    Paragraph2.Append(String.Format(document.StreamTexts.Fourth, document.WorkgroupText));
+                    }
+
+
+                Paragraph2.Append(String.Format(StatusIETFStdBcp));
+
                 Result.Add(Paragraph2.ToString());
 
-                Result.Add(String.Format(Paragraph3, document.Status, document.SeriesNumber));
+                Result.Add(String.Format(Paragraph3,"info", document.Number));
 
                 }
 

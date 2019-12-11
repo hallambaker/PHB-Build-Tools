@@ -175,6 +175,9 @@ namespace Goedel.Document.Markdown {
         }
 
     public class TextSegmentEmpty : TextSegment {
+        public TextSegmentEmpty() {
+            }
+
         public TextSegmentEmpty(CatalogEntry CatalogEntry, List<TagValue> Attributes)
             : base(CatalogEntry, Attributes) {
             }

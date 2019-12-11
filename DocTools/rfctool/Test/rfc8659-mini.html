@@ -824,9 +824,9 @@ record and rules for processing CAA records by CAs.<a class="pilcrow" href="#s-a
         <a class="selfRef" href="#bp-1"></a>
         <a class="selfRef" href="#n-status-of-this-memo">Status of This Memo</a>
       </h3>
-      <p id="bp-1-1">Standards Track<a class="pilcrow" href="#bp-1-1">&para;</a></p>
-      <p id="bp-1-2">Internet Engineering Task Force This document is a product of the Internet Engineering Task Force (IETF).<a class="pilcrow" href="#bp-1-2">&para;</a></p>
-      <p id="bp-1-3">Information about the current status of this document, any errata, and how to provide feedback on it may be obtained at <a class="eref" href="http://www.rfc-editor.org/std/rfc">http://www.rfc-editor.org/std/rfc</a>.<a class="pilcrow" href="#bp-1-3">&para;</a></p>
+      <p id="bp-1-1">This is an Internet Standards Track document.<a class="pilcrow" href="#bp-1-1">&para;</a></p>
+      <p id="bp-1-2">This document is a product of the Internet Engineering Task Force (IETF). It represents the consensus of the IETF community. It has received public review and has been approved for publication by the Internet Engineering Steering Group (IESG).Further information on (BCPs or Internet Standards) is available in Section 2 of RFC 7841.<a class="pilcrow" href="#bp-1-2">&para;</a></p>
+      <p id="bp-1-3">Information about the current status of this document, any errata, and how to provide feedback on it may be obtained at <a class="eref" href="https://www.rfc-editor.org/info/rfc8659">https://www.rfc-editor.org/info/rfc8659</a>.<a class="pilcrow" href="#bp-1-3">&para;</a></p>
     </section>
     
     <section id="n-copyright-notice">
@@ -938,23 +938,27 @@ record and rules for processing CAA records by CAs.<a class="pilcrow" href="#s-a
         <a class="selfRef" href="#s-1_1">1.1.</a>
         <a class="selfRef" href="#test-format">Format Tests</a>
       </h4>
-      <p id="s-1_1-1">
-      This is a test of the various paragraph formats    
-       and  and 
-        and  with 
-        and . Math elements include e and
-          e.
-        <a class="pilcrow" href="#s-1_1-1">&para;</a></p>
+      <p id="s-1_1-1"><span class="bcp14">MUST</span><a class="pilcrow" href="#s-1_1-1">&para;</a></p>
       <p id="s-1_1-2">
-          Reference types include 
-          external URIs 
-          Internal reference <a class="pilcrow" href="#s-1_1-2">&para;</a></p>
+      This is a test of the various paragraph formats    
+      <span class="bcp14">MUST</span> and <i>emphasis</i> and <b>strong</b>
+        and         </>
+        </>
+ with <a class="eref" href="null"></a>
+        and <code>fixed font</code>. Math elements include e<sup>super</sup> and
+          e<sub>sub</sub>.
+        <span class="cref">Comments may be included and have formatting <i>emphasis</i>,
+        <b>strong</b></span><a class="pilcrow" href="#s-1_1-2">&para;</a></p>
       <p id="s-1_1-3">
-          Citations may be normative  or informational <a class="pilcrow" href="#s-1_1-3">&para;</a></p>
-      <p id="s-1_1-4">Can also add <a class="pilcrow" href="#s-1_1-4">&para;</a></p>
-      <p id="s-1_1-5">Deprecated formatting includes the ,
-         and 
-        <a class="pilcrow" href="#s-1_1-5">&para;</a></p>
+          Reference types include 
+          external URIs <a class="eref" href="null"></a>
+          Internal reference <a class="xref" href="#"></a>targeted text<a class="pilcrow" href="#s-1_1-3">&para;</a></p>
+      <p id="s-1_1-4">
+          Citations may be normative <a class="xref" href="#"></a> or informational <a class="xref" href="#"></a><a class="pilcrow" href="#s-1_1-4">&para;</a></p>
+      <p id="s-1_1-5">Can also add <a class="pilcrow" href="#s-1_1-5">&para;</a></p>
+      <p id="s-1_1-6">Deprecated formatting includes the <b>spanx strong</b>,
+        <i>spanx emphasis</i> and 
+        <code>spanx tt</code><a class="pilcrow" href="#s-1_1-6">&para;</a></p>
     </section>
     
     <section id="tests-lists">
@@ -1056,44 +1060,9 @@ record and rules for processing CAA records by CAs.<a class="pilcrow" href="#s-a
       <p id="s-1_3_7-1">
             Blank (for checking)
           <a class="pilcrow" href="#s-1_3_7-1">&para;</a></p>
-      <table id="s-1_3_7-2">
-        <thead>
-          <tr>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-      <p id="s-1_3_7-3">
+      <p id="s-1_3_7-2">
             Three cols with two rows
-          <a class="pilcrow" href="#s-1_3_7-3">&para;</a></p>
-      <table id="s-1_3_7-4">
-        <thead>
-          <tr>
-            <td>
-              Head 1
-            </td>
-            <td>
-              Head 2
-            </td>
-            <td>
-              Head 3
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td/>
-            <td/>
-            <td/>
-          </tr>
-          <tr>
-            <td/>
-            <td/>
-            <td/>
-          </tr>
-        </tbody>
-      </table>
+          <a class="pilcrow" href="#s-1_3_7-2">&para;</a></p>
     </section>
     
     <section id="introduction">
@@ -1120,11 +1089,11 @@ unintended certificate mis-issue.<a class="pilcrow" href="#s-2-1">&para;</a></p>
         <a class="selfRef" href="#s-3_1">3.1.</a>
         <a class="selfRef" href="#requirements-language">Requirements Language</a>
       </h4>
-      <p id="s-3_1-1">The key words "", "", "", "",
-"", "", "", "",
-"", "", and "" in this document
+      <p id="s-3_1-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>",
+"<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>",
+"<span class="bcp14">NOT RECOMMENDED</span>", "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document
 are to be interpreted as described in BCP&nbsp;14
- when,
+<a class="xref" href="#"></a><a class="xref" href="#"></a> when,
 and only when, they appear in all capitals, as shown here.<a class="pilcrow" href="#s-3_1-1">&para;</a></p>
     </section>
     
@@ -1141,17 +1110,17 @@ and only when, they appear in all capitals, as shown here.<a class="pilcrow" hre
         <a class="selfRef" href="#s-4">4.</a>
         <a class="selfRef" href="#relevant-resource-record-set">Relevant Resource Record Set</a>
       </h3>
-      <p id="s-4-1">Before issuing a certificate, a compliant CA  check for
+      <p id="s-4-1">Before issuing a certificate, a compliant CA <span class="bcp14">MUST</span> check for
 publication of a Relevant RRset.  If such an RRset
-exists, a CA  issue a certificate unless the CA
+exists, a CA <span class="bcp14">MUST&nbsp;NOT</span> issue a certificate unless the CA
 determines that either (1)&nbsp;the certificate request is consistent with
 the applicable CAA RRset or (2)&nbsp;an exception specified
 in the relevant CP or CPS applies. If the Relevant RRset for an FQDN
 or Wildcard Domain Name contains no Property Tags that restrict issuance
 (for instance, if it contains only iodef Property Tags or only Property
 Tags unrecognized by the CA), CAA does not restrict issuance.<a class="pilcrow" href="#s-4-1">&para;</a></p>
-      <p id="s-4-2">A certificate request  specify more than one FQDN and 
-specify Wildcard Domain Names.  Issuers  verify authorization for all
+      <p id="s-4-2">A certificate request <span class="bcp14">MAY</span> specify more than one FQDN and <span class="bcp14">MAY</span>
+specify Wildcard Domain Names.  Issuers <span class="bcp14">MUST</span> verify authorization for all
 the FQDNs and Wildcard Domain Names specified in the request.<a class="pilcrow" href="#s-4-2">&para;</a></p>
       <p id="s-4-3">The search for a CAA RRset climbs the DNS name tree from the
 specified label up to, but not including, the DNS root "."
@@ -1173,8 +1142,8 @@ Name *.X, the Relevant RRset RelevantCAASet(X) is determined as follows (in pseu
         <a class="selfRef" href="#syntax">Syntax</a>
       </h4>
       <p id="s-5_1-1">A CAA RR contains a single Property consisting of a tag‑value
-pair. An FQDN  have multiple CAA RRs associated with it, and a
-given Property Tag  be specified more than once across those RRs.<a class="pilcrow" href="#s-5_1-1">&para;</a></p>
+pair. An FQDN <span class="bcp14">MAY</span> have multiple CAA RRs associated with it, and a
+given Property Tag <span class="bcp14">MAY</span> be specified more than once across those RRs.<a class="pilcrow" href="#s-5_1-1">&para;</a></p>
       <p id="s-5_1-2">The RDATA section for a CAA RR contains one Property. A Property
 consists of the following:<a class="pilcrow" href="#s-5_1-2">&para;</a></p>
       <p id="s-5_1-3">Where n is the length specified in the Tag Length field and m is the
@@ -1182,22 +1151,22 @@ number of remaining octets in the Value field. They are related by
 (m&nbsp;=&nbsp;d&nbsp;-&nbsp;n&nbsp;-&nbsp;2)
 where d is the length of the RDATA section.<a class="pilcrow" href="#s-5_1-3">&para;</a></p>
       <p id="s-5_1-4">The fields are defined as follows:<a class="pilcrow" href="#s-5_1-4">&para;</a></p>
-      <p id="s-5_1-5">Note that according to the conventions set out in , bit 0
+      <p id="s-5_1-5">Note that according to the conventions set out in <a class="xref" href="#"></a>, bit 0
 is the Most Significant Bit and bit 7 is the Least Significant
 Bit. Thus, according to those conventions, the Flags value 1 means that bit 7 is
 set, while a value of 128 means that bit 0 is set.<a class="pilcrow" href="#s-5_1-5">&para;</a></p>
       <p id="s-5_1-6">All other bit positions are reserved for future use.<a class="pilcrow" href="#s-5_1-6">&para;</a></p>
       <p id="s-5_1-7">To ensure compatibility with future extensions to CAA, DNS records
-compliant with this version of the CAA specification  clear
+compliant with this version of the CAA specification <span class="bcp14">MUST</span> clear
 (set to "0") all reserved flag bits.
 
   Applications that interpret
-CAA records  ignore the value of all reserved flag bits.<a class="pilcrow" href="#s-5_1-7">&para;</a></p>
-      <p id="s-5_1-8">Tags  contain ASCII characters "a" through "z", "A"
-through "Z", and the numbers 0 through 9.  Tags 
+CAA records <span class="bcp14">MUST</span> ignore the value of all reserved flag bits.<a class="pilcrow" href="#s-5_1-7">&para;</a></p>
+      <p id="s-5_1-8">Tags <span class="bcp14">MAY</span> contain ASCII characters "a" through "z", "A"
+through "Z", and the numbers 0 through 9.  Tags <span class="bcp14">MUST NOT</span>
 contain any other characters.  Matching of tags is case
 insensitive.<a class="pilcrow" href="#s-5_1-8">&para;</a></p>
-      <p id="s-5_1-9">Tags submitted for registration by IANA  contain any
+      <p id="s-5_1-9">Tags submitted for registration by IANA <span class="bcp14">MUST NOT</span> contain any
 characters other than the (lowercase) ASCII characters "a"
 through "z" and the numbers 0 through 9.<a class="pilcrow" href="#s-5_1-9">&para;</a></p>
       <p id="s-5_1-10">The length of the Value field is specified implicitly as the
@@ -1244,11 +1213,11 @@ remaining length of the enclosing RDATA section.<a class="pilcrow" href="#s-5_1-
     <div class="docInfo">
       <span class="prepared">
         Prepared: 
-        <time datetime="2019-12-10">2019-12-10</time>
+        <time datetime="2019-12-11">2019-12-11</time>
       </span>
       <span class="rendered">
         Rendered: 
-        <time datetime="2019-12-10">2019-12-10</time>
+        <time datetime="2019-12-11">2019-12-11</time>
       </span>
     </div>
     

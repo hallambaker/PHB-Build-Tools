@@ -95,6 +95,7 @@ namespace Goedel.Document.RFC {
                     Start("span", false, false, "class", "cref");
                     break;
                     }
+                case "bcp":
                 case "bcp14": {
                     Start("span", false, false, "class", "bcp14");
                     break;

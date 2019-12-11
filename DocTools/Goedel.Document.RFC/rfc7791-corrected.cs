@@ -92,6 +92,14 @@ namespace Goedel.Document.RFC {
 
         /// <remarks/>
         vspace,
+        /// <remarks/>
+        aside,
+        /// <remarks/>
+        table,
+        /// <remarks/>
+        texttable,
+        /// <remarks/>
+        blockquote,
         }
 
 
@@ -843,13 +851,13 @@ namespace Goedel.Document.RFC {
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute(typeof(string))]
         [System.Xml.Serialization.XmlElementAttribute("bcp14", typeof(Bcp14String))]
-        [System.Xml.Serialization.XmlElementAttribute("cref", typeof(cref))]
         [System.Xml.Serialization.XmlElementAttribute("em", typeof(textrun))]
-        [System.Xml.Serialization.XmlElementAttribute("eref", typeof(eref))]
-        [System.Xml.Serialization.XmlElementAttribute("iref", typeof(iref))]
         [System.Xml.Serialization.XmlElementAttribute("strong", typeof(textrun))]
         [System.Xml.Serialization.XmlElementAttribute("sub", typeof(textrun))]
         [System.Xml.Serialization.XmlElementAttribute("sup", typeof(textrun))]
+        [System.Xml.Serialization.XmlElementAttribute("cref", typeof(cref))]
+        [System.Xml.Serialization.XmlElementAttribute("eref", typeof(eref))]
+        [System.Xml.Serialization.XmlElementAttribute("iref", typeof(iref))]
         [System.Xml.Serialization.XmlElementAttribute("xref", typeof(xref))]
         [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
         public object[] Items { get; set; }
@@ -876,7 +884,7 @@ namespace Goedel.Document.RFC {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value { get; set; }
+        public string Text { get; set; }
         }
 
     /// <remarks/>
@@ -950,7 +958,7 @@ namespace Goedel.Document.RFC {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value { get; set; }
+        public string Text { get; set; }
         }
 
     /// <remarks/>
@@ -987,11 +995,6 @@ namespace Goedel.Document.RFC {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        [System.ComponentModel.DefaultValueAttribute(boolean.@false)]
-        public boolean pageno { get; set; } = boolean.@false;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(relrefDisplayFormat.of)]
         public relrefDisplayFormat displayFormat { get; set; } = relrefDisplayFormat.of;
 
@@ -1004,12 +1007,15 @@ namespace Goedel.Document.RFC {
         public string relative { get; set; }
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public string Text { get; set; }
+
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string derivedLink { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value { get; set; }
+
         }
 
     /// <remarks/>
@@ -1229,7 +1235,7 @@ namespace Goedel.Document.RFC {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value { get; set; }
+        public string Text { get; set; }
         }
 
     #endregion
@@ -1269,54 +1275,11 @@ namespace Goedel.Document.RFC {
     #endregion
     #region // t
 
-    //public enum Bcp14String {
-    //    [XmlEnum ("MUST")]
-    //    MUST,
-    //    [XmlEnum("MUST NOT")]
-    //    MUST_NOT,
-    //    [XmlEnum("REQUIRED")]
-    //    REQUIRED,
-    //    [XmlEnum("SHALL")]
-    //    SHALL,
-    //    [XmlEnum("SHALL NOT")]
-    //    SHALL_NOT,
-    //    [XmlEnum("SHOULD")]
-    //    SHOULD,
-    //    [XmlEnum("SHOULD NOT")]
-    //    SHOULD_NOT,
-    //    [XmlEnum("RECOMMENDED")]
-    //    RECOMMENDED,
-    //    [XmlEnum("NOT RECOMMENDED")]
-    //    NOT_RECOMMENDED,
-    //    [XmlEnum("MAY")]
-    //    MAY,
-    //    [XmlEnum("OPTIONAL")]
-    //    OPTIONAL,
-
-    //    ///<summary>RFC 6919 Keywords</summary>
-    //    [XmlEnum("MUST (BUT WE KNOW YOU WON'T)")]
-    //    MUST_WONT,
-    //    [XmlEnum("SHOULD CONSIDER")]
-    //    SHOULD_CONSIDER,
-    //    [XmlEnum("REALLY SHOULD NOT")]
-    //    REALLY_SHOULD_NOT,
-    //    [XmlEnum("COULD")]
-    //    COULD,
-    //    [XmlEnum("POSSIBLE")]
-    //    POSSIBLE,
-    //    [XmlEnum("MIGHT")]
-    //    MIGHT,
-    //    [XmlEnum("WOULD PROBABLY")]
-    //    WOULD_PROBABLY,
-    //    [XmlEnum("OUGHT TO")]
-    //    OUGHT_TO,
-    //    }
-
 
     public partial class Bcp14String {
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string[] Text { get; set; }
+        public string Text { get; set; }
         }
 
     /// <remarks/>
@@ -1594,7 +1557,15 @@ namespace Goedel.Document.RFC {
         [System.Xml.Serialization.XmlElementAttribute("table", typeof(table))]
         [System.Xml.Serialization.XmlElementAttribute("texttable", typeof(texttable))]
         [System.Xml.Serialization.XmlElementAttribute("ul", typeof(ul))]
+        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
+
         public object[] Items { get; set; }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ItemsElementName")]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public ItemsChoiceTextRun[] ItemsElementName { get; set; }
+
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("section")]

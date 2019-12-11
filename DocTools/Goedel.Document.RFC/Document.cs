@@ -557,8 +557,6 @@ namespace Goedel.Document.RFC {
 
     public class P : TextBlock {
         public override string SectionText => "Paragraph " + NumericID;
-
-        //public List <Text>              Chunks = new List<Text>();
         public List<GM.TextSegment> Segments;
 
 
@@ -833,4 +831,119 @@ namespace Goedel.Document.RFC {
         public RequirementLevel    Level;
         public string              Text;
         }
+
+
+    /// <summary>
+    /// This text builder should probably be attached to the XML parser since that
+    /// is what it is specialized to.
+    /// </summary>
+    public class TextBlockSequenceBuilder {
+        public List<TextBlock> Blocks = new List<TextBlock>();
+        public TextBlock Block => Blocks.Count == 0 ? null : Blocks[Blocks.Count-1];
+
+        public List<Markdown.TextSegment> Segments;
+
+        public TextBlockSequenceBuilder() {
+            }
+
+        public void AddBlock (TextBlock block, List<Markdown.TextSegment> segments) {
+            Blocks.Add(block);
+            Segments = segments;
+
+            }
+        public void AddText(string text) {
+            if (text != null) {
+                var textSegment = new Markdown.TextSegmentText(text);
+                Segments.Add(textSegment);
+                }
+            }
+
+        public Markdown.TextSegmentOpen OpenTextRun(spanx spanx) {
+            switch (spanx.style) {
+                case "emph": {
+                    return OpenTextRun("em");
+                    }
+                case "strong": {
+                    return OpenTextRun("strong");
+                    }
+                case "verb": {
+                    return OpenTextRun("tt");
+                    }
+                }
+            return OpenTextRun("");
+            }
+
+        public Markdown.TextSegmentOpen OpenTextRun(ItemsChoiceTextRun tag, params string[] attributes) {
+            switch (tag) {
+                case ItemsChoiceTextRun.em: {
+                    return OpenTextRun("em", attributes);
+                    }
+                case ItemsChoiceTextRun.strong: {
+                    return OpenTextRun("strong", attributes);
+                    }
+                case ItemsChoiceTextRun.tt: {
+                    return OpenTextRun("tt", attributes);
+                    }
+                case ItemsChoiceTextRun.sub: {
+                    return OpenTextRun("sub", attributes);
+                    }
+                case ItemsChoiceTextRun.sup: {
+                    return OpenTextRun("sup", attributes);
+                    }
+                case ItemsChoiceTextRun.bcp14: {
+                    return OpenTextRun("bcp14", attributes);
+                    }
+
+                case ItemsChoiceTextRun.eref: {
+                    return OpenTextRun("eref", attributes);
+                    }
+                case ItemsChoiceTextRun.relref: {
+                    return OpenTextRun("relref", attributes);
+                    }
+                case ItemsChoiceTextRun.xref: {
+                    return OpenTextRun("xref", attributes);
+                    }
+                case ItemsChoiceTextRun.cref: {
+                    return OpenTextRun("cref", attributes);
+                    }
+
+                }
+            return OpenTextRun("");
+            }
+
+
+        public Markdown.TextSegmentOpen OpenTextRun(string tag, params string[]attributes) {
+            var textSegment = new Markdown.TextSegmentOpen() {
+                Tag = tag
+                };
+            Segments.Add(textSegment);
+            return textSegment;
+            }
+
+        public void CloseTextRun(Markdown.TextSegmentOpen opener) {
+
+            var textSegment = new Markdown.TextSegmentClose(opener);
+            Segments.Add(textSegment);
+            }
+
+
+        public void TextEmpty(ItemsChoiceTextRun tag, params string[] attributes) {
+            switch (tag) {
+                case ItemsChoiceTextRun.iref: {
+                    TextEmpty("iref", attributes);
+                    break;
+                    }
+
+                }
+            var textSegment = new Markdown.TextSegmentEmpty();
+            Segments.Add(textSegment);
+            }
+        public void TextEmpty(string tag, params string[] attributes) {
+
+            var textSegment = new Markdown.TextSegmentEmpty();
+            Segments.Add(textSegment);
+            }
+        }
+
+
     }
