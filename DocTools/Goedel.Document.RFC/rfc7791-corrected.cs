@@ -688,8 +688,8 @@ namespace Goedel.Document.RFC {
         [System.Xml.Serialization.XmlElementAttribute("tt", typeof(textrun))]
         [System.Xml.Serialization.XmlElementAttribute("em", typeof(textrun))]
 
-        [System.Xml.Serialization.XmlElementAttribute("dl", typeof(dl))]
         [System.Xml.Serialization.XmlElementAttribute("t", typeof(t))]
+        [System.Xml.Serialization.XmlElementAttribute("dl", typeof(dl))]
         [System.Xml.Serialization.XmlElementAttribute("ul", typeof(ul))]
         [System.Xml.Serialization.XmlElementAttribute("list", typeof(list))]
         [System.Xml.Serialization.XmlElementAttribute("ol", typeof(ol))]

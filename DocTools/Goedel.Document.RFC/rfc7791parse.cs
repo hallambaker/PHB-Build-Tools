@@ -328,7 +328,50 @@ namespace Goedel.Document.RFC {
             AddTextBlocks(builder, source.Items, source.ItemsElementName);
             }
 
+        void MakeTextBlock (TextBlockSequenceBuilder builder, ol source) {
+            var block = new ListBlock() {
+                Type = BlockType.Ordered,
+                SetableID = source.anchor,
+                ListType = source.type,
+                ListStart = source.start,
+                ListGroup = source.group,
+                ListSpacing = source.spacing.ToString()
+                };
 
+            builder.AddBlock(block, block.Segments);
+
+
+            // Nope, this does not work because the output model is purely
+            // block based. LI/etc elements are not nested in containers,
+            // they specify their attributes and the necessary HTML wrapping
+            // is computed.
+
+            if (source.li != null) {
+                var listBuilder = new TextBlockSequenceBuilder();
+                block.Items = listBuilder.Blocks;
+                foreach (var li in source.li) {
+                    var blockLi = new LI() {
+                        Segments = new List<Markdown.TextSegment>(),
+                        Type = BlockType.Ordered
+                        };
+
+                    listBuilder.AddBlock(blockLi, blockLi.Segments);
+                    AddTextBlocks(listBuilder, li.Items, li.ItemsElementName);
+                    }
+                }
+            }
+
+        void MakeTextBlock(TextBlockSequenceBuilder builder, ul source) {
+            // see above
+            }
+
+        void MakeTextBlock(TextBlockSequenceBuilder builder, dl source) {
+            // see above
+            }
+
+        void MakeTextBlock(TextBlockSequenceBuilder builder, list source) {
+            // see above
+            }
 
         void AddTextBlocks(TextBlockSequenceBuilder builder, object[] Items, ItemsChoiceTextRun[] Tags) {
 
@@ -426,13 +469,31 @@ namespace Goedel.Document.RFC {
                             break;
                             }
 
-                        // Entries yet to be implemented
+                        
 
                         // List like entities
-                        case ItemsChoiceTextRun.list:
-                        case ItemsChoiceTextRun.dl:
-                        case ItemsChoiceTextRun.ol:
-                        case ItemsChoiceTextRun.ul:
+                        case ItemsChoiceTextRun.ol: {
+                            MakeTextBlock(builder, item as ol);
+                            break;
+                            }
+
+                        case ItemsChoiceTextRun.ul: {
+                            MakeTextBlock(builder, item as ul);
+                            break;
+                            }
+
+                        case ItemsChoiceTextRun.dl: {
+                            MakeTextBlock(builder, item as dl);
+                            break;
+                            }
+
+                        case ItemsChoiceTextRun.list: {
+                            MakeTextBlock(builder, item as list);
+                            break;
+                            }
+
+
+                        // Entries yet to be implemented
 
                         // Table like entities
                         case ItemsChoiceTextRun.table:
@@ -454,20 +515,9 @@ namespace Goedel.Document.RFC {
                             // Vspace is deprecated and we simply elide occurrences.
                             break;
                             }
-
                         }
-
-
-
-
                     }
-
-
-
-
                 }
-
-
             }
 
 
