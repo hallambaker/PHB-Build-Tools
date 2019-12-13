@@ -636,7 +636,7 @@ namespace Goedel.Document.RFC {
 
         [System.Xml.Serialization.XmlElementAttribute("ItemsElementName")]
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public ItemsChoiceType101[] ItemsElementName { get; set; }
+        public ItemsChoiceTypeDL[] ItemsElementName { get; set; }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
@@ -661,7 +661,7 @@ namespace Goedel.Document.RFC {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(IncludeInSchema = false)]
-    public enum ItemsChoiceType101 {
+    public enum ItemsChoiceTypeDL {
         /// <remarks/>
         dt,
 
@@ -773,6 +773,10 @@ namespace Goedel.Document.RFC {
         [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute("")]
         public string height { get; set; } = "";
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string src { get; set; }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
@@ -1073,9 +1077,22 @@ namespace Goedel.Document.RFC {
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
         public string anchor { get; set; }
 
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute("")]
+        public string width { get; set; } = "";
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute("")]
+        public string height { get; set; } = "";
+
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string pn { get; set; }
+
+        // Deprecated
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
@@ -1089,14 +1106,6 @@ namespace Goedel.Document.RFC {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string src { get; set; }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string originalSrc { get; set; }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
         [System.ComponentModel.DefaultValueAttribute(alignType.left)]
         public alignType align { get; set; } = alignType.left;
 
@@ -1107,13 +1116,11 @@ namespace Goedel.Document.RFC {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        [System.ComponentModel.DefaultValueAttribute("")]
-        public string width { get; set; } = "";
+        public string src { get; set; }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        [System.ComponentModel.DefaultValueAttribute("")]
-        public string height { get; set; } = "";
+        public string originalSrc { get; set; }
         }
 
     #endregion
@@ -1156,8 +1163,7 @@ namespace Goedel.Document.RFC {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public System.Xml.XmlNode[] Any { get; set; }
+        public string Value { get; set; }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
@@ -1612,6 +1618,7 @@ namespace Goedel.Document.RFC {
     public partial class aside : Common {
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute(typeof(string))]
         [System.Xml.Serialization.XmlElementAttribute("artwork", typeof(artwork))]
         [System.Xml.Serialization.XmlElementAttribute("dl", typeof(dl))]
         [System.Xml.Serialization.XmlElementAttribute("figure", typeof(figure))]
@@ -1620,11 +1627,13 @@ namespace Goedel.Document.RFC {
         [System.Xml.Serialization.XmlElementAttribute("t", typeof(t))]
         [System.Xml.Serialization.XmlElementAttribute("table", typeof(table))]
         [System.Xml.Serialization.XmlElementAttribute("ul", typeof(ul))]
+        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
         public object[] Items { get; set; }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
-        public string[] Text { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("ItemsElementName")]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public ItemsChoiceTextRun[] ItemsElementName { get; set; }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
@@ -1955,16 +1964,20 @@ namespace Goedel.Document.RFC {
     public partial class c {
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute(typeof(string))]
         [System.Xml.Serialization.XmlElementAttribute("cref", typeof(cref))]
         [System.Xml.Serialization.XmlElementAttribute("eref", typeof(eref))]
         [System.Xml.Serialization.XmlElementAttribute("iref", typeof(iref))]
         [System.Xml.Serialization.XmlElementAttribute("spanx", typeof(spanx))]
         [System.Xml.Serialization.XmlElementAttribute("xref", typeof(xref))]
+        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
+
         public object[] Items { get; set; }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
-        public string[] Text { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("ItemsElementName")]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public ItemsChoiceTextRun[] ItemsElementName { get; set; }
         }
 
     /// <remarks/>

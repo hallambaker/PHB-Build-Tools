@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" version="3" category="std" consensus="true" docName="draft-ietf-lamps-rfc6844bis-07" indexInclude="true" ipr="trust200902" number="8659" obsoletes="6844" prepTime="2019-11-19T22:42:54" scripts="Common,Latin" sortRefs="true" submissionType="IETF" symRefs="true" tocDepth="3" tocInclude="true" xml:lang="en">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" version="3" category="std" 
+     consensus="true" docName="draft-ietf-lamps-rfc6844bis-07" 
+     indexInclude="true" ipr="trust200902" number="8659" obsoletes="6844" 
+     prepTime="2019-11-19T22:42:54" scripts="Common,Latin" sortRefs="true" 
+     submissionType="IETF" symRefs="true" tocDepth="3" tocInclude="true" xml:lang="en">
   <link href="https://datatracker.ietf.org/doc/draft-ietf-lamps-rfc6844bis-07" rel="prev"/>
   <link href="https://dx.doi.org/10.17487/rfc8659" rel="alternate"/>
   <link href="urn:issn:2070-1721" rel="alternate"/>

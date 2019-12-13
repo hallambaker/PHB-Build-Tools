@@ -579,7 +579,7 @@ namespace Goedel.Document.RFC {
             foreach (var Segment in Segments) {
                 switch (Segment) {
                     case GM.TextSegmentText Text: {
-                        Buffer.Append(Text.Text.XMLEscape());
+                        Buffer.Append(Text.Text.XMLEscapeStrict());
                         break;
                         }
                     }
@@ -594,7 +594,9 @@ namespace Goedel.Document.RFC {
         public string Language = "none";
 
         public override BlockType BlockType => BlockType.Verbatim;
+        public PRE() : base() {
 
+            }
         public PRE(string Text, string ID) : base(Text, ID) {
 
             }
@@ -623,6 +625,9 @@ namespace Goedel.Document.RFC {
         public BlockType Type;
         public int Level;
         public int Index;
+
+        public string Format;
+
         public override BlockType BlockType => Type;
 
         public LI(string Text, string ID, BlockType Type, int Level) :
@@ -853,6 +858,8 @@ namespace Goedel.Document.RFC {
 
         public List<Markdown.TextSegment> Segments;
 
+        public int ListLevel = 0;
+
         public TextBlockSequenceBuilder() {
             }
 
@@ -864,6 +871,13 @@ namespace Goedel.Document.RFC {
         public void AddText(string text) {
             if (text != null) {
                 var textSegment = new Markdown.TextSegmentText(text);
+                if (Segments == null) {
+
+                    AddBlock(new P(), new List<GM.TextSegment>());
+
+                    }
+
+
                 Segments.Add(textSegment);
                 }
             }
@@ -885,6 +899,10 @@ namespace Goedel.Document.RFC {
 
         public Markdown.TextSegmentOpen OpenTextRun(ItemsChoiceTextRun tag, params string[] attributes) {
             switch (tag) {
+                case ItemsChoiceTextRun.bcp14: {
+                    return OpenTextRun("bcp14", attributes);
+                    }
+
                 case ItemsChoiceTextRun.em: {
                     return OpenTextRun("em", attributes);
                     }
@@ -900,9 +918,7 @@ namespace Goedel.Document.RFC {
                 case ItemsChoiceTextRun.sup: {
                     return OpenTextRun("sup", attributes);
                     }
-                case ItemsChoiceTextRun.bcp14: {
-                    return OpenTextRun("bcp14", attributes);
-                    }
+
 
                 case ItemsChoiceTextRun.eref: {
                     return OpenTextRun("eref", attributes);

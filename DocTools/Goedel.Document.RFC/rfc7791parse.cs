@@ -329,49 +329,221 @@ namespace Goedel.Document.RFC {
             }
 
         void MakeTextBlock (TextBlockSequenceBuilder builder, ol source) {
-            var block = new ListBlock() {
-                Type = BlockType.Ordered,
-                SetableID = source.anchor,
-                ListType = source.type,
-                ListStart = source.start,
-                ListGroup = source.group,
-                ListSpacing = source.spacing.ToString()
-                };
-
-            builder.AddBlock(block, block.Segments);
-
-
-            // Nope, this does not work because the output model is purely
-            // block based. LI/etc elements are not nested in containers,
-            // they specify their attributes and the necessary HTML wrapping
-            // is computed.
-
+            builder.ListLevel++;
             if (source.li != null) {
-                var listBuilder = new TextBlockSequenceBuilder();
-                block.Items = listBuilder.Blocks;
+
+                if (!Int32.TryParse(source.start, out int index)) {
+                    index = 1;
+                    }
+
+
+                //var listBuilder = new TextBlockSequenceBuilder();
+                //block.Items = listBuilder.Blocks;
+                    foreach (var li in source.li) {
+                    var blockLi = new LI() {
+                        Level = builder.ListLevel,
+                        Index = index,
+                        Format = source.type,
+                        Segments = new List<Markdown.TextSegment>(),
+                        Type = BlockType.Symbol
+                        };
+
+                    builder.AddBlock(blockLi, blockLi.Segments);
+                    AddTextBlocks(builder, li.Items, li.ItemsElementName);
+                    }
+                }
+            builder.ListLevel--;
+
+            }
+
+        void MakeTextBlock(TextBlockSequenceBuilder builder, ul source) {
+            builder.ListLevel++;
+            if (source.li != null) {
+                //var listBuilder = new TextBlockSequenceBuilder();
+                //block.Items = listBuilder.Blocks;
                 foreach (var li in source.li) {
                     var blockLi = new LI() {
+                        Level = builder.ListLevel,
                         Segments = new List<Markdown.TextSegment>(),
                         Type = BlockType.Ordered
                         };
 
-                    listBuilder.AddBlock(blockLi, blockLi.Segments);
-                    AddTextBlocks(listBuilder, li.Items, li.ItemsElementName);
+                    builder.AddBlock(blockLi, blockLi.Segments);
+                    AddTextBlocks(builder, li.Items, li.ItemsElementName);
                     }
                 }
-            }
-
-        void MakeTextBlock(TextBlockSequenceBuilder builder, ul source) {
-            // see above
+            builder.ListLevel--;
             }
 
         void MakeTextBlock(TextBlockSequenceBuilder builder, dl source) {
+            builder.ListLevel++;
+            if (source.Items != null) {
+                //var listBuilder = new TextBlockSequenceBuilder();
+                //block.Items = listBuilder.Blocks;
+
+                var index = 0;
+                foreach (var li in source.Items) {
+                    var lit = li as listItemType;
+                    var tag = source.ItemsElementName[index++];
+                    BlockType blockType = BlockType.Paragraph;
+                    switch (tag) {
+                        case ItemsChoiceTypeDL.dt: {
+                            blockType = BlockType.Term;
+                            break;
+                            }
+                        case ItemsChoiceTypeDL.dd: {
+                            blockType = BlockType.Data;
+                            break;
+                            }
+                        }
+
+                    var blockLi = new LI() {
+                        Level = builder.ListLevel,
+                        Segments = new List<Markdown.TextSegment>(),
+                        Type = blockType
+                        };
+
+                    builder.AddBlock(blockLi, blockLi.Segments);
+                    AddTextBlocks(builder, lit.Items, lit.ItemsElementName);
+                    }
+                }
+            builder.ListLevel--;
             // see above
             }
 
         void MakeTextBlock(TextBlockSequenceBuilder builder, list source) {
+            builder.ListLevel++;
+            builder.ListLevel--;
             // see above
             }
+        void MakeTextBlock(TextBlockSequenceBuilder builder, table source) {
+
+            var block = new Table() {
+                };
+
+            // ToDo: name, iref, anchor
+
+            MakeTableRow(block, source.thead);
+            foreach (var row in source.tbody) {
+                MakeTableRow(block, row);
+                }
+            MakeTableRow(block, source.tfoot);
+
+            builder.AddBlock(block, null);
+
+            // see above
+            }
+
+
+        void MakeTableRow(Table table, tableRowsType trtype) {
+            if (trtype == null) {
+                return;
+                }
+            if (trtype.tr == null) {
+                return;
+                }
+            var builder = new TextBlockSequenceBuilder();
+            foreach (var trs in trtype.tr) {
+                foreach (var item in trs.Items) {
+                    MakeTableCell(builder, item);
+                    }
+                }
+
+            }
+
+        void MakeTableCell(TextBlockSequenceBuilder builder, tableCellType cellType) {
+            // anchor, colspan, rowspan, align 
+
+            AddTextBlocks(builder, cellType.Items, cellType.ItemsElementName);
+            }
+
+
+        void MakeTextBlock(TextBlockSequenceBuilder builder, texttable source) {
+            if (source.ttcol == null) {
+                return; // elide empty tables
+                }
+            var cols = source.ttcol.Length;
+            if (cols <= 0) {
+                return; // elide headerless tables
+                }
+
+            foreach (var ttcol in source.ttcol) {
+
+                // create table element with text ttcol.Value
+                }
+
+            int count = 0;
+            foreach (var c in source.c) {
+                if (count == 0) {
+                    // make a new row for the table here.
+                    }
+                count = (count + 1) % cols;
+                // make text run with c.Items, c.ItemsElementName
+
+                }
+
+
+            // see above
+            }
+        void MakeTextBlock(TextBlockSequenceBuilder builder, blockquote source) {
+            var block = new P() {
+                Segments = new List<Markdown.TextSegment>()
+                };
+
+            builder.AddBlock(block, block.Segments);
+            AddTextBlocks(builder, source.Items, source.ItemsElementName);
+            }
+        void MakeTextBlock(TextBlockSequenceBuilder builder, sourcecode source) {
+            var block = new PRE(source.Value, source.anchor) {
+                // name?
+                // type?
+                // src ?
+                };
+
+            builder.AddBlock(block, block.Segments);
+            // here need to include the source text or the link...
+            }
+
+        void MakeTextBlock(TextBlockSequenceBuilder builder, artwork source) {
+            var block = new PRE("TBS", source.anchor) {
+                // name?
+                // type?
+                // src ?
+                };
+
+            builder.AddBlock(block, block.Segments);
+            // here need to include the source text or the link...
+            }
+        void MakeTextBlock(TextBlockSequenceBuilder builder, aside source) {
+            AddTextBlocks(builder, source.Items, source.ItemsElementName);
+            }
+
+        void MakeTextBlock(TextBlockSequenceBuilder builder, figure source) {
+            // see above
+
+            var block = new Figure(null, source.anchor) {
+                // name?
+                // iref?
+                // preamble?
+                // postamble?
+                };
+
+            foreach (var item in source.Items) {
+                switch (item) {
+                    case artwork artwork: {
+                        break;
+                        }
+                    case sourcecode sourcecode: {
+                        break;
+                        }
+                    }
+
+                }
+            builder.AddBlock(block, null);
+
+
+            }
+
 
         void AddTextBlocks(TextBlockSequenceBuilder builder, object[] Items, ItemsChoiceTextRun[] Tags) {
 
@@ -469,7 +641,6 @@ namespace Goedel.Document.RFC {
                             break;
                             }
 
-                        
 
                         // List like entities
                         case ItemsChoiceTextRun.ol: {
@@ -496,18 +667,35 @@ namespace Goedel.Document.RFC {
                         // Entries yet to be implemented
 
                         // Table like entities
-                        case ItemsChoiceTextRun.table:
-                        case ItemsChoiceTextRun.texttable:
+                        case ItemsChoiceTextRun.table: {
+                            MakeTextBlock(builder, item as table);
+                            break;
+                            }
+                        case ItemsChoiceTextRun.texttable: {
+                            MakeTextBlock(builder, item as texttable);
+                            break;
+                            }
 
 
-                        case ItemsChoiceTextRun.blockquote:
-                        case ItemsChoiceTextRun.sourcecode:
-                        case ItemsChoiceTextRun.figure:
-                        case ItemsChoiceTextRun.artwork: 
+                        case ItemsChoiceTextRun.blockquote: {
+                            MakeTextBlock(builder, item as blockquote);
+                            break;
+                            }
+
+                        case ItemsChoiceTextRun.sourcecode: {
+                            MakeTextBlock(builder, item as sourcecode);
+                            break;
+                            }
+                        case ItemsChoiceTextRun.figure: {
+                            MakeTextBlock(builder, item as figure);
+                            break;
+                            }
+                        case ItemsChoiceTextRun.artwork: {
+                            MakeTextBlock(builder, item as artwork);
+                            break;
+                            }
                         case ItemsChoiceTextRun.aside: {
-
-                            // Process reference like things
-
+                            MakeTextBlock(builder, item as aside);
                             break;
                             }
 
@@ -543,31 +731,6 @@ namespace Goedel.Document.RFC {
                         AddTextBlocks(builder, section.Items, section.ItemsElementName);
                         }
 
-                    
-
-
-                    //if (section.Items != null) {
-                    //    foreach (object o in section.Items) {
-                    //        switch (o) {
-                    //            case figure figure: {
-                    //                AddFigureBlock(outSection.TextBlocks, figure);
-                    //                break;
-                    //                }
-                    //            case iref iref: {
-                    //                AddIndex(outSection.TextBlocks, iref);
-                    //                break;
-                    //                }
-                    //            case t t: {
-                    //                AddListBlocks(outSection.TextBlocks, t);
-                    //                break;
-                    //                }
-                    //            case texttable texttable: {
-                    //                AddTableBlock(outSection.TextBlocks, texttable);
-                    //                break;
-                    //                }
-                    //            }
-                    //        }
-                    //    }
 
                     // Recurse
                     if (section.section1 != null) {

@@ -1,0 +1,367 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" consensus="true" docName="RFC8659" indexInclude="false" ipr="trust200902" number="8659" obsoletes="6844" scripts="Common,Latin" sortRefs="true" submissionType="IETF" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
+<title abbrev="CAA">DNS Certification Authority Authorization (CAA) Resource Record</title>
+<author fullname="Phillip Hallam-Baker" initials="P." surname="Hallam-Baker"><organization>Venture Cryptography</organization>
+<address>
+<email>phill@hallambaker.com</email>
+</address>
+</author>
+<author fullname="Rob Stradling" initials="R." surname="Stradling"><organization>Sectigo Ltd.</organization>
+<address>
+<email>rob@sectigo.com</email>
+</address>
+</author>
+<author fullname="Jacob Hoffman-Andrews" initials="J." surname="Hoffman-Andrews"><organization>Let's Encrypt</organization>
+<address>
+<email>jsha@letsencrypt.org</email>
+</address>
+</author>
+<date month="11" year="2019"/>
+<area/>
+<workgroup/>
+<keyword>certificate</keyword>
+<keyword>ca</keyword>
+<keyword>pki</keyword>
+<keyword>issue</keyword>
+<keyword>issuance</keyword>
+<keyword>wildcard</keyword>
+<abstract>
+<t>The Certification Authority Authorization (CAA) DNS Resource Record
+allows a DNS domain name holder to specify one or more Certification
+Authorities (CAs) authorized to issue certificates for that domain name.
+CAA Resource Records allow a public CA to
+implement additional controls to reduce the risk of unintended
+certificate mis-issue.  This document defines the syntax of the CAA
+record and rules for processing CAA records by CAs.</t>
+<t>This document obsoletes RFC 6844.</t>
+</abstract>
+</front>
+<middle>
+<section title="Tests" anchor="s-1"><section title="Format Tests" anchor="s-1_1"><t><bcp14>MUST</bcp14></t>
+<t>
+      This is a test of the various paragraph formats    
+      <bcp14>MUST</bcp14> and <em>emphasis</em> and <strong>strong</strong>
+        and  with <eref></eref>
+        and <tt>fixed font</tt>. Math elements include e<sup>super</sup> and
+          e<sub>sub</sub>.
+        <cref>Comments may be included and have formatting <em>emphasis</em>,
+        <strong>strong</strong></cref></t>
+<t>
+          Reference types include 
+          external URIs <eref></eref>
+          Internal reference <xref></xref><relref>targeted text</relref></t>
+<t>
+          Citations may be normative <xref></xref> or informational <xref></xref></t>
+<t>Deprecated formatting includes the <strong>spanx strong</strong>,
+        <em>spanx emphasis</em> and 
+        <tt>spanx tt</tt></t>
+</section>
+<section title="List Tests" anchor="s-1_2"><section title="Ordered List Tests" anchor="s-1_2_1"><t>ordinary numbered</t>
+<ul>
+<li>One</li>
+<li>Two</li>
+<li>Three</li>
+</ul>
+<t>ordinary numbered start at 3</t>
+<ul>
+<li>Three</li>
+<li>Four</li>
+<li>Five</li>
+</ul>
+<t>uppercase roman numbered</t>
+<ul>
+<li>One</li>
+<li>Two</li>
+<li>Three</li>
+</ul>
+<t>lowercase roman numbered</t>
+<ul>
+<li>One</li>
+<li>Two</li>
+<li>Three</li>
+</ul>
+<t>uppercase numbered</t>
+<ul>
+<li>One</li>
+<li>Two</li>
+<li>Three</li>
+</ul>
+<t>lowercase numbered</t>
+<ul>
+<li>One</li>
+<li>Two</li>
+<li>Three</li>
+</ul>
+<t>
+            We are currently omitting the [REQ-%c] type numbering
+          </t>
+</section>
+<section title="Unordered List Tests" anchor="s-1_2_2"><t>ordinary unordered</t>
+<ol>
+<li>Bullet one</li>
+<li>Bullet two</li>
+<li>Bullet three</li>
+</ol>
+<t>compact unordered</t>
+<ol>
+<li>Bullet one</li>
+<li>Bullet two</li>
+<li>Bullet three</li>
+</ol>
+</section>
+<section title="Definition List Tests" anchor="s-1_2_3"><t>Inline</t>
+<dl>
+<dt>The defined term</dt>
+<dd>The definition</dd>
+</dl>
+<t>hanging</t>
+<dl>
+<dt>The defined term</dt>
+<dd>The definition</dd>
+</dl>
+<t>spaced</t>
+<dl>
+<dt>The defined term</dt>
+<dd>The definition</dd>
+</dl>
+</section>
+</section>
+<section anchor="s-1_3"><section title="Artwork Block Tests" anchor="s-1_3_1"><figure anchor="s-1_3_1-1" suppress-title="true"><artwork>
+<![CDATA[TBS]]></artwork>
+</figure>
+<figure anchor="s-1_3_1-2" suppress-title="true"><artwork>
+<![CDATA[TBS]]></artwork>
+</figure>
+</section>
+<section title="Aside Block Tests" anchor="s-1_3_2"><t></t>
+</section>
+<section title="BlockQuote Block Tests" anchor="s-1_3_3"><t></t>
+<t>
+              A wrapper around a paragraph to make a quotation out of it.
+            </t>
+</section>
+<section title="Figure Block Tests" anchor="s-1_3_4"><figure>
+<preamble>
+[[This figure is not viewable in this format.]]</preamble>
+<artwork>
+</artwork>
+<postamble>
+</postamble>
+</figure>
+</section>
+<section title="Source Code Block Tests" anchor="s-1_3_5"><figure anchor="s-1_3_5-1" suppress-title="true"><artwork>
+<![CDATA[
+            { "tag" : "value" }
+          ]]></artwork>
+</figure>
+</section>
+<section title="Table Block Tests" anchor="s-1_3_6"><texttable  anchor="s-1_3_6-1"></texttable >
+</section>
+<section title="TextTable (deprecated) Block Tests" anchor="s-1_3_7"><t>
+            Blank (for checking)
+          </t>
+<t>
+            Three cols with two rows
+          </t>
+</section>
+</section>
+</section>
+<section title="Introduction" anchor="s-2"><t>The Certification Authority Authorization (CAA) DNS Resource Record
+allows a DNS domain name holder to specify the Certification
+Authorities (CAs) authorized to issue certificates for that domain name.
+Publication of CAA Resource Records allows a public CA to implement additional controls to reduce the risk of
+unintended certificate mis-issue.</t>
+</section>
+<section title="Definitions" anchor="s-3"><section title="Requirements Language" anchor="s-3_1"><t>The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>",
+"<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>",
+"<bcp14>NOT RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document
+are to be interpreted as described in BCP?14
+<xref></xref><xref></xref> when,
+and only when, they appear in all capitals, as shown here.</t>
+</section>
+<section title="Defined Terms" anchor="s-3_2"><t>The following terms are used in this document:</t>
+<dl>
+<dt>Certificate:</dt>
+<dd>An X.509 Certificate, as specified in <xref></xref>.</dd>
+<dt>Certificate Evaluator:</dt>
+<dd>A party other than a Relying Party that
+   evaluates the trustworthiness of certificates issued by
+   Certification Authorities.</dd>
+<dt>Certification Authority (CA):</dt>
+<dd>An Issuer that issues certificates in
+   accordance with a specified Certificate Policy.</dd>
+<dt>Certificate Policy (CP):</dt>
+<dd>Specifies the criteria that a CA
+   undertakes to meet in its issue of certificates.  See
+   <xref></xref>.</dd>
+<dt>Certification Practices Statement (CPS):</dt>
+<dd>Specifies the means by
+   which the criteria of the CP are met.  In most
+   cases, this will be the document against which the operations of
+   the CA are audited.  See <xref></xref>.</dd>
+<dt>Domain Name:</dt>
+<dd>The label assigned to a node in the Domain Name System.</dd>
+<dt>Domain Name System (DNS):</dt>
+<dd>The Internet naming system specified in
+   <xref></xref> and <xref></xref>.</dd>
+<dt>DNS Security (DNSSEC):</dt>
+<dd>Extensions to the DNS that provide
+   authentication services as specified in <xref></xref>, <xref></xref>,
+   <xref></xref>, <xref></xref>, and
+   any revisions to these specifications.</dd>
+<dt>Fully Qualified Domain Name (FQDN):</dt>
+<dd>A domain name that includes the labels of all
+  superior nodes in the DNS.</dd>
+<dt>Issuer:</dt>
+<dd>An entity that issues certificates.  See <xref></xref>.</dd>
+<dt>Property:</dt>
+<dd>The tag-value portion of a CAA Resource Record.</dd>
+<dt>Property Tag:</dt>
+<dd>The tag portion of a CAA Resource Record.</dd>
+<dt>Property Value:</dt>
+<dd>The value portion of a CAA Resource Record.</dd>
+<dt>Relevant Resource Record Set (Relevant RRset):</dt>
+<dd>A set of CAA 
+   Resource Records resulting
+   from applying the algorithm in <xref></xref> to a specific FQDN or Wildcard Domain Name.</dd>
+<dt>Relying Party:</dt>
+<dd>A party that makes use of an application whose
+   operation depends on the use of a certificate for making a security
+   decision.  See <xref></xref>.</dd>
+<dt>Resource Record (RR):</dt>
+<dd>A particular entry in the DNS, including the
+   owner name, class, type, time to live, and data, as defined in
+   <xref></xref> and <xref></xref>.</dd>
+<dt>Resource Record Set (RRset):</dt>
+<dd>A set of RRs of a
+   particular owner name, class, and type.  The time to live on all
+   RRs within an RRset is always the same, but the data may be
+   different among RRs in the RRset.</dd>
+<dt>Wildcard Domain Name:</dt>
+<dd>A domain name consisting of a single asterisk
+   character followed by a single "full stop" character ("*.") followed
+   by an FQDN.</dd>
+</dl>
+</section>
+</section>
+<section title="Relevant Resource Record Set" anchor="s-4"><t>Before issuing a certificate, a compliant CA <bcp14>MUST</bcp14> check for
+publication of a Relevant RRset.  If such an RRset
+exists, a CA <bcp14>MUST?NOT</bcp14> issue a certificate unless the CA
+determines that either (1)?the certificate request is consistent with
+the applicable CAA RRset or (2)?an exception specified
+in the relevant CP or CPS applies. If the Relevant RRset for an FQDN
+or Wildcard Domain Name contains no Property Tags that restrict issuance
+(for instance, if it contains only iodef Property Tags or only Property
+Tags unrecognized by the CA), CAA does not restrict issuance.</t>
+<t>A certificate request <bcp14>MAY</bcp14> specify more than one FQDN and <bcp14>MAY</bcp14>
+specify Wildcard Domain Names.  Issuers <bcp14>MUST</bcp14> verify authorization for all
+the FQDNs and Wildcard Domain Names specified in the request.</t>
+<t>The search for a CAA RRset climbs the DNS name tree from the
+specified label up to, but not including, the DNS root "."
+until a CAA RRset is found.</t>
+<t>Given a request for a specific FQDN X or a request for a Wildcard Domain
+Name *.X, the Relevant RRset RelevantCAASet(X) is determined as follows (in pseudocode):</t>
+<ol>
+<li>Let CAA(X) be the RRset returned by performing a CAA record query for the
+FQDN X, according to the lookup algorithm
+specified in <xref></xref> (in particular, chasing
+aliases). Let Parent(X) be the FQDN produced by
+removing the leftmost label of X.</li>
+</ol>
+<figure anchor="s-4-6" suppress-title="true"><artwork>
+<![CDATA[
+   RelevantCAASet(domain):
+     while domain is not ".":
+       if CAA(domain) is not Empty:
+         return CAA(domain)
+       domain = Parent(domain)
+     return Empty ]]></artwork>
+</figure>
+<ol>
+<li>For example, processing CAA for the FQDN "X.Y.Z" where there are
+no CAA records at any level in the tree RelevantCAASet would have the
+following steps:</li>
+</ol>
+<figure anchor="s-4-8" suppress-title="true"><artwork>
+<![CDATA[TBS]]></artwork>
+</figure>
+<ol>
+<li>Processing CAA for the FQDN "A.B.C" where there is a CAA record
+"issue example.com" at "B.C" would terminate early upon finding the CAA
+record:</li>
+</ol>
+<figure anchor="s-4-10" suppress-title="true"><artwork>
+<![CDATA[TBS]]></artwork>
+</figure>
+</section>
+<section title="Mechanism" anchor="s-5"><section title="Syntax" anchor="s-5_1"><t>A CAA RR contains a single Property consisting of a tag?value
+pair. An FQDN <bcp14>MAY</bcp14> have multiple CAA RRs associated with it, and a
+given Property Tag <bcp14>MAY</bcp14> be specified more than once across those RRs.</t>
+<t>The RDATA section for a CAA RR contains one Property. A Property
+consists of the following:</t>
+<figure anchor="s-5_1-3" suppress-title="true"><artwork>
+<![CDATA[TBS]]></artwork>
+</figure>
+<t>Where n is the length specified in the Tag Length field and m is the
+number of remaining octets in the Value field. They are related by
+(m?=?d?-?n?-?2)
+where d is the length of the RDATA section.</t>
+<t>The fields are defined as follows:</t>
+<dl>
+<dt>Flags:</dt>
+<dd></dd>
+</dl>
+<t>One octet containing the following field:
+
+            </t>
+<dl>
+<dl>
+<dt>Bit 0, Issuer Critical Flag:</dt>
+<dd>If the value is set to "1", the
+ Property is critical. A CA <bcp14>MUST NOT</bcp14> issue
+ certificates for any FQDN if the Relevant RRset for
+ that FQDN contains a CAA critical
+ Property for an unknown or unsupported Property Tag.
+
+ </dd>
+</dl>
+</dl>
+<t>Note that according to the conventions set out in <xref></xref>, bit 0
+is the Most Significant Bit and bit 7 is the Least Significant
+Bit. Thus, according to those conventions, the Flags value 1 means that bit 7 is
+set, while a value of 128 means that bit 0 is set.</t>
+<t>All other bit positions are reserved for future use.</t>
+<t>To ensure compatibility with future extensions to CAA, DNS records
+compliant with this version of the CAA specification <bcp14>MUST</bcp14> clear
+(set to "0") all reserved flag bits.
+
+  Applications that interpret
+CAA records <bcp14>MUST</bcp14> ignore the value of all reserved flag bits.</t>
+<dl>
+<dt>Tag Length:</dt>
+<dd>A single octet containing an unsigned integer specifying
+the tag length in octets.  The tag length <bcp14>MUST</bcp14> be at least 1.</dd>
+<dt>Tag:</dt>
+<dd>The Property identifier -- a sequence of ASCII characters.</dd>
+</dl>
+<t>Tags <bcp14>MAY</bcp14> contain ASCII characters "a" through "z", "A"
+through "Z", and the numbers 0 through 9.  Tags <bcp14>MUST NOT</bcp14>
+contain any other characters.  Matching of tags is case
+insensitive.</t>
+<t>Tags submitted for registration by IANA <bcp14>MUST NOT</bcp14> contain any
+characters other than the (lowercase) ASCII characters "a"
+through "z" and the numbers 0 through 9.</t>
+<dl>
+<dt>Value:</dt>
+<dd>A sequence of octets representing the Property Value.
+Property Values are encoded as binary values and <bcp14>MAY</bcp14> employ
+sub?formats.</dd>
+</dl>
+<t>The length of the Value field is specified implicitly as the
+remaining length of the enclosing RDATA section.</t>
+</section>
+</section>
+</middle>
+<back>
+</back>
+</rfc>

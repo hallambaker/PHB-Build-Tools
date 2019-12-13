@@ -56,7 +56,7 @@ record and rules for processing CAA records by CAs.</t>
         <t>
       This is a test of the various paragraph formats    
       <bcp14>MUST</bcp14> and <em>emphasis</em> and <strong>strong</strong>
-        and <iref item="indexed"/> with <eref target="http://example.com/"/>
+        and <iref>indexed</iref> with <eref target="http://example.com/"/>
         and <tt>fixed font</tt>. Math elements include e<sup>super</sup> and
           e<sub>sub</sub>.
         <cref>Comments may be included and have formatting <em>emphasis</em>,

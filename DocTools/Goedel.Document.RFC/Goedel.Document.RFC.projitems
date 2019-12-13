@@ -33,6 +33,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)TXT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WriteAML.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XML.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Xml2RFCOutv2.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Xml2RFCOut.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XMLEmbed.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XmlSchema.cs" />
