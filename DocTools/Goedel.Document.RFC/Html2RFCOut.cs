@@ -660,7 +660,7 @@ namespace Goedel.Document.RFC {
 
             WriteElement("a", Figure.SectionText, "href", Figure.GeneratedID);
             Output.Write(":");
-            WriteElement("a", Figure.Caption, "href", Figure.SetableID, "id", Figure.SetableID, "class", "selfRef");
+            WriteElement("a", Figure.Caption, "href", Figure.AnchorID, "id", Figure.AnchorID, "class", "selfRef");
             
             End();
             }
@@ -672,7 +672,7 @@ namespace Goedel.Document.RFC {
 
             var attributes = Figure.Width == null ? null: $"width=\"{Figure.Width}\"";
 
-            WriteLinkSVG(Figure.Filename, "img", "src", attributes);
+            //WriteLinkSVG(Figure.Filename, "img", "src", attributes);
 
             WriteElement("a", Pilcrow, "class", "pilcrow", "href", "#" + Figure.GeneratedID);
             End();

@@ -424,13 +424,13 @@ namespace Goedel.Document.RFC {
 
 
 
-        void WriteIrefs(List<string> irefs) {
+        void WriteIrefs(List<GM.TextSegment> irefs) {
             if (irefs == null || irefs.Count == 0) {
                 return;
                 }
 
             foreach (var iref in irefs) {
-                WriteEmptyTagNL("iref", null, "item", iref);
+                //WriteEmptyTagNL("iref", null, "item", iref);
                 }
 
             }
@@ -470,40 +470,41 @@ namespace Goedel.Document.RFC {
 
 
         void WriteBlock(PRE block) {
-            if (block.GeneratedID != null && block.AnchorID != "") {
-                WriteStartTag("figure", "anchor", block.AnchorID, "suppress-title", "true");
-                }
-            else {
-                WriteStartTagNL("figure");
-                }
-            WriteStartTagNL("artwork");
+            var element = block.Element == "artwork" ? "artwork" : "sourcecode";
 
-            textWriter.Write("<![CDATA[");
-            WritePRE(block.Segments);
-            //TextWriter.Write(PRE.Text);
-            textWriter.Write("]]>");
 
-            WriteEndTagNL("artwork");
-            WriteEndTagNL("figure");
+            WriteStartTag(element, 
+                "anchor", block.AnchorID,
+                "src", block.Filename,
+                "type", block.Language,
+                "name", block.OutputFile,
+                "align", block.Align,
+                "alt", block.Alt
+                );
+
+
+            if (block.Segments != null) {
+                WritePRE(block.Segments);
+                }
+
+
+            WriteEndTagNL(element);
+
             }
         void WriteBlock(Figure block) {
             ListLast();
             WriteStartTagNL("figure");
+            WriteIrefs(block.Irefs);
             WriteStartTagNL("preamble");
-            textWriter.Write("[[This figure is not viewable in this format.");
-            if (document.Also != null) {
-                textWriter.Write(" The figure is available at <eref target=\"");
-                textWriter.Write(document.Also);
-                textWriter.Write("\">");
-                textWriter.Write(document.Also);
-                textWriter.Write("</eref>.");
-                }
-            textWriter.Write("]]");
             WriteEndTagNL("preamble");
+
+            foreach (var item in block.Content) {
+                WriteBlock(item);
+                }
+
             WriteStartTagNL("artwork");
             WriteEndTagNL("artwork");
             WriteStartTagNL("postamble");
-            textWriter.Write(block.Caption);
             WriteEndTagNL("postamble");
             WriteEndTagNL("figure");
             

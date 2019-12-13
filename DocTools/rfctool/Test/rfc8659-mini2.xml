@@ -127,14 +127,19 @@ record and rules for processing CAA records by CAs.</t>
 </dl>
 </section>
 </section>
-<section anchor="s-1_3"><section title="Artwork Block Tests" anchor="s-1_3_1"><figure suppress-title="true"><artwork>
-<![CDATA[TBS]]></artwork>
-</figure>
-<figure suppress-title="true"><artwork>
-<![CDATA[TBS]]></artwork>
-</figure>
+<section anchor="s-1_3"><section title="Artwork Block Tests" anchor="s-1_3_1"><artwork src="myart.svg"></artwork>
+<artwork>
++-----+
+| Box |
++-----+
+    +-----+
+    | Box |
+    +-----+
+          </artwork>
 </section>
-<section title="Aside Block Tests" anchor="s-1_3_2"><t></t>
+<section title="Aside Block Tests" anchor="s-1_3_2"><t>
+            I have no idea how this is separate from the comment and t blocks.
+          </t>
 </section>
 <section title="BlockQuote Block Tests" anchor="s-1_3_3"><t></t>
 <t>
@@ -143,88 +148,89 @@ record and rules for processing CAA records by CAs.</t>
 </section>
 <section title="Figure Block Tests" anchor="s-1_3_4"><figure>
 <preamble>
-[[This figure is not viewable in this format.]]</preamble>
+</preamble>
+<sourcecode type="" name="">
+              The figure data (could be an artwork of course)
+            </sourcecode>
 <artwork>
 </artwork>
 <postamble>
 </postamble>
 </figure>
 </section>
-<section title="Source Code Block Tests" anchor="s-1_3_5"><figure suppress-title="true"><artwork>
-<![CDATA[
+<section title="Source Code Block Tests" anchor="s-1_3_5"><sourcecode anchor="sourcecode-example" type="json" name="">
             { "tag" : "value" }
-          ]]></artwork>
-</figure>
+          </sourcecode>
 </section>
 <section title="Table Block Tests" anchor="s-1_3_6"><table><tr>
 <th colspan="1" rowspan="1">
-<t></t>
+<t>head 1</t>
 </th>
 <th colspan="1" rowspan="1">
-<t></t>
+<t>head 2</t>
 </th>
 <th colspan="1" rowspan="1">
-<t></t>
+<t>head 3</t>
 </th>
 </tr>
 <tr>
 <td colspan="1" rowspan="1">
-<t></t>
+<t>text1</t>
 </td>
 <td colspan="1" rowspan="1">
-<t></t>
+<t>text2</t>
 </td>
 <td colspan="1" rowspan="1">
-<t></t>
+<t>text3</t>
 </td>
 </tr>
 <tr>
 <td colspan="1" rowspan="1">
-<t></t>
+<t>text1 b</t>
 </td>
 <td colspan="1" rowspan="1">
-<t></t>
+<t>text2 b</t>
 </td>
 <td colspan="1" rowspan="1">
-<t></t>
+<t>text3 b</t>
 </td>
 </tr>
 <tr>
 <td colspan="2" rowspan="1">
-<t></t>
+<t>text1 c</t>
 </td>
 <td colspan="1" rowspan="1">
-<t></t>
+<t>text3 c</t>
 </td>
 </tr>
 <tr>
 <td colspan="1" rowspan="1">
-<t></t>
+<t>text1 d</t>
 </td>
 <td colspan="1" rowspan="2">
-<t></t>
+<t>text2 d</t>
 </td>
 <td colspan="1" rowspan="1">
-<t></t>
-</td>
-</tr>
-<tr>
-<td colspan="1" rowspan="1">
-<t></t>
-</td>
-<td colspan="1" rowspan="1">
-<t></t>
+<t>text3 d</t>
 </td>
 </tr>
 <tr>
 <td colspan="1" rowspan="1">
-<t></t>
+<t>text1 e</t>
 </td>
 <td colspan="1" rowspan="1">
-<t></t>
+<t>text3 e</t>
+</td>
+</tr>
+<tr>
+<td colspan="1" rowspan="1">
+<t>foot 1</t>
 </td>
 <td colspan="1" rowspan="1">
-<t></t>
+<t>foot 2</t>
+</td>
+<td colspan="1" rowspan="1">
+<t>foot 3</t>
 </td>
 </tr>
 </table></section>
@@ -339,40 +345,48 @@ specified in <xref></xref> (in particular, chasing
 aliases). Let Parent(X) be the FQDN produced by
 removing the leftmost label of X.</li>
 </ul>
-<figure suppress-title="true"><artwork>
-<![CDATA[
+<sourcecode type="pseudocode" name="pseudocode-1">
    RelevantCAASet(domain):
      while domain is not ".":
        if CAA(domain) is not Empty:
          return CAA(domain)
        domain = Parent(domain)
-     return Empty ]]></artwork>
-</figure>
+     return Empty </sourcecode>
 <ul>
 <li>For example, processing CAA for the FQDN "X.Y.Z" where there are
 no CAA records at any level in the tree RelevantCAASet would have the
 following steps:</li>
 </ul>
-<figure suppress-title="true"><artwork>
-<![CDATA[TBS]]></artwork>
-</figure>
+<artwork>
+   CAA("X.Y.Z.") = Empty; domain = Parent("X.Y.Z.") = "Y.Z."
+   CAA("Y.Z.")   = Empty; domain = Parent("Y.Z.")   = "Z."
+   CAA("Z.")     = Empty; domain = Parent("Z.")     = "."
+   return Empty </artwork>
 <ul>
 <li>Processing CAA for the FQDN "A.B.C" where there is a CAA record
 "issue example.com" at "B.C" would terminate early upon finding the CAA
 record:</li>
 </ul>
-<figure suppress-title="true"><artwork>
-<![CDATA[TBS]]></artwork>
-</figure>
+<artwork>
+   CAA("A.B.C.") = Empty; domain = Parent("A.B.C.") = "B.C."
+   CAA("B.C.")   = "issue example.com"
+   return "issue example.com" </artwork>
 </section>
 <section title="Mechanism" anchor="s-5"><section title="Syntax" anchor="s-5_1"><t>A CAA RR contains a single Property consisting of a tag?value
 pair. An FQDN <bcp14>MAY</bcp14> have multiple CAA RRs associated with it, and a
 given Property Tag <bcp14>MAY</bcp14> be specified more than once across those RRs.</t>
 <t>The RDATA section for a CAA RR contains one Property. A Property
 consists of the following:</t>
-<figure suppress-title="true"><artwork>
-<![CDATA[TBS]]></artwork>
-</figure>
+<artwork>
++0-1-2-3-4-5-6-7-|0-1-2-3-4-5-6-7-|
+| Flags          | Tag Length = n |
++----------------|----------------+...+---------------+
+| Tag char 0     | Tag char 1     |...| Tag char n-1  |
++----------------|----------------+...+---------------+
++----------------|----------------+.....+----------------+
+| Value byte 0   | Value byte 1   |.....| Value byte m-1 |
++----------------|----------------+.....+----------------+
+</artwork>
 <t>Where n is the length specified in the Tag Length field and m is the
 number of remaining octets in the Value field. They are related by
 (m = d - n - 2)

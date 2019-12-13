@@ -605,7 +605,13 @@ namespace Goedel.Document.RFC {
         [System.Xml.Serialization.XmlElementAttribute("ol", typeof(ol))]
         [System.Xml.Serialization.XmlElementAttribute("t", typeof(t))]
         [System.Xml.Serialization.XmlElementAttribute("ul", typeof(ul))]
+        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
         public object[] Items { get; set; }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ItemsElementName")]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public ItemsChoiceTextRun[] ItemsElementName { get; set; }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
@@ -731,9 +737,12 @@ namespace Goedel.Document.RFC {
     public partial class artwork : Common {
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
+        
         [System.Xml.Serialization.XmlAnyElementAttribute()]
         public System.Xml.XmlNode[] Any { get; set; }
+
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public string Text { get; set; } = "";
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
@@ -1206,16 +1215,19 @@ namespace Goedel.Document.RFC {
     public partial class postamble : Common {
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute(typeof(string))]
         [System.Xml.Serialization.XmlElementAttribute("cref", typeof(cref))]
         [System.Xml.Serialization.XmlElementAttribute("eref", typeof(eref))]
         [System.Xml.Serialization.XmlElementAttribute("iref", typeof(iref))]
         [System.Xml.Serialization.XmlElementAttribute("spanx", typeof(spanx))]
         [System.Xml.Serialization.XmlElementAttribute("xref", typeof(xref))]
+        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
         public object[] Items { get; set; }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
-        public string[] Text { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("ItemsElementName")]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public ItemsChoiceTextRun[] ItemsElementName { get; set; }
         }
 
     #endregion
@@ -1507,7 +1519,13 @@ namespace Goedel.Document.RFC {
         [System.Xml.Serialization.XmlElementAttribute("ol", typeof(ol))]
         [System.Xml.Serialization.XmlElementAttribute("t", typeof(t))]
         [System.Xml.Serialization.XmlElementAttribute("ul", typeof(ul))]
+        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
         public object[] Items { get; set; }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ItemsElementName")]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public ItemsChoiceTextRun[] ItemsElementName { get; set; }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]

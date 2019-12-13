@@ -56,7 +56,7 @@ namespace Goedel.Document.RFC {
         public List<string> Workgroup = new List<string>();
         public List<string> Keywords = new List<string>();
         public List<TextBlock> Abstract = new List<TextBlock>();
-        public List<TextBlock> Note = new List<TextBlock>();
+        public List<List<TextBlock>> Note = new List<List<TextBlock>>();
         public List<Section> Boilerplate = new List<Section>();
         public List<Section> Middle = new List<Section>();
         public List<Section> Back = new List<Section>();
@@ -328,7 +328,7 @@ namespace Goedel.Document.RFC {
                         var Figure = Text as Figure;
                         TableOfFigures.Add(Text as Figure);
                         Figure.NumericID = TableOfFigures.Count.ToString();
-                        Figure.SetableID = Figure.SetableID ?? "n-" + GetAnchor(Figure.Caption);
+                        Figure.AnchorID = Figure.AnchorID ?? "n-" + GetAnchor(Figure.Caption);
                         }
                     }
                 }
@@ -384,7 +384,7 @@ namespace Goedel.Document.RFC {
 
         public void NumberSections() {
             NumberTextBlocks("s-abstract", ref Abstract);
-            NumberTextBlocks("s-note", ref Note);
+            //NumberTextBlocks("s-note", ref Note);
 
             int Index = 1;
 
@@ -527,12 +527,12 @@ namespace Goedel.Document.RFC {
 
     public abstract class TextBlock {
         public string GeneratedID;  // The id used in <p>, <h2>, <h3>, etc.
-        public string SetableID = null;
+        public string AnchorID = null;
         public string NumericID = "tbs";
-
+        
+        public string Align;
 
         // These are the identifiers to use in future.
-        public string AnchorID = null; // probably collapse to SetableID
         public string PnID = null; // probablyu collapse to GeneratedID
 
         public abstract string SectionText { get; }
@@ -541,8 +541,9 @@ namespace Goedel.Document.RFC {
 
         public abstract BlockType BlockType { get; }
 
-        public List<string> Irefs;
+        public List<GM.TextSegment> Irefs;
 
+        public List<GM.TextSegment> BlockName;
         }
 
 
@@ -551,13 +552,22 @@ namespace Goedel.Document.RFC {
         public override string SectionText => "Figure " + NumericID;
         public string FigureID => "f-" + NumericID;
 
+        public List<GM.TextSegment> Preamble;
+        public List<GM.TextSegment> Postamble;
+
         public string Caption;
-        public string Filename;
+
         public string Width;
+        public string Height;
+
+
+
+        public List<PRE> Content = new List<PRE>();
+
 
         public Figure(string Filename, string ID) {
-            this.SetableID = ID;
-            this.Filename = Filename;
+            this.AnchorID = ID;
+            //this.Filename = Filename;
             }
         }
 
@@ -575,7 +585,7 @@ namespace Goedel.Document.RFC {
 
 
         public P(string Text, string ID) {
-            this.SetableID = ID;
+            this.AnchorID = ID;
             Segments = Segments ?? new List<GM.TextSegment>();
             Segments.Add(new GM.TextSegmentText(Text));
             }
@@ -598,7 +608,12 @@ namespace Goedel.Document.RFC {
 
     public class PRE : P {
 
-        public string Language = "none";
+        public string Element;
+
+        public string Language;
+        public string Filename;
+        public string OutputFile;
+        public string Alt;
 
         public override BlockType BlockType => BlockType.Verbatim;
         public PRE() : base() {
@@ -881,6 +896,8 @@ namespace Goedel.Document.RFC {
 
         public List<Markdown.TextSegment> Segments;
 
+
+        public int AsideLevel = 0;
         public int ListLevel = 0;
 
         public TextBlockSequenceBuilder() {
@@ -895,8 +912,10 @@ namespace Goedel.Document.RFC {
             if (text != null) {
                 var textSegment = new Markdown.TextSegmentText(text);
                 if (Segments == null) {
-
-                    AddBlock(new P(), new List<GM.TextSegment>());
+                    var block = new P() {
+                        Segments = new List<GM.TextSegment>()
+                        };
+                    AddBlock(block, block.Segments);
 
                     }
 

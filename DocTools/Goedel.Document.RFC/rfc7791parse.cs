@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 using Goedel.Document.RFC;
+using Goedel.Utilities;
 
 namespace Goedel.Document.RFC {
     public class Rfc7991Parse {
@@ -24,7 +25,7 @@ namespace Goedel.Document.RFC {
             this.TextReader = TextReader;
             this.Document = Document;
 
-            Parse ();
+            Parse();
             }
 
 
@@ -39,9 +40,9 @@ namespace Goedel.Document.RFC {
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
             ns.Add("", "http://tempuri.org/rfc2629");
 
-            XmlSerializer XmlSerializer = new XmlSerializer (typeof (rfc));
+            XmlSerializer XmlSerializer = new XmlSerializer(typeof(rfc));
 
-            rfc rfc = (rfc) XmlSerializer.Deserialize (TextReader);
+            rfc rfc = (rfc)XmlSerializer.Deserialize(TextReader);
             Document.Number = rfc.number;
             Document.Obsoletes = rfc.obsoletes;
             Document.Updates = rfc.updates;
@@ -71,7 +72,7 @@ namespace Goedel.Document.RFC {
                 Document.Workgroup = MakeString(front.workgroup);
                 Document.Keywords = MakeKeywords(front.keyword);
 
-                Document.Abstract = MakeTextBlocks(front.@abstract.Items);
+                Document.Abstract = MakeTextBlocks(front.@abstract.Items, front.@abstract.ItemsElementName);
                 Document.Note = MakeTextBlocks(front.note);
                 if (front.boilerplate != null) {
                     Document.Boilerplate = MakeSections(front.boilerplate.section, 2);
@@ -89,7 +90,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        List<string> MakeString (asciitext[] Text) {
+        List<string> MakeString(asciitext[] Text) {
             if (Text == null) {
                 return null;
                 }
@@ -101,13 +102,6 @@ namespace Goedel.Document.RFC {
             return Result;
             }
 
-
-        string MakeString (string[] s) {
-
-            if (s == null) { return null; }
-            if (s.Length == 0) {return null; }
-            return s[0];
-            }
 
         List<string> MakeKeywords(asciitext[] keyword) {
             List<string> Result = new List<string>();
@@ -121,9 +115,10 @@ namespace Goedel.Document.RFC {
             return Result;
             }
 
+        #region // authors, references
 
         List<Author> MakeAuthors(author[] authors) {
-            List<Author> Result = new List<Author> ();
+            List<Author> Result = new List<Author>();
 
             foreach (author author in authors) {
                 Author Author = new Author() {
@@ -135,7 +130,7 @@ namespace Goedel.Document.RFC {
                     Author.Organization = author.organization.Value;
                     Author.OrganizationAbbrev = author.organization.abbrev;
                     }
-              
+
                 Author.Surname = author.surname;
 
                 if (author.address != null) {
@@ -148,7 +143,7 @@ namespace Goedel.Document.RFC {
                     Author.Street = GetAddressAttribute(author.address.postal, "street");
                     }
 
-                Result.Add (Author);
+                Result.Add(Author);
                 }
 
             return Result;
@@ -156,13 +151,13 @@ namespace Goedel.Document.RFC {
 
 
         Reference MakeReference(reference reference) {
-            Reference Result = new Reference ();
+            Reference Result = new Reference();
 
             if (reference.front != null) {
                 Result.Title = reference.front.title.Value;
                 Result.Abbrev = reference.front.title.abbrev;
                 if (reference.front.author != null) {
-                    Result.Authors = MakeAuthors (reference.front.author);
+                    Result.Authors = MakeAuthors(reference.front.author);
                     }
                 if (reference.front.date != null) {
                     Result.Day = reference.front.date.day;
@@ -171,12 +166,12 @@ namespace Goedel.Document.RFC {
                     }
                 Result.Area = MakeString(reference.front.area);
                 Result.Workgroup = MakeString(reference.front.workgroup);
-                Result.Keywords = MakeKeywords (reference.front.keyword);
+                Result.Keywords = MakeKeywords(reference.front.keyword);
                 // do nothing with the note field
                 }
 
-            Result.SeriesInfos = MakeSeriesInfo (reference.Items);
-            Result.Formats = MakeFormats (reference.Items);
+            Result.SeriesInfos = MakeSeriesInfo(reference.Items);
+            Result.Formats = MakeFormats(reference.Items);
 
 
             Result.GeneratedID = reference.anchor;
@@ -185,7 +180,9 @@ namespace Goedel.Document.RFC {
             return Result;
             }
 
-        List<SeriesInfo> MakeSeriesInfo (seriesInfo[] seriesInfos) {
+
+
+        List<SeriesInfo> MakeSeriesInfo(seriesInfo[] seriesInfos) {
             List<SeriesInfo> ListSeriesInfo = new List<SeriesInfo>();
 
             if (seriesInfos != null) {
@@ -203,7 +200,7 @@ namespace Goedel.Document.RFC {
             }
 
         List<SeriesInfo> MakeSeriesInfo(object[] seriesInfos) {
-            List<SeriesInfo> ListSeriesInfo = new List<SeriesInfo> ();
+            List<SeriesInfo> ListSeriesInfo = new List<SeriesInfo>();
 
             if (seriesInfos != null) {
                 foreach (var obj in seriesInfos) {
@@ -223,7 +220,7 @@ namespace Goedel.Document.RFC {
             return ListSeriesInfo;
             }
 
-        List<Format> MakeFormats (object[] formats) {
+        List<Format> MakeFormats(object[] formats) {
             List<Format> ListFormats = new List<Format>();
 
             if (formats != null) {
@@ -245,8 +242,21 @@ namespace Goedel.Document.RFC {
             }
 
 
+        #endregion
 
-        void MakeCatalog (Catalog Catalog, references[] referencesArray) {
+        List<TextBlock> MakeTextBlocks(object[] items, ItemsChoiceTextRun[] tags) {
+            if (items == null) {
+                return null;
+                }
+
+            var builder = new TextBlockSequenceBuilder();
+            AddTextBlocks(builder, items, tags);
+
+            return builder.Blocks;
+            }
+
+
+        void MakeCatalog(Catalog Catalog, references[] referencesArray) {
             if (referencesArray != null) {
                 foreach (references references in referencesArray) {
                     References References = new References();
@@ -268,44 +278,22 @@ namespace Goedel.Document.RFC {
                 }
             }
 
-
-        void FillTextBlock (object[] Items, List<TextBlock> TextBlocks) {
-            foreach (object o in Items) {
-                if (o.GetType() == typeof(figure)) {
-                    AddFigureBlock(TextBlocks, (figure)o);
-                    }
-                else if (o.GetType() == typeof(iref)) {
-                    AddIndex(TextBlocks, (iref)o);
-                    }
-                else if (o.GetType() == typeof(t)) {
-                    AddListBlocks(TextBlocks, (t)o);
-                    }
-
-                // ToDo: add in all new textblock like things
-                }
-            }
-
-        List<TextBlock> MakeTextBlocks (note[] Notes) {
+        List<List<TextBlock>> MakeTextBlocks(note[] Notes) {
             if (Notes == null) {
                 return null;
                 }
 
-            List<TextBlock> Result = new List<TextBlock>();
+            var result = new List<List<TextBlock>>();
 
             foreach (var Note in Notes) {
-                FillTextBlock(Note.Items, Result);
+
+                var blocks = MakeTextBlocks(Note.Items, Note.ItemsElementName);
+                result.Add(blocks);
+
                 }
-            return Result;
+            return result;
             }
 
-
-        List<TextBlock> MakeTextBlocks(object[] Items) {
-            List<TextBlock> Result = new List<TextBlock>();
-
-            FillTextBlock(Items, Result);
-
-            return Result;
-            }
 
 
         void MakeTextBlockT(TextBlockSequenceBuilder builder, t source) {
@@ -317,7 +305,7 @@ namespace Goedel.Document.RFC {
             AddTextBlocks(builder, source.Items, source.ItemsElementName);
             }
 
-        void MakeTextBlock (TextBlockSequenceBuilder builder, ol source) {
+        void MakeTextBlock(TextBlockSequenceBuilder builder, ol source) {
             builder.ListLevel++;
             if (source.li != null) {
 
@@ -328,7 +316,7 @@ namespace Goedel.Document.RFC {
 
                 //var listBuilder = new TextBlockSequenceBuilder();
                 //block.Items = listBuilder.Blocks;
-                    foreach (var li in source.li) {
+                foreach (var li in source.li) {
                     var blockLi = new LI() {
                         Level = builder.ListLevel,
                         Index = index,
@@ -453,7 +441,7 @@ namespace Goedel.Document.RFC {
             return result;
             }
 
-        int A2Int(string text, int def=1) {
+        int A2Int(string text, int def = 1) {
             if (!Int32.TryParse(text, out int index)) {
                 return def;
                 }
@@ -463,14 +451,13 @@ namespace Goedel.Document.RFC {
         TableData MakeTableCell(tableCellType cellType) {
             // anchor, colspan, rowspan, align 
 
-            var builder = new TextBlockSequenceBuilder();
-            AddTextBlocks(builder, cellType.Items, cellType.ItemsElementName);
+            var blocks = MakeTextBlocks(cellType.Items, cellType.ItemsElementName);
 
             var result = new TableData() {
-                AnchorID =cellType.anchor,
+                AnchorID = cellType.anchor,
                 RowSpan = A2Int(cellType.rowspan),
                 ColSpan = A2Int(cellType.colspan),
-                Blocks = builder.Blocks
+                Blocks = blocks
                 };
 
 
@@ -513,47 +500,86 @@ namespace Goedel.Document.RFC {
             builder.AddBlock(block, block.Segments);
             AddTextBlocks(builder, source.Items, source.ItemsElementName);
             }
-        void MakeTextBlock(TextBlockSequenceBuilder builder, sourcecode source) {
-            var block = new PRE(source.Value, source.anchor) {
-                // name?
-                // type?
-                // src ?
-                };
 
-            builder.AddBlock(block, block.Segments);
-            // here need to include the source text or the link...
-            }
-
-        void MakeTextBlock(TextBlockSequenceBuilder builder, artwork source) {
-            var block = new PRE("TBS", source.anchor) {
-                // name?
-                // type?
-                // src ?
-                };
-
-            builder.AddBlock(block, block.Segments);
-            // here need to include the source text or the link...
-            }
         void MakeTextBlock(TextBlockSequenceBuilder builder, aside source) {
+            builder.AsideLevel++;
             AddTextBlocks(builder, source.Items, source.ItemsElementName);
+            builder.AsideLevel--;
+            }
+
+
+
+
+        void MakeTextBlock(TextBlockSequenceBuilder builder, sourcecode source) =>
+            builder.AddBlock(MakeTextBlock(source), null);
+
+        List<Markdown.TextSegment> MakeName(name name) {
+            return null;
+            }
+
+        List<Markdown.TextSegment> MakeIrefs(iref[] irefs) {
+            return null;
+            }
+
+
+        PRE MakeTextBlock(sourcecode source) {
+            var block = new PRE(source.Value, source.anchor) {
+                Element = "sourcecode",
+                Filename = source.src,
+                Language = source.type,
+                OutputFile = source.name
+                };
+
+            return block;
+            }
+
+        void MakeTextBlock(TextBlockSequenceBuilder builder, artwork source) => 
+            builder.AddBlock(MakeTextBlock(source), null);
+
+        PRE MakeTextBlock(artwork source) {
+            var block = new PRE(source.Text, source.anchor) {
+                Element = "artwork",
+                Filename = source.src
+                };
+            return block;
+
             }
 
         void MakeTextBlock(TextBlockSequenceBuilder builder, figure source) {
             // see above
 
             var block = new Figure(null, source.anchor) {
-                // name?
-                // iref?
-                // preamble?
-                // postamble?
+                AnchorID = source.anchor,
+                Width = source.width,
+                Height = source.height
                 };
+
+            if (source.name != null) {
+                block.BlockName = MakeName(source.name);
+                }
+            if (source.iref != null) {
+                block.Irefs = MakeIrefs(source.iref);
+                }
+
+
+            if (source.preamble != null) {
+                block.Preamble = MakeTextSegments(
+                    source.preamble.Items, source.preamble.ItemsElementName);
+                }
+            if (source.postamble != null) {
+                block.Postamble = MakeTextSegments(
+                    source.postamble.Items, source.postamble.ItemsElementName);
+                }
 
             foreach (var item in source.Items) {
                 switch (item) {
                     case artwork artwork: {
+                        block.Content.Add(MakeTextBlock(artwork));
+
                         break;
                         }
                     case sourcecode sourcecode: {
+                        block.Content.Add(MakeTextBlock(sourcecode));
                         break;
                         }
                     }
@@ -564,6 +590,10 @@ namespace Goedel.Document.RFC {
 
             }
 
+
+        List<Markdown.TextSegment> MakeTextSegments(object[] Items, ItemsChoiceTextRun[] Tags) {
+            return null; 
+            }
 
         void AddTextBlocks(TextBlockSequenceBuilder builder, object[] Items, ItemsChoiceTextRun[] Tags) {
 
@@ -763,147 +793,7 @@ namespace Goedel.Document.RFC {
             return Result;
             }
 
-
-        ////////////////////////
-        // Above is mostly stable
-        // These are orphan implementations that need to be removed.
-
-        void AddText(ref string s1, string s2) => s1 = (s1 == null) ? s2 : s1 + s2;
-
-
-        void MakeP(List<TextBlock> Parent, ref string  Text, ref string ID) {
-            if (Text != null) {
-                P P = new P (Text, ID);
-                ID = null; Text = null;
-                Parent.Add (P);
-                }
-            }
-
-        void MakeListItem(List<TextBlock> Parent, BlockType ListItem,
-                        ref string Text, ref string ID, ref string hangtext, int level, ref int Index) {
-
-            if (ListItem == BlockType.Definitions) {
-                if (hangtext != null) {
-                    LI LI = new LI(hangtext, ID, BlockType.Term, level);
-                    ID = null; hangtext = null;
-                    Parent.Add(LI);
-                    }
-                if (Text != null) {
-                    LI LI = new LI(Text, ID, BlockType.Data, level);
-                    ID = null; Text = null;
-                    Parent.Add(LI);
-                    }
-                }
-            else {
-
-                if (Text != null) {
-                    LI LI = new LI(Text, ID, ListItem, level, Index++);
-                    ID = null; Text = null;
-                    Parent.Add(LI);
-                    }
-                }
-            }
-
-
-
-        // a single t block can have a series of nested paragraphs.
-        void AddListBlocks(List<TextBlock> Parent, t t) {
-            if (t.Items != null) {
-                string ID = t.anchor;
-                string Text = null;
-
-                foreach (object o in t.Items) {
-                    if (o.GetType() == typeof (string)) {
-                        AddText (ref Text, (string) o);
-                        }
-                    else if (o.GetType() == typeof(list)) {
-                        MakeP (Parent, ref Text, ref ID);
-                        //Console.Write("Got list !");
-                        AddListBlocks (Parent, (list) o, 0);
-                        }
-                    else if (o.GetType() == typeof(figure)) {
-                        MakeP (Parent, ref Text, ref ID);
-                        AddFigureBlock (Parent, (figure) o);
-                        }
-
-                    // cref eref iref spanx vspace xref
-                    }
-
-                MakeP (Parent, ref Text, ref ID);
-                }
-
-            }
-
-
-        void AddListBlocks(List<TextBlock> Parent, list list, int level) {
-            BlockType ListItem;
-            int Index = 1;
-
-            if ((list.style == null) || (list.style == "symbols")) {
-                ListItem = BlockType.Symbol;
-                }
-            else if (list.style == "numbers") {
-                ListItem = BlockType.Ordered;
-                }
-            else if (list.style == "hanging") {
-                ListItem = BlockType.Definitions;
-                }
-            else {
-                throw new Exception ("List type not supported [" + list.style + "]");
-                }
-
-            if ((list.t == null) || list.t.Length == 0) {
-                return;
-                }
-            foreach (t t in list.t) {
-                string ID = t.anchor;
-                string HangText = t.hangText;
-                string Text = null;
-
-                foreach (object o in t.Items) {
-                    if (o.GetType() == typeof (string)) {
-                        AddText (ref Text, (string) o);
-                        }
-                    else if (o.GetType() == typeof(list)) {
-                        MakeListItem (Parent, ListItem, ref Text, ref ID, ref HangText, level, ref Index);
-                        AddListBlocks (Parent, (list) o, level +1);
-                        }
-                    else if (o.GetType() == typeof(figure)) {
-                        MakeListItem (Parent, ListItem, ref Text, ref ID, ref HangText, level, ref Index);
-                        AddFigureBlock (Parent, (figure) o);
-                        }
-
-                    // cref eref iref spanx vspace xref
-                    }
-
-                MakeListItem (Parent, ListItem, ref Text, ref ID, ref HangText, level, ref Index);
-                }
-            }
-
-
-        void AddPre (List<TextBlock> Parent, System.Xml.XmlNode[] Texts, string Anchor) {
-            //foreach (var Text in Texts) {
-            //    PRE PRE = new PRE(Text, Anchor);
-            //    Parent.Add(PRE);
-            //    }
-            }
-
-
-        void AddFigureBlock(List<TextBlock> Parent, figure figure) {
-            foreach (var Item in figure.Items) {
-                switch (Item) {
-                    case artwork artwork: {
-                        AddPre(Parent, artwork.Any, figure.anchor);
-                        break;
-                        }
-                    case sourcecode sourcecode: {
-                        break;
-                        }
-                    }
-
-                }
-            }
-
+        // ToDo: this should be a text run so that it can have indexes etc.
         string MakeString(object[] items) {
             string Result = "";
 
@@ -913,17 +803,6 @@ namespace Goedel.Document.RFC {
                     }
                 }
 
-            return Result;
-            }
-
-        string MakeString(object[] items, string[] text) {
-            string Result = "";
-
-            if (text != null) {
-                foreach (string s in text) {
-                    Result += s;
-                    }
-                }
             return Result;
             }
 
