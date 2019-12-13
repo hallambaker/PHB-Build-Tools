@@ -280,9 +280,6 @@ namespace Goedel.Document.RFC {
                 else if (o.GetType() == typeof(t)) {
                     AddListBlocks(TextBlocks, (t)o);
                     }
-                else if (o.GetType() == typeof(texttable)) {
-                    AddTableBlock(TextBlocks, (texttable)o);
-                    }
 
                 // ToDo: add in all new textblock like things
                 }
@@ -306,14 +303,6 @@ namespace Goedel.Document.RFC {
             List<TextBlock> Result = new List<TextBlock>();
 
             FillTextBlock(Items, Result);
-
-            return Result;
-            }
-
-        List<TextBlock> MakeTextBlocks (section section) {
-            List<TextBlock> Result = new List<TextBlock>();
-
-            FillTextBlock(section.Items, Result);
 
             return Result;
             }
@@ -345,7 +334,7 @@ namespace Goedel.Document.RFC {
                         Index = index,
                         Format = source.type,
                         Segments = new List<Markdown.TextSegment>(),
-                        Type = BlockType.Symbol
+                        Type = BlockType.Ordered
                         };
 
                     builder.AddBlock(blockLi, blockLi.Segments);
@@ -365,7 +354,7 @@ namespace Goedel.Document.RFC {
                     var blockLi = new LI() {
                         Level = builder.ListLevel,
                         Segments = new List<Markdown.TextSegment>(),
-                        Type = BlockType.Ordered
+                        Type = BlockType.Symbol
                         };
 
                     builder.AddBlock(blockLi, blockLi.Segments);
@@ -419,15 +408,16 @@ namespace Goedel.Document.RFC {
         void MakeTextBlock(TextBlockSequenceBuilder builder, table source) {
 
             var block = new Table() {
+                AnchorID = source.anchor
                 };
 
             // ToDo: name, iref, anchor
 
-            MakeTableRow(block, source.thead);
+            block.Head = MakeTableRow(source.thead);
             foreach (var row in source.tbody) {
-                MakeTableRow(block, row);
+                block.Body.Add(MakeTableRow(row));
                 }
-            MakeTableRow(block, source.tfoot);
+            block.Foot = MakeTableRow(source.tfoot);
 
             builder.AddBlock(block, null);
 
@@ -435,26 +425,56 @@ namespace Goedel.Document.RFC {
             }
 
 
-        void MakeTableRow(Table table, tableRowsType trtype) {
+        List<TableRow> MakeTableRow(tableRowsType trtype) {
             if (trtype == null) {
-                return;
+                return null;
                 }
             if (trtype.tr == null) {
-                return;
+                return null;
                 }
-            var builder = new TextBlockSequenceBuilder();
-            foreach (var trs in trtype.tr) {
-                foreach (var item in trs.Items) {
-                    MakeTableCell(builder, item);
+            var result = new List<TableRow>();
+
+            if (trtype.tr != null) {
+                foreach (var trs in trtype.tr) {
+                    var dataList = new List<TableData>();
+                    var tableRow = new TableRow() {
+                        AnchorID = trtype.anchor,
+                        Data = dataList
+                        };
+                    result.Add(tableRow);
+                    if (trs.Items != null) {
+                        foreach (var item in trs.Items) {
+                            dataList.Add(MakeTableCell(item));
+                            }
+                        }
                     }
                 }
 
+            return result;
             }
 
-        void MakeTableCell(TextBlockSequenceBuilder builder, tableCellType cellType) {
+        int A2Int(string text, int def=1) {
+            if (!Int32.TryParse(text, out int index)) {
+                return def;
+                }
+            return index;
+            }
+
+        TableData MakeTableCell(tableCellType cellType) {
             // anchor, colspan, rowspan, align 
 
+            var builder = new TextBlockSequenceBuilder();
             AddTextBlocks(builder, cellType.Items, cellType.ItemsElementName);
+
+            var result = new TableData() {
+                AnchorID =cellType.anchor,
+                RowSpan = A2Int(cellType.rowspan),
+                ColSpan = A2Int(cellType.colspan),
+                Blocks = builder.Blocks
+                };
+
+
+            return result;
             }
 
 
@@ -746,6 +766,7 @@ namespace Goedel.Document.RFC {
 
         ////////////////////////
         // Above is mostly stable
+        // These are orphan implementations that need to be removed.
 
         void AddText(ref string s1, string s2) => s1 = (s1 == null) ? s2 : s1 + s2;
 
@@ -881,48 +902,6 @@ namespace Goedel.Document.RFC {
                     }
 
                 }
-            }
-
-        void AddTableBlock(List<TextBlock> Parent, texttable texttable) {
-            Table Table = new Table() {
-                GeneratedID = texttable.anchor
-                };
-            
-            TableRow TableRow = new TableRow();
-
-            if (texttable.ttcol != null) {
-                foreach (ttcol ttcol in texttable.ttcol) {
-                    TableData item = new TableData() {
-                        IsHeading = true,
-                        Text = ttcol.Value
-                        };
-                    TableRow.Data.Add(item);
-                    }
-                }
-
-            Table.MaxRow = TableRow.Data.Count;
-            Table.Rows.Add (TableRow);
-
-            if (texttable.c != null) {
-                int col = Table.MaxRow;
-                foreach (c c in texttable.c) {
-                    TableData item = new TableData() {
-                        IsHeading = false,
-                        // Text = MakeString(c.Items, c.Text)
-                        };
-
-                    if (col >= Table.MaxRow) {
-                        col = 0;
-                        TableRow = new TableRow();
-                        Table.Rows.Add(TableRow);
-                        }
-                    col++;
-                    TableRow.Data.Add(item);
-                    }
-                }
-            
-            Parent.Add (Table);
-
             }
 
         string MakeString(object[] items) {

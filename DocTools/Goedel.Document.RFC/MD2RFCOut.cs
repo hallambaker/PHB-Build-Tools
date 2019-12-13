@@ -145,21 +145,23 @@ namespace Goedel.Document.RFC {
 
         public void WriteTable (Table Table) {
 
-            TextWriter.WriteLine( "<table={0}>", Table.GeneratedID);
-            TextWriter.WriteLine("<thead>");
-            TextWriter.WriteLine("<tr>");
-            foreach (var Data in Table.Rows[0].Data) {
-                TextWriter.WriteLine("<td>{0}", Data.Text);
-                }
-            TextWriter.WriteLine("<tbody>");
-            TextWriter.WriteLine("<tr>");
-            for (var i = 1; i < Table.Rows.Count; i++) {
-                TextWriter.WriteLine("<tr>");
-                foreach (var Data in Table.Rows[i].Data) {
-                    TextWriter.WriteLine("<td>{0}", Data.Text);
-                    }
-                }
-            TextWriter.WriteLine("</table>");
+            throw new NYI(); // disable for now
+
+            //TextWriter.WriteLine( "<table={0}>", Table.GeneratedID);
+            //TextWriter.WriteLine("<thead>");
+            //TextWriter.WriteLine("<tr>");
+            //foreach (var Data in Table.Body[0].Data) {
+            //    TextWriter.WriteLine("<td>{0}", Data.Text);
+            //    }
+            //TextWriter.WriteLine("<tbody>");
+            //TextWriter.WriteLine("<tr>");
+            //for (var i = 1; i < Table.Body.Count; i++) {
+            //    TextWriter.WriteLine("<tr>");
+            //    foreach (var Data in Table.Body[i].Data) {
+            //        TextWriter.WriteLine("<td>{0}", Data.Text);
+            //        }
+            //    }
+            //TextWriter.WriteLine("</table>");
             }
 
         public void WriteHeading(string Text, int Level) {

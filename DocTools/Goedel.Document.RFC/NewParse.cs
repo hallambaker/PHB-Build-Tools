@@ -603,19 +603,21 @@ namespace Goedel.Document.RFC {
         Table MakeTable(List<XML> Contents) {
             Table Table = new Table();
 
-            for (int Index = 0; Index < Contents.Count; Index++) {
-                if (Contents[Index].GetType() == typeof(Element)) {
-                    Element Element = (Element)Contents[Index];
+            throw new NYI();
 
-                    switch (Element.Tag.ToLower()) {
-                        case "tr": {
-                                Table.Rows.Add(MakeTableRow(Table, Element.Contents));
-                                break;
-                                }
-                        }
-                    }
-                }
-            return Table;
+            //for (int Index = 0; Index < Contents.Count; Index++) {
+            //    if (Contents[Index].GetType() == typeof(Element)) {
+            //        Element Element = (Element)Contents[Index];
+
+            //        switch (Element.Tag.ToLower()) {
+            //            case "tr": {
+            //                    Table.Body.Add(MakeTableRow(Table, Element.Contents));
+            //                    break;
+            //                    }
+            //            }
+            //        }
+            //    }
+            //return Table;
             }
 
         TableRow MakeTableRow(Table Table, List<XML> Contents) {

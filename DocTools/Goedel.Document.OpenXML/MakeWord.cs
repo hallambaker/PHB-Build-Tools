@@ -8,6 +8,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using HT = Goedel.Document.RFC;
 using GM = Goedel.Document.Markdown;
+using Goedel.Utilities;
 
 namespace Goedel.Document.OpenXML {
     public partial class MakeWord : HT.MakeFormat {
@@ -140,21 +141,24 @@ namespace Goedel.Document.OpenXML {
             }
 
         void WriteTable (HT.Table TableData) {
-            var Table = new Table();
-            foreach (var Row in TableData.Rows) {
-                var tr = new TableRow();
-                foreach (var Cell in Row.Data) {
-                    var tc = new TableCell();
-                    tc.Append(new Paragraph(
-                        new Run(
-                            new Text(Cell.Text))));
-                    tc.Append(new TableCellProperties(
-                        new TableCellWidth { Type = TableWidthUnitValues.Auto }));
-                    tr.Append(tc);
-                    }
-                Table.Append(tr);
-                }
-            TargetBody.Append(Table);
+
+            throw new NYI(); // ToDo: fix tables
+
+            //var Table = new Table();
+            //foreach (var Row in TableData.Body) {
+            //    var tr = new TableRow();
+            //    foreach (var Cell in Row.Data) {
+            //        var tc = new TableCell();
+            //        tc.Append(new Paragraph(
+            //            new Run(
+            //                new Text(Cell.Text))));
+            //        tc.Append(new TableCellProperties(
+            //            new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+            //        tr.Append(tc);
+            //        }
+            //    Table.Append(tr);
+            //    }
+            //TargetBody.Append(Table);
             }
 
 

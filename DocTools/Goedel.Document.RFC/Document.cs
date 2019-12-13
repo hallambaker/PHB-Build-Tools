@@ -530,11 +530,18 @@ namespace Goedel.Document.RFC {
         public string SetableID = null;
         public string NumericID = "tbs";
 
+
+        // These are the identifiers to use in future.
+        public string AnchorID = null; // probably collapse to SetableID
+        public string PnID = null; // probablyu collapse to GeneratedID
+
         public abstract string SectionText { get; }
         public int Line, Position;
         public int Page;
 
         public abstract BlockType BlockType { get; }
+
+        public List<string> Irefs;
 
         }
 
@@ -627,6 +634,13 @@ namespace Goedel.Document.RFC {
         public int Index;
 
         public string Format;
+        public string Group;
+        public string Spacing;
+
+        public string EnclosingAnchorID;
+
+
+        public string Empty => Format == "empty" ? "true" : null;
 
         public override BlockType BlockType => Type;
 
@@ -671,7 +685,9 @@ namespace Goedel.Document.RFC {
         public int MaxRow = 0;
         public List<int> Percent = new List<int>();
         public List<int> Width = new List<int>();
-        public List<TableRow> Rows = new List<TableRow>();
+        public List<TableRow> Head = new List<TableRow>();
+        public List<List<TableRow>> Body = new List<List<TableRow>>();
+        public List<TableRow> Foot = new List<TableRow>();
         }
 
     public class TableRow : TextBlock {
@@ -685,6 +701,12 @@ namespace Goedel.Document.RFC {
         public override BlockType BlockType => BlockType.TableData;
         public bool IsHeading;
         public string Text;
+
+        // the good stuff
+        public int RowSpan;
+        public int ColSpan;
+        public List<TextBlock> Blocks;
+
         }
 
 
@@ -734,7 +756,8 @@ namespace Goedel.Document.RFC {
         
         ///<summary>The DOI identifier</summary>
         public string DOI;
-
+        ///<summary>The STD identifier</summary>
+        public string STD;
         ///<summary>The document version if explicitly specified.</summary>
         public string ExplicitVersion = null;
 

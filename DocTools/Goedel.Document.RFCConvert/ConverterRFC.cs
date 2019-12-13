@@ -5,6 +5,7 @@ using System.Text;
 using Goedel.Document.RFC;
 using GM = Goedel.Document.Markdown;
 using Goedel.Registry;
+using Goedel.Utilities;
 
 namespace MakeRFC {
     public class ConverterRFC {
@@ -325,39 +326,41 @@ namespace MakeRFC {
             }
 
         Table ParseTable (GM.Block Block) {
-            var Table = new Table ();
-            TableRow Row = null;
-            TableData Data = null;
-            int RowCount = 0;
+            //var Table = new Table ();
+            //TableRow Row = null;
+            //TableData Data = null;
+            //int RowCount = 0;
 
-            foreach (var Segment in Block.Segments) {
-                switch (Segment) {
-                    case GM.TextSegmentOpen Open: {
-                        if (Open.CatalogEntry.Key == "tablerow") {
-                            Row = new TableRow();
-                            Table.Rows.Add(Row);
-                            RowCount++;
-                            }
-                        if (Open.CatalogEntry.Key == "tablecell") {
-                            Data = new TableData();
-                            Row.Data.Add(Data);
-                            Table.MaxRow = Row.Data.Count > Table.MaxRow ? Row.Data.Count : Table.MaxRow;
-                            }
-                        break;
-                        }
-                    case GM.TextSegmentText Text: {
-                        Data.Text = Text.Text;
-                        break;
-                        }
-                    case GM.TextSegmentClose Close: {
-                        break;
-                        }
-                    }
+            throw new NYI();
+
+            //foreach (var Segment in Block.Segments) {
+            //    switch (Segment) {
+            //        case GM.TextSegmentOpen Open: {
+            //            if (Open.CatalogEntry.Key == "tablerow") {
+            //                Row = new TableRow();
+            //                Table.Body.Add(Row);
+            //                RowCount++;
+            //                }
+            //            if (Open.CatalogEntry.Key == "tablecell") {
+            //                Data = new TableData();
+            //                Row.Data.Add(Data);
+            //                Table.MaxRow = Row.Data.Count > Table.MaxRow ? Row.Data.Count : Table.MaxRow;
+            //                }
+            //            break;
+            //            }
+            //        case GM.TextSegmentText Text: {
+            //            Data.Text = Text.Text;
+            //            break;
+            //            }
+            //        case GM.TextSegmentClose Close: {
+            //            break;
+            //            }
+            //        }
 
 
-                }
+            //    }
 
-            return Table;
+            //return Table;
 
             }
 

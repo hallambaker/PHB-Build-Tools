@@ -213,9 +213,11 @@ record and rules for processing CAA records by CAs.</t>
           <table>
             <name>Named table</name>
             <thead>
-              <td>head 1</td>
-              <td>head 2</td>
-              <td>head 3</td>                 
+              <tr>
+                <td>head 1</td>
+                <td>head 2</td>
+                <td>head 3</td>   
+              </tr>
             </thead>
             <tbody>
               <tr>

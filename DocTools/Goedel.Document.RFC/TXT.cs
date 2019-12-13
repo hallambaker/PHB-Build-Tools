@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using GM = Goedel.Document.Markdown;
+using Goedel.Utilities;
 
 namespace Goedel.Document.RFC {
 
@@ -143,13 +144,15 @@ namespace Goedel.Document.RFC {
                     }
                 }
 
-            if ((PageWriter.Line + Lines + 2)> PageWriter.LastLine) {
-                PageWriter.WritePage ();
-                PageWriter.WriteLine();
-                PageWriter.WriteLine(Rule1);
-                WriteRow (Table, Table.Rows[0], Widths, Rule1, Rule2);
-                PageWriter.WriteLine(Rule1);
-                }
+            // ToDo: inplement tables
+
+            //if ((PageWriter.Line + Lines + 2)> PageWriter.LastLine) {
+            //    PageWriter.WritePage ();
+            //    PageWriter.WriteLine();
+            //    PageWriter.WriteLine(Rule1);
+            //    WriteRow (Table, Table.Body[0], Widths, Rule1, Rule2);
+            //    PageWriter.WriteLine(Rule1);
+            //    }
 
             for (int i = 0; i < Table.MaxRow; i++) {
                 Cols[i] = Row.Data[i].Text;
@@ -182,65 +185,66 @@ namespace Goedel.Document.RFC {
 
             int PerRow = RowSpace / Table.MaxRow;
 
+            throw new NYI(); // ToDo: implement new tables 
 
-            int[] Widths = new int[Table.MaxRow];
-            for (int i = 0; i < Table.MaxRow; i++) {
-                Widths[i] = 0;
-                }
+            //int[] Widths = new int[Table.MaxRow];
+            //for (int i = 0; i < Table.MaxRow; i++) {
+            //    Widths[i] = 0;
+            //    }
 
-            int VariableRows = 0;
-            foreach (TableRow Row in Table.Rows) {
-                for (int i = 0; i < Table.MaxRow; i++) {
-                    if (Widths[i] < 0) {
-                        }
-                    else if (Row.Data[i].Text.Length > PerRow) {
-                        Widths[i] = -1;
-                        VariableRows++;
-                        }
-                    else {
-                        Widths[i] = Widths[i] > Row.Data[i].Text.Length ?
-                            Widths[i] : Row.Data[i].Text.Length;
-                        }
-                    }
-                }
+            //int VariableRows = 0;
+            //foreach (TableRow Row in Table.Body) {
+            //    for (int i = 0; i < Table.MaxRow; i++) {
+            //        if (Widths[i] < 0) {
+            //            }
+            //        else if (Row.Data[i].Text.Length > PerRow) {
+            //            Widths[i] = -1;
+            //            VariableRows++;
+            //            }
+            //        else {
+            //            Widths[i] = Widths[i] > Row.Data[i].Text.Length ?
+            //                Widths[i] : Row.Data[i].Text.Length;
+            //            }
+            //        }
+            //    }
 
-            for (int i = 0; i < Table.MaxRow; i++) {
-                if (Widths[i] >= 0) {
-                    RowSpace -= Widths[i] + 3;
-                    }
-                }
+            //for (int i = 0; i < Table.MaxRow; i++) {
+            //    if (Widths[i] >= 0) {
+            //        RowSpace -= Widths[i] + 3;
+            //        }
+            //    }
 
-            if (VariableRows > 0) {
-                PerRow = RowSpace / VariableRows;
-                int Extra = RowSpace - (PerRow * VariableRows);
-                for (int i = 0; i < Table.MaxRow; i++) {
-                    if (Widths[i] < 0) {
-                        Widths[i] = PerRow + (Extra > 0 ? 1 : 0) - 3;
-                        Extra--;
-                        }
-                    }
-                }
-            string Rule1 = "   +", Rule2 = "   |";
-            for (int i = 0; i < Table.MaxRow; i++) {
-                Rule1 += "".PadLeft (Widths[i] + 2, '-') + "+";
-                Rule2 += "".PadLeft (Widths[i] + 2, ' ') + "|";
-                }
+            //if (VariableRows > 0) {
+            //    PerRow = RowSpace / VariableRows;
+            //    int Extra = RowSpace - (PerRow * VariableRows);
+            //    for (int i = 0; i < Table.MaxRow; i++) {
+            //        if (Widths[i] < 0) {
+            //            Widths[i] = PerRow + (Extra > 0 ? 1 : 0) - 3;
+            //            Extra--;
+            //            }
+            //        }
+            //    }
+            //string Rule1 = "   +", Rule2 = "   |";
+            //for (int i = 0; i < Table.MaxRow; i++) {
+            //    Rule1 += "".PadLeft (Widths[i] + 2, '-') + "+";
+            //    Rule2 += "".PadLeft (Widths[i] + 2, ' ') + "|";
+            //    }
 
-            //string Rule1 = "   +" + "".PadLeft(PageWriter.MaxCol - 5, '-') + "+";
-            //string Rule2 = "   |" + "".PadLeft(PageWriter.MaxCol - 5, '-') + "|";
+            ////string Rule1 = "   +" + "".PadLeft(PageWriter.MaxCol - 5, '-') + "+";
+            ////string Rule2 = "   |" + "".PadLeft(PageWriter.MaxCol - 5, '-') + "|";
 
-            //string[] Cols = new String[Table.MaxRow];
+            ////string[] Cols = new String[Table.MaxRow];
 
-            PageWriter.WriteLine(Rule1);
-            WriteRow(Table, Table.Rows[0], Widths, Rule1, Rule2);
-            PageWriter.WriteLine(Rule1);
+            //PageWriter.WriteLine(Rule1);
+            //WriteRow(Table, Table.Body[0], Widths, Rule1, Rule2);
+            //PageWriter.WriteLine(Rule1);
 
-            for (int i = 1; i < Table.Rows.Count; i++) {              
-                WriteRow(Table, Table.Rows[i], Widths, Rule1, Rule2);
-                PageWriter.WriteLine(i+1 == Table.Rows.Count ? Rule1 : Rule2);
-                PageWriter.AddBreak(0);
-                }
-            PageWriter.AddBlank(1);
+            //for (int i = 1; i < Table.Body.Count; i++) {              
+            //    WriteRow(Table, Table.Body[i], Widths, Rule1, Rule2);
+            //    PageWriter.WriteLine(i+1 == Table.Body.Count ? Rule1 : Rule2);
+            //    PageWriter.AddBreak(0);
+            //    }
+            //PageWriter.AddBlank(1);
             }
 
         public void Write (StringBuilder Buffer, GM.TextSegmentOpen Open) {
