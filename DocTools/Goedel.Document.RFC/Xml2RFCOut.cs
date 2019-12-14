@@ -8,7 +8,13 @@ using Goedel.Utilities;
 namespace Goedel.Document.RFC {
     public class Xml2RFCOut {
         TextWriter textWriter;
+        /*<rfc xmlns:xi="http://www.w3.org/2001/XInclude" docName="draft-hallambaker-mesh-cryptography-05" 
+     indexInclude="false" ipr="trust200902" scripts="Common,Latin" sortRefs="true" symRefs="true" 
+     tocDepth="3" tocInclude="true" version="3" submissionType="independent" category="info" xml:lang="en"><front>
+<title abbrev="Mesh Cryptographic Algorithms">Mathematical Mesh 3.0 Part VIII: Cryptographic Algorithms</title>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-cryptography"/>
 
+         */
         public Xml2RFCOut(TextWriter TextWriter) => this.textWriter = TextWriter;
         #region // Dcoument
         Document document;
@@ -201,7 +207,9 @@ namespace Goedel.Document.RFC {
             textWriter.Write("<{0}", Tag);
             if (Attributes != null) {
                 foreach (var attribute in Attributes) {
-                    textWriter.Write(" {0}=\"{1}\"", attribute.Tag, attribute.Value.Trim().XMLAttributeEscape());
+                    if (attribute.Value != null) {
+                        textWriter.Write(" {0}=\"{1}\"", attribute.Tag, attribute.Value.Trim().XMLAttributeEscape());
+                        }
                     }
                 }
             textWriter.Write(">");
@@ -316,12 +324,23 @@ namespace Goedel.Document.RFC {
             SetListLevel(lI.Level-1, lI.Type, lI);
 
             switch (lI.Type) {
-                case BlockType.Data: {
-                    Write("dd", lI.Segments, "anchor", lI.AnchorID);
-                    break;
-                    }
+                //case BlockType.Data: {
+                //    Write("dd", lI.Segments, "anchor", lI.AnchorID);
+                //    break;
+                //    }
                 case BlockType.Term: {
                     Write("dt", lI.Segments, "anchor", lI.AnchorID);
+                    WriteStartTagNL("dd");
+                    if (lI.Content == null) {
+                        Write("t", null);
+                        }
+                    else {
+                        WriteTextBlocks(lI.Content);
+                        }
+
+                    WriteEndTagNL("dd");
+
+
                     break;
                     }
                 case BlockType.Ordered:
@@ -341,25 +360,59 @@ namespace Goedel.Document.RFC {
         public void Write (GM.TextSegmentOpen Open) {
             switch (Open.Tag) {
 
-                case "bcp14":
+                // none of these take attributes
+                case "bcp14": 
                 case "em":
                 case "strong":
                 case "tt":
                 case "sub":
-                case "sup":
-                case "eref":
-                case "relref":
-                case "xref":
+                case "sup": {
+                    WriteStartTag(Open.Tag);
+                    break;
+                    }
+
+                case "eref": {
+                    WriteStartTag(Open.Tag, "target", Open.AttributeValue("target"));
+                    break;
+                    }
+                case "relref": {
+                    WriteStartTag(Open.Tag,
+                            "target", Open.AttributeValue("target"),
+                            "displayFormat", Open.AttributeValue("displayFormat"),
+                            "relative", Open.AttributeValue("relative"),
+                            "section", Open.AttributeValue("section"));
+                    break;
+                    }
+                case "xref": {
+                    WriteStartTag(Open.Tag, 
+                            "target", Open.AttributeValue("target"),
+                            "format", Open.AttributeValue("format"),
+                            "title", Open.AttributeValue("title"));
+                    break;
+                    }
                 case "cref": {
+
+                    // bug: need to strip out the attributes
                     WriteStartTag(Open.Tag, Open.Attributes);
                     break;
                     }
 
-                case "norm":
-                case "info":
-                case "a": {
-                    // need to manage these here!
 
+                // The special case versions
+                case "a": {
+                    Open.Tag = "eref";
+                    WriteStartTag(Open.Tag, "target", Open.AttributeValue("a"));
+                    break;
+                    }
+
+                case "norm": {
+                    Open.Tag = "xref";
+                    WriteStartTag(Open.Tag, "target", Open.AttributeValue("norm"));
+                    break;
+                    }
+                case "info": {
+                    Open.Tag = "xref";
+                    WriteStartTag(Open.Tag, "target", Open.AttributeValue("info"));
                     break;
                     }
                 }
@@ -495,17 +548,11 @@ namespace Goedel.Document.RFC {
             ListLast();
             WriteStartTagNL("figure");
             WriteIrefs(block.Irefs);
-            WriteStartTagNL("preamble");
-            WriteEndTagNL("preamble");
 
             foreach (var item in block.Content) {
                 WriteBlock(item);
                 }
 
-            WriteStartTagNL("artwork");
-            WriteEndTagNL("artwork");
-            WriteStartTagNL("postamble");
-            WriteEndTagNL("postamble");
             WriteEndTagNL("figure");
             
             }

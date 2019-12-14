@@ -527,7 +527,12 @@ namespace Goedel.Document.RFC {
 
     public abstract class TextBlock {
         public string GeneratedID;  // The id used in <p>, <h2>, <h3>, etc.
-        public string AnchorID = null;
+        string anchorID;
+        public string AnchorID {
+            get => anchorID == "" ? null : anchorID;
+            set => anchorID = value;
+            }
+
         public string NumericID = "tbs";
         
         public string Align;
@@ -653,7 +658,7 @@ namespace Goedel.Document.RFC {
         public string Spacing;
 
         public string EnclosingAnchorID;
-
+        public List<TextBlock> Content;
 
         public string Empty => Format == "empty" ? "true" : null;
 

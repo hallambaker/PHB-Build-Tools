@@ -2,7 +2,7 @@
   "profiles": {
     "rfctool": {
       "commandName": "Project",
-      "commandLineArgs": "rfc8659-mini.xml /xml=rfc8659-mini2.xml ",
+      "commandLineArgs": "hallambaker-mesh-8-cryptography.docx /xml",
       "workingDirectory": "C:\\Users\\hallam\\Work\\buildtools\\DocTools\\rfctool\\Test"
     }
   }

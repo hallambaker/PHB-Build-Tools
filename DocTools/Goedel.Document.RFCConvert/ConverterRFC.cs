@@ -128,12 +128,15 @@ namespace MakeRFC {
             var SectionStack = new Stack<Section>();
             Section CurrentSection = null;
 
+
+            LI enclosingDt = null;
             foreach (var Block in Source.Blocks) {
                 //Console.WriteLine("Block {0}", Block.BlockType);
 
 
                 if ((Block.GetType() == typeof(Goedel.Document.Markdown.Layout)) |
                     (Block.GetType() == typeof(Goedel.Document.Markdown.Close))){
+                    enclosingDt = null;
 
                     if (Block.CatalogEntry.Key =="table") {
                         CurrentText.Add(ParseTable(Block));
@@ -141,6 +144,8 @@ namespace MakeRFC {
 
                     }
                 else if (Block.CatalogEntry.Level > 0) {
+                    enclosingDt = null;
+
                     //Console.WriteLine("    Heading");
                     if ((Block.CatalogEntry.Key == "appendix") &
                             (State != BlockState.Back)) {
@@ -172,6 +177,7 @@ namespace MakeRFC {
 
                     switch (Block.CatalogEntry.Key) {
                         case "li": {
+                            enclosingDt = null;
                             var TextBlock = new LI() {
                                 Segments = ReadSegments (Block.Segments),
                                 //Chunks = MakeChunks(Block.Segments),
@@ -183,6 +189,7 @@ namespace MakeRFC {
                             }
                         case "nli": 
                         case "ni" : {
+                            enclosingDt = null;
                             var TextBlock = new LI() {
                                 Segments = ReadSegments(Block.Segments),
                                 //Chunks = MakeChunks(Block.Segments),
@@ -197,22 +204,34 @@ namespace MakeRFC {
                                 Segments = ReadSegments(Block.Segments),
                                 //Chunks = MakeChunks(Block.Segments),
                                 Type = BlockType.Term,
-                                Level = 1
+                                Level = 1,
+                                Content = new List<TextBlock>()
                                 };
                             CurrentText.Add(TextBlock);
+                            enclosingDt = TextBlock;
                             break;
                             }
                         case "dd": {
+                            if (enclosingDt == null) {
+                                enclosingDt = new LI() {
+                                    Type = BlockType.Term,
+                                    Level = 1,
+                                    Content = new List<TextBlock>()
+                                    };
+                                CurrentText.Add(enclosingDt);
+                                }
                             var TextBlock = new LI() {
                                 Segments = ReadSegments(Block.Segments),
                                 //Chunks = MakeChunks(Block.Segments),
                                 Type = BlockType.Data,
                                 Level = 1
                                 };
-                            CurrentText.Add(TextBlock);
+                            enclosingDt.Content.Add(TextBlock);
+
                             break;
                             }
                         case "pre": {
+                            enclosingDt = null;
                             var TextBlock = new Goedel.Document.RFC.PRE(Preformat(Block.Text), "");
 
                             if (Block.Attributes != null) {
@@ -226,6 +245,7 @@ namespace MakeRFC {
                             }
                         case "figuresvg":
                         case "imgref": {
+                            enclosingDt = null;
                             if (Block?.Attributes.Count > 0) {
                                 var ID = GetID(Block);
                                 var width = Block.AttributeValue("width");
@@ -238,6 +258,7 @@ namespace MakeRFC {
                             break;
                             }
                         default: {
+                            enclosingDt = null;
                             if (State != BlockState.Abstract | Block.BlockType != GM.BlockType.Meta) {
                                 var TextBlock = new P() {
                                     Segments = ReadSegments(Block.Segments),

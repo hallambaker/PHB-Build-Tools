@@ -131,12 +131,14 @@ namespace Goedel.Document.Markdown {
 
 
 
+
+
     public abstract class TextSegment {
-        string _Tag;
+        string tag;
         public CatalogEntry CatalogEntry = null;
         public string Tag {
-            get => _Tag ?? CatalogEntry?.Key;
-            set => _Tag = value;
+            get => tag ?? CatalogEntry?.Key;
+            set => tag = Normalize(value);
             }
 
         public List<TagValue> Attributes = null;
@@ -144,12 +146,49 @@ namespace Goedel.Document.Markdown {
         public TextSegment() {
             }
 
-        public TextSegment(CatalogEntry CatalogEntry, List<TagValue> Attributes) {
-            this.Attributes = Attributes;
-               this.CatalogEntry = CatalogEntry;
+        public TextSegment(CatalogEntry catalogEntry, List<TagValue> attributes) {
+            Attributes = attributes;
+            CatalogEntry = catalogEntry;
             }
 
 
+        public string AttributeValue(string tag) {
+            if (Attributes == null) {
+                return null;
+                }
+
+            foreach (var tagValue in Attributes) {
+                if (tagValue.Tag == tag) {
+                    return tagValue.Value;
+                    }
+                }
+
+            return null;
+            }
+
+
+        string Normalize(string Tag) {
+
+            switch (Tag.ToLower()) {
+                case "i": {
+                    return "em";
+                    }
+                case "b": {
+                    return "strong";
+                    }
+
+                case "a":
+                case "norm":
+                case "info": {
+                    return Tag.ToLower();
+                    }
+
+                default: {
+                    return Tag;
+                    }
+                }
+
+            }
         }
 
 
@@ -158,6 +197,8 @@ namespace Goedel.Document.Markdown {
 
 
         public TextSegmentText(string Text) => this.Text = Text;
+
+
 
         }
 
