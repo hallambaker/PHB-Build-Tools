@@ -8,6 +8,13 @@ namespace Goedel.Document.RFC {
     public partial class Document {
         public GM.Document Source = null;
 
+        public DateTime PrepTime = DateTime.Now;
+
+
+        // serious issue with Category/Status and SubmissionType/Stream
+        // These seem to overlap.
+
+
         // Attributes from tag <RFC>
         public string Number;
         public string Obsoletes;
@@ -91,7 +98,7 @@ namespace Goedel.Document.RFC {
 
         public SeriesInfo SeriesInfo;
         public string Stream => SeriesInfo?.Stream ?? "ietf";
-        public string Status => SeriesInfo?.Status ?? "standard";
+        public string Status => Category ?? SeriesInfo?.Status ?? "standard";
         public string Series => SeriesInfo?.Name ?? "draft";
         public string Version {
             get => SeriesInfo?.AutoVersion;
@@ -793,7 +800,7 @@ namespace Goedel.Document.RFC {
             }
 
         string GetNextVersion () {
-            if (Name != "draft") {
+            if (Name != "Internet-Draft") {
                 return "";
                 }
             Version = Goedel.Document.RFC.Source.GetDraftVersion(Value);

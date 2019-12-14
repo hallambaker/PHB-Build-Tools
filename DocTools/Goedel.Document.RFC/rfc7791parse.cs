@@ -31,16 +31,16 @@ namespace Goedel.Document.RFC {
 
         public void Parse() {
 
-            XmlRootAttribute xRoot = new XmlRootAttribute() {
-                ElementName = "rfc"
-                };
+            //XmlRootAttribute xRoot = new XmlRootAttribute() {
+            //    ElementName = "rfc"
+            //    };
             //xRoot.Namespace = "http://tempuri.org/rfc2629";
             //xRoot.IsNullable = true;
 
-            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-            ns.Add("", "http://tempuri.org/rfc2629");
+            //XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+            //ns.Add("", "http://tempuri.org/rfc2629");
 
-            XmlSerializer XmlSerializer = new XmlSerializer(typeof(rfc));
+            var XmlSerializer = new XmlSerializer(typeof(rfc));
 
             rfc rfc = (rfc)XmlSerializer.Deserialize(TextReader);
             Document.Number = rfc.number;
@@ -200,7 +200,7 @@ namespace Goedel.Document.RFC {
             }
 
         List<SeriesInfo> MakeSeriesInfo(object[] seriesInfos) {
-            List<SeriesInfo> ListSeriesInfo = new List<SeriesInfo>();
+            var ListSeriesInfo = new List<SeriesInfo>();
 
             if (seriesInfos != null) {
                 foreach (var obj in seriesInfos) {
@@ -221,7 +221,7 @@ namespace Goedel.Document.RFC {
             }
 
         List<Format> MakeFormats(object[] formats) {
-            List<Format> ListFormats = new List<Format>();
+            var ListFormats = new List<Format>();
 
             if (formats != null) {
                 foreach (var obj in formats) {
@@ -399,7 +399,9 @@ namespace Goedel.Document.RFC {
                 AnchorID = source.anchor
                 };
 
-            // ToDo: name, iref, anchor
+            if (source.iref != null) {
+                block.Irefs = MakeIrefs(source.iref);
+                }
 
             block.Head = MakeTableRow(source.thead);
             foreach (var row in source.tbody) {

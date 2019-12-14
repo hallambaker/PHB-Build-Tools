@@ -1,14 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" docName="draft-hallambaker-mesh-cryptography-05" 
-     indexInclude="false" ipr="trust200902" scripts="Common,Latin" sortRefs="true" symRefs="true" 
-     tocDepth="3" tocInclude="true" version="3" submissionType="independent" category="info" xml:lang="en"><front>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="info" docName="draft-hallambaker-mesh-cryptography-05" indexInclude="false" ipr="trust200902" prepTime="2019-12-14T17:26:20Z" scripts="Common,Latin" sortRefs="true" submissionType="independent" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
 <title abbrev="Mesh Cryptographic Algorithms">Mathematical Mesh 3.0 Part VIII: Cryptographic Algorithms</title>
-<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-cryptography"/>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-cryptography" stream="independent"/>
 <author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker"><address>
 <email>phill@hallambaker.com</email>
 </address>
 </author>
-<date day="13" month="December" year="2019"/>
+<date day="14" month="December" year="2019"/>
 <area/>
 <workgroup/>
 <abstract>
@@ -139,11 +137,6 @@
 <li>Providing the information required to make use of the private key to the device.</li>
 </ul>
 <t>Note that while the administration device needs to know the device application public key, it does not require knowledge of the device application private key.</t>
-<figure>
-<artwork>
-  test
-</artwork>
-</figure>
 <section title="Example: Provisioning the Confirmation Service" anchor="s-5_1"><t>For example, Alice provisions the confirmation service to her watch. The device profile of the watch specifies an Ed25519 signature key. Note that for production use, Ed448 is almost certainly prefered but Ed25519 has the advantage of more compact presentation. </t>
 <sourcecode>Device Key
 
@@ -184,18 +177,8 @@ Fingerprint:    MBAK-3KK5-F3AN-E6AJ-EIIT-IIL6-7KTP</sourcecode>
 </section>
 </section>
 <section title="Multi-Party Decryption" anchor="s-6"><t>A key limitation of most deployed messaging systems is that true end-to-end confidentiality is only achieved for a limited set of communication patterns. Specifically, bilateral communications (Alice sends a message to Bob) or broadcast communications to a known set of recipients (Alice sends a message to Bob, Carol and Doug). These capabilities do not support communication patterns where the set of recipients changes over time or is confidential. Yet such requirements commonly occur in situations such as sending a message to a mailing list whose membership isn't known to the sender, or creating a spreadsheet whose readership is to be limited to authorized members of the 'accounting' team.</t>
-<figure>
-  <artwork>
-    test
-  </artwork>
-</figure>
 <t>The mathematical approach that makes key co-generation possible may be applied to support a public key encryption mode in which encryption is performed as usual but decryption requires the use of multiple keys. This approach is variously described in the literature as distributed key generation and proxy re-encryption <xref target="Blaze98"></xref>.</t>
 <t>The approach specified in this document borrows aspects of both these techniques. This combined approach is called 'recryption'. Using recryption allows a sender to send a message to a group of users whose membership is not known to the sender at the time the message is sent and can change at any time. </t>
-<figure>
-  <artwork>
-    test
-  </artwork>
-</figure>
 <t>Proxy re-encryption provides a technical capability that meets the needs of such communication patterns. Conventional symmetric key cryptography uses a single key to encrypt and decrypt data. Public key cryptography uses two keys, the key used to encrypt data is separate from the key used to decrypt. Proxy re-encryption introduces a third key (the recryption key) that allows a party to permit an encrypted data packet to be decrypted using a different key without permitting the data to be decrypted.</t>
 <t>The introduction of a recryption key permits end-to-end confidentiality to be preserved when a communication pattern requires that some part of the communication be supported by a service.</t>
 <t>The introduction of a third type of key, the recryption key permits two new roles to be established, that of an administrator and recryption service. There are thus four parties:</t>
@@ -214,11 +197,6 @@ Fingerprint:    MBAK-3KK5-F3AN-E6AJ-EIIT-IIL6-7KTP</sourcecode>
 </dd>
 </dl>
 <t>The communication between these parties is shown in Figure X below:</t>
-<figure>
-  <artwork>
-    test
-  </artwork>
-</figure>
 <t>The information stored at the recryption service is necessary but not sufficient to decrypt the message. Thus, no disclosure of the message plaintext occurs even in the event that an attacker gains full knowledge of all the information stored by the recryption service.</t>
 <section title="Mechanism" anchor="s-6_1"><t>The mechanism used to support recryption is the same as the mechanism used to support key co-generation except that this time, instead of combining two keys to create one, the private component of a decryption key (i.e. the private key) is split into two parts, a recryption key and a decryption key.</t>
 <t>Recall that the key combination law for Diffie Hellman crypto-systems states that we can add two private keys to get a third. It follows that we can split the private key portion of a keypair {<em>G</em>, <em>g</em>} into two parts by choosing a random number that is less than the order of the Diffie-Hellman group to be our first key <em>x</em>. Our second key is <em>y</em> = <em>g</em> - <em>r</em> mod <em>o</em>, where <em>o</em> is the order of the group. </t>
@@ -260,11 +238,6 @@ Fingerprint:    MBAK-3KK5-F3AN-E6AJ-EIIT-IIL6-7KTP</sourcecode>
 <li>The fingerprint of the decryption key(s) the device would like to make use of.</li>
 <li>Whether or not the encrypted decryption key entry should be returned.</li>
 </ul>
-<figure>
-  <artwork>
-    test
-  </artwork>
-</figure>
 <t>The recryption service searches the catalog for the corresponding recryption group to find a matching entry. If found and if the recipient and proposed decryption key are dully authorized for the purpose, the service performs the key agreement operation using the recryption key specified in the entry and returns the result to the recipient.</t>
 <t>The recipient then decrypts the recryption data entry using its device decryption key and uses the group decryption key to calculate the other half of the result. The two halves of the result are then added to obtain the key agreement value that is then used to decrypt the message.</t>
 </section>

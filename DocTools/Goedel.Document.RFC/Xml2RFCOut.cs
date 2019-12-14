@@ -26,25 +26,24 @@ namespace Goedel.Document.RFC {
 
             WriteStartTag("rfc",
                 "xmlns:xi", "http://www.w3.org/2001/XInclude",
-                "category", Prep(document.Category),
+                "category", Prep(document.Status),
                 "consensus", Prep(document.Consensus),
                 "docName", Prep(document.FullDocName),
                 "indexInclude", Prep(document.IndexInclude),
                 "ipr", Prep(document.Ipr),
-                //iprExtract
                 "number", Prep(document.Number),
                 "obsoletes", Prep(document.Obsoletes),
-                //prepTime
+                "prepTime", document.PrepTime.ToRFC3339(),
                 "scripts", Prep(document.Scripts),
                 "sortRefs", Prep(document.SortRefs),
-                "submissionType", Prep(document.SubmissionType),
+                "submissionType", Prep(document.SubmissionType??document.Stream),
                 "symRefs", Prep(document.Symrefs),
                 "tocDepth", document.TocDepth.ToString(),
                 "tocInclude", Prep(document.TocInclude),
                 "updates", Prep(document.Updates),
                 "version", "3",
                 "xml:lang", "en"
-                );
+                ); ; ;
 
 
             MakeFront(document);
@@ -546,14 +545,14 @@ namespace Goedel.Document.RFC {
             }
         void WriteBlock(Figure block) {
             ListLast();
-            WriteStartTagNL("figure");
-            WriteIrefs(block.Irefs);
+            //WriteStartTagNL("figure");
+            //WriteIrefs(block.Irefs);
 
-            foreach (var item in block.Content) {
-                WriteBlock(item);
-                }
+            //foreach (var item in block.Content) {
+            //    WriteBlock(item);
+            //    }
 
-            WriteEndTagNL("figure");
+            //WriteEndTagNL("figure");
             
             }
 
