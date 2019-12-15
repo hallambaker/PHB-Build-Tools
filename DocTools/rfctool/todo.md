@@ -70,20 +70,14 @@ Implement anchors
 
 ## XML v3 generation bugs
 
-The header element needs to work for drafts when submitting via the tool
-
- submissionType="independent" category="info"
-
-````
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" docName="draft-hallambaker-mesh-cryptography-05" 
-     indexInclude="false" ipr="trust200902" scripts="Common,Latin" sortRefs="true" symRefs="true" 
-     tocDepth="3" tocInclude="true" version="3" submissionType="independent" category="info" xml:lang="en"><front>
-<title abbrev="Mesh Cryptographic Algorithms">Mathematical Mesh 3.0 Part VIII: Cryptographic Algorithms</title>
-<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-cryptography"/>
-````
 
 Artwork type elements are not being correctly rendered, the code is lost.
 
+
+### DL Lists
+
+The DD tag is not being properly filled out in DL lists. This could be due to a bug in 
+the word parser or the generator.
 
 ## HTML generation bugs
 

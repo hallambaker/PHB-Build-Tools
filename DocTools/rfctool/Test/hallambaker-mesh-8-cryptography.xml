@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="info" docName="draft-hallambaker-mesh-cryptography-05" indexInclude="false" ipr="trust200902" prepTime="2019-12-14T17:26:20Z" scripts="Common,Latin" sortRefs="true" submissionType="independent" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="info" docName="draft-hallambaker-mesh-cryptography-05" indexInclude="false" ipr="trust200902" prepTime="2019-12-15T16:47:56Z" scripts="Common,Latin" sortRefs="true" submissionType="independent" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
 <title abbrev="Mesh Cryptographic Algorithms">Mathematical Mesh 3.0 Part VIII: Cryptographic Algorithms</title>
 <seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-cryptography" stream="independent"/>
 <author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker"><address>
 <email>phill@hallambaker.com</email>
 </address>
 </author>
-<date day="14" month="December" year="2019"/>
+<date day="15" month="December" year="2019"/>
 <area/>
 <workgroup/>
 <abstract>
@@ -36,17 +36,27 @@
 <dl>
 <dt>Administration Device</dt>
 <dd>
+</dl>
+<t>A general-purpose computing device that is used for Mesh administration functions.</t>
 </dd>
+<dl>
 <dt>Mesh Device</dt>
 <dd>
+</dl>
+<t>A general-purpose computing device that is not used for Mesh administration functions with sufficient memory and processing power to perform public key cryptography operations without paying particular attention to the impact on performance.</t>
 </dd>
+<dl>
 <dt>Constrained Device</dt>
 <dd>
+</dl>
+<t>An embedded computing device with limited memory and computing power that offers sufficient processing capabilities to perform occasional public key operations (e.g. during device initialization) but is not suited to repeated operations.</t>
 </dd>
+<dl>
 <dt>Bridge Device</dt>
 <dd>
-</dd>
 </dl>
+<t>A trusted device that enables Mesh Devices to interoperate with Constrained devices. </t>
+</dd>
 <t>Since Administration Devices and Mesh Devices <bcp14>MUST</bcp14> support communication with Mesh Devices and Constrained devices, they <bcp14>MUST</bcp14> meet all the <bcp14>REQUIRED</bcp14> algorithms for both types of device.</t>
 <section title="Mesh Device" anchor="s-3_1"><t>Support for the following algorithms is <bcp14>REQUIRED</bcp14>:</t>
 <ul>
@@ -185,17 +195,27 @@ Fingerprint:    MBAK-3KK5-F3AN-E6AJ-EIIT-IIL6-7KTP</sourcecode>
 <dl>
 <dt>Administrator </dt>
 <dd>
+</dl>
+<t>Holder of Decryption Key, Creator of Recryption Keys</t>
 </dd>
+<dl>
 <dt>Sender </dt>
 <dd>
+</dl>
+<t>Holder of Encryption Key</t>
 </dd>
+<dl>
 <dt>Recryption Service </dt>
 <dd>
+</dl>
+<t>Holder of Recryption keys</t>
 </dd>
+<dl>
 <dt>Receiver </dt>
 <dd>
-</dd>
 </dl>
+<t>Holder of personal decryption key</t>
+</dd>
 <t>The communication between these parties is shown in Figure X below:</t>
 <t>The information stored at the recryption service is necessary but not sufficient to decrypt the message. Thus, no disclosure of the message plaintext occurs even in the event that an attacker gains full knowledge of all the information stored by the recryption service.</t>
 <section title="Mechanism" anchor="s-6_1"><t>The mechanism used to support recryption is the same as the mechanism used to support key co-generation except that this time, instead of combining two keys to create one, the private component of a decryption key (i.e. the private key) is split into two parts, a recryption key and a decryption key.</t>
@@ -299,11 +319,19 @@ Key Agreement IKM:
 <dl>
 <dt>Client ephemeral</dt>
 <dd>
+</dl>
+<t>The client contributes an ephemeral key pair {<em>n<sub>A</sub></em>, <em>N<sub>A</sub></em>}. The effective public key of the client is <em>A</em> ? <em>N<sub>A</sub></em>. </t>
+<t>The server uses its public key <em>B</em>.</t>
+<t>The key agreement value is <em>DH </em>(<em>a</em> + <em>n<sub>A</sub></em>, B) = <em>DH</em> (<em>b</em>, <em>A</em> ? <em>N<sub>A</sub></em>)</t>
 </dd>
+<dl>
 <dt>Dual ephemeral </dt>
 <dd>
-</dd>
 </dl>
+<t>The client contributes an ephemeral key pair {<em>n<sub>A</sub></em>, <em>N<sub>A</sub></em>}. The effective public key of the client is <em>A</em> ? <em>N<sub>A</sub></em>. </t>
+<t>The server contributes an ephemeral key pair {<em>n<sub>B</sub></em>, <em>N<sub>B</sub></em>}. The effective public key of the client is <em>B</em> ? <em>N<sub>B</sub></em>. </t>
+<t>The key agreement value is <em>DH </em>(<em>a</em> + <em>n<sub>A</sub></em>, <em>B</em> ? <em>N<sub>B</sub></em>) = <em>DH</em> (<em>b</em> + <em>n<sub>B</sub></em>, <em>A</em> ? <em>N<sub>A</sub></em>)</t>
+</dd>
 <t>The function of the ephemeral key is effectively that of a nonce but it is shared with the counter-party as a public key value.</t>
 <t>The dual ephemeral approach has the advantage that it limits the scope for side channel attacks as both sides have contributed unknown information to the key agreement value. The disadvantage of this approach is that the key agreement value can only be calculated after the server has provided its ephemeral.</t>
 <t>Implementations <bcp14>MAY</bcp14> take advantage of the result combination law to enable private key operations involving the authenticated key (or a contribution to it) to be performed in trustworthy hardware.</t>

@@ -220,11 +220,8 @@ namespace MakeRFC {
                                     };
                                 CurrentText.Add(enclosingDt);
                                 }
-                            var TextBlock = new LI() {
+                            var TextBlock = new P() {
                                 Segments = ReadSegments(Block.Segments),
-                                //Chunks = MakeChunks(Block.Segments),
-                                Type = BlockType.Data,
-                                Level = 1
                                 };
                             enclosingDt.Content.Add(TextBlock);
 
