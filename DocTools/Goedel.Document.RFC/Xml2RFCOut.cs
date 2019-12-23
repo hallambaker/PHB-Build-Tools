@@ -334,7 +334,14 @@ namespace Goedel.Document.RFC {
                         Write("t", null);
                         }
                     else {
-                        WriteTextBlocks(lI.Content);
+                        foreach (var block in lI.Content) {
+                            switch (block) {
+                                case P P: {
+                                    Write("t", P.Segments);
+                                    break;
+                                    }
+                                }
+                            }
                         }
 
                     WriteEndTagNL("dd");
