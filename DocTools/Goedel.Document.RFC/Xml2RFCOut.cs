@@ -472,11 +472,14 @@ namespace Goedel.Document.RFC {
         #region // Write sections
 
         void WritePRE (List<GM.TextSegment> Segments) {
-            foreach (var Segment in Segments) {
-                switch (Segment) {
-                    case GM.TextSegmentText TextSegmentText:
-                        textWriter.Write(TextSegmentText.Text);
-                        break;
+            using (var wrapWriter = new WrapWriter(textWriter)) {
+
+                foreach (var Segment in Segments) {
+                    switch (Segment) {
+                        case GM.TextSegmentText TextSegmentText:
+                            wrapWriter.Write(TextSegmentText.Text);
+                            break;
+                        }
                     }
                 }
             }

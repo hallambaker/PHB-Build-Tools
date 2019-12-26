@@ -31,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)rfc7791-corrected.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)rfc7791parse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TXT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WrapWritter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WriteAML.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XML.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Xml2RFCOutv2.cs" />

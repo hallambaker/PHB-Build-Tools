@@ -9,47 +9,47 @@
     ".NETCoreApp,Version=v2.1/linux-x64": {
       "makey/1.0.0": {
         "dependencies": {
-          "Microsoft.NETCore.App": "2.1.13",
+          "Microsoft.NETCore.App": "2.1.14",
           "ToolLib": "1.0.0"
         },
         "runtime": {
           "makey.dll": {}
         }
       },
-      "Microsoft.NETCore.App/2.1.13": {
+      "Microsoft.NETCore.App/2.1.14": {
         "dependencies": {
-          "Microsoft.NETCore.DotNetHostPolicy": "2.1.13",
-          "Microsoft.NETCore.Platforms": "2.1.6",
+          "Microsoft.NETCore.DotNetHostPolicy": "2.1.14",
+          "Microsoft.NETCore.Platforms": "2.1.7",
           "Microsoft.NETCore.Targets": "2.0.0",
           "NETStandard.Library": "2.0.3",
-          "runtime.linux-x64.Microsoft.NETCore.App": "2.1.13"
+          "runtime.linux-x64.Microsoft.NETCore.App": "2.1.14"
         }
       },
-      "Microsoft.NETCore.DotNetAppHost/2.1.13": {
+      "Microsoft.NETCore.DotNetAppHost/2.1.14": {
         "dependencies": {
-          "runtime.linux-x64.Microsoft.NETCore.DotNetAppHost": "2.1.13"
+          "runtime.linux-x64.Microsoft.NETCore.DotNetAppHost": "2.1.14"
         }
       },
-      "Microsoft.NETCore.DotNetHostPolicy/2.1.13": {
+      "Microsoft.NETCore.DotNetHostPolicy/2.1.14": {
         "dependencies": {
-          "Microsoft.NETCore.DotNetHostResolver": "2.1.13",
-          "runtime.linux-x64.Microsoft.NETCore.DotNetHostPolicy": "2.1.13"
+          "Microsoft.NETCore.DotNetHostResolver": "2.1.14",
+          "runtime.linux-x64.Microsoft.NETCore.DotNetHostPolicy": "2.1.14"
         }
       },
-      "Microsoft.NETCore.DotNetHostResolver/2.1.13": {
+      "Microsoft.NETCore.DotNetHostResolver/2.1.14": {
         "dependencies": {
-          "Microsoft.NETCore.DotNetAppHost": "2.1.13",
-          "runtime.linux-x64.Microsoft.NETCore.DotNetHostResolver": "2.1.13"
+          "Microsoft.NETCore.DotNetAppHost": "2.1.14",
+          "runtime.linux-x64.Microsoft.NETCore.DotNetHostResolver": "2.1.14"
         }
       },
-      "Microsoft.NETCore.Platforms/2.1.6": {},
+      "Microsoft.NETCore.Platforms/2.1.7": {},
       "Microsoft.NETCore.Targets/2.0.0": {},
       "NETStandard.Library/2.0.3": {
         "dependencies": {
-          "Microsoft.NETCore.Platforms": "2.1.6"
+          "Microsoft.NETCore.Platforms": "2.1.7"
         }
       },
-      "runtime.linux-x64.Microsoft.NETCore.App/2.1.13": {
+      "runtime.linux-x64.Microsoft.NETCore.App/2.1.14": {
         "runtime": {
           "runtimes/linux-x64/lib/netcoreapp2.1/Microsoft.CSharp.dll": {
             "assemblyVersion": "4.0.4.0",
@@ -665,7 +665,7 @@
           },
           "runtimes/linux-x64/lib/netcoreapp2.1/mscorlib.dll": {
             "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.6.28008.1"
+            "fileVersion": "4.6.28208.1"
           },
           "runtimes/linux-x64/lib/netcoreapp2.1/netstandard.dll": {
             "assemblyVersion": "2.0.0.0",
@@ -742,16 +742,16 @@
           }
         }
       },
-      "runtime.linux-x64.Microsoft.NETCore.DotNetAppHost/2.1.13": {
+      "runtime.linux-x64.Microsoft.NETCore.DotNetAppHost/2.1.14": {
         "native": {
           "runtimes/linux-x64/native/apphost": {
             "fileVersion": "0.0.0.0"
           }
         }
       },
-      "runtime.linux-x64.Microsoft.NETCore.DotNetHostPolicy/2.1.13": {
+      "runtime.linux-x64.Microsoft.NETCore.DotNetHostPolicy/2.1.14": {
         "dependencies": {
-          "Microsoft.NETCore.DotNetHostResolver": "2.1.13"
+          "Microsoft.NETCore.DotNetHostResolver": "2.1.14"
         },
         "native": {
           "runtimes/linux-x64/native/libhostpolicy.so": {
@@ -759,9 +759,9 @@
           }
         }
       },
-      "runtime.linux-x64.Microsoft.NETCore.DotNetHostResolver/2.1.13": {
+      "runtime.linux-x64.Microsoft.NETCore.DotNetHostResolver/2.1.14": {
         "dependencies": {
-          "Microsoft.NETCore.DotNetAppHost": "2.1.13"
+          "Microsoft.NETCore.DotNetAppHost": "2.1.14"
         },
         "native": {
           "runtimes/linux-x64/native/libhostfxr.so": {
@@ -782,40 +782,40 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.NETCore.App/2.1.13": {
+    "Microsoft.NETCore.App/2.1.14": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-oB/yobEiuhNDI5M6Lr52vlyWFbwIumLK6sqaOZ4pLe7jR1w5nBjoFXhrBJOr/EWqu8DNraaquTkhN/EaOib62g==",
-      "path": "microsoft.netcore.app/2.1.13",
-      "hashPath": "microsoft.netcore.app.2.1.13.nupkg.sha512"
+      "sha512": "sha512-eool+cYTxKwXR1fYKvE9p4aOCyz3tIWurY0QqUhETTLvdra6H20t9X32WTpKw0jZ/cMARD/XdkSzLdlXt247cw==",
+      "path": "microsoft.netcore.app/2.1.14",
+      "hashPath": "microsoft.netcore.app.2.1.14.nupkg.sha512"
     },
-    "Microsoft.NETCore.DotNetAppHost/2.1.13": {
+    "Microsoft.NETCore.DotNetAppHost/2.1.14": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-V2S2OlQnSh5/aWhfVip9UuIBCaz45AeOpmeiqO9Kf+9mtWhcCSRX3WbqQ9529IIbOsUFhLPqRnDE+mfWO9chWw==",
-      "path": "microsoft.netcore.dotnetapphost/2.1.13",
-      "hashPath": "microsoft.netcore.dotnetapphost.2.1.13.nupkg.sha512"
+      "sha512": "sha512-Ut7HKCs0h+/6qurCrvqXK8kgrLBIji0/g3sjUB/+QC4PrrZtErALmfuJhaNq2Shko/ybiqH1HE+K40lykKBl8g==",
+      "path": "microsoft.netcore.dotnetapphost/2.1.14",
+      "hashPath": "microsoft.netcore.dotnetapphost.2.1.14.nupkg.sha512"
     },
-    "Microsoft.NETCore.DotNetHostPolicy/2.1.13": {
+    "Microsoft.NETCore.DotNetHostPolicy/2.1.14": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-0B8AmWJe3pL1lOM8cIfkQ0VwsZ9sd03EjBsdM64enVi7Ufrc+B7yjnBlUFIXzCfzoHL4BLYKxbYI8fnKQ02pRA==",
-      "path": "microsoft.netcore.dotnethostpolicy/2.1.13",
-      "hashPath": "microsoft.netcore.dotnethostpolicy.2.1.13.nupkg.sha512"
+      "sha512": "sha512-SzaBUMMbQLyIYEM1FZn1JOiV6fcBaZMdIepanJj6MHJK50y5/lXTBMiaOGd0UXM8TnTPJ6pHri1dZSuFsBHEGg==",
+      "path": "microsoft.netcore.dotnethostpolicy/2.1.14",
+      "hashPath": "microsoft.netcore.dotnethostpolicy.2.1.14.nupkg.sha512"
     },
-    "Microsoft.NETCore.DotNetHostResolver/2.1.13": {
+    "Microsoft.NETCore.DotNetHostResolver/2.1.14": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-dyG06+WY38ite0ObF6TBZN9Vivbgd7Isdd5lwb5rmsGfPdKdLGv/5ZdM7QP+YHV7pjEQD2Ee3EU+RNhkfV8Ptw==",
-      "path": "microsoft.netcore.dotnethostresolver/2.1.13",
-      "hashPath": "microsoft.netcore.dotnethostresolver.2.1.13.nupkg.sha512"
+      "sha512": "sha512-pxG8LcvMlcEnk6Q0qITNQ8lzut5oTnrmpxc+bOdCXJUnS1sFaeT0oytY5GqChXyFpM5wipGpnAI+SMJlgZRuFw==",
+      "path": "microsoft.netcore.dotnethostresolver/2.1.14",
+      "hashPath": "microsoft.netcore.dotnethostresolver.2.1.14.nupkg.sha512"
     },
-    "Microsoft.NETCore.Platforms/2.1.6": {
+    "Microsoft.NETCore.Platforms/2.1.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-MX6jvPsEer3ap638v2toFHHrK9Tq6qLxqV8z+0lKM9HSmEGJc26X2ZbRa5+XnPjfgXL5mrb/6T9eBjYI6tgB2g==",
-      "path": "microsoft.netcore.platforms/2.1.6",
-      "hashPath": "microsoft.netcore.platforms.2.1.6.nupkg.sha512"
+      "sha512": "sha512-tgYLpldLzHRPFhhWKWw0PHI584pkJ35+3xmH1eCLxOhaNkWpcz7LPACF4rsJWqI5HrLLImJ4WDuMd9YeAwf5Fg==",
+      "path": "microsoft.netcore.platforms/2.1.7",
+      "hashPath": "microsoft.netcore.platforms.2.1.7.nupkg.sha512"
     },
     "Microsoft.NETCore.Targets/2.0.0": {
       "type": "package",
@@ -831,33 +831,33 @@
       "path": "netstandard.library/2.0.3",
       "hashPath": "netstandard.library.2.0.3.nupkg.sha512"
     },
-    "runtime.linux-x64.Microsoft.NETCore.App/2.1.13": {
+    "runtime.linux-x64.Microsoft.NETCore.App/2.1.14": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-6d8wY7P8oEOchb6T0ZoAYC+fz/r2XxC35Zk/YH2lPam6H9ToGtrUQpvuNdKKoU/TCFmdQ/4qPVTJjMy+NPz1nA==",
-      "path": "runtime.linux-x64.microsoft.netcore.app/2.1.13",
-      "hashPath": "runtime.linux-x64.microsoft.netcore.app.2.1.13.nupkg.sha512"
+      "sha512": "sha512-EkmbD+mxuxkNf8d8Ylwc03HGtHYDaEwmveEQ+hsKR/esTOlXy5TWES5VChB6TK/cudeLAPr6f+78lWbrkMzEhA==",
+      "path": "runtime.linux-x64.microsoft.netcore.app/2.1.14",
+      "hashPath": "runtime.linux-x64.microsoft.netcore.app.2.1.14.nupkg.sha512"
     },
-    "runtime.linux-x64.Microsoft.NETCore.DotNetAppHost/2.1.13": {
+    "runtime.linux-x64.Microsoft.NETCore.DotNetAppHost/2.1.14": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-qFt8FYzwjcjC/wSR24yHLu5qOFy/02qggzjCsiTvNjmaH11oD1bc8l+BR/0txSIoVKTiDygQjiR6rQGUpcTD5Q==",
-      "path": "runtime.linux-x64.microsoft.netcore.dotnetapphost/2.1.13",
-      "hashPath": "runtime.linux-x64.microsoft.netcore.dotnetapphost.2.1.13.nupkg.sha512"
+      "sha512": "sha512-vasGpKfBG8brUQ8C0Q1PmynGroWGLZle+gue+fbR7zLIIKkr31C/d8RgKdhQ7Yckl2VjBfH2w3+zl0mB+axyQg==",
+      "path": "runtime.linux-x64.microsoft.netcore.dotnetapphost/2.1.14",
+      "hashPath": "runtime.linux-x64.microsoft.netcore.dotnetapphost.2.1.14.nupkg.sha512"
     },
-    "runtime.linux-x64.Microsoft.NETCore.DotNetHostPolicy/2.1.13": {
+    "runtime.linux-x64.Microsoft.NETCore.DotNetHostPolicy/2.1.14": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-LP1qa11BVFurZ+d50NP83dXvrund83rkw9yz9K97SD/Oyune/fbNo86F8lcB0T2gQiHXbhvUE73LIhuGDYygNw==",
-      "path": "runtime.linux-x64.microsoft.netcore.dotnethostpolicy/2.1.13",
-      "hashPath": "runtime.linux-x64.microsoft.netcore.dotnethostpolicy.2.1.13.nupkg.sha512"
+      "sha512": "sha512-2CfAJqfzBI60HWTmT3M0zsXgtZ6eYfO2dGYln/EImDJQxI4dowx/2+2kGnx/aVc0MSPKLQNhjKTaPqXvUq8Rjw==",
+      "path": "runtime.linux-x64.microsoft.netcore.dotnethostpolicy/2.1.14",
+      "hashPath": "runtime.linux-x64.microsoft.netcore.dotnethostpolicy.2.1.14.nupkg.sha512"
     },
-    "runtime.linux-x64.Microsoft.NETCore.DotNetHostResolver/2.1.13": {
+    "runtime.linux-x64.Microsoft.NETCore.DotNetHostResolver/2.1.14": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-vVbtjgBrZOwFHwDRht+2hsSggUlYugB4OtlSymMkjqjuo4cDUuDG5P/X3a0cq0h2cT67YVo8fgrj+VyYS2cdnw==",
-      "path": "runtime.linux-x64.microsoft.netcore.dotnethostresolver/2.1.13",
-      "hashPath": "runtime.linux-x64.microsoft.netcore.dotnethostresolver.2.1.13.nupkg.sha512"
+      "sha512": "sha512-3XHbYU9iLfxqmmzBvQMBB/hb2deEE16lvmssMuachA5LJ71HW/Ga1o+wIimoS68SUjEEaSQuA8eh5Qo/HJ1l+Q==",
+      "path": "runtime.linux-x64.microsoft.netcore.dotnethostresolver/2.1.14",
+      "hashPath": "runtime.linux-x64.microsoft.netcore.dotnethostresolver.2.1.14.nupkg.sha512"
     },
     "ToolLib/1.0.0": {
       "type": "project",
