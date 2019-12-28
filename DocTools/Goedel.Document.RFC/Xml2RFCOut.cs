@@ -8,20 +8,12 @@ using Goedel.Utilities;
 namespace Goedel.Document.RFC {
     public class Xml2RFCOut {
         TextWriter textWriter;
-        /*<rfc xmlns:xi="http://www.w3.org/2001/XInclude" docName="draft-hallambaker-mesh-cryptography-05" 
-     indexInclude="false" ipr="trust200902" scripts="Common,Latin" sortRefs="true" symRefs="true" 
-     tocDepth="3" tocInclude="true" version="3" submissionType="independent" category="info" xml:lang="en"><front>
-<title abbrev="Mesh Cryptographic Algorithms">Mathematical Mesh 3.0 Part VIII: Cryptographic Algorithms</title>
-<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-cryptography"/>
 
-         */
         public Xml2RFCOut(TextWriter TextWriter) => this.textWriter = TextWriter;
-        #region // Dcoument
+        #region // Document
+
         Document document;
-
         public void Write(Document document) {
-            this.document = document;
-
             textWriter.WriteLine("<?xml version='1.0' encoding='utf-8'?>");
 
             WriteStartTag("rfc",
@@ -45,6 +37,7 @@ namespace Goedel.Document.RFC {
                 "xml:lang", "en"
                 ); ; ;
 
+            this.document = document;
 
             MakeFront(document);
             MakeMiddle(document);
@@ -85,13 +78,6 @@ namespace Goedel.Document.RFC {
                 WriteTextBlocks(document.Abstract);
                 WriteEndTagNL("abstract");
                 }
-
-            // ToDo: note
-
-
-
-            // boilerplate element is filled by the prep tool - ignore.
-
 
             WriteEndTagNL("front");
             }
@@ -228,13 +214,11 @@ namespace Goedel.Document.RFC {
         List<BlockType> listItems = new List<BlockType>();
         int listPointer = -1;
 
-        void OpenList(BlockType listItem, LI lI) {
-            //TextWriter.Write(Start);
+        void OpenList(BlockType listItem, LI li) {
             listPointer++;
 
             if (listItems.Count < (listPointer + 1)) {
                 listItems.Add(listItem);
-
                 }
             else {
                 listItems[listPointer] = listItem;
@@ -244,25 +228,25 @@ namespace Goedel.Document.RFC {
                 case BlockType.Term:
                 case BlockType.Data: {
                     WriteStartTagNL("dl",
-                        "anchor", lI.EnclosingAnchorID,
-                        "hanging", lI.Format,
-                        "spacing", lI.Spacing);
+                        "anchor", li.EnclosingAnchorID,
+                        "hanging", li.Format,
+                        "spacing", li.Spacing);
                     break;
                     }
                 case BlockType.Ordered: {
                     WriteStartTagNL("ol",
-                        "anchor", lI.EnclosingAnchorID,
-                        "group", lI.Group,
-                        "spacing", lI.Spacing,
-                        "start", lI.Index.ToString(),
-                        "type", lI.Format);
+                        "anchor", li.EnclosingAnchorID,
+                        "group", li.Group,
+                        "spacing", li.Spacing,
+                        "start", li.Index.ToString(),
+                        "type", li.Format);
                     break;
                     }
                 case BlockType.Symbol: {
                     WriteStartTagNL("ul",
-                        "anchor", lI.EnclosingAnchorID,
-                        "empty", lI.Empty,
-                        "spacing", lI.Spacing);
+                        "anchor", li.EnclosingAnchorID,
+                        "empty", li.Empty,
+                        "spacing", li.Spacing);
                     break;
                     }
                 }
@@ -308,8 +292,6 @@ namespace Goedel.Document.RFC {
                 return;
                 }
 
-
-            // Level == ListPointer 
             if ((listItems[listPointer] == ListItem) |
                 (listItems[listPointer] == BlockType.Term & ListItem == BlockType.Data)) {
                 return;
@@ -318,23 +300,23 @@ namespace Goedel.Document.RFC {
             OpenList(ListItem, LI);
             }
 
-        void WriteBlock(LI lI) {
+        void WriteBlock(LI li) {
 
-            SetListLevel(lI.Level-1, lI.Type, lI);
+            SetListLevel(li.Level-1, li.Type, li);
 
-            switch (lI.Type) {
+            switch (li.Type) {
                 //case BlockType.Data: {
                 //    Write("dd", lI.Segments, "anchor", lI.AnchorID);
                 //    break;
                 //    }
                 case BlockType.Term: {
-                    Write("dt", lI.Segments, "anchor", lI.AnchorID);
+                    Write("dt", li.Segments, "anchor", li.AnchorID);
                     WriteStartTagNL("dd");
-                    if (lI.Content == null) {
+                    if (li.Content == null) {
                         Write("t", null);
                         }
                     else {
-                        foreach (var block in lI.Content) {
+                        foreach (var block in li.Content) {
                             switch (block) {
                                 case P P: {
                                     Write("t", P.Segments);
@@ -351,7 +333,7 @@ namespace Goedel.Document.RFC {
                     }
                 case BlockType.Ordered:
                 case BlockType.Symbol: {
-                    Write("li", lI.Segments, "anchor", lI.AnchorID);
+                    Write("li", li.Segments, "anchor", li.AnchorID);
                     break;
                     }
                 }
@@ -378,7 +360,7 @@ namespace Goedel.Document.RFC {
                     }
 
                 case "eref": {
-                    WriteStartTag(Open.Tag, "target", Open.AttributeValue("target"));
+                    WriteStartTag(Open.Tag, "target", Open.AttributeValue("eref"));
                     break;
                     }
                 case "relref": {
@@ -391,7 +373,7 @@ namespace Goedel.Document.RFC {
                     }
                 case "xref": {
                     WriteStartTag(Open.Tag, 
-                            "target", Open.AttributeValue("target"),
+                            "target", Open.AttributeValue("xref"),
                             "format", Open.AttributeValue("format"),
                             "title", Open.AttributeValue("title"));
                     break;
@@ -402,9 +384,18 @@ namespace Goedel.Document.RFC {
                     WriteStartTag(Open.Tag, Open.Attributes);
                     break;
                     }
-
+                case "id":
+                case "anchor": {
+                    Open.IsInvisible = true;
+                    break;
+                    }
 
                 // The special case versions
+                case "iref": {
+                    Open.Tag = "iref";
+                    WriteStartTag(Open.Tag);
+                    break;
+                    }
                 case "a": {
                     Open.Tag = "eref";
                     WriteStartTag(Open.Tag, "target", Open.AttributeValue("a"));
@@ -425,7 +416,9 @@ namespace Goedel.Document.RFC {
             }
 
         public void Write (GM.TextSegmentClose Close) {
-            WriteEndTag(Close.Open.Tag);
+            if (!Close.Open.IsInvisible) {
+                WriteEndTag(Close.Open.Tag);
+                }
             }
 
         public void Write(GM.TextSegmentEmpty Text) {
@@ -573,7 +566,7 @@ namespace Goedel.Document.RFC {
             foreach (Section Section in Sections) {
                 if (!Section.Automatic) {
 
-                    WriteStartTag("section", "title", Section.Heading, "anchor", Section.GeneratedID);
+                    WriteStartTag("section", "title", Section.Heading, "anchor", Section.SetableID);
                     WriteTextBlocks(Section.TextBlocks);
                     ListLast();
 

@@ -225,6 +225,9 @@ namespace Goedel.Document.OpenXML {
         TextProperty Superscript = new TextProperty();
 
         void Add (GM.MarkNewParagraph Lexer, Run Run) {
+
+            //Console.WriteLine($"Run {Run.InnerText}");
+
             if (Lexer.XMLTagMode) {
                 Lexer.Push(Run.InnerText);
                 return;
@@ -267,6 +270,8 @@ namespace Goedel.Document.OpenXML {
                 Changed = Changed | Superscript.Set(false);
                 }
 
+
+
             // Close all contexts first
             if (Bold.Close) {
                 PopStack(Lexer, "b");
@@ -283,6 +288,10 @@ namespace Goedel.Document.OpenXML {
             if (Superscript.Close) {
                 PopStack(Lexer, "sup");
                 }
+
+            //if (Changed) {
+            //    Lexer.MakeSegment();
+            //    }
 
             // Now open any new ones
             if (Bold.Open) {

@@ -2,7 +2,7 @@
   "profiles": {
     "rfctool": {
       "commandName": "Project",
-      "commandLineArgs": "hallambaker-threshold-base.docx /xml",
+      "commandLineArgs": "test2.docx /xml",
       "workingDirectory": "C:\\Users\\hallam\\Work\\buildtools\\DocTools\\rfctool\\Test"
     }
   }

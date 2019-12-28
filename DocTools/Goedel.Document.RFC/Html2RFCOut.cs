@@ -12,39 +12,38 @@ namespace Goedel.Document.RFC {
     public partial class Html2RFCOut : XMLTextWriter {
         public bool Strict = false;
 
-        TextWriter TextWriter;
-
-
-
-        /// <summary>
-        /// Constructor, this is a subclass of XMLTextWriter
-        /// </summary>
-        /// <param name="TextWriter"></param>
-        public Html2RFCOut(TextWriter TextWriter) : base(TextWriter, false) {
-            this.TextWriter = TextWriter;
-            TextWriter.NewLine = "\n";
-            TextWriter.WriteLine("<!DOCTYPE html>");
-            }
+        TextWriter textWriter;
 
         public string Pilcrow = "&para;"; // "¶"
 
-
-        readonly string[] AttributesLinkLicense = new string[] {
+        readonly string[] attributesLinkLicense = new string[] {
             "href", "https://trustee.ietf.org/trust-legal-provisions.html", "rel", "license" };
 
-        readonly string[] Stylesheets = {
+        readonly string[] stylesheets = {
             //"https://rfc-format.github.io/draft-iab-rfc-css-bis/xml2rfc.css",  // ToDo: - final stylesheet
             "rfc-local.css"
             };
 
         public string MainStylesheet = "xml2rfc.css";
 
-
         // ToDo: Should incorporate the stylesheet and linked SVGs into the output as one file.
 
         DateTime Prepared = DateTime.UtcNow;
         DateTime Rendered = DateTime.UtcNow;
         Document Document;
+
+        /// <summary>
+        /// Constructor, this is a subclass of XMLTextWriter
+        /// </summary>
+        /// <param name="TextWriter"></param>
+        public Html2RFCOut(TextWriter TextWriter) : base(TextWriter, false) {
+            this.textWriter = TextWriter;
+            TextWriter.NewLine = "\n";
+            TextWriter.WriteLine("<!DOCTYPE html>");
+            }
+
+
+        #region // Document
 
         public void Write(Document Document) {
             this.Document = Document;
@@ -62,9 +61,6 @@ namespace Goedel.Document.RFC {
             foreach (var Author in Document.Authors) {
                 WriteElementEmpty("meta", "name", "author", "content", Author.Name.Trim());
                 }
-
-
-
 
             // ToDo: Description
             if (Document.Abstract.Count > 0) {
@@ -100,7 +96,7 @@ namespace Goedel.Document.RFC {
             // ToDo: include style of user's choice.
             WriteStyle(MainStylesheet);
 
-            foreach (var Stylesheet in Stylesheets) {
+            foreach (var Stylesheet in stylesheets) {
                 WriteElementEmpty("link", "href", Stylesheet, "rel", "stylesheet", "type", "text/css");
                 }
 
@@ -115,7 +111,7 @@ namespace Goedel.Document.RFC {
 
             if (!Strict) {
                 if (Document.EmbedSVG == 0) {
-                    XMLEmbed.FaviconBase64("favicon.png", TextWriter);
+                    XMLEmbed.FaviconBase64("favicon.png", textWriter);
                     }
                 else {
                     WriteElementEmpty("link", "href", "favicon.png", "rel", "icon");
@@ -193,7 +189,7 @@ namespace Goedel.Document.RFC {
             End();
             }
 
-
+        #endregion
         #region // Utitlies to make various paragraph blocks
 
         //Tagging and bagging paragraph blocks
@@ -234,11 +230,13 @@ namespace Goedel.Document.RFC {
 
 
         void WritePRE(List<TextSegment> Segments) {
-            foreach (var Segment in Segments) {
-                switch (Segment) {
-                    case TextSegmentText TextSegmentText:
-                        Write(TextSegmentText.Text, false, false);
-                        break;
+            using (var wrapWriter = new WrapWriter(textWriter)) {
+                foreach (var Segment in Segments) {
+                    switch (Segment) {
+                        case TextSegmentText TextSegmentText:
+                            wrapWriter.Write(TextSegmentText.Text);
+                            break;
+                        }
                     }
                 }
             }
@@ -253,6 +251,8 @@ namespace Goedel.Document.RFC {
             End(false, true);
             }
 
+        #endregion
+        #region // Tables
         public void WriteTable(Table Table) {
             if (Table.Body.Count == 0) {
                 return; // no rows so suppress outpout
@@ -282,7 +282,7 @@ namespace Goedel.Document.RFC {
             }
 
         #endregion
-
+        #region // Abstract
         // Replacements for the automatic sections
         public void WriteAbstract(Document Document) {
             StartSection(1, "Abstract", "abstract");
@@ -298,7 +298,8 @@ namespace Goedel.Document.RFC {
 
             EndSection();
             }
-
+        #endregion
+        #region // Toc
         public void WriteToc(Document Document) {
             StartSection(1, "Table of Contents", "toc");
 
@@ -362,8 +363,8 @@ namespace Goedel.Document.RFC {
             WriteToc(Section.Subsections);
             End();
             }
-
-
+        #endregion
+        #region // Status
         public void WriteStatus(Document Document) {
             StartSection(1, "Status of this Memo", "n-status-of-this-memo");
             EndSection();
@@ -515,8 +516,9 @@ namespace Goedel.Document.RFC {
             var href = RFCEditorBoilerplate.RFCLocationURL + "rfc" + number;
             WriteElement("a", number, "href", href, "class", "eref");
             }
+        #endregion
 
-
+        #region // List
         // -----------------------
 
         ListLevel ListLevel;
@@ -545,30 +547,47 @@ namespace Goedel.Document.RFC {
 
         string WrapNull (string Text) => Text ?? "";
 
-        void ListItem (LI LI) {
-            ListLevel.SetListLevel(LI.Level-1, LI.Type, LI.GeneratedID);
+        void ListItem (LI li) {
+            ListLevel.SetListLevel(li.Level-1, li.Type, li.GeneratedID);
 
-            switch (LI.Type) {
-                case BlockType.Data: {
-                    WriteBlock(LI, "dd");
-                    break;
-                    }
+            switch (li.Type) {
+                //case BlockType.Data: {
+                //    WriteBlock(LI, "dd");
+                //    break;
+                //    }
                 case BlockType.Term: {
-                    WriteBlock(LI, "dt");
+                    WriteBlock(li, "dt");
+
+                    if (li.Content != null) {
+                        foreach (var block in li.Content) {
+                            switch (block) {
+                                case P P: {
+                                    WriteBlock(P, "dd");
+                                    break;
+                                    }
+                                }
+
+                            }
+                        }
+
                     break;
                     }
                 case BlockType.Ordered: {
-                    WriteBlock(LI, "li");
+                    WriteBlock(li, "li");
                     break;
                     }
                 case BlockType.Symbol: {
-                    WriteBlock(LI, "li");
+                    WriteBlock(li, "li");
                     break;
                     }
                 }
             }
 
         void ListLast() => ListLevel.ListLast();
+
+        #endregion
+
+        #region // SVG
 
         public void WriteLinkSVG (string Filename, string Element, string Attribute, string Attributes) {
 
@@ -606,7 +625,9 @@ namespace Goedel.Document.RFC {
             }
 
 
-        //----------------------
+        #endregion
+
+        #region // Sections
 
         // Write out the sections
         public void WriteSections (List<Section> Sections, int Level, bool Always = false) {
@@ -740,6 +761,10 @@ namespace Goedel.Document.RFC {
             End();
             }
 
+        #endregion
+
+        #region // Utility - time
+
         void GetTime (string Day, string Month, string Year, out string Numeric, out string Text) {
             var NumericBuilder = new StringBuilder();
             var TextBuilder = new StringBuilder();
@@ -773,8 +798,10 @@ namespace Goedel.Document.RFC {
         static List<string> Months = new List<string>() {
                 "jan", "feb", "mar",  "apr", "may", "jun",  "jul", "aug", "sep",  "oct", "nov", "dec"
                 };
-            
 
+        #endregion
+
+        #region // Utilit-Author
 
         void WriteAuthorList (List<Author> Authors) {
             var Separate = false;
@@ -790,6 +817,10 @@ namespace Goedel.Document.RFC {
         void WriteSpan(string Class, string Text) => WriteElementIfTrim("span", Text, "class", Class);
 
         void StartSpan(string Class) => Start("span", "Class", Class);
+
+        #endregion
+
+        #region // Colophon
 
         void WriteColophon () {
             // The colophon
@@ -826,7 +857,9 @@ namespace Goedel.Document.RFC {
             }
 
 
+        #endregion
 
+        #region // Author list
         void WriteAuthors (string Heading, List<Author> Authors) {
             // ToDo: use &nbsp; as spaces - need to rewrite element handler.
             StartSection(0, Heading, "n-authors");
@@ -891,6 +924,8 @@ namespace Goedel.Document.RFC {
             Strong, Emphasis, Code, Comment, Superscript, Subscript, Norm
 
             }
+
+        #endregion
         }
 
     }

@@ -7,7 +7,6 @@ using Goedel.Utilities;
 namespace Goedel.Document.RFC {
     public partial class WrapWriter : Disposable {
 
-        Encoding encoding;
         public TextWriter TextWriter;
         public int MaxCol;
 

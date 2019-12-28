@@ -1,13 +1,11 @@
 ﻿# PHB Build Tools: RFC Tool
 
-
 # General
 
-Handling of xref references inside the document is wonky
+* Should eref wrap the hypertext link it contains?
 
 * Pointers to normative and informational documents
-* Pointers to anchors inside the document
-* Naming anchors inside the document.
+
 
 # Testing
 
@@ -32,7 +30,6 @@ Build set of input test docs with different repertoirs
 * References
 * Source Code
 
-
 # SVG
 
 Need a tool to read in SVG and strip stuff out that isn't to spec.
@@ -43,11 +40,9 @@ Need a tool to read in SVG and strip stuff out that isn't to spec.
 
 Including SVG files
 
-
 ## XML v2 (deprecated)
 
 TextTable input is not correctly handled.
-
 
 
 ## Markdown
@@ -61,6 +56,9 @@ Accept kramdown style metadata
 
 ## Word
 
+Superscripts are being presented out of order in certain cases. The Word representation
+is correct, the parser is messing up.
+
 Does not support nested lists, probably never will
 
 Implement anchors
@@ -70,14 +68,6 @@ Implement anchors
 
 ## XML v3 generation bugs
 
-
-Artwork type elements are not being correctly rendered, the code is lost.
-
-
-### DL Lists
-
-The DD tag is not being properly filled out in DL lists. This could be due to a bug in 
-the word parser or the generator.
 
 ## HTML generation bugs
 

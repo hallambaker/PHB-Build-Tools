@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="info" docName="draft-hallambaker-threshold-00" indexInclude="false" ipr="trust200902" prepTime="2019-12-26T18:32:39Z" scripts="Common,Latin" sortRefs="true" submissionType="independent" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="info" docName="draft-hallambaker-threshold-00" indexInclude="false" ipr="trust200902" prepTime="2019-12-27T00:15:25Z" scripts="Common,Latin" sortRefs="true" submissionType="independent" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
 <title abbrev="Threshold Cryptography in Elliptic Curves">Threshold Cryptography in Elliptic Curves</title>
 <seriesInfo name="Internet-Draft" value="draft-hallambaker-threshold" stream="independent"/>
 <author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker"><organization>Venture Cryptography.</organization>
@@ -7,7 +7,7 @@
 <email>phill@hallambaker.com</email>
 </address>
 </author>
-<date day="26" month="December" year="2019"/>
+<date day="27" month="December" year="2019"/>
 <area/>
 <workgroup/>
 <keyword>Threshold Cryptography</keyword>

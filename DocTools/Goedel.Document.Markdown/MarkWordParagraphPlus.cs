@@ -108,6 +108,9 @@ namespace Goedel.Document.Markdown {
 
 
         public void MakeSegment () {
+            Buffer.Append(Upper.ToString());
+            Upper.Clear();
+
             if (Buffer.Length > 0) {
                 SegmentText(Buffer.ToString());
                 Buffer.Clear();

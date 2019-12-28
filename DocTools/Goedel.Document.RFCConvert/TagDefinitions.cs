@@ -152,6 +152,21 @@ Class Goedel.MarkLib TagDefinitions
 			|remark
 		XML ""cref"" ""class""
 
+	Annotation anchor
+		Remark
+			|remark
+
+
+	Annotation iref
+		Remark
+			|remark
+	Annotation xref
+		Remark
+			|remark
+	Annotation eref
+		Remark
+			|remark
+
 
 	Item img
 		Remark

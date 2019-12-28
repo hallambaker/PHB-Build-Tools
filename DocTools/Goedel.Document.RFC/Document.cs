@@ -5,11 +5,27 @@ using GM = Goedel.Document.Markdown;
 using Goedel.Utilities;
 
 namespace Goedel.Document.RFC {
+
+    public class XRefTarget {
+        public string Text => GetText();
+        public Section Section;
+        public TextBlock TextBlock;
+
+        public string GetText() {
+            if (Section != null) {
+                return "Section " + Section.Number;
+                }
+            return TextBlock?.AnchorText ?? "TBS";
+            }
+
+
+        }
+
     public partial class Document {
         public GM.Document Source = null;
 
         public DateTime PrepTime = DateTime.Now;
-
+        public Dictionary<string, XRefTarget> XRefDictionary = new Dictionary<string, XRefTarget>();
 
         // serious issue with Category/Status and SubmissionType/Stream
         // These seem to overlap.
@@ -207,7 +223,7 @@ namespace Goedel.Document.RFC {
             SeriesInfo.Status = SeriesInfo.Status ?? Category;
             SeriesInfo.Stream = SeriesInfo.Stream ?? SubmissionType;
 
-            switch (SeriesInfo.Stream.ToLower()) {
+            switch (SeriesInfo.Stream?.ToLower()) {
 
                 case "iab": {
                     SeriesInfo.Stream = "IAB";
@@ -227,7 +243,7 @@ namespace Goedel.Document.RFC {
                     }
                 }
 
-            switch (SeriesInfo.Status.ToLower()) {
+            switch (SeriesInfo.Status?.ToLower()) {
                 case "standard":
                 case "std": {
                     SeriesInfo.Status = "std";
@@ -335,7 +351,7 @@ namespace Goedel.Document.RFC {
                         var Figure = Text as Figure;
                         TableOfFigures.Add(Text as Figure);
                         Figure.NumericID = TableOfFigures.Count.ToString();
-                        Figure.AnchorID = Figure.AnchorID ?? "n-" + GetAnchor(Figure.Caption);
+                        Figure.GeneratedID = Figure.AnchorID ?? "n-" + GetAnchor(Figure.Caption);
                         }
                     }
                 }
@@ -427,6 +443,34 @@ namespace Goedel.Document.RFC {
             }
 
         public virtual void ReportNit(string Nit) => Console.Write(Nit);
+
+
+        public XRefTarget AddAnchor(string xref, Section section) {
+            if (!XRefDictionary.TryGetValue(xref, out var xRefTarget)) {
+                xRefTarget = new XRefTarget();
+                XRefDictionary.Add(xref, xRefTarget);
+                }
+            xRefTarget.Section = section;
+            return xRefTarget;
+            }
+
+        public XRefTarget AddAnchor(string xref, TextBlock textBlock) {
+            if (!XRefDictionary.TryGetValue(xref, out var xRefTarget)) {
+                xRefTarget = new XRefTarget();
+                XRefDictionary.Add(xref, xRefTarget);
+                }
+            xRefTarget.TextBlock = textBlock;
+            return xRefTarget;
+            }
+
+        public XRefTarget AddXref(string xref) {
+            if (!XRefDictionary.TryGetValue(xref, out var xRefTarget)) {
+                xRefTarget = new XRefTarget();
+                XRefDictionary.Add(xref, xRefTarget);
+                }
+            return xRefTarget;
+            }
+
         }
 
 
@@ -533,6 +577,7 @@ namespace Goedel.Document.RFC {
         }
 
     public abstract class TextBlock {
+        public string AnchorText => GeneratedID;
         public string GeneratedID;  // The id used in <p>, <h2>, <h3>, etc.
         string anchorID;
         public string AnchorID {

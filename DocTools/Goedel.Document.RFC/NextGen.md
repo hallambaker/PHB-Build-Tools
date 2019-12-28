@@ -12,24 +12,6 @@ Objectives:
 
 ##Paragraph styles in text
 
-: bcp14
-::Wrap MUST, SHOULD, etc.
-
-:em
-::Emphasis
-
-:strong
-::Bold
-
-:sub
-::Subscript
-
-:sup
-::Superscript
-
-:tt
-::Teletype
-
 :cref
 ::Wraps a comment
 

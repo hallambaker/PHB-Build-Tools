@@ -135,6 +135,7 @@ namespace Goedel.Document.Markdown {
 
     public abstract class TextSegment {
         string tag;
+
         public CatalogEntry CatalogEntry = null;
         public string Tag {
             get => tag ?? CatalogEntry?.Key;
@@ -206,7 +207,7 @@ namespace Goedel.Document.Markdown {
         public TextSegment Close = null;
         public string Text;
         public bool IsEmpty = false;
-
+        public bool IsInvisible = false;
         public TextSegmentOpen () {
             }
 

@@ -9,8 +9,8 @@ using Goedel.Utilities;
 
 namespace MakeRFC {
     public class ConverterRFC {
-        GM.Document Source;
-        Goedel.Document.RFC.Document Target;
+        GM.Document source;
+        Goedel.Document.RFC.Document target;
 
         enum BlockState {
             Title,
@@ -18,52 +18,52 @@ namespace MakeRFC {
             Front,
             Back
             }
-        BlockState State = BlockState.Title;
+        BlockState state = BlockState.Title;
 
         // Convenience routine as a static function
-        public static ConverterRFC Convert(GM.Document Source, Goedel.Document.RFC.Document Target) => new ConverterRFC(Source, Target);
+        public static ConverterRFC Convert(GM.Document source, Goedel.Document.RFC.Document target) => new ConverterRFC(source, target);
 
         // Create a converter
-        public ConverterRFC(GM.Document Source, Goedel.Document.RFC.Document Target) {
-            this.Source = Source;
-            this.Target = Target;
-            Target.Source = Source;
+        public ConverterRFC(GM.Document Source, Goedel.Document.RFC.Document target) {
+            this.source = Source;
+            this.target = target;
+            target.Source = Source;
             Convert();
             }
 
         void Convert() {
             // Pull in metadata from the catalog
-            Target.Title = Source.MetaDataGetString("title", "Title");
-            Target.TitleAbrrev = Source.MetaDataGetString("abbrev", Target.Title);
-            Target.Docname = Source.MetaDataGetString("series", "ietf-draft-TBS"); // ToDo : make proper SeriesInfo
+            target.Title = source.MetaDataGetString("title", "Title");
+            target.TitleAbrrev = source.MetaDataGetString("abbrev", target.Title);
+            target.Docname = source.MetaDataGetString("series", "ietf-draft-TBS"); // ToDo : make proper SeriesInfo
 
-            Target.Year = Source.MetaDataGetString("year", Target.Year);
-            Target.Month = Source.MetaDataGetString("month", Target.Month);
-            Target.Day = Source.MetaDataGetString("day", Target.Day);
+            target.Year = source.MetaDataGetString("year", target.Year);
+            target.Month = source.MetaDataGetString("month", target.Month);
+            target.Day = source.MetaDataGetString("day", target.Day);
 
-            Target.Ipr = Source.MetaDataGetString("ipr", null);
-            Target.Area = Source.MetaDataGetStrings("area", null);
-            Target.Workgroup = Source.MetaDataGetStrings("workgroup", null);
+            target.Ipr = source.MetaDataGetString("ipr", null);
+            target.Area = source.MetaDataGetStrings("area", null);
+            target.Workgroup = source.MetaDataGetStrings("workgroup", null);
 
-            Target.Number = Source.MetaDataGetString("number", null);
-            Target.Category = Source.MetaDataGetString("category", null);
-            Target.Updates = Source.MetaDataGetString("updates", null);
-            Target.Obsoletes = Source.MetaDataGetString("obsoletes", null);
-            Target.SeriesNumber = Source.MetaDataGetString("seriesnumber", null);
+            target.Number = source.MetaDataGetString("number", null);
+            target.Category = source.MetaDataGetString("category", null);
+            target.Updates = source.MetaDataGetString("updates", null);
+            target.Obsoletes = source.MetaDataGetString("obsoletes", null);
+            target.SeriesNumber = source.MetaDataGetString("seriesnumber", null);
 
-            Target.Also = Source.MetaDataGetString("also", null);
+            target.Also = source.MetaDataGetString("also", null);
 
-            var HaveKeywords = Source.MetaDataLookup("keyword", out var Metas);
-            if (HaveKeywords) {
+            var haveKeywords = source.MetaDataLookup("keyword", out var Metas);
+            if (haveKeywords) {
                 foreach (var Meta in Metas) {
                     if (Meta.Text != null) {
-                        Target.Keywords.Add(Meta.Text);
+                        target.Keywords.Add(Meta.Text);
                         }
                     }
                 }
 
-            var HaveSeries = Source.MetaDataLookup("series", out Metas);
-            if (HaveSeries) {
+            var haveSeries = source.MetaDataLookup("series", out Metas);
+            if (haveSeries) {
                 foreach (var Meta in Metas) {
                     var SeriesInfo = new SeriesInfo() {
                         DocName = Meta.Text
@@ -71,34 +71,34 @@ namespace MakeRFC {
                     FillMetaString(Meta, "stream", ref SeriesInfo.Stream);
                     FillMetaString(Meta, "status", ref SeriesInfo.Status);
                     FillMetaString(Meta, "version", ref SeriesInfo.Version);
-                    Target.SeriesInfos.Add(SeriesInfo);
+                    target.SeriesInfos.Add(SeriesInfo);
                     }
                 }
             else {
-                Target.Docname = "ietf-draft-TBS";
+                target.Docname = "ietf-draft-TBS";
                 }
 
-            var HaveLayout = Source.MetaDataLookup("layout", out Metas);
-            if (HaveLayout) {
+            var haveLayout = source.MetaDataLookup("layout", out Metas);
+            if (haveLayout) {
                 foreach (var Meta in Metas) {
-                    FillMetaAttributeBool(Meta, "sortrefs", ref Target.SortRefs);
-                    FillMetaAttributeBool(Meta, "symrefs", ref Target.Symrefs);
-                    FillMetaAttributeBool(Meta, "toc", ref Target.TocInclude);
-                    FillMetaAttributeBool(Meta, "tocinclude", ref Target.TocInclude);
-                    FillMetaAttributeBool(Meta, "tof", ref Target.TofInclude);
-                    FillMetaAttributeBool(Meta, "tot", ref Target.TotInclude);
-                    FillMetaAttributeBool(Meta, "ton", ref Target.TonInclude);
-                    FillMetaAttributeBool(Meta, "index", ref Target.IndexInclude);
-                    FillMetaAttributeBool(Meta, "embedstyle", ref Target.EmbedStylesheet);
-                    FillMetaAttributeInt(Meta, "embedsvg", ref Target.EmbedSVG);
-                    FillMetaAttributeInt(Meta, "tocdepth", ref Target.TocDepth);
+                    FillMetaAttributeBool(Meta, "sortrefs", ref target.SortRefs);
+                    FillMetaAttributeBool(Meta, "symrefs", ref target.Symrefs);
+                    FillMetaAttributeBool(Meta, "toc", ref target.TocInclude);
+                    FillMetaAttributeBool(Meta, "tocinclude", ref target.TocInclude);
+                    FillMetaAttributeBool(Meta, "tof", ref target.TofInclude);
+                    FillMetaAttributeBool(Meta, "tot", ref target.TotInclude);
+                    FillMetaAttributeBool(Meta, "ton", ref target.TonInclude);
+                    FillMetaAttributeBool(Meta, "index", ref target.IndexInclude);
+                    FillMetaAttributeBool(Meta, "embedstyle", ref target.EmbedStylesheet);
+                    FillMetaAttributeInt(Meta, "embedsvg", ref target.EmbedSVG);
+                    FillMetaAttributeInt(Meta, "tocdepth", ref target.TocDepth);
 
                     }
                 }
 
 
-            var HaveAuthors = Source.MetaDataLookup("author", out Metas);
-            if (HaveAuthors) {
+            var haveAuthors = source.MetaDataLookup("author", out Metas);
+            if (haveAuthors) {
                 foreach (var Meta in Metas) {
                     var Author = new Goedel.Document.RFC.Author() {
                         Name = Meta.Text
@@ -117,98 +117,100 @@ namespace MakeRFC {
                     FillMetaString(Meta, "email", ref Author.Email);
                     FillMetaString(Meta, "uri", ref Author.URI);
 
-                    Target.Authors.Add(Author);
+                    target.Authors.Add(Author);
                     }
                 }
 
             // Fill in the lists Abstract, Middle and Back from the block stream
 
-            var CurrentText = Target.Abstract;
-            var CurrentPart = Target.Middle;
-            var SectionStack = new Stack<Section>();
+            var currentText = target.Abstract;
+            var currentPart = target.Middle;
+            var sectionStack = new Stack<Section>();
             Section CurrentSection = null;
 
 
             LI enclosingDt = null;
-            foreach (var Block in Source.Blocks) {
+            foreach (var block in source.Blocks) {
                 //Console.WriteLine("Block {0}", Block.BlockType);
 
 
-                if ((Block.GetType() == typeof(Goedel.Document.Markdown.Layout)) |
-                    (Block.GetType() == typeof(Goedel.Document.Markdown.Close))){
+                if ((block.GetType() == typeof(Goedel.Document.Markdown.Layout)) |
+                    (block.GetType() == typeof(Goedel.Document.Markdown.Close))){
                     enclosingDt = null;
 
-                    if (Block.CatalogEntry.Key =="table") {
-                        CurrentText.Add(ParseTable(Block));
+                    if (block.CatalogEntry.Key =="table") {
+                        currentText.Add(ParseTable(block));
                         }
 
                     }
-                else if (Block.CatalogEntry.Level > 0) {
+                else if (block.CatalogEntry.Level > 0) {
                     enclosingDt = null;
 
                     //Console.WriteLine("    Heading");
-                    if ((Block.CatalogEntry.Key == "appendix") &
-                            (State != BlockState.Back)) {
-                        State = BlockState.Back;
-                        CurrentPart = Target.Back;
+                    if ((block.CatalogEntry.Key == "appendix") &
+                            (state != BlockState.Back)) {
+                        state = BlockState.Back;
+                        currentPart = target.Back;
                         // Reset the section stack
-                        SectionStack = new Stack<Section>();
+                        sectionStack = new Stack<Section>();
                         }
 
-                    if (State == BlockState.Title) {
+                    if (state == BlockState.Title) {
                         //Ignore the first section heading
-                        State = BlockState.Abstract;
+                        state = BlockState.Abstract;
                         }
                     else {
                         // Put a new section onto the stack at the desired level
-                        CurrentSection = AddSection(SectionStack, CurrentPart,
-                                Block.CatalogEntry.Level);
+                        CurrentSection = AddSection(sectionStack, currentPart,
+                                block.CatalogEntry.Level);
                         //CurrentSection.Heading = Target.Catalog.GetCitation(Block.Text, true);
-                        MakeSegments(CurrentSection, Block);
-                        CurrentText = CurrentSection.TextBlocks;
+                        MakeSegments(CurrentSection, block);
+                        currentText = CurrentSection.TextBlocks;
                         }
                     }
                 else {
-                    if (State == BlockState.Title) {
-                        State = BlockState.Abstract;
+                    if (state == BlockState.Title) {
+                        state = BlockState.Abstract;
                         }
 
-                    string FilteredText = Target.Catalog.GetCitation(Block.Text, true);
+                    string FilteredText = target.Catalog.GetCitation(block.Text, true);
 
-                    switch (Block.CatalogEntry.Key) {
+                    switch (block.CatalogEntry.Key) {
                         case "li": {
                             enclosingDt = null;
-                            var TextBlock = new LI() {
-                                Segments = ReadSegments (Block.Segments),
+
+
+                            var textBlock = new LI() {
                                 //Chunks = MakeChunks(Block.Segments),
                                 Type = BlockType.Symbol,
                                 Level = 1
                                 };
-                            CurrentText.Add(TextBlock);
+                            textBlock.Segments = ReadSegments(textBlock, block.Segments);
+
+
+                            currentText.Add(textBlock);
                             break;
                             }
                         case "nli": 
                         case "ni" : {
                             enclosingDt = null;
-                            var TextBlock = new LI() {
-                                Segments = ReadSegments(Block.Segments),
-                                //Chunks = MakeChunks(Block.Segments),
+                            var textBlock = new LI() {
                                 Type = BlockType.Ordered,
                                 Level = 1
                                 };
-                            CurrentText.Add(TextBlock);
+                            textBlock.Segments = ReadSegments(textBlock, block.Segments);
+                            currentText.Add(textBlock);
                             break;
                             }
                         case "dt": {
-                            var TextBlock = new LI() {
-                                Segments = ReadSegments(Block.Segments),
-                                //Chunks = MakeChunks(Block.Segments),
+                            var textBlock = new LI() {
                                 Type = BlockType.Term,
                                 Level = 1,
                                 Content = new List<TextBlock>()
                                 };
-                            CurrentText.Add(TextBlock);
-                            enclosingDt = TextBlock;
+                            textBlock.Segments = ReadSegments(textBlock, block.Segments);
+                            currentText.Add(textBlock);
+                            enclosingDt = textBlock;
                             break;
                             }
                         case "dd": {
@@ -218,50 +220,47 @@ namespace MakeRFC {
                                     Level = 1,
                                     Content = new List<TextBlock>()
                                     };
-                                CurrentText.Add(enclosingDt);
+                                currentText.Add(enclosingDt);
                                 }
-                            var TextBlock = new P() {
-                                Segments = ReadSegments(Block.Segments),
-                                };
+                            var TextBlock = new P();
+                            TextBlock.Segments = ReadSegments(TextBlock, block.Segments);
                             enclosingDt.Content.Add(TextBlock);
 
                             break;
                             }
                         case "pre": {
                             enclosingDt = null;
-                            var TextBlock = new Goedel.Document.RFC.PRE(Preformat(Block.Text), "");
+                            var TextBlock = new Goedel.Document.RFC.PRE(Preformat(block.Text), "");
 
-                            if (Block.Attributes != null) {
-                                if (Block.Attributes[0].Value != null) {
-                                    TextBlock.Language = Block.Attributes[0].Value;
+                            if (block.Attributes != null) {
+                                if (block.Attributes[0].Value != null) {
+                                    TextBlock.Language = block.Attributes[0].Value;
                                     }
                                 }
 
-                            CurrentText.Add(TextBlock);
+                            currentText.Add(TextBlock);
                             break;
                             }
                         case "figuresvg":
                         case "imgref": {
                             enclosingDt = null;
-                            if (Block?.Attributes.Count > 0) {
-                                var ID = GetID(Block);
-                                var width = Block.AttributeValue("width");
-                                var Figure = new Figure(Block.Attributes[0].Value, ID) {
-                                    Caption = Block.Text,
+                            if (block?.Attributes.Count > 0) {
+                                var ID = GetID(block);
+                                var width = block.AttributeValue("width");
+                                var Figure = new Figure(block.Attributes[0].Value, ID) {
+                                    Caption = block.Text,
                                     Width = width
                                     };
-                                CurrentText.Add(Figure);
+                                currentText.Add(Figure);
                                 }
                             break;
                             }
                         default: {
                             enclosingDt = null;
-                            if (State != BlockState.Abstract | Block.BlockType != GM.BlockType.Meta) {
-                                var TextBlock = new P() {
-                                    Segments = ReadSegments(Block.Segments),
-                                    //Chunks = MakeChunks(Block.Segments),
-                                    };
-                                CurrentText.Add(TextBlock);
+                            if (state != BlockState.Abstract | block.BlockType != GM.BlockType.Meta) {
+                                var textBlock = new P();
+                                textBlock.Segments = ReadSegments(textBlock, block.Segments);
+                                currentText.Add(textBlock);
                                 }
                             break;
                             }
@@ -272,17 +271,17 @@ namespace MakeRFC {
             }
 
         void MakeSegments (Section Section, GM.Block Block) {
-            var Builder = new StringBuilder();
+            var builder = new StringBuilder();
 
-            foreach (var Segment in Block.Segments) {
-                switch (Segment) {
+            foreach (var segment in Block.Segments) {
+                switch (segment) {
                     case GM.TextSegmentText Text: {
-                        Builder.Append(Text.Text);
+                        builder.Append(Text.Text);
                         break;
                         }
                     case GM.TextSegmentOpen Text: {
-                        if (Text.Attributes?[0].Tag == "id") {
-                            Section.GeneratedID = Text.Attributes?[0].Value;
+                        if (Text.Attributes?[0].Tag == "id" | Text.Attributes?[0].Tag == "anchor") {
+                            Section.SetableID = Text.Attributes?[0].Value;
                             }
 
                         if (Text.Attributes.Count > 0) {
@@ -293,22 +292,46 @@ namespace MakeRFC {
                         }
                     }
                 }
-            Section.Heading = Builder.ToString();
+            Section.Heading = builder.ToString();
             Section.Segments = Block.Segments;
             }
 
 
 
-        List<GM.TextSegment> ReadSegments (List<GM.TextSegment> Segments) {
+        List<GM.TextSegment> ReadSegments (TextBlock parent, List<GM.TextSegment> segments) {
 
-            foreach (var Segment in Segments) {
-                switch (Segment) {
-                    case GM.TextSegmentOpen Text: {
-                        if (Text.Tag == "info") {
-                            AddReference(Text, false);
-                            }
-                        else if (Text.Tag == "norm") {
-                            AddReference(Text, true);
+            foreach (var segment in segments) {
+                switch (segment) {
+                    case GM.TextSegmentOpen text: {
+                        switch (text.Tag) {
+                            case "info": {
+                                AddReference(text, false);
+                                break;
+                                }
+                            case "norm": {
+                                AddReference(text, true);
+                                break;
+                                }
+                            case "anchor":
+                            case "id": {
+                                if (text.Attributes != null && text.Attributes?.Count > 0) {
+                                    parent.AnchorID = text.Attributes[0].Value;
+                                    }
+                                break;
+                                }
+                            //case "iref": {
+
+                            //    break;
+                            //    }
+                            //case "xref": {
+
+                            //    break;
+                            //    }
+                            case "a":
+                            case "eref": {
+
+                                break;
+                                }
                             }
                         break;
                         }
@@ -316,20 +339,20 @@ namespace MakeRFC {
                     }
                 }
 
-            return Segments;
+            return segments;
             }
 
 
-        void AddReference (GM.TextSegmentOpen Text, bool Normative) {
-            var ID = Text.Attributes?[0].Value;
+        void AddReference (GM.TextSegmentOpen text, bool normative) {
+            var ID = text.Attributes?[0].Value;
 
-            Text.Text = "[" + ID + "]";
+            text.Text = "[" + ID + "]";
 
-            Target.Catalog.AddCitation (ID, Normative);
+            target.Catalog.AddCitation (ID, normative);
             }
 
-        string GetID (GM.Block Block) {
-            foreach (var Attribute in Block.Attributes) {
+        string GetID (GM.Block block) {
+            foreach (var Attribute in block.Attributes) {
                 if (Attribute.Tag == "id") {
                     return Attribute.Value;
                     }
@@ -343,7 +366,7 @@ namespace MakeRFC {
             return Out.Replace('\r', '\n');
             }
 
-        Table ParseTable (GM.Block Block) {
+        Table ParseTable (GM.Block block) {
             //var Table = new Table ();
             //TableRow Row = null;
             //TableData Data = null;
