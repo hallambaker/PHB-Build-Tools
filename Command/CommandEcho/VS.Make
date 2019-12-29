@@ -1,8 +1,7 @@
 
 # Supplemental Makefile for Visual Studios Projects
 #
-# Visual Studio is responsible for managing rules for production of
-# code but does not provide support for pre and post build actions.
+# Visual Studio runs tools for most projects but not for shared projects.
 # 
 # Prebuild items supported:
 #   [None currently]
@@ -18,22 +17,23 @@
 
 MSBuildThisFileDirectory = 
 
-LinkFiles = \
-    Goedel.Tool.Shell.dll
+LinkFiles = 
 
 ToolTargets = \
 	Command.cs
-
 Command.cs : Command.command 
 	commandparse Command.command  /cs  Command.cs
 
 
+
 prebuildRecurse : 
+	cd ..\..\Goedel3\Goedel.Tool.Schema && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
+	cd ..\..\Goedel3\Goedel.Tool.Schema && nmake /c /f VS.make postbuild 
 
-
+# Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse

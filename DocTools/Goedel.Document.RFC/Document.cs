@@ -430,8 +430,24 @@ namespace Goedel.Document.RFC {
             }
 
 
-        string GetAnchor(string Text) => Text == null ? "undefined" : Text.Replace(" ", "-").ToLower();
+        string GetAnchor(string Text) => Text == null ? "undefined" : Clean(Text);
 
+
+        string Clean(string text) {
+            var builder = new StringBuilder();
+            text = text.ToLower();
+            foreach (var c in text) {
+                if ((c >= 'A' & c <= 'Z') | (c >= 'a' & c <= 'z') | (c >= '0' & c <= '9')) {
+                    builder.Append(c);
+                    }
+                else if (c == ' ') {
+                    builder.Append('-');
+                    }
+                }
+
+            return builder.ToString();
+
+            }
 
         public bool CheckNits() {
             bool Result = true;

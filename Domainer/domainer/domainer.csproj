@@ -3,11 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <ApplicationIcon>PHBLogo256.ico</ApplicationIcon>
+    <OutputType>Exe</OutputType>
+    <StartupObject />
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.Tool.Shell\ToolLib.csproj" />
-  </ItemGroup>
 
   <Import Project="..\Goedel.Tool.Domainer\Goedel.Tool.Domainer.projitems" Label="Shared" />
 
@@ -18,5 +16,9 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="cd $(ProjectDir) &amp;&amp; VSPostBuildWindows $(TargetDir)" />
   </Target>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+  </ItemGroup>
 
 </Project>

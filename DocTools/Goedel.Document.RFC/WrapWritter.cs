@@ -21,7 +21,7 @@ namespace Goedel.Document.RFC {
             TextWriter.Write(builder.ToString());
             }
 
-        public WrapWriter(TextWriter textWriter, int maxCol = 72) {
+        public WrapWriter(TextWriter textWriter, int maxCol = 69) {
             TextWriter = textWriter;
             MaxCol = maxCol;
             }

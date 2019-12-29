@@ -1,8 +1,7 @@
 
 # Supplemental Makefile for Visual Studios Projects
 #
-# Visual Studio is responsible for managing rules for production of
-# code but does not provide support for pre and post build actions.
+# Visual Studio runs tools for most projects but not for shared projects.
 # 
 # Prebuild items supported:
 #   [None currently]
@@ -23,7 +22,6 @@ LinkFiles =
 ToolTargets = \
 	Asn2.cs\
 	GenerateCS.cs
-
 Asn2.cs : Asn2.gdl 
 	goedel3 Asn2.gdl  /cs  Asn2.cs
 
@@ -31,12 +29,13 @@ GenerateCS.cs : GenerateCS.script
 	gscript GenerateCS.script  GenerateCS.cs
 
 
+
 prebuildRecurse : 
 
 
 postbuildRecurse :
 
-
+# Shared project, create build rules for custom tools.
 prebuild : prebuildRecurse $(ToolTargets)
 
 postbuild : postbuildRecurse

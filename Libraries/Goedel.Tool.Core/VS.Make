@@ -19,20 +19,22 @@ MSBuildThisFileDirectory =
 
 LinkFiles = 
 
-ToolTargets = \
-	Commands.cs
-Commands.cs : Commands.command 
-	commandparse Commands.command  /cs  Commands.cs
-
+ToolTargets = 
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.Makey && nmake /c /f VS.make prebuild 
+	cd ..\..\..\mmm\Libraries\Goedel.Command && nmake /c /f VS.make prebuild 
+	cd ..\..\..\mmm\Libraries\Goedel.FSR && nmake /c /f VS.make prebuild 
+	cd ..\..\..\mmm\Libraries\Goedel.Registry && nmake /c /f VS.make prebuild 
+	cd ..\..\..\mmm\Libraries\Goedel.Utilities && nmake /c /f VS.make prebuild 
 	cd ..\..\..\mmm\Libraries\Goedel.IO && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
-	cd ..\Goedel.Tool.Makey && nmake /c /f VS.make postbuild 
+	cd ..\..\..\mmm\Libraries\Goedel.Command && nmake /c /f VS.make postbuild 
+	cd ..\..\..\mmm\Libraries\Goedel.FSR && nmake /c /f VS.make postbuild 
+	cd ..\..\..\mmm\Libraries\Goedel.Registry && nmake /c /f VS.make postbuild 
+	cd ..\..\..\mmm\Libraries\Goedel.Utilities && nmake /c /f VS.make postbuild 
 	cd ..\..\..\mmm\Libraries\Goedel.IO && nmake /c /f VS.make postbuild 
 
 # Non shared project, nothing to do
@@ -42,5 +44,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget makey.exe $(LinkFiles) 
+	powershell publishtarget Goedel.Tool.Core.dll
 
