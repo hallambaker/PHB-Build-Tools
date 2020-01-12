@@ -149,7 +149,7 @@ ToolTargets = #!
 
 
 prebuildRecurse : 
-#if (Project.ProjectType != ProjectType.shared)
+#if (Project.ProjectType != ProjectType.Shared)
 #foreach (var SharedProject in Project.SharedProject)
 	cd #{SharedProject.RelativeDirectory} && nmake /c /f VS.make prebuild 
 #end foreach  
@@ -157,19 +157,21 @@ prebuildRecurse :
 
 
 postbuildRecurse :
-#if (Project.ProjectType != ProjectType.shared)
+#if (Project.ProjectType != ProjectType.Shared)
 #foreach (var SharedProject in Project.SharedProject)
 	cd #{SharedProject.RelativeDirectory} && nmake /c /f VS.make postbuild 
 #end foreach  
 #end if
 
-#if (Project.ProjectType == ProjectType.shared)
+#if (Project.ProjectType == ProjectType.Shared)
 ## Shared project, create build rules for custom tools.
 prebuild : prebuildRecurse $(ToolTargets)
 #else
 ## Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
+	version version.version AssemblyVersion.cs
 #end if
+	
 
 postbuild : postbuildRecurse
 

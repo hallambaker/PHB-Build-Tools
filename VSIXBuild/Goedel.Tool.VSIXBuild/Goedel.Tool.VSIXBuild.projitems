@@ -30,6 +30,7 @@
       <Generator>GScript</Generator>
     </None>
     <None Include="$(MSBuildThisFileDirectory)PHBLogo256.ico" />
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
     <None Include="$(MSBuildThisFileDirectory)VSIXBuild.gdl">
       <LastGenOutput>VSIXBuild.cs</LastGenOutput>
       <Generator>goedel3</Generator>

@@ -1,0 +1,16 @@
+phbtools
+3.0
+ASN\asn2\asn2.csproj
+Command\commandparse\commandparse.csproj
+DNSConfig\srvconf\srvconf.csproj
+DocTools\bootmaker\bootmaker.csproj
+DocTools\rfctool\rfctool.csproj
+Domainer\Domainer\domainer.csproj
+Exceptional\Exceptional\Exceptional.csproj
+FSRGen\fsrgen\fsrgen.csproj
+Goedel3\goedel3\goedel3.csproj
+GScript\gscript\gscript.csproj
+MakeyMakey\makey\makey.csproj
+protogen\protogen\protogen.csproj
+registryconfig\registryconfig\registryconfig.csproj
+vsixbuild\vsixbuild\vsixbuild.csproj

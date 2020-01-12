@@ -52,6 +52,6 @@ All the tools are written in C# and will run on any platform supported by
 
 All the tools may be used in standalone mode from the console.
 
-The tools did run in Visual Studio until some recent changes broke them. This is
-being fixed.
+The tools have been implemented as Visual Studio extensions in the past, this
+stopped working with the move to .NET Core but may be fixed in the future.
 

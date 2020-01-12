@@ -28,6 +28,7 @@ prebuildRecurse :
 	cd ..\..\..\mmm\Libraries\Goedel.Registry && nmake /c /f VS.make prebuild 
 	cd ..\..\..\mmm\Libraries\Goedel.Utilities && nmake /c /f VS.make prebuild 
 	cd ..\..\..\mmm\Libraries\Goedel.IO && nmake /c /f VS.make prebuild 
+	cd ..\..\..\mmm\Libraries\Goedel.Discovery && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
@@ -36,9 +37,12 @@ postbuildRecurse :
 	cd ..\..\..\mmm\Libraries\Goedel.Registry && nmake /c /f VS.make postbuild 
 	cd ..\..\..\mmm\Libraries\Goedel.Utilities && nmake /c /f VS.make postbuild 
 	cd ..\..\..\mmm\Libraries\Goedel.IO && nmake /c /f VS.make postbuild 
+	cd ..\..\..\mmm\Libraries\Goedel.Discovery && nmake /c /f VS.make postbuild 
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
+	version version.version AssemblyVersion.cs
+	
 
 postbuild : postbuildRecurse
 

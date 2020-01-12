@@ -1,0 +1,13 @@
+﻿#script 1.0
+#license MITLicense
+#pclass Goedel.Tool.Version Generate
+
+#method GenerateCS VersionInfo Version
+using System;
+using System.Reflection;
+
+[assembly: System.Reflection.AssemblyVersionAttribute("#{Version.Assembly}")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("#{Version.File}")]
+
+#end method
+#end pclass

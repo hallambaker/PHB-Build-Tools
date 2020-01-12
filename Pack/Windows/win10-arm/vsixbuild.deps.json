@@ -9,7 +9,7 @@
     ".NETCoreApp,Version=v3.1/win10-arm": {
       "vsixbuild/1.0.0": {
         "dependencies": {
-          "ToolLib": "1.0.0",
+          "Goedel.Tool.Core": "1.0.0",
           "runtimepack.Microsoft.NETCore.App.Runtime.win-arm": "3.1.0"
         },
         "runtime": {
@@ -853,9 +853,9 @@
           }
         }
       },
-      "ToolLib/1.0.0": {
+      "Goedel.Tool.Core/1.0.0": {
         "runtime": {
-          "Goedel.Tool.Shell.dll": {}
+          "Goedel.Tool.Core.dll": {}
         }
       }
     }
@@ -871,7 +871,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "ToolLib/1.0.0": {
+    "Goedel.Tool.Core/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

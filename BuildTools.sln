@@ -74,6 +74,7 @@ Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Reference", "Documentation\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{B8875584-8190-40D6-8F72-AB192191B28C}"
 	ProjectSection(SolutionItems) = preProject
+		Scripts\MakeDocs.bat = Scripts\MakeDocs.bat
 		Scripts\MoveToLibrary.bat = Scripts\MoveToLibrary.bat
 		Scripts\MoveToTools.bat = Scripts\MoveToTools.bat
 		Scripts\publishtarget.ps1 = Scripts\publishtarget.ps1
@@ -133,10 +134,37 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Discovery-Shared", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C7832AC9-CFEB-42A5-86C9-328DD37B67F6}"
 	ProjectSection(SolutionItems) = preProject
+		Buildtools.version = Buildtools.version
 		readme.md = readme.md
+		RFCTools.version = RFCTools.version
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Tool.Core", "Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj", "{DF10757D-B584-43D5-91BD-C7E446A81415}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Drafts", "Documentation\Drafts\Drafts.csproj", "{1E3B2958-B714-4787-81FE-F782D569AE0D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Version", "Version\Version.csproj", "{CB32834E-517D-4167-89CD-72EF4D20DD9B}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Documentation(1)", "Documentation\", "{E70048E2-977E-4B05-A4FD-4906B4C5A352}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_64792"
+		Debug.AspNetCompiler.PhysicalPath = "Documentation\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_64792\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_64792"
+		Release.AspNetCompiler.PhysicalPath = "Documentation\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_64792\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "64792"
+		SlnRelativePath = "Documentation\"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -512,6 +540,66 @@ Global
 		{DF10757D-B584-43D5-91BD-C7E446A81415}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DF10757D-B584-43D5-91BD-C7E446A81415}.Release|x86.ActiveCfg = Release|Any CPU
 		{DF10757D-B584-43D5-91BD-C7E446A81415}.Release|x86.Build.0 = Release|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Debug|x86.Build.0 = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.DotNet|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.DotNet|Any CPU.Build.0 = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.DotNet|x86.ActiveCfg = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.DotNet|x86.Build.0 = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Focus|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Focus|Any CPU.Build.0 = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Focus|x86.ActiveCfg = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Focus|x86.Build.0 = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Publish|x86.ActiveCfg = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Publish|x86.Build.0 = Debug|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Release|x86.ActiveCfg = Release|Any CPU
+		{1E3B2958-B714-4787-81FE-F782D569AE0D}.Release|x86.Build.0 = Release|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Debug|x86.Build.0 = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.DotNet|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.DotNet|Any CPU.Build.0 = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.DotNet|x86.ActiveCfg = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.DotNet|x86.Build.0 = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Focus|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Focus|Any CPU.Build.0 = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Focus|x86.ActiveCfg = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Focus|x86.Build.0 = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Publish|x86.ActiveCfg = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Publish|x86.Build.0 = Debug|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Release|x86.ActiveCfg = Release|Any CPU
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B}.Release|x86.Build.0 = Release|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Debug|x86.Build.0 = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.DotNet|Any CPU.ActiveCfg = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.DotNet|Any CPU.Build.0 = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.DotNet|x86.ActiveCfg = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.DotNet|x86.Build.0 = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Focus|Any CPU.ActiveCfg = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Focus|Any CPU.Build.0 = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Focus|x86.ActiveCfg = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Focus|x86.Build.0 = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Publish|x86.ActiveCfg = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Publish|x86.Build.0 = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Release|x86.ActiveCfg = Debug|Any CPU
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352}.Release|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -570,6 +658,9 @@ Global
 		{627A80A7-F304-444E-B1DF-0F5A9515716F} = {8D9AC879-C123-4356-B9B6-BE5393FCBFF8}
 		{E0560A9E-5A6C-464D-8114-10E9889882B3} = {510C00FB-FB4F-4C9E-A2F6-86D2FA171CD1}
 		{DF10757D-B584-43D5-91BD-C7E446A81415} = {510C00FB-FB4F-4C9E-A2F6-86D2FA171CD1}
+		{1E3B2958-B714-4787-81FE-F782D569AE0D} = {0774B7F8-6C0C-4389-A8C5-37D955FF9E46}
+		{CB32834E-517D-4167-89CD-72EF4D20DD9B} = {32781FAB-7F7F-4267-9599-479F14195A4B}
+		{E70048E2-977E-4B05-A4FD-4906B4C5A352} = {0774B7F8-6C0C-4389-A8C5-37D955FF9E46}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B0FED20-F156-4724-9241-1F63A97DA43E}

@@ -2,8 +2,8 @@
   "profiles": {
     "rfctool": {
       "commandName": "Project",
-      "commandLineArgs": "test2.docx /xml",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\buildtools\\DocTools\\rfctool\\Test"
+      "commandLineArgs": "O:\\Documents\\Mesh\\hallambaker-mesh-2-udf.docx   /cache=bib.xml  /auto",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Release\\Documents\\Publish"
     }
   }
 }

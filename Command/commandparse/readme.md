@@ -82,7 +82,7 @@ Class CommandShell CommandShell
 We can use the tool to compile its own configuration file as follows:
 
 ````
-commandparse Command.command /cs /nomain /nocatcher
+commandparse Command.command /cs 
 ````
 
 There is no need to specify the output file, this is implicit from the use of the /cs flag
@@ -94,7 +94,7 @@ by specifying `commandparse Command.command /cs /c`
 Generated code also accepts input in unix style syntax:
 
 ````
-commandparse Command.command -cs -nomain -nocatcher
+commandparse Command.command -cs
 ````
 
 Tools created using the command may be called using Windows or unix style syntax

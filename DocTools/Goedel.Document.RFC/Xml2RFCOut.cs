@@ -489,37 +489,41 @@ namespace Goedel.Document.RFC {
                 }
 
             }
+
+        string MakeSpan(int span) =>
+            span <= 0 ? null : span.ToString();
+
         void WriteRow(List<TableRow> rows, bool head, string tag) {
             if (rows == null || rows.Count == 0) {
                 return;
                 }
 
+            WriteStartTagNL(tag);
             var elementTag = head ? "th" : "td";
             foreach (var row in rows) {
                 WriteStartTagNL("tr");
                 foreach (var td in row.Data) {
                     WriteStartTagNL(elementTag,
                         "anchor", td.AnchorID,
-                        "colspan", td.ColSpan.ToString(),
-                        "rowspan", td.RowSpan.ToString());
-
-                    WriteTextBlocks(td.Blocks);
+                        "colspan", MakeSpan(td.ColSpan),
+                        "rowspan", MakeSpan(td.RowSpan));
+                    textWriter.Write(td.Text.XMLEscapeStrict());
                     WriteEndTagNL(elementTag);
                     }
                 WriteEndTagNL("tr");
                 }
-            
+            WriteEndTagNL(tag);
             }
 
 
-        void WriteBlock(Table block) {
-            WriteStartTag("table", "anchor", block.AnchorID);
-            WriteIrefs(block.Irefs);
-            WriteRow(block.Head, true, "thead");
-            foreach (var body in block.Body) {
+        void WriteBlock(Table table) {
+            WriteStartTag("table", "anchor", table.AnchorID);
+            WriteIrefs(table.Irefs);
+            WriteRow(table.Head, true, "thead");
+            foreach (var body in table.Body) {
                 WriteRow(body, false, "tbody");
                 }
-            WriteRow(block.Foot, false, "tfoot");
+            WriteRow(table.Foot, false, "tfoot");
             WriteEndTag("table");
             }
 

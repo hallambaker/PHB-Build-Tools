@@ -367,41 +367,49 @@ namespace MakeRFC {
             }
 
         Table ParseTable (GM.Block block) {
-            //var Table = new Table ();
-            //TableRow Row = null;
-            //TableData Data = null;
-            //int RowCount = 0;
-
-            throw new NYI();
-
-            //foreach (var Segment in Block.Segments) {
-            //    switch (Segment) {
-            //        case GM.TextSegmentOpen Open: {
-            //            if (Open.CatalogEntry.Key == "tablerow") {
-            //                Row = new TableRow();
-            //                Table.Body.Add(Row);
-            //                RowCount++;
-            //                }
-            //            if (Open.CatalogEntry.Key == "tablecell") {
-            //                Data = new TableData();
-            //                Row.Data.Add(Data);
-            //                Table.MaxRow = Row.Data.Count > Table.MaxRow ? Row.Data.Count : Table.MaxRow;
-            //                }
-            //            break;
-            //            }
-            //        case GM.TextSegmentText Text: {
-            //            Data.Text = Text.Text;
-            //            break;
-            //            }
-            //        case GM.TextSegmentClose Close: {
-            //            break;
-            //            }
-            //        }
+            var Table = new Table();
+            TableRow row = null;
+            TableData data = null;
+            int rowCount = 0;
 
 
-            //    }
+            foreach (var Segment in block.Segments) {
+                switch (Segment) {
+                    case GM.TextSegmentOpen Open: {
+                        if (Open.CatalogEntry.Key == "tablerow") {
+                            row = new TableRow();
+                            Table.Body = Table.Body ?? new List<List<TableRow>>();
+                            if (Table.Head.Count == 0) {
+                                Table.Head.Add(row);
+                                }
+                            else {
+                                if (Table.Body.Count == 0) {
+                                    Table.Body.Add(new List<TableRow>());
+                                    }
+                                Table.Body[0].Add(row);
+                                }
+                            rowCount++;
+                            }
+                        if (Open.CatalogEntry.Key == "tablecell") {
+                            data = new TableData();
+                            row.Data.Add(data);
+                            Table.MaxRow = row.Data.Count > Table.MaxRow ? row.Data.Count : Table.MaxRow;
+                            }
+                        break;
+                        }
+                    case GM.TextSegmentText Text: {
+                        data.Text = Text.Text;
+                        break;
+                        }
+                    case GM.TextSegmentClose Close: {
+                        break;
+                        }
+                    }
 
-            //return Table;
+
+                }
+
+            return Table;
 
             }
 

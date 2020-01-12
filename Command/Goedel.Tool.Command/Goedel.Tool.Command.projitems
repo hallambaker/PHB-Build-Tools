@@ -40,6 +40,7 @@
       <Generator>GScript</Generator>
     </None>
     <None Include="$(MSBuildThisFileDirectory)PHBLogo256.ico" />
+    <None Include="$(MSBuildThisFileDirectory)version.version" />
     <None Include="$(MSBuildThisFileDirectory)VS.Make" />
   </ItemGroup>
 </Project>

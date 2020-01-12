@@ -9,7 +9,7 @@
     ".NETCoreApp,Version=v3.1/osx-x64": {
       "fsrgen/1.0.0": {
         "dependencies": {
-          "ToolLib": "1.0.0",
+          "Goedel.Tool.Core": "1.0.0",
           "runtimepack.Microsoft.NETCore.App.Runtime.osx-x64": "3.1.0"
         },
         "runtime": {
@@ -745,9 +745,9 @@
           }
         }
       },
-      "ToolLib/1.0.0": {
+      "Goedel.Tool.Core/1.0.0": {
         "runtime": {
-          "Goedel.Tool.Shell.dll": {}
+          "Goedel.Tool.Core.dll": {}
         }
       }
     }
@@ -763,7 +763,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "ToolLib/1.0.0": {
+    "Goedel.Tool.Core/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

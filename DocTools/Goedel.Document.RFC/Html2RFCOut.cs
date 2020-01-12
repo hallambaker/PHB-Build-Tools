@@ -253,32 +253,32 @@ namespace Goedel.Document.RFC {
 
         #endregion
         #region // Tables
-        public void WriteTable(Table Table) {
-            if (Table.Body.Count == 0) {
+        public void WriteTable(Table table) {
+            if (table.Body.Count == 0) {
                 return; // no rows so suppress outpout
                 }
-
-            throw new NYI(); // disable for now
-
-            //Start("table", "id", Table.GeneratedID);
-            //Start("thead");
-            //Start("tr");
-            //foreach (var Data in Table.Body[0].Data) {
-            //    WriteElement("td", Data.Text);
-            //    }
-            //End();
-            //End();
-            //Start("tbody");
-            //for (var i = 1; i < Table.Body.Count; i++) {
-            //    Start("tr");
-            //    foreach (var Data in Table.Body[i].Data) {
-            //        WriteElement("td", Data.Text);
-            //        }
-            //    End();
-            //    }
-            //End();
-            //End();
-
+            Start("table", "id", table.GeneratedID);
+            Start("thead");
+            foreach (var HeadRow in table.Head) {
+                Start("tr");
+                foreach (var data in HeadRow.Data) {
+                    WriteElement("th", data.Text);
+                    }
+                End();
+                }
+            End();
+            Start("tbody");
+            foreach (var body in table.Body) {
+                foreach (var bodyrow in body) {
+                    Start("tr");
+                    foreach (var data in bodyrow.Data) {
+                        WriteElement("td", data.Text);
+                        }
+                    End();
+                    }
+                }
+            End();
+            End();
             }
 
         #endregion

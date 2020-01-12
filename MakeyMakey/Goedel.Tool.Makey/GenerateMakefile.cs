@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Copyright ©  2017 by 
+//  © 2015-2019 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -204,7 +204,9 @@ namespace Goedel.Tool.Makey {
 				} else {
 				_Output.Write ("# Non shared project, nothing to do\n{0}", _Indent);
 				_Output.Write ("prebuild : prebuildRecurse $(ToolTargets)\n{0}", _Indent);
+				_Output.Write ("	version version.version AssemblyVersion.cs\n{0}", _Indent);
 				}
+			_Output.Write ("	\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("postbuild : postbuildRecurse\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

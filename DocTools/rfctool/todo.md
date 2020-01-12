@@ -56,12 +56,9 @@ Accept kramdown style metadata
 
 ## Word
 
-Superscripts are being presented out of order in certain cases. The Word representation
-is correct, the parser is messing up.
-
 Does not support nested lists, probably never will
 
-Implement anchors
+Sourcecode needs to accept language type specifier.
 
 
 # Generation bugs
@@ -71,7 +68,7 @@ Implement anchors
 
 ## HTML generation bugs
 
-Tables
+The DL enclosure is missing when a DL list follows immediately after a section heading.
 
 Figures / Artwork / Source
 

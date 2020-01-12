@@ -17,12 +17,13 @@
 
 MSBuildThisFileDirectory = 
 
-LinkFiles = 
+LinkFiles = \
+    Goedel.Tool.Core.dll
 
 ToolTargets = \
 	main.cs
 main.cs : main.command 
-	commandparse main.command  /cs  main.cs
+	commandparse main.command  /cs  main.cs /nocatch
 
 
 
@@ -41,6 +42,8 @@ postbuildRecurse :
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
+	version version.version AssemblyVersion.cs
+	
 
 postbuild : postbuildRecurse
 

@@ -65,5 +65,6 @@
       <Generator>Goedel3</Generator>
     </None>
     <None Include="$(MSBuildThisFileDirectory)TagDefinitions.mdsd" />
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
   </ItemGroup>
 </Project>
