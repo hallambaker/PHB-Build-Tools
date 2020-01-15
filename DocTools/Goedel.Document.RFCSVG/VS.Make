@@ -21,24 +21,16 @@ LinkFiles = \
     Goedel.Tool.Core.dll
 
 ToolTargets = \
-	main.cs
-main.cs : main.command 
-	commandparse main.command  /cs  main.cs
+	ReadStyle.cs
+ReadStyle.cs : ReadStyle.fsr 
+	fsrgen ReadStyle.fsr  /cs  ReadStyle.cs
 
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Document.Markdown && nmake /c /f VS.make prebuild 
-	cd ..\Goedel.Document.OpenXML && nmake /c /f VS.make prebuild 
-	cd ..\..\DocTools\Goedel.Document.RFC && nmake /c /f VS.make prebuild 
-	cd ..\..\DocTools\Goedel.Document.RFCConvert && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
-	cd ..\Goedel.Document.Markdown && nmake /c /f VS.make postbuild 
-	cd ..\Goedel.Document.OpenXML && nmake /c /f VS.make postbuild 
-	cd ..\..\DocTools\Goedel.Document.RFC && nmake /c /f VS.make postbuild 
-	cd ..\..\DocTools\Goedel.Document.RFCConvert && nmake /c /f VS.make postbuild 
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
@@ -49,5 +41,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget rfctool.exe $(LinkFiles) 
+	powershell publishtarget Goedel.Document.RFCSVG.exe $(LinkFiles) 
 

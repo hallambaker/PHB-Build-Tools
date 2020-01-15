@@ -1,0 +1,71 @@
+﻿FSR Goedel.Document.RFCSVG ReadStyle
+
+	// To save effort, we just strip out CR characters as worthless and beneath
+	// contempt before the lexer
+
+	Charset Digit		"0" "9"
+	Charset alpha		"a" "z"
+	Charset ALPHA		"A" "Z"
+
+	Token Empty
+	Token Start			
+	Token End
+	Token Line			
+	Token TagValue      
+	Token Invalid
+	
+	// Strip out blank lines
+	State Initial Reset Empty
+		On " \t\n" GoTo Initial
+		On "." GoTo Initial
+		Any GoTo Label
+
+	State Label AddLabel Invalid
+		On " \t\n" GoTo LabelWS
+		On "{" GoTo StartStyle
+		Any GoTo Label
+
+	State LabelWS Null Invalid
+		On " \t\n" GoTo LabelWS
+		On "{" GoTo StartStyle
+		Any GoTo Fail
+
+	State StartStyle Null Invalid
+		On "}" GoTo EndStyle
+		On " \t\n" GoTo StartStyle
+		Any GoTo Tag
+
+	State Tag AddTag Invalid
+		On "}" GoTo EndStyle
+		On " \t\n" GoTo TagWS
+		On ":" GoTo EndTag
+		Any GoTo Tag
+
+	State TagWS Null Invalid
+		On "}" GoTo EndStyle
+		On " \t\n" GoTo LabelWS
+		On ":" GoTo EndTag
+		Any GoTo Fail
+
+	State EndTag Null Invalid
+		On "}" GoTo EndStyle
+		On " \t\n" GoTo EndTag
+		Any GoTo Value
+
+	State Value AddValue Invalid
+		On "}" GoTo EndStyle
+		On " \t\n" GoTo TagWS
+		On ";" GoTo EndValue
+		Any GoTo Value
+
+	State EndValue CompleteValue Invalid
+		On "}" GoTo EndStyle
+		On " \t\n" GoTo StartStyle
+		Any GoTo Tag
+
+
+	State EndStyle CompleteValue End
+
+
+	State Fail Abort Invalid
+		
