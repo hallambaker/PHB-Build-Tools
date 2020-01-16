@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml;
+using System.Xml.Schema;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Utilities;
@@ -53,23 +54,60 @@ namespace Goedel.Document.RFCSVG {
 
         /// <summary>
         /// Save the redacted document data to the output stream <paramref name="output"/>
-        /// with format specifier <paramref name="formatting"/>.
+        /// with format specifier <paramref name="indent "/>.
         /// </summary>
         /// <param name="output">The output stream.</param>
-        /// <param name="formatting">The formatting mode</param>
-        public void Save(TextWriter output, Formatting formatting= Formatting.Indented) {
-            using var xmlOutput = new XmlTextWriter(output) {
-                Formatting = formatting
+        /// <param name="indent ">The formatting mode</param>
+        public void Save(TextWriter output, bool indent = true) {
+            
+
+            // The following code is needed due to the lack of documentation on
+            // how to set up XmlDocument namespaces. There is clearly a missing
+            // method
+
+            var settings = new XmlWriterSettings() {
+                Indent = indent ,
+                NamespaceHandling = NamespaceHandling.OmitDuplicates,
+                ConformanceLevel = ConformanceLevel.Fragment,
+                CloseOutput = false
                 };
-            Save(xmlOutput);
+            using var xmlOutput = XmlWriter.Create(output, settings);
+
+            output.Write("<svg ");
+
+            foreach (var item in Root.Attributes) {
+                if (item is XmlAttribute attribute) {
+                    output.Write($"{attribute.Name}=\"{attribute.Value}\" ");
+                    }
+                }
+            output.WriteLine(">");
+            output.Flush();
+
+            Root.WriteContentTo(xmlOutput);
+            xmlOutput.Flush();
+
+            output.WriteLine("</svg>");
+            output.Flush();
             }
 
         /// <summary>
         /// Save the redacted document data to the XmlWriter <paramref name="output"/>.
         /// </summary>
         /// <param name="output">The output XmlWriter.</param>
-        public void Save(XmlWriter output) => Root.WriteTo(output);
+        public void Save(XmlWriter output) {
+            output.WriteStartElement("svg");
+            foreach (var item in Root.Attributes) {
+                if (item is XmlAttribute attribute) {
+                    output.WriteAttributeString(attribute.Name, attribute.Value);
+                    }
+                }
 
+            output.WriteFullEndElement();
+
+            Root.WriteContentTo(output);
+
+            output.WriteEndElement();
+            }
         /// <summary>
         /// Redact the source document <paramref name="source"/>.
         /// </summary>
@@ -77,8 +115,15 @@ namespace Goedel.Document.RFCSVG {
         /// <returns>The redacted document.</returns>
         XmlDocument Redact(XmlDocument source) {
             Source = source; // might as well keep
-            Target = new XmlDocument(); // the output
+            //var namespaceManager = new XmlNamespaceManager();
+            //namespaceManager.AddNamespace(String.Empty, "http://www.w3.org/2000/svg");
+ 
 
+
+            //XmlNamespace ns0 = "http://www.w3.org/2000/svg";
+
+            Target = new XmlDocument(); // the output
+            //Target.NamespaceURI = "";
             foreach (var child in Source.DocumentElement.ChildNodes) {
                 if (child is XmlElement element) {
                     if (element.Name == "style") {
@@ -96,7 +141,7 @@ namespace Goedel.Document.RFCSVG {
             Root = MakeElement(targetContext, Source.DocumentElement).Element;
 
             Root.SetAttribute("xmlns", "http://www.w3.org/2000/svg");
-            Root.SetAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+            //Root.SetAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
 
             return Target;
             }
@@ -524,7 +569,7 @@ namespace Goedel.Document.RFCSVG {
             new AttributeProfile ("viewBox"),
             new AttributeProfile ("zoomAndPan", "disable"),
             new AttributeProfile ("transform"),
-            new AttributeProfile ("style"),
+            //new AttributeProfile ("style"),
             new AttributeProfile ("d"),
             new AttributeProfile ("visibility", "visible" , "hidden" , "collapse" , "inherit"),
             new AttributeProfile ("snapshotTime"),

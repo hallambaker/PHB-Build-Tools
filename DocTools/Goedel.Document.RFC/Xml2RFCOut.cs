@@ -552,15 +552,22 @@ namespace Goedel.Document.RFC {
             }
         void WriteBlock(Figure block) {
             ListLast();
-            //WriteStartTagNL("figure");
-            //WriteIrefs(block.Irefs);
+            WriteStartTagNL("figure");
+            WriteIrefs(block.Irefs);
+
+            if (block.SvgDocument != null) {
+                WriteStartTagNL("artwork");
+                block.SaveContent(textWriter);
+                WriteEndTagNL("artwork");
+                }
+
 
             //foreach (var item in block.Content) {
             //    WriteBlock(item);
             //    }
 
-            //WriteEndTagNL("figure");
-            
+            WriteEndTagNL("figure");
+
             }
 
 

@@ -635,6 +635,11 @@ namespace Goedel.Document.RFC {
                 if (Always | !Section.Automatic) {
                     StartSection(Section);
                     foreach (TextBlock TextBlock in Section.TextBlocks) {
+
+
+                        if (TextBlock is Figure) {
+                            }
+
                         switch (TextBlock) {
                             case LI LI: {
                                 ListItem(LI);

@@ -576,8 +576,11 @@ namespace Goedel.Document.RFC {
             foreach (var item in source.Items) {
                 switch (item) {
                     case artwork artwork: {
-                        block.Content.Add(MakeTextBlock(artwork));
-
+                        if (artwork.type == "svg") {
+                            }
+                        else {
+                            block.Content.Add(MakeTextBlock(artwork));
+                            }
                         break;
                         }
                     case sourcecode sourcecode: {

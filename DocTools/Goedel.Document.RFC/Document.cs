@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 using GM = Goedel.Document.Markdown;
 using Goedel.Utilities;
+using Goedel.Document.RFCSVG;
 
 namespace Goedel.Document.RFC {
 
@@ -633,15 +635,28 @@ namespace Goedel.Document.RFC {
         public string Width;
         public string Height;
 
-
+        public string Filename;
 
         public List<PRE> Content = new List<PRE>();
+        public string Type;
 
+        public SvgDocument SvgDocument = null;
 
-        public Figure(string Filename, string ID) {
-            this.AnchorID = ID;
-            //this.Filename = Filename;
+        public Figure(string filename, string id,  string type="svg") {
+            AnchorID = id;
+            Filename = filename;
+            Type = type;
+
+            if (filename != null) {
+                SvgDocument = new SvgDocument(filename);
+                }
+
             }
+
+        public void SaveContent(TextWriter output) {
+            SvgDocument.Save(output);
+            }
+
         }
 
 
