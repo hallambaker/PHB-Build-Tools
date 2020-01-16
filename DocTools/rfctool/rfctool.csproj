@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+    <ProjectReference Include="..\Goedel.Document.RFCSVG\Goedel.Document.RFCSVG.csproj" />
   </ItemGroup>
 
   <ItemGroup>

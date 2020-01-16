@@ -54,7 +54,6 @@
 
 	State Value AddValue Invalid
 		On "}" GoTo EndStyle
-		On " \t\n" GoTo TagWS
 		On ";" GoTo EndValue
 		Any GoTo Value
 

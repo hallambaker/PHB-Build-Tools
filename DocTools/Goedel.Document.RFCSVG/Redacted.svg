@@ -1,25 +1,6 @@
-<svg width="6.13542in" height="4.20833in" viewBox="0 0 441.75 303" fill="none" fill-rule="evenodd" font-size="12px" overflow="visible" stroke-linecap="square" stroke-miterlimit="3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  	<style type="text/css">
-	<![CDATA[
-		.st1 {
-    fill:#ffffff;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
-		.st2 {stroke:#000000;stroke-dasharray:5.25,3.75,0,3.75;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
-		.st3 {fill:#ffffff;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
-		.st4 {fill:#000000;font-family:Calibri;font-size:1.33333em}
-		.st5 {fill:#000000;font-family:Calibri;font-size:1.00001em}
-		.st6 {font-size:1em}
-		.st7 {fill:#000000;font-family:Calibri;font-size:0.833336em}
-		.st8 {font-size:1em;font-style:italic}
-		.st9 {font-family:Cambria Math;font-size:1em}
-		.st10 {marker-end:url(#mrkr4-83);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
-		.st11 {fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:0.22935779816514}
-		.st12 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
-		.st13 {fill:#000000;font-family:Cambria Math;font-size:0.833336em}
-		.st14 {fill:#000000;font-family:Calibri;font-size:0.916672em}
-		.st15 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
-	]]>
-	</style>
-    <defs id="Markers">
+<svg width="6.13542in" height="4.20833in" viewBox="0 0 441.75 303" fill="none" 
+     fill-rule="evenodd" font-size="12px" stroke-linecap="square" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="Markers">
     <g id="lend4">
       <path d="M 2 1 L 0 0 L 2 -1 L 2 1 " style="stroke:none" />
     </g>
@@ -32,123 +13,142 @@
       <path d="M0 303 L265.5 303" stroke="#000000" stroke-dasharray="5.25,3.75,0,3.75" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
     </g>
     <g id="shape3-6" transform="translate(270.75,-159)">
-      <rect x="0" y="283" width="36" height="20" fill="#ffffff" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="14.02" y="297.8" fill="#000000" font-family="Calibri" font-size="1.33333em">=</text>
+      <rect x="0" y="283" width="36" height="20" fill="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+      <text x="14.02" y="297.8" fill="#000000" font-family="sans-serif" font-size="1.33333em">=</text>
     </g>
     <g id="shape4-9" transform="translate(270.75,-114)">
-      <rect x="0" y="283" width="36" height="20" fill="#ffffff" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="14.02" y="297.8" fill="#000000" font-family="Calibri" font-size="1.33333em">=</text>
+      <title>Sheet.4</title>
+      <rect x="0" y="283" width="36" height="20" fill="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+      <text x="14.02" y="297.8" fill="#000000" font-family="sans-serif" font-size="1.33333em">=</text>
     </g>
     <g id="shape5-12" transform="translate(270.75,-69)">
-      <rect x="0" y="283" width="36" height="20" fill="#ffffff" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="14.02" y="297.8" fill="#000000" font-family="Calibri" font-size="1.33333em">=</text>
+      <title>Sheet.5</title>
+      <rect x="0" y="283" width="36" height="20" fill="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+      <text x="14.02" y="297.8" fill="#000000" font-family="sans-serif" font-size="1.33333em">=</text>
     </g>
     <g id="shape8-15" transform="translate(18.75,-42)">
+      <title>Sheet.8</title>
       <rect x="0" y="123" width="108" height="180" fill="#ffffff" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="21.79" y="137.8" fill="#000000" font-family="Calibri" font-size="1.00001em">ProfileDevice<tspan x="39.21" font-size="1em">Alice</tspan>1</text>
+      <text x="21.79" y="137.8" fill="#000000" font-family="sans-serif" font-size="1.00001em">ProfileDevice<tspan x="39.21" y="152.200144" font-size="1em">Alice</tspan>1</text>
     </g>
     <g id="shape9-19" transform="translate(27.75,-141.563)">
+      <title>Sheet.9</title>
       <rect x="0" y="267.563" width="90" height="35.4375" fill="#ffffff" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="17.17" y="282.28" fill="#000000" font-family="Calibri" font-size="0.833336em">Signature Key<tspan font-size="1em" font-style="italic" /><tspan x="27.69" font-size="1em">Public</tspan>:<tspan font-size="1em" font-style="italic" /><tspan font-size="1em" font-style="italic">X</tspan></text>
+      <text x="17.17" y="282.28" fill="#000000" font-family="sans-serif" font-size="0.833336em">Signature Key<tspan font-size="1em" font-style="italic" /><tspan x="27.69" y="294.2800384" font-size="1em">Public</tspan>:<tspan font-size="1em" font-style="italic" /><tspan font-size="1em" font-style="italic">X</tspan></text>
     </g>
     <g id="shape10-26" transform="translate(27.75,-96.5625)">
+      <title>Sheet.10</title>
       <desc>Authentication Key Public: X</desc>
       <rect x="0" y="267.563" width="90" height="35.4375" fill="#ffffff" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="6.17" y="282.28" fill="#000000" font-family="Calibri" font-size="0.833336em">Authentication Key<tspan x="27.69" font-size="1em">Public</tspan>:<tspan font-size="1em" font-style="italic" /><tspan font-size="1em" font-style="italic">X</tspan></text>
+      <text x="6.17" y="282.28" fill="#000000" font-family="sans-serif" font-size="0.833336em">Authentication Key<tspan x="27.69" y="294.2800384" font-size="1em">Public</tspan>:<tspan font-size="1em" font-style="italic" /><tspan font-size="1em" font-style="italic">X</tspan></text>
     </g>
     <g id="shape11-32" transform="translate(27.75,-51.5625)">
+      <title>Sheet.11</title>
       <desc>Encryption Key Public: X</desc>
       <rect x="0" y="267.563" width="90" height="35.4375" fill="#ffffff" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="14.62" y="282.28" fill="#000000" font-family="Calibri" font-size="0.833336em">Encryption Key<tspan x="27.69" font-size="1em">Public</tspan>:<tspan font-size="1em" font-style="italic" /><tspan font-size="1em" font-style="italic">X</tspan></text>
+      <text x="14.62" y="282.28" fill="#000000" font-family="sans-serif" font-size="0.833336em">Encryption Key<tspan x="27.69" y="294.2800384" font-size="1em">Public</tspan>:<tspan font-size="1em" font-style="italic" /><tspan font-size="1em" font-style="italic">X</tspan></text>
     </g>
     <g id="shape13-38" transform="translate(171.75,-141.563)">
+      <title>Sheet.13</title>
       <desc>Signature Key Private: y, Y</desc>
       <rect x="0" y="267.563" width="90" height="35.4375" fill="#ffffff" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="17.17" y="282.28" fill="#000000" font-family="Calibri" font-size="0.833336em">Signature Key<tspan x="21.19" font-size="1em">Private</tspan>: <tspan font-size="1em" font-style="italic">y</tspan><tspan font-size="1em" font-style="italic">, </tspan><tspan font-size="1em" font-style="italic">Y</tspan></text>
+      <text x="17.17" y="282.28" fill="#000000" font-family="sans-serif" font-size="0.833336em">Signature Key<tspan x="21.19" y="294.2800384" font-size="1em">Private</tspan>: <tspan font-size="1em" font-style="italic">y</tspan><tspan font-size="1em" font-style="italic">, </tspan><tspan font-size="1em" font-style="italic">Y</tspan></text>
     </g>
     <g id="shape14-45" transform="translate(171.75,-96.5625)">
+      <title>Sheet.14</title>
       <desc>Authentication Key Private: y, Y</desc>
       <rect x="0" y="267.563" width="90" height="35.4375" fill="#ffffff" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="6.17" y="282.28" fill="#000000" font-family="Calibri" font-size="0.833336em">Authentication Key<tspan x="21.19" font-size="1em">Private</tspan>: <tspan font-size="1em" font-style="italic">y</tspan><tspan font-size="1em" font-style="italic">, </tspan><tspan font-size="1em" font-style="italic">Y</tspan></text>
+      <text x="6.17" y="282.28" fill="#000000" font-family="sans-serif" font-size="0.833336em">Authentication Key<tspan x="21.19" y="294.2800384" font-size="1em">Private</tspan>: <tspan font-size="1em" font-style="italic">y</tspan><tspan font-size="1em" font-style="italic">, </tspan><tspan font-size="1em" font-style="italic">Y</tspan></text>
     </g>
     <g id="shape15-52" transform="translate(171.75,-51.5625)">
+      <title>Sheet.15</title>
       <desc>Encryption Key Private: y, Y</desc>
       <rect x="0" y="267.563" width="90" height="35.4375" fill="#ffffff" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="14.62" y="282.28" fill="#000000" font-family="Calibri" font-size="0.833336em">Encryption Key<tspan x="21.19" font-size="1em">Private</tspan>: <tspan font-size="1em" font-style="italic">y</tspan><tspan font-size="1em" font-style="italic">, </tspan><tspan font-size="1em" font-style="italic">Y</tspan></text>
+      <text x="14.62" y="282.28" fill="#000000" font-family="sans-serif" font-size="0.833336em">Encryption Key<tspan x="21.19" y="294.2800384" font-size="1em">Private</tspan>: <tspan font-size="1em" font-style="italic">y</tspan><tspan font-size="1em" font-style="italic">, </tspan><tspan font-size="1em" font-style="italic">Y</tspan></text>
     </g>
     <g id="shape16-59" transform="translate(306.75,-42)">
+      <title>Sheet.16</title>
       <desc>AssertionDevice Account</desc>
       <rect x="0" y="123" width="108" height="180" fill="#ffffff" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="14.77" y="137.8" fill="#000000" font-family="Calibri" font-size="1.00001em">AssertionDevice<tspan x="33.98" font-size="1em">Account</tspan></text>
+      <text x="14.77" y="137.8" fill="#000000" font-family="sans-serif" font-size="1.00001em">AssertionDevice<tspan x="33.98" y="152.200144" font-size="1em">Account</tspan></text>
     </g>
     <g id="shape17-63" transform="translate(315.75,-141.563)">
+      <title>Sheet.17</title>
       <desc>Signature Key Public: X⊕Y</desc>
       <rect x="0" y="267.563" width="90" height="35.4375" fill="#ffffff" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="17.17" y="282.11" fill="#000000" font-family="Calibri" font-size="0.833336em">Signature Key<tspan x="20.28" font-size="1em">Public</tspan>: X<tspan>⊕</tspan>Y</text>
+      <text x="17.17" y="282.11" fill="#000000" font-family="sans-serif" font-size="0.833336em">Signature Key<tspan x="20.28" y="294.3600392" font-size="1em">Public</tspan>: X<tspan font-family="sans-serif" font-size="1em">⊕</tspan>Y</text>
     </g>
     <g id="shape18-68" transform="translate(315.75,-96.5625)">
+      <title>Sheet.18</title>
       <desc>Authentication Key Public: X⊕Y</desc>
       <rect x="0" y="267.563" width="90" height="35.4375" fill="#ffffff" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="6.17" y="282.11" fill="#000000" font-family="Calibri" font-size="0.833336em">Authentication Key<tspan x="20.28" font-size="1em">Public</tspan>: X<tspan>⊕</tspan>Y</text>
+      <text x="6.17" y="282.11" fill="#000000" font-family="sans-serif" font-size="0.833336em">Authentication Key<tspan x="20.28" y="294.3600392" font-size="1em">Public</tspan>: X<tspan font-family="sans-serif" font-size="1em">⊕</tspan>Y</text>
     </g>
     <g id="shape19-73" transform="translate(315.75,-51.5625)">
+      <title>Sheet.19</title>
       <desc>Encryption Key Public: X⊕Y</desc>
       <rect x="0" y="267.563" width="90" height="35.4375" fill="#ffffff" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="14.62" y="282.11" fill="#000000" font-family="Calibri" font-size="0.833336em">Encryption Key<tspan x="20.28" font-size="1em">Public</tspan>: X<tspan>⊕</tspan>Y</text>
+      <text x="14.62" y="282.11" fill="#000000" font-family="sans-serif" font-size="0.833336em">Encryption Key<tspan x="20.28" y="294.3600392" font-size="1em">Public</tspan>: X<tspan font-family="sans-serif" font-size="1em">⊕</tspan>Y</text>
     </g>
     <g id="shape20-78" transform="translate(117.75,-159)">
-      <path d="M0 303 L47.46 303" />
+      <title>Sheet.20</title>
+      <path d="M0 303 L47.46 303" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
     </g>
     <g id="shape21-84" transform="translate(261.75,-159)">
-      <path d="M0 303 L47.46 303" />
+      <title>Sheet.21</title>
+      <path d="M0 303 L47.46 303" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
     </g>
     <g id="shape22-89" transform="translate(117.75,-114)">
-      <path d="M0 303 L47.46 303" />
+      <title>Sheet.22</title>
+      <path d="M0 303 L47.46 303" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
     </g>
     <g id="shape23-94" transform="translate(261.75,-114)">
-      <path d="M0 303 L47.46 303" />
+      <title>Sheet.23</title>
+      <path d="M0 303 L47.46 303" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
     </g>
     <g id="shape24-99" transform="translate(117.75,-69)">
-      <path d="M0 303 L47.46 303" />
+      <title>Sheet.24</title>
+      <path d="M0 303 L47.46 303" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
     </g>
     <g id="shape25-104" transform="translate(261.75,-69)">
-      <path d="M0 303 L47.46 303" />
+      <title>Sheet.25</title>
+      <path d="M0 303 L47.46 303" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
     </g>
     <g id="shape26-109" transform="translate(126.75,-159)">
+      <title>Sheet.26</title>
       <desc>⊕</desc>
-      <rect x="0" y="283" width="36" height="20" fill="none" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="13.02" y="297.8">⊕</text>
+      <rect x="0" y="283" width="36" height="20" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+      <text x="13.02" y="297.8" fill="#000000" font-family="sans-serif" font-size="0.833336em">⊕</text>
     </g>
-
-      
     <g id="shape27-112" transform="translate(126.75,-114)">
+      <title>Sheet.27</title>
       <desc>⊕</desc>
-      <rect x="0" y="283" width="36" height="20" fill="none" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="13.02" y="297.8">⊕</text>
+      <rect x="0" y="283" width="36" height="20" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+      <text x="13.02" y="297.8" fill="#000000" font-family="sans-serif" font-size="0.833336em">⊕</text>
     </g>
     <g id="shape28-115" transform="translate(126.75,-69)">
+      <title>Sheet.28</title>
       <desc>⊕</desc>
-      <rect x="0" y="283" width="36" height="20" fill="none" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="13.02" y="297.8">⊕</text>
+      <rect x="0" y="283" width="36" height="20" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+      <text x="13.02" y="297.8" fill="#000000" font-family="sans-serif" font-size="0.833336em">⊕</text>
     </g>
     <g id="shape29-118" transform="translate(18.75,-256.75)">
+      <title>Sheet.29</title>
       <desc>Private</desc>
-      <rect x="0" y="283" width="252" height="20" fill="none" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="110.28" y="296.3">Private</text>
+      <rect x="0" y="283" width="252" height="20" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+      <text x="110.28" y="296.3" fill="#000000" font-family="sans-serif" font-size="0.916672em">Private</text>
     </g>
     <g id="shape30-121" transform="translate(306.75,-255.75)">
+      <title>Sheet.30</title>
       <desc>Public</desc>
-      <rect x="0" y="283" width="108" height="20" fill="none" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="40.53" y="296.3">Public</text>
+      <rect x="0" y="283" width="108" height="20" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+      <text x="40.53" y="296.3" fill="#000000" font-family="sans-serif" font-size="0.916672em">Public</text>
     </g>
     <g id="shape31-124" transform="translate(231.75,-228.25)">
+      <title>Sheet.31</title>
       <desc>ActivationAccount</desc>
-      <rect x="0" y="283" width="112.5" height="20" fill="#ffffff" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="15.27" y="296.3" class="st14" >ActivationAccount</text>
+      <rect x="0" y="283" width="112.5" height="20" fill="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+      <text x="15.27" y="296.3" fill="#000000" font-family="sans-serif" font-size="0.916672em">ActivationAccount</text>
     </g>
-  
-
-
-
   </g>
 </svg>
