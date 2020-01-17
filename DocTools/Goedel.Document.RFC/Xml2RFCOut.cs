@@ -556,7 +556,10 @@ namespace Goedel.Document.RFC {
             WriteIrefs(block.Irefs);
 
             if (block.SvgDocument != null) {
-                WriteStartTagNL("artwork");
+                if (block.Filename != null) {
+                    textWriter.Write($"<!-- Include SVG File {block.Filename} -->");
+                    }
+                WriteStartTagNL("artwork", "type", "svg");
                 block.SaveContent(textWriter);
                 WriteEndTagNL("artwork");
                 }

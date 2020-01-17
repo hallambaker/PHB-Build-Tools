@@ -82,17 +82,24 @@
       <title>Sheet.18</title>
       <desc>Authentication Key Public: X⊕Y</desc>
       <rect x="0" y="267.563" width="90" height="35.4375" fill="#ffffff" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="6.17" y="282.11" fill="#000000" font-family="sans-serif" font-size="0.833336em">Authentication Key<tspan x="20.28" y="294.3600392" font-size="1em">Public</tspan>: X<tspan font-family="sans-serif" font-size="1em">⊕</tspan>Y</text>
+      <text x="6.17" y="282.11" fill="#000000" font-family="sans-serif" font-size="0.833336em">Authentication Key<tspan x="20.28" y="294.3600392" font-size="1em">BONG</tspan>: X<tspan font-family="sans-serif" font-size="1em">⊕</tspan>Y</text>
     </g>
     <g id="shape19-73" transform="translate(315.75,-51.5625)">
       <title>Sheet.19</title>
       <desc>Encryption Key Public: X⊕Y</desc>
       <rect x="0" y="267.563" width="90" height="35.4375" fill="#ffffff" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
-      <text x="14.62" y="282.11" fill="#000000" font-family="sans-serif" font-size="0.833336em">Encryption Key<tspan x="20.28" y="294.3600392" font-size="1em">Public</tspan>: X<tspan font-family="sans-serif" font-size="1em">⊕</tspan>Y</text>
+      <text x="14.62" y="282.11" fill="#000000" font-family="sans-serif" font-size="0.833336em">Encryption Key<tspan x="20.28" y="294.3600392" font-size="1em">Public</tspan>: X<tspan font-family="sans-serif" font-size="1em">⊕</tspan><tspan>YOB</tspan></text>
     </g>
     <g id="shape20-78" transform="translate(117.75,-159)">
       <title>Sheet.20</title>
-      <path d="M0 303 L47.46 303" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+      <path d="M0 303 L47.46 303" stroke="#000000" stroke-linecap="round" 
+            stroke-linejoin="round" stroke-width="0.75" />
+      <rect x="0" y="123" width="108" height="180" fill="#ffffff" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+
+      <path d="M0 303  L -200 300 L-200 303 L 0 303 " stroke="#000000" fill="#000000"  fill-opacity="1"/>
+      <g id="lend4">
+        <path d="M 200 100 L 0 0 L 20 -10 L 20 10 "  fill="#000000"/>
+      </g>
     </g>
     <g id="shape21-84" transform="translate(261.75,-159)">
       <title>Sheet.21</title>

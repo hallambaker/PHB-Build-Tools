@@ -29,6 +29,8 @@ namespace Goedel.Document.RFC {
         public DateTime PrepTime = DateTime.Now;
         public Dictionary<string, XRefTarget> XRefDictionary = new Dictionary<string, XRefTarget>();
 
+        public SortedSet<string> AssignedIDs = new SortedSet<string>();
+
         // serious issue with Category/Status and SubmissionType/Stream
         // These seem to overlap.
 
@@ -359,6 +361,20 @@ namespace Goedel.Document.RFC {
                 }
             }
 
+
+        string UniqueifyID(string id) {
+
+            if (AssignedIDs.Contains(id)) {
+                var baseid = id;
+                for (var i = 0; AssignedIDs.Contains(id); i++) {
+                    id = baseid + "-" + i.ToString();
+                    }
+                }
+            AssignedIDs.Add(id);
+
+            return id;
+            }
+
         /// <summary>
         /// Number a section
         /// </summary>
@@ -388,6 +404,11 @@ namespace Goedel.Document.RFC {
             Section.Number = TextSuffix != null ? TextPrefix + TextNumber : "";
 
             Section.SetableID = Section.SetableID ?? "n-" + GetAnchor(Section.Heading);      // For H1, H2, H3, etc.
+
+            Section.SetableID = UniqueifyID(Section.SetableID);
+
+
+
             Section.GeneratedID = NumericIDPrefix + NumberAsText;                      // For the toc ref and sub paras
 
             //if (Section.GeneratedID == null) {
@@ -684,7 +705,7 @@ namespace Goedel.Document.RFC {
             foreach (var Segment in Segments) {
                 switch (Segment) {
                     case GM.TextSegmentText Text: {
-                        Buffer.Append(Text.Text.XMLEscapeStrict());
+                        Buffer.Append(Text.Text.XMLEscapeRFCBullies());
                         break;
                         }
                     }

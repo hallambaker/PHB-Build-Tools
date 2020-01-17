@@ -63,6 +63,13 @@ Sourcecode needs to accept language type specifier.
 
 # Generation bugs
 
+## SVG Bugs
+
+Double escaping occurring on text (DARE) &lt;300 Bytes&gt;
+
+Markers not supported
+
+
 ## XML v3 generation bugs
 
 

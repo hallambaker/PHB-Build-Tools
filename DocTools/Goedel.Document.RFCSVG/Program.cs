@@ -42,11 +42,15 @@ namespace Goedel.Document.RFCSVG {
         /// <param name="source">The source document to redact.</param>
         public SvgDocument(XmlDocument source) => Redact(source);
 
+
+        public string Filename;
+
         /// <summary>
         /// Constructor creating a redacted document from the file name <paramref name="input"/>.
         /// </summary>
         /// <param name="input">Name of the file to be read.</param>
         public SvgDocument(string input) {
+            Filename = input;
             var source = new XmlDocument();
             source.Load(input);
             Redact(source);
@@ -173,16 +177,31 @@ namespace Goedel.Document.RFCSVG {
             var targetContext = elem.Process(parentContext, sourceElement);
             var targetElement = targetContext.Element;
             // attach the child nodes
+
+            var wrapTextTspan = false;
+            var testTextTspan = sourceElement.Name == "text";
+
             foreach (var child in sourceElement.ChildNodes) {
                 if (child is XmlElement element) {
                     var newChild = MakeElement(targetContext, element);
                     if (newChild != null) {
                         targetElement.AppendChild(newChild.Element);
                         }
+                    if (testTextTspan & element.Name == "tspan") {
+                        wrapTextTspan = true;
+                        }
+
                     }
                 else if (child is XmlText text) {
-                    var newText = Target.CreateTextNode(text.InnerText);
-                    targetElement.AppendChild(newText);
+                    var newText = Target.CreateTextNode(text.InnerText.XMLEscapeRFCBullies());
+                    if (wrapTextTspan) {
+                        var wrapper = Target.CreateElement("tspan");
+                        wrapper.AppendChild(newText);
+                        targetElement.AppendChild(wrapper);
+                        }
+                    else {
+                        targetElement.AppendChild(newText);
+                        }
                     }
                 }
 
@@ -388,7 +407,7 @@ namespace Goedel.Document.RFCSVG {
             new ElementProfile ("a",              null, "id", "role", "fill", "transform"),
             new ElementProfile ("use",            null, "id", "role", "transform", "x", "y", "href", "xlink:href"),
 
-            new ElementProfile ("rect",           ProcessAttributeRect, "font-family", "font-weight", "font-style", "font-variant", "direction", "unicode-bidi",
+            new ElementProfile ("rect",           ProcessAttributeStroke, "font-family", "font-weight", "font-style", "font-variant", "direction", "unicode-bidi",
                                         "text-anchor", "fill-rule", "id", "role", "fill", "transform", "x", "y",
                                             "width", "height", "rx", "ry", "stroke-miterlimit"),
             new ElementProfile ("circle",         null, "font-family", "font-weight", "font-style", "font-variant", "direction", "unicode-bidi",
@@ -409,7 +428,7 @@ namespace Goedel.Document.RFCSVG {
             new ElementProfile ("linearGradient", null, "id", "role", "gradientUnits", "x1", "y1", "x2", "y2"),
             new ElementProfile ("radialGradient", null, "id", "role", "gradientUnits", "cx", "cy", "r"),
             new ElementProfile ("stop",           null, "id", "role", "fill"),
-            new ElementProfile ("path",           null, "font-family", "font-weight", "font-style", "font-variant", "direction", "unicode-bidi",
+            new ElementProfile ("path",           ProcessAttributeStroke, "font-family", "font-weight", "font-style", "font-variant", "direction", "unicode-bidi",
                                         "text-anchor",  "fill-rule", "id", "role", "fill", "transform", "d", "pathLength",
                                         "stroke-miterlimit")
             };
@@ -465,6 +484,12 @@ namespace Goedel.Document.RFCSVG {
                         else {
                             }
                         }
+                    else if (attribute.Name == "id") {
+                        // just suppress these 
+                        }
+                    else if (attribute.Name == "style") {
+                        // just suppress these 
+                        }
                     else {
                         processAttribute(targetElement, attribute.Name, attribute.Value);
                         }
@@ -496,7 +521,7 @@ namespace Goedel.Document.RFCSVG {
                 }
             }
 
-        static void ProcessAttributeRect(SvgContext context, string tag, string value) {
+        static void ProcessAttributeStroke(SvgContext context, string tag, string value) {
             if (tag == "stroke" & value == "none") {
                 return;
                 }
