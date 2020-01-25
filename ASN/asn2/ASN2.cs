@@ -5,6 +5,7 @@ using System.Text;
 using Goedel.Command;
 using Goedel.Registry;
 using Goedel.Utilities;
+#pragma warning disable IDE1006
 
 namespace Goedel.Shell.ASN {
 

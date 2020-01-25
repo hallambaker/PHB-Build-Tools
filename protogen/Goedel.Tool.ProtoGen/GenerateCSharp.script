@@ -22,7 +22,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Protocol;
-
+##pragma warning disable IDE1006
 
 
 #foreach (var Item in ProtoStruct.Top)
@@ -69,10 +69,10 @@ namespace #{Namespace} {
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
-        /// <param name="JSONReader">Input stream</param>
+        /// <param name="jsonReader">Input stream</param>
         /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) => 
-			Out = JSONReader.ReadTaggedObject(_TagDictionary);
+        public static void Deserialize(JSONReader jsonReader, out JSONObject Out) => 
+			Out = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
 
@@ -124,8 +124,8 @@ namespace #{Namespace} {
         /// <summary>
 		/// Base method for implementing the transaction  #{Transaction.Id}.
         /// </summary>
-        /// <param name="Request">The request object to send to the host.</param>
-		/// <param name="JpcSession">The authentication binding.</param>
+        /// <param name="request">The request object to send to the host.</param>
+		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
         public virtual #{Transaction.Response} #{Transaction.Id} (
                 #{Transaction.Request} request, JpcSession session=null) => 
@@ -154,8 +154,8 @@ namespace #{Namespace} {
 		/// Create a client connection to the specified service.
         /// </summary>	
         /// <param name="JPCRemoteSession">The remote session to connect to</param>
-		public #{Service.Id}Client (JPCRemoteSession JPCRemoteSession) =>
-			this.JPCRemoteSession = JPCRemoteSession;
+		public #{Service.Id}Client (JPCRemoteSession jpcRemoteSession) =>
+			JPCRemoteSession = jpcRemoteSession;
 
 
 #foreach (_Choice Entry2 in Protocol.Entries)
@@ -166,7 +166,7 @@ namespace #{Namespace} {
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="JpcSession">The authentication binding.</param>
+		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
         public override #{Transaction.Response} #{Transaction.Id} (
                 #{Transaction.Request} request, JpcSession session=null) {
@@ -196,14 +196,14 @@ namespace #{Namespace} {
 		/// <summary>
 		/// Dispatch object request in specified authentication context.
 		/// </summary>			
-        /// <param name="Session">The client context.</param>
-        /// <param name="JSONReader">Reader for data object.</param>
+        /// <param name="session">The client context.</param>
+        /// <param name="jsonReader">Reader for data object.</param>
         /// <returns>The response object returned by the corresponding dispatch.</returns>
-		public override Goedel.Protocol.JSONObject Dispatch(JpcSession  Session,  
-								Goedel.Protocol.JSONReader JSONReader) {
+		public override Goedel.Protocol.JSONObject Dispatch(JpcSession  session,  
+								Goedel.Protocol.JSONReader jsonReader) {
 
-			JSONReader.StartObject ();
-			string token = JSONReader.ReadToken ();
+			jsonReader.StartObject ();
+			string token = jsonReader.ReadToken ();
 			JSONObject Response = null;
 
 			switch (token) {
@@ -212,8 +212,8 @@ namespace #{Namespace} {
 #casecast Transaction Transaction
 				case "#{Transaction.Id}" : {
 					var Request = new #{Transaction.Request}();
-					Request.Deserialize (JSONReader);
-					Response = Service.#{Transaction.Id} (Request, Session);
+					Request.Deserialize (jsonReader);
+					Response = Service.#{Transaction.Id} (Request, session);
 					break;
 					}
 #end switchcast
@@ -222,7 +222,7 @@ namespace #{Namespace} {
 					throw new Goedel.Protocol.UnknownOperation ();
 					}
 				}
-			JSONReader.EndObject ();
+			jsonReader.EndObject ();
 			return Response;
 			}
 
@@ -482,17 +482,17 @@ new #{Id}();
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new #{Id} FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new #{Id} FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as #{Id};
 				}
 #if (!IsAbstract (Entries))
 		    var Result = new #{Id} ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 #else
@@ -503,9 +503,9 @@ new #{Id}();
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 #foreach (_Choice Entry in Entries)
@@ -516,32 +516,32 @@ new #{Id}();
 				case "#{Tag}" : {
 #if Multiple
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					#{Token} = new List <#{Type}> ();
 					while (_Going) {
 #if Entry._Tag () == ProtoStructType.Struct
 						// an untagged structure.
 						var _Item = new  #{Type} ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new #{Type} (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new #{Type} (jsonReader);
 #elseif Entry._Tag () == ProtoStructType.TStruct
-						var _Item = #{Type}.FromJSON (JSONReader, true); // a tagged structure
+						var _Item = #{Type}.FromJSON (jsonReader, true); // a tagged structure
 #else
-						#{Type} _Item = JSONReader.Read#{TType} ();
+						#{Type} _Item = jsonReader.Read#{TType} ();
 #end if
 						#{Token}.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 #else
 #if Entry._Tag () == ProtoStructType.Struct
 					// An untagged structure
 					#{Token} = new #{Type} ();
-					#{Token}.Deserialize (JSONReader);
+					#{Token}.Deserialize (jsonReader);
  
 #elseif Entry._Tag () == ProtoStructType.TStruct
-					#{Token} = #{Type}.FromJSON (JSONReader, true) ;  // A tagged structure
+					#{Token} = #{Type}.FromJSON (jsonReader, true) ;  // A tagged structure
 #else
-					#{Token} = JSONReader.Read#{TType} ();
+					#{Token} = jsonReader.Read#{TType} ();
 #end if
 #end if
 					break;
@@ -550,7 +550,7 @@ new #{Id}();
 #end foreach
 				default : {
 #if (Inherits != null)
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 #end if
 					break;
 					}
@@ -707,7 +707,7 @@ new #{Id}();
 #else
 					// Out = #{Id}.Factory ();
 					Out = new #{Id} ();
-					Out.Deserialize (JSONReader);
+					Out.Deserialize (jsonReader);
 					break;
 #end if
 					}
@@ -724,7 +724,7 @@ new #{Id}();
 #else
 					Out = new #{Id} (); 
 					// Out = #{Id}.Factory ();
-					Out.Deserialize (JSONReader);
+					Out.Deserialize (jsonReader);
 					break;
 #end if
 					}

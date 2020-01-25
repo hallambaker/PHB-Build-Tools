@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Copyright ©  2017 by 
+//  © 2015-2019 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -72,6 +72,8 @@ namespace Goedel.Tool.Command {
 				_Output.Write ("using Goedel.Registry;\n{0}", _Indent);
 				}
 			_Output.Write ("using Goedel.Utilities;\n{0}", _Indent);
+			_Output.Write ("#pragma warning disable IDE1006\n{0}", _Indent);
+			_Output.Write ("#pragma warning disable CS1591\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			foreach  (_Choice Item in CommandParse.Top) {
 				switch (Item._Tag ()) {

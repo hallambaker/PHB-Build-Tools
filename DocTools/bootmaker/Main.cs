@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using Goedel.Command;
 using Goedel.Utilities;
+#pragma warning disable IDE1006
 
 namespace Shell.Bootmaker {
 
