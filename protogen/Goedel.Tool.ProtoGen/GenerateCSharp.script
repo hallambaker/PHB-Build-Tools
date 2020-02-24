@@ -70,9 +70,9 @@ namespace #{Namespace} {
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
         /// <param name="jsonReader">Input stream</param>
-        /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader jsonReader, out JSONObject Out) => 
-			Out = jsonReader.ReadTaggedObject(_TagDictionary);
+        /// <param name="result">The created object</param>
+        public static void Deserialize(JSONReader jsonReader, out JSONObject result) => 
+			result = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
 
@@ -153,7 +153,7 @@ namespace #{Namespace} {
         /// <summary>
 		/// Create a client connection to the specified service.
         /// </summary>	
-        /// <param name="JPCRemoteSession">The remote session to connect to</param>
+        /// <param name="jpcRemoteSession">The remote session to connect to</param>
 		public #{Service.Id}Client (JPCRemoteSession jpcRemoteSession) =>
 			JPCRemoteSession = jpcRemoteSession;
 
@@ -413,12 +413,12 @@ new #{Id}();
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -426,17 +426,17 @@ new #{Id}();
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
 #if (Inherits != null)
-			((#{Inherits})this).SerializeX(_Writer, false, ref _first);
+			((#{Inherits})this).SerializeX(_writer, false, ref _first);
 #end if
 #foreach (_Choice Entry in Entries)
 #% GetType (Entry, out var Token, out var Type, out var TType, 
@@ -445,15 +445,15 @@ new #{Id}();
 #% bool Multiple = IsMultiple (Options);
 #if Multiple
 			if (#{Token} != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("#{Tag}", 1);
-				_Writer.WriteArrayStart ();
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("#{Tag}", 1);
+				_writer.WriteArrayStart ();
 				bool _firstarray = true;
 				foreach (var _index in #{Token}) {
-					_Writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteArraySeparator (ref _firstarray);
 #% MakeSerializeArrayEntry (Entry, "_index");
 					}
-				_Writer.WriteArrayEnd ();
+				_writer.WriteArrayEnd ();
 				}
 #else
 #if Nullable
@@ -461,8 +461,8 @@ new #{Id}();
 #else
 			if (__#{Token}){
 #end if
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("#{Tag}", 1);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("#{Tag}", 1);
 #% MakeSerializeEntry (Entry, Token.ToString());
 				}
 #end if
@@ -472,21 +472,21 @@ new #{Id}();
 #end if
 #end foreach
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new #{Id} FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new #{Id} FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as #{Id};
 				}
@@ -504,44 +504,44 @@ new #{Id}();
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
-#foreach (_Choice Entry in Entries)
-#% GetType(Entry, out var Token, out var Type, out var TType, 
-#%    out var Options, out var Nullable, out var Tag);
-#if (Token != null)
-#% bool Multiple = IsMultiple (Options);
-				case "#{Tag}" : {
+			switch (tag) {
+#foreach (_Choice entry in Entries)
+#% GetType(entry, out var token, out var type, out var ttype, 
+#%    out var options, out var nullable, out var tag);
+#if (token != null)
+#% bool Multiple = IsMultiple (options);
+				case "#{tag}" : {
 #if Multiple
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					#{Token} = new List <#{Type}> ();
+					#{token} = new List <#{type}> ();
 					while (_Going) {
-#if Entry._Tag () == ProtoStructType.Struct
+#if entry._Tag () == ProtoStructType.Struct
 						// an untagged structure.
-						var _Item = new  #{Type} ();
+						var _Item = new  #{type} ();
 						_Item.Deserialize (jsonReader);
-						// var _Item = new #{Type} (jsonReader);
-#elseif Entry._Tag () == ProtoStructType.TStruct
-						var _Item = #{Type}.FromJSON (jsonReader, true); // a tagged structure
+						// var _Item = new #{type} (jsonReader);
+#elseif entry._Tag () == ProtoStructType.TStruct
+						var _Item = #{type}.FromJSON (jsonReader, true); // a tagged structure
 #else
-						#{Type} _Item = jsonReader.Read#{TType} ();
+						#{type} _Item = jsonReader.Read#{ttype} ();
 #end if
-						#{Token}.Add (_Item);
+						#{token}.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
 #else
-#if Entry._Tag () == ProtoStructType.Struct
+#if entry._Tag () == ProtoStructType.Struct
 					// An untagged structure
-					#{Token} = new #{Type} ();
-					#{Token}.Deserialize (jsonReader);
+					#{token} = new #{type} ();
+					#{token}.Deserialize (jsonReader);
  
-#elseif Entry._Tag () == ProtoStructType.TStruct
-					#{Token} = #{Type}.FromJSON (jsonReader, true) ;  // A tagged structure
+#elseif entry._Tag () == ProtoStructType.TStruct
+					#{token} = #{type}.FromJSON (jsonReader, true) ;  // A tagged structure
 #else
-					#{Token} = jsonReader.Read#{TType} ();
+					#{token} = jsonReader.Read#{ttype} ();
 #end if
 #end if
 					break;
@@ -550,7 +550,7 @@ new #{Id}();
 #end foreach
 				default : {
 #if (Inherits != null)
-					base.DeserializeToken(jsonReader, Tag);
+					base.DeserializeToken(jsonReader, tag);
 #end if
 					break;
 					}
@@ -565,33 +565,33 @@ new #{Id}();
 #method2 MakeSerializeEntry _Choice Entry string Tag
 #switchcast ProtoStructType Entry
 #casecast Boolean null
-					_Writer.WriteBoolean (#{Tag});
+					_writer.WriteBoolean (#{Tag});
 #casecast Integer null
-					_Writer.WriteInteger32 (#{Tag});
+					_writer.WriteInteger32 (#{Tag});
 #casecast Binary null
-					_Writer.WriteBinary (#{Tag});
+					_writer.WriteBinary (#{Tag});
 #casecast Struct null
-					#{Tag}.Serialize (_Writer, false);
+					#{Tag}.Serialize (_writer, false);
 #casecast TStruct null
 					// expand this to a tagged structure
-					//#{Tag}.Serialize (_Writer, false);
+					//#{Tag}.Serialize (_writer, false);
 					{
-						_Writer.WriteObjectStart();
-						_Writer.WriteToken(#{Tag}._Tag, 1);
+						_writer.WriteObjectStart();
+						_writer.WriteToken(#{Tag}._Tag, 1);
 						bool firstinner = true;
-						#{Tag}.Serialize (_Writer, true, ref firstinner);
-						_Writer.WriteObjectEnd();
+						#{Tag}.Serialize (_writer, true, ref firstinner);
+						_writer.WriteObjectEnd();
 						}
 #casecast Label null
-					_Writer.WriteString (#{Tag});
+					_writer.WriteString (#{Tag});
 #casecast Name null
-					_Writer.WriteString (#{Tag});
+					_writer.WriteString (#{Tag});
 #casecast String null
-					_Writer.WriteString (#{Tag});
+					_writer.WriteString (#{Tag});
 #casecast URI null
-					_Writer.WriteString (#{Tag});
+					_writer.WriteString (#{Tag});
 #casecast DateTime null
-					_Writer.WriteDateTime (#{Tag});
+					_writer.WriteDateTime (#{Tag});
 #%							break; }
 #% default : {
 
@@ -601,34 +601,34 @@ new #{Id}();
 #method2 MakeSerializeArrayEntry _Choice Entry string Tag
 #switchcast ProtoStructType Entry
 #casecast Boolean null
-					_Writer.WriteBoolean (#{Tag});
+					_writer.WriteBoolean (#{Tag});
 #casecast Integer null
-					_Writer.WriteInteger32 (#{Tag});
+					_writer.WriteInteger32 (#{Tag});
 #casecast Binary null
-					_Writer.WriteBinary (#{Tag});
+					_writer.WriteBinary (#{Tag});
 #casecast Struct null
 					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(#{Tag}._Tag, 1);
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(#{Tag}._Tag, 1);
 					bool firstinner = true;
-					#{Tag}.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
+					#{Tag}.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
 #casecast TStruct null
-                    _Writer.WriteObjectStart();
-                    _Writer.WriteToken(#{Tag}._Tag, 1);
+                    _writer.WriteObjectStart();
+                    _writer.WriteToken(#{Tag}._Tag, 1);
 					bool firstinner = true;
-					#{Tag}.Serialize (_Writer, true, ref firstinner);
-                    _Writer.WriteObjectEnd();
+					#{Tag}.Serialize (_writer, true, ref firstinner);
+                    _writer.WriteObjectEnd();
 #casecast Label null
-					_Writer.WriteString (#{Tag});
+					_writer.WriteString (#{Tag});
 #casecast Name null
-					_Writer.WriteString (#{Tag});
+					_writer.WriteString (#{Tag});
 #casecast String null
-					_Writer.WriteString (#{Tag});
+					_writer.WriteString (#{Tag});
 #casecast URI null
-					_Writer.WriteString (#{Tag});
+					_writer.WriteString (#{Tag});
 #casecast DateTime null
-					_Writer.WriteDateTime (#{Tag});
+					_writer.WriteDateTime (#{Tag});
 #%							break; }
 #% default : {
 

@@ -6,6 +6,7 @@ using Goedel.Command;
 using Goedel.Registry;
 using Goedel.Utilities;
 #pragma warning disable IDE1006
+#pragma warning disable CS1591
 
 namespace Goedel.VSIXBuildShell {
 

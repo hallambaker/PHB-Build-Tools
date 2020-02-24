@@ -5,6 +5,7 @@ using System.Text;
 using Goedel.Command;
 using Goedel.Utilities;
 #pragma warning disable IDE1006
+#pragma warning disable CS1591
 
 namespace Command {
 

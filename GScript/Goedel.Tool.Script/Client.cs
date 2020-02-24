@@ -142,7 +142,8 @@ namespace Goedel.Tool.Script {
         const string UsingText = "using {0};";
 
         const string FileText =
-                "\n\n{4}//\n{4}// {0}\n{4}//\n{4}public static void {0} ({2} {3}) {{ /* File  */\n{4}\tusing (var _Output = new StreamWriter ({1})) {{\n{4}\t\tvar _Indent = \"\"; ";
+                "\n\n{4}//\n{4}// {0}\n{4}//\n{4}public static void {0} ({2} {3}) {{ /* File  */\n{4}\t" +
+            "using var _Output = new StreamWriter ({1});\n{4}\t\tvar _Indent = \"\"; ";
 
         //#file 0MakeSiteDocs 1WebKey 2"Guide/key.md" 3CreateWeb 4Examples
         const string XFileText = "\n\n{5}//\n{5}// {1}\n{5}//\n" +
@@ -243,7 +244,7 @@ namespace Goedel.Tool.Script {
             new ScriptCommand ("pclass",    PClassText,         "\t\t}\n\t}",   2,      1,      2,      6),
             new ScriptCommand ("xclass",    XClassText,         "\t\t}\n\t}",   2,      1,      2,      6),
 
-            new ScriptCommand ("file",      FileText,             "\t\t}\n\t\t\t}",  4,      2,      2,      1),
+            new ScriptCommand ("file",      FileText,             "\n\t\t\t}",  4,      2,      2,      1),
             new ScriptCommand ("xfile",     XFileText,            "\t\t\t}",  5,      2,      2,      1),
             new ScriptCommand ("zfile",     ZFileText,            "\t\t\t}",  4,      2,      2,      1),
 

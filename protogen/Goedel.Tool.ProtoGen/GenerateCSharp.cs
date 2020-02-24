@@ -106,9 +106,9 @@ namespace Goedel.Tool.ProtoGen {
 					_Output.Write ("        /// Construct an instance from the specified tagged JSONReader stream.\n{0}", _Indent);
 					_Output.Write ("        /// </summary>\n{0}", _Indent);
 					_Output.Write ("        /// <param name=\"jsonReader\">Input stream</param>\n{0}", _Indent);
-					_Output.Write ("        /// <param name=\"Out\">The created object</param>\n{0}", _Indent);
-					_Output.Write ("        public static void Deserialize(JSONReader jsonReader, out JSONObject Out) => \n{0}", _Indent);
-					_Output.Write ("			Out = jsonReader.ReadTaggedObject(_TagDictionary);\n{0}", _Indent);
+					_Output.Write ("        /// <param name=\"result\">The created object</param>\n{0}", _Indent);
+					_Output.Write ("        public static void Deserialize(JSONReader jsonReader, out JSONObject result) => \n{0}", _Indent);
+					_Output.Write ("			result = jsonReader.ReadTaggedObject(_TagDictionary);\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("		}}\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
@@ -192,7 +192,7 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("        /// <summary>\n{0}", _Indent);
 							_Output.Write ("		/// Create a client connection to the specified service.\n{0}", _Indent);
 							_Output.Write ("        /// </summary>	\n{0}", _Indent);
-							_Output.Write ("        /// <param name=\"JPCRemoteSession\">The remote session to connect to</param>\n{0}", _Indent);
+							_Output.Write ("        /// <param name=\"jpcRemoteSession\">The remote session to connect to</param>\n{0}", _Indent);
 							_Output.Write ("		public {1}Client (JPCRemoteSession jpcRemoteSession) =>\n{0}", _Indent, Service.Id);
 							_Output.Write ("			JPCRemoteSession = jpcRemoteSession;\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
@@ -507,12 +507,12 @@ namespace Goedel.Tool.ProtoGen {
 			_Output.Write ("        /// <summary>\n{0}", _Indent);
 			_Output.Write ("        /// Serialize this object to the specified output stream.\n{0}", _Indent);
 			_Output.Write ("        /// </summary>\n{0}", _Indent);
-			_Output.Write ("        /// <param name=\"Writer\">Output stream</param>\n{0}", _Indent);
+			_Output.Write ("        /// <param name=\"writer\">Output stream</param>\n{0}", _Indent);
 			_Output.Write ("        /// <param name=\"wrap\">If true, output is wrapped with object\n{0}", _Indent);
 			_Output.Write ("        /// start and end sequences '{{ ... }}'.</param>\n{0}", _Indent);
 			_Output.Write ("        /// <param name=\"first\">If true, item is the first entry in a list.</param>\n{0}", _Indent);
-			_Output.Write ("		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>\n{0}", _Indent);
-			_Output.Write ("			SerializeX (Writer, wrap, ref first);\n{0}", _Indent);
+			_Output.Write ("		public override void Serialize (Writer writer, bool wrap, ref bool first) =>\n{0}", _Indent);
+			_Output.Write ("			SerializeX (writer, wrap, ref first);\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        /// <summary>\n{0}", _Indent);
@@ -520,17 +520,17 @@ namespace Goedel.Tool.ProtoGen {
 			_Output.Write ("        /// Unlike the Serlialize() method, this method is not inherited from the\n{0}", _Indent);
 			_Output.Write ("        /// parent class allowing a specific version of the method to be called.\n{0}", _Indent);
 			_Output.Write ("        /// </summary>\n{0}", _Indent);
-			_Output.Write ("        /// <param name=\"_Writer\">Output stream</param>\n{0}", _Indent);
+			_Output.Write ("        /// <param name=\"_writer\">Output stream</param>\n{0}", _Indent);
 			_Output.Write ("        /// <param name=\"_wrap\">If true, output is wrapped with object\n{0}", _Indent);
 			_Output.Write ("        /// start and end sequences '{{ ... }}'.</param>\n{0}", _Indent);
 			_Output.Write ("        /// <param name=\"_first\">If true, item is the first entry in a list.</param>\n{0}", _Indent);
-			_Output.Write ("		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {{\n{0}", _Indent);
+			_Output.Write ("		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {{\n{0}", _Indent);
 			_Output.Write ("			PreEncode();\n{0}", _Indent);
 			_Output.Write ("			if (_wrap) {{\n{0}", _Indent);
-			_Output.Write ("				_Writer.WriteObjectStart ();\n{0}", _Indent);
+			_Output.Write ("				_writer.WriteObjectStart ();\n{0}", _Indent);
 			_Output.Write ("				}}\n{0}", _Indent);
 			if (  (Inherits != null) ) {
-				_Output.Write ("			(({1})this).SerializeX(_Writer, false, ref _first);\n{0}", _Indent, Inherits);
+				_Output.Write ("			(({1})this).SerializeX(_writer, false, ref _first);\n{0}", _Indent, Inherits);
 				}
 			foreach  (_Choice Entry in Entries) {
 				 GetType (Entry, out var Token, out var Type, out var TType, 
@@ -539,15 +539,15 @@ namespace Goedel.Tool.ProtoGen {
 					 bool Multiple = IsMultiple (Options);
 					if (  Multiple ) {
 						_Output.Write ("			if ({1} != null) {{\n{0}", _Indent, Token);
-						_Output.Write ("				_Writer.WriteObjectSeparator (ref _first);\n{0}", _Indent);
-						_Output.Write ("				_Writer.WriteToken (\"{1}\", 1);\n{0}", _Indent, Tag);
-						_Output.Write ("				_Writer.WriteArrayStart ();\n{0}", _Indent);
+						_Output.Write ("				_writer.WriteObjectSeparator (ref _first);\n{0}", _Indent);
+						_Output.Write ("				_writer.WriteToken (\"{1}\", 1);\n{0}", _Indent, Tag);
+						_Output.Write ("				_writer.WriteArrayStart ();\n{0}", _Indent);
 						_Output.Write ("				bool _firstarray = true;\n{0}", _Indent);
 						_Output.Write ("				foreach (var _index in {1}) {{\n{0}", _Indent, Token);
-						_Output.Write ("					_Writer.WriteArraySeparator (ref _firstarray);\n{0}", _Indent);
+						_Output.Write ("					_writer.WriteArraySeparator (ref _firstarray);\n{0}", _Indent);
 						 MakeSerializeArrayEntry (Entry, "_index");
 						_Output.Write ("					}}\n{0}", _Indent);
-						_Output.Write ("				_Writer.WriteArrayEnd ();\n{0}", _Indent);
+						_Output.Write ("				_writer.WriteArrayEnd ();\n{0}", _Indent);
 						_Output.Write ("				}}\n{0}", _Indent);
 						} else {
 						if (  Nullable ) {
@@ -555,8 +555,8 @@ namespace Goedel.Tool.ProtoGen {
 							} else {
 							_Output.Write ("			if (__{1}){{\n{0}", _Indent, Token);
 							}
-						_Output.Write ("				_Writer.WriteObjectSeparator (ref _first);\n{0}", _Indent);
-						_Output.Write ("				_Writer.WriteToken (\"{1}\", 1);\n{0}", _Indent, Tag);
+						_Output.Write ("				_writer.WriteObjectSeparator (ref _first);\n{0}", _Indent);
+						_Output.Write ("				_writer.WriteToken (\"{1}\", 1);\n{0}", _Indent, Tag);
 						 MakeSerializeEntry (Entry, Token.ToString());
 						_Output.Write ("				}}\n{0}", _Indent);
 						}
@@ -566,21 +566,21 @@ namespace Goedel.Tool.ProtoGen {
 					}
 				}
 			_Output.Write ("			if (_wrap) {{\n{0}", _Indent);
-			_Output.Write ("				_Writer.WriteObjectEnd ();\n{0}", _Indent);
+			_Output.Write ("				_writer.WriteObjectEnd ();\n{0}", _Indent);
 			_Output.Write ("				}}\n{0}", _Indent);
 			_Output.Write ("			}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        /// <summary>\n{0}", _Indent);
 			_Output.Write ("        /// Deserialize a tagged stream\n{0}", _Indent);
 			_Output.Write ("        /// </summary>\n{0}", _Indent);
-			_Output.Write ("        /// <param name=\"JSONReader\">The input stream</param>\n{0}", _Indent);
-			_Output.Write ("		/// <param name=\"Tagged\">If true, the input is wrapped in a tag specifying the type</param>\n{0}", _Indent);
+			_Output.Write ("        /// <param name=\"jsonReader\">The input stream</param>\n{0}", _Indent);
+			_Output.Write ("		/// <param name=\"tagged\">If true, the input is wrapped in a tag specifying the type</param>\n{0}", _Indent);
 			_Output.Write ("        /// <returns>The created object.</returns>		\n{0}", _Indent);
-			_Output.Write ("        public static new {1} FromJSON (JSONReader jsonReader, bool Tagged=true) {{\n{0}", _Indent, Id);
+			_Output.Write ("        public static new {1} FromJSON (JSONReader jsonReader, bool tagged=true) {{\n{0}", _Indent, Id);
 			_Output.Write ("			if (jsonReader == null) {{\n{0}", _Indent);
 			_Output.Write ("				return null;\n{0}", _Indent);
 			_Output.Write ("				}}\n{0}", _Indent);
-			_Output.Write ("			if (Tagged) {{\n{0}", _Indent);
+			_Output.Write ("			if (tagged) {{\n{0}", _Indent);
 			_Output.Write ("				var Out = jsonReader.ReadTaggedObject (_TagDictionary);\n{0}", _Indent);
 			_Output.Write ("				return Out as {1};\n{0}", _Indent, Id);
 			_Output.Write ("				}}\n{0}", _Indent);
@@ -598,44 +598,44 @@ namespace Goedel.Tool.ProtoGen {
 			_Output.Write ("        /// Having read a tag, process the corresponding value data.\n{0}", _Indent);
 			_Output.Write ("        /// </summary>\n{0}", _Indent);
 			_Output.Write ("        /// <param name=\"jsonReader\">The input stream</param>\n{0}", _Indent);
-			_Output.Write ("        /// <param name=\"Tag\">The tag</param>\n{0}", _Indent);
-			_Output.Write ("		public override void DeserializeToken (JSONReader jsonReader, string Tag) {{\n{0}", _Indent);
+			_Output.Write ("        /// <param name=\"tag\">The tag</param>\n{0}", _Indent);
+			_Output.Write ("		public override void DeserializeToken (JSONReader jsonReader, string tag) {{\n{0}", _Indent);
 			_Output.Write ("			\n{0}", _Indent);
-			_Output.Write ("			switch (Tag) {{\n{0}", _Indent);
-			foreach  (_Choice Entry in Entries) {
-				 GetType(Entry, out var Token, out var Type, out var TType, 
-				    out var Options, out var Nullable, out var Tag);
-				if (  (Token != null) ) {
-					 bool Multiple = IsMultiple (Options);
-					_Output.Write ("				case \"{1}\" : {{\n{0}", _Indent, Tag);
+			_Output.Write ("			switch (tag) {{\n{0}", _Indent);
+			foreach  (_Choice entry in Entries) {
+				 GetType(entry, out var token, out var type, out var ttype, 
+				    out var options, out var nullable, out var tag);
+				if (  (token != null) ) {
+					 bool Multiple = IsMultiple (options);
+					_Output.Write ("				case \"{1}\" : {{\n{0}", _Indent, tag);
 					if (  Multiple ) {
 						_Output.Write ("					// Have a sequence of values\n{0}", _Indent);
 						_Output.Write ("					bool _Going = jsonReader.StartArray ();\n{0}", _Indent);
-						_Output.Write ("					{1} = new List <{2}> ();\n{0}", _Indent, Token, Type);
+						_Output.Write ("					{1} = new List <{2}> ();\n{0}", _Indent, token, type);
 						_Output.Write ("					while (_Going) {{\n{0}", _Indent);
-						if (  Entry._Tag () == ProtoStructType.Struct ) {
+						if (  entry._Tag () == ProtoStructType.Struct ) {
 							_Output.Write ("						// an untagged structure.\n{0}", _Indent);
-							_Output.Write ("						var _Item = new  {1} ();\n{0}", _Indent, Type);
+							_Output.Write ("						var _Item = new  {1} ();\n{0}", _Indent, type);
 							_Output.Write ("						_Item.Deserialize (jsonReader);\n{0}", _Indent);
-							_Output.Write ("						// var _Item = new {1} (jsonReader);\n{0}", _Indent, Type);
-							} else if (  Entry._Tag () == ProtoStructType.TStruct) {
-							_Output.Write ("						var _Item = {1}.FromJSON (jsonReader, true); // a tagged structure\n{0}", _Indent, Type);
+							_Output.Write ("						// var _Item = new {1} (jsonReader);\n{0}", _Indent, type);
+							} else if (  entry._Tag () == ProtoStructType.TStruct) {
+							_Output.Write ("						var _Item = {1}.FromJSON (jsonReader, true); // a tagged structure\n{0}", _Indent, type);
 							} else {
-							_Output.Write ("						{1} _Item = jsonReader.Read{2} ();\n{0}", _Indent, Type, TType);
+							_Output.Write ("						{1} _Item = jsonReader.Read{2} ();\n{0}", _Indent, type, ttype);
 							}
-						_Output.Write ("						{1}.Add (_Item);\n{0}", _Indent, Token);
+						_Output.Write ("						{1}.Add (_Item);\n{0}", _Indent, token);
 						_Output.Write ("						_Going = jsonReader.NextArray ();\n{0}", _Indent);
 						_Output.Write ("						}}\n{0}", _Indent);
 						} else {
-						if (  Entry._Tag () == ProtoStructType.Struct ) {
+						if (  entry._Tag () == ProtoStructType.Struct ) {
 							_Output.Write ("					// An untagged structure\n{0}", _Indent);
-							_Output.Write ("					{1} = new {2} ();\n{0}", _Indent, Token, Type);
-							_Output.Write ("					{1}.Deserialize (jsonReader);\n{0}", _Indent, Token);
+							_Output.Write ("					{1} = new {2} ();\n{0}", _Indent, token, type);
+							_Output.Write ("					{1}.Deserialize (jsonReader);\n{0}", _Indent, token);
 							_Output.Write (" \n{0}", _Indent);
-							} else if (  Entry._Tag () == ProtoStructType.TStruct) {
-							_Output.Write ("					{1} = {2}.FromJSON (jsonReader, true) ;  // A tagged structure\n{0}", _Indent, Token, Type);
+							} else if (  entry._Tag () == ProtoStructType.TStruct) {
+							_Output.Write ("					{1} = {2}.FromJSON (jsonReader, true) ;  // A tagged structure\n{0}", _Indent, token, type);
 							} else {
-							_Output.Write ("					{1} = jsonReader.Read{2} ();\n{0}", _Indent, Token, TType);
+							_Output.Write ("					{1} = jsonReader.Read{2} ();\n{0}", _Indent, token, ttype);
 							}
 						}
 					_Output.Write ("					break;\n{0}", _Indent);
@@ -644,7 +644,7 @@ namespace Goedel.Tool.ProtoGen {
 				}
 			_Output.Write ("				default : {{\n{0}", _Indent);
 			if (  (Inherits != null) ) {
-				_Output.Write ("					base.DeserializeToken(jsonReader, Tag);\n{0}", _Indent);
+				_Output.Write ("					base.DeserializeToken(jsonReader, tag);\n{0}", _Indent);
 				}
 			_Output.Write ("					break;\n{0}", _Indent);
 			_Output.Write ("					}}\n{0}", _Indent);
@@ -663,42 +663,42 @@ namespace Goedel.Tool.ProtoGen {
 		public void MakeSerializeEntry (_Choice Entry, string Tag) {
 			switch (Entry._Tag ()) {
 				case ProtoStructType.Boolean: { 
-				_Output.Write ("					_Writer.WriteBoolean ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteBoolean ({1});\n{0}", _Indent, Tag);
 				break; }
 				case ProtoStructType.Integer: { 
-				_Output.Write ("					_Writer.WriteInteger32 ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteInteger32 ({1});\n{0}", _Indent, Tag);
 				break; }
 				case ProtoStructType.Binary: { 
-				_Output.Write ("					_Writer.WriteBinary ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteBinary ({1});\n{0}", _Indent, Tag);
 				break; }
 				case ProtoStructType.Struct: { 
-				_Output.Write ("					{1}.Serialize (_Writer, false);\n{0}", _Indent, Tag);
+				_Output.Write ("					{1}.Serialize (_writer, false);\n{0}", _Indent, Tag);
 				break; }
 				case ProtoStructType.TStruct: { 
 				_Output.Write ("					// expand this to a tagged structure\n{0}", _Indent);
-				_Output.Write ("					//{1}.Serialize (_Writer, false);\n{0}", _Indent, Tag);
+				_Output.Write ("					//{1}.Serialize (_writer, false);\n{0}", _Indent, Tag);
 				_Output.Write ("					{{\n{0}", _Indent);
-				_Output.Write ("						_Writer.WriteObjectStart();\n{0}", _Indent);
-				_Output.Write ("						_Writer.WriteToken({1}._Tag, 1);\n{0}", _Indent, Tag);
+				_Output.Write ("						_writer.WriteObjectStart();\n{0}", _Indent);
+				_Output.Write ("						_writer.WriteToken({1}._Tag, 1);\n{0}", _Indent, Tag);
 				_Output.Write ("						bool firstinner = true;\n{0}", _Indent);
-				_Output.Write ("						{1}.Serialize (_Writer, true, ref firstinner);\n{0}", _Indent, Tag);
-				_Output.Write ("						_Writer.WriteObjectEnd();\n{0}", _Indent);
+				_Output.Write ("						{1}.Serialize (_writer, true, ref firstinner);\n{0}", _Indent, Tag);
+				_Output.Write ("						_writer.WriteObjectEnd();\n{0}", _Indent);
 				_Output.Write ("						}}\n{0}", _Indent);
 				break; }
 				case ProtoStructType.Label: { 
-				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteString ({1});\n{0}", _Indent, Tag);
 				break; }
 				case ProtoStructType.Name: { 
-				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteString ({1});\n{0}", _Indent, Tag);
 				break; }
 				case ProtoStructType.String: { 
-				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteString ({1});\n{0}", _Indent, Tag);
 				break; }
 				case ProtoStructType.URI: { 
-				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteString ({1});\n{0}", _Indent, Tag);
 				break; }
 				case ProtoStructType.DateTime: { 
-				_Output.Write ("					_Writer.WriteDateTime ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteDateTime ({1});\n{0}", _Indent, Tag);
 				
 											break; }
 				
@@ -715,43 +715,43 @@ namespace Goedel.Tool.ProtoGen {
 		public void MakeSerializeArrayEntry (_Choice Entry, string Tag) {
 			switch (Entry._Tag ()) {
 				case ProtoStructType.Boolean: { 
-				_Output.Write ("					_Writer.WriteBoolean ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteBoolean ({1});\n{0}", _Indent, Tag);
 				break; }
 				case ProtoStructType.Integer: { 
-				_Output.Write ("					_Writer.WriteInteger32 ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteInteger32 ({1});\n{0}", _Indent, Tag);
 				break; }
 				case ProtoStructType.Binary: { 
-				_Output.Write ("					_Writer.WriteBinary ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteBinary ({1});\n{0}", _Indent, Tag);
 				break; }
 				case ProtoStructType.Struct: { 
 				_Output.Write ("					// This is an untagged structure. Cannot inherit.\n{0}", _Indent);
-				_Output.Write ("                    //_Writer.WriteObjectStart();\n{0}", _Indent);
-				_Output.Write ("                    //_Writer.WriteToken({1}._Tag, 1);\n{0}", _Indent, Tag);
+				_Output.Write ("                    //_writer.WriteObjectStart();\n{0}", _Indent);
+				_Output.Write ("                    //_writer.WriteToken({1}._Tag, 1);\n{0}", _Indent, Tag);
 				_Output.Write ("					bool firstinner = true;\n{0}", _Indent);
-				_Output.Write ("					{1}.Serialize (_Writer, true, ref firstinner);\n{0}", _Indent, Tag);
-				_Output.Write ("                    //_Writer.WriteObjectEnd();\n{0}", _Indent);
+				_Output.Write ("					{1}.Serialize (_writer, true, ref firstinner);\n{0}", _Indent, Tag);
+				_Output.Write ("                    //_writer.WriteObjectEnd();\n{0}", _Indent);
 				break; }
 				case ProtoStructType.TStruct: { 
-				_Output.Write ("                    _Writer.WriteObjectStart();\n{0}", _Indent);
-				_Output.Write ("                    _Writer.WriteToken({1}._Tag, 1);\n{0}", _Indent, Tag);
+				_Output.Write ("                    _writer.WriteObjectStart();\n{0}", _Indent);
+				_Output.Write ("                    _writer.WriteToken({1}._Tag, 1);\n{0}", _Indent, Tag);
 				_Output.Write ("					bool firstinner = true;\n{0}", _Indent);
-				_Output.Write ("					{1}.Serialize (_Writer, true, ref firstinner);\n{0}", _Indent, Tag);
-				_Output.Write ("                    _Writer.WriteObjectEnd();\n{0}", _Indent);
+				_Output.Write ("					{1}.Serialize (_writer, true, ref firstinner);\n{0}", _Indent, Tag);
+				_Output.Write ("                    _writer.WriteObjectEnd();\n{0}", _Indent);
 				break; }
 				case ProtoStructType.Label: { 
-				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteString ({1});\n{0}", _Indent, Tag);
 				break; }
 				case ProtoStructType.Name: { 
-				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteString ({1});\n{0}", _Indent, Tag);
 				break; }
 				case ProtoStructType.String: { 
-				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteString ({1});\n{0}", _Indent, Tag);
 				break; }
 				case ProtoStructType.URI: { 
-				_Output.Write ("					_Writer.WriteString ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteString ({1});\n{0}", _Indent, Tag);
 				break; }
 				case ProtoStructType.DateTime: { 
-				_Output.Write ("					_Writer.WriteDateTime ({1});\n{0}", _Indent, Tag);
+				_Output.Write ("					_writer.WriteDateTime ({1});\n{0}", _Indent, Tag);
 				
 											break; }
 				
