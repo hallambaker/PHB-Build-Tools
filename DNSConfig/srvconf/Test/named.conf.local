@@ -10,6 +10,41 @@ zone "defaultdenysecurity.com" {
     file "/etc/bind/zones/db.defaultdenysecurity.com";
 };
 
+zone "thresholded.com" {
+    type master;
+    file "/etc/bind/zones/db.thresholded.com";
+};
+
+zone "thresholdkey.com" {
+    type master;
+    file "/etc/bind/zones/db.thresholdkey.com";
+};
+
+zone "thresholdrise.com" {
+    type master;
+    file "/etc/bind/zones/db.thresholdrise.com";
+};
+
+zone "thresholdmode.com" {
+    type master;
+    file "/etc/bind/zones/db.thresholdmode.com";
+};
+
+zone "thresholdsecret.com" {
+    type master;
+    file "/etc/bind/zones/db.thresholdsecret.com";
+};
+
+zone "thresholdsecrets.com" {
+    type master;
+    file "/etc/bind/zones/db.thresholdsecrets.com";
+};
+
+zone "thresholdshare.com" {
+    type master;
+    file "/etc/bind/zones/db.thresholdshare.com";
+};
+
 zone "dotcrimemanifesto.com" {
     type master;
     file "/etc/bind/zones/db.dotcrimemanifesto.com";

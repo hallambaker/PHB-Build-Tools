@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Copyright ©  2017 by 
+//  © 2015-2019 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -267,13 +267,12 @@ namespace Goedel.Tool.ASN {
 					}
 				
 				  break; } default : {
-				_Output.Write ("		/// <summary>\n{0}", _Indent);
-				_Output.Write ("		/// ASN.1 member {1} \n{0}", _Indent, Member.Name);
-				_Output.Write ("		/// </summary>\n{0}", _Indent);
+				_Output.Write ("		/// <summary> ASN.1 member {1} </summary>\n{0}", _Indent, Member.Name);
 				_Output.Write ("		public ", _Indent);
 				
 				 TypeDeclaration (Member.Spec);
-				_Output.Write ("{1} ;\n{0}", _Indent, Member.Name);
+				_Output.Write ("{1}  {{get; set;}}\n{0}", _Indent, Member.Name);
+				_Output.Write ("\n{0}", _Indent);
 			break; }
 				}
 			}

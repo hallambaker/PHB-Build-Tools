@@ -1,8 +1,7 @@
 
 # Supplemental Makefile for Visual Studios Projects
 #
-# Visual Studio is responsible for managing rules for production of
-# code but does not provide support for pre and post build actions.
+# Visual Studio runs tools for most projects but not for shared projects.
 # 
 # Prebuild items supported:
 #   [None currently]
@@ -23,9 +22,9 @@ LinkFiles = \
 
 ToolTargets = \
 	DNSConfig.cs
-
 DNSConfig.cs : DNSConfig.command 
-	commandparse DNSConfig.command  DNSConfig.cs
+	commandparse DNSConfig.command  /cs  DNSConfig.cs
+
 
 
 prebuildRecurse : 
@@ -35,8 +34,10 @@ prebuildRecurse :
 postbuildRecurse :
 	cd ..\Goedel.Tool.DNSConfig && nmake /c /f VS.make postbuild 
 
-
+# Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
+	version version.version AssemblyVersion.cs
+	
 
 postbuild : postbuildRecurse
 

@@ -148,10 +148,9 @@ namespace Goedel.Tool.Script {
         //#file 0MakeSiteDocs 1WebKey 2"Guide/key.md" 3CreateWeb 4Examples
         const string XFileText = "\n\n{5}//\n{5}// {1}\n{5}//\n" +
             "{5}public static void {1}({3} {4}) {{ /* XFile  */\n" +
-            "{5}\t\tusing (var _Output = new StreamWriter({2})) {{\n" +
-            "{5}\t\tvar obj = new {0}() {{ _Output = _Output, _Indent = \"\", _Filename = {2} }};\n" +
-            "{5}\t\tobj._{1}({4});\n" +
-            "{5}\t\t}}\n" +
+            "{5}\tusing var _Output = new StreamWriter({2});" +
+            "{5}\tvar obj = new {0}() {{ _Output = _Output, _Indent = \"\", _Filename = {2} }};\n" +
+            "{5}\tobj._{1}({4});\n" +
             "{5}\t}}\n" +
             "{5}public void _{1}({3} {4}) {{\n"
             ;
@@ -159,9 +158,9 @@ namespace Goedel.Tool.Script {
         //#file 0MakeSiteDocs 1WebKey 2"Guide/key.md" 3CreateWeb 4Examples
         const string ZFileText = "\n\n{4}//\n{4}// {1}\n{4}//\n" +
             "{4}public static void {1}({0} {3}) {{ /* XFile  */\n" +
-            "{4}\t\tusing ({3}._Output = new StreamWriter({2})) {{\n" +
-            "{4}\t\t{3}._{1}({3});\n" +
-            "{4}\t\t}}\n" +
+            "{4}\t\tusing var _Output = new StreamWriter({2});\n" +
+            "{4}\t{3}._Output = _Output;\n" +
+            "{4}\t{3}._{1}({3});\n" +
             "{4}\t}}\n" +
             "{4}public void _{1}({0} {3}) {{\n"
             ;
@@ -494,10 +493,10 @@ namespace Goedel.Tool.Script {
                                         }
                                 }
                             if (Commands[i].Stack == 1) {
-                                Indent = Indent + "\t";
+                                Indent += "\t";
                                 }
                             else if (Commands[i].Stack == 2) {
-                                Indent = Indent + "\t\t";
+                                Indent += "\t\t";
                                 }
                             }
                         }
@@ -582,7 +581,7 @@ namespace Goedel.Tool.Script {
                                 state = 1;
                                 }
                             else {
-                                escapedLine = escapedLine + EscapeCharacter(c);
+                                escapedLine += EscapeCharacter(c);
                                 }
                             break;
                             }
@@ -599,7 +598,7 @@ namespace Goedel.Tool.Script {
                                 state = 4;
                                 }
                             else {
-                                escapedLine = escapedLine + EscapeCharacter(c);
+                                escapedLine += EscapeCharacter(c);
                                 state = 0;
                                 }
                             break;
@@ -616,7 +615,7 @@ namespace Goedel.Tool.Script {
                                 state = 0;
                                 }
                             else {
-                                id = id + c;
+                                id += c;
                                 }
                             break;
                             }
@@ -629,12 +628,12 @@ namespace Goedel.Tool.Script {
                                 state = 0;
                                 }
                             else {
-                                format = format + c;
+                                format += c;
                                 }
                             break;
                             }
                     case 4: {
-                            escapedLine = escapedLine + EscapeCharacter(c);
+                            escapedLine += EscapeCharacter(c);
                             break;
                             }
                     }
@@ -642,7 +641,7 @@ namespace Goedel.Tool.Script {
             switch (state) {
                 case 0:
                 case 1: {
-                        escapedLine = escapedLine + "\\n{0}";
+                        escapedLine += "\\n{0}";
                         break;
                         }
                 case 4: {

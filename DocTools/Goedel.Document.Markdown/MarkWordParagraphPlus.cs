@@ -20,7 +20,7 @@ namespace Goedel.Document.Markdown {
 
         public MarkNewParagraph (Block Block) {
             //this.Block = Block;
-            Block.Segments = Block.Segments ?? new List<TextSegment>();
+            Block.Segments ??= new List<TextSegment>();
             Segments = Block.Segments;
             }
 
@@ -167,7 +167,7 @@ namespace Goedel.Document.Markdown {
             }
 
         public virtual void AddTag (int c) {
-            Element.Tag = Element.Tag + (char)c;
+            Element.Tag += (char)c;
             Extra.Append((char)c);
             }
 
@@ -178,13 +178,13 @@ namespace Goedel.Document.Markdown {
                 Tag = cc.ToString();
                 }
             else {
-                Tag = Tag + cc;
+                Tag += cc;
                 }
             Extra.Append((char)c);
             }
 
         public virtual void AddValue (int c) {
-            Element.Value = Element.Value + (char)c;
+            Element.Value += (char)c;
             Extra.Append((char)c);
             }
 

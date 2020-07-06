@@ -328,96 +328,78 @@ namespace ProtoGenShell {
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
-				using (Stream outputStream =
-							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
+                using Stream outputStream =
+                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
+                Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate() { _Output = OutputWriter };
 
-						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate () { _Output= OutputWriter };
-
-						Script.GenerateRFC2XML (Parse);
-						}
-					}
-				}
+                Script.GenerateRFC2XML(Parse);
+                }
 			// Script output of type GenerateHTML html
 			if (Options.GenerateHTML.Text != null) {
 				string outputfile = Options.GenerateHTML.Text; // Automatically defaults
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
-				using (Stream outputStream =
-							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
+                using Stream outputStream =
+                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
+                Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate() { _Output = OutputWriter };
 
-						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate () { _Output= OutputWriter };
-
-						Script.GenerateHTML (Parse);
-						}
-					}
-				}
+                Script.GenerateHTML(Parse);
+                }
 			// Script output of type GenerateMD md
 			if (Options.GenerateMD.Text != null) {
 				string outputfile = Options.GenerateMD.Text; // Automatically defaults
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
-				using (Stream outputStream =
-							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
+                using Stream outputStream =
+                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
+                Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate() { _Output = OutputWriter };
 
-						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate () { _Output= OutputWriter };
-
-						Script.GenerateMD (Parse);
-						}
-					}
-				}
+                Script.GenerateMD(Parse);
+                }
 			// Script output of type GenerateCS cs
 			if (Options.GenerateCS.Text != null) {
 				string outputfile = Options.GenerateCS.Text; // Automatically defaults
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
-				using (Stream outputStream =
-							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
+                using Stream outputStream =
+                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
+                Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate() { _Output = OutputWriter };
 
-						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate () { _Output= OutputWriter };
-
-						Script.GenerateCS (Parse);
-						}
-					}
-				}
+                Script.GenerateCS(Parse);
+                }
 			// Script output of type GenerateC c
 			if (Options.GenerateC.Text != null) {
 				string outputfile = Options.GenerateC.Text; // Automatically defaults
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
-				using (Stream outputStream =
-							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
+                using Stream outputStream =
+                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
+                Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate() { _Output = OutputWriter };
 
-						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate () { _Output= OutputWriter };
-
-						Script.GenerateC (Parse);
-						}
-					}
-				}
+                Script.GenerateC(Parse);
+                }
 			// Script output of type GenerateH h
 			if (Options.GenerateH.Text != null) {
 				string outputfile = Options.GenerateH.Text; // Automatically defaults
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
-				using (Stream outputStream =
-							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
+                using Stream outputStream =
+                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
+                Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate() { _Output = OutputWriter };
 
-						Goedel.Tool.ProtoGen.Generate Script = new Goedel.Tool.ProtoGen.Generate () { _Output= OutputWriter };
-
-						Script.GenerateH (Parse);
-						}
-					}
-				}
+                Script.GenerateH(Parse);
+                }
 			}
 
 

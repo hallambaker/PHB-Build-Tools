@@ -243,9 +243,8 @@ namespace Goedel.Document.RFC {
         Element Root = new Element();
 
         public static void Parse (string File, Document Document) {
-            using (FileReader FileReader = new FileReader(File)) {
-                Parse(FileReader, Document);
-                }
+            using FileReader FileReader = new FileReader(File);
+            Parse(FileReader, Document);
             }
 
         public static void Parse(TextReader TextReader, Document Document) => new NewParse(TextReader, Document);
@@ -281,11 +280,10 @@ namespace Goedel.Document.RFC {
 
         public NewParse (Processing Processing, Document Document) {
 
-            using (FileReader BibFileReader = new FileReader(Processing.File)) {
-                this.Document = Document;
+            using FileReader BibFileReader = new FileReader(Processing.File);
+            this.Document = Document;
 
-                ParseReferences(BibFileReader);
-                }
+            ParseReferences(BibFileReader);
             }
 
         public void ParseReferences (TextReader TextReader) {
@@ -875,12 +873,12 @@ namespace Goedel.Document.RFC {
                 case "day": Document.Day = Value; break;
                 case "ipr": Document.Ipr = Value; break;
                 case "area": {
-                    Document.Area = Document.Area ?? new List<string> ();
+                    Document.Area ??= new List<string> ();
                     Document.Area.Add(Value);
                     break;
                     }
                 case "workgroup": {
-                    Document.Workgroup = Document.Workgroup ?? new List<string>();
+                    Document.Workgroup ??= new List<string>();
                     Document.Workgroup.Add(Value);
                     break;
                     }
@@ -967,12 +965,12 @@ namespace Goedel.Document.RFC {
                     Reference.Day = Element.Day; break;
 
                 case "area": {
-                    Reference.Area = Reference.Area ?? new List<string>();
+                    Reference.Area ??= new List<string>();
                     Reference.Area.Add(Value);
                     break;
                     }
                 case "workgroup": {
-                    Reference.Workgroup = Reference.Workgroup ?? new List<string>();
+                    Reference.Workgroup ??= new List<string>();
                     Reference.Workgroup.Add(Value);
                     break;
                     }

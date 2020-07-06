@@ -248,26 +248,26 @@ namespace Goedel.Document.OpenXML {
 
                 // Check to see what styles have changed.
                 Changed = Bold.Set(RunProperties.Bold != null);
-                Changed = Changed | Italic.Set(RunProperties.Italic != null);
-                Changed = Changed | Underline.Set(RunProperties.Underline != null);
+                Changed |= Italic.Set(RunProperties.Italic != null);
+                Changed |= Underline.Set(RunProperties.Underline != null);
 
                 var Valign = Run.RunProperties.VerticalTextAlignment;
                 if (Valign != null) {
-                    Changed = Changed | Subscript.Set(Valign.Val == VerticalPositionValues.Subscript);
-                    Changed = Changed | Superscript.Set(Valign.Val == VerticalPositionValues.Superscript);
+                    Changed |= Subscript.Set(Valign.Val == VerticalPositionValues.Subscript);
+                    Changed |= Superscript.Set(Valign.Val == VerticalPositionValues.Superscript);
                     }
                 else {
-                    Changed = Changed | Subscript.Set(false);
-                    Changed = Changed | Superscript.Set(false);
+                    Changed |= Subscript.Set(false);
+                    Changed |= Superscript.Set(false);
                     }
                 }
             else {
                 // All annotations must have reset.
                 Changed = Bold.Set(false);
-                Changed = Changed | Italic.Set(false);
-                Changed = Changed | Underline.Set(false);
-                Changed = Changed | Subscript.Set(false);
-                Changed = Changed | Superscript.Set(false);
+                Changed |= Italic.Set(false);
+                Changed |= Underline.Set(false);
+                Changed |= Subscript.Set(false);
+                Changed |= Superscript.Set(false);
                 }
 
 

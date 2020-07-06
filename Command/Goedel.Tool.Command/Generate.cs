@@ -396,7 +396,7 @@ namespace Goedel.Tool.Command {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    public partial class  Enumeration<T> : _Enumeration<T> {{\n{0}", _Indent);
-			_Output.Write ("        public Enumeration(DescribeEntryEnumerate description, string value=null) : base(description, value){{\n{0}", _Indent);
+			_Output.Write ("        public Enumeration(DescribeEntryEnumerate description) : base(description){{\n{0}", _Indent);
 			_Output.Write ("            }}\n{0}", _Indent);
 			_Output.Write ("        }} // _Enumeration<T>\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

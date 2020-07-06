@@ -70,7 +70,7 @@ using Goedel.Utilities;
 #end foreach
 #end foreach
 
-##pragma warning disable IDE0022
+##pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
 namespace #{Class.Namespace} {
 
 

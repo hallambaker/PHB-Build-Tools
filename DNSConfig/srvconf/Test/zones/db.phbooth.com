@@ -6,7 +6,7 @@
 ;
 $TTL 600
 phbooth.com.      IN      SOA     dns1.phbooth.com. hallam.gmail.com. (
-                        2019031301       ; serial, todays date + todays serial 
+                        2020030901       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds

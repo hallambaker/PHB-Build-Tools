@@ -213,12 +213,11 @@ namespace #{Cast.Name} {
 #% EntryDeclaration (Entry);
 #end foreach
 #%  break; } default : {
-		/// <summary>
-		/// ASN.1 member #{Member.Name} 
-		/// </summary>
+		/// <summary> ASN.1 member #{Member.Name} </summary>
 		public #!
 #% TypeDeclaration (Member.Spec);
-#{Member.Name} ;
+#{Member.Name}  {get; set;}
+
 #end switchcast
 #end method
 

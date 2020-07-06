@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Copyright ©  2017 by 
+//  © 2015-2019 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -120,7 +120,7 @@ namespace GoedelSchema {
 					}
 				}
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("#pragma warning disable IDE0022\n{0}", _Indent);
+			_Output.Write ("#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059\n{0}", _Indent);
 			_Output.Write ("namespace {1} {{\n{0}", _Indent, Class.Namespace);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

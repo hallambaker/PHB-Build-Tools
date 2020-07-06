@@ -49,11 +49,11 @@ namespace Goedel.Document.Markdown {
                 Buffer = Buffer + Extra + (char)c;
                 }
             else {
-                Buffer = Buffer + Extra;
+                Buffer += Extra;
                 }
             Extra = "";
             }
-        void ToExtra(int c) => Extra = Extra + (char)c;
+        void ToExtra(int c) => Extra += (char)c;
 
         public override void Reset() {
             Buffer = "";
@@ -92,7 +92,7 @@ namespace Goedel.Document.Markdown {
             }
 
         public virtual void AddTag(int c) {
-            Element.Tag = Element.Tag + (char)c;
+            Element.Tag += (char)c;
             ToExtra(c);
             }
 
@@ -103,13 +103,13 @@ namespace Goedel.Document.Markdown {
                 Tag = cc.ToString();
                 }
             else {
-                Tag = Tag + cc;
+                Tag += cc;
                 }
             ToExtra(c);
             }
 
         public virtual void AddValue(int c) {
-            Element.Value = Element.Value + (char)c;
+            Element.Value += (char)c;
             ToExtra(c);
             }
 

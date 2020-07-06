@@ -138,7 +138,7 @@ namespace Goedel.Document.RFC {
                 HaveRowData = false;
                 for (int i = 0; i < Table.MaxRow; i++) {
                     string Chunk = PageWriter.Consume(ref Cols[i], Widths[i]);
-                    HaveRowData = HaveRowData | (Chunk.Length > 0); }
+                    HaveRowData |= (Chunk.Length > 0); }
                 if (HaveRowData) {
                     Lines++;
                     }
@@ -164,7 +164,7 @@ namespace Goedel.Document.RFC {
                 string Line = "   |";
                 for (int i = 0; i < Table.MaxRow; i++) {
                     string Chunk = PageWriter.Consume(ref Cols[i], Widths[i]);
-                    HaveRowData = HaveRowData | (Chunk.Length > 0);
+                    HaveRowData |= (Chunk.Length > 0);
                     Line = Line + " " + Chunk + "".PadLeft(Widths[i] - Chunk.Length) + " |";
                     }
                 if (HaveRowData) {

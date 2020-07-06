@@ -378,7 +378,7 @@ namespace MakeRFC {
                     case GM.TextSegmentOpen Open: {
                         if (Open.CatalogEntry.Key == "tablerow") {
                             row = new TableRow();
-                            Table.Body = Table.Body ?? new List<List<TableRow>>();
+                            Table.Body ??= new List<List<TableRow>>();
                             if (Table.Head.Count == 0) {
                                 Table.Head.Add(row);
                                 }

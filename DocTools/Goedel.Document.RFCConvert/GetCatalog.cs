@@ -22,17 +22,15 @@ namespace BridgeLib {
             var Parse = new Goedel.Document.Markdown.Tags.MarkSchema();
 
             if (filename == null) {
-            using (Stream infile = StreamFromString(Constants.Value)) {
-                    var Schema = new Lexer("INTERNAL");
-                    Schema.Process(infile, Parse);
-                    }
+                using Stream infile = StreamFromString(Constants.Value);
+                var Schema = new Lexer("INTERNAL");
+                Schema.Process(infile, Parse);
                 }
             else {
-                using (Stream infile =
-                            new FileStream(filename, FileMode.Open, FileAccess.Read)) {
-                    var Schema = new Lexer(filename);
-                    Schema.Process(infile, Parse);
-                    }
+                using Stream infile =
+                            new FileStream(filename, FileMode.Open, FileAccess.Read);
+                var Schema = new Lexer(filename);
+                Schema.Process(infile, Parse);
                 }
             return new TagCatalog(Parse);
             }

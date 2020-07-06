@@ -71,7 +71,7 @@ namespace Goedel.Document.Markdown {
             XText = "";
             }
 
-        public virtual void PreClose(int c) => XText = XText + (char)c;
+        public virtual void PreClose(int c) => XText += (char)c;
 
 
         public virtual void AddHeading (int c) {
@@ -81,13 +81,13 @@ namespace Goedel.Document.Markdown {
 
         public virtual void WasHeading1 (int c) {
             BlockType = BlockType.Heading;
-            XText = XText + (char) c;
+            XText += (char) c;
             Level = 0;
 			}
 
         public virtual void WasHeading2 (int c) {
             BlockType = BlockType.Heading;
-            XText = XText + (char) c;
+            XText += (char) c;
             Level = 1;
 			}
 

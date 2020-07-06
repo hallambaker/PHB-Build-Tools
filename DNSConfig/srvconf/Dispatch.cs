@@ -47,10 +47,9 @@ namespace Goedel.Shell.DNSConfig {
             foreach (var Domain in Parse.Domains) {
                 var FileName = "zones/db." + Domain.Id.Label;
 
-                using (var OutputWriter = FileName.OpenTextWriterNew()) {
-                    var Script = new Goedel.Tool.DNSConfig.Generate(OutputWriter);
-                    Script.GenerateDomain(Domain);
-                    }
+                using var OutputWriter = FileName.OpenTextWriterNew();
+                var Script = new Goedel.Tool.DNSConfig.Generate(OutputWriter);
+                Script.GenerateDomain(Domain);
                 }
 
             using (var OutputWriter = "named.addresses".OpenTextWriterNew()) {

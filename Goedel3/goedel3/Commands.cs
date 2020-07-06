@@ -270,7 +270,7 @@ namespace Command {
 
 
     public partial class  Enumeration<T> : _Enumeration<T> {
-        public Enumeration(DescribeEntryEnumerate description, string value=null) : base(description, value){
+        public Enumeration(DescribeEntryEnumerate description) : base(description){
             }
         } // _Enumeration<T>
 

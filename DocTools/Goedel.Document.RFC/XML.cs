@@ -7,9 +7,8 @@ namespace Goedel.Document.RFC {
     public partial class Writers {
 
         public static void WriteXML(string OutputFile, Document Document) {
-            using (TextWriter TextWriter = new StreamWriter(OutputFile, false, Encoding.ASCII)) {
-                WriteXML(TextWriter, Document);
-                }
+            using TextWriter TextWriter = new StreamWriter(OutputFile, false, Encoding.ASCII);
+            WriteXML(TextWriter, Document);
             }
 
         public static void WriteXML(TextWriter TextWriter, Document Document) {

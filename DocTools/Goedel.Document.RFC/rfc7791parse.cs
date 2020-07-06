@@ -13,9 +13,8 @@ namespace Goedel.Document.RFC {
         TextReader TextReader;
 
         public static void Parse(string File, Goedel.Document.RFC.Document Document) {
-            using (FileReader FileReader = new FileReader(File)) {
-                Parse(FileReader, Document);
-                }
+            using FileReader FileReader = new FileReader(File);
+            Parse(FileReader, Document);
             }
 
         public static void Parse(TextReader TextReader, Goedel.Document.RFC.Document Document) => new Rfc7991Parse(TextReader, Document);

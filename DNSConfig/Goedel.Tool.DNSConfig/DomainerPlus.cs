@@ -31,7 +31,7 @@ namespace Goedel.Tool.DNSConfig {
                         break;
                         }
                     case DNS DNS: {
-                        DefaultDns = DefaultDns ?? DNS;
+                        DefaultDns ??= DNS;
                         break;
                         }
                     case Site Site: {

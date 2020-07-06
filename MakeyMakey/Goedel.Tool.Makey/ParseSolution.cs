@@ -68,11 +68,10 @@ namespace Goedel.Tool.Makey {
         public VSSolution(string Filename) => Parse(Filename);
 
         public void Parse(string Filename) {
-            using (var FileStream = new FileStream(
-                        Filename, FileMode.Open, FileAccess.Read)) {
-                LexReader LexReader = new LexReader(FileStream);
-                Parse(LexReader);
-                }
+            using var FileStream = new FileStream(
+                        Filename, FileMode.Open, FileAccess.Read);
+            LexReader LexReader = new LexReader(FileStream);
+            Parse(LexReader);
 
             }
 

@@ -230,13 +230,12 @@ namespace Goedel.Document.RFC {
 
 
         void WritePRE(List<TextSegment> Segments) {
-            using (var wrapWriter = new WrapWriter(textWriter)) {
-                foreach (var Segment in Segments) {
-                    switch (Segment) {
-                        case TextSegmentText TextSegmentText:
-                            wrapWriter.Write(TextSegmentText.Text);
-                            break;
-                        }
+            using var wrapWriter = new WrapWriter(textWriter);
+            foreach (var Segment in Segments) {
+                switch (Segment) {
+                    case TextSegmentText TextSegmentText:
+                        wrapWriter.Write(TextSegmentText.Text);
+                        break;
                     }
                 }
             }

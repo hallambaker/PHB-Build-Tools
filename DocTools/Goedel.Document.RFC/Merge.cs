@@ -11,14 +11,12 @@ namespace Goedel.Document.RFC {
 
             Encoding UTF8WithoutBOM = new UTF8Encoding (false);
 
-            using (XmlTextReader XmlTextReader = new XmlTextReader(InputFile)) {
-                using (XmlTextWriter XmlTextWriter = new XmlTextWriter(OutputFile, UTF8WithoutBOM)) {
+            using XmlTextReader XmlTextReader = new XmlTextReader(InputFile);
+            using XmlTextWriter XmlTextWriter = new XmlTextWriter(OutputFile, UTF8WithoutBOM);
 
-                    //XmlTextReader.DtdProcessing = DtdProcessing.Ignore;
+            //XmlTextReader.DtdProcessing = DtdProcessing.Ignore;
 
-                    Translate.ReadStream(XmlTextReader, XmlTextWriter, true);
-                    }
-                }
+            Translate.ReadStream(XmlTextReader, XmlTextWriter, true);
             }
         }
 
@@ -127,9 +125,8 @@ namespace Goedel.Document.RFC {
             //        AttributeXML, AttributeMIME, AttributeSection);
 
             if (AttributeXML != null) {
-                using (XmlTextReader XmlTextReader = new XmlTextReader(AttributeXML)) {
-                    ReadStream (XmlTextReader, XmlWriter, false); // recursively process the file
-                    }
+                using XmlTextReader XmlTextReader = new XmlTextReader(AttributeXML);
+                ReadStream(XmlTextReader, XmlWriter, false); // recursively process the file
                 }
             if (AttributeMIME != null) {
                 throw new Exception ("MIME include not yet implemented");
@@ -158,7 +155,7 @@ namespace Goedel.Document.RFC {
                         break;
                     case 1:
                         if (IsTag(c)) {
-                            match = match & (c == Tag [Index++]);
+                            match &= (c == Tag [Index++]);
                             }
                         else if (IsWhitespace(c)) {
                             match = (match & Index == Tag.Length);
@@ -202,7 +199,7 @@ namespace Goedel.Document.RFC {
                             state = 0;
                             }
                         else if (match) {
-                            result = result + c;
+                            result += c;
                             }
                         break;
                     }

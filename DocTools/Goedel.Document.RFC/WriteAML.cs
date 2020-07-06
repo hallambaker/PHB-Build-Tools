@@ -15,9 +15,8 @@ namespace Goedel.Document.RFC {
         /// <param name="OutputFile">Output</param>
         /// <param name="Document">Document to write</param>
         public static void WriteAML(string OutputFile, Document Document) {
-            using (TextWriter TextWriter = new StreamWriter(OutputFile, false, Encoding.UTF8)) {
-                WriteAML(TextWriter, Document);
-                }
+            using TextWriter TextWriter = new StreamWriter(OutputFile, false, Encoding.UTF8);
+            WriteAML(TextWriter, Document);
             }
 
         /// <summary>

@@ -303,7 +303,7 @@ namespace Goedel.Document.Markdown {
             }
 
         public TextSegmentText AddSegmentText(string Text) {
-            this.Text = this.Text + Text;
+            this.Text += Text;
             var TextSegment = new TextSegmentText(Text);
             Segments.Add(TextSegment);
             return TextSegment;
@@ -441,9 +441,8 @@ namespace Goedel.Document.Markdown {
             Name = file;
             Link = System.IO.Path.GetFileNameWithoutExtension(Name) + ".html";
 
-            using (var Reader = new LexReader(file.OpenTextReader())) {
-                Parse(Reader);
-                }
+            using var Reader = new LexReader(file.OpenTextReader());
+            Parse(Reader);
             }
 
         public Document(FileInfo FileInfo) :
@@ -460,9 +459,8 @@ namespace Goedel.Document.Markdown {
 
         public Document(Stream Stream, TagCatalog TagCatalog)
             : base() {
-            using (var Reader = new LexReader(Stream)) {
-                Init(Reader, TagCatalog);
-                }
+            using var Reader = new LexReader(Stream);
+            Init(Reader, TagCatalog);
             }
 
         public Document(DocumentSet Parent, FileInfo FileInfo, TagCatalog TagCatalog) : 
@@ -477,9 +475,8 @@ namespace Goedel.Document.Markdown {
             }
 
         private void Init(FileInfo FileInfo, TagCatalog TagCatalog) {
-            using (var Reader = new LexReader(FileInfo.FullName.OpenTextReader())) {
-                Init(Reader, TagCatalog);
-                }
+            using var Reader = new LexReader(FileInfo.FullName.OpenTextReader());
+            Init(Reader, TagCatalog);
             }
 
 

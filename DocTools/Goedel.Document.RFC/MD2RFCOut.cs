@@ -15,9 +15,8 @@ namespace Goedel.Document.RFC {
         /// <param name="OutputFile">Output</param>
         /// <param name="Document">Document to write</param>
         public static void WriteMD(string OutputFile, Document Document) {
-            using (var TextWriter = new StreamWriter(OutputFile, false, Encoding.UTF8)) {
-                WriteMD(TextWriter, Document);
-                }
+            using var TextWriter = new StreamWriter(OutputFile, false, Encoding.UTF8);
+            WriteMD(TextWriter, Document);
             }
 
         /// <summary>
@@ -61,13 +60,13 @@ namespace Goedel.Document.RFC {
                         WBuffer = " ";
                         }
                     else {
-                        Buffer = Buffer + c;
+                        Buffer += c;
                         }
                     }
                 else {
                     if (IsWhite(c)) {
                         if (State == 1) {
-                            WBuffer = WBuffer + " ";
+                            WBuffer += " ";
                             }
                         }
                     else {

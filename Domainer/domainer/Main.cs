@@ -235,16 +235,13 @@ namespace DomainerShell {
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
-				using (Stream outputStream =
-							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
+                using Stream outputStream =
+                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
+                Goedel.Tool.Domainer.Generate Script = new Goedel.Tool.Domainer.Generate(OutputWriter);
 
-						Goedel.Tool.Domainer.Generate Script = new Goedel.Tool.Domainer.Generate (OutputWriter);
-
-						Script.GenerateCS (Parse);
-						}
-					}
-				}
+                Script.GenerateCS(Parse);
+                }
 			}
 
 

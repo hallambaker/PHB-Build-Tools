@@ -201,47 +201,46 @@ namespace Goedel.Document.Markdown {
                 }
 
 
-            using (var HTMLWriter = new HTMLWriter(TargetFile)) {
-                var TagStack = new TagStack(HTMLWriter);
+            using var HTMLWriter = new HTMLWriter(TargetFile);
+            var TagStack = new TagStack(HTMLWriter);
 
-                HTMLWriter.StartHead();
-                HTMLWriter.WriteLine("  <title>{0}</title>", Document.Title);
-                HTMLWriter.WriteLine("  ", Header);
+            HTMLWriter.StartHead();
+            HTMLWriter.WriteLine("  <title>{0}</title>", Document.Title);
+            HTMLWriter.WriteLine("  ", Header);
 
-                HTMLWriter.StartBody();
+            HTMLWriter.StartBody();
 
-                if (Document.Root != null) {
-                    MakeNav(HTMLWriter, Document);
+            if (Document.Root != null) {
+                MakeNav(HTMLWriter, Document);
+                }
+
+            HTMLWriter.WriteLine("  ", ParagraphsStart);
+
+            foreach (var Block in Document.Blocks) {
+                if (Block.GetType() == typeof(Layout)) {
+
+                    WriteStart(HTMLWriter, Block.CatalogEntry, Block.Attributes);
                     }
-
-                HTMLWriter.WriteLine("  ", ParagraphsStart);
-
-                foreach (var Block in Document.Blocks) {
-                    if (Block.GetType() == typeof(Layout)) {
-                        
-                        WriteStart(HTMLWriter, Block.CatalogEntry, Block.Attributes);
-                        }
-                    else if (Block.GetType() == typeof(Close)) {
-                        WriteEnd(HTMLWriter, Block.CatalogEntry);
-                        HTMLWriter.WriteLine();
-                        }
-                    else if (Block.GetType() == typeof(Paragraph)) {
-                        WriteParagraph(HTMLWriter, (Paragraph)Block);
-                        }
-                    else if (Block.GetType() == typeof(Heading)) {
-                        WriteStart(HTMLWriter, Block.CatalogEntry, Block.Attributes);
-                        WriteText(HTMLWriter, Block);
-                        WriteEnd(HTMLWriter, Block.CatalogEntry);
-                        }
+                else if (Block.GetType() == typeof(Close)) {
+                    WriteEnd(HTMLWriter, Block.CatalogEntry);
+                    HTMLWriter.WriteLine();
                     }
-
-
-                TagStack.Clear();
-                HTMLWriter.WriteLine("  ", ParagraphsEnd);
-                foreach (var s in Trailer) {
-                    HTMLWriter.Write("  ");
-                    HTMLWriter.WriteLine(s);
+                else if (Block.GetType() == typeof(Paragraph)) {
+                    WriteParagraph(HTMLWriter, (Paragraph)Block);
                     }
+                else if (Block.GetType() == typeof(Heading)) {
+                    WriteStart(HTMLWriter, Block.CatalogEntry, Block.Attributes);
+                    WriteText(HTMLWriter, Block);
+                    WriteEnd(HTMLWriter, Block.CatalogEntry);
+                    }
+                }
+
+
+            TagStack.Clear();
+            HTMLWriter.WriteLine("  ", ParagraphsEnd);
+            foreach (var s in Trailer) {
+                HTMLWriter.Write("  ");
+                HTMLWriter.WriteLine(s);
                 }
             }
 

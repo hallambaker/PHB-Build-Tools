@@ -219,7 +219,7 @@ namespace Goedel.Document.Markdown {
                     if (Entry.GetType() == typeof(BM.Format)) {
                         var Format = Entry as BM.Format;
                         var FormatHTML = new FormatHTML(Format);
-                        DefaultFormat = DefaultFormat ?? FormatHTML;
+                        DefaultFormat ??= FormatHTML;
                         Formats.Add(Format.Id.ToString(), FormatHTML);
                         }
                     else {

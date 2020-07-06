@@ -88,13 +88,11 @@ namespace Goedel.Document.RFC {
                 IndentChars = "  ",
                 WriteEndDocumentOnClose = true
                 };
-           
 
-            using (var XmlReader = XmlTextReader.Create(TextReader, XmlReaderSettings)) {
-                using (var XmlWriter = XmlTextWriter.Create(TextWriter, XmlWriterSettings)) {
-                    Embed(XmlReader, XmlWriter);
-                    }
-                }
+
+            using var XmlReader = XmlTextReader.Create(TextReader, XmlReaderSettings);
+            using var XmlWriter = XmlTextWriter.Create(TextWriter, XmlWriterSettings);
+            Embed(XmlReader, XmlWriter);
 
             }
 

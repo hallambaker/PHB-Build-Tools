@@ -53,6 +53,7 @@ Class Goedel.Tool.DNSConfig DNSConfig
 			Service Service Multiple
 			Address Address Multiple
 			SMTP SMTP Multiple
+			Email Email Single
 
 	Type Address
 		Id				ID AddressT
@@ -62,6 +63,13 @@ Class Goedel.Tool.DNSConfig DNSConfig
 
 	Type SMTP
 
+	Type Email
+		Options			Options
+			MX MX Multiple
+			SPF SPF Multiple
+
+	Type SPF
+		Value			String
 
 	Type Web
 		Id				Token DomainT

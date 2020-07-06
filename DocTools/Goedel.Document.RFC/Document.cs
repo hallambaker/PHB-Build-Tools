@@ -165,15 +165,13 @@ namespace Goedel.Document.RFC {
             : this() {
 
             if (Format == null || (Format.ToLower() == "html" | Format.ToLower() == "html2rfc")) {
-                using (FileReader FileReader = new FileReader(InputFile)) {
-                    new NewParse(FileReader, this);
-                    }
+                using FileReader FileReader = new FileReader(InputFile);
+                new NewParse(FileReader, this);
                 }
             else if (Format.ToLower() == "xml" | Format.ToLower() == "xml2rfc"
                     | Format.ToLower() == "rfc2629") {
-                using (FileReader FileReader = new FileReader(InputFile)) {
-                    new Rfc7991Parse(FileReader, this);
-                    }
+                using FileReader FileReader = new FileReader(InputFile);
+                new Rfc7991Parse(FileReader, this);
                 }
             else {
                 throw new Exception("Format not recognized");
@@ -220,12 +218,12 @@ namespace Goedel.Document.RFC {
                         break;
                         }
                     }
-                SeriesInfo.Status = SeriesInfo.Status ?? seriesInfo.Status?.ToLower();
-                SeriesInfo.Stream = SeriesInfo.Stream ?? seriesInfo.Stream;
+                SeriesInfo.Status ??= seriesInfo.Status?.ToLower();
+                SeriesInfo.Stream ??= seriesInfo.Stream;
                 }
 
-            SeriesInfo.Status = SeriesInfo.Status ?? Category;
-            SeriesInfo.Stream = SeriesInfo.Stream ?? SubmissionType;
+            SeriesInfo.Status ??= Category;
+            SeriesInfo.Stream ??= SubmissionType;
 
             switch (SeriesInfo.Stream?.ToLower()) {
 
@@ -403,7 +401,7 @@ namespace Goedel.Document.RFC {
 
             Section.Number = TextSuffix != null ? TextPrefix + TextNumber : "";
 
-            Section.SetableID = Section.SetableID ?? "n-" + GetAnchor(Section.Heading);      // For H1, H2, H3, etc.
+            Section.SetableID ??= "n-" + GetAnchor(Section.Heading);      // For H1, H2, H3, etc.
 
             Section.SetableID = UniqueifyID(Section.SetableID);
 
@@ -695,7 +693,7 @@ namespace Goedel.Document.RFC {
 
         public P(string Text, string ID) {
             this.AnchorID = ID;
-            Segments = Segments ?? new List<GM.TextSegment>();
+            Segments ??= new List<GM.TextSegment>();
             Segments.Add(new GM.TextSegmentText(Text));
             }
 

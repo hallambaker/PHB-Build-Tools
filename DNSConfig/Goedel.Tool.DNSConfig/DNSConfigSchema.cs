@@ -81,6 +81,8 @@ using Goedel.Utilities;
 //       Service
 //       Address
 //       SMTP
+//       Email
+//       SPF
 //       Root
 //       Name
 //       TXT
@@ -110,6 +112,8 @@ namespace Goedel.Tool.DNSConfig {
         Domain,
         Address,
         SMTP,
+        Email,
+        SPF,
         Web,
         Service,
         Host,
@@ -450,6 +454,7 @@ namespace Goedel.Tool.DNSConfig {
 		public List<Service>  Service = new  List <Service> ();
 		public List<Address>  Address = new  List <Address> ();
 		public List<SMTP>  SMTP = new  List <SMTP> ();
+		public Email  Email = new  Email();
 
         public override DNSConfigType _Tag () =>DNSConfigType.Domain;
 
@@ -475,6 +480,8 @@ namespace Goedel.Tool.DNSConfig {
 			foreach (SMTP _e in SMTP) {
 				_e.Serialize (Output, true);
 				}
+		// public Email  Email = new  Email();
+			Email.Serialize (Output, true);
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Domain");
@@ -529,6 +536,60 @@ namespace Goedel.Tool.DNSConfig {
 
 			if (tag) {
 				Output.EndElement ("SMTP");
+				}			
+			}
+		}
+
+    public partial class Email : _Choice {
+		public List<MX>  MX = new  List <MX> ();
+		public List<SPF>  SPF = new  List <SPF> ();
+
+        public override DNSConfigType _Tag () =>DNSConfigType.Email;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Email");
+				}
+
+			Output.StartList ("");
+			foreach (MX _e in MX) {
+				_e.Serialize (Output, true);
+				}
+			foreach (SPF _e in SPF) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("Email");
+				}			
+			}
+		}
+
+    public partial class SPF : _Choice {
+		public string					Value;
+
+        public override DNSConfigType _Tag () =>DNSConfigType.SPF;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("SPF");
+				}
+
+			Output.WriteAttribute ("Value", Value);
+			if (tag) {
+				Output.EndElement ("SPF");
 				}			
 			}
 		}
@@ -782,6 +843,10 @@ namespace Goedel.Tool.DNSConfig {
 		Address__Data,				
 		Address__Options,				
 		SMTP_Start,
+		Email_Start,
+		Email__Options,				
+		SPF_Start,
+		SPF__Value,				
 		Web_Start,
 		Web__Id,				
 		Web__Root,				
@@ -887,6 +952,8 @@ namespace Goedel.Tool.DNSConfig {
                 case "Domain": return NewDomain();
                 case "Address": return NewAddress();
                 case "SMTP": return NewSMTP();
+                case "Email": return NewEmail();
+                case "SPF": return NewSPF();
                 case "Web": return NewWeb();
                 case "Service": return NewService();
                 case "Host": return NewHost();
@@ -1014,6 +1081,22 @@ namespace Goedel.Tool.DNSConfig {
             }
 
 
+        private Goedel.Tool.DNSConfig.Email NewEmail() {
+            Goedel.Tool.DNSConfig.Email result = new Goedel.Tool.DNSConfig.Email();
+            Push (result);
+            State = StateCode.Email_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.DNSConfig.SPF NewSPF() {
+            Goedel.Tool.DNSConfig.SPF result = new Goedel.Tool.DNSConfig.SPF();
+            Push (result);
+            State = StateCode.SPF_Start;
+            return result;
+            }
+
+
         private Goedel.Tool.DNSConfig.Web NewWeb() {
             Goedel.Tool.DNSConfig.Web result = new Goedel.Tool.DNSConfig.Web();
             Push (result);
@@ -1087,6 +1170,8 @@ namespace Goedel.Tool.DNSConfig {
                 case "Domain": return Goedel.Tool.DNSConfig.DNSConfigType.Domain;
                 case "Address": return Goedel.Tool.DNSConfig.DNSConfigType.Address;
                 case "SMTP": return Goedel.Tool.DNSConfig.DNSConfigType.SMTP;
+                case "Email": return Goedel.Tool.DNSConfig.DNSConfigType.Email;
+                case "SPF": return Goedel.Tool.DNSConfig.DNSConfigType.SPF;
                 case "Web": return Goedel.Tool.DNSConfig.DNSConfigType.Web;
                 case "Service": return Goedel.Tool.DNSConfig.DNSConfigType.Service;
                 case "Host": return Goedel.Tool.DNSConfig.DNSConfigType.Host;
@@ -1180,7 +1265,7 @@ namespace Goedel.Tool.DNSConfig {
                                 }
                             break;
                             }
-                        if (Token == TokenType.END) {
+                        if (Token == TokenType.END) { 
                             State = StateCode._End;
                             break;
                             }
@@ -1533,8 +1618,14 @@ namespace Goedel.Tool.DNSConfig {
 									Current_Cast.SMTP.Add (NewSMTP ());
 									break;
 									}
+								case Goedel.Tool.DNSConfig.DNSConfigType.Email : {
+
+									// Email  Email
+									Current_Cast.Email = NewEmail ();
+									break;
+									}
 								default : {
-									throw new Expected("Parser Error Expected [Service Address SMTP ]");
+									throw new Expected("Parser Error Expected [Service Address SMTP Email ]");
 									}
 								}
 							}
@@ -1592,6 +1683,58 @@ namespace Goedel.Tool.DNSConfig {
                         break;
 
                     case StateCode.SMTP_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Email_Start:
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Email__Options;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.Email__Options: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for OPTIONS $$$$$
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.DNSConfig.Email Current_Cast = (Goedel.Tool.DNSConfig.Email)Current;
+                            Goedel.Tool.DNSConfig.DNSConfigType LabelType = _Reserved (Text);
+							switch (LabelType) {
+								case Goedel.Tool.DNSConfig.DNSConfigType.MX : {
+
+									// MX  MX
+									Current_Cast.MX.Add (NewMX ());
+									break;
+									}
+								case Goedel.Tool.DNSConfig.DNSConfigType.SPF : {
+
+									// SPF  SPF
+									Current_Cast.SPF.Add (NewSPF ());
+									break;
+									}
+								default : {
+									throw new Expected("Parser Error Expected [MX SPF ]");
+									}
+								}
+							}
+                        break;
+
+                    case StateCode.SPF_Start:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.DNSConfig.SPF Current_Cast = (Goedel.Tool.DNSConfig.SPF)Current;
+                            Current_Cast.Value = Text;
+                            State = StateCode.SPF__Value;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.SPF__Value:
                         Pop ();
                         Represent = true; 
                         break;

@@ -59,11 +59,10 @@ namespace Goedel.Document.OpenXML {
             //ReadTest();
 
 
-            using (var wordDocument =
-                WordprocessingDocument.Create(Filename, WordprocessingDocumentType.Document)) {
-                this.Target = wordDocument;
-                Generate();
-                }
+            using var wordDocument =
+                WordprocessingDocument.Create(Filename, WordprocessingDocumentType.Document);
+            this.Target = wordDocument;
+            Generate();
             }
 
         public static MakeWord FromHTML2RFC(string Filename, Goedel.Document.RFC.Document Source) => new MakeWord(Filename, Source);

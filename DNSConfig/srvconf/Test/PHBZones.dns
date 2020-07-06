@@ -27,10 +27,25 @@ Site hallambaker
 	Domain hallambaker.com
 		Address smtp1.hallambaker.com CloudDroplet
 			SMTP
+		Email
+			MX mx01.ionos.com 10
+			MX mx00.ionos.com 10
+			SPF "v=spf1 ip4:178.62.79.124 ip4:139.59.200.120 ?all"
+
 	Domain defaultdenysecurity.com
+
+	Domain thresholded.com
+	Domain thresholdkey.com
+	Domain thresholdrise.com
+	Domain thresholdmode.com
+	Domain thresholdsecret.com
+	Domain thresholdsecrets.com
+	Domain thresholdshare.com
+
 	Domain dotcrimemanifesto.com
 	Domain quantumofstupid.com
 	Domain cyberishard.com
+
 	Web www.hallambaker.com "hallambaker/"
 		Host host1.mathmesh.com
 

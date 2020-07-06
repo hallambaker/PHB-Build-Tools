@@ -207,7 +207,7 @@ namespace Goedel.Document.RFC  {
             Citation Citation = FindCitation(Label);
 
             if (Citation != null) {
-                Citation.Normative = Citation.Normative | Normative;
+                Citation.Normative |= Normative;
                 }
             else {
                 Citations.Add(new Citation(Label, Normative));
@@ -280,13 +280,12 @@ namespace Goedel.Document.RFC  {
 
         public void AppendResolved(string FileName) {
             DateTime Now = DateTime.Now;
-            using (StreamWriter Stream = File.AppendText(FileName)) {
-                foreach (Citation Citation in Citations) {
-                    if (Citation.Uri != null) {
-                        Stream.WriteLine("<!-- {0} Added {1} -->", Citation.Label, Now.ToString("R"));
-                        Stream.WriteLine("<!-- Source: {0} -->", Citation.Uri);
-                        Stream.WriteLine(Citation.Result);
-                        }
+            using StreamWriter Stream = File.AppendText(FileName);
+            foreach (Citation Citation in Citations) {
+                if (Citation.Uri != null) {
+                    Stream.WriteLine("<!-- {0} Added {1} -->", Citation.Label, Now.ToString("R"));
+                    Stream.WriteLine("<!-- Source: {0} -->", Citation.Uri);
+                    Stream.WriteLine(Citation.Result);
                     }
                 }
             }

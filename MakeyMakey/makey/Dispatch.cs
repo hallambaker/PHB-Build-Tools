@@ -53,13 +53,11 @@ namespace Goedel.Shell.Makey {
                         var Project = (Item.ProjectType == ProjectType.Shared) ?
                                 Item.Project.SharedProject[0] : Item.Project;
 
-                        using (var outputStream = TargetFile2.OpenFileNew()) {
-                            using (var outputText = outputStream.OpenTextWriter()) {
-                                var Generate = new Generate(outputText);
+                        using var outputStream = TargetFile2.OpenFileNew();
+                        using var outputText = outputStream.OpenTextWriter();
+                        var Generate = new Generate(outputText);
 
-                                Generate.GenerateVSMakefile(Project);
-                                }
-                            }
+                        Generate.GenerateVSMakefile(Project);
 
                         }
 

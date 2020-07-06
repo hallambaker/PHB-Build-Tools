@@ -95,14 +95,10 @@ namespace Goedel.Tool.Makey {
 
             Directory = Path.GetDirectoryName(Filename);
 
-            using (Stream scriptfile =
-                new FileStream(Filename, FileMode.Open, FileAccess.Read)) {
-
-                using (var TextReader = new StreamReader(scriptfile)) {
-
-                    Parse (TextReader, Expand, Filename);
-                    }
-                }
+            using Stream scriptfile =
+                new FileStream(Filename, FileMode.Open, FileAccess.Read);
+            using var TextReader = new StreamReader(scriptfile);
+            Parse(TextReader, Expand, Filename);
             }
 
         public VSProject(TextReader TextReader) => Parse(TextReader, true, "");
@@ -404,13 +400,13 @@ namespace Goedel.Tool.Makey {
             FuckerParse2(TextReader);
 
             foreach (var PropertyGroup in Project.PropertyGroup) {
-                OutputType = OutputType ?? PropertyGroup.OutputType;
-                AssemblyName = AssemblyName ?? PropertyGroup.AssemblyName;
-                ProjectGuid = ProjectGuid ?? PropertyGroup.ProjectGuid;
-                ProjectTypeGuids = ProjectTypeGuids ?? PropertyGroup.ProjectTypeGuids;
+                OutputType ??= PropertyGroup.OutputType;
+                AssemblyName ??= PropertyGroup.AssemblyName;
+                ProjectGuid ??= PropertyGroup.ProjectGuid;
+                ProjectTypeGuids ??= PropertyGroup.ProjectTypeGuids;
                 }
 
-            AssemblyName = AssemblyName ?? Path.GetFileNameWithoutExtension(FilePath);
+            AssemblyName ??= Path.GetFileNameWithoutExtension(FilePath);
 
             switch (OutputType) {
                 case "Exe":
@@ -510,7 +506,7 @@ namespace Goedel.Tool.Makey {
         BuildDescription _BuildDescription = null;
         BuildDescription BuildDescription {
             get {
-                _BuildDescription = _BuildDescription ?? GetBuildDescription();
+                _BuildDescription ??= GetBuildDescription();
                 return _BuildDescription;
                 }
             }

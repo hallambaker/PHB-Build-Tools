@@ -37,11 +37,11 @@ namespace MakeRFC {
 
             bool DoWork = !Options.Lazy.Value;
 
-            DoWork = DoWork | Options.Auto.Value;
+            DoWork |= Options.Auto.Value;
 
-            if (htmlfile != null) { DoWork = DoWork | !FileTools.UpToDate(inputfile, htmlfile); }
-            if (xmlfile != null) { DoWork = DoWork | !FileTools.UpToDate(inputfile, xmlfile); }
-            if (txtfile != null) { DoWork = DoWork | !FileTools.UpToDate(inputfile, txtfile); }
+            if (htmlfile != null) { DoWork |= !FileTools.UpToDate(inputfile, htmlfile); }
+            if (xmlfile != null) { DoWork |= !FileTools.UpToDate(inputfile, xmlfile); }
+            if (txtfile != null) { DoWork |= !FileTools.UpToDate(inputfile, txtfile); }
 
             if (!DoWork) { return; }
 

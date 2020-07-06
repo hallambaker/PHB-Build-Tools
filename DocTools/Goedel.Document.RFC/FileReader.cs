@@ -52,15 +52,13 @@ namespace Goedel.Document.RFC {
 
 
         public void Include(string FileName) {
-            using (StreamReader StreamReader = new StreamReader(FileName)) {
-                ReadStream(StreamReader);
-                }
+            using StreamReader StreamReader = new StreamReader(FileName);
+            ReadStream(StreamReader);
             }
 
         public void IncludeXML(string FileName) {
-            using (StreamReader StreamReader = new StreamReader(FileName)) {
-                ReadStreamXML(StreamReader);
-                }
+            using StreamReader StreamReader = new StreamReader(FileName);
+            ReadStreamXML(StreamReader);
             }
 
 

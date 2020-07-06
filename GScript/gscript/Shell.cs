@@ -61,16 +61,13 @@ namespace GoedelShell {
 
             Console.WriteLine("Process file {0} to {1}", inputfile, outputfile);
 
-            using (Stream scriptfile =
-                new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
-                using (Stream outputStream =
-                    new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-                    using (TextWriter outputText = new StreamWriter(outputStream)) {
-                        Goedel.Tool.Script.Script Script = new Goedel.Tool.Script.Script();
-                        Script.Process(scriptfile, inputfile, outputText);
-                        }
-                    }
-                }
+            using Stream scriptfile =
+                new FileStream(inputfile, FileMode.Open, FileAccess.Read);
+            using Stream outputStream =
+new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+            using TextWriter outputText = new StreamWriter(outputStream);
+            Goedel.Tool.Script.Script Script = new Goedel.Tool.Script.Script();
+            Script.Process(scriptfile, inputfile, outputText);
             }
 
 
@@ -85,18 +82,14 @@ namespace GoedelShell {
 
             Console.WriteLine("Process file {0} to {1}", inputfile, csfile);
 
-            using (Stream scriptfile =
-                new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
-                using (var inText = new StreamReader(scriptfile)) {
-                    using (Stream outputStream =
-                        new FileStream(csfile, FileMode.Create, FileAccess.Write)) {
-                        using (TextWriter outputText = new StreamWriter(outputStream)) {
-                            DoWrap.CS(inText, outputText,
-                                Options.Namespace.Value, Options.Class.Text, Options.Variable.Text);
-                            }
-                        }
-                    }
-                }
+            using Stream scriptfile =
+                new FileStream(inputfile, FileMode.Open, FileAccess.Read);
+            using var inText = new StreamReader(scriptfile);
+            using Stream outputStream =
+new FileStream(csfile, FileMode.Create, FileAccess.Write);
+            using TextWriter outputText = new StreamWriter(outputStream);
+            DoWrap.CS(inText, outputText,
+Options.Namespace.Value, Options.Class.Text, Options.Variable.Text);
             }
 
         }
