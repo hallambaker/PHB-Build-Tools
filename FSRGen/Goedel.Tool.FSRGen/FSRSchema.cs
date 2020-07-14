@@ -57,7 +57,7 @@ using Goedel.Utilities;
 //       tAction
 //       tToken
 
-#pragma warning disable IDE0022
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
 namespace Goedel.Tool.FSRGen {
 
 
@@ -588,7 +588,7 @@ namespace Goedel.Tool.FSRGen {
             }
 
         void Pop () {
-			Assert.False (Stack.Count == 0, InternalError.Throw);
+			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -608,7 +608,7 @@ namespace Goedel.Tool.FSRGen {
                 (Token == TokenType.COMMENT)) {
 				return;
 				}
-			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
+			Assert.AssertFalse (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -639,7 +639,7 @@ namespace Goedel.Tool.FSRGen {
                                 }
                             break;
                             }
-                        if (Token == TokenType.END) {
+                        if (Token == TokenType.END) { 
                             State = StateCode._End;
                             break;
                             }
@@ -801,9 +801,8 @@ namespace Goedel.Tool.FSRGen {
                                 Current_Cast.Is = New_Choice(Text);
                                 }
                             else {
-                                Goedel.Tool.FSRGen._Label result = new Goedel.Tool.FSRGen._Label {
-                                    Label = Registry.REF(Position, Text, TYPE__tCharset, Current_Cast)
-                                    };
+                                Goedel.Tool.FSRGen._Label result = new Goedel.Tool.FSRGen._Label();
+                                result.Label = Registry.REF(Position, Text, TYPE__tCharset, Current_Cast);
                                 Current_Cast.Is = result;
                                 State = StateCode.Entry__Is;
                                 }
@@ -818,7 +817,7 @@ namespace Goedel.Tool.FSRGen {
                             break;
                             }
                         else {
-                            throw new Expected ("Parser Error Expected [On Any ]");
+						    throw new Expected ("Parser Error Expected [On Any ]");
                             }
 
                     case StateCode.Entry__Is:
@@ -836,8 +835,8 @@ namespace Goedel.Tool.FSRGen {
                                 }
                             break;
                             }
-                        else {
-                            throw new Expected("Parser Error Expected [Return GoTo ]");
+                        else { 
+						    throw new Expected("Parser Error Expected [Return GoTo ]");
                             }
 
                     case StateCode.Entry__Action:

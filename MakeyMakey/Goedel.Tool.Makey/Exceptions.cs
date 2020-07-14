@@ -1,59 +1,64 @@
-﻿using System;
-using Goedel.Utilities;
+﻿
+//using System;
+//using Goedel.Utilities;
 
 using Goedel.FSR;
 
 
+#pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Tool.Makey {
+
+
 
 
     /// <summary>
     /// </summary>
-    public class KeyFileException : global::System.Exception {
+    [global::System.Serializable]
+	public partial class KeyFileException : global::Goedel.Utilities.GoedelException {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Key could not be read"
+				};
 
 		/// <summary>
-        /// Construct instance for exception "Key could not be read"
-        /// </summary>		
-		public KeyFileException () : base ("Key could not be read") {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public KeyFileException  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
-        
-		/// <summary>
-        /// Construct instance for exception "Key could not be read"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public KeyFileException (string Description) : base (Description) {
-			}
+
+
+
+
 
 		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public KeyFileException (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// The public fatory delegate
+        /// </summary>
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
-
-
-
+        static System.Exception _Throw(object reasons) => new KeyFileException(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new KeyFileException(Reason as string);
-				}
-			else {
-				return new KeyFileException();
-				}
-            }
+
         }
 
 
@@ -62,47 +67,52 @@ namespace Goedel.Tool.Makey {
     /// provider. This may be because the key algorithm is 
     /// not supported or the key parameters were found to be invalid.
     /// </summary>
-    public class NoProviderSpecified : KeyFileException {
+    [global::System.Serializable]
+	public partial class NoProviderSpecified : KeyFileException {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"No provider specified"
+				};
 
 		/// <summary>
-        /// Construct instance for exception "No provider specified"
-        /// </summary>		
-		public NoProviderSpecified () : base ("No provider specified") {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public NoProviderSpecified  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
-        
+
+
+
+
+
 		/// <summary>
-        /// Construct instance for exception "No provider specified"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public NoProviderSpecified (string Description) : base (Description) {
-			}
+        /// The public fatory delegate
+        /// </summary>
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public NoProviderSpecified (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
-
-
-
-
+        static System.Exception _Throw(object reasons) => new NoProviderSpecified(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new NoProviderSpecified(Reason as string);
-				}
-			else {
-				return new NoProviderSpecified();
-				}
-            }
+
         }
 
 
@@ -110,47 +120,52 @@ namespace Goedel.Tool.Makey {
     /// An attempt was made to perform a private key operation
     /// and the private key parameters could not be found.
     /// </summary>
-    public class PrivateKeyNotAvailable : KeyFileException {
+    [global::System.Serializable]
+	public partial class PrivateKeyNotAvailable : KeyFileException {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The specified private key could not be found"
+				};
 
 		/// <summary>
-        /// Construct instance for exception "The specified private key could not be found"
-        /// </summary>		
-		public PrivateKeyNotAvailable () : base ("The specified private key could not be found") {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public PrivateKeyNotAvailable  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
-        
+
+
+
+
+
 		/// <summary>
-        /// Construct instance for exception "The specified private key could not be found"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public PrivateKeyNotAvailable (string Description) : base (Description) {
-			}
+        /// The public fatory delegate
+        /// </summary>
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public PrivateKeyNotAvailable (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
-
-
-
-
+        static System.Exception _Throw(object reasons) => new PrivateKeyNotAvailable(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new PrivateKeyNotAvailable(Reason as string);
-				}
-			else {
-				return new PrivateKeyNotAvailable();
-				}
-            }
+
         }
 
 
@@ -158,116 +173,101 @@ namespace Goedel.Tool.Makey {
     /// An attempt to read a file failed because data was
     /// missing or corrupted.
     /// </summary>
-    public class UnexpectedEnd : KeyFileException {
+    [global::System.Serializable]
+	public partial class UnexpectedEnd : KeyFileException {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"File read error, file was incomplete"
+				};
 
 		/// <summary>
-        /// Construct instance for exception "File read error, file was incomplete"
-        /// </summary>		
-		public UnexpectedEnd () : base ("File read error, file was incomplete") {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public UnexpectedEnd  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
-        
+
+
+
+
+
 		/// <summary>
-        /// Construct instance for exception "File read error, file was incomplete"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public UnexpectedEnd (string Description) : base (Description) {
-			}
+        /// The public fatory delegate
+        /// </summary>
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public UnexpectedEnd (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
-
-
-
-
+        static System.Exception _Throw(object reasons) => new UnexpectedEnd(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new UnexpectedEnd(Reason as string);
-				}
-			else {
-				return new UnexpectedEnd();
-				}
-            }
+
         }
 
 
     /// <summary>
     /// </summary>
-    public class ParseError : KeyFileException {
+    [global::System.Serializable]
+	public partial class ParseError : KeyFileException {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+				};
 
 		/// <summary>
-        /// Construct instance for exception "An error occurred"
-        /// </summary>		
-		public ParseError () : base ("An error occurred") {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public ParseError  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
-        
-		/// <summary>
-        /// Construct instance for exception "An error occurred"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public ParseError (string Description) : base (Description) {
-			}
 
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public ParseError (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+
+
 
 
 		/// <summary>
-        /// Construct instance for exception using a userdata parameter of
-		/// type LexReader and the format string "The file {0} could not be read"
-        /// </summary>		
-        /// <param name="Object">User data</param>	
-		public ParseError (LexReader Object) : 
-				base (global::System.String.Format ("The file {0} could not be read",
-					Object.FilePath					)) => UserData = Object;
+        /// The public fatory delegate
+        /// </summary>
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-
-		/// <summary>
-        /// Construct instance for exception using a userdata parameter of
-		/// type LexReader and the format string "The file {0} could not be read"
-        /// </summary>		
-        /// <param name="Object">User data</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public ParseError (LexReader Object, System.Exception Inner) : 
-				base (global::System.String.Format ("The file {0} could not be read",
-					Object.FilePath					), Inner) => UserData = Object;
-
-
-
+        static System.Exception _Throw(object reasons) => new ParseError(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new ParseError(Reason as string);
-				}
-			else if (Reason as LexReader != null) {
-				return new ParseError(Reason as LexReader);
-				}
-			else {
-				return new ParseError();
-				}
-            }
+
         }
 
 

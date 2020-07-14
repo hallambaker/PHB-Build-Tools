@@ -4,11 +4,6 @@
         <name>Goedel.IO</name>
     </assembly>
     <members>
-        <member name="T:Goedel.IO.NamespaceDoc">
-            <summary>
-            Various support functions for managing files.
-            </summary>
-        </member>
         <member name="T:Goedel.IO.Debug">
             <summary>
             Class containing static helper methods. This should inherit from the Trace class
@@ -342,6 +337,11 @@
             will not be initialized a second time. Otherwise the <paramref name="initializationDelegate"/>
             is called.</param>
             <param name="TestMode">If true, initialize package using test mode configuration (if defined).</param>
+        </member>
+        <member name="T:Goedel.IO.NamespaceDoc">
+            <summary>
+            Various support functions for managing files.
+            </summary>
         </member>
         <member name="T:Goedel.IO.StreamReaderBase">
             <summary>

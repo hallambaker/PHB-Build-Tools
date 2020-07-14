@@ -7,9 +7,6 @@ Namespace  Goedel.Tool.Command
 			|The input could not be parsed
 			
 		Exception UnknownOptionSet
-			Console "The OptionSet is not specified"
+			Console "The OptionSet {0} is not specified"
 			Description
 				|The file could not be read.
-
-			Object ExceptionData "The OptionSet {0} is not specified"
-				String

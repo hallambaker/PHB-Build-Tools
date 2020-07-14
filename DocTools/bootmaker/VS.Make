@@ -18,7 +18,8 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Tool.Core.dll
+    Goedel.Tool.Core.dll\
+    Goedel.Document.RFCSVG.dll
 
 ToolTargets = \
 	Main.cs

@@ -18,6 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Goedel.Registry.dll\
     Goedel.Tool.Core.dll
 
 ToolTargets = \
@@ -28,7 +29,7 @@ Main.cs : Main.Command
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.Exceptional && nmake /c /f VS.make prebuild 
+	cd ..\Goedel.Tool.Exceptional && nmake /a /c /f VS.make prebuild 
 
 
 postbuildRecurse :

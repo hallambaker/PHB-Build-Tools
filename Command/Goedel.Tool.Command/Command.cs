@@ -69,7 +69,7 @@ using Goedel.Utilities;
 //       PType
 //       CaseType
 
-#pragma warning disable IDE0022
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
 namespace Goedel.Tool.Command {
 
 
@@ -1179,7 +1179,7 @@ namespace Goedel.Tool.Command {
             }
 
         void Pop () {
-			Assert.False (Stack.Count == 0, InternalError.Throw);
+			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -1199,7 +1199,7 @@ namespace Goedel.Tool.Command {
                 (Token == TokenType.COMMENT)) {
 				return;
 				}
-			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
+			Assert.AssertFalse (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -1230,7 +1230,7 @@ namespace Goedel.Tool.Command {
                                 }
                             break;
                             }
-                        if (Token == TokenType.END) {
+                        if (Token == TokenType.END) { 
                             State = StateCode._End;
                             break;
                             }

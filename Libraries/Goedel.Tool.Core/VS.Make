@@ -17,27 +17,21 @@
 
 MSBuildThisFileDirectory = 
 
-LinkFiles = 
+LinkFiles = \
+    Goedel.Command.dll\
+    Goedel.Discovery.dll\
+    Goedel.FSR.dll\
+    Goedel.IO.dll\
+    Goedel.Registry.dll\
+    Goedel.Utilities.dll
 
 ToolTargets = 
 
 
 prebuildRecurse : 
-	cd ..\..\..\mmm\Libraries\Goedel.Command && nmake /c /f VS.make prebuild 
-	cd ..\..\..\mmm\Libraries\Goedel.FSR && nmake /c /f VS.make prebuild 
-	cd ..\..\..\mmm\Libraries\Goedel.Registry && nmake /c /f VS.make prebuild 
-	cd ..\..\..\mmm\Libraries\Goedel.Utilities && nmake /c /f VS.make prebuild 
-	cd ..\..\..\mmm\Libraries\Goedel.IO && nmake /c /f VS.make prebuild 
-	cd ..\..\..\mmm\Libraries\Goedel.Discovery && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
-	cd ..\..\..\mmm\Libraries\Goedel.Command && nmake /c /f VS.make postbuild 
-	cd ..\..\..\mmm\Libraries\Goedel.FSR && nmake /c /f VS.make postbuild 
-	cd ..\..\..\mmm\Libraries\Goedel.Registry && nmake /c /f VS.make postbuild 
-	cd ..\..\..\mmm\Libraries\Goedel.Utilities && nmake /c /f VS.make postbuild 
-	cd ..\..\..\mmm\Libraries\Goedel.IO && nmake /c /f VS.make postbuild 
-	cd ..\..\..\mmm\Libraries\Goedel.Discovery && nmake /c /f VS.make postbuild 
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)

@@ -179,14 +179,12 @@ Global
 		DocTools\Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.projitems*{03c081d6-fe5a-4a20-b387-8a960a45e77f}*SharedItemsImports = 13
 		Protogen\Goedel.Tool.Protogen\Goedel.Tool.Protogen.projitems*{04206448-ff4b-430d-8270-a4cbfa9d2fa3}*SharedItemsImports = 13
 		DocTools\Goedel.Document.Markdown\Goedel.Document.Markdown.projitems*{1326416b-712a-44d0-ae00-ad0ddf7f9258}*SharedItemsImports = 13
-		VSIXBuild\Goedel.Tool.VSIXBuild\Goedel.Tool.VSIXBuild.projitems*{145387d3-292e-4e16-b16b-e2e0b0755a5b}*SharedItemsImports = 13
 		RegistryConfig\Goedel.Tool.RegistryConfig\Goedel.Tool.RegistryConfig.projitems*{35bc3550-4add-4bb8-a3ee-0f75253cc63a}*SharedItemsImports = 5
 		FSRGen\Goedel.Tool.FSRGen\Goedel.Tool.FSRGen.projitems*{3622efbf-83de-4af2-ae1a-76fb2368ccf8}*SharedItemsImports = 13
 		Exceptional\Goedel.Tool.Exceptional\Goedel.Tool.Exceptional.projitems*{41a32fd3-3814-4370-a2c7-ae6e29f4ab01}*SharedItemsImports = 5
 		Command\Goedel.Tool.Command\Goedel.Tool.Command.projitems*{4256f87b-9ba6-4996-a4dd-dc1e36136054}*SharedItemsImports = 5
 		MakeyMakey\Goedel.Tool.Makey\Goedel.Tool.Makey.projitems*{5288bb4f-3685-4f5f-afd0-596dbdf843b5}*SharedItemsImports = 13
 		ASN\Goedel.Tool.ASN\Goedel.Tool.ASN.projitems*{54d70c8d-707d-4456-bbd0-3210f42ca97c}*SharedItemsImports = 5
-		..\mmm\Libraries\Goedel.ASN\Goedel.ASN.projitems*{54d70c8d-707d-4456-bbd0-3210f42ca97c}*SharedItemsImports = 5
 		Command\Goedel.Tool.Command\Goedel.Tool.Command.projitems*{5a910d73-f8ea-48a5-a325-1f7ebdce92f7}*SharedItemsImports = 13
 		Domainer\Goedel.Tool.Domainer\Goedel.Tool.Domainer.projitems*{608732b4-132c-41a3-b785-164ff4239b20}*SharedItemsImports = 13
 		DNSConfig\Goedel.Tool.DNSConfig\Goedel.Tool.DNSConfig.projitems*{627a80a7-f304-444e-b1df-0f5a9515716f}*SharedItemsImports = 5
@@ -208,7 +206,6 @@ Global
 		DocTools\Goedel.Document.OpenXML\Goedel.Document.OpenXML.projitems*{d52143dd-04dc-4fa9-8c77-6adff4b00275}*SharedItemsImports = 5
 		DocTools\Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.projitems*{d52143dd-04dc-4fa9-8c77-6adff4b00275}*SharedItemsImports = 5
 		DocTools\Goedel.Document.RFC\Goedel.Document.RFC.projitems*{d52143dd-04dc-4fa9-8c77-6adff4b00275}*SharedItemsImports = 5
-		VSIXBuild\Goedel.Tool.VSIXBuild\Goedel.Tool.VSIXBuild.projitems*{ef9a072d-d974-400f-b118-7ba299f81484}*SharedItemsImports = 5
 		GScript\Goedel.Tool.Script\Goedel.Tool.Script.projitems*{f9ba54ca-95e0-4709-8705-ad52673dfbfe}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

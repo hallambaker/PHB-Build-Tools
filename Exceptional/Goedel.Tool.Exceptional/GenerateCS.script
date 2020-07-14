@@ -30,15 +30,10 @@ using #{Using.Id};
 #foreach (_Choice Toplevel in Exceptions.Top)
 #switchcast ExceptionsType Toplevel
 #casecast Namespace Namespace
+##pragma warning disable IDE1006 // Naming Styles
 namespace #{Namespace.Id} {
 
-	partial class AllExeptions {
-		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = 
-			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {
-				null#!
-#% SummarizeListExceptions (Namespace.Options);
-				};
-		}
+
 
 #% WriteListExceptions (Namespace.Options);
 
@@ -101,7 +96,7 @@ namespace #{Namespace.Id} {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static #{Exception.Base.If("", "new ")}global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static #{Exception.Base.If("", "new ")}global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new #{Exception.Id}(args:reasons) ;
 		

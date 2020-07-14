@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Copyright ©  2017 by 
+//  © 2015-2019 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,15 +26,7 @@ using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
 namespace Goedel.Tool.DNSConfig {
-	/// <summary>A Goedel script.</summary>
 	public partial class Generate : global::Goedel.Registry.Script {
-		/// <summary>Default constructor.</summary>
-		public Generate () : base () {
-			}
-		/// <summary>Constructor with output stream.</summary>
-		/// <param name="Output">The output stream</param>
-		public Generate (TextWriter Output) : base (Output) {
-			}
 
 		
 

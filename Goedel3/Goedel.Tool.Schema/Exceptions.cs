@@ -4,7 +4,10 @@
 
 
 
+#pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Schema {
+
+
 
 
     /// <summary>
@@ -21,6 +24,7 @@ namespace Goedel.Schema {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
+
 				"The schema could not be parsed"
 				};
 
@@ -44,23 +48,16 @@ namespace Goedel.Schema {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new SchemaParse(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new SchemaParse(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new SchemaParse(reason as string);
-				}
-			else {
-				return new SchemaParse();
-				}
-            }
+
         }
 
 
@@ -78,6 +75,7 @@ namespace Goedel.Schema {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
+
 				"Expected reserved word, token {0} was not found"
 				};
 
@@ -101,23 +99,16 @@ namespace Goedel.Schema {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new NotFoundReserved(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new NotFoundReserved(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new NotFoundReserved(reason as string);
-				}
-			else {
-				return new NotFoundReserved();
-				}
-            }
+
         }
 
 

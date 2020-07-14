@@ -238,9 +238,10 @@ namespace DomainerShell {
                 using Stream outputStream =
                             new FileStream(outputfile, FileMode.Create, FileAccess.Write);
                 using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
-                Goedel.Tool.Domainer.Generate Script = new Goedel.Tool.Domainer.Generate(OutputWriter);
-
-                Script.GenerateCS(Parse);
+                Goedel.Tool.Domainer.Generate Script = new Goedel.Tool.Domainer.Generate() {
+					_Output = OutputWriter
+					};
+				Script.GenerateCS(Parse);
                 }
 			}
 

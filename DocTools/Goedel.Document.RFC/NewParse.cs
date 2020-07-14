@@ -323,14 +323,14 @@ namespace Goedel.Document.RFC {
 
             // find body element
             Body = GetNextElement(Root.Contents, "body", ref BodyIndex);
-            Assert.NotNull(Body, HTMLParseNoBody.Throw);
+            Assert.AssertNotNull(Body, HTMLParseNoBody.Throw);
 
             Front = GetNextElement(Body.Contents, "h1", ref FrontIndex);
-            Assert.NotNull(Front, HTMLParseNoH1.Throw);
+            Assert.AssertNotNull(Front, HTMLParseNoH1.Throw);
 
             MiddleIndex = FrontIndex + 1;
             Middle = GetNextElement(Body.Contents, "h1", ref MiddleIndex);
-            Assert.NotNull(Middle, HTMLParseNoH2.Throw);
+            Assert.AssertNotNull(Middle, HTMLParseNoH2.Throw);
 
             MakeHTMLFront(Body.Contents, FrontIndex, MiddleIndex);
             MakeHTMLMiddle(Body.Contents, MiddleIndex);

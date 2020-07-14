@@ -35,12 +35,16 @@ namespace Goedel.Shell.DNSConfig {
             Parse.Init();
 
             using (var OutputWriter = "named.conf.options".OpenTextWriterNew()) {
-                var Script = new Goedel.Tool.DNSConfig.Generate(OutputWriter);
+                var Script = new Goedel.Tool.DNSConfig.Generate() {
+                    _Output = OutputWriter
+                    };
                 Script.GenerateOptions(Parse);
                 }
 
             using (var OutputWriter = "named.conf.local".OpenTextWriterNew()) {
-                var Script = new Goedel.Tool.DNSConfig.Generate(OutputWriter);
+                var Script = new Goedel.Tool.DNSConfig.Generate() {
+                    _Output = OutputWriter
+                    };
                 Script.GenerateLocal(Parse);
                 }
 
@@ -48,12 +52,16 @@ namespace Goedel.Shell.DNSConfig {
                 var FileName = "zones/db." + Domain.Id.Label;
 
                 using var OutputWriter = FileName.OpenTextWriterNew();
-                var Script = new Goedel.Tool.DNSConfig.Generate(OutputWriter);
+                var Script = new Goedel.Tool.DNSConfig.Generate() {
+                    _Output = OutputWriter
+                    };
                 Script.GenerateDomain(Domain);
                 }
 
             using (var OutputWriter = "named.addresses".OpenTextWriterNew()) {
-                var Script = new Goedel.Tool.DNSConfig.Generate(OutputWriter);
+                var Script = new Goedel.Tool.DNSConfig.Generate() {
+                    _Output = OutputWriter
+                    };
                 Script.GenerateAdressRecords(Parse);
                 }
             }

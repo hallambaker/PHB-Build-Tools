@@ -142,7 +142,7 @@ namespace Goedel.Tool.Command {
                         }
                     case Include include: {
                         var OptionSet = include.Id.Definition as OptionSet;
-                        Assert.NotNull(NYI.Throw, String: include.Id.ToString());
+                        OptionSet.AssertNotNull(UnknownOptionSet.Throw, include.Id.ToString());
                         foreach (var SubEntry in OptionSet.Options) {
                             switch (SubEntry) {
                                 case Option Option: {

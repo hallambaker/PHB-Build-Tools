@@ -71,7 +71,7 @@ using Goedel.Utilities;
 //   TokenType
 //       IDName
 
-#pragma warning disable IDE0022
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
 namespace Goedel.Tool.ASN {
 
 
@@ -1377,7 +1377,7 @@ namespace Goedel.Tool.ASN {
             }
 
         void Pop () {
-			Assert.False (Stack.Count == 0, InternalError.Throw);
+			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -1397,7 +1397,7 @@ namespace Goedel.Tool.ASN {
                 (Token == TokenType.COMMENT)) {
 				return;
 				}
-			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
+			Assert.AssertFalse (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -1433,7 +1433,7 @@ namespace Goedel.Tool.ASN {
                                 }
                             break;
                             }
-                        if (Token == TokenType.END) {
+                        if (Token == TokenType.END) { 
                             State = StateCode._End;
                             break;
                             }
@@ -1715,9 +1715,8 @@ namespace Goedel.Tool.ASN {
                                 Current_Cast.Spec = New_Choice(Text);
                                 }
                             else {
-                                Goedel.Tool.ASN._Label result = new Goedel.Tool.ASN._Label {
-                                    Label = Registry.REF(Position, Text, TYPE__IDName, Current_Cast)
-                                    };
+                                Goedel.Tool.ASN._Label result = new Goedel.Tool.ASN._Label();
+                                result.Label = Registry.REF(Position, Text, TYPE__IDName, Current_Cast);
                                 Current_Cast.Spec = result;
                                 State = StateCode.Member__Spec;
                                 }
@@ -1732,7 +1731,7 @@ namespace Goedel.Tool.ASN {
                             break;
                             }
                         else {
-                            throw new Expected ("Parser Error Expected [OIDRef Any Bits VBits Octets Integer BigInteger Boolean Time List Set Choice IA5String BMPString UTF8String PrintableString ]");
+						    throw new Expected ("Parser Error Expected [OIDRef Any Bits VBits Octets Integer BigInteger Boolean Time List Set Choice IA5String BMPString UTF8String PrintableString ]");
                             }
 
                     case StateCode.Member__Spec:
@@ -1825,9 +1824,8 @@ namespace Goedel.Tool.ASN {
                                 Current_Cast.Spec = New_Choice(Text);
                                 }
                             else {
-                                Goedel.Tool.ASN._Label result = new Goedel.Tool.ASN._Label {
-                                    Label = Registry.REF(Position, Text, TYPE__IDName, Current_Cast)
-                                    };
+                                Goedel.Tool.ASN._Label result = new Goedel.Tool.ASN._Label();
+                                result.Label = Registry.REF(Position, Text, TYPE__IDName, Current_Cast);
                                 Current_Cast.Spec = result;
                                 State = StateCode.List__Spec;
                                 }
@@ -1842,7 +1840,7 @@ namespace Goedel.Tool.ASN {
                             break;
                             }
                         else {
-                            throw new Expected ("Parser Error Expected [OIDRef Any Bits VBits Octets Integer BigInteger Boolean Time List Set Choice IA5String BMPString UTF8String PrintableString ]");
+						    throw new Expected ("Parser Error Expected [OIDRef Any Bits VBits Octets Integer BigInteger Boolean Time List Set Choice IA5String BMPString UTF8String PrintableString ]");
                             }
 
                     case StateCode.List__Spec:
@@ -1874,9 +1872,8 @@ namespace Goedel.Tool.ASN {
                                 Current_Cast.Spec = New_Choice(Text);
                                 }
                             else {
-                                Goedel.Tool.ASN._Label result = new Goedel.Tool.ASN._Label {
-                                    Label = Registry.REF(Position, Text, TYPE__IDName, Current_Cast)
-                                    };
+                                Goedel.Tool.ASN._Label result = new Goedel.Tool.ASN._Label();
+                                result.Label = Registry.REF(Position, Text, TYPE__IDName, Current_Cast);
                                 Current_Cast.Spec = result;
                                 State = StateCode.Set__Spec;
                                 }
@@ -1891,7 +1888,7 @@ namespace Goedel.Tool.ASN {
                             break;
                             }
                         else {
-                            throw new Expected ("Parser Error Expected [OIDRef Any Bits VBits Octets Integer BigInteger Boolean Time List Set Choice IA5String BMPString UTF8String PrintableString ]");
+						    throw new Expected ("Parser Error Expected [OIDRef Any Bits VBits Octets Integer BigInteger Boolean Time List Set Choice IA5String BMPString UTF8String PrintableString ]");
                             }
 
                     case StateCode.Set__Spec:
@@ -1962,8 +1959,8 @@ namespace Goedel.Tool.ASN {
                                 }
                             break;
                             }
-                        else {
-                            throw new Expected("Parser Error Expected [Code Implicit Explicit Optional Default Context ]");
+                        else { 
+						    throw new Expected("Parser Error Expected [Code Implicit Explicit Optional Default Context ]");
                             }
 
                     case StateCode.Qualifier__Entry:

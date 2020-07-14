@@ -24,7 +24,7 @@ ToolTargets =
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.Protogen && nmake /c /f VS.make prebuild 
+	cd ..\Goedel.Tool.Protogen && nmake /a /c /f VS.make prebuild 
 
 
 postbuildRecurse :

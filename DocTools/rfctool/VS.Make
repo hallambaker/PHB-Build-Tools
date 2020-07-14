@@ -18,7 +18,8 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Tool.Core.dll
+    Goedel.Tool.Core.dll\
+    Goedel.Document.RFCSVG.dll
 
 ToolTargets = \
 	main.cs
@@ -28,10 +29,10 @@ main.cs : main.command
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Document.Markdown && nmake /c /f VS.make prebuild 
-	cd ..\Goedel.Document.OpenXML && nmake /c /f VS.make prebuild 
-	cd ..\..\DocTools\Goedel.Document.RFC && nmake /c /f VS.make prebuild 
-	cd ..\..\DocTools\Goedel.Document.RFCConvert && nmake /c /f VS.make prebuild 
+	cd ..\Goedel.Document.Markdown && nmake /a /c /f VS.make prebuild 
+	cd ..\Goedel.Document.OpenXML && nmake /a /c /f VS.make prebuild 
+	cd ..\..\DocTools\Goedel.Document.RFC && nmake /a /c /f VS.make prebuild 
+	cd ..\..\DocTools\Goedel.Document.RFCConvert && nmake /a /c /f VS.make prebuild 
 
 
 postbuildRecurse :

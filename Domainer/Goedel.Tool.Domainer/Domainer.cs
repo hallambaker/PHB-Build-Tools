@@ -106,7 +106,7 @@ using Goedel.Utilities;
 //       VarT
 //       ReasonT
 
-#pragma warning disable IDE0022
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
 namespace Goedel.Tool.Domainer {
 
 
@@ -1678,7 +1678,7 @@ namespace Goedel.Tool.Domainer {
             }
 
         void Pop () {
-			Assert.False (Stack.Count == 0, InternalError.Throw);
+			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -1698,7 +1698,7 @@ namespace Goedel.Tool.Domainer {
                 (Token == TokenType.COMMENT)) {
 				return;
 				}
-			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
+			Assert.AssertFalse (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -1733,7 +1733,7 @@ namespace Goedel.Tool.Domainer {
                                 }
                             break;
                             }
-                        if (Token == TokenType.END) {
+                        if (Token == TokenType.END) { 
                             State = StateCode._End;
                             break;
                             }
@@ -2376,8 +2376,8 @@ namespace Goedel.Tool.Domainer {
                                 }
                             break;
                             }
-                        else {
-                            throw new Expected("Parser Error Expected [Null IPv4 IPv6 Domain Mail ]");
+                        else { 
+						    throw new Expected("Parser Error Expected [Null IPv4 IPv6 Domain Mail ]");
                             }
 
                     case StateCode.AltEntry__Choices:

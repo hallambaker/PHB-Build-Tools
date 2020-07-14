@@ -28,7 +28,7 @@ Goedel.cs : Goedel.command
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.Script && nmake /c /f VS.make prebuild 
+	cd ..\Goedel.Tool.Script && nmake /a /c /f VS.make prebuild 
 
 
 postbuildRecurse :

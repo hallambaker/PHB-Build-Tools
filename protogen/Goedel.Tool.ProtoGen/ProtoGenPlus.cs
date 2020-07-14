@@ -99,7 +99,7 @@ namespace Goedel.Tool.ProtoGen {
 
                     _Choice Parent = Inherits.Ref.Definition;
 
-                    Assert.NotNull(Parent, UndefinedParent.Throw, 
+                    Assert.AssertNotNull(Parent, UndefinedParent.Throw, 
                         new UndefinedParentError() {Class = Struct.ID, Inherits= Inherits.Ref.Label});
 
                     Parent.Normalize();

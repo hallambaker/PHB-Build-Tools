@@ -91,7 +91,7 @@ using Goedel.Utilities;
 //       Text
 //   TokenType
 
-#pragma warning disable IDE0022
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
 namespace Goedel.Tool.DNSConfig {
 
 
@@ -1212,7 +1212,7 @@ namespace Goedel.Tool.DNSConfig {
             }
 
         void Pop () {
-			Assert.False (Stack.Count == 0, InternalError.Throw);
+			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -1232,7 +1232,7 @@ namespace Goedel.Tool.DNSConfig {
                 (Token == TokenType.COMMENT)) {
 				return;
 				}
-			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
+			Assert.AssertFalse (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 

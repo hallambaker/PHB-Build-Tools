@@ -28,7 +28,7 @@ FSRGen.cs : FSRGen.command
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.FSRGen && nmake /c /f VS.make prebuild 
+	cd ..\Goedel.Tool.FSRGen && nmake /a /c /f VS.make prebuild 
 
 
 postbuildRecurse :

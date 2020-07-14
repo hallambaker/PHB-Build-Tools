@@ -41,5 +41,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Document.RFCSVG.exe $(LinkFiles) 
+	powershell publishtarget Goedel.Document.RFCSVG.dll
 

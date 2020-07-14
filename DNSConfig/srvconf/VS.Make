@@ -28,7 +28,7 @@ DNSConfig.cs : DNSConfig.command
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.DNSConfig && nmake /c /f VS.make prebuild 
+	cd ..\Goedel.Tool.DNSConfig && nmake /a /c /f VS.make prebuild 
 
 
 postbuildRecurse :

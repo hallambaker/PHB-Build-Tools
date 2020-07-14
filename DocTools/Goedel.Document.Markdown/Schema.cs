@@ -100,7 +100,7 @@ using Goedel.Utilities;
 //       ClassType
 //       FormatField
 
-#pragma warning disable IDE0022
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
 namespace Goedel.Document.Markdown.Tags {
 
 
@@ -1366,7 +1366,7 @@ namespace Goedel.Document.Markdown.Tags {
             }
 
         void Pop () {
-			Assert.False (Stack.Count == 0, InternalError.Throw);
+			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -1386,7 +1386,7 @@ namespace Goedel.Document.Markdown.Tags {
                 (Token == TokenType.COMMENT)) {
 				return;
 				}
-			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
+			Assert.AssertFalse (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -1417,7 +1417,7 @@ namespace Goedel.Document.Markdown.Tags {
                                 }
                             break;
                             }
-                        if (Token == TokenType.END) {
+                        if (Token == TokenType.END) { 
                             State = StateCode._End;
                             break;
                             }

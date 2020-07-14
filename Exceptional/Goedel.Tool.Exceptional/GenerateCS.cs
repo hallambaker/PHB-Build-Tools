@@ -66,16 +66,10 @@ namespace Goedel.Tool.Exceptional {
 				switch (Toplevel._Tag ()) {
 					case ExceptionsType.Namespace: {
 					  Namespace Namespace = (Namespace) Toplevel; 
+					_Output.Write ("#pragma warning disable IDE1006 // Naming Styles\n{0}", _Indent);
 					_Output.Write ("namespace {1} {{\n{0}", _Indent, Namespace.Id);
 					_Output.Write ("\n{0}", _Indent);
-					_Output.Write ("	partial class AllExeptions {{\n{0}", _Indent);
-					_Output.Write ("		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = \n{0}", _Indent);
-					_Output.Write ("			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {{\n{0}", _Indent);
-					_Output.Write ("				null", _Indent);
-					
-					 SummarizeListExceptions (Namespace.Options);
-					_Output.Write ("				}};\n{0}", _Indent);
-					_Output.Write ("		}}\n{0}", _Indent);
+					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
 					
 					 WriteListExceptions (Namespace.Options);
@@ -143,7 +137,7 @@ namespace Goedel.Tool.Exceptional {
 			_Output.Write ("		/// <summary>\n{0}", _Indent);
 			_Output.Write ("        /// The public fatory delegate\n{0}", _Indent);
 			_Output.Write ("        /// </summary>\n{0}", _Indent);
-			_Output.Write ("        public static {1}global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;\n{0}", _Indent, Exception.Base.If("", "new "));
+			_Output.Write ("        /// public static {1}global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;\n{0}", _Indent, Exception.Base.If("", "new "));
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        static System.Exception _Throw(object reasons) => new {1}(args:reasons) ;\n{0}", _Indent, Exception.Id);
 			_Output.Write ("		\n{0}", _Indent);

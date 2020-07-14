@@ -86,7 +86,7 @@ namespace Goedel.Document.RFC {
             XMLOutput.End();
             XMLOutput.End();
 
-            Assert.AssertTrue(Stack == XMLOutput.Stack, Internal.ThrowNew);
+            Assert.AssertTrue(Stack == XMLOutput.Stack, Internal.Throw);
             }
 
         public void Write(List<Section> Sections) {
@@ -116,7 +116,7 @@ namespace Goedel.Document.RFC {
 
             XMLOutput.End();
 
-            Assert.AssertTrue(Stack == XMLOutput.Stack, Internal.ThrowNew);
+            Assert.AssertTrue(Stack == XMLOutput.Stack, Internal.Throw);
             }
 
 
@@ -145,7 +145,7 @@ namespace Goedel.Document.RFC {
 
             XMLOutput.CloseBlock();
 
-            Assert.AssertTrue(Stack == XMLOutput.Stack, Internal.ThrowNew);
+            Assert.AssertTrue(Stack == XMLOutput.Stack, Internal.Throw);
             }
 
 
