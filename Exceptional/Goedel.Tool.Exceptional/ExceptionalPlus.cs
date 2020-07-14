@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Goedel.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,8 @@ namespace Goedel.Tool.Exceptional {
  
     public partial class Exception {
         public List<Object> Objects = new List<Object>();
+        public List<Console> Consoles = new List<Console>();
+
 
         public string Console = "An error occurred";
         public string BaseClass;
@@ -26,14 +29,15 @@ namespace Goedel.Tool.Exceptional {
                 Base = false;
                 }
             else {
-                BaseClass = "global::System.Exception";
+                //BaseClass = "global::System.Exception";
+                BaseClass = "global::Goedel.Utilities.GoedelException";
                 Base = true;
                 }
             
             foreach (var Option in Options) {
-                if (Option as Console != null) {
-
-                    Console = (Option as Console).Message;
+                if (Option is Console console) {
+                    Console = console.Message;
+                    Consoles.Add(console);
                     }
 
 

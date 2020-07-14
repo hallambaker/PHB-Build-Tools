@@ -57,8 +57,8 @@ namespace #{Namespace} {
 		/// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
-				new Dictionary<string, JSONFactoryDelegate> () {
+		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary = 
+				new Dictionary<string, JsonFactoryDelegate> () {
 #% Separator.IsFirst = true;
 #foreach (_Choice Entry in Protocol.Structures)
 #{Separator}
@@ -67,11 +67,11 @@ namespace #{Namespace} {
 			};
 
 		/// <summary>
-        /// Construct an instance from the specified tagged JSONReader stream.
+        /// Construct an instance from the specified tagged JsonReader stream.
         /// </summary>
         /// <param name="jsonReader">Input stream</param>
         /// <param name="result">The created object</param>
-        public static void Deserialize(JSONReader jsonReader, out JSONObject result) => 
+        public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
 			result = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
@@ -172,7 +172,7 @@ namespace #{Namespace} {
                 #{Transaction.Request} request, JpcSession session=null) {
 
             var responseData = JPCRemoteSession.Post("#{Transaction.Id}", request);
-            var response = #{Transaction.Response}.FromJSON(responseData.JSONReader(), true);
+            var response = #{Transaction.Response}.FromJson(responseData.JsonReader(), true);
 
             return response;
             }
@@ -199,12 +199,12 @@ namespace #{Namespace} {
         /// <param name="session">The client context.</param>
         /// <param name="jsonReader">Reader for data object.</param>
         /// <returns>The response object returned by the corresponding dispatch.</returns>
-		public override Goedel.Protocol.JSONObject Dispatch(JpcSession  session,  
-								Goedel.Protocol.JSONReader jsonReader) {
+		public override Goedel.Protocol.JsonObject Dispatch(JpcSession  session,  
+								Goedel.Protocol.JsonReader jsonReader) {
 
 			jsonReader.StartObject ();
 			string token = jsonReader.ReadToken ();
-			JSONObject Response = null;
+			JsonObject Response = null;
 
 			switch (token) {
 #foreach (_Choice Entry2 in Protocol.Entries)
@@ -366,7 +366,7 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 #end if
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => #!
+		public static new JsonObject _Factory () => #!
 #if (IsAbstract (Entries))
 throw new CannotCreateAbstract();
 #else
@@ -482,7 +482,7 @@ new #{Id}();
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new #{Id} FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new #{Id} FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -505,7 +505,7 @@ new #{Id}();
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 #foreach (_Choice entry in Entries)
@@ -525,7 +525,7 @@ new #{Id}();
 						_Item.Deserialize (jsonReader);
 						// var _Item = new #{type} (jsonReader);
 #elseif entry._Tag () == ProtoStructType.TStruct
-						var _Item = #{type}.FromJSON (jsonReader, true); // a tagged structure
+						var _Item = #{type}.FromJson (jsonReader, true); // a tagged structure
 #else
 						#{type} _Item = jsonReader.Read#{ttype} ();
 #end if
@@ -539,7 +539,7 @@ new #{Id}();
 					#{token}.Deserialize (jsonReader);
  
 #elseif entry._Tag () == ProtoStructType.TStruct
-					#{token} = #{type}.FromJSON (jsonReader, true) ;  // A tagged structure
+					#{token} = #{type}.FromJson (jsonReader, true) ;  // A tagged structure
 #else
 					#{token} = jsonReader.Read#{ttype} ();
 #end if

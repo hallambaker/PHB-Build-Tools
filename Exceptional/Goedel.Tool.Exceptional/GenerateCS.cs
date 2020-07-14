@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  Copyright ©  2017 by 
+//  © 2015-2019 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,7 @@
 //  THE SOFTWARE.
 //  
 //  
+using  Goedel.Utilities;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -47,8 +48,9 @@ namespace Goedel.Tool.Exceptional {
 		//
 		public void GenerateCSX (Exceptions Exceptions) {
 			 Exceptions._InitChildren ();
-			_Output.Write ("using System;\n{0}", _Indent);
-			_Output.Write ("using Goedel.Utilities;\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("//using System;\n{0}", _Indent);
+			_Output.Write ("//using Goedel.Utilities;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			foreach  (_Choice Toplevel in Exceptions.Top) {
 				switch (Toplevel._Tag ()) {
@@ -65,6 +67,15 @@ namespace Goedel.Tool.Exceptional {
 					case ExceptionsType.Namespace: {
 					  Namespace Namespace = (Namespace) Toplevel; 
 					_Output.Write ("namespace {1} {{\n{0}", _Indent, Namespace.Id);
+					_Output.Write ("\n{0}", _Indent);
+					_Output.Write ("	partial class AllExeptions {{\n{0}", _Indent);
+					_Output.Write ("		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = \n{0}", _Indent);
+					_Output.Write ("			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {{\n{0}", _Indent);
+					_Output.Write ("				null", _Indent);
+					
+					 SummarizeListExceptions (Namespace.Options);
+					_Output.Write ("				}};\n{0}", _Indent);
+					_Output.Write ("		}}\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
 					
 					 WriteListExceptions (Namespace.Options);
@@ -93,90 +104,55 @@ namespace Goedel.Tool.Exceptional {
 					}
 				}
 			_Output.Write ("    /// </summary>\n{0}", _Indent);
-			_Output.Write ("    [Serializable]\n{0}", _Indent);
-			_Output.Write ("	public class {1} : {2} {{\n{0}", _Indent, Exception.Id, Exception.BaseClass);
+			_Output.Write ("    [global::System.Serializable]\n{0}", _Indent);
+			_Output.Write ("	public partial class {1} : {2} {{\n{0}", _Indent, Exception.Id, Exception.BaseClass);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("		/// <summary>\n{0}", _Indent);
-			_Output.Write ("        /// Construct instance for exception {1}\n{0}", _Indent, Exception.Console.Quoted());
-			_Output.Write ("        /// </summary>		\n{0}", _Indent);
-			_Output.Write ("		public {1} () : base ({2}) {{\n{0}", _Indent, Exception.Id, Exception.Console.Quoted());
-			_Output.Write ("			}}\n{0}", _Indent);
-			_Output.Write ("        \n{0}", _Indent);
-			_Output.Write ("		/// <summary>\n{0}", _Indent);
-			_Output.Write ("        /// Construct instance for exception {1}\n{0}", _Indent, Exception.Console.Quoted());
-			_Output.Write ("        /// </summary>		\n{0}", _Indent);
-			_Output.Write ("        /// <param name=\"Description\">Description of the error</param>	\n{0}", _Indent);
-			_Output.Write ("		public {1} (string Description) : base (Description) {{\n{0}", _Indent, Exception.Id);
-			_Output.Write ("			}}\n{0}", _Indent);
+			_Output.Write ("        ///<summary>The exception formatting delegate. May be overriden \n{0}", _Indent);
+			_Output.Write ("		///locally or globally to implement different exception formatting.</summary>\n{0}", _Indent);
+			_Output.Write ("		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate {{ get; set; }} =\n{0}", _Indent);
+			_Output.Write ("				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("		/// <summary>\n{0}", _Indent);
-			_Output.Write ("        /// Construct instance for exception ", _Indent);
-			_Output.Write ("		/// containing an inner exception.\n{0}", _Indent);
-			_Output.Write ("        /// </summary>		\n{0}", _Indent);
-			_Output.Write ("        /// <param name=\"Description\">Description of the error</param>	\n{0}", _Indent);
-			_Output.Write ("		/// <param name=\"Inner\">Inner Exception</param>	\n{0}", _Indent);
-			_Output.Write ("		public {1} (string Description, System.Exception Inner) : \n{0}", _Indent, Exception.Id);
-			_Output.Write ("				base (Description, Inner) {{\n{0}", _Indent);
-			_Output.Write ("			}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			if (  (Exception.Base) ) {
-				_Output.Write ("		/// <summary>\n{0}", _Indent);
-				_Output.Write ("        /// User data associated with the exception.\n{0}", _Indent);
-				_Output.Write ("        /// </summary>	\n{0}", _Indent);
-				_Output.Write ("		public object UserData;\n{0}", _Indent);
+			_Output.Write ("		///<summary></summary>\n{0}", _Indent);
+			_Output.Write ("		public static new System.Collections.Generic.List<string> Templates = \n{0}", _Indent);
+			_Output.Write ("				new System.Collections.Generic.List<string> {{\n{0}", _Indent);
+			 var ConsoleSep = new Separator ("", ",");
+			foreach  (var console in Exception.Consoles) {
+				_Output.Write ("{1}\n{0}", _Indent, ConsoleSep);
+				_Output.Write ("				\"{1}\"\n{0}", _Indent, console.Message.CEscape());
 				}
+			_Output.Write ("				}};\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			foreach  (var Object in Exception.Objects) {
-				_Output.Write ("		/// <summary>\n{0}", _Indent);
-				_Output.Write ("        /// Construct instance for exception using a userdata parameter of\n{0}", _Indent);
-				_Output.Write ("		/// type {1} and the format string {2}\n{0}", _Indent, Object.Type, Object.Text.Quoted());
-				_Output.Write ("        /// </summary>		\n{0}", _Indent);
-				_Output.Write ("        /// <param name=\"Object\">User data</param>	\n{0}", _Indent);
-				_Output.Write ("		public {1} ({2} Object) : \n{0}", _Indent, Exception.Id, Object.Type);
-				_Output.Write ("				base (global::System.String.Format ({1}", _Indent, Object.Text.Quoted());
-				foreach  (var Parameter in Object.Parameters) {
-					_Output.Write (",\n{0}", _Indent);
-					_Output.Write ("					Object.{1}", _Indent, Parameter.Name);
-					}
-				_Output.Write ("					)) => UserData = Object;\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("		/// <summary>\n{0}", _Indent);
-				_Output.Write ("        /// Construct instance for exception using a userdata parameter of\n{0}", _Indent);
-				_Output.Write ("		/// type {1} and the format string {2}\n{0}", _Indent, Object.Type, Object.Text.Quoted());
-				_Output.Write ("        /// </summary>		\n{0}", _Indent);
-				_Output.Write ("        /// <param name=\"Object\">User data</param>	\n{0}", _Indent);
-				_Output.Write ("		/// <param name=\"Inner\">Inner Exception</param>	\n{0}", _Indent);
-				_Output.Write ("		public {1} ({2} Object, System.Exception Inner) : \n{0}", _Indent, Exception.Id, Object.Type);
-				_Output.Write ("				base (global::System.String.Format ({1}", _Indent, Object.Text.Quoted());
-				foreach  (var Parameter in Object.Parameters) {
-					_Output.Write (",\n{0}", _Indent);
-					_Output.Write ("					Object.{1}", _Indent, Parameter.Name);
-					}
-				_Output.Write ("					), Inner) => UserData = Object;\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				}
+			_Output.Write ("		/// <summary>\n{0}", _Indent);
+			_Output.Write ("		/// Construct instance for exception\n{0}", _Indent);
+			_Output.Write ("		/// </summary>		\n{0}", _Indent);
+			_Output.Write ("		/// <param name=\"description\">Description of the error, may be used to override the \n{0}", _Indent);
+			_Output.Write ("		/// generated message.</param>	\n{0}", _Indent);
+			_Output.Write ("		/// <param name=\"inner\">Inner Exception</param>	\n{0}", _Indent);
+			_Output.Write ("		/// <param name=\"args\">Optional list of parameterized arguments.</param>\n{0}", _Indent);
+			_Output.Write ("		public {1}  (string description=null, System.Exception inner=null,\n{0}", _Indent, Exception.Id);
+			_Output.Write ("			params object[] args) : \n{0}", _Indent);
+			_Output.Write ("				base (ExceptionFormatDelegate(description, Templates,\n{0}", _Indent);
+			_Output.Write ("					null, args), inner) {{\n{0}", _Indent);
+			_Output.Write ("			}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("		/// <summary>\n{0}", _Indent);
+			_Output.Write ("        /// The public fatory delegate\n{0}", _Indent);
+			_Output.Write ("        /// </summary>\n{0}", _Indent);
+			_Output.Write ("        public static {1}global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;\n{0}", _Indent, Exception.Base.If("", "new "));
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("        static System.Exception _Throw(object reasons) => new {1}(args:reasons) ;\n{0}", _Indent, Exception.Id);
 			_Output.Write ("		\n{0}", _Indent);
 			_Output.Write ("		/// <summary>\n{0}", _Indent);
 			_Output.Write ("        /// The public fatory delegate\n{0}", _Indent);
 			_Output.Write ("        /// </summary>\n{0}", _Indent);
 			_Output.Write ("        public static {1}global::Goedel.Utilities.ThrowDelegate Throw = _Throw;\n{0}", _Indent, Exception.Base.If("", "new "));
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("        static System.Exception _Throw(object Reason) {{\n{0}", _Indent);
-			_Output.Write ("			if (Reason as string != null) {{\n{0}", _Indent);
-			_Output.Write ("				return new {1}(Reason as string);\n{0}", _Indent, Exception.Id);
-			_Output.Write ("				}}\n{0}", _Indent);
-			foreach  (var Object in Exception.Objects) {
-				_Output.Write ("			else if (Reason as {1} != null) {{\n{0}", _Indent, Object.Type);
-				_Output.Write ("				return new {1}(Reason as {2});\n{0}", _Indent, Exception.Id, Object.Type);
-				_Output.Write ("				}}\n{0}", _Indent);
-				}
-			_Output.Write ("			else {{\n{0}", _Indent);
-			_Output.Write ("				return new {1}();\n{0}", _Indent, Exception.Id);
-			_Output.Write ("				}}\n{0}", _Indent);
-			_Output.Write ("            }}\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			 WriteListExceptions (Exception.Options);
@@ -190,6 +166,28 @@ namespace Goedel.Tool.Exceptional {
 			foreach  (_Choice Exception in Exceptions) {
 				if (  (Exception as Exception != null) ) {
 					 WriteException (Exception as Exception );
+					}
+				}
+			}
+		
+
+		//
+		// SummarizeException
+		//
+		public void SummarizeException (Exception Exception) {
+			_Output.Write (",\n{0}", _Indent);
+			_Output.Write ("				{1}.ThrowNew", _Indent, Exception.Id);
+			 SummarizeListExceptions (Exception.Options);
+			}
+		
+
+		//
+		// SummarizeListExceptions
+		//
+		public void SummarizeListExceptions (List<_Choice> Exceptions) {
+			foreach  (_Choice Exception in Exceptions) {
+				if (  (Exception as Exception != null) ) {
+					 SummarizeException (Exception as Exception );
 					}
 				}
 			}

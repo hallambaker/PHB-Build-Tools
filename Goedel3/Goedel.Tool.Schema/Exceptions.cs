@@ -1,5 +1,6 @@
-﻿using System;
-using Goedel.Utilities;
+﻿
+//using System;
+//using Goedel.Utilities;
 
 
 
@@ -8,46 +9,53 @@ namespace Goedel.Schema {
 
     /// <summary>
     /// </summary>
-    public class SchemaParse : global::System.Exception {
+    [global::System.Serializable]
+	public partial class SchemaParse : global::Goedel.Utilities.GoedelException {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+				"The schema could not be parsed"
+				};
 
 		/// <summary>
-        /// Construct instance for exception "The schema could not be parsed"
-        /// </summary>		
-		public SchemaParse () : base ("The schema could not be parsed") {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public SchemaParse  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
-        
-		/// <summary>
-        /// Construct instance for exception "The schema could not be parsed"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public SchemaParse (string Description) : base (Description) {
-			}
+
+
+
+
 
 		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public SchemaParse (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
-
-
-
+        static System.Exception _ThrowNew(object reasons) => new SchemaParse(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new SchemaParse(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new SchemaParse(reason as string);
 				}
 			else {
 				return new SchemaParse();
@@ -58,65 +66,53 @@ namespace Goedel.Schema {
 
     /// <summary>
     /// </summary>
-    public class NotFoundReserved : SchemaParse {
+    [global::System.Serializable]
+	public partial class NotFoundReserved : SchemaParse {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+				"Expected reserved word, token {0} was not found"
+				};
 
 		/// <summary>
-        /// Construct instance for exception "An error occurred"
-        /// </summary>		
-		public NotFoundReserved () : base ("An error occurred") {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public NotFoundReserved  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
-        
-		/// <summary>
-        /// Construct instance for exception "An error occurred"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public NotFoundReserved (string Description) : base (Description) {
-			}
 
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public NotFoundReserved (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+
+
 
 
 		/// <summary>
-        /// Construct instance for exception using a userdata parameter of
-		/// type ExceptionData and the format string "Expected reserved word, token {0} was not found"
-        /// </summary>		
-        /// <param name="Object">User data</param>	
-		public NotFoundReserved (ExceptionData Object) : 
-				base (global::System.String.Format ("Expected reserved word, token {0} was not found",
-					Object.String					)) => UserData = Object;
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-		/// <summary>
-        /// Construct instance for exception using a userdata parameter of
-		/// type ExceptionData and the format string "Expected reserved word, token {0} was not found"
-        /// </summary>		
-        /// <param name="Object">User data</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public NotFoundReserved (ExceptionData Object, System.Exception Inner) : 
-				base (global::System.String.Format ("Expected reserved word, token {0} was not found",
-					Object.String					), Inner) => UserData = Object;
-
-
-
+        static System.Exception _ThrowNew(object reasons) => new NotFoundReserved(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new NotFoundReserved(Reason as string);
-				}
-			else if (Reason as ExceptionData != null) {
-				return new NotFoundReserved(Reason as ExceptionData);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new NotFoundReserved(reason as string);
 				}
 			else {
 				return new NotFoundReserved();

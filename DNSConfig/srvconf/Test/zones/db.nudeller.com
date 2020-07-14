@@ -6,7 +6,7 @@
 ;
 $TTL 600
 nudeller.com.      IN      SOA     dns1.nudeller.com. hallam.gmail.com. (
-                        2020030901       ; serial, todays date + todays serial 
+                        2020071201       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds

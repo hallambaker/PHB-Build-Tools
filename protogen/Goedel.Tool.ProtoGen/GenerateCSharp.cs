@@ -92,8 +92,8 @@ namespace Goedel.Tool.ProtoGen {
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
 					_Output.Write ("        /// Dictionary mapping tags to factory methods\n{0}", _Indent);
 					_Output.Write ("        /// </summary>\n{0}", _Indent);
-					_Output.Write ("		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = \n{0}", _Indent);
-					_Output.Write ("				new Dictionary<string, JSONFactoryDelegate> () {{\n{0}", _Indent);
+					_Output.Write ("		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary = \n{0}", _Indent);
+					_Output.Write ("				new Dictionary<string, JsonFactoryDelegate> () {{\n{0}", _Indent);
 					
 					 Separator.IsFirst = true;
 					foreach  (_Choice Entry in Protocol.Structures) {
@@ -103,11 +103,11 @@ namespace Goedel.Tool.ProtoGen {
 					_Output.Write ("			}};\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("		/// <summary>\n{0}", _Indent);
-					_Output.Write ("        /// Construct an instance from the specified tagged JSONReader stream.\n{0}", _Indent);
+					_Output.Write ("        /// Construct an instance from the specified tagged JsonReader stream.\n{0}", _Indent);
 					_Output.Write ("        /// </summary>\n{0}", _Indent);
 					_Output.Write ("        /// <param name=\"jsonReader\">Input stream</param>\n{0}", _Indent);
 					_Output.Write ("        /// <param name=\"result\">The created object</param>\n{0}", _Indent);
-					_Output.Write ("        public static void Deserialize(JSONReader jsonReader, out JSONObject result) => \n{0}", _Indent);
+					_Output.Write ("        public static void Deserialize(JsonReader jsonReader, out JsonObject result) => \n{0}", _Indent);
 					_Output.Write ("			result = jsonReader.ReadTaggedObject(_TagDictionary);\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("		}}\n{0}", _Indent);
@@ -212,7 +212,7 @@ namespace Goedel.Tool.ProtoGen {
 									_Output.Write ("                {1} request, JpcSession session=null) {{\n{0}", _Indent, Transaction.Request);
 									_Output.Write ("\n{0}", _Indent);
 									_Output.Write ("            var responseData = JPCRemoteSession.Post(\"{1}\", request);\n{0}", _Indent, Transaction.Id);
-									_Output.Write ("            var response = {1}.FromJSON(responseData.JSONReader(), true);\n{0}", _Indent, Transaction.Response);
+									_Output.Write ("            var response = {1}.FromJson(responseData.JsonReader(), true);\n{0}", _Indent, Transaction.Response);
 									_Output.Write ("\n{0}", _Indent);
 									_Output.Write ("            return response;\n{0}", _Indent);
 									_Output.Write ("            }}\n{0}", _Indent);
@@ -240,12 +240,12 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("        /// <param name=\"session\">The client context.</param>\n{0}", _Indent);
 							_Output.Write ("        /// <param name=\"jsonReader\">Reader for data object.</param>\n{0}", _Indent);
 							_Output.Write ("        /// <returns>The response object returned by the corresponding dispatch.</returns>\n{0}", _Indent);
-							_Output.Write ("		public override Goedel.Protocol.JSONObject Dispatch(JpcSession  session,  \n{0}", _Indent);
-							_Output.Write ("								Goedel.Protocol.JSONReader jsonReader) {{\n{0}", _Indent);
+							_Output.Write ("		public override Goedel.Protocol.JsonObject Dispatch(JpcSession  session,  \n{0}", _Indent);
+							_Output.Write ("								Goedel.Protocol.JsonReader jsonReader) {{\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("			jsonReader.StartObject ();\n{0}", _Indent);
 							_Output.Write ("			string token = jsonReader.ReadToken ();\n{0}", _Indent);
-							_Output.Write ("			JSONObject Response = null;\n{0}", _Indent);
+							_Output.Write ("			JsonObject Response = null;\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("			switch (token) {{\n{0}", _Indent);
 							foreach  (_Choice Entry2 in Protocol.Entries) {
@@ -454,7 +454,7 @@ namespace Goedel.Tool.ProtoGen {
 				}
 			_Output.Write ("        /// </summary>\n{0}", _Indent);
 			_Output.Write ("        /// <returns>Object of this type</returns>\n{0}", _Indent);
-			_Output.Write ("		public static new JSONObject _Factory () => ", _Indent);
+			_Output.Write ("		public static new JsonObject _Factory () => ", _Indent);
 			if (  (IsAbstract (Entries)) ) {
 				_Output.Write ("throw new CannotCreateAbstract();\n{0}", _Indent);
 				} else {
@@ -576,7 +576,7 @@ namespace Goedel.Tool.ProtoGen {
 			_Output.Write ("        /// <param name=\"jsonReader\">The input stream</param>\n{0}", _Indent);
 			_Output.Write ("		/// <param name=\"tagged\">If true, the input is wrapped in a tag specifying the type</param>\n{0}", _Indent);
 			_Output.Write ("        /// <returns>The created object.</returns>		\n{0}", _Indent);
-			_Output.Write ("        public static new {1} FromJSON (JSONReader jsonReader, bool tagged=true) {{\n{0}", _Indent, Id);
+			_Output.Write ("        public static new {1} FromJson (JsonReader jsonReader, bool tagged=true) {{\n{0}", _Indent, Id);
 			_Output.Write ("			if (jsonReader == null) {{\n{0}", _Indent);
 			_Output.Write ("				return null;\n{0}", _Indent);
 			_Output.Write ("				}}\n{0}", _Indent);
@@ -599,7 +599,7 @@ namespace Goedel.Tool.ProtoGen {
 			_Output.Write ("        /// </summary>\n{0}", _Indent);
 			_Output.Write ("        /// <param name=\"jsonReader\">The input stream</param>\n{0}", _Indent);
 			_Output.Write ("        /// <param name=\"tag\">The tag</param>\n{0}", _Indent);
-			_Output.Write ("		public override void DeserializeToken (JSONReader jsonReader, string tag) {{\n{0}", _Indent);
+			_Output.Write ("		public override void DeserializeToken (JsonReader jsonReader, string tag) {{\n{0}", _Indent);
 			_Output.Write ("			\n{0}", _Indent);
 			_Output.Write ("			switch (tag) {{\n{0}", _Indent);
 			foreach  (_Choice entry in Entries) {
@@ -619,7 +619,7 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("						_Item.Deserialize (jsonReader);\n{0}", _Indent);
 							_Output.Write ("						// var _Item = new {1} (jsonReader);\n{0}", _Indent, type);
 							} else if (  entry._Tag () == ProtoStructType.TStruct) {
-							_Output.Write ("						var _Item = {1}.FromJSON (jsonReader, true); // a tagged structure\n{0}", _Indent, type);
+							_Output.Write ("						var _Item = {1}.FromJson (jsonReader, true); // a tagged structure\n{0}", _Indent, type);
 							} else {
 							_Output.Write ("						{1} _Item = jsonReader.Read{2} ();\n{0}", _Indent, type, ttype);
 							}
@@ -633,7 +633,7 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("					{1}.Deserialize (jsonReader);\n{0}", _Indent, token);
 							_Output.Write (" \n{0}", _Indent);
 							} else if (  entry._Tag () == ProtoStructType.TStruct) {
-							_Output.Write ("					{1} = {2}.FromJSON (jsonReader, true) ;  // A tagged structure\n{0}", _Indent, token, type);
+							_Output.Write ("					{1} = {2}.FromJson (jsonReader, true) ;  // A tagged structure\n{0}", _Indent, token, type);
 							} else {
 							_Output.Write ("					{1} = jsonReader.Read{2} ();\n{0}", _Indent, token, ttype);
 							}

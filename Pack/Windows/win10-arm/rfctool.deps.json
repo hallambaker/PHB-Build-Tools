@@ -1762,9 +1762,26 @@
           "Goedel.Document.RFCSVG.dll": {}
         }
       },
+      "Goedel.Registry/1.0.0": {
+        "dependencies": {
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Registry.dll": {}
+        }
+      },
       "Goedel.Tool.Core/1.0.0": {
+        "dependencies": {
+          "Goedel.Registry": "1.0.0",
+          "Goedel.Utilities": "1.0.0"
+        },
         "runtime": {
           "Goedel.Tool.Core.dll": {}
+        }
+      },
+      "Goedel.Utilities/1.0.0": {
+        "runtime": {
+          "Goedel.Utilities.dll": {}
         }
       }
     }
@@ -2534,7 +2551,17 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Goedel.Registry/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "Goedel.Tool.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Utilities/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

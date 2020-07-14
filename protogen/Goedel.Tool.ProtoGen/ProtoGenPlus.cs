@@ -23,9 +23,9 @@ namespace Goedel.Tool.ProtoGen {
         public bool Parameterized = false;
         public List<string> Description = new List<string>();
 
-        public string ThisInherits = ": global::Goedel.Protocol.JSONObject";
+        public string ThisInherits = ": global::Goedel.Protocol.JsonObject";
 
-        // Classes that don't inherit internally are children of JSONObject
+        // Classes that don't inherit internally are children of JsonObject
         // by default.
         public string ExternParent = "JSONObject";
 

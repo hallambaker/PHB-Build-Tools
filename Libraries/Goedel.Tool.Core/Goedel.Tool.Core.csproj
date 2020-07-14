@@ -4,16 +4,13 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <Import Project="..\..\..\mmm\Libraries\Goedel.Command\Goedel.Command.projitems" Label="Shared" />
-
-  <Import Project="..\..\..\mmm\Libraries\Goedel.FSR\Goedel.FSR.projitems" Label="Shared" />
-
-  <Import Project="..\..\..\mmm\Libraries\Goedel.Registry\Goedel.Registry.projitems" Label="Shared" />
-
-  <Import Project="..\..\..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.projitems" Label="Shared" />
-
-  <Import Project="..\..\..\mmm\Libraries\Goedel.IO\Goedel.IO.projitems" Label="Shared" />
-
-  <Import Project="..\..\..\mmm\Libraries\Goedel.Discovery\Goedel.Discovery.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.Command\Goedel.Command.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.Discovery\Goedel.Discovery.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.FSR\Goedel.FSR.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.IO\Goedel.IO.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.Registry\Goedel.Registry.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+  </ItemGroup>
 
 </Project>

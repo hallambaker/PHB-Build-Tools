@@ -423,7 +423,7 @@ namespace GoedelSchema {
 			_Output.Write ("            }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        void Pop () {{\n{0}", _Indent);
-			_Output.Write ("			Assert.False (Stack.Count == 0, InternalError.Throw);\n{0}", _Indent);
+			_Output.Write ("			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("            _StackItem Item = Stack[Stack.Count -1];\n{0}", _Indent);
 			_Output.Write ("            State = Item.State;\n{0}", _Indent);
@@ -443,7 +443,7 @@ namespace GoedelSchema {
 			_Output.Write ("                (Token == TokenType.COMMENT)) {{\n{0}", _Indent);
 			_Output.Write ("				return;\n{0}", _Indent);
 			_Output.Write ("				}}\n{0}", _Indent);
-			_Output.Write ("			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);\n{0}", _Indent);
+			_Output.Write ("			Assert.AssertFalse (Token == TokenType.INVALID, InvalidToken.Throw);\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("            bool Represent = true;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

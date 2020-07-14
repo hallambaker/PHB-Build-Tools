@@ -4,7 +4,7 @@ Namespace Goedel.Schema
 		Console "The schema could not be parsed"		
 
 		Exception NotFoundReserved
-			Object ExceptionData "Expected reserved word, token {0} was not found"
-				String
+			Console "Expected reserved word, token {0} was not found"
+
 
 

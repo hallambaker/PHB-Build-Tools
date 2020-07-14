@@ -1,5 +1,6 @@
 ﻿#script 1.0
 #license MITLicense
+#using Goedel.Utilities
 #pclass Goedel.Tool.Exceptional Generate
 
 
@@ -13,8 +14,10 @@
 
 #method GenerateCSX Exceptions Exceptions
 #% Exceptions._InitChildren ();
-using System;
-using Goedel.Utilities;
+
+#pragma warning disable IDE1006 // Naming Styles
+//using System;
+//using Goedel.Utilities;
 
 #foreach (_Choice Toplevel in Exceptions.Top)
 #switchcast ExceptionsType Toplevel
@@ -29,12 +32,22 @@ using #{Using.Id};
 #casecast Namespace Namespace
 namespace #{Namespace.Id} {
 
+	partial class AllExeptions {
+		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = 
+			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {
+				null#!
+#% SummarizeListExceptions (Namespace.Options);
+				};
+		}
+
 #% WriteListExceptions (Namespace.Options);
 
 	}
 #end switchcast
 #end foreach
 #end method
+
+
 
 
 #method WriteException Exception Exception
@@ -49,90 +62,55 @@ namespace #{Namespace.Id} {
 #end switchcast
 #end foreach
     /// </summary>
-    [Serializable]
-	public class #{Exception.Id} : #{Exception.BaseClass} {
+    [global::System.Serializable]
+	public partial class #{Exception.Id} : #{Exception.BaseClass} {
 
-		/// <summary>
-        /// Construct instance for exception #{Exception.Console.Quoted()}
-        /// </summary>		
-		public #{Exception.Id} () : base (#{Exception.Console.Quoted()}) {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception #{Exception.Console.Quoted()}
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public #{Exception.Id} (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception #{Exception.Console.Quoted()
-		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public #{Exception.Id} (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
-
-#if (Exception.Base)
-		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
-#end if
-
-#foreach (var Object in Exception.Objects)
-		/// <summary>
-        /// Construct instance for exception using a userdata parameter of
-		/// type #{Object.Type} and the format string #{Object.Text.Quoted()}
-        /// </summary>		
-        /// <param name="Object">User data</param>	
-		public #{Exception.Id} (#{Object.Type} Object) : 
-				base (global::System.String.Format (#{Object.Text.Quoted()}#!
-#foreach (var Parameter in Object.Parameters)
-,
-					Object.#{Parameter.Name}#!
-#end foreach				
-					)) => UserData = Object;
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		/// <summary>
-        /// Construct instance for exception using a userdata parameter of
-		/// type #{Object.Type} and the format string #{Object.Text.Quoted()}
-        /// </summary>		
-        /// <param name="Object">User data</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public #{Exception.Id} (#{Object.Type} Object, System.Exception Inner) : 
-				base (global::System.String.Format (#{Object.Text.Quoted()}#!
-#foreach (var Parameter in Object.Parameters)
-,
-					Object.#{Parameter.Name}#!
-#end foreach				
-					), Inner) => UserData = Object;
-
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+#% var ConsoleSep = new Separator ("", ",");
+#foreach (var console in Exception.Consoles)
+#{ConsoleSep}
+				"#{console.Message.CEscape()}"
 #end foreach
+				};
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public #{Exception.Id}  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
+			}
 
 
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static #{Exception.Base.If("", "new ")}global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+        static System.Exception _Throw(object reasons) => new #{Exception.Id}(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static #{Exception.Base.If("", "new ")}global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new #{Exception.Id}(Reason as string);
-				}
-#foreach (var Object in Exception.Objects)
-			else if (Reason as #{Object.Type} != null) {
-				return new #{Exception.Id}(Reason as #{Object.Type});
-				}
-#end foreach
-			else {
-				return new #{Exception.Id}();
-				}
-            }
+
         }
 
 #% WriteListExceptions (Exception.Options);
@@ -145,5 +123,20 @@ namespace #{Namespace.Id} {
 #end if
 #end foreach
 #end method
+
+#method SummarizeException Exception Exception
+,
+				#{Exception.Id}.ThrowNew#!
+#% SummarizeListExceptions (Exception.Options);
+#end method
+
+#method SummarizeListExceptions List<_Choice> Exceptions
+#foreach (_Choice Exception in Exceptions)
+#if (Exception as Exception != null)
+#% SummarizeException (Exception as Exception );
+#end if
+#end foreach
+#end method
+
 
 #end pclass

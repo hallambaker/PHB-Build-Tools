@@ -16,6 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.Registry\Goedel.Registry.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
   </ItemGroup>
 
