@@ -2,7 +2,7 @@
   "profiles": {
     "protogen": {
       "commandName": "Project",
-      "commandLineArgs": "ProtocolSchema.protocol  /cs  ProtocolSchema.cs",
+      "commandLineArgs": "SchemaMesh.protocol  /cs  SchemaMesh.cs",
       "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Mesh\\Goedel.Mesh"
     }
   }

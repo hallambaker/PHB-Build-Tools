@@ -596,7 +596,7 @@ namespace Goedel.Document.RFCSVG {
             new AttributeProfile ("transform"),
             //new AttributeProfile ("style"),
             new AttributeProfile ("d"),
-            new AttributeProfile ("visibility", "visible" , "hidden" , "collapse" , "inherit"),
+            //new AttributeProfile ("visibility", "visible" , "hidden" , "collapse" , "inherit"),
             new AttributeProfile ("snapshotTime"),
             new AttributeProfile ("label"),
             new AttributeProfile ("href"),

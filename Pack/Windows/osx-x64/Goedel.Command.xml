@@ -570,10 +570,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Command.ParserException.ThrowNew">
+        <member name="M:Goedel.Command.ParserException._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Command.ParserException.Throw">
             <summary>
@@ -601,10 +602,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Command.FileReadError.ThrowNew">
+        <member name="M:Goedel.Command.FileReadError._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Command.FileReadError.Throw">
             <summary>
@@ -632,10 +634,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Command.UnknownCommand.ThrowNew">
+        <member name="M:Goedel.Command.UnknownCommand._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Command.UnknownCommand.Throw">
             <summary>
@@ -663,10 +666,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Command.UnknownOption.ThrowNew">
+        <member name="M:Goedel.Command.UnknownOption._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Command.UnknownOption.Throw">
             <summary>
@@ -694,10 +698,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Command.NoCommand.ThrowNew">
+        <member name="M:Goedel.Command.NoCommand._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Command.NoCommand.Throw">
             <summary>
@@ -725,10 +730,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Command.InvalidOption.ThrowNew">
+        <member name="M:Goedel.Command.InvalidOption._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Command.InvalidOption.Throw">
             <summary>
@@ -949,6 +955,13 @@
             Completion routine. This is called at the end of parameter processing to finalize default values.
             </summary>
             <param name="Data">The completed data</param>
+        </member>
+        <member name="M:Goedel.Command._NewFile.DefaultFrom(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
         </member>
         <member name="T:Goedel.Command._ExistingFile">
             <summary>

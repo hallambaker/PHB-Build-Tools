@@ -3289,10 +3289,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Discovery.DiscoveryException.ThrowNew">
+        <member name="M:Goedel.Discovery.DiscoveryException._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Discovery.DiscoveryException.Throw">
             <summary>
@@ -3320,10 +3321,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Discovery.BufferWriteOverflow.ThrowNew">
+        <member name="M:Goedel.Discovery.BufferWriteOverflow._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Discovery.BufferWriteOverflow.Throw">
             <summary>
@@ -3351,10 +3353,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Discovery.BufferReadOverflow.ThrowNew">
+        <member name="M:Goedel.Discovery.BufferReadOverflow._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Discovery.BufferReadOverflow.Throw">
             <summary>
@@ -3382,10 +3385,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Discovery.LabelTooLong.ThrowNew">
+        <member name="M:Goedel.Discovery.LabelTooLong._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Discovery.LabelTooLong.Throw">
             <summary>
@@ -3413,10 +3417,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Discovery.UnicodeNotSupported.ThrowNew">
+        <member name="M:Goedel.Discovery.UnicodeNotSupported._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Discovery.UnicodeNotSupported.Throw">
             <summary>
@@ -3444,10 +3449,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Discovery.IllegalCharacter.ThrowNew">
+        <member name="M:Goedel.Discovery.IllegalCharacter._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Discovery.IllegalCharacter.Throw">
             <summary>
@@ -3475,10 +3481,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Discovery.TagTooLong.ThrowNew">
+        <member name="M:Goedel.Discovery.TagTooLong._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Discovery.TagTooLong.Throw">
             <summary>
@@ -3506,10 +3513,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Discovery.InvalidIPv4.ThrowNew">
+        <member name="M:Goedel.Discovery.InvalidIPv4._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Discovery.InvalidIPv4.Throw">
             <summary>
@@ -3537,10 +3545,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Discovery.InvalidIPv6.ThrowNew">
+        <member name="M:Goedel.Discovery.InvalidIPv6._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Discovery.InvalidIPv6.Throw">
             <summary>

@@ -156,10 +156,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Registry.ParserException.ThrowNew">
+        <member name="M:Goedel.Registry.ParserException._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Registry.ParserException.Throw">
             <summary>
@@ -187,10 +188,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Registry.FileReadError.ThrowNew">
+        <member name="M:Goedel.Registry.FileReadError._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Registry.FileReadError.Throw">
             <summary>
@@ -218,10 +220,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Registry.UnknownCommand.ThrowNew">
+        <member name="M:Goedel.Registry.UnknownCommand._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Registry.UnknownCommand.Throw">
             <summary>
@@ -249,10 +252,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Registry.UnknownOption.ThrowNew">
+        <member name="M:Goedel.Registry.UnknownOption._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Registry.UnknownOption.Throw">
             <summary>
@@ -280,10 +284,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Registry.NoCommand.ThrowNew">
+        <member name="M:Goedel.Registry.NoCommand._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Registry.NoCommand.Throw">
             <summary>
@@ -311,10 +316,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Registry.SchemaParse.ThrowNew">
+        <member name="M:Goedel.Registry.SchemaParse._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Registry.SchemaParse.Throw">
             <summary>
@@ -342,10 +348,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Registry.NotFoundReserved.ThrowNew">
+        <member name="M:Goedel.Registry.NotFoundReserved._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Registry.NotFoundReserved.Throw">
             <summary>
@@ -373,10 +380,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Registry.InternalError.ThrowNew">
+        <member name="M:Goedel.Registry.InternalError._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Registry.InternalError.Throw">
             <summary>
@@ -404,10 +412,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Registry.InvalidToken.ThrowNew">
+        <member name="M:Goedel.Registry.InvalidToken._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Registry.InvalidToken.Throw">
             <summary>
@@ -435,10 +444,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Registry.ExpectedStart.ThrowNew">
+        <member name="M:Goedel.Registry.ExpectedStart._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Registry.ExpectedStart.Throw">
             <summary>
@@ -466,10 +476,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Registry.ExpectedClass.ThrowNew">
+        <member name="M:Goedel.Registry.ExpectedClass._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Registry.ExpectedClass.Throw">
             <summary>
@@ -497,10 +508,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Registry.Expected.ThrowNew">
+        <member name="M:Goedel.Registry.Expected._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Registry.Expected.Throw">
             <summary>
@@ -528,10 +540,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Registry.TooManyClose.ThrowNew">
+        <member name="M:Goedel.Registry.TooManyClose._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Registry.TooManyClose.Throw">
             <summary>
@@ -559,10 +572,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Registry.UnreachableCode.ThrowNew">
+        <member name="M:Goedel.Registry.UnreachableCode._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Registry.UnreachableCode.Throw">
             <summary>
@@ -747,6 +761,12 @@
         </member>
         <member name="F:Goedel.Registry.Lexer.CharType.CR">
             <summary>Carriage Return</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.Lt">
+            <summary>Any other character</summary>
+        </member>
+        <member name="F:Goedel.Registry.Lexer.CharType.Gt">
+            <summary>Any other character</summary>
         </member>
         <member name="F:Goedel.Registry.Lexer.CharType.Other">
             <summary>Any other character</summary>
