@@ -29,7 +29,7 @@ Main.cs : Main.Command
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.Exceptional && nmake /a /c /f VS.make prebuild 
+	cd ..\Goedel.Tool.Exceptional && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :

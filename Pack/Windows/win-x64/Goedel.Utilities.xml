@@ -1087,7 +1087,7 @@
         </member>
         <member name="M:Goedel.Utilities.Extension.Keep(System.Object)">
             <summary>
-            Tell compiler that an object is reserved for future use.
+            Tell compiler that an object is reserved.
             </summary>
             <param name="o">Object to reserve.</param>
             <returns>true if the object is not null, false otherwise.</returns>

@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "constant": {
+      "commandName": "Project",
+      "commandLineArgs": "UDFConstants.constant ",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Libraries\\Goedel.Cryptography"
+    }
+  }
+}

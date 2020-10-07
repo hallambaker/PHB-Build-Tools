@@ -28,7 +28,7 @@ Commands.cs : Commands.command
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.Makey && nmake /a /c /f VS.make prebuild 
+	cd ..\Goedel.Tool.Makey && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :

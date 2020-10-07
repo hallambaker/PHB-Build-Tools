@@ -843,6 +843,12 @@
             </summary>
             <param name="NameIn">The source name</param>
         </member>
+        <member name="M:Goedel.Registry.Source.ToString">
+            <summary>
+            Convert position to text.
+            </summary>
+            <returns>The string value</returns>
+        </member>
         <member name="T:Goedel.Registry.Position">
             <summary>Track position in a source file.</summary>
         </member>

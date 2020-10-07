@@ -489,6 +489,7 @@ namespace Goedel.Tool.Makey {
             { "verbcs", new BuildDescription ("cs", "verb", " /cs ") },
             { "fsrcs", new BuildDescription ("cs", "fsrgen", " /cs ") },
             { "exceptional", new BuildDescription("cs", "exceptional", " /cs ") },
+            { "constant", new BuildDescription("cs", "constant", " /cs ") },
             { "gscript", new BuildDescription ("cs", "gscript") },
             { "goedel3", new BuildDescription ("cs", "goedel3", " /cs ") },
             { "asn2cs", new BuildDescription ("cs", "asn2", " /cs ") },

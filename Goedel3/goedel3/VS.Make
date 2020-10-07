@@ -28,7 +28,7 @@ Commands.cs : Commands.command
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.Schema && nmake /a /c /f VS.make prebuild 
+	cd ..\Goedel.Tool.Schema && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :

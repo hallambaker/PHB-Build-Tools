@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyVersionAttribute("3.0.0.267")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("3.0.0.267")]
+[assembly: System.Reflection.AssemblyVersionAttribute("3.0.0.287")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("3.0.0.287")]
 

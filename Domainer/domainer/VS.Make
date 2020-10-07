@@ -24,7 +24,7 @@ ToolTargets =
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.Domainer && nmake /a /c /f VS.make prebuild 
+	cd ..\Goedel.Tool.Domainer && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :

@@ -700,7 +700,8 @@ namespace Goedel.Document.RFC {
             //WriteLinkSVG(Figure.Filename, "img", "src", attributes);
 
             WriteElement("a", Pilcrow, "class", "pilcrow", "href", "#" + Figure.GeneratedID);
-            End();
+            Figure.SaveContent(textWriter);
+
             WriteFigureCaption(Figure);
 
             End();

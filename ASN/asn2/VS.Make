@@ -29,7 +29,7 @@ ASN2.cs : ASN2.command
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.ASN && nmake /a /c /f VS.make prebuild 
+	cd ..\Goedel.Tool.ASN && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
