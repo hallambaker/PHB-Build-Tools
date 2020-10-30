@@ -242,12 +242,10 @@ namespace Goedel.Document.RFC {
 
         public void WritePre(PRE P) {
             Start("pre", true, false, "id", P.GeneratedID);
-            // ToDo: write ID
             WritePRE(P.Segments);
-            //Write(P.Text.Trim(), false, false);
-            WriteElement("a", false, false, Pilcrow, "class", "pilcrow", "href", "#" + P.GeneratedID);
-
             End(false, true);
+            // put this after the preformatted section to avoid creating a clubline
+            WriteElement("a", false, false, Pilcrow, "class", "pilcrow", "href", "#" + P.GeneratedID);
             }
 
         #endregion
