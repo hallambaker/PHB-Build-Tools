@@ -356,7 +356,7 @@ namespace Goedel.Document.Markdown {
                 }
 
             if (CatalogEntry.Key == "include") {
-                Console.WriteLine("Read file {0}", Attributes[0].Value);
+                //Console.WriteLine("Read file {0}", Attributes[0].Value);
                 ParseRegistry.Include(Attributes[0].Value, TagCatalog, Document);
                 return;
                 }

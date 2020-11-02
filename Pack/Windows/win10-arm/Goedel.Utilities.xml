@@ -1537,12 +1537,13 @@
             <param name="text">The text to write.</param>
             <param name="indent">The number of two space indents to prepend.</param>
         </member>
-        <member name="M:Goedel.Utilities.Linewrap.Wrap(System.String,System.Int32)">
+        <member name="M:Goedel.Utilities.Linewrap.Wrap(System.String,System.String,System.Int32,System.Int32)">
             <summary>
             Wrap text to fit a line without breaking words.
             </summary>
-            <param name="Input">The input string.</param>
-            <param name="Length">Maximum line length</param>
+            <param name="input">The input string.</param>
+            <param name="input2">Additional input</param>
+            <param name="length">Maximum line length</param>
             <returns>The wrapped string.</returns>
         </member>
         <member name="T:Goedel.Utilities.LockGlobal">

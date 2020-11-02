@@ -1097,6 +1097,18 @@
             </summary>
             <param name="Output">The output stream</param>
         </member>
+        <member name="M:Goedel.Registry.Script.Wrap(System.String,System.Int32,System.Int32,System.String,System.Int32)">
+            <summary>
+            Wrap the text <paramref name="text"/> to <paramref name="cols"/> inserting 
+            line breaks where necessary at spaces in the text.
+            </summary>
+            <param name="text">The text to wrap.</param>
+            <param name="position">The initial position on the line.</param>
+            <param name="cols">The column to wrap at.</param>
+            <param name="indent">Number of spaces to indent continuation lines</param>
+            <param name="continuation">Optional continuation character to be added to ends of lines</param>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Registry.Script.SetTextWriter(System.IO.TextWriter)">
             <summary>
             Set the output.
