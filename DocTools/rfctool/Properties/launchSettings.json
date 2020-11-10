@@ -2,7 +2,7 @@
   "profiles": {
     "rfctool": {
       "commandName": "Project",
-      "commandLineArgs": "..\\Word\\hallambaker-mesh-3-dare.docx   /cache=bib.xml  /html=fred.html",
+      "commandLineArgs": "..\\Word\\hallambaker-mesh-1-architecture.docx   /cache=bib.xml  /xml=fred.xml",
       "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Outputs\\Documents\\Publish"
     }
   }

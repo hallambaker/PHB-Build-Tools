@@ -551,7 +551,13 @@ namespace Goedel.Document.RFC {
         void WriteBlock(Figure block) {
             ListLast();
             WriteStartTagNL("figure");
+            WriteStartTagNL("name");
+            textWriter.Write(block.Caption);
+            WriteEndTagNL("name");
+
             WriteIrefs(block.Irefs);
+
+
 
             if (block.SvgDocument != null) {
                 if (block.Filename != null) {
@@ -559,8 +565,11 @@ namespace Goedel.Document.RFC {
                     }
                 WriteStartTagNL("artwork", "type", "svg");
                 block.SaveContent(textWriter);
+
                 WriteEndTagNL("artwork");
                 }
+
+
 
 
             //foreach (var item in block.Content) {
