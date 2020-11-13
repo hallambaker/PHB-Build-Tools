@@ -65,6 +65,16 @@ namespace Goedel.Tool.Constant {
                             enumEntry.Markdown(output);
                             break;
                             }
+                        case Parameters parametersEntry: {
+                            parametersEntry.Markdown(output);
+                            break;
+                            }
+
+                        case IANA ianaEntry: {
+                            ianaEntry.Markdown(output);
+                            break;
+                            }
+
                         }
                     }
                 if (codes) {
@@ -78,7 +88,7 @@ namespace Goedel.Tool.Constant {
                             }
                         output.WriteLine($"</dl>");
                         }
-                    
+
                     }
 
                 //output.WriteLine("~~~~");
@@ -187,12 +197,131 @@ namespace Goedel.Tool.Constant {
                     }
                 MarkdownTableEnd(output);
                 }
+
+            if (Tag?.Count > 0) {
+                MarkdownTableHead(output);
+                MarkdownData(output, "Parameter");
+                MarkdownData(output, "Tag");
+                MarkdownData(output, "UTF8 equivalent string");
+                MarkdownTableBody(output);
+                foreach (var tag in Tag) {
+                    MarkdownRowStart(output);
+                    MarkdownData(output, tag.Id.ToString());
+                    MarkdownData(output, tag.UTF8);
+                    MarkdownData(output, tag.Value);
+                    MarkdownRowEnd(output);
+                    }
+                MarkdownTableEnd(output);
+                }
+
             }
 
 
         }
-    public partial class UDF {
+    public partial class IANA {
+        public Enum Enum => Id.Definition as Enum;
+        public List<UDF> UDF => Enum.UDF;
 
+        public void Markdown(TextWriter output) {
+
+            if (UDF?.Count > 0) {
+                output.WriteLine("~~~~");
+                output.WriteLine("Code  Description                               Reference");
+                output.WriteLine("----  ----------------------------------------  ---------");
+                foreach (var udf in UDF) {
+                    output.WriteLine($"{udf.Value,4}  {udf.Text.PadRight(40)}  {udf.Reference}");
+
+                    }
+
+                output.WriteLine("~~~~");
+                }
+
+            //if (UDF?.Count > 0) {
+            //    MarkdownTableHead(output);
+            //    MarkdownData(output, "Type ID");
+            //    MarkdownData(output, "Initial");
+            //    MarkdownData(output, "Algorithm");
+            //    MarkdownTableBody(output);
+            //    foreach (var udf in UDF) {
+            //        MarkdownRowStart(output);
+            //        MarkdownData(output, udf.Value.ToString());
+            //        MarkdownData(output, udf.Initial.ToString());
+            //        MarkdownData(output, udf.Text);
+            //        MarkdownRowEnd(output);
+            //        }
+            //    MarkdownTableEnd(output);
+            //    }
+
+            //    if (Integer?.Count > 0) {
+            //        MarkdownTableHead(output);
+            //        MarkdownData(output, "Code");
+            //        MarkdownData(output, "Algorithm");
+            //        MarkdownData(output, "Description");
+
+            //        MarkdownTableBody(output);
+            //        foreach (var item in Integer) {
+            //            MarkdownRowStart(output);
+            //            if (item.Reserve.End == 0) {
+            //                MarkdownData(output, item.Value.ToString());
+
+            //                }
+            //            else {
+            //                MarkdownData(output, $"{item.Value}-{item.Reserve.End}");
+            //                }
+            //            MarkdownData(output, item.Id.Label);
+            //            MarkdownData(output, item.Title);
+            //            MarkdownRowEnd(output);
+            //            }
+            //        MarkdownTableEnd(output);
+            //        }
+
+            //    if (Tag?.Count > 0) {
+            //        MarkdownTableHead(output);
+            //        MarkdownData(output, "Parameter");
+            //        MarkdownData(output, "Tag");
+            //        MarkdownData(output, "UTF8 equivalent string");
+            //        MarkdownTableBody(output);
+            //        foreach (var tag in Tag) {
+            //            MarkdownRowStart(output);
+            //            MarkdownData(output, tag.Id.ToString());
+            //            MarkdownData(output, tag.Value);
+            //            MarkdownData(output, tag.Value);
+            //            MarkdownRowEnd(output);
+            //            }
+            //        MarkdownTableEnd(output);
+            //}
+
+            }
+
+
+        }
+
+    public partial class Parameters {
+
+
+        public void Markdown(TextWriter output) {
+
+            if (Integer?.Count > 0) {
+                MarkdownTableHead(output);
+                MarkdownData(output, "Algorithm");
+                MarkdownData(output, "L");
+
+                MarkdownTableBody(output);
+                foreach (var item in Integer) {
+                    MarkdownRowStart(output);
+                    MarkdownData(output, item.Title);
+                    MarkdownData(output, item.Value.ToString());
+                    MarkdownRowEnd(output);
+                    }
+                MarkdownTableEnd(output);
+                }
+            }
+
+
+        }
+
+    public partial class UDF {
+        public string Reference => "[This document]";
         public char Initial => (char)('A' + (Value >> 3));
 
         public string Text {
@@ -201,7 +330,7 @@ namespace Goedel.Tool.Constant {
                     return Note.Text;
                     }
                 if (Algorithm != null) {
-                    return Compress.Bits > 0 ? Algorithm.Id.Label :
+                    return Compress.Bits == 0 ? Algorithm.Id.Label :
                         $"{Algorithm.Id.Label} ({Compress.Bits} compressed)";
                     }
 
@@ -211,5 +340,7 @@ namespace Goedel.Tool.Constant {
 
             }
         }
-
+    public partial class Tag {
+        public string UTF8 => $"[{(int)Value[0]}]";
+        }
     }

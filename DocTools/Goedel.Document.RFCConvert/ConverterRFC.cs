@@ -131,7 +131,7 @@ namespace MakeRFC {
 
             LI enclosingDt = null;
 
-            var blocknum = 0;
+            //var blocknum = 0;
             foreach (var block in source.Blocks) {
                 //Console.WriteLine($"Block {blocknum++}");
 
