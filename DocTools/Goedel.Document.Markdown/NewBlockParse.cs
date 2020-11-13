@@ -97,8 +97,10 @@ namespace Goedel.Document.Markdown {
 
                 switch (block.CatalogEntry.Key) {
                     case "table": {
-                        table = Block.MakeBlock(CatalogEntryTable, null);
-                        documentBlocks.Add(table);
+                        if (block is Layout) {
+                            table = Block.MakeBlock(CatalogEntryTable, null);
+                            documentBlocks.Add(table);
+                            }
                         break;
                         }
                     case "tablerow":

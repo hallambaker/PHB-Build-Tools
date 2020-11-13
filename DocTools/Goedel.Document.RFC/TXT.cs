@@ -183,6 +183,10 @@ namespace Goedel.Document.RFC {
 
             int RowSpace = PageWriter.MaxCol - 4;
 
+            if (Table.MaxRow == 0) {
+                Table.MaxRow = 1;
+                }
+
             int PerRow = RowSpace / Table.MaxRow;
 
             int[] Widths = new int[Table.MaxRow];
