@@ -6,15 +6,15 @@
     <OutputType>Exe</OutputType>
     <Company>Phill Hallam-Baker</Company>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-    <Product>RFCTool</Product>
+    <Product>Constant Manager</Product>
     <Description>Generates RFC format documentation from OOXML or Markdown source.</Description>
     <Copyright>© 2015-2019</Copyright>
-    <Title>RFCTool</Title>
+    <Title>Constant Manager</Title>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 
-  <Import Project="..\Goedel.Tool.Constant\Goedel.Tool.Constant.projitems" Label="Shared" />
+
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="VSPreBuild" />
@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+    <ProjectReference Include="..\Goedel.Tool.Constant\Goedel.Tool.Constant.csproj" />
   </ItemGroup>
 
   <ItemGroup>

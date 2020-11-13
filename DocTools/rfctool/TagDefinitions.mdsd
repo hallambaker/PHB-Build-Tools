@@ -1,4 +1,6 @@
-﻿Class Goedel.MarkLib TagDefinitions
+﻿// The tag definitions used to create RFCs.
+
+Class Goedel.MarkLib TagDefinitions
 	
 	Block figure
 	Block include
@@ -80,6 +82,30 @@
 		Stack dl
 		Stack row
 		XML "dd" "class"
+
+
+	Layout table
+		Stack table
+
+	Layout tablerow
+		Stack table
+	
+	Layout tablecell
+		Stack tbody
+	
+	Layout thead
+		Stack table
+	
+	Layout tbody
+		Stack table
+
+	Layout tr
+		Stack table
+	
+	Block th
+		Stack tr
+	Block td
+		Stack tr
 
 
 	Annotation a

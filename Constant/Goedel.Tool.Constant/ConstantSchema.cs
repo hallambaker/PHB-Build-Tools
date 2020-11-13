@@ -51,8 +51,11 @@ using Goedel.Utilities;
 //       String
 //       Function
 //       Enum
+//       IANA
+//       Parameters
 //       Conv
 //   IdType
+//       Filename
 //   NamespaceType
 //       Goedel.Tool.Constant
 //   ClassType
@@ -66,8 +69,9 @@ using Goedel.Utilities;
 //       Options
 //       Description
 //       Value
-//       UDF
 //       Integer
+//       Tag
+//       UDF
 //       Algorithm
 //       Compress
 //       Note
@@ -82,7 +86,6 @@ using Goedel.Utilities;
 //   TokenType
 //       Name
 //       Label
-//       Filename
 
 #pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
 namespace Goedel.Tool.Constant {
@@ -93,9 +96,12 @@ namespace Goedel.Tool.Constant {
 
         Namespace,
         File,
+        IANA,
         Code,
         String,
+        Parameters,
         Enum,
+        Tag,
         UDF,
         Note,
         Algorithm,
@@ -163,7 +169,7 @@ namespace Goedel.Tool.Constant {
 		}
 
     public partial class File : _Choice {
-        public TOKEN<_Choice>			Id;
+        public ID<_Choice>				Id; 
         public List <_Choice>           Entries = new List<_Choice> ();
 
         public override ConstantType _Tag () =>ConstantType.File;
@@ -182,7 +188,7 @@ namespace Goedel.Tool.Constant {
 				Output.StartElement ("File");
 				}
 
-	        Output.WriteId ("Id", Id.ToString());
+	        Output.WriteId ("Id", Id.ToString()); 
 			Output.StartList ("");
 			foreach (_Choice _e in Entries) {
 				_e.Serialize (Output, true);
@@ -190,6 +196,36 @@ namespace Goedel.Tool.Constant {
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("File");
+				}			
+			}
+		}
+
+    public partial class IANA : _Choice {
+        public REF<_Choice>				Id;
+		public string					Title;
+		public Description  Description = new  Description();
+
+        public override ConstantType _Tag () =>ConstantType.IANA;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("IANA");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			Output.WriteAttribute ("Title", Title);
+			Output.StartList ("");
+		// public Description  Description = new  Description();
+			Description.Serialize (Output, true);
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("IANA");
 				}			
 			}
 		}
@@ -254,12 +290,48 @@ namespace Goedel.Tool.Constant {
 			}
 		}
 
+    public partial class Parameters : _Choice {
+        public ID<_Choice>				Id; 
+		public string					Title;
+		public List<Integer>  Integer = new  List <Integer> ();
+		public List<Tag>  Tag = new  List <Tag> ();
+
+        public override ConstantType _Tag () =>ConstantType.Parameters;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Parameters");
+				}
+
+	        Output.WriteId ("Id", Id.ToString()); 
+			Output.WriteAttribute ("Title", Title);
+			Output.StartList ("");
+			foreach (Integer _e in Integer) {
+				_e.Serialize (Output, true);
+				}
+			foreach (Tag _e in Tag) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("Parameters");
+				}			
+			}
+		}
+
     public partial class Enum : _Choice {
-        public TOKEN<_Choice>			Id;
+        public ID<_Choice>				Id; 
 		public string					Title;
 		public List<Code>  Code = new  List <Code> ();
 		public List<UDF>  UDF = new  List <UDF> ();
 		public List<Integer>  Integer = new  List <Integer> ();
+		public List<Tag>  Tag = new  List <Tag> ();
 
         public override ConstantType _Tag () =>ConstantType.Enum;
 
@@ -274,7 +346,7 @@ namespace Goedel.Tool.Constant {
 				Output.StartElement ("Enum");
 				}
 
-	        Output.WriteId ("Id", Id.ToString());
+	        Output.WriteId ("Id", Id.ToString()); 
 			Output.WriteAttribute ("Title", Title);
 			Output.StartList ("");
 			foreach (Code _e in Code) {
@@ -286,9 +358,37 @@ namespace Goedel.Tool.Constant {
 			foreach (Integer _e in Integer) {
 				_e.Serialize (Output, true);
 				}
+			foreach (Tag _e in Tag) {
+				_e.Serialize (Output, true);
+				}
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Enum");
+				}			
+			}
+		}
+
+    public partial class Tag : _Choice {
+        public ID<_Choice>				Id; 
+		public string					Value;
+
+        public override ConstantType _Tag () =>ConstantType.Tag;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Tag");
+				}
+
+	        Output.WriteId ("Id", Id.ToString()); 
+			Output.WriteAttribute ("Value", Value);
+			if (tag) {
+				Output.EndElement ("Tag");
 				}			
 			}
 		}
@@ -632,6 +732,10 @@ namespace Goedel.Tool.Constant {
 		File_Start,
 		File__Id,				
 		File__Entries,				
+		IANA_Start,
+		IANA__Id,				
+		IANA__Title,				
+		IANA__Options,				
 		Code_Start,
 		Code__Id,				
 		Code__Title,				
@@ -640,10 +744,17 @@ namespace Goedel.Tool.Constant {
 		String__Id,				
 		String__Value,				
 		String__Options,				
+		Parameters_Start,
+		Parameters__Id,				
+		Parameters__Title,				
+		Parameters__Options,				
 		Enum_Start,
 		Enum__Id,				
 		Enum__Title,				
 		Enum__Options,				
+		Tag_Start,
+		Tag__Id,				
+		Tag__Value,				
 		UDF_Start,
 		UDF__Value,				
 		UDF__Class,				
@@ -732,9 +843,9 @@ namespace Goedel.Tool.Constant {
             Stack = new List <_StackItem> ();
             StartOfEntry = true;
 
+			TYPE__Filename = Registry.TYPE ("Filename"); 
 			TYPE__Name = Registry.TYPE ("Name"); 
 			TYPE__Label = Registry.TYPE ("Label"); 
-			TYPE__Filename = Registry.TYPE ("Filename"); 
 
 
 
@@ -742,18 +853,21 @@ namespace Goedel.Tool.Constant {
 
 
 
+        public TYPE<Goedel.Tool.Constant._Choice> TYPE__Filename ;
         public TYPE<Goedel.Tool.Constant._Choice> TYPE__Name ;
         public TYPE<Goedel.Tool.Constant._Choice> TYPE__Label ;
-        public TYPE<Goedel.Tool.Constant._Choice> TYPE__Filename ;
 
         private Goedel.Tool.Constant._Choice New_Choice(string Label) {
             switch (Label) {
 
                 case "Namespace": return NewNamespace();
                 case "File": return NewFile();
+                case "IANA": return NewIANA();
                 case "Code": return NewCode();
                 case "String": return NewString();
+                case "Parameters": return NewParameters();
                 case "Enum": return NewEnum();
+                case "Tag": return NewTag();
                 case "UDF": return NewUDF();
                 case "Note": return NewNote();
                 case "Algorithm": return NewAlgorithm();
@@ -789,6 +903,14 @@ namespace Goedel.Tool.Constant {
             }
 
 
+        private Goedel.Tool.Constant.IANA NewIANA() {
+            Goedel.Tool.Constant.IANA result = new Goedel.Tool.Constant.IANA();
+            Push (result);
+            State = StateCode.IANA_Start;
+            return result;
+            }
+
+
         private Goedel.Tool.Constant.Code NewCode() {
             Goedel.Tool.Constant.Code result = new Goedel.Tool.Constant.Code();
             Push (result);
@@ -805,10 +927,26 @@ namespace Goedel.Tool.Constant {
             }
 
 
+        private Goedel.Tool.Constant.Parameters NewParameters() {
+            Goedel.Tool.Constant.Parameters result = new Goedel.Tool.Constant.Parameters();
+            Push (result);
+            State = StateCode.Parameters_Start;
+            return result;
+            }
+
+
         private Goedel.Tool.Constant.Enum NewEnum() {
             Goedel.Tool.Constant.Enum result = new Goedel.Tool.Constant.Enum();
             Push (result);
             State = StateCode.Enum_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Constant.Tag NewTag() {
+            Goedel.Tool.Constant.Tag result = new Goedel.Tool.Constant.Tag();
+            Push (result);
+            State = StateCode.Tag_Start;
             return result;
             }
 
@@ -906,9 +1044,12 @@ namespace Goedel.Tool.Constant {
 
                 case "Namespace": return Goedel.Tool.Constant.ConstantType.Namespace;
                 case "File": return Goedel.Tool.Constant.ConstantType.File;
+                case "IANA": return Goedel.Tool.Constant.ConstantType.IANA;
                 case "Code": return Goedel.Tool.Constant.ConstantType.Code;
                 case "String": return Goedel.Tool.Constant.ConstantType.String;
+                case "Parameters": return Goedel.Tool.Constant.ConstantType.Parameters;
                 case "Enum": return Goedel.Tool.Constant.ConstantType.Enum;
+                case "Tag": return Goedel.Tool.Constant.ConstantType.Tag;
                 case "UDF": return Goedel.Tool.Constant.ConstantType.UDF;
                 case "Note": return Goedel.Tool.Constant.ConstantType.Note;
                 case "Algorithm": return Goedel.Tool.Constant.ConstantType.Algorithm;
@@ -1061,7 +1202,7 @@ namespace Goedel.Tool.Constant {
                     case StateCode.File_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Constant.File Current_Cast = (Goedel.Tool.Constant.File)Current;
-                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__Filename, Current_Cast);
+                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__Filename, Current_Cast);
                             State = StateCode.File__Id;
                             break;
                             }
@@ -1092,15 +1233,68 @@ namespace Goedel.Tool.Constant {
 									(LabelType == Goedel.Tool.Constant.ConstantType.Code) |
 									(LabelType == Goedel.Tool.Constant.ConstantType.String) |
 									(LabelType == Goedel.Tool.Constant.ConstantType.Function) |
-									(LabelType == Goedel.Tool.Constant.ConstantType.Enum) ) {
+									(LabelType == Goedel.Tool.Constant.ConstantType.Enum) |
+									(LabelType == Goedel.Tool.Constant.ConstantType.IANA) |
+									(LabelType == Goedel.Tool.Constant.ConstantType.Parameters) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Code String Function Enum ]");
+								throw new Expected ("Parser Error Expected [Code String Function Enum IANA Parameters ]");
 								}
 							}
                         break;
 
+
+                    case StateCode.IANA_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Constant.IANA Current_Cast = (Goedel.Tool.Constant.IANA)Current;
+                            Current_Cast.Id = Registry.REF(Position, Text, TYPE__Label, Current_Cast);
+                            State = StateCode.IANA__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.IANA__Id:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Constant.IANA Current_Cast = (Goedel.Tool.Constant.IANA)Current;
+                            Current_Cast.Title = Text;
+                            State = StateCode.IANA__Title;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.IANA__Title:
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.IANA__Options;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.IANA__Options: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for OPTIONS $$$$$
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Constant.IANA Current_Cast = (Goedel.Tool.Constant.IANA)Current;
+                            Goedel.Tool.Constant.ConstantType LabelType = _Reserved (Text);
+							switch (LabelType) {
+								case Goedel.Tool.Constant.ConstantType.Description : {
+
+									// Description  Description
+									Current_Cast.Description = NewDescription ();
+									break;
+									}
+								default : {
+									throw new Expected("Parser Error Expected [Description ]");
+									}
+								}
+							}
+                        break;
 
                     case StateCode.Code_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
@@ -1204,10 +1398,67 @@ namespace Goedel.Tool.Constant {
 							}
                         break;
 
+                    case StateCode.Parameters_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Constant.Parameters Current_Cast = (Goedel.Tool.Constant.Parameters)Current;
+                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__Label, Current_Cast);
+                            State = StateCode.Parameters__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Parameters__Id:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Constant.Parameters Current_Cast = (Goedel.Tool.Constant.Parameters)Current;
+                            Current_Cast.Title = Text;
+                            State = StateCode.Parameters__Title;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Parameters__Title:
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Parameters__Options;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.Parameters__Options: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for OPTIONS $$$$$
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Constant.Parameters Current_Cast = (Goedel.Tool.Constant.Parameters)Current;
+                            Goedel.Tool.Constant.ConstantType LabelType = _Reserved (Text);
+							switch (LabelType) {
+								case Goedel.Tool.Constant.ConstantType.Integer : {
+
+									// Integer  Integer
+									Current_Cast.Integer.Add (NewInteger ());
+									break;
+									}
+								case Goedel.Tool.Constant.ConstantType.Tag : {
+
+									// Tag  Tag
+									Current_Cast.Tag.Add (NewTag ());
+									break;
+									}
+								default : {
+									throw new Expected("Parser Error Expected [Integer Tag ]");
+									}
+								}
+							}
+                        break;
+
                     case StateCode.Enum_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Constant.Enum Current_Cast = (Goedel.Tool.Constant.Enum)Current;
-                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__Label, Current_Cast);
+                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__Label, Current_Cast);
                             State = StateCode.Enum__Id;
                             break;
                             }
@@ -1260,13 +1511,41 @@ namespace Goedel.Tool.Constant {
 									Current_Cast.Integer.Add (NewInteger ());
 									break;
 									}
+								case Goedel.Tool.Constant.ConstantType.Tag : {
+
+									// Tag  Tag
+									Current_Cast.Tag.Add (NewTag ());
+									break;
+									}
 								default : {
-									throw new Expected("Parser Error Expected [Code UDF Integer ]");
+									throw new Expected("Parser Error Expected [Code UDF Integer Tag ]");
 									}
 								}
 							}
                         break;
 
+                    case StateCode.Tag_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Constant.Tag Current_Cast = (Goedel.Tool.Constant.Tag)Current;
+                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__Label, Current_Cast);
+                            State = StateCode.Tag__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Tag__Id:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Constant.Tag Current_Cast = (Goedel.Tool.Constant.Tag)Current;
+                            Current_Cast.Value = Text;
+                            State = StateCode.Tag__Value;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Tag__Value:
+                        Pop ();
+                        Represent = true; 
+                        break;
                     case StateCode.UDF_Start:
                         if (Token == TokenType.INTEGER) {
                             Goedel.Tool.Constant.UDF Current_Cast = (Goedel.Tool.Constant.UDF)Current;

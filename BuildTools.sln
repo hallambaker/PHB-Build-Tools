@@ -165,10 +165,18 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Command", "..\mmm\Libraries\Core\Goedel.Command\Goedel.Command.csproj", "{AEAE0789-44DF-4B7F-B346-C15BBD90B458}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tool Constant", "Tool Constant", "{CB0E0AF4-0877-40BE-B0AA-DA18ABBC9E72}"
+	ProjectSection(SolutionItems) = preProject
+		..\mmm\Libraries\Goedel.Cryptography\UDFConstants.constant = ..\mmm\Libraries\Goedel.Cryptography\UDFConstants.constant
+		..\mmm\Outputs\Documents\Generated\UDFConstantsAlgorithmIdentifier.md = ..\mmm\Outputs\Documents\Generated\UDFConstantsAlgorithmIdentifier.md
+		..\mmm\Outputs\Documents\Generated\UDFConstantsIANAValues.md = ..\mmm\Outputs\Documents\Generated\UDFConstantsIANAValues.md
+		..\mmm\Outputs\Documents\Generated\UDFConstantsRSATags.md = ..\mmm\Outputs\Documents\Generated\UDFConstantsRSATags.md
+		..\mmm\Outputs\Documents\Generated\UDFConstantsRSAValues.md = ..\mmm\Outputs\Documents\Generated\UDFConstantsRSAValues.md
+		..\mmm\Outputs\Documents\Generated\UDFConstantsTypeIdentifier.md = ..\mmm\Outputs\Documents\Generated\UDFConstantsTypeIdentifier.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "constant", "Constant\constant\constant.csproj", "{B122A664-D433-4993-8E7B-8139BC5890F4}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Tool.Constant", "Constant\Goedel.Tool.Constant\Goedel.Tool.Constant.shproj", "{89C76FCA-62D3-4198-A8B4-489A7A4F4ACA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Tool.Constant", "Constant\Goedel.Tool.Constant\Goedel.Tool.Constant.csproj", "{3738EB7E-3C12-4A80-BF66-942F27E60356}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -192,10 +200,8 @@ Global
 		DocTools\Goedel.Document.RFC\Goedel.Document.RFC.projitems*{7c30fbe5-8e08-4687-ad68-8028819d5e57}*SharedItemsImports = 13
 		GScript\Goedel.Tool.Script\Goedel.Tool.Script.projitems*{7d3b1b22-f249-4389-ab94-790757144aa2}*SharedItemsImports = 13
 		Goedel3\Goedel.Tool.Schema\Goedel.Tool.Schema.projitems*{85063efc-7090-42ad-b562-006087de9aa6}*SharedItemsImports = 5
-		Constant\Goedel.Tool.Constant\Goedel.Tool.Domainer.projitems*{89c76fca-62d3-4198-a8b4-489a7a4f4aca}*SharedItemsImports = 13
 		DNSConfig\Goedel.Tool.DNSConfig\Goedel.Tool.DNSConfig.projitems*{9c81e246-38a7-4567-b2db-f1dbde2a0b65}*SharedItemsImports = 13
 		DocTools\Goedel.Document.OpenXML\Goedel.Document.OpenXML.projitems*{a25a14da-8ac5-445e-9562-46c11c54ea15}*SharedItemsImports = 13
-		Constant\Goedel.Tool.Constant\Goedel.Tool.Constant.projitems*{b122a664-d433-4993-8e7b-8139bc5890f4}*SharedItemsImports = 5
 		FSRGen\Goedel.Tool.FSRGen\Goedel.Tool.FSRGen.projitems*{c0c2037e-ecf1-4fbf-82f8-7c2e6feb0d3f}*SharedItemsImports = 5
 		MakeyMakey\Goedel.Tool.Makey\Goedel.Tool.Makey.projitems*{c22aa4a5-f0a0-4cff-ab4d-7a02f5dfb59e}*SharedItemsImports = 5
 		ASN\Goedel.Tool.ASN\Goedel.Tool.ASN.projitems*{c4be31be-8172-455d-a94f-275410348065}*SharedItemsImports = 13
@@ -778,6 +784,26 @@ Global
 		{B122A664-D433-4993-8E7B-8139BC5890F4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B122A664-D433-4993-8E7B-8139BC5890F4}.Release|x86.ActiveCfg = Release|Any CPU
 		{B122A664-D433-4993-8E7B-8139BC5890F4}.Release|x86.Build.0 = Release|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Debug|x86.Build.0 = Debug|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.DotNet|Any CPU.ActiveCfg = Debug|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.DotNet|Any CPU.Build.0 = Debug|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.DotNet|x86.ActiveCfg = Debug|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.DotNet|x86.Build.0 = Debug|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Focus|Any CPU.ActiveCfg = Release|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Focus|Any CPU.Build.0 = Release|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Focus|x86.ActiveCfg = Release|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Focus|x86.Build.0 = Release|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Publish|x86.ActiveCfg = Release|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Publish|x86.Build.0 = Release|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Release|x86.ActiveCfg = Release|Any CPU
+		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -840,7 +866,7 @@ Global
 		{AEAE0789-44DF-4B7F-B346-C15BBD90B458} = {510C00FB-FB4F-4C9E-A2F6-86D2FA171CD1}
 		{CB0E0AF4-0877-40BE-B0AA-DA18ABBC9E72} = {32781FAB-7F7F-4267-9599-479F14195A4B}
 		{B122A664-D433-4993-8E7B-8139BC5890F4} = {CB0E0AF4-0877-40BE-B0AA-DA18ABBC9E72}
-		{89C76FCA-62D3-4198-A8B4-489A7A4F4ACA} = {CB0E0AF4-0877-40BE-B0AA-DA18ABBC9E72}
+		{3738EB7E-3C12-4A80-BF66-942F27E60356} = {CB0E0AF4-0877-40BE-B0AA-DA18ABBC9E72}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B0FED20-F156-4724-9241-1F63A97DA43E}

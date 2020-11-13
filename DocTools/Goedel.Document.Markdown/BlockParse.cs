@@ -31,6 +31,7 @@ namespace Goedel.Document.Markdown {
             if (Document.MetaDataLookup("short", out MetaTags)) {
                 Document.ShortTitle = MetaTags[0].Text;
                 }
+
             }
 
         // We have the following types of markup

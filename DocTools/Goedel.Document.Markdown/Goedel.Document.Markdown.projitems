@@ -33,7 +33,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)NewBlockParse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Parse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ParseRegistry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Reader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Schema.cs">
       <DependentUpon>Schema.gdl</DependentUpon>
       <DesignTime>True</DesignTime>

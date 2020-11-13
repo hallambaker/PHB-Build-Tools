@@ -5,15 +5,15 @@ using System.Text;
 
 using Goedel.Registry;
 using Goedel.IO;
+using Goedel.Tool.Constant ;
 
-namespace Goedel.Shell.Constant {
+    namespace Goedel.Shell.Constant {
     public partial class ConstantShell  {
 
         public override void Generate(Generate Options) {
             var inputfile = Options.InputFile.Text;
             var outputfile = Options.OutputFile.DefaultFrom(inputfile);
             var Parse = new Goedel.Tool.Constant.Constant() ;
-
 
             using (Stream infile =
                         new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
@@ -25,19 +25,20 @@ namespace Goedel.Shell.Constant {
 
             Parse.Init();
 
-
-            using (var OutputWriter = outputfile.OpenTextWriterNew()) {
-                var Script = new Goedel.Tool.Constant.Generate() {
-                    _Output = OutputWriter
-                    };
-                Script.GenerateCS(Parse);
-                }
-
-
             if (Options.MarkDown.Value) {
-
+                Parse.Markdown();
 
                 }
+            else {
+                using (var OutputWriter = outputfile.OpenTextWriterNew()) {
+                    var Script = new Goedel.Tool.Constant.Generate() {
+                        _Output = OutputWriter
+                        };
+                    Script.GenerateCS(Parse);
+                    }
+
+                }
+
 
             }
 

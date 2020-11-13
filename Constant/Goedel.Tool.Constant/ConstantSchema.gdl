@@ -8,13 +8,20 @@ Class Goedel.Tool.Constant Constant
 		Text			Text
 
 	TopType File
-		Id				Token Filename
+		Id				ID Filename
 		Entries			List Choice
 			Code
 			String
 			Function
 			Enum
+			IANA
+			Parameters
 
+	Type IANA
+		Id				REF Label
+		Title			String
+		Options			Options
+			Description	Description Single
 
 	Type Code
 		Id				Token Label
@@ -28,14 +35,25 @@ Class Goedel.Tool.Constant Constant
 		Options			Options
 			Description	Description Single
 
+	Type Parameters
+		Id				ID Label
+		Title			String
+		Options			Options
+			Integer		Integer Multiple
+			Tag			Tag Multiple
+
 	Type Enum
-		Id				Token Label
+		Id				ID Label
 		Title			String
 		Options			Options
 			Code		Code Multiple
 			UDF			UDF Multiple
 			Integer		Integer Multiple
+			Tag			Tag Multiple
 
+	Type Tag
+		Id				ID Label
+		Value			String
 
 	Type UDF
 		Value			Integer

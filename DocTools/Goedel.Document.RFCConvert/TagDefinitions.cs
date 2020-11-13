@@ -65,6 +65,14 @@ Class Goedel.MarkLib TagDefinitions
 		Stack table
 		Stack tablerow
 
+	Layout tr
+		Stack table
+
+	Block td
+		Stack tr
+	Block th
+		Stack tr
+
 	Layout ul
 		XML ""ul"" ""class""
 	Layout ol

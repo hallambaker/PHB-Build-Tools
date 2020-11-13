@@ -69,7 +69,13 @@ namespace Goedel.Document.Markdown {
         /// <returns></returns>
         public static bool Include (string FileName, TagCatalog TagCatalog,
                         Document Document) {
+            CatalogEntry CatalogEntryTable = TagCatalog.Find("table");
+            CatalogEntry CatalogEntryTableRow = TagCatalog.Find("tablerow");
+            CatalogEntry CatalogEntryTableCell = TagCatalog.Find("tablecell");
 
+            var documentBlocks = Document.Blocks;
+            var newBlocks = new List<Block>();
+            Document.Blocks = newBlocks;
             // todo expand path here
             var FilePath = Path.Combine (Document.Path, FileName);
 
@@ -83,6 +89,61 @@ namespace Goedel.Document.Markdown {
                 Document = Document
                 };
             BlockParser.ParseMarkDown(Included.Paragraphs);
+
+            Block table = null;
+            TextSegmentOpen tableRow = null;
+            foreach (var block in newBlocks) {
+
+
+                switch (block.CatalogEntry.Key) {
+                    case "table": {
+                        table = Block.MakeBlock(CatalogEntryTable, null);
+                        documentBlocks.Add(table);
+                        break;
+                        }
+                    case "tablerow":
+                    case "tr": {
+                        if (block is Layout) {
+                            if (table != null) {
+                                if (tableRow != null) {
+                                    table.AddSegmentClose(tableRow);
+                                    }
+
+                                tableRow = table.AddSegmentOpen(CatalogEntryTableRow, null);
+                                }
+                            }
+                        break;
+                        }
+                    case "th":
+                    case "td":
+                    case "tablecell": {
+                        if (tableRow != null) {
+                            var OpenCell = table.AddSegmentOpen(CatalogEntryTableCell, null);
+                            table.AddSegmentText(block.Text);
+                            table.AddSegmentClose(OpenCell);
+                            }
+
+                        break;
+                        }
+                    default: {
+                        if (tableRow != null) {
+                            table.AddSegmentClose(tableRow);
+                            tableRow = null;
+                            }
+
+                        table = null;
+                        
+                        documentBlocks.Add(block);
+                        break;
+                        }
+                    }
+                }
+            if (tableRow != null) {
+                table.AddSegmentClose(tableRow);
+                tableRow = null;
+                }
+
+            Document.Blocks = documentBlocks;
 
             return true;
             }

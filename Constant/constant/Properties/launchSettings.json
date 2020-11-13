@@ -2,8 +2,8 @@
   "profiles": {
     "constant": {
       "commandName": "Project",
-      "commandLineArgs": "UDFConstants.constant ",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Libraries\\Goedel.Cryptography"
+      "commandLineArgs": "..\\..\\..\\Libraries\\Goedel.Cryptography\\UDFConstants.constant /md",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Outputs\\Documents\\Generated"
     }
   }
 }

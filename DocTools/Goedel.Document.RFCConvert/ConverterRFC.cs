@@ -130,8 +130,10 @@ namespace MakeRFC {
 
 
             LI enclosingDt = null;
+
+            var blocknum = 0;
             foreach (var block in source.Blocks) {
-                //Console.WriteLine("Block {0}", Block.BlockType);
+                //Console.WriteLine($"Block {blocknum++}");
 
 
                 if ((block.GetType() == typeof(Goedel.Document.Markdown.Layout)) |
@@ -398,7 +400,9 @@ namespace MakeRFC {
                         break;
                         }
                     case GM.TextSegmentText Text: {
-                        data.Text = Text.Text;
+                        if (data != null) {
+                            data.Text = Text.Text;
+                            }
                         break;
                         }
                     case GM.TextSegmentClose Close: {
