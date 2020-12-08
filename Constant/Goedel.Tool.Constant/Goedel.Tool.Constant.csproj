@@ -22,6 +22,12 @@
 
   <ItemGroup>
     <Compile Update="ConstantSchema.cs">
+      <DependentUpon>ConstantSchema.gdl</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Generate.cs">
+      <DependentUpon>Generate.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -29,10 +35,12 @@
 
   <ItemGroup>
     <None Update="ConstantSchema.gdl">
-      <Generator></Generator>
+      <LastGenOutput>ConstantSchema.cs</LastGenOutput>
+      <Generator>Goedel3</Generator>
     </None>
     <None Update="Generate.Script">
-      <Generator></Generator>
+      <LastGenOutput>Generate.cs</LastGenOutput>
+      <Generator>GScript</Generator>
     </None>
   </ItemGroup>
 

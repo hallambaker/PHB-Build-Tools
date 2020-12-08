@@ -18,7 +18,7 @@ namespace #{Constant.NameSpaceName} {
     ///<summary>#{item.Title}</summary>
     public enum #{item.Id.Label} {
         ///<summary>Undefined type</summary>
-        Unknown#!
+        Unknown = -1#!
 #foreach (var entry in item.Integer)
 #if (entry.Reserve.End == 0)
 ,
