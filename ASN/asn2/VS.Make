@@ -19,7 +19,8 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.ASN.dll\
-    Goedel.Tool.Core.dll
+    Goedel.Tool.Core.dll\
+    Goedel.Tool.ASN.dll
 
 ToolTargets = \
 	ASN2.cs
@@ -29,11 +30,9 @@ ASN2.cs : ASN2.command
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.ASN && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
-	cd ..\Goedel.Tool.ASN && nmake /c /f VS.make postbuild 
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)

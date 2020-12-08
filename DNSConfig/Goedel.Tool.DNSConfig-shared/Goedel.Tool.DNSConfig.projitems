@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>608732b4-132c-41a3-b785-164ff4239b20</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Goedel.Tool.DNSConfig</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)DNSConfigSchema.cs">
+      <DependentUpon>DNSConfigSchema.gdl</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)DomainerPlus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Generate.cs">
+      <DependentUpon>Generate.Script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)DNSConfigSchema.gdl">
+      <LastGenOutput>Domainer.cs</LastGenOutput>
+      <Generator>Goedel3</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Generate.Script">
+      <LastGenOutput>Generate.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)PHBLogo256.ico" />
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
+  </ItemGroup>
+</Project>

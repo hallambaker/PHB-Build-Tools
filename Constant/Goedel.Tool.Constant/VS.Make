@@ -17,17 +17,10 @@
 
 MSBuildThisFileDirectory = 
 
-LinkFiles = 
+LinkFiles = \
+    Goedel.Tool.Core.dll
 
-ToolTargets = \
-	ConstantSchema.cs\
-	Generate.cs
-ConstantSchema.cs : ConstantSchema.gdl 
-	goedel3 ConstantSchema.gdl  /cs  ConstantSchema.cs
-
-Generate.cs : Generate.Script 
-	gscript Generate.Script  Generate.cs
-
+ToolTargets = 
 
 
 prebuildRecurse : 
@@ -35,13 +28,14 @@ prebuildRecurse :
 
 postbuildRecurse :
 
-# Shared project, create build rules for custom tools.
+# Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
+	version version.version AssemblyVersion.cs
 	
 
 postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Tool.Domainer.dll
+	powershell publishtarget Goedel.Tool.Constant.dll
 

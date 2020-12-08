@@ -15,6 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Goedel.Tool.DNSConfig\Goedel.Tool.DNSConfig.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
   </ItemGroup>
 
@@ -32,8 +33,6 @@
       <Generator>CommandCS</Generator>
     </None>
   </ItemGroup>
-
-  <Import Project="..\Goedel.Tool.DNSConfig\Goedel.Tool.DNSConfig.projitems" Label="Shared" />
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="VSPreBuild" />

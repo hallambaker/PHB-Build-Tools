@@ -28,11 +28,9 @@ Command.cs : Command.command
 
 
 prebuildRecurse : 
-	cd ..\..\Goedel3\Goedel.Tool.Schema && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
-	cd ..\..\Goedel3\Goedel.Tool.Schema && nmake /c /f VS.make postbuild 
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>3622efbf-83de-4af2-ae1a-76fb2368ccf8</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Goedel.Tool.FSRGen</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)FSRSchema.cs">
+      <DependentUpon>FSRSchema.gdl</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)FSRSchemaPlus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GenerateC.cs">
+      <DependentUpon>GenerateC.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)GenerateCS.cs">
+      <DependentUpon>GenerateCS.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)FSRSchema.gdl">
+      <LastGenOutput>FSRSchema.cs</LastGenOutput>
+      <Generator>Goedel3</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)GenerateC.script">
+      <LastGenOutput>GenerateC.cs</LastGenOutput>
+      <Generator>GScript</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)GenerateCS.script">
+      <LastGenOutput>GenerateCS.cs</LastGenOutput>
+      <Generator>GScript</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)PHBLogo256.ico" />
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
+  </ItemGroup>
+</Project>

@@ -17,7 +17,8 @@
 
 MSBuildThisFileDirectory = 
 
-LinkFiles = 
+LinkFiles = \
+    Goedel.Tool.Core.dll
 
 ToolTargets = \
 	Document.cs\
@@ -47,8 +48,9 @@ prebuildRecurse :
 
 postbuildRecurse :
 
-# Shared project, create build rules for custom tools.
+# Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
+	version version.version AssemblyVersion.cs
 	
 
 postbuild : postbuildRecurse

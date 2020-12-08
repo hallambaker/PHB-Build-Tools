@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Goedel.Tool.Schema\Goedel.Tool.Schema.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
   </ItemGroup>
 
@@ -36,8 +37,6 @@
       <Generator>CommandCS</Generator>
     </None>
   </ItemGroup>
-
-  <Import Project="..\Goedel.Tool.Schema\Goedel.Tool.Schema.projitems" Label="Shared" />
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="VSPreBuild" />

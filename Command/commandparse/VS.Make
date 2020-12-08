@@ -18,7 +18,8 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Tool.Core.dll
+    Goedel.Tool.Core.dll\
+    Goedel.Tool.Command.dll
 
 ToolTargets = \
 	Command.cs
@@ -28,11 +29,9 @@ Command.cs : Command.command
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.Command && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
-	cd ..\Goedel.Tool.Command && nmake /c /f VS.make postbuild 
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)

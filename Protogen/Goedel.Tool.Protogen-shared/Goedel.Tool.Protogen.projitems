@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>04206448-ff4b-430d-8270-a4cbfa9d2fa3</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Goedel.Tool.Protogen</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Annotation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Document.cs">
+      <DependentUpon>Document.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Error.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)GenerateC.cs">
+      <DependentUpon>GenerateC.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)GenerateCSharp.cs">
+      <DependentUpon>GenerateCSharp.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ProtoGen.cs">
+      <DependentUpon>ProtoGen.gdl</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ProtoGenPlus.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Document.script">
+      <LastGenOutput>Document.cs</LastGenOutput>
+      <Generator>GScript</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Exceptions.exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>exceptional</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)GenerateC.script">
+      <LastGenOutput>GenerateC.cs</LastGenOutput>
+      <Generator>GScript</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)GenerateCSharp.script">
+      <LastGenOutput>GenerateCSharp.cs</LastGenOutput>
+      <Generator>GScript</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)MakeSchema.bat" />
+    <None Include="$(MSBuildThisFileDirectory)PHBLogo256.ico" />
+    <None Include="$(MSBuildThisFileDirectory)ProtoGen.gdl">
+      <LastGenOutput>ProtoGen.cs</LastGenOutput>
+      <Generator>Goedel3</Generator>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,171 @@
+﻿Class Goedel.Document.Markdown TagDefinitions
+	
+	Block figure
+	Block include
+	Block pre
+		Flag plaintext
+
+	Meta bibliography
+	Meta bibsource
+	Meta style
+
+
+	Block p
+		Level 0
+		XML "p" "id"
+	Block h1
+		Level 1
+		XML "h1" "id"
+	Block h2
+		Level 2
+		XML "h2" "id"
+	Block h3
+		Level 3
+		XML "h3" "id"
+	Block h4
+		Level 4
+		XML "h4" "id"
+	Block h5
+		Level 5
+		XML "h5" "id"
+	Block h6
+		Level 6
+		XML "h6" "id"
+
+	Block appendix
+		Level 1
+		XML "h1" "id"
+
+	Layout ul
+		XML "ul" "class"
+	Layout ol
+		XML "ol" "class"
+	Layout dl
+		XML "dl" "class"
+
+	Layout appendicies
+
+	Block li
+		Stack ul
+		Stack row
+		XML "li" "class"
+
+	Block nli
+		Stack ol
+		Stack row
+		XML "li" "class"
+
+	Block dt
+		Stack dl
+		Stack row
+		XML "dt" "class"
+	Block dd
+		Stack dl
+		Stack row
+		XML "dd" "class"
+
+
+
+	Annotation a
+		Remark 
+			|Text anchor
+		XML "a" "href"
+
+	Annotation b
+		Remark 
+			|Bold font
+		XML "b" "class"
+
+	Annotation i
+		Remark 
+			|Italic font
+		XML "i" "class"
+
+	Annotation u
+		Remark 
+			|Underline
+		XML "u" "class"
+		 
+	Annotation s
+		Remark 
+			|Strikethrough
+		XML "s" "class"
+
+	Annotation x
+		Remark
+			|Code (monospaced) font
+		XML "code" "class"
+
+	Annotation d
+		Remark
+			|Definition of a term
+		XML "d" "class"
+
+
+	Item img
+		Remark
+			|Image
+		XML "img" "src"
+			Default "class" "img-responsive"
+
+	Item cite
+		Remark
+			|Citation of an external resource
+		XML "b" "class"
+
+	Item ref
+		Remark
+			|Reference to an external resource
+		XML "b" "class"
+
+	Meta layout 
+		Flag master 
+		Flag navigator 
+		Flag toc 
+		Flag tof 
+		Flag tor 
+		Flag tod  
+
+	Layout row
+		Markup "<div class=\"row\">" "<div class=\"row\">" "</div>"
+
+	Layout col
+		Stack row
+		Integer count
+		Markup "<div class=\"span1\">" "<div class=\"span{0}\">" "</div>"
+
+	Meta title
+	Meta titleshort
+	Meta keyword
+	Meta version
+	Meta priority
+	Meta author
+		Meta firstname
+		Meta lastname
+		Meta initials
+		Meta organization
+		Meta email
+
+	Meta ietf
+		Flag app 
+		Flag gen 
+		Flag int 
+		Flag ops 
+		Flag rai 
+		Flag rtg 
+		Flag sec 
+		Flag tsv 
+		Flag trust200902 
+		Flag noModifications 
+		Flag noDerivatives 
+		Flag std 
+		Flag bcp 
+		Flag info 
+		Flag exp 
+		Flag historic 
+		Flag id 
+		Flag rfc 
+
+	// These are used for MAML parsing
+	Meta id
+	Meta Contenttype

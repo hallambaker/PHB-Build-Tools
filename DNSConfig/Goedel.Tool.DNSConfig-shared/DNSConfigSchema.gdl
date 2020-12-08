@@ -1,0 +1,102 @@
+﻿Copyright "Default Deny Security Inc." "2018" MITLicense
+
+Class Goedel.Tool.DNSConfig DNSConfig
+
+	TopType Machine
+		Id				ID IPT
+		Data			String
+
+	TopType DNS
+		Id				ID DnsT
+		Contact			String
+		Options			Options
+			Refresh Refresh Single
+			Retry Retry Single
+			Expire Expire Single
+			TTL TTL Single
+			Slave Slave Multiple
+			CAA CAA Multiple
+			Authoritative Authoritative Multiple
+			MX MX Multiple
+
+	Type Authoritative
+		Id				ID AddressT
+		Data			REF IPT
+
+	Type Refresh
+		Time			Integer
+	Type Retry
+		Time			Integer
+	Type Expire
+		Time			Integer
+	Type TTL
+		Time			Integer
+	Type Slave
+		Host			REF AddressT
+	Type CAA
+		Tag				String
+		Value			String
+
+	Type MX
+		Id				REF AddressT
+		Priority		Integer
+
+	TopType Site
+		Id				ID SiteT
+		Options			Options
+			Domain Domain Multiple
+			Web Web Single
+
+	Type Domain
+		Id				ID DomainT
+		Options			Options
+			Service Service Multiple
+			Address Address Multiple
+			SMTP SMTP Multiple
+			Email Email Single
+
+	Type Address
+		Id				ID AddressT
+		Data			REF IPT
+		Options			Options
+			SMTP SMTP Single
+
+	Type SMTP
+
+	Type Email
+		Options			Options
+			MX MX Multiple
+			SPF SPF Multiple
+
+	Type SPF
+		Value			String
+
+	Type Web
+		Id				Token DomainT
+		Root			String
+		Options			Options
+			Host Host Multiple
+
+	Type Service
+		Name			String
+		Options			Options
+			Host Host Multiple
+			TXT TXT Multiple
+
+	Type Host
+		Id				REF AddressT
+		Options			Options
+			TXT TXT Multiple
+			Port Port Single
+			Priority Priority Single
+			Weight Weight Single
+			
+	Type TXT
+		Text			String
+
+	Type Port
+		Value			Integer
+	Type Priority
+		Value			Integer
+	Type Weight
+		Value			Integer

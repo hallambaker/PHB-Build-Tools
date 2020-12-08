@@ -46,7 +46,7 @@ using Goedel.Utilities;
 //   TokenType
 //       ClassType
 
-#pragma warning disable IDE0022
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
 namespace Goedel.Tool.RegistryConfig {
 
 
@@ -442,7 +442,7 @@ namespace Goedel.Tool.RegistryConfig {
             }
 
         void Pop () {
-			Assert.AssertFalse(Stack.Count == 0, InternalError.Throw);
+			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -462,7 +462,7 @@ namespace Goedel.Tool.RegistryConfig {
                 (Token == TokenType.COMMENT)) {
 				return;
 				}
-			Assert.AssertFalse(Token == TokenType.INVALID, InvalidToken.Throw);
+			Assert.AssertFalse (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -493,7 +493,7 @@ namespace Goedel.Tool.RegistryConfig {
                                 }
                             break;
                             }
-                        if (Token == TokenType.END) {
+                        if (Token == TokenType.END) { 
                             State = StateCode._End;
                             break;
                             }
@@ -577,8 +577,8 @@ namespace Goedel.Tool.RegistryConfig {
                                 }
                             break;
                             }
-                        else {
-                            throw new Expected("Parser Error Expected [String Int Binary ]");
+                        else { 
+						    throw new Expected("Parser Error Expected [String Int Binary ]");
                             }
 
                     case StateCode.Field__Type:

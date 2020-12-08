@@ -16,8 +16,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.ASN\Goedel.ASN.csproj" />
-    <ProjectReference Include="..\..\Goedel.Tool.ASN\Goedel.Tool.ASN.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+    <ProjectReference Include="..\Goedel.Tool.ASN\Goedel.Tool.ASN.csproj" />
   </ItemGroup>
 
   <ItemGroup>

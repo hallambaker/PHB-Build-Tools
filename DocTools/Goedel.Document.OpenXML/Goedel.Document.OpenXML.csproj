@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Goedel.ASN</RootNamespace>
+    <Configurations>Debug;Release;Focus</Configurations>
+    <Company>ThresholdSecrets.Com</Company>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+    <Product>Goedel.ASN</Product>
+    <Description>ASN1 parsing library.</Description>
+    <Copyright>© 2020</Copyright>
+    <Title>Goedel.ASN</Title>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.7.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Goedel.Document.Markdown\Goedel.Document.Markdown.csproj" />
+    <ProjectReference Include="..\Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.csproj" />
+    <ProjectReference Include="..\Goedel.Document.RFC\Goedel.Document.RFC.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+  </ItemGroup>
+
+</Project>

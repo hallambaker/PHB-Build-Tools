@@ -5,10 +5,10 @@
     <TargetFramework>net5.0</TargetFramework>
     <Company>Phill Hallam-Baker</Company>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-    <Product>RFCTool</Product>
-    <Description>Generates RFC format documentation from OOXML or Markdown source.</Description>
+    <Product>RFC SVG management library</Product>
+    <Description>Converts SVG to IETF stupid format.</Description>
     <Copyright>© 2015-2019</Copyright>
-    <Title>SVGTool</Title>
+    <Title>RFC SVG management library</Title>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <ApplicationIcon />

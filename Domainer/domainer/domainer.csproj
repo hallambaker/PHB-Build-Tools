@@ -14,8 +14,6 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 
-  <Import Project="..\Goedel.Tool.Domainer\Goedel.Tool.Domainer.projitems" Label="Shared" />
-
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="VSPreBuild" />
   </Target>
@@ -25,6 +23,7 @@
   </Target>
 
   <ItemGroup>
+    <ProjectReference Include="..\Goedel.Tool.Domainer\Goedel.Tool.Domainer.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
   </ItemGroup>
 

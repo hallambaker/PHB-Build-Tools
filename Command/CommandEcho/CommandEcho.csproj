@@ -41,6 +41,4 @@
     <Exec Command="VSPostBuild" />
   </Target>
 
-  <Import Project="..\..\Goedel3\Goedel.Tool.Schema\Goedel.Tool.Schema.projitems" Label="Shared" />
-
 </Project>

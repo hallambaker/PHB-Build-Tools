@@ -17,7 +17,11 @@
 
 MSBuildThisFileDirectory = 
 
-LinkFiles = 
+LinkFiles = \
+    Goedel.Document.Markdown.dll\
+    Goedel.Document.RFCConvert.dll\
+    Goedel.Document.RFC.dll\
+    Goedel.Tool.Core.dll
 
 ToolTargets = 
 
@@ -27,8 +31,9 @@ prebuildRecurse :
 
 postbuildRecurse :
 
-# Shared project, create build rules for custom tools.
+# Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
+	version version.version AssemblyVersion.cs
 	
 
 postbuild : postbuildRecurse

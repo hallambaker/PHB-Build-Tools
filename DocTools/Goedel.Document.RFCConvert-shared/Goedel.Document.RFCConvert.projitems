@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>03c081d6-fe5a-4a20-b387-8a960a45e77f</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Goedel.Document.RFCConvert</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ConverterRFC.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GetCatalog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TagDefinitions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Template.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)PHBLogo256.ico" />
+    <None Include="$(MSBuildThisFileDirectory)PreBuild.bat" />
+    <None Include="$(MSBuildThisFileDirectory)TagDefinitions.mdsd" />
+    <None Include="$(MSBuildThisFileDirectory)Template.md" />
+  </ItemGroup>
+</Project>

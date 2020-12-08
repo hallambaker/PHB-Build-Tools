@@ -1,7 +1,55 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Goedel.ASN</RootNamespace>
+    <Configurations>Debug;Release;Focus</Configurations>
+    <Company>ThresholdSecrets.Com</Company>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+    <Product>Goedel.Tool.ASN</Product>
+    <Description>ASN1 schema DSL.</Description>
+    <Copyright>© 2020</Copyright>
+    <Title>Goedel.Tool.ASN</Title>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.ASN\Goedel.ASN.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Asn2.cs">
+      <DependentUpon>Asn2.gdl</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="GenerateCS.cs">
+      <DependentUpon>GenerateCS.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Asn2.gdl">
+      <LastGenOutput>Asn2.cs</LastGenOutput>
+      <Generator>goedel3</Generator>
+    </None>
+    <None Update="GenerateCS.script">
+      <LastGenOutput>GenerateCS.cs</LastGenOutput>
+      <Generator>GScript</Generator>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPreBuild" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="cd $(ProjectDir) &amp;&amp; VSPostBuildWindows $(TargetDir)" />
+  </Target>
 
 </Project>

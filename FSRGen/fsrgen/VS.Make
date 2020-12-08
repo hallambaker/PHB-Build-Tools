@@ -18,6 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Goedel.Tool.FSRGen.dll\
     Goedel.Tool.Core.dll
 
 ToolTargets = \
@@ -28,11 +29,9 @@ FSRGen.cs : FSRGen.command
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.FSRGen && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
-	cd ..\Goedel.Tool.FSRGen && nmake /c /f VS.make postbuild 
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)

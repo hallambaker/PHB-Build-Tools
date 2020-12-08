@@ -29,6 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Goedel.Document.Markdown\Goedel.Document.Markdown.csproj" />
+    <ProjectReference Include="..\Goedel.Document.OpenXML\Goedel.Document.OpenXML.csproj" />
+    <ProjectReference Include="..\Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.csproj" />
+    <ProjectReference Include="..\Goedel.Document.RFC\Goedel.Document.RFC.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
     <ProjectReference Include="..\Goedel.Document.RFCSVG\Goedel.Document.RFCSVG.csproj" />
   </ItemGroup>
@@ -50,14 +54,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-  <Import Project="..\Goedel.Document.Markdown\Goedel.Document.Markdown.projitems" Label="Shared" />
-
-  <Import Project="..\Goedel.Document.OpenXML\Goedel.Document.OpenXML.projitems" Label="Shared" />
-
-  <Import Project="..\..\DocTools\Goedel.Document.RFC\Goedel.Document.RFC.projitems" Label="Shared" />
-
-  <Import Project="..\..\DocTools\Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.projitems" Label="Shared" />
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="VSPreBuild" />

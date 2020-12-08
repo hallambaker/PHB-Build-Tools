@@ -18,6 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Goedel.Tool.DNSConfig.dll\
     Goedel.Tool.Core.dll
 
 ToolTargets = \
@@ -28,11 +29,9 @@ DNSConfig.cs : DNSConfig.command
 
 
 prebuildRecurse : 
-	cd ..\Goedel.Tool.DNSConfig && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
-	cd ..\Goedel.Tool.DNSConfig && nmake /c /f VS.make postbuild 
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
