@@ -80,8 +80,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{B887
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{C6BE0DF9-7483-4F51-B070-285F71E0D3FC}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Tool.ASN", "ASN\Goedel.Tool.ASN\Goedel.Tool.ASN.shproj", "{C4BE31BE-8172-455D-A94F-275410348065}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Tool.Domainer", "Domainer\Goedel.Tool.Domainer\Goedel.Tool.Domainer.shproj", "{608732B4-132C-41A3-B785-164FF4239B20}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Tool.Exceptional", "Exceptional\Goedel.Tool.Exceptional\Goedel.Tool.Exceptional.shproj", "{64815D6D-201E-4039-B1BD-FE85C44B8126}"
@@ -178,6 +176,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "constant", "Constant\consta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Tool.Constant", "Constant\Goedel.Tool.Constant\Goedel.Tool.Constant.csproj", "{3738EB7E-3C12-4A80-BF66-942F27E60356}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Tool.ASN", "Goedel.Tool.ASN\Goedel.Tool.ASN.csproj", "{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		DocTools\Goedel.Document.Markdown\Goedel.Document.Markdown.projitems*{01be8cf8-8989-4e94-adf0-97340821a660}*SharedItemsImports = 5
@@ -192,7 +192,6 @@ Global
 		Exceptional\Goedel.Tool.Exceptional\Goedel.Tool.Exceptional.projitems*{41a32fd3-3814-4370-a2c7-ae6e29f4ab01}*SharedItemsImports = 5
 		Command\Goedel.Tool.Command\Goedel.Tool.Command.projitems*{4256f87b-9ba6-4996-a4dd-dc1e36136054}*SharedItemsImports = 5
 		MakeyMakey\Goedel.Tool.Makey\Goedel.Tool.Makey.projitems*{5288bb4f-3685-4f5f-afd0-596dbdf843b5}*SharedItemsImports = 13
-		ASN\Goedel.Tool.ASN\Goedel.Tool.ASN.projitems*{54d70c8d-707d-4456-bbd0-3210f42ca97c}*SharedItemsImports = 5
 		Command\Goedel.Tool.Command\Goedel.Tool.Command.projitems*{5a910d73-f8ea-48a5-a325-1f7ebdce92f7}*SharedItemsImports = 13
 		Domainer\Goedel.Tool.Domainer\Goedel.Tool.Domainer.projitems*{608732b4-132c-41a3-b785-164ff4239b20}*SharedItemsImports = 13
 		DNSConfig\Goedel.Tool.DNSConfig\Goedel.Tool.DNSConfig.projitems*{627a80a7-f304-444e-b1df-0f5a9515716f}*SharedItemsImports = 5
@@ -204,7 +203,6 @@ Global
 		DocTools\Goedel.Document.OpenXML\Goedel.Document.OpenXML.projitems*{a25a14da-8ac5-445e-9562-46c11c54ea15}*SharedItemsImports = 13
 		FSRGen\Goedel.Tool.FSRGen\Goedel.Tool.FSRGen.projitems*{c0c2037e-ecf1-4fbf-82f8-7c2e6feb0d3f}*SharedItemsImports = 5
 		MakeyMakey\Goedel.Tool.Makey\Goedel.Tool.Makey.projitems*{c22aa4a5-f0a0-4cff-ab4d-7a02f5dfb59e}*SharedItemsImports = 5
-		ASN\Goedel.Tool.ASN\Goedel.Tool.ASN.projitems*{c4be31be-8172-455d-a94f-275410348065}*SharedItemsImports = 13
 		Protogen\Goedel.Tool.Protogen\Goedel.Tool.Protogen.projitems*{c604a477-72c2-42ed-9a77-2d6673337f7a}*SharedItemsImports = 5
 		RegistryConfig\Goedel.Tool.RegistryConfig\Goedel.Tool.RegistryConfig.projitems*{cf7ad1db-76c4-46fd-be2c-a972cdf22059}*SharedItemsImports = 13
 		Goedel3\Goedel.Tool.Schema\Goedel.Tool.Schema.projitems*{d276dd3c-b102-49c8-9df5-c22a45d1d05d}*SharedItemsImports = 13
@@ -804,6 +802,26 @@ Global
 		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Release|x86.ActiveCfg = Release|Any CPU
 		{3738EB7E-3C12-4A80-BF66-942F27E60356}.Release|x86.Build.0 = Release|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Debug|x86.Build.0 = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.DotNet|Any CPU.ActiveCfg = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.DotNet|Any CPU.Build.0 = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.DotNet|x86.ActiveCfg = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.DotNet|x86.Build.0 = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Focus|Any CPU.ActiveCfg = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Focus|Any CPU.Build.0 = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Focus|x86.ActiveCfg = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Focus|x86.Build.0 = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Publish|Any CPU.Build.0 = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Publish|x86.ActiveCfg = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Publish|x86.Build.0 = Debug|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Release|x86.ActiveCfg = Release|Any CPU
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -835,7 +853,6 @@ Global
 		{01BE8CF8-8989-4E94-ADF0-97340821A660} = {9E6E38F6-13C4-49A0-A278-018742486965}
 		{D52143DD-04DC-4FA9-8C77-6ADFF4B00275} = {9E6E38F6-13C4-49A0-A278-018742486965}
 		{CD5C23DD-8EEF-4848-992F-B04088630CC1} = {0774B7F8-6C0C-4389-A8C5-37D955FF9E46}
-		{C4BE31BE-8172-455D-A94F-275410348065} = {7640A833-1086-4041-90FB-3E3D76F967D4}
 		{608732B4-132C-41A3-B785-164FF4239B20} = {93F2FFDB-9A2F-442A-B865-5455E87D7B6E}
 		{64815D6D-201E-4039-B1BD-FE85C44B8126} = {45476490-421C-458B-8BBF-0175A4A145B9}
 		{3622EFBF-83DE-4AF2-AE1A-76FB2368CCF8} = {EB62FFCF-F19A-4F79-A66F-3C3F4B032F24}
@@ -867,6 +884,7 @@ Global
 		{CB0E0AF4-0877-40BE-B0AA-DA18ABBC9E72} = {32781FAB-7F7F-4267-9599-479F14195A4B}
 		{B122A664-D433-4993-8E7B-8139BC5890F4} = {CB0E0AF4-0877-40BE-B0AA-DA18ABBC9E72}
 		{3738EB7E-3C12-4A80-BF66-942F27E60356} = {CB0E0AF4-0877-40BE-B0AA-DA18ABBC9E72}
+		{41221189-CD0B-4FF0-BB1A-D2BD38D7C211} = {7640A833-1086-4041-90FB-3E3D76F967D4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B0FED20-F156-4724-9241-1F63A97DA43E}

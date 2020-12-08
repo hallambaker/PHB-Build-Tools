@@ -2,7 +2,7 @@
   "profiles": {
     "constant": {
       "commandName": "Project",
-      "commandLineArgs": "..\\..\\..\\Libraries\\Goedel.Cryptography\\UDFConstants.constant /md",
+      "commandLineArgs": "..\\..\\..\\Libraries\\Goedel.Cryptography.Dare\\DareConstants.constant /cs",
       "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Outputs\\Documents\\Generated"
     }
   }

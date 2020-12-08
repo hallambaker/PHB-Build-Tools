@@ -66,16 +66,21 @@ namespace #{Constant.NameSpaceName} {
 
 #casecast Enum item
 
+#foreach (var code in item.Code)
+        ///<summary>Jose enumeration tag for #{item.Id.Label}.#{code.Id.Label}</summary>
+        public const string  #{item.Id.Label}#{code.Id.Label}Tag = "#{code.Id.Label}";
+#end foreach
+
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
         /// value.
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static  #{item.Id.Label} To#{item.Id.Label} (this string text) =>
+        public static #{item.Id.Label} To#{item.Id.Label} (this string text) =>
             text switch {
 #foreach (var code in item.Code)
-                "#{code.Id.Label}" => #{item.Id.Label}.#{code.Id.Label},
+                #{item.Id.Label}#{code.Id.Label}Tag => #{item.Id.Label}.#{code.Id.Label},
 #end foreach
                 _ => #{item.Id.Label}.Unknown
                 };
@@ -89,7 +94,7 @@ namespace #{Constant.NameSpaceName} {
         public static string ToLabel (this #{item.Id.Label} data) =>
             data switch {
 #foreach (var code in item.Code)
-                #{item.Id.Label}.#{code.Id.Label} => "#{code.Id.Label}",
+                #{item.Id.Label}.#{code.Id.Label} => #{item.Id.Label}#{code.Id.Label}Tag,
 #end foreach
                 _ => null
                 };

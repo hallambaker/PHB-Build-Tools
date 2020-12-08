@@ -102,16 +102,21 @@ namespace Goedel.Tool.Constant {
 						case ConstantType.Enum: {
 						  Enum item = (Enum) entry; 
 						_Output.Write ("\n{0}", _Indent);
+						foreach  (var code in item.Code) {
+							_Output.Write ("        ///<summary>Jose enumeration tag for {1}.{2}</summary>\n{0}", _Indent, item.Id.Label, code.Id.Label);
+							_Output.Write ("        public const string  {1}{2}Tag = \"{3}\";\n{0}", _Indent, item.Id.Label, code.Id.Label, code.Id.Label);
+							}
+						_Output.Write ("\n{0}", _Indent);
 						_Output.Write ("        /// <summary>\n{0}", _Indent);
 						_Output.Write ("        /// Convert the string <paramref name=\"text\"/> to the corresponding enumeration\n{0}", _Indent);
 						_Output.Write ("        /// value.\n{0}", _Indent);
 						_Output.Write ("        /// </summary>\n{0}", _Indent);
 						_Output.Write ("        /// <param name=\"text\">The string to convert.</param>\n{0}", _Indent);
 						_Output.Write ("        /// <returns>The enumeration value.</returns>\n{0}", _Indent);
-						_Output.Write ("        public static  {1} To{2} (this string text) =>\n{0}", _Indent, item.Id.Label, item.Id.Label);
+						_Output.Write ("        public static {1} To{2} (this string text) =>\n{0}", _Indent, item.Id.Label, item.Id.Label);
 						_Output.Write ("            text switch {{\n{0}", _Indent);
 						foreach  (var code in item.Code) {
-							_Output.Write ("                \"{1}\" => {2}.{3},\n{0}", _Indent, code.Id.Label, item.Id.Label, code.Id.Label);
+							_Output.Write ("                {1}{2}Tag => {3}.{4},\n{0}", _Indent, item.Id.Label, code.Id.Label, item.Id.Label, code.Id.Label);
 							}
 						_Output.Write ("                _ => {1}.Unknown\n{0}", _Indent, item.Id.Label);
 						_Output.Write ("                }};\n{0}", _Indent);
@@ -125,7 +130,7 @@ namespace Goedel.Tool.Constant {
 						_Output.Write ("        public static string ToLabel (this {1} data) =>\n{0}", _Indent, item.Id.Label);
 						_Output.Write ("            data switch {{\n{0}", _Indent);
 						foreach  (var code in item.Code) {
-							_Output.Write ("                {1}.{2} => \"{3}\",\n{0}", _Indent, item.Id.Label, code.Id.Label, code.Id.Label);
+							_Output.Write ("                {1}.{2} => {3}{4}Tag,\n{0}", _Indent, item.Id.Label, code.Id.Label, item.Id.Label, code.Id.Label);
 							}
 						_Output.Write ("                _ => null\n{0}", _Indent);
 						_Output.Write ("                }};\n{0}", _Indent);
