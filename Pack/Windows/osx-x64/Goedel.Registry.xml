@@ -145,7 +145,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Registry.ParserException.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.ParserException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -177,7 +177,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Registry.FileReadError.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.FileReadError.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -209,7 +209,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Registry.UnknownCommand.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.UnknownCommand.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -241,7 +241,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Registry.UnknownOption.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.UnknownOption.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -273,7 +273,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Registry.NoCommand.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.NoCommand.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -305,7 +305,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Registry.SchemaParse.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.SchemaParse.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -337,7 +337,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Registry.NotFoundReserved.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.NotFoundReserved.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -369,7 +369,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Registry.InternalError.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.InternalError.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -401,7 +401,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Registry.InvalidToken.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.InvalidToken.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -433,7 +433,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Registry.ExpectedStart.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.ExpectedStart.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -465,7 +465,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Registry.ExpectedClass.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.ExpectedClass.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -497,7 +497,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Registry.Expected.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.Expected.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -529,7 +529,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Registry.TooManyClose.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.TooManyClose.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -561,7 +561,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Registry.UnreachableCode.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.UnreachableCode.#ctor(System.String,System.Exception,System.Object[])">
             <summary>

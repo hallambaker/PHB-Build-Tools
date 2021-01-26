@@ -320,6 +320,7 @@
         <member name="M:Goedel.Utilities.Assert.AssertEqual``1(``0,``0,Goedel.Utilities.ThrowDelegate,System.Object[])">
             <summary>Test to see if two values are equal.
             </summary>
+            <typeparam name="T">The type of the argument.</typeparam>
             <param name="test1">First test value</param>
             <param name="test2">Second test value</param>
             <param name="throwDelegate">Delegate that creates the exception to be thrown if
@@ -340,20 +341,20 @@
             Utility routine used to flag missing code to implement missing
             cryptographic authentication check
             </summary>
-            <param name="description"></param>
+            <param name="description">Task description</param>
         </member>
         <member name="M:Goedel.Utilities.Assert.TaskRedundant(System.String)">
             <summary>
             Utility routine used to flag possibly redundant code.
             </summary>
-            <param name="description"></param>
+            <param name="description">Task description</param>
         </member>
         <member name="M:Goedel.Utilities.Assert.TaskTest(System.String)">
             <summary>
             Utility routine used to flag missing code to implement missing test for
             functionality not yet implemented.
             </summary>
-            <param name="description"></param>
+            <param name="description">Task description</param>
         </member>
         <member name="M:Goedel.Utilities.Assert.TaskFunctionality(System.String,System.Boolean)">
             <summary>
@@ -433,36 +434,36 @@
             </summary>
         </member>
         <member name="F:Goedel.Utilities.BaseConvert.BASE16">
-            <summary></summary>
+            <summary>Base16 conversion table</summary>
         </member>
         <member name="F:Goedel.Utilities.BaseConvert.BASE32">
-            <summary></summary>
+            <summary>Base32 conversion table</summary>
         </member>
         <member name="F:Goedel.Utilities.BaseConvert.BASE32HEX">
-            <summary></summary>
+            <summary>Base32Hex conversion table</summary>
         </member>
         <member name="F:Goedel.Utilities.BaseConvert.BASE64URL">
-            <summary></summary>
+            <summary>Base64URL conversion table</summary>
         </member>
         <member name="F:Goedel.Utilities.BaseConvert.BASE64">
-            <summary></summary>
+            <summary>Base64 conversion table</summary>
         </member>
         <member name="F:Goedel.Utilities.BaseConvert.BASE16Value">
-            <summary></summary>
+            <summary>Base 16 conversion table</summary>
         </member>
         <member name="F:Goedel.Utilities.BaseConvert.BASE32Value">
-            <summary></summary>
+            <summary>Base 32 conversion table</summary>
         </member>
         <member name="F:Goedel.Utilities.BaseConvert.BASE64Value">
-            <summary></summary>
+            <summary>Base 64 conversion table</summary>
         </member>
         <member name="M:Goedel.Utilities.BaseConvert.OutputLength32(System.Int32)">
             <summary>
             Convenience function returning the number of characters that will be returned by converting
             a string of <paramref name="precision"/> bits to Base32 encoding.
             </summary>
-            <param name="precision"></param>
-            <returns></returns>
+            <param name="precision">Output precision</param>
+            <returns>The output length</returns>
         </member>
         <member name="M:Goedel.Utilities.BaseConvert.ToStreamBase16(System.IO.Stream,Goedel.Utilities.ConversionFormat)">
             <summary>
@@ -1122,6 +1123,14 @@
             <param name="Value">The test value</param>
             <returns>False if the test value is true, true otherwise.</returns>
         </member>
+        <member name="M:Goedel.Utilities.Extension.VerifyCanonical(System.String)">
+            <summary>
+            Verify that the path is not an absolute path and contains no relative 
+            references to an earlier path.
+            </summary>
+            <param name="path">The path to verify</param>
+            <returns>True if the path is canonical, otherwise false.</returns>
+        </member>
         <member name="M:Goedel.Utilities.Extension.UnixCanonicalPath(System.String)">
             <summary>
             Parse file path and return canonical unix path. Relative directory references will
@@ -1266,8 +1275,8 @@
             <summary>
             Write debug output to current trace listener.
             </summary>
-            <param name="format"></param>
-            <param name="arg"></param>
+            <param name="format">The format string</param>
+            <param name="arg">Arguments to apply to the format string.</param>
         </member>
         <member name="T:Goedel.Utilities.NYI">
             <summary>
@@ -1279,7 +1288,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Utilities.NYI.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Utilities.NYI.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1311,7 +1320,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Utilities.AssertionFail.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Utilities.AssertionFail.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1343,7 +1352,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Utilities.Internal.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Utilities.Internal.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1375,7 +1384,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Utilities.FileReadError.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Utilities.FileReadError.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1408,7 +1417,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Utilities.Not64Bit.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Utilities.Not64Bit.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1432,6 +1441,7 @@
         </member>
         <member name="T:Goedel.Utilities.EnvironmentVariableRequired">
             <summary>
+            The environment variable must be defined.
             </summary>
         </member>
         <member name="P:Goedel.Utilities.EnvironmentVariableRequired.ExceptionFormatDelegate">
@@ -1439,7 +1449,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Utilities.EnvironmentVariableRequired.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Utilities.EnvironmentVariableRequired.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1463,6 +1473,7 @@
         </member>
         <member name="T:Goedel.Utilities.ExpectedSuccess">
             <summary>
+            Service request failed when it should have succeded
             </summary>
         </member>
         <member name="P:Goedel.Utilities.ExpectedSuccess.ExceptionFormatDelegate">
@@ -1470,7 +1481,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Utilities.ExpectedSuccess.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Utilities.ExpectedSuccess.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1494,6 +1505,7 @@
         </member>
         <member name="T:Goedel.Utilities.ExpectedError">
             <summary>
+            Service request succeeded when it should have returned an error
             </summary>
         </member>
         <member name="P:Goedel.Utilities.ExpectedError.ExceptionFormatDelegate">
@@ -1501,7 +1513,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Utilities.ExpectedError.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Utilities.ExpectedError.#ctor(System.String,System.Exception,System.Object[])">
             <summary>

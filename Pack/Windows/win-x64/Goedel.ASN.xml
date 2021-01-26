@@ -585,7 +585,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.ASN.ASNDecodingException.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.ASN.ASNDecodingException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -617,7 +617,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.ASN.Implementation.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.ASN.Implementation.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -649,7 +649,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.ASN.InvalidLength.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.ASN.InvalidLength.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -681,7 +681,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.ASN.IndefiniteLengthInvalid.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.ASN.IndefiniteLengthInvalid.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -713,7 +713,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.ASN.LengthExceedsInput.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.ASN.LengthExceedsInput.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -744,7 +744,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.ASN.LengthExceedsStructure.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.ASN.LengthExceedsStructure.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -775,7 +775,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.ASN.UnExpectedData.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.ASN.UnExpectedData.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -806,7 +806,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.ASN.ExpectedSequence.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.ASN.ExpectedSequence.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -837,7 +837,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.ASN.ExpectedInteger.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.ASN.ExpectedInteger.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -868,7 +868,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.ASN.IntegerOverflow.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.ASN.IntegerOverflow.#ctor(System.String,System.Exception,System.Object[])">
             <summary>

@@ -20,7 +20,15 @@ MSBuildThisFileDirectory =
 LinkFiles = \
     Goedel.Tool.Core.dll
 
-ToolTargets = 
+ToolTargets = \
+	ConstantSchema.cs\
+	Generate.cs
+ConstantSchema.cs : ConstantSchema.gdl 
+	goedel3 ConstantSchema.gdl  /cs  ConstantSchema.cs
+
+Generate.cs : Generate.Script 
+	gscript Generate.Script  Generate.cs
+
 
 
 prebuildRecurse : 

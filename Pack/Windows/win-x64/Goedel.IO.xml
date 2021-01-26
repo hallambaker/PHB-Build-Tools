@@ -4,55 +4,6 @@
         <name>Goedel.IO</name>
     </assembly>
     <members>
-        <member name="T:Goedel.IO.Debug">
-            <summary>
-            Class containing static helper methods. This should inherit from the Trace class
-            but that is sealed.
-            </summary>
-        </member>
-        <member name="M:Goedel.IO.Debug.Initialize(System.Boolean)">
-            <summary>
-            Class initialization routine.
-            </summary>
-            <param name="TestMode">If true the first time the initialization is
-            called, initializes parameters in test mode.</param>
-        </member>
-        <member name="M:Goedel.IO.Debug.Initialization(System.Boolean)">
-            <summary>
-            Perform standard initialization
-            </summary>
-        </member>
-        <member name="M:Goedel.IO.Debug.WriteLine(System.String,System.Object[])">
-            <summary>
-            Convenience method to do formatted write to the trace output
-            </summary>
-            <param name="Format">A composite format string </param>
-            <param name="Arg">An array of objects to write using format</param>
-        </member>
-        <member name="M:Goedel.IO.Debug.Write(System.String,System.Object[])">
-            <summary>
-            Convenience method to do formatted write to the trace output
-            </summary>
-            <param name="Format">A composite format string </param>
-            <param name="Arg">An array of objects to write using format</param>
-        </member>
-        <member name="T:Goedel.IO.GoedelTraceListener">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:Goedel.IO.GoedelTraceListener.Write(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="message"></param>
-        </member>
-        <member name="M:Goedel.IO.GoedelTraceListener.WriteLine(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="message"></param>
-        </member>
         <member name="T:Goedel.IO.Extension">
             <summary>
             Tools for managing directories
@@ -316,27 +267,6 @@
         </member>
         <member name="F:Goedel.IO.FileStatus.ConcurrentLocked">
             <summary>Open existing file or create new if it does not exist with shared write permission</summary>
-        </member>
-        <member name="T:Goedel.IO.InitializationDelegate">
-            <summary>
-            Delegate specifying an initialization routine to be called.
-            </summary>
-            <param name="TestMode">If true, initialize package using test mode configuration (if defined).</param>
-        </member>
-        <member name="T:Goedel.IO.Initialization">
-            <summary>
-            Base class for all initialization classes.
-            </summary>
-        </member>
-        <member name="M:Goedel.IO.Initialization.Initialize(System.Boolean@,Goedel.IO.InitializationDelegate,System.Boolean)">
-            <summary>
-            Thread safe initialization. The delegate is called exactly once.
-            </summary>
-            <param name="initializationDelegate">Initialization delegate to be called exactly once.</param>
-            <param name="flag">Initialization flag. If true, the class has already been initialized and
-            will not be initialized a second time. Otherwise the <paramref name="initializationDelegate"/>
-            is called.</param>
-            <param name="TestMode">If true, initialize package using test mode configuration (if defined).</param>
         </member>
         <member name="T:Goedel.IO.NamespaceDoc">
             <summary>

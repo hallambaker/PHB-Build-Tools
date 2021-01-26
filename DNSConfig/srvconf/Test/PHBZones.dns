@@ -84,7 +84,7 @@ Site mathmesh
 	Domain mathmesh.net
 	Domain prismproof.com
 	Domain prismproof.org
-	Web www.mathmesh.com "prismproof/"
+	Web www.mathmesh.com "mathmesh/"
 		Host host1.mathmesh.com
 
 Site bitkitten

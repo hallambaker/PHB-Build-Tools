@@ -1,0 +1,13 @@
+﻿server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/mathmesh;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name mathmesh.com www.mathmesh.com cryptomesh.org www.cryptomesh.org mathmesh.net www.mathmesh.net prismproof.com www.prismproof.com prismproof.org www.prismproof.org;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+}

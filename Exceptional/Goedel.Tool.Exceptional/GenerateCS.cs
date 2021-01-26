@@ -107,7 +107,7 @@ namespace Goedel.Tool.Exceptional {
 			_Output.Write ("				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("		///<summary></summary>\n{0}", _Indent);
+			_Output.Write ("		///<summary>Templates for formatting response messages.</summary>\n{0}", _Indent);
 			_Output.Write ("		public static new System.Collections.Generic.List<string> Templates = \n{0}", _Indent);
 			_Output.Write ("				new System.Collections.Generic.List<string> {{\n{0}", _Indent);
 			 var ConsoleSep = new Separator ("", ",");

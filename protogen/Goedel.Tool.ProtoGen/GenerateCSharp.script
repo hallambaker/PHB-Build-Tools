@@ -20,8 +20,11 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+
+
 ##pragma warning disable IDE1006
 
 
@@ -57,7 +60,8 @@ namespace #{Namespace} {
 		/// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary = 
+		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
+		static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
 				new Dictionary<string, JsonFactoryDelegate> () {
 #% Separator.IsFirst = true;
 #foreach (_Choice Entry in Protocol.Structures)
@@ -65,6 +69,10 @@ namespace #{Namespace} {
 			{"#{Entry.ID}", #{Entry.ID}._Factory}#!
 #end foreach
 			};
+
+        [ModuleInitializer]
+        internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+
 
 		/// <summary>
         /// Construct an instance from the specified tagged JsonReader stream.
@@ -87,7 +95,7 @@ namespace #{Namespace} {
     /// <summary>
 	/// The new base class for the client and service side APIs.
     /// </summary>		
-    public abstract partial class #{Service.Id} : Goedel.Protocol.JPCInterface {
+    public abstract partial class #{Service.Id} : Goedel.Protocol.JpcInterface {
 		
         /// <summary>
         /// Well Known service identifier.
@@ -109,13 +117,8 @@ namespace #{Namespace} {
         /// </summary>
 		public override string GetDiscovery => Discovery;
 
-        /// <summary>
-        /// The active JpcSession.
-        /// </summary>		
-		public virtual JpcSession JpcSession {get; set;}
-
 		///<summary>Base interface (used to create client wrapper stubs)</summary>
-		protected virtual #{Service.Id} JPCInterface {get; set;}
+		protected virtual #{Service.Id} JpcInterface {get; set;}
 
 #foreach (_Choice Entry2 in Protocol.Entries)
 #switchcast ProtoStructType Entry2
@@ -129,7 +132,7 @@ namespace #{Namespace} {
 		/// <returns>The response object from the service</returns>
         public virtual #{Transaction.Response} #{Transaction.Id} (
                 #{Transaction.Request} request, JpcSession session=null) => 
-						JPCInterface.#{Transaction.Id} (request, session ?? JpcSession);
+						JpcInterface.#{Transaction.Id} (request, session ?? JpcSession);
 #end switchcast
 #end foreach
 
@@ -140,22 +143,14 @@ namespace #{Namespace} {
     /// </summary>		
     public partial class #{Service.Id}Client : #{Service.Id} {
  		
-		JPCRemoteSession JPCRemoteSession;
+		JpcRemoteSession JpcRemoteSession;
         /// <summary>
         /// The active JpcSession.
         /// </summary>		
 		public override JpcSession JpcSession {
-			get => JPCRemoteSession;
-			set => JPCRemoteSession = value as JPCRemoteSession; 
+			get => JpcRemoteSession;
+			set => JpcRemoteSession = value as JpcRemoteSession; 
 			}
-
-
-        /// <summary>
-		/// Create a client connection to the specified service.
-        /// </summary>	
-        /// <param name="jpcRemoteSession">The remote session to connect to</param>
-		public #{Service.Id}Client (JPCRemoteSession jpcRemoteSession) =>
-			JPCRemoteSession = jpcRemoteSession;
 
 
 #foreach (_Choice Entry2 in Protocol.Entries)
@@ -171,7 +166,7 @@ namespace #{Namespace} {
         public override #{Transaction.Response} #{Transaction.Id} (
                 #{Transaction.Request} request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("#{Transaction.Id}", request);
+            var responseData = JpcRemoteSession.Post("#{Transaction.Id}", request);
             var response = #{Transaction.Response}.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -185,7 +180,7 @@ namespace #{Namespace} {
     /// <summary>
 	/// Service class for #{Service.Id}.
     /// </summary>		
-    public partial class #{Service.Id}Provider : Goedel.Protocol.JPCProvider {
+    public partial class #{Service.Id}Provider : Goedel.Protocol.JpcProvider {
 
 		/// <summary>
 		/// Interface object to dispatch requests to.

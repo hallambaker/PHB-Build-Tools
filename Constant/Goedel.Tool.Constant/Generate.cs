@@ -49,7 +49,7 @@ namespace Goedel.Tool.Constant {
 				_Output.Write ("    ///<summary>{1}</summary>\n{0}", _Indent, item.Title);
 				_Output.Write ("    public enum {1} {{\n{0}", _Indent, item.Id.Label);
 				_Output.Write ("        ///<summary>Undefined type</summary>\n{0}", _Indent);
-				_Output.Write ("        Unknown", _Indent);
+				_Output.Write ("        Unknown = -1", _Indent);
 				foreach  (var entry in item.Integer) {
 					if (  (entry.Reserve.End == 0) ) {
 						_Output.Write (",\n{0}", _Indent);

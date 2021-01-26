@@ -393,17 +393,20 @@
         <member name="F:Goedel.Discovery.Transport.NULL">
             <summary>No value specified</summary>
         </member>
-        <member name="T:Goedel.Discovery.DNSClient">
+        <member name="T:Goedel.Discovery.DnsClient">
             <summary>
             DNS client.
             </summary>
         </member>
-        <member name="M:Goedel.Discovery.DNSClient.GetContext">
+        <member name="P:Goedel.Discovery.DnsClient.Default">
+            <summary>Default client context for DNS query (result is cached for reuse)</summary>
+        </member>
+        <member name="M:Goedel.Discovery.DnsClient.GetContext">
             <summary>Return a DNS Client Context in which to make a set of queries.
             </summary>
             <returns>The DNS Client Context</returns>
         </member>
-        <member name="M:Goedel.Discovery.DNSClient.ResolveService(System.String,System.String,System.Nullable{System.Int32},Goedel.Discovery.DNSFallback)">
+        <member name="M:Goedel.Discovery.DnsClient.ResolveService(System.String,System.String,System.Nullable{System.Int32},Goedel.Discovery.DNSFallback)">
             <summary>
             Resolve a DNS name to an address and service characteristics.
             </summary>
@@ -413,7 +416,7 @@
             <param name="Fallback">The fallback mode to use if SRV lookup fails</param>
             <returns>IP Destination describing the resolution results</returns>
         </member>
-        <member name="M:Goedel.Discovery.DNSClient.ResolveServiceAsync(System.String,System.String,System.Nullable{System.Int32},Goedel.Discovery.DNSFallback)">
+        <member name="M:Goedel.Discovery.DnsClient.ResolveServiceAsync(System.String,System.String,System.Nullable{System.Int32},Goedel.Discovery.DNSFallback)">
             <summary>
             Perform Asynchronous query for Service discovery and description records
             using the platform default DNSClient.
@@ -428,9 +431,6 @@
             <summary>
             Multiple managed DNS queries.
             </summary>
-        </member>
-        <member name="F:Goedel.Discovery.DNSContext.DNSClient">
-            <summary>The DNS client to use</summary>
         </member>
         <member name="F:Goedel.Discovery.DNSContext.pendingRequests">
             <summary>Scoreboard of current requests.</summary>
@@ -527,58 +527,58 @@
             <param name="ServiceDescription">The service description to add to</param>
             <param name="Record">DNS record to add data from</param>
         </member>
-        <member name="T:Goedel.Discovery.DNSClientUDP">
+        <member name="T:Goedel.Discovery.DnsClientUDP">
             <summary>
             DNS client implementation
             </summary>
         </member>
-        <member name="F:Goedel.Discovery.DNSClientUDP.ListIPAddress">
+        <member name="F:Goedel.Discovery.DnsClientUDP.ListIPAddress">
             <summary>
             List of IP addresses to contact.
             </summary>
         </member>
-        <member name="F:Goedel.Discovery.DNSClientUDP.Port">
+        <member name="F:Goedel.Discovery.DnsClientUDP.Port">
             <summary>
             Port number to contact.
             </summary>
         </member>
-        <member name="M:Goedel.Discovery.DNSClientUDP.#ctor">
+        <member name="M:Goedel.Discovery.DnsClientUDP.#ctor">
             <summary>
             Default constructor using platform default DNS.
             </summary>
         </member>
-        <member name="M:Goedel.Discovery.DNSClientUDP.#ctor(System.String)">
+        <member name="M:Goedel.Discovery.DnsClientUDP.#ctor(System.String)">
             <summary>
             Constructor from server name.
             </summary>
             <param name="Server">Address of DNS server</param>
         </member>
-        <member name="M:Goedel.Discovery.DNSClientUDP.#ctor(System.Net.IPAddress)">
+        <member name="M:Goedel.Discovery.DnsClientUDP.#ctor(System.Net.IPAddress)">
             <summary>
             Constructor from IP Address using default DNS port (53).
             </summary>
             <param name="IPAddress">Address of DNS server</param>
         </member>
-        <member name="M:Goedel.Discovery.DNSClientUDP.#ctor(System.Collections.Generic.List{System.Net.IPAddress})">
+        <member name="M:Goedel.Discovery.DnsClientUDP.#ctor(System.Collections.Generic.List{System.Net.IPAddress})">
             <summary>
             Constructor from list of IP Addresses
             </summary>
             <param name="ListIPAddress">List of addresses of DNS server</param>
         </member>
-        <member name="M:Goedel.Discovery.DNSClientUDP.#ctor(System.Net.IPAddress,System.UInt16)">
+        <member name="M:Goedel.Discovery.DnsClientUDP.#ctor(System.Net.IPAddress,System.UInt16)">
             <summary>
             Constructor from IP Address and port.
             </summary>
             <param name="IPAddress">Address of DNS server</param>
             <param name="Port">Port number</param>
         </member>
-        <member name="M:Goedel.Discovery.DNSClientUDP.GetHostDNS">
+        <member name="M:Goedel.Discovery.DnsClientUDP.GetHostDNS">
             <summary>
             Stub method for non portable function to get the host DNS server address.
             </summary>
             <returns>List of DNS servers.</returns>
         </member>
-        <member name="M:Goedel.Discovery.DNSClientUDP.GetContext">
+        <member name="M:Goedel.Discovery.DnsClientUDP.GetContext">
             <summary>Return a DNS Client Context in which to make a set of queries.
             </summary>
             <returns>The DNS Client Context</returns>
@@ -586,6 +586,11 @@
         <member name="T:Goedel.Discovery.DNSContextUDP">
             <summary>
             DNS client implementation
+            </summary>
+        </member>
+        <member name="M:Goedel.Discovery.DNSContextUDP.Disposing">
+            <summary>
+            The disposal method, frees the UdpClient if allocated.
             </summary>
         </member>
         <member name="M:Goedel.Discovery.DNSContextUDP.#ctor(System.Collections.Generic.List{System.Net.IPAddress},System.UInt16)">
@@ -3278,7 +3283,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Discovery.DiscoveryException.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.DiscoveryException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3310,7 +3315,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Discovery.BufferWriteOverflow.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.BufferWriteOverflow.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3342,7 +3347,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Discovery.BufferReadOverflow.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.BufferReadOverflow.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3374,7 +3379,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Discovery.LabelTooLong.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.LabelTooLong.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3406,7 +3411,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Discovery.UnicodeNotSupported.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.UnicodeNotSupported.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3438,7 +3443,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Discovery.IllegalCharacter.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.IllegalCharacter.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3470,7 +3475,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Discovery.TagTooLong.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.TagTooLong.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3502,7 +3507,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Discovery.InvalidIPv4.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.InvalidIPv4.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3534,7 +3539,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Discovery.InvalidIPv6.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.InvalidIPv6.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3780,47 +3785,6 @@
             operations not supported in the portable libraries. Delegates must 
             be bound before use.
             </summary>
-        </member>
-        <member name="F:Goedel.Discovery.Platform.DNSClient">
-            <summary>Default client context for DNS query</summary>
-        </member>
-        <member name="T:Goedel.Discovery.Platform.GetRandomBytesDelegate">
-            <summary>Fill byte buffer with cryptographically strong random numbers.</summary>
-        </member>
-        <member name="F:Goedel.Discovery.Platform.GetRandomBytesD">
-            <summary>Fill byte buffer with cryptographically strong random numbers</summary>
-        </member>
-        <member name="F:Goedel.Discovery.Platform.RNGCryptoServiceProvider">
-            <summary>
-            Cryptographic random number generator.
-            </summary>
-        </member>
-        <member name="M:Goedel.Discovery.Platform.GetRandomBytes(System.Byte[],System.Int32,System.Int32)">
-            <summary>
-            Fill a byte array with cryptographically strong random data.
-            </summary>
-            <param name="Data">The array to fill with cryptographically strong random bytes.</param>
-            <param name="Offset">The index of the array to start the fill operation.</param>
-            <param name="Count">The number of bytes to fill</param>
-        </member>
-        <member name="M:Goedel.Discovery.Platform.GetRandomBytes(System.Int32)">
-            <summary>
-            Get a specified number of random bytes.
-            </summary>
-            <param name="Length">Number of bytes to get</param>
-            <returns>Random data</returns>
-        </member>
-        <member name="M:Goedel.Discovery.Platform.GetRandomPort">
-            <summary>
-            Return a randomly assigned UDP port.
-            </summary>
-            <returns>The randomly assigned port in the range 4096-65535</returns>
-        </member>
-        <member name="M:Goedel.Discovery.Platform.GetRandom16">
-            <summary>
-            Return a randomly assigned UDP port.
-            </summary>
-            <returns>Random integer</returns>
         </member>
         <member name="T:Goedel.Discovery.ServiceDescription">
             <summary>

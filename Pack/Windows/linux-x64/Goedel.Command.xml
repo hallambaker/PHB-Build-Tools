@@ -559,7 +559,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Command.ParserException.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Command.ParserException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -591,7 +591,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Command.FileReadError.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Command.FileReadError.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -623,7 +623,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Command.UnknownCommand.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Command.UnknownCommand.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -655,7 +655,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Command.UnknownOption.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Command.UnknownOption.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -687,7 +687,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Command.NoCommand.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Command.NoCommand.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -719,7 +719,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Command.InvalidOption.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Command.InvalidOption.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
