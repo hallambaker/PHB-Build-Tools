@@ -154,8 +154,52 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("        /// </summary>\n{0}", _Indent);
 							_Output.Write ("		public override string GetDiscovery => Discovery;\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
-							_Output.Write ("		///<summary>Base interface (used to create client wrapper stubs)</summary>\n{0}", _Indent);
-							_Output.Write ("		protected virtual {1} JpcInterface {{get; set;}}\n{0}", _Indent, Service.Id);
+							_Output.Write ("		/// <summary>\n{0}", _Indent);
+							_Output.Write ("		/// Dispatch object request in specified authentication context.\n{0}", _Indent);
+							_Output.Write ("		/// </summary>			\n{0}", _Indent);
+							_Output.Write ("        /// <param name=\"session\">The client context.</param>\n{0}", _Indent);
+							_Output.Write ("        /// <param name=\"jsonReader\">Reader for data object.</param>\n{0}", _Indent);
+							_Output.Write ("        /// <returns>The response object returned by the corresponding dispatch.</returns>\n{0}", _Indent);
+							_Output.Write ("		public override Goedel.Protocol.JsonObject Dispatch(JpcSession  session,  \n{0}", _Indent);
+							_Output.Write ("								Goedel.Protocol.JsonReader jsonReader) {{\n{0}", _Indent);
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("			jsonReader.StartObject ();\n{0}", _Indent);
+							_Output.Write ("			string token = jsonReader.ReadToken ();\n{0}", _Indent);
+							_Output.Write ("			JsonObject response = null;\n{0}", _Indent);
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("			switch (token) {{\n{0}", _Indent);
+							foreach  (_Choice Entry2 in Protocol.Entries) {
+								switch (Entry2._Tag ()) {
+									case ProtoStructType.Transaction: {
+									  Transaction Transaction = (Transaction) Entry2; 
+									_Output.Write ("				case \"{1}\" : {{\n{0}", _Indent, Transaction.Id);
+									_Output.Write ("					var request = new {1}();\n{0}", _Indent, Transaction.Request);
+									_Output.Write ("					request.Deserialize (jsonReader);\n{0}", _Indent);
+									_Output.Write ("					response = {1} (request, session);\n{0}", _Indent, Transaction.Id);
+									_Output.Write ("					break;\n{0}", _Indent);
+									_Output.Write ("					}}\n{0}", _Indent);
+								break; }
+									}
+								}
+							_Output.Write ("				default : {{\n{0}", _Indent);
+							_Output.Write ("					throw new Goedel.Protocol.UnknownOperation ();\n{0}", _Indent);
+							_Output.Write ("					}}\n{0}", _Indent);
+							_Output.Write ("				}}\n{0}", _Indent);
+							_Output.Write ("			jsonReader.EndObject ();\n{0}", _Indent);
+							_Output.Write ("			return response;\n{0}", _Indent);
+							_Output.Write ("			}}\n{0}", _Indent);
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("        /// <summary>\n{0}", _Indent);
+							_Output.Write ("        /// Return a client tapping the service API directly without serialization bound to\n{0}", _Indent);
+							_Output.Write ("        /// the session <paramref name=\"jpcSession\"/>. This is intended for use in testing etc.\n{0}", _Indent);
+							_Output.Write ("        /// </summary>\n{0}", _Indent);
+							_Output.Write ("        /// <param name=\"jpcSession\">Session to which requests are to be bound.</param>\n{0}", _Indent);
+							_Output.Write ("        /// <returns>The direct client instance.</returns>\n{0}", _Indent);
+							_Output.Write ("		public override Goedel.Protocol.JpcClientInterface GetDirect (JpcSession jpcSession) =>\n{0}", _Indent);
+							_Output.Write ("				new {1}Direct () {{\n{0}", _Indent, Service.Id);
+							_Output.Write ("						JpcSession = jpcSession,\n{0}", _Indent);
+							_Output.Write ("						Service = this\n{0}", _Indent);
+							_Output.Write ("						}};\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							foreach  (_Choice Entry2 in Protocol.Entries) {
 								switch (Entry2._Tag ()) {
@@ -166,11 +210,10 @@ namespace Goedel.Tool.ProtoGen {
 									_Output.Write ("		/// Base method for implementing the transaction  {1}.\n{0}", _Indent, Transaction.Id);
 									_Output.Write ("        /// </summary>\n{0}", _Indent);
 									_Output.Write ("        /// <param name=\"request\">The request object to send to the host.</param>\n{0}", _Indent);
-									_Output.Write ("		/// <param name=\"session\">The authentication binding.</param>\n{0}", _Indent);
+									_Output.Write ("		/// <param name=\"session\">The request context.</param>\n{0}", _Indent);
 									_Output.Write ("		/// <returns>The response object from the service</returns>\n{0}", _Indent);
-									_Output.Write ("        public virtual {1} {2} (\n{0}", _Indent, Transaction.Response, Transaction.Id);
-									_Output.Write ("                {1} request, JpcSession session=null) => \n{0}", _Indent, Transaction.Request);
-									_Output.Write ("						JpcInterface.{1} (request, session ?? JpcSession);\n{0}", _Indent, Transaction.Id);
+									_Output.Write ("        public abstract {1} {2} (\n{0}", _Indent, Transaction.Response, Transaction.Id);
+									_Output.Write ("                {1} request, JpcSession session);\n{0}", _Indent, Transaction.Request);
 								break; }
 									}
 								}
@@ -180,13 +223,34 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("    /// <summary>\n{0}", _Indent);
 							_Output.Write ("	/// Client class for {1}.\n{0}", _Indent, Service.Id);
 							_Output.Write ("    /// </summary>		\n{0}", _Indent);
-							_Output.Write ("    public partial class {1}Client : {2} {{\n{0}", _Indent, Service.Id, Service.Id);
+							_Output.Write ("    public partial class {1}Client :  Goedel.Protocol.JpcClientInterface {{\n{0}", _Indent, Service.Id);
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("	    /// <summary>\n{0}", _Indent);
+							_Output.Write ("        /// Well Known service identifier.\n{0}", _Indent);
+							_Output.Write ("        /// </summary>\n{0}", _Indent);
+							_Output.Write ("		public const string WellKnown = \"{1}\";\n{0}", _Indent, Service.WellKnown);
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("        /// <summary>\n{0}", _Indent);
+							_Output.Write ("        /// Well Known service identifier.\n{0}", _Indent);
+							_Output.Write ("        /// </summary>\n{0}", _Indent);
+							_Output.Write ("		public override string GetWellKnown => WellKnown;\n{0}", _Indent);
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("        /// <summary>\n{0}", _Indent);
+							_Output.Write ("        /// Well Known service identifier.\n{0}", _Indent);
+							_Output.Write ("        /// </summary>\n{0}", _Indent);
+							_Output.Write ("		public const string Discovery = \"{1}\";\n{0}", _Indent, Service.Discovery);
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("        /// <summary>\n{0}", _Indent);
+							_Output.Write ("        /// Well Known service identifier.\n{0}", _Indent);
+							_Output.Write ("        /// </summary>\n{0}", _Indent);
+							_Output.Write ("		public override string GetDiscovery => Discovery;\n{0}", _Indent);
+							_Output.Write ("\n{0}", _Indent);
 							_Output.Write (" 		\n{0}", _Indent);
 							_Output.Write ("		JpcRemoteSession JpcRemoteSession;\n{0}", _Indent);
 							_Output.Write ("        /// <summary>\n{0}", _Indent);
 							_Output.Write ("        /// The active JpcSession.\n{0}", _Indent);
 							_Output.Write ("        /// </summary>		\n{0}", _Indent);
-							_Output.Write ("		public override JpcSession JpcSession {{\n{0}", _Indent);
+							_Output.Write ("		public virtual JpcSession JpcSession {{\n{0}", _Indent);
 							_Output.Write ("			get => JpcRemoteSession;\n{0}", _Indent);
 							_Output.Write ("			set => JpcRemoteSession = value as JpcRemoteSession; \n{0}", _Indent);
 							_Output.Write ("			}}\n{0}", _Indent);
@@ -201,16 +265,45 @@ namespace Goedel.Tool.ProtoGen {
 									_Output.Write ("		/// Implement the transaction\n{0}", _Indent);
 									_Output.Write ("        /// </summary>		\n{0}", _Indent);
 									_Output.Write ("        /// <param name=\"request\">The request object.</param>\n{0}", _Indent);
-									_Output.Write ("		/// <param name=\"session\">The authentication binding.</param>\n{0}", _Indent);
 									_Output.Write ("		/// <returns>The response object</returns>\n{0}", _Indent);
-									_Output.Write ("        public override {1} {2} (\n{0}", _Indent, Transaction.Response, Transaction.Id);
-									_Output.Write ("                {1} request, JpcSession session=null) {{\n{0}", _Indent, Transaction.Request);
+									_Output.Write ("        public virtual {1} {2} ({3} request) =>\n{0}", _Indent, Transaction.Response, Transaction.Id, Transaction.Request);
+									_Output.Write ("				JpcRemoteSession.Post(\"{1}\", \"{2}\", request) as {3};\n{0}", _Indent, Transaction.Id, Transaction.Response, Transaction.Response);
 									_Output.Write ("\n{0}", _Indent);
-									_Output.Write ("            var responseData = JpcRemoteSession.Post(\"{1}\", request);\n{0}", _Indent, Transaction.Id);
-									_Output.Write ("            var response = {1}.FromJson(responseData.JsonReader(), true);\n{0}", _Indent, Transaction.Response);
+								break; }
+									}
+								}
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("		}}\n{0}", _Indent);
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("    /// <summary>\n{0}", _Indent);
+							_Output.Write ("	/// Direct API class for {1}.\n{0}", _Indent, Service.Id);
+							_Output.Write ("    /// </summary>		\n{0}", _Indent);
+							_Output.Write ("    public partial class {1}Direct: {2}Client {{\n{0}", _Indent, Service.Id, Service.Id);
+							_Output.Write (" 		\n{0}", _Indent);
+							_Output.Write ("		/// <summary>\n{0}", _Indent);
+							_Output.Write ("		/// Interface object to dispatch requests to.\n{0}", _Indent);
+							_Output.Write ("		/// </summary>	\n{0}", _Indent);
+							_Output.Write ("		public {1} Service {{get; set;}}\n{0}", _Indent, Service.Id);
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("        /// <summary>\n{0}", _Indent);
+							_Output.Write ("        /// The active JpcSession.\n{0}", _Indent);
+							_Output.Write ("        /// </summary>		\n{0}", _Indent);
+							_Output.Write ("		public override JpcSession JpcSession {{get; set;}}\n{0}", _Indent);
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("\n{0}", _Indent);
+							foreach  (_Choice Entry2 in Protocol.Entries) {
+								switch (Entry2._Tag ()) {
+									case ProtoStructType.Transaction: {
+									  Transaction Transaction = (Transaction) Entry2; 
 									_Output.Write ("\n{0}", _Indent);
-									_Output.Write ("            return response;\n{0}", _Indent);
-									_Output.Write ("            }}\n{0}", _Indent);
+									_Output.Write ("        /// <summary>\n{0}", _Indent);
+									_Output.Write ("		/// Implement the transaction\n{0}", _Indent);
+									_Output.Write ("        /// </summary>		\n{0}", _Indent);
+									_Output.Write ("        /// <param name=\"request\">The request object.</param>\n{0}", _Indent);
+									_Output.Write ("		/// <returns>The response object</returns>\n{0}", _Indent);
+									_Output.Write ("        public override {1} {2} ({3} request) =>\n{0}", _Indent, Transaction.Response, Transaction.Id, Transaction.Request);
+									_Output.Write ("				Service.{1} (request, JpcSession);\n{0}", _Indent, Transaction.Id);
+									_Output.Write ("\n{0}", _Indent);
 								break; }
 									}
 								}
@@ -218,10 +311,11 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("		}}\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("    /*\n{0}", _Indent);
 							_Output.Write ("    /// <summary>\n{0}", _Indent);
 							_Output.Write ("	/// Service class for {1}.\n{0}", _Indent, Service.Id);
 							_Output.Write ("    /// </summary>		\n{0}", _Indent);
-							_Output.Write ("    public partial class {1}Provider : Goedel.Protocol.JpcProvider {{\n{0}", _Indent, Service.Id);
+							_Output.Write ("    public partial class {1}Dispatch : Goedel.Protocol.JpcDispatch {{\n{0}", _Indent, Service.Id);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("		/// <summary>\n{0}", _Indent);
 							_Output.Write ("		/// Interface object to dispatch requests to.\n{0}", _Indent);
@@ -240,7 +334,7 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("			jsonReader.StartObject ();\n{0}", _Indent);
 							_Output.Write ("			string token = jsonReader.ReadToken ();\n{0}", _Indent);
-							_Output.Write ("			JsonObject Response = null;\n{0}", _Indent);
+							_Output.Write ("			JsonObject response = null;\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("			switch (token) {{\n{0}", _Indent);
 							foreach  (_Choice Entry2 in Protocol.Entries) {
@@ -248,9 +342,9 @@ namespace Goedel.Tool.ProtoGen {
 									case ProtoStructType.Transaction: {
 									  Transaction Transaction = (Transaction) Entry2; 
 									_Output.Write ("				case \"{1}\" : {{\n{0}", _Indent, Transaction.Id);
-									_Output.Write ("					var Request = new {1}();\n{0}", _Indent, Transaction.Request);
-									_Output.Write ("					Request.Deserialize (jsonReader);\n{0}", _Indent);
-									_Output.Write ("					Response = Service.{1} (Request, session);\n{0}", _Indent, Transaction.Id);
+									_Output.Write ("					var request = new {1}();\n{0}", _Indent, Transaction.Request);
+									_Output.Write ("					request.Deserialize (jsonReader);\n{0}", _Indent);
+									_Output.Write ("					response = Service.{1} (request, session);\n{0}", _Indent, Transaction.Id);
 									_Output.Write ("					break;\n{0}", _Indent);
 									_Output.Write ("					}}\n{0}", _Indent);
 								break; }
@@ -261,11 +355,11 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("					}}\n{0}", _Indent);
 							_Output.Write ("				}}\n{0}", _Indent);
 							_Output.Write ("			jsonReader.EndObject ();\n{0}", _Indent);
-							_Output.Write ("			return Response;\n{0}", _Indent);
+							_Output.Write ("			return response;\n{0}", _Indent);
 							_Output.Write ("			}}\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("		}}\n{0}", _Indent);
-							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("		*/\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 						break; }
 							}

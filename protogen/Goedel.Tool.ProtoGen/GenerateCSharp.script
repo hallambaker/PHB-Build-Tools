@@ -117,8 +117,50 @@ namespace #{Namespace} {
         /// </summary>
 		public override string GetDiscovery => Discovery;
 
-		///<summary>Base interface (used to create client wrapper stubs)</summary>
-		protected virtual #{Service.Id} JpcInterface {get; set;}
+		/// <summary>
+		/// Dispatch object request in specified authentication context.
+		/// </summary>			
+        /// <param name="session">The client context.</param>
+        /// <param name="jsonReader">Reader for data object.</param>
+        /// <returns>The response object returned by the corresponding dispatch.</returns>
+		public override Goedel.Protocol.JsonObject Dispatch(JpcSession  session,  
+								Goedel.Protocol.JsonReader jsonReader) {
+
+			jsonReader.StartObject ();
+			string token = jsonReader.ReadToken ();
+			JsonObject response = null;
+
+			switch (token) {
+#foreach (_Choice Entry2 in Protocol.Entries)
+#switchcast ProtoStructType Entry2
+#casecast Transaction Transaction
+				case "#{Transaction.Id}" : {
+					var request = new #{Transaction.Request}();
+					request.Deserialize (jsonReader);
+					response = #{Transaction.Id} (request, session);
+					break;
+					}
+#end switchcast
+#end foreach
+				default : {
+					throw new Goedel.Protocol.UnknownOperation ();
+					}
+				}
+			jsonReader.EndObject ();
+			return response;
+			}
+
+        /// <summary>
+        /// Return a client tapping the service API directly without serialization bound to
+        /// the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+        /// </summary>
+        /// <param name="jpcSession">Session to which requests are to be bound.</param>
+        /// <returns>The direct client instance.</returns>
+		public override Goedel.Protocol.JpcClientInterface GetDirect (JpcSession jpcSession) =>
+				new #{Service.Id}Direct () {
+						JpcSession = jpcSession,
+						Service = this
+						};
 
 #foreach (_Choice Entry2 in Protocol.Entries)
 #switchcast ProtoStructType Entry2
@@ -128,11 +170,10 @@ namespace #{Namespace} {
 		/// Base method for implementing the transaction  #{Transaction.Id}.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
+		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual #{Transaction.Response} #{Transaction.Id} (
-                #{Transaction.Request} request, JpcSession session=null) => 
-						JpcInterface.#{Transaction.Id} (request, session ?? JpcSession);
+        public abstract #{Transaction.Response} #{Transaction.Id} (
+                #{Transaction.Request} request, JpcSession session);
 #end switchcast
 #end foreach
 
@@ -141,13 +182,34 @@ namespace #{Namespace} {
     /// <summary>
 	/// Client class for #{Service.Id}.
     /// </summary>		
-    public partial class #{Service.Id}Client : #{Service.Id} {
+    public partial class #{Service.Id}Client :  Goedel.Protocol.JpcClientInterface {
+
+	    /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public const string WellKnown = "#{Service.WellKnown}";
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public override string GetWellKnown => WellKnown;
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public const string Discovery = "#{Service.Discovery}";
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public override string GetDiscovery => Discovery;
+
  		
 		JpcRemoteSession JpcRemoteSession;
         /// <summary>
         /// The active JpcSession.
         /// </summary>		
-		public override JpcSession JpcSession {
+		public virtual JpcSession JpcSession {
 			get => JpcRemoteSession;
 			set => JpcRemoteSession = value as JpcRemoteSession; 
 			}
@@ -161,26 +223,54 @@ namespace #{Namespace} {
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override #{Transaction.Response} #{Transaction.Id} (
-                #{Transaction.Request} request, JpcSession session=null) {
+        public virtual #{Transaction.Response} #{Transaction.Id} (#{Transaction.Request} request) =>
+				JpcRemoteSession.Post("#{Transaction.Id}", "#{Transaction.Response}", request) as #{Transaction.Response};
 
-            var responseData = JpcRemoteSession.Post("#{Transaction.Id}", request);
-            var response = #{Transaction.Response}.FromJson(responseData.JsonReader(), true);
+#end switchcast
+#end foreach
 
-            return response;
-            }
+		}
+
+    /// <summary>
+	/// Direct API class for #{Service.Id}.
+    /// </summary>		
+    public partial class #{Service.Id}Direct: #{Service.Id}Client {
+ 		
+		/// <summary>
+		/// Interface object to dispatch requests to.
+		/// </summary>	
+		public #{Service.Id} Service {get; set;}
+
+        /// <summary>
+        /// The active JpcSession.
+        /// </summary>		
+		public override JpcSession JpcSession {get; set;}
+
+
+#foreach (_Choice Entry2 in Protocol.Entries)
+#switchcast ProtoStructType Entry2
+#casecast Transaction Transaction
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override #{Transaction.Response} #{Transaction.Id} (#{Transaction.Request} request) =>
+				Service.#{Transaction.Id} (request, JpcSession);
+
 #end switchcast
 #end foreach
 
 		}
 
 
+    /*
     /// <summary>
 	/// Service class for #{Service.Id}.
     /// </summary>		
-    public partial class #{Service.Id}Provider : Goedel.Protocol.JpcProvider {
+    public partial class #{Service.Id}Dispatch : Goedel.Protocol.JpcDispatch {
 
 		/// <summary>
 		/// Interface object to dispatch requests to.
@@ -199,16 +289,16 @@ namespace #{Namespace} {
 
 			jsonReader.StartObject ();
 			string token = jsonReader.ReadToken ();
-			JsonObject Response = null;
+			JsonObject response = null;
 
 			switch (token) {
 #foreach (_Choice Entry2 in Protocol.Entries)
 #switchcast ProtoStructType Entry2
 #casecast Transaction Transaction
 				case "#{Transaction.Id}" : {
-					var Request = new #{Transaction.Request}();
-					Request.Deserialize (jsonReader);
-					Response = Service.#{Transaction.Id} (Request, session);
+					var request = new #{Transaction.Request}();
+					request.Deserialize (jsonReader);
+					response = Service.#{Transaction.Id} (request, session);
 					break;
 					}
 #end switchcast
@@ -218,11 +308,11 @@ namespace #{Namespace} {
 					}
 				}
 			jsonReader.EndObject ();
-			return Response;
+			return response;
 			}
 
 		}
-
+		*/
 
 #end switchcast
 #end foreach
