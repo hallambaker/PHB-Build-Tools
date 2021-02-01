@@ -245,16 +245,6 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("        /// </summary>\n{0}", _Indent);
 							_Output.Write ("		public override string GetDiscovery => Discovery;\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
-							_Output.Write (" 		\n{0}", _Indent);
-							_Output.Write ("		JpcRemoteSession JpcRemoteSession;\n{0}", _Indent);
-							_Output.Write ("        /// <summary>\n{0}", _Indent);
-							_Output.Write ("        /// The active JpcSession.\n{0}", _Indent);
-							_Output.Write ("        /// </summary>		\n{0}", _Indent);
-							_Output.Write ("		public virtual JpcSession JpcSession {{\n{0}", _Indent);
-							_Output.Write ("			get => JpcRemoteSession;\n{0}", _Indent);
-							_Output.Write ("			set => JpcRemoteSession = value as JpcRemoteSession; \n{0}", _Indent);
-							_Output.Write ("			}}\n{0}", _Indent);
-							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							foreach  (_Choice Entry2 in Protocol.Entries) {
 								switch (Entry2._Tag ()) {
