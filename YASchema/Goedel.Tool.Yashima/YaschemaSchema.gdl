@@ -1,0 +1,65 @@
+﻿Copyright "ThresholdSecrets" "2020" MITLicense
+
+Class Goedel.Tool.Yaschema YaschemaStruct
+
+	TopType Namespace
+		Id				Token Name
+		Class			Token Label
+		Text			Text
+	
+	TopType Client
+		Entries		List Packet
+			
+	TopType Host
+		Entries		List Packet
+
+	Type Packet
+		Id				ID PacketType
+		Options			Options
+			Initial	Initial Single
+			Respond Respond Single
+			Plaintext Plaintext Single
+			Mezzanine Mezzanine Single
+			Encrypted Encrypted Single
+
+	Type Initial
+		Options Options
+			HostCredential HostCredential Single
+
+	Type Respond
+		To List REF PacketType
+
+	Type Plaintext
+		Entries		List Choice
+			ClientEphemerals
+			ClientEphemeral
+			HostKeyID	
+			HostCredential
+			HostEphemerals
+			Response
+			Challenge
+			Payload
+
+	Type Mezzanine
+		Entries		List Choice
+			ClientCredential
+			ClientKeyID
+			Payload
+			HostEphemeral
+			HostEphemerals
+
+	Type Encrypted
+		Entries		List Choice
+			Payload
+
+	Type Payload
+	Type HostCredential
+	Type ClientCredential
+	Type ClientEphemerals
+	Type ClientEphemeral
+	Type HostEphemerals
+	Type HostEphemeral
+	Type Challenge
+	Type Response
+	Type HostKeyID
+	Type ClientKeyID

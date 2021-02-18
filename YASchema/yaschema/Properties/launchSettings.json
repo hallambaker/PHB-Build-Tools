@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "constant": {
+      "commandName": "Project",
+      "commandLineArgs": "..\\..\\..\\mmm\\Libraries\\Goedel.Protocol.Presentation\\PacketSchema.yaschema /cs",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Libraries\\Goedel.Protocol.Presentation"
+    }
+  }
+}

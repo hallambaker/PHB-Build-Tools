@@ -1,0 +1,16 @@
+﻿#script 1.0
+#license MITLicense
+#pclass Goedel.Tool.Yaschema Generate
+
+#method GenerateCS YaschemaStruct YaschemaStruct
+
+// hodwdie doody time
+
+
+#end method
+
+#method GenerateMD YaschemaStruct YaschemaStruct
+
+#end method
+
+#end pclass
