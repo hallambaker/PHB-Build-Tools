@@ -260,7 +260,7 @@ namespace Goedel.Shell.Yaschema {
                 Lexer Schema = new Lexer(inputfile);
                 Schema.Process(infile, Parse);
                 }
-			Parse.Init();
+			// Parse.Init();
 
 
 			// Script output of type GenerateCS cs
@@ -276,7 +276,7 @@ namespace Goedel.Shell.Yaschema {
 				Goedel.Tool.Yaschema.Generate Script = new Goedel.Tool.Yaschema.Generate () { 
 					_Output= OutputWriter 
 					};
-				// Script.GenerateCS (Parse);
+				Script.GenerateCS (Parse);
 				}
 			// Script output of type GenerateMD md
 			if (Options.GenerateMD.Text != null) {
@@ -291,7 +291,7 @@ namespace Goedel.Shell.Yaschema {
 				Goedel.Tool.Yaschema.Generate Script = new Goedel.Tool.Yaschema.Generate () { 
 					_Output= OutputWriter 
 					};
-				// Script.GenerateMD (Parse);
+				Script.GenerateMD (Parse);
 				}
 			}
 

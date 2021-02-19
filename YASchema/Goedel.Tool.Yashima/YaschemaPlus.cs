@@ -72,8 +72,8 @@ namespace Goedel.Tool.Yaschema {
 
         public override void Init(_Choice Parent) {
             base.Init(Parent);
-            Base.Packets.Add(this);
-            IsClient = Parent is Client;
+            _Base.Packets.Add(this);
+            IsClient = _Parent is Client;
             if (Parent is Client client) {
                 if (IsInitial) {
                     if (IsInitialHostCredential) {
@@ -89,8 +89,7 @@ namespace Goedel.Tool.Yaschema {
         }
 
     public partial class _Choice {
-        public YaschemaStruct Base;
-        public _Choice Parent;
+
         }
 
     public partial class Client {

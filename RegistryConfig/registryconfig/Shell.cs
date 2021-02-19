@@ -243,7 +243,7 @@ namespace CommandShell {
                 Lexer Schema = new Lexer(inputfile);
                 Schema.Process(infile, Parse);
                 }
-			Parse.Init();
+			// Parse.Init();
 
 
 			// Script output of type Generate cs
@@ -259,7 +259,7 @@ namespace CommandShell {
 				Goedel.Tool.RegistryConfig.GenerateCS Script = new Goedel.Tool.RegistryConfig.GenerateCS () { 
 					_Output= OutputWriter 
 					};
-				// Script.Generate (Parse);
+				Script.Generate (Parse);
 				}
 			}
 

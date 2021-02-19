@@ -243,7 +243,7 @@ namespace Goedel.Shell.DNSConfig {
                 Lexer Schema = new Lexer(inputfile);
                 Schema.Process(infile, Parse);
                 }
-			Parse.Init();
+			// Parse.Init();
 
 
 			// Script output of type GenerateZone zone
@@ -259,7 +259,7 @@ namespace Goedel.Shell.DNSConfig {
 				Goedel.Tool.DNSConfig.Generate Script = new Goedel.Tool.DNSConfig.Generate () { 
 					_Output= OutputWriter 
 					};
-				// Script.GenerateZone (Parse);
+				Script.GenerateZone (Parse);
 				}
 			}
 

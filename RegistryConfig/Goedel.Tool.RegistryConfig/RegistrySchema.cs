@@ -13,6 +13,8 @@ using Goedel.Registry;
 using Goedel.Utilities;
 
 
+
+
 //
 // Namespace Goedel.Tool.RegistryConfig
 // Class ConfigItems
@@ -44,6 +46,7 @@ using Goedel.Utilities;
 //   TokenType
 //       ClassType
 
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
 namespace Goedel.Tool.RegistryConfig {
 
 
@@ -65,14 +68,21 @@ namespace Goedel.Tool.RegistryConfig {
     public abstract partial class _Choice {
         abstract public ConfigItemsType _Tag ();
 
+        public _Choice _Parent;
+        public ConfigItems _Base;
+
 		public abstract void Serialize (StructureWriter Output, bool tag);
 
-		public virtual void Init (_Choice Parent) {
+    	public virtual void Init (_Choice parent) {
+            _Parent = parent;
 			}
 
+        
+
 		bool _Initialized = false;
-		public virtual void _InitChildren (_Choice Parent) {
-			Init (Parent);
+		public virtual void _InitChildren (_Choice parent) {
+			Init (parent);
+            _Base = parent._Base;
 			if (_Initialized) {
 				return;
 				}
@@ -87,9 +97,8 @@ namespace Goedel.Tool.RegistryConfig {
         public ID<_Choice>				Id; 
         public List <Field>           Fields = new List<Field> ();
 
-        public override ConfigItemsType _Tag () {
-            return ConfigItemsType.Class;
-            }
+        public override ConfigItemsType _Tag () =>ConfigItemsType.Class;
+
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -122,9 +131,8 @@ namespace Goedel.Tool.RegistryConfig {
         public _Choice					Type;
         public List <_Choice>           Options = new List<_Choice> ();
 
-        public override ConfigItemsType _Tag () {
-            return ConfigItemsType.Field;
-            }
+        public override ConfigItemsType _Tag () =>ConfigItemsType.Field;
+
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -156,9 +164,8 @@ namespace Goedel.Tool.RegistryConfig {
     public partial class AltID : _Choice {
 		public string					Name;
 
-        public override ConfigItemsType _Tag () {
-            return ConfigItemsType.AltID;
-            }
+        public override ConfigItemsType _Tag () =>ConfigItemsType.AltID;
+
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -179,9 +186,8 @@ namespace Goedel.Tool.RegistryConfig {
 
     public partial class String : _Choice {
 
-        public override ConfigItemsType _Tag () {
-            return ConfigItemsType.String;
-            }
+        public override ConfigItemsType _Tag () =>ConfigItemsType.String;
+
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -201,9 +207,8 @@ namespace Goedel.Tool.RegistryConfig {
 
     public partial class Int : _Choice {
 
-        public override ConfigItemsType _Tag () {
-            return ConfigItemsType.Int;
-            }
+        public override ConfigItemsType _Tag () =>ConfigItemsType.Int;
+
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -223,9 +228,8 @@ namespace Goedel.Tool.RegistryConfig {
 
     public partial class Binary : _Choice {
 
-        public override ConfigItemsType _Tag () {
-            return ConfigItemsType.Binary;
-            }
+        public override ConfigItemsType _Tag () =>ConfigItemsType.Binary;
+
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -248,17 +252,11 @@ namespace Goedel.Tool.RegistryConfig {
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
-        public void Reach() {
-            Label = null;
-            }
+        public void Reach() =>  Label = null;
 
-        public override ConfigItemsType _Tag () {
-            return ConfigItemsType._Label;
-            }
+        public override ConfigItemsType _Tag () => ConfigItemsType._Label;
 
-		public override void Serialize (StructureWriter Output, bool tag) {
-			Output.WriteId ("ID", Label.ToString());
-			}
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
         }
 
 
@@ -292,13 +290,7 @@ namespace Goedel.Tool.RegistryConfig {
         public List <Goedel.Tool.RegistryConfig._Choice>        Top;
         public Registry	<Goedel.Tool.RegistryConfig._Choice>	Registry;
 
-
-
-        bool _StartOfEntry;
-        public bool StartOfEntry {
-            get {return _StartOfEntry;}
-            private set { _StartOfEntry = value; }
-            }
+        public bool StartOfEntry {get;  private set;}
 
         StateCode								State;
         Goedel.Tool.RegistryConfig._Choice				Current;
@@ -306,14 +298,16 @@ namespace Goedel.Tool.RegistryConfig {
 
 
         public static ConfigItems Parse(string File, Goedel.Registry.Dispatch Options) {
-            var Result = new ConfigItems();
-            Result.Options = Options;
+            var Result = new ConfigItems() {
+				Options = Options
+				};
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
                 Lexer Schema = new Lexer(File);
                 Schema.Process(infile, Result);
                 }
+            Result.Init ();
 			Result._InitChildren ();
 
             return Result;
@@ -326,6 +320,7 @@ namespace Goedel.Tool.RegistryConfig {
 				}
 			_Initialized = true;
 			foreach (var Entry in Top) {
+                Entry._Base = this;
 				Entry._InitChildren (null);
 				}
 			}
@@ -335,7 +330,7 @@ namespace Goedel.Tool.RegistryConfig {
             Registry = new Registry <Goedel.Tool.RegistryConfig._Choice> ();
             State = StateCode._Start;
             Stack = new List <_StackItem> ();
-            _StartOfEntry = true;
+            StartOfEntry = true;
 
 			TYPE__FieldType = Registry.TYPE ("FieldType"); 
 			TYPE__ClassType = Registry.TYPE ("ClassType"); 
@@ -429,9 +424,7 @@ namespace Goedel.Tool.RegistryConfig {
             }
 
 
-		public void Serialize (TextWriter Output) {
-			Serialize (Output, OutputFormat.Goedel);
-			}
+		public void Serialize (TextWriter Output)=> Serialize (Output, OutputFormat.Goedel);
 
 		public void Serialize (TextWriter Output, OutputFormat OutputFormat) {
 
@@ -445,9 +438,10 @@ namespace Goedel.Tool.RegistryConfig {
 
 
         void Push (Goedel.Tool.RegistryConfig._Choice Token) {
-            _StackItem Item = new _StackItem ();
-            Item.State = State;
-            Item.Token = Current;
+            _StackItem Item = new _StackItem () {
+					State = State,
+					Token = Current
+					};
 
             Stack.Add (Item);
 
@@ -457,7 +451,7 @@ namespace Goedel.Tool.RegistryConfig {
             }
 
         void Pop () {
-			Assert.False (Stack.Count == 0, InternalError.Throw);
+			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -477,7 +471,7 @@ namespace Goedel.Tool.RegistryConfig {
                 (Token == TokenType.COMMENT)) {
 				return;
 				}
-			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
+			Assert.AssertFalse (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -508,7 +502,7 @@ namespace Goedel.Tool.RegistryConfig {
                                 }
                             break;
                             }
-                        if (Token == TokenType.END) {
+                        if (Token == TokenType.END) { 
                             State = StateCode._End;
                             break;
                             }
@@ -592,7 +586,9 @@ namespace Goedel.Tool.RegistryConfig {
                                 }
                             break;
                             }
-                        else throw new Expected("Parser Error Expected [String Int Binary ]");
+                        else { 
+						    throw new Expected("Parser Error Expected [String Int Binary ]");
+                            }
 
                     case StateCode.Field__Type:
 
@@ -661,5 +657,5 @@ namespace Goedel.Tool.RegistryConfig {
             }
         }
 	}
-
+#pragma warning restore IDE0022	
 
