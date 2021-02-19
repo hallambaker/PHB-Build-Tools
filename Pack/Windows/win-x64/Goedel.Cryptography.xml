@@ -6211,6 +6211,9 @@
             <summary>If true, a signature generated using this key will always include the
             full public key parameters.</summary>
         </member>
+        <member name="P:Goedel.Cryptography.KeyPair.LengthSignature">
+            <summary>The length of a signature in bytes.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.KeyPair.Sign(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Sign a precomputed digest
@@ -6735,6 +6738,9 @@
             <summary>
             Return private key parameters in PKIX structure
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairDH.LengthSignature">
+            <summary>The length of a signature in bytes.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.KeyPairDH.PKIXPrivateKeyDH">
             <summary>
@@ -7262,6 +7268,9 @@
             The byte encoding of the public key
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.KeyPairEd25519.LengthSignature">
+            <summary>The length of a signature in bytes.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.#ctor(System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Construct a KeyPairEd25519 instance for the specified key data in interchange 
@@ -7440,6 +7449,9 @@
             The byte encoding of the public key
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.KeyPairEd448.LengthSignature">
+            <summary>The length of a signature in bytes.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.KeyPairEd448.#ctor(System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Construct a KeyPairEd25519 instance for the specified key data in interchange 
@@ -7615,6 +7627,9 @@
         </member>
         <member name="P:Goedel.Cryptography.KeyPairRSA.PublicOnly">
             <summary>If true, the key only has access to public key values.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairRSA.LengthSignature">
+            <summary>The length of a signature in bytes.</summary> 
         </member>
         <member name="M:Goedel.Cryptography.KeyPairRSA.SignatureAlgorithmID(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
@@ -7919,6 +7934,9 @@
             The byte encoding of the public key
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.KeyPairX25519.LengthSignature">
+            <summary>The length of a signature in bytes.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.KeyPairX25519.#ctor(System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Construct a KeyPairX25519 instance for the specified key data in interchange 
@@ -8085,6 +8103,9 @@
             <summary>
             The byte encoding of the public key
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairX448.LengthSignature">
+            <summary>The length of a signature in bytes.</summary> 
         </member>
         <member name="M:Goedel.Cryptography.KeyPairX448.#ctor(System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>

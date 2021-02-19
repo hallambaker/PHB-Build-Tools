@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "goedel3": {
+    "Goedel.Tool.Schema": {
       "commandName": "Project",
       "commandLineArgs": "YaschemaSchema.gdl  /cs  YaschemaSchema.cs",
       "workingDirectory": "C:\\Users\\hallam\\Work\\buildtools\\YASchema\\Goedel.Tool.Yashima"

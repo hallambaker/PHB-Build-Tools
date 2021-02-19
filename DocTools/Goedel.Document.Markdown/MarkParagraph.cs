@@ -71,14 +71,17 @@ namespace Goedel.Document.Markdown{
         /// </summary>
         /// <param name="StartState">The initial starting state</param>
         /// <returns>The token detected or -1 if an error occurred</returns>
-        public Token GetToken(State StartState) => Tokens [GetTokenInt((int)StartState)];
-
+        public Token GetToken(State StartState) {
+            return Tokens [GetTokenInt((int)StartState)];
+            }
 
         /// <summary>
         /// Get the next token from the stream
         /// </summary>
         /// <returns>The token detected or -1 if an error occurred</returns>
-        public Token GetToken () => GetToken (0);
+        public Token GetToken () {
+            return GetToken (0);
+            }
 
 		/// <summary>State types</summary>
 		public enum State {
@@ -193,7 +196,7 @@ namespace Goedel.Document.Markdown{
 
 		/// <summary>Generated initialization method, is called automatically 
 		/// the FSR to reset </summary>
-        public override void Init () =>
+        public override void Init () {
             Actions = new ActionDelegate[] {
 				Reset,
 				AddText,
@@ -212,7 +215,9 @@ namespace Goedel.Document.Markdown{
 				ElementEnd,
 				Null,
 				AddCloseTag,
-				ElementEnd			};
+				ElementEnd
+				};
+			}
 		}
 	}
 

@@ -34,8 +34,6 @@ using Goedel.Registry;
 using Goedel.Utilities;
 
 
-
-
 //
 // Namespace Goedel.Tool.Domainer
 // Class Domainer
@@ -106,7 +104,6 @@ using Goedel.Utilities;
 //       VarT
 //       ReasonT
 
-#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
 namespace Goedel.Tool.Domainer {
 
 
@@ -180,8 +177,9 @@ namespace Goedel.Tool.Domainer {
         public ID<_Choice>				Id; 
         public List <REF<_Choice>>           Members = new List<REF<_Choice>> ();
 
-        public override DomainerType _Tag () =>DomainerType.Group;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Group;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -212,8 +210,9 @@ namespace Goedel.Tool.Domainer {
 		public string					Reference;
         public List <_Choice>           Entries = new List<_Choice> ();
 
-        public override DomainerType _Tag () =>DomainerType.RR;
-
+        public override DomainerType _Tag () {
+            return DomainerType.RR;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -245,8 +244,9 @@ namespace Goedel.Tool.Domainer {
 
     public partial class Obsolete : _Choice {
 
-        public override DomainerType _Tag () =>DomainerType.Obsolete;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Obsolete;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -266,8 +266,9 @@ namespace Goedel.Tool.Domainer {
 
     public partial class Pseudo : _Choice {
 
-        public override DomainerType _Tag () =>DomainerType.Pseudo;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Pseudo;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -287,8 +288,9 @@ namespace Goedel.Tool.Domainer {
 
     public partial class Experimental : _Choice {
 
-        public override DomainerType _Tag () =>DomainerType.Experimental;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Experimental;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -309,8 +311,9 @@ namespace Goedel.Tool.Domainer {
     public partial class IPv4 : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.IPv4;
-
+        public override DomainerType _Tag () {
+            return DomainerType.IPv4;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -332,8 +335,9 @@ namespace Goedel.Tool.Domainer {
     public partial class IPv6 : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.IPv6;
-
+        public override DomainerType _Tag () {
+            return DomainerType.IPv6;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -355,8 +359,9 @@ namespace Goedel.Tool.Domainer {
     public partial class Domain : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.Domain;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Domain;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -378,8 +383,9 @@ namespace Goedel.Tool.Domainer {
     public partial class Mail : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.Mail;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Mail;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -401,8 +407,9 @@ namespace Goedel.Tool.Domainer {
     public partial class NodeID : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.NodeID;
-
+        public override DomainerType _Tag () {
+            return DomainerType.NodeID;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -424,8 +431,9 @@ namespace Goedel.Tool.Domainer {
     public partial class Byte : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.Byte;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Byte;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -447,8 +455,9 @@ namespace Goedel.Tool.Domainer {
     public partial class Int16 : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.Int16;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Int16;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -470,8 +479,9 @@ namespace Goedel.Tool.Domainer {
     public partial class Int32 : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.Int32;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Int32;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -493,8 +503,9 @@ namespace Goedel.Tool.Domainer {
     public partial class Time32 : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.Time32;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Time32;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -516,8 +527,9 @@ namespace Goedel.Tool.Domainer {
     public partial class Time48 : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.Time48;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Time48;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -539,8 +551,9 @@ namespace Goedel.Tool.Domainer {
     public partial class String : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.String;
-
+        public override DomainerType _Tag () {
+            return DomainerType.String;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -562,8 +575,9 @@ namespace Goedel.Tool.Domainer {
     public partial class OptionalString : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.OptionalString;
-
+        public override DomainerType _Tag () {
+            return DomainerType.OptionalString;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -585,8 +599,9 @@ namespace Goedel.Tool.Domainer {
     public partial class Strings : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.Strings;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Strings;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -608,8 +623,9 @@ namespace Goedel.Tool.Domainer {
     public partial class StringX : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.StringX;
-
+        public override DomainerType _Tag () {
+            return DomainerType.StringX;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -631,8 +647,9 @@ namespace Goedel.Tool.Domainer {
     public partial class Binary : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.Binary;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Binary;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -654,8 +671,9 @@ namespace Goedel.Tool.Domainer {
     public partial class Binary8 : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.Binary8;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Binary8;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -677,8 +695,9 @@ namespace Goedel.Tool.Domainer {
     public partial class Binary16 : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.Binary16;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Binary16;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -701,8 +720,9 @@ namespace Goedel.Tool.Domainer {
         public TOKEN<_Choice>			Length;
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.LBinary;
-
+        public override DomainerType _Tag () {
+            return DomainerType.LBinary;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -726,8 +746,9 @@ namespace Goedel.Tool.Domainer {
         public TOKEN<_Choice>			Target;
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.LByte;
-
+        public override DomainerType _Tag () {
+            return DomainerType.LByte;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -751,8 +772,9 @@ namespace Goedel.Tool.Domainer {
         public TOKEN<_Choice>			Target;
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.LInt16;
-
+        public override DomainerType _Tag () {
+            return DomainerType.LInt16;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -775,8 +797,9 @@ namespace Goedel.Tool.Domainer {
     public partial class Hex : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.Hex;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Hex;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -798,8 +821,9 @@ namespace Goedel.Tool.Domainer {
     public partial class Hex8 : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.Hex8;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Hex8;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -821,8 +845,9 @@ namespace Goedel.Tool.Domainer {
     public partial class Hex16 : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.Hex16;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Hex16;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -843,8 +868,9 @@ namespace Goedel.Tool.Domainer {
 
     public partial class Null : _Choice {
 
-        public override DomainerType _Tag () =>DomainerType.Null;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Null;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -865,8 +891,9 @@ namespace Goedel.Tool.Domainer {
     public partial class OptionList : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.OptionList;
-
+        public override DomainerType _Tag () {
+            return DomainerType.OptionList;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -889,8 +916,9 @@ namespace Goedel.Tool.Domainer {
         public TOKEN<_Choice>			Code;
         public TOKEN<_Choice>			Id;
 
-        public override DomainerType _Tag () =>DomainerType.Gateway;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Gateway;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -914,8 +942,9 @@ namespace Goedel.Tool.Domainer {
         public TOKEN<_Choice>			Id;
         public List <_Choice>           Entries = new List<_Choice> ();
 
-        public override DomainerType _Tag () =>DomainerType.List;
-
+        public override DomainerType _Tag () {
+            return DomainerType.List;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -946,8 +975,9 @@ namespace Goedel.Tool.Domainer {
         public TOKEN<_Choice>			Id;
         public List <AltEntry>           Entries = new List<AltEntry> ();
 
-        public override DomainerType _Tag () =>DomainerType.Alt;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Alt;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -978,8 +1008,9 @@ namespace Goedel.Tool.Domainer {
 		public int						Code;
         public _Choice					Choices;
 
-        public override DomainerType _Tag () =>DomainerType.AltEntry;
-
+        public override DomainerType _Tag () {
+            return DomainerType.AltEntry;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -1006,8 +1037,9 @@ namespace Goedel.Tool.Domainer {
 		public string					Description;
 		public string					Reference;
 
-        public override DomainerType _Tag () =>DomainerType.Q;
-
+        public override DomainerType _Tag () {
+            return DomainerType.Q;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -1035,8 +1067,9 @@ namespace Goedel.Tool.Domainer {
 		public string					Description;
 		public string					Reference;
 
-        public override DomainerType _Tag () =>DomainerType.IG;
-
+        public override DomainerType _Tag () {
+            return DomainerType.IG;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -1063,8 +1096,9 @@ namespace Goedel.Tool.Domainer {
 		public int						First;
 		public int						Last;
 
-        public override DomainerType _Tag () =>DomainerType.NA;
-
+        public override DomainerType _Tag () {
+            return DomainerType.NA;
+            }
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
@@ -1090,11 +1124,17 @@ namespace Goedel.Tool.Domainer {
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
-        public void Reach() =>  Label = null;
+        public void Reach() {
+            Label = null;
+            }
 
-        public override DomainerType _Tag () => DomainerType._Label;
+        public override DomainerType _Tag () {
+            return DomainerType._Label;
+            }
 
-		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
+		public override void Serialize (StructureWriter Output, bool tag) {
+			Output.WriteId ("ID", Label.ToString());
+			}
         }
 
 
@@ -1205,7 +1245,13 @@ namespace Goedel.Tool.Domainer {
         public List <Goedel.Tool.Domainer._Choice>        Top;
         public Registry	<Goedel.Tool.Domainer._Choice>	Registry;
 
-        public bool StartOfEntry {get;  private set;}
+
+
+        bool _StartOfEntry;
+        public bool StartOfEntry {
+            get {return _StartOfEntry;}
+            private set { _StartOfEntry = value; }
+            }
 
         StateCode								State;
         Goedel.Tool.Domainer._Choice				Current;
@@ -1213,9 +1259,8 @@ namespace Goedel.Tool.Domainer {
 
 
         public static Domainer Parse(string File, Goedel.Registry.Dispatch Options) {
-            var Result = new Domainer() {
-				Options = Options
-				};
+            var Result = new Domainer();
+            Result.Options = Options;
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
@@ -1243,7 +1288,7 @@ namespace Goedel.Tool.Domainer {
             Registry = new Registry <Goedel.Tool.Domainer._Choice> ();
             State = StateCode._Start;
             Stack = new List <_StackItem> ();
-            StartOfEntry = true;
+            _StartOfEntry = true;
 
 			TYPE__GroupT = Registry.TYPE ("GroupT"); 
 			TYPE__RRT = Registry.TYPE ("RRT"); 
@@ -1651,7 +1696,9 @@ namespace Goedel.Tool.Domainer {
             }
 
 
-		public void Serialize (TextWriter Output)=> Serialize (Output, OutputFormat.Goedel);
+		public void Serialize (TextWriter Output) {
+			Serialize (Output, OutputFormat.Goedel);
+			}
 
 		public void Serialize (TextWriter Output, OutputFormat OutputFormat) {
 
@@ -1665,10 +1712,9 @@ namespace Goedel.Tool.Domainer {
 
 
         void Push (Goedel.Tool.Domainer._Choice Token) {
-            _StackItem Item = new _StackItem () {
-					State = State,
-					Token = Current
-					};
+            _StackItem Item = new _StackItem ();
+            Item.State = State;
+            Item.Token = Current;
 
             Stack.Add (Item);
 
@@ -1678,7 +1724,7 @@ namespace Goedel.Tool.Domainer {
             }
 
         void Pop () {
-			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
+			Assert.False (Stack.Count == 0, InternalError.Throw);
 
             _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
@@ -1698,7 +1744,7 @@ namespace Goedel.Tool.Domainer {
                 (Token == TokenType.COMMENT)) {
 				return;
 				}
-			Assert.AssertFalse (Token == TokenType.INVALID, InvalidToken.Throw);
+			Assert.False (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -1733,7 +1779,7 @@ namespace Goedel.Tool.Domainer {
                                 }
                             break;
                             }
-                        if (Token == TokenType.END) { 
+                        if (Token == TokenType.END) {
                             State = StateCode._End;
                             break;
                             }
@@ -2376,9 +2422,7 @@ namespace Goedel.Tool.Domainer {
                                 }
                             break;
                             }
-                        else { 
-						    throw new Expected("Parser Error Expected [Null IPv4 IPv6 Domain Mail ]");
-                            }
+                        else throw new Expected("Parser Error Expected [Null IPv4 IPv6 Domain Mail ]");
 
                     case StateCode.AltEntry__Choices:
                         Pop ();
@@ -2504,5 +2548,5 @@ namespace Goedel.Tool.Domainer {
             }
         }
 	}
-#pragma warning restore IDE0022	
+
 

@@ -140,27 +140,28 @@
             The user command could not be parsed
             </summary>
         </member>
-        <member name="P:Goedel.Registry.ParserException.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Registry.ParserException.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Registry.ParserException.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Registry.ParserException.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The user command could not be parsed"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Registry.ParserException._Throw(System.Object)">
+        <member name="M:Goedel.Registry.ParserException.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The user command could not be parsed"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.ParserException.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.ParserException.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
         </member>
         <member name="F:Goedel.Registry.ParserException.Throw">
             <summary>
@@ -172,27 +173,23 @@
             The file could not be read.
             </summary>
         </member>
-        <member name="P:Goedel.Registry.FileReadError.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Registry.FileReadError.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Registry.FileReadError.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Registry.FileReadError.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The file {0} could not be read"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Registry.FileReadError._Throw(System.Object)">
+        <member name="M:Goedel.Registry.FileReadError.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The file {0} could not be read"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.FileReadError.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Registry.FileReadError.Throw">
             <summary>
@@ -204,27 +201,23 @@
             User entered an unknown command
             </summary>
         </member>
-        <member name="P:Goedel.Registry.UnknownCommand.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Registry.UnknownCommand.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Registry.UnknownCommand.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Registry.UnknownCommand.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Unknown command"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Registry.UnknownCommand._Throw(System.Object)">
+        <member name="M:Goedel.Registry.UnknownCommand.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Unknown command"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.UnknownCommand.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Registry.UnknownCommand.Throw">
             <summary>
@@ -236,27 +229,23 @@
             User entered an unknown option
             </summary>
         </member>
-        <member name="P:Goedel.Registry.UnknownOption.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Registry.UnknownOption.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Registry.UnknownOption.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Registry.UnknownOption.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Unknown option"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Registry.UnknownOption._Throw(System.Object)">
+        <member name="M:Goedel.Registry.UnknownOption.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Unknown option"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.UnknownOption.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Registry.UnknownOption.Throw">
             <summary>
@@ -268,27 +257,23 @@
             No command specified
             </summary>
         </member>
-        <member name="P:Goedel.Registry.NoCommand.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Registry.NoCommand.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Registry.NoCommand.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Registry.NoCommand.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "No command specified"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Registry.NoCommand._Throw(System.Object)">
+        <member name="M:Goedel.Registry.NoCommand.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "No command specified"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.NoCommand.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Registry.NoCommand.Throw">
             <summary>
@@ -300,27 +285,28 @@
             Schema parsing exception
             </summary>
         </member>
-        <member name="P:Goedel.Registry.SchemaParse.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Registry.SchemaParse.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Registry.SchemaParse.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Registry.SchemaParse.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The schema could not be parsed"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Registry.SchemaParse._Throw(System.Object)">
+        <member name="M:Goedel.Registry.SchemaParse.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The schema could not be parsed"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.SchemaParse.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Registry.SchemaParse.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
         </member>
         <member name="F:Goedel.Registry.SchemaParse.Throw">
             <summary>
@@ -332,27 +318,23 @@
             A reserved word was expected but a different token was encountered.
             </summary>
         </member>
-        <member name="P:Goedel.Registry.NotFoundReserved.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Registry.NotFoundReserved.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Registry.NotFoundReserved.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Registry.NotFoundReserved.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Expected reserved word, token {0} was not found"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Registry.NotFoundReserved._Throw(System.Object)">
+        <member name="M:Goedel.Registry.NotFoundReserved.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Expected reserved word, token {0} was not found"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.NotFoundReserved.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Registry.NotFoundReserved.Throw">
             <summary>
@@ -364,27 +346,23 @@
             An internal parser error occured, this code should not have been reached.
             </summary>
         </member>
-        <member name="P:Goedel.Registry.InternalError.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Registry.InternalError.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Registry.InternalError.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Registry.InternalError.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "An internal parser error occurred"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Registry.InternalError._Throw(System.Object)">
+        <member name="M:Goedel.Registry.InternalError.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "An internal parser error occurred"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.InternalError.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Registry.InternalError.Throw">
             <summary>
@@ -396,27 +374,23 @@
             The input token was not valid.
             </summary>
         </member>
-        <member name="P:Goedel.Registry.InvalidToken.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Registry.InvalidToken.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Registry.InvalidToken.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Registry.InvalidToken.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "An invalid token was encountered"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Registry.InvalidToken._Throw(System.Object)">
+        <member name="M:Goedel.Registry.InvalidToken.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "An invalid token was encountered"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.InvalidToken.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Registry.InvalidToken.Throw">
             <summary>
@@ -428,27 +402,23 @@
             Expected a block start token.
             </summary>
         </member>
-        <member name="P:Goedel.Registry.ExpectedStart.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Registry.ExpectedStart.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Registry.ExpectedStart.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Registry.ExpectedStart.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Start token expected"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Registry.ExpectedStart._Throw(System.Object)">
+        <member name="M:Goedel.Registry.ExpectedStart.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Start token expected"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.ExpectedStart.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Registry.ExpectedStart.Throw">
             <summary>
@@ -460,27 +430,23 @@
             A class token was expected.
             </summary>
         </member>
-        <member name="P:Goedel.Registry.ExpectedClass.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Registry.ExpectedClass.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Registry.ExpectedClass.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Registry.ExpectedClass.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Parser Error Expected [Class]"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Registry.ExpectedClass._Throw(System.Object)">
+        <member name="M:Goedel.Registry.ExpectedClass.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Parser Error Expected [Class]"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.ExpectedClass.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Registry.ExpectedClass.Throw">
             <summary>
@@ -492,27 +458,23 @@
             A token was expected.
             </summary>
         </member>
-        <member name="P:Goedel.Registry.Expected.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Registry.Expected.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Registry.Expected.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Registry.Expected.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Parser Error Expected [Class]"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Registry.Expected._Throw(System.Object)">
+        <member name="M:Goedel.Registry.Expected.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Parser Error Expected [Class]"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.Expected.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Registry.Expected.Throw">
             <summary>
@@ -524,27 +486,23 @@
             More block close tokens were encountered than open tokens.
             </summary>
         </member>
-        <member name="P:Goedel.Registry.TooManyClose.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Registry.TooManyClose.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Registry.TooManyClose.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Registry.TooManyClose.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Too Many Closing Braces"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Registry.TooManyClose._Throw(System.Object)">
+        <member name="M:Goedel.Registry.TooManyClose.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Too Many Closing Braces"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.TooManyClose.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Registry.TooManyClose.Throw">
             <summary>
@@ -556,27 +514,23 @@
             Unreachable code was encountered.
             </summary>
         </member>
-        <member name="P:Goedel.Registry.UnreachableCode.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Registry.UnreachableCode.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Registry.UnreachableCode.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Registry.UnreachableCode.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Unreachable code reached"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Registry.UnreachableCode._Throw(System.Object)">
+        <member name="M:Goedel.Registry.UnreachableCode.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Unreachable code reached"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Registry.UnreachableCode.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Registry.UnreachableCode.Throw">
             <summary>

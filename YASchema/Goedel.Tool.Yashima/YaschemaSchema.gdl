@@ -16,15 +16,15 @@ Class Goedel.Tool.Yaschema YaschemaStruct
 	Type Packet
 		Id				ID PacketType
 		Options			Options
-			Initial	Initial Single
-			Respond Respond Single
-			Plaintext Plaintext Single
-			Mezzanine Mezzanine Single
-			Encrypted Encrypted Single
+			Initial	Initial Multiple
+			Respond Respond Multiple
+			Plaintext Plaintext Multiple
+			Mezzanine Mezzanine Multiple
+			Encrypted Encrypted Multiple
 
 	Type Initial
 		Options Options
-			HostCredential HostCredential Single
+			HostCredential HostCredential Multiple
 
 	Type Respond
 		To List REF PacketType

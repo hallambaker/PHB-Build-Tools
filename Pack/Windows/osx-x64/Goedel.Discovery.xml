@@ -3278,27 +3278,28 @@
             Base class for protocol exceptions.
             </summary>
         </member>
-        <member name="P:Goedel.Discovery.DiscoveryException.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Discovery.DiscoveryException.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Discovery.DiscoveryException.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Discovery.DiscoveryException.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "An exception occurred in the discovery library"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Discovery.DiscoveryException._Throw(System.Object)">
+        <member name="M:Goedel.Discovery.DiscoveryException.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "An exception occurred in the discovery library"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Discovery.DiscoveryException.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Discovery.DiscoveryException.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
         </member>
         <member name="F:Goedel.Discovery.DiscoveryException.Throw">
             <summary>
@@ -3310,27 +3311,23 @@
             An attempt was made to write past the end of a buffer.
             </summary>
         </member>
-        <member name="P:Goedel.Discovery.BufferWriteOverflow.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Discovery.BufferWriteOverflow.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Discovery.BufferWriteOverflow.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Discovery.BufferWriteOverflow.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Buffer write overflow"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Discovery.BufferWriteOverflow._Throw(System.Object)">
+        <member name="M:Goedel.Discovery.BufferWriteOverflow.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Buffer write overflow"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Discovery.BufferWriteOverflow.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Discovery.BufferWriteOverflow.Throw">
             <summary>
@@ -3342,27 +3339,23 @@
             An attempt was made to read past the end of a buffer.
             </summary>
         </member>
-        <member name="P:Goedel.Discovery.BufferReadOverflow.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Discovery.BufferReadOverflow.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Discovery.BufferReadOverflow.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Discovery.BufferReadOverflow.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Buffer read overflow"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Discovery.BufferReadOverflow._Throw(System.Object)">
+        <member name="M:Goedel.Discovery.BufferReadOverflow.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Buffer read overflow"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Discovery.BufferReadOverflow.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Discovery.BufferReadOverflow.Throw">
             <summary>
@@ -3374,27 +3367,23 @@
             A message contained a label longer than the permitted length
             </summary>
         </member>
-        <member name="P:Goedel.Discovery.LabelTooLong.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Discovery.LabelTooLong.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Discovery.LabelTooLong.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Discovery.LabelTooLong.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "A message contained a label longer than the permitted length"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Discovery.LabelTooLong._Throw(System.Object)">
+        <member name="M:Goedel.Discovery.LabelTooLong.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "A message contained a label longer than the permitted length"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Discovery.LabelTooLong.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Discovery.LabelTooLong.Throw">
             <summary>
@@ -3406,27 +3395,23 @@
             Unicode labels are not supported
             </summary>
         </member>
-        <member name="P:Goedel.Discovery.UnicodeNotSupported.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Discovery.UnicodeNotSupported.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Discovery.UnicodeNotSupported.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Discovery.UnicodeNotSupported.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Unicode labels are not supported"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Discovery.UnicodeNotSupported._Throw(System.Object)">
+        <member name="M:Goedel.Discovery.UnicodeNotSupported.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Unicode labels are not supported"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Discovery.UnicodeNotSupported.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Discovery.UnicodeNotSupported.Throw">
             <summary>
@@ -3438,27 +3423,23 @@
             An illegal character was encountered
             </summary>
         </member>
-        <member name="P:Goedel.Discovery.IllegalCharacter.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Discovery.IllegalCharacter.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Discovery.IllegalCharacter.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Discovery.IllegalCharacter.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "An illegal character was encountered"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Discovery.IllegalCharacter._Throw(System.Object)">
+        <member name="M:Goedel.Discovery.IllegalCharacter.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "An illegal character was encountered"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Discovery.IllegalCharacter.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Discovery.IllegalCharacter.Throw">
             <summary>
@@ -3470,27 +3451,23 @@
             A message contained a tag longer than the permitted length
             </summary>
         </member>
-        <member name="P:Goedel.Discovery.TagTooLong.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Discovery.TagTooLong.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Discovery.TagTooLong.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Discovery.TagTooLong.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "A message contained a tag longer than the permitted length"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Discovery.TagTooLong._Throw(System.Object)">
+        <member name="M:Goedel.Discovery.TagTooLong.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "A message contained a tag longer than the permitted length"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Discovery.TagTooLong.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Discovery.TagTooLong.Throw">
             <summary>
@@ -3502,27 +3479,23 @@
             A message contained an invalid IPv4 address
             </summary>
         </member>
-        <member name="P:Goedel.Discovery.InvalidIPv4.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Discovery.InvalidIPv4.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Discovery.InvalidIPv4.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Discovery.InvalidIPv4.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "A message contained an invalid IPv4 address"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Discovery.InvalidIPv4._Throw(System.Object)">
+        <member name="M:Goedel.Discovery.InvalidIPv4.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "A message contained an invalid IPv4 address"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Discovery.InvalidIPv4.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Discovery.InvalidIPv4.Throw">
             <summary>
@@ -3534,27 +3507,23 @@
             A message contained an invalid IPv6 address
             </summary>
         </member>
-        <member name="P:Goedel.Discovery.InvalidIPv6.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Discovery.InvalidIPv6.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Discovery.InvalidIPv6.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Discovery.InvalidIPv6.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "A message contained an invalid IPv6 address"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Discovery.InvalidIPv6._Throw(System.Object)">
+        <member name="M:Goedel.Discovery.InvalidIPv6.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "A message contained an invalid IPv6 address"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Discovery.InvalidIPv6.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Discovery.InvalidIPv6.Throw">
             <summary>
@@ -3915,6 +3884,23 @@
         </member>
         <member name="P:Goedel.Discovery.ServiceEntry.HTTPEndpoint">
             <summary>Calculate the Web Service Endpoint for a HTTP binding</summary>
+        </member>
+        <member name="T:Goedel.Discovery.WebServiceEndpoint">
+            <summary>
+            Describes a service endpoint for HTTP and HTTPS transport.
+            </summary>
+        </member>
+        <member name="M:Goedel.Discovery.WebServiceEndpoint.GetEndpoint(System.String,System.String,System.String,System.String)">
+            <summary>
+            Return a host endpoint to allow a client to access the service <paramref name="srv"/>
+            at domain <paramref name="domain"/>.
+            </summary>
+            <param name="domain">Service name.</param>
+            <param name="wellKnown">Protocol identifier.</param>
+            <param name="srv">DNS protocol identifier.</param>
+            <param name="instance">Optional instance used to identify a sepcific instance
+            of the service on a host.</param>
+            <returns>The service endpoint.</returns>
         </member>
     </members>
 </doc>

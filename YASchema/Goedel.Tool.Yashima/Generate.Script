@@ -2,12 +2,137 @@
 #license MITLicense
 #pclass Goedel.Tool.Yaschema Generate
 
-#method GenerateCS YaschemaStruct YaschemaStruct
+#method GenerateCS YaschemaStruct Yaschema
+#! Yaschema.Init();
 
-// hodwdie doody time
+
+using System;
+using System.IO;
+using System.Net;
+using System.Collections.Generic;
+using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
+using Goedel.Protocol;
+using System.Threading.Tasks;
+
+
+namespace #{Yaschema.NameSpaceName} {
+
+	/// <summary>
+    /// Client connection class. Tracks the state of a client connection.
+    /// </summary>
+    public partial class ConnectionClient : Connection {
+
+#filter Client client Yaschema.Top
+
+	    /// <summary>
+        /// Return an initial packet for this connection.
+        /// </summary>
+        //public Packet GetInitial () =>
+        //    HostCredential==null ? new #{client.WithoutHostCredential.ClassName} () :
+        //        new #{client.WithHostCredential.ClassName} (HostCredential);
+
+#foreach (var packet in client.Entries)
+#call GenersateSerializer packet
+#end foreach
+#end filter
+
+#filter Host host Yaschema.Top
+#foreach (var packet in host.Entries)
+#call GenerateParser packet
+#end foreach
+#end filter
+
+
+		}
+
+	/// <summary>
+    /// Host connection class. Tracks the state of a host connection.
+    /// </summary>
+    public partial class ConnectionHost : Connection {
+
+#filter Host host Yaschema.Top
+#foreach (var packet in host.Entries)
+#call GenersateSerializer packet
+#end foreach
+#end filter
+
+#filter Client client Yaschema.Top
+#foreach (var packet in client.Entries)
+#if (packet.IsInitial)
+        // Skip Client packet #{packet.Id} (initial packets parsed by the listener)
+#else 
+#call GenerateParser packet
+#end if
+#end foreach
+#end filter
+
+		}
+
+
+
+#filter Client client Yaschema.Top
+#foreach (var packet in client.Entries)
+#if (packet.IsInitial)
+
+    public partial class Listner {
+
+        public #{packet.ClassName} Parse#{packet.ClassName} (PortId sourceId, byte[] packet) {
+            var result = new #{packet.ClassName} () {
+                SourcePortId = sourceId
+                };
+
+            // Read the plaintext part
+
+
+            return result;
+            }
+
+		}
+#end if
+#end foreach
+#end filter
+
+
+#foreach (var packet in Yaschema.Packets)
+
+    public partial class #{packet.ClassName} : Packet {
+#call GenerateCompleter packet
+
+        }
+
+#end foreach
+
+
+	}
 
 
 #end method
+
+#method GenersateSerializer Packet packet
+        // Serialize #{packet.PacketType} packet #{packet.Id}
+#end method
+
+#method GenerateParser Packet packet
+        // Parse #{packet.PacketType} packet #{packet.Id}
+#end method
+
+#method GenerateCompleter Packet packet
+        // Complete #{packet.PacketType} packet #{packet.Id}
+
+#if (packet.HasMezzanine)
+        public override void Complete () {
+            // perform the Mezzanine key exchange here
+
+#if (packet.HasEncrypted)
+            // perform the Mutual key exchange here
+
+#end if
+            }
+#end if
+#end method
+
 
 #method GenerateMD YaschemaStruct YaschemaStruct
 

@@ -21,8 +21,9 @@ LinkFiles = \
     Goedel.Tool.Core.dll\
     Goedel.Tool.Command.dll
 
-ToolTargets = \
-	Command.cs
+ToolTargets = 
+
+
 Command.cs : Command.command 
 	commandparse Command.command  /cs  Command.cs
 

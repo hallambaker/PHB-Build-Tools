@@ -554,27 +554,28 @@
             The user command could not be parsed
             </summary>
         </member>
-        <member name="P:Goedel.Command.ParserException.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Command.ParserException.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Command.ParserException.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Command.ParserException.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The user command could not be parsed"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Command.ParserException._Throw(System.Object)">
+        <member name="M:Goedel.Command.ParserException.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The user command could not be parsed"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Command.ParserException.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Command.ParserException.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
         </member>
         <member name="F:Goedel.Command.ParserException.Throw">
             <summary>
@@ -586,27 +587,23 @@
             The file could not be read.
             </summary>
         </member>
-        <member name="P:Goedel.Command.FileReadError.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Command.FileReadError.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Command.FileReadError.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Command.FileReadError.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The file [{0}] could not be read"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Command.FileReadError._Throw(System.Object)">
+        <member name="M:Goedel.Command.FileReadError.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The file [{0}] could not be read"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Command.FileReadError.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Command.FileReadError.Throw">
             <summary>
@@ -618,27 +615,23 @@
             User entered an unknown command
             </summary>
         </member>
-        <member name="P:Goedel.Command.UnknownCommand.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Command.UnknownCommand.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Command.UnknownCommand.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Command.UnknownCommand.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The command {0} is not known."
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Command.UnknownCommand._Throw(System.Object)">
+        <member name="M:Goedel.Command.UnknownCommand.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The command {0} is not known."
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Command.UnknownCommand.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Command.UnknownCommand.Throw">
             <summary>
@@ -650,27 +643,23 @@
             User entered an unknown option
             </summary>
         </member>
-        <member name="P:Goedel.Command.UnknownOption.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Command.UnknownOption.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Command.UnknownOption.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Command.UnknownOption.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The option {0} is not known."
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Command.UnknownOption._Throw(System.Object)">
+        <member name="M:Goedel.Command.UnknownOption.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The option {0} is not known."
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Command.UnknownOption.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Command.UnknownOption.Throw">
             <summary>
@@ -682,27 +671,23 @@
             No command specified
             </summary>
         </member>
-        <member name="P:Goedel.Command.NoCommand.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Command.NoCommand.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Command.NoCommand.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Command.NoCommand.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "No command specified"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Command.NoCommand._Throw(System.Object)">
+        <member name="M:Goedel.Command.NoCommand.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "No command specified"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Command.NoCommand.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Command.NoCommand.Throw">
             <summary>
@@ -714,27 +699,23 @@
             The option value was incorrectly formatted
             </summary>
         </member>
-        <member name="P:Goedel.Command.InvalidOption.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Command.InvalidOption.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Command.InvalidOption.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Command.InvalidOption.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The option value was incorrectly formatted"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Command.InvalidOption._Throw(System.Object)">
+        <member name="M:Goedel.Command.InvalidOption.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The option value was incorrectly formatted"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Command.InvalidOption.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Command.InvalidOption.Throw">
             <summary>

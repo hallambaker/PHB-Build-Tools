@@ -257,11 +257,10 @@ namespace Goedel.Shell.Yaschema {
 			
 			using (Stream infile =
                         new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
-
                 Lexer Schema = new Lexer(inputfile);
-
                 Schema.Process(infile, Parse);
                 }
+			Parse.Init();
 
 
 			// Script output of type GenerateCS cs
@@ -270,15 +269,14 @@ namespace Goedel.Shell.Yaschema {
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
-				using (Stream outputStream =
-							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
+                using Stream outputStream =
+                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
 
-						Goedel.Tool.Yaschema.Generate Script = new Goedel.Tool.Yaschema.Generate () { _Output= OutputWriter };
-
-						Script.GenerateCS (Parse);
-						}
-					}
+				Goedel.Tool.Yaschema.Generate Script = new Goedel.Tool.Yaschema.Generate () { 
+					_Output= OutputWriter 
+					};
+				// Script.GenerateCS (Parse);
 				}
 			// Script output of type GenerateMD md
 			if (Options.GenerateMD.Text != null) {
@@ -286,15 +284,14 @@ namespace Goedel.Shell.Yaschema {
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
-				using (Stream outputStream =
-							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
+                using Stream outputStream =
+                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
 
-						Goedel.Tool.Yaschema.Generate Script = new Goedel.Tool.Yaschema.Generate () { _Output= OutputWriter };
-
-						Script.GenerateMD (Parse);
-						}
-					}
+				Goedel.Tool.Yaschema.Generate Script = new Goedel.Tool.Yaschema.Generate () { 
+					_Output= OutputWriter 
+					};
+				// Script.GenerateMD (Parse);
 				}
 			}
 

@@ -516,11 +516,10 @@ namespace Goedel.Tool.Command {
 						_Output.Write ("			\n{0}", _Indent);
 						_Output.Write ("			using (Stream infile =\n{0}", _Indent);
 						_Output.Write ("                        new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {{\n{0}", _Indent);
-						_Output.Write ("\n{0}", _Indent);
 						_Output.Write ("                Lexer Schema = new Lexer(inputfile);\n{0}", _Indent);
-						_Output.Write ("\n{0}", _Indent);
 						_Output.Write ("                Schema.Process(infile, Parse);\n{0}", _Indent);
 						_Output.Write ("                }}\n{0}", _Indent);
+						_Output.Write ("			// Parse.Init();\n{0}", _Indent);
 						_Output.Write ("\n{0}", _Indent);
 						break; }
 						case CommandParseType.Generator: { 
@@ -540,15 +539,14 @@ namespace Goedel.Tool.Command {
 							_Output.Write ("					return;\n{0}", _Indent);
 							_Output.Write ("					}}\n{0}", _Indent);
 							}
-						_Output.Write ("				using (Stream outputStream =\n{0}", _Indent);
-						_Output.Write ("							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {{\n{0}", _Indent);
-						_Output.Write ("					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {{\n{0}", _Indent);
+						_Output.Write ("                using Stream outputStream =\n{0}", _Indent);
+						_Output.Write ("                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);\n{0}", _Indent);
+						_Output.Write ("                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);\n{0}", _Indent);
 						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("						{1}.{2} Script = new {3}.{4} () {{ _Output= OutputWriter }};\n{0}", _Indent, Script.Namespace, Script.Class, Script.Namespace, Script.Class);
-						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("						Script.{1} (Parse);\n{0}", _Indent, Script.Id);
-						_Output.Write ("						}}\n{0}", _Indent);
-						_Output.Write ("					}}\n{0}", _Indent);
+						_Output.Write ("				{1}.{2} Script = new {3}.{4} () {{ \n{0}", _Indent, Script.Namespace, Script.Class, Script.Namespace, Script.Class);
+						_Output.Write ("					_Output= OutputWriter \n{0}", _Indent);
+						_Output.Write ("					}};\n{0}", _Indent);
+						_Output.Write ("				Script.{1} (Parse);\n{0}", _Indent, Script.Id);
 						_Output.Write ("				}}\n{0}", _Indent);
 					break; }
 						}

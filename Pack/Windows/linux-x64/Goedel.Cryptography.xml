@@ -4353,27 +4353,28 @@
             Base class for cryptographic exceptions.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.CryptographicException.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CryptographicException.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.CryptographicException.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.CryptographicException.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "A cryptographic exception occurred.."
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.CryptographicException._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.CryptographicException.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "A cryptographic exception occurred.."
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.CryptographicException.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Cryptography.CryptographicException.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
         </member>
         <member name="F:Goedel.Cryptography.CryptographicException.Throw">
             <summary>
@@ -4385,27 +4386,23 @@
             The container specified a reference to an invalid frame"		
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.InvalidFrameIndex.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.InvalidFrameIndex.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.InvalidFrameIndex.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.InvalidFrameIndex.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The container specified a reference to an invalid frame"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.InvalidFrameIndex._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.InvalidFrameIndex.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The container specified a reference to an invalid frame"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidFrameIndex.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.InvalidFrameIndex.Throw">
             <summary>
@@ -4417,27 +4414,23 @@
             An internal assertion check failed."
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.InternalCryptographicException.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.InternalCryptographicException.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.InternalCryptographicException.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.InternalCryptographicException.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "An internal assertion check failed"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.InternalCryptographicException._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.InternalCryptographicException.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "An internal assertion check failed"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.InternalCryptographicException.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.InternalCryptographicException.Throw">
             <summary>
@@ -4449,27 +4442,23 @@
             Key could not be found."
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeyNotFound.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyNotFound.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.KeyNotFound.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.KeyNotFound.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Key could not be found"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.KeyNotFound._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.KeyNotFound.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Key could not be found"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.KeyNotFound.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.KeyNotFound.Throw">
             <summary>
@@ -4481,27 +4470,23 @@
             An internal assertion check failed."
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.MismatchedCurves.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.MismatchedCurves.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.MismatchedCurves.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.MismatchedCurves.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Points are on different curves"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.MismatchedCurves._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.MismatchedCurves.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Points are on different curves"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.MismatchedCurves.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.MismatchedCurves.Throw">
             <summary>
@@ -4513,27 +4498,23 @@
             The operation requires cryptographic catalog initialization"
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.CatalogNotInitialized.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CatalogNotInitialized.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.CatalogNotInitialized.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.CatalogNotInitialized.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The operation requires cryptographic catalog initialization"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.CatalogNotInitialized._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.CatalogNotInitialized.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The operation requires cryptographic catalog initialization"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.CatalogNotInitialized.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.CatalogNotInitialized.Throw">
             <summary>
@@ -4545,27 +4526,23 @@
             The operation requires platform initialization
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PlatformNotInitialized.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.PlatformNotInitialized.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PlatformNotInitialized.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.PlatformNotInitialized.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The operation requires platform initialization"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.PlatformNotInitialized._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.PlatformNotInitialized.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The operation requires platform initialization"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.PlatformNotInitialized.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.PlatformNotInitialized.Throw">
             <summary>
@@ -4577,27 +4554,23 @@
             The requested cryptographic operation is not supported
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.OperationNotSupported.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.OperationNotSupported.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.OperationNotSupported.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.OperationNotSupported.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The requested cryptographic operation is not supported"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.OperationNotSupported._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.OperationNotSupported.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The requested cryptographic operation is not supported"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.OperationNotSupported.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.OperationNotSupported.Throw">
             <summary>
@@ -4609,27 +4582,23 @@
             No encryption key is available
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.NoAvailableEncryptionKey.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.NoAvailableEncryptionKey.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.NoAvailableEncryptionKey.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.NoAvailableEncryptionKey.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "No encryption key is available"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.NoAvailableEncryptionKey._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.NoAvailableEncryptionKey.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "No encryption key is available"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.NoAvailableEncryptionKey.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.NoAvailableEncryptionKey.Throw">
             <summary>
@@ -4641,27 +4610,23 @@
             No decryption key is available
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.NoAvailableDecryptionKey.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.NoAvailableDecryptionKey.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.NoAvailableDecryptionKey.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.NoAvailableDecryptionKey.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "No decryption key is available"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.NoAvailableDecryptionKey._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.NoAvailableDecryptionKey.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "No decryption key is available"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.NoAvailableDecryptionKey.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.NoAvailableDecryptionKey.Throw">
             <summary>
@@ -4674,27 +4639,23 @@
             code needing improvement.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.ImplementationLimit.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.ImplementationLimit.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.ImplementationLimit.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.ImplementationLimit.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Some implementation limit hit"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.ImplementationLimit._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.ImplementationLimit.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Some implementation limit hit"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.ImplementationLimit.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.ImplementationLimit.Throw">
             <summary>
@@ -4706,27 +4667,23 @@
             Some or all of the quorum parameters are incorrect.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.InvalidQuorum.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.InvalidQuorum.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.InvalidQuorum.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.InvalidQuorum.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Quorum parameters invalid"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.InvalidQuorum._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.InvalidQuorum.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Quorum parameters invalid"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidQuorum.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.InvalidQuorum.Throw">
             <summary>
@@ -4739,27 +4696,23 @@
             to recover the key.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.InsufficientShares.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.InsufficientShares.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.InsufficientShares.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.InsufficientShares.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Not enough shares to recover key"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.InsufficientShares._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.InsufficientShares.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Not enough shares to recover key"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.InsufficientShares.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.InsufficientShares.Throw">
             <summary>
@@ -4772,27 +4725,23 @@
             equal to or smaller than the number of shares
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.QuorumExceedsShares.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.QuorumExceedsShares.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.QuorumExceedsShares.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.QuorumExceedsShares.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Quorum can\'t exceed shares"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.QuorumExceedsShares._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.QuorumExceedsShares.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Quorum can\'t exceed shares"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.QuorumExceedsShares.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.QuorumExceedsShares.Throw">
             <summary>
@@ -4804,27 +4753,23 @@
             The quorum must require at least 2 shares.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.QuorumInsufficient.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.QuorumInsufficient.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.QuorumInsufficient.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.QuorumInsufficient.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Quorum must be at least 2"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.QuorumInsufficient._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.QuorumInsufficient.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Quorum must be at least 2"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.QuorumInsufficient.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.QuorumInsufficient.Throw">
             <summary>
@@ -4836,27 +4781,23 @@
             There must be at least two key shares.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.SharesInsufficient.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.SharesInsufficient.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.SharesInsufficient.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.SharesInsufficient.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Shares must be at least 2"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.SharesInsufficient._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.SharesInsufficient.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Shares must be at least 2"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.SharesInsufficient.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.SharesInsufficient.Throw">
             <summary>
@@ -4869,27 +4810,23 @@
             that were requested.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.QuorumExceeded.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.QuorumExceeded.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.QuorumExceeded.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.QuorumExceeded.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Too many shares specified"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.QuorumExceeded._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.QuorumExceeded.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Too many shares specified"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.QuorumExceeded.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.QuorumExceeded.Throw">
             <summary>
@@ -4902,27 +4839,23 @@
             permitted polynomial degree.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.QuorumDegreeExceeded.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.QuorumDegreeExceeded.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.QuorumDegreeExceeded.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.QuorumDegreeExceeded.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Degree too high"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.QuorumDegreeExceeded._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.QuorumDegreeExceeded.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Degree too high"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.QuorumDegreeExceeded.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.QuorumDegreeExceeded.Throw">
             <summary>
@@ -4934,27 +4867,23 @@
             The shares presented are not from the same set of shares.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.MismatchedShares.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.MismatchedShares.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.MismatchedShares.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.MismatchedShares.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Keys must have same threshold"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.MismatchedShares._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.MismatchedShares.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Keys must have same threshold"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.MismatchedShares.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.MismatchedShares.Throw">
             <summary>
@@ -4966,27 +4895,23 @@
             A recryption attempt failed because there were no result values to combine.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.InsufficientResults.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.InsufficientResults.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.InsufficientResults.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.InsufficientResults.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "There must be at least one result"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.InsufficientResults._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.InsufficientResults.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "There must be at least one result"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.InsufficientResults.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.InsufficientResults.Throw">
             <summary>
@@ -4999,27 +4924,23 @@
             value.			
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.FingerprintMatchFailed.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.FingerprintMatchFailed.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.FingerprintMatchFailed.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.FingerprintMatchFailed.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Data did not match expected fingerprint value"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.FingerprintMatchFailed._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.FingerprintMatchFailed.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Data did not match expected fingerprint value"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.FingerprintMatchFailed.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.FingerprintMatchFailed.Throw">
             <summary>
@@ -5032,27 +4953,23 @@
             does not support.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.CipherModeNotSupported.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CipherModeNotSupported.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.CipherModeNotSupported.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.CipherModeNotSupported.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The requested cipher mode is not supported by the provider"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.CipherModeNotSupported._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.CipherModeNotSupported.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The requested cipher mode is not supported by the provider"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.CipherModeNotSupported.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.CipherModeNotSupported.Throw">
             <summary>
@@ -5065,27 +4982,23 @@
             does not support.			
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.CryptographicOperationNotSupported.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.CryptographicOperationNotSupported.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.CryptographicOperationNotSupported.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.CryptographicOperationNotSupported.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The requested cryptographic operation is not supported by the provider"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.CryptographicOperationNotSupported._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.CryptographicOperationNotSupported.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The requested cryptographic operation is not supported by the provider"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.CryptographicOperationNotSupported.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.CryptographicOperationNotSupported.Throw">
             <summary>
@@ -5097,27 +5010,23 @@
             The encryption key type does not match the recryption key type
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeyTypeMismatch.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyTypeMismatch.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.KeyTypeMismatch.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.KeyTypeMismatch.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The encryption key type does not match the recryption key type"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.KeyTypeMismatch._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.KeyTypeMismatch.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The encryption key type does not match the recryption key type"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.KeyTypeMismatch.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.KeyTypeMismatch.Throw">
             <summary>
@@ -5131,27 +5040,23 @@
             not supported or the key parameters were found to be invalid.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.NoProviderSpecified.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.NoProviderSpecified.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.NoProviderSpecified.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.NoProviderSpecified.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "No provider specified"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.NoProviderSpecified._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.NoProviderSpecified.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "No provider specified"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.NoProviderSpecified.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.NoProviderSpecified.Throw">
             <summary>
@@ -5163,27 +5068,23 @@
             The key value must not be null
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.NullKeyValue.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.NullKeyValue.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.NullKeyValue.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.NullKeyValue.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The key value must not be null"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.NullKeyValue._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.NullKeyValue.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The key value must not be null"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.NullKeyValue.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.NullKeyValue.Throw">
             <summary>
@@ -5195,27 +5096,23 @@
             The parameter value must not be null
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.NullParameter.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.NullParameter.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.NullParameter.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.NullParameter.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The parameter value must not be null"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.NullParameter._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.NullParameter.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The parameter value must not be null"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.NullParameter.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.NullParameter.Throw">
             <summary>
@@ -5227,27 +5124,23 @@
             The implementation does not support the requested key size
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeySizeNotSupported.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeySizeNotSupported.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.KeySizeNotSupported.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.KeySizeNotSupported.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The requested key size is not supported"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.KeySizeNotSupported._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.KeySizeNotSupported.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The requested key size is not supported"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.KeySizeNotSupported.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.KeySizeNotSupported.Throw">
             <summary>
@@ -5260,27 +5153,23 @@
             This is a fatal error that cannot be recovered from.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.InitializationFailed.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.InitializationFailed.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.InitializationFailed.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.InitializationFailed.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Initialization of the cryptographic support library failed."
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.InitializationFailed._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.InitializationFailed.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Initialization of the cryptographic support library failed."
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.InitializationFailed.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.InitializationFailed.Throw">
             <summary>
@@ -5292,27 +5181,23 @@
             The specified key size presents an insufficient work factor
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.InsufficientKeySize.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.InsufficientKeySize.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.InsufficientKeySize.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.InsufficientKeySize.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The specified key size presents an insufficient work factor"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.InsufficientKeySize._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.InsufficientKeySize.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The specified key size presents an insufficient work factor"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.InsufficientKeySize.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.InsufficientKeySize.Throw">
             <summary>
@@ -5324,27 +5209,23 @@
             The keypair presented was not of the expected type.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.InvalidKeyPairType.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.InvalidKeyPairType.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.InvalidKeyPairType.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.InvalidKeyPairType.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The keypair presented was not of the expected type"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.InvalidKeyPairType._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.InvalidKeyPairType.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The keypair presented was not of the expected type"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidKeyPairType.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.InvalidKeyPairType.Throw">
             <summary>
@@ -5356,27 +5237,23 @@
             An attempt was made to create more recryption shares than the implementation supports.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.RecryptionShareLimitExceeded.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.RecryptionShareLimitExceeded.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.RecryptionShareLimitExceeded.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.RecryptionShareLimitExceeded.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The number of recryption shares requested exceeds the implementation limit"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.RecryptionShareLimitExceeded._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.RecryptionShareLimitExceeded.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The number of recryption shares requested exceeds the implementation limit"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.RecryptionShareLimitExceeded.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.RecryptionShareLimitExceeded.Throw">
             <summary>
@@ -5387,27 +5264,23 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.InvalidRecoveredData.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.InvalidRecoveredData.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.InvalidRecoveredData.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.InvalidRecoveredData.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The recovered data was invalid"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.InvalidRecoveredData._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.InvalidRecoveredData.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The recovered data was invalid"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidRecoveredData.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.InvalidRecoveredData.Throw">
             <summary>
@@ -5418,27 +5291,23 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeyErasureFailed.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyErasureFailed.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.KeyErasureFailed.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.KeyErasureFailed.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The private key could not be removed from the key store."
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.KeyErasureFailed._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.KeyErasureFailed.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The private key could not be removed from the key store."
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.KeyErasureFailed.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.KeyErasureFailed.Throw">
             <summary>
@@ -5450,27 +5319,23 @@
             The cryptographic provider does not support the requested operation
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.InvalidOperation.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.InvalidOperation.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.InvalidOperation.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.InvalidOperation.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The cryptographic provider does not support the requested operation"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.InvalidOperation._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.InvalidOperation.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The cryptographic provider does not support the requested operation"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidOperation.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.InvalidOperation.Throw">
             <summary>
@@ -5482,27 +5347,23 @@
             The specified algorithm is not valid for the operation attempted
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.InvalidAlgorithm.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.InvalidAlgorithm.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.InvalidAlgorithm.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.InvalidAlgorithm.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The specified algorithm is not valid for the operation attempted"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.InvalidAlgorithm._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.InvalidAlgorithm.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The specified algorithm is not valid for the operation attempted"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidAlgorithm.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.InvalidAlgorithm.Throw">
             <summary>
@@ -5513,27 +5374,23 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.InvalidPoint.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.InvalidPoint.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.InvalidPoint.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.InvalidPoint.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The specified point is not valid for the curve"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.InvalidPoint._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.InvalidPoint.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The specified point is not valid for the curve"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidPoint.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.InvalidPoint.Throw">
             <summary>
@@ -5545,27 +5402,23 @@
             The operation requested requires a private key that could not be found
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PrivateKeyNotFound.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.PrivateKeyNotFound.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PrivateKeyNotFound.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.PrivateKeyNotFound.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The operation requested requires a private key that could not be found"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.PrivateKeyNotFound._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.PrivateKeyNotFound.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The operation requested requires a private key that could not be found"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.PrivateKeyNotFound.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.PrivateKeyNotFound.Throw">
             <summary>
@@ -5577,27 +5430,23 @@
             The key unwrap operation returned an invalid value.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.UnwrapFailed.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.UnwrapFailed.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.UnwrapFailed.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.UnwrapFailed.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The key unwrap operation returned an invalid value."
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.UnwrapFailed._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.UnwrapFailed.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The key unwrap operation returned an invalid value."
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.UnwrapFailed.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.UnwrapFailed.Throw">
             <summary>
@@ -5609,27 +5458,23 @@
             The named parameters specified in an operation are not known
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.UnknownNamedParameters.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.UnknownNamedParameters.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.UnknownNamedParameters.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.UnknownNamedParameters.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The named parameters specified in an operation are not known"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.UnknownNamedParameters._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.UnknownNamedParameters.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The named parameters specified in an operation are not known"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.UnknownNamedParameters.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.UnknownNamedParameters.Throw">
             <summary>
@@ -5641,27 +5486,23 @@
             The cryptographic provider does not permit export of the private key parameters
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.NotExportable.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.NotExportable.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.NotExportable.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Cryptography.NotExportable.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "The cryptographic provider does not permit export of the private key parameters"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Cryptography.NotExportable._Throw(System.Object)">
+        <member name="M:Goedel.Cryptography.NotExportable.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "The cryptographic provider does not permit export of the private key parameters"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.NotExportable.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Cryptography.NotExportable.Throw">
             <summary>
@@ -6211,6 +6052,9 @@
             <summary>If true, a signature generated using this key will always include the
             full public key parameters.</summary>
         </member>
+        <member name="P:Goedel.Cryptography.KeyPair.LengthSignature">
+            <summary>The length of a signature in bytes.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.KeyPair.Sign(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Sign a precomputed digest
@@ -6735,6 +6579,9 @@
             <summary>
             Return private key parameters in PKIX structure
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairDH.LengthSignature">
+            <summary>The length of a signature in bytes.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.KeyPairDH.PKIXPrivateKeyDH">
             <summary>
@@ -7262,6 +7109,9 @@
             The byte encoding of the public key
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.KeyPairEd25519.LengthSignature">
+            <summary>The length of a signature in bytes.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.KeyPairEd25519.#ctor(System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Construct a KeyPairEd25519 instance for the specified key data in interchange 
@@ -7440,6 +7290,9 @@
             The byte encoding of the public key
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.KeyPairEd448.LengthSignature">
+            <summary>The length of a signature in bytes.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.KeyPairEd448.#ctor(System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Construct a KeyPairEd25519 instance for the specified key data in interchange 
@@ -7615,6 +7468,9 @@
         </member>
         <member name="P:Goedel.Cryptography.KeyPairRSA.PublicOnly">
             <summary>If true, the key only has access to public key values.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairRSA.LengthSignature">
+            <summary>The length of a signature in bytes.</summary> 
         </member>
         <member name="M:Goedel.Cryptography.KeyPairRSA.SignatureAlgorithmID(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
@@ -7919,6 +7775,9 @@
             The byte encoding of the public key
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.KeyPairX25519.LengthSignature">
+            <summary>The length of a signature in bytes.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.KeyPairX25519.#ctor(System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Construct a KeyPairX25519 instance for the specified key data in interchange 
@@ -8085,6 +7944,9 @@
             <summary>
             The byte encoding of the public key
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyPairX448.LengthSignature">
+            <summary>The length of a signature in bytes.</summary> 
         </member>
         <member name="M:Goedel.Cryptography.KeyPairX448.#ctor(System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
@@ -9005,14 +8867,20 @@
             </summary>
             <param name="SigningCertificate">Certificate of signer.</param>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.Certificate.TBSCertificate">
-            <summary> ASN.1 member TBSCertificate </summary>
+        <member name="F:Goedel.Cryptography.PKIX.Certificate.TBSCertificate">
+            <summary>
+            ASN.1 member TBSCertificate 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.Certificate.SignatureAlgorithm">
-            <summary> ASN.1 member SignatureAlgorithm </summary>
+        <member name="F:Goedel.Cryptography.PKIX.Certificate.SignatureAlgorithm">
+            <summary>
+            ASN.1 member SignatureAlgorithm 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.Certificate.Signature">
-            <summary> ASN.1 member Signature </summary>
+        <member name="F:Goedel.Cryptography.PKIX.Certificate.Signature">
+            <summary>
+            ASN.1 member Signature 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.Certificate.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -9044,14 +8912,20 @@
             </summary>
             <param name="name">The subject name to set.</param>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.CertificationRequest.CertificationRequestInfo">
-            <summary> ASN.1 member CertificationRequestInfo </summary>
+        <member name="F:Goedel.Cryptography.PKIX.CertificationRequest.CertificationRequestInfo">
+            <summary>
+            ASN.1 member CertificationRequestInfo 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.CertificationRequest.SignatureAlgorithm">
-            <summary> ASN.1 member SignatureAlgorithm </summary>
+        <member name="F:Goedel.Cryptography.PKIX.CertificationRequest.SignatureAlgorithm">
+            <summary>
+            ASN.1 member SignatureAlgorithm 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.CertificationRequest.Signature">
-            <summary> ASN.1 member Signature </summary>
+        <member name="F:Goedel.Cryptography.PKIX.CertificationRequest.Signature">
+            <summary>
+            ASN.1 member Signature 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.CertificationRequest.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -9071,17 +8945,25 @@
             Create an empty CertificationRequestInfo class with version 1.0
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.CertificationRequestInfo.Version">
-            <summary> ASN.1 member Version </summary>
+        <member name="F:Goedel.Cryptography.PKIX.CertificationRequestInfo.Version">
+            <summary>
+            ASN.1 member Version 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.CertificationRequestInfo.Subject">
-            <summary> ASN.1 member Subject </summary>
+        <member name="F:Goedel.Cryptography.PKIX.CertificationRequestInfo.Subject">
+            <summary>
+            ASN.1 member Subject 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.CertificationRequestInfo.SubjectPublicKeyInfo">
-            <summary> ASN.1 member SubjectPublicKeyInfo </summary>
+        <member name="F:Goedel.Cryptography.PKIX.CertificationRequestInfo.SubjectPublicKeyInfo">
+            <summary>
+            ASN.1 member SubjectPublicKeyInfo 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.CertificationRequestInfo.Attributes">
-            <summary> ASN.1 member Attributes </summary>
+        <member name="F:Goedel.Cryptography.PKIX.CertificationRequestInfo.Attributes">
+            <summary>
+            ASN.1 member Attributes 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.CertificationRequestInfo.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -9101,11 +8983,15 @@
             The shared domain parameters
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPublicKeyDH.Shared">
-            <summary> ASN.1 member Shared </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PKIXPublicKeyDH.Shared">
+            <summary>
+            ASN.1 member Shared 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPublicKeyDH.Public">
-            <summary> ASN.1 member Public </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PKIXPublicKeyDH.Public">
+            <summary>
+            ASN.1 member Public 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.PKIXPublicKeyDH.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -9145,14 +9031,20 @@
             The shared domain parameters
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyDH.Shared">
-            <summary> ASN.1 member Shared </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PKIXPrivateKeyDH.Shared">
+            <summary>
+            ASN.1 member Shared 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyDH.Public">
-            <summary> ASN.1 member Public </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PKIXPrivateKeyDH.Public">
+            <summary>
+            ASN.1 member Public 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PKIXPrivateKeyDH.Private">
-            <summary> ASN.1 member Private </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PKIXPrivateKeyDH.Private">
+            <summary>
+            ASN.1 member Private 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.PKIXPrivateKeyDH.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -9258,11 +9150,15 @@
             <param name="ID">The identifier to compare</param>
             <returns>true if the UDF value matches the specified identifier.</returns>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.DHDomain.Modulus">
-            <summary> ASN.1 member Modulus </summary>
+        <member name="F:Goedel.Cryptography.PKIX.DHDomain.Modulus">
+            <summary>
+            ASN.1 member Modulus 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.DHDomain.Generator">
-            <summary> ASN.1 member Generator </summary>
+        <member name="F:Goedel.Cryptography.PKIX.DHDomain.Generator">
+            <summary>
+            ASN.1 member Generator 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.DHDomain.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -9291,11 +9187,15 @@
             <param name="OID">Algorithm identifier.</param>
             <param name="KeyData">Key Data.</param>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.SubjectPublicKeyInfo.Algorithm">
-            <summary> ASN.1 member Algorithm </summary>
+        <member name="F:Goedel.Cryptography.PKIX.SubjectPublicKeyInfo.Algorithm">
+            <summary>
+            ASN.1 member Algorithm 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.SubjectPublicKeyInfo.SubjectPublicKey">
-            <summary> ASN.1 member SubjectPublicKey </summary>
+        <member name="F:Goedel.Cryptography.PKIX.SubjectPublicKeyInfo.SubjectPublicKey">
+            <summary>
+            ASN.1 member SubjectPublicKey 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.SubjectPublicKeyInfo.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -9328,11 +9228,15 @@
             </summary>
             <param name="Numbers">OID as an integer sequence.</param>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.AlgorithmIdentifier.Algorithm">
-            <summary> ASN.1 member Algorithm </summary>
+        <member name="F:Goedel.Cryptography.PKIX.AlgorithmIdentifier.Algorithm">
+            <summary>
+            ASN.1 member Algorithm 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.AlgorithmIdentifier.Parameters">
-            <summary> ASN.1 member Parameters </summary>
+        <member name="F:Goedel.Cryptography.PKIX.AlgorithmIdentifier.Parameters">
+            <summary>
+            ASN.1 member Parameters 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.AlgorithmIdentifier.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -10682,35 +10586,55 @@
             TBSCertificate 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertificate.Version">
-            <summary> ASN.1 member Version </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertificate.Version">
+            <summary>
+            ASN.1 member Version 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertificate.SerialNumber">
-            <summary> ASN.1 member SerialNumber </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertificate.SerialNumber">
+            <summary>
+            ASN.1 member SerialNumber 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertificate.Signature">
-            <summary> ASN.1 member Signature </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertificate.Signature">
+            <summary>
+            ASN.1 member Signature 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertificate.Issuer">
-            <summary> ASN.1 member Issuer </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertificate.Issuer">
+            <summary>
+            ASN.1 member Issuer 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertificate.Validity">
-            <summary> ASN.1 member Validity </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertificate.Validity">
+            <summary>
+            ASN.1 member Validity 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertificate.Subject">
-            <summary> ASN.1 member Subject </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertificate.Subject">
+            <summary>
+            ASN.1 member Subject 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertificate.SubjectPublicKeyInfo">
-            <summary> ASN.1 member SubjectPublicKeyInfo </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertificate.SubjectPublicKeyInfo">
+            <summary>
+            ASN.1 member SubjectPublicKeyInfo 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertificate.IssuerUniqueID">
-            <summary> ASN.1 member IssuerUniqueID </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertificate.IssuerUniqueID">
+            <summary>
+            ASN.1 member IssuerUniqueID 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertificate.SubjectUniqueID">
-            <summary> ASN.1 member SubjectUniqueID </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertificate.SubjectUniqueID">
+            <summary>
+            ASN.1 member SubjectUniqueID 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertificate.Extensions">
-            <summary> ASN.1 member Extensions </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertificate.Extensions">
+            <summary>
+            ASN.1 member Extensions 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.TBSCertificate.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -10833,11 +10757,15 @@
             DigestInfo 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.DigestInfo.Algorithm">
-            <summary> ASN.1 member Algorithm </summary>
+        <member name="F:Goedel.Cryptography.PKIX.DigestInfo.Algorithm">
+            <summary>
+            ASN.1 member Algorithm 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.DigestInfo.SubjectPublicKey">
-            <summary> ASN.1 member SubjectPublicKey </summary>
+        <member name="F:Goedel.Cryptography.PKIX.DigestInfo.SubjectPublicKey">
+            <summary>
+            ASN.1 member SubjectPublicKey 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.DigestInfo.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -10852,11 +10780,15 @@
             TaggedBitString 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TaggedBitString.Algorithm">
-            <summary> ASN.1 member Algorithm </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TaggedBitString.Algorithm">
+            <summary>
+            ASN.1 member Algorithm 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TaggedBitString.SubjectPublicKey">
-            <summary> ASN.1 member SubjectPublicKey </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TaggedBitString.SubjectPublicKey">
+            <summary>
+            ASN.1 member SubjectPublicKey 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.TaggedBitString.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -10874,14 +10806,20 @@
             X.509v3 Extension
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.Extension.ObjectIdentifier">
-            <summary> ASN.1 member ObjectIdentifier </summary>
+        <member name="F:Goedel.Cryptography.PKIX.Extension.ObjectIdentifier">
+            <summary>
+            ASN.1 member ObjectIdentifier 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.Extension.Critical">
-            <summary> ASN.1 member Critical </summary>
+        <member name="F:Goedel.Cryptography.PKIX.Extension.Critical">
+            <summary>
+            ASN.1 member Critical 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.Extension.Data">
-            <summary> ASN.1 member Data </summary>
+        <member name="F:Goedel.Cryptography.PKIX.Extension.Data">
+            <summary>
+            ASN.1 member Data 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.Extension.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -10907,11 +10845,15 @@
             Validity 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.Validity.NotBefore">
-            <summary> ASN.1 member NotBefore </summary>
+        <member name="F:Goedel.Cryptography.PKIX.Validity.NotBefore">
+            <summary>
+            ASN.1 member NotBefore 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.Validity.NotAfter">
-            <summary> ASN.1 member NotAfter </summary>
+        <member name="F:Goedel.Cryptography.PKIX.Validity.NotAfter">
+            <summary>
+            ASN.1 member NotAfter 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.Validity.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -10933,11 +10875,15 @@
             CertificateList 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.CertificateList.TBSCertList">
-            <summary> ASN.1 member TBSCertList </summary>
+        <member name="F:Goedel.Cryptography.PKIX.CertificateList.TBSCertList">
+            <summary>
+            ASN.1 member TBSCertList 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.CertificateList.Signature">
-            <summary> ASN.1 member Signature </summary>
+        <member name="F:Goedel.Cryptography.PKIX.CertificateList.Signature">
+            <summary>
+            ASN.1 member Signature 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.CertificateList.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -10952,26 +10898,40 @@
             TBSCertList 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertList.Version">
-            <summary> ASN.1 member Version </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertList.Version">
+            <summary>
+            ASN.1 member Version 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertList.Signature">
-            <summary> ASN.1 member Signature </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertList.Signature">
+            <summary>
+            ASN.1 member Signature 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertList.Issuer">
-            <summary> ASN.1 member Issuer </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertList.Issuer">
+            <summary>
+            ASN.1 member Issuer 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertList.ThisUpdate">
-            <summary> ASN.1 member ThisUpdate </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertList.ThisUpdate">
+            <summary>
+            ASN.1 member ThisUpdate 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertList.NextUpdate">
-            <summary> ASN.1 member NextUpdate </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertList.NextUpdate">
+            <summary>
+            ASN.1 member NextUpdate 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertList.RevokedCertificates">
-            <summary> ASN.1 member RevokedCertificates </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertList.RevokedCertificates">
+            <summary>
+            ASN.1 member RevokedCertificates 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSCertList.CrlExtensions">
-            <summary> ASN.1 member CrlExtensions </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSCertList.CrlExtensions">
+            <summary>
+            ASN.1 member CrlExtensions 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.TBSCertList.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -10986,14 +10946,20 @@
             CertEntry 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.CertEntry.UserCertificate">
-            <summary> ASN.1 member UserCertificate </summary>
+        <member name="F:Goedel.Cryptography.PKIX.CertEntry.UserCertificate">
+            <summary>
+            ASN.1 member UserCertificate 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.CertEntry.RevocationDate">
-            <summary> ASN.1 member RevocationDate </summary>
+        <member name="F:Goedel.Cryptography.PKIX.CertEntry.RevocationDate">
+            <summary>
+            ASN.1 member RevocationDate 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.CertEntry.CrlEntryExtensions">
-            <summary> ASN.1 member CrlEntryExtensions </summary>
+        <member name="F:Goedel.Cryptography.PKIX.CertEntry.CrlEntryExtensions">
+            <summary>
+            ASN.1 member CrlEntryExtensions 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.CertEntry.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11013,8 +10979,10 @@
             The OID value
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.Name.Member">
-            <summary> ASN.1 member Member </summary>
+        <member name="F:Goedel.Cryptography.PKIX.Name.Member">
+            <summary>
+            ASN.1 member Member 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.Name.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11084,11 +11052,15 @@
             Attribute = type = value tripple
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.AttributeTypeValue.Type">
-            <summary> ASN.1 member Type </summary>
+        <member name="F:Goedel.Cryptography.PKIX.AttributeTypeValue.Type">
+            <summary>
+            ASN.1 member Type 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.AttributeTypeValue.Value">
-            <summary> ASN.1 member Value </summary>
+        <member name="F:Goedel.Cryptography.PKIX.AttributeTypeValue.Value">
+            <summary>
+            ASN.1 member Value 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.AttributeTypeValue.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11119,17 +11091,25 @@
             The OID value
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.AnyString.IA5String">
-            <summary> ASN.1 member IA5String </summary>
+        <member name="F:Goedel.Cryptography.PKIX.AnyString.IA5String">
+            <summary>
+            ASN.1 member IA5String 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.AnyString.BMPString">
-            <summary> ASN.1 member BMPString </summary>
+        <member name="F:Goedel.Cryptography.PKIX.AnyString.BMPString">
+            <summary>
+            ASN.1 member BMPString 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.AnyString.UTF8String">
-            <summary> ASN.1 member UTF8String </summary>
+        <member name="F:Goedel.Cryptography.PKIX.AnyString.UTF8String">
+            <summary>
+            ASN.1 member UTF8String 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.AnyString.PrintableString">
-            <summary> ASN.1 member PrintableString </summary>
+        <member name="F:Goedel.Cryptography.PKIX.AnyString.PrintableString">
+            <summary>
+            ASN.1 member PrintableString 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.AnyString.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11151,11 +11131,15 @@
             AttributeTypeValues 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.AttributeTypeValues.Type">
-            <summary> ASN.1 member Type </summary>
+        <member name="F:Goedel.Cryptography.PKIX.AttributeTypeValues.Type">
+            <summary>
+            ASN.1 member Type 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.AttributeTypeValues.Value">
-            <summary> ASN.1 member Value </summary>
+        <member name="F:Goedel.Cryptography.PKIX.AttributeTypeValues.Value">
+            <summary>
+            ASN.1 member Value 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.AttributeTypeValues.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11175,14 +11159,20 @@
             The OID value
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.AuthorityKeyIdentifier.KeyIdentifier">
-            <summary> ASN.1 member KeyIdentifier </summary>
+        <member name="F:Goedel.Cryptography.PKIX.AuthorityKeyIdentifier.KeyIdentifier">
+            <summary>
+            ASN.1 member KeyIdentifier 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.AuthorityKeyIdentifier.AuthorityCertIssuer">
-            <summary> ASN.1 member AuthorityCertIssuer </summary>
+        <member name="F:Goedel.Cryptography.PKIX.AuthorityKeyIdentifier.AuthorityCertIssuer">
+            <summary>
+            ASN.1 member AuthorityCertIssuer 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.AuthorityKeyIdentifier.AuthorityCertSerialNumber">
-            <summary> ASN.1 member AuthorityCertSerialNumber </summary>
+        <member name="F:Goedel.Cryptography.PKIX.AuthorityKeyIdentifier.AuthorityCertSerialNumber">
+            <summary>
+            ASN.1 member AuthorityCertSerialNumber 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.AuthorityKeyIdentifier.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11202,8 +11192,10 @@
             The OID value
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.SubjectKeyIdentifier.Value">
-            <summary> ASN.1 member Value </summary>
+        <member name="F:Goedel.Cryptography.PKIX.SubjectKeyIdentifier.Value">
+            <summary>
+            ASN.1 member Value 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.SubjectKeyIdentifier.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11223,8 +11215,10 @@
             The OID value
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.KeyUsage.Value">
-            <summary> ASN.1 member Value </summary>
+        <member name="F:Goedel.Cryptography.PKIX.KeyUsage.Value">
+            <summary>
+            ASN.1 member Value 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.KeyUsage.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11244,8 +11238,10 @@
             The OID value
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.CertificatePolicies.Value">
-            <summary> ASN.1 member Value </summary>
+        <member name="F:Goedel.Cryptography.PKIX.CertificatePolicies.Value">
+            <summary>
+            ASN.1 member Value 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.CertificatePolicies.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11260,11 +11256,15 @@
             PolicyInformation 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PolicyInformation.PolicyIdentifier">
-            <summary> ASN.1 member PolicyIdentifier </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PolicyInformation.PolicyIdentifier">
+            <summary>
+            ASN.1 member PolicyIdentifier 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PolicyInformation.PolicyQualifiers">
-            <summary> ASN.1 member PolicyQualifiers </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PolicyInformation.PolicyQualifiers">
+            <summary>
+            ASN.1 member PolicyQualifiers 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.PolicyInformation.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11279,11 +11279,15 @@
             PolicyQualifierInfo 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PolicyQualifierInfo.PolicyQualifierId">
-            <summary> ASN.1 member PolicyQualifierId </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PolicyQualifierInfo.PolicyQualifierId">
+            <summary>
+            ASN.1 member PolicyQualifierId 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PolicyQualifierInfo.Qualifier">
-            <summary> ASN.1 member Qualifier </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PolicyQualifierInfo.Qualifier">
+            <summary>
+            ASN.1 member Qualifier 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.PolicyQualifierInfo.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11306,8 +11310,10 @@
             The OID value
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.SubjectAltName.Names">
-            <summary> ASN.1 member Names </summary>
+        <member name="F:Goedel.Cryptography.PKIX.SubjectAltName.Names">
+            <summary>
+            ASN.1 member Names 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.SubjectAltName.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11337,11 +11343,15 @@
             The OID value
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.GeneralName.RFC822Name">
-            <summary> ASN.1 member RFC822Name </summary>
+        <member name="F:Goedel.Cryptography.PKIX.GeneralName.RFC822Name">
+            <summary>
+            ASN.1 member RFC822Name 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.GeneralName.DNSName">
-            <summary> ASN.1 member DNSName </summary>
+        <member name="F:Goedel.Cryptography.PKIX.GeneralName.DNSName">
+            <summary>
+            ASN.1 member DNSName 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.GeneralName.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11368,11 +11378,15 @@
             The OID value
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.BasicConstraints.CA">
-            <summary> ASN.1 member CA </summary>
+        <member name="F:Goedel.Cryptography.PKIX.BasicConstraints.CA">
+            <summary>
+            ASN.1 member CA 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.BasicConstraints.PathLenConstraint">
-            <summary> ASN.1 member PathLenConstraint </summary>
+        <member name="F:Goedel.Cryptography.PKIX.BasicConstraints.PathLenConstraint">
+            <summary>
+            ASN.1 member PathLenConstraint 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.BasicConstraints.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11392,11 +11406,15 @@
             The OID value
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.NameConstraints.PermittedSubtrees">
-            <summary> ASN.1 member PermittedSubtrees </summary>
+        <member name="F:Goedel.Cryptography.PKIX.NameConstraints.PermittedSubtrees">
+            <summary>
+            ASN.1 member PermittedSubtrees 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.NameConstraints.ExcludedSubtrees">
-            <summary> ASN.1 member ExcludedSubtrees </summary>
+        <member name="F:Goedel.Cryptography.PKIX.NameConstraints.ExcludedSubtrees">
+            <summary>
+            ASN.1 member ExcludedSubtrees 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.NameConstraints.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11411,14 +11429,20 @@
             GeneralSubtrees 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.GeneralSubtrees.Base">
-            <summary> ASN.1 member Base </summary>
+        <member name="F:Goedel.Cryptography.PKIX.GeneralSubtrees.Base">
+            <summary>
+            ASN.1 member Base 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.GeneralSubtrees.Minimum">
-            <summary> ASN.1 member Minimum </summary>
+        <member name="F:Goedel.Cryptography.PKIX.GeneralSubtrees.Minimum">
+            <summary>
+            ASN.1 member Minimum 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.GeneralSubtrees.Maximum">
-            <summary> ASN.1 member Maximum </summary>
+        <member name="F:Goedel.Cryptography.PKIX.GeneralSubtrees.Maximum">
+            <summary>
+            ASN.1 member Maximum 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.GeneralSubtrees.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11438,8 +11462,10 @@
             The OID value
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.ExtendedKeyUsage.KeyPurpose">
-            <summary> ASN.1 member KeyPurpose </summary>
+        <member name="F:Goedel.Cryptography.PKIX.ExtendedKeyUsage.KeyPurpose">
+            <summary>
+            ASN.1 member KeyPurpose 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.ExtendedKeyUsage.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11454,14 +11480,20 @@
             PFX 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PFX.Version">
-            <summary> ASN.1 member Version </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PFX.Version">
+            <summary>
+            ASN.1 member Version 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PFX.AuthSafe">
-            <summary> ASN.1 member AuthSafe </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PFX.AuthSafe">
+            <summary>
+            ASN.1 member AuthSafe 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PFX.MacData">
-            <summary> ASN.1 member MacData </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PFX.MacData">
+            <summary>
+            ASN.1 member MacData 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.PFX.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11476,11 +11508,15 @@
             ContentInfo 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.ContentInfo.ContentType">
-            <summary> ASN.1 member ContentType </summary>
+        <member name="F:Goedel.Cryptography.PKIX.ContentInfo.ContentType">
+            <summary>
+            ASN.1 member ContentType 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.ContentInfo.Content">
-            <summary> ASN.1 member Content </summary>
+        <member name="F:Goedel.Cryptography.PKIX.ContentInfo.Content">
+            <summary>
+            ASN.1 member Content 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.ContentInfo.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11495,14 +11531,20 @@
             MacData 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.MacData.MAC">
-            <summary> ASN.1 member MAC </summary>
+        <member name="F:Goedel.Cryptography.PKIX.MacData.MAC">
+            <summary>
+            ASN.1 member MAC 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.MacData.MacSalt">
-            <summary> ASN.1 member MacSalt </summary>
+        <member name="F:Goedel.Cryptography.PKIX.MacData.MacSalt">
+            <summary>
+            ASN.1 member MacSalt 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.MacData.Iterations">
-            <summary> ASN.1 member Iterations </summary>
+        <member name="F:Goedel.Cryptography.PKIX.MacData.Iterations">
+            <summary>
+            ASN.1 member Iterations 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.MacData.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11517,11 +11559,15 @@
             EncryptedData 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.EncryptedData.Version">
-            <summary> ASN.1 member Version </summary>
+        <member name="F:Goedel.Cryptography.PKIX.EncryptedData.Version">
+            <summary>
+            ASN.1 member Version 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.EncryptedData.EncryptedContent">
-            <summary> ASN.1 member EncryptedContent </summary>
+        <member name="F:Goedel.Cryptography.PKIX.EncryptedData.EncryptedContent">
+            <summary>
+            ASN.1 member EncryptedContent 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.EncryptedData.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11536,14 +11582,20 @@
             EncryptedContentInfo 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.EncryptedContentInfo.ContentType">
-            <summary> ASN.1 member ContentType </summary>
+        <member name="F:Goedel.Cryptography.PKIX.EncryptedContentInfo.ContentType">
+            <summary>
+            ASN.1 member ContentType 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.EncryptedContentInfo.Algorithm">
-            <summary> ASN.1 member Algorithm </summary>
+        <member name="F:Goedel.Cryptography.PKIX.EncryptedContentInfo.Algorithm">
+            <summary>
+            ASN.1 member Algorithm 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.EncryptedContentInfo.EncryptedContent">
-            <summary> ASN.1 member EncryptedContent </summary>
+        <member name="F:Goedel.Cryptography.PKIX.EncryptedContentInfo.EncryptedContent">
+            <summary>
+            ASN.1 member EncryptedContent 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.EncryptedContentInfo.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11558,11 +11610,15 @@
             EncryptedPrivateKeyInfo 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.EncryptedPrivateKeyInfo.EncryptionAlgorithm">
-            <summary> ASN.1 member EncryptionAlgorithm </summary>
+        <member name="F:Goedel.Cryptography.PKIX.EncryptedPrivateKeyInfo.EncryptionAlgorithm">
+            <summary>
+            ASN.1 member EncryptionAlgorithm 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.EncryptedPrivateKeyInfo.EncryptedData">
-            <summary> ASN.1 member EncryptedData </summary>
+        <member name="F:Goedel.Cryptography.PKIX.EncryptedPrivateKeyInfo.EncryptedData">
+            <summary>
+            ASN.1 member EncryptedData 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.EncryptedPrivateKeyInfo.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11580,17 +11636,25 @@
             PrivateKeyInfo 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PrivateKeyInfo.Version">
-            <summary> ASN.1 member Version </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PrivateKeyInfo.Version">
+            <summary>
+            ASN.1 member Version 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PrivateKeyInfo.PrivateKeyAlgorithm">
-            <summary> ASN.1 member PrivateKeyAlgorithm </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PrivateKeyInfo.PrivateKeyAlgorithm">
+            <summary>
+            ASN.1 member PrivateKeyAlgorithm 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PrivateKeyInfo.PrivateKey">
-            <summary> ASN.1 member PrivateKey </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PrivateKeyInfo.PrivateKey">
+            <summary>
+            ASN.1 member PrivateKey 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PrivateKeyInfo.Attributes">
-            <summary> ASN.1 member Attributes </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PrivateKeyInfo.Attributes">
+            <summary>
+            ASN.1 member Attributes 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.PrivateKeyInfo.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11624,11 +11688,15 @@
             PkixPublicKeyRsa 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PkixPublicKeyRsa.Modulus">
-            <summary> ASN.1 member Modulus </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PkixPublicKeyRsa.Modulus">
+            <summary>
+            ASN.1 member Modulus 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PkixPublicKeyRsa.PublicExponent">
-            <summary> ASN.1 member PublicExponent </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PkixPublicKeyRsa.PublicExponent">
+            <summary>
+            ASN.1 member PublicExponent 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.PkixPublicKeyRsa.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11660,32 +11728,50 @@
             PkixPrivateKeyRsa 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.Version">
-            <summary> ASN.1 member Version </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.Version">
+            <summary>
+            ASN.1 member Version 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.Modulus">
-            <summary> ASN.1 member Modulus </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.Modulus">
+            <summary>
+            ASN.1 member Modulus 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.PublicExponent">
-            <summary> ASN.1 member PublicExponent </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.PublicExponent">
+            <summary>
+            ASN.1 member PublicExponent 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.PrivateExponent">
-            <summary> ASN.1 member PrivateExponent </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.PrivateExponent">
+            <summary>
+            ASN.1 member PrivateExponent 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.Prime1">
-            <summary> ASN.1 member Prime1 </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.Prime1">
+            <summary>
+            ASN.1 member Prime1 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.Prime2">
-            <summary> ASN.1 member Prime2 </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.Prime2">
+            <summary>
+            ASN.1 member Prime2 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.Exponent1">
-            <summary> ASN.1 member Exponent1 </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.Exponent1">
+            <summary>
+            ASN.1 member Exponent1 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.Exponent2">
-            <summary> ASN.1 member Exponent2 </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.Exponent2">
+            <summary>
+            ASN.1 member Exponent2 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.Coefficient">
-            <summary> ASN.1 member Coefficient </summary>
+        <member name="F:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.Coefficient">
+            <summary>
+            ASN.1 member Coefficient 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.PkixPrivateKeyRsa.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11746,8 +11832,10 @@
             AgreementDH 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.AgreementDH.Result">
-            <summary> ASN.1 member Result </summary>
+        <member name="F:Goedel.Cryptography.PKIX.AgreementDH.Result">
+            <summary>
+            ASN.1 member Result 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.AgreementDH.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11770,14 +11858,20 @@
             Endorsement 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.Endorsement.TBSEndorsement">
-            <summary> ASN.1 member TBSEndorsement </summary>
+        <member name="F:Goedel.Cryptography.PKIX.Endorsement.TBSEndorsement">
+            <summary>
+            ASN.1 member TBSEndorsement 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.Endorsement.SignatureAlgorithm">
-            <summary> ASN.1 member SignatureAlgorithm </summary>
+        <member name="F:Goedel.Cryptography.PKIX.Endorsement.SignatureAlgorithm">
+            <summary>
+            ASN.1 member SignatureAlgorithm 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.Endorsement.Signature">
-            <summary> ASN.1 member Signature </summary>
+        <member name="F:Goedel.Cryptography.PKIX.Endorsement.Signature">
+            <summary>
+            ASN.1 member Signature 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.Endorsement.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11792,26 +11886,40 @@
             TBSEndorsement 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSEndorsement.Version">
-            <summary> ASN.1 member Version </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSEndorsement.Version">
+            <summary>
+            ASN.1 member Version 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSEndorsement.Issued">
-            <summary> ASN.1 member Issued </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSEndorsement.Issued">
+            <summary>
+            ASN.1 member Issued 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSEndorsement.IssuerKeyIdentifier">
-            <summary> ASN.1 member IssuerKeyIdentifier </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSEndorsement.IssuerKeyIdentifier">
+            <summary>
+            ASN.1 member IssuerKeyIdentifier 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSEndorsement.SubjectKeyIdentifier">
-            <summary> ASN.1 member SubjectKeyIdentifier </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSEndorsement.SubjectKeyIdentifier">
+            <summary>
+            ASN.1 member SubjectKeyIdentifier 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSEndorsement.Subject">
-            <summary> ASN.1 member Subject </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSEndorsement.Subject">
+            <summary>
+            ASN.1 member Subject 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSEndorsement.SubjectAltName">
-            <summary> ASN.1 member SubjectAltName </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSEndorsement.SubjectAltName">
+            <summary>
+            ASN.1 member SubjectAltName 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.TBSEndorsement.Extensions">
-            <summary> ASN.1 member Extensions </summary>
+        <member name="F:Goedel.Cryptography.PKIX.TBSEndorsement.Extensions">
+            <summary>
+            ASN.1 member Extensions 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.TBSEndorsement.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11826,14 +11934,20 @@
             RFC2631OtherInfo 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.RFC2631OtherInfo.KeyInfo">
-            <summary> ASN.1 member KeyInfo </summary>
+        <member name="F:Goedel.Cryptography.PKIX.RFC2631OtherInfo.KeyInfo">
+            <summary>
+            ASN.1 member KeyInfo 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.RFC2631OtherInfo.PartyAInfo">
-            <summary> ASN.1 member PartyAInfo </summary>
+        <member name="F:Goedel.Cryptography.PKIX.RFC2631OtherInfo.PartyAInfo">
+            <summary>
+            ASN.1 member PartyAInfo 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.RFC2631OtherInfo.SuppPubInfo">
-            <summary> ASN.1 member SuppPubInfo </summary>
+        <member name="F:Goedel.Cryptography.PKIX.RFC2631OtherInfo.SuppPubInfo">
+            <summary>
+            ASN.1 member SuppPubInfo 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.RFC2631OtherInfo.Encode(Goedel.ASN.Buffer)">
              <summary>
@@ -11874,11 +11988,15 @@
             KeySpecificInfo 
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.KeySpecificInfo.Algorithm">
-            <summary> ASN.1 member Algorithm </summary>
+        <member name="F:Goedel.Cryptography.PKIX.KeySpecificInfo.Algorithm">
+            <summary>
+            ASN.1 member Algorithm 
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.PKIX.KeySpecificInfo.Counter">
-            <summary> ASN.1 member Counter </summary>
+        <member name="F:Goedel.Cryptography.PKIX.KeySpecificInfo.Counter">
+            <summary>
+            ASN.1 member Counter 
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PKIX.KeySpecificInfo.Encode(Goedel.ASN.Buffer)">
              <summary>

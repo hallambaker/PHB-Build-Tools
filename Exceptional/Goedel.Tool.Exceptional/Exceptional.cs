@@ -95,14 +95,21 @@ namespace Goedel.Tool.Exceptional {
     public abstract partial class _Choice {
         abstract public ExceptionsType _Tag ();
 
+        public _Choice _Parent;
+        public Exceptions _Base;
+
 		public abstract void Serialize (StructureWriter Output, bool tag);
 
-		public virtual void Init (_Choice Parent) {
+    	public virtual void Init (_Choice parent) {
+            _Parent = parent;
 			}
 
+        
+
 		bool _Initialized = false;
-		public virtual void _InitChildren (_Choice Parent) {
-			Init (Parent);
+		public virtual void _InitChildren (_Choice parent) {
+			Init (parent);
+            _Base = parent._Base;
 			if (_Initialized) {
 				return;
 				}
@@ -391,6 +398,7 @@ namespace Goedel.Tool.Exceptional {
                 Lexer Schema = new Lexer(File);
                 Schema.Process(infile, Result);
                 }
+            Result.Init ();
 			Result._InitChildren ();
 
             return Result;
@@ -403,6 +411,7 @@ namespace Goedel.Tool.Exceptional {
 				}
 			_Initialized = true;
 			foreach (var Entry in Top) {
+                Entry._Base = this;
 				Entry._InitChildren (null);
 				}
 			}

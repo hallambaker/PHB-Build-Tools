@@ -423,11 +423,10 @@ namespace #{Class.Namespace} {
 			
 			using (Stream infile =
                         new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
-
                 Lexer Schema = new Lexer(inputfile);
-
                 Schema.Process(infile, Parse);
                 }
+			// Parse.Init();
 
 #casecast Generator null
 #end switchcast
@@ -444,15 +443,14 @@ namespace #{Class.Namespace} {
 					return;
 					}
 #end if	
-				using (Stream outputStream =
-							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
+                using Stream outputStream =
+                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
 
-						#{Script.Namespace}.#{Script.Class} Script = new #{Script.Namespace}.#{Script.Class} () { _Output= OutputWriter };
-
-						Script.#{Script.Id} (Parse);
-						}
-					}
+				#{Script.Namespace}.#{Script.Class} Script = new #{Script.Namespace}.#{Script.Class} () { 
+					_Output= OutputWriter 
+					};
+				Script.#{Script.Id} (Parse);
 				}
 #end switchcast
 #end foreach

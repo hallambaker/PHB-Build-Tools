@@ -580,27 +580,28 @@
             An error occurred in the decoding of presumed ASN.1 binary data.
             </summary>
         </member>
-        <member name="P:Goedel.ASN.ASNDecodingException.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.ASN.ASNDecodingException.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.ASN.ASNDecodingException.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.ASN.ASNDecodingException.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "An ASN.1 Decoding exception occurred"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.ASN.ASNDecodingException._Throw(System.Object)">
+        <member name="M:Goedel.ASN.ASNDecodingException.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "An ASN.1 Decoding exception occurred"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.ASN.ASNDecodingException.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.ASN.ASNDecodingException.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
         </member>
         <member name="F:Goedel.ASN.ASNDecodingException.Throw">
             <summary>
@@ -612,27 +613,23 @@
             Construct instance for exception "Implementation restriction"
             </summary>
         </member>
-        <member name="P:Goedel.ASN.Implementation.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.ASN.Implementation.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.ASN.Implementation.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.ASN.Implementation.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Implementation restriction"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.ASN.Implementation._Throw(System.Object)">
+        <member name="M:Goedel.ASN.Implementation.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Implementation restriction"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.ASN.Implementation.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.ASN.Implementation.Throw">
             <summary>
@@ -644,27 +641,23 @@
             Construct instance for exception "Length invalid"
             </summary>
         </member>
-        <member name="P:Goedel.ASN.InvalidLength.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.ASN.InvalidLength.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.ASN.InvalidLength.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.ASN.InvalidLength.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Length invalid"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.ASN.InvalidLength._Throw(System.Object)">
+        <member name="M:Goedel.ASN.InvalidLength.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Length invalid"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.ASN.InvalidLength.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.ASN.InvalidLength.Throw">
             <summary>
@@ -676,27 +669,23 @@
             Indefinite length not valid
             </summary>
         </member>
-        <member name="P:Goedel.ASN.IndefiniteLengthInvalid.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.ASN.IndefiniteLengthInvalid.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.ASN.IndefiniteLengthInvalid.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.ASN.IndefiniteLengthInvalid.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Indefinite length not valid"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.ASN.IndefiniteLengthInvalid._Throw(System.Object)">
+        <member name="M:Goedel.ASN.IndefiniteLengthInvalid.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Indefinite length not valid"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.ASN.IndefiniteLengthInvalid.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.ASN.IndefiniteLengthInvalid.Throw">
             <summary>
@@ -708,27 +697,23 @@
             Length exceeds data input
             </summary>
         </member>
-        <member name="P:Goedel.ASN.LengthExceedsInput.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.ASN.LengthExceedsInput.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.ASN.LengthExceedsInput.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.ASN.LengthExceedsInput.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Length exceeds data input"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.ASN.LengthExceedsInput._Throw(System.Object)">
+        <member name="M:Goedel.ASN.LengthExceedsInput.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Length exceeds data input"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.ASN.LengthExceedsInput.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.ASN.LengthExceedsInput.Throw">
             <summary>
@@ -739,27 +724,23 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.ASN.LengthExceedsStructure.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.ASN.LengthExceedsStructure.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.ASN.LengthExceedsStructure.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.ASN.LengthExceedsStructure.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Length exceeds current structure"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.ASN.LengthExceedsStructure._Throw(System.Object)">
+        <member name="M:Goedel.ASN.LengthExceedsStructure.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Length exceeds current structure"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.ASN.LengthExceedsStructure.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.ASN.LengthExceedsStructure.Throw">
             <summary>
@@ -770,27 +751,23 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.ASN.UnExpectedData.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.ASN.UnExpectedData.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.ASN.UnExpectedData.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.ASN.UnExpectedData.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Unexpected Data"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.ASN.UnExpectedData._Throw(System.Object)">
+        <member name="M:Goedel.ASN.UnExpectedData.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Unexpected Data"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.ASN.UnExpectedData.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.ASN.UnExpectedData.Throw">
             <summary>
@@ -801,27 +778,23 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.ASN.ExpectedSequence.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.ASN.ExpectedSequence.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.ASN.ExpectedSequence.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.ASN.ExpectedSequence.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Expected Sequence"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.ASN.ExpectedSequence._Throw(System.Object)">
+        <member name="M:Goedel.ASN.ExpectedSequence.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Expected Sequence"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.ASN.ExpectedSequence.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.ASN.ExpectedSequence.Throw">
             <summary>
@@ -832,27 +805,23 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.ASN.ExpectedInteger.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.ASN.ExpectedInteger.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.ASN.ExpectedInteger.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.ASN.ExpectedInteger.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Expected Integer"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.ASN.ExpectedInteger._Throw(System.Object)">
+        <member name="M:Goedel.ASN.ExpectedInteger.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Expected Integer"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.ASN.ExpectedInteger.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.ASN.ExpectedInteger.Throw">
             <summary>
@@ -863,27 +832,23 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.ASN.IntegerOverflow.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.ASN.IntegerOverflow.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.ASN.IntegerOverflow.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.ASN.IntegerOverflow.#ctor">
             <summary>
-            Construct instance for exception
+            Construct instance for exception "Integer too large"
             </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.ASN.IntegerOverflow._Throw(System.Object)">
+        <member name="M:Goedel.ASN.IntegerOverflow.#ctor(System.String)">
             <summary>
-            The public fatory delegate
-            </summary>
-            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            Construct instance for exception "Integer too large"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.ASN.IntegerOverflow.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.ASN.IntegerOverflow.Throw">
             <summary>

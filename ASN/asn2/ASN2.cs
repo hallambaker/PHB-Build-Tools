@@ -240,11 +240,10 @@ namespace Goedel.Shell.ASN {
 			
 			using (Stream infile =
                         new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
-
                 Lexer Schema = new Lexer(inputfile);
-
                 Schema.Process(infile, Parse);
                 }
+			// Parse.Init();
 
 
 			// Script output of type GenerateCS cs
@@ -253,15 +252,14 @@ namespace Goedel.Shell.ASN {
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
-				using (Stream outputStream =
-							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
+                using Stream outputStream =
+                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
 
-						Goedel.Tool.ASN.Generate Script = new Goedel.Tool.ASN.Generate () { _Output= OutputWriter };
-
-						Script.GenerateCS (Parse);
-						}
-					}
+				Goedel.Tool.ASN.Generate Script = new Goedel.Tool.ASN.Generate () { 
+					_Output= OutputWriter 
+					};
+				Script.GenerateCS (Parse);
 				}
 			}
 

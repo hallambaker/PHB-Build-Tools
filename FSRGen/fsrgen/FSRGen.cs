@@ -257,11 +257,10 @@ namespace Goedel.Shell.FSRGen {
 			
 			using (Stream infile =
                         new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
-
                 Lexer Schema = new Lexer(inputfile);
-
                 Schema.Process(infile, Parse);
                 }
+			// Parse.Init();
 
 
 			// Script output of type GenerateH h
@@ -270,15 +269,14 @@ namespace Goedel.Shell.FSRGen {
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
-				using (Stream outputStream =
-							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
+                using Stream outputStream =
+                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
 
-						Goedel.Tool.FSRGen.Generate Script = new Goedel.Tool.FSRGen.Generate () { _Output= OutputWriter };
-
-						Script.GenerateH (Parse);
-						}
-					}
+				Goedel.Tool.FSRGen.Generate Script = new Goedel.Tool.FSRGen.Generate () { 
+					_Output= OutputWriter 
+					};
+				Script.GenerateH (Parse);
 				}
 			// Script output of type GenerateCS cs
 			if (Options.GenerateCS.Text != null) {
@@ -286,15 +284,14 @@ namespace Goedel.Shell.FSRGen {
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
-				using (Stream outputStream =
-							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
+                using Stream outputStream =
+                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
 
-						Goedel.Tool.FSRGen.Generate Script = new Goedel.Tool.FSRGen.Generate () { _Output= OutputWriter };
-
-						Script.GenerateCS (Parse);
-						}
-					}
+				Goedel.Tool.FSRGen.Generate Script = new Goedel.Tool.FSRGen.Generate () { 
+					_Output= OutputWriter 
+					};
+				Script.GenerateCS (Parse);
 				}
 			}
 
