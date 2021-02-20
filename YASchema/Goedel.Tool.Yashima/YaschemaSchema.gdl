@@ -15,12 +15,12 @@ Class Goedel.Tool.Yaschema YaschemaStruct
 
 	Type Packet
 		Id				ID PacketType
-		Options			Options
-			Initial	Initial Multiple
-			Respond Respond Multiple
-			Plaintext Plaintext Multiple
-			Mezzanine Mezzanine Multiple
-			Encrypted Encrypted Multiple
+		Entries		List Choice			
+			Initial
+			Respond
+			Plaintext
+			Mezzanine
+			Encrypted
 
 	Type Initial
 		Options Options

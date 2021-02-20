@@ -29,16 +29,16 @@ namespace Goedel.Tool.Yaschema {
             _InitChildren();
 
 
-            foreach (var entry in Top) {
-                switch (entry) {
-                    case Namespace nameSpace: {
-                        Namespace = nameSpace;
-                        break;
-                        }
+            //foreach (var entry in Top) {
+            //    switch (entry) {
+            //        case Namespace nameSpace: {
+            //            Namespace = nameSpace;
+            //            break;
+            //            }
 
-                    }
-                //entry.Init(null);
-                }
+            //        }
+            //    //entry.Init(null);
+            //    }
 
             }
 
@@ -47,18 +47,25 @@ namespace Goedel.Tool.Yaschema {
 
         public string ClassName => YaschemaStruct.PacketPrefix + Id.Label;
 
-        public bool IsInitial => Initial.Count > 0;
-        public bool IsInitialHostCredential => IsInitial && (Initial[0].HostCredential.Count > 0);
-
-        public List<REF<_Choice>> Responds => Respond[0].To;
+        public bool IsInitial => Initial != null;
+        public bool IsInitialHostCredential => IsInitial && (Initial.HostCredential.Count > 0);
 
 
-        public bool HasPlaintext => Plaintext?.Count > 0;
-        public bool HasMezzanine => Mezzanine?.Count > 0;
-        public bool HasEncrypted => Encrypted?.Count > 0;
-        public List<_Choice> PlaintextItems => HasPlaintext ? Plaintext[0].Entries : null;
-        public List<_Choice> MezzanineItems => HasMezzanine ? Mezzanine[0].Entries : null;
-        public List<_Choice> EncryptedItems => HasEncrypted ? Encrypted[0].Entries : null;
+
+
+        public bool HasPlaintext => Plaintext != null;
+        public bool HasMezzanine => Mezzanine != null;
+        public bool HasEncrypted => Encrypted != null;
+
+
+
+
+
+        public Initial Initial;
+        public Respond Respond;
+        public Plaintext Plaintext;
+        public Mezzanine Mezzanine;
+        public Encrypted Encrypted;
 
 
         public bool IsClient;
@@ -106,8 +113,54 @@ namespace Goedel.Tool.Yaschema {
 
         }
     public partial class Namespace {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            _Base.Namespace = this;
+            }
         }
 
+
+
+    public partial class Initial {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            if (Parent is Packet packet) {
+                packet.Initial = this;
+                }
+            }
+        }
+    public partial class Respond {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            if (Parent is Packet packet) {
+                packet.Respond = this;
+                }
+            }
+        }
+    public partial class Plaintext {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            if (Parent is Packet packet) {
+                packet.Plaintext = this;
+                }
+            }
+        }
+    public partial class Mezzanine {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            if (Parent is Packet packet) {
+                packet.Mezzanine = this;
+                }
+            }
+        }
+    public partial class Encrypted {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            if (Parent is Packet packet) {
+                packet.Encrypted = this;
+                }
+            }
+        }
 
 
     public partial class ClientCredential {

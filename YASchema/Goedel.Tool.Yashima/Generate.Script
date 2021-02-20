@@ -99,26 +99,35 @@ namespace #{Yaschema.NameSpaceName} {
 #end method
 
 #method GenersateSerializer Packet packet
-#% var plaintext = packet.Plaintext.SafeIndex();
-#% var mezzanine = packet.Mezzanine.SafeIndex();
+#% var plaintext = packet.Plaintext;
+#% var mezzanine = packet.Mezzanine;
         // Serialize #{packet.PacketType} packet #{packet.Id}
 
         /// <summary>
         /// Create a serialised packet of type #{packet.Id} packet.
         /// </summary>
         /// <param name="payload">The payload data.</param>
-        /// <param name="plaintextExtensions">Extensions to be presented in the plaintext segment.</param>
+        /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
+        /// in the plaintext segment.</param>
+#if (packet.HasMezzanine)
+        /// <param name="mezanineExtensionsIn">Additional extensions to be presented
+        /// in the mezzanine segment.</param>
+#end if
+#if (packet.HasEncrypted)
+        /// <param name="ciphertextExtensions">Additional extensions to be presented 
+        /// in the encrypted segment.</param>
+#end if
         /// <returns>The serialized data.</returns>
         public byte[] Serialize#{packet.ClassName} (
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null#!
 #if (packet.HasMezzanine)
-
+,
                 List<PacketExtension> mezanineExtensionsIn = null#!
 #end if
 #if (packet.HasEncrypted)
-
-                List<PacketExtension> encryptedExtensions = null#!
+,
+                List<PacketExtension> ciphertextExtensions = null#!
 #end if
 
                 ) {

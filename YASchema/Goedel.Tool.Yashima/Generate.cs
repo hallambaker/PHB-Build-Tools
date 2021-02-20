@@ -138,26 +138,35 @@ namespace Goedel.Tool.Yaschema {
 		// GenersateSerializer
 		//
 		public void GenersateSerializer (Packet packet) {
-			 var plaintext = packet.Plaintext.SafeIndex();
-			 var mezzanine = packet.Mezzanine.SafeIndex();
+			 var plaintext = packet.Plaintext;
+			 var mezzanine = packet.Mezzanine;
 			_Output.Write ("        // Serialize {1} packet {2}\n{0}", _Indent, packet.PacketType, packet.Id);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        /// <summary>\n{0}", _Indent);
 			_Output.Write ("        /// Create a serialised packet of type {1} packet.\n{0}", _Indent, packet.Id);
 			_Output.Write ("        /// </summary>\n{0}", _Indent);
 			_Output.Write ("        /// <param name=\"payload\">The payload data.</param>\n{0}", _Indent);
-			_Output.Write ("        /// <param name=\"plaintextExtensions\">Extensions to be presented in the plaintext segment.</param>\n{0}", _Indent);
+			_Output.Write ("        /// <param name=\"plaintextExtensionsIn\">Additional extensions to be presented \n{0}", _Indent);
+			_Output.Write ("        /// in the plaintext segment.</param>\n{0}", _Indent);
+			if (  (packet.HasMezzanine) ) {
+				_Output.Write ("        /// <param name=\"mezanineExtensionsIn\">Additional extensions to be presented\n{0}", _Indent);
+				_Output.Write ("        /// in the mezzanine segment.</param>\n{0}", _Indent);
+				}
+			if (  (packet.HasEncrypted) ) {
+				_Output.Write ("        /// <param name=\"ciphertextExtensions\">Additional extensions to be presented \n{0}", _Indent);
+				_Output.Write ("        /// in the encrypted segment.</param>\n{0}", _Indent);
+				}
 			_Output.Write ("        /// <returns>The serialized data.</returns>\n{0}", _Indent);
 			_Output.Write ("        public byte[] Serialize{1} (\n{0}", _Indent, packet.ClassName);
 			_Output.Write ("                byte[] payload = null,\n{0}", _Indent);
 			_Output.Write ("                List<PacketExtension> plaintextExtensionsIn = null", _Indent);
 			if (  (packet.HasMezzanine) ) {
-				_Output.Write ("\n{0}", _Indent);
+				_Output.Write (",\n{0}", _Indent);
 				_Output.Write ("                List<PacketExtension> mezanineExtensionsIn = null", _Indent);
 				}
 			if (  (packet.HasEncrypted) ) {
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("                List<PacketExtension> encryptedExtensions = null", _Indent);
+				_Output.Write (",\n{0}", _Indent);
+				_Output.Write ("                List<PacketExtension> ciphertextExtensions = null", _Indent);
 				}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("                ) {{\n{0}", _Indent);

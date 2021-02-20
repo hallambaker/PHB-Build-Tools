@@ -49,6 +49,11 @@ using Goedel.Utilities;
 //       Host
 //   TypeType
 //       Packet
+//       Initial
+//       Respond
+//       Plaintext
+//       Mezzanine
+//       Encrypted
 //       ClientEphemerals
 //       ClientEphemeral
 //       HostKeyID
@@ -71,11 +76,6 @@ using Goedel.Utilities;
 //       Text
 //       Entries
 //       Options
-//       Initial
-//       Respond
-//       Plaintext
-//       Mezzanine
-//       Encrypted
 //       HostCredential
 //       To
 //   TokenType
@@ -99,11 +99,11 @@ namespace Goedel.Tool.Yaschema {
         Mezzanine,
         Encrypted,
         Payload,
-        HostCredential,
         ClientCredential,
+        HostCredential,
         ClientEphemerals,
-        ClientEphemeral,
         HostEphemerals,
+        ClientEphemeral,
         HostEphemeral,
         Challenge,
         Response,
@@ -125,10 +125,7 @@ namespace Goedel.Tool.Yaschema {
 
     	public virtual void Init (_Choice parent) {
             _Parent = parent;
-            
-            _Base ??= parent?._Base;
-
-            }
+			}
 
         
 
@@ -236,17 +233,16 @@ namespace Goedel.Tool.Yaschema {
 
     public partial class Packet : _Choice {
         public ID<_Choice>				Id; 
-		public List<Initial>  Initial = new  List <Initial> ();
-		public List<Respond>  Respond = new  List <Respond> ();
-		public List<Plaintext>  Plaintext = new  List <Plaintext> ();
-		public List<Mezzanine>  Mezzanine = new  List <Mezzanine> ();
-		public List<Encrypted>  Encrypted = new  List <Encrypted> ();
+        public List <_Choice>           Entries = new List<_Choice> ();
 
         public override YaschemaStructType _Tag () =>YaschemaStructType.Packet;
 
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
 			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -257,19 +253,7 @@ namespace Goedel.Tool.Yaschema {
 
 	        Output.WriteId ("Id", Id.ToString()); 
 			Output.StartList ("");
-			foreach (Initial _e in Initial) {
-				_e.Serialize (Output, true);
-				}
-			foreach (Respond _e in Respond) {
-				_e.Serialize (Output, true);
-				}
-			foreach (Plaintext _e in Plaintext) {
-				_e.Serialize (Output, true);
-				}
-			foreach (Mezzanine _e in Mezzanine) {
-				_e.Serialize (Output, true);
-				}
-			foreach (Encrypted _e in Encrypted) {
+			foreach (_Choice _e in Entries) {
 				_e.Serialize (Output, true);
 				}
 			Output.EndList ("");
@@ -444,27 +428,6 @@ namespace Goedel.Tool.Yaschema {
 			}
 		}
 
-    public partial class HostCredential : _Choice {
-
-        public override YaschemaStructType _Tag () =>YaschemaStructType.HostCredential;
-
-
-		public override void _InitChildren (_Choice Parent) {
-			Init (Parent);
-			}
-
-		public override void Serialize (StructureWriter Output, bool tag) {
-
-			if (tag) {
-				Output.StartElement ("HostCredential");
-				}
-
-			if (tag) {
-				Output.EndElement ("HostCredential");
-				}			
-			}
-		}
-
     public partial class ClientCredential : _Choice {
 
         public override YaschemaStructType _Tag () =>YaschemaStructType.ClientCredential;
@@ -482,6 +445,27 @@ namespace Goedel.Tool.Yaschema {
 
 			if (tag) {
 				Output.EndElement ("ClientCredential");
+				}			
+			}
+		}
+
+    public partial class HostCredential : _Choice {
+
+        public override YaschemaStructType _Tag () =>YaschemaStructType.HostCredential;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("HostCredential");
+				}
+
+			if (tag) {
+				Output.EndElement ("HostCredential");
 				}			
 			}
 		}
@@ -507,27 +491,6 @@ namespace Goedel.Tool.Yaschema {
 			}
 		}
 
-    public partial class ClientEphemeral : _Choice {
-
-        public override YaschemaStructType _Tag () =>YaschemaStructType.ClientEphemeral;
-
-
-		public override void _InitChildren (_Choice Parent) {
-			Init (Parent);
-			}
-
-		public override void Serialize (StructureWriter Output, bool tag) {
-
-			if (tag) {
-				Output.StartElement ("ClientEphemeral");
-				}
-
-			if (tag) {
-				Output.EndElement ("ClientEphemeral");
-				}			
-			}
-		}
-
     public partial class HostEphemerals : _Choice {
 
         public override YaschemaStructType _Tag () =>YaschemaStructType.HostEphemerals;
@@ -545,6 +508,27 @@ namespace Goedel.Tool.Yaschema {
 
 			if (tag) {
 				Output.EndElement ("HostEphemerals");
+				}			
+			}
+		}
+
+    public partial class ClientEphemeral : _Choice {
+
+        public override YaschemaStructType _Tag () =>YaschemaStructType.ClientEphemeral;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("ClientEphemeral");
+				}
+
+			if (tag) {
+				Output.EndElement ("ClientEphemeral");
 				}			
 			}
 		}
@@ -682,7 +666,7 @@ namespace Goedel.Tool.Yaschema {
 		Host__Entries,				
 		Packet_Start,
 		Packet__Id,				
-		Packet__Options,				
+		Packet__Entries,				
 		Initial_Start,
 		Initial__Options,				
 		Respond_Start,
@@ -694,11 +678,11 @@ namespace Goedel.Tool.Yaschema {
 		Encrypted_Start,
 		Encrypted__Entries,				
 		Payload_Start,
-		HostCredential_Start,
 		ClientCredential_Start,
+		HostCredential_Start,
 		ClientEphemerals_Start,
-		ClientEphemeral_Start,
 		HostEphemerals_Start,
+		ClientEphemeral_Start,
 		HostEphemeral_Start,
 		Challenge_Start,
 		Response_Start,
@@ -785,11 +769,11 @@ namespace Goedel.Tool.Yaschema {
                 case "Mezzanine": return NewMezzanine();
                 case "Encrypted": return NewEncrypted();
                 case "Payload": return NewPayload();
-                case "HostCredential": return NewHostCredential();
                 case "ClientCredential": return NewClientCredential();
+                case "HostCredential": return NewHostCredential();
                 case "ClientEphemerals": return NewClientEphemerals();
-                case "ClientEphemeral": return NewClientEphemeral();
                 case "HostEphemerals": return NewHostEphemerals();
+                case "ClientEphemeral": return NewClientEphemeral();
                 case "HostEphemeral": return NewHostEphemeral();
                 case "Challenge": return NewChallenge();
                 case "Response": return NewResponse();
@@ -883,18 +867,18 @@ namespace Goedel.Tool.Yaschema {
             }
 
 
-        private Goedel.Tool.Yaschema.HostCredential NewHostCredential() {
-            Goedel.Tool.Yaschema.HostCredential result = new Goedel.Tool.Yaschema.HostCredential();
-            Push (result);
-            State = StateCode.HostCredential_Start;
-            return result;
-            }
-
-
         private Goedel.Tool.Yaschema.ClientCredential NewClientCredential() {
             Goedel.Tool.Yaschema.ClientCredential result = new Goedel.Tool.Yaschema.ClientCredential();
             Push (result);
             State = StateCode.ClientCredential_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Yaschema.HostCredential NewHostCredential() {
+            Goedel.Tool.Yaschema.HostCredential result = new Goedel.Tool.Yaschema.HostCredential();
+            Push (result);
+            State = StateCode.HostCredential_Start;
             return result;
             }
 
@@ -907,18 +891,18 @@ namespace Goedel.Tool.Yaschema {
             }
 
 
-        private Goedel.Tool.Yaschema.ClientEphemeral NewClientEphemeral() {
-            Goedel.Tool.Yaschema.ClientEphemeral result = new Goedel.Tool.Yaschema.ClientEphemeral();
-            Push (result);
-            State = StateCode.ClientEphemeral_Start;
-            return result;
-            }
-
-
         private Goedel.Tool.Yaschema.HostEphemerals NewHostEphemerals() {
             Goedel.Tool.Yaschema.HostEphemerals result = new Goedel.Tool.Yaschema.HostEphemerals();
             Push (result);
             State = StateCode.HostEphemerals_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Yaschema.ClientEphemeral NewClientEphemeral() {
+            Goedel.Tool.Yaschema.ClientEphemeral result = new Goedel.Tool.Yaschema.ClientEphemeral();
+            Push (result);
+            State = StateCode.ClientEphemeral_Start;
             return result;
             }
 
@@ -976,11 +960,11 @@ namespace Goedel.Tool.Yaschema {
                 case "Mezzanine": return Goedel.Tool.Yaschema.YaschemaStructType.Mezzanine;
                 case "Encrypted": return Goedel.Tool.Yaschema.YaschemaStructType.Encrypted;
                 case "Payload": return Goedel.Tool.Yaschema.YaschemaStructType.Payload;
-                case "HostCredential": return Goedel.Tool.Yaschema.YaschemaStructType.HostCredential;
                 case "ClientCredential": return Goedel.Tool.Yaschema.YaschemaStructType.ClientCredential;
+                case "HostCredential": return Goedel.Tool.Yaschema.YaschemaStructType.HostCredential;
                 case "ClientEphemerals": return Goedel.Tool.Yaschema.YaschemaStructType.ClientEphemerals;
-                case "ClientEphemeral": return Goedel.Tool.Yaschema.YaschemaStructType.ClientEphemeral;
                 case "HostEphemerals": return Goedel.Tool.Yaschema.YaschemaStructType.HostEphemerals;
+                case "ClientEphemeral": return Goedel.Tool.Yaschema.YaschemaStructType.ClientEphemeral;
                 case "HostEphemeral": return Goedel.Tool.Yaschema.YaschemaStructType.HostEphemeral;
                 case "Challenge": return Goedel.Tool.Yaschema.YaschemaStructType.Challenge;
                 case "Response": return Goedel.Tool.Yaschema.YaschemaStructType.Response;
@@ -1193,61 +1177,40 @@ namespace Goedel.Tool.Yaschema {
                         throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Packet__Id:
+
                         if (Token == TokenType.BEGIN) {
-                            State = StateCode.Packet__Options;
+                            State = StateCode.Packet__Entries;
                             }
                         else {
 							Pop ();
                             Represent = true;
                             }
                         break;
-                    case StateCode.Packet__Options: 
+                    case StateCode.Packet__Entries: 
                         if (Token == TokenType.END) {
                             Pop();
                             break;
                             }
 
-						// Parser transition for OPTIONS $$$$$
+						// Parser transition for LIST $$$$$
+
                         else if (Token == TokenType.LABEL) {
 							Goedel.Tool.Yaschema.Packet Current_Cast = (Goedel.Tool.Yaschema.Packet)Current;
                             Goedel.Tool.Yaschema.YaschemaStructType LabelType = _Reserved (Text);
-							switch (LabelType) {
-								case Goedel.Tool.Yaschema.YaschemaStructType.Initial : {
-
-									// Initial  Initial
-									Current_Cast.Initial.Add (NewInitial ());
-									break;
-									}
-								case Goedel.Tool.Yaschema.YaschemaStructType.Respond : {
-
-									// Respond  Respond
-									Current_Cast.Respond.Add (NewRespond ());
-									break;
-									}
-								case Goedel.Tool.Yaschema.YaschemaStructType.Plaintext : {
-
-									// Plaintext  Plaintext
-									Current_Cast.Plaintext.Add (NewPlaintext ());
-									break;
-									}
-								case Goedel.Tool.Yaschema.YaschemaStructType.Mezzanine : {
-
-									// Mezzanine  Mezzanine
-									Current_Cast.Mezzanine.Add (NewMezzanine ());
-									break;
-									}
-								case Goedel.Tool.Yaschema.YaschemaStructType.Encrypted : {
-
-									// Encrypted  Encrypted
-									Current_Cast.Encrypted.Add (NewEncrypted ());
-									break;
-									}
-								default : {
-									throw new Expected("Parser Error Expected [Initial Respond Plaintext Mezzanine Encrypted ]");
-									}
+                            if ( false |
+									(LabelType == Goedel.Tool.Yaschema.YaschemaStructType.Initial) |
+									(LabelType == Goedel.Tool.Yaschema.YaschemaStructType.Respond) |
+									(LabelType == Goedel.Tool.Yaschema.YaschemaStructType.Plaintext) |
+									(LabelType == Goedel.Tool.Yaschema.YaschemaStructType.Mezzanine) |
+									(LabelType == Goedel.Tool.Yaschema.YaschemaStructType.Encrypted) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [Initial Respond Plaintext Mezzanine Encrypted ]");
 								}
 							}
                         break;
+
 
                     case StateCode.Initial_Start:
                         if (Token == TokenType.BEGIN) {
@@ -1372,13 +1335,13 @@ namespace Goedel.Tool.Yaschema {
                             if ( false |
 									(LabelType == Goedel.Tool.Yaschema.YaschemaStructType.ClientCredential) |
 									(LabelType == Goedel.Tool.Yaschema.YaschemaStructType.ClientKeyID) |
-									(LabelType == Goedel.Tool.Yaschema.YaschemaStructType.Payload) |
 									(LabelType == Goedel.Tool.Yaschema.YaschemaStructType.HostEphemeral) |
-									(LabelType == Goedel.Tool.Yaschema.YaschemaStructType.HostEphemerals) ) {
+									(LabelType == Goedel.Tool.Yaschema.YaschemaStructType.HostEphemerals) |
+									(LabelType == Goedel.Tool.Yaschema.YaschemaStructType.Payload) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [ClientCredential ClientKeyID Payload HostEphemeral HostEphemerals ]");
+								throw new Expected ("Parser Error Expected [ClientCredential ClientKeyID HostEphemeral HostEphemerals Payload ]");
 								}
 							}
                         break;
@@ -1420,11 +1383,11 @@ namespace Goedel.Tool.Yaschema {
                         Pop ();
                         Represent = true; 
                         break;
-                    case StateCode.HostCredential_Start:
+                    case StateCode.ClientCredential_Start:
                         Pop ();
                         Represent = true; 
                         break;
-                    case StateCode.ClientCredential_Start:
+                    case StateCode.HostCredential_Start:
                         Pop ();
                         Represent = true; 
                         break;
@@ -1432,11 +1395,11 @@ namespace Goedel.Tool.Yaschema {
                         Pop ();
                         Represent = true; 
                         break;
-                    case StateCode.ClientEphemeral_Start:
+                    case StateCode.HostEphemerals_Start:
                         Pop ();
                         Represent = true; 
                         break;
-                    case StateCode.HostEphemerals_Start:
+                    case StateCode.ClientEphemeral_Start:
                         Pop ();
                         Represent = true; 
                         break;
