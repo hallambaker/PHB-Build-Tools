@@ -243,7 +243,7 @@ namespace ExceptionalShell {
                 Lexer Schema = new Lexer(inputfile);
                 Schema.Process(infile, Parse);
                 }
-			// Parse.Init();
+			Parse.Init();
 
 
 			// Script output of type GenerateCS cs

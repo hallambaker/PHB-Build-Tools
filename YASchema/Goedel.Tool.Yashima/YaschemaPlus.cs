@@ -17,7 +17,7 @@ namespace Goedel.Tool.Yaschema {
 
         public Namespace Namespace;
 
-        public string NameSpaceName => Namespace.Id.Label;
+        public string NameSpaceName => Namespace?.Id.Label;
         public string Class => Namespace.Class.Label;
 
         public List<Packet> Packets = new();
@@ -26,24 +26,18 @@ namespace Goedel.Tool.Yaschema {
             if (_Initialized) {
                 return;
                 }
-
             _InitChildren();
+
+
             foreach (var entry in Top) {
                 switch (entry) {
                     case Namespace nameSpace: {
                         Namespace = nameSpace;
                         break;
                         }
-                    case Client client: {
-                        client.Base = this;
-                        break;
-                        }
-                    case Host host: {
-                        host.Base = this;
-                        break;
-                        }
+
                     }
-                entry.Init(null);
+                //entry.Init(null);
                 }
 
             }
@@ -57,6 +51,7 @@ namespace Goedel.Tool.Yaschema {
         public bool IsInitialHostCredential => IsInitial && (Initial[0].HostCredential.Count > 0);
 
         public List<REF<_Choice>> Responds => Respond[0].To;
+
 
         public bool HasPlaintext => Plaintext?.Count > 0;
         public bool HasMezzanine => Mezzanine?.Count > 0;
@@ -89,7 +84,15 @@ namespace Goedel.Tool.Yaschema {
         }
 
     public partial class _Choice {
+        public bool Ephemerals = false;
+        public bool Ephemeral = false;
+        public bool KeyId = false;
+        public bool Challenge = false;
+        public bool Response = false;
+        public bool Credential = false;
 
+
+        public bool AddExtensions => Ephemerals | Credential | Challenge | Response;
         }
 
     public partial class Client {
@@ -103,14 +106,72 @@ namespace Goedel.Tool.Yaschema {
 
         }
     public partial class Namespace {
+        }
 
+
+
+    public partial class ClientCredential {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            Parent.Credential = true;
+            }
         }
-    public partial class YaschemaStruct {
+    public partial class HostCredential {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            Parent.Credential = true;
+            }
         }
-    public partial class YaschemaStruct {
+
+    public partial class ClientEphemerals {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            Parent.Ephemerals = true;
+            }
         }
-    public partial class YaschemaStruct {
+    public partial class HostEphemerals {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            Parent.Ephemerals = true;
+            }
         }
-    public partial class YaschemaStruct {
+    public partial class ClientEphemeral {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            Parent.Ephemeral = true;
+            }
         }
+
+    public partial class HostEphemeral {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            Parent.Ephemeral = true;
+            }
+        }
+    public partial class HostKeyID {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            Parent.KeyId = true;
+            }
+        }
+    public partial class ClientKeyID {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            Parent.KeyId = true;
+            }
+        }
+
+    public partial class Challenge {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            Parent.Challenge = true;
+            }
+        }
+    public partial class Response {
+        public override void Init(_Choice Parent) {
+            base.Init(Parent);
+            Parent.Response = true;
+            }
+        }
+
     }

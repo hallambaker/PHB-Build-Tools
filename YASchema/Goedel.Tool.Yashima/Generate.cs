@@ -21,6 +21,7 @@
 //  THE SOFTWARE.
 //  
 //  
+using  Goedel.Utilities;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -106,41 +107,27 @@ namespace Goedel.Tool.Yaschema {
 			_Output.Write ("		}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    public partial class Listner {{\n{0}", _Indent);
 			foreach (var _client in Yaschema.Top) {  if (_client.GetType() == typeof (Client)) { var client = (Client) _client; 
 				foreach  (var packet in client.Entries) {
 					if (  (packet.IsInitial) ) {
-						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("    public partial class Listner {{\n{0}", _Indent);
-						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("        public {1} Parse{2} (PortId sourceId, byte[] packet) {{\n{0}", _Indent, packet.ClassName, packet.ClassName);
-						_Output.Write ("            var result = new {1} () {{\n{0}", _Indent, packet.ClassName);
-						_Output.Write ("                SourcePortId = sourceId\n{0}", _Indent);
-						_Output.Write ("                }};\n{0}", _Indent);
-						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("            // Read the plaintext part\n{0}", _Indent);
-						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("            return result;\n{0}", _Indent);
-						_Output.Write ("            }}\n{0}", _Indent);
-						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("		}}\n{0}", _Indent);
+						GenerateParser (packet);
 						}
 					}
 					}
 	}
-			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("		}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			foreach  (var packet in Yaschema.Packets) {
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("    /// <summary>\n{0}", _Indent);
+				_Output.Write ("    /// Parsed {1} packet\n{0}", _Indent, packet.Id);
+				_Output.Write ("    /// </summary>   \n{0}", _Indent);
 				_Output.Write ("    public partial class {1} : Packet {{\n{0}", _Indent, packet.ClassName);
 				GenerateCompleter (packet);
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("        }}\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				}
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("	}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -151,7 +138,112 @@ namespace Goedel.Tool.Yaschema {
 		// GenersateSerializer
 		//
 		public void GenersateSerializer (Packet packet) {
+			 var plaintext = packet.Plaintext.SafeIndex();
+			 var mezzanine = packet.Mezzanine.SafeIndex();
 			_Output.Write ("        // Serialize {1} packet {2}\n{0}", _Indent, packet.PacketType, packet.Id);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("        /// <summary>\n{0}", _Indent);
+			_Output.Write ("        /// Create a serialised packet of type {1} packet.\n{0}", _Indent, packet.Id);
+			_Output.Write ("        /// </summary>\n{0}", _Indent);
+			_Output.Write ("        /// <param name=\"payload\">The payload data.</param>\n{0}", _Indent);
+			_Output.Write ("        /// <param name=\"plaintextExtensions\">Extensions to be presented in the plaintext segment.</param>\n{0}", _Indent);
+			_Output.Write ("        /// <returns>The serialized data.</returns>\n{0}", _Indent);
+			_Output.Write ("        public byte[] Serialize{1} (\n{0}", _Indent, packet.ClassName);
+			_Output.Write ("                byte[] payload = null,\n{0}", _Indent);
+			_Output.Write ("                List<PacketExtension> plaintextExtensionsIn = null", _Indent);
+			if (  (packet.HasMezzanine) ) {
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("                List<PacketExtension> mezanineExtensionsIn = null", _Indent);
+				}
+			if (  (packet.HasEncrypted) ) {
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("                List<PacketExtension> encryptedExtensions = null", _Indent);
+				}
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("                ) {{\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("            // The plaintext part\n{0}", _Indent);
+			_Output.Write ("            var outerWriter = new PacketWriterAesGcm();\n{0}", _Indent);
+			if (  (plaintext == null) ) {
+				_Output.Write ("            // There are no plaintext fields.\n{0}", _Indent);
+				_Output.Write ("            outerWriter.WriteExtensions(plaintextExtensionsIn);\n{0}", _Indent);
+				} else {
+				_Output.Write ("            // Plaintext fields..\n{0}", _Indent);
+				if (  (plaintext.AddExtensions) ) {
+					_Output.Write ("            var plaintextExtensions = new List<PacketExtension>();\n{0}", _Indent);
+					}
+				if (  (plaintext.Ephemeral) ) {
+					_Output.Write ("            // ClientKeyExchange (out var ephemeral, out var keyId);\n{0}", _Indent);
+					_Output.Write ("            // outerWriter.Write (keyId);\n{0}", _Indent);
+					_Output.Write ("            // outerWriter.Ephemeral (ephemeral);\n{0}", _Indent);
+					} else if (  (plaintext.KeyId)) {
+					_Output.Write ("            // ClientKeyExchange (out var keyId);\n{0}", _Indent);
+					_Output.Write ("            // outerWriter.Write (keyId);\n{0}", _Indent);
+					}
+				if (  (plaintext.Ephemerals) ) {
+					_Output.Write ("            // AddEphemerals (plaintextExtensions);\n{0}", _Indent);
+					}
+				if (  (plaintext.Challenge) ) {
+					_Output.Write ("            // AddChallenge (plaintextExtensions);\n{0}", _Indent);
+					} else if (  (plaintext.Response)) {
+					_Output.Write ("            // AddResponse (plaintextExtensions);\n{0}", _Indent);
+					}
+				if (  (plaintext.Credential) ) {
+					_Output.Write ("            // AddCredentials (plaintextExtensions);\n{0}", _Indent);
+					}
+				if (  (plaintext.AddExtensions) ) {
+					_Output.Write ("            plaintextExtensions.AddRangeSafe(plaintextExtensionsIn);\n{0}", _Indent);
+					_Output.Write ("            outerWriter.WriteExtensions(plaintextExtensions);\n{0}", _Indent);
+					} else {
+					_Output.Write ("            outerWriter.WriteExtensions(plaintextExtensionsIn);\n{0}", _Indent);
+					}
+				}
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			if (  (packet.HasMezzanine)  ) {
+				_Output.Write ("            // Mezzanine\n{0}", _Indent);
+				_Output.Write ("            var mezanineWriter = new PacketWriterAesGcm();\n{0}", _Indent);
+				if (  (mezzanine.AddExtensions) ) {
+					_Output.Write ("            var mezanineExtensions = new List<PacketExtension>();\n{0}", _Indent);
+					}
+				if (  (mezzanine.Ephemeral) ) {
+					_Output.Write ("            // MutualKeyExchange (out var ephemeral, out var keyId);\n{0}", _Indent);
+					_Output.Write ("            // mezanineWriter.Write (keyId);\n{0}", _Indent);
+					_Output.Write ("            // mezanineWriter.Ephemeral (ephemeral);\n{0}", _Indent);
+					} else if (  (mezzanine.KeyId)) {
+					_Output.Write ("            // MutualKeyExchange (out var keyId);\n{0}", _Indent);
+					_Output.Write ("            // mezanineWriter.Write (keyId);\n{0}", _Indent);
+					}
+				if (  (mezzanine.Credential) ) {
+					_Output.Write ("            // AddCredentials (mezanineExtensions);\n{0}", _Indent);
+					}
+				if (  (mezzanine.AddExtensions) ) {
+					_Output.Write ("            mezanineExtensions.AddRangeSafe(mezanineExtensionsIn);\n{0}", _Indent);
+					_Output.Write ("            outerWriter.WriteExtensions(mezanineExtensions);\n{0}", _Indent);
+					} else {
+					_Output.Write ("            outerWriter.WriteExtensions(plaintextExtensionsIn);\n{0}", _Indent);
+					}
+				if (  (packet.HasEncrypted)  ) {
+					_Output.Write ("            // Encrypted inside Mezzanine\n{0}", _Indent);
+					_Output.Write ("            var innerWriter = new PacketWriter();\n{0}", _Indent);
+					_Output.Write ("            Write(innerWriter, payload, ciphertextExtensions);\n{0}", _Indent);
+					_Output.Write ("            mezanineWriter.Encrypt(MutualKeyOut, innerWriter);\n{0}", _Indent);
+					}
+				_Output.Write ("            outerWriter.Encrypt(ClientKeyOut, mezanineWriter);\n{0}", _Indent);
+				} else if (  (packet.HasEncrypted) ) {
+				_Output.Write ("            // Encrypted in plaintext\n{0}", _Indent);
+				_Output.Write ("            var innerWriter = new PacketWriter();\n{0}", _Indent);
+				_Output.Write ("            Write(innerWriter, payload, ciphertextExtensions);\n{0}", _Indent);
+				_Output.Write ("            outerWriter.Encrypt(MutualKeyOut, innerWriter);\n{0}", _Indent);
+				} else {
+				_Output.Write ("            // Only have plaintext\n{0}", _Indent);
+				_Output.Write ("            outerWriter.Write(payload);\n{0}", _Indent);
+				}
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("            // Return the outermost packet\n{0}", _Indent);
+			_Output.Write ("            return outerWriter.Packet;\n{0}", _Indent);
+			_Output.Write ("            }}\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			}
 		
 
@@ -159,7 +251,25 @@ namespace Goedel.Tool.Yaschema {
 		// GenerateParser
 		//
 		public void GenerateParser (Packet packet) {
-			_Output.Write ("        // Parse {1} packet {2}\n{0}", _Indent, packet.PacketType, packet.Id);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("        /// <summary>\n{0}", _Indent);
+			_Output.Write ("        /// Parse the packet <paramref name=\"packet\"/> received from <paramref name=\"sourceId\"/>\n{0}", _Indent);
+			_Output.Write ("        /// as a {1} packet.\n{0}", _Indent, packet.Id);
+			_Output.Write ("        /// </summary>\n{0}", _Indent);
+			_Output.Write ("        /// <param name=\"sourceId\">The packet source.</param>\n{0}", _Indent);
+			_Output.Write ("        /// <param name=\"packet\">The packet data</param>\n{0}", _Indent);
+			_Output.Write ("        /// <returns>The parsed packet.</returns>\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("        public {1} Parse{2} (PortId sourceId, byte[] packet) {{\n{0}", _Indent, packet.ClassName, packet.ClassName);
+			_Output.Write ("            var result = new {1} () {{\n{0}", _Indent, packet.ClassName);
+			_Output.Write ("                SourcePortId = sourceId\n{0}", _Indent);
+			_Output.Write ("                }};\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("            // Read the plaintext part\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("            return result;\n{0}", _Indent);
+			_Output.Write ("            }}\n{0}", _Indent);
 			}
 		
 
@@ -167,9 +277,10 @@ namespace Goedel.Tool.Yaschema {
 		// GenerateCompleter
 		//
 		public void GenerateCompleter (Packet packet) {
-			_Output.Write ("        // Complete {1} packet {2}\n{0}", _Indent, packet.PacketType, packet.Id);
-			_Output.Write ("\n{0}", _Indent);
 			if (  (packet.HasMezzanine) ) {
+				_Output.Write ("        /// <summary>\n{0}", _Indent);
+				_Output.Write ("        /// Perform key exchanges and complete parsing of the packet\n{0}", _Indent);
+				_Output.Write ("        /// </summary>\n{0}", _Indent);
 				_Output.Write ("        public override void Complete () {{\n{0}", _Indent);
 				_Output.Write ("            // perform the Mezzanine key exchange here\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

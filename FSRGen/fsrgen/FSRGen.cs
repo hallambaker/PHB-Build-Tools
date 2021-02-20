@@ -260,7 +260,7 @@ namespace Goedel.Shell.FSRGen {
                 Lexer Schema = new Lexer(inputfile);
                 Schema.Process(infile, Parse);
                 }
-			// Parse.Init();
+			Parse.Init();
 
 
 			// Script output of type GenerateH h

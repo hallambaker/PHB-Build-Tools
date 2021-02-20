@@ -18,7 +18,9 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Tool.Core.dll
+    Goedel.IO.dll\
+    Goedel.Registry.dll\
+    Goedel.Utilities.dll
 
 ToolTargets = \
 	Exceptions.cs\

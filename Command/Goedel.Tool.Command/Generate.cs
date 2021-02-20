@@ -519,7 +519,7 @@ namespace Goedel.Tool.Command {
 						_Output.Write ("                Lexer Schema = new Lexer(inputfile);\n{0}", _Indent);
 						_Output.Write ("                Schema.Process(infile, Parse);\n{0}", _Indent);
 						_Output.Write ("                }}\n{0}", _Indent);
-						_Output.Write ("			// Parse.Init();\n{0}", _Indent);
+						_Output.Write ("			Parse.Init();\n{0}", _Indent);
 						_Output.Write ("\n{0}", _Indent);
 						break; }
 						case CommandParseType.Generator: { 

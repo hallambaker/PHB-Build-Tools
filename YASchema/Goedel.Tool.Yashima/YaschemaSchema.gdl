@@ -44,20 +44,20 @@ Class Goedel.Tool.Yaschema YaschemaStruct
 		Entries		List Choice
 			ClientCredential
 			ClientKeyID
-			Payload
 			HostEphemeral
 			HostEphemerals
+			Payload
 
 	Type Encrypted
 		Entries		List Choice
 			Payload
 
 	Type Payload
-	Type HostCredential
 	Type ClientCredential
+	Type HostCredential
 	Type ClientEphemerals
-	Type ClientEphemeral
 	Type HostEphemerals
+	Type ClientEphemeral
 	Type HostEphemeral
 	Type Challenge
 	Type Response

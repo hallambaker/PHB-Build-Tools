@@ -20,7 +20,18 @@ MSBuildThisFileDirectory =
 LinkFiles = \
     Goedel.Tool.Core.dll
 
-ToolTargets = 
+ToolTargets = \
+	FSRSchema.cs\
+	GenerateC.cs\
+	GenerateCS.cs
+FSRSchema.cs : FSRSchema.gdl 
+	goedel3 FSRSchema.gdl  /cs  FSRSchema.cs
+
+GenerateC.cs : GenerateC.script 
+	gscript GenerateC.script  GenerateC.cs
+
+GenerateCS.cs : GenerateCS.script 
+	gscript GenerateCS.script  GenerateCS.cs
 
 
 

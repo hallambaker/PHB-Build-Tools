@@ -1,6 +1,8 @@
 ﻿#script 1.0
 #license MITLicense
+#using Goedel.Utilities
 #pclass Goedel.Tool.Yaschema Generate
+
 
 #method GenerateCS YaschemaStruct Yaschema
 #! Yaschema.Init();
@@ -71,12 +73,149 @@ namespace #{Yaschema.NameSpaceName} {
 		}
 
 
-
+    public partial class Listner {
 #filter Client client Yaschema.Top
 #foreach (var packet in client.Entries)
 #if (packet.IsInitial)
+#call GenerateParser packet
+#end if
+#end foreach
+#end filter
+		}
 
-    public partial class Listner {
+#foreach (var packet in Yaschema.Packets)
+
+    /// <summary>
+    /// Parsed #{packet.Id} packet
+    /// </summary>   
+    public partial class #{packet.ClassName} : Packet {
+#call GenerateCompleter packet
+        }
+
+#end foreach
+	}
+
+
+#end method
+
+#method GenersateSerializer Packet packet
+#% var plaintext = packet.Plaintext.SafeIndex();
+#% var mezzanine = packet.Mezzanine.SafeIndex();
+        // Serialize #{packet.PacketType} packet #{packet.Id}
+
+        /// <summary>
+        /// Create a serialised packet of type #{packet.Id} packet.
+        /// </summary>
+        /// <param name="payload">The payload data.</param>
+        /// <param name="plaintextExtensions">Extensions to be presented in the plaintext segment.</param>
+        /// <returns>The serialized data.</returns>
+        public byte[] Serialize#{packet.ClassName} (
+                byte[] payload = null,
+                List<PacketExtension> plaintextExtensionsIn = null#!
+#if (packet.HasMezzanine)
+
+                List<PacketExtension> mezanineExtensionsIn = null#!
+#end if
+#if (packet.HasEncrypted)
+
+                List<PacketExtension> encryptedExtensions = null#!
+#end if
+
+                ) {
+
+            // The plaintext part
+            var outerWriter = new PacketWriterAesGcm();
+#if (plaintext == null)
+            // There are no plaintext fields.
+            outerWriter.WriteExtensions(plaintextExtensionsIn);
+#else
+            // Plaintext fields..
+#if (plaintext.AddExtensions)
+            var plaintextExtensions = new List<PacketExtension>();
+#end if
+#if (plaintext.Ephemeral)
+            // ClientKeyExchange (out var ephemeral, out var keyId);
+            // outerWriter.Write (keyId);
+            // outerWriter.Ephemeral (ephemeral);
+#elseif (plaintext.KeyId)
+            // ClientKeyExchange (out var keyId);
+            // outerWriter.Write (keyId);
+#end if
+#if (plaintext.Ephemerals)
+            // AddEphemerals (plaintextExtensions);
+#end if
+#if (plaintext.Challenge)
+            // AddChallenge (plaintextExtensions);
+#elseif (plaintext.Response)
+            // AddResponse (plaintextExtensions);
+#end if
+#if (plaintext.Credential)
+            // AddCredentials (plaintextExtensions);
+#end if
+#if (plaintext.AddExtensions)
+            plaintextExtensions.AddRangeSafe(plaintextExtensionsIn);
+            outerWriter.WriteExtensions(plaintextExtensions);
+#else
+            outerWriter.WriteExtensions(plaintextExtensionsIn);
+#end if
+#end if
+
+
+#if (packet.HasMezzanine) 
+            // Mezzanine
+            var mezanineWriter = new PacketWriterAesGcm();
+#if (mezzanine.AddExtensions)
+            var mezanineExtensions = new List<PacketExtension>();
+#end if  
+#if (mezzanine.Ephemeral)
+            // MutualKeyExchange (out var ephemeral, out var keyId);
+            // mezanineWriter.Write (keyId);
+            // mezanineWriter.Ephemeral (ephemeral);
+#elseif (mezzanine.KeyId)
+            // MutualKeyExchange (out var keyId);
+            // mezanineWriter.Write (keyId);
+#end if  
+#if (mezzanine.Credential)
+            // AddCredentials (mezanineExtensions);
+#end if
+#if (mezzanine.AddExtensions)
+            mezanineExtensions.AddRangeSafe(mezanineExtensionsIn);
+            outerWriter.WriteExtensions(mezanineExtensions);
+#else
+            outerWriter.WriteExtensions(plaintextExtensionsIn);
+#end if
+#if (packet.HasEncrypted) 
+            // Encrypted inside Mezzanine
+            var innerWriter = new PacketWriter();
+            Write(innerWriter, payload, ciphertextExtensions);
+            mezanineWriter.Encrypt(MutualKeyOut, innerWriter);
+#end if
+            outerWriter.Encrypt(ClientKeyOut, mezanineWriter);
+#elseif (packet.HasEncrypted) 
+            // Encrypted in plaintext
+            var innerWriter = new PacketWriter();
+            Write(innerWriter, payload, ciphertextExtensions);
+            outerWriter.Encrypt(MutualKeyOut, innerWriter);
+#else
+            // Only have plaintext
+            outerWriter.Write(payload);
+#end if
+
+            // Return the outermost packet
+            return outerWriter.Packet;
+            }
+
+#end method
+
+#method GenerateParser Packet packet
+
+        /// <summary>
+        /// Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
+        /// as a #{packet.Id} packet.
+        /// </summary>
+        /// <param name="sourceId">The packet source.</param>
+        /// <param name="packet">The packet data</param>
+        /// <returns>The parsed packet.</returns>
 
         public #{packet.ClassName} Parse#{packet.ClassName} (PortId sourceId, byte[] packet) {
             var result = new #{packet.ClassName} () {
@@ -88,40 +227,13 @@ namespace #{Yaschema.NameSpaceName} {
 
             return result;
             }
-
-		}
-#end if
-#end foreach
-#end filter
-
-
-#foreach (var packet in Yaschema.Packets)
-
-    public partial class #{packet.ClassName} : Packet {
-#call GenerateCompleter packet
-
-        }
-
-#end foreach
-
-
-	}
-
-
-#end method
-
-#method GenersateSerializer Packet packet
-        // Serialize #{packet.PacketType} packet #{packet.Id}
-#end method
-
-#method GenerateParser Packet packet
-        // Parse #{packet.PacketType} packet #{packet.Id}
 #end method
 
 #method GenerateCompleter Packet packet
-        // Complete #{packet.PacketType} packet #{packet.Id}
-
 #if (packet.HasMezzanine)
+        /// <summary>
+        /// Perform key exchanges and complete parsing of the packet
+        /// </summary>
         public override void Complete () {
             // perform the Mezzanine key exchange here
 

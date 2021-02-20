@@ -154,6 +154,7 @@ namespace GoedelSchema {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    	public virtual void Init (_Choice parent) {{\n{0}", _Indent);
 			_Output.Write ("            _Parent = parent;\n{0}", _Indent);
+			_Output.Write ("            _Base ??= parent?._Base;\n{0}", _Indent);
 			_Output.Write ("			}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        \n{0}", _Indent);

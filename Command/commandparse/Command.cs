@@ -278,11 +278,10 @@ namespace CommandShell {
 			
 			using (Stream infile =
                         new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
-
                 Lexer Schema = new Lexer(inputfile);
-
                 Schema.Process(infile, Parse);
                 }
+			Parse.Init();
 
 
 			// Script output of type Generate cs
@@ -291,15 +290,14 @@ namespace CommandShell {
 				if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 					return;
 					}
-				using (Stream outputStream =
-							new FileStream(outputfile, FileMode.Create, FileAccess.Write)) {
-					using (TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8)) {
+                using Stream outputStream =
+                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
 
-						Goedel.Tool.Command.GenerateCS Script = new Goedel.Tool.Command.GenerateCS () { _Output= OutputWriter };
-
-						Script.Generate (Parse);
-						}
-					}
+				Goedel.Tool.Command.GenerateCS Script = new Goedel.Tool.Command.GenerateCS () { 
+					_Output= OutputWriter 
+					};
+				Script.Generate (Parse);
 				}
 			}
 

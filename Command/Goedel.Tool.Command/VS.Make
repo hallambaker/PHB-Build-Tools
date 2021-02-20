@@ -25,6 +25,13 @@ ToolTargets = \
 	Exceptions.cs\
 	Generate.cs
 Command.cs : Command.gdl 
+	goedel3 Command.gdl  /cs  Command.cs
+
+Exceptions.cs : Exceptions.exceptional 
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
+
+Generate.cs : Generate.script 
+	gscript Generate.script  Generate.cs
 
 
 

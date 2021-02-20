@@ -18,8 +18,11 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Tool.Schema.dll\
-    Goedel.Tool.Core.dll
+    Goedel.Command.dll\
+    Goedel.IO.dll\
+    Goedel.Registry.dll\
+    Goedel.Utilities.dll\
+    Goedel.Tool.Schema.dll
 
 ToolTargets = \
 	Commands.cs
