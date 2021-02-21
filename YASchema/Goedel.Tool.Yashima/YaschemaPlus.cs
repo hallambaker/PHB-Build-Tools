@@ -52,13 +52,12 @@ namespace Goedel.Tool.Yaschema {
 
 
 
-
         public bool HasPlaintext => Plaintext != null;
         public bool HasMezzanine => Mezzanine != null;
         public bool HasEncrypted => Encrypted != null;
 
 
-
+        public bool Completer => IsClient & (HasMezzanine | HasEncrypted);
 
 
         public Initial Initial;
@@ -75,17 +74,19 @@ namespace Goedel.Tool.Yaschema {
         public override void Init(_Choice Parent) {
             base.Init(Parent);
             _Base.Packets.Add(this);
+
+
             IsClient = _Parent is Client;
-            if (Parent is Client client) {
-                if (IsInitial) {
-                    if (IsInitialHostCredential) {
-                        client.WithHostCredential = this;
-                        }
-                    else {
-                        client.WithoutHostCredential = this;
-                        }
-                    }
-                }
+            //if (Parent is Client client) {
+            //    if (IsInitial) {
+            //        if (IsInitialHostCredential) {
+            //            client.WithHostCredential = this;
+            //            }
+            //        else {
+            //            client.WithoutHostCredential = this;
+            //            }
+            //        }
+            //    }
 
             }
         }
@@ -103,8 +104,8 @@ namespace Goedel.Tool.Yaschema {
         }
 
     public partial class Client {
-        public Packet WithHostCredential;
-        public Packet WithoutHostCredential;
+        //public Packet WithHostCredential;
+        //public Packet WithoutHostCredential;
 
         //public override void Init(_Choice Parent) : base{
         //    }

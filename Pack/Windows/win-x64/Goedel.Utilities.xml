@@ -102,6 +102,17 @@
             <param name="second">Second array</param>
             <returns>result</returns>
         </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.SafeIndex``1(System.Collections.Generic.List{``0},System.Int32)">
+            <summary>
+            Return element number <paramref name="index"/> from <paramref name="list"/>
+            if it exists, otherwise the default for the list element type.
+            </summary>
+            <typeparam name="T">The list element type.</typeparam>
+            <param name="list">The list to extract from (may be null).</param>
+            <param name="index">The element to extract (if present).</param>
+            <returns>The extracted element or null if either <paramref name="list"/> is null
+            or <paramref name="index"/> is greater than the number of elements.</returns>
+        </member>
         <member name="T:Goedel.Utilities.AssemblyStack">
             <summary>
             Utility functions using reflection to extract information from the stack.

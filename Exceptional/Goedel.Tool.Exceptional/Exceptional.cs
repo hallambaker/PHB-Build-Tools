@@ -102,6 +102,7 @@ namespace Goedel.Tool.Exceptional {
 
     	public virtual void Init (_Choice parent) {
             _Parent = parent;
+            _Base ??= parent?._Base;
 			}
 
         

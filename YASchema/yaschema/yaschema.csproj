@@ -12,6 +12,7 @@
     <Title>Constant Manager</Title>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <Configurations>Debug;Release;Yaschema</Configurations>
   </PropertyGroup>
 
 

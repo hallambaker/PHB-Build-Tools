@@ -28,13 +28,6 @@ namespace #{Yaschema.NameSpaceName} {
 
 #filter Client client Yaschema.Top
 
-	    /// <summary>
-        /// Return an initial packet for this connection.
-        /// </summary>
-        //public Packet GetInitial () =>
-        //    HostCredential==null ? new #{client.WithoutHostCredential.ClassName} () :
-        //        new #{client.WithHostCredential.ClassName} (HostCredential);
-
 #foreach (var packet in client.Entries)
 #call GenersateSerializer packet
 #end foreach
@@ -49,9 +42,6 @@ namespace #{Yaschema.NameSpaceName} {
 
 		}
 
-	/// <summary>
-    /// Host connection class. Tracks the state of a host connection.
-    /// </summary>
     public partial class ConnectionHost : Connection {
 
 #filter Host host Yaschema.Top
@@ -69,7 +59,19 @@ namespace #{Yaschema.NameSpaceName} {
 #end if
 #end foreach
 #end filter
+#filter Client client Yaschema.Top
+#foreach (var packet in client.Entries)
+#if (packet.Completer)
 
+        /// <summary>
+        /// Perform key exchanges and complete parsing of the packet
+        /// </summary>
+        public override void Complete#{packet.Id} () {
+#call ParseMezzanine packet
+            }
+#end if
+#end foreach
+#end filter
 		}
 
 
@@ -129,7 +131,6 @@ namespace #{Yaschema.NameSpaceName} {
 ,
                 List<PacketExtension> ciphertextExtensions = null#!
 #end if
-
                 ) {
 
             // The plaintext part
@@ -143,23 +144,23 @@ namespace #{Yaschema.NameSpaceName} {
             var plaintextExtensions = new List<PacketExtension>();
 #end if
 #if (plaintext.Ephemeral)
-            // ClientKeyExchange (out var ephemeral, out var keyId);
-            // outerWriter.Write (keyId);
-            // outerWriter.Ephemeral (ephemeral);
+            ClientKeyExchange (out var ephemeral, out var clientKeyId);
+            outerWriter.Write (clientKeyId);
+            outerWriter.Write (ephemeral);
 #elseif (plaintext.KeyId)
-            // ClientKeyExchange (out var keyId);
-            // outerWriter.Write (keyId);
+            ClientKeyExchange (out var clientKeyId);
+            outerWriter.Write (clientKeyId);
 #end if
 #if (plaintext.Ephemerals)
-            // AddEphemerals (plaintextExtensions);
+            AddEphemerals (plaintextExtensions);
 #end if
 #if (plaintext.Challenge)
-            // AddChallenge (plaintextExtensions);
+            AddChallenge (plaintextExtensions);
 #elseif (plaintext.Response)
-            // AddResponse (plaintextExtensions);
+            AddResponse (plaintextExtensions);
 #end if
 #if (plaintext.Credential)
-            // AddCredentials (plaintextExtensions);
+            AddCredentials (plaintextExtensions);
 #end if
 #if (plaintext.AddExtensions)
             plaintextExtensions.AddRangeSafe(plaintextExtensionsIn);
@@ -177,33 +178,37 @@ namespace #{Yaschema.NameSpaceName} {
             var mezanineExtensions = new List<PacketExtension>();
 #end if  
 #if (mezzanine.Ephemeral)
-            // MutualKeyExchange (out var ephemeral, out var keyId);
-            // mezanineWriter.Write (keyId);
-            // mezanineWriter.Ephemeral (ephemeral);
+            MutualKeyExchange (out var ephemeral, out var hostKeyId);
+            mezanineWriter.Write (hostKeyId);
+            mezanineWriter.Write (ephemeral);
 #elseif (mezzanine.KeyId)
-            // MutualKeyExchange (out var keyId);
-            // mezanineWriter.Write (keyId);
+            MutualKeyExchange (out var hostKeyId);
+            mezanineWriter.Write (hostKeyId);
 #end if  
 #if (mezzanine.Credential)
-            // AddCredentials (mezanineExtensions);
+            AddCredentials (mezanineExtensions);
 #end if
 #if (mezzanine.AddExtensions)
             mezanineExtensions.AddRangeSafe(mezanineExtensionsIn);
-            outerWriter.WriteExtensions(mezanineExtensions);
+            mezanineWriter.WriteExtensions(mezanineExtensions);
 #else
-            outerWriter.WriteExtensions(plaintextExtensionsIn);
+            mezanineWriter.WriteExtensions(plaintextExtensionsIn);
 #end if
 #if (packet.HasEncrypted) 
             // Encrypted inside Mezzanine
             var innerWriter = new PacketWriter();
-            Write(innerWriter, payload, ciphertextExtensions);
+            innerWriter.WriteExtensions(ciphertextExtensions);
+            innerWriter.Write(payload);
             mezanineWriter.Encrypt(MutualKeyOut, innerWriter);
+#else
+            mezanineWriter.Write(payload);
 #end if
             outerWriter.Encrypt(ClientKeyOut, mezanineWriter);
 #elseif (packet.HasEncrypted) 
             // Encrypted in plaintext
             var innerWriter = new PacketWriter();
-            Write(innerWriter, payload, ciphertextExtensions);
+            innerWriter.WriteExtensions(ciphertextExtensions);
+            innerWriter.Write(payload);
             outerWriter.Encrypt(MutualKeyOut, innerWriter);
 #else
             // Only have plaintext
@@ -217,6 +222,8 @@ namespace #{Yaschema.NameSpaceName} {
 #end method
 
 #method GenerateParser Packet packet
+#% var plaintext = packet.Plaintext;
+#% var mezzanine = packet.Mezzanine;
 
         /// <summary>
         /// Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
@@ -231,27 +238,114 @@ namespace #{Yaschema.NameSpaceName} {
                 SourcePortId = sourceId
                 };
 
-            // Read the plaintext part
-
+            // The plaintext part
+            var outerReader = new PacketReaderAesGcm(packet);
+#if (packet.HasPlaintext) 
+#if (plaintext.Ephemeral)
+            result.HostKeyId = outerReader.ReadString ();
+            result.ClientEphemeral = outerReader.ReadBinary ();
+#elseif (plaintext.KeyId)
+            result.HostKeyId = outerReader.ReadString ();
+#end if
+#end if
+            result.PlaintextExtensions = outerReader.ReadExtensions();
+#if (packet.Completer)
+            // Parsing the inner packet is deferred until plaintext is parsed.
+            result.Reader = outerReader;
+#else
+#call ParseMezzanine packet
+#end if
 
             return result;
             }
 #end method
 
+#method ParseMezzanine Packet packet
+#% var plaintext = packet.Plaintext;
+#% var mezzanine = packet.Mezzanine;
+#if (packet.HasPlaintext) 
+#if (plaintext.Ephemeral)
+            // client key exchange (Packet)
+#elseif (plaintext.KeyId)
+            // client key exchange (Packet)
+#end if
+#end if
+#if (packet.HasMezzanine) 
+            // Mezzanine
+            var mezanineReader = outerReader.Decrypt (ClientKeyIn);
+#if (mezzanine.Ephemeral)
+            result.ClientKeyId = outerReader.ReadString ();
+            result.HostEphemeral = outerReader.ReadBinary ();
+#elseif (mezzanine.KeyId)
+            result.ClientKeyId = outerReader.ReadString ();
+#end if
+            result.MezzanineExtensions = mezanineReader.ReadExtensions();
+#if (packet.HasPlaintext) 
+#if (plaintext.Ephemeral)
+            // host key exchange (Packet)
+#elseif (plaintext.KeyId)
+            // host key exchange (Packet)
+#end if
+#end if
+#if (packet.HasEncrypted) 
+            // Encrypted inside Mezzanine
+            var innerReader = mezanineReader.Decrypt (MutualKeyIn);
+            result.CiphertextExtensions = innerReader.ReadExtensions();
+            result.Payload = innerReader.ReadBinary();
+#else
+            result.Payload = mezanineReader.ReadBinary();
+#end if
+#elseif (packet.HasEncrypted) 
+            // Encrypted inside Mezzanine
+            var innerReader = mezanineReader.Decrypt (MutualKeyIn);
+            result.CiphertextExtensions = innerReader.ReadExtensions();
+            result.Payload = innerReader.ReadBinary();
+#else
+            // Only have plaintext
+            result.Payload = outerReader.ReadBinary();
+#end if
+#end method
+
 #method GenerateCompleter Packet packet
-#if (packet.HasMezzanine)
-        /// <summary>
-        /// Perform key exchanges and complete parsing of the packet
-        /// </summary>
-        public override void Complete () {
-            // perform the Mezzanine key exchange here
+#% var plaintext = packet.Plaintext;
+#% var mezzanine = packet.Mezzanine;
 
+#if (packet.Completer)
+        public PacketReader Reader{ get; set; }
+#end if
+
+#if (packet.HasMezzanine) 
+        ///<summary>Options specified in the packet mezzanine.</summary> 
+        public List<PacketExtension> MezzanineExtensions{ get; set; }
+#end if
 #if (packet.HasEncrypted)
-            // perform the Mutual key exchange here
+        ///<summary>Options specified in the packet ciphertext.</summary> 
+        public List<PacketExtension> CiphertextExtensions { get; set; }
+#end if
 
+#if (packet.HasPlaintext) 
+#if (plaintext.Ephemeral)
+        ///<summary>Host chosen ephemeral key.</summary> 
+        public byte[] ClientEphemeral  { get; set; }
 #end if
-            }
+#if (plaintext.KeyId)
+        ///<summary>Client Key Identifier.</summary> 
+        public string HostKeyId { get; set; }
 #end if
+#end if
+
+#if (packet.HasMezzanine) 
+#if (mezzanine.Ephemeral)
+        ///<summary>Client chosen ephemeral key.</summary> 
+        public byte[] HostEphemeral  { get; set; }
+#end if
+#if (mezzanine.KeyId)
+        ///<summary>Host Key Identifier.</summary> 
+        public string ClientKeyId { get; set; }
+#end if
+#end if
+
+
 #end method
 
 

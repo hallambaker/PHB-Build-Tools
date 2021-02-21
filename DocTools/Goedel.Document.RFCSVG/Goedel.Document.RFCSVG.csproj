@@ -13,6 +13,7 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <ApplicationIcon />
     <StartupObject />
+    <Configurations>Debug;Release;Yaschema</Configurations>
 
   </PropertyGroup>
 
