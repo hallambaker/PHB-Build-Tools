@@ -66,7 +66,8 @@ namespace #{Yaschema.NameSpaceName} {
         /// <summary>
         /// Perform key exchanges and complete parsing of the packet
         /// </summary>
-        public override void Complete#{packet.Id} () {
+        public void Complete#{packet.Id} (#{packet.ClassName} result) {
+            var outerReader = result.Reader;
 #call ParseMezzanine packet
             }
 #end if
@@ -75,7 +76,7 @@ namespace #{Yaschema.NameSpaceName} {
 		}
 
 
-    public partial class Listner {
+    public partial class Listener {
 #filter Client client Yaschema.Top
 #foreach (var packet in client.Entries)
 #if (packet.IsInitial)
@@ -91,7 +92,7 @@ namespace #{Yaschema.NameSpaceName} {
     /// Parsed #{packet.Id} packet
     /// </summary>   
     public partial class #{packet.ClassName} : Packet {
-#call GenerateCompleter packet
+#call GeneratePacket packet
         }
 
 #end foreach
@@ -173,7 +174,7 @@ namespace #{Yaschema.NameSpaceName} {
 
 #if (packet.HasMezzanine) 
             // Mezzanine
-            var mezanineWriter = new PacketWriterAesGcm();
+            var mezanineWriter = new PacketWriterAesGcm(outerWriter.RemainingSpace);
 #if (mezzanine.AddExtensions)
             var mezanineExtensions = new List<PacketExtension>();
 #end if  
@@ -196,7 +197,7 @@ namespace #{Yaschema.NameSpaceName} {
 #end if
 #if (packet.HasEncrypted) 
             // Encrypted inside Mezzanine
-            var innerWriter = new PacketWriter();
+            var innerWriter = new PacketWriter(mezanineWriter.RemainingSpace);
             innerWriter.WriteExtensions(ciphertextExtensions);
             innerWriter.Write(payload);
             mezanineWriter.Encrypt(MutualKeyOut, innerWriter);
@@ -206,7 +207,7 @@ namespace #{Yaschema.NameSpaceName} {
             outerWriter.Encrypt(ClientKeyOut, mezanineWriter);
 #elseif (packet.HasEncrypted) 
             // Encrypted in plaintext
-            var innerWriter = new PacketWriter();
+            var innerWriter = new PacketWriter(outerWriter.RemainingSpace);
             innerWriter.WriteExtensions(ciphertextExtensions);
             innerWriter.Write(payload);
             outerWriter.Encrypt(MutualKeyOut, innerWriter);
@@ -265,9 +266,9 @@ namespace #{Yaschema.NameSpaceName} {
 #% var mezzanine = packet.Mezzanine;
 #if (packet.HasPlaintext) 
 #if (plaintext.Ephemeral)
-            // client key exchange (Packet)
+            ClientKeyExchange (result.ClientEphemeral, result.HostKeyId);
 #elseif (plaintext.KeyId)
-            // client key exchange (Packet)
+            ClientKeyExchange (result.HostKeyId);
 #end if
 #end if
 #if (packet.HasMezzanine) 
@@ -276,17 +277,12 @@ namespace #{Yaschema.NameSpaceName} {
 #if (mezzanine.Ephemeral)
             result.ClientKeyId = outerReader.ReadString ();
             result.HostEphemeral = outerReader.ReadBinary ();
+            MutualKeyExchange (result.HostEphemeral, result.ClientKeyId);
 #elseif (mezzanine.KeyId)
             result.ClientKeyId = outerReader.ReadString ();
+            MutualKeyExchange (result.ClientKeyId);
 #end if
             result.MezzanineExtensions = mezanineReader.ReadExtensions();
-#if (packet.HasPlaintext) 
-#if (plaintext.Ephemeral)
-            // host key exchange (Packet)
-#elseif (plaintext.KeyId)
-            // host key exchange (Packet)
-#end if
-#end if
 #if (packet.HasEncrypted) 
             // Encrypted inside Mezzanine
             var innerReader = mezanineReader.Decrypt (MutualKeyIn);
@@ -306,14 +302,14 @@ namespace #{Yaschema.NameSpaceName} {
 #end if
 #end method
 
-#method GenerateCompleter Packet packet
+#method GeneratePacket Packet packet
 #% var plaintext = packet.Plaintext;
 #% var mezzanine = packet.Mezzanine;
 
 #if (packet.Completer)
+        ///<summary>Packet reader used to complete reading of the packet.</summary> 
         public PacketReader Reader{ get; set; }
 #end if
-
 #if (packet.HasMezzanine) 
         ///<summary>Options specified in the packet mezzanine.</summary> 
         public List<PacketExtension> MezzanineExtensions{ get; set; }
