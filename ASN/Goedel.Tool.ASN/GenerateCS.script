@@ -6,6 +6,7 @@
 #method GenerateCS ASN2 ASN2
 #pragma warning disable  CS0219
 #% ASN2.Complete ();
+#% Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
 
 using System;
 using System.Collections.Generic;

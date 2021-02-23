@@ -63,6 +63,8 @@ namespace Goedel.Tool.Command {
 			 CommandParse = CommandParseIn;
 			 CommandParse.Init();
 			 TypeType = CommandParse.Registry.FindType ("TypeType");
+			 Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("using System;\n{0}", _Indent);
 			_Output.Write ("using System.Collections.Generic;\n{0}", _Indent);
 			_Output.Write ("using System.IO;\n{0}", _Indent);

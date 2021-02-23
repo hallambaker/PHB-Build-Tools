@@ -39,6 +39,8 @@ namespace Goedel.Tool.Exceptional {
 			// Goedel.Registry.Script.MITLicense (_Output, "//", 
 			//     Goedel.Registry.Script.AssemblyCopyright,
 			//     Goedel.Registry.Script.AssemblyCompany);
+			 Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
+			_Output.Write ("\n{0}", _Indent);
 			 GenerateCSX (Exceptions);
 			}
 		

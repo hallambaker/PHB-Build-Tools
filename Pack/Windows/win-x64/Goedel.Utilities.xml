@@ -113,6 +113,15 @@
             <returns>The extracted element or null if either <paramref name="list"/> is null
             or <paramref name="index"/> is greater than the number of elements.</returns>
         </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.AddRangeSafe``1(System.Collections.Generic.List{``0},System.Collections.Generic.List{``0})">
+            <summary>
+            If the list <paramref name="second"/> is not null, append the entries to the list
+            <paramref name="first"/>. Otherwise, do nothing.
+            </summary>
+            <typeparam name="T">The type of the list entries.</typeparam>
+            <param name="first">The list to add to.</param>
+            <param name="second">The list of items to be added if not null.</param>
+        </member>
         <member name="T:Goedel.Utilities.AssemblyStack">
             <summary>
             Utility functions using reflection to extract information from the stack.

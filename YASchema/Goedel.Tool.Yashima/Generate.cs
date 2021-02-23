@@ -35,8 +35,8 @@ namespace Goedel.Tool.Yaschema {
 		// GenerateCS
 		//
 		public void GenerateCS (YaschemaStruct Yaschema) {
-			// Yaschema.Init();
-			_Output.Write ("\n{0}", _Indent);
+			 Registry.Boilerplate.License(_Output, "//  ", "MITLicense");
+			 Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("using System;\n{0}", _Indent);
 			_Output.Write ("using System.IO;\n{0}", _Indent);
@@ -66,7 +66,7 @@ namespace Goedel.Tool.Yaschema {
 			_Output.Write ("\n{0}", _Indent);
 			foreach (var _host in Yaschema.Top) {  if (_host.GetType() == typeof (Host)) { var host = (Host) _host; 
 				foreach  (var packet in host.Entries) {
-					GenerateParser (packet);
+					 GenerateParser (packet, false);
 					}
 					}
 	}
@@ -88,7 +88,7 @@ namespace Goedel.Tool.Yaschema {
 					if (  (packet.IsInitial) ) {
 						_Output.Write ("        // Skip Client packet {1} (initial packets parsed by the listener)\n{0}", _Indent, packet.Id);
 						} else {
-						GenerateParser (packet);
+						 GenerateParser (packet, false);
 						}
 					}
 					}
@@ -115,7 +115,7 @@ namespace Goedel.Tool.Yaschema {
 			foreach (var _client in Yaschema.Top) {  if (_client.GetType() == typeof (Client)) { var client = (Client) _client; 
 				foreach  (var packet in client.Entries) {
 					if (  (packet.IsInitial) ) {
-						GenerateParser (packet);
+						 GenerateParser (packet, true);
 						}
 					}
 					}
@@ -161,7 +161,7 @@ namespace Goedel.Tool.Yaschema {
 				_Output.Write ("        /// in the encrypted segment.</param>\n{0}", _Indent);
 				}
 			_Output.Write ("        /// <returns>The serialized data.</returns>\n{0}", _Indent);
-			_Output.Write ("        public byte[] Serialize{1} (\n{0}", _Indent, packet.ClassName);
+			_Output.Write ("        public byte[] Serialize{1} (\n{0}", _Indent, packet.Id);
 			_Output.Write ("                byte[] payload = null,\n{0}", _Indent);
 			_Output.Write ("                List<PacketExtension> plaintextExtensionsIn = null", _Indent);
 			if (  (packet.HasMezzanine) ) {
@@ -266,7 +266,7 @@ namespace Goedel.Tool.Yaschema {
 		//
 		// GenerateParser
 		//
-		public void GenerateParser (Packet packet) {
+		public void GenerateParser (Packet packet, bool isstatic) {
 			 var plaintext = packet.Plaintext;
 			 var mezzanine = packet.Mezzanine;
 			_Output.Write ("\n{0}", _Indent);
@@ -278,7 +278,7 @@ namespace Goedel.Tool.Yaschema {
 			_Output.Write ("        /// <param name=\"packet\">The packet data</param>\n{0}", _Indent);
 			_Output.Write ("        /// <returns>The parsed packet.</returns>\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("        public {1} Parse{2} (PortId sourceId, byte[] packet) {{\n{0}", _Indent, packet.ClassName, packet.ClassName);
+			_Output.Write ("        public {1} {2} Parse{3} (PortId sourceId, byte[] packet) {{\n{0}", _Indent, isstatic.If("static"), packet.ClassName, packet.Id);
 			_Output.Write ("            var result = new {1} () {{\n{0}", _Indent, packet.ClassName);
 			_Output.Write ("                SourcePortId = sourceId\n{0}", _Indent);
 			_Output.Write ("                }};\n{0}", _Indent);

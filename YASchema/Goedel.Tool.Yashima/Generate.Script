@@ -5,8 +5,8 @@
 
 
 #method GenerateCS YaschemaStruct Yaschema
-#! Yaschema.Init();
-
+#% Registry.Boilerplate.License(_Output, "//  ", "MITLicense");
+#% Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
 
 using System;
 using System.IO;
@@ -35,7 +35,7 @@ namespace #{Yaschema.NameSpaceName} {
 
 #filter Host host Yaschema.Top
 #foreach (var packet in host.Entries)
-#call GenerateParser packet
+#% GenerateParser (packet, false);
 #end foreach
 #end filter
 
@@ -55,7 +55,7 @@ namespace #{Yaschema.NameSpaceName} {
 #if (packet.IsInitial)
         // Skip Client packet #{packet.Id} (initial packets parsed by the listener)
 #else 
-#call GenerateParser packet
+#% GenerateParser (packet, false);
 #end if
 #end foreach
 #end filter
@@ -80,7 +80,7 @@ namespace #{Yaschema.NameSpaceName} {
 #filter Client client Yaschema.Top
 #foreach (var packet in client.Entries)
 #if (packet.IsInitial)
-#call GenerateParser packet
+#% GenerateParser (packet, true);
 #end if
 #end foreach
 #end filter
@@ -121,7 +121,7 @@ namespace #{Yaschema.NameSpaceName} {
         /// in the encrypted segment.</param>
 #end if
         /// <returns>The serialized data.</returns>
-        public byte[] Serialize#{packet.ClassName} (
+        public byte[] Serialize#{packet.Id} (
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null#!
 #if (packet.HasMezzanine)
@@ -222,7 +222,7 @@ namespace #{Yaschema.NameSpaceName} {
 
 #end method
 
-#method GenerateParser Packet packet
+#method2 GenerateParser Packet packet bool isstatic
 #% var plaintext = packet.Plaintext;
 #% var mezzanine = packet.Mezzanine;
 
@@ -234,7 +234,7 @@ namespace #{Yaschema.NameSpaceName} {
         /// <param name="packet">The packet data</param>
         /// <returns>The parsed packet.</returns>
 
-        public #{packet.ClassName} Parse#{packet.ClassName} (PortId sourceId, byte[] packet) {
+        public #{isstatic.If("static")} #{packet.ClassName} Parse#{packet.Id} (PortId sourceId, byte[] packet) {
             var result = new #{packet.ClassName} () {
                 SourcePortId = sourceId
                 };
@@ -259,7 +259,7 @@ namespace #{Yaschema.NameSpaceName} {
 
             return result;
             }
-#end method
+#end method2
 
 #method ParseMezzanine Packet packet
 #% var plaintext = packet.Plaintext;

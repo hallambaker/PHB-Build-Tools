@@ -42,7 +42,7 @@ namespace Goedel.Tool.ProtoGen {
 			 ProtoStruct.Complete ();
 			 var GenerateTime =System.DateTime.UtcNow;
 			 Boilerplate.MITLicense (_Output, "//  ", "Copyright (c) " + "2016", ".");
-			_Output.Write ("#% var InheritsOverride = \"override\"; // \"virtual\"\n{0}", _Indent);
+			 Boilerplate.Header (_Output, "//  ", GenerateTime);
 			 string Namespace;
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("using System;\n{0}", _Indent);

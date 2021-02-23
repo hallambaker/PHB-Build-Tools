@@ -13,7 +13,7 @@ namespace Goedel.Tool.Yaschema {
     public partial class YaschemaStruct {
 
 
-        public const string PacketPrefix = "Xpacket";
+        public const string PacketPrefix = "Packet";
 
         public Namespace Namespace;
 

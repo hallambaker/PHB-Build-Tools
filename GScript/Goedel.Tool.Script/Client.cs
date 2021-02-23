@@ -237,6 +237,7 @@ namespace Goedel.Tool.Script {
             new ScriptCommand ("//",        DocumentText,           null,   1,      -1,     0,      3),
             new ScriptCommand ("script",    ScriptText,             null,   1,      0,      0,      6),
             new ScriptCommand ("license",   "%13",                  null,   1,      -1,     0,      0),
+            new ScriptCommand ("header",    "%14",                  null,   0,      -1,     0,      0),
             new ScriptCommand ("using",     UsingText,              null,   1,      0,      0,      6),
             new ScriptCommand ("prefix",    PrefixText,              "}",   1,      0,      1,      3),
             new ScriptCommand ("class",     ClassText,          "\t\t}\n\t}",   2,      1,      2,      6),
@@ -376,7 +377,7 @@ namespace Goedel.Tool.Script {
                             if (arguments.Length > 1) {
                                 //Writer.WriteLine ("// Argument {0}", arguments[1]);
                                 if (arguments[1] != Commands[Top.Command].Tag) {
-                                    throw new MismatchedEndException (Commands[Top.Command].Tag, arguments[1]);
+                                    throw new MismatchedEndException(Commands[Top.Command].Tag, arguments[1]);
                                     }
                                 }
                             if (Top.AutoClose >= 0) {
@@ -411,60 +412,60 @@ namespace Goedel.Tool.Script {
 
                             switch (Commands[i].Action) {
                                 case 0: {
-                                        Writer.WriteLine(Commands[i].Text, Indent);
-                                        break;
-                                        }
+                                    Writer.WriteLine(Commands[i].Text, Indent);
+                                    break;
+                                    }
                                 case 1: {
-                                        String substring = line.Substring(1 + tag.Length);
-                                        Writer.WriteLine(Commands[i].Text, substring, Indent);
-                                        break;
-                                        }
+                                    String substring = line.Substring(1 + tag.Length);
+                                    Writer.WriteLine(Commands[i].Text, substring, Indent);
+                                    break;
+                                    }
                                 case 2: {
-                                        CheckArguments (arguments.Length, 2);
-                                        Writer.WriteLine(Commands[i].Text, arguments[1], arguments[2], 
-                                            Indent);
-                                        break;
-                                        }
+                                    CheckArguments(arguments.Length, 2);
+                                    Writer.WriteLine(Commands[i].Text, arguments[1], arguments[2],
+                                        Indent);
+                                    break;
+                                    }
                                 case 3: {
-                                        CheckArguments (arguments.Length, 3);
-                                        Writer.WriteLine(Commands[i].Text, arguments[1], arguments[2], 
-                                            arguments[3], Indent);
-                                        break;
-                                        }
+                                    CheckArguments(arguments.Length, 3);
+                                    Writer.WriteLine(Commands[i].Text, arguments[1], arguments[2],
+                                        arguments[3], Indent);
+                                    break;
+                                    }
                                 case 4: {
-                                        CheckArguments (arguments.Length, 4);
-                                        Writer.WriteLine(Commands[i].Text, arguments[1], arguments[2], 
-                                            arguments[3], arguments[4], Indent);
-                                        break;
-                                        }
+                                    CheckArguments(arguments.Length, 4);
+                                    Writer.WriteLine(Commands[i].Text, arguments[1], arguments[2],
+                                        arguments[3], arguments[4], Indent);
+                                    break;
+                                    }
                                 case 5: {
-                                        CheckArguments (arguments.Length, 5);
-                                        Writer.WriteLine(Commands[i].Text, arguments[1], arguments[2], 
-                                            arguments[3], arguments[4], arguments[5], Indent);
-                                        break;
-                                        }
+                                    CheckArguments(arguments.Length, 5);
+                                    Writer.WriteLine(Commands[i].Text, arguments[1], arguments[2],
+                                        arguments[3], arguments[4], arguments[5], Indent);
+                                    break;
+                                    }
                                 case 6: {
-                                        CheckArguments (arguments.Length, 6);
-                                        Writer.WriteLine(Commands[i].Text, arguments[1], arguments[2], 
-                                            arguments[3], arguments[4], arguments[5], arguments[6], Indent);
-                                        break;
-                                        }
+                                    CheckArguments(arguments.Length, 6);
+                                    Writer.WriteLine(Commands[i].Text, arguments[1], arguments[2],
+                                        arguments[3], arguments[4], arguments[5], arguments[6], Indent);
+                                    break;
+                                    }
 
                                 case 7: {
-                                        CheckArguments (arguments.Length, 7);
-                                        Writer.WriteLine(Commands[i].Text, arguments[1], arguments[2], 
-                                            arguments[3], arguments[4], arguments[5], arguments[6], 
-                                            arguments[7], Indent);
-                                        break;
-                                        }
+                                    CheckArguments(arguments.Length, 7);
+                                    Writer.WriteLine(Commands[i].Text, arguments[1], arguments[2],
+                                        arguments[3], arguments[4], arguments[5], arguments[6],
+                                        arguments[7], Indent);
+                                    break;
+                                    }
 
                                 case 10: {
-                                        CheckArguments (arguments.Length, 2);
-                                        Writer.WriteLine(SwitchCastText, arguments[1], arguments[2]);
-                                        SwitchVar = arguments[2]; 
-                                        SwitchType = arguments[1];
-                                        break;
-                                        }
+                                    CheckArguments(arguments.Length, 2);
+                                    Writer.WriteLine(SwitchCastText, arguments[1], arguments[2]);
+                                    SwitchVar = arguments[2];
+                                    SwitchType = arguments[1];
+                                    break;
+                                    }
                                 case 11: {
                                     CheckArguments(arguments.Length, 2);
                                     if (arguments[2] == "null") {
@@ -476,21 +477,27 @@ namespace Goedel.Tool.Script {
                                     break;
                                     }
                                 case 12: {
-                                        CheckArguments (arguments.Length, 2);
-                                        Writer.WriteLine(ClassText, arguments[1], arguments[2], GenerateTime);
-                                        break;
-                                        }
+                                    CheckArguments(arguments.Length, 2);
+                                    Writer.WriteLine(ClassText, arguments[1], arguments[2], GenerateTime);
+                                    break;
+                                    }
 
                                 case 13: {
-                                        CheckArguments (arguments.Length, 1);
-                                        Registry.Boilerplate.License (Writer, "//  ", arguments[1]);
-                                        Writer.WriteLine ();
-                                        break;
-                                        }
+                                    CheckArguments(arguments.Length, 1);
+                                    Registry.Boilerplate.License(Writer, "//  ", arguments[1]);
+                                    Writer.WriteLine();
+                                    break;
+                                    }
                                 case 14: {
+                                    CheckArguments(arguments.Length, 1);
+                                    Registry.Boilerplate.Header(Writer, "//  ", DateTime.Now);
+                                    Writer.WriteLine();
+                                    break;
+                                    }
+                                case 15: {
 
-                                        break;
-                                        }
+                                    break;
+                                    }
                                 }
                             if (Commands[i].Stack == 1) {
                                 Indent += "\t";

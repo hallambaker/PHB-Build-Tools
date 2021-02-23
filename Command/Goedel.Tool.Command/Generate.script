@@ -32,6 +32,8 @@
 #% CommandParse = CommandParseIn;
 #% CommandParse.Init();
 #% TypeType = CommandParse.Registry.FindType ("TypeType");
+#% Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
+
 using System;
 using System.Collections.Generic;
 using System.IO;

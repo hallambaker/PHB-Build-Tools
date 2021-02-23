@@ -3,6 +3,7 @@
 #xclass Goedel.Tool.FSRGen Generate
 #method GenerateCS FSRSchema FSRSchema
 #% FSRSchema.Complete ();
+#% Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
 
 using System;
 using System.Collections.Generic;

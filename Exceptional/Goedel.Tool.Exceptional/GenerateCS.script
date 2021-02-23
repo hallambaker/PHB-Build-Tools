@@ -9,6 +9,8 @@
 #! Goedel.Registry.Script.MITLicense (_Output, "//", 
 #!     Goedel.Registry.Script.AssemblyCopyright,
 #!     Goedel.Registry.Script.AssemblyCompany);
+#% Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
+
 #% GenerateCSX (Exceptions);
 #end method
 

@@ -6,9 +6,9 @@
     <OutputType>Exe</OutputType>
     <Company>Phill Hallam-Baker</Company>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-    <Product>Constant Manager</Product>
+    <Product>Yet Another Schema</Product>
     <Description>Generates RFC format documentation from OOXML or Markdown source.</Description>
-    <Copyright>© 2015-2019</Copyright>
+    <Copyright>© 2021</Copyright>
     <Title>Constant Manager</Title>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>

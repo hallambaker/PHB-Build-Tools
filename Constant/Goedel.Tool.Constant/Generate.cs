@@ -34,6 +34,7 @@ namespace Goedel.Tool.Constant {
 		// GenerateCS
 		//
 		public void GenerateCS (Constant Constant) {
+			 Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("using System;\n{0}", _Indent);
 			_Output.Write ("using System.Collections.Generic;\n{0}", _Indent);

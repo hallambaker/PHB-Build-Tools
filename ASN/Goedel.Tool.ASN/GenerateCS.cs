@@ -36,6 +36,7 @@ namespace Goedel.Tool.ASN {
 		//
 		public void GenerateCS (ASN2 ASN2) {
 			 ASN2.Complete ();
+			 Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("using System;\n{0}", _Indent);
 			_Output.Write ("using System.Collections.Generic;\n{0}", _Indent);
