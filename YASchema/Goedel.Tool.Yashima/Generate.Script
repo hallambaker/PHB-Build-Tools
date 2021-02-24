@@ -250,6 +250,11 @@ namespace #{Yaschema.NameSpaceName} {
 #end if
 #end if
             result.PlaintextExtensions = outerReader.ReadExtensions();
+#if (packet.HasPlaintext) 
+#if (plaintext.Credential)
+            CredentialOther = CredentialSelf.GetCredentials (result.PlaintextExtensions);
+#end if
+#end if
 #if (packet.Completer)
             // Parsing the inner packet is deferred until plaintext is parsed.
             result.Reader = outerReader;
@@ -283,6 +288,9 @@ namespace #{Yaschema.NameSpaceName} {
             MutualKeyExchange (result.ClientKeyId);
 #end if
             result.MezzanineExtensions = mezanineReader.ReadExtensions();
+#if (mezzanine.Credential)
+            CredentialOther = CredentialSelf.GetCredentials (result.MezzanineExtensions);
+#end if
 #if (packet.HasEncrypted) 
             // Encrypted inside Mezzanine
             var innerReader = mezanineReader.Decrypt (MutualKeyIn);

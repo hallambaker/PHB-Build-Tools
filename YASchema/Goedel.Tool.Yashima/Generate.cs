@@ -294,6 +294,11 @@ namespace Goedel.Tool.Yaschema {
 					}
 				}
 			_Output.Write ("            result.PlaintextExtensions = outerReader.ReadExtensions();\n{0}", _Indent);
+			if (  (packet.HasPlaintext)  ) {
+				if (  (plaintext.Credential) ) {
+					_Output.Write ("            CredentialOther = CredentialSelf.GetCredentials (result.PlaintextExtensions);\n{0}", _Indent);
+					}
+				}
 			if (  (packet.Completer) ) {
 				_Output.Write ("            // Parsing the inner packet is deferred until plaintext is parsed.\n{0}", _Indent);
 				_Output.Write ("            result.Reader = outerReader;\n{0}", _Indent);
@@ -331,6 +336,9 @@ namespace Goedel.Tool.Yaschema {
 					_Output.Write ("            MutualKeyExchange (result.ClientKeyId);\n{0}", _Indent);
 					}
 				_Output.Write ("            result.MezzanineExtensions = mezanineReader.ReadExtensions();\n{0}", _Indent);
+				if (  (mezzanine.Credential) ) {
+					_Output.Write ("            CredentialOther = CredentialSelf.GetCredentials (result.MezzanineExtensions);\n{0}", _Indent);
+					}
 				if (  (packet.HasEncrypted)  ) {
 					_Output.Write ("            // Encrypted inside Mezzanine\n{0}", _Indent);
 					_Output.Write ("            var innerReader = mezanineReader.Decrypt (MutualKeyIn);\n{0}", _Indent);
