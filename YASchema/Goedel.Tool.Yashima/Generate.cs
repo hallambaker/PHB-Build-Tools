@@ -282,7 +282,9 @@ namespace Goedel.Tool.Yaschema {
 			_Output.Write ("            var result = new {1} () {{\n{0}", _Indent, packet.ClassName);
 			_Output.Write ("                SourcePortId = sourceId\n{0}", _Indent);
 			_Output.Write ("                }};\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			if (  (!isstatic)              ) {
+				_Output.Write ("            PacketIn=result;\n{0}", _Indent);
+				}
 			_Output.Write ("            // The plaintext part\n{0}", _Indent);
 			_Output.Write ("            var outerReader = new PacketReaderAesGcm(packet);\n{0}", _Indent);
 			if (  (packet.HasPlaintext)  ) {
@@ -328,16 +330,19 @@ namespace Goedel.Tool.Yaschema {
 				_Output.Write ("            // Mezzanine\n{0}", _Indent);
 				_Output.Write ("            var mezanineReader = outerReader.Decrypt (ClientKeyIn);\n{0}", _Indent);
 				if (  (mezzanine.Ephemeral) ) {
-					_Output.Write ("            result.ClientKeyId = outerReader.ReadString ();\n{0}", _Indent);
-					_Output.Write ("            result.HostEphemeral = outerReader.ReadBinary ();\n{0}", _Indent);
-					_Output.Write ("            MutualKeyExchange (result.HostEphemeral, result.ClientKeyId);\n{0}", _Indent);
+					_Output.Write ("            result.ClientKeyId = mezanineReader.ReadString ();\n{0}", _Indent);
+					_Output.Write ("            result.HostEphemeral = mezanineReader.ReadBinary ();\n{0}", _Indent);
 					} else if (  (mezzanine.KeyId)) {
-					_Output.Write ("            result.ClientKeyId = outerReader.ReadString ();\n{0}", _Indent);
-					_Output.Write ("            MutualKeyExchange (result.ClientKeyId);\n{0}", _Indent);
+					_Output.Write ("            result.ClientKeyId = mezanineReader.ReadString ();\n{0}", _Indent);
 					}
 				_Output.Write ("            result.MezzanineExtensions = mezanineReader.ReadExtensions();\n{0}", _Indent);
 				if (  (mezzanine.Credential) ) {
 					_Output.Write ("            CredentialOther = CredentialSelf.GetCredentials (result.MezzanineExtensions);\n{0}", _Indent);
+					}
+				if (  (mezzanine.Ephemeral) ) {
+					_Output.Write ("            MutualKeyExchange (result.HostEphemeral, result.ClientKeyId);\n{0}", _Indent);
+					} else if (  (mezzanine.KeyId)) {
+					_Output.Write ("            MutualKeyExchange (result.ClientKeyId);\n{0}", _Indent);
 					}
 				if (  (packet.HasEncrypted)  ) {
 					_Output.Write ("            // Encrypted inside Mezzanine\n{0}", _Indent);

@@ -238,7 +238,9 @@ namespace #{Yaschema.NameSpaceName} {
             var result = new #{packet.ClassName} () {
                 SourcePortId = sourceId
                 };
-
+#if (!isstatic)             
+            PacketIn=result;
+#end if
             // The plaintext part
             var outerReader = new PacketReaderAesGcm(packet);
 #if (packet.HasPlaintext) 
@@ -280,16 +282,19 @@ namespace #{Yaschema.NameSpaceName} {
             // Mezzanine
             var mezanineReader = outerReader.Decrypt (ClientKeyIn);
 #if (mezzanine.Ephemeral)
-            result.ClientKeyId = outerReader.ReadString ();
-            result.HostEphemeral = outerReader.ReadBinary ();
-            MutualKeyExchange (result.HostEphemeral, result.ClientKeyId);
+            result.ClientKeyId = mezanineReader.ReadString ();
+            result.HostEphemeral = mezanineReader.ReadBinary ();
 #elseif (mezzanine.KeyId)
-            result.ClientKeyId = outerReader.ReadString ();
-            MutualKeyExchange (result.ClientKeyId);
+            result.ClientKeyId = mezanineReader.ReadString ();
 #end if
             result.MezzanineExtensions = mezanineReader.ReadExtensions();
 #if (mezzanine.Credential)
             CredentialOther = CredentialSelf.GetCredentials (result.MezzanineExtensions);
+#end if
+#if (mezzanine.Ephemeral)
+            MutualKeyExchange (result.HostEphemeral, result.ClientKeyId);
+#elseif (mezzanine.KeyId)
+            MutualKeyExchange (result.ClientKeyId);
 #end if
 #if (packet.HasEncrypted) 
             // Encrypted inside Mezzanine
