@@ -1,0 +1,38 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="ProjectGroup">
+  <TemplateData>
+    <Name>Goedel generator project (complete)</Name>
+    <Description>Goedel generator project with command shell.</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>Goedel</ProjectSubType>
+    <DefaultName>Class.cs</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <Icon>PHBLogo256.ico</Icon>
+    <SortOrder>20</SortOrder>
+  </TemplateData>
+
+  <TemplateContent>
+    <ProjectCollection>
+      <ProjectTemplateLink>
+        Documentation\Documentation.vstemplate
+      </ProjectTemplateLink>
+      <ProjectTemplateLink>
+        Protocol\Protocol.vstemplate
+      </ProjectTemplateLink>
+      <ProjectTemplateLink>
+        Client\Client.vstemplate
+      </ProjectTemplateLink>
+      <ProjectTemplateLink>
+        Service\Service.vstemplate
+      </ProjectTemplateLink>
+      <ProjectTemplateLink>
+        ClientShell\Client.vstemplate
+      </ProjectTemplateLink>
+      <ProjectTemplateLink>
+        ServiceShell\Service.vstemplate
+      </ProjectTemplateLink>
+      <ProjectTemplateLink>
+        Test\Test.vstemplate
+      </ProjectTemplateLink>
+    </ProjectCollection>
+  </TemplateContent>
+</VSTemplate>

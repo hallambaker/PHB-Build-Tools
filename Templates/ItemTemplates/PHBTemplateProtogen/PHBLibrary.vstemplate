@@ -1,0 +1,15 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+  <TemplateData>
+    <Name>Protogen schema file</Name>
+    <Description>Empty Protogen schema file</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>Goedel</ProjectSubType>
+    <DefaultName>Class.cs</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <Icon>PHBLogo256.ico</Icon>
+    <SortOrder>20</SortOrder>
+  </TemplateData>
+  <TemplateContent>
+    <ProjectItem ReplaceParameters="true"  TargetFileName="$fileinputname$.protocol" >Class1.protocol</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

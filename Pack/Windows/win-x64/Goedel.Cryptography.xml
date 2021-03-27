@@ -5985,52 +5985,12 @@
             <summary>Salt used to derive keys to authenticate messages send by the client, i.e. the initiator
             to the server.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.KeyDerive.SaltClientToServerAuthenticate">
-            <summary>Salt used to derive keys to authenticate messages send by the client, i.e. the initiator
-            to the server.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyDerive.SaltServerToClientAuthenticate">
-            <summary>Salt used to derive keys to authenticate messages send by the server, i.e. the responder
-            to the client.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyDerive.SaltClientToServerEncrypt">
-            <summary>Salt used to derive keys to encrypt messages send by the client, i.e. the initiator
-            to the server.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.KeyDerive.SaltServerToClientEncrypt">
-            <summary>Salt used to derive keys to encrypt messages send by the server, i.e. the responder
-            to the client.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.KeyDerive.ClientToServerAuthenticate(System.Int32)">
-            <summary>Key used to authenticate messages send by the client, i.e. the initiator
-            to the server.</summary>
-            <param name="Length">The key length in bits</param>
-            <returns>The key value</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.KeyDerive.ClientToServerToClientAuthenticate(System.Int32)">
-            <summary>Key used to authenticate messages send by the server, i.e. the responder
-            to the client.</summary>
-            <param name="Length">The key length in bits</param>
-            <returns>The key value</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.KeyDerive.ClientToServerEncrypt(System.Int32)">
-            <summary>Key used to encrypt messages send by the client, i.e. the initiator
-            to the server.</summary>
-            <param name="Length">The key length in bits</param>
-            <returns>The key value</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.KeyDerive.ServerToClientEncrypt(System.Int32)">
-            <summary>Key used to encrypt messages send by the server, i.e. the responder
-            to the client.</summary>
-            <param name="Length">The key length in bits</param>
-            <returns>The key value</returns>
-        </member>
         <member name="M:Goedel.Cryptography.KeyDerive.Derive(System.Byte[],System.Int32)">
             <summary>
             Key Derivation function
             </summary>
-            <param name="Info">The information to be used to vary this key</param>
-            <param name="Length">The length of the key to extract in bits</param>
+            <param name="info">The information to be used to vary this key</param>
+            <param name="length">The length of the key to extract in bits</param>
             <returns>The key agreement result.</returns>
         </member>
         <member name="T:Goedel.Cryptography.KeyDeriveHKDF">
@@ -6061,12 +6021,7 @@
             <param name="algorithm">The MAC algorithm to use</param>
         </member>
         <member name="M:Goedel.Cryptography.KeyDeriveHKDF.Derive(System.Byte[],System.Int32)">
-            <summary>
-            Key Derivation function
-            </summary>
-            <param name="Info">The information to be used to vary this key</param>
-            <param name="Length">The length of the key to extract</param>
-            <returns>The derrived key.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyDeriveHKDF.Derive(System.Byte[],System.Byte[],System.Byte[],System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
@@ -6099,8 +6054,8 @@
             The extraction function
             </summary>
             <param name="algorithm">The MAC algorithm to use</param>
-            <param name="IKM">The initial keying material</param>
-            <param name="Salt">Salt to be used to vary the derived key across domains.</param>
+            <param name="ikm">The initial keying material</param>
+            <param name="salt">Salt to be used to vary the derived key across domains.</param>
             <returns>The extracted value.</returns>
         </member>
         <member name="M:Goedel.Cryptography.KeyDeriveHKDF.Expand(Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32,System.Byte[])">
@@ -6680,13 +6635,13 @@
             Return public key parameters in PKIX structure
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.KeyPairBaseDH.KeyPairPublicFactory">
+        <member name="P:Goedel.Cryptography.KeyPairBaseDH.KeyPairPublicFactory">
             <summary>
             Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
             platform provider.
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.KeyPairBaseDH.KeyPairPrivateFactory">
+        <member name="P:Goedel.Cryptography.KeyPairBaseDH.KeyPairPrivateFactory">
             <summary>
             Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
             platform provider.
@@ -14207,6 +14162,155 @@
             </summary>
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
+        </member>
+        <member name="T:TestConsole.AesOCB">
+            <summary>
+            Implementation of OCB mode for AES. This does not currently expose the full capabilities 
+            of the .NET cryptographic processing classes.
+            </summary>
+        </member>
+        <member name="F:TestConsole.AesOCB.AesBlock">
+            <summary>The block length in bytes.</summary> 
+        </member>
+        <member name="P:TestConsole.AesOCB.Encrypt">
+            <summary>Processing mode is encryption if true and decryption if false.</summary> 
+        </member>
+        <member name="M:TestConsole.AesOCB.#ctor(System.Byte[],System.Byte[],System.Int32,System.Boolean)">
+            <summary>
+            Constructor for an OCB processor with key, nonce, tag length and processing mode
+            specified by <paramref name="key"/>, <paramref name="n"/>, <paramref name="tagLengthBits"/>
+            and <paramref name="encrypt"/> respectively.
+            </summary>
+            <param name="key">The key. This MUST be a valid AES key size (i.e. 128, 192 or 256).</param>
+            <param name="n"></param>
+            <param name="tagLengthBits">The tag length in bits. The value MUST be in the interval
+            [64..128].</param>
+            <param name="encrypt">Processing mode is encryption if true and decryption if false.</param>
+        </member>
+        <member name="M:TestConsole.AesOCB.GetOutputLength(System.Int32)">
+            <summary>
+            Returns the output data length for an input of <paramref name="inputLength"/> bytes
+            </summary>
+            <param name="inputLength">The input length</param>
+            <returns>The corresponding output length.</returns>
+        </member>
+        <member name="M:TestConsole.AesOCB.GetDataLength(System.Int32)">
+            <summary>
+            Returns the length of the plaintext for the input length <paramref name="inputLength"/>
+            </summary>
+            <param name="inputLength">The input length</param>
+            <returns>The corresponding plaintext length.</returns>
+        </member>
+        <member name="M:TestConsole.AesOCB.Process(System.Byte[],System.Byte[])">
+            <summary>
+            Process the input data <paramref name="input"/> with associated data 
+            <paramref name="authData"/> and return the result.
+            </summary>
+            <param name="input">The input data</param>
+            <param name="authData">Additional authentication data (ignored if null)</param>
+            <returns>The processed data.</returns>
+        </member>
+        <member name="M:TestConsole.AesOCB.Process(System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Process the input data <paramref name="input"/> with associated data 
+            <paramref name="authData"/> and return the result.
+            </summary>
+            <param name="input">The input data</param>
+            <param name="output">Buffer in which the output data is to be stored.</param>
+            <param name="authData">Additional authentication data (ignored if null)</param>
+            <returns>The number of bytes written to <paramref name="output"/>.</returns>
+        </member>
+        <member name="M:TestConsole.AesOCB.GetHash(System.Byte[])">
+            <summary>
+            Get the OCB hash value on the associated data <paramref name="authData"/>.
+            </summary>
+            <param name="authData">The </param>
+        </member>
+        <member name="M:TestConsole.AesOCB.Process(System.Byte[],System.Int32,System.Int32,System.Byte[],System.Int32)">
+            <summary>
+            Process the block <paramref name="input"/> starting at byte <paramref name="offsetIn"/> for 
+            <paramref name="length"/> bytes and write the result to <paramref name="output"/> starting
+            at <paramref name="offsetOut"/>.
+            </summary>
+            <param name="input">The input buffer.</param>
+            <param name="offsetIn">Initial byte to process in the input buffer.</param>
+            <param name="length">Number of bytes to process. MUST be a whole multiple
+            of <see cref="F:TestConsole.AesOCB.AesBlock"/>.</param>
+            <param name="output">The output buffer. This MUST be large enough to hold
+            the output bytes.</param>
+            <param name="offsetOut">Starting position within the output buffer.</param>
+            <returns>The number of data bytes written to <paramref name="output"/>. This
+            SHOULD be added to <paramref name="offsetOut"/> on the next call if
+            performing sequential processing to a pre-allocated buffer.</returns>
+        </member>
+        <member name="M:TestConsole.AesOCB.Finalize(System.Byte[],System.Int32,System.Byte[],System.Int32,System.Byte[])">
+            <summary>
+            Complete processing of the data,
+            </summary>
+            <param name="input">The input buffer.</param>
+            <param name="offsetIn">Initial byte to process in the input buffer.</param>
+            <param name="output">The output buffer. This MUST be large enough to hold
+            the output bytes.</param>
+            <param name="offsetOut">Starting position within the output buffer.</param>
+            <param name="authData">Optional authenticated plaintext data.</param>
+        </member>
+        <member name="M:TestConsole.AesOCB.ExpandNonce(System.Byte[])">
+            <summary>
+            Expand the nonce <paramref name="n"/> to create the nonce block value.
+            </summary>
+            <param name="n">The supplied nonce.</param>
+            <returns>The nonce block value.</returns>
+        </member>
+        <member name="M:TestConsole.AesOCB.Double(System.Byte[])">
+            <summary>
+            Double the value of the block <paramref name="block"/>.
+            </summary>
+            <param name="block">The block to double.</param>
+            <returns>The doubled block.</returns>
+        </member>
+        <member name="M:TestConsole.AesOCB.ShiftLeft(System.Byte[],System.Byte[])">
+            <summary>
+            Shift the block <paramref name="block"/> left.
+            </summary>
+            <param name="block">The input block.</param>
+            <param name="output">The left shifted block.</param>
+            <returns>the leftmost bit of the input.</returns>
+        </member>
+        <member name="M:TestConsole.AesOCB.Xor(System.Byte[],System.Byte[],System.Int32)">
+            <summary>
+            XOR the block <paramref name="b1"/> with the block <paramref name="b2"/> 
+            beginning at offset <paramref name="offsetb2"/>, writing the result to
+            <paramref name="b1"/>.
+            </summary>
+            <param name="b1">First input and the output.</param>
+            <param name="b2">Second input block.</param>
+            <param name="offsetb2">Offset from the start of b2.</param>
+        </member>
+        <member name="M:TestConsole.AesOCB.Xor(System.Byte[],System.Int32,System.Byte[],System.Byte[])">
+            <summary>
+            XOR the block <paramref name="b1"/> 
+            beginning at offset <paramref name="offsetb1"/>, 
+            with the block <paramref name="b2"/> writing the result to
+            <paramref name="result"/>.
+            </summary>
+            <param name="b1">First input.</param>
+            <param name="b2">Second input block.</param>
+            <param name="offsetb1">Offset from the start of b1.</param>
+            <param name="result">The output.</param>
+        </member>
+        <member name="M:TestConsole.AesOCB.CountTrailingZeros(System.Int64)">
+            <summary>
+            Count the trailing zeros of <paramref name="x"/>
+            </summary>
+            <param name="x">The input.</param>
+            <returns>The number of trailing zeros.</returns>
+        </member>
+        <member name="M:TestConsole.AesOCB.GetLSub(System.Int32)">
+            <summary>
+            Return the L value L_<paramref name="n"/>
+            </summary>
+            <param name="n">The subscript.</param>
+            <returns>The L value.</returns>
         </member>
     </members>
 </doc>

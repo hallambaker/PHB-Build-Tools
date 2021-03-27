@@ -24,7 +24,7 @@ namespace #{Yaschema.NameSpaceName} {
 	/// <summary>
     /// Client connection class. Tracks the state of a client connection.
     /// </summary>
-    public partial class ConnectionClient : Connection {
+    public partial class  SessionInitiator : Session {
 
 #filter Client client Yaschema.Top
 
@@ -42,7 +42,7 @@ namespace #{Yaschema.NameSpaceName} {
 
 		}
 
-    public partial class ConnectionHost : Connection {
+    public partial class SessionResponder : Session {
 
 #filter Host host Yaschema.Top
 #foreach (var packet in host.Entries)
@@ -54,14 +54,9 @@ namespace #{Yaschema.NameSpaceName} {
 #foreach (var packet in client.Entries)
 #if (packet.IsInitial)
         // Skip Client packet #{packet.Id} (initial packets parsed by the listener)
-#else 
-#% GenerateParser (packet, false);
-#end if
-#end foreach
-#end filter
-#filter Client client Yaschema.Top
-#foreach (var packet in client.Entries)
-#if (packet.Completer)
+
+#elseif (packet.Completer)
+        // Perform initial parse as static listener, only complete decrypt in session context
 
         /// <summary>
         /// Perform key exchanges and complete parsing of the packet
@@ -70,6 +65,8 @@ namespace #{Yaschema.NameSpaceName} {
             var outerReader = result.Reader;
 #call ParseMezzanine packet
             }
+#else 
+#% GenerateParser (packet, false);
 #end if
 #end foreach
 #end filter
@@ -79,7 +76,7 @@ namespace #{Yaschema.NameSpaceName} {
     public partial class Listener {
 #filter Client client Yaschema.Top
 #foreach (var packet in client.Entries)
-#if (packet.IsInitial)
+#if (packet.IsInitial | packet.Completer)
 #% GenerateParser (packet, true);
 #end if
 #end foreach
@@ -120,6 +117,8 @@ namespace #{Yaschema.NameSpaceName} {
         /// <param name="ciphertextExtensions">Additional extensions to be presented 
         /// in the encrypted segment.</param>
 #end if
+        /// <param name="buffer">Buffer provided by caller</param>
+        /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The serialized data.</returns>
         public byte[] Serialize#{packet.Id} (
                 byte[] payload = null,
@@ -132,10 +131,12 @@ namespace #{Yaschema.NameSpaceName} {
 ,
                 List<PacketExtension> ciphertextExtensions = null#!
 #end if
-                ) {
+,
+                byte[] buffer=null,
+                int position=0) {
 
             // The plaintext part
-            var outerWriter = new PacketWriterAesGcm();
+            var outerWriter = new PacketWriterAesGcm(buffer:buffer, position:position);
 #if (plaintext == null)
             // There are no plaintext fields.
             outerWriter.WriteExtensions(plaintextExtensionsIn);
@@ -232,9 +233,16 @@ namespace #{Yaschema.NameSpaceName} {
         /// </summary>
         /// <param name="sourceId">The packet source.</param>
         /// <param name="packet">The packet data</param>
+        /// <param name="position">Start position at which reading of the packet should start.</param>
+        /// <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+        /// If less than 0, <paramref name="packet"/> is read to the end.</param>
         /// <returns>The parsed packet.</returns>
 
-        public #{isstatic.If("static")} #{packet.ClassName} Parse#{packet.Id} (PortId sourceId, byte[] packet) {
+        public #{isstatic.If("static")} #{packet.ClassName} Parse#{packet.Id} (
+                PortId sourceId, 
+                byte[] packet,
+                int position=0,
+                int count = -1) {
             var result = new #{packet.ClassName} () {
                 SourcePortId = sourceId
                 };
@@ -242,7 +250,7 @@ namespace #{Yaschema.NameSpaceName} {
             PacketIn=result;
 #end if
             // The plaintext part
-            var outerReader = new PacketReaderAesGcm(packet);
+            var outerReader = new PacketReaderAesGcm(packet, position, count);
 #if (packet.HasPlaintext) 
 #if (plaintext.Ephemeral)
             result.HostKeyId = outerReader.ReadString ();

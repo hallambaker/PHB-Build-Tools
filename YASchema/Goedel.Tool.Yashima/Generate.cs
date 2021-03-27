@@ -54,7 +54,7 @@ namespace Goedel.Tool.Yaschema {
 			_Output.Write ("	/// <summary>\n{0}", _Indent);
 			_Output.Write ("    /// Client connection class. Tracks the state of a client connection.\n{0}", _Indent);
 			_Output.Write ("    /// </summary>\n{0}", _Indent);
-			_Output.Write ("    public partial class ConnectionClient : Connection {{\n{0}", _Indent);
+			_Output.Write ("    public partial class  SessionInitiator : Session {{\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			foreach (var _client in Yaschema.Top) {  if (_client.GetType() == typeof (Client)) { var client = (Client) _client; 
 				_Output.Write ("\n{0}", _Indent);
@@ -74,7 +74,7 @@ namespace Goedel.Tool.Yaschema {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("		}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("    public partial class ConnectionHost : Connection {{\n{0}", _Indent);
+			_Output.Write ("    public partial class SessionResponder : Session {{\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			foreach (var _host in Yaschema.Top) {  if (_host.GetType() == typeof (Host)) { var host = (Host) _host; 
 				foreach  (var packet in host.Entries) {
@@ -87,15 +87,9 @@ namespace Goedel.Tool.Yaschema {
 				foreach  (var packet in client.Entries) {
 					if (  (packet.IsInitial) ) {
 						_Output.Write ("        // Skip Client packet {1} (initial packets parsed by the listener)\n{0}", _Indent, packet.Id);
-						} else {
-						 GenerateParser (packet, false);
-						}
-					}
-					}
-	}
-			foreach (var _client in Yaschema.Top) {  if (_client.GetType() == typeof (Client)) { var client = (Client) _client; 
-				foreach  (var packet in client.Entries) {
-					if (  (packet.Completer) ) {
+						_Output.Write ("\n{0}", _Indent);
+						} else if (  (packet.Completer)) {
+						_Output.Write ("        // Perform initial parse as static listener, only complete decrypt in session context\n{0}", _Indent);
 						_Output.Write ("\n{0}", _Indent);
 						_Output.Write ("        /// <summary>\n{0}", _Indent);
 						_Output.Write ("        /// Perform key exchanges and complete parsing of the packet\n{0}", _Indent);
@@ -104,6 +98,8 @@ namespace Goedel.Tool.Yaschema {
 						_Output.Write ("            var outerReader = result.Reader;\n{0}", _Indent);
 						ParseMezzanine (packet);
 						_Output.Write ("            }}\n{0}", _Indent);
+						} else {
+						 GenerateParser (packet, false);
 						}
 					}
 					}
@@ -114,7 +110,7 @@ namespace Goedel.Tool.Yaschema {
 			_Output.Write ("    public partial class Listener {{\n{0}", _Indent);
 			foreach (var _client in Yaschema.Top) {  if (_client.GetType() == typeof (Client)) { var client = (Client) _client; 
 				foreach  (var packet in client.Entries) {
-					if (  (packet.IsInitial) ) {
+					if (  (packet.IsInitial | packet.Completer) ) {
 						 GenerateParser (packet, true);
 						}
 					}
@@ -160,6 +156,8 @@ namespace Goedel.Tool.Yaschema {
 				_Output.Write ("        /// <param name=\"ciphertextExtensions\">Additional extensions to be presented \n{0}", _Indent);
 				_Output.Write ("        /// in the encrypted segment.</param>\n{0}", _Indent);
 				}
+			_Output.Write ("        /// <param name=\"buffer\">Buffer provided by caller</param>\n{0}", _Indent);
+			_Output.Write ("        /// <param name=\"position\">Offset within packet at which first byte is to be written.</param>\n{0}", _Indent);
 			_Output.Write ("        /// <returns>The serialized data.</returns>\n{0}", _Indent);
 			_Output.Write ("        public byte[] Serialize{1} (\n{0}", _Indent, packet.Id);
 			_Output.Write ("                byte[] payload = null,\n{0}", _Indent);
@@ -172,10 +170,12 @@ namespace Goedel.Tool.Yaschema {
 				_Output.Write (",\n{0}", _Indent);
 				_Output.Write ("                List<PacketExtension> ciphertextExtensions = null", _Indent);
 				}
-			_Output.Write ("                ) {{\n{0}", _Indent);
+			_Output.Write (",\n{0}", _Indent);
+			_Output.Write ("                byte[] buffer=null,\n{0}", _Indent);
+			_Output.Write ("                int position=0) {{\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("            // The plaintext part\n{0}", _Indent);
-			_Output.Write ("            var outerWriter = new PacketWriterAesGcm();\n{0}", _Indent);
+			_Output.Write ("            var outerWriter = new PacketWriterAesGcm(buffer:buffer, position:position);\n{0}", _Indent);
 			if (  (plaintext == null) ) {
 				_Output.Write ("            // There are no plaintext fields.\n{0}", _Indent);
 				_Output.Write ("            outerWriter.WriteExtensions(plaintextExtensionsIn);\n{0}", _Indent);
@@ -276,9 +276,16 @@ namespace Goedel.Tool.Yaschema {
 			_Output.Write ("        /// </summary>\n{0}", _Indent);
 			_Output.Write ("        /// <param name=\"sourceId\">The packet source.</param>\n{0}", _Indent);
 			_Output.Write ("        /// <param name=\"packet\">The packet data</param>\n{0}", _Indent);
+			_Output.Write ("        /// <param name=\"position\">Start position at which reading of the packet should start.</param>\n{0}", _Indent);
+			_Output.Write ("        /// <param name=\"count\">Maximum number of bytes to be read from <paramref name=\"packet\"/>.\n{0}", _Indent);
+			_Output.Write ("        /// If less than 0, <paramref name=\"packet\"/> is read to the end.</param>\n{0}", _Indent);
 			_Output.Write ("        /// <returns>The parsed packet.</returns>\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("        public {1} {2} Parse{3} (PortId sourceId, byte[] packet) {{\n{0}", _Indent, isstatic.If("static"), packet.ClassName, packet.Id);
+			_Output.Write ("        public {1} {2} Parse{3} (\n{0}", _Indent, isstatic.If("static"), packet.ClassName, packet.Id);
+			_Output.Write ("                PortId sourceId, \n{0}", _Indent);
+			_Output.Write ("                byte[] packet,\n{0}", _Indent);
+			_Output.Write ("                int position=0,\n{0}", _Indent);
+			_Output.Write ("                int count = -1) {{\n{0}", _Indent);
 			_Output.Write ("            var result = new {1} () {{\n{0}", _Indent, packet.ClassName);
 			_Output.Write ("                SourcePortId = sourceId\n{0}", _Indent);
 			_Output.Write ("                }};\n{0}", _Indent);
@@ -286,7 +293,7 @@ namespace Goedel.Tool.Yaschema {
 				_Output.Write ("            PacketIn=result;\n{0}", _Indent);
 				}
 			_Output.Write ("            // The plaintext part\n{0}", _Indent);
-			_Output.Write ("            var outerReader = new PacketReaderAesGcm(packet);\n{0}", _Indent);
+			_Output.Write ("            var outerReader = new PacketReaderAesGcm(packet, position, count);\n{0}", _Indent);
 			if (  (packet.HasPlaintext)  ) {
 				if (  (plaintext.Ephemeral) ) {
 					_Output.Write ("            result.HostKeyId = outerReader.ReadString ();\n{0}", _Indent);

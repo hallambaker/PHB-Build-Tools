@@ -160,7 +160,7 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("        /// <param name=\"session\">The client context.</param>\n{0}", _Indent);
 							_Output.Write ("        /// <param name=\"jsonReader\">Reader for data object.</param>\n{0}", _Indent);
 							_Output.Write ("        /// <returns>The response object returned by the corresponding dispatch.</returns>\n{0}", _Indent);
-							_Output.Write ("		public override Goedel.Protocol.JsonObject Dispatch(JpcSession  session,  \n{0}", _Indent);
+							_Output.Write ("		public override Goedel.Protocol.JsonObject Dispatch(IJpcSession  session,  \n{0}", _Indent);
 							_Output.Write ("								Goedel.Protocol.JsonReader jsonReader) {{\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("			jsonReader.StartObject ();\n{0}", _Indent);
@@ -195,7 +195,7 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("        /// </summary>\n{0}", _Indent);
 							_Output.Write ("        /// <param name=\"jpcSession\">Session to which requests are to be bound.</param>\n{0}", _Indent);
 							_Output.Write ("        /// <returns>The direct client instance.</returns>\n{0}", _Indent);
-							_Output.Write ("		public override Goedel.Protocol.JpcClientInterface GetDirect (JpcSession jpcSession) =>\n{0}", _Indent);
+							_Output.Write ("		public override Goedel.Protocol.JpcClientInterface GetDirect (IJpcSession jpcSession) =>\n{0}", _Indent);
 							_Output.Write ("				new {1}Direct () {{\n{0}", _Indent, Service.Id);
 							_Output.Write ("						JpcSession = jpcSession,\n{0}", _Indent);
 							_Output.Write ("						Service = this\n{0}", _Indent);
@@ -213,7 +213,7 @@ namespace Goedel.Tool.ProtoGen {
 									_Output.Write ("		/// <param name=\"session\">The request context.</param>\n{0}", _Indent);
 									_Output.Write ("		/// <returns>The response object from the service</returns>\n{0}", _Indent);
 									_Output.Write ("        public abstract {1} {2} (\n{0}", _Indent, Transaction.Response, Transaction.Id);
-									_Output.Write ("                {1} request, JpcSession session);\n{0}", _Indent, Transaction.Request);
+									_Output.Write ("                {1} request, IJpcSession session);\n{0}", _Indent, Transaction.Request);
 								break; }
 									}
 								}
@@ -257,7 +257,7 @@ namespace Goedel.Tool.ProtoGen {
 									_Output.Write ("        /// <param name=\"request\">The request object.</param>\n{0}", _Indent);
 									_Output.Write ("		/// <returns>The response object</returns>\n{0}", _Indent);
 									_Output.Write ("        public virtual {1} {2} ({3} request) =>\n{0}", _Indent, Transaction.Response, Transaction.Id, Transaction.Request);
-									_Output.Write ("				JpcRemoteSession.Post(\"{1}\", \"{2}\", request) as {3};\n{0}", _Indent, Transaction.Id, Transaction.Response, Transaction.Response);
+									_Output.Write ("				JpcSession.Post(\"{1}\", request) as {2};\n{0}", _Indent, Transaction.Id, Transaction.Response);
 									_Output.Write ("\n{0}", _Indent);
 								break; }
 									}
@@ -274,12 +274,6 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("		/// Interface object to dispatch requests to.\n{0}", _Indent);
 							_Output.Write ("		/// </summary>	\n{0}", _Indent);
 							_Output.Write ("		public {1} Service {{get; set;}}\n{0}", _Indent, Service.Id);
-							_Output.Write ("\n{0}", _Indent);
-							_Output.Write ("        /// <summary>\n{0}", _Indent);
-							_Output.Write ("        /// The active JpcSession.\n{0}", _Indent);
-							_Output.Write ("        /// </summary>		\n{0}", _Indent);
-							_Output.Write ("		public override JpcSession JpcSession {{get; set;}}\n{0}", _Indent);
-							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							foreach  (_Choice Entry2 in Protocol.Entries) {
 								switch (Entry2._Tag ()) {
@@ -319,7 +313,7 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("        /// <param name=\"session\">The client context.</param>\n{0}", _Indent);
 							_Output.Write ("        /// <param name=\"jsonReader\">Reader for data object.</param>\n{0}", _Indent);
 							_Output.Write ("        /// <returns>The response object returned by the corresponding dispatch.</returns>\n{0}", _Indent);
-							_Output.Write ("		public override Goedel.Protocol.JsonObject Dispatch(JpcSession  session,  \n{0}", _Indent);
+							_Output.Write ("		public override Goedel.Protocol.JsonObject Dispatch(IJpcSession  session,  \n{0}", _Indent);
 							_Output.Write ("								Goedel.Protocol.JsonReader jsonReader) {{\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("			jsonReader.StartObject ();\n{0}", _Indent);

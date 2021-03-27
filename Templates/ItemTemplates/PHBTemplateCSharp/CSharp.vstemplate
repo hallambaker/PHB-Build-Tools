@@ -1,0 +1,15 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+  <TemplateData>
+    <Name>C# Class</Name>
+    <Description>An empty C# Class File with regions</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>Goedel</ProjectSubType>
+    <DefaultName>Class.cs</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <Icon>PHBLogo256.ico</Icon>
+    <SortOrder>10</SortOrder>
+  </TemplateData>
+  <TemplateContent>
+    <ProjectItem ReplaceParameters="true"  TargetFileName="$fileinputname$.cs" >Class1.cs</ProjectItem>
+  </TemplateContent>
+</VSTemplate>
