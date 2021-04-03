@@ -2701,6 +2701,52 @@
             <param name="hashBitLength">The number of output bits</param>
             <returns>The digest value</returns>
         </member>
+        <member name="T:Goedel.Cryptography.Algorithms.ShortBlockPermute">
+            <summary>
+            Short block permutation.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Algorithms.ShortBlockPermute.Mask">
+            <summary>The bitmask masking the lower n bits of the data channel</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Algorithms.ShortBlockPermute.Bits">
+            <summary>The number of bits to permute.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Algorithms.ShortBlockPermute.Rounds">
+            <summary>The number of rounds to perform.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Algorithms.ShortBlockPermute.keySchedule">
+            <summary>The key schedule, this is stored for reuse.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Algorithms.ShortBlockPermute.#ctor(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Constructor, creates a permutation function mapping an input of 
+            length <paramref name="bits"/> to an output of length <paramref name="bits"/>
+            according to the value of <paramref name="key"/>.
+            <para>Once the key schedule is set up, calls to Permute will always return
+            a different output if the low order bits <paramref name="bits"/> are 
+            different and the same otherwise.</para>
+            </summary>
+            <param name="key"></param>
+            <param name="bits"></param>
+            <param name="rounds"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Algorithms.ShortBlockPermute.Permute(System.UInt64)">
+            <summary>
+            Permute the lower n bits of <paramref name="input"/> according to the 
+            schedule established by the constructor.
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Algorithms.ShortBlockPermute.Depermute(System.UInt64)">
+            <summary>
+            A depermutation function could be implemented but that would encourage people
+            to use this for encrypting data. This is implemented here for use in testing.
+            </summary>
+            <param name="input">The cipertext.</param>
+            <returns>The depermuted input.</returns>
+        </member>
         <member name="T:Goedel.Cryptography.Algorithms.XMSS">
             <summary>
             rfc8391

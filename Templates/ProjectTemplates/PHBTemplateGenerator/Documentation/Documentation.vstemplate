@@ -14,15 +14,12 @@
     <Icon>__TemplateIcon.png</Icon>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="PHB New Library.csproj" File="PHB New Library.csproj" ReplaceParameters="true">
-      <ProjectItem ReplaceParameters="true" TargetFileName="Class1.cs">Class1.cs</ProjectItem>
-      <ProjectItem ReplaceParameters="false" TargetFileName="Exceptions.exceptional">Exceptions.exceptional</ProjectItem>
-      <ProjectItem ReplaceParameters="true" TargetFileName="Exceptions.cs">Exceptions.cs</ProjectItem>
-      <ProjectItem ReplaceParameters="false" TargetFileName="Index.md">Index.md</ProjectItem>
+    <Project  File="Documentation.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="true" TargetFileName="Main.cs">Main.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Script.gscript">script.gscript</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Script.cs">Script.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Index.md">Index.md</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="NamespaceDoc.cs">NamespaceDoc.cs</ProjectItem>
-      <Folder Name="Properties" TargetFolderName="Properties">
-        <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
-      </Folder>
     </Project>
   </TemplateContent>
 </VSTemplate>

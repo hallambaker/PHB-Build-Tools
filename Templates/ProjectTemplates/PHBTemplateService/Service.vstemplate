@@ -1,7 +1,7 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="ProjectGroup">
   <TemplateData>
-    <Name>Goedel generator project (complete)</Name>
-    <Description>Goedel generator project with command shell.</Description>
+    <Name>Goedel service project (complete)</Name>
+    <Description>Goedel service project</Description>
     <ProjectType>CSharp</ProjectType>
     <ProjectSubType>Goedel</ProjectSubType>
     <DefaultName>Class.cs</DefaultName>

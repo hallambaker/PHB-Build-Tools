@@ -21,24 +21,21 @@
 
 using System;
 using System.Collections.Generic;
+
+using Xunit;
+
 using Goedel.Utilities;
+using Goedel.Test.Core;
+using Goedel.Test;
 
+namespace $rootnamespace$.Xunit  {
+    public class Test$safeitemname$ {
 
-namespace $rootnamespace$   {
+        static Test$safeitemname$ () {
+            // _ = Goedel.Cryptography.Core.Initialization.Initialized;
+            }
 
-    #region // Properties
-    #endregion 
+        public static Test$safeitemname$ Test() => new Test$safeitemname$();
 
-    #region // Destructor
-    #endregion 
-
-    #region // Constructors
-    #endregion 
-
-    #region // Implement Interface: Ixxx
-    #endregion 
-
-    #region // Methods 
-    #endregion 
-
+        }
     }

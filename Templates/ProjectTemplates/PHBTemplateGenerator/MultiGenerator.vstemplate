@@ -4,24 +4,22 @@
     <Description>Goedel generator project with command shell.</Description>
     <ProjectType>CSharp</ProjectType>
     <ProjectSubType>Goedel</ProjectSubType>
-    <DefaultName>Class.cs</DefaultName>
-    <ProvideDefaultName>true</ProvideDefaultName>
     <Icon>PHBLogo256.ico</Icon>
-    <SortOrder>20</SortOrder>
+    <SortOrder>50</SortOrder>
   </TemplateData>
 
   <TemplateContent>
     <ProjectCollection>
-      <ProjectTemplateLink>
+      <ProjectTemplateLink ProjectName="Documentation">
         Documentation\Documentation.vstemplate
       </ProjectTemplateLink>
-      <ProjectTemplateLink>
+      <ProjectTemplateLink ProjectName="Generator">
         Generator\Generator.vstemplate
       </ProjectTemplateLink>
-      <ProjectTemplateLink>
+      <ProjectTemplateLink ProjectName="Shell">
         Shell\Shell.vstemplate
       </ProjectTemplateLink>
-      <ProjectTemplateLink>
+      <ProjectTemplateLink ProjectName="Test">
         Test\Test.vstemplate
       </ProjectTemplateLink>
     </ProjectCollection>

@@ -19,29 +19,29 @@
 //  THE SOFTWARE.
 //  
 
+using System;
+using System.Collections.Generic;
+using Goedel.Utilities;
+
+
 namespace $rootnamespace$   {
+    public class $safeitemname$ {
+        #region // Properties
+        #endregion 
 
-Class $rootnamespace$ $safeitemname$
-	Brief "TBS"
+        #region // Destructor
+        #endregion 
 
-	Type NewFile			"file"
-	Type ExistingFile		"file"
-	Type Flag				"flag"
-	
+        #region // Constructors
+        #endregion 
 
-	Command GenerateCommand "in"
-		Brief "TBS"
-		DefaultCommand
+        #region // Implement Interface: Ixxx
+        #endregion 
 
-		Lazy Lazy "lazy"	
-			Brief "Only generate code if source or generator have changed"
+        #region // Private Methods 
+        #endregion 
 
-		Parser Goedel.Tool.Command CommandParse "command"
-
-		Script  Goedel.Tool.Command GenerateCS Generate "cs"
-			Brief "Generate code for C#"
-			Default "cs"
-
-		Option Catcher			"catch" Flag
-			Default "true"
-			Brief "If set, wrap the main calling loop with a try/catch structure."
+        #region // Public Methods 
+        #endregion 
+        }
+    }

@@ -1,0 +1,31 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>PHB CS Library</Name>
+    <Description>C# Library with Exceptional, NamespaceDoc, etc.</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>10</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>PHB New Library</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>__TemplateIcon.png</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project File="Generator.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="true" TargetFileName="Schema.gdl">Schema.gdl</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Schema.cs">Schema.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Script.gscript">Script.gscript</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Script.cs">Script.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Exceptions.exceptional">Exceptions.exceptional</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Exceptions.cs">Exceptions.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Index.md">Index.md</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="NamespaceDoc.cs">NamespaceDoc.cs</ProjectItem>
+      <Folder Name="Properties" TargetFolderName="Properties">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
+      </Folder>
+    </Project>
+  </TemplateContent>
+</VSTemplate>
