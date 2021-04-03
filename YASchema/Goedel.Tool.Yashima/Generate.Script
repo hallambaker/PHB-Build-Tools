@@ -206,11 +206,11 @@ namespace #{Yaschema.NameSpaceName} {
             // Encrypted inside Mezzanine
             var innerWriter = new PacketWriter(mezanineWriter.RemainingSpace);
             innerWriter.WriteExtensions(ciphertextExtensions);
-            innerWriter.Write(destinationId);
+            innerWriter.Write(sourceId);
             innerWriter.Write(payload);
             mezanineWriter.Encrypt(MutualKeyOut, innerWriter);
 #else
-            mezanineWriter.Write(destinationId);
+            mezanineWriter.Write(sourceId);
             mezanineWriter.Write(payload);
 #end if
             outerWriter.Encrypt(ClientKeyOut, mezanineWriter);
@@ -218,12 +218,12 @@ namespace #{Yaschema.NameSpaceName} {
             // Encrypted in plaintext
             var innerWriter = new PacketWriter(outerWriter.RemainingSpace);
             innerWriter.WriteExtensions(ciphertextExtensions);
-            innerWriter.Write(destinationId);
+            innerWriter.Write(sourceId);
             innerWriter.Write(payload);
             outerWriter.Encrypt(MutualKeyOut, innerWriter);
 #else
             // Only have plaintext
-            outerWriter.Write(destinationId);
+            outerWriter.Write(sourceId);
             outerWriter.Write(payload);
 #end if
 
@@ -325,7 +325,7 @@ namespace #{Yaschema.NameSpaceName} {
             // Encrypted inside Mezzanine
             var innerReader = mezanineReader.Decrypt (MutualKeyIn);
             result.CiphertextExtensions = innerReader.ReadExtensions();
-            result.SourceId = innerReader.ReadBinary();
+            result.SourceId = innerReaderg.ReadBinary();
             result.Payload = innerReader.ReadBinary();
 #else
             // Only have plaintext

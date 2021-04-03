@@ -245,11 +245,11 @@ namespace Goedel.Tool.Yaschema {
 					_Output.Write ("            // Encrypted inside Mezzanine\n{0}", _Indent);
 					_Output.Write ("            var innerWriter = new PacketWriter(mezanineWriter.RemainingSpace);\n{0}", _Indent);
 					_Output.Write ("            innerWriter.WriteExtensions(ciphertextExtensions);\n{0}", _Indent);
-					_Output.Write ("            innerWriter.Write(destinationId);\n{0}", _Indent);
+					_Output.Write ("            innerWriter.Write(sourceId);\n{0}", _Indent);
 					_Output.Write ("            innerWriter.Write(payload);\n{0}", _Indent);
 					_Output.Write ("            mezanineWriter.Encrypt(MutualKeyOut, innerWriter);\n{0}", _Indent);
 					} else {
-					_Output.Write ("            mezanineWriter.Write(destinationId);\n{0}", _Indent);
+					_Output.Write ("            mezanineWriter.Write(sourceId);\n{0}", _Indent);
 					_Output.Write ("            mezanineWriter.Write(payload);\n{0}", _Indent);
 					}
 				_Output.Write ("            outerWriter.Encrypt(ClientKeyOut, mezanineWriter);\n{0}", _Indent);
@@ -257,12 +257,12 @@ namespace Goedel.Tool.Yaschema {
 				_Output.Write ("            // Encrypted in plaintext\n{0}", _Indent);
 				_Output.Write ("            var innerWriter = new PacketWriter(outerWriter.RemainingSpace);\n{0}", _Indent);
 				_Output.Write ("            innerWriter.WriteExtensions(ciphertextExtensions);\n{0}", _Indent);
-				_Output.Write ("            innerWriter.Write(destinationId);\n{0}", _Indent);
+				_Output.Write ("            innerWriter.Write(sourceId);\n{0}", _Indent);
 				_Output.Write ("            innerWriter.Write(payload);\n{0}", _Indent);
 				_Output.Write ("            outerWriter.Encrypt(MutualKeyOut, innerWriter);\n{0}", _Indent);
 				} else {
 				_Output.Write ("            // Only have plaintext\n{0}", _Indent);
-				_Output.Write ("            outerWriter.Write(destinationId);\n{0}", _Indent);
+				_Output.Write ("            outerWriter.Write(sourceId);\n{0}", _Indent);
 				_Output.Write ("            outerWriter.Write(payload);\n{0}", _Indent);
 				}
 			_Output.Write ("\n{0}", _Indent);
@@ -372,7 +372,7 @@ namespace Goedel.Tool.Yaschema {
 				_Output.Write ("            // Encrypted inside Mezzanine\n{0}", _Indent);
 				_Output.Write ("            var innerReader = mezanineReader.Decrypt (MutualKeyIn);\n{0}", _Indent);
 				_Output.Write ("            result.CiphertextExtensions = innerReader.ReadExtensions();\n{0}", _Indent);
-				_Output.Write ("            result.SourceId = innerReader.ReadBinary();\n{0}", _Indent);
+				_Output.Write ("            result.SourceId = innerReaderg.ReadBinary();\n{0}", _Indent);
 				_Output.Write ("            result.Payload = innerReader.ReadBinary();\n{0}", _Indent);
 				} else {
 				_Output.Write ("            // Only have plaintext\n{0}", _Indent);
