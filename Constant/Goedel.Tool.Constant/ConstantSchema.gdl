@@ -54,6 +54,8 @@ Class Goedel.Tool.Constant Constant
 	Type Tag
 		Id				ID Label
 		Value			String
+		Options			Options
+			Description	Description Single
 
 	Type UDF
 		Value			Integer

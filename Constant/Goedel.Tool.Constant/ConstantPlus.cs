@@ -69,6 +69,9 @@ namespace Goedel.Tool.Constant {
             foreach (var item in Integer) {
                 item.Init(this);
                 }
+            foreach (var item in Tag) {
+                item.Init(this);
+                }
             }
         }
 

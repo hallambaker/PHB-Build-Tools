@@ -379,6 +379,7 @@ namespace Goedel.Tool.Constant {
     public partial class Tag : _Choice {
         public ID<_Choice>				Id; 
 		public string					Value;
+		public Description  Description = new  Description();
 
         public override ConstantType _Tag () =>ConstantType.Tag;
 
@@ -395,6 +396,10 @@ namespace Goedel.Tool.Constant {
 
 	        Output.WriteId ("Id", Id.ToString()); 
 			Output.WriteAttribute ("Value", Value);
+			Output.StartList ("");
+		// public Description  Description = new  Description();
+			Description.Serialize (Output, true);
+			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Tag");
 				}			
@@ -763,6 +768,7 @@ namespace Goedel.Tool.Constant {
 		Tag_Start,
 		Tag__Id,				
 		Tag__Value,				
+		Tag__Options,				
 		UDF_Start,
 		UDF__Value,				
 		UDF__Class,				
@@ -1553,9 +1559,38 @@ namespace Goedel.Tool.Constant {
                         throw new Expected("Expected String");
 
                     case StateCode.Tag__Value:
-                        Pop ();
-                        Represent = true; 
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Tag__Options;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
                         break;
+                    case StateCode.Tag__Options: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for OPTIONS $$$$$
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Constant.Tag Current_Cast = (Goedel.Tool.Constant.Tag)Current;
+                            Goedel.Tool.Constant.ConstantType LabelType = _Reserved (Text);
+							switch (LabelType) {
+								case Goedel.Tool.Constant.ConstantType.Description : {
+
+									// Description  Description
+									Current_Cast.Description = NewDescription ();
+									break;
+									}
+								default : {
+									throw new Expected("Parser Error Expected [Description ]");
+									}
+								}
+							}
+                        break;
+
                     case StateCode.UDF_Start:
                         if (Token == TokenType.INTEGER) {
                             Goedel.Tool.Constant.UDF Current_Cast = (Goedel.Tool.Constant.UDF)Current;

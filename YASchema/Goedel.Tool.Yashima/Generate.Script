@@ -24,7 +24,7 @@ namespace #{Yaschema.NameSpaceName} {
 	/// <summary>
     /// Client connection class. Tracks the state of a client connection.
     /// </summary>
-    public partial class  SessionInitiator : Session {
+    public partial class  ConnectionInitiator : RudConnection {
 
 #filter Client client Yaschema.Top
 
@@ -42,7 +42,7 @@ namespace #{Yaschema.NameSpaceName} {
 
 		}
 
-    public partial class SessionResponder : Session {
+    public partial class ConnectionResponder : RudConnection {
 
 #filter Host host Yaschema.Top
 #foreach (var packet in host.Entries)
@@ -52,10 +52,7 @@ namespace #{Yaschema.NameSpaceName} {
 
 #filter Client client Yaschema.Top
 #foreach (var packet in client.Entries)
-#if (packet.IsInitial)
-        // Skip Client packet #{packet.Id} (initial packets parsed by the listener)
-
-#elseif (packet.Completer)
+#if (packet.Completer)
         // Perform initial parse as static listener, only complete decrypt in session context
 
         /// <summary>
@@ -106,6 +103,10 @@ namespace #{Yaschema.NameSpaceName} {
         /// <summary>
         /// Create a serialised packet of type #{packet.Id} packet.
         /// </summary>
+        /// <param name="sourceId">The source identifier.</param>
+#if (!packet.IsInitial)
+        /// <param name="destinationId">The destination identifier.</param>
+#end if
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
@@ -122,7 +123,9 @@ namespace #{Yaschema.NameSpaceName} {
         /// <returns>The serialized data.</returns>
         public byte[] Serialize#{packet.Id} (
                 byte[] sourceId,
+#if (!packet.IsInitial)
                 byte[] destinationId,
+#end if
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null#!
 #if (packet.HasMezzanine)
@@ -138,10 +141,16 @@ namespace #{Yaschema.NameSpaceName} {
                 int position=0) {
 
             // The plaintext part
-            var outerWriter = new PacketWriterAesGcm(buffer:buffer, position:position);
+            var outerWriter = PacketWriterFactory(buffer:buffer, position:position);
+#if (packet.IsInitial)
+            byte[] destinationId = null;
+#end if
             outerWriter.WriteStreamId(destinationId);
-#if (!packet.IsClient)
-            outerWriter.Write(Constants.Tag#{packet.Id});
+
+#if (packet.IsClient)
+            outerWriter.Write(InitiatorMessageType.#{packet.Id});
+#else
+            outerWriter.Write(ResponderMessageType.#{packet.Id});
 #end if
 #if (plaintext == null)
             // There are no plaintext fields.
@@ -160,7 +169,7 @@ namespace #{Yaschema.NameSpaceName} {
             outerWriter.Write (clientKeyId);
 #end if
 #if (plaintext.Ephemerals)
-            AddEphemerals (plaintextExtensions);
+            AddEphemerals (destinationId, plaintextExtensions);
 #end if
 #if (plaintext.Challenge)
             AddChallenge (plaintextExtensions);
@@ -181,7 +190,7 @@ namespace #{Yaschema.NameSpaceName} {
 
 #if (packet.HasMezzanine) 
             // Mezzanine
-            var mezanineWriter = new PacketWriterAesGcm(outerWriter.RemainingSpace);
+            var mezanineWriter = PacketWriterFactory(outerWriter);
 #if (mezzanine.AddExtensions)
             var mezanineExtensions = new List<PacketExtension>();
 #end if  
@@ -200,30 +209,32 @@ namespace #{Yaschema.NameSpaceName} {
             mezanineExtensions.AddRangeSafe(mezanineExtensionsIn);
             mezanineWriter.WriteExtensions(mezanineExtensions);
 #else
-            mezanineWriter.WriteExtensions(plaintextExtensionsIn);
+            mezanineWriter.WriteExtensions(mezanineExtensionsIn);
 #end if
 #if (packet.HasEncrypted) 
             // Encrypted inside Mezzanine
-            var innerWriter = new PacketWriter(mezanineWriter.RemainingSpace);
+            var innerWriter = PacketWriterFactory(mezanineWriter);
             innerWriter.WriteExtensions(ciphertextExtensions);
             innerWriter.Write(sourceId);
             innerWriter.Write(payload);
-            mezanineWriter.Encrypt(MutualKeyOut, innerWriter);
+            mezanineWriter.Encrypt(MutualKeyOut, innerWriter, false);
 #else
             mezanineWriter.Write(sourceId);
             mezanineWriter.Write(payload);
 #end if
-            outerWriter.Encrypt(ClientKeyOut, mezanineWriter);
+            outerWriter.Encrypt(ClientKeyOut, mezanineWriter, true);
 #elseif (packet.HasEncrypted) 
             // Encrypted in plaintext
-            var innerWriter = new PacketWriter(outerWriter.RemainingSpace);
+            var innerWriter = PacketWriterFactory(outerWriter);
             innerWriter.WriteExtensions(ciphertextExtensions);
             innerWriter.Write(sourceId);
             innerWriter.Write(payload);
-            outerWriter.Encrypt(MutualKeyOut, innerWriter);
+            outerWriter.Encrypt(MutualKeyOut, innerWriter, true);
 #else
             // Only have plaintext
+#if (packet.IsClient)
             outerWriter.Write(sourceId);
+#end if
             outerWriter.Write(payload);
 #end if
 
@@ -238,10 +249,8 @@ namespace #{Yaschema.NameSpaceName} {
 #% var mezzanine = packet.Mezzanine;
 
         /// <summary>
-        /// Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
-        /// as a #{packet.Id} packet.
+        /// Parse the packet <paramref name="packet"/> as a #{packet.Id} packet.
         /// </summary>
-        /// <param name="sourceId">The packet source.</param>
         /// <param name="packet">The packet data</param>
         /// <param name="position">Start position at which reading of the packet should start.</param>
         /// <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
@@ -257,7 +266,7 @@ namespace #{Yaschema.NameSpaceName} {
             PacketIn=result;
 #end if
             // The plaintext part
-            var outerReader = new PacketReaderAesGcm(packet, position, count);
+            var outerReader = PacketReaderFactory(packet, position, count);
 #if (packet.HasPlaintext) 
 #if (plaintext.Ephemeral)
             result.HostKeyId = outerReader.ReadString ();
@@ -313,7 +322,7 @@ namespace #{Yaschema.NameSpaceName} {
 #end if
 #if (packet.HasEncrypted) 
             // Encrypted inside Mezzanine
-            var innerReader = mezanineReader.Decrypt (MutualKeyIn);
+            var innerReader = mezanineReader.Decrypt (MutualKeyIn, false);
             result.CiphertextExtensions = innerReader.ReadExtensions();
             result.SourceId = innerReader.ReadBinary();
             result.Payload = innerReader.ReadBinary();
@@ -329,7 +338,9 @@ namespace #{Yaschema.NameSpaceName} {
             result.Payload = innerReader.ReadBinary();
 #else
             // Only have plaintext
+#if (packet.IsClient)
             result.SourceId = outerReader.ReadBinary();
+#end if
             result.Payload = outerReader.ReadBinary();
 #end if
 #end method
