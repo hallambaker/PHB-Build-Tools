@@ -1,9 +1,9 @@
 ﻿
-//  This file was automatically generated at 6/10/2021 1:34:16 PM
+//  This file was automatically generated at 6/10/2021 3:34:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  exceptional version 3.0.0.651
+//  Generator:  exceptional version 3.0.0.655
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -37,8 +37,8 @@ namespace Goedel.Tool.Makey {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"Key could not be read"
 				};
@@ -70,7 +70,7 @@ namespace Goedel.Tool.Makey {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -91,8 +91,8 @@ namespace Goedel.Tool.Makey {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"No provider specified"
 				};
@@ -124,7 +124,7 @@ namespace Goedel.Tool.Makey {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -144,8 +144,8 @@ namespace Goedel.Tool.Makey {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The specified private key could not be found"
 				};
@@ -177,7 +177,7 @@ namespace Goedel.Tool.Makey {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -197,8 +197,8 @@ namespace Goedel.Tool.Makey {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"File read error, file was incomplete"
 				};
@@ -230,7 +230,7 @@ namespace Goedel.Tool.Makey {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -248,8 +248,8 @@ namespace Goedel.Tool.Makey {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 				};
 
 		/// <summary>
@@ -279,7 +279,7 @@ namespace Goedel.Tool.Makey {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }

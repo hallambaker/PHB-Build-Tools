@@ -23,7 +23,7 @@
   </Target>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.Registry\Goedel.Registry.csproj" />
-    <ProjectReference Include="..\..\..\mmm\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
 </Project>

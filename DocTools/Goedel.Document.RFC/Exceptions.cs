@@ -1,9 +1,9 @@
 ﻿
-//  This file was automatically generated at 6/10/2021 1:34:24 PM
+//  This file was automatically generated at 6/10/2021 3:34:59 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  exceptional version 3.0.0.651
+//  Generator:  exceptional version 3.0.0.655
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -36,8 +36,8 @@ namespace Goedel.Document.RFC {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"HTML Parser error"
 				};
@@ -69,7 +69,7 @@ namespace Goedel.Document.RFC {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -87,8 +87,8 @@ namespace Goedel.Document.RFC {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"HTML Parser error no HTML body element"
 				};
@@ -120,7 +120,7 @@ namespace Goedel.Document.RFC {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -138,8 +138,8 @@ namespace Goedel.Document.RFC {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"HTML Parser error no HTML H1 element for title"
 				};
@@ -171,7 +171,7 @@ namespace Goedel.Document.RFC {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -189,8 +189,8 @@ namespace Goedel.Document.RFC {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"HTML Parser error no HTML H2 element for start of document"
 				};
@@ -222,7 +222,7 @@ namespace Goedel.Document.RFC {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -240,8 +240,8 @@ namespace Goedel.Document.RFC {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 				};
 
 		/// <summary>
@@ -271,7 +271,7 @@ namespace Goedel.Document.RFC {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -289,8 +289,8 @@ namespace Goedel.Document.RFC {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"Invalid IPR term specified"
 				};
@@ -322,7 +322,7 @@ namespace Goedel.Document.RFC {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }

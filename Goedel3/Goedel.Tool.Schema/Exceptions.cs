@@ -1,9 +1,9 @@
 ﻿
-//  This file was automatically generated at 6/10/2021 1:34:11 PM
+//  This file was automatically generated at 6/10/2021 3:34:47 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  exceptional version 3.0.0.651
+//  Generator:  exceptional version 3.0.0.655
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -36,8 +36,8 @@ namespace Goedel.Schema {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The schema could not be parsed"
 				};
@@ -69,7 +69,7 @@ namespace Goedel.Schema {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -87,8 +87,8 @@ namespace Goedel.Schema {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"Expected reserved word, token {0} was not found"
 				};
@@ -120,7 +120,7 @@ namespace Goedel.Schema {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }

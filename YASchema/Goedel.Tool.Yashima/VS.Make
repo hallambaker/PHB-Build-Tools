@@ -21,9 +21,8 @@ LinkFiles = \
     Goedel.Tool.Core.dll
 
 ToolTargets = \
+	YaschemaSchema.cs\
 	Generate.cs
-
-
 YaschemaSchema.cs : YaschemaSchema.gdl 
 	goedel3 YaschemaSchema.gdl  /cs  YaschemaSchema.cs
 

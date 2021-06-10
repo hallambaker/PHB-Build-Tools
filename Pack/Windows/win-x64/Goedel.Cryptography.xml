@@ -14140,6 +14140,120 @@
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
         </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierAnyTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.Any</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierAnyTitle">
+            <summary>Description for UdfAlgorithmIdentifier.Any</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierX25519Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.X25519</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierX25519Title">
+            <summary>Description for UdfAlgorithmIdentifier.X25519</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierX448Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.X448</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierX448Title">
+            <summary>Description for UdfAlgorithmIdentifier.X448</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierEd25519Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.Ed25519</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierEd25519Title">
+            <summary>Description for UdfAlgorithmIdentifier.Ed25519</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierEd448Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.Ed448</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierEd448Title">
+            <summary>Description for UdfAlgorithmIdentifier.Ed448</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierP256Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.P256</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierP256Title">
+            <summary>Description for UdfAlgorithmIdentifier.P256</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierP384Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.P384</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierP384Title">
+            <summary>Description for UdfAlgorithmIdentifier.P384</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierP521Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.P521</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierP521Title">
+            <summary>Description for UdfAlgorithmIdentifier.P521</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA2048Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.RSA2048</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA2048Title">
+            <summary>Description for UdfAlgorithmIdentifier.RSA2048</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA3072Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.RSA3072</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA3072Title">
+            <summary>Description for UdfAlgorithmIdentifier.RSA3072</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA4096Tag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.RSA4096</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierRSA4096Title">
+            <summary>Description for UdfAlgorithmIdentifier.RSA4096</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierReservedIetfTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.ReservedIetf</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierReservedIetfTitle">
+            <summary>Description for UdfAlgorithmIdentifier.ReservedIetf</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshProfileDeviceTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshProfileDevice</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshProfileDeviceTitle">
+            <summary>Description for UdfAlgorithmIdentifier.MeshProfileDevice</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshActivationDeviceTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshActivationDevice</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshActivationDeviceTitle">
+            <summary>Description for UdfAlgorithmIdentifier.MeshActivationDevice</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshProfileAccountTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshProfileAccount</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshProfileAccountTitle">
+            <summary>Description for UdfAlgorithmIdentifier.MeshProfileAccount</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshActivationAccountTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshActivationAccount</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshActivationAccountTitle">
+            <summary>Description for UdfAlgorithmIdentifier.MeshActivationAccount</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshProfileServiceTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshProfileService</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshProfileServiceTitle">
+            <summary>Description for UdfAlgorithmIdentifier.MeshProfileService</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshActivationServiceTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshActivationService</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierMeshActivationServiceTitle">
+            <summary>Description for UdfAlgorithmIdentifier.MeshActivationService</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierReservedMeshTag">
+            <summary>Jose enumeration tag for UdfAlgorithmIdentifier.ReservedMesh</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.UdfAlgorithmIdentifierReservedMeshTitle">
+            <summary>Description for UdfAlgorithmIdentifier.ReservedMesh</summary>
+        </member>
         <member name="M:Goedel.Cryptography.UDFConstants.ToUdfAlgorithmIdentifier(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -14176,6 +14290,30 @@
         </member>
         <member name="F:Goedel.Cryptography.UDFConstants.UDFLock">
             <summary>application/udf-lock</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesAnyTag">
+            <summary>Jose enumeration tag for DerivedKeyUdfDerrivedKeyUses.Any</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesAnyTitle">
+            <summary>Description for DerivedKeyUdfDerrivedKeyUses.Any</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesEncryptionTag">
+            <summary>Jose enumeration tag for DerivedKeyUdfDerrivedKeyUses.Encryption</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesEncryptionTitle">
+            <summary>Description for DerivedKeyUdfDerrivedKeyUses.Encryption</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesSignatureTag">
+            <summary>Jose enumeration tag for DerivedKeyUdfDerrivedKeyUses.Signature</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesSignatureTitle">
+            <summary>Description for DerivedKeyUdfDerrivedKeyUses.Signature</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesAuthenticationTag">
+            <summary>Jose enumeration tag for DerivedKeyUdfDerrivedKeyUses.Authentication</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.UDFConstants.DerivedKeyUdfDerrivedKeyUsesAuthenticationTitle">
+            <summary>Description for DerivedKeyUdfDerrivedKeyUses.Authentication</summary>
         </member>
         <member name="M:Goedel.Cryptography.UDFConstants.ToDerivedKeyUdfDerrivedKeyUses(System.String)">
             <summary>
