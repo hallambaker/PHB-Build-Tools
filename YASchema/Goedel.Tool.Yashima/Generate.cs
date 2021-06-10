@@ -157,8 +157,6 @@ namespace Goedel.Tool.Yaschema {
 				_Output.Write ("        /// <param name=\"ciphertextExtensions\">Additional extensions to be presented \n{0}", _Indent);
 				_Output.Write ("        /// in the encrypted segment.</param>\n{0}", _Indent);
 				}
-			_Output.Write ("        /// <param name=\"buffer\">Buffer provided by caller</param>\n{0}", _Indent);
-			_Output.Write ("        /// <param name=\"position\">Offset within packet at which first byte is to be written.</param>\n{0}", _Indent);
 			_Output.Write ("        /// <returns>The serialized data.</returns>\n{0}", _Indent);
 			_Output.Write ("        public byte[] Serialize{1} (\n{0}", _Indent, packet.Id);
 			_Output.Write ("                byte[] sourceId,\n{0}", _Indent);
@@ -175,12 +173,12 @@ namespace Goedel.Tool.Yaschema {
 				_Output.Write (",\n{0}", _Indent);
 				_Output.Write ("                List<PacketExtension> ciphertextExtensions = null", _Indent);
 				}
-			_Output.Write (",\n{0}", _Indent);
-			_Output.Write ("                byte[] buffer=null,\n{0}", _Indent);
-			_Output.Write ("                int position=0) {{\n{0}", _Indent);
+			//                byte[] buffer=null,
+			//                int position=0
+			_Output.Write (") {{\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("            // The plaintext part\n{0}", _Indent);
-			_Output.Write ("            var outerWriter = PacketWriterFactory(buffer:buffer, position:position);\n{0}", _Indent);
+			_Output.Write ("            var outerWriter = PacketWriterFactory();\n{0}", _Indent);
 			if (  (packet.IsInitial) ) {
 				_Output.Write ("            byte[] destinationId = null;\n{0}", _Indent);
 				}

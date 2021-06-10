@@ -107,6 +107,12 @@ namespace Goedel.Tool.Constant {
 							_Output.Write ("        ///<summary>Jose enumeration tag for {1}.{2}</summary>\n{0}", _Indent, item.Id.Label, code.Id.Label);
 							_Output.Write ("        public const string  {1}{2}Tag = \"{3}\";\n{0}", _Indent, item.Id.Label, code.Id.Label, code.Id.Label);
 							}
+						foreach  (var code in item.Integer) {
+							_Output.Write ("        ///<summary>Jose enumeration tag for {1}.{2}</summary>\n{0}", _Indent, item.Id.Label, code.Id.Label);
+							_Output.Write ("        public const string  {1}{2}Tag = \"{3}\";\n{0}", _Indent, item.Id.Label, code.Id.Label, code.Id.Label);
+							_Output.Write ("        ///<summary>Description for {1}.{2}</summary>\n{0}", _Indent, item.Id.Label, code.Id.Label);
+							_Output.Write ("        public const string  {1}{2}Title = \"{3}\";\n{0}", _Indent, item.Id.Label, code.Id.Label, code.Title);
+							}
 						_Output.Write ("\n{0}", _Indent);
 						_Output.Write ("        /// <summary>\n{0}", _Indent);
 						_Output.Write ("        /// Convert the string <paramref name=\"text\"/> to the corresponding enumeration\n{0}", _Indent);

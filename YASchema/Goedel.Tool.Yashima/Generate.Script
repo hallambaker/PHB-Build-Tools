@@ -118,8 +118,6 @@ namespace #{Yaschema.NameSpaceName} {
         /// <param name="ciphertextExtensions">Additional extensions to be presented 
         /// in the encrypted segment.</param>
 #end if
-        /// <param name="buffer">Buffer provided by caller</param>
-        /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The serialized data.</returns>
         public byte[] Serialize#{packet.Id} (
                 byte[] sourceId,
@@ -136,12 +134,13 @@ namespace #{Yaschema.NameSpaceName} {
 ,
                 List<PacketExtension> ciphertextExtensions = null#!
 #end if
-,
-                byte[] buffer=null,
-                int position=0) {
+#!,
+#!                byte[] buffer=null,
+#!                int position=0
+) {
 
             // The plaintext part
-            var outerWriter = PacketWriterFactory(buffer:buffer, position:position);
+            var outerWriter = PacketWriterFactory();
 #if (packet.IsInitial)
             byte[] destinationId = null;
 #end if

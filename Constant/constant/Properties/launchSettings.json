@@ -2,8 +2,8 @@
   "profiles": {
     "constant": {
       "commandName": "Project",
-      "commandLineArgs": "..\\..\\..\\Libraries\\Goedel.Cryptography.Dare\\DareConstants.constant /cs",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Outputs\\Documents\\Generated"
+      "commandLineArgs": "C:\\Users\\hallam\\Work\\mmm\\Mesh\\Goedel.Mesh\\MeshConstants.constant /cs",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Mesh\\Goedel.Mesh"
     }
   }
 }

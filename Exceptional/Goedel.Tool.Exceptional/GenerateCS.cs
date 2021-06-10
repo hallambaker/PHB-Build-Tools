@@ -110,8 +110,8 @@ namespace Goedel.Tool.Exceptional {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("		///<summary>Templates for formatting response messages.</summary>\n{0}", _Indent);
-			_Output.Write ("		public static new System.Collections.Generic.List<string> Templates = \n{0}", _Indent);
-			_Output.Write ("				new System.Collections.Generic.List<string> {{\n{0}", _Indent);
+			_Output.Write ("		public static new System.Collections.Generic.List<string> Templates {{get; set;}} = \n{0}", _Indent);
+			_Output.Write ("				new () {{\n{0}", _Indent);
 			 var ConsoleSep = new Separator ("", ",");
 			foreach  (var console in Exception.Consoles) {
 				_Output.Write ("{1}\n{0}", _Indent, ConsoleSep);
@@ -146,7 +146,7 @@ namespace Goedel.Tool.Exceptional {
 			_Output.Write ("		/// <summary>\n{0}", _Indent);
 			_Output.Write ("        /// The public fatory delegate\n{0}", _Indent);
 			_Output.Write ("        /// </summary>\n{0}", _Indent);
-			_Output.Write ("        public static {1}global::Goedel.Utilities.ThrowDelegate Throw = _Throw;\n{0}", _Indent, Exception.Base.If("", "new "));
+			_Output.Write ("        public static {1}global::Goedel.Utilities.ThrowDelegate Throw {{get;}} = _Throw;\n{0}", _Indent, Exception.Base.If("", "new "));
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        }}\n{0}", _Indent);

@@ -1310,6 +1310,12 @@
             Write a blank line to the output
             </summary>
         </member>
+        <member name="M:Goedel.Utilities.Screen.Write(System.String)">
+            <summary>
+            Write text to the console;
+            </summary>
+            <param name="text">The text to write.</param>
+        </member>
         <member name="T:Goedel.Utilities.NYI">
             <summary>
             This feature has not been implemented

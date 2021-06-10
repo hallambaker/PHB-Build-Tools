@@ -71,6 +71,12 @@ namespace #{Constant.NameSpaceName} {
         ///<summary>Jose enumeration tag for #{item.Id.Label}.#{code.Id.Label}</summary>
         public const string  #{item.Id.Label}#{code.Id.Label}Tag = "#{code.Id.Label}";
 #end foreach
+#foreach (var code in item.Integer)
+        ///<summary>Jose enumeration tag for #{item.Id.Label}.#{code.Id.Label}</summary>
+        public const string  #{item.Id.Label}#{code.Id.Label}Tag = "#{code.Id.Label}";
+        ///<summary>Description for #{item.Id.Label}.#{code.Id.Label}</summary>
+        public const string  #{item.Id.Label}#{code.Id.Label}Title = "#{code.Title}";
+#end foreach
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
