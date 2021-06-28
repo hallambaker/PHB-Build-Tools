@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <ApplicationIcon>PHBLogo256.ico</ApplicationIcon>
+    <OutputType>Exe</OutputType>
+    <Company>Phill Hallam-Baker</Company>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+    <Product>Version</Product>
+    <Description>Manages version information.</Description>
+    <Copyright>© 2015-2019</Copyright>
+    <Title>Version</Title>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <Configurations>Debug;Release</Configurations>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Generate.cs">
+      <DependentUpon>Generate.Script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Command.cs">
+      <DependentUpon>Command.command</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Command.command">
+      <LastGenOutput>Command.cs</LastGenOutput>
+      <Generator>CommandCS</Generator>
+    </None>
+    <None Update="Generate.Script">
+      <LastGenOutput>Generate.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPreBuild" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="cd $(ProjectDir) &amp;&amp; VSPostBuildWindows $(TargetDir)" />
+  </Target>
+  
+  
+</Project>

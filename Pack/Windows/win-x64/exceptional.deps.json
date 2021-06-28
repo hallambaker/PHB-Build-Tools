@@ -891,6 +891,9 @@
         }
       },
       "Goedel.IO/1.0.0": {
+        "dependencies": {
+          "Goedel.Utilities": "1.0.0"
+        },
         "runtime": {
           "Goedel.IO.dll": {}
         }

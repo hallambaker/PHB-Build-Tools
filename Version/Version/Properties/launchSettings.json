@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Version": {
+      "commandName": "Project",
+      "commandLineArgs": "version.version AssemblyVersion.cs",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\buildtools\\Version"
+    }
+  }
+}

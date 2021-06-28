@@ -3282,7 +3282,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Discovery.DiscoveryException.Templates">
+        <member name="P:Goedel.Discovery.DiscoveryException.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.DiscoveryException.#ctor(System.String,System.Exception,System.Object[])">
@@ -3300,7 +3300,7 @@
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Discovery.DiscoveryException.Throw">
+        <member name="P:Goedel.Discovery.DiscoveryException.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -3314,7 +3314,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Discovery.BufferWriteOverflow.Templates">
+        <member name="P:Goedel.Discovery.BufferWriteOverflow.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.BufferWriteOverflow.#ctor(System.String,System.Exception,System.Object[])">
@@ -3332,7 +3332,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Discovery.BufferWriteOverflow.Throw">
+        <member name="P:Goedel.Discovery.BufferWriteOverflow.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -3346,7 +3346,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Discovery.BufferReadOverflow.Templates">
+        <member name="P:Goedel.Discovery.BufferReadOverflow.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.BufferReadOverflow.#ctor(System.String,System.Exception,System.Object[])">
@@ -3364,7 +3364,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Discovery.BufferReadOverflow.Throw">
+        <member name="P:Goedel.Discovery.BufferReadOverflow.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -3378,7 +3378,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Discovery.LabelTooLong.Templates">
+        <member name="P:Goedel.Discovery.LabelTooLong.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.LabelTooLong.#ctor(System.String,System.Exception,System.Object[])">
@@ -3396,7 +3396,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Discovery.LabelTooLong.Throw">
+        <member name="P:Goedel.Discovery.LabelTooLong.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -3410,7 +3410,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Discovery.UnicodeNotSupported.Templates">
+        <member name="P:Goedel.Discovery.UnicodeNotSupported.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.UnicodeNotSupported.#ctor(System.String,System.Exception,System.Object[])">
@@ -3428,7 +3428,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Discovery.UnicodeNotSupported.Throw">
+        <member name="P:Goedel.Discovery.UnicodeNotSupported.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -3442,7 +3442,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Discovery.IllegalCharacter.Templates">
+        <member name="P:Goedel.Discovery.IllegalCharacter.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.IllegalCharacter.#ctor(System.String,System.Exception,System.Object[])">
@@ -3460,7 +3460,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Discovery.IllegalCharacter.Throw">
+        <member name="P:Goedel.Discovery.IllegalCharacter.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -3474,7 +3474,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Discovery.TagTooLong.Templates">
+        <member name="P:Goedel.Discovery.TagTooLong.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.TagTooLong.#ctor(System.String,System.Exception,System.Object[])">
@@ -3492,7 +3492,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Discovery.TagTooLong.Throw">
+        <member name="P:Goedel.Discovery.TagTooLong.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -3506,7 +3506,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Discovery.InvalidIPv4.Templates">
+        <member name="P:Goedel.Discovery.InvalidIPv4.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.InvalidIPv4.#ctor(System.String,System.Exception,System.Object[])">
@@ -3524,7 +3524,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Discovery.InvalidIPv4.Throw">
+        <member name="P:Goedel.Discovery.InvalidIPv4.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -3538,7 +3538,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Discovery.InvalidIPv6.Templates">
+        <member name="P:Goedel.Discovery.InvalidIPv6.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Discovery.InvalidIPv6.#ctor(System.String,System.Exception,System.Object[])">
@@ -3556,7 +3556,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Discovery.InvalidIPv6.Throw">
+        <member name="P:Goedel.Discovery.InvalidIPv6.Throw">
             <summary>
             The public fatory delegate
             </summary>

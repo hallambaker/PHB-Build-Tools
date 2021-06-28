@@ -4403,7 +4403,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.CryptographicException.Templates">
+        <member name="P:Goedel.Cryptography.CryptographicException.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.CryptographicException.#ctor(System.String,System.Exception,System.Object[])">
@@ -4421,7 +4421,7 @@
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.CryptographicException.Throw">
+        <member name="P:Goedel.Cryptography.CryptographicException.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4435,7 +4435,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.InvalidFrameIndex.Templates">
+        <member name="P:Goedel.Cryptography.InvalidFrameIndex.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.InvalidFrameIndex.#ctor(System.String,System.Exception,System.Object[])">
@@ -4453,7 +4453,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.InvalidFrameIndex.Throw">
+        <member name="P:Goedel.Cryptography.InvalidFrameIndex.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4467,7 +4467,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.InternalCryptographicException.Templates">
+        <member name="P:Goedel.Cryptography.InternalCryptographicException.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.InternalCryptographicException.#ctor(System.String,System.Exception,System.Object[])">
@@ -4485,7 +4485,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.InternalCryptographicException.Throw">
+        <member name="P:Goedel.Cryptography.InternalCryptographicException.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4499,7 +4499,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.KeyNotFound.Templates">
+        <member name="P:Goedel.Cryptography.KeyNotFound.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.KeyNotFound.#ctor(System.String,System.Exception,System.Object[])">
@@ -4517,7 +4517,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.KeyNotFound.Throw">
+        <member name="P:Goedel.Cryptography.KeyNotFound.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4531,7 +4531,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.MismatchedCurves.Templates">
+        <member name="P:Goedel.Cryptography.MismatchedCurves.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.MismatchedCurves.#ctor(System.String,System.Exception,System.Object[])">
@@ -4549,7 +4549,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.MismatchedCurves.Throw">
+        <member name="P:Goedel.Cryptography.MismatchedCurves.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4563,7 +4563,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.CatalogNotInitialized.Templates">
+        <member name="P:Goedel.Cryptography.CatalogNotInitialized.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.CatalogNotInitialized.#ctor(System.String,System.Exception,System.Object[])">
@@ -4581,7 +4581,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.CatalogNotInitialized.Throw">
+        <member name="P:Goedel.Cryptography.CatalogNotInitialized.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4595,7 +4595,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.PlatformNotInitialized.Templates">
+        <member name="P:Goedel.Cryptography.PlatformNotInitialized.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.PlatformNotInitialized.#ctor(System.String,System.Exception,System.Object[])">
@@ -4613,7 +4613,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.PlatformNotInitialized.Throw">
+        <member name="P:Goedel.Cryptography.PlatformNotInitialized.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4627,7 +4627,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.OperationNotSupported.Templates">
+        <member name="P:Goedel.Cryptography.OperationNotSupported.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.OperationNotSupported.#ctor(System.String,System.Exception,System.Object[])">
@@ -4645,7 +4645,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.OperationNotSupported.Throw">
+        <member name="P:Goedel.Cryptography.OperationNotSupported.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4659,7 +4659,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.NoAvailableEncryptionKey.Templates">
+        <member name="P:Goedel.Cryptography.NoAvailableEncryptionKey.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.NoAvailableEncryptionKey.#ctor(System.String,System.Exception,System.Object[])">
@@ -4677,7 +4677,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.NoAvailableEncryptionKey.Throw">
+        <member name="P:Goedel.Cryptography.NoAvailableEncryptionKey.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4691,7 +4691,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.NoAvailableDecryptionKey.Templates">
+        <member name="P:Goedel.Cryptography.NoAvailableDecryptionKey.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.NoAvailableDecryptionKey.#ctor(System.String,System.Exception,System.Object[])">
@@ -4709,7 +4709,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.NoAvailableDecryptionKey.Throw">
+        <member name="P:Goedel.Cryptography.NoAvailableDecryptionKey.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4724,7 +4724,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.ImplementationLimit.Templates">
+        <member name="P:Goedel.Cryptography.ImplementationLimit.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.ImplementationLimit.#ctor(System.String,System.Exception,System.Object[])">
@@ -4742,7 +4742,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.ImplementationLimit.Throw">
+        <member name="P:Goedel.Cryptography.ImplementationLimit.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4756,7 +4756,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.InvalidQuorum.Templates">
+        <member name="P:Goedel.Cryptography.InvalidQuorum.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.InvalidQuorum.#ctor(System.String,System.Exception,System.Object[])">
@@ -4774,7 +4774,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.InvalidQuorum.Throw">
+        <member name="P:Goedel.Cryptography.InvalidQuorum.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4789,7 +4789,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.InsufficientShares.Templates">
+        <member name="P:Goedel.Cryptography.InsufficientShares.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.InsufficientShares.#ctor(System.String,System.Exception,System.Object[])">
@@ -4807,7 +4807,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.InsufficientShares.Throw">
+        <member name="P:Goedel.Cryptography.InsufficientShares.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4822,7 +4822,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.QuorumExceedsShares.Templates">
+        <member name="P:Goedel.Cryptography.QuorumExceedsShares.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.QuorumExceedsShares.#ctor(System.String,System.Exception,System.Object[])">
@@ -4840,7 +4840,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.QuorumExceedsShares.Throw">
+        <member name="P:Goedel.Cryptography.QuorumExceedsShares.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4854,7 +4854,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.QuorumInsufficient.Templates">
+        <member name="P:Goedel.Cryptography.QuorumInsufficient.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.QuorumInsufficient.#ctor(System.String,System.Exception,System.Object[])">
@@ -4872,7 +4872,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.QuorumInsufficient.Throw">
+        <member name="P:Goedel.Cryptography.QuorumInsufficient.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4886,7 +4886,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.SharesInsufficient.Templates">
+        <member name="P:Goedel.Cryptography.SharesInsufficient.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.SharesInsufficient.#ctor(System.String,System.Exception,System.Object[])">
@@ -4904,7 +4904,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.SharesInsufficient.Throw">
+        <member name="P:Goedel.Cryptography.SharesInsufficient.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4919,7 +4919,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.QuorumExceeded.Templates">
+        <member name="P:Goedel.Cryptography.QuorumExceeded.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.QuorumExceeded.#ctor(System.String,System.Exception,System.Object[])">
@@ -4937,7 +4937,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.QuorumExceeded.Throw">
+        <member name="P:Goedel.Cryptography.QuorumExceeded.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4952,7 +4952,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.QuorumDegreeExceeded.Templates">
+        <member name="P:Goedel.Cryptography.QuorumDegreeExceeded.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.QuorumDegreeExceeded.#ctor(System.String,System.Exception,System.Object[])">
@@ -4970,7 +4970,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.QuorumDegreeExceeded.Throw">
+        <member name="P:Goedel.Cryptography.QuorumDegreeExceeded.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4984,7 +4984,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.MismatchedShares.Templates">
+        <member name="P:Goedel.Cryptography.MismatchedShares.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.MismatchedShares.#ctor(System.String,System.Exception,System.Object[])">
@@ -5002,7 +5002,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.MismatchedShares.Throw">
+        <member name="P:Goedel.Cryptography.MismatchedShares.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5016,7 +5016,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.InsufficientResults.Templates">
+        <member name="P:Goedel.Cryptography.InsufficientResults.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.InsufficientResults.#ctor(System.String,System.Exception,System.Object[])">
@@ -5034,7 +5034,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.InsufficientResults.Throw">
+        <member name="P:Goedel.Cryptography.InsufficientResults.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5049,7 +5049,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.FingerprintMatchFailed.Templates">
+        <member name="P:Goedel.Cryptography.FingerprintMatchFailed.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.FingerprintMatchFailed.#ctor(System.String,System.Exception,System.Object[])">
@@ -5067,7 +5067,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.FingerprintMatchFailed.Throw">
+        <member name="P:Goedel.Cryptography.FingerprintMatchFailed.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5082,7 +5082,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.CipherModeNotSupported.Templates">
+        <member name="P:Goedel.Cryptography.CipherModeNotSupported.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.CipherModeNotSupported.#ctor(System.String,System.Exception,System.Object[])">
@@ -5100,7 +5100,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.CipherModeNotSupported.Throw">
+        <member name="P:Goedel.Cryptography.CipherModeNotSupported.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5115,7 +5115,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.CryptographicOperationNotSupported.Templates">
+        <member name="P:Goedel.Cryptography.CryptographicOperationNotSupported.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.CryptographicOperationNotSupported.#ctor(System.String,System.Exception,System.Object[])">
@@ -5133,7 +5133,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.CryptographicOperationNotSupported.Throw">
+        <member name="P:Goedel.Cryptography.CryptographicOperationNotSupported.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5147,7 +5147,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.KeyTypeMismatch.Templates">
+        <member name="P:Goedel.Cryptography.KeyTypeMismatch.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.KeyTypeMismatch.#ctor(System.String,System.Exception,System.Object[])">
@@ -5165,7 +5165,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.KeyTypeMismatch.Throw">
+        <member name="P:Goedel.Cryptography.KeyTypeMismatch.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5181,7 +5181,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.NoProviderSpecified.Templates">
+        <member name="P:Goedel.Cryptography.NoProviderSpecified.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.NoProviderSpecified.#ctor(System.String,System.Exception,System.Object[])">
@@ -5199,7 +5199,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.NoProviderSpecified.Throw">
+        <member name="P:Goedel.Cryptography.NoProviderSpecified.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5213,7 +5213,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.NullKeyValue.Templates">
+        <member name="P:Goedel.Cryptography.NullKeyValue.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.NullKeyValue.#ctor(System.String,System.Exception,System.Object[])">
@@ -5231,7 +5231,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.NullKeyValue.Throw">
+        <member name="P:Goedel.Cryptography.NullKeyValue.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5245,7 +5245,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.NullParameter.Templates">
+        <member name="P:Goedel.Cryptography.NullParameter.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.NullParameter.#ctor(System.String,System.Exception,System.Object[])">
@@ -5263,7 +5263,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.NullParameter.Throw">
+        <member name="P:Goedel.Cryptography.NullParameter.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5277,7 +5277,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.KeySizeNotSupported.Templates">
+        <member name="P:Goedel.Cryptography.KeySizeNotSupported.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.KeySizeNotSupported.#ctor(System.String,System.Exception,System.Object[])">
@@ -5295,7 +5295,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.KeySizeNotSupported.Throw">
+        <member name="P:Goedel.Cryptography.KeySizeNotSupported.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5310,7 +5310,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.InitializationFailed.Templates">
+        <member name="P:Goedel.Cryptography.InitializationFailed.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.InitializationFailed.#ctor(System.String,System.Exception,System.Object[])">
@@ -5328,7 +5328,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.InitializationFailed.Throw">
+        <member name="P:Goedel.Cryptography.InitializationFailed.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5342,7 +5342,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.InsufficientKeySize.Templates">
+        <member name="P:Goedel.Cryptography.InsufficientKeySize.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.InsufficientKeySize.#ctor(System.String,System.Exception,System.Object[])">
@@ -5360,7 +5360,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.InsufficientKeySize.Throw">
+        <member name="P:Goedel.Cryptography.InsufficientKeySize.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5374,7 +5374,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.InvalidKeyPairType.Templates">
+        <member name="P:Goedel.Cryptography.InvalidKeyPairType.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.InvalidKeyPairType.#ctor(System.String,System.Exception,System.Object[])">
@@ -5392,7 +5392,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.InvalidKeyPairType.Throw">
+        <member name="P:Goedel.Cryptography.InvalidKeyPairType.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5406,7 +5406,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.RecryptionShareLimitExceeded.Templates">
+        <member name="P:Goedel.Cryptography.RecryptionShareLimitExceeded.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.RecryptionShareLimitExceeded.#ctor(System.String,System.Exception,System.Object[])">
@@ -5424,7 +5424,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.RecryptionShareLimitExceeded.Throw">
+        <member name="P:Goedel.Cryptography.RecryptionShareLimitExceeded.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5437,7 +5437,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.InvalidRecoveredData.Templates">
+        <member name="P:Goedel.Cryptography.InvalidRecoveredData.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.InvalidRecoveredData.#ctor(System.String,System.Exception,System.Object[])">
@@ -5455,7 +5455,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.InvalidRecoveredData.Throw">
+        <member name="P:Goedel.Cryptography.InvalidRecoveredData.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5468,7 +5468,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.KeyErasureFailed.Templates">
+        <member name="P:Goedel.Cryptography.KeyErasureFailed.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.KeyErasureFailed.#ctor(System.String,System.Exception,System.Object[])">
@@ -5486,7 +5486,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.KeyErasureFailed.Throw">
+        <member name="P:Goedel.Cryptography.KeyErasureFailed.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5500,7 +5500,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.InvalidOperation.Templates">
+        <member name="P:Goedel.Cryptography.InvalidOperation.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.InvalidOperation.#ctor(System.String,System.Exception,System.Object[])">
@@ -5518,7 +5518,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.InvalidOperation.Throw">
+        <member name="P:Goedel.Cryptography.InvalidOperation.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5532,7 +5532,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.InvalidAlgorithm.Templates">
+        <member name="P:Goedel.Cryptography.InvalidAlgorithm.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.InvalidAlgorithm.#ctor(System.String,System.Exception,System.Object[])">
@@ -5550,7 +5550,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.InvalidAlgorithm.Throw">
+        <member name="P:Goedel.Cryptography.InvalidAlgorithm.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5563,7 +5563,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.InvalidPoint.Templates">
+        <member name="P:Goedel.Cryptography.InvalidPoint.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.InvalidPoint.#ctor(System.String,System.Exception,System.Object[])">
@@ -5581,7 +5581,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.InvalidPoint.Throw">
+        <member name="P:Goedel.Cryptography.InvalidPoint.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5595,7 +5595,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.PrivateKeyNotFound.Templates">
+        <member name="P:Goedel.Cryptography.PrivateKeyNotFound.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.PrivateKeyNotFound.#ctor(System.String,System.Exception,System.Object[])">
@@ -5613,7 +5613,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.PrivateKeyNotFound.Throw">
+        <member name="P:Goedel.Cryptography.PrivateKeyNotFound.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5627,7 +5627,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.UnwrapFailed.Templates">
+        <member name="P:Goedel.Cryptography.UnwrapFailed.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.UnwrapFailed.#ctor(System.String,System.Exception,System.Object[])">
@@ -5645,7 +5645,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.UnwrapFailed.Throw">
+        <member name="P:Goedel.Cryptography.UnwrapFailed.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5659,7 +5659,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.UnknownNamedParameters.Templates">
+        <member name="P:Goedel.Cryptography.UnknownNamedParameters.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.UnknownNamedParameters.#ctor(System.String,System.Exception,System.Object[])">
@@ -5677,7 +5677,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.UnknownNamedParameters.Throw">
+        <member name="P:Goedel.Cryptography.UnknownNamedParameters.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -5691,7 +5691,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.NotExportable.Templates">
+        <member name="P:Goedel.Cryptography.NotExportable.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Cryptography.NotExportable.#ctor(System.String,System.Exception,System.Object[])">
@@ -5709,7 +5709,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Cryptography.NotExportable.Throw">
+        <member name="P:Goedel.Cryptography.NotExportable.Throw">
             <summary>
             The public fatory delegate
             </summary>

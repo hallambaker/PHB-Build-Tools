@@ -144,7 +144,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Registry.ParserException.Templates">
+        <member name="P:Goedel.Registry.ParserException.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.ParserException.#ctor(System.String,System.Exception,System.Object[])">
@@ -162,7 +162,7 @@
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Registry.ParserException.Throw">
+        <member name="P:Goedel.Registry.ParserException.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -176,7 +176,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Registry.FileReadError.Templates">
+        <member name="P:Goedel.Registry.FileReadError.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.FileReadError.#ctor(System.String,System.Exception,System.Object[])">
@@ -194,7 +194,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Registry.FileReadError.Throw">
+        <member name="P:Goedel.Registry.FileReadError.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -208,7 +208,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Registry.UnknownCommand.Templates">
+        <member name="P:Goedel.Registry.UnknownCommand.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.UnknownCommand.#ctor(System.String,System.Exception,System.Object[])">
@@ -226,7 +226,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Registry.UnknownCommand.Throw">
+        <member name="P:Goedel.Registry.UnknownCommand.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -240,7 +240,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Registry.UnknownOption.Templates">
+        <member name="P:Goedel.Registry.UnknownOption.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.UnknownOption.#ctor(System.String,System.Exception,System.Object[])">
@@ -258,7 +258,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Registry.UnknownOption.Throw">
+        <member name="P:Goedel.Registry.UnknownOption.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -272,7 +272,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Registry.NoCommand.Templates">
+        <member name="P:Goedel.Registry.NoCommand.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.NoCommand.#ctor(System.String,System.Exception,System.Object[])">
@@ -290,7 +290,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Registry.NoCommand.Throw">
+        <member name="P:Goedel.Registry.NoCommand.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -304,7 +304,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Registry.SchemaParse.Templates">
+        <member name="P:Goedel.Registry.SchemaParse.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.SchemaParse.#ctor(System.String,System.Exception,System.Object[])">
@@ -322,7 +322,7 @@
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Registry.SchemaParse.Throw">
+        <member name="P:Goedel.Registry.SchemaParse.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -336,7 +336,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Registry.NotFoundReserved.Templates">
+        <member name="P:Goedel.Registry.NotFoundReserved.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.NotFoundReserved.#ctor(System.String,System.Exception,System.Object[])">
@@ -354,7 +354,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Registry.NotFoundReserved.Throw">
+        <member name="P:Goedel.Registry.NotFoundReserved.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -368,7 +368,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Registry.InternalError.Templates">
+        <member name="P:Goedel.Registry.InternalError.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.InternalError.#ctor(System.String,System.Exception,System.Object[])">
@@ -386,7 +386,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Registry.InternalError.Throw">
+        <member name="P:Goedel.Registry.InternalError.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -400,7 +400,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Registry.InvalidToken.Templates">
+        <member name="P:Goedel.Registry.InvalidToken.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.InvalidToken.#ctor(System.String,System.Exception,System.Object[])">
@@ -418,7 +418,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Registry.InvalidToken.Throw">
+        <member name="P:Goedel.Registry.InvalidToken.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -432,7 +432,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Registry.ExpectedStart.Templates">
+        <member name="P:Goedel.Registry.ExpectedStart.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.ExpectedStart.#ctor(System.String,System.Exception,System.Object[])">
@@ -450,7 +450,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Registry.ExpectedStart.Throw">
+        <member name="P:Goedel.Registry.ExpectedStart.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -464,7 +464,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Registry.ExpectedClass.Templates">
+        <member name="P:Goedel.Registry.ExpectedClass.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.ExpectedClass.#ctor(System.String,System.Exception,System.Object[])">
@@ -482,7 +482,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Registry.ExpectedClass.Throw">
+        <member name="P:Goedel.Registry.ExpectedClass.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -496,7 +496,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Registry.Expected.Templates">
+        <member name="P:Goedel.Registry.Expected.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.Expected.#ctor(System.String,System.Exception,System.Object[])">
@@ -514,7 +514,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Registry.Expected.Throw">
+        <member name="P:Goedel.Registry.Expected.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -528,7 +528,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Registry.TooManyClose.Templates">
+        <member name="P:Goedel.Registry.TooManyClose.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.TooManyClose.#ctor(System.String,System.Exception,System.Object[])">
@@ -546,7 +546,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Registry.TooManyClose.Throw">
+        <member name="P:Goedel.Registry.TooManyClose.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -560,7 +560,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Registry.UnreachableCode.Templates">
+        <member name="P:Goedel.Registry.UnreachableCode.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Registry.UnreachableCode.#ctor(System.String,System.Exception,System.Object[])">
@@ -578,7 +578,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Registry.UnreachableCode.Throw">
+        <member name="P:Goedel.Registry.UnreachableCode.Throw">
             <summary>
             The public fatory delegate
             </summary>

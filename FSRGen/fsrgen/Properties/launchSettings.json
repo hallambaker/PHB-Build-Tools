@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "fsrgen": {
+      "commandName": "Project",
+      "commandLineArgs": "qqqq"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "registryconfig": {
+      "commandName": "Project",
+      "commandLineArgs": "aaa"
+    }
+  }
+}

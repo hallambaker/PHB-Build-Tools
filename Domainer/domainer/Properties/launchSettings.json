@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "domainer": {
+      "commandName": "Project",
+      "commandLineArgs": "aaaa"
+    }
+  }
+}
