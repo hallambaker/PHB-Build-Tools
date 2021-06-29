@@ -44,6 +44,10 @@
       <Generator>GScript</Generator>
     </None>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="VSPreBuild" />
   </Target>
