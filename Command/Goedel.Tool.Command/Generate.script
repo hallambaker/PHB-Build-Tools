@@ -70,7 +70,7 @@ using Goedel.Utilities;
 
 #method GenerateCommandSet CommandSet CommandSet
 #% Separator.IsFirst = true;
-		public static DescribeCommandSet DescribeCommandSet_#{CommandSet.Id} = new DescribeCommandSet () {
+		public static DescribeCommandSet DescribeCommandSet_#{CommandSet.Id} => new DescribeCommandSet () {
             Identifier = "#{CommandSet.Tag.ToLower()}",
 			Brief = "#{CommandSet.Brief}",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {#!

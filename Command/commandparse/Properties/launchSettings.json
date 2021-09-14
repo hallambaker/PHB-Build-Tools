@@ -2,8 +2,8 @@
   "profiles": {
     "commandparse": {
       "commandName": "Project",
-      "commandLineArgs": "Command.command  /cs  ",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\buildtools\\Command\\CommandEcho"
+      "commandLineArgs": "Meshman.command  /cs  ",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Mesh\\Goedel.Mesh.Shell"
     },
     "meshman": {
       "commandName": "Project",

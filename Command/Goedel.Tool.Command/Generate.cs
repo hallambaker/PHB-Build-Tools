@@ -110,7 +110,7 @@ namespace Goedel.Tool.Command {
 		//
 		public void GenerateCommandSet (CommandSet CommandSet) {
 			 Separator.IsFirst = true;
-			_Output.Write ("		public static DescribeCommandSet DescribeCommandSet_{1} = new DescribeCommandSet () {{\n{0}", _Indent, CommandSet.Id);
+			_Output.Write ("		public static DescribeCommandSet DescribeCommandSet_{1} => new DescribeCommandSet () {{\n{0}", _Indent, CommandSet.Id);
 			_Output.Write ("            Identifier = \"{1}\",\n{0}", _Indent, CommandSet.Tag.ToLower());
 			_Output.Write ("			Brief = \"{1}\",\n{0}", _Indent, CommandSet.Brief);
 			_Output.Write ("			Entries = new  SortedDictionary<string, DescribeCommand> () {{", _Indent);
