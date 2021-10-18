@@ -1,9 +1,9 @@
 ﻿
-//  This file was automatically generated at 9/14/2021 5:55:19 PM
+//  This file was automatically generated at 10/18/2021 6:01:15 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  commandparse version 3.0.0.662
+//  Generator:  commandparse version 3.0.0.689
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -41,6 +41,35 @@ namespace CommandShell {
 		static char UnixFlag = '-';
 		static char WindowsFlag = '/';
 
+        /// <summary>
+        /// Default help dispatch
+        /// </summary>
+        /// <param name="Dispatch">The command description.</param>
+        /// <param name="args">The set of arguments.</param>
+        /// <param name="index">The first unparsed argument.</param>
+        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
+            Brief(Description, DefaultCommand, Entries);
+
+        public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
+            Identifier = "help",
+            HandleDelegate = Help,
+            Entries = new List<DescribeEntry>() { }
+            };
+        /// <summary>
+        /// Describe the application invoked by the command.
+        /// </summary>
+        /// <param name="Dispatch">The command description.</param>
+        /// <param name="args">The set of arguments.</param>
+        /// <param name="index">The first unparsed argument.</param>
+        public static void About (DispatchShell Dispatch, string[] args, int index) =>
+            FileTools.About();
+
+
+        public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
+            Identifier = "about",
+            HandleDelegate = About,
+            Entries = new List<DescribeEntry>() { }
+            };
 
 
         static bool IsFlag(char c) =>
@@ -65,7 +94,9 @@ namespace CommandShell {
 				Description = "Command Line Parser Generator";
 
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"in", _GenerateCommand._DescribeCommand }
+				{"in", _GenerateCommand._DescribeCommand },
+				{"about", DescribeAbout },
+				{"help", DescribeHelp }
 				}; // End Entries
 
 

@@ -101,9 +101,7 @@ namespace #{Namespace} {
         /// </summary>
 		public const string WellKnown = "#{Service.WellKnown}";
 
-        /// <summary>
-        /// Well Known service identifier.
-        /// </summary>
+		///<inheritdoc/>
 		public override string GetWellKnown => WellKnown;
 
         /// <summary>
@@ -111,10 +109,23 @@ namespace #{Namespace} {
         /// </summary>
 		public const string Discovery = "#{Service.Discovery}";
 
-        /// <summary>
-        /// Well Known service identifier.
-        /// </summary>
+		///<inheritdoc/>
 		public override string GetDiscovery => Discovery;
+
+		///<inheritdoc/>
+		public override Dictionary<string, JsonFactoryDelegate>  GetTagDictionary() => _TagDictionary;
+		
+		static Dictionary<string, JsonFactoryDelegate> _TagDictionary = new () {#!
+#% var separator = new Separator (",");
+#foreach (_Choice Entry2 in Protocol.Entries)
+#switchcast ProtoStructType Entry2
+#casecast Transaction Transaction
+#{separator.ToString()}
+					{"#{Transaction.Id}", #{Transaction.Request}._Factory}#!
+#end switchcast
+#end foreach
+
+			};
 
 		/// <summary>
 		/// Dispatch object request in specified authentication context.

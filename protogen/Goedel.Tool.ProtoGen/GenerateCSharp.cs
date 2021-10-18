@@ -139,9 +139,7 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("        /// </summary>\n{0}", _Indent);
 							_Output.Write ("		public const string WellKnown = \"{1}\";\n{0}", _Indent, Service.WellKnown);
 							_Output.Write ("\n{0}", _Indent);
-							_Output.Write ("        /// <summary>\n{0}", _Indent);
-							_Output.Write ("        /// Well Known service identifier.\n{0}", _Indent);
-							_Output.Write ("        /// </summary>\n{0}", _Indent);
+							_Output.Write ("		///<inheritdoc/>\n{0}", _Indent);
 							_Output.Write ("		public override string GetWellKnown => WellKnown;\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("        /// <summary>\n{0}", _Indent);
@@ -149,10 +147,26 @@ namespace Goedel.Tool.ProtoGen {
 							_Output.Write ("        /// </summary>\n{0}", _Indent);
 							_Output.Write ("		public const string Discovery = \"{1}\";\n{0}", _Indent, Service.Discovery);
 							_Output.Write ("\n{0}", _Indent);
-							_Output.Write ("        /// <summary>\n{0}", _Indent);
-							_Output.Write ("        /// Well Known service identifier.\n{0}", _Indent);
-							_Output.Write ("        /// </summary>\n{0}", _Indent);
+							_Output.Write ("		///<inheritdoc/>\n{0}", _Indent);
 							_Output.Write ("		public override string GetDiscovery => Discovery;\n{0}", _Indent);
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("		///<inheritdoc/>\n{0}", _Indent);
+							_Output.Write ("		public override Dictionary<string, JsonFactoryDelegate>  GetTagDictionary() => _TagDictionary;\n{0}", _Indent);
+							_Output.Write ("		\n{0}", _Indent);
+							_Output.Write ("		static Dictionary<string, JsonFactoryDelegate> _TagDictionary = new () {{", _Indent);
+							
+							 var separator = new Separator (",");
+							foreach  (_Choice Entry2 in Protocol.Entries) {
+								switch (Entry2._Tag ()) {
+									case ProtoStructType.Transaction: {
+									  Transaction Transaction = (Transaction) Entry2; 
+									_Output.Write ("{1}\n{0}", _Indent, separator.ToString());
+									_Output.Write ("					{{\"{1}\", {2}._Factory}}", _Indent, Transaction.Id, Transaction.Request);
+								break; }
+									}
+								}
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("			}};\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							_Output.Write ("		/// <summary>\n{0}", _Indent);
 							_Output.Write ("		/// Dispatch object request in specified authentication context.\n{0}", _Indent);

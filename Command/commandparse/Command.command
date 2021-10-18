@@ -1,5 +1,9 @@
 ﻿Class CommandShell CommandShell
 	Brief "Command Line Parser Generator"
+	About "about"
+		Brief		"Report version and compilation date."
+	Help "help"
+		Brief		"Command guide."
 
 	Type NewFile			"file"
 	Type ExistingFile		"file"

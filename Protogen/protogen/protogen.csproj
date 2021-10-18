@@ -7,8 +7,8 @@
     <Company>Phill Hallam-Baker</Company>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>RFCTool</Product>
-    <Description>Generates RFC format documentation from OOXML or Markdown source.</Description>
-    <Copyright>© 2015-2019</Copyright>
+    <Description>Protogen schema tool</Description>
+    <Copyright>© 2015-2021</Copyright>
     <Title>RFCTool</Title>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
