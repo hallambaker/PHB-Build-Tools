@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Tool.RegistryConfig</name>
+    </assembly>
+    <members>
+        <member name="P:Goedel.Tool.RegistryConfig.Field.RegistryType">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>goedel3</name>
+    </assembly>
+    <members>
+        <member name="F:Command.CommandLineInterpreter.Entries">
+            <summary>The command entries</summary>
+        </member>
+        <member name="F:Command.CommandLineInterpreter.DefaultCommand">
+            <summary>The default command.</summary>
+        </member>
+        <member name="F:Command.CommandLineInterpreter.Description">
+            <summary>Description of the comman</summary>
+        </member>
+        <member name="P:Command._Schema.Goedel">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Command._Schema.Lazy">
+            <summary>Field accessor for parameter [lazy]</summary>
+        </member>
+        <member name="P:Command._Schema.GenerateCS">
+            <summary>Field accessor for option [cs]</summary>
+        </member>
+        <member name="P:Command._Schema.DebugLexer">
+            <summary>Field accessor for option [dlexer]</summary>
+        </member>
+        <member name="P:Command._Schema.DebugParser">
+            <summary>Field accessor for option [dparser]</summary>
+        </member>
+        <member name="P:Command._Schema.DebugStack">
+            <summary>Field accessor for option [dstack]</summary>
+        </member>
+        <member name="P:Command._Schema.Serializer">
+            <summary>Field accessor for option [serial]</summary>
+        </member>
+    </members>
+</doc>

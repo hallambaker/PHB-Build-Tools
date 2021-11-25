@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Tool.Script</name>
+    </assembly>
+    <members>
+        <member name="F:Goedel.Tool.Script.Script.Commands">
+            <summary>
+            The command table state machine. 
+            
+            Document	= Comment*  ClassBlock
+            ClassBlock	= Class (Comment | Instruction | MethodBlock)* End
+            MethodBlock	= Method TextBlock End
+            TextBlock	= Text | Instruction | IfBlock | ForBlock
+            IfBlock		= If TextBlock* ElseIf* TextBlock* Else? TextBlock* End
+            ForBlock	= (ForEach | For) TextBlock* End
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.Script.Script.Process(System.String,System.IO.TextReader,System.IO.TextWriter)">
+            <summary>
+            Process the specified input stream and write data to the output stream.
+            </summary>
+            <param name="Filename">The file name of the source file.</param>
+            <param name="Reader">The input stream.</param>
+            <param name="Writer">The output stream.</param>
+        </member>
+        <member name="M:Goedel.Tool.Script.Script.ProcessLine(System.String)">
+             <summary>
+             Replace Regular expressions in a line of characters and write the
+             result to the Writer.
+            
+             Expressions of the form (c* #[ c* (| c*)? #])* are transformed 
+             into the corresponding text formatting strings.
+             </summary>
+             <param name="Writer"></param>
+             <param name="line"></param>
+        </member>
+    </members>
+</doc>

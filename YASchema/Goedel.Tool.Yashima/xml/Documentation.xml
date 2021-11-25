@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Tool.Yaschema</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Tool.Yaschema.YaschemaStruct">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

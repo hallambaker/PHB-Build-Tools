@@ -1,19 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+	<Import Project="$(SolutionDir)CommonSettingsApplication.xml" />
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <ApplicationIcon>PHBLogo256.ico</ApplicationIcon>
-    <OutputType>Exe</OutputType>
-    <Company>Phill Hallam-Baker</Company>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-    <Product>Version</Product>
-    <Description>Manages version information.</Description>
-    <Copyright>© 2015-2019</Copyright>
-    <Title>Version</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <Configurations>Debug;Release</Configurations>
-    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+	  <AssemblyName>version</AssemblyName>
+	  <Product>Version management</Product>
+	  <Description>Fixes Visual Studio version management feature loss.</Description>
+	  <Copyright>© 2015-2021</Copyright>
+	  <Title>Version management</Title>
   </PropertyGroup>
 
   <ItemGroup>

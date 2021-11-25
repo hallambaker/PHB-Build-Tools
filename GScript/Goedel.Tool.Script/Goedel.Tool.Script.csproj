@@ -1,18 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+	<Import Project="$(SolutionDir)CommonSettings.xml" />
   <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Goedel.ASN</RootNamespace>
-    <Configurations>Debug;Release;Focus;Yaschema</Configurations>
-    <Company>ThresholdSecrets.Com</Company>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+    <RootNamespace>Goedel.Tool.Script</RootNamespace>
+    <Title>Goedel.Tool.Script</Title>
     <Product>Goedel.Tool.Script</Product>
     <Description>Goedel Script DSL.</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.Tool.Script</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="VSPreBuild" />

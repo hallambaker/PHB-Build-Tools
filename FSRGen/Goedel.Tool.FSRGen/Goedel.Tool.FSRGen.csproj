@@ -1,18 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+	<Import Project="$(SolutionDir)CommonSettings.xml" />
   <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Goedel.ASN</RootNamespace>
-    <Configurations>Debug;Release;Focus;Yaschema</Configurations>
-    <Company>ThresholdSecrets.Com</Company>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+    <RootNamespace>Goedel.Tool.FSR</RootNamespace>
+    <Title>Goedel.Tool.FSR</Title>
     <Product>Goedel.Tool.FSR</Product>
     <Description>Finite State Recognizer DSL.</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.Tool.FSR</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 
   <ItemGroup>

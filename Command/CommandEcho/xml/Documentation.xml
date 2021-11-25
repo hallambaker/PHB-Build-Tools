@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CommandEcho</name>
+    </assembly>
+    <members>
+        <member name="F:Command.EnumReporting.Report">
+            <summary>Case "report": Report output (default)</summary>
+        </member>
+        <member name="F:Command.EnumReporting.Silent">
+            <summary>Case "silent": Suppress output</summary>
+        </member>
+        <member name="F:Command.EnumReporting.Verbose">
+            <summary>Case "verbose": Verbose reports</summary>
+        </member>
+        <member name="F:Command.EnumReporting.Json">
+            <summary>Case "json": Report output in JSON format</summary>
+        </member>
+        <member name="F:Command.CommandLineInterpreter.Entries">
+            <summary>The command entries</summary>
+        </member>
+        <member name="F:Command.CommandLineInterpreter.DefaultCommand">
+            <summary>The default command.</summary>
+        </member>
+        <member name="F:Command.CommandLineInterpreter.Description">
+            <summary>Description of the comman</summary>
+        </member>
+        <member name="M:Command.CommandLineInterpreter.Help(Goedel.Command.DispatchShell,System.String[],System.Int32)">
+            <summary>
+            Default help dispatch
+            </summary>
+            <param name="Dispatch">The command description.</param>
+            <param name="args">The set of arguments.</param>
+            <param name="index">The first unparsed argument.</param>
+        </member>
+        <member name="M:Command.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">
+            <summary>
+            Describe the application invoked by the command.
+            </summary>
+            <param name="Dispatch">The command description.</param>
+            <param name="args">The set of arguments.</param>
+            <param name="index">The first unparsed argument.</param>
+        </member>
+        <member name="P:Command._Script.InputFile">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Command._Script.CSharp">
+            <summary>Field accessor for option [cs]</summary>
+        </member>
+        <member name="P:Command._Script.C">
+            <summary>Field accessor for option [c]</summary>
+        </member>
+        <member name="P:Command._Script.Java">
+            <summary>Field accessor for option [java]</summary>
+        </member>
+        <member name="P:Command._Script.Lazy">
+            <summary>Field accessor for option [lazy]</summary>
+        </member>
+        <member name="P:Command._Script.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Command._Script.CommentLine">
+            <summary>Field accessor for option [line]</summary>
+        </member>
+        <member name="P:Command._Script.Directive">
+            <summary>Field accessor for option [link]</summary>
+        </member>
+        <member name="P:Command._Schema.InputFile">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Command._Schema.CSharp">
+            <summary>Field accessor for option [cs]</summary>
+        </member>
+        <member name="P:Command._Schema.C">
+            <summary>Field accessor for option [c]</summary>
+        </member>
+        <member name="P:Command._Schema.Java">
+            <summary>Field accessor for option [java]</summary>
+        </member>
+        <member name="P:Command._Schema.Lazy">
+            <summary>Field accessor for option [lazy]</summary>
+        </member>
+        <member name="P:Command._Schema.DebugLexer">
+            <summary>Field accessor for option [dlexer]</summary>
+        </member>
+        <member name="P:Command._Schema.DebugParser">
+            <summary>Field accessor for option [dparser]</summary>
+        </member>
+        <member name="P:Command._Schema.DebugStack">
+            <summary>Field accessor for option [dstack]</summary>
+        </member>
+    </members>
+</doc>

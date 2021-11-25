@@ -49,14 +49,12 @@ namespace Goedel.Tool.Constant {
                 foreach (var entry in Entries) {
 
                     switch (entry) {
+                        case String stringEntry: 
                         case Code codeEntry: {
                             codes = true;
                             break;
                             }
-                        case String stringEntry: {
-                            stringEntry.Markdown(output);
-                            break;
-                            }
+
                         case Function functionEntry: {
                             functionEntry.Markdown(output);
                             break;
@@ -83,6 +81,10 @@ namespace Goedel.Tool.Constant {
                         switch (entry) {
                             case Code codeEntry: {
                                 codeEntry.Markdown(output);
+                                break;
+                                }
+                            case String stringEntry: {
+                                stringEntry.Markdown(output);
                                 break;
                                 }
                             }
@@ -141,7 +143,12 @@ namespace Goedel.Tool.Constant {
 
 
         public void Markdown(TextWriter output) {
-            output.WriteLine("String");
+            output.WriteLine($"<dt>{Value}");
+            output.WriteLine($"<dd>");
+            foreach (var line in Description.Text) {
+                output.WriteLine($"    {line}");
+                }
+            output.WriteLine($"</dd>");
             }
 
 

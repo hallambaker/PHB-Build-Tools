@@ -1,19 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+	<Import Project="$(SolutionDir)CommonSettingsApplication.xml" />
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <ApplicationIcon>PHBLogo256.ico</ApplicationIcon>
-    <Company>Phill Hallam-Baker</Company>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-    <Product>RFCTool</Product>
-    <Description>Protogen schema tool</Description>
-    <Copyright>© 2015-2021</Copyright>
-    <Title>RFCTool</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <Configurations>Debug;Release</Configurations>
-    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+	  <AssemblyName>protogen</AssemblyName>
+	  <Product>Protogen</Product>
+	  <Description>Generates JSON Web protocol service and client classes.</Description>
+	  <Copyright>© 2015-2021</Copyright>
+	  <Title>Protocol</Title>
   </PropertyGroup>
 
   <ItemGroup>

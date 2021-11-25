@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>gscript</name>
+    </assembly>
+    <members>
+        <member name="F:GoedelShell.CommandLineInterpreter.Entries">
+            <summary>The command entries</summary>
+        </member>
+        <member name="F:GoedelShell.CommandLineInterpreter.DefaultCommand">
+            <summary>The default command.</summary>
+        </member>
+        <member name="F:GoedelShell.CommandLineInterpreter.Description">
+            <summary>Description of the comman</summary>
+        </member>
+        <member name="P:GoedelShell._Generate.InputFile">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:GoedelShell._Generate.OutputFile">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:GoedelShell._Generate.CommentLine">
+            <summary>Field accessor for option [line]</summary>
+        </member>
+        <member name="P:GoedelShell._Generate.Directive">
+            <summary>Field accessor for option [link]</summary>
+        </member>
+        <member name="P:GoedelShell._Generate.Lazy">
+            <summary>Field accessor for option [lazy]</summary>
+        </member>
+        <member name="P:GoedelShell._Wrap.InputFile">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:GoedelShell._Wrap.CS">
+            <summary>Field accessor for option [cs]</summary>
+        </member>
+        <member name="P:GoedelShell._Wrap.Namespace">
+            <summary>Field accessor for option [namespace]</summary>
+        </member>
+        <member name="P:GoedelShell._Wrap.Class">
+            <summary>Field accessor for option [class]</summary>
+        </member>
+        <member name="P:GoedelShell._Wrap.Variable">
+            <summary>Field accessor for option [variable]</summary>
+        </member>
+        <member name="P:GoedelShell._Wrap.Lazy">
+            <summary>Field accessor for option [lazy]</summary>
+        </member>
+        <member name="T:Goedel.Tool.Script.DoWrap">
+            <summary>
+            Class with static methods to turn a file into a C# constant string.
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.Script.DoWrap.CS(System.IO.TextReader,System.IO.TextWriter,System.String,System.String,System.String)">
+            <summary>
+            Read an input file and wrap it as a C# string.
+            </summary>
+            <param name="In">The input file</param>
+            <param name="Out">The output file</param>
+            <param name="Namespace">The namespace in which to create the constant.</param>
+            <param name="Class">The (partial) class in which to create the constant.</param>
+            <param name="Variable">The name of the variable to assign the constant to.</param>
+        </member>
+    </members>
+</doc>

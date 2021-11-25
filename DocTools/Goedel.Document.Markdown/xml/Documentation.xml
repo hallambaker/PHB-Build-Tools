@@ -1,0 +1,484 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Document.Markdown</name>
+    </assembly>
+    <members>
+        <member name="M:Goedel.Document.Markdown.BlockParser.FinishParse">
+            <summary>
+            Final cleanup. Pop remaining enclosures off the stack and set the
+            values of Title and ShortTitle from the metadata values (if any).
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.Markdown.BlockParser.PurgeStack(Goedel.Document.Markdown.CatalogEntry)">
+            <summary>
+            Purge the stack back to an element that is permitted to contain a block
+            of type CatalogEntry
+            </summary>
+            <param name="CatalogEntry"></param>
+        </member>
+        <member name="M:Goedel.Document.Markdown.BlockParser.CheckLayoutWrapper(Goedel.Document.Markdown.CatalogEntry)">
+            <summary>
+            It is not clear why this is required together with purge stack
+            Consider removal.
+            </summary>
+            <param name="CatalogEntry"></param>
+        </member>
+        <member name="T:Goedel.Document.Markdown.Document">
+            <summary>
+            A Document Resource.
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkDownLex.#ctor(Goedel.FSR.LexReader)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="Reader">The input source.</param>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkDownLex.#ctor(System.IO.Stream)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="Stream">The input source.</param>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkDownLex.#ctor(System.IO.TextReader)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="TextReader">The input source.</param>
+        </member>
+        <member name="P:Goedel.Document.Markdown.MarkDownLex.CharacterMappings">
+            <summary>
+            Maps characters to character sets
+            </summary>
+        </member>
+        <member name="P:Goedel.Document.Markdown.MarkDownLex.CompressedTransitions">
+            <summary>
+            State transitions in response to character set
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkDownLex.GetToken(Goedel.Document.Markdown.MarkDownLex.State)">
+            <summary>
+            Get the next token from the stream
+            </summary>
+            <param name="StartState">The initial starting state</param>
+            <returns>The token detected or -1 if an error occurred</returns>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkDownLex.GetToken">
+            <summary>
+            Get the next token from the stream
+            </summary>
+            <returns>The token detected or -1 if an error occurred</returns>
+        </member>
+        <member name="T:Goedel.Document.Markdown.MarkDownLex.State">
+            <summary>State types</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.BlockStart">
+            <summary>BlockStart</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.Comment1">
+            <summary>Comment1</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.Comment2">
+            <summary>Comment2</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.Pre1">
+            <summary>Pre1</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.Pre2">
+            <summary>Pre2</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.PreCR">
+            <summary>PreCR</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.InPre">
+            <summary>InPre</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.PreAdd">
+            <summary>PreAdd</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.PreOut1">
+            <summary>PreOut1</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.PreOut2">
+            <summary>PreOut2</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.PreOut3">
+            <summary>PreOut3</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.PreOut4">
+            <summary>PreOut4</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.NotPre">
+            <summary>NotPre</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.WhiteSpace">
+            <summary>WhiteSpace</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.Text">
+            <summary>Text</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.TextSpace">
+            <summary>TextSpace</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.TextMoreSpace">
+            <summary>TextMoreSpace</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.TextCR">
+            <summary>TextCR</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.TextCRSpace">
+            <summary>TextCRSpace</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.TextH1">
+            <summary>TextH1</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.TextH2">
+            <summary>TextH2</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.Heading">
+            <summary>Heading</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.Defined">
+            <summary>Defined</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.Defined2">
+            <summary>Defined2</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.Number">
+            <summary>Number</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.Numbered">
+            <summary>Numbered</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.Bullet">
+            <summary>Bullet</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.State.End">
+            <summary>End</summary>
+        </member>
+        <member name="T:Goedel.Document.Markdown.MarkDownLex.Token">
+            <summary>Token Types</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.Token.INVALID">
+            <summary>Could not find a valid token.</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.Token.Empty">
+            <summary>Empty</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.Token.Block">
+            <summary>Block</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownLex.Character_Mapping">
+            <summary>Mapping of characters to character groups</summary>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkDownLex.Init">
+            <summary>Generated initialization method, is called automatically 
+            the FSR to reset </summary>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkDownParagraph.#ctor(Goedel.FSR.LexReader)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="Reader">The input source.</param>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkDownParagraph.#ctor(System.IO.Stream)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="Stream">The input source.</param>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkDownParagraph.#ctor(System.IO.TextReader)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="TextReader">The input source.</param>
+        </member>
+        <member name="P:Goedel.Document.Markdown.MarkDownParagraph.CharacterMappings">
+            <summary>
+            Maps characters to character sets
+            </summary>
+        </member>
+        <member name="P:Goedel.Document.Markdown.MarkDownParagraph.CompressedTransitions">
+            <summary>
+            State transitions in response to character set
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkDownParagraph.GetToken(Goedel.Document.Markdown.MarkDownParagraph.State)">
+            <summary>
+            Get the next token from the stream
+            </summary>
+            <param name="StartState">The initial starting state</param>
+            <returns>The token detected or -1 if an error occurred</returns>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkDownParagraph.GetToken">
+            <summary>
+            Get the next token from the stream
+            </summary>
+            <returns>The token detected or -1 if an error occurred</returns>
+        </member>
+        <member name="T:Goedel.Document.Markdown.MarkDownParagraph.State">
+            <summary>State types</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.Start">
+            <summary>Start</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.ReadText">
+            <summary>ReadText</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.Escape">
+            <summary>Escape</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.eText">
+            <summary>eText</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.ElementStart">
+            <summary>ElementStart</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.NewElementTag">
+            <summary>NewElementTag</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.ElementTag">
+            <summary>ElementTag</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.ElementWS">
+            <summary>ElementWS</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.ElementWaitValue">
+            <summary>ElementWaitValue</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.ElementValue">
+            <summary>ElementValue</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.ElementWaitQuotedValue">
+            <summary>ElementWaitQuotedValue</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.ElementQuotedValue">
+            <summary>ElementQuotedValue</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.ElementEnd">
+            <summary>ElementEnd</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.ElementEmpty">
+            <summary>ElementEmpty</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.ElementEmptyEnd">
+            <summary>ElementEmptyEnd</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.ElementCloseStart">
+            <summary>ElementCloseStart</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.ElementClose">
+            <summary>ElementClose</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.State.ElementEndClose">
+            <summary>ElementEndClose</summary>
+        </member>
+        <member name="T:Goedel.Document.Markdown.MarkDownParagraph.Token">
+            <summary>Token Types</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.Token.INVALID">
+            <summary>Could not find a valid token.</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.Token.Null">
+            <summary>Null</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.Token.Text">
+            <summary>Text</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.Token.Open">
+            <summary>Open</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.Token.Close">
+            <summary>Close</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.Token.Empty">
+            <summary>Empty</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkDownParagraph.Character_Mapping">
+            <summary>Mapping of characters to character groups</summary>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkDownParagraph.Init">
+            <summary>Generated initialization method, is called automatically 
+            the FSR to reset </summary>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkNewParagraph.#ctor(Goedel.FSR.LexReader)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="Reader">The input source.</param>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkNewParagraph.#ctor(System.IO.Stream)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="Stream">The input source.</param>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkNewParagraph.#ctor(System.IO.TextReader)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="TextReader">The input source.</param>
+        </member>
+        <member name="P:Goedel.Document.Markdown.MarkNewParagraph.CharacterMappings">
+            <summary>
+            Maps characters to character sets
+            </summary>
+        </member>
+        <member name="P:Goedel.Document.Markdown.MarkNewParagraph.CompressedTransitions">
+            <summary>
+            State transitions in response to character set
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkNewParagraph.GetToken(Goedel.Document.Markdown.MarkNewParagraph.State)">
+            <summary>
+            Get the next token from the stream
+            </summary>
+            <param name="StartState">The initial starting state</param>
+            <returns>The token detected or -1 if an error occurred</returns>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkNewParagraph.GetToken">
+            <summary>
+            Get the next token from the stream
+            </summary>
+            <returns>The token detected or -1 if an error occurred</returns>
+        </member>
+        <member name="T:Goedel.Document.Markdown.MarkNewParagraph.State">
+            <summary>State types</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.Start">
+            <summary>Start</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.UpperText">
+            <summary>UpperText</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.UpperSpace">
+            <summary>UpperSpace</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.AnyText">
+            <summary>AnyText</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.AnySpace">
+            <summary>AnySpace</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.Escape">
+            <summary>Escape</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.eText">
+            <summary>eText</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.ElementStart">
+            <summary>ElementStart</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.NewElementTag">
+            <summary>NewElementTag</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.ElementTag">
+            <summary>ElementTag</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.ElementWS">
+            <summary>ElementWS</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.ElementWaitValue">
+            <summary>ElementWaitValue</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.ElementValue">
+            <summary>ElementValue</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.ElementWaitQuotedValue">
+            <summary>ElementWaitQuotedValue</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.ElementQuotedValue">
+            <summary>ElementQuotedValue</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.ElementEnd">
+            <summary>ElementEnd</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.ElementEmpty">
+            <summary>ElementEmpty</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.ElementEmptyEnd">
+            <summary>ElementEmptyEnd</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.ElementCloseStart">
+            <summary>ElementCloseStart</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.ElementClose">
+            <summary>ElementClose</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.State.ElementEndClose">
+            <summary>ElementEndClose</summary>
+        </member>
+        <member name="T:Goedel.Document.Markdown.MarkNewParagraph.Token">
+            <summary>Token Types</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.Token.INVALID">
+            <summary>Could not find a valid token.</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.Token.Null">
+            <summary>Null</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.Token.Text">
+            <summary>Text</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.Token.Open">
+            <summary>Open</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.Token.Close">
+            <summary>Close</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.Token.Empty">
+            <summary>Empty</summary>
+        </member>
+        <member name="F:Goedel.Document.Markdown.MarkNewParagraph.Character_Mapping">
+            <summary>Mapping of characters to character groups</summary>
+        </member>
+        <member name="M:Goedel.Document.Markdown.MarkNewParagraph.Init">
+            <summary>Generated initialization method, is called automatically 
+            the FSR to reset </summary>
+        </member>
+        <member name="T:Goedel.Document.Markdown.BlockParserMarkDown">
+            <summary>
+            The block parser for markdown.
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.Markdown.BlockParserMarkDown.Parse(System.String,Goedel.Document.Markdown.TagCatalog)">
+            <summary>
+            Static method for complete document parse.
+            </summary>
+            <param name="FileName"></param>
+            <param name="TagCatalog"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Document.Markdown.BlockParserMarkDown.Parse(System.IO.TextReader,Goedel.Document.Markdown.TagCatalog)">
+            <summary>
+            Static method for complete document parse.
+            </summary>
+            <param name="TextReader"></param>
+            <param name="TagCatalog"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Document.Markdown.BlockParserMarkDown.Include(System.String,Goedel.Document.Markdown.TagCatalog,Goedel.Document.Markdown.Document)">
+            <summary>
+            Static method for parsing included file.
+            </summary>
+            <param name="FileName"></param>
+            <param name="TagCatalog"></param>
+            <param name="Document"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Document.Markdown.BlockParserMarkDown.ParseMarkDown(System.Collections.Generic.List{Goedel.Document.Markdown.Paragraph})">
+            <summary>
+            Partial parse function, does not perform cleanup.
+            </summary>
+            <param name="Paragraphs"></param>
+        </member>
+        <member name="M:Goedel.Document.Markdown.BlockParserMarkDown.AddBlocks(Goedel.Document.Markdown.Paragraph)">
+            <summary>
+            Convert a MarkDown Paragraph into a series of blocks, metadata entries,
+            etc.
+            </summary>
+            <param name="Paragraph"></param>
+        </member>
+    </members>
+</doc>

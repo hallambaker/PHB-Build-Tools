@@ -1,18 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$(SolutionDir)CommonSettings.xml" />
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <ApplicationIcon>PHBLogo256.ico</ApplicationIcon>
-    <OutputType>Library</OutputType>
-    <Company>Phill Hallam-Baker</Company>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-    <Product>Constant Manager</Product>
-    <Description>Generates RFC format documentation from OOXML or Markdown source.</Description>
-    <Copyright>© 2015-2019</Copyright>
-    <Title>Constant Manager</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <Configurations>Debug;Release;Yaschema</Configurations>
+    <RootNamespace>Goedel.Tool.Constant</RootNamespace>
+    <Title>Goedel.Tool.Constant</Title>
+    <Product>Goedel.Tool.Constant</Product>
+    <Description>Generates source code and documentation for code constants.</Description>
   </PropertyGroup>
 
 

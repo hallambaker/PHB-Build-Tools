@@ -1,0 +1,312 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Document.RFCSVG</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Document.RFCSVG.SvgDocument">
+            <summary>
+            The processing context for an SVG document. The context is bound to an SVG document when
+            instantiated and the corresponding profile constrained document computed. This may then
+            be written out as a standalone document or as an element incorporated into another document.
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.SvgDocument.Source">
+            <summary>The parsed source document.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.SvgDocument.Target">
+            <summary>The redacted target document as a parse tree.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.SvgDocument.Root">
+            <summary>The root svg element.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.SvgDocument.Style">
+            <summary>The style sheet extracted from the source document.</summary>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.SvgDocument.#ctor(System.Xml.XmlDocument)">
+            <summary>
+            Constructor creating a redacted document from the parsed document <paramref name="source"/>.
+            </summary>
+            <param name="source">The source document to redact.</param>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.SvgDocument.#ctor(System.String)">
+            <summary>
+            Constructor creating a redacted document from the file name <paramref name="input"/>.
+            </summary>
+            <param name="input">Name of the file to be read.</param>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.SvgDocument.Save(System.IO.TextWriter,System.Boolean)">
+            <summary>
+            Save the redacted document data to the output stream <paramref name="output"/>
+            with format specifier <paramref name="indent "/>.
+            </summary>
+            <param name="output">The output stream.</param>
+            <param name="indent ">The formatting mode</param>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.SvgDocument.Save(System.Xml.XmlWriter)">
+            <summary>
+            Save the redacted document data to the XmlWriter <paramref name="output"/>.
+            </summary>
+            <param name="output">The output XmlWriter.</param>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.SvgDocument.Redact(System.Xml.XmlDocument)">
+            <summary>
+            Redact the source document <paramref name="source"/>.
+            </summary>
+            <param name="source">The document to redact.</param>
+            <returns>The redacted document.</returns>
+        </member>
+        <member name="T:Goedel.Document.RFCSVG.SvgContext">
+            <summary>
+            Processing context for SVG elements. The class tracks the current X and Y position to
+            allow resolution of relative X and Y coordinates (dx, dy) to the absolute coordinates 
+            supported by SVG Tiny 1.2
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.SvgContext.Target">
+            <summary>
+            The redacted document under construction
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.SvgContext.Parent">
+            <summary>The enclosing context.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.SvgContext.Element">
+            <summary>The XML element</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.SvgContext.Elem">
+            <summary>The element description.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.SvgContext.X">
+            <summary>The X position in pixels</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.SvgContext.Y">
+            <summary>The Y position in pixels</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.SvgContext.FontSize">
+            <summary>The font size in pixels</summary>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.SvgContext.#ctor(Goedel.Document.RFCSVG.SvgDocument)">
+            <summary>
+            Construct a root context from <paramref name="svgDocument"/>.
+            </summary>
+            <param name="svgDocument">The document processing context.</param>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.SvgContext.#ctor(Goedel.Document.RFCSVG.SvgContext,System.Xml.XmlElement,Goedel.Document.RFCSVG.ElementProfile)">
+            <summary>
+            Construct a subordinate context to <paramref name="parent"/> for element <paramref name="element"/>
+            with description <paramref name="elem"/>.
+            </summary>
+            <param name="parent">The parent element processing context.</param>
+            <param name="element">The XML element.</param>
+            <param name="elem">The element description.</param>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.SvgContext.Attribute(System.String@,System.String@)">
+            <summary>
+            Adjust the frame of reference according to the coordinate and font size
+            information in the tag <paramref name="tag"/> with value <paramref name="value"/>.
+            </summary>
+            <param name="tag">The attribute name.</param>
+            <param name="value">The attribute value.</param>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.SvgContext.CreateElement(System.String,Goedel.Document.RFCSVG.ElementProfile)">
+            <summary>
+            Create a subordinate element and context.
+            </summary>
+            <param name="name">Name of the element to create.</param>
+            <param name="elem">The element description.</param>
+            <returns>The context wrapping the new element.</returns>
+        </member>
+        <member name="T:Goedel.Document.RFCSVG.ElementProfile">
+            <summary>
+            Describes an SVG element profile.
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ElementProfile.Name">
+            <summary>The element name.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ElementProfile.Attributes">
+            <summary>Dictionary mappng attribute names to values.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ElementProfile.Elements">
+            <summary>Dictionary mapping element names to profiles.</summary>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.ElementProfile.Process(Goedel.Document.RFCSVG.SvgContext,System.Xml.XmlElement)">
+            <summary>
+            Process the source element data <paramref name="sourceElement"/> and return
+            a new processing context for the redacted version in the context <paramref name="parent"/>.
+            </summary>
+            <param name="parent">The parent processing context.</param>
+            <param name="sourceElement">The source element to process.</param>
+            <returns>The processing context for the redacted version of the element</returns>
+        </member>
+        <member name="T:Goedel.Document.RFCSVG.AttributeProfile">
+            <summary>
+            Describes an attribute profile.
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.AttributeProfile.MainAttributes">
+            <summary>The attributes shared between all elements.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.AttributeProfile.OptionalAttributes">
+            <summary>Optional elements only supported by specific attributes.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.AttributeProfile.Name">
+            <summary>The attribute name.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.AttributeProfile.Allowed">
+            <summary>The allowed attribute values.</summary>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.AttributeProfile.#ctor(System.String)">
+            <summary>
+            Base constructor for attribute <paramref name="name"/>.
+            </summary>
+            <param name="name">Name of the attribute to create</param>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.AttributeProfile.#ctor(System.String,System.String[])">
+            <summary>
+            Base constructor for attribute <paramref name="name"/> with values constrained to 
+            the set specified in <paramref name="allowed"/>.
+            </summary>
+            <param name="name">Name of the attribute to create</param>
+            <param name="allowed"></param>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.AttributeProfile.DefaultedAttributes">
+            <summary>Counter tracking the number of defaulted attributes.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.AttributeProfile.SuppressedAttributes">
+            <summary>Counter tracking the bnumber of suppressed attributes.</summary>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.AttributeProfile.Constrain(System.String,System.String)">
+            <summary>
+            Constrain the value <paramref name="value"/> to the set
+            permitted for the attribute named <paramref name="name"/> 
+            </summary>
+            <param name="name">The name of the attribute to constrain to.</param>
+            <param name="value">The value to be constrained.</param>
+            <returns>The constrained value.</returns>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.AttributeProfile.Constrain(System.String)">
+            <summary>
+            Constrain the value <paramref name="value"/> to the set
+            permitted for the attribute this description describes.
+            </summary>
+            <param name="value">The value to be constrained.</param>
+            <returns>The constrained value.</returns>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.ReadStyle.#ctor(Goedel.FSR.LexReader)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="Reader">The input source.</param>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.ReadStyle.#ctor(System.IO.Stream)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="Stream">The input source.</param>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.ReadStyle.#ctor(System.IO.TextReader)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="TextReader">The input source.</param>
+        </member>
+        <member name="P:Goedel.Document.RFCSVG.ReadStyle.CharacterMappings">
+            <summary>
+            Maps characters to character sets
+            </summary>
+        </member>
+        <member name="P:Goedel.Document.RFCSVG.ReadStyle.CompressedTransitions">
+            <summary>
+            State transitions in response to character set
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.ReadStyle.GetToken(Goedel.Document.RFCSVG.ReadStyle.State)">
+            <summary>
+            Get the next token from the stream
+            </summary>
+            <param name="StartState">The initial starting state</param>
+            <returns>The token detected or -1 if an error occurred</returns>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.ReadStyle.GetToken">
+            <summary>
+            Get the next token from the stream
+            </summary>
+            <returns>The token detected or -1 if an error occurred</returns>
+        </member>
+        <member name="T:Goedel.Document.RFCSVG.ReadStyle.State">
+            <summary>State types</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.State.Initial">
+            <summary>Initial</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.State.Label">
+            <summary>Label</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.State.LabelWS">
+            <summary>LabelWS</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.State.StartStyle">
+            <summary>StartStyle</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.State.Tag">
+            <summary>Tag</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.State.TagWS">
+            <summary>TagWS</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.State.EndTag">
+            <summary>EndTag</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.State.Value">
+            <summary>Value</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.State.EndValue">
+            <summary>EndValue</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.State.EndStyle">
+            <summary>EndStyle</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.State.Fail">
+            <summary>Fail</summary>
+        </member>
+        <member name="T:Goedel.Document.RFCSVG.ReadStyle.Token">
+            <summary>Token Types</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.Token.INVALID">
+            <summary>Could not find a valid token.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.Token.Empty">
+            <summary>Empty</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.Token.Start">
+            <summary>Start</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.Token.End">
+            <summary>End</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.Token.Line">
+            <summary>Line</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.Token.TagValue">
+            <summary>TagValue</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.Token.Invalid">
+            <summary>Invalid</summary>
+        </member>
+        <member name="F:Goedel.Document.RFCSVG.ReadStyle.Character_Mapping">
+            <summary>Mapping of characters to character groups</summary>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.ReadStyle.Init">
+            <summary>Generated initialization method, is called automatically 
+            the FSR to reset </summary>
+        </member>
+        <member name="M:Goedel.Document.RFCSVG.ReadStyle.#ctor(System.String)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="Stream">The input source.</param>
+        </member>
+    </members>
+</doc>

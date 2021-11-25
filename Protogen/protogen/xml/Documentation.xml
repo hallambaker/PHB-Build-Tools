@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>protogen</name>
+    </assembly>
+    <members>
+        <member name="F:ProtoGenShell.CommandLineInterpreter.Entries">
+            <summary>The command entries</summary>
+        </member>
+        <member name="F:ProtoGenShell.CommandLineInterpreter.DefaultCommand">
+            <summary>The default command.</summary>
+        </member>
+        <member name="F:ProtoGenShell.CommandLineInterpreter.Description">
+            <summary>Description of the comman</summary>
+        </member>
+        <member name="M:ProtoGenShell.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">
+            <summary>
+            Describe the application invoked by the command.
+            </summary>
+            <param name="Dispatch">The command description.</param>
+            <param name="args">The set of arguments.</param>
+            <param name="index">The first unparsed argument.</param>
+        </member>
+        <member name="P:ProtoGenShell._Protocol.Lazy">
+            <summary>Field accessor for parameter [lazy]</summary>
+        </member>
+        <member name="P:ProtoGenShell._Protocol.ProtoStruct">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:ProtoGenShell._Protocol.GenerateRFC2XML">
+            <summary>Field accessor for option [xml]</summary>
+        </member>
+        <member name="P:ProtoGenShell._Protocol.GenerateHTML">
+            <summary>Field accessor for option [html]</summary>
+        </member>
+        <member name="P:ProtoGenShell._Protocol.GenerateMD">
+            <summary>Field accessor for option [md]</summary>
+        </member>
+        <member name="P:ProtoGenShell._Protocol.GenerateCS">
+            <summary>Field accessor for option [cs]</summary>
+        </member>
+        <member name="P:ProtoGenShell._Protocol.GenerateC">
+            <summary>Field accessor for option [c]</summary>
+        </member>
+        <member name="P:ProtoGenShell._Protocol.GenerateH">
+            <summary>Field accessor for option [h]</summary>
+        </member>
+    </members>
+</doc>

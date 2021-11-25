@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>version</name>
+    </assembly>
+    <members>
+        <member name="F:Goedel.Tool.Version.CommandLineInterpreter.Entries">
+            <summary>The command entries</summary>
+        </member>
+        <member name="F:Goedel.Tool.Version.CommandLineInterpreter.DefaultCommand">
+            <summary>The default command.</summary>
+        </member>
+        <member name="F:Goedel.Tool.Version.CommandLineInterpreter.Description">
+            <summary>Description of the comman</summary>
+        </member>
+        <member name="M:Goedel.Tool.Version.CommandLineInterpreter.Help(Goedel.Command.DispatchShell,System.String[],System.Int32)">
+            <summary>
+            Default help dispatch
+            </summary>
+            <param name="Dispatch">The command description.</param>
+            <param name="args">The set of arguments.</param>
+            <param name="index">The first unparsed argument.</param>
+        </member>
+        <member name="M:Goedel.Tool.Version.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">
+            <summary>
+            Describe the application invoked by the command.
+            </summary>
+            <param name="Dispatch">The command description.</param>
+            <param name="args">The set of arguments.</param>
+            <param name="index">The first unparsed argument.</param>
+        </member>
+        <member name="P:Goedel.Tool.Version._Version.InputFile">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Tool.Version._Version.OutputFile">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>rfctool</name>
+    </assembly>
+    <members>
+        <member name="F:MakeRFC.CommandLineInterpreter.Entries">
+            <summary>The command entries</summary>
+        </member>
+        <member name="F:MakeRFC.CommandLineInterpreter.DefaultCommand">
+            <summary>The default command.</summary>
+        </member>
+        <member name="F:MakeRFC.CommandLineInterpreter.Description">
+            <summary>Description of the comman</summary>
+        </member>
+        <member name="M:MakeRFC.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">
+            <summary>
+            Describe the application invoked by the command.
+            </summary>
+            <param name="Dispatch">The command description.</param>
+            <param name="args">The set of arguments.</param>
+            <param name="index">The first unparsed argument.</param>
+        </member>
+        <member name="P:MakeRFC._RFC.Lazy">
+            <summary>Field accessor for parameter [lazy]</summary>
+        </member>
+        <member name="P:MakeRFC._RFC.InputFile">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:MakeRFC._RFC.InputFormat">
+            <summary>Field accessor for option [in]</summary>
+        </member>
+        <member name="P:MakeRFC._RFC.Catalog">
+            <summary>Field accessor for option [catalog]</summary>
+        </member>
+        <member name="P:MakeRFC._RFC.HTML">
+            <summary>Field accessor for option [html]</summary>
+        </member>
+        <member name="P:MakeRFC._RFC.XML">
+            <summary>Field accessor for option [xml]</summary>
+        </member>
+        <member name="P:MakeRFC._RFC.TXT">
+            <summary>Field accessor for option [txt]</summary>
+        </member>
+        <member name="P:MakeRFC._RFC.MD">
+            <summary>Field accessor for option [md]</summary>
+        </member>
+        <member name="P:MakeRFC._RFC.DOC">
+            <summary>Field accessor for option [docx]</summary>
+        </member>
+        <member name="P:MakeRFC._RFC.AML">
+            <summary>Field accessor for option [aml]</summary>
+        </member>
+        <member name="P:MakeRFC._RFC.W3C">
+            <summary>Field accessor for option [w3c]</summary>
+        </member>
+        <member name="P:MakeRFC._RFC.Bibliography">
+            <summary>Field accessor for option [bib]</summary>
+        </member>
+        <member name="P:MakeRFC._RFC.Cache">
+            <summary>Field accessor for option [cache]</summary>
+        </member>
+        <member name="P:MakeRFC._RFC.Stylesheet">
+            <summary>Field accessor for option [style]</summary>
+        </member>
+        <member name="P:MakeRFC._RFC.Boilerplate">
+            <summary>Field accessor for option [boiler]</summary>
+        </member>
+        <member name="P:MakeRFC._RFC.Auto">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:MakeRFC._Template.Identifier">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:MakeRFC._Template.HTML">
+            <summary>Field accessor for option [html]</summary>
+        </member>
+        <member name="P:MakeRFC._Template.XML">
+            <summary>Field accessor for option [xml]</summary>
+        </member>
+        <member name="P:MakeRFC._Template.MD">
+            <summary>Field accessor for option [md]</summary>
+        </member>
+        <member name="P:MakeRFC._Template.DOC">
+            <summary>Field accessor for option [docx]</summary>
+        </member>
+    </members>
+</doc>

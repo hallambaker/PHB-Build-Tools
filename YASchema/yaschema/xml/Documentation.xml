@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>yashema</name>
+    </assembly>
+    <members>
+        <member name="F:Goedel.Shell.Yaschema.CommandLineInterpreter.Entries">
+            <summary>The command entries</summary>
+        </member>
+        <member name="F:Goedel.Shell.Yaschema.CommandLineInterpreter.DefaultCommand">
+            <summary>The default command.</summary>
+        </member>
+        <member name="F:Goedel.Shell.Yaschema.CommandLineInterpreter.Description">
+            <summary>Description of the comman</summary>
+        </member>
+        <member name="M:Goedel.Shell.Yaschema.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">
+            <summary>
+            Describe the application invoked by the command.
+            </summary>
+            <param name="Dispatch">The command description.</param>
+            <param name="args">The set of arguments.</param>
+            <param name="index">The first unparsed argument.</param>
+        </member>
+        <member name="P:Goedel.Shell.Yaschema._Yaschema.Lazy">
+            <summary>Field accessor for parameter [lazy]</summary>
+        </member>
+        <member name="P:Goedel.Shell.Yaschema._Yaschema.YaschemaStruct">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Shell.Yaschema._Yaschema.GenerateCS">
+            <summary>Field accessor for option [cs]</summary>
+        </member>
+        <member name="P:Goedel.Shell.Yaschema._Yaschema.GenerateMD">
+            <summary>Field accessor for option [md]</summary>
+        </member>
+    </members>
+</doc>

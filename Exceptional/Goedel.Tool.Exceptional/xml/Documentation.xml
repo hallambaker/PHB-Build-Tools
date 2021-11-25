@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Tool.Exceptional</name>
+    </assembly>
+    <members>
+        <member name="M:Goedel.Tool.Exceptional.Exception.Init(Goedel.Tool.Exceptional._Choice)">
+            <summary>
+            The initialization method. This is automatically called once after
+            the whole system has been created.
+            </summary>
+            <param name="Parent"></param>
+        </member>
+    </members>
+</doc>

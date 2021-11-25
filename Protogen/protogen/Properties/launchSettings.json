@@ -1,6 +1,11 @@
 {
   "profiles": {
-    "protogen": {
+    "WSL": {
+      "commandName": "WSL2",
+      "environmentVariables": {},
+      "distributionName": ""
+    },
+    "ProtocolSchema": {
       "commandName": "Project",
       "commandLineArgs": "ProtocolSchema.protocol  /cs  ProtocolSchema.cs",
       "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Mesh\\Goedel.Mesh"

@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Tool.Command</name>
+    </assembly>
+    <members>
+        <member name="M:Goedel.Tool.Command.CommandParse.Init">
+            <summary>Initialize.</summary>
+        </member>
+        <member name="P:Goedel.Tool.Command.EntryItem.Item">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Goedel.Tool.Command.ParserException">
+            <summary>
+            The input could not be parsed
+            </summary>
+        </member>
+        <member name="P:Goedel.Tool.Command.ParserException.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Tool.Command.ParserException.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Tool.Command.ParserException.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Tool.Command.ParserException._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Tool.Command.ParserException.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Tool.Command.UnknownOptionSet">
+            <summary>
+            The file could not be read.
+            </summary>
+        </member>
+        <member name="P:Goedel.Tool.Command.UnknownOptionSet.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Tool.Command.UnknownOptionSet.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Tool.Command.UnknownOptionSet.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Tool.Command.UnknownOptionSet._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Tool.Command.UnknownOptionSet.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+    </members>
+</doc>

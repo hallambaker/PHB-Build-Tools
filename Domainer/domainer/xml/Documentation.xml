@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>domainer</name>
+    </assembly>
+    <members>
+        <member name="F:DomainerShell.CommandLineInterpreter.Entries">
+            <summary>The command entries</summary>
+        </member>
+        <member name="F:DomainerShell.CommandLineInterpreter.DefaultCommand">
+            <summary>The default command.</summary>
+        </member>
+        <member name="F:DomainerShell.CommandLineInterpreter.Description">
+            <summary>Description of the comman</summary>
+        </member>
+        <member name="M:DomainerShell.CommandLineInterpreter.Help(Goedel.Command.DispatchShell,System.String[],System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="Dispatch"></param>
+            <param name="args"></param>
+            <param name="index"></param>
+        </member>
+        <member name="M:DomainerShell.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">
+            <summary>
+            Describe the application invoked by the command.
+            </summary>
+            <param name="Dispatch">The command description.</param>
+            <param name="args">The set of arguments.</param>
+            <param name="index">The first unparsed argument.</param>
+        </member>
+        <member name="P:DomainerShell._GenerateDomainer.Lazy">
+            <summary>Field accessor for parameter [lazy]</summary>
+        </member>
+        <member name="P:DomainerShell._GenerateDomainer.Domainer">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:DomainerShell._GenerateDomainer.GenerateCS">
+            <summary>Field accessor for option [cs]</summary>
+        </member>
+    </members>
+</doc>

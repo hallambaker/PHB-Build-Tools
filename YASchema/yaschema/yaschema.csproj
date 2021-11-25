@@ -1,19 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+	<Import Project="$(SolutionDir)CommonSettingsApplication.xml" />
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <ApplicationIcon>PHBLogo256.ico</ApplicationIcon>
-    <OutputType>Exe</OutputType>
-    <Company>Phill Hallam-Baker</Company>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-    <Product>Yet Another Schema</Product>
-    <Description>Generates RFC format documentation from OOXML or Markdown source.</Description>
-    <Copyright>© 2021</Copyright>
-    <Title>Constant Manager</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <Configurations>Debug;Release</Configurations>
-    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+	  <AssemblyName>yashema</AssemblyName>
+	  <Product>DSL for building RUD</Product>
+	  <Description>DSL specifically designed to build RUD packet (de)serialization.</Description>
+	  <Copyright>© 2015-2021</Copyright>
+	  <Title>DSL for building RUD</Title>
   </PropertyGroup>
 
 

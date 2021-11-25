@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Tool.ASN</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Tool.ASN.ASN2">
+            <summary>
+            The core parser
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ASN.ASN2.Complete">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

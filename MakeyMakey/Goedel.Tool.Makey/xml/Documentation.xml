@@ -1,0 +1,1093 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Tool.Makey</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Tool.Makey.KeyFileException">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Tool.Makey.KeyFileException.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Tool.Makey.KeyFileException.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Tool.Makey.KeyFileException.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.KeyFileException._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Tool.Makey.KeyFileException.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Tool.Makey.NoProviderSpecified">
+            <summary>
+            The specified key did not have a valid cryptographic
+            provider. This may be because the key algorithm is 
+            not supported or the key parameters were found to be invalid.
+            </summary>
+        </member>
+        <member name="P:Goedel.Tool.Makey.NoProviderSpecified.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Tool.Makey.NoProviderSpecified.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Tool.Makey.NoProviderSpecified.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.NoProviderSpecified._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Tool.Makey.NoProviderSpecified.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Tool.Makey.PrivateKeyNotAvailable">
+            <summary>
+            An attempt was made to perform a private key operation
+            and the private key parameters could not be found.
+            </summary>
+        </member>
+        <member name="P:Goedel.Tool.Makey.PrivateKeyNotAvailable.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Tool.Makey.PrivateKeyNotAvailable.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Tool.Makey.PrivateKeyNotAvailable.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.PrivateKeyNotAvailable._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Tool.Makey.PrivateKeyNotAvailable.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Tool.Makey.UnexpectedEnd">
+            <summary>
+            An attempt to read a file failed because data was
+            missing or corrupted.
+            </summary>
+        </member>
+        <member name="P:Goedel.Tool.Makey.UnexpectedEnd.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Tool.Makey.UnexpectedEnd.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Tool.Makey.UnexpectedEnd.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.UnexpectedEnd._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Tool.Makey.UnexpectedEnd.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Tool.Makey.ParseError">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ParseError.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ParseError.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Tool.Makey.ParseError.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.ParseError._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Tool.Makey.ParseError.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="P:Goedel.Tool.Makey.NoneType.Include">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.NoneType.Update">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.NoneType.Generator">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.NoneType.LastGenOutput">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ProjectReferenceType.Include">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ProjectReferenceType.Project">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ProjectReferenceType.Name">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey.VSSolution">
+            <summary>
+            Represents a Visual Studio solution.
+            
+            NB, since the format of the file is not published, it is not possible
+            to know with any certainty how Visual Studio parses it. In particular
+            there may be features of the file format that have not been expressed
+            in any of the examples seen.
+            
+            In particular, we have no way to tell if the file format supports 
+            comments or if there is some line wrapping mechanism supported.
+            </summary>
+        </member>
+        <member name="P:Goedel.Tool.Makey.Project.Sdk">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.Project.PropertyGroup">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.Project.ItemGroup">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.PropertyGroupType.ProjectTypeGuids">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.PropertyGroupType.ProjectGuid">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.PropertyGroupType.OutputType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.PropertyGroupType.AssemblyName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ItemGroupType.Reference">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ItemGroupType.Compile">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ItemGroupType.None">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ItemGroupType.ProjectReference">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ReferenceType.Include">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ReferenceType.Update">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ReferenceType.HintPath">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ReferenceType.Private">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.CompileType.Include">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.CompileType.Update">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.CompileType.DependentUpon">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ImportType.Project">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ImportType.Condition">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey.ImportType.Label">
+            <remarks/>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.#ctor(Goedel.FSR.LexReader)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="Reader">The input source.</param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.#ctor(System.IO.Stream)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="Stream">The input source.</param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.#ctor(System.IO.TextReader)">
+            <summary>
+            Create and initialize a lexical analyzer.
+            </summary>
+            <param name="TextReader">The input source.</param>
+        </member>
+        <member name="P:Goedel.Tool.Makey.Tokenizer.CharacterMappings">
+            <summary>
+            Maps characters to character sets
+            </summary>
+        </member>
+        <member name="P:Goedel.Tool.Makey.Tokenizer.CompressedTransitions">
+            <summary>
+            State transitions in response to character set
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.GetToken(Goedel.Tool.Makey.Tokenizer.State)">
+            <summary>
+            Get the next token from the stream
+            </summary>
+            <param name="StartState">The initial starting state</param>
+            <returns>The token detected or -1 if an error occurred</returns>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.GetToken">
+            <summary>
+            Get the next token from the stream
+            </summary>
+            <returns>The token detected or -1 if an error occurred</returns>
+        </member>
+        <member name="T:Goedel.Tool.Makey.Tokenizer.State">
+            <summary>State types</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.Initial">
+            <summary>Initial</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.Begin">
+            <summary>Begin</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.GetTagValue0">
+            <summary>GetTagValue0</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.GetTagValue">
+            <summary>GetTagValue</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.HaveOpen">
+            <summary>HaveOpen</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.StartKey1">
+            <summary>StartKey1</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.StartParam1">
+            <summary>StartParam1</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.StartParam2">
+            <summary>StartParam2</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.StartItem1">
+            <summary>StartItem1</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.StartItem2">
+            <summary>StartItem2</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.StartItem3">
+            <summary>StartItem3</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.StartComplete">
+            <summary>StartComplete</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.EndComplete">
+            <summary>EndComplete</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.TagValueComplete">
+            <summary>TagValueComplete</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.LineComplete">
+            <summary>LineComplete</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.State.Fail">
+            <summary>Fail</summary>
+        </member>
+        <member name="T:Goedel.Tool.Makey.Tokenizer.Token">
+            <summary>Token Types</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.Token.INVALID">
+            <summary>Could not find a valid token.</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.Token.Empty">
+            <summary>Empty</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.Token.Start">
+            <summary>Start</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.Token.End">
+            <summary>End</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.Token.Line">
+            <summary>Line</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.Token.TagValue">
+            <summary>TagValue</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.Token.Invalid">
+            <summary>Invalid</summary>
+        </member>
+        <member name="F:Goedel.Tool.Makey.Tokenizer.Character_Mapping">
+            <summary>Mapping of characters to character groups</summary>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.Init">
+            <summary>Generated initialization method, is called automatically 
+            the FSR to reset </summary>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.Reset">
+            <summary>
+            Reset all buffers and output values for the next token.
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.Clear">
+            <summary>
+            Reset all buffers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.CurrentItem">
+            <summary>
+            Get the value of the current item and clear the input buffers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.Reset(System.Int32)">
+            <summary>
+            Do nothing
+            </summary>
+            <param name="c">Character that was read</param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.StartFinalize(System.Int32)">
+            <summary>
+            Complete a start token. This has the pattern 
+            Label( {Item} ) = {Item} [, {Item}]
+            </summary>
+            <param name="c">Character that was read</param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.TagValueFinalize(System.Int32)">
+            <summary>
+            Complete a TagValue token. This is any line that does not
+            match the Start token pattern that matches the pattern
+            {Item} = {Item}
+            </summary>
+            <param name="c">Character that was read</param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.EndFinalize(System.Int32)">
+            <summary>
+            Complete an End token This is any line that does not
+            match either the Start or TagValue tokens
+            </summary>
+            <param name="c">Character that was read</param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.Abort(System.Int32)">
+            <summary>
+            Abort the current scan and ignore the data.
+            </summary>
+            <param name="c">Character that was read</param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.Ignore(System.Int32)">
+            <summary>
+            Do nothing
+            </summary>
+            <param name="c">Character that was read</param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.GotTag(System.Int32)">
+            <summary>
+            Do nothing
+            </summary>
+            <param name="c">Character that was read</param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.GotStartTag(System.Int32)">
+            <summary>
+            Do nothing
+            </summary>
+            <param name="c">Character that was read</param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Tokenizer.GotItem(System.Int32)">
+            <summary>
+            Do nothing
+            </summary>
+            <param name="c">Character that was read</param>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.Project">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.PropertyGroup">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.ItemGroup">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.ItemDefinitionGroup">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.Choose">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.UsingTask">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.ProjectExtensions">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.Target">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.Import">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.ImportGroup">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.PropertyGroup1">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.ItemGroup1">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.ItemDefinitionGroup1">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.Choose1">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.UsingTask1">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.Target1">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.Import1">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.ImportGroup1">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.ProjectExtensions1">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.DefaultTargets">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.InitialTargets">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.Project.ToolsVersion">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.PropertyGroupType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.PropertyGroupType.Property">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.PropertyGroupType.Condition">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.PropertyGroupType.Label">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.GenericPropertyType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.GenericPropertyType.Any">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.GenericPropertyType.Condition">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.GenericPropertyType.Label">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.UsingTaskBodyType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.UsingTaskBodyType.Any">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.UsingTaskBodyType.Evaluate">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.UsingTaskType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.UsingTaskType.ParameterGroup">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.UsingTaskType.Task">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.UsingTaskType.Condition">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.UsingTaskType.AssemblyName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.UsingTaskType.AssemblyFile">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.UsingTaskType.TaskName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.UsingTaskType.TaskFactory">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.UsingTaskType.Architecture">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.UsingTaskType.Runtime">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.OtherwiseType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.OtherwiseType.Items">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.ChooseType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ChooseType.When">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ChooseType.Otherwise">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ChooseType.Label">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.WhenType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.WhenType.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.WhenType.Condition">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.ItemGroupType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ItemGroupType.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ItemGroupType.Condition">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ItemGroupType.Label">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.SimpleItemType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.SimpleItemType.Condition">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.SimpleItemType.Include">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.SimpleItemType.Exclude">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.SimpleItemType.Remove">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.SimpleItemType.Label">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.PostBuildEventItem">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.PostBuildEventItem.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.PostBuildEventItem.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.ItemsChoiceType3">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType3.Command">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType3.Message">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.PreBuildEventItem">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.PreBuildEventItem.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.PreBuildEventItem.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.ItemsChoiceType2">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType2.Command">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType2.Message">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.ResourceCompile">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ResourceCompile.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ResourceCompile.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.ItemsChoiceType1">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType1.AdditionalIncludeDirectories">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType1.Culture">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType1.IgnoreStandardIncludePath">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType1.NullTerminateStrings">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType1.PreprocessorDefinitions">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType1.ResourceOutputFileName">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType1.ShowProgress">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType1.SuppressStartupBanner">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType1.UndefinePreprocessorDefinitions">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.LinkItem">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.LinkItem.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.LinkItem.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.ItemsChoiceType">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.AddModuleNamesToAssembly">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.AdditionalDependencies">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.AdditionalLibraryDirectories">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.AdditionalManifestDependencies">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.AllowIsolation">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.AssemblyDebug">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.AssemblyLinkResource">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.BaseAddress">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.CLRImageType">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.CLRSupportLastError">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.CLRThreadAttribute">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.CLRUnmanagedCodeCheck">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.CreateHotPatchableImage">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.DataExecutionPrevention">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.DelayLoadDLLs">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.DelaySign">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.Driver">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.EmbedManagedResourceFile">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.EnableCOMDATFolding">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.EnableUAC">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.EntryPointSymbol">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.FixedBaseAddress">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.ForceFileOutput">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.ForceSymbolReferences">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.FunctionOrder">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.GenerateDebugInformation">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.GenerateMapFile">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.HeapCommitSize">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.HeapReserveSize">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.IgnoreAllDefaultLibraries">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.IgnoreEmbeddedIDL">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.IgnoreSpecificDefaultLibraries">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.IgnoreStandardIncludePath">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.ImageHasSafeExceptionHandlers">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.ImportLibrary">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.KeyContainer">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.KeyFile">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.LargeAddressAware">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.LinkErrorReporting">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.LinkStatus">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.LinkTimeCodeGeneration">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.MSDOSStubFileName">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.MapExports">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.MapFileName">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.MergeSections">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.MergedIDLBaseFileName">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.MidlCommandFile">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.MinimumRequiredVersion">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.ModuleDefinitionFile">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.OptimizeReferences">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.OutputFile">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.PreventDllBinding">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.Profile">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.ProfileGuidedDatabase">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.ProgramDatabaseFile">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.RandomizedBaseAddress">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.RegisterOutput">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.SectionAlignment">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.ShowProgress">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.SpecifySectionAttributes">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.StackCommitSize">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.StackReserveSize">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.StripPrivateSymbols">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.SubSystem">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.SupportNobindOfDelayLoadedDLL">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.SupportUnloadOfDelayLoadedDLL">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.SuppressStartupBanner">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.SwapRunFromCD">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.SwapRunFromNET">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.TargetMachine">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.TerminalServerAware">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.TreatLinkerWarningAsErrors">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.TypeLibraryFile">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.TypeLibraryResourceID">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.UACExecutionLevel">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.UACUIAccess">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Tool.Makey1.ItemsChoiceType.Version">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.GenericItemType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.GenericItemType.Any">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.ItemDefinitionGroupType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ItemDefinitionGroupType.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ItemDefinitionGroupType.Condition">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ItemDefinitionGroupType.Label">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.ImportType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ImportType.Condition">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ImportType.Project">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ImportType.Label">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.ImportGroupType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ImportGroupType.Import">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ImportGroupType.Condition">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.ImportGroupType.Label">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.OnErrorType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.OnErrorType.Condition">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.OnErrorType.ExecuteTargets">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.OnErrorType.Label">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.TaskType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TaskType.Output">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TaskType.Condition">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TaskType.ContinueOnError">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TaskType.Architecture">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TaskType.Runtime">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.TaskTypeOutput">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TaskTypeOutput.TaskParameter">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TaskTypeOutput.ItemName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TaskTypeOutput.PropertyName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TaskTypeOutput.Condition">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Tool.Makey1.TargetType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TargetType.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TargetType.OnError">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TargetType.Name">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TargetType.DependsOnTargets">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TargetType.Inputs">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TargetType.Outputs">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TargetType.Condition">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TargetType.KeepDuplicateOutputs">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TargetType.Returns">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TargetType.BeforeTargets">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TargetType.AfterTargets">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Tool.Makey1.TargetType.Label">
+            <remarks/>
+        </member>
+    </members>
+</doc>

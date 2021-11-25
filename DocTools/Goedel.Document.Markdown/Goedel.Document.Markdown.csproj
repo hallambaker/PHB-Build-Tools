@@ -1,18 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$(SolutionDir)CommonSettings.xml" />
   <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Goedel.ASN</RootNamespace>
-    <Configurations>Debug;Release;Focus;Yaschema</Configurations>
-    <Company>ThresholdSecrets.Com</Company>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-    <Product>Goedel.ASN</Product>
-    <Description>ASN1 parsing library.</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.ASN</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <RootNamespace>Goedel.Document.Markdown</RootNamespace>
+    <Title>Goedel.Document.Markdown</Title>
+    <Product>Goedel.Document.Markdown</Product>
+    <Description>Markdown document parsing.</Description>
   </PropertyGroup>
 
   <ItemGroup>

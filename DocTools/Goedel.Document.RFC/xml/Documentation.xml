@@ -1,0 +1,1767 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Document.RFC</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Document.RFC.Citation">
+            <summary>
+            Represents a link to a citation of material to be matched or that has 
+            been matched in the cache or an external source.
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.Citation.Label">
+            <summary>
+            The citation label, e.g. 'RFC1984'
+            </summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.Citation.Normative">
+            <summary>
+            If true, citation is listed as normative. Note that if a citation is 
+            cited normatively and informatively in the same document it is
+            normative.
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.Citation.Resolved">
+            <summary>
+            Set true when a label has been successfully matched in an external library or
+            the cache.
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.Citation.Result">
+            <summary>
+            The result of resolving the match (used to store in the archive).
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.Citation.Uri">
+            <summary>
+            The URI that resulted in the match.
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.Citation.Reference">
+            <summary>
+            The parsed reference.
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.Citation.#ctor(System.String,System.Boolean)">
+            <summary>
+            Create a citation reference to be matched.
+            </summary>
+            <param name="Label">The label spcified in the text.</param>
+            <param name="Normative">If true, citation is normative.</param>
+        </member>
+        <member name="T:Goedel.Document.RFC.References">
+            <summary>
+            A list of references. A document will typically have a list of normative 
+            references and a list of informative references.
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.References.Title">
+            <summary>
+            The title for this list of references.
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.References.Entries">
+            <summary>
+            The list of references.
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.Catalog.AddDefaultSources">
+            <summary>
+            Register the default set of citation libraries.
+            </summary>
+        </member>
+        <member name="T:Goedel.Document.RFC.RFCEditorBoilerplate">
+            <summary>
+            Generate boilerplate and ipr statements. This should eventually be
+            replaced by a configuration file that can be read during processing.
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.Document.MakeAutomatics">
+            <summary>
+            Perform all automated expansions of data to inline, etc. sections.
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.Document.ParseSeriesInfos">
+            <summary>
+            Convert information from the various locations successive schema versions put 
+            it to a canonical form.
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.Document.NumberSection(Goedel.Document.RFC.Section,System.Int32,System.Int32,System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Number a section
+            </summary>
+            <param name="Section">The section to number</param>
+            <param name="Number">The number relative to its peers</param>
+            <param name="Level">The depth (for cutting the TOC)</param>
+            <param name="NumericIDPrefix">Prefix for the numeric ID</param>
+            <param name="TextID">The text representation of Number</param>
+            <param name="TextSuffix">Suffix to put after number for display</param>
+            <param name="TextPrefix">Prefix to put in front of user for display</param>
+            <param name="Numeric">If true the number is turned into a numeric section ID</param>
+        </member>
+        <member name="T:Goedel.Document.RFC.BlockType">
+            <summary>Text Block Types</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockType.Paragraph">
+            <summary>Formatted paragraph</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockType.Verbatim">
+            <summary>Verbatim paragraph</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockType.Ordered">
+            <summary>Numbered list</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockType.Symbol">
+            <summary>Bullet List</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockType.Definitions">
+            <summary>Definitions</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockType.Term">
+            <summary>Defined Term</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockType.Data">
+            <summary>Definition</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockType.Table">
+            <summary>Table</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockType.TableRow">
+            <summary>Table Row</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockType.TableData">
+            <summary>Table Data</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockType.Reference">
+            <summary>Reference</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockType.Author">
+            <summary>Author</summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Goedel.Document.RFC.BlockType.Figure" -->
+        <!-- Badly formed XML comment ignored for member "F:Goedel.Document.RFC.BlockType.Artwork" -->
+        <!-- Badly formed XML comment ignored for member "F:Goedel.Document.RFC.BlockType.BlockQuote" -->
+        <!-- Badly formed XML comment ignored for member "F:Goedel.Document.RFC.BlockType.SourceCode" -->
+        <!-- Badly formed XML comment ignored for member "F:Goedel.Document.RFC.BlockType.Null" -->
+        <member name="F:Goedel.Document.RFC.SeriesInfo.Name">
+            <summary>The name of the series. Valid values are "RFC",
+            "Internet-Draft", and "W3c".</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.SeriesInfo.Value">
+            <summary>identifier in series 822 or dreaft-hallambaker-fred-00</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.SeriesInfo.Status">
+            <summary>The status of this document.  The currently known values are
+            "standard", "informational", "experimental", "bcp", "fyi", and
+            "full-standard".  The RFC Series Editor may change this list in the
+            future.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.SeriesInfo.Stream">
+            <summary>   The stream (as described in [RFC7841]) that originated the document.
+            Valid values are "IETF", "IAB", "IRTF", "independent".
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.SeriesInfo.DOI">
+            <summary>The DOI identifier</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.SeriesInfo.STD">
+            <summary>The STD identifier</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.SeriesInfo.ExplicitVersion">
+            <summary>The document version if explicitly specified.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.SeriesInfo.Version">
+            <summary>The explicitly specified version.</summary>
+        </member>
+        <member name="T:Goedel.Document.RFC.TextBlockSequenceBuilder">
+            <summary>
+            This text builder should probably be attached to the XML parser since that
+            is what it is specialized to.
+            </summary>
+        </member>
+        <member name="T:Goedel.Document.RFC.HTMLParse">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.HTMLParse.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.HTMLParse.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.HTMLParse.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.HTMLParse._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Document.RFC.HTMLParse.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Document.RFC.HTMLParseNoBody">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.HTMLParseNoBody.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.HTMLParseNoBody.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.HTMLParseNoBody.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.HTMLParseNoBody._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Document.RFC.HTMLParseNoBody.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Document.RFC.HTMLParseNoH1">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.HTMLParseNoH1.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.HTMLParseNoH1.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.HTMLParseNoH1.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.HTMLParseNoH1._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Document.RFC.HTMLParseNoH1.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Document.RFC.HTMLParseNoH2">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.HTMLParseNoH2.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.HTMLParseNoH2.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.HTMLParseNoH2.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.HTMLParseNoH2._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Document.RFC.HTMLParseNoH2.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Document.RFC.NotFoundReserved">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.NotFoundReserved.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.NotFoundReserved.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.NotFoundReserved.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.NotFoundReserved._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Document.RFC.NotFoundReserved.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Document.RFC.IPRInvalid">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.IPRInvalid.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.IPRInvalid.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.IPRInvalid.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.IPRInvalid._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Document.RFC.IPRInvalid.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.Writers.WriteHTML(System.String,Goedel.Document.RFC.Document)">
+            <summary>
+            Write RFC Document out in HTML to file.
+            </summary>
+            <param name="OutputFile">Output</param>
+            <param name="Document">Document to write</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.Writers.WriteHTML(System.IO.TextWriter,Goedel.Document.RFC.Document)">
+            <summary>
+            Write RFC Document out in HTML to text writer.
+            </summary>
+            <param name="TextWriter">Output</param>
+            <param name="Document">Document to write</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.Writers.WriteMD(System.String,Goedel.Document.RFC.Document)">
+            <summary>
+            Write RFC Document out in Markdown Format to file.
+            </summary>
+            <param name="OutputFile">Output</param>
+            <param name="Document">Document to write</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.Writers.WriteMD(System.IO.TextWriter,Goedel.Document.RFC.Document)">
+            <summary>
+            Write RFC Document out in Markdown Format to text writer.
+            </summary>
+            <param name="TextWriter">Output</param>
+            <param name="Document">Document to write</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.Writers.WriteTXT(System.String,Goedel.Document.RFC.Document)">
+            <summary>
+            Write document to specified output stream
+            </summary>
+            <param name="OutputFile">The output file to write to</param>
+            <param name="Document">The document to write</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.Writers.WriteTXT(System.IO.TextWriter,Goedel.Document.RFC.Document)">
+            <summary>
+            Write document to specified output stream
+            </summary>
+            <param name="TextWriter">The output stream to write to</param>
+            <param name="Document">The document to write</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.Writers.WriteAML(System.String,Goedel.Document.RFC.Document)">
+            <summary>
+            Write RFC Document out in MAML to file.
+            </summary>
+            <param name="OutputFile">Output</param>
+            <param name="Document">Document to write</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.Writers.WriteAML(System.IO.TextWriter,Goedel.Document.RFC.Document)">
+            <summary>
+            Write document to specified output stream
+            </summary>
+            <param name="TextWriter">The output stream to write to</param>
+            <param name="Document">The document to write</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.Html2RFCOut.#ctor(System.IO.TextWriter)">
+            <summary>
+            Constructor, this is a subclass of XMLTextWriter
+            </summary>
+            <param name="TextWriter"></param>
+        </member>
+        <member name="T:Goedel.Document.RFC.IndentWriter">
+            <summary>
+            Variant of the streamwriter class supporting formatted output
+            of XML.
+            </summary>
+        </member>
+        <member name="T:Goedel.Document.RFC.PageWriter">
+            <summary>
+            Output class performing nroff style page formatting.
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.PageWriter.#ctor(System.IO.TextWriter)">
+            <summary>
+            Create a new instance using the specified TextWriter as output
+            and the default page length (58) and width (72);
+            </summary>
+            <param name="TextWriter">The output stream</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.PageWriter.#ctor(System.IO.TextWriter,System.Int32,System.Int32)">
+            <summary>
+            Create a new instance using the specified TextWriter as output
+            and the specified page length and width ;
+            </summary>
+            <param name="TextWriter">The output stream</param>
+            <param name="MaxLine">The page length</param>
+            <param name="MaxCol">The page width</param>
+        </member>
+        <member name="P:Goedel.Document.RFC.Common.lang">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.Common.base">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.ItemsChoiceTextRun">
+            <summary>The common enumeration for all tagged text run types</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.artwork">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.bcp14">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.cref">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.dl">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.em">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.eref">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.figure">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.iref">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.list">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.ol">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.relref">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.sourcecode">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.strong">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.sub">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.sup">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.t">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.tt">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.ul">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.xref">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.spanx">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.vspace">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.aside">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.table">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.texttable">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTextRun.blockquote">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.rfc">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.link">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.front">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.middle">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.back">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.number">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.obsoletes">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.updates">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.category">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.consensus">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.seriesNo">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.ipr">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.iprExtract">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.submissionType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.docName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.sortRefs">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.symRefs">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.tocInclude">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.tocDepth">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.prepTime">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.indexInclude">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.version">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.scripts">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.rfc.expiresDate">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.link">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.link.href">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.link.rel">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.front">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.front.title">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.front.seriesInfo">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.front.author">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.front.date">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.front.area">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.front.workgroup">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.front.keyword">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.front.abstract">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.front.note">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.front.boilerplate">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.title">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.title.abbrev">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.title.ascii">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.title.Value">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.seriesInfo">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.seriesInfo.name">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.seriesInfo.value">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.seriesInfo.asciiName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.seriesInfo.asciiValue">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.seriesInfo.status">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.seriesInfo.stream">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.streamType">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.streamType.IETF">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.streamType.IAB">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.streamType.IRTF">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.streamType.independent">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.author">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.author.organization">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.author.address">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.author.initials">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.author.asciiInitials">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.author.surname">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.author.fullname">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.author.role">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.author.roleSpecified">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.author.asciiFullname">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.organization">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.organization.abbrev">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.organization.ascii">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.organization.Value">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.address">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.address.postal">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.address.phone">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.address.facsimile">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.address.email">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.address.uri">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.postal">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.postal.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.postal.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.taggedtext">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.taggedtext.ascii">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.taggedtext.Value">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.ItemsChoiceType">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceType.city">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceType.code">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceType.country">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceType.postalLine">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceType.region">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceType.street">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.asciitext">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.asciitext.abbrev">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.asciitext.Value">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.authorRole">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.authorRole.editor">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.date">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.date.day">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.date.month">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.date.year">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.abstract">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.abstract.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.abstract.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.abstract.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.abstract.pn">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.dl">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.dl.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.dl.spacing">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.dl.hanging">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.dl.pn">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.ItemsChoiceTypeDL">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTypeDL.dt">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceTypeDL.dd">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.listItemType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.listItemType.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.listItemType.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.listItemType.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.listItemType.pn">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.artwork">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.artwork.Any">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.artwork.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.artwork.pn">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.artwork.name">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.artwork.type">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.artwork.align">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.artwork.alt">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.artwork.width">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.artwork.height">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.artwork.src">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.artwork.originalSrc">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.alignType">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.alignType.left">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.alignType.center">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.alignType.right">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.cref">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.cref.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.cref.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.cref.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.cref.source">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.cref.display">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.textrun">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.textrun.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.textrun.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.eref">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.eref.target">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.eref.Text">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.iref">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.iref.item">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.iref.subitem">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.iref.primary">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.iref.pn">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.boolean">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.boolean.true">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.boolean.false">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.xref">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.xref.target">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.xref.pageno">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.xref.format">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.xref.derivedContent">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.xref.Text">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.xrefFormat">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.xrefFormat.counter">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.xrefFormat.title">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.xrefFormat.none">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.xrefFormat.default">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.relref">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.relref.target">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.relref.displayFormat">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.relref.section">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.relref.relative">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.relref.Text">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.relref.derivedLink">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.relrefDisplayFormat">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.relrefDisplayFormat.of">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.relrefDisplayFormat.comma">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.relrefDisplayFormat.parens">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.relrefDisplayFormat.bare">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.figure">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.figure.name">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.figure.iref">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.figure.preamble">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.figure.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.figure.postamble">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.figure.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.figure.width">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.figure.height">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.figure.pn">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.figure.title">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.figure.suppresstitle">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.figure.align">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.figure.alt">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.figure.src">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.figure.originalSrc">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.name">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.name.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.name.slugifiedName">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.sourcecode">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.sourcecode.Value">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.sourcecode.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.sourcecode.pn">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.sourcecode.name">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.sourcecode.type">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.sourcecode.src">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.sourcecode.originalSrc">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.postamble">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.postamble.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.postamble.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.spanx">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.spanx.space">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.spanx.style">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.spanx.Text">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.list">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.list.t">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.list.style">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.list.hangIndent">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.list.counter">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.list.pn">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.Bcp14String.Text">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.t">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.t.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.t.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.t.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.t.pn">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.t.hangText">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.t.keepWithNext">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.t.keepWithPrevious">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.vspace">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.vspace.blankLines">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.ol">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ol.li">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ol.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ol.type">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ol.start">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ol.group">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ol.spacing">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ol.pn">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.olSpacing">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.olSpacing.normal">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.olSpacing.compact">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.ul">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ul.li">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ul.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ul.spacing">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ul.empty">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ul.emptySpecified">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ul.pn">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.ulSpacing">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ulSpacing.normal">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ulSpacing.compact">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.dlSpacing">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.dlSpacing.normal">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.dlSpacing.compact">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.note">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.note.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.note.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.note.title">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.note.pn">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.boilerplate">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.boilerplate.section">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.section">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.section.name">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.section.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.section.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.section.section1">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.section.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.section.pn">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.section.title">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.section.numbered">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.section.toc">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.section.removeInRFC">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.aside">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.aside.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.aside.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.aside.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.aside.pn">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.table">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.table.name">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.table.iref">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.table.thead">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.table.tbody">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.table.tfoot">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.table.Text">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.table.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.table.pn">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.tableRowsType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.tableRowsType.tr">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.tableRowsType.anchor">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.tr">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.tr.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.tr.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.tr.anchor">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.tableCellType">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.tableCellType.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.tableCellType.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.tableCellType.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.tableCellType.colspan">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.tableCellType.rowspan">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.tableCellType.align">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.tableCellType.alignSpecified">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.ItemsChoiceType6">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceType6.td">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ItemsChoiceType6.th">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.blockquote">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.blockquote.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.blockquote.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.blockquote.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.blockquote.pn">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.blockquote.cite">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.blockquote.quotedFrom">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.texttable">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.texttable.preamble">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.texttable.ttcol">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.texttable.c">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.texttable.postamble">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.texttable.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.texttable.title">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.texttable.suppresstitle">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.texttable.align">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.texttable.style">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.ttcol">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ttcol.width">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ttcol.align">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.ttcol.Value">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.ttcolAlign">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ttcolAlign.left">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ttcolAlign.center">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.ttcolAlign.right">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.c">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.c.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.c.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.texttableStyle">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.texttableStyle.all">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.texttableStyle.none">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.texttableStyle.headers">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.texttableStyle.full">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.sectionToc">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.sectionToc.include">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.sectionToc.exclude">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.sectionToc.default">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.middle">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.middle.section">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.back">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.back.displayreference">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.back.references">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.back.section">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.displayreference">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.displayreference.target">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.displayreference.to">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.references">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.references.name">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.references.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.references.title">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.references.pn">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.references.anchor">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.reference">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.reference.front">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.reference.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.reference.anchor">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.reference.target">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.reference.quoteTitle">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.reference.quoteTitleSpecified">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.format">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.format.target">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.format.type">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.format.octets">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.refcontent">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.refcontent.Items">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.refcontent.ItemsElementName">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.referencegroup">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.referencegroup.reference">
+            <remarks/>
+        </member>
+        <member name="P:Goedel.Document.RFC.referencegroup.anchor">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.rfcConsensus">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.rfcConsensus.no">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.rfcConsensus.yes">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.rfcConsensus.true">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.rfcConsensus.false">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.rfcIndexInclude">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.rfcIndexInclude.true">
+            <remarks/>
+        </member>
+        <member name="F:Goedel.Document.RFC.rfcIndexInclude.false">
+            <remarks/>
+        </member>
+        <member name="T:Goedel.Document.RFC.XMLTextWriterAML">
+            <summary>
+            XML Writer customized to output the open and close tags used in the AML format.
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.XMLTextWriterAML.#ctor(System.IO.TextWriter)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="TextWriter">The output stream.</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.XMLTextWriterAML.Open(Goedel.Document.RFC.XMLTextWriterPlus.Mode)">
+            <summary>
+            Begin a block containing either Paragraph, Definition or List content.
+            </summary>
+            <param name="Mode">The type of content for this block</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.XMLTextWriterAML.Close(Goedel.Document.RFC.XMLTextWriterPlus.Mode)">
+            <summary>
+            End a block containing either Paragraph, Definition or List content.
+            </summary>
+            <param name="Mode">The type of content for this block</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.XMLTextWriterAML.OpenList(Goedel.Document.RFC.BlockType)">
+            <summary>
+            Begin a list level
+            </summary>
+            <param name="ListItem">The type of list</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.XMLTextWriterAML.CloseList(Goedel.Document.RFC.BlockType)">
+            <summary>
+            End a list level
+            </summary>
+            <param name="ListItem">The type of list</param>
+        </member>
+        <member name="T:Goedel.Document.RFC.XMLTextWriterPlus.Mode">
+            <summary>
+            The types of text block
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.XMLTextWriterPlus.Mode.None">
+            <summary>Initial state</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.XMLTextWriterPlus.Mode.List">
+            <summary>List mode</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.XMLTextWriterPlus.Mode.Paragraph">
+            <summary>Paragraph data</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.XMLTextWriterPlus.Mode.Definition">
+            <summary>Definition List</summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.XMLTextWriterPlus.#ctor(System.IO.TextWriter)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="TextWriter">The output stream.</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.XMLTextWriterPlus.SetTextBlock(Goedel.Document.RFC.TextBlock)">
+            <summary>
+            Set the wrapping mode for the current text block
+            </summary>
+            <param name="TextBlock"></param>
+        </member>
+        <member name="M:Goedel.Document.RFC.XMLTextWriterPlus.Open(Goedel.Document.RFC.XMLTextWriterPlus.Mode)">
+            <summary>
+            Begin a block containing either Paragraph, Definition or List content.
+            </summary>
+            <param name="Mode">The type of content for this block</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.XMLTextWriterPlus.Close(Goedel.Document.RFC.XMLTextWriterPlus.Mode)">
+            <summary>
+            End a block containing either Paragraph, Definition or List content.
+            </summary>
+            <param name="Mode">The type of content for this block</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.XMLTextWriterPlus.OpenList(Goedel.Document.RFC.BlockType)">
+            <summary>
+            Begin a list level
+            </summary>
+            <param name="ListItem">The type of list</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.XMLTextWriterPlus.CloseList(Goedel.Document.RFC.BlockType)">
+            <summary>
+            End a list level
+            </summary>
+            <param name="ListItem">The type of list</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.XMLTextWriterPlus.OpenBlock">
+            <summary>
+            Open a block of textblock output
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.XMLTextWriterPlus.CloseBlock">
+            <summary>
+            Close a block of TextBlock output
+            </summary>
+        </member>
+    </members>
+</doc>

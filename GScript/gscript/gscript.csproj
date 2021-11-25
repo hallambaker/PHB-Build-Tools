@@ -1,19 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+	<Import Project="$(SolutionDir)CommonSettingsApplication.xml" />
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <ApplicationIcon>PHBLogo256.ico</ApplicationIcon>
-    <Company>Phill Hallam-Baker</Company>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-    <Product>RFCTool</Product>
-    <Description>Generates RFC format documentation from OOXML or Markdown source.</Description>
-    <Copyright>© 2015-2019</Copyright>
-    <Title>RFCTool</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <Configurations>Debug;Release</Configurations>
-    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+	  <AssemblyName>gscript</AssemblyName>
+	  <Product>Gscript</Product>
+	  <Description>Goedel 3 code meta-synthesizer script tool.</Description>
+	  <Copyright>© 2015-2021</Copyright>
+	  <Title>Gscript</Title>
   </PropertyGroup>
 
   <ItemGroup>
