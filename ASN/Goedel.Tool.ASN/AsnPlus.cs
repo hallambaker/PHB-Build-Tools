@@ -28,7 +28,7 @@ namespace Goedel.Tool.ASN {
 
 
     public abstract partial class _Choice {
-        public List<OID> Children = new List<OID>();
+        public List<OID> Children = new();
 
         public int[] Binary = null;
 

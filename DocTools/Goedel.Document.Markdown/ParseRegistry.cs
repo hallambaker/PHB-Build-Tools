@@ -18,7 +18,7 @@ namespace Goedel.Document.Markdown {
 
     public class ParseRegistry {
         static Dictionary<string, ParseRegistryEntry> ByExtension = 
-                        new Dictionary<string, ParseRegistryEntry> ();
+                        new();
 
 
         public static void Register(string Extension, ParseRegistryEntry Entry) => ByExtension.Add(Extension, Entry);

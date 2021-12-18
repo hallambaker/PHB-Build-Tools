@@ -74,25 +74,25 @@ namespace Goedel.Document.RFC  {
         /// <summary>
         /// The list of references.
         /// </summary>
-        public List<Reference> Entries = new List<Reference>();
+        public List<Reference> Entries = new();
         }
 
 
     public class Catalog {
-        public List<Citation> Citations = new List<Citation>();
-        public List<Reference> References = new List<Reference>();
+        public List<Citation> Citations = new();
+        public List<Reference> References = new();
 
-        public List<Reference> Normative = new List<Reference>();
-        public List<Reference> Informative = new List<Reference>();
+        public List<Reference> Normative = new();
+        public List<Reference> Informative = new();
 
-        public List<References> ReferenceSections = new List<References>();
+        public List<References> ReferenceSections = new();
 
-        List<Source> Sources = new List<Source>();
+        List<Source> Sources = new();
 
-        public List<string> Caches = new List<string>() ;
+        public List<string> Caches = new() ;
 
         public void AddSource(string Prefix, string UriPattern) {
-            Source Source = new Source(Prefix, UriPattern);
+            Source Source = new(Prefix, UriPattern);
             Sources.Add(Source);
             }
 
@@ -257,7 +257,7 @@ namespace Goedel.Document.RFC  {
                         GeneratedID = Citation.Label,
                         Title = "[Reference Not Found!]"
                         };
-                    Author Author = new Author() {
+                    Author Author = new() {
                         Surname = "",
                         Initials = "",
                         Organization = ""
@@ -349,7 +349,7 @@ namespace Goedel.Document.RFC  {
                 }
             }
 
-        static WebClient WebClient = new WebClient();
+        static WebClient WebClient = new();
 
 
 

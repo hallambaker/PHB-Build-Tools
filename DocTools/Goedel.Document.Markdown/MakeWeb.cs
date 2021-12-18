@@ -16,7 +16,7 @@ namespace Goedel.Document.Markdown {
 
     class TagStack {
         HTMLWriter HTMLWriter;
-        Stack<ListType> Stack = new Stack<ListType>();
+        Stack<ListType> Stack = new();
 
         public TagStack(HTMLWriter HTMLWriter) => this.HTMLWriter = HTMLWriter;
 

@@ -65,7 +65,7 @@ namespace Goedel.Document.OpenXML {
             Generate();
             }
 
-        public static MakeWord FromHTML2RFC(string Filename, Goedel.Document.RFC.Document Source) => new MakeWord(Filename, Source);
+        public static MakeWord FromHTML2RFC(string Filename, Goedel.Document.RFC.Document Source) => new(Filename, Source);
 
 
         private void Generate () {
@@ -187,7 +187,7 @@ namespace Goedel.Document.OpenXML {
             Run.AppendChild(MakeTextRun(Text));
             }
 
-        Text MakeTextRun(string Text) => new Text() {
+        Text MakeTextRun(string Text) => new() {
             Text = Text,
             Space = SpaceProcessingModeValues.Preserve
             };

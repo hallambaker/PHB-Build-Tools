@@ -4,13 +4,13 @@
         <name>gscript</name>
     </assembly>
     <members>
-        <member name="F:GoedelShell.CommandLineInterpreter.Entries">
+        <member name="P:GoedelShell.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
-        <member name="F:GoedelShell.CommandLineInterpreter.DefaultCommand">
+        <member name="P:GoedelShell.CommandLineInterpreter.DefaultCommand">
             <summary>The default command.</summary>
         </member>
-        <member name="F:GoedelShell.CommandLineInterpreter.Description">
+        <member name="P:GoedelShell.CommandLineInterpreter.Description">
             <summary>Description of the comman</summary>
         </member>
         <member name="P:GoedelShell._Generate.InputFile">

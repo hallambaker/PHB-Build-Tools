@@ -7,12 +7,12 @@ namespace Goedel.Document.RFC {
 
     public partial class Writers {
         public static void Merge (string InputFile, string OutputFile) {
-            Translate Translate = new Translate();
+            Translate Translate = new();
 
             Encoding UTF8WithoutBOM = new UTF8Encoding (false);
 
-            using XmlTextReader XmlTextReader = new XmlTextReader(InputFile);
-            using XmlTextWriter XmlTextWriter = new XmlTextWriter(OutputFile, UTF8WithoutBOM);
+            using XmlTextReader XmlTextReader = new(InputFile);
+            using XmlTextWriter XmlTextWriter = new(OutputFile, UTF8WithoutBOM);
 
             //XmlTextReader.DtdProcessing = DtdProcessing.Ignore;
 
@@ -125,7 +125,7 @@ namespace Goedel.Document.RFC {
             //        AttributeXML, AttributeMIME, AttributeSection);
 
             if (AttributeXML != null) {
-                using XmlTextReader XmlTextReader = new XmlTextReader(AttributeXML);
+                using XmlTextReader XmlTextReader = new(AttributeXML);
                 ReadStream(XmlTextReader, XmlWriter, false); // recursively process the file
                 }
             if (AttributeMIME != null) {

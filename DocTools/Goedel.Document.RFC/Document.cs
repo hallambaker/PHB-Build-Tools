@@ -27,9 +27,9 @@ namespace Goedel.Document.RFC {
         public GM.Document Source = null;
 
         public DateTime PrepTime = DateTime.Now;
-        public Dictionary<string, XRefTarget> XRefDictionary = new Dictionary<string, XRefTarget>();
+        public Dictionary<string, XRefTarget> XRefDictionary = new();
 
-        public SortedSet<string> AssignedIDs = new SortedSet<string>();
+        public SortedSet<string> AssignedIDs = new();
 
         // serious issue with Category/Status and SubmissionType/Stream
         // These seem to overlap.
@@ -65,7 +65,7 @@ namespace Goedel.Document.RFC {
         public string Scripts = "Common,Latin";
         public string ExpiresDate = null;
 
-        public List<Link> Links = new List<Link>();
+        public List<Link> Links = new();
 
         // Collected attributes and elements from <front>
         public string TitleFull => IsDraft ? Title : FullDocName + ": " + Title;
@@ -73,21 +73,21 @@ namespace Goedel.Document.RFC {
         public string Title = "";
         public string TitleAbrrev = "";
         public string TitleAscii = "";
-        public List<Author> Authors = new List<Author>();
+        public List<Author> Authors = new();
 
         public string Year;
         public string Month;
         public string Day;
 
-        public List<string> Area = new List<string>();      // UNUSED
-        public List<string> Workgroup = new List<string>();
-        public List<string> Keywords = new List<string>();
-        public List<TextBlock> Abstract = new List<TextBlock>();
-        public List<List<TextBlock>> Note = new List<List<TextBlock>>();
-        public List<Section> Boilerplate = new List<Section>();
-        public List<Section> Middle = new List<Section>();
-        public List<Section> Back = new List<Section>();
-        public List<SeriesInfo> SeriesInfos = new List<SeriesInfo>();
+        public List<string> Area = new();      // UNUSED
+        public List<string> Workgroup = new();
+        public List<string> Keywords = new();
+        public List<TextBlock> Abstract = new();
+        public List<List<TextBlock>> Note = new();
+        public List<Section> Boilerplate = new();
+        public List<Section> Middle = new();
+        public List<Section> Back = new();
+        public List<SeriesInfo> SeriesInfos = new();
 
 
         public string Also = null;
@@ -136,14 +136,14 @@ namespace Goedel.Document.RFC {
         public string SeriesText;
         public string StatusText;
 
-        public Catalog Catalog = new Catalog();
+        public Catalog Catalog = new();
 
         // End data from the schema
 
 
 
-        public List<Figure> TableOfFigures = new List<Figure>();
-        public List<Table> TableOfTables = new List<Table>();
+        public List<Figure> TableOfFigures = new();
+        public List<Table> TableOfTables = new();
 
 
         static string[] Months = {null, "January", "February", "March", "April", "May", "June",
@@ -165,12 +165,12 @@ namespace Goedel.Document.RFC {
             : this() {
 
             if (Format == null || (Format.ToLower() == "html" | Format.ToLower() == "html2rfc")) {
-                using FileReader FileReader = new FileReader(InputFile);
+                using FileReader FileReader = new(InputFile);
                 new NewParse(FileReader, this);
                 }
             else if (Format.ToLower() == "xml" | Format.ToLower() == "xml2rfc"
                     | Format.ToLower() == "rfc2629") {
-                using FileReader FileReader = new FileReader(InputFile);
+                using FileReader FileReader = new(InputFile);
                 new Rfc7991Parse(FileReader, this);
                 }
             else {
@@ -284,7 +284,7 @@ namespace Goedel.Document.RFC {
                 Catalog.ReferenceSections.Count == 0) {
                 return;
                 }// nothing to do
-            Section References = new Section("References", "n-references") {
+            Section References = new("References", "n-references") {
                 Automatic = true,
                 SuppressNumbering = true
                 };
@@ -298,7 +298,7 @@ namespace Goedel.Document.RFC {
             Catalog.Informative.Sort(CompareReferences);
 
             if (Catalog.Normative.Count > 0) {
-                Section Sub = new Section("Normative References", "n-normative") {
+                Section Sub = new("Normative References", "n-normative") {
                     SuppressNumbering = true,
                     };
                 References.Subsections.Add(Sub);
@@ -308,7 +308,7 @@ namespace Goedel.Document.RFC {
 
                 }
             if (Catalog.Informative.Count > 0) {
-                Section Sub = new Section("Informative References", "n-informative") {
+                Section Sub = new("Informative References", "n-informative") {
                     SuppressNumbering = true
                     };
                 References.Subsections.Add(Sub);
@@ -322,7 +322,7 @@ namespace Goedel.Document.RFC {
 
         public void AddAuthors() {
             AuthorSectionTitle = Authors.Count == 1 ? "Author's Address" : "Authors' Addresses";
-            Section Sub = new Section(AuthorSectionTitle, "n-authors") {
+            Section Sub = new(AuthorSectionTitle, "n-authors") {
                 Automatic = true
                 };
 
@@ -656,7 +656,7 @@ namespace Goedel.Document.RFC {
 
         public string Filename;
 
-        public List<PRE> Content = new List<PRE>();
+        public List<PRE> Content = new();
         public string Type;
 
         public SvgDocument SvgDocument = null;
@@ -782,7 +782,7 @@ namespace Goedel.Document.RFC {
 
     public class ListBlock : LI {
 
-        public List<TextBlock> Items = new List<TextBlock>();
+        public List<TextBlock> Items = new();
 
 
         public string ListType;
@@ -805,17 +805,17 @@ namespace Goedel.Document.RFC {
         public string Caption;
 
         public int MaxRow = 0;
-        public List<int> Percent = new List<int>();
-        public List<int> Width = new List<int>();
-        public List<TableRow> Head = new List<TableRow>();
-        public List<List<TableRow>> Body = new List<List<TableRow>>();
-        public List<TableRow> Foot = new List<TableRow>();
+        public List<int> Percent = new();
+        public List<int> Width = new();
+        public List<TableRow> Head = new();
+        public List<List<TableRow>> Body = new();
+        public List<TableRow> Foot = new();
         }
 
     public class TableRow : TextBlock {
         public override string SectionText => null;
         public override BlockType BlockType => BlockType.TableRow;
-        public List<TableData> Data = new List<TableData>();
+        public List<TableData> Data = new();
         }
 
     public class TableData : TextBlock {
@@ -957,15 +957,15 @@ namespace Goedel.Document.RFC {
 
         public List<string> Area;
         public List<string> Workgroup;
-        public List<Author> Authors = new List<Author>();
+        public List<Author> Authors = new();
         public string Year;
         public string Month;
         public string Day;
-        public List<string> Keywords = new List<string>();
-        public List<string> Abstract = new List<string>();
-        public List<SeriesInfo> SeriesInfos = new List<SeriesInfo>();
-        public List<Format> Formats = new List<Format>();
-        public List<string> Annotation = new List<string>();
+        public List<string> Keywords = new();
+        public List<string> Abstract = new();
+        public List<SeriesInfo> SeriesInfos = new();
+        public List<Format> Formats = new();
+        public List<string> Annotation = new();
 
 
         public string Version {
@@ -998,7 +998,7 @@ namespace Goedel.Document.RFC {
     /// is what it is specialized to.
     /// </summary>
     public class TextBlockSequenceBuilder {
-        public List<TextBlock> Blocks = new List<TextBlock>();
+        public List<TextBlock> Blocks = new();
         public TextBlock Block => Blocks.Count == 0 ? null : Blocks[Blocks.Count-1];
 
         public List<Markdown.TextSegment> Segments;

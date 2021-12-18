@@ -16,13 +16,13 @@
         <member name="F:Command.EnumReporting.Json">
             <summary>Case "json": Report output in JSON format</summary>
         </member>
-        <member name="F:Command.CommandLineInterpreter.Entries">
+        <member name="P:Command.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
-        <member name="F:Command.CommandLineInterpreter.DefaultCommand">
+        <member name="P:Command.CommandLineInterpreter.DefaultCommand">
             <summary>The default command.</summary>
         </member>
-        <member name="F:Command.CommandLineInterpreter.Description">
+        <member name="P:Command.CommandLineInterpreter.Description">
             <summary>Description of the comman</summary>
         </member>
         <member name="M:Command.CommandLineInterpreter.Help(Goedel.Command.DispatchShell,System.String[],System.Int32)">

@@ -78,7 +78,7 @@ namespace Goedel.Tool.Command {
         public bool Main = true;
         public string ReturnType = null;
         public override Class ParentClass => this;
-        public List<Enumerate> EnumItems = new List<Enumerate>();
+        public List<Enumerate> EnumItems = new();
 
         public override void Init (_Choice parent) {
             this.Parent = parent;
@@ -120,13 +120,13 @@ namespace Goedel.Tool.Command {
 
 
     public partial class Command {
-        public List<EntryItem> EntryItems = new List<EntryItem>();
+        public List<EntryItem> EntryItems = new();
 
         public bool IsDefault;
         public bool Lazy = false;
         public Parser Parser = null;
-        public List<Generator> Generator = new List<Generator>();
-        public List<Script> Script = new List<Script>();
+        public List<Generator> Generator = new();
+        public List<Script> Script = new();
         public List<Enumerate> EnumItems => ParentClass.EnumItems;
 
         public override void Init (_Choice parent) {
@@ -329,7 +329,7 @@ namespace Goedel.Tool.Command {
         }
 
     public partial class Enumerate {
-        public List<Case> Cases = new List<Case>();
+        public List<Case> Cases = new();
 
         public override void Init(_Choice parent) {
             base.Init(parent);

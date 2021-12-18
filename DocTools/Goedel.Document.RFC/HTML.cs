@@ -26,7 +26,7 @@ namespace Goedel.Document.RFC {
         /// <param name="Document">Document to write</param>
         public static void WriteHTML(TextWriter TextWriter, Document Document) {
 
-            Html2RFCOut Html2RFCOut = new Html2RFCOut(TextWriter);
+            Html2RFCOut Html2RFCOut = new(TextWriter);
             //Xml2RFCOut Xml2RFCOut = new Xml2RFCOut(Console.Out);
             Html2RFCOut.Write(Document);
 

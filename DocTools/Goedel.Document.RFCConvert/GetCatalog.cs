@@ -9,8 +9,8 @@ namespace BridgeLib {
     public class Configure {
 
         public static Stream StreamFromString(string s) {
-            MemoryStream stream = new MemoryStream();
-            StreamWriter writer = new StreamWriter(stream);
+            MemoryStream stream = new();
+            StreamWriter writer = new(stream);
             writer.Write(s);
             writer.Flush();
             stream.Position = 0;

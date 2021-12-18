@@ -43,6 +43,7 @@ using Goedel.Command;
 using Goedel.Registry;
 #end if 
 using Goedel.Utilities;
+##pragma warning disable IDE0079
 ##pragma warning disable IDE1006
 ##pragma warning disable CS1591
 
@@ -60,24 +61,24 @@ using Goedel.Utilities;
 #switchcast CommandParseType Entry
 #casecast CommandSet Cast
 #{Separator}
-				{"#{Cast.Tag.ToLower()}", DescribeCommandSet_#{Cast.Id}}#!
+			{"#{Cast.Tag.ToLower()}", DescribeCommandSet_#{Cast.Id}}#!
 #casecast Command Cast
 #{Separator}
-				{"#{Cast.Tag.ToLower()}", _#{Cast.Id}._DescribeCommand }#!
+			{"#{Cast.Tag.ToLower()}", _#{Cast.Id}._DescribeCommand }#!
 #end switchcast
 #end foreach
 #% }
 
 #method GenerateCommandSet CommandSet CommandSet
 #% Separator.IsFirst = true;
-		public static DescribeCommandSet DescribeCommandSet_#{CommandSet.Id} => new DescribeCommandSet () {
-            Identifier = "#{CommandSet.Tag.ToLower()}",
-			Brief = "#{CommandSet.Brief}",
-			Entries = new  SortedDictionary<string, DescribeCommand> () {#!
+	public static DescribeCommandSet DescribeCommandSet_#{CommandSet.Id} => new  () {
+        Identifier = "#{CommandSet.Tag.ToLower()}",
+		Brief = "#{CommandSet.Brief}",
+		Entries = new  () {#!
 #call GenerateCommandEntries CommandSet.Entries
 
-				} // End Entries
-			};
+			} // End Entries
+		};
 
 #foreach (var Entry in CommandSet.Entries)
 #switchcast CommandParseType Entry
@@ -88,101 +89,99 @@ using Goedel.Utilities;
 #end method
 
 #method GenerateClass Class Class
-namespace #{Class.Namespace} {
+namespace #{Class.Namespace};
 
 #foreach (var Entry in Class.EnumItems)
-	// Enumeration type
-	public enum #{Entry.Name.Label} {#!
+// Enumeration type
+public enum #{Entry.Name.Label} {#!
 #% Separator.IsFirst = true;
 #foreach (var item in Entry.Modifier)
 #switchcast CommandParseType item
 #casecast Case Cast
 #{Separator}
-        /// <summary>Case "#{Cast.Tag}": #{Cast.Brief.If()}</summary>
-        #{Cast.Id.Label}#!
+    /// <summary>Case "#{Cast.Tag}": #{Cast.Brief.If()}</summary>
+    #{Cast.Id.Label}#!
 #end switchcast
 #end foreach
 
-		}
+	}
 
 #end foreach
 
 
-    public partial class CommandLineInterpreter : CommandLineInterpreterBase {
+public partial class CommandLineInterpreter : CommandLineInterpreterBase {
         
 
 
 
-		/// <summary>The command entries</summary>
-        public static SortedDictionary<string, DescribeCommand> Entries;
-        /// <summary>The default command.</summary>
-        public static DescribeCommandEntry DefaultCommand;
-        /// <summary>Description of the comman</summary>
-        public static string Description = "<Not specified>";
+	/// <summary>The command entries</summary>
+    public static SortedDictionary<string, DescribeCommand> Entries { get; set; }
+	/// <summary>The default command.</summary>
+	public static DescribeCommandEntry DefaultCommand { get; set; }
+	/// <summary>Description of the comman</summary>
+	public static string Description { get; set; } = "<Not specified>";
 
-		static char UnixFlag = '-';
-		static char WindowsFlag = '/';
+	static readonly char UnixFlag = '-';
+	static readonly char WindowsFlag = '/';
 
 #if (Class.Help != null)	
-        /// <summary>
-        /// Default help dispatch
-        /// </summary>
-        /// <param name="Dispatch">The command description.</param>
-        /// <param name="args">The set of arguments.</param>
-        /// <param name="index">The first unparsed argument.</param>
-        public static void Help (DispatchShell Dispatch, string[] args, int index) =>
-            Brief(Description, DefaultCommand, Entries);
+    /// <summary>
+    /// Default help dispatch
+    /// </summary>
+    /// <param name="Dispatch">The command description.</param>
+    /// <param name="args">The set of arguments.</param>
+    /// <param name="index">The first unparsed argument.</param>
+    public static void Help (DispatchShell Dispatch, string[] args, int index) =>
+        Brief(Description, DefaultCommand, Entries);
 
-        public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
-            Identifier = "help",
-            HandleDelegate = Help,
-            Entries = new List<DescribeEntry>() { }
-            };
+    public readonly static DescribeCommandEntry DescribeHelp = new () {
+        Identifier = "help",
+        HandleDelegate = Help,
+        Entries = new () { }
+        };
 #end if
 #if (Class.About != null)
-        /// <summary>
-        /// Describe the application invoked by the command.
-        /// </summary>
-        /// <param name="Dispatch">The command description.</param>
-        /// <param name="args">The set of arguments.</param>
-        /// <param name="index">The first unparsed argument.</param>
-        public static void About (DispatchShell Dispatch, string[] args, int index) =>
-            FileTools.About();
+    /// <summary>
+    /// Describe the application invoked by the command.
+    /// </summary>
+    /// <param name="Dispatch">The command description.</param>
+    /// <param name="args">The set of arguments.</param>
+    /// <param name="index">The first unparsed argument.</param>
+    public static void About (DispatchShell Dispatch, string[] args, int index) =>
+        FileTools.About();
 
 
-        public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
-            Identifier = "about",
-            HandleDelegate = About,
-            Entries = new List<DescribeEntry>() { }
-            };
+    public readonly static DescribeCommandEntry DescribeAbout = new () {
+        Identifier = "about",
+        HandleDelegate = About,
+        Entries = new () { }
+        };
 #end if
 
 #foreach (var Entry in Class.EnumItems)
-		public static DescribeEntryEnumerate Describe#{Entry.Name.Label} = new DescribeEntryEnumerate () {
-            Identifier = "#{Entry.Command}",
-            Brief = "#{Entry.Brief}",
-            Entries = new List<DescribeCase>() { #!
+	public readonly static DescribeEntryEnumerate Describe#{Entry.Name.Label} = new  () {
+        Identifier = "#{Entry.Command}",
+        Brief = "#{Entry.Brief}",
+        Entries = new () { #!
 #% Separator.IsFirst = true;
 #foreach (var item in Entry.Modifier)
 #switchcast CommandParseType item
 #casecast Case Cast
 #{Separator}
-				new DescribeCase () {
-					Identifier = "#{Cast.Tag}",
-					Brief = "#{Cast.Brief}",
-					Value = (int) #{Entry.Name.Label}.#{Cast.Id.Label}
-					}#!
+			new DescribeCase () {
+				Identifier = "#{Cast.Tag}",
+				Brief = "#{Cast.Brief}",
+				Value = (int) #{Entry.Name.Label}.#{Cast.Id.Label}
+				}#!
 #end switchcast
 #end foreach
 
-				}
-			};
+			}
+		};
 #end foreach
 
-        static bool IsFlag(char c) =>
-            (c == UnixFlag) | (c == WindowsFlag) ;
-
-
+#!        static bool IsFlag(char c) =>
+#!            (c == UnixFlag) | (c == WindowsFlag) ;
 
 
 #foreach (_Choice Entry in Class.Entries)
@@ -192,72 +191,72 @@ namespace #{Class.Namespace} {
 #end switchcast
 #end foreach
 
-        static CommandLineInterpreter () {
-            System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
+    static CommandLineInterpreter () {
+        System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 
-            if (OperatingSystem.Platform == PlatformID.Unix |
-                    OperatingSystem.Platform == PlatformID.MacOSX) {
-                FlagIndicator = UnixFlag;
-                }
-            else {
-                FlagIndicator = WindowsFlag;
-                }
+        if (OperatingSystem.Platform == PlatformID.Unix |
+                OperatingSystem.Platform == PlatformID.MacOSX) {
+            FlagIndicator = UnixFlag;
+            }
+        else {
+            FlagIndicator = WindowsFlag;
+            }
 
 #if (Class.DefaultCommand != null)
-				DefaultCommand = _#{Class.DefaultCommand.Id}._DescribeCommand;
+			DefaultCommand = _#{Class.DefaultCommand.Id}._DescribeCommand;
 #end if
 #if (Class.Description != null)
-				Description = "#{Class.Description}";
+			Description = "#{Class.Description}";
 #end if
 
-			Entries = new  SortedDictionary<string, DescribeCommand> () {#!
+		Entries = new   () {#!
 #% Separator.IsFirst = true;
 #call GenerateCommandEntries Class.Entries
 #if (Class.About != null)
 #{Separator}
-				{"about", DescribeAbout }#!
+			{"about", DescribeAbout }#!
 #end if
 #if (Class.Help != null)
 #{Separator}
-				{"help", DescribeHelp }#!
+			{"help", DescribeHelp }#!
 #end if
 
-				}; // End Entries
+			}; // End Entries
 
 
 
-            }
+        }
 
 #if Class.Main
-        static void Main(string[] args) {
-			var CLI = new CommandLineInterpreter ();
-			CLI.MainMethod (args);
-			}
+    static void Main(string[] args) {
+		var CLI = new CommandLineInterpreter ();
+		CLI.MainMethod (args);
+		}
 #else
 
 #end if
 
-        public void MainMethod(string[] Args) {
-			#{Class.Id} Dispatch = new #{Class.Id} ();
+    public void MainMethod(string[] Args) {
+		#{Class.Id} Dispatch = new ();
 
 #if CommandParse.Catcher
-			try {
-				MainMethod (Dispatch, Args);
-				}
-            catch (Goedel.Command.ParserException) {
-			    Brief(Description, DefaultCommand, Entries);
-				}
-            catch (System.Exception Exception) {
-                Console.WriteLine("Application: {0}", Exception.Message);
-                }
-#else
+		try {
 			MainMethod (Dispatch, Args);
-#end if
 			}
+        catch (Goedel.Command.ParserException) {
+			Brief(Description, DefaultCommand, Entries);
+			}
+        catch (System.Exception Exception) {
+            Console.WriteLine("Application: {0}", Exception.Message);
+            }
+#else
+		MainMethod (Dispatch, Args);
+#end if
+		}
 
 
-        public void MainMethod(#{Class.Id} Dispatch, string[] Args) =>
-			Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
+    public void MainMethod(#{Class.Id} Dispatch, string[] Args) =>
+		Dispatcher (Entries, DefaultCommand, Dispatch, Args, 0);
 
 
 
@@ -271,27 +270,27 @@ namespace #{Class.Namespace} {
 #end foreach
 
 
-	} // class Main
+} // class Main
 
 
-	// The stub class for carrying optional parameters for each command type
-	// As with the main class each consists of an abstract main class 
-	// with partial virtual that can be extended as required.
+// The stub class for carrying optional parameters for each command type
+// As with the main class each consists of an abstract main class 
+// with partial virtual that can be extended as required.
 
-	// All subclasses inherit from the abstract classes Goedel.Regisrty.Dispatch 
-	// and Goedel.Command.Type
+// All subclasses inherit from the abstract classes Goedel.Regisrty.Dispatch 
+// and Goedel.Command.Type
 
 #foreach (_Choice Entry in Class.Entries)
 #switchcast CommandParseType Entry
 #casecast OptionSet OptionSet
-	public interface I#{OptionSet.Id} {
+public interface I#{OptionSet.Id} {
 #foreach (_Choice OptionC in OptionSet.Options)
 #switchcast CommandParseType OptionC
 #casecast Option Option
-		#{Option.Type}			#{Option.Name}{get; set;}
+	#{Option.Type}			#{Option.Name}{get; set;}
 #end switchcast
 #end foreach
-		}
+	}
 
 #casecast Command Cast
 #call CommandOptionClass Cast
@@ -301,43 +300,43 @@ namespace #{Class.Namespace} {
 #end foreach
 
 
-    public partial class  Flag : Goedel.Command._Flag {
-        public Flag(string value=null) : base (value) {}
-        } // Flag
+public partial class  Flag : Goedel.Command._Flag {
+    public Flag(string value=null) : base (value) {}
+    } // Flag
 
-    public partial class  File : Goedel.Command._File {
-	    public File(string value=null) : base (value) {}
-        } // File
+public partial class  File : Goedel.Command._File {
+	public File(string value=null) : base (value) {}
+    } // File
 
-    public partial class  NewFile : Goedel.Command._NewFile {
-		public NewFile(string value=null) : base (value) {}
-        } // NewFile
+public partial class  NewFile : Goedel.Command._NewFile {
+	public NewFile(string value=null) : base (value) {}
+    } // NewFile
 
-    public partial class  ExistingFile : Goedel.Command._ExistingFile {
-		public ExistingFile(string value=null) : base (value) {}
-        } // ExistingFile
+public partial class  ExistingFile : Goedel.Command._ExistingFile {
+	public ExistingFile(string value=null) : base (value) {}
+    } // ExistingFile
 
-    public partial class  Integer : Goedel.Command._Integer {
-		public Integer(string value=null) : base (value) {}
-        } // Integer
+public partial class  Integer : Goedel.Command._Integer {
+	public Integer(string value=null) : base (value) {}
+    } // Integer
 
-    public partial class  String : Goedel.Command._String {
-		public String(string value=null) : base (value) {}
-        } // String
+public partial class  String : Goedel.Command._String {
+	public String(string value=null) : base (value) {}
+    } // String
 
 
 
-    public partial class  Enumeration<T> : _Enumeration<T> {
-        public Enumeration(DescribeEntryEnumerate description) : base(description){
-            }
-        } // _Enumeration<T>
+public partial class  Enumeration<T> : _Enumeration<T> {
+    public Enumeration(DescribeEntryEnumerate description) : base(description){
+        }
+    } // _Enumeration<T>
 
-	// The stub class just contains routines that echo their arguments and
-	// write 'not yet implemented'
+// The stub class just contains routines that echo their arguments and
+// write 'not yet implemented'
 
-	// Eventually there will be a compiler option to suppress the debugging
-	// to eliminate the redundant code
-    public class _#{Class.Id} : global::Goedel.Command.DispatchShell {
+// Eventually there will be a compiler option to suppress the debugging
+// to eliminate the redundant code
+public class _#{Class.Id} : global::Goedel.Command.DispatchShell {
 
 #foreach (_Choice Entry in Class.Entries)
 #switchcast CommandParseType Entry
@@ -348,12 +347,11 @@ namespace #{Class.Namespace} {
 #end switchcast
 #end foreach
 
-        } // class _#{Class.Id}
+    } // class _#{Class.Id}
 
-    public partial class #{Class.Id} : _#{Class.Id} {
-        } // class #{Class.Id}
+public partial class #{Class.Id} : _#{Class.Id} {
+    } // class #{Class.Id}
 
-    } // namespace #{Class.Id}
 
 #end method
 // Types
@@ -362,19 +360,19 @@ namespace #{Class.Namespace} {
 
 #method2 CommandHandler Command Command Class Class
 
-		public static void Handle_#{Command.Id} (
-					DispatchShell  DispatchIn, string[] Args, int Index) {
-			#{Class.Id} Dispatch =	DispatchIn as #{Class.Id};
-			#{Command.Id}		Options = new #{Command.Id} ();
-			ProcessOptions (Args, Index, Options);
-			Dispatch._PreProcess (Options);
+	public static void Handle_#{Command.Id} (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		#{Class.Id} Dispatch =	DispatchIn as #{Class.Id};
+		#{Command.Id}		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
 #if Class.ReturnType == null
-			Dispatch.#{Command.Id} (Options);
+		Dispatch.#{Command.Id} (Options);
 #else
-			var result = Dispatch.#{Command.Id} (Options);
-			Dispatch._PostProcess (result);
+		var result = Dispatch.#{Command.Id} (Options);
+		Dispatch._PostProcess (result);
 #end if
-			}
+		}
 #end method2
 
 #method CommandMethod Command Command
@@ -393,42 +391,42 @@ namespace #{Class.Namespace} {
 #% Lazy = Cast.Name.ToString ();
 #end switchcast
 #end foreach
-		public virtual #{Class.ReturnType ?? "void"} #{Command.Id} ( #{Command.Id} Options) #!
+	public virtual #{Class.ReturnType ?? "void"} #{Command.Id} ( #{Command.Id} Options) #!
 #if DefaultOutput
 #if Class.ReturnType != null
 {
-			CommandLineInterpreter.DescribeValues (Options);
-			return null;
-			}
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
 #else
 =>
-			CommandLineInterpreter.DescribeValues (Options);
+		CommandLineInterpreter.DescribeValues (Options);
 #end if
 #else
 {
-			string inputfile = null;
+		string inputfile = null;
 
 #foreach (_Choice CommandEntry in Command.Entries)
 #switchcast CommandParseType CommandEntry
 #casecast Parser Parser
-			inputfile = Options.#{Parser.Class}.Text;
+		inputfile = Options.#{Parser.Class}.Text;
 
-            #{Parser.Namespace}.#{Parser.Class} Parse = new #{Parser.Namespace}.#{Parser.Class}() {
+        #{Parser.Namespace}.#{Parser.Class} Parse = new () {
 #foreach (_Choice CommandEntry2 in Command.Entries)
 #switchcast CommandParseType CommandEntry2
 #casecast Option Option
-			    #{Option.Name} = Options.#{Option.Name}.Value,
+			#{Option.Name} = Options.#{Option.Name}.Value,
 #end switchcast
 #end foreach
-				};
+			};
         
 			
-			using (Stream infile =
-                        new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
-                Lexer Schema = new Lexer(inputfile);
-                Schema.Process(infile, Parse);
-                }
-			Parse.Init();
+		using (Stream infile =
+                    new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
+            Lexer Schema = new Lexer(inputfile);
+            Schema.Process(infile, Parse);
+            }
+		Parse.Init();
 
 #casecast Generator null
 #end switchcast
@@ -437,26 +435,26 @@ namespace #{Class.Namespace} {
 #foreach (_Choice CommandEntry in Command.Entries)
 #switchcast CommandParseType CommandEntry
 #casecast Script Script
-			// Script output of type #{Script.Id} #{Script.Extension}
-			if (Options.#{Script.Id}.Text != null) {
-				string outputfile = Options.#{Script.Id}.Text; // Automatically defaults
+		// Script output of type #{Script.Id} #{Script.Extension}
+		if (Options.#{Script.Id}.Text != null) {
+			string outputfile = Options.#{Script.Id}.Text; // Automatically defaults
 #if Lazy != null
-				if (Options.#{Lazy}.Value & FileTools.UpToDate (inputfile, outputfile)) {
-					return;
-					}
-#end if	
-                using Stream outputStream =
-                            new FileStream(outputfile, FileMode.Create, FileAccess.Write);
-                using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
-
-				#{Script.Namespace}.#{Script.Class} Script = new #{Script.Namespace}.#{Script.Class} () { 
-					_Output= OutputWriter 
-					};
-				Script.#{Script.Id} (Parse);
+			if (Options.#{Lazy}.Value & FileTools.UpToDate (inputfile, outputfile)) {
+				return;
 				}
+#end if	
+            using Stream outputStream =
+                        new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+            using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
+
+			#{Script.Namespace}.#{Script.Class} Script = new () { 
+				_Output= OutputWriter 
+				};
+			Script.#{Script.Id} (Parse);
+			}
 #end switchcast
 #end foreach
-			}
+		}
 #end if
 
 #end method
@@ -497,27 +495,27 @@ namespace #{Class.Namespace} {
 
 #method CommandOptionClass Command Command
 
-    public class _#{Command.Id} : #{NameDispatchType} #!
+public class _#{Command.Id} : #{NameDispatchType} #!
 #foreach (_Choice OptionC in Command.Entries)
 #switchcast CommandParseType OptionC
 #casecast Include Include
 ,
-							I#{Include.Id}#!
+						I#{Include.Id}#!
 #end switchcast
 #end foreach
- {
+{
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {#!
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {#!
 #% Separator.IsFirst = true;
 #foreach (var Entry in Command.EntryItems)
 #{Separator}
 #if (Entry.IsEnumerate) 
-			new #{Entry.Type} (CommandLineInterpreter.Describe#{Entry.ID})#!
+		new #{Entry.Type} (CommandLineInterpreter.Describe#{Entry.ID})#!
 #else
-			new #{Entry.Type} ()#!
+		new #{Entry.Type} ()#!
 #end if 
 #end foreach
-			} ;
+		} ;
 
 
 
@@ -525,56 +523,56 @@ namespace #{Class.Namespace} {
 
 #foreach (var Entry in Command.EntryItems)
 #% var Item = Entry.Item;
-		/// <summary>Field accessor for #{Entry.IsOption.If("option","parameter")} [#{Entry.Tag}]</summary>
-		public virtual #{Entry.Type} #{Entry.ID} {
-			get => _Data[#{Entry.Index}] as #{Entry.Type};
-			set => _Data[#{Entry.Index}]  = value;
-			}
+	/// <summary>Field accessor for #{Entry.IsOption.If("option","parameter")} [#{Entry.Tag}]</summary>
+	public virtual #{Entry.Type} #{Entry.ID} {
+		get => _Data[#{Entry.Index}] as #{Entry.Type};
+		set => _Data[#{Entry.Index}]  = value;
+		}
 
-		public virtual string _#{Entry.ID} {
+	public virtual string _#{Entry.ID} {
 #!			get => (_Data[#{Entry.Index}] as #{Entry.Type}).Value.To;
-			set => _Data[#{Entry.Index}].Parameter (value);
-			}
+		set => _Data[#{Entry.Index}].Parameter (value);
+		}
 #end foreach
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "#{Command.Tag.ToLower()}",
-			Brief =  "#{Command.Brief}",
-			HandleDelegate =  CommandLineInterpreter.Handle_#{Command.Id},
-			Lazy =  #{Command.Lazy.If("true","false")},
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "#{Command.Tag.ToLower()}",
+		Brief =  "#{Command.Brief}",
+		HandleDelegate =  CommandLineInterpreter.Handle_#{Command.Id},
+		Lazy =  #{Command.Lazy.If("true","false")},
 #if (Command.IsDefault)
-            IsDefault = true,
+        IsDefault = true,
 #end if
-			Entries = new List<DescribeEntry> () {#!
+		Entries = new List<DescribeEntry> () {#!
 #% Separator.IsFirst = true;
 #foreach (var EntryItem in Command.EntryItems)
 #% var Item = EntryItem.Item;
 #if EntryItem.HasEntry
 #{Separator}
 #if EntryItem.IsOption
-				new DescribeEntryOption () {
+			new DescribeEntryOption () {
 #elseif EntryItem.IsEnumerate
-				new DescribeEntryEnumerate () {
+			new DescribeEntryEnumerate () {
 #else
-				new DescribeEntryParameter () {
+			new DescribeEntryParameter () {
 #end if
-					Identifier = "#{EntryItem.ID}", 
-					Default = #{EntryItem.Default.QuotedNull()}, // null if null
-					Brief = #{EntryItem.Brief.Quoted()},
-					Index = #{EntryItem.Index},
-					Key = "#{EntryItem.Tag.ToLower()}"
-					}#!
+				Identifier = "#{EntryItem.ID}", 
+				Default = #{EntryItem.Default.QuotedNull()}, // null if null
+				Brief = #{EntryItem.Brief.Quoted()},
+				Index = #{EntryItem.Index},
+				Key = "#{EntryItem.Tag.ToLower()}"
+				}#!
 #end if
 #end foreach
 
-				}
-			};
+			}
+		};
 
-		}
+	}
 
-    public partial class #{Command.Id} : _#{Command.Id} {
-        } // class #{Command.Id}
+public partial class #{Command.Id} : _#{Command.Id} {
+    } // class #{Command.Id}
 #end method
 
 

@@ -39,7 +39,7 @@ namespace Goedel.Document.RFC {
 
 
         public static readonly Dictionary<string, StringSet> SeriesTexts =
-            new Dictionary<string, StringSet> {
+            new() {
             { "rfc",  new StringSet("RFC") },
             { "draft",  new StringSet("Internet-Draft") },
             };
@@ -47,7 +47,7 @@ namespace Goedel.Document.RFC {
 
 
         public static readonly Dictionary<string, StringSet> StreamTexts =
-            new Dictionary<string, StringSet> {
+            new() {
             { "ietf", new StringSet("Internet Engineering Task Force",
                     "This document is a product of the Internet Engineering Task Force (IETF).",
                     "It represents the consensus of the IETF community. " +
@@ -76,7 +76,7 @@ namespace Goedel.Document.RFC {
         const string Prefix1 = "This document is not an Internet Standards Track specification;";
 
         public static readonly Dictionary<string, StringSet> StatusTexts =
-            new Dictionary<string, StringSet> {
+            new() {
             {"std", new StringSet("Standards Track", "This is an Internet Standards Track document.") },
             {"bcp", new StringSet("Best Current Practices", "This memo documents an Internet Best Current Practice.") },
             {"info", new StringSet("Informational",
@@ -103,7 +103,7 @@ namespace Goedel.Document.RFC {
 
 
         public static readonly Dictionary<string, List<string>> IPR =
-            new Dictionary<string, List<string>> {
+            new() {
                     { "trust200902", new List<string>() { TLP6b_1 }  },
                     { "noModificationTrust200902", new List<string>() { } },
                     { "noDerivativesTrust200902", new List<string>() { } },
@@ -159,7 +159,7 @@ namespace Goedel.Document.RFC {
 
 
             if (!havestatus) {
-                Section StatusSection = new Section("Status of This Memo", "n-status-of-this-memo") {
+                Section StatusSection = new("Status of This Memo", "n-status-of-this-memo") {
                     Automatic = true
                     };
                 AddParagraphs(StatusSection, StatusOfThisDocument(document));

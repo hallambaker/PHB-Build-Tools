@@ -21,13 +21,13 @@
             </summary>
             <param name="Options">Command line options</param>
         </member>
-        <member name="F:Shell.Bootmaker.CommandLineInterpreter.Entries">
+        <member name="P:Shell.Bootmaker.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
-        <member name="F:Shell.Bootmaker.CommandLineInterpreter.DefaultCommand">
+        <member name="P:Shell.Bootmaker.CommandLineInterpreter.DefaultCommand">
             <summary>The default command.</summary>
         </member>
-        <member name="F:Shell.Bootmaker.CommandLineInterpreter.Description">
+        <member name="P:Shell.Bootmaker.CommandLineInterpreter.Description">
             <summary>Description of the comman</summary>
         </member>
         <member name="M:Shell.Bootmaker.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">

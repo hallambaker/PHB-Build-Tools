@@ -87,7 +87,7 @@ namespace Goedel.Document.OpenXML {
             }
 
         Dictionary<string, GM.CatalogEntry> StyleDictionary = 
-                new Dictionary<string, GM.CatalogEntry>();
+                new();
 
 
         public void CompileDictionary (MainDocumentPart SourceMain) {
@@ -218,11 +218,11 @@ namespace Goedel.Document.OpenXML {
                 }
             }
 
-        TextProperty Bold = new TextProperty();
-        TextProperty Italic = new TextProperty();
-        TextProperty Underline = new TextProperty();
-        TextProperty Subscript = new TextProperty();
-        TextProperty Superscript = new TextProperty();
+        TextProperty Bold = new();
+        TextProperty Italic = new();
+        TextProperty Underline = new();
+        TextProperty Subscript = new();
+        TextProperty Superscript = new();
 
         void Add (GM.MarkNewParagraph Lexer, Run Run) {
 

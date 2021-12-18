@@ -1,6 +1,6 @@
 // Script Syntax Version:  1.0
 
-//  © 2015-2019 by Phill Hallam-Baker
+//  © 2015-2021 by Threshold Secrets LLC.
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,21 +25,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Goedel.Registry;
-namespace Goedel.Tool.Version {
-	public partial class Generate : global::Goedel.Registry.Script {
+namespace Goedel.Tool.Version;
+public partial class Generate : global::Goedel.Registry.Script {
 
-		
+	
 
-		//
-		// GenerateCS
-		//
-		public void GenerateCS (VersionInfo Version) {
-			_Output.Write ("using System;\n{0}", _Indent);
-			_Output.Write ("using System.Reflection;\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("[assembly: System.Reflection.AssemblyVersionAttribute(\"{1}\")]\n{0}", _Indent, Version.Assembly);
-			_Output.Write ("[assembly: System.Reflection.AssemblyFileVersionAttribute(\"{1}\")]\n{0}", _Indent, Version.File);
-			_Output.Write ("\n{0}", _Indent);
-			}
+	//
+	// GenerateCS
+	//
+	public void GenerateCS (VersionInfo Version) {
+		_Output.Write ("using System;\n{0}", _Indent);
+		_Output.Write ("using System.Reflection;\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("[assembly: System.Reflection.AssemblyVersionAttribute(\"{1}\")]\n{0}", _Indent, Version.Assembly);
+		_Output.Write ("[assembly: System.Reflection.AssemblyFileVersionAttribute(\"{1}\")]\n{0}", _Indent, Version.File);
+		_Output.Write ("\n{0}", _Indent);
 		}
+
 	}

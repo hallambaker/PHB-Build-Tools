@@ -25,7 +25,7 @@ namespace Goedel.Document.Markdown {
 
         public void Parse(LexReader Reader, List<Paragraph> Paragraphs) {
             bool First = true;
-            MarkDownLex Lexer = new MarkDownLex(Reader);
+            MarkDownLex Lexer = new(Reader);
 
             while (!Reader.EOF) {
                 MarkDownLex.Token Token = Lexer.GetToken();

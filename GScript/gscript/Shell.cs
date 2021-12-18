@@ -66,7 +66,7 @@ namespace GoedelShell {
             using Stream outputStream =
 new FileStream(outputfile, FileMode.Create, FileAccess.Write);
             using TextWriter outputText = new StreamWriter(outputStream);
-            Goedel.Tool.Script.Script Script = new Goedel.Tool.Script.Script();
+            Goedel.Tool.Script.Script Script = new();
             Script.Process(scriptfile, inputfile, outputText);
             }
 

@@ -4,13 +4,13 @@
         <name>commandparse</name>
     </assembly>
     <members>
-        <member name="F:CommandShell.CommandLineInterpreter.Entries">
+        <member name="P:CommandShell.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
-        <member name="F:CommandShell.CommandLineInterpreter.DefaultCommand">
+        <member name="P:CommandShell.CommandLineInterpreter.DefaultCommand">
             <summary>The default command.</summary>
         </member>
-        <member name="F:CommandShell.CommandLineInterpreter.Description">
+        <member name="P:CommandShell.CommandLineInterpreter.Description">
             <summary>Description of the comman</summary>
         </member>
         <member name="M:CommandShell.CommandLineInterpreter.Help(Goedel.Command.DispatchShell,System.String[],System.Int32)">

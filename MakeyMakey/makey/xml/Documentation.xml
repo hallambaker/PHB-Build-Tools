@@ -4,13 +4,13 @@
         <name>makey</name>
     </assembly>
     <members>
-        <member name="F:Goedel.Shell.Makey.CommandLineInterpreter.Entries">
+        <member name="P:Goedel.Shell.Makey.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
-        <member name="F:Goedel.Shell.Makey.CommandLineInterpreter.DefaultCommand">
+        <member name="P:Goedel.Shell.Makey.CommandLineInterpreter.DefaultCommand">
             <summary>The default command.</summary>
         </member>
-        <member name="F:Goedel.Shell.Makey.CommandLineInterpreter.Description">
+        <member name="P:Goedel.Shell.Makey.CommandLineInterpreter.Description">
             <summary>Description of the comman</summary>
         </member>
         <member name="M:Goedel.Shell.Makey.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">

@@ -64,7 +64,7 @@ namespace Goedel.Tool.Makey {
             }
 
 
-        Accumulate Accumulate = new Accumulate();
+        Accumulate Accumulate = new();
 
         public string Tag { get; set; }
         public string Key { get; set; }

@@ -4,13 +4,13 @@
         <name>exceptional</name>
     </assembly>
     <members>
-        <member name="F:ExceptionalShell.CommandLineInterpreter.Entries">
+        <member name="P:ExceptionalShell.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
-        <member name="F:ExceptionalShell.CommandLineInterpreter.DefaultCommand">
+        <member name="P:ExceptionalShell.CommandLineInterpreter.DefaultCommand">
             <summary>The default command.</summary>
         </member>
-        <member name="F:ExceptionalShell.CommandLineInterpreter.Description">
+        <member name="P:ExceptionalShell.CommandLineInterpreter.Description">
             <summary>Description of the comman</summary>
         </member>
         <member name="M:ExceptionalShell.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">

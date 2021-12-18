@@ -31,7 +31,7 @@ namespace Goedel.Tool.Makey {
 
     public class VSProject : VSFile  {
 
-        public SortedSet<string> ManualAddLibraries = new SortedSet<string> {
+        public SortedSet<string> ManualAddLibraries = new() {
             "WindowsBase",
             "System.Numerics",
             "Microsoft.VisualStudio.QualityTools.UnitTestFramework"
@@ -80,16 +80,16 @@ namespace Goedel.Tool.Makey {
         public string CompileAll = "";
         public string LinkAll = "";
 
-        public List<string> SourceDependency = new List<string>();
-        public List<string> FixedLinkDependency = new List<string>();
-        public List<string> LinkDependency = new List<string>();
+        public List<string> SourceDependency = new();
+        public List<string> FixedLinkDependency = new();
+        public List<string> LinkDependency = new();
         public List<string> AdditionalLinkDependency { get; set; } = new List<string>();
         
         public string Directory;
         public string RelativeDirectory=null;
         public ProjectType ProjectType;
 
-        public List<VSProject> SharedProject = new List<VSProject>();
+        public List<VSProject> SharedProject = new();
 
         public VSProject(string Filename, bool Expand) {
 
@@ -484,7 +484,7 @@ namespace Goedel.Tool.Makey {
 
 
     public partial class NoneType {
-        public static Dictionary<string, BuildDescription> BuildTypes = new Dictionary<string, BuildDescription>() {
+        public static Dictionary<string, BuildDescription> BuildTypes = new() {
             { "commandcs", new BuildDescription ("cs", "commandparse", " /cs ") },
             { "verbcs", new BuildDescription ("cs", "verb", " /cs ") },
             { "fsrcs", new BuildDescription ("cs", "fsrgen", " /cs ") },

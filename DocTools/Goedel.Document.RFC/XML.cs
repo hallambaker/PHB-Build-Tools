@@ -13,7 +13,7 @@ namespace Goedel.Document.RFC {
 
         public static void WriteXML(TextWriter TextWriter, Document Document) {
 
-            Xml2RFCOut Xml2RFCOut = new Xml2RFCOut(TextWriter);
+            Xml2RFCOut Xml2RFCOut = new(TextWriter);
             Xml2RFCOut.Write(Document);
 
             }

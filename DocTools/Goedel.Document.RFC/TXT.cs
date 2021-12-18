@@ -25,7 +25,7 @@ namespace Goedel.Document.RFC {
 
     public partial class Writers {
 
-        public static Dictionary<char, string> Substitions = new Dictionary<char, string> {
+        public static Dictionary<char, string> Substitions = new() {
                 { '…', "..."},
                 { '‘', "'"},
                 { '’', "'"},
@@ -59,7 +59,7 @@ namespace Goedel.Document.RFC {
         /// <param name="Document">The document to write</param>
         public static void WriteTXT(string OutputFile, Document Document) {
             // Format document to place line numbers
-            WriteTXT WriteTXT = new WriteTXT();
+            WriteTXT WriteTXT = new();
             WriteTXT.Write(Document);
 
             // Redo from the beginning with line numbers
@@ -75,7 +75,7 @@ namespace Goedel.Document.RFC {
         public static void WriteTXT(TextWriter TextWriter, Document Document)
             {
             // Format document to place line numbers
-            WriteTXT WriteTXT = new WriteTXT();
+            WriteTXT WriteTXT = new();
             WriteTXT.Write(Document);
 
             // Redo from the beginning with line numbers

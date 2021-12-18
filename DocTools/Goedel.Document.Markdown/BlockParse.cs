@@ -41,8 +41,8 @@ namespace Goedel.Document.Markdown {
         // Block        - applies to a complete block (e.g. heading)
         // Annotation   - applies to a part of a block
 
-        protected Stack<Block> StackLayout = new Stack<Block>();
-        protected Stack<TextSegmentOpen> StackAnnotation = new Stack<TextSegmentOpen>();
+        protected Stack<Block> StackLayout = new();
+        protected Stack<TextSegmentOpen> StackAnnotation = new();
 
         // Reads in one input paragraph chunk at a time and performs
         // block level parsing
@@ -375,7 +375,7 @@ namespace Goedel.Document.Markdown {
                     }
                 case ElementType.Meta: {
                     FinishBlock();
-                    Meta Meta = new Meta(CatalogEntry, Attributes) {
+                    Meta Meta = new(CatalogEntry, Attributes) {
                         BlockType = BlockType.Meta
                         };
                     Document.MetaDataAdd(CatalogEntry, Meta);

@@ -62,7 +62,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        public List<string> Heading = new List<string>();
+        public List<string> Heading = new();
 
         /// <summary>
         /// Create a new instance using the specified TextWriter as output

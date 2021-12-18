@@ -13,12 +13,12 @@ namespace Goedel.Tool.Constant {
         public string Class => Namespace.Class.Label;
 
 
-        public List<_Choice> All = new List<_Choice>();
-        public List<File> Files = new List<File>();
+        public List<_Choice> All = new();
+        public List<File> Files = new();
 
-        public List<_Choice> Entries = new List<_Choice>();
+        public List<_Choice> Entries = new();
 
-        public List<Enum> Enums = new List<Enum>();
+        public List<Enum> Enums = new();
 
         public override void Init() {
 

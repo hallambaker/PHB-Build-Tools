@@ -80,9 +80,9 @@ namespace Goedel.Tool.FSRGen {
 
         public int[] ActionTable;
         public int[] TokenTable;
-        public List<State> States = new List<State>();
-        public List<Token> Tokens = new List<Token>();
-        public List<Action> Actions = new List<Action>();
+        public List<State> States = new();
+        public List<Token> Tokens = new();
+        public List<Action> Actions = new();
 
         public string StateType = "char";
 

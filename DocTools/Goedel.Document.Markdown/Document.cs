@@ -16,10 +16,10 @@ namespace Goedel.Document.Markdown {
         public DocumentSet Root;
         public DocumentSet Parent;
 
-        public List<Document> Documents = new List<Document>();
-        public List<DocumentSet> Directories = new List<DocumentSet>();
+        public List<Document> Documents = new();
+        public List<DocumentSet> Directories = new();
 
-        public List<Resource> Resources = new List<Resource>();
+        public List<Resource> Resources = new();
         public TagCatalog TagCatalog;
 
         // build the top level
@@ -272,7 +272,7 @@ namespace Goedel.Document.Markdown {
         public string Text = "";
 
         public List<TagValue> Attributes;
-        public List<TextSegment> Segments = new List<TextSegment>();
+        public List<TextSegment> Segments = new();
         public CatalogEntry CatalogEntry = null;
 
         public override string ToString() => CatalogEntry?.ToString() ?? "Unknown block";
@@ -419,10 +419,10 @@ namespace Goedel.Document.Markdown {
     /// </summary>
     public partial class Document : Resource  {
 
-        public Dictionary<string, List<Meta>> MetaData = new Dictionary<string, List<Meta>>();
+        public Dictionary<string, List<Meta>> MetaData = new();
         public List<Heading> Headings;
-        public List<Paragraph> Paragraphs = new List<Paragraph>();
-        public List<Block> Blocks = new List<Block>();
+        public List<Paragraph> Paragraphs = new();
+        public List<Block> Blocks = new();
 
         public string Title = "";
         public string ShortTitle = null;

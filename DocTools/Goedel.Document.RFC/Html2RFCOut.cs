@@ -798,7 +798,7 @@ namespace Goedel.Document.RFC {
             Text = TextBuilder.ToString();
             }
 
-        static List<string> Months = new List<string>() {
+        static List<string> Months = new() {
                 "jan", "feb", "mar",  "apr", "may", "jun",  "jul", "aug", "sep",  "oct", "nov", "dec"
                 };
 

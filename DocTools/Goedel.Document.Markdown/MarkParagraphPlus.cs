@@ -17,7 +17,7 @@ namespace Goedel.Document.Markdown {
             this.Tag = Tag;
             this.Value = Value;
             }
-        public static List<TagValue> EmptyAttributes = new List<TagValue>();
+        public static List<TagValue> EmptyAttributes = new();
         }
 
 
@@ -124,7 +124,7 @@ namespace Goedel.Document.Markdown {
             Console.WriteLine(Data);
 
             var Reader = new System.IO.StringReader(Data);
-            MarkDownParagraph Lexer = new MarkDownParagraph(Reader);
+            MarkDownParagraph Lexer = new(Reader);
 
             var Token = Lexer.GetToken();
 

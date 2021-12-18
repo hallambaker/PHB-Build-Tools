@@ -4,13 +4,13 @@
         <name>srvconf</name>
     </assembly>
     <members>
-        <member name="F:Goedel.Shell.DNSConfig.CommandLineInterpreter.Entries">
+        <member name="P:Goedel.Shell.DNSConfig.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
-        <member name="F:Goedel.Shell.DNSConfig.CommandLineInterpreter.DefaultCommand">
+        <member name="P:Goedel.Shell.DNSConfig.CommandLineInterpreter.DefaultCommand">
             <summary>The default command.</summary>
         </member>
-        <member name="F:Goedel.Shell.DNSConfig.CommandLineInterpreter.Description">
+        <member name="P:Goedel.Shell.DNSConfig.CommandLineInterpreter.Description">
             <summary>Description of the comman</summary>
         </member>
         <member name="M:Goedel.Shell.DNSConfig.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">

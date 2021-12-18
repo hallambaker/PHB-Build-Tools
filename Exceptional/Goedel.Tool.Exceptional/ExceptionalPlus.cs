@@ -9,8 +9,8 @@ namespace Goedel.Tool.Exceptional {
 
  
     public partial class Exception {
-        public List<Object> Objects = new List<Object>();
-        public List<Console> Consoles = new List<Console>();
+        public List<Object> Objects = new();
+        public List<Console> Consoles = new();
 
 
         public string Console = "An error occurred";

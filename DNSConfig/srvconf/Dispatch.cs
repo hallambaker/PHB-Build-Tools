@@ -20,14 +20,14 @@ namespace Goedel.Shell.DNSConfig {
 
             inputfile = Options.DNSConfig.Text;
 
-            Goedel.Tool.DNSConfig.DNSConfig Parse = new Goedel.Tool.DNSConfig.DNSConfig() {
+            Goedel.Tool.DNSConfig.DNSConfig Parse = new() {
                 };
 
 
             using (Stream infile =
                         new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
 
-                Lexer Schema = new Lexer(inputfile);
+                Lexer Schema = new(inputfile);
 
                 Schema.Process(infile, Parse);
                 }

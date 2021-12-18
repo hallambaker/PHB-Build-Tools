@@ -211,7 +211,7 @@ namespace Goedel.Document.RFC {
         // ToDo: Implement recursive lists
         // All the attributes expressed in the first item in a list are transfered.
 
-        List<BlockType> listItems = new List<BlockType>();
+        List<BlockType> listItems = new();
         int listPointer = -1;
 
         void OpenList(BlockType listItem, LI li) {

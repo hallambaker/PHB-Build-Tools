@@ -4,13 +4,13 @@
         <name>rfctool</name>
     </assembly>
     <members>
-        <member name="F:MakeRFC.CommandLineInterpreter.Entries">
+        <member name="P:MakeRFC.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
-        <member name="F:MakeRFC.CommandLineInterpreter.DefaultCommand">
+        <member name="P:MakeRFC.CommandLineInterpreter.DefaultCommand">
             <summary>The default command.</summary>
         </member>
-        <member name="F:MakeRFC.CommandLineInterpreter.Description">
+        <member name="P:MakeRFC.CommandLineInterpreter.Description">
             <summary>Description of the comman</summary>
         </member>
         <member name="M:MakeRFC.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">

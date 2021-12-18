@@ -10,7 +10,7 @@ namespace Goedel.Document.RFC {
     public abstract class XMLTextWriterPlus : XMLTextWriter {
 
 
-        Stack<BlockType> ListItemStack = new Stack<BlockType>();
+        Stack<BlockType> ListItemStack = new();
 
         /// <summary>
         /// The types of text block

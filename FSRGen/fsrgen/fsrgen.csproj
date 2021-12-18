@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="$(SolutionDir)CommonSettingsApplication.xml" />
   <PropertyGroup>
-	  <AssemblyName>frsgen</AssemblyName>
+	  <AssemblyName>fsrgen</AssemblyName>
 	  <Product>Finite State Recognizer Generator</Product>
 	  <Description>Generates Finite State Recognizer from description.</Description>
 	  <Copyright>© 2015-2021</Copyright>

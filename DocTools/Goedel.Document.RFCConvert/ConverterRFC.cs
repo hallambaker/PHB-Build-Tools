@@ -21,7 +21,7 @@ namespace MakeRFC {
         BlockState state = BlockState.Title;
 
         // Convenience routine as a static function
-        public static ConverterRFC Convert(GM.Document source, Goedel.Document.RFC.Document target) => new ConverterRFC(source, target);
+        public static ConverterRFC Convert(GM.Document source, Goedel.Document.RFC.Document target) => new(source, target);
 
         // Create a converter
         public ConverterRFC(GM.Document Source, Goedel.Document.RFC.Document target) {

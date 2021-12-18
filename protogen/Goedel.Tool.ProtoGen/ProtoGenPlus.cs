@@ -21,7 +21,7 @@ namespace Goedel.Tool.ProtoGen {
         public bool ByValue = true;
 
         public bool Parameterized = false;
-        public List<string> Description = new List<string>();
+        public List<string> Description = new();
 
         public string ThisInherits = ": global::Goedel.Protocol.JsonObject";
 
@@ -37,7 +37,7 @@ namespace Goedel.Tool.ProtoGen {
         public static List<_Choice> InheritEntries(List<_Choice> Input) {
             
 
-            List<_Choice> Result = new List<_Choice>();
+            List<_Choice> Result = new();
 
             foreach (_Choice Entry in Input) {
                 Entry.Normalize();
@@ -86,7 +86,7 @@ namespace Goedel.Tool.ProtoGen {
 
         public static List<_Choice> InheritEntriesUnsorted(_Choice Struct, List<_Choice> Input) {
 
-            List<_Choice> Result = new List<_Choice>();
+            List<_Choice> Result = new();
 
             foreach (_Choice Entry in Input) {
                 Entry.Normalize();
@@ -157,7 +157,7 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Protocol {
 
-        public List <Structure> Structures = new List<Structure> ();
+        public List <Structure> Structures = new();
 
         public override void Normalize() {
             if (Normalized) {
@@ -210,7 +210,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         public Structure AsStructure() {
-            Structure Structure = new Structure {
+            Structure Structure = new() {
                 AllEntries = AllEntries,
                 AllEntriesUnsorted = AllEntriesUnsorted,
                 Entries = Entries,

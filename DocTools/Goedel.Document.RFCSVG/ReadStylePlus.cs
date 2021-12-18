@@ -62,9 +62,9 @@ namespace Goedel.Document.RFCSVG {
         //    return StateInt;
         //    }
 
-        StringBuilder classBuilder = new StringBuilder();
-        StringBuilder valueBuilder = new StringBuilder();
-        StringBuilder tagBuilder = new StringBuilder();
+        StringBuilder classBuilder = new();
+        StringBuilder valueBuilder = new();
+        StringBuilder tagBuilder = new();
 
         public string Class => classBuilder.ToString();
         public string Value => valueBuilder.ToString();

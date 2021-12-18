@@ -26,7 +26,7 @@ namespace Goedel.Document.RFC {
         /// <param name="Document">The document to write</param>
         public static void WriteAML(TextWriter TextWriter, Document Document) {
             // Format document to place line numbers
-            WriteAML WriteAML = new WriteAML(TextWriter);
+            WriteAML WriteAML = new(TextWriter);
             WriteAML.Write(Document);
             }
         }

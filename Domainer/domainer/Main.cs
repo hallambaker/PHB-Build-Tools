@@ -28,7 +28,7 @@ namespace DomainerShell {
         /// <param name="index"></param>
         public static void Help(DispatchShell Dispatch, string[] args, int index) => Brief(Description, DefaultCommand, Entries);
 
-        public static DescribeCommandEntry DescribeHelp = new DescribeCommandEntry() {
+        public static DescribeCommandEntry DescribeHelp = new() {
             Identifier = "help",
             HandleDelegate = Help,
             Entries = new List<DescribeEntry>() { }
@@ -42,7 +42,7 @@ namespace DomainerShell {
         /// <param name="index">The first unparsed argument.</param>
         public static void About(DispatchShell Dispatch, string[] args, int index) => FileTools.About();
 
-        public static DescribeCommandEntry DescribeAbout = new DescribeCommandEntry() {
+        public static DescribeCommandEntry DescribeAbout = new() {
             Identifier = "about",
             HandleDelegate = About,
             Entries = new List<DescribeEntry>() { }
@@ -81,7 +81,7 @@ namespace DomainerShell {
 			}
 
         public void MainMethod(string[] Args) {
-			DomainerShell Dispatch = new DomainerShell ();
+			DomainerShell Dispatch = new();
 
 			MainMethod (Dispatch, Args);
 			}
@@ -94,7 +94,7 @@ namespace DomainerShell {
         public static void Handle_GenerateDomainer (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			DomainerShell Dispatch =	DispatchIn as DomainerShell;
-			GenerateDomainer		Options = new GenerateDomainer ();
+			GenerateDomainer		Options = new();
 			ProcessOptions (Args, Index, Options);
 			Dispatch.GenerateDomainer (Options);
 			}
@@ -147,7 +147,7 @@ namespace DomainerShell {
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+		public static DescribeCommandEntry _DescribeCommand = new() {
 			Identifier = "in",
 			Brief =  "<Unspecified>",
 			HandleDelegate =  CommandLineInterpreter.Handle_GenerateDomainer,
@@ -216,14 +216,14 @@ namespace DomainerShell {
 
 			inputfile = Options.Domainer.Text;
 
-            Goedel.Tool.Domainer.Domainer Parse = new Goedel.Tool.Domainer.Domainer() {
+            Goedel.Tool.Domainer.Domainer Parse = new() {
 				};
         
 			
 			using (Stream infile =
                         new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
 
-                Lexer Schema = new Lexer(inputfile);
+                Lexer Schema = new(inputfile);
 
                 Schema.Process(infile, Parse);
                 }
@@ -238,7 +238,7 @@ namespace DomainerShell {
                 using Stream outputStream =
                             new FileStream(outputfile, FileMode.Create, FileAccess.Write);
                 using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
-                Goedel.Tool.Domainer.Generate Script = new Goedel.Tool.Domainer.Generate() {
+                Goedel.Tool.Domainer.Generate Script = new() {
 					_Output = OutputWriter
 					};
 				Script.GenerateCS(Parse);

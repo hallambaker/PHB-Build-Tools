@@ -16,8 +16,8 @@ namespace Goedel.Tool.DNSConfig {
 
 
         public DNS DefaultDns = null;
-        public List<Domain> Domains = new List<Domain>();
-        public List<Machine> Machines = new List<Machine>();
+        public List<Domain> Domains = new();
+        public List<Machine> Machines = new();
 
         public override void Init () {
             if (_Initialized) {
@@ -87,8 +87,8 @@ namespace Goedel.Tool.DNSConfig {
             }
 
 
-        public List<DNSRecord_A> Records_A = new List<DNSRecord_A>();
-        public List<DNSRecord_AAAA> Records_AAAA = new List<DNSRecord_AAAA>();
+        public List<DNSRecord_A> Records_A = new();
+        public List<DNSRecord_AAAA> Records_AAAA = new();
 
         //public string MakeAddress (string Data, ID<_Choice> First, ID<_Choice> Second = null) {
         //    return MakeAddress(Data, First.Label, Second?.Label);
@@ -142,8 +142,8 @@ namespace Goedel.Tool.DNSConfig {
         }
 
     public partial class Machine {
-        public List<DNSRecord_A> Records_A = new List<DNSRecord_A>();
-        public List<DNSRecord_AAAA> Records_AAAA = new List<DNSRecord_AAAA>();
+        public List<DNSRecord_A> Records_A = new();
+        public List<DNSRecord_AAAA> Records_AAAA = new();
         }
 
     public partial class Authoritative {

@@ -13,7 +13,7 @@ namespace Goedel.Document.RFC {
         TextReader TextReader;
 
         public static void Parse(string File, Goedel.Document.RFC.Document Document) {
-            using FileReader FileReader = new FileReader(File);
+            using FileReader FileReader = new(File);
             Parse(FileReader, Document);
             }
 
@@ -103,7 +103,7 @@ namespace Goedel.Document.RFC {
 
 
         List<string> MakeKeywords(asciitext[] keyword) {
-            List<string> Result = new List<string>();
+            List<string> Result = new();
 
             if (keyword != null) {
                 foreach (var s in keyword) {
@@ -117,10 +117,10 @@ namespace Goedel.Document.RFC {
         #region // authors, references
 
         List<Author> MakeAuthors(author[] authors) {
-            List<Author> Result = new List<Author>();
+            List<Author> Result = new();
 
             foreach (author author in authors) {
-                Author Author = new Author() {
+                Author Author = new() {
                     Initials = author.initials,
                     Name = author.fullname
                     };
@@ -150,7 +150,7 @@ namespace Goedel.Document.RFC {
 
 
         Reference MakeReference(reference reference) {
-            Reference Result = new Reference();
+            Reference Result = new();
 
             if (reference.front != null) {
                 Result.Title = reference.front.title.Value;
@@ -182,12 +182,12 @@ namespace Goedel.Document.RFC {
 
 
         List<SeriesInfo> MakeSeriesInfo(seriesInfo[] seriesInfos) {
-            List<SeriesInfo> ListSeriesInfo = new List<SeriesInfo>();
+            List<SeriesInfo> ListSeriesInfo = new();
 
             if (seriesInfos != null) {
                 foreach (var seriesInfo in seriesInfos) {
 
-                    SeriesInfo SeriesInfo = new SeriesInfo();
+                    SeriesInfo SeriesInfo = new();
                     ListSeriesInfo.Add(SeriesInfo);
                     SeriesInfo.Name = seriesInfo.name;
                     SeriesInfo.Value = seriesInfo.value;
@@ -205,7 +205,7 @@ namespace Goedel.Document.RFC {
                 foreach (var obj in seriesInfos) {
                     switch (obj) {
                         case seriesInfo seriesInfo: {
-                            SeriesInfo SeriesInfo = new SeriesInfo();
+                            SeriesInfo SeriesInfo = new();
                             ListSeriesInfo.Add(SeriesInfo);
                             SeriesInfo.Name = seriesInfo.name;
                             SeriesInfo.Value = seriesInfo.value;
@@ -227,7 +227,7 @@ namespace Goedel.Document.RFC {
 
                     switch (obj) {
                         case format format: {
-                            Format Format = new Format();
+                            Format Format = new();
                             ListFormats.Add(Format);
                             Format.Octets = format.octets;
                             Format.Target = format.target;
@@ -258,7 +258,7 @@ namespace Goedel.Document.RFC {
         void MakeCatalog(Catalog Catalog, references[] referencesArray) {
             if (referencesArray != null) {
                 foreach (references references in referencesArray) {
-                    References References = new References();
+                    References References = new();
                     Catalog.ReferenceSections.Add(References);
                     References.Title = references.title;
 
@@ -769,7 +769,7 @@ namespace Goedel.Document.RFC {
                 throw new Exception("Levels nested too deeply, maximum is 6.");
                 }
 
-            List<Section> Result = new List<Section>();
+            List<Section> Result = new();
             if (sections != null) {
                 foreach (section section in sections) {
                     var title = section.title;

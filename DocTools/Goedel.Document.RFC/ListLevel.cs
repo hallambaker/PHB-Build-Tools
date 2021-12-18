@@ -9,7 +9,7 @@ namespace Goedel.Document.RFC {
 
 
     public class ListLevel {
-        List<BlockType> ListItems = new List<BlockType>();
+        List<BlockType> ListItems = new();
         int ListPointer = -1;
 
         public delegate void OpenListDelegate (BlockType ListItem);

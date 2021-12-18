@@ -186,7 +186,7 @@ namespace Goedel.Document.RFC {
 
             public List<Text> ToTextList {
                 get {
-                    List<Text> TextList = new List<Text>();
+                    List<Text> TextList = new();
                     TextListAdd(ref TextList, Contents,
                         (Tag == "pre") ? TextMode.Literal : TextMode.StripSpace);
                     return TextList;
@@ -194,7 +194,7 @@ namespace Goedel.Document.RFC {
                 }
 
             public string Tag;
-            public List<XML> Contents = new List<XML>();
+            public List<XML> Contents = new();
 
             public String Id = null;
             public String Class = null;
@@ -240,10 +240,10 @@ namespace Goedel.Document.RFC {
         XmlReader XmlReader;
 
         Element XMLRoot;
-        Element Root = new Element();
+        Element Root = new();
 
         public static void Parse (string File, Document Document) {
-            using FileReader FileReader = new FileReader(File);
+            using FileReader FileReader = new(File);
             Parse(FileReader, Document);
             }
 
@@ -253,9 +253,9 @@ namespace Goedel.Document.RFC {
             this.TextReader = FileReader;
             this.Document = Document;
 
-            XmlPreloadedResolver XmlPreloadedResolver = new XmlPreloadedResolver();
+            XmlPreloadedResolver XmlPreloadedResolver = new();
 
-            XmlReaderSettings XmlReaderSettings = new XmlReaderSettings() {
+            XmlReaderSettings XmlReaderSettings = new() {
                 DtdProcessing = DtdProcessing.Parse,
                 IgnoreWhitespace = true,
                 IgnoreComments = true,
@@ -271,7 +271,7 @@ namespace Goedel.Document.RFC {
 
 
         public NewParse (String Reference, Document Document) {
-            StringReader StringReader = new StringReader(Reference);
+            StringReader StringReader = new(Reference);
             this.Document = Document;
 
             ParseReferences(StringReader);
@@ -280,16 +280,16 @@ namespace Goedel.Document.RFC {
 
         public NewParse (Processing Processing, Document Document) {
 
-            using FileReader BibFileReader = new FileReader(Processing.File);
+            using FileReader BibFileReader = new(Processing.File);
             this.Document = Document;
 
             ParseReferences(BibFileReader);
             }
 
         public void ParseReferences (TextReader TextReader) {
-            XmlPreloadedResolver XmlPreloadedResolver = new XmlPreloadedResolver();
+            XmlPreloadedResolver XmlPreloadedResolver = new();
 
-            XmlReaderSettings XmlReaderSettings = new XmlReaderSettings() {
+            XmlReaderSettings XmlReaderSettings = new() {
                 DtdProcessing = DtdProcessing.Parse,
                 IgnoreWhitespace = true,
                 IgnoreComments = true,
@@ -338,7 +338,7 @@ namespace Goedel.Document.RFC {
 
 
         P MakePBlock (Element Element) {
-            P P = new P(Element.Value, Element.Id);
+            P P = new(Element.Value, Element.Id);
 
 
             return P;
@@ -517,7 +517,7 @@ namespace Goedel.Document.RFC {
             }
 
         void MakeReference(Element Element) {
-            Reference Reference = new Reference() {
+            Reference Reference = new() {
                 GeneratedID = Element.Anchor
                 };
 
@@ -531,7 +531,7 @@ namespace Goedel.Document.RFC {
                                 break;
                                 }
                         case "seriesinfo": {
-                                SeriesInfo SeriesInfo = new SeriesInfo() {
+                                SeriesInfo SeriesInfo = new() {
                                     Name = L1.Name,
                                     Value = L1.Value
                                     };
@@ -539,7 +539,7 @@ namespace Goedel.Document.RFC {
                                 break;
                                 }
                         case "format": {
-                                Format Format = new Format() {
+                                Format Format = new() {
                                     Type = L1.Type,
                                     Octets = L1.Octets,
                                     Target = L1.Target
@@ -599,7 +599,7 @@ namespace Goedel.Document.RFC {
             }
 
         Table MakeTable(List<XML> Contents) {
-            Table Table = new Table();
+            Table Table = new();
 
             throw new NYI();
 
@@ -619,7 +619,7 @@ namespace Goedel.Document.RFC {
             }
 
         TableRow MakeTableRow(Table Table, List<XML> Contents) {
-            TableRow TableRow = new TableRow();
+            TableRow TableRow = new();
 
             for (int Index = 0; Index < Contents.Count; Index++) {
                 if (Contents[Index].GetType() == typeof(Element)) {
@@ -628,7 +628,7 @@ namespace Goedel.Document.RFC {
 
                     switch (Element.Tag.ToLower()) {
                         case "th": {
-                                TableData TableData = new TableData() {
+                                TableData TableData = new() {
                                     IsHeading = true,
                                     Text = FilteredText,
                                     GeneratedID = Element.Id
@@ -637,7 +637,7 @@ namespace Goedel.Document.RFC {
                                 break;
                                 }
                         case "td": {
-                                TableData TableData = new TableData() {
+                                TableData TableData = new() {
                                     IsHeading = false,
                                     Text = FilteredText,
                                     GeneratedID = Element.Id
@@ -698,7 +698,7 @@ namespace Goedel.Document.RFC {
             }
 
         class Stack {
-            public List<StackItem> Data = new List<StackItem>();
+            public List<StackItem> Data = new();
             int Pointer = 0;
 
             public StackItem Top => Data[Pointer - 1]; 
@@ -711,7 +711,7 @@ namespace Goedel.Document.RFC {
 
 
             public StackItem Push() {
-                StackItem StackItem = new StackItem();
+                StackItem StackItem = new();
                 if (Pointer < Data.Count) {
                     Data[Pointer] = StackItem;
                     }
@@ -737,7 +737,7 @@ namespace Goedel.Document.RFC {
             }
 
         public void ReadStream(XmlReader XmlReader) {
-            Stack Stack = new Stack();
+            Stack Stack = new();
 
 
             Stack.Push();
@@ -803,7 +803,7 @@ namespace Goedel.Document.RFC {
 
                     case XmlNodeType.ProcessingInstruction:
                         //Console.Write("<?{0} {1}?>", XmlReader.Name, XmlReader.Value);
-                        Processing Processing = new Processing(XmlReader.Name, XmlReader.Value);
+                        Processing Processing = new(XmlReader.Name, XmlReader.Value);
 
                         if (Processing.Tag == "include") {
                             //FileReader.Include(Processing.File);
@@ -891,7 +891,7 @@ namespace Goedel.Document.RFC {
                 case "seriesNo": Document.SeriesNumber = Value; break;
 
                 case "author": {
-                    Author Author = new Author() {
+                    Author Author = new() {
                         Name = Value
                         };
                     Document.Authors.Add(Author);
@@ -949,7 +949,7 @@ namespace Goedel.Document.RFC {
             switch (Tag.ToLower()) {
                 case "title": Reference.Title = Value; break;
                 case "author": {
-                        Author Author = new Author() {
+                        Author Author = new() {
                             Name = Element.Fullname,
                             Initials = Element.Initials,
                             Surname = Element.Surname

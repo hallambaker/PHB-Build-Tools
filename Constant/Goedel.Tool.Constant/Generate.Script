@@ -12,139 +12,139 @@ using System.Text;
 
 using Goedel.Utilities;
 
-namespace #{Constant.NameSpaceName} {
+namespace #{Constant.NameSpaceName} ;
 
 
 #foreach (var item in Constant.Enums)
-    ///<summary>#{item.Title}</summary>
-    public enum #{item.Id.Label} {
-        ///<summary>Undefined type</summary>
-        Unknown = -1#!
+///<summary>#{item.Title}</summary>
+public enum #{item.Id.Label} {
+    ///<summary>Undefined type</summary>
+    Unknown = -1#!
 #foreach (var entry in item.Integer)
 #if (entry.Reserve.End == 0)
 ,
-        ///<summary>#{entry.Title}</summary>
-        #{entry.Id.Label} = #{entry.Value}#!
+    ///<summary>#{entry.Title}</summary>
+    #{entry.Id.Label} = #{entry.Value}#!
 #end if
 #end foreach
 #foreach (var entry in item.UDF)
 ,
-        ///<summary>#{entry.Title}</summary>
-        #{entry.Id} = #{entry.Value}#!
+    ///<summary>#{entry.Title}</summary>
+    #{entry.Id} = #{entry.Value}#!
 #end foreach
 #foreach (var entry in item.Code)
 ,
-        ///<summary>#{entry.Title}</summary>
-        #{entry.Id.Label}#!
+    ///<summary>#{entry.Title}</summary>
+    #{entry.Id.Label}#!
 #end foreach
-        }
+    }
 
 #end foreach
 
-    ///<summary>
+///<summary>
 #foreach (var line in Constant.Namespace.Text)
-    ///#{line}
+///#{line}
 #end foreach
-    ///</summary>
-    public static partial class #{Constant.Class} {
+///</summary>
+public static partial class #{Constant.Class} {
 
 #foreach (var file in Constant.Files)
-        // File: #{file.Id.Label}
+    // File: #{file.Id.Label}
 
 #foreach (var entry in file.Entries)
 #switchcast ConstantType entry
 #casecast Code code
-        ///<summary>#{code.Title}</summary>
-        public const string #{code.Id.Label} = "#{code.Id.Label}";
+    ///<summary>#{code.Title}</summary>
+    public const string #{code.Id.Label} = "#{code.Id.Label}";
 
 #casecast String String
-        ///<summary>
+    ///<summary>
 #foreach (var line in String.Description.Text)
-        ///#{line}
+    ///#{line}
 #end foreach
-        ///</summary>
-        public const string #{String.Id.Label} = "#{String.Value}";
+    ///</summary>
+    public const string #{String.Id.Label} = "#{String.Value}";
 
 #casecast Enum item
 
 #foreach (var code in item.Code)
-        ///<summary>Jose enumeration tag for #{item.Id.Label}.#{code.Id.Label}</summary>
-        public const string  #{item.Id.Label}#{code.Id.Label}Tag = "#{code.Id.Label}";
+    ///<summary>Jose enumeration tag for #{item.Id.Label}.#{code.Id.Label}</summary>
+    public const string  #{item.Id.Label}#{code.Id.Label}Tag = "#{code.Id.Label}";
 #end foreach
 #foreach (var code in item.Integer)
-        ///<summary>Jose enumeration tag for #{item.Id.Label}.#{code.Id.Label}</summary>
-        public const string  #{item.Id.Label}#{code.Id.Label}Tag = "#{code.Id.Label}";
-        ///<summary>Description for #{item.Id.Label}.#{code.Id.Label}</summary>
-        public const string  #{item.Id.Label}#{code.Id.Label}Title = "#{code.Title}";
+    ///<summary>Jose enumeration tag for #{item.Id.Label}.#{code.Id.Label}</summary>
+    public const string  #{item.Id.Label}#{code.Id.Label}Tag = "#{code.Id.Label}";
+    ///<summary>Description for #{item.Id.Label}.#{code.Id.Label}</summary>
+    public const string  #{item.Id.Label}#{code.Id.Label}Title = "#{code.Title}";
 #end foreach
 
-        /// <summary>
-        /// Convert the string <paramref name="text"/> to the corresponding enumeration
-        /// value.
-        /// </summary>
-        /// <param name="text">The string to convert.</param>
-        /// <returns>The enumeration value.</returns>
-        public static #{item.Id.Label} To#{item.Id.Label} (this string text) =>
-            text switch {
+    /// <summary>
+    /// Convert the string <paramref name="text"/> to the corresponding enumeration
+    /// value.
+    /// </summary>
+    /// <param name="text">The string to convert.</param>
+    /// <returns>The enumeration value.</returns>
+    public static #{item.Id.Label} To#{item.Id.Label} (this string text) =>
+        text switch {
 #foreach (var code in item.Code)
-                #{item.Id.Label}#{code.Id.Label}Tag => #{item.Id.Label}.#{code.Id.Label},
+            #{item.Id.Label}#{code.Id.Label}Tag => #{item.Id.Label}.#{code.Id.Label},
 #end foreach
-                _ => #{item.Id.Label}.Unknown
-                };
+            _ => #{item.Id.Label}.Unknown
+            };
 
-        /// <summary>
-        /// Convert the enumerated value <paramref name="data"/> to the corresponding string
-        /// value.
-        /// </summary>
-        /// <param name="data">The enumerated value.</param>
-        /// <returns>The text value.</returns>
-        public static string ToLabel (this #{item.Id.Label} data) =>
-            data switch {
+    /// <summary>
+    /// Convert the enumerated value <paramref name="data"/> to the corresponding string
+    /// value.
+    /// </summary>
+    /// <param name="data">The enumerated value.</param>
+    /// <returns>The text value.</returns>
+    public static string ToLabel (this #{item.Id.Label} data) =>
+        data switch {
 #foreach (var code in item.Code)
-                #{item.Id.Label}.#{code.Id.Label} => #{item.Id.Label}#{code.Id.Label}Tag,
+            #{item.Id.Label}.#{code.Id.Label} => #{item.Id.Label}#{code.Id.Label}Tag,
 #end foreach
-                _ => null
-                };
+            _ => null
+            };
 
 #casecast Function function
-        /// <summary>
+    /// <summary>
 #if (function.Description != null)
 #foreach (var line in function.Description.Text)
-        /// #{line}
+    /// #{line}
 #end foreach
 #end if
-        /// </summary>
+    /// </summary>
 #foreach (var parameter in function.Parameter)
-        /// <param name="in#{parameter.Id}">#{parameter.Title}</param>
+    /// <param name="in#{parameter.Id}">#{parameter.Title}</param>
 #end foreach
-        /// <returns></returns>
-        public static string KeyDerivationKeyName (#!
+    /// <returns></returns>
+    public static string KeyDerivationKeyName (#!
 #% var separator = new Separator (",");
 #foreach (var parameter in function.Parameter)
 #{separator}
-                    #{parameter.Type} in#{parameter.Id}#!
+                #{parameter.Type} in#{parameter.Id}#!
 #end foreach
 ) {
 #foreach (var parameter in function.Parameter)
-            var #{parameter.Id} = in#{parameter.Id}#{parameter.Convert?.Type.If()}; 
+        var #{parameter.Id} = in#{parameter.Id}#{parameter.Convert?.Type.If()}; 
 #end foreach
 
 #foreach (var formula in function.Formula)
-            var #!
+        var #!
 #foreach (var line in formula.Text)
 #{line} #!
 #end foreach
 ;
 #end foreach
 
-            return #{function.Return.Label};
-            }
+        return #{function.Return.Label};
+        }
 
 
 #end switchcast
 #end foreach
 #end foreach
-        }
     }
+
 #end method
 #end pclass

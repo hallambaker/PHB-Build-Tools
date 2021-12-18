@@ -14,8 +14,8 @@ namespace Goedel.Document.RFC {
         int space = 0;
         int start = 0;
 
-        StringBuilder builder = new StringBuilder();
-        StringBuilder spaces = new StringBuilder();
+        StringBuilder builder = new();
+        StringBuilder spaces = new();
 
         protected override void Disposing() {
             TextWriter.Write(builder.ToString());

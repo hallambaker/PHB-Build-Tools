@@ -10,12 +10,12 @@ namespace Goedel.Document.RFC {
         //int             End;
         //int             Line;
         //int             Column;
-        public List<SourceFile> SourceFiles = new List<SourceFile>();
+        public List<SourceFile> SourceFiles = new();
         }
 
 
     public class FileReader : TextReader {
-        StringWriter StringWriter = new StringWriter();
+        StringWriter StringWriter = new();
         
         string      Buffer = null;
         int         Pointer = 0;
@@ -52,12 +52,12 @@ namespace Goedel.Document.RFC {
 
 
         public void Include(string FileName) {
-            using StreamReader StreamReader = new StreamReader(FileName);
+            using StreamReader StreamReader = new(FileName);
             ReadStream(StreamReader);
             }
 
         public void IncludeXML(string FileName) {
-            using StreamReader StreamReader = new StreamReader(FileName);
+            using StreamReader StreamReader = new(FileName);
             ReadStreamXML(StreamReader);
             }
 
@@ -262,7 +262,7 @@ namespace Goedel.Document.RFC {
                 }
             }
         
-        List<StreamHandle> StreamHandles = new List<StreamHandle> ();
+        List<StreamHandle> StreamHandles = new();
         StreamHandle CurrentHandle => StreamHandles[StreamHandles.Count - 1];
 
         public int LineNumber => CurrentHandle.LineNumber;
@@ -314,7 +314,7 @@ namespace Goedel.Document.RFC {
             }
 
         public void Include(string FileName) {
-            StreamHandle StreamHandle = new StreamHandle(FileName);
+            StreamHandle StreamHandle = new(FileName);
             StreamHandles.Add(StreamHandle);
             }
 

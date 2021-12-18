@@ -25,7 +25,7 @@ namespace Goedel.Tool.ProtoGen {
     public abstract partial class _Choice {
         public bool             IsAbstract = false;
         public _Choice          Superclass = null;
-        public List<_Choice>    Subclasses = new List<_Choice> () ;
+        public List<_Choice>    Subclasses = new() ;
 
         virtual public void Complete() =>
             //Console.WriteLine ("Completing");

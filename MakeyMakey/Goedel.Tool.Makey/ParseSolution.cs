@@ -37,7 +37,7 @@ namespace Goedel.Tool.Makey {
     /// comments or if there is some line wrapping mechanism supported.
     /// </summary>
     public partial class VSSolution : VSFile {
-        readonly static public Dictionary<string, ProjectType> MapProject = new Dictionary<string, ProjectType> {
+        readonly static public Dictionary<string, ProjectType> MapProject = new() {
                 { "{2150e333-8fdc-42a3-9474-1a3956d46de8}", ProjectType.Folder},
                 { "{fae04ec0-301f-11d3-bf4b-00c04f79efbc}", ProjectType.Csproj},
                 { "{930c7802-8a8c-48f9-8165-68863bccd9dd}", ProjectType.Wixproj},
@@ -58,19 +58,19 @@ namespace Goedel.Tool.Makey {
 
         public List<SolutionProject> Projects { get; set; } = new List<SolutionProject>();
 
-        public List<KeyValue> SolutionConfigurationPlatforms = new List<KeyValue>();
-        public List<KeyValue> ProjectConfigurationPlatforms = new List<KeyValue>();
-        public List<KeyValue> SolutionProperties = new List<KeyValue>();
-        public List<KeyValue> NestedProjects = new List<KeyValue>();
+        public List<KeyValue> SolutionConfigurationPlatforms = new();
+        public List<KeyValue> ProjectConfigurationPlatforms = new();
+        public List<KeyValue> SolutionProperties = new();
+        public List<KeyValue> NestedProjects = new();
 
-        public Dictionary<string, SolutionProject> ProjectsByGUID = new Dictionary<string, SolutionProject>();
+        public Dictionary<string, SolutionProject> ProjectsByGUID = new();
 
         public VSSolution(string Filename) => Parse(Filename);
 
         public void Parse(string Filename) {
             using var FileStream = new FileStream(
                         Filename, FileMode.Open, FileAccess.Read);
-            LexReader LexReader = new LexReader(FileStream);
+            LexReader LexReader = new(FileStream);
             Parse(LexReader);
 
             }
@@ -91,7 +91,7 @@ namespace Goedel.Tool.Makey {
 
 
         public void Parse(LexReader LexReader) {
-            Stack<Target> Stack = new Stack<Target>();
+            Stack<Target> Stack = new();
 
             SolutionProject SolutionProject = null;
 
@@ -235,8 +235,8 @@ namespace Goedel.Tool.Makey {
         public VSProject Project;
         ProjectType _ProjectType = ProjectType.NULL; 
 
-        public List<KeyValue> SolutionItems = new List<KeyValue>();
-        public List<KeyValue> ProjectDependencies = new List<KeyValue>();
+        public List<KeyValue> SolutionItems = new();
+        public List<KeyValue> ProjectDependencies = new();
         
         public SolutionProject(Tokenizer Tokenizer) {
             TypeGUID = Tokenizer.Key;
@@ -262,7 +262,7 @@ namespace Goedel.Tool.Makey {
 
         public bool Recurse => IsRecurse(ProjectType);
 
-        readonly List<string> KillGUIDs = new List<string> {
+        readonly List<string> KillGUIDs = new() {
             "{82b43b9b-a64c-4715-b499-d71e9ca2bd60}"
             };
 

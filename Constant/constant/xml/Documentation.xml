@@ -4,13 +4,13 @@
         <name>constant</name>
     </assembly>
     <members>
-        <member name="F:Goedel.Shell.Constant.CommandLineInterpreter.Entries">
+        <member name="P:Goedel.Shell.Constant.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
-        <member name="F:Goedel.Shell.Constant.CommandLineInterpreter.DefaultCommand">
+        <member name="P:Goedel.Shell.Constant.CommandLineInterpreter.DefaultCommand">
             <summary>The default command.</summary>
         </member>
-        <member name="F:Goedel.Shell.Constant.CommandLineInterpreter.Description">
+        <member name="P:Goedel.Shell.Constant.CommandLineInterpreter.Description">
             <summary>Description of the comman</summary>
         </member>
         <member name="M:Goedel.Shell.Constant.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">
@@ -29,6 +29,12 @@
         </member>
         <member name="P:Goedel.Shell.Constant._Generate.MarkDown">
             <summary>Field accessor for option [md]</summary>
+        </member>
+        <member name="M:Goedel.Shell.Constant.ConstantShell.Generate(Goedel.Shell.Constant.Generate)">
+            <summary>
+            Generate the output files as directed by <paramref name="Options"/>
+            </summary>
+            <param name="Options">The specified options.</param>
         </member>
     </members>
 </doc>

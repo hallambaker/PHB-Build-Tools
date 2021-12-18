@@ -4,13 +4,13 @@
         <name>version</name>
     </assembly>
     <members>
-        <member name="F:Goedel.Tool.Version.CommandLineInterpreter.Entries">
+        <member name="P:Goedel.Tool.Version.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
-        <member name="F:Goedel.Tool.Version.CommandLineInterpreter.DefaultCommand">
+        <member name="P:Goedel.Tool.Version.CommandLineInterpreter.DefaultCommand">
             <summary>The default command.</summary>
         </member>
-        <member name="F:Goedel.Tool.Version.CommandLineInterpreter.Description">
+        <member name="P:Goedel.Tool.Version.CommandLineInterpreter.Description">
             <summary>Description of the comman</summary>
         </member>
         <member name="M:Goedel.Tool.Version.CommandLineInterpreter.Help(Goedel.Command.DispatchShell,System.String[],System.Int32)">

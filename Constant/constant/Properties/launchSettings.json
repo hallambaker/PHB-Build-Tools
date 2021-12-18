@@ -2,7 +2,7 @@
   "profiles": {
     "constant": {
       "commandName": "Project",
-      "commandLineArgs": "C:\\Users\\hallam\\Work\\mmm\\Mesh\\Goedel.Mesh\\MeshConstants.constant /cs /md",
+      "commandLineArgs": "MeshConstants.constant /cs",
       "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Mesh\\Goedel.Mesh"
     }
   }

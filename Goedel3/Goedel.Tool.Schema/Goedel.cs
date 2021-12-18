@@ -207,7 +207,7 @@ namespace GoedelSchema {
 		}
 
     public partial class OtherLicense : _Choice {
-		public List <System.String>			Text = new List <System.String> ();
+		public List <System.String>			Text = new();
 
         public override GoedelType _Tag() => GoedelType.OtherLicense;
 
@@ -221,7 +221,7 @@ namespace GoedelSchema {
     public partial class Class : _Choice {
         public TOKEN<_Choice>			Namespace;
         public TOKEN<_Choice>			Name;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = new();
 
         public override GoedelType _Tag() => GoedelType.Class;
 
@@ -236,7 +236,7 @@ namespace GoedelSchema {
 
     public partial class TopType : _Choice {
         public ID<_Choice>				Id; 
-        public List <Entry>           Entries = new List<Entry> ();
+        public List <Entry>           Entries = new();
 
         public override GoedelType _Tag() => GoedelType.TopType;
 
@@ -250,7 +250,7 @@ namespace GoedelSchema {
 
     public partial class Type : _Choice {
         public ID<_Choice>				Id; 
-        public List <Entry>           Entries = new List<Entry> ();
+        public List <Entry>           Entries = new();
 
         public override GoedelType _Tag() => GoedelType.Type;
 
@@ -275,7 +275,7 @@ namespace GoedelSchema {
 		}
 
     public partial class Remark : _Choice {
-		public List <System.String>			Text = new List <System.String> ();
+		public List <System.String>			Text = new();
 
         public override GoedelType _Tag() => GoedelType.Remark;
 
@@ -287,7 +287,7 @@ namespace GoedelSchema {
 		}
 
     public partial class Options : _Choice {
-        public List <OptionEntry>           Entries = new List<OptionEntry> ();
+        public List <OptionEntry>           Entries = new();
 
         public override GoedelType _Tag() => GoedelType.Options;
 
@@ -337,7 +337,7 @@ namespace GoedelSchema {
         }
 
     public partial class Choice : _Choice {
-        public List <REF<_Choice>>           Entries = new List<REF<_Choice>> ();
+        public List <REF<_Choice>>           Entries = new();
 
         public override GoedelType _Tag() => GoedelType.Choice;
 
@@ -350,7 +350,7 @@ namespace GoedelSchema {
 
     public partial class ChoiceREF : _Choice {
         public REF<_Choice>				ID;
-        public List <REF<_Choice>>           Entries = new List<REF<_Choice>> ();
+        public List <REF<_Choice>>           Entries = new();
 
         public override GoedelType _Tag() => GoedelType.ChoiceREF;
 
@@ -577,7 +577,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.Copyright NewCopyright() {
-            GoedelSchema.Copyright result = new GoedelSchema.Copyright();
+            GoedelSchema.Copyright result = new();
             Push (result);
             State = StateCode.Copyright_Start;
             return result;
@@ -585,7 +585,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.MITLicense NewMITLicense() {
-            GoedelSchema.MITLicense result = new GoedelSchema.MITLicense();
+            GoedelSchema.MITLicense result = new();
             Push (result);
             State = StateCode.MITLicense_Start;
             return result;
@@ -593,7 +593,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.BSD2License NewBSD2License() {
-            GoedelSchema.BSD2License result = new GoedelSchema.BSD2License();
+            GoedelSchema.BSD2License result = new();
             Push (result);
             State = StateCode.BSD2License_Start;
             return result;
@@ -601,7 +601,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.BSD3License NewBSD3License() {
-            GoedelSchema.BSD3License result = new GoedelSchema.BSD3License();
+            GoedelSchema.BSD3License result = new();
             Push (result);
             State = StateCode.BSD3License_Start;
             return result;
@@ -609,7 +609,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.ISCLicense NewISCLicense() {
-            GoedelSchema.ISCLicense result = new GoedelSchema.ISCLicense();
+            GoedelSchema.ISCLicense result = new();
             Push (result);
             State = StateCode.ISCLicense_Start;
             return result;
@@ -617,7 +617,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.Apache2License NewApache2License() {
-            GoedelSchema.Apache2License result = new GoedelSchema.Apache2License();
+            GoedelSchema.Apache2License result = new();
             Push (result);
             State = StateCode.Apache2License_Start;
             return result;
@@ -625,7 +625,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.OtherLicense NewOtherLicense() {
-            GoedelSchema.OtherLicense result = new GoedelSchema.OtherLicense();
+            GoedelSchema.OtherLicense result = new();
             Push (result);
             State = StateCode.OtherLicense_Start;
             return result;
@@ -633,7 +633,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.Class NewClass() {
-            GoedelSchema.Class result = new GoedelSchema.Class();
+            GoedelSchema.Class result = new();
             Push (result);
             State = StateCode.Class_Start;
             return result;
@@ -641,7 +641,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.TopType NewTopType() {
-            GoedelSchema.TopType result = new GoedelSchema.TopType();
+            GoedelSchema.TopType result = new();
             Push (result);
             State = StateCode.TopType_Start;
             return result;
@@ -649,7 +649,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.Type NewType() {
-            GoedelSchema.Type result = new GoedelSchema.Type();
+            GoedelSchema.Type result = new();
             Push (result);
             State = StateCode.Type_Start;
             return result;
@@ -657,7 +657,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.Entry NewEntry() {
-            GoedelSchema.Entry result = new GoedelSchema.Entry();
+            GoedelSchema.Entry result = new();
             Push (result);
             State = StateCode.Entry_Start;
             return result;
@@ -665,7 +665,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.Remark NewRemark() {
-            GoedelSchema.Remark result = new GoedelSchema.Remark();
+            GoedelSchema.Remark result = new();
             Push (result);
             State = StateCode.Remark_Start;
             return result;
@@ -673,7 +673,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.Options NewOptions() {
-            GoedelSchema.Options result = new GoedelSchema.Options();
+            GoedelSchema.Options result = new();
             Push (result);
             State = StateCode.Options_Start;
             return result;
@@ -681,7 +681,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.OptionEntry NewOptionEntry() {
-            GoedelSchema.OptionEntry result = new GoedelSchema.OptionEntry();
+            GoedelSchema.OptionEntry result = new();
             Push (result);
             State = StateCode.OptionEntry_Start;
             return result;
@@ -689,7 +689,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.Single NewSingle() {
-            GoedelSchema.Single result = new GoedelSchema.Single();
+            GoedelSchema.Single result = new();
             Push (result);
             State = StateCode.Single_Start;
             return result;
@@ -697,7 +697,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.Multiple NewMultiple() {
-            GoedelSchema.Multiple result = new GoedelSchema.Multiple();
+            GoedelSchema.Multiple result = new();
             Push (result);
             State = StateCode.Multiple_Start;
             return result;
@@ -705,7 +705,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.List NewList() {
-            GoedelSchema.List result = new GoedelSchema.List();
+            GoedelSchema.List result = new();
             Push (result);
             State = StateCode.List_Start;
             return result;
@@ -713,7 +713,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.Choice NewChoice() {
-            GoedelSchema.Choice result = new GoedelSchema.Choice();
+            GoedelSchema.Choice result = new();
             Push (result);
             State = StateCode.Choice_Start;
             return result;
@@ -721,7 +721,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.ChoiceREF NewChoiceREF() {
-            GoedelSchema.ChoiceREF result = new GoedelSchema.ChoiceREF();
+            GoedelSchema.ChoiceREF result = new();
             Push (result);
             State = StateCode.ChoiceREF_Start;
             return result;
@@ -729,7 +729,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.ID NewID() {
-            GoedelSchema.ID result = new GoedelSchema.ID();
+            GoedelSchema.ID result = new();
             Push (result);
             State = StateCode.ID_Start;
             return result;
@@ -737,7 +737,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.REF NewREF() {
-            GoedelSchema.REF result = new GoedelSchema.REF();
+            GoedelSchema.REF result = new();
             Push (result);
             State = StateCode.REF_Start;
             return result;
@@ -745,7 +745,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.Token NewToken() {
-            GoedelSchema.Token result = new GoedelSchema.Token();
+            GoedelSchema.Token result = new();
             Push (result);
             State = StateCode.Token_Start;
             return result;
@@ -753,7 +753,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.String NewString() {
-            GoedelSchema.String result = new GoedelSchema.String();
+            GoedelSchema.String result = new();
             Push (result);
             State = StateCode.String_Start;
             return result;
@@ -761,7 +761,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.Integer NewInteger() {
-            GoedelSchema.Integer result = new GoedelSchema.Integer();
+            GoedelSchema.Integer result = new();
             Push (result);
             State = StateCode.Integer_Start;
             return result;
@@ -769,7 +769,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.Text NewText() {
-            GoedelSchema.Text result = new GoedelSchema.Text();
+            GoedelSchema.Text result = new();
             Push (result);
             State = StateCode.Text_Start;
             return result;
@@ -777,7 +777,7 @@ namespace GoedelSchema {
 
 
         private GoedelSchema.Boolean NewBoolean() {
-            GoedelSchema.Boolean result = new GoedelSchema.Boolean();
+            GoedelSchema.Boolean result = new();
             Push (result);
             State = StateCode.Boolean_Start;
             return result;
@@ -826,7 +826,7 @@ namespace GoedelSchema {
 
 
         void Push (GoedelSchema._Choice Token) {
-            _StackItem Item = new _StackItem {
+            _StackItem Item = new() {
                 State = State,
                 Token = Current
                 };
@@ -1160,7 +1160,7 @@ namespace GoedelSchema {
                                 Current_Cast.Type = New_Choice(Text);
                                 }
                             else {
-                                GoedelSchema._Label result = new _Label {
+                                GoedelSchema._Label result = new() {
                                     Label = Registry.REF(Position, Text, TYPE__TypeType, Current_Cast)
                                     };
                                 Current_Cast.Type = result;
@@ -1169,7 +1169,7 @@ namespace GoedelSchema {
                             break;
                             }
                         else if (Token == TokenType.LITERAL) {
-                            GoedelSchema._Label result = new GoedelSchema._Label();
+                            GoedelSchema._Label result = new();
                             GoedelSchema.Entry Current_Cast = (GoedelSchema.Entry)Current;
                             result.Label = Registry.REF(Position, Text, TYPE__TypeType, Current_Cast);
                             Current_Cast.Type = result;
@@ -1304,7 +1304,7 @@ namespace GoedelSchema {
                                 Current_Cast.Type = New_Choice(Text);
                                 }
                             else {
-                                GoedelSchema._Label result = new _Label {
+                                GoedelSchema._Label result = new() {
                                     Label = Registry.REF(Position, Text, TYPE__TypeType, Current_Cast)
                                     };
                                 Current_Cast.Type = result;
@@ -1313,7 +1313,7 @@ namespace GoedelSchema {
                             break;
                             }
                         else if (Token == TokenType.LITERAL) {
-                            GoedelSchema._Label result = new GoedelSchema._Label();
+                            GoedelSchema._Label result = new();
                             GoedelSchema.List Current_Cast = (GoedelSchema.List)Current;
                             result.Label = Registry.REF(Position, Text, TYPE__TypeType, Current_Cast);
                             Current_Cast.Type = result;

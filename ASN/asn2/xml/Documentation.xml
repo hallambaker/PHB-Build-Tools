@@ -4,13 +4,13 @@
         <name>asn2</name>
     </assembly>
     <members>
-        <member name="F:Goedel.Shell.ASN.CommandLineInterpreter.Entries">
+        <member name="P:Goedel.Shell.ASN.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
-        <member name="F:Goedel.Shell.ASN.CommandLineInterpreter.DefaultCommand">
+        <member name="P:Goedel.Shell.ASN.CommandLineInterpreter.DefaultCommand">
             <summary>The default command.</summary>
         </member>
-        <member name="F:Goedel.Shell.ASN.CommandLineInterpreter.Description">
+        <member name="P:Goedel.Shell.ASN.CommandLineInterpreter.Description">
             <summary>Description of the comman</summary>
         </member>
         <member name="M:Goedel.Shell.ASN.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">

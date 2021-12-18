@@ -23,7 +23,7 @@ namespace Goedel.Document.Markdown {
         public ElementType ElementType = ElementType.Invalid;
 
         public _Choice Element;
-        public List<CatalogEntry> Children = new List<CatalogEntry>();
+        public List<CatalogEntry> Children = new();
 
 
         public int Level = -1;
@@ -32,13 +32,13 @@ namespace Goedel.Document.Markdown {
         public string End = null;
         public string XMLTag = null;
         public string XMLFirst = null;
-        public List<TagValue> XMLDefaults = new List<TagValue>();
+        public List<TagValue> XMLDefaults = new();
 
-        public List<_Choice> PreEnclosures = new List<_Choice> ();
-        public List<_Choice> PreWrappers = new List<_Choice>();
+        public List<_Choice> PreEnclosures = new();
+        public List<_Choice> PreWrappers = new();
 
-        public List<CatalogEntry> StackEnclosures = new List<CatalogEntry>();
-        public List<CatalogEntry> Wrappers = new List<CatalogEntry>();
+        public List<CatalogEntry> StackEnclosures = new();
+        public List<CatalogEntry> Wrappers = new();
         public bool Any = false;
 
         public bool Plaintext = false;
@@ -201,7 +201,7 @@ namespace Goedel.Document.Markdown {
         public ProcessDelegate Process;
 
         public FormatHTML DefaultFormat = null;
-        public Dictionary<string, FormatHTML> Formats = new Dictionary<string, FormatHTML>();
+        public Dictionary<string, FormatHTML> Formats = new();
 
 
         Dictionary<string, CatalogEntry> Catalog;

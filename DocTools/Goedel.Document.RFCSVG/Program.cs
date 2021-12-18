@@ -34,7 +34,7 @@ namespace Goedel.Document.RFCSVG {
         public XmlElement Root;
 
         ///<summary>The style sheet extracted from the source document.</summary>
-        public Dictionary<string, List<TagValue>> Style = new Dictionary<string, List<TagValue>>();
+        public Dictionary<string, List<TagValue>> Style = new();
 
         /// <summary>
         /// Constructor creating a redacted document from the parsed document <paramref name="source"/>.
@@ -393,7 +393,7 @@ namespace Goedel.Document.RFCSVG {
         public string Name;
 
         ///<summary>Dictionary mappng attribute names to values.</summary>
-        public Dictionary<string, AttributeProfile> Attributes = new Dictionary<string, AttributeProfile>();
+        public Dictionary<string, AttributeProfile> Attributes = new();
         
         ProcessAttributeDelegate processAttribute;
 

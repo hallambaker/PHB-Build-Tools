@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Goedel.Document.Markdown {
     public partial class MarkNewParagraph {
 
-        List<string> Normative= new List<string> {
+        List<string> Normative= new() {
             "MUST", "SHALL", "SHOULD", "REQUIRED", "RECOMMENDED", "MAY", "OPTIONAL",
             "MUST NOT", "SHALL NOT", "SHOULD NOT"
                 };
@@ -26,11 +26,11 @@ namespace Goedel.Document.Markdown {
 
         public MarkNewParagraph(List<TextSegment> Segments = null) => this.Segments = Segments ?? new List<TextSegment>();
 
-        StringBuilder Buffer = new StringBuilder();
-        StringBuilder Upper = new StringBuilder();
-        StringBuilder Extra = new StringBuilder();
+        StringBuilder Buffer = new();
+        StringBuilder Upper = new();
+        StringBuilder Extra = new();
 
-        public List<TagValue> Attributes = new List<TagValue>();
+        public List<TagValue> Attributes = new();
         public string Tag;
         public TagValue Element;
 
@@ -215,7 +215,7 @@ namespace Goedel.Document.Markdown {
 
         public bool XMLTagMode = false;
 
-        public Stack<TextSegmentOpen> StackAnnotation = new Stack<TextSegmentOpen>();
+        public Stack<TextSegmentOpen> StackAnnotation = new();
 
         
 

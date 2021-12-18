@@ -44,7 +44,7 @@ namespace Shell.Bootmaker {
             using (Stream infile =
                         new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
 
-                Lexer Schema = new Lexer(inputfile);
+                Lexer Schema = new(inputfile);
                 Schema.Process(infile, Parse);
                 }
 
