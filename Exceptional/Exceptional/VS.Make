@@ -23,9 +23,9 @@ LinkFiles = \
     Goedel.Tool.Core.dll
 
 ToolTargets = \
-	Main.cs
-Main.cs : Main.Command 
-	commandparse Main.Command  /cs  Main.cs
+	Exceptional.cs
+Exceptional.cs : Exceptional.Command 
+	commandparse Exceptional.Command  /cs  Exceptional.cs
 
 
 

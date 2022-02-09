@@ -41,5 +41,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget CommandEcho.exe $(LinkFiles) 
+	powershell publishtarget CommandEcho.dll
 

@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(SolutionDir)CommonSettingsApplication.xml" />
+	<PropertyGroup>
+		<!--<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>-->
+		<AssemblyName>exceptional</AssemblyName>
+		<Product>Exceptional</Product>
+		<Description>Generates Exception classes and documentation support.</Description>
+		<Copyright>© 2015-2022</Copyright>
+		<Title>Exceptional</Title>
+		<!--<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>-->
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+		<ProjectReference Include="..\Goedel.Tool.Exceptional\Goedel.Tool.Exceptional.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Exceptional.cs">
+			<DependentUpon>Exceptional.Command</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Exceptional.Command">
+	    <LastGenOutput>Exceptional.cs</LastGenOutput>
+	    <Generator>CommandCS</Generator>
+	  </None>
+	</ItemGroup>
+	
+	<!--<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="VSPreBuild" />
+	</Target>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="cd $(ProjectDir) &amp;&amp; VSPostBuildWindows $(TargetDir)" />
+	</Target>-->
+
+</Project>

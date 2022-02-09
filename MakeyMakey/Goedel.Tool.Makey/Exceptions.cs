@@ -1,15 +1,15 @@
 ﻿
-//  This file was automatically generated at 12/18/2021 1:09:20 AM
+//  This file was automatically generated at 09-Feb-22 3:16:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  exceptional version 3.0.0.749
+//  Generator:  exceptional version 3.0.0.795
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
-//      Copyright : © 2015-2021
+//      Copyright : © 2015-2022
 //  
-//  Build Platform: Win32NT 10.0.18362.0
+//  Build Platform: Win32NT 10.0.19042.0
 //  
 //  
 
@@ -19,10 +19,9 @@
 using Goedel.FSR;
 
 
+#pragma warning disable IDE0079
 #pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Tool.Makey ;
-
-
 
 
 /// <summary>
@@ -283,6 +282,20 @@ public partial class ParseError : KeyFileException {
 
 
     }
+
+
+/// <summary>
+/// Extensions class defining logging events and convenience methods.
+/// </summary>
+public  static partial class EventExtensions {
+
+    /// <summary>
+    /// Static initializer, is called once when the module loads.
+    /// </summary>
+    static EventExtensions() {
+        }
+
+	}
 
 
 

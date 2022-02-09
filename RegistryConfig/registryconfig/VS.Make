@@ -42,5 +42,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget registryconfig.exe $(LinkFiles) 
+	powershell publishtarget registryconfig.dll
 

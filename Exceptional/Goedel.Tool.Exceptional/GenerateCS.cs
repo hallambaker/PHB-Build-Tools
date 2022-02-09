@@ -72,15 +72,91 @@ public partial class Generate : global::Goedel.Registry.Script {
 				_Output.Write ("#pragma warning disable IDE1006 // Naming Styles\n{0}", _Indent);
 				_Output.Write ("namespace {1} ;\n{0}", _Indent, Namespace.Id);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
 				
 				 WriteListExceptions (Namespace.Options);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("/// <summary>\n{0}", _Indent);
+				_Output.Write ("/// Extensions class defining logging events and convenience methods.\n{0}", _Indent);
+				_Output.Write ("/// </summary>\n{0}", _Indent);
+				_Output.Write ("public  static partial class EventExtensions {{\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("    /// <summary>\n{0}", _Indent);
+				_Output.Write ("    /// Static initializer, is called once when the module loads.\n{0}", _Indent);
+				_Output.Write ("    /// </summary>\n{0}", _Indent);
+				_Output.Write ("    static EventExtensions() {{\n{0}", _Indent);
+				foreach  (_Choice Entry in Namespace.Options) {
+					if (  (Entry is IEvent logEvent) ) {
+						 WriteEventInit (logEvent);
+						}
+					}
+				_Output.Write ("        }}\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				foreach  (_Choice Entry in Namespace.Options) {
+					if (  (Entry is IEvent logEvent) ) {
+						 WriteEvent (logEvent);
+						}
+					}
+				_Output.Write ("	}}\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 			break; }
 				}
 			}
+		_Output.Write ("\n{0}", _Indent);
+		}
+	
+
+	//
+	// WriteEventInit
+	//
+	public void WriteEventInit (IEvent logEvent) {
+		_Output.Write ("        _{1} = LoggerMessage.Define", _Indent, logEvent.Name);
+		if (  (!logEvent.IsEmpty) ) {
+			 var separator = new Separator (",");
+			_Output.Write ("<", _Indent);
+			foreach  (var param in logEvent.TypedParameters) {
+				_Output.Write ("{1}{2}", _Indent, separator.ToString(), param.Type);
+				}
+			_Output.Write (">", _Indent);
+			}
+		_Output.Write ("(\n{0}", _Indent);
+		_Output.Write ("            LogLevel.{1}, new EventId({2}, nameof(_{3})),\n{0}", _Indent, logEvent.LogLevel, logEvent.EventId, logEvent.Name);
+		_Output.Write ("            \"{1}\");\n{0}", _Indent, logEvent.Pattern);
+		}
+	
+
+	//
+	// WriteEvent
+	//
+	public void WriteEvent (IEvent logEvent) {
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    private static readonly Action<ILogger", _Indent);
+		foreach  (var param in logEvent.TypedParameters) {
+			_Output.Write (", {1}", _Indent, param.Type);
+			}
+		_Output.Write (", Exception> _{1};\n{0}", _Indent, logEvent.Name);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("	/// <summary>\n{0}", _Indent);
+		_Output.Write ("    /// Write an event of type {1} to <paramref name=\"logger\"/> \n{0}", _Indent, logEvent.Name);
+		_Output.Write ("    /// </summary>\n{0}", _Indent);
+		_Output.Write ("    /// <param name=\"logger\">The logger to write the output to.</param>\n{0}", _Indent);
+		foreach  (var param in logEvent.TypedParameters) {
+			_Output.Write ("	/// <param name=\"{1}\">{2}</param>\n{0}", _Indent, param.Name, param.Text);
+			}
+		_Output.Write ("    public static void {1}(\n{0}", _Indent, logEvent.Name);
+		_Output.Write ("			this ILogger logger", _Indent);
+		foreach  (var param in logEvent.TypedParameters) {
+			_Output.Write (",\n{0}", _Indent);
+			_Output.Write ("			{1} {2}", _Indent, param.Type, param.Name);
+			}
+		_Output.Write (") {{\n{0}", _Indent);
+		_Output.Write ("        _{1}(logger", _Indent, logEvent.Name);
+		foreach  (var param in logEvent.TypedParameters) {
+			_Output.Write (", {1}", _Indent, param.Name);
+			}
+		_Output.Write (", null);\n{0}", _Indent);
+		_Output.Write ("        }}\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
 		}
 	
 

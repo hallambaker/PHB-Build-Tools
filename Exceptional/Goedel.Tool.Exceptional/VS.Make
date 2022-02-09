@@ -21,15 +21,16 @@ LinkFiles = \
     Goedel.Tool.Core.dll
 
 ToolTargets = \
-	Exceptional.cs\
-	GenerateCS.cs
-Exceptional.cs : Exceptional.gdl 
-	goedel3 Exceptional.gdl  /cs  Exceptional.cs
+	GenerateCS.cs\
+	Exceptional.cs
+
+
 
 GenerateCS.cs : GenerateCS.script 
 	gscript GenerateCS.script  GenerateCS.cs
 
-
+Exceptional.cs : Exceptional.gdl 
+	goedel3 Exceptional.gdl  /cs  Exceptional.cs
 
 prebuildRecurse : 
 

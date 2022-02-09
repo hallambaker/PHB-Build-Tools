@@ -42,5 +42,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget constant.exe $(LinkFiles) 
+	powershell publishtarget constant.dll
 

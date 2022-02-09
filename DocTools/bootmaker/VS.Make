@@ -46,5 +46,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget bootmaker.exe $(LinkFiles) 
+	powershell publishtarget bootmaker.dll
 

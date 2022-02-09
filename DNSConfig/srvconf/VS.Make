@@ -42,5 +42,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget srvconf.exe $(LinkFiles) 
+	powershell publishtarget srvconf.dll
 

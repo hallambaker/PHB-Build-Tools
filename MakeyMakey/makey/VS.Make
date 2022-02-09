@@ -42,5 +42,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget makey.exe $(LinkFiles) 
+	powershell publishtarget makey.dll
 

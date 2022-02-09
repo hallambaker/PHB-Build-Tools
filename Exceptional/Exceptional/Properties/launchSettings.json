@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "Exceptional": {
+    "Protocol.Service": {
       "commandName": "Project",
       "commandLineArgs": "Exceptions.exceptional  /cs  Exceptions.cs",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Libraries\\Goedel.Protocol"
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Libraries\\Goedel.Protocol.Service"
     }
   }
 }

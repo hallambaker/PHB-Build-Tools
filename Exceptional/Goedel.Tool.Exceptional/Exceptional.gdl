@@ -5,7 +5,12 @@ Class Goedel.Tool.Exceptional Exceptions
         Id ID NamespaceT
 		Options List Choice
 			Exception
-
+			Trace
+			Debug
+			Information
+			Warning
+			Error
+			Critical
 
 	TopType Using
         Id ID NamespaceT
@@ -19,6 +24,51 @@ Class Goedel.Tool.Exceptional Exceptions
 			Description
 			Object
 			Exception
+
+	Type Trace
+		Code		Integer
+		Id			ID EventT
+		Text		String
+		Parameters	List TypedParameter
+
+	Type Debug
+		Code		Integer
+		Id			ID EventT
+		Text		String
+		Parameters	List TypedParameter
+
+	Type Information
+		Code		Integer
+		Id			ID EventT
+		Text		String
+		Parameters	List TypedParameter
+
+	Type Warning
+		Code		Integer
+		Id			ID EventT
+		Text		String
+		Parameters	List TypedParameter
+
+	Type Error
+		Code		Integer
+		Id			ID EventT
+		Text		String
+		Parameters	List TypedParameter
+
+	Type Critical
+		Code		Integer
+		Id			ID EventT
+		Text		String
+		Parameters	List TypedParameter
+
+
+
+
+	Type TypedParameter
+		Name Token TypeType
+		Type Token IdType
+		Text		String
+
 					
 	Type Object
 		Type	Token TypeType

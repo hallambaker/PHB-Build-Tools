@@ -46,5 +46,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget rfctool.exe $(LinkFiles) 
+	powershell publishtarget rfctool.dll
 

@@ -45,5 +45,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Version.exe $(LinkFiles) 
+	powershell publishtarget version.dll
 

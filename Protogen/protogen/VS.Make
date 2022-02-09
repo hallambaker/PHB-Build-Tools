@@ -38,5 +38,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget protogen.exe $(LinkFiles) 
+	powershell publishtarget protogen.dll
 

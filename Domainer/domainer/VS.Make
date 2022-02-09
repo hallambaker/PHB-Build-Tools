@@ -38,5 +38,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget domainer.exe $(LinkFiles) 
+	powershell publishtarget domainer.dll
 

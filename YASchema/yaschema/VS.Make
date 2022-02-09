@@ -42,5 +42,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget yaschema.exe $(LinkFiles) 
+	powershell publishtarget yashema.dll
 

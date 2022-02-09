@@ -45,5 +45,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget goedel3.exe $(LinkFiles) 
+	powershell publishtarget goedel3.dll
 

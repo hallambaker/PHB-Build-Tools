@@ -7,7 +7,7 @@
 		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
 		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
 		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
-		<DocumentationFile>xml\Documentation.xml</DocumentationFile>
+		<!--<DocumentationFile>xml\Documentation.xml</DocumentationFile>-->
     <UseSharedCompilation>false</UseSharedCompilation>
 	</PropertyGroup>
 	

@@ -1,15 +1,15 @@
 ﻿
-//  This file was automatically generated at 12/18/2021 1:09:33 AM
+//  This file was automatically generated at 09-Feb-22 3:16:48 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  commandparse version 3.0.0.761
+//  Generator:  commandparse version 3.0.0.776
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.18362.0
+//  Build Platform: Win32NT 10.0.19042.0
 //  
 //  
 using System;
@@ -19,6 +19,7 @@ using System.Text;
 using Goedel.Command;
 using Goedel.Registry;
 using Goedel.Utilities;
+#pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CS1591
 

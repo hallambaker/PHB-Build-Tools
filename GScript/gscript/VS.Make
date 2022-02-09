@@ -45,5 +45,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget gscript.exe $(LinkFiles) 
+	powershell publishtarget gscript.dll
 

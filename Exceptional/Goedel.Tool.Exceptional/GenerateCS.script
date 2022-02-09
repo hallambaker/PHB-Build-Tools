@@ -36,17 +36,82 @@ using #{Using.Id};
 ##pragma warning disable IDE1006 // Naming Styles
 namespace #{Namespace.Id} ;
 
-
-
 #% WriteListExceptions (Namespace.Options);
+
+/// <summary>
+/// Extensions class defining logging events and convenience methods.
+/// </summary>
+public  static partial class EventExtensions {
+
+    /// <summary>
+    /// Static initializer, is called once when the module loads.
+    /// </summary>
+    static EventExtensions() {
+#foreach (_Choice Entry in Namespace.Options)
+#if (Entry is IEvent logEvent)
+#% WriteEventInit (logEvent);
+#end if
+#end foreach
+        }
+
+#foreach (_Choice Entry in Namespace.Options)
+#if (Entry is IEvent logEvent)
+#% WriteEvent (logEvent);
+#end if
+#end foreach
+	}
 
 
 #end switchcast
 #end foreach
+
 #end method
 
+#method WriteEventInit IEvent logEvent
+        _#{logEvent.Name} = LoggerMessage.Define#!
+#if (!logEvent.IsEmpty)
+#% var separator = new Separator (",");
+<#!
+#foreach (var param in logEvent.TypedParameters)
+#{separator.ToString()}#{param.Type}#!
+#end foreach
+>#!
+#end if
+(
+            LogLevel.#{logEvent.LogLevel}, new EventId(#{logEvent.EventId}, nameof(_#{logEvent.Name})),
+            "#{logEvent.Pattern}");
+#end method
 
+#method WriteEvent IEvent logEvent
 
+    private static readonly Action<ILogger#!
+#foreach (var param in logEvent.TypedParameters)
+, #{param.Type}#!
+#end foreach
+, Exception> _#{logEvent.Name};
+
+	/// <summary>
+    /// Write an event of type #{logEvent.Name} to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+#foreach (var param in logEvent.TypedParameters)
+	/// <param name="#{param.Name}">#{param.Text}</param>
+#end foreach
+    public static void #{logEvent.Name}(
+			this ILogger logger#!
+#foreach (var param in logEvent.TypedParameters)
+,
+			#{param.Type} #{param.Name}#!
+#end foreach
+) {
+        _#{logEvent.Name}(logger#!
+#foreach (var param in logEvent.TypedParameters)
+, #{param.Name}#!
+#end foreach
+, null);
+        }
+
+#end method
 
 #method WriteException Exception Exception
 

@@ -42,5 +42,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget fsrgen.exe $(LinkFiles) 
+	powershell publishtarget fsrgen.dll
 
