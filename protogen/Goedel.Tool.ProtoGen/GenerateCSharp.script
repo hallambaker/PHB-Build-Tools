@@ -758,6 +758,8 @@ new #{Id}();
 #end if
 		}
 
+#if false.True()
+
     /// <summary>
     /// Having read a tag, process the corresponding value data.
     /// </summary>
@@ -815,7 +817,7 @@ new #{Id}();
 			}
 		// check up that all the required elements are present
 		}
-
+#end if
 
 #% }
 #end block

@@ -889,64 +889,66 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		_Output.Write ("		}}\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("    /// <summary>\n{0}", _Indent);
-		_Output.Write ("    /// Having read a tag, process the corresponding value data.\n{0}", _Indent);
-		_Output.Write ("    /// </summary>\n{0}", _Indent);
-		_Output.Write ("    /// <param name=\"jsonReader\">The input stream</param>\n{0}", _Indent);
-		_Output.Write ("    /// <param name=\"tag\">The tag</param>\n{0}", _Indent);
-		_Output.Write ("	public override void DeserializeToken (JsonReader jsonReader, string tag) {{\n{0}", _Indent);
-		_Output.Write ("			\n{0}", _Indent);
-		_Output.Write ("		switch (tag) {{\n{0}", _Indent);
-		foreach  (_Choice entry in Entries) {
-			 GetType(entry, out var token, out var type, out var ttype, 
-			    out var options, out var nullable, out var tag);
-			if (  (token != null) ) {
-				 bool Multiple = IsMultiple (options);
-				_Output.Write ("			case \"{1}\" : {{\n{0}", _Indent, tag);
-				if (  Multiple ) {
-					_Output.Write ("				// Have a sequence of values\n{0}", _Indent);
-					_Output.Write ("				bool _Going = jsonReader.StartArray ();\n{0}", _Indent);
-					_Output.Write ("				{1} = new List <{2}> ();\n{0}", _Indent, token, type);
-					_Output.Write ("				while (_Going) {{\n{0}", _Indent);
-					if (  entry._Tag () == ProtoStructType.Struct ) {
-						_Output.Write ("					// an untagged structure.\n{0}", _Indent);
-						_Output.Write ("					var _Item = new  {1} ();\n{0}", _Indent, type);
-						_Output.Write ("					_Item.Deserialize (jsonReader);\n{0}", _Indent);
-						_Output.Write ("					// var _Item = new {1} (jsonReader);\n{0}", _Indent, type);
-						} else if (  entry._Tag () == ProtoStructType.TStruct) {
-						_Output.Write ("					var _Item = {1}.FromJson (jsonReader, true); // a tagged structure\n{0}", _Indent, type);
+		if (  false.True() ) {
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    /// <summary>\n{0}", _Indent);
+			_Output.Write ("    /// Having read a tag, process the corresponding value data.\n{0}", _Indent);
+			_Output.Write ("    /// </summary>\n{0}", _Indent);
+			_Output.Write ("    /// <param name=\"jsonReader\">The input stream</param>\n{0}", _Indent);
+			_Output.Write ("    /// <param name=\"tag\">The tag</param>\n{0}", _Indent);
+			_Output.Write ("	public override void DeserializeToken (JsonReader jsonReader, string tag) {{\n{0}", _Indent);
+			_Output.Write ("			\n{0}", _Indent);
+			_Output.Write ("		switch (tag) {{\n{0}", _Indent);
+			foreach  (_Choice entry in Entries) {
+				 GetType(entry, out var token, out var type, out var ttype, 
+				    out var options, out var nullable, out var tag);
+				if (  (token != null) ) {
+					 bool Multiple = IsMultiple (options);
+					_Output.Write ("			case \"{1}\" : {{\n{0}", _Indent, tag);
+					if (  Multiple ) {
+						_Output.Write ("				// Have a sequence of values\n{0}", _Indent);
+						_Output.Write ("				bool _Going = jsonReader.StartArray ();\n{0}", _Indent);
+						_Output.Write ("				{1} = new List <{2}> ();\n{0}", _Indent, token, type);
+						_Output.Write ("				while (_Going) {{\n{0}", _Indent);
+						if (  entry._Tag () == ProtoStructType.Struct ) {
+							_Output.Write ("					// an untagged structure.\n{0}", _Indent);
+							_Output.Write ("					var _Item = new  {1} ();\n{0}", _Indent, type);
+							_Output.Write ("					_Item.Deserialize (jsonReader);\n{0}", _Indent);
+							_Output.Write ("					// var _Item = new {1} (jsonReader);\n{0}", _Indent, type);
+							} else if (  entry._Tag () == ProtoStructType.TStruct) {
+							_Output.Write ("					var _Item = {1}.FromJson (jsonReader, true); // a tagged structure\n{0}", _Indent, type);
+							} else {
+							_Output.Write ("					{1} _Item = jsonReader.Read{2} ();\n{0}", _Indent, type, ttype);
+							}
+						_Output.Write ("					{1}.Add (_Item);\n{0}", _Indent, token);
+						_Output.Write ("					_Going = jsonReader.NextArray ();\n{0}", _Indent);
+						_Output.Write ("					}}\n{0}", _Indent);
 						} else {
-						_Output.Write ("					{1} _Item = jsonReader.Read{2} ();\n{0}", _Indent, type, ttype);
+						if (  entry._Tag () == ProtoStructType.Struct ) {
+							_Output.Write ("				// An untagged structure\n{0}", _Indent);
+							_Output.Write ("				{1} = new {2} ();\n{0}", _Indent, token, type);
+							_Output.Write ("				{1}.Deserialize (jsonReader);\n{0}", _Indent, token);
+							_Output.Write (" \n{0}", _Indent);
+							} else if (  entry._Tag () == ProtoStructType.TStruct) {
+							_Output.Write ("				{1} = {2}.FromJson (jsonReader, true) ;  // A tagged structure\n{0}", _Indent, token, type);
+							} else {
+							_Output.Write ("				{1} = jsonReader.Read{2} ();\n{0}", _Indent, token, ttype);
+							}
 						}
-					_Output.Write ("					{1}.Add (_Item);\n{0}", _Indent, token);
-					_Output.Write ("					_Going = jsonReader.NextArray ();\n{0}", _Indent);
-					_Output.Write ("					}}\n{0}", _Indent);
-					} else {
-					if (  entry._Tag () == ProtoStructType.Struct ) {
-						_Output.Write ("				// An untagged structure\n{0}", _Indent);
-						_Output.Write ("				{1} = new {2} ();\n{0}", _Indent, token, type);
-						_Output.Write ("				{1}.Deserialize (jsonReader);\n{0}", _Indent, token);
-						_Output.Write (" \n{0}", _Indent);
-						} else if (  entry._Tag () == ProtoStructType.TStruct) {
-						_Output.Write ("				{1} = {2}.FromJson (jsonReader, true) ;  // A tagged structure\n{0}", _Indent, token, type);
-						} else {
-						_Output.Write ("				{1} = jsonReader.Read{2} ();\n{0}", _Indent, token, ttype);
-						}
+					_Output.Write ("				break;\n{0}", _Indent);
+					_Output.Write ("				}}\n{0}", _Indent);
 					}
-				_Output.Write ("				break;\n{0}", _Indent);
-				_Output.Write ("				}}\n{0}", _Indent);
 				}
+			_Output.Write ("			default : {{\n{0}", _Indent);
+			if (  (Inherits != null) ) {
+				_Output.Write ("				base.DeserializeToken(jsonReader, tag);\n{0}", _Indent);
+				}
+			_Output.Write ("				break;\n{0}", _Indent);
+			_Output.Write ("				}}\n{0}", _Indent);
+			_Output.Write ("			}}\n{0}", _Indent);
+			_Output.Write ("		// check up that all the required elements are present\n{0}", _Indent);
+			_Output.Write ("		}}\n{0}", _Indent);
 			}
-		_Output.Write ("			default : {{\n{0}", _Indent);
-		if (  (Inherits != null) ) {
-			_Output.Write ("				base.DeserializeToken(jsonReader, tag);\n{0}", _Indent);
-			}
-		_Output.Write ("				break;\n{0}", _Indent);
-		_Output.Write ("				}}\n{0}", _Indent);
-		_Output.Write ("			}}\n{0}", _Indent);
-		_Output.Write ("		// check up that all the required elements are present\n{0}", _Indent);
-		_Output.Write ("		}}\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		 }
 	
