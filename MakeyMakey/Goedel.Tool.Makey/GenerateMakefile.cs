@@ -204,7 +204,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 			} else {
 			_Output.Write ("# Non shared project, nothing to do\n{0}", _Indent);
 			_Output.Write ("prebuild : prebuildRecurse $(ToolTargets)\n{0}", _Indent);
-			_Output.Write ("	version version.version AssemblyVersion.cs\n{0}", _Indent);
+			//	version version.version AssemblyVersion.cs
 			}
 		_Output.Write ("	\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);

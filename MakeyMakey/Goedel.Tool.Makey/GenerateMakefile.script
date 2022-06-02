@@ -169,7 +169,7 @@ prebuild : prebuildRecurse $(ToolTargets)
 #else
 ## Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
-	version version.version AssemblyVersion.cs
+#!	version version.version AssemblyVersion.cs
 #end if
 	
 

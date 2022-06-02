@@ -29,6 +29,7 @@ using Goedel.Registry;
 namespace Goedel.Tool.Exceptional;
 public partial class Generate : global::Goedel.Registry.Script {
 
+	 static bool DirectGeneration = true;
 	
 
 	//
@@ -80,21 +81,51 @@ public partial class Generate : global::Goedel.Registry.Script {
 				_Output.Write ("/// </summary>\n{0}", _Indent);
 				_Output.Write ("public  static partial class EventExtensions {{\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("    /// <summary>\n{0}", _Indent);
-				_Output.Write ("    /// Static initializer, is called once when the module loads.\n{0}", _Indent);
-				_Output.Write ("    /// </summary>\n{0}", _Indent);
-				_Output.Write ("    static EventExtensions() {{\n{0}", _Indent);
-				foreach  (_Choice Entry in Namespace.Options) {
-					if (  (Entry is IEvent logEvent) ) {
-						 WriteEventInit (logEvent);
+				if (  (DirectGeneration) ) {
+					_Output.Write ("    /// <summary>\n{0}", _Indent);
+					_Output.Write ("    /// Static initializer, is called once when the module loads.\n{0}", _Indent);
+					_Output.Write ("    /// </summary>\n{0}", _Indent);
+					_Output.Write ("    static EventExtensions() {{\n{0}", _Indent);
+					foreach  (_Choice Entry in Namespace.Options) {
+						if (  (Entry is IEvent logEvent) ) {
+							 WriteEventInit (logEvent);
+							}
 						}
-					}
-				_Output.Write ("        }}\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				foreach  (_Choice Entry in Namespace.Options) {
-					if (  (Entry is IEvent logEvent) ) {
-						 WriteEvent (logEvent);
+					_Output.Write ("        }}\n{0}", _Indent);
+					_Output.Write ("\n{0}", _Indent);
+					foreach  (_Choice Entry in Namespace.Options) {
+						if (  (Entry is IEvent logEvent) ) {
+							 WriteEvent (logEvent);
+							}
 						}
+					} else {
+					_Output.Write ("\n{0}", _Indent);
+					foreach  (_Choice Entry in Namespace.Options) {
+						if (  (Entry is IEvent logEvent) ) {
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("	/// <summary>\n{0}", _Indent);
+							_Output.Write ("    /// Write an event of type {1} to <paramref name=\"logger\"/> \n{0}", _Indent, logEvent.Name);
+							_Output.Write ("    /// </summary>\n{0}", _Indent);
+							_Output.Write ("    /// <param name=\"logger\">The logger to write the output to.</param>\n{0}", _Indent);
+							foreach  (var param in logEvent.TypedParameters) {
+								_Output.Write ("	/// <param name=\"{1}\">{2}</param>\n{0}", _Indent, param.Name, param.Text);
+								}
+							_Output.Write ("	/// <param name=\"_exception\">Exception (if thrown)</param>\n{0}", _Indent);
+							_Output.Write ("    [LoggerMessage(\n{0}", _Indent);
+							_Output.Write ("        EventId = {1},\n{0}", _Indent, logEvent.EventId);
+							_Output.Write ("		Level = LogLevel.{1},\n{0}", _Indent, logEvent.LogLevel);
+							_Output.Write ("        Message = \"{1}\")]\n{0}", _Indent, logEvent.Pattern);
+							_Output.Write ("    public static partial void {1}(\n{0}", _Indent, logEvent.Name);
+							_Output.Write ("        ILogger logger", _Indent);
+							foreach  (var param in logEvent.TypedParameters) {
+								_Output.Write (",\n{0}", _Indent);
+								_Output.Write ("			{1} {2}", _Indent, param.Type, param.Name);
+								}
+							_Output.Write (",\n{0}", _Indent);
+							_Output.Write ("			Exception _exception=null);\n{0}", _Indent);
+							}
+						}
+					_Output.Write ("\n{0}", _Indent);
 					}
 				_Output.Write ("	}}\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -143,18 +174,20 @@ public partial class Generate : global::Goedel.Registry.Script {
 		foreach  (var param in logEvent.TypedParameters) {
 			_Output.Write ("	/// <param name=\"{1}\">{2}</param>\n{0}", _Indent, param.Name, param.Text);
 			}
+		_Output.Write ("	/// <param name=\"_exception\">Exception (if thrown)</param>\n{0}", _Indent);
 		_Output.Write ("    public static void {1}(\n{0}", _Indent, logEvent.Name);
 		_Output.Write ("			this ILogger logger", _Indent);
 		foreach  (var param in logEvent.TypedParameters) {
 			_Output.Write (",\n{0}", _Indent);
 			_Output.Write ("			{1} {2}", _Indent, param.Type, param.Name);
 			}
-		_Output.Write (") {{\n{0}", _Indent);
+		_Output.Write (",\n{0}", _Indent);
+		_Output.Write ("			Exception _exception=null) {{\n{0}", _Indent);
 		_Output.Write ("        _{1}(logger", _Indent, logEvent.Name);
 		foreach  (var param in logEvent.TypedParameters) {
 			_Output.Write (", {1}", _Indent, param.Name);
 			}
-		_Output.Write (", null);\n{0}", _Indent);
+		_Output.Write (", _exception);\n{0}", _Indent);
 		_Output.Write ("        }}\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		}

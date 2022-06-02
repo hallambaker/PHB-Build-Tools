@@ -1,5 +1,6 @@
 ﻿#script 1.0
 #license MITLicense
+#using Goedel.Utilities
 #xclass Goedel.Tool.ProtoGen Generate
 #!% bool OldConstructors = false;
 #% Separator Separator = new Separator (",");
@@ -22,6 +23,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 ##pragma warning disable IDE0079
 ##pragma warning disable IDE1006
@@ -129,14 +131,8 @@ public abstract partial class #{Service.Id} : Goedel.Protocol.JpcInterface {
 
 		};
 
-	/// <summary>
-	/// Dispatch object request in specified authentication context.
-	/// </summary>			
-	/// <param name="token">The method identifier</param>
-	/// <param name="request">The request data</param>
-	/// <param name="session">The client context.</param>
-	/// <returns>The response object returned by the corresponding dispatch.</returns>
-	public Goedel.Protocol.JsonObject Dispatch(
+    ///<inheritdoc/>
+	public override Goedel.Protocol.JsonObject Dispatch(
 			string token,
 			Goedel.Protocol.JsonObject request,
 			IJpcSession session) => token switch {
@@ -150,12 +146,10 @@ public abstract partial class #{Service.Id} : Goedel.Protocol.JpcInterface {
         };
 
 
-	/// <summary>
-	/// Dispatch object request in specified authentication context.
-	/// </summary>			
-    /// <param name="session">The client context.</param>
-    /// <param name="jsonReader">Reader for data object.</param>
-    /// <returns>The response object returned by the corresponding dispatch.</returns>
+
+
+#if (false.True())
+    ///<inheritdoc/>
 	public override Goedel.Protocol.JsonObject Dispatch(IJpcSession  session,  
 							Goedel.Protocol.JsonReader jsonReader) {
 
@@ -182,6 +176,7 @@ public abstract partial class #{Service.Id} : Goedel.Protocol.JpcInterface {
 		jsonReader.EndObject ();
 		return response;
 		}
+#end if
 
     /// <summary>
     /// Return a client tapping the service API directly without serialization bound to
@@ -396,7 +391,74 @@ public partial class #{Id}#{TTT} : #{CurrentPrefix} {
 public partial class #{Id}#{TTT} : #{Inherits} {
 #end if
 #call DeclareMembers (Entries)
-		
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+#call DeclareMembersSetter (Entries)
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+#call DeclareMembersGetter (Entries)
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+#call DeclareProperties (Entries)
+
+        };
+
+#if (Inherits == null) 
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+#else
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, #{Inherits}._StaticAllProperties);
+#end if
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+#if false
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {#!
+#call DeclareMetaMembers (Entries)
+
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+#end if		
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -426,6 +488,150 @@ new #{Id}();
 #end block 
 
 
+#block DeclareMembersSetter
+#% public void DeclareMembersSetter  (List<_Choice> Entries) {
+#foreach (_Choice Entry in Entries)
+#% GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
+#%    out var Nullable, out var Tag);
+#% var list = Entry.Multiple ? "List" : "" ;
+#% var eType =  Entry.Multiple ? $"List<{Type}>" : Type ;
+#switchcast ProtoStructType Entry
+#casecast Struct Param
+			case "#{Tag}" : {
+				if (value is TokenValue#{list}StructObject vvalue) {
+					#{Token} = vvalue.Value as #{eType};
+					}
+				break;
+				}
+#casecast TStruct Param
+			case "#{Tag}" : {
+				if (value is TokenValue#{list}StructObject vvalue) {
+					#{Token} = vvalue.Value as #{eType};
+					}
+				break;
+				}
+#% break; } default : {
+#if (Token != null)
+			case "#{Tag}" : {
+				if (value is TokenValue#{list}#{TType} vvalue) {
+					#{Token} = vvalue.Value;
+					}
+				break;
+				}
+#end if
+#end switchcast
+#end foreach
+#% }
+#end block 
+
+#block DeclareMembersGetter
+#% public void DeclareMembersGetter  (List<_Choice> Entries) {
+#foreach (_Choice Entry in Entries)
+#% GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
+#%    out var Nullable, out var Tag);
+#% var list = Entry.Multiple ? "List" : "" ;
+#% var eType =  Entry.Multiple ? $"List<{Type}>" : Type ;
+#switchcast ProtoStructType Entry
+#casecast Struct Param
+			case "#{Tag}" : {
+#if Entry.Multiple
+				return new TokenValueListStruct<#{Type}> (#{Token});
+#else
+				return new TokenValueStruct<#{Type}> (#{Token});
+#end if
+				}
+#casecast TStruct Param
+			case "#{Tag}" : {
+#if Entry.Multiple
+				return new TokenValueListStruct<#{Type}> (#{Token});
+#else
+				return new TokenValueStruct<#{Type}> (#{Token});
+#end if
+				}
+#% break; } default : {
+#if (Token != null)
+			case "#{Tag}" : {
+				return new TokenValue#{list}#{TType} (#{Token});
+				}
+#end if
+#end switchcast
+#end foreach
+#% }
+#end block 
+
+
+#block DeclareProperties
+#% public void DeclareProperties  (List<_Choice> Entries) {
+#% var separator = new Separator (",");
+#foreach (_Choice Entry in Entries)
+#% GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
+#%    out var Nullable, out var Tag);
+#% 
+#% var list = Entry.Multiple ? "List" : "" ;
+#% var eType =  Entry.Multiple ? $"List<{Type}>" : Type ;
+#switchcast ProtoStructType Entry
+#casecast Struct Param
+#{separator}
+			{ "#{Tag}", new Property ( typeof(TokenValue#{list}Struct), #{Entry.Multiple.ToString().ToLower()},
+					()=>new #{eType}(), ()=>new #{Type}(), false)} #!
+#casecast TStruct Param
+#{separator}
+			{ "#{Tag}", new Property ( typeof(TokenValue#{list}Struct), #{Entry.Multiple.ToString().ToLower()},
+#if Entry.Multiple
+					()=>new #{eType}(), null, true)} #!
+#else
+					null, null, true)} #!
+#end if
+#% break; } default : {
+#if (Token != null)
+#{separator}
+			{ "#{Tag}", new Property (typeof(TokenValue#{list}#{TType}), #{Entry.Multiple.ToString().ToLower()})} #!
+#end if
+#end switchcast
+#end foreach
+#% }
+#end block
+
+
+
+
+
+#block ParameterList
+#% public void DeclareMetaMembers  (List<_Choice> Entries) {
+#% var separator = new Separator (",");
+#foreach (_Choice Entry in Entries)
+#% GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
+#%    out var Nullable, out var Tag);
+#% 
+#% var list = Entry.Multiple ? "List" : "" ;
+#% var eType =  Entry.Multiple ? $"List<{Type}>" : Type ;
+#switchcast ProtoStructType Entry
+#casecast Struct Param
+#{separator}
+			{ "#{Tag}", new MetaData#{list}Struct(
+				delegate (object _a) {  #{Token} = _a as #{eType}; },
+				() => #{Token},
+				"#{Type}" )} #!
+#casecast TStruct Param
+#{separator}
+			{ "#{Tag}", new MetaData#{list}Struct(
+				delegate (object _a) {  #{Token} = _a as #{eType}; },
+				() => #{Token},
+				"#{Type}", true)}#!
+#% break; } default : {
+#if (Token != null)
+#{separator}
+			{ "#{Tag}", new MetaData#{list}#{TType}(
+				delegate (#{eType} _a) {  #{Token} = _a; },
+				() => #{Token}) } #!
+#end if
+#end switchcast
+#end foreach
+#% }
+#end block
+
+
+
 #block ParameterList
 #% public void DeclareMembers  (List<_Choice> Entries) {
 #foreach (_Choice Entry in Entries)
@@ -437,7 +643,8 @@ new #{Id}();
 #{CommentSummary(8,Entry.Description)}
 	public virtual List<#{Type}>				#{Token}  {get; set;}
 #else
-#if !Nullable
+#!  if !Nullable
+#if false.True()
 	bool								__#{Token} = false;
 	private #{Type}						_#{Token};
 #{CommentSummary(8,Entry.Description)}
@@ -458,7 +665,7 @@ new #{Id}();
 #block MakeSerializers
 #% public void MakeSerializers  (ID<_Choice> Id, string STag, List<_Choice> Entries, string Inherits) {
 #!% string IsOverride = (Id.Object.Superclass == null) ? "virtual " : "virtual ";
-
+#if false.True()
     /// <summary>
     /// Serialize this object to the specified output stream.
     /// </summary>
@@ -508,7 +715,8 @@ new #{Id}();
 #if Nullable
 		if (#{Token} != null) {
 #else
-		if (__#{Token}){
+		if (#{Token} != null) {
+#!		if (__#{Token}){
 #end if
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("#{Tag}", 1);
@@ -524,6 +732,7 @@ new #{Id}();
 			_writer.WriteObjectEnd ();
 			}
 		}
+#end if
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -616,7 +825,11 @@ new #{Id}();
 #casecast Boolean null
 				_writer.WriteBoolean (#{Tag});
 #casecast Integer null
+#if Entry.LengthBits >32
+				_writer.WriteInteger64 (#{Tag});
+#else
 				_writer.WriteInteger32 (#{Tag});
+#end if
 #casecast Binary null
 				_writer.WriteBinary (#{Tag});
 #casecast Struct null
@@ -691,9 +904,11 @@ new #{Id}();
 #% Nullable = true;
 #switchcast ProtoStructType Entry
 #casecast Boolean Param
-#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "bool";  Nullable = false;TType = "Boolean";
+#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "bool?";  Nullable = false;TType = "Boolean";
 #casecast Integer Param
-#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "int"; Nullable = false;TType = "Integer32";
+#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options;  Nullable = false;
+#% Type = Param.LengthBits>32 ? "long?": "int?";
+#% TType = Param.LengthBits>32 ? "Integer64": "Integer32";
 #casecast Binary Param
 #% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "byte[]";TType = "Binary";
 #casecast Label Param

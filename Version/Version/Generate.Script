@@ -3,9 +3,7 @@
 #pclass Goedel.Tool.Version Generate
 
 #method GenerateCS VersionInfo Version
-using System;
-using System.Reflection;
-
+// These values are automatically generated from version.version
 [assembly: System.Reflection.AssemblyVersionAttribute("#{Version.Assembly}")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("#{Version.File}")]
 

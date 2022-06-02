@@ -21,6 +21,7 @@
 //  THE SOFTWARE.
 //  
 //  
+using  Goedel.Utilities;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -52,6 +53,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("using System.Runtime.CompilerServices;\n{0}", _Indent);
 		_Output.Write ("using System.Text;\n{0}", _Indent);
 		_Output.Write ("using Goedel.Protocol;\n{0}", _Indent);
+		_Output.Write ("using Goedel.Utilities;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("#pragma warning disable IDE0079\n{0}", _Indent);
 		_Output.Write ("#pragma warning disable IDE1006\n{0}", _Indent);
@@ -170,14 +172,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 						_Output.Write ("\n{0}", _Indent);
 						_Output.Write ("		}};\n{0}", _Indent);
 						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("	/// <summary>\n{0}", _Indent);
-						_Output.Write ("	/// Dispatch object request in specified authentication context.\n{0}", _Indent);
-						_Output.Write ("	/// </summary>			\n{0}", _Indent);
-						_Output.Write ("	/// <param name=\"token\">The method identifier</param>\n{0}", _Indent);
-						_Output.Write ("	/// <param name=\"request\">The request data</param>\n{0}", _Indent);
-						_Output.Write ("	/// <param name=\"session\">The client context.</param>\n{0}", _Indent);
-						_Output.Write ("	/// <returns>The response object returned by the corresponding dispatch.</returns>\n{0}", _Indent);
-						_Output.Write ("	public Goedel.Protocol.JsonObject Dispatch(\n{0}", _Indent);
+						_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+						_Output.Write ("	public override Goedel.Protocol.JsonObject Dispatch(\n{0}", _Indent);
 						_Output.Write ("			string token,\n{0}", _Indent);
 						_Output.Write ("			Goedel.Protocol.JsonObject request,\n{0}", _Indent);
 						_Output.Write ("			IJpcSession session) => token switch {{\n{0}", _Indent);
@@ -193,40 +189,39 @@ public partial class Generate : global::Goedel.Registry.Script {
 						_Output.Write ("        }};\n{0}", _Indent);
 						_Output.Write ("\n{0}", _Indent);
 						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("	/// <summary>\n{0}", _Indent);
-						_Output.Write ("	/// Dispatch object request in specified authentication context.\n{0}", _Indent);
-						_Output.Write ("	/// </summary>			\n{0}", _Indent);
-						_Output.Write ("    /// <param name=\"session\">The client context.</param>\n{0}", _Indent);
-						_Output.Write ("    /// <param name=\"jsonReader\">Reader for data object.</param>\n{0}", _Indent);
-						_Output.Write ("    /// <returns>The response object returned by the corresponding dispatch.</returns>\n{0}", _Indent);
-						_Output.Write ("	public override Goedel.Protocol.JsonObject Dispatch(IJpcSession  session,  \n{0}", _Indent);
-						_Output.Write ("							Goedel.Protocol.JsonReader jsonReader) {{\n{0}", _Indent);
 						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("		jsonReader.StartObject ();\n{0}", _Indent);
-						_Output.Write ("		string token = jsonReader.ReadToken ();\n{0}", _Indent);
-						_Output.Write ("		JsonObject response = null;\n{0}", _Indent);
 						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("		switch (token) {{\n{0}", _Indent);
-						foreach  (_Choice Entry2 in Protocol.Entries) {
-							switch (Entry2._Tag ()) {
-								case ProtoStructType.Transaction: {
-								  Transaction Transaction = (Transaction) Entry2; 
-								_Output.Write ("			case \"{1}\" : {{\n{0}", _Indent, Transaction.Id);
-								_Output.Write ("				var request = new {1}();\n{0}", _Indent, Transaction.Request);
-								_Output.Write ("				request.Deserialize (jsonReader);\n{0}", _Indent);
-								_Output.Write ("				response = {1} (request, session);\n{0}", _Indent, Transaction.Id);
-								_Output.Write ("				break;\n{0}", _Indent);
-								_Output.Write ("				}}\n{0}", _Indent);
-							break; }
+						if (  (false.True()) ) {
+							_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+							_Output.Write ("	public override Goedel.Protocol.JsonObject Dispatch(IJpcSession  session,  \n{0}", _Indent);
+							_Output.Write ("							Goedel.Protocol.JsonReader jsonReader) {{\n{0}", _Indent);
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("		jsonReader.StartObject ();\n{0}", _Indent);
+							_Output.Write ("		string token = jsonReader.ReadToken ();\n{0}", _Indent);
+							_Output.Write ("		JsonObject response = null;\n{0}", _Indent);
+							_Output.Write ("\n{0}", _Indent);
+							_Output.Write ("		switch (token) {{\n{0}", _Indent);
+							foreach  (_Choice Entry2 in Protocol.Entries) {
+								switch (Entry2._Tag ()) {
+									case ProtoStructType.Transaction: {
+									  Transaction Transaction = (Transaction) Entry2; 
+									_Output.Write ("			case \"{1}\" : {{\n{0}", _Indent, Transaction.Id);
+									_Output.Write ("				var request = new {1}();\n{0}", _Indent, Transaction.Request);
+									_Output.Write ("				request.Deserialize (jsonReader);\n{0}", _Indent);
+									_Output.Write ("				response = {1} (request, session);\n{0}", _Indent, Transaction.Id);
+									_Output.Write ("				break;\n{0}", _Indent);
+									_Output.Write ("				}}\n{0}", _Indent);
+								break; }
+									}
 								}
+							_Output.Write ("			default : {{\n{0}", _Indent);
+							_Output.Write ("				throw new Goedel.Protocol.UnknownOperation ();\n{0}", _Indent);
+							_Output.Write ("				}}\n{0}", _Indent);
+							_Output.Write ("			}}\n{0}", _Indent);
+							_Output.Write ("		jsonReader.EndObject ();\n{0}", _Indent);
+							_Output.Write ("		return response;\n{0}", _Indent);
+							_Output.Write ("		}}\n{0}", _Indent);
 							}
-						_Output.Write ("			default : {{\n{0}", _Indent);
-						_Output.Write ("				throw new Goedel.Protocol.UnknownOperation ();\n{0}", _Indent);
-						_Output.Write ("				}}\n{0}", _Indent);
-						_Output.Write ("			}}\n{0}", _Indent);
-						_Output.Write ("		jsonReader.EndObject ();\n{0}", _Indent);
-						_Output.Write ("		return response;\n{0}", _Indent);
-						_Output.Write ("		}}\n{0}", _Indent);
 						_Output.Write ("\n{0}", _Indent);
 						_Output.Write ("    /// <summary>\n{0}", _Indent);
 						_Output.Write ("    /// Return a client tapping the service API directly without serialization bound to\n{0}", _Indent);
@@ -492,7 +487,74 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("public partial class {1}{2} : {3} {{\n{0}", _Indent, Id, TTT, Inherits);
 			}
 		DeclareMembers ((Entries));
-		_Output.Write ("		\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+		_Output.Write ("	public override void Setter(\n{0}", _Indent);
+		_Output.Write ("			string tag, TokenValue value) {{ \n{0}", _Indent);
+		_Output.Write ("		switch (tag) {{\n{0}", _Indent);
+		DeclareMembersSetter ((Entries));
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("			default: {{\n{0}", _Indent);
+		_Output.Write ("				base.Setter(tag, value);\n{0}", _Indent);
+		_Output.Write ("				break;\n{0}", _Indent);
+		_Output.Write ("				}}\n{0}", _Indent);
+		_Output.Write ("			}}\n{0}", _Indent);
+		_Output.Write ("		}}\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+		_Output.Write ("    public override TokenValue Getter(\n{0}", _Indent);
+		_Output.Write ("            string tag) {{\n{0}", _Indent);
+		_Output.Write ("        switch (tag) {{\n{0}", _Indent);
+		DeclareMembersGetter ((Entries));
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("            default: {{\n{0}", _Indent);
+		_Output.Write ("                return base.Getter(tag);\n{0}", _Indent);
+		_Output.Write ("                }}\n{0}", _Indent);
+		_Output.Write ("            }}\n{0}", _Indent);
+		_Output.Write ("        }}\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    ///<summary>Dictionary describing the serializable properties.</summary> \n{0}", _Indent);
+		_Output.Write ("    public readonly static new Dictionary<string, Property> _StaticProperties = new() {{\n{0}", _Indent);
+		DeclareProperties ((Entries));
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("        }};\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		if (  (Inherits == null)  ) {
+			_Output.Write ("	///<summary>Dictionary describing the serializable properties.</summary> \n{0}", _Indent);
+			_Output.Write ("	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;\n{0}", _Indent);
+			} else {
+			_Output.Write ("	///<summary>Dictionary describing the serializable properties.</summary> \n{0}", _Indent);
+			_Output.Write ("	public readonly static new Dictionary<string, Property> _StaticAllProperties =\n{0}", _Indent);
+			_Output.Write ("			Combine(_StaticProperties, {1}._StaticAllProperties);\n{0}", _Indent, Inherits);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+		_Output.Write ("	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+		_Output.Write ("    public override Dictionary<string, Property> _Properties => _StaticProperties;\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+		_Output.Write ("    public override Dictionary<string, Property> _ParentProperties => base._Properties;\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		if (  false ) {
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+			_Output.Write ("    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+			_Output.Write ("	public override Dictionary<string, MetaData> _MetaData => \n{0}", _Indent);
+			_Output.Write ("		_metaData ??  new Dictionary<string, MetaData> () {{", _Indent);
+			DeclareMetaMembers ((Entries));
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("		}}.CacheValue(out _metaData);\n{0}", _Indent);
+			_Output.Write ("	Dictionary<string, MetaData> _metaData;\n{0}", _Indent);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	/// <summary>\n{0}", _Indent);
 		_Output.Write ("    /// Tag identifying this class\n{0}", _Indent);
 		_Output.Write ("    /// </summary>\n{0}", _Indent);
@@ -523,6 +585,179 @@ public partial class Generate : global::Goedel.Registry.Script {
 	
 
 	//
+	//  DeclareMembersSetter
+	//
+
+		 public void DeclareMembersSetter  (List<_Choice> Entries) {
+		foreach  (_Choice Entry in Entries) {
+			 GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
+			    out var Nullable, out var Tag);
+			 var list = Entry.Multiple ? "List" : "" ;
+			 var eType =  Entry.Multiple ? $"List<{Type}>" : Type ;
+			switch (Entry._Tag ()) {
+				case ProtoStructType.Struct: {
+				  Struct Param = (Struct) Entry; 
+				_Output.Write ("			case \"{1}\" : {{\n{0}", _Indent, Tag);
+				_Output.Write ("				if (value is TokenValue{1}StructObject vvalue) {{\n{0}", _Indent, list);
+				_Output.Write ("					{1} = vvalue.Value as {2};\n{0}", _Indent, Token, eType);
+				_Output.Write ("					}}\n{0}", _Indent);
+				_Output.Write ("				break;\n{0}", _Indent);
+				_Output.Write ("				}}\n{0}", _Indent);
+				break; }
+				case ProtoStructType.TStruct: {
+				  TStruct Param = (TStruct) Entry; 
+				_Output.Write ("			case \"{1}\" : {{\n{0}", _Indent, Tag);
+				_Output.Write ("				if (value is TokenValue{1}StructObject vvalue) {{\n{0}", _Indent, list);
+				_Output.Write ("					{1} = vvalue.Value as {2};\n{0}", _Indent, Token, eType);
+				_Output.Write ("					}}\n{0}", _Indent);
+				_Output.Write ("				break;\n{0}", _Indent);
+				_Output.Write ("				}}\n{0}", _Indent);
+				
+				 break; } default : {
+				if (  (Token != null) ) {
+					_Output.Write ("			case \"{1}\" : {{\n{0}", _Indent, Tag);
+					_Output.Write ("				if (value is TokenValue{1}{2} vvalue) {{\n{0}", _Indent, list, TType);
+					_Output.Write ("					{1} = vvalue.Value;\n{0}", _Indent, Token);
+					_Output.Write ("					}}\n{0}", _Indent);
+					_Output.Write ("				break;\n{0}", _Indent);
+					_Output.Write ("				}}\n{0}", _Indent);
+					}
+			break; }
+				}
+			}
+		 }
+	
+	
+
+	//
+	//  DeclareMembersGetter
+	//
+
+		 public void DeclareMembersGetter  (List<_Choice> Entries) {
+		foreach  (_Choice Entry in Entries) {
+			 GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
+			    out var Nullable, out var Tag);
+			 var list = Entry.Multiple ? "List" : "" ;
+			 var eType =  Entry.Multiple ? $"List<{Type}>" : Type ;
+			switch (Entry._Tag ()) {
+				case ProtoStructType.Struct: {
+				  Struct Param = (Struct) Entry; 
+				_Output.Write ("			case \"{1}\" : {{\n{0}", _Indent, Tag);
+				if (  Entry.Multiple ) {
+					_Output.Write ("				return new TokenValueListStruct<{1}> ({2});\n{0}", _Indent, Type, Token);
+					} else {
+					_Output.Write ("				return new TokenValueStruct<{1}> ({2});\n{0}", _Indent, Type, Token);
+					}
+				_Output.Write ("				}}\n{0}", _Indent);
+				break; }
+				case ProtoStructType.TStruct: {
+				  TStruct Param = (TStruct) Entry; 
+				_Output.Write ("			case \"{1}\" : {{\n{0}", _Indent, Tag);
+				if (  Entry.Multiple ) {
+					_Output.Write ("				return new TokenValueListStruct<{1}> ({2});\n{0}", _Indent, Type, Token);
+					} else {
+					_Output.Write ("				return new TokenValueStruct<{1}> ({2});\n{0}", _Indent, Type, Token);
+					}
+				_Output.Write ("				}}\n{0}", _Indent);
+				
+				 break; } default : {
+				if (  (Token != null) ) {
+					_Output.Write ("			case \"{1}\" : {{\n{0}", _Indent, Tag);
+					_Output.Write ("				return new TokenValue{1}{2} ({3});\n{0}", _Indent, list, TType, Token);
+					_Output.Write ("				}}\n{0}", _Indent);
+					}
+			break; }
+				}
+			}
+		 }
+	
+	
+
+	//
+	//  DeclareProperties
+	//
+
+		 public void DeclareProperties  (List<_Choice> Entries) {
+		 var separator = new Separator (",");
+		foreach  (_Choice Entry in Entries) {
+			 GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
+			    out var Nullable, out var Tag);
+			 
+			 var list = Entry.Multiple ? "List" : "" ;
+			 var eType =  Entry.Multiple ? $"List<{Type}>" : Type ;
+			switch (Entry._Tag ()) {
+				case ProtoStructType.Struct: {
+				  Struct Param = (Struct) Entry; 
+				_Output.Write ("{1}\n{0}", _Indent, separator);
+				_Output.Write ("			{{ \"{1}\", new Property ( typeof(TokenValue{2}Struct), {3},\n{0}", _Indent, Tag, list, Entry.Multiple.ToString().ToLower());
+				_Output.Write ("					()=>new {1}(), ()=>new {2}(), false)}} ", _Indent, eType, Type);
+				break; }
+				case ProtoStructType.TStruct: {
+				  TStruct Param = (TStruct) Entry; 
+				_Output.Write ("{1}\n{0}", _Indent, separator);
+				_Output.Write ("			{{ \"{1}\", new Property ( typeof(TokenValue{2}Struct), {3},\n{0}", _Indent, Tag, list, Entry.Multiple.ToString().ToLower());
+				if (  Entry.Multiple ) {
+					_Output.Write ("					()=>new {1}(), null, true)}} ", _Indent, eType);
+					} else {
+					_Output.Write ("					null, null, true)}} ", _Indent);
+					}
+				
+				 break; } default : {
+				if (  (Token != null) ) {
+					_Output.Write ("{1}\n{0}", _Indent, separator);
+					_Output.Write ("			{{ \"{1}\", new Property (typeof(TokenValue{2}{3}), {4})}} ", _Indent, Tag, list, TType, Entry.Multiple.ToString().ToLower());
+					}
+			break; }
+				}
+			}
+		 }
+	
+	
+
+	//
+	//  ParameterList
+	//
+
+		 public void DeclareMetaMembers  (List<_Choice> Entries) {
+		 var separator = new Separator (",");
+		foreach  (_Choice Entry in Entries) {
+			 GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
+			    out var Nullable, out var Tag);
+			 
+			 var list = Entry.Multiple ? "List" : "" ;
+			 var eType =  Entry.Multiple ? $"List<{Type}>" : Type ;
+			switch (Entry._Tag ()) {
+				case ProtoStructType.Struct: {
+				  Struct Param = (Struct) Entry; 
+				_Output.Write ("{1}\n{0}", _Indent, separator);
+				_Output.Write ("			{{ \"{1}\", new MetaData{2}Struct(\n{0}", _Indent, Tag, list);
+				_Output.Write ("				delegate (object _a) {{  {1} = _a as {2}; }},\n{0}", _Indent, Token, eType);
+				_Output.Write ("				() => {1},\n{0}", _Indent, Token);
+				_Output.Write ("				\"{1}\" )}} ", _Indent, Type);
+				break; }
+				case ProtoStructType.TStruct: {
+				  TStruct Param = (TStruct) Entry; 
+				_Output.Write ("{1}\n{0}", _Indent, separator);
+				_Output.Write ("			{{ \"{1}\", new MetaData{2}Struct(\n{0}", _Indent, Tag, list);
+				_Output.Write ("				delegate (object _a) {{  {1} = _a as {2}; }},\n{0}", _Indent, Token, eType);
+				_Output.Write ("				() => {1},\n{0}", _Indent, Token);
+				_Output.Write ("				\"{1}\", true)}}", _Indent, Type);
+				
+				 break; } default : {
+				if (  (Token != null) ) {
+					_Output.Write ("{1}\n{0}", _Indent, separator);
+					_Output.Write ("			{{ \"{1}\", new MetaData{2}{3}(\n{0}", _Indent, Tag, list, TType);
+					_Output.Write ("				delegate ({1} _a) {{  {2} = _a; }},\n{0}", _Indent, eType, Token);
+					_Output.Write ("				() => {1}) }} ", _Indent, Token);
+					}
+			break; }
+				}
+			}
+		 }
+	
+	
+
+	//
 	//  ParameterList
 	//
 
@@ -536,7 +771,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 					_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
 					_Output.Write ("	public virtual List<{1}>				{2}  {{get; set;}}\n{0}", _Indent, Type, Token);
 					} else {
-					if (  !Nullable ) {
+					//  if !Nullable
+					if (  false.True() ) {
 						_Output.Write ("	bool								__{1} = false;\n{0}", _Indent, Token);
 						_Output.Write ("	private {1}						_{2};\n{0}", _Indent, Type, Token);
 						_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
@@ -560,72 +796,74 @@ public partial class Generate : global::Goedel.Registry.Script {
 	//
 
 		 public void MakeSerializers  (ID<_Choice> Id, string STag, List<_Choice> Entries, string Inherits) {
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("    /// <summary>\n{0}", _Indent);
-		_Output.Write ("    /// Serialize this object to the specified output stream.\n{0}", _Indent);
-		_Output.Write ("    /// </summary>\n{0}", _Indent);
-		_Output.Write ("    /// <param name=\"writer\">Output stream</param>\n{0}", _Indent);
-		_Output.Write ("    /// <param name=\"wrap\">If true, output is wrapped with object\n{0}", _Indent);
-		_Output.Write ("    /// start and end sequences '{{ ... }}'.</param>\n{0}", _Indent);
-		_Output.Write ("    /// <param name=\"first\">If true, item is the first entry in a list.</param>\n{0}", _Indent);
-		_Output.Write ("	public override void Serialize (Writer writer, bool wrap, ref bool first) =>\n{0}", _Indent);
-		_Output.Write ("		SerializeX (writer, wrap, ref first);\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("    /// <summary>\n{0}", _Indent);
-		_Output.Write ("    /// Serialize this object to the specified output stream.\n{0}", _Indent);
-		_Output.Write ("    /// Unlike the Serlialize() method, this method is not inherited from the\n{0}", _Indent);
-		_Output.Write ("    /// parent class allowing a specific version of the method to be called.\n{0}", _Indent);
-		_Output.Write ("    /// </summary>\n{0}", _Indent);
-		_Output.Write ("    /// <param name=\"_writer\">Output stream</param>\n{0}", _Indent);
-		_Output.Write ("    /// <param name=\"_wrap\">If true, output is wrapped with object\n{0}", _Indent);
-		_Output.Write ("    /// start and end sequences '{{ ... }}'.</param>\n{0}", _Indent);
-		_Output.Write ("    /// <param name=\"_first\">If true, item is the first entry in a list.</param>\n{0}", _Indent);
-		_Output.Write ("	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {{\n{0}", _Indent);
-		_Output.Write ("		PreEncode();\n{0}", _Indent);
-		_Output.Write ("		if (_wrap) {{\n{0}", _Indent);
-		_Output.Write ("			_writer.WriteObjectStart ();\n{0}", _Indent);
-		_Output.Write ("			}}\n{0}", _Indent);
-		if (  (Inherits != null) ) {
-			_Output.Write ("		(({1})this).SerializeX(_writer, false, ref _first);\n{0}", _Indent, Inherits);
-			}
-		foreach  (_Choice Entry in Entries) {
-			 GetType (Entry, out var Token, out var Type, out var TType, 
-			      out var Options, out var Nullable, out var Tag);
-			if (  (Token != null) ) {
-				 bool Multiple = IsMultiple (Options);
-				if (  Multiple ) {
-					_Output.Write ("		if ({1} != null) {{\n{0}", _Indent, Token);
-					_Output.Write ("			_writer.WriteObjectSeparator (ref _first);\n{0}", _Indent);
-					_Output.Write ("			_writer.WriteToken (\"{1}\", 1);\n{0}", _Indent, Tag);
-					_Output.Write ("			_writer.WriteArrayStart ();\n{0}", _Indent);
-					_Output.Write ("			bool _firstarray = true;\n{0}", _Indent);
-					_Output.Write ("			foreach (var _index in {1}) {{\n{0}", _Indent, Token);
-					_Output.Write ("				_writer.WriteArraySeparator (ref _firstarray);\n{0}", _Indent);
-					 MakeSerializeArrayEntry (Entry, "_index");
-					_Output.Write ("				}}\n{0}", _Indent);
-					_Output.Write ("			_writer.WriteArrayEnd ();\n{0}", _Indent);
-					_Output.Write ("			}}\n{0}", _Indent);
-					} else {
-					if (  Nullable ) {
+		if (  false.True() ) {
+			_Output.Write ("    /// <summary>\n{0}", _Indent);
+			_Output.Write ("    /// Serialize this object to the specified output stream.\n{0}", _Indent);
+			_Output.Write ("    /// </summary>\n{0}", _Indent);
+			_Output.Write ("    /// <param name=\"writer\">Output stream</param>\n{0}", _Indent);
+			_Output.Write ("    /// <param name=\"wrap\">If true, output is wrapped with object\n{0}", _Indent);
+			_Output.Write ("    /// start and end sequences '{{ ... }}'.</param>\n{0}", _Indent);
+			_Output.Write ("    /// <param name=\"first\">If true, item is the first entry in a list.</param>\n{0}", _Indent);
+			_Output.Write ("	public override void Serialize (Writer writer, bool wrap, ref bool first) =>\n{0}", _Indent);
+			_Output.Write ("		SerializeX (writer, wrap, ref first);\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    /// <summary>\n{0}", _Indent);
+			_Output.Write ("    /// Serialize this object to the specified output stream.\n{0}", _Indent);
+			_Output.Write ("    /// Unlike the Serlialize() method, this method is not inherited from the\n{0}", _Indent);
+			_Output.Write ("    /// parent class allowing a specific version of the method to be called.\n{0}", _Indent);
+			_Output.Write ("    /// </summary>\n{0}", _Indent);
+			_Output.Write ("    /// <param name=\"_writer\">Output stream</param>\n{0}", _Indent);
+			_Output.Write ("    /// <param name=\"_wrap\">If true, output is wrapped with object\n{0}", _Indent);
+			_Output.Write ("    /// start and end sequences '{{ ... }}'.</param>\n{0}", _Indent);
+			_Output.Write ("    /// <param name=\"_first\">If true, item is the first entry in a list.</param>\n{0}", _Indent);
+			_Output.Write ("	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {{\n{0}", _Indent);
+			_Output.Write ("		PreEncode();\n{0}", _Indent);
+			_Output.Write ("		if (_wrap) {{\n{0}", _Indent);
+			_Output.Write ("			_writer.WriteObjectStart ();\n{0}", _Indent);
+			_Output.Write ("			}}\n{0}", _Indent);
+			if (  (Inherits != null) ) {
+				_Output.Write ("		(({1})this).SerializeX(_writer, false, ref _first);\n{0}", _Indent, Inherits);
+				}
+			foreach  (_Choice Entry in Entries) {
+				 GetType (Entry, out var Token, out var Type, out var TType, 
+				      out var Options, out var Nullable, out var Tag);
+				if (  (Token != null) ) {
+					 bool Multiple = IsMultiple (Options);
+					if (  Multiple ) {
 						_Output.Write ("		if ({1} != null) {{\n{0}", _Indent, Token);
+						_Output.Write ("			_writer.WriteObjectSeparator (ref _first);\n{0}", _Indent);
+						_Output.Write ("			_writer.WriteToken (\"{1}\", 1);\n{0}", _Indent, Tag);
+						_Output.Write ("			_writer.WriteArrayStart ();\n{0}", _Indent);
+						_Output.Write ("			bool _firstarray = true;\n{0}", _Indent);
+						_Output.Write ("			foreach (var _index in {1}) {{\n{0}", _Indent, Token);
+						_Output.Write ("				_writer.WriteArraySeparator (ref _firstarray);\n{0}", _Indent);
+						 MakeSerializeArrayEntry (Entry, "_index");
+						_Output.Write ("				}}\n{0}", _Indent);
+						_Output.Write ("			_writer.WriteArrayEnd ();\n{0}", _Indent);
+						_Output.Write ("			}}\n{0}", _Indent);
 						} else {
-						_Output.Write ("		if (__{1}){{\n{0}", _Indent, Token);
+						if (  Nullable ) {
+							_Output.Write ("		if ({1} != null) {{\n{0}", _Indent, Token);
+							} else {
+							_Output.Write ("		if ({1} != null) {{\n{0}", _Indent, Token);
+							//		if (__#{Token}){
+							}
+						_Output.Write ("			_writer.WriteObjectSeparator (ref _first);\n{0}", _Indent);
+						_Output.Write ("			_writer.WriteToken (\"{1}\", 1);\n{0}", _Indent, Tag);
+						 MakeSerializeEntry (Entry, Token.ToString());
+						_Output.Write ("			}}\n{0}", _Indent);
 						}
-					_Output.Write ("			_writer.WriteObjectSeparator (ref _first);\n{0}", _Indent);
-					_Output.Write ("			_writer.WriteToken (\"{1}\", 1);\n{0}", _Indent, Tag);
-					 MakeSerializeEntry (Entry, Token.ToString());
-					_Output.Write ("			}}\n{0}", _Indent);
-					}
-				if (  Multiple ) {
-					_Output.Write ("\n{0}", _Indent);
+					if (  Multiple ) {
+						_Output.Write ("\n{0}", _Indent);
+						}
 					}
 				}
+			_Output.Write ("		if (_wrap) {{\n{0}", _Indent);
+			_Output.Write ("			_writer.WriteObjectEnd ();\n{0}", _Indent);
+			_Output.Write ("			}}\n{0}", _Indent);
+			_Output.Write ("		}}\n{0}", _Indent);
 			}
-		_Output.Write ("		if (_wrap) {{\n{0}", _Indent);
-		_Output.Write ("			_writer.WriteObjectEnd ();\n{0}", _Indent);
-		_Output.Write ("			}}\n{0}", _Indent);
-		_Output.Write ("		}}\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    /// <summary>\n{0}", _Indent);
 		_Output.Write ("    /// Deserialize a tagged stream\n{0}", _Indent);
@@ -723,7 +961,11 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("				_writer.WriteBoolean ({1});\n{0}", _Indent, Tag);
 			break; }
 			case ProtoStructType.Integer: { 
-			_Output.Write ("				_writer.WriteInteger32 ({1});\n{0}", _Indent, Tag);
+			if (  Entry.LengthBits >32 ) {
+				_Output.Write ("				_writer.WriteInteger64 ({1});\n{0}", _Indent, Tag);
+				} else {
+				_Output.Write ("				_writer.WriteInteger32 ({1});\n{0}", _Indent, Tag);
+				}
 			break; }
 			case ProtoStructType.Binary: { 
 			_Output.Write ("				_writer.WriteBinary ({1});\n{0}", _Indent, Tag);
@@ -830,12 +1072,16 @@ public partial class Generate : global::Goedel.Registry.Script {
 			case ProtoStructType.Boolean: {
 			  Boolean Param = (Boolean) Entry; 
 			
-			 Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "bool";  Nullable = false;TType = "Boolean";
+			 Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "bool?";  Nullable = false;TType = "Boolean";
 			break; }
 			case ProtoStructType.Integer: {
 			  Integer Param = (Integer) Entry; 
 			
-			 Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "int"; Nullable = false;TType = "Integer32";
+			 Tag = Param.ID ; Token = Param.Id; Options = Param.Options;  Nullable = false;
+			
+			 Type = Param.LengthBits>32 ? "long?": "int?";
+			
+			 TType = Param.LengthBits>32 ? "Integer64": "Integer32";
 			break; }
 			case ProtoStructType.Binary: {
 			  Binary Param = (Binary) Entry; 

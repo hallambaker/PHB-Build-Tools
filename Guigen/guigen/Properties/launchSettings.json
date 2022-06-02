@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "MauiMesh": {
+      "commandName": "Project",
+      "commandLineArgs": "MeshGui.gui /cs=MeshGui.cs",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\Maui\\MeshTool"
+    }
+  }
+}

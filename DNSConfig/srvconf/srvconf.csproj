@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)CommonSettingsApplication.xml" />
+	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
   <PropertyGroup>
 	  <AssemblyName>srvconf</AssemblyName>
 	  <Product>Internet service configuration</Product>
@@ -28,12 +28,5 @@
     </None>
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="VSPreBuild" />
-  </Target>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="cd $(ProjectDir) &amp;&amp; VSPostBuildWindows $(TargetDir)" />
-  </Target>
 
 </Project>

@@ -1,0 +1,87 @@
+﻿Copyright  "1988-2022" "Phill Hallam-Baker" MITLicense
+
+Class Goedel.Tool.Guigen Guigen
+
+	TopType Copyright
+		Date		String
+		Holder		String
+		License		Choice
+			MITLicense
+			BSD2License
+			BSD3License
+			ISCLicense
+			Apache2License
+			OtherLicense
+
+	Type MITLicense
+	Type BSD2License
+	Type BSD3License
+	Type ISCLicense
+	Type Apache2License
+	Type OtherLicense
+		Text		Text
+
+	TopType Application
+		Namespace		Token GroupT
+		Id				ID GroupT
+		Entries			List Declaration
+
+	TopType Declaration
+		Id				ID GroupT
+		Entry Choice
+			Structure		
+			Environment
+			Icon
+			Menu
+
+	Type Structure
+		Entries			List Choice 
+			Icon
+
+	Type Environment
+		Entries			List Choice 
+			Catalog
+			Spool
+			Icon
+			Menu
+
+	Type Catalog
+		Id				Token CatalogItem
+		Prompt			String
+		Entries			List Choice 
+			Default
+			Selector
+			Action
+
+	Type Spool
+		Id				Token CatalogItem
+		Prompt			String
+		Entries			List Choice 
+			Default
+			Selector
+			Action
+
+	Type Menu
+		Entries			List MenuEntry
+
+	Type Default
+		Entries			List MenuEntry 
+
+	Type Selector
+		Entries			List MenuEntry 
+
+	Type Action
+		Entries			List MenuEntry 
+
+	Type MenuEntry
+		Id				Token MenuItem
+		Prompt			String
+		Entries			List Choice 
+			Icon
+			Text
+
+	Type Text
+		Prompt			String
+
+	Type Icon
+		File			String 

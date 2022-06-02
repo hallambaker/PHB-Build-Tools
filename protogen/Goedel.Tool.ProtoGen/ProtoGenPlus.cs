@@ -30,6 +30,7 @@ namespace Goedel.Tool.ProtoGen {
         public string ExternParent = "JSONObject";
 
         public int CountChildren = 0;
+        public int LengthBits = 32;
 
         public virtual void Normalize() {
             }
@@ -141,6 +142,9 @@ namespace Goedel.Tool.ProtoGen {
                     }
                 if (Entry.GetType() == typeof(Required)) {
                     Required = true;
+                    }
+                if (Entry.GetType() == typeof(LengthBits)) {
+                    LengthBits = ((LengthBits)Entry).Bits;
                     }
                 if (Entry.GetType() == typeof(Default)) {
                     Default = ((Default)Entry).Default;

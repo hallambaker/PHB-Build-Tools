@@ -34,9 +34,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	// GenerateCS
 	//
 	public void GenerateCS (VersionInfo Version) {
-		_Output.Write ("using System;\n{0}", _Indent);
-		_Output.Write ("using System.Reflection;\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("// These values are automatically generated from version.version\n{0}", _Indent);
 		_Output.Write ("[assembly: System.Reflection.AssemblyVersionAttribute(\"{1}\")]\n{0}", _Indent, Version.Assembly);
 		_Output.Write ("[assembly: System.Reflection.AssemblyFileVersionAttribute(\"{1}\")]\n{0}", _Indent, Version.File);
 		_Output.Write ("\n{0}", _Indent);

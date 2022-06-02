@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
+  <PropertyGroup>
+	  <AssemblyName>guigen</AssemblyName>
+	  <Product>Guigen</Product>
+	  <Description>Generates GUI from description file.</Description>
+	  <Copyright>© 2022</Copyright>
+	  <Title>Guigen</Title>
+
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+    <ProjectReference Include="..\Goedel.Tool.Guigen\Goedel.Tool.Guigen.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Compile Update="Guigen.cs">
+		<DependentUpon>Guigen.command</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Update="Guigen.command">
+      <LastGenOutput>Guigen.cs</LastGenOutput>
+      <Generator>CommandCS</Generator>
+    </None>
+  </ItemGroup>
+
+</Project>

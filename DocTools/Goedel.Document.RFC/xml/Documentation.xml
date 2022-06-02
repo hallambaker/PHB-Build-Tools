@@ -367,6 +367,16 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Document.RFC.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Document.RFC.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
         <member name="M:Goedel.Document.RFC.Writers.WriteHTML(System.String,Goedel.Document.RFC.Document)">
             <summary>
             Write RFC Document out in HTML to file.

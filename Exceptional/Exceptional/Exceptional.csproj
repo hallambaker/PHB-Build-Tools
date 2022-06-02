@@ -1,15 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)CommonSettingsApplication.xml" />
+	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
 	<PropertyGroup>
-		<!--<OutputType>Exe</OutputType>
-		<TargetFramework>net6.0</TargetFramework>-->
+
 		<AssemblyName>exceptional</AssemblyName>
 		<Product>Exceptional</Product>
 		<Description>Generates Exception classes and documentation support.</Description>
 		<Copyright>© 2015-2022</Copyright>
 		<Title>Exceptional</Title>
-		<!--<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>-->
+
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -33,12 +31,6 @@
 		</None>
 	</ItemGroup>
 
-	<!--<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-		<Exec Command="VSPreBuild" />
-	</Target>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="cd $(ProjectDir) &amp;&amp; VSPostBuildWindows $(TargetDir)" />
-	</Target>-->
 
 </Project>

@@ -2,7 +2,7 @@
 #license MITLicense
 #using Goedel.Utilities
 #pclass Goedel.Tool.Exceptional Generate
-
+#% static bool DirectGeneration = true;
 
 #method GenerateCS Exceptions Exceptions
 #! Goedel.Registry.Script.Header (_Output, "//", GenerateTime);
@@ -43,6 +43,7 @@ namespace #{Namespace.Id} ;
 /// </summary>
 public  static partial class EventExtensions {
 
+#if (DirectGeneration)
     /// <summary>
     /// Static initializer, is called once when the module loads.
     /// </summary>
@@ -59,6 +60,35 @@ public  static partial class EventExtensions {
 #% WriteEvent (logEvent);
 #end if
 #end foreach
+#else
+
+#foreach (_Choice Entry in Namespace.Options)
+#if (Entry is IEvent logEvent)
+
+	/// <summary>
+    /// Write an event of type #{logEvent.Name} to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+#foreach (var param in logEvent.TypedParameters)
+	/// <param name="#{param.Name}">#{param.Text}</param>
+#end foreach
+	/// <param name="_exception">Exception (if thrown)</param>
+    [LoggerMessage(
+        EventId = #{logEvent.EventId},
+		Level = LogLevel.#{logEvent.LogLevel},
+        Message = "#{logEvent.Pattern}")]
+    public static partial void #{logEvent.Name}(
+        ILogger logger#!
+#foreach (var param in logEvent.TypedParameters)
+,
+			#{param.Type} #{param.Name}#!
+#end foreach		
+,
+			Exception _exception=null);
+#end if
+#end foreach
+
+#end if
 	}
 
 
@@ -97,18 +127,20 @@ public  static partial class EventExtensions {
 #foreach (var param in logEvent.TypedParameters)
 	/// <param name="#{param.Name}">#{param.Text}</param>
 #end foreach
+	/// <param name="_exception">Exception (if thrown)</param>
     public static void #{logEvent.Name}(
 			this ILogger logger#!
 #foreach (var param in logEvent.TypedParameters)
 ,
 			#{param.Type} #{param.Name}#!
 #end foreach
-) {
+,
+			Exception _exception=null) {
         _#{logEvent.Name}(logger#!
 #foreach (var param in logEvent.TypedParameters)
 , #{param.Name}#!
 #end foreach
-, null);
+, _exception);
         }
 
 #end method

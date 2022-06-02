@@ -12,43 +12,51 @@ namespace Goedel.Tool.Version {
             
             try {
                 versionInfo = GetVersionInfo(Options.InputFile.Value);
+                Console.WriteLine($"Assembly {versionInfo.Assembly} File {versionInfo.File}");
+
+                using var output = Options.OutputFile.Value.OpenTextWriterNew();
+
+                var generate = new Generate() {
+                    _Output = output
+                    };
+                generate.GenerateCS(versionInfo);
                 }
             catch {
-                versionInfo = new VersionInfo() {
-                    Assembly = "0.0.0.0",
-                    File = "0.0.0.0"
-                    };
+                Console.WriteLine("***** File read conflict");
+                //versionInfo = new VersionInfo() {
+                //    Assembly = "0.0.0.0",
+                //    File = "0.0.0.0"
+                //    };
                 }
 
-
-            using var output = Options.OutputFile.Value.OpenTextWriterNew();
-            
-            var generate = new Generate() {
-                _Output = output
-                };
-            generate.GenerateCS(versionInfo);
 
             }
 
         VersionInfo GetVersionInfo(string file) {
             var versionInfo = new VersionInfo();
 
-            using (var input = file.OpenFileReadWrite()) {
-                using var stream = new StreamReader(input);
+            using var input = file.OpenFileReadWrite() ;
+            using var streamReader = new StreamReader(input);
+          
 
-                versionInfo.Assembly = stream.ReadLine();
-                versionInfo.File = stream.ReadLine();
+            versionInfo.Assembly = streamReader.ReadLine();
+            versionInfo.File = streamReader.ReadLine();
 
 
-                versionInfo.Assembly = Increment(versionInfo.Assembly);
-                versionInfo.File = Increment(versionInfo.File);
+            versionInfo.Assembly = Increment(versionInfo.Assembly);
+            versionInfo.File = Increment(versionInfo.File);
 
-                var newInput = (versionInfo.Assembly + "\n" + versionInfo.File + "\n").ToUTF8();
+            var newInput = (versionInfo.Assembly + "\n" + versionInfo.File + "\n").ToUTF8();
 
-                input.Seek(0, SeekOrigin.Begin);
-                input.Write(newInput, 0, newInput.Length);
-                input.SetLength(newInput.Length);
-                }
+            input.Seek(0, SeekOrigin.Begin);
+            //using var textWriter = new StreamWriter(input);
+
+            //textWriter.WriteLine(versionInfo.Assembly);
+            //textWriter.WriteLine(versionInfo.File);
+
+            input.Write(newInput, 0, newInput.Length);
+            input.SetLength(newInput.Length);
+
 
             return versionInfo;
             }
@@ -56,6 +64,11 @@ namespace Goedel.Tool.Version {
 
 
         string Increment(string version) {
+            if (version == null) {
+                return "0.0.0.0";
+                }
+
+
             var split = version.LastIndexOf('.');
             var left = version.Substring(0, split);
             var right = version.Substring(split+1);

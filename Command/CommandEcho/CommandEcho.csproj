@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)CommonSettingsApplication.xml" />
+	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
   <PropertyGroup>
     <Product>command Echo</Product>
     <Description>Echos the command entered on the command line.</Description>
@@ -25,12 +25,5 @@
     </None>
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="VSPreBuild" />
-  </Target>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="VSPostBuild" />
-  </Target>
 
 </Project>
