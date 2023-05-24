@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 24-May-23 1:07:12 AM
+//  This file was automatically generated at 24-May-23 4:36:25 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -137,6 +137,7 @@ public class _MakeGui : Goedel.Command.Dispatch {
 	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
 		new Flag (),
 		new ExistingFile (),
+		new NewFile (),
 		new NewFile ()		} ;
 
 
@@ -170,6 +171,15 @@ public class _MakeGui : Goedel.Command.Dispatch {
 	public virtual string _GenerateCS {
 		set => _Data[2].Parameter (value);
 		}
+	/// <summary>Field accessor for option [resx]</summary>
+	public virtual NewFile GenerateResx {
+		get => _Data[3] as NewFile;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _GenerateResx {
+		set => _Data[3].Parameter (value);
+		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
@@ -192,6 +202,13 @@ public class _MakeGui : Goedel.Command.Dispatch {
 				Brief = "Generate cs class",
 				Index = 2,
 				Key = "cs"
+				},
+			new DescribeEntryOption () {
+				Identifier = "GenerateResx", 
+				Default = "resx", // null if null
+				Brief = "Generate resource file",
+				Index = 3,
+				Key = "resx"
 				}
 			}
 		};
@@ -271,6 +288,21 @@ public class _GuigenShell : global::Goedel.Command.DispatchShell {
 				_Output= OutputWriter 
 				};
 			Script.GenerateCS (Parse);
+			}
+		// Script output of type GenerateResx resx
+		if (Options.GenerateResx.Text != null) {
+			string outputfile = Options.GenerateResx.Text; // Automatically defaults
+			if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
+				return;
+				}
+            using Stream outputStream =
+                        new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+            using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
+
+			Goedel.Tool.Guigen.Generate Script = new () { 
+				_Output= OutputWriter 
+				};
+			Script.GenerateResx (Parse);
 			}
 		}
 

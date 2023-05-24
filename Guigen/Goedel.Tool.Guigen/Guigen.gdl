@@ -63,7 +63,7 @@ Class Goedel.Tool.Guigen Guigen
 		Id			REF SectionT
 
 	Type Chooser
-		Id			REF SectionT
+		Id			ID SectionT
 		Prompt		String		
 		Icon		String				
 		Type		Token TypeT 

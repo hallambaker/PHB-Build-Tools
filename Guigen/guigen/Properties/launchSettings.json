@@ -2,7 +2,7 @@
   "profiles": {
     "MauiMesh": {
       "commandName": "Project",
-      "commandLineArgs": "Sketch.guigen /cs=Sketch.cs",
+      "commandLineArgs": "Sketch.guigen /cs=Sketch.cs /resx=Resources\\Sketch.resx",
       "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Applications\\Everything"
     }
   }

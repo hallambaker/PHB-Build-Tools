@@ -461,7 +461,7 @@ namespace Goedel.Tool.Guigen {
 		}
 
     public partial class Chooser : _Choice {
-        public REF<_Choice>				Id;
+        public ID<_Choice>				Id; 
 		public string					Prompt;
 		public string					Icon;
         public TOKEN<_Choice>			Type;
@@ -483,7 +483,7 @@ namespace Goedel.Tool.Guigen {
 				Output.StartElement ("Chooser");
 				}
 
-	        Output.WriteId ("Id", Id.ToString());
+	        Output.WriteId ("Id", Id.ToString()); 
 			Output.WriteAttribute ("Prompt", Prompt);
 			Output.WriteAttribute ("Icon", Icon);
 	        Output.WriteId ("Type", Type.ToString());
@@ -1439,7 +1439,7 @@ namespace Goedel.Tool.Guigen {
                     case StateCode.Chooser_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Guigen.Chooser Current_Cast = (Goedel.Tool.Guigen.Chooser)Current;
-                            Current_Cast.Id = Registry.REF(Position, Text, TYPE__SectionT, Current_Cast);
+                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__SectionT, Current_Cast);
                             State = StateCode.Chooser__Id;
                             break;
                             }

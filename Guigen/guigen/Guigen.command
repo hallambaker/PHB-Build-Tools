@@ -19,3 +19,6 @@
 			Brief "Generate cs class"
 			Default "cs"
 
+		Script  Goedel.Tool.Guigen Generate GenerateResx			"resx"
+			Brief "Generate resource file"
+			Default "resx"

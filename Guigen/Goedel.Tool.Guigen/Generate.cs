@@ -21,6 +21,7 @@
 //  THE SOFTWARE.
 //  
 //  
+using  Goedel.Utilities;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -87,12 +88,12 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	///<inheritdoc/>\n{0}", _Indent);
-		_Output.Write ("	public override List<GuiIcon> Icons => icons;\n{0}", _Indent);
-		_Output.Write ("	readonly List<GuiIcon> icons = new () {{ ", _Indent);
+		_Output.Write ("	public override List<GuiImage> Icons => icons;\n{0}", _Indent);
+		_Output.Write ("	readonly List<GuiImage> icons = new () {{ ", _Indent);
 		 var separator = new Separator (",");
 		foreach  (var icon in Guigen.Icons)  {
 			_Output.Write ("{1} \n{0}", _Indent, separator);
-			_Output.Write ("		new GuiIcon (\"{1}\") ", _Indent, icon.Key);
+			_Output.Write ("		new GuiImage ({1}) ", _Indent, icon.Key.Quoted());
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("		}};\n{0}", _Indent);
@@ -133,7 +134,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("	// Sections\n{0}", _Indent);
 		foreach  (var section in Guigen.Sections)  {
 			_Output.Write ("	static readonly GuiSection {1} = new (\n{0}", _Indent, section.RecordId);
-			_Output.Write ("			\"{1}\", \"{2}\", \"{3}\", {4}, new List<ISectionEntry>() {{ ", _Indent, section.Id, section.Prompt, section.Icon, section.Primary.If("true","false"));
+			_Output.Write ("			{1}, {2}, {3}, {4}, new List<ISectionEntry>() {{ ", _Indent, section.QuotedId, section.Prompt.Quoted(), section.Icon.Quoted(), section.Primary.If("true","false"));
 			 separator.Reset ();
 			foreach  (var entry in section.Entries) {
 				if (  (entry.Active) ) {
@@ -150,7 +151,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("	// Actions\n{0}", _Indent);
 		foreach  (var action in Guigen.Actions)  {
 			_Output.Write ("	static readonly GuiAction {1} = new (\n{0}", _Indent, action.RecordId);
-			_Output.Write ("			\"{1}\", \"{2}\", \"{3}\", new List<IActionEntry>() {{", _Indent, action.Id, action.Prompt, action.Icon);
+			_Output.Write ("			{1}, {2}, {3}, new List<IActionEntry>() {{", _Indent, action.QuotedId, action.Prompt.Quoted(), action.Icon.Quoted());
 			 separator.Reset ();
 			foreach  (var entry in action.Entries) {
 				_Output.Write ("{1} \n{0}", _Indent, separator);
@@ -165,7 +166,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("	// Dialogs\n{0}", _Indent);
 		foreach  (var dialog in Guigen.Dialogs)  {
 			_Output.Write ("	static readonly GuiDialog {1} = new (\n{0}", _Indent, dialog.RecordId);
-			_Output.Write ("			\"{1}\", new List<IDialogEntry>() {{", _Indent, dialog.Id);
+			_Output.Write ("			{1}, new List<IDialogEntry>() {{", _Indent, dialog.QuotedId);
 			 separator.Reset ();
 			foreach  (var entry in dialog.Entries) {
 				_Output.Write ("{1} \n{0}", _Indent, separator);
@@ -236,15 +237,17 @@ public partial class Generate : global::Goedel.Registry.Script {
 	// GenerateChooser
 	//
 	public void GenerateChooser (Chooser chooser) {
-		_Output.Write ("			// Chooser ", _Indent);
-		}
-	
-
-	//
-	// GenerateButton
-	//
-	public void GenerateButton (Button button) {
-		_Output.Write ("			// Button ", _Indent);
+		 var separator = new Separator (",");
+		_Output.Write ("			new GuiChooser ({1}, {2}, {3}, new List<IChooserEntry>() {{", _Indent, chooser.QuotedId, chooser.Prompt.Quoted(), chooser.Icon.Quoted());
+		_Indent = _Indent + "\t";
+		 separator.Reset ();
+		foreach  (var entry in chooser.Entries) {
+			_Output.Write ("{1} \n{0}", _Indent, separator);
+			GenerateEntry (entry);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("				}}) ", _Indent);
+		_Indent = _Indent.Remove (0,1);
 		}
 	
 
@@ -252,47 +255,202 @@ public partial class Generate : global::Goedel.Registry.Script {
 	// GenerateDialog
 	//
 	public void GenerateDialog (Dialog dialog) {
-		_Output.Write ("			// Dialog ", _Indent);
+		 var separator = new Separator (",");
+		_Output.Write ("			new GuiDialog ({1}, new List<IDialogEntry>() {{", _Indent, dialog.QuotedId);
+		_Indent = _Indent + "\t";
+		 separator.Reset ();
+		foreach  (var entry in dialog.Entries) {
+			_Output.Write ("{1} \n{0}", _Indent, separator);
+			GenerateEntry (entry);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("				}}) ", _Indent);
+		_Indent = _Indent.Remove (0,1);
+		}
+	
+
+	//
+	// GenerateButton
+	//
+	public void GenerateButton (Button field) {
+		_Output.Write ("			new GuiButton ({1})", _Indent, field.QuotedId);
 		}
 	
 
 	//
 	// GenerateText
 	//
-	public void GenerateText (Text text) {
-		_Output.Write ("			// Text ", _Indent);
+	public void GenerateText (Text field) {
+		_Output.Write ("			new GuiText ({1}, {2})", _Indent, field.QuotedId, field.Prompt.Quoted());
 		}
 	
 
 	//
 	// GenerateColor
 	//
-	public void GenerateColor (Color color) {
-		_Output.Write ("			// Color ", _Indent);
+	public void GenerateColor (Color field) {
+		_Output.Write ("			new GuiColor ({1}, {2})", _Indent, field.QuotedId, field.Prompt.Quoted());
 		}
 	
 
 	//
 	// GenerateSize
 	//
-	public void GenerateSize (Size size) {
-		_Output.Write ("			// Text ", _Indent);
+	public void GenerateSize (Size field) {
+		_Output.Write ("			new GuiSize ({1}, {2})", _Indent, field.QuotedId, field.Prompt.Quoted());
 		}
 	
 
 	//
 	// GenerateDecimal
 	//
-	public void GenerateDecimal (Decimal decimalv) {
-		_Output.Write ("			// Decimal ", _Indent);
+	public void GenerateDecimal (Decimal field) {
+		_Output.Write ("			new GuiDecimal ({1}, {2})", _Indent, field.QuotedId, field.Prompt.Quoted());
 		}
 	
 
 	//
 	// GenerateIcon
 	//
-	public void GenerateIcon (Icon icon) {
-		_Output.Write ("			// Icon ", _Indent);
+	public void GenerateIcon (Icon field) {
+		_Output.Write ("			new GuiIcon ({1}, {2})", _Indent, field.QuotedId, field.Prompt.Quoted());
+		}
+	
+
+	//
+	// GenerateResx
+	//
+	public void GenerateResx (Guigen Guigen) {
+		_Output.Write ("?xml version=\"1.0\" encoding=\"utf-8\"?>\n{0}", _Indent);
+		_Output.Write ("<root>\n{0}", _Indent);
+		_Output.Write ("  <!-- \n{0}", _Indent);
+		_Output.Write ("    Microsoft ResX Schema \n{0}", _Indent);
+		_Output.Write ("    \n{0}", _Indent);
+		_Output.Write ("    Version 2.0\n{0}", _Indent);
+		_Output.Write ("    \n{0}", _Indent);
+		_Output.Write ("    The primary goals of this format is to allow a simple XML format \n{0}", _Indent);
+		_Output.Write ("    that is mostly human readable. The generation and parsing of the \n{0}", _Indent);
+		_Output.Write ("    various data types are done through the TypeConverter classes \n{0}", _Indent);
+		_Output.Write ("    associated with the data types.\n{0}", _Indent);
+		_Output.Write ("    \n{0}", _Indent);
+		_Output.Write ("    Example:\n{0}", _Indent);
+		_Output.Write ("    \n{0}", _Indent);
+		_Output.Write ("    ... ado.net/XML headers & schema ...\n{0}", _Indent);
+		_Output.Write ("    <resheader name=\"resmimetype\">text/microsoft-resx</resheader>\n{0}", _Indent);
+		_Output.Write ("    <resheader name=\"version\">2.0</resheader>\n{0}", _Indent);
+		_Output.Write ("    <resheader name=\"reader\">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>\n{0}", _Indent);
+		_Output.Write ("    <resheader name=\"writer\">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>\n{0}", _Indent);
+		_Output.Write ("    <data name=\"Name1\"><value>this is my long string</value><comment>this is a comment</comment></data>\n{0}", _Indent);
+		_Output.Write ("    <data name=\"Color1\" type=\"System.Drawing.Color, System.Drawing\">Blue</data>\n{0}", _Indent);
+		_Output.Write ("    <data name=\"Bitmap1\" mimetype=\"application/x-microsoft.net.object.binary.base64\">\n{0}", _Indent);
+		_Output.Write ("        <value>[base64 mime encoded serialized .NET Framework object]</value>\n{0}", _Indent);
+		_Output.Write ("    </data>\n{0}", _Indent);
+		_Output.Write ("    <data name=\"Icon1\" type=\"System.Drawing.Icon, System.Drawing\" mimetype=\"application/x-microsoft.net.object.bytearray.base64\">\n{0}", _Indent);
+		_Output.Write ("        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>\n{0}", _Indent);
+		_Output.Write ("        <comment>This is a comment</comment>\n{0}", _Indent);
+		_Output.Write ("    </data>\n{0}", _Indent);
+		_Output.Write ("                \n{0}", _Indent);
+		_Output.Write ("    There are any number of \"resheader\" rows that contain simple \n{0}", _Indent);
+		_Output.Write ("    name/value pairs.\n{0}", _Indent);
+		_Output.Write ("    \n{0}", _Indent);
+		_Output.Write ("    Each data row contains a name, and value. The row also contains a \n{0}", _Indent);
+		_Output.Write ("    type or mimetype. Type corresponds to a .NET class that support \n{0}", _Indent);
+		_Output.Write ("    text/value conversion through the TypeConverter architecture. \n{0}", _Indent);
+		_Output.Write ("    Classes that don't support this are serialized and stored with the \n{0}", _Indent);
+		_Output.Write ("    mimetype set.\n{0}", _Indent);
+		_Output.Write ("    \n{0}", _Indent);
+		_Output.Write ("    The mimetype is used for serialized objects, and tells the \n{0}", _Indent);
+		_Output.Write ("    ResXResourceReader how to depersist the object. This is currently not \n{0}", _Indent);
+		_Output.Write ("    extensible. For a given mimetype the value must be set accordingly:\n{0}", _Indent);
+		_Output.Write ("    \n{0}", _Indent);
+		_Output.Write ("    Note - application/x-microsoft.net.object.binary.base64 is the format \n{0}", _Indent);
+		_Output.Write ("    that the ResXResourceWriter will generate, however the reader can \n{0}", _Indent);
+		_Output.Write ("    read any of the formats listed below.\n{0}", _Indent);
+		_Output.Write ("    \n{0}", _Indent);
+		_Output.Write ("    mimetype: application/x-microsoft.net.object.binary.base64\n{0}", _Indent);
+		_Output.Write ("    value   : The object must be serialized with \n{0}", _Indent);
+		_Output.Write ("            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter\n{0}", _Indent);
+		_Output.Write ("            : and then encoded with base64 encoding.\n{0}", _Indent);
+		_Output.Write ("    \n{0}", _Indent);
+		_Output.Write ("    mimetype: application/x-microsoft.net.object.soap.base64\n{0}", _Indent);
+		_Output.Write ("    value   : The object must be serialized with \n{0}", _Indent);
+		_Output.Write ("            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter\n{0}", _Indent);
+		_Output.Write ("            : and then encoded with base64 encoding.\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    mimetype: application/x-microsoft.net.object.bytearray.base64\n{0}", _Indent);
+		_Output.Write ("    value   : The object must be serialized into a byte array \n{0}", _Indent);
+		_Output.Write ("            : using a System.ComponentModel.TypeConverter\n{0}", _Indent);
+		_Output.Write ("            : and then encoded with base64 encoding.\n{0}", _Indent);
+		_Output.Write ("    -->\n{0}", _Indent);
+		_Output.Write ("  <xsd:schema id=\"root\" xmlns=\"\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:msdata=\"urn:schemas-microsoft-com:xml-msdata\">\n{0}", _Indent);
+		_Output.Write ("    <xsd:import namespace=\"http://www.w3.org/XML/1998/namespace\" />\n{0}", _Indent);
+		_Output.Write ("    <xsd:element name=\"root\" msdata:IsDataSet=\"true\">\n{0}", _Indent);
+		_Output.Write ("      <xsd:complexType>\n{0}", _Indent);
+		_Output.Write ("        <xsd:choice maxOccurs=\"unbounded\">\n{0}", _Indent);
+		_Output.Write ("          <xsd:element name=\"metadata\">\n{0}", _Indent);
+		_Output.Write ("            <xsd:complexType>\n{0}", _Indent);
+		_Output.Write ("              <xsd:sequence>\n{0}", _Indent);
+		_Output.Write ("                <xsd:element name=\"value\" type=\"xsd:string\" minOccurs=\"0\" />\n{0}", _Indent);
+		_Output.Write ("              </xsd:sequence>\n{0}", _Indent);
+		_Output.Write ("              <xsd:attribute name=\"name\" use=\"required\" type=\"xsd:string\" />\n{0}", _Indent);
+		_Output.Write ("              <xsd:attribute name=\"type\" type=\"xsd:string\" />\n{0}", _Indent);
+		_Output.Write ("              <xsd:attribute name=\"mimetype\" type=\"xsd:string\" />\n{0}", _Indent);
+		_Output.Write ("              <xsd:attribute ref=\"xml:space\" />\n{0}", _Indent);
+		_Output.Write ("            </xsd:complexType>\n{0}", _Indent);
+		_Output.Write ("          </xsd:element>\n{0}", _Indent);
+		_Output.Write ("          <xsd:element name=\"assembly\">\n{0}", _Indent);
+		_Output.Write ("            <xsd:complexType>\n{0}", _Indent);
+		_Output.Write ("              <xsd:attribute name=\"alias\" type=\"xsd:string\" />\n{0}", _Indent);
+		_Output.Write ("              <xsd:attribute name=\"name\" type=\"xsd:string\" />\n{0}", _Indent);
+		_Output.Write ("            </xsd:complexType>\n{0}", _Indent);
+		_Output.Write ("          </xsd:element>\n{0}", _Indent);
+		_Output.Write ("          <xsd:element name=\"data\">\n{0}", _Indent);
+		_Output.Write ("            <xsd:complexType>\n{0}", _Indent);
+		_Output.Write ("              <xsd:sequence>\n{0}", _Indent);
+		_Output.Write ("                <xsd:element name=\"value\" type=\"xsd:string\" minOccurs=\"0\" msdata:Ordinal=\"1\" />\n{0}", _Indent);
+		_Output.Write ("                <xsd:element name=\"comment\" type=\"xsd:string\" minOccurs=\"0\" msdata:Ordinal=\"2\" />\n{0}", _Indent);
+		_Output.Write ("              </xsd:sequence>\n{0}", _Indent);
+		_Output.Write ("              <xsd:attribute name=\"name\" type=\"xsd:string\" use=\"required\" msdata:Ordinal=\"1\" />\n{0}", _Indent);
+		_Output.Write ("              <xsd:attribute name=\"type\" type=\"xsd:string\" msdata:Ordinal=\"3\" />\n{0}", _Indent);
+		_Output.Write ("              <xsd:attribute name=\"mimetype\" type=\"xsd:string\" msdata:Ordinal=\"4\" />\n{0}", _Indent);
+		_Output.Write ("              <xsd:attribute ref=\"xml:space\" />\n{0}", _Indent);
+		_Output.Write ("            </xsd:complexType>\n{0}", _Indent);
+		_Output.Write ("          </xsd:element>\n{0}", _Indent);
+		_Output.Write ("          <xsd:element name=\"resheader\">\n{0}", _Indent);
+		_Output.Write ("            <xsd:complexType>\n{0}", _Indent);
+		_Output.Write ("              <xsd:sequence>\n{0}", _Indent);
+		_Output.Write ("                <xsd:element name=\"value\" type=\"xsd:string\" minOccurs=\"0\" msdata:Ordinal=\"1\" />\n{0}", _Indent);
+		_Output.Write ("              </xsd:sequence>\n{0}", _Indent);
+		_Output.Write ("              <xsd:attribute name=\"name\" type=\"xsd:string\" use=\"required\" />\n{0}", _Indent);
+		_Output.Write ("            </xsd:complexType>\n{0}", _Indent);
+		_Output.Write ("          </xsd:element>\n{0}", _Indent);
+		_Output.Write ("        </xsd:choice>\n{0}", _Indent);
+		_Output.Write ("      </xsd:complexType>\n{0}", _Indent);
+		_Output.Write ("    </xsd:element>\n{0}", _Indent);
+		_Output.Write ("  </xsd:schema>\n{0}", _Indent);
+		_Output.Write ("  <resheader name=\"resmimetype\">\n{0}", _Indent);
+		_Output.Write ("    <value>text/microsoft-resx</value>\n{0}", _Indent);
+		_Output.Write ("  </resheader>\n{0}", _Indent);
+		_Output.Write ("  <resheader name=\"version\">\n{0}", _Indent);
+		_Output.Write ("    <value>2.0</value>\n{0}", _Indent);
+		_Output.Write ("  </resheader>\n{0}", _Indent);
+		_Output.Write ("  <resheader name=\"reader\">\n{0}", _Indent);
+		_Output.Write ("    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>\n{0}", _Indent);
+		_Output.Write ("  </resheader>\n{0}", _Indent);
+		_Output.Write ("  <resheader name=\"writer\">\n{0}", _Indent);
+		_Output.Write ("    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>\n{0}", _Indent);
+		_Output.Write ("  </resheader>\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		foreach  (var prompt in Guigen.Prompts) {
+			_Output.Write ("  <data name=\"{1}\" xml:space=\"preserve\">\n{0}", _Indent, prompt.Value.Key);
+			_Output.Write ("    <value>{1}</value>\n{0}", _Indent, prompt.Value.Text.XMLEscape());
+			_Output.Write ("    <comment>Generated by Guigen</comment>\n{0}", _Indent);
+			_Output.Write ("  </data>\n{0}", _Indent);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("</root>\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
 		}
 
 	}
