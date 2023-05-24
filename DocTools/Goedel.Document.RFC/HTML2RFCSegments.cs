@@ -80,12 +80,22 @@ namespace Goedel.Document.RFC {
                     break;
                     }
                 case "info":
-                case "norm":
-                case "xref": {
-                    var Value = Text.Attributes?[0].Value;
-                    Start("a", false, false, "class", "xref", "href", "#" + Value);
+                case "norm": {
+                    var id = Text.Attributes?[0].Value;
+                    Start("a", false, false, "class", "xref", "href", "#" + id);
                     if (Text.IsEmpty) {
-                        Output.Write(Text.Text ?? Value);
+                        Output.Write(Text.Text ?? id);
+                        }
+                    break;
+                    }
+                case "xref": {
+                    var id = Text.Attributes?[0].Value;
+                    var text = GetReference(id);
+
+
+                    Start("a", false, false, "class", "xref", "href", "#" + text);
+                    if (Text.IsEmpty) {
+                        Output.Write(Text.Text ?? text);
                         }
                     break;
                     }
@@ -102,6 +112,53 @@ namespace Goedel.Document.RFC {
                     }
 
                 }
+            }
+
+
+        string GetReference(string anchor, string format=null) {
+
+            if (anchor == null) {
+                return "[Not Specified!]";
+                }
+
+            if (!Document.XRefDictionary.TryGetValue(anchor, out var target)) {
+                return "[Undefined!]";
+                }
+            if (target.Section != null) {
+                // Get the number minus the trailing period.
+                var number = target.Section.Number.Substring (
+                    0, target.Section.Number.Length-1);
+
+                if (format == "pilcrow") {
+                    return $"{Pilcrow} {number}";
+                    }
+
+                if (target.Section.Level == 1) {
+                    return $"section {number}";
+                    }
+                return $"subsection {number}";
+                }
+
+            var textblock = target.TextBlock;
+            if (textblock == null) {
+                return "[Help!]";
+                }
+
+            if (textblock is Figure figure) {
+                return figure.SectionText;
+                }
+            if (textblock is P p) {
+                var number = p.SectionId.Substring(0, p.SectionId.Length - 1);
+
+                if (format == "pilcrow") {
+                    return $"{Pilcrow} {number} {Sect} {p.NumericID}";
+                    }
+
+                return $"section {number} paragraph {p.NumericID}";
+                }
+
+            return anchor;
+
             }
 
         void WriteEmpty (TextSegmentOpen Text) {

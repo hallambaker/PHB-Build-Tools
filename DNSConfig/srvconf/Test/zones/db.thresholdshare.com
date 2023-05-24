@@ -6,7 +6,7 @@
 ;
 $TTL 600
 thresholdshare.com.      IN      SOA     dns1.thresholdshare.com. hallam.gmail.com. (
-                        2020092201       ; serial, todays date + todays serial 
+                        2022102501       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -30,11 +30,11 @@ thresholdshare.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 thresholdshare.com.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 108.20.156.67 
-thresholdshare.com.    A 108.20.156.67 
-www.thresholdshare.com.    A 108.20.156.67 
-http.thresholdshare.com.    A 108.20.156.67
-https.thresholdshare.com.    A 108.20.156.67 
+; Host host1.mathmesh.com 108.7.201.148 
+thresholdshare.com.    A 108.7.201.148 
+www.thresholdshare.com.    A 108.7.201.148 
+http.thresholdshare.com.    A 108.7.201.148
+https.thresholdshare.com.    A 108.7.201.148 
 _http._tcp.thresholdshare.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.thresholdshare.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 

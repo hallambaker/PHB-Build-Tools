@@ -1,0 +1,245 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="standard" docName="RFC" indexInclude="false" prepTime="2022-10-21T14:35:48Z" scripts="Common,Latin" sortRefs="true" submissionType="IETF" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
+<title abbrev="Title">Title</title>
+<seriesInfo stream="IETF"/>
+<date day="21" month="October" year="2022"/>
+<area/>
+<workgroup/>
+<abstract>
+<t>Examples of links</t>
+<t><xref target="RFC822"></xref></t>
+<t></t>
+</abstract>
+</front>
+<middle>
+<section title="Test" anchor="fred"><t>This is a test of the testy test . It references <xref target="moreFred"></xref>. It also has an external anchor to <eref target="http://example.com/"></eref></t>
+</section>
+<section title="Test More" anchor="moreFred"><t>This references <xref target="fred"></xref> and defines the term <iref>more</iref> It also has an external anchor to <eref target="http://example.com/"></eref></t>
+<t></t>
+<t></t>
+<ul>
+<li>r [.] S = S<sup>r</sup> mod p</li>
+<li>o = p-1</li>
+<li><em>A </em>[x] <em>B</em> = <em>A </em>[.] <em>B</em> = <em>AB </em>mod <em>p</em>.</li>
+</ul>
+<t><em>Proof:</em></t>
+<t>Let z = x + y</t>
+<t>By definition, X = e<sup>x</sup> mod p, Y = e<sup>y</sup> mod p, and Z = e<sup>z </sup>mod p.</t>
+<t>Therefore, </t>
+<dl>
+<dt>Z = e<sup>z</sup> mod p </dt>
+<dd>
+<t>= e<sup>x+y</sup> mod p </t>
+<t>= (e<sup>x</sup>e<sup>y</sup>) mod p </t>
+<t>= e<sup>x </sup>mod p.e<sup>y</sup> mod p </t>
+<t>= X.Y</t>
+</dd>
+</dl>
+<t>Moreover, A = e<sup>a</sup> mod p,</t>
+<t>Therefore,</t>
+<dl>
+<dt>(A<sup>x</sup> mod p).(A<sup>y</sup> mod p) </dt>
+<dd>
+<t>= (A<sup>x</sup>A<sup>y</sup>) mod p) </t>
+<t>= (A<sup>x+y</sup>) mod p) </t>
+<t>= A<sup>z</sup> mod p</t>
+<t>= e<sup>az</sup> mod p </t>
+<t>= (e<sup>z</sup>)<sup>a</sup> mod p </t>
+<t>= Z<sup>a</sup> mod p</t>
+</dd>
+</dl>
+<t>Since e<sup>o</sup> mod p = 1, the same result holds for z = (x + y) mod o since e<sup>x+y+no</sup> = e<sup>x+y</sup>.e<sup>no</sup> = e<sup>x+y</sup>.1 = e<sup>x+y</sup>.</t>
+<section title="Threshold Decryption" anchor="n-threshold-decryption"><t>Threshold decryption allows  a decryption key to be divided into two or more parts, allowing these roles to be assigned to different parties. This capability can be employed within a machine to divide use of a private key between an implementation running in the user mode and a process running in a privileged mode that is bound to the machine. Alternatively, threshold cryptography can be employed to </t>
+<t>The key combination law and result combination law provide a basis for threshold decryption. </t>
+<section title="Key Splitting" anchor="n-key-splitting"><t>We begin by creating a base key pair { X, x }. The public component X is used to perform encryption operations by means of a key agreement against an ephemeral key in the usual fashion. The private component x may be used for decryption in the normal fashion or to provide the source material for a key splitting operation.</t>
+<t>To split the base key into n shares { S<sub>1</sub>, s<sub>1</sub> }, { S<sub>2</sub>, s<sub>2</sub> }, ... { S<sub>n</sub>, s<sub>n</sub> }, we begin by generating the first n-1 private keys in the normal fashion. It is not necessary to generate the corresponding public keys as these are not required.</t>
+<t>The private key of the final key share s<sub>n</sub> is given by:</t>
+<t><em>s<sub>n</sub> = (x - s1 - s2 - ... - sn-1) mod o</em></t>
+<t>Thus, the base private key x is equal to the sum of the private key shares modulo the group order.</t>
+</section>
+<section title="Decryption" anchor="n-decryption"><t>To encrypt a document, we first generate an ephemeral key pair { Y, y }. The key agreement value e<sup>xy</sup> is calculated from the base public key X = e<sup>x</sup> and the ephemeral private key y. A key derivation function is then used to obtain the session key to be used to encrypt the document under a symmetric cipher.</t>
+<t>To decrypt a document using the threshold key shares, each key share holder first performs a Diffie Hellman operation using their private key on the ephemeral public key. The key shares are then combined using the result combination law to obtain the key exchange value from which the session key is recovered.</t>
+<t>The key contribution c<sub>i</sub> for the holder of the i<sup>th</sup> key share is calculated as:</t>
+<t>c<sub>i</sub> = Y<sup>si</sup></t>
+<t>The key agreement value is thus</t>
+<t>A = c<sub>1</sub> . c<sub>2</sub> . ... . c<sub>n</sub></t>
+<t>This value is equal to the encryption key agreement value according to the group law.</t>
+</section>
+</section>
+<section title="Threshold Key Generation" anchor="n-threshold-key-generation"><t>The key combination law allows an aggregate private key to be derived from private key contributions provided by two or more parties such that the corresponding aggregate public key may be derived from the public keys corresponding to the contributions. The resulting key generation mechanism is thus, auditable and interoperable.</t>
+<section title="Device Provisioning" anchor="n-device-provisioning"><t>Auditable Threshold Key Generation provides a simple and efficient means of securely provisioning keys to devices. This is encountered in the IoT space as a concern in 'onboarding' and in the provisioning of unique keys for use with cryptographic applications (e.g. SSH, S/MIME, OpenPGP, etc.).</t>
+<t>Consider the case in which Alice purchases an IoT connected Device D which requires a unique device key pair <em>{ X , x }</em> for its operation. The process of provisioning (aka 'onboarding') is performed using an administration device. Traditional key pair generation gives us three options:</t>
+<ul>
+<li>Generate and install a key pair during manufacture.</li>
+<li>Generate a new key pair during device provisioning.</li>
+<li>Generate a key pair on the administration device and transfer it to the device being provisioned. </li>
+</ul>
+<t>The first approach has the obvious disadvantage that the manufacturer has knowledge of the private key. This represents a liability for both the user and the manufacturer. Less obvious is the fact that the second approach doesn't actually provide a solution unless the process of generating keys on the device is auditable. The third approach is auditable with respect to the device being provisioned but not with respect to the administration device being used for provisioning. If that device were to be compromised, so could every device it was used to provision.</t>
+<t>Threshold key generation allows the administration device and the joining device being provisioned to jointly provision a key pair as follows:</t>
+<ul>
+<li>The joining device has public, private key pair<em> { D, d }</em>.</li>
+<li>A provisioning request is made for the device which includes the joining device public key <em>D</em>.</li>
+<li>The administration device generates a key pair contribution <em>{ A, a }</em>. </li>
+<li>The administration device private key is transmitted to the Device by means of a secure channel.</li>
+<li>The joining device calculates the aggregate key pair <em>{ A [x] D, a+d }</em>. </li>
+<li>The administration device authorizes the joining device to participate in the local network using the public key <em>A [x] D</em>.</li>
+</ul>
+<t>The Device key pair <bcp14>MAY</bcp14> be installed during manufacture or generated during provisioning or be derived from a combination of both using threshold key generation recursively. The provisioning request <bcp14>MAY</bcp14> be originated by the device or be generated by a purchasing system.</t>
+<t>Note that the provisioning protocol does not require either party to authenticate the aggregate key pair. The protocol provides security by ensuring that both parties obtain the correct results if and only if the values each communicated to the other were correct.</t>
+<t>Out of band authentication of the joining device public key <em>D</em> is sufficient to prevent Man-in-the-Middle attack. This may be achieved by means of a QR code printed on the device itself that discloses or provides a means of obtaining <em>D.</em></t>
+</section>
+<section title="Key Rollover" anchor="n-key-rollover"><t>Traditional key rollover protocols in PKIX and other PKIs following the Kohnfelder model, require a multi-step interaction between the key holder and the Certificate Authority.</t>
+<t>Threshold key generation allows a Certificate Authority to implement key rollover with a single communication:</t>
+<t>Consider the case in which the service host has a base key pair { B , b }. A CA that has knowledge of the Host public key B may generate a certificate for the time period <em>t</em> with a fresh key as follows:</t>
+<ul>
+<li>Generate a key pair contribution { A<sub>t</sub>, a<sub>t</sub> }. </li>
+<li>Generate and sign an end entity certificate C<sub>t</sub> for the key B [x] A<sub>t</sub>.</li>
+<li>Transmit C<sub>t</sub>, a<sub>t</sub> to the host by means of a secure channel</li>
+</ul>
+</section>
+<section title="Host Activation" anchor="n-host-activation"><t>Modern Internet service architectures frequently make use of short lived, ephemeral hosts running on virtualized machines. Provisioning cryptographic material in such environments is a significant challenge and especially so when the underlying hardware is a shared resource.</t>
+<t>The key rollover approach described above provides a means of provisioning short lived credentials to ephemeral hosts that potentially avoids the need to build sensitive keys into the service image or configuration.</t>
+</section>
+<section title="Separation of Duties" anchor="n-separation-of-duties"><t>Threshold key generation provides a means of separating administration of cryptographic keys between individuals. This allows two or more administrators to control access to a private key without having the ability to use it themselves. This approach is of particular utility when used in combination with threshold decryption. Alice and Bob can be granted the ability to create key contributions allowing a user to decrypt information without having the ability to decrypt themselves.</t>
+</section>
+</section>
+<section title="Side Channel Resistance" anchor="n-side-channel-resistance"><t>Side-channel attacks, present a major concern in the implementation of public key cryptosystems. Of particular concern are the timing attacks identified by Paul Kocher <xref target="Kocher96"></xref> and related attacks in the power and emissions ranges. Performing repeated observations of the use of the same private key material provides an attacker with considerably greater opportunity to extract the private key material.</t>
+<t>A simple but effective means of defeating such attacks is to split the private key value into two or more random shares for every private key operation and use the result combination law to recover the result. </t>
+<t>The implementation of this approach is identical to that for Threshold Decryption except that instead of giving the key shares to different parties, they are kept by the party performing the private key operation.</t>
+<t>While this approach doubles the number of private key operations required, the operations <bcp14>MAY</bcp14> be performed in parallel. Thus avoiding impact on the user experience.</t>
+</section>
+</section>
+<section title="Application to Elliptic Curves" anchor="n-application-to-elliptic-curves"><t>For elliptic curve cryptosystems, the operators [x] and [.] are point addition.</t>
+<t>Implementing a robust Key Co-Generation for the Elliptic Curve Cryptography schemes described in <xref target="RFC7748"></xref> and <xref target="RFC8032"></xref> requires some additional considerations to be addressed.</t>
+<ul>
+<li>The secret scalar used in the EdDSA algorithm is calculated from the private key using a digest function. It is therefore necessary to specify the Key Co-Generation mechanism by reference to operations on the secret scalar values rather than operations on the private keys.</li>
+<li>The Montgomery Ladder traditionally used to perform X25519 and X448 point multiplication does not require implementation of a function to add two arbitrary points. While the steps required to create such a function are fully constrained by <xref target="RFC7748"></xref>, the means of performing point addition is not.</li>
+</ul>
+<section title="Implementation for Ed25519 and Ed448" anchor="n-implementation-for-ed25519-and-ed448"><t><xref target="RFC8032"></xref> provides all the cryptographic operations required to perform threshold operations and corresponding public keys. </t>
+<t>The secret scalars used in <xref target="RFC8032"></xref> private key operations are derived from a private key value using a cryptographic digest function. This encoding allows the inputs to a private key combination to be described but not the output. Contrawise, the encoding allows the inputs to a private key splitting operation to be described but not the output</t>
+<t>It is therefore necessary to provide an alternative representation for the Ed25519 and Ed448 private keys. Moreover, the signature algorithm requires both a secret scalar and a prefix value as inputs.</t>
+<t>Since threshold signatures are out of scope for this document and <xref target="RFC8032"></xref> does not specify a key agreement mechanism, it suffices to specify the data formats required to encode private key values generated by means of threshold key generation.</t>
+<section title="Ed25519" anchor="n-ed25519"><t>Let the inputs to the threshold key generation scheme be a set of 32 byte private key values <em>P<sub>1</sub>, P2 ... Pn. For each private key value i in turn:</em></t>
+<ol start="0">
+<li>Hash the 32-byte private key using SHA-512, storing the digest in a 64-octet large buffer, denoted<em> h<sub>i</sub></em>. Let n<sub>i</sub> be the first 32 octets of h<sub>i</sub> and m<sub>i</sub> be the remaining 32 octets of h<sub>i</sub>.</li>
+<li>Prune n<sub>i</sub>: The lowest three bits of the first octet are cleared, the highest bit of the last octet is cleared, and the second highest bit of the last octet is set.</li>
+<li>Interpret the buffer as the little-endian integer, forming a secret scalar s<sub>i</sub>.</li>
+</ol>
+<t>The private key values are calculated as follows:</t>
+<t>The aggregate secret scalar value <em>s<sub>a</sub> = s1 + s2 + ... sn mod L, where L is the order of the curve.</em></t>
+<t>The aggregate prefix value is calculated by either</t>
+<ul>
+<li>Some function TBS on the values m<sub>1</sub>, m<sub>2</sub>,  ... m<sub>n</sub>, or</li>
+<li>Taking the SHA256 digest of s<sub>a</sub>.</li>
+</ul>
+<t>The second approach is the simplest and the most robust. It does however mean that the prefix is a function of the secret scalar rather than both being functions of the same seed. </t>
+</section>
+<section title="Ed448" anchor="n-ed448"><t>Let the inputs to the threshold key generation scheme be a set of 57 byte private key values <em>P<sub>1</sub>, P2 ... Pn. For each private key value i in turn:</em></t>
+<ol start="0">
+<li>Hash the 57-byte private key using SHAKE256(x, 114), storing the digest in a 114-octet large buffer, denoted<em> h<sub>i</sub></em>. Let n<sub>i</sub> be the first 57 octets of h<sub>i</sub> and m<sub>i</sub> be the remaining 57 octets of h<sub>i</sub>.</li>
+<li>Prune n<sub>i</sub>: The two least significant bits of the first octet are cleared, all eight bits the last octet are cleared, and the highest bit of the second to last octet is set.</li>
+<li>Interpret the buffer as the little-endian integer, forming a secret scalar s<sub>i</sub>.</li>
+</ol>
+<t>The private key values are calculated as follows:</t>
+<t>The aggregate secret scalar value <em>s<sub>a</sub> = s1 + s2 + ... sn mod L, where L is the order of the curve.</em></t>
+<t>The aggregate prefix value is calculated by either</t>
+<ul>
+<li>Some function TBS on the values m<sub>1</sub>, m<sub>2</sub>,  ... m<sub>n</sub>, or</li>
+<li>Taking the SHAKE256(x, 57) digest of s<sub>a</sub>.</li>
+</ul>
+<t>The second approach is the simplest and the most robust. It does however mean that the prefix is a function of the secret scalar rather than both being functions of the same seed. </t>
+</section>
+</section>
+<section title="Implementation for X25519 and X448" anchor="n-implementation-for-x25519-and-x448"><t><xref target="RFC7748"></xref> defines all the cryptographic operations required to perform threshold key generation and threshold decryption but does not describe how to implement them.</t>
+<t>The Montgomery curve described in <xref target="RFC7748"></xref> allows for efficient scalar multiplication using arithmetic operations on a single coordinate. Point addition requires both coordinate values. It is thus necessary to provide an extended representation for point encoding and provide an algorithm for recovering both coordinates from a scalar multiplication operation and an algorithm for point addition.</t>
+<t>The notation of <xref target="RFC7748"></xref> is followed using {u, v} to represent the coordinates on the Montgomery curve and {x, y} for coordinates on the corresponding Edwards curve.</t>
+<section title="Point Encoding" anchor="n-point-encoding"><t>The relationship between the u and v coordinates is specified by the Montgomery Curve formula itself:</t>
+<t><em>v<sup>2</sup></em> = <em>u<sup>3</sup> + Au2 + u</em></t>
+<t>An algorithm for extracting a square root of a number in a finite field is specified in <xref target="RFC8032">.</xref></t>
+<t>Since <em>v<sup>2</sup></em> has a positive (<em>v</em>) and a negative solution (<em>-v</em>), it follows that <em>v<sup>2</sup></em> mod p will have the solutions <em>v</em>, <em>p-v</em>. Furthermore, since <em>p</em> is odd, if <em>v</em> is odd, <em>p-v</em> must be even and vice versa. It is thus sufficient to record whether <em>v</em> is odd or even to enable recovery of the <em>v</em> coordinate from <em>u</em>.</t>
+</section>
+<section title="X25519 Point Encoding" anchor="n-x25519-point-encoding"><t>The extended point encoding allowing the v coordinate to be recovered is as given in <xref target="draft-ietf-lwig-curve-representations"></xref></t>
+<t>[TBS]</t>
+</section>
+<section title="X448 Point Encoding" anchor="n-x448-point-encoding"><t>The extended point encoding allowing the v coordinate to be recovered is as given in <xref target="draft-ietf-lwig-curve-representations"></xref></t>
+<t>[TBS]</t>
+</section>
+<section title="Point Addition" anchor="n-point-addition"><t>The point addition formula for the Montgomery curve is defined as follows:</t>
+<t>Let P<sub>1</sub> = {u<sub>1</sub>, v<sub>1</sub>}, P<sub>2</sub> = {u<sub>2</sub>,  v<sub>2</sub>}, P<sub>3</sub> = {u<sub>3</sub>, v<sub>3</sub>} = P<sub>1</sub> + P<sub>2</sub> </t>
+<t>By definition: </t>
+<t>u<sub>3</sub> = B(v<sub>2</sub> - v<sub>1</sub>)<sup>2</sup> / (u<sub>2</sub> - u<sub>1</sub>)<sup>2</sup> - A - u<sub>1</sub> - u<sub>2</sub></t>
+<t>    = B((u<sub>2</sub>v<sub>1</sub> - u<sub>1</sub>v<sub>2</sub>)<sup>2</sup> ) / u<sub>1</sub>u<sub>2</sub> (u<sub>2</sub> - u<sub>1</sub>)<sup>2</sup></t>
+<t>v<sub>3</sub> = ((2u<sub>1</sub> + u<sub>2</sub> + A)(v<sub>2</sub> - v<sub>1</sub>) / (u<sub>2</sub> - u<sub>1</sub>)) - B (v<sub>2</sub> - v<sub>1</sub>)<sup>3</sup> / (u<sub>2</sub> -u<sub>1</sub>)<sup>3</sup> - v<sub>1</sub></t>
+<t>For curves X25519 and X448, B = 1 and so:</t>
+<t>u<sub>3</sub> = ((v<sub>2</sub> - v<sub>1</sub>).(u<sub>2</sub> - u<sub>1</sub>)<sup>-1</sup>)<sup>2</sup> - A - u<sub>1</sub> - u<sub>2</sub></t>
+<t>v<sub>3</sub> = ((2u<sub>1</sub> + u<sub>2</sub> + A)(v<sub>2</sub> - v<sub>1</sub>).(u<sub>2</sub> - u<sub>1</sub>)<sup>-1</sup>) - ((v<sub>2</sub> - v<sub>1</sub>).(u<sub>2</sub> -u<sub>1</sub>)<sup>-1</sup>)<sup>3</sup> - v<sub>1</sub></t>
+<t>This may be implemented using the following code:</t>
+<t></t>
+</section>
+</section>
+</section>
+</middle>
+<back>
+<references title="Normative References"><reference anchor="RFC822"><front>
+<title>STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES</title>
+<author fullname="D. Crocker" initials="D." surname="Crocker"><address>
+</address>
+</author>
+<date month="August" year="1982"/>
+</front>
+<seriesInfo name="STD" value="11"/>
+<seriesInfo name="RFC" value="822"/>
+<seriesInfo name="DOI" value="10.17487/RFC0822"/>
+</reference>
+<reference anchor="RFC7748"><front>
+<title>Elliptic Curves for Security</title>
+<author fullname="A. Langley" initials="A." surname="Langley"><address>
+</address>
+</author>
+<author fullname="M. Hamburg" initials="M." surname="Hamburg"><address>
+</address>
+</author>
+<author fullname="S. Turner" initials="S." surname="Turner"><address>
+</address>
+</author>
+<date month="January" year="2016"/>
+</front>
+<seriesInfo name="RFC" value="7748"/>
+<seriesInfo name="DOI" value="10.17487/RFC7748"/>
+</reference>
+<reference anchor="RFC8032"><front>
+<title>Edwards-Curve Digital Signature Algorithm (EdDSA)</title>
+<author fullname="S. Josefsson" initials="S." surname="Josefsson"><address>
+</address>
+</author>
+<author fullname="I. Liusvaara" initials="I." surname="Liusvaara"><address>
+</address>
+</author>
+<date month="January" year="2017"/>
+</front>
+<seriesInfo name="RFC" value="8032"/>
+<seriesInfo name="DOI" value="10.17487/RFC8032"/>
+</reference>
+<reference anchor="draft-ietf-lwig-curve-representations"><front>
+<title>Alternative Elliptic Curve Representations</title>
+<author fullname="Rene Struik" surname="Rene Struik"><organization>Struik Security Consultancy</organization>
+<address>
+</address>
+</author>
+<date day="21" month="January" year="2022"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-ietf-lwig-curve-representations-23"/>
+</reference>
+</references>
+<references title="Informative References"><reference anchor="Kocher96"><front>
+<title>[Reference Not Found!]</title>
+<author initials="" surname=""><organization/>
+<address>
+</address>
+</author>
+<date/>
+</front>
+</reference>
+</references>
+</back>
+</rfc>

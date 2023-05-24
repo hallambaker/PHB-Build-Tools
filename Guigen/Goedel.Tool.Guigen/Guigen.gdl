@@ -1,4 +1,4 @@
-﻿Copyright  "1988-2022" "Phill Hallam-Baker" MITLicense
+﻿Copyright  "1988-2023" "Phill Hallam-Baker" MITLicense
 
 Class Goedel.Tool.Guigen Guigen
 
@@ -20,68 +20,83 @@ Class Goedel.Tool.Guigen Guigen
 	Type Apache2License
 	Type OtherLicense
 		Text		Text
+	
+	TopType Class
+		Namespace Token  TypeT
+		Name Token  TypeT
+		Description Text
 
-	TopType Application
-		Namespace		Token GroupT
-		Id				ID GroupT
-		Entries			List Declaration
+	TopType Section
+		Id			ID SectionT
+		Prompt		String		
+		Icon		String	
+		Entries List Choice
+			Chooser
+			Primary
+			Button
+			Dialog
 
-	TopType Declaration
-		Id				ID GroupT
-		Entry Choice
-			Structure		
-			Environment
-			Icon
-			Menu
-
-	Type Structure
-		Entries			List Choice 
-			Icon
-
-	Type Environment
-		Entries			List Choice 
-			Catalog
-			Spool
-			Icon
-			Menu
-
-	Type Catalog
-		Id				Token CatalogItem
-		Prompt			String
-		Entries			List Choice 
-			Default
-			Selector
-			Action
-
-	Type Spool
-		Id				Token CatalogItem
-		Prompt			String
-		Entries			List Choice 
-			Default
-			Selector
-			Action
-
-	Type Menu
-		Entries			List MenuEntry
-
-	Type Default
-		Entries			List MenuEntry 
-
-	Type Selector
-		Entries			List MenuEntry 
-
-	Type Action
-		Entries			List MenuEntry 
-
-	Type MenuEntry
-		Id				Token MenuItem
-		Prompt			String
-		Entries			List Choice 
-			Icon
+	TopType Action
+		Id			ID SectionT
+		Prompt		String		
+		Icon		String	
+		Entries List Choice
+			Chooser
 			Text
+			Color
+			Size
+			Decimal
+			Context
+
+	TopType Dialog
+		Id			ID SectionT
+		Entries List Choice
+			Chooser
+			Text
+			Color
+			Size
+			Decimal
+			Icon
+
+
+	Type Button
+		Id			REF SectionT
+
+	Type Chooser
+		Id			REF SectionT
+		Prompt		String		
+		Icon		String				
+		Type		Token TypeT 
+		Entries List Choice
+			Button
+		
+			
+
+	Type Primary
+
+	Type Context
+		Id			Token SectionT		
+		Prompt		String
 
 	Type Text
-		Prompt			String
+		Id			Token SectionT
+		Prompt		String
+
+	Type Color
+		Id			Token SectionT
+		Prompt		String
+
+	Type Size
+		Id			Token SectionT
+		Prompt		String
+
+	Type Decimal
+		Id			Token SectionT
+		Prompt		String
 
 	Type Icon
-		File			String 
+		Id			Token SectionT
+		Prompt		String
+
+
+

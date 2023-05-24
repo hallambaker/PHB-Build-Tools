@@ -550,7 +550,7 @@ namespace Goedel.Document.RFC {
             }
         void WriteBlock(Figure block) {
             ListLast();
-            WriteStartTagNL("figure");
+            WriteStartTagNL("figure", "anchor", block.AnchorID);
             WriteStartTagNL("name");
             textWriter.Write(block.Caption);
             WriteEndTagNL("name");

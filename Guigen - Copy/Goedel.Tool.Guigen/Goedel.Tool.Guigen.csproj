@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+  <PropertyGroup>
+    <RootNamespace>Goedel.Tool.Domainer</RootNamespace>
+    <Title>Goedel.Tool.Domainer</Title>
+    <Product>Goedel.Tool.Domainer</Product>
+    <Description>DNS wireline and zone file parser library.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Guigen.cs">
+      <DependentUpon>Guigen.gdl</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Generate.cs">
+      <DependentUpon>Generate.Script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Guigen.gdl">
+      <LastGenOutput>Guigen.cs</LastGenOutput>
+      <Generator>goedel3</Generator>
+    </None>
+    <None Update="Generate.Script">
+      <LastGenOutput>Generate.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+  </ItemGroup>
+
+</Project>

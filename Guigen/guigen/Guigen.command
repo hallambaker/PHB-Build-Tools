@@ -19,7 +19,3 @@
 			Brief "Generate cs class"
 			Default "cs"
 
-		Script  Goedel.Tool.Guigen Generate GeneratePs1			"ps1"
-			Brief "Generate cs class"
-			Default "ps1"
-

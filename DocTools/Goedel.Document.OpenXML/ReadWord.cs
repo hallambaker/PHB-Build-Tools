@@ -6,6 +6,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 
 using GM = Goedel.Document.Markdown;
+using Goedel.IO;
 
 namespace Goedel.Document.OpenXML {
     public partial class BlockParseWord : GM.BlockParser {
@@ -53,7 +54,10 @@ namespace Goedel.Document.OpenXML {
         GM.CatalogEntry CatalogEntryTableCell;
 
         public BlockParseWord(string FileName, GM.TagCatalog TagCatalog) {
-            Source = WordprocessingDocument.Open(FileName, false);
+            FileName.OpenReadToEnd(out var data);
+            var stream = new MemoryStream(data);
+
+            Source = WordprocessingDocument.Open(stream, false);
 
             InitBlockParseWord (Source, TagCatalog);
             }

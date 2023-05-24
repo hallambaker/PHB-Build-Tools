@@ -2,24 +2,6 @@
 #license MITLicense
 #pclass Goedel.Tool.Guigen Generate
 
-#method GeneratePs1 Guigen Guigen
-#% Guigen._InitChildren();
-#foreach (_Choice Item in Guigen.Top)
-#switchcast GuigenType Item
-#casecast Application application
-
-#foreach (var tagValue in application.DictionaryIconsByFile)
-#% var tag = tagValue.Key;
-$source = $args[0]
-$target = $args[1]
-
-copy $source\#{tag}  $target\#{tag}
-#end foreach
-#end switchcast
-#end foreach
-
-#end method
-
 #method GenerateCS Guigen Guigen
 #% Guigen._InitChildren();
 ##region // Copyright 
@@ -47,163 +29,166 @@ copy $source\#{tag}  $target\#{tag}
 
 ##endregion
 
-##pragma warning disable IDE0161 // Convert to file-scoped namespace
+using Goedel.Guigen;
 
-#foreach (_Choice Item in Guigen.Top)
-#switchcast GuigenType Item
-#casecast Application application
+namespace #{Guigen.Class.Namespace};
 
-namespace #{application.Namespace} {
-
-	///<summary></summary> 
-	public partial class #{application.Id} : GuiApplication {
-
-
-#foreach (var tagValue in application.DictionaryMenuEntries)
-#% var tag = tagValue.Key;
-#% var menuEntry = tagValue.Value;
-		// Menu Item #{tag}
-	public GuiMenuEntry Action_#{tag} = new ("#{menuEntry.Id}", "#{menuEntry.Prompt}", "#{menuEntry.Icon?.File}", "#{menuEntry.Text?.Prompt}" );
+/// <summary>
+#foreach (var text in Guigen.Class.Description)
+/// #{text}
 #end foreach
-
-#foreach (var tagValue in application.DictionaryIcons)
-#% var tag = tagValue.Key;
-#% var icon = tagValue.Value;
-	public GuiIcon Icon_#{tag} = new ("#{icon.Id}", "#{icon.File}");
-		// Icon Entry #{tag}
-#end foreach
+/// </summary>
+public partial class #{Guigen.Class.Name} : Gui {
 
 
-
-		///<summary>Environment declarations</summary> 
-		public static List <GuiEnvironment> Environments = new () {#!
+	///<inheritdoc/>
+	public override List<GuiIcon> Icons => icons;
+	readonly List<GuiIcon> icons = new () { #!
 #% var separator = new Separator (",");
-#foreach (var environment in application.Environments)
-#{separator}
-			new ("#{environment.Id}", "#{environment.Icon?.File}") {
-				Menus = new () {#!
-#% var separator2 = new Separator (",");
-#foreach (var menu in environment.Menus)
-#{separator2}
-					new () {
-						Entries = new () {#!
-#% MakeMenuEntries(menu.Entries);
-							}
-						}#!
+#foreach (var icon in Guigen.Icons) 
+#{separator} 
+		new GuiIcon ("#{icon.Key}") #!
 #end foreach
 
-					},
-				Stores = new () {#!
-#% separator2.Reset();
-#foreach (var store in environment.Stores)
-#{separator2}
-#switchcast GuigenType store
-#casecast Catalog catalog
-					new () {
-						Mode = GuiTableMode.Catalog,#!
-#% MakeStoreEntries(catalog);
-						}#!
-#casecast Spool spool
-					new () {
-						Mode = GuiTableMode.Spool,#!
-#% MakeStoreEntries(spool);
-						}#!
-#end switchcast
+		};
+
+	///<inheritdoc/>
+	public override List<GuiSection> Sections => sections;
+	readonly List<GuiSection> sections = new () { #!
+#% separator.Reset ();
+#foreach (var section in Guigen.Sections) 
+#{separator} 
+		#{section.RecordId}#!
 #end foreach
 
-					}
-				}#!
+		};
+
+	///<inheritdoc/>
+	public override List<GuiAction> Actions => actions;
+	readonly List<GuiAction> actions = new () { #!
+#% separator.Reset ();
+#foreach (var action in Guigen.Actions) 
+#{separator} 
+		#{action.RecordId}#!
 #end foreach
 
-			};
+		};
 
-		///<summary>Structure declarations</summary> 
-		public static List <GuiStructure> Structures = new () {#!
-#% separator.Reset();
-#foreach (var structure in application.Structures)
-#{separator}
-			new (typeof(#{structure.Id}), "#{structure.Icon?.File}")#!
+	///<inheritdoc/>
+	public override List<GuiDialog> Dialogs => dialogs;
+	readonly List<GuiDialog> dialogs = new () { #!
+#% separator.Reset ();
+#foreach (var dialog in Guigen.Dialogs) 
+#{separator} 
+		#{dialog.RecordId}#!
 #end foreach
 
-			};
+		};
 
-		///<summary>Icon declarations</summary> 
-		public static List <GuiIcon> Icons = new () {#!
-#% separator.Reset();
-#foreach (var icon in application.Icons)
-#{separator}
-			new ("#{icon.Id}", "#{icon.File}")#!
+	// Sections
+#foreach (var section in Guigen.Sections) 
+	static readonly GuiSection #{section.RecordId} = new (
+			"#{section.Id}", "#{section.Prompt}", "#{section.Icon}", #{section.Primary.If("true","false")}, new List<ISectionEntry>() { #!
+#% separator.Reset ();
+#foreach (var entry in section.Entries)
+#if (entry.Active)
+#{separator} 
+#call GenerateEntry entry
+#end if 
 #end foreach
 
-			};
-		}
+			}) {
+		};
+
+#end foreach	
+	
+	// Actions
+#foreach (var action in Guigen.Actions) 
+	static readonly GuiAction #{action.RecordId} = new (
+			"#{action.Id}", "#{action.Prompt}", "#{action.Icon}", new List<IActionEntry>() {#!
+#% separator.Reset ();
+#foreach (var entry in action.Entries)
+#{separator} 
+#call GenerateEntry entry
+#end foreach
+
+			}) {
+		};
+
+#end foreach	
+
+	// Dialogs
+#foreach (var dialog in Guigen.Dialogs) 
+	static readonly GuiDialog #{dialog.RecordId} = new (
+			"#{dialog.Id}", new List<IDialogEntry>() {#!
+#% separator.Reset ();
+#foreach (var entry in dialog.Entries)
+#{separator} 
+#call GenerateEntry entry
+#end foreach
+
+			}) {
+		};
+
+#end foreach	
+	
 	}
 
+
+#end method
+
+
+#method GenerateEntry _Choice entry
+#switchcast GuigenType entry
+#casecast Chooser chooser
+#call GenerateChooser chooser
+#casecast Button button
+#call GenerateButton button
+#casecast Dialog dialog
+#call GenerateDialog dialog
+#casecast Text text
+#call GenerateText text
+#casecast Color color
+#call GenerateColor color
+#casecast Size size
+#call GenerateSize size
+#casecast Decimal decimalv
+#call GenerateDecimal decimalv
+#casecast Icon icon
+#call GenerateIcon icon
 #end switchcast
-#end foreach
-
 #end method
 
-#method MakeMenuEntries List<MenuEntry> menuEntries
-#% var separator = new Separator (",");
-#foreach (var menuEntry in menuEntries)
-#{separator}
-							new ("#{menuEntry.Id}", "#{menuEntry.Prompt}", "#{menuEntry.Icon?.File}", "#{menuEntry.Text?.Prompt}" )#!
-#end foreach
+#method GenerateChooser Chooser chooser
+			// Chooser #!
 #end method
 
-#method MakeMenuEntries2 List<MenuEntry> menuEntries
-#% var separator = new Separator (",");
-#foreach (var menuEntry in menuEntries)
-#{separator}
-									new ("#{menuEntry.Id}", "#{menuEntry.Prompt}", "#{menuEntry.Icon?.File}", "#{menuEntry.Text?.Prompt}" )#!
-#end foreach
+#method GenerateButton Button button
+			// Button #!
 #end method
 
-#method MakeStoreEntries IHaveActions store
-
-						Defaults = new () {#!
-#% var separator = new Separator (",");
-#foreach (var defaultEntry in store.Defaults)
-#{separator}
-							new () {
-								Entries = new () {#!
-#% MakeMenuEntries2(defaultEntry.Entries);
-
-									}
-								}#!
-#end foreach
-
-							},
-						Selectors = new () {#!
-#% separator.Reset();
-#foreach (var selector in store.Selectors)
-#{separator}
-							new () {
-								Entries = new () {#!
-#% MakeMenuEntries2(selector.Entries);
-
-									}
-								}#!
-#end foreach
-
-							},
-						Actions = new () {#!
-#% separator.Reset();
-#foreach (var action in store.Actions)
-#{separator}
-							new () {
-								Entries = new () {#!
-#% MakeMenuEntries2(action.Entries);
-
-									}
-								}#!
-#end foreach
-
-							}
+#method GenerateDialog Dialog dialog
+			// Dialog #!
 #end method
 
+#method GenerateText Text text
+			// Text #!
+#end method
 
+#method GenerateColor Color color
+			// Color #!
+#end method
 
+#method GenerateSize Size size
+			// Text #!
+#end method
+
+#method GenerateDecimal Decimal decimalv
+			// Decimal #!
+#end method
+
+#method GenerateIcon Icon icon
+			// Icon #!
+#end method
 
 #end pclass

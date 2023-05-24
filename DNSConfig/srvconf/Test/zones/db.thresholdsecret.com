@@ -6,7 +6,7 @@
 ;
 $TTL 600
 thresholdsecret.com.      IN      SOA     dns1.thresholdsecret.com. hallam.gmail.com. (
-                        2020092201       ; serial, todays date + todays serial 
+                        2022102501       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -30,11 +30,11 @@ thresholdsecret.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 thresholdsecret.com.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 108.20.156.67 
-thresholdsecret.com.    A 108.20.156.67 
-www.thresholdsecret.com.    A 108.20.156.67 
-http.thresholdsecret.com.    A 108.20.156.67
-https.thresholdsecret.com.    A 108.20.156.67 
+; Host host1.mathmesh.com 108.7.201.148 
+thresholdsecret.com.    A 108.7.201.148 
+www.thresholdsecret.com.    A 108.7.201.148 
+http.thresholdsecret.com.    A 108.7.201.148
+https.thresholdsecret.com.    A 108.7.201.148 
 _http._tcp.thresholdsecret.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.thresholdsecret.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 

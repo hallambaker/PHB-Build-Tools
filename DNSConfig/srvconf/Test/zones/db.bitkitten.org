@@ -6,7 +6,7 @@
 ;
 $TTL 600
 bitkitten.org.      IN      SOA     dns1.bitkitten.org. hallam.gmail.com. (
-                        2020092201       ; serial, todays date + todays serial 
+                        2022102501       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -30,11 +30,11 @@ bitkitten.org.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 bitkitten.org.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 108.20.156.67 
-bitkitten.org.    A 108.20.156.67 
-www.bitkitten.org.    A 108.20.156.67 
-http.bitkitten.org.    A 108.20.156.67
-https.bitkitten.org.    A 108.20.156.67 
+; Host host1.mathmesh.com 108.7.201.148 
+bitkitten.org.    A 108.7.201.148 
+www.bitkitten.org.    A 108.7.201.148 
+http.bitkitten.org.    A 108.7.201.148
+https.bitkitten.org.    A 108.7.201.148 
 _http._tcp.bitkitten.org.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.bitkitten.org.   IN   SRV 1 1 443 host1.mathmesh.com.
 

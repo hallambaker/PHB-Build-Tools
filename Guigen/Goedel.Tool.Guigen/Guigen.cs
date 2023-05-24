@@ -1,5 +1,5 @@
 ﻿
-//  Copyright (c) 1988-2022 by Phill Hallam-Baker
+//  Copyright (c) 1988-2023 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -45,7 +45,9 @@ using Goedel.Utilities;
 // Types
 //   TopTypeType
 //       Copyright
-//       Application
+//       Class
+//       Section
+//       Action
 //   TypeType
 //       MITLicense
 //       BSD2License
@@ -53,18 +55,16 @@ using Goedel.Utilities;
 //       ISCLicense
 //       Apache2License
 //       OtherLicense
-//       Declaration
-//       Structure
-//       Environment
-//       Icon
-//       Menu
-//       Catalog
-//       Spool
-//       Default
-//       Selector
-//       Action
-//       MenuEntry
+//       Chooser
+//       Primary
+//       Button
+//       Dialog
+//       Color
+//       Size
+//       Decimal
+//       Context
 //   IdType
+//       SectionT
 //   NamespaceType
 //       Goedel.Tool.Guigen
 //   ClassType
@@ -75,15 +75,15 @@ using Goedel.Utilities;
 //       License
 //       Text
 //       Namespace
+//       Name
+//       Description
 //       Id
-//       Entries
-//       Entry
 //       Prompt
-//       File
+//       Icon
+//       Entries
+//       Type
 //   TokenType
-//       GroupT
-//       CatalogItem
-//       MenuItem
+//       TypeT
 
 #pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
 namespace Goedel.Tool.Guigen {
@@ -99,18 +99,18 @@ namespace Goedel.Tool.Guigen {
         ISCLicense,
         Apache2License,
         OtherLicense,
-        Application,
-        Declaration,
-        Structure,
-        Environment,
-        Catalog,
-        Spool,
-        Menu,
-        Default,
-        Selector,
+        Class,
+        Section,
         Action,
-        MenuEntry,
+        Dialog,
+        Button,
+        Chooser,
+        Primary,
+        Context,
         Text,
+        Color,
+        Size,
+        Decimal,
         Icon,
 
         _Label,
@@ -304,286 +304,76 @@ namespace Goedel.Tool.Guigen {
 			}
 		}
 
-    public partial class Application : _Choice {
+    public partial class Class : _Choice {
         public TOKEN<_Choice>			Namespace;
-        public ID<_Choice>				Id; 
-        public List <Declaration>           Entries = new List<Declaration> ();
+        public TOKEN<_Choice>			Name;
+		public List <System.String>			Description = new List <System.String> (); 
 
-        public override GuigenType _Tag () =>GuigenType.Application;
+        public override GuigenType _Tag () =>GuigenType.Class;
 
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
-			foreach (var Sub in Entries) {
-				Sub._InitChildren (this);
-				}
 			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
-				Output.StartElement ("Application");
+				Output.StartElement ("Class");
 				}
 
 	        Output.WriteId ("Namespace", Namespace.ToString());
-	        Output.WriteId ("Id", Id.ToString()); 
-			Output.StartList ("");
-			foreach (Declaration _e in Entries) {
-				_e.Serialize (Output, true);
+	        Output.WriteId ("Name", Name.ToString());
+			foreach (string _s in Description) {
+				Output.WriteAttribute ("Description",_s);
 				}
-			Output.EndList ("");
 			if (tag) {
-				Output.EndElement ("Application");
+				Output.EndElement ("Class");
 				}			
 			}
 		}
 
-    public partial class Declaration : _Choice {
+    public partial class Section : _Choice {
         public ID<_Choice>				Id; 
-        public _Choice					Entry;
+		public string					Prompt;
+		public string					Icon;
+        public List <_Choice>           Entries = new List<_Choice> ();
 
-        public override GuigenType _Tag () =>GuigenType.Declaration;
+        public override GuigenType _Tag () =>GuigenType.Section;
 
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
-			Entry._InitChildren (this);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
 			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
-				Output.StartElement ("Declaration");
+				Output.StartElement ("Section");
 				}
 
 	        Output.WriteId ("Id", Id.ToString()); 
-	        Entry.Serialize (Output, true);
-			if (tag) {
-				Output.EndElement ("Declaration");
-				}			
-			}
-		}
-
-    public partial class Structure : _Choice {
-        public List <_Choice>           Entries = new List<_Choice> ();
-
-        public override GuigenType _Tag () =>GuigenType.Structure;
-
-
-		public override void _InitChildren (_Choice Parent) {
-			Init (Parent);
-			foreach (var Sub in Entries) {
-				Sub._InitChildren (this);
-				}
-			}
-
-		public override void Serialize (StructureWriter Output, bool tag) {
-
-			if (tag) {
-				Output.StartElement ("Structure");
-				}
-
-			Output.StartList ("");
-			foreach (_Choice _e in Entries) {
-				_e.Serialize (Output, true);
-				}
-			Output.EndList ("");
-			if (tag) {
-				Output.EndElement ("Structure");
-				}			
-			}
-		}
-
-    public partial class Environment : _Choice {
-        public List <_Choice>           Entries = new List<_Choice> ();
-
-        public override GuigenType _Tag () =>GuigenType.Environment;
-
-
-		public override void _InitChildren (_Choice Parent) {
-			Init (Parent);
-			foreach (var Sub in Entries) {
-				Sub._InitChildren (this);
-				}
-			}
-
-		public override void Serialize (StructureWriter Output, bool tag) {
-
-			if (tag) {
-				Output.StartElement ("Environment");
-				}
-
-			Output.StartList ("");
-			foreach (_Choice _e in Entries) {
-				_e.Serialize (Output, true);
-				}
-			Output.EndList ("");
-			if (tag) {
-				Output.EndElement ("Environment");
-				}			
-			}
-		}
-
-    public partial class Catalog : _Choice {
-        public TOKEN<_Choice>			Id;
-		public string					Prompt;
-        public List <_Choice>           Entries = new List<_Choice> ();
-
-        public override GuigenType _Tag () =>GuigenType.Catalog;
-
-
-		public override void _InitChildren (_Choice Parent) {
-			Init (Parent);
-			foreach (var Sub in Entries) {
-				Sub._InitChildren (this);
-				}
-			}
-
-		public override void Serialize (StructureWriter Output, bool tag) {
-
-			if (tag) {
-				Output.StartElement ("Catalog");
-				}
-
-	        Output.WriteId ("Id", Id.ToString());
 			Output.WriteAttribute ("Prompt", Prompt);
+			Output.WriteAttribute ("Icon", Icon);
 			Output.StartList ("");
 			foreach (_Choice _e in Entries) {
 				_e.Serialize (Output, true);
 				}
 			Output.EndList ("");
 			if (tag) {
-				Output.EndElement ("Catalog");
-				}			
-			}
-		}
-
-    public partial class Spool : _Choice {
-        public TOKEN<_Choice>			Id;
-		public string					Prompt;
-        public List <_Choice>           Entries = new List<_Choice> ();
-
-        public override GuigenType _Tag () =>GuigenType.Spool;
-
-
-		public override void _InitChildren (_Choice Parent) {
-			Init (Parent);
-			foreach (var Sub in Entries) {
-				Sub._InitChildren (this);
-				}
-			}
-
-		public override void Serialize (StructureWriter Output, bool tag) {
-
-			if (tag) {
-				Output.StartElement ("Spool");
-				}
-
-	        Output.WriteId ("Id", Id.ToString());
-			Output.WriteAttribute ("Prompt", Prompt);
-			Output.StartList ("");
-			foreach (_Choice _e in Entries) {
-				_e.Serialize (Output, true);
-				}
-			Output.EndList ("");
-			if (tag) {
-				Output.EndElement ("Spool");
-				}			
-			}
-		}
-
-    public partial class Menu : _Choice {
-        public List <MenuEntry>           Entries = new List<MenuEntry> ();
-
-        public override GuigenType _Tag () =>GuigenType.Menu;
-
-
-		public override void _InitChildren (_Choice Parent) {
-			Init (Parent);
-			foreach (var Sub in Entries) {
-				Sub._InitChildren (this);
-				}
-			}
-
-		public override void Serialize (StructureWriter Output, bool tag) {
-
-			if (tag) {
-				Output.StartElement ("Menu");
-				}
-
-			Output.StartList ("");
-			foreach (MenuEntry _e in Entries) {
-				_e.Serialize (Output, true);
-				}
-			Output.EndList ("");
-			if (tag) {
-				Output.EndElement ("Menu");
-				}			
-			}
-		}
-
-    public partial class Default : _Choice {
-        public List <MenuEntry>           Entries = new List<MenuEntry> ();
-
-        public override GuigenType _Tag () =>GuigenType.Default;
-
-
-		public override void _InitChildren (_Choice Parent) {
-			Init (Parent);
-			foreach (var Sub in Entries) {
-				Sub._InitChildren (this);
-				}
-			}
-
-		public override void Serialize (StructureWriter Output, bool tag) {
-
-			if (tag) {
-				Output.StartElement ("Default");
-				}
-
-			Output.StartList ("");
-			foreach (MenuEntry _e in Entries) {
-				_e.Serialize (Output, true);
-				}
-			Output.EndList ("");
-			if (tag) {
-				Output.EndElement ("Default");
-				}			
-			}
-		}
-
-    public partial class Selector : _Choice {
-        public List <MenuEntry>           Entries = new List<MenuEntry> ();
-
-        public override GuigenType _Tag () =>GuigenType.Selector;
-
-
-		public override void _InitChildren (_Choice Parent) {
-			Init (Parent);
-			foreach (var Sub in Entries) {
-				Sub._InitChildren (this);
-				}
-			}
-
-		public override void Serialize (StructureWriter Output, bool tag) {
-
-			if (tag) {
-				Output.StartElement ("Selector");
-				}
-
-			Output.StartList ("");
-			foreach (MenuEntry _e in Entries) {
-				_e.Serialize (Output, true);
-				}
-			Output.EndList ("");
-			if (tag) {
-				Output.EndElement ("Selector");
+				Output.EndElement ("Section");
 				}			
 			}
 		}
 
     public partial class Action : _Choice {
-        public List <MenuEntry>           Entries = new List<MenuEntry> ();
+        public ID<_Choice>				Id; 
+		public string					Prompt;
+		public string					Icon;
+        public List <_Choice>           Entries = new List<_Choice> ();
 
         public override GuigenType _Tag () =>GuigenType.Action;
 
@@ -601,8 +391,11 @@ namespace Goedel.Tool.Guigen {
 				Output.StartElement ("Action");
 				}
 
+	        Output.WriteId ("Id", Id.ToString()); 
+			Output.WriteAttribute ("Prompt", Prompt);
+			Output.WriteAttribute ("Icon", Icon);
 			Output.StartList ("");
-			foreach (MenuEntry _e in Entries) {
+			foreach (_Choice _e in Entries) {
 				_e.Serialize (Output, true);
 				}
 			Output.EndList ("");
@@ -612,12 +405,11 @@ namespace Goedel.Tool.Guigen {
 			}
 		}
 
-    public partial class MenuEntry : _Choice {
-        public TOKEN<_Choice>			Id;
-		public string					Prompt;
+    public partial class Dialog : _Choice {
+        public ID<_Choice>				Id; 
         public List <_Choice>           Entries = new List<_Choice> ();
 
-        public override GuigenType _Tag () =>GuigenType.MenuEntry;
+        public override GuigenType _Tag () =>GuigenType.Dialog;
 
 
 		public override void _InitChildren (_Choice Parent) {
@@ -630,23 +422,130 @@ namespace Goedel.Tool.Guigen {
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
-				Output.StartElement ("MenuEntry");
+				Output.StartElement ("Dialog");
 				}
 
-	        Output.WriteId ("Id", Id.ToString());
-			Output.WriteAttribute ("Prompt", Prompt);
+	        Output.WriteId ("Id", Id.ToString()); 
 			Output.StartList ("");
 			foreach (_Choice _e in Entries) {
 				_e.Serialize (Output, true);
 				}
 			Output.EndList ("");
 			if (tag) {
-				Output.EndElement ("MenuEntry");
+				Output.EndElement ("Dialog");
+				}			
+			}
+		}
+
+    public partial class Button : _Choice {
+        public REF<_Choice>				Id;
+
+        public override GuigenType _Tag () =>GuigenType.Button;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Button");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			if (tag) {
+				Output.EndElement ("Button");
+				}			
+			}
+		}
+
+    public partial class Chooser : _Choice {
+        public REF<_Choice>				Id;
+		public string					Prompt;
+		public string					Icon;
+        public TOKEN<_Choice>			Type;
+        public List <_Choice>           Entries = new List<_Choice> ();
+
+        public override GuigenType _Tag () =>GuigenType.Chooser;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Chooser");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			Output.WriteAttribute ("Prompt", Prompt);
+			Output.WriteAttribute ("Icon", Icon);
+	        Output.WriteId ("Type", Type.ToString());
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("Chooser");
+				}			
+			}
+		}
+
+    public partial class Primary : _Choice {
+
+        public override GuigenType _Tag () =>GuigenType.Primary;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Primary");
+				}
+
+			if (tag) {
+				Output.EndElement ("Primary");
+				}			
+			}
+		}
+
+    public partial class Context : _Choice {
+        public TOKEN<_Choice>			Id;
+		public string					Prompt;
+
+        public override GuigenType _Tag () =>GuigenType.Context;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Context");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			Output.WriteAttribute ("Prompt", Prompt);
+			if (tag) {
+				Output.EndElement ("Context");
 				}			
 			}
 		}
 
     public partial class Text : _Choice {
+        public TOKEN<_Choice>			Id;
 		public string					Prompt;
 
         public override GuigenType _Tag () =>GuigenType.Text;
@@ -662,6 +561,7 @@ namespace Goedel.Tool.Guigen {
 				Output.StartElement ("Text");
 				}
 
+	        Output.WriteId ("Id", Id.ToString());
 			Output.WriteAttribute ("Prompt", Prompt);
 			if (tag) {
 				Output.EndElement ("Text");
@@ -669,8 +569,84 @@ namespace Goedel.Tool.Guigen {
 			}
 		}
 
+    public partial class Color : _Choice {
+        public TOKEN<_Choice>			Id;
+		public string					Prompt;
+
+        public override GuigenType _Tag () =>GuigenType.Color;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Color");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			Output.WriteAttribute ("Prompt", Prompt);
+			if (tag) {
+				Output.EndElement ("Color");
+				}			
+			}
+		}
+
+    public partial class Size : _Choice {
+        public TOKEN<_Choice>			Id;
+		public string					Prompt;
+
+        public override GuigenType _Tag () =>GuigenType.Size;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Size");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			Output.WriteAttribute ("Prompt", Prompt);
+			if (tag) {
+				Output.EndElement ("Size");
+				}			
+			}
+		}
+
+    public partial class Decimal : _Choice {
+        public TOKEN<_Choice>			Id;
+		public string					Prompt;
+
+        public override GuigenType _Tag () =>GuigenType.Decimal;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Decimal");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			Output.WriteAttribute ("Prompt", Prompt);
+			if (tag) {
+				Output.EndElement ("Decimal");
+				}			
+			}
+		}
+
     public partial class Icon : _Choice {
-		public string					File;
+        public TOKEN<_Choice>			Id;
+		public string					Prompt;
 
         public override GuigenType _Tag () =>GuigenType.Icon;
 
@@ -685,7 +661,8 @@ namespace Goedel.Tool.Guigen {
 				Output.StartElement ("Icon");
 				}
 
-			Output.WriteAttribute ("File", File);
+	        Output.WriteId ("Id", Id.ToString());
+			Output.WriteAttribute ("Prompt", Prompt);
 			if (tag) {
 				Output.EndElement ("Icon");
 				}			
@@ -721,41 +698,50 @@ namespace Goedel.Tool.Guigen {
 		Apache2License_Start,
 		OtherLicense_Start,
 		OtherLicense__Text,				
-		Application_Start,
-		Application__Namespace,				
-		Application__Id,				
-		Application__Entries,				
-		Declaration_Start,
-		Declaration__Id,				
-		Declaration__Entry,				
-		Structure_Start,
-		Structure__Entries,				
-		Environment_Start,
-		Environment__Entries,				
-		Catalog_Start,
-		Catalog__Id,				
-		Catalog__Prompt,				
-		Catalog__Entries,				
-		Spool_Start,
-		Spool__Id,				
-		Spool__Prompt,				
-		Spool__Entries,				
-		Menu_Start,
-		Menu__Entries,				
-		Default_Start,
-		Default__Entries,				
-		Selector_Start,
-		Selector__Entries,				
+		Class_Start,
+		Class__Namespace,				
+		Class__Name,				
+		Class__Description,				
+		Section_Start,
+		Section__Id,				
+		Section__Prompt,				
+		Section__Icon,				
+		Section__Entries,				
 		Action_Start,
+		Action__Id,				
+		Action__Prompt,				
+		Action__Icon,				
 		Action__Entries,				
-		MenuEntry_Start,
-		MenuEntry__Id,				
-		MenuEntry__Prompt,				
-		MenuEntry__Entries,				
+		Dialog_Start,
+		Dialog__Id,				
+		Dialog__Entries,				
+		Button_Start,
+		Button__Id,				
+		Chooser_Start,
+		Chooser__Id,				
+		Chooser__Prompt,				
+		Chooser__Icon,				
+		Chooser__Type,				
+		Chooser__Entries,				
+		Primary_Start,
+		Context_Start,
+		Context__Id,				
+		Context__Prompt,				
 		Text_Start,
+		Text__Id,				
 		Text__Prompt,				
+		Color_Start,
+		Color__Id,				
+		Color__Prompt,				
+		Size_Start,
+		Size__Id,				
+		Size__Prompt,				
+		Decimal_Start,
+		Decimal__Id,				
+		Decimal__Prompt,				
 		Icon_Start,
-		Icon__File,				
+		Icon__Id,				
+		Icon__Prompt,				
         }
 
 
@@ -810,9 +796,8 @@ namespace Goedel.Tool.Guigen {
             Stack = new List <_StackItem> ();
             StartOfEntry = true;
 
-			TYPE__GroupT = Registry.TYPE ("GroupT"); 
-			TYPE__CatalogItem = Registry.TYPE ("CatalogItem"); 
-			TYPE__MenuItem = Registry.TYPE ("MenuItem"); 
+			TYPE__SectionT = Registry.TYPE ("SectionT"); 
+			TYPE__TypeT = Registry.TYPE ("TypeT"); 
 
 
 
@@ -820,9 +805,8 @@ namespace Goedel.Tool.Guigen {
 
 
 
-        public TYPE<Goedel.Tool.Guigen._Choice> TYPE__GroupT ;
-        public TYPE<Goedel.Tool.Guigen._Choice> TYPE__CatalogItem ;
-        public TYPE<Goedel.Tool.Guigen._Choice> TYPE__MenuItem ;
+        public TYPE<Goedel.Tool.Guigen._Choice> TYPE__SectionT ;
+        public TYPE<Goedel.Tool.Guigen._Choice> TYPE__TypeT ;
 
         private Goedel.Tool.Guigen._Choice New_Choice(string Label) {
             switch (Label) {
@@ -834,18 +818,18 @@ namespace Goedel.Tool.Guigen {
                 case "ISCLicense": return NewISCLicense();
                 case "Apache2License": return NewApache2License();
                 case "OtherLicense": return NewOtherLicense();
-                case "Application": return NewApplication();
-                case "Declaration": return NewDeclaration();
-                case "Structure": return NewStructure();
-                case "Environment": return NewEnvironment();
-                case "Catalog": return NewCatalog();
-                case "Spool": return NewSpool();
-                case "Menu": return NewMenu();
-                case "Default": return NewDefault();
-                case "Selector": return NewSelector();
+                case "Class": return NewClass();
+                case "Section": return NewSection();
                 case "Action": return NewAction();
-                case "MenuEntry": return NewMenuEntry();
+                case "Dialog": return NewDialog();
+                case "Button": return NewButton();
+                case "Chooser": return NewChooser();
+                case "Primary": return NewPrimary();
+                case "Context": return NewContext();
                 case "Text": return NewText();
+                case "Color": return NewColor();
+                case "Size": return NewSize();
+                case "Decimal": return NewDecimal();
                 case "Icon": return NewIcon();
 
 				}
@@ -911,74 +895,18 @@ namespace Goedel.Tool.Guigen {
             }
 
 
-        private Goedel.Tool.Guigen.Application NewApplication() {
-            Goedel.Tool.Guigen.Application result = new Goedel.Tool.Guigen.Application();
+        private Goedel.Tool.Guigen.Class NewClass() {
+            Goedel.Tool.Guigen.Class result = new Goedel.Tool.Guigen.Class();
             Push (result);
-            State = StateCode.Application_Start;
+            State = StateCode.Class_Start;
             return result;
             }
 
 
-        private Goedel.Tool.Guigen.Declaration NewDeclaration() {
-            Goedel.Tool.Guigen.Declaration result = new Goedel.Tool.Guigen.Declaration();
+        private Goedel.Tool.Guigen.Section NewSection() {
+            Goedel.Tool.Guigen.Section result = new Goedel.Tool.Guigen.Section();
             Push (result);
-            State = StateCode.Declaration_Start;
-            return result;
-            }
-
-
-        private Goedel.Tool.Guigen.Structure NewStructure() {
-            Goedel.Tool.Guigen.Structure result = new Goedel.Tool.Guigen.Structure();
-            Push (result);
-            State = StateCode.Structure_Start;
-            return result;
-            }
-
-
-        private Goedel.Tool.Guigen.Environment NewEnvironment() {
-            Goedel.Tool.Guigen.Environment result = new Goedel.Tool.Guigen.Environment();
-            Push (result);
-            State = StateCode.Environment_Start;
-            return result;
-            }
-
-
-        private Goedel.Tool.Guigen.Catalog NewCatalog() {
-            Goedel.Tool.Guigen.Catalog result = new Goedel.Tool.Guigen.Catalog();
-            Push (result);
-            State = StateCode.Catalog_Start;
-            return result;
-            }
-
-
-        private Goedel.Tool.Guigen.Spool NewSpool() {
-            Goedel.Tool.Guigen.Spool result = new Goedel.Tool.Guigen.Spool();
-            Push (result);
-            State = StateCode.Spool_Start;
-            return result;
-            }
-
-
-        private Goedel.Tool.Guigen.Menu NewMenu() {
-            Goedel.Tool.Guigen.Menu result = new Goedel.Tool.Guigen.Menu();
-            Push (result);
-            State = StateCode.Menu_Start;
-            return result;
-            }
-
-
-        private Goedel.Tool.Guigen.Default NewDefault() {
-            Goedel.Tool.Guigen.Default result = new Goedel.Tool.Guigen.Default();
-            Push (result);
-            State = StateCode.Default_Start;
-            return result;
-            }
-
-
-        private Goedel.Tool.Guigen.Selector NewSelector() {
-            Goedel.Tool.Guigen.Selector result = new Goedel.Tool.Guigen.Selector();
-            Push (result);
-            State = StateCode.Selector_Start;
+            State = StateCode.Section_Start;
             return result;
             }
 
@@ -991,10 +919,42 @@ namespace Goedel.Tool.Guigen {
             }
 
 
-        private Goedel.Tool.Guigen.MenuEntry NewMenuEntry() {
-            Goedel.Tool.Guigen.MenuEntry result = new Goedel.Tool.Guigen.MenuEntry();
+        private Goedel.Tool.Guigen.Dialog NewDialog() {
+            Goedel.Tool.Guigen.Dialog result = new Goedel.Tool.Guigen.Dialog();
             Push (result);
-            State = StateCode.MenuEntry_Start;
+            State = StateCode.Dialog_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Guigen.Button NewButton() {
+            Goedel.Tool.Guigen.Button result = new Goedel.Tool.Guigen.Button();
+            Push (result);
+            State = StateCode.Button_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Guigen.Chooser NewChooser() {
+            Goedel.Tool.Guigen.Chooser result = new Goedel.Tool.Guigen.Chooser();
+            Push (result);
+            State = StateCode.Chooser_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Guigen.Primary NewPrimary() {
+            Goedel.Tool.Guigen.Primary result = new Goedel.Tool.Guigen.Primary();
+            Push (result);
+            State = StateCode.Primary_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Guigen.Context NewContext() {
+            Goedel.Tool.Guigen.Context result = new Goedel.Tool.Guigen.Context();
+            Push (result);
+            State = StateCode.Context_Start;
             return result;
             }
 
@@ -1003,6 +963,30 @@ namespace Goedel.Tool.Guigen {
             Goedel.Tool.Guigen.Text result = new Goedel.Tool.Guigen.Text();
             Push (result);
             State = StateCode.Text_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Guigen.Color NewColor() {
+            Goedel.Tool.Guigen.Color result = new Goedel.Tool.Guigen.Color();
+            Push (result);
+            State = StateCode.Color_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Guigen.Size NewSize() {
+            Goedel.Tool.Guigen.Size result = new Goedel.Tool.Guigen.Size();
+            Push (result);
+            State = StateCode.Size_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Guigen.Decimal NewDecimal() {
+            Goedel.Tool.Guigen.Decimal result = new Goedel.Tool.Guigen.Decimal();
+            Push (result);
+            State = StateCode.Decimal_Start;
             return result;
             }
 
@@ -1025,18 +1009,18 @@ namespace Goedel.Tool.Guigen {
                 case "ISCLicense": return Goedel.Tool.Guigen.GuigenType.ISCLicense;
                 case "Apache2License": return Goedel.Tool.Guigen.GuigenType.Apache2License;
                 case "OtherLicense": return Goedel.Tool.Guigen.GuigenType.OtherLicense;
-                case "Application": return Goedel.Tool.Guigen.GuigenType.Application;
-                case "Declaration": return Goedel.Tool.Guigen.GuigenType.Declaration;
-                case "Structure": return Goedel.Tool.Guigen.GuigenType.Structure;
-                case "Environment": return Goedel.Tool.Guigen.GuigenType.Environment;
-                case "Catalog": return Goedel.Tool.Guigen.GuigenType.Catalog;
-                case "Spool": return Goedel.Tool.Guigen.GuigenType.Spool;
-                case "Menu": return Goedel.Tool.Guigen.GuigenType.Menu;
-                case "Default": return Goedel.Tool.Guigen.GuigenType.Default;
-                case "Selector": return Goedel.Tool.Guigen.GuigenType.Selector;
+                case "Class": return Goedel.Tool.Guigen.GuigenType.Class;
+                case "Section": return Goedel.Tool.Guigen.GuigenType.Section;
                 case "Action": return Goedel.Tool.Guigen.GuigenType.Action;
-                case "MenuEntry": return Goedel.Tool.Guigen.GuigenType.MenuEntry;
+                case "Dialog": return Goedel.Tool.Guigen.GuigenType.Dialog;
+                case "Button": return Goedel.Tool.Guigen.GuigenType.Button;
+                case "Chooser": return Goedel.Tool.Guigen.GuigenType.Chooser;
+                case "Primary": return Goedel.Tool.Guigen.GuigenType.Primary;
+                case "Context": return Goedel.Tool.Guigen.GuigenType.Context;
                 case "Text": return Goedel.Tool.Guigen.GuigenType.Text;
+                case "Color": return Goedel.Tool.Guigen.GuigenType.Color;
+                case "Size": return Goedel.Tool.Guigen.GuigenType.Size;
+                case "Decimal": return Goedel.Tool.Guigen.GuigenType.Decimal;
                 case "Icon": return Goedel.Tool.Guigen.GuigenType.Icon;
 
                 }
@@ -1115,8 +1099,10 @@ namespace Goedel.Tool.Guigen {
                             Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
                             if (false |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Copyright) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Application) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Declaration)) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Class) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Section) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Action) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Dialog)) {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
@@ -1224,235 +1210,85 @@ namespace Goedel.Tool.Guigen {
                        throw new Expected("Expected Text");
 
 
-                    case StateCode.Application_Start:
+                    case StateCode.Class_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.Tool.Guigen.Application Current_Cast = (Goedel.Tool.Guigen.Application)Current;
-                            Current_Cast.Namespace = Registry.TOKEN(Position, Text, TYPE__GroupT, Current_Cast);
-                            State = StateCode.Application__Namespace;
+                            Goedel.Tool.Guigen.Class Current_Cast = (Goedel.Tool.Guigen.Class)Current;
+                            Current_Cast.Namespace = Registry.TOKEN(Position, Text, TYPE__TypeT, Current_Cast);
+                            State = StateCode.Class__Namespace;
                             break;
                             }
                         throw new Expected("Expected LABEL or LITERAL");
 
-                    case StateCode.Application__Namespace:
+                    case StateCode.Class__Namespace:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.Tool.Guigen.Application Current_Cast = (Goedel.Tool.Guigen.Application)Current;
-                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__GroupT, Current_Cast);
-                            State = StateCode.Application__Id;
+                            Goedel.Tool.Guigen.Class Current_Cast = (Goedel.Tool.Guigen.Class)Current;
+                            Current_Cast.Name = Registry.TOKEN(Position, Text, TYPE__TypeT, Current_Cast);
+                            State = StateCode.Class__Name;
                             break;
                             }
                         throw new Expected("Expected LABEL or LITERAL");
 
-                    case StateCode.Application__Id:
-
+                    case StateCode.Class__Name:
                         if (Token == TokenType.BEGIN) {
-                            State = StateCode.Application__Entries;
+                            State = StateCode.Class__Description;
+                            break;
                             }
                         else {
-							Pop ();
+                            Pop();
                             Represent = true;
+                            break;
                             }
-                        break;
-                    case StateCode.Application__Entries: 
-                        if (Token == TokenType.END) {
+                    case StateCode.Class__Description:
+                       if (Token == TokenType.END) {
                             Pop();
                             break;
                             }
-
-						// Parser transition for LIST $$$$$
-
-
-						/// Label
-                        else {
-                            Goedel.Tool.Guigen.Application Current_Cast = (Goedel.Tool.Guigen.Application)Current;
-                            Current_Cast.Entries.Add (NewDeclaration ());
-                            Represent = true;
+                       else if (Token == TokenType.TEXT) {
+                            Goedel.Tool.Guigen.Class Current_Cast = (Goedel.Tool.Guigen.Class)Current;
+                            Current_Cast.Description.Add (Text);
+                            break;							
                             }
+                       throw new Expected("Expected Text");
 
-                        break;
 
-
-                    case StateCode.Declaration_Start:
+                    case StateCode.Section_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.Tool.Guigen.Declaration Current_Cast = (Goedel.Tool.Guigen.Declaration)Current;
-                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__GroupT, Current_Cast);
-                            State = StateCode.Declaration__Id;
+                            Goedel.Tool.Guigen.Section Current_Cast = (Goedel.Tool.Guigen.Section)Current;
+                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__SectionT, Current_Cast);
+                            State = StateCode.Section__Id;
                             break;
                             }
                         throw new Expected("Expected LABEL or LITERAL");
 
-                    case StateCode.Declaration__Id:
-                        if (Token == TokenType.LABEL) {
-							Goedel.Tool.Guigen.Declaration Current_Cast = (Goedel.Tool.Guigen.Declaration)Current;
-                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
-                            if ( false |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Structure) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Environment) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Icon) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Menu) ) {
-                                State = StateCode.Declaration__Entry;
-                                Current_Cast.Entry = New_Choice(Text);
-                                }
-                            else {
-                               throw new Expected ("Parser Error Expected [Structure Environment Icon Menu ]");
-                                }
-                            break;
-                            }
-                        else { 
-						    throw new Expected("Parser Error Expected [Structure Environment Icon Menu ]");
-                            }
-
-                    case StateCode.Declaration__Entry:
-                        Pop ();
-                        Represent = true; 
-                        break;
-                    case StateCode.Structure_Start:
-
-                        if (Token == TokenType.BEGIN) {
-                            State = StateCode.Structure__Entries;
-                            }
-                        else {
-							Pop ();
-                            Represent = true;
-                            }
-                        break;
-                    case StateCode.Structure__Entries: 
-                        if (Token == TokenType.END) {
-                            Pop();
-                            break;
-                            }
-
-						// Parser transition for LIST $$$$$
-
-                        else if (Token == TokenType.LABEL) {
-							Goedel.Tool.Guigen.Structure Current_Cast = (Goedel.Tool.Guigen.Structure)Current;
-                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
-                            if ( false |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Icon) ) {
-                                Current_Cast.Entries.Add (New_Choice(Text));
-                                }
-                            else {
-								throw new Expected ("Parser Error Expected [Icon ]");
-								}
-							}
-                        break;
-
-
-                    case StateCode.Environment_Start:
-
-                        if (Token == TokenType.BEGIN) {
-                            State = StateCode.Environment__Entries;
-                            }
-                        else {
-							Pop ();
-                            Represent = true;
-                            }
-                        break;
-                    case StateCode.Environment__Entries: 
-                        if (Token == TokenType.END) {
-                            Pop();
-                            break;
-                            }
-
-						// Parser transition for LIST $$$$$
-
-                        else if (Token == TokenType.LABEL) {
-							Goedel.Tool.Guigen.Environment Current_Cast = (Goedel.Tool.Guigen.Environment)Current;
-                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
-                            if ( false |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Catalog) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Spool) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Icon) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Menu) ) {
-                                Current_Cast.Entries.Add (New_Choice(Text));
-                                }
-                            else {
-								throw new Expected ("Parser Error Expected [Catalog Spool Icon Menu ]");
-								}
-							}
-                        break;
-
-
-                    case StateCode.Catalog_Start:
-                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.Tool.Guigen.Catalog Current_Cast = (Goedel.Tool.Guigen.Catalog)Current;
-                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__CatalogItem, Current_Cast);
-                            State = StateCode.Catalog__Id;
-                            break;
-                            }
-                        throw new Expected("Expected LABEL or LITERAL");
-
-                    case StateCode.Catalog__Id:
+                    case StateCode.Section__Id:
                         if (Token == TokenType.STRING) {
-                            Goedel.Tool.Guigen.Catalog Current_Cast = (Goedel.Tool.Guigen.Catalog)Current;
+                            Goedel.Tool.Guigen.Section Current_Cast = (Goedel.Tool.Guigen.Section)Current;
                             Current_Cast.Prompt = Text;
-                            State = StateCode.Catalog__Prompt;
+                            State = StateCode.Section__Prompt;
                             break;
                             }
                         throw new Expected("Expected String");
 
-                    case StateCode.Catalog__Prompt:
-
-                        if (Token == TokenType.BEGIN) {
-                            State = StateCode.Catalog__Entries;
-                            }
-                        else {
-							Pop ();
-                            Represent = true;
-                            }
-                        break;
-                    case StateCode.Catalog__Entries: 
-                        if (Token == TokenType.END) {
-                            Pop();
-                            break;
-                            }
-
-						// Parser transition for LIST $$$$$
-
-                        else if (Token == TokenType.LABEL) {
-							Goedel.Tool.Guigen.Catalog Current_Cast = (Goedel.Tool.Guigen.Catalog)Current;
-                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
-                            if ( false |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Default) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Selector) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Action) ) {
-                                Current_Cast.Entries.Add (New_Choice(Text));
-                                }
-                            else {
-								throw new Expected ("Parser Error Expected [Default Selector Action ]");
-								}
-							}
-                        break;
-
-
-                    case StateCode.Spool_Start:
-                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.Tool.Guigen.Spool Current_Cast = (Goedel.Tool.Guigen.Spool)Current;
-                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__CatalogItem, Current_Cast);
-                            State = StateCode.Spool__Id;
-                            break;
-                            }
-                        throw new Expected("Expected LABEL or LITERAL");
-
-                    case StateCode.Spool__Id:
+                    case StateCode.Section__Prompt:
                         if (Token == TokenType.STRING) {
-                            Goedel.Tool.Guigen.Spool Current_Cast = (Goedel.Tool.Guigen.Spool)Current;
-                            Current_Cast.Prompt = Text;
-                            State = StateCode.Spool__Prompt;
+                            Goedel.Tool.Guigen.Section Current_Cast = (Goedel.Tool.Guigen.Section)Current;
+                            Current_Cast.Icon = Text;
+                            State = StateCode.Section__Icon;
                             break;
                             }
                         throw new Expected("Expected String");
 
-                    case StateCode.Spool__Prompt:
+                    case StateCode.Section__Icon:
 
                         if (Token == TokenType.BEGIN) {
-                            State = StateCode.Spool__Entries;
+                            State = StateCode.Section__Entries;
                             }
                         else {
 							Pop ();
                             Represent = true;
                             }
                         break;
-                    case StateCode.Spool__Entries: 
+                    case StateCode.Section__Entries: 
                         if (Token == TokenType.END) {
                             Pop();
                             break;
@@ -1461,109 +1297,50 @@ namespace Goedel.Tool.Guigen {
 						// Parser transition for LIST $$$$$
 
                         else if (Token == TokenType.LABEL) {
-							Goedel.Tool.Guigen.Spool Current_Cast = (Goedel.Tool.Guigen.Spool)Current;
+							Goedel.Tool.Guigen.Section Current_Cast = (Goedel.Tool.Guigen.Section)Current;
                             Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Default) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Selector) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Action) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Chooser) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Primary) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Button) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Dialog) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Default Selector Action ]");
+								throw new Expected ("Parser Error Expected [Chooser Primary Button Dialog ]");
 								}
 							}
-                        break;
-
-
-                    case StateCode.Menu_Start:
-
-                        if (Token == TokenType.BEGIN) {
-                            State = StateCode.Menu__Entries;
-                            }
-                        else {
-							Pop ();
-                            Represent = true;
-                            }
-                        break;
-                    case StateCode.Menu__Entries: 
-                        if (Token == TokenType.END) {
-                            Pop();
-                            break;
-                            }
-
-						// Parser transition for LIST $$$$$
-
-
-						/// Label
-                        else {
-                            Goedel.Tool.Guigen.Menu Current_Cast = (Goedel.Tool.Guigen.Menu)Current;
-                            Current_Cast.Entries.Add (NewMenuEntry ());
-                            Represent = true;
-                            }
-
-                        break;
-
-
-                    case StateCode.Default_Start:
-
-                        if (Token == TokenType.BEGIN) {
-                            State = StateCode.Default__Entries;
-                            }
-                        else {
-							Pop ();
-                            Represent = true;
-                            }
-                        break;
-                    case StateCode.Default__Entries: 
-                        if (Token == TokenType.END) {
-                            Pop();
-                            break;
-                            }
-
-						// Parser transition for LIST $$$$$
-
-
-						/// Label
-                        else {
-                            Goedel.Tool.Guigen.Default Current_Cast = (Goedel.Tool.Guigen.Default)Current;
-                            Current_Cast.Entries.Add (NewMenuEntry ());
-                            Represent = true;
-                            }
-
-                        break;
-
-
-                    case StateCode.Selector_Start:
-
-                        if (Token == TokenType.BEGIN) {
-                            State = StateCode.Selector__Entries;
-                            }
-                        else {
-							Pop ();
-                            Represent = true;
-                            }
-                        break;
-                    case StateCode.Selector__Entries: 
-                        if (Token == TokenType.END) {
-                            Pop();
-                            break;
-                            }
-
-						// Parser transition for LIST $$$$$
-
-
-						/// Label
-                        else {
-                            Goedel.Tool.Guigen.Selector Current_Cast = (Goedel.Tool.Guigen.Selector)Current;
-                            Current_Cast.Entries.Add (NewMenuEntry ());
-                            Represent = true;
-                            }
-
                         break;
 
 
                     case StateCode.Action_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.Action Current_Cast = (Goedel.Tool.Guigen.Action)Current;
+                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__SectionT, Current_Cast);
+                            State = StateCode.Action__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Action__Id:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Guigen.Action Current_Cast = (Goedel.Tool.Guigen.Action)Current;
+                            Current_Cast.Prompt = Text;
+                            State = StateCode.Action__Prompt;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Action__Prompt:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Guigen.Action Current_Cast = (Goedel.Tool.Guigen.Action)Current;
+                            Current_Cast.Icon = Text;
+                            State = StateCode.Action__Icon;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Action__Icon:
 
                         if (Token == TokenType.BEGIN) {
                             State = StateCode.Action__Entries;
@@ -1581,46 +1358,45 @@ namespace Goedel.Tool.Guigen {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
-                        else {
-                            Goedel.Tool.Guigen.Action Current_Cast = (Goedel.Tool.Guigen.Action)Current;
-                            Current_Cast.Entries.Add (NewMenuEntry ());
-                            Represent = true;
-                            }
-
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Guigen.Action Current_Cast = (Goedel.Tool.Guigen.Action)Current;
+                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Chooser) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Text) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Color) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Size) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Decimal) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Context) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Context ]");
+								}
+							}
                         break;
 
 
-                    case StateCode.MenuEntry_Start:
+                    case StateCode.Dialog_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.Tool.Guigen.MenuEntry Current_Cast = (Goedel.Tool.Guigen.MenuEntry)Current;
-                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__MenuItem, Current_Cast);
-                            State = StateCode.MenuEntry__Id;
+                            Goedel.Tool.Guigen.Dialog Current_Cast = (Goedel.Tool.Guigen.Dialog)Current;
+                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__SectionT, Current_Cast);
+                            State = StateCode.Dialog__Id;
                             break;
                             }
                         throw new Expected("Expected LABEL or LITERAL");
 
-                    case StateCode.MenuEntry__Id:
-                        if (Token == TokenType.STRING) {
-                            Goedel.Tool.Guigen.MenuEntry Current_Cast = (Goedel.Tool.Guigen.MenuEntry)Current;
-                            Current_Cast.Prompt = Text;
-                            State = StateCode.MenuEntry__Prompt;
-                            break;
-                            }
-                        throw new Expected("Expected String");
-
-                    case StateCode.MenuEntry__Prompt:
+                    case StateCode.Dialog__Id:
 
                         if (Token == TokenType.BEGIN) {
-                            State = StateCode.MenuEntry__Entries;
+                            State = StateCode.Dialog__Entries;
                             }
                         else {
 							Pop ();
                             Represent = true;
                             }
                         break;
-                    case StateCode.MenuEntry__Entries: 
+                    case StateCode.Dialog__Entries: 
                         if (Token == TokenType.END) {
                             Pop();
                             break;
@@ -1629,21 +1405,141 @@ namespace Goedel.Tool.Guigen {
 						// Parser transition for LIST $$$$$
 
                         else if (Token == TokenType.LABEL) {
-							Goedel.Tool.Guigen.MenuEntry Current_Cast = (Goedel.Tool.Guigen.MenuEntry)Current;
+							Goedel.Tool.Guigen.Dialog Current_Cast = (Goedel.Tool.Guigen.Dialog)Current;
                             Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Icon) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Text) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Chooser) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Text) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Color) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Size) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Decimal) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Icon) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Icon Text ]");
+								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Icon ]");
 								}
 							}
                         break;
 
 
+                    case StateCode.Button_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.Button Current_Cast = (Goedel.Tool.Guigen.Button)Current;
+                            Current_Cast.Id = Registry.REF(Position, Text, TYPE__SectionT, Current_Cast);
+                            State = StateCode.Button__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Button__Id:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Chooser_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.Chooser Current_Cast = (Goedel.Tool.Guigen.Chooser)Current;
+                            Current_Cast.Id = Registry.REF(Position, Text, TYPE__SectionT, Current_Cast);
+                            State = StateCode.Chooser__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Chooser__Id:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Guigen.Chooser Current_Cast = (Goedel.Tool.Guigen.Chooser)Current;
+                            Current_Cast.Prompt = Text;
+                            State = StateCode.Chooser__Prompt;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Chooser__Prompt:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Guigen.Chooser Current_Cast = (Goedel.Tool.Guigen.Chooser)Current;
+                            Current_Cast.Icon = Text;
+                            State = StateCode.Chooser__Icon;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Chooser__Icon:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.Chooser Current_Cast = (Goedel.Tool.Guigen.Chooser)Current;
+                            Current_Cast.Type = Registry.TOKEN(Position, Text, TYPE__TypeT, Current_Cast);
+                            State = StateCode.Chooser__Type;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Chooser__Type:
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Chooser__Entries;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.Chooser__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Guigen.Chooser Current_Cast = (Goedel.Tool.Guigen.Chooser)Current;
+                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Button) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [Button ]");
+								}
+							}
+                        break;
+
+
+                    case StateCode.Primary_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Context_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.Context Current_Cast = (Goedel.Tool.Guigen.Context)Current;
+                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__SectionT, Current_Cast);
+                            State = StateCode.Context__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Context__Id:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Guigen.Context Current_Cast = (Goedel.Tool.Guigen.Context)Current;
+                            Current_Cast.Prompt = Text;
+                            State = StateCode.Context__Prompt;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Context__Prompt:
+                        Pop ();
+                        Represent = true; 
+                        break;
                     case StateCode.Text_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.Text Current_Cast = (Goedel.Tool.Guigen.Text)Current;
+                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__SectionT, Current_Cast);
+                            State = StateCode.Text__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Text__Id:
                         if (Token == TokenType.STRING) {
                             Goedel.Tool.Guigen.Text Current_Cast = (Goedel.Tool.Guigen.Text)Current;
                             Current_Cast.Prompt = Text;
@@ -1656,16 +1552,91 @@ namespace Goedel.Tool.Guigen {
                         Pop ();
                         Represent = true; 
                         break;
-                    case StateCode.Icon_Start:
+                    case StateCode.Color_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.Color Current_Cast = (Goedel.Tool.Guigen.Color)Current;
+                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__SectionT, Current_Cast);
+                            State = StateCode.Color__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Color__Id:
                         if (Token == TokenType.STRING) {
-                            Goedel.Tool.Guigen.Icon Current_Cast = (Goedel.Tool.Guigen.Icon)Current;
-                            Current_Cast.File = Text;
-                            State = StateCode.Icon__File;
+                            Goedel.Tool.Guigen.Color Current_Cast = (Goedel.Tool.Guigen.Color)Current;
+                            Current_Cast.Prompt = Text;
+                            State = StateCode.Color__Prompt;
                             break;
                             }
                         throw new Expected("Expected String");
 
-                    case StateCode.Icon__File:
+                    case StateCode.Color__Prompt:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Size_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.Size Current_Cast = (Goedel.Tool.Guigen.Size)Current;
+                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__SectionT, Current_Cast);
+                            State = StateCode.Size__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Size__Id:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Guigen.Size Current_Cast = (Goedel.Tool.Guigen.Size)Current;
+                            Current_Cast.Prompt = Text;
+                            State = StateCode.Size__Prompt;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Size__Prompt:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Decimal_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.Decimal Current_Cast = (Goedel.Tool.Guigen.Decimal)Current;
+                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__SectionT, Current_Cast);
+                            State = StateCode.Decimal__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Decimal__Id:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Guigen.Decimal Current_Cast = (Goedel.Tool.Guigen.Decimal)Current;
+                            Current_Cast.Prompt = Text;
+                            State = StateCode.Decimal__Prompt;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Decimal__Prompt:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Icon_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.Icon Current_Cast = (Goedel.Tool.Guigen.Icon)Current;
+                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__SectionT, Current_Cast);
+                            State = StateCode.Icon__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Icon__Id:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Guigen.Icon Current_Cast = (Goedel.Tool.Guigen.Icon)Current;
+                            Current_Cast.Prompt = Text;
+                            State = StateCode.Icon__Prompt;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Icon__Prompt:
                         Pop ();
                         Represent = true; 
                         break;

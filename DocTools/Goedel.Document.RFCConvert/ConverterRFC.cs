@@ -358,6 +358,9 @@ namespace MakeRFC {
                 if (Attribute.Tag == "id") {
                     return Attribute.Value;
                     }
+                if (Attribute.Tag == "anchor") {
+                    return Attribute.Value;
+                    }
                 }
             return null;
             }

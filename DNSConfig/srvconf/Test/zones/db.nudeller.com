@@ -6,7 +6,7 @@
 ;
 $TTL 600
 nudeller.com.      IN      SOA     dns1.nudeller.com. hallam.gmail.com. (
-                        2020092201       ; serial, todays date + todays serial 
+                        2022102501       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -30,11 +30,11 @@ nudeller.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 nudeller.com.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 108.20.156.67 
-nudeller.com.    A 108.20.156.67 
-www.nudeller.com.    A 108.20.156.67 
-http.nudeller.com.    A 108.20.156.67
-https.nudeller.com.    A 108.20.156.67 
+; Host host1.mathmesh.com 108.7.201.148 
+nudeller.com.    A 108.7.201.148 
+www.nudeller.com.    A 108.7.201.148 
+http.nudeller.com.    A 108.7.201.148
+https.nudeller.com.    A 108.7.201.148 
 _http._tcp.nudeller.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.nudeller.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 

@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 02-Jun-22 5:17:48 PM
+//  This file was automatically generated at 24-May-23 1:07:12 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -137,7 +137,6 @@ public class _MakeGui : Goedel.Command.Dispatch {
 	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
 		new Flag (),
 		new ExistingFile (),
-		new NewFile (),
 		new NewFile ()		} ;
 
 
@@ -171,15 +170,6 @@ public class _MakeGui : Goedel.Command.Dispatch {
 	public virtual string _GenerateCS {
 		set => _Data[2].Parameter (value);
 		}
-	/// <summary>Field accessor for option [ps1]</summary>
-	public virtual NewFile GeneratePs1 {
-		get => _Data[3] as NewFile;
-		set => _Data[3]  = value;
-		}
-
-	public virtual string _GeneratePs1 {
-		set => _Data[3].Parameter (value);
-		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
@@ -202,13 +192,6 @@ public class _MakeGui : Goedel.Command.Dispatch {
 				Brief = "Generate cs class",
 				Index = 2,
 				Key = "cs"
-				},
-			new DescribeEntryOption () {
-				Identifier = "GeneratePs1", 
-				Default = "ps1", // null if null
-				Brief = "Generate cs class",
-				Index = 3,
-				Key = "ps1"
 				}
 			}
 		};
@@ -288,21 +271,6 @@ public class _GuigenShell : global::Goedel.Command.DispatchShell {
 				_Output= OutputWriter 
 				};
 			Script.GenerateCS (Parse);
-			}
-		// Script output of type GeneratePs1 ps1
-		if (Options.GeneratePs1.Text != null) {
-			string outputfile = Options.GeneratePs1.Text; // Automatically defaults
-			if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
-				return;
-				}
-            using Stream outputStream =
-                        new FileStream(outputfile, FileMode.Create, FileAccess.Write);
-            using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
-
-			Goedel.Tool.Guigen.Generate Script = new () { 
-				_Output= OutputWriter 
-				};
-			Script.GeneratePs1 (Parse);
 			}
 		}
 

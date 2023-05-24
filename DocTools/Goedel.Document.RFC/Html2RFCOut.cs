@@ -16,6 +16,7 @@ public partial class Html2RFCOut : XMLTextWriter {
     TextWriter textWriter;
 
     public string Pilcrow = "&para;"; // "¶"
+    public string Sect = "&sect;"; // "¶"
 
     readonly string[] attributesLinkLicense = new string[] {
             "href", "https://trustee.ietf.org/trust-legal-provisions.html", "rel", "license" };

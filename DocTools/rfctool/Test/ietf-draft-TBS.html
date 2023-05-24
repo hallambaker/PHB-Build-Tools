@@ -1,0 +1,1295 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="Common,Latin" name="scripts">
+    <meta content="initial-scale=1.0" name="viewport">
+    <title>RFC: Title</title>
+    <meta name="description" content="Examples of links   ">
+    <meta content="rfctool 2.0" name="generator">
+    <meta content="null" name="rfc.number">
+    <link href="rfc.xml" type="application/rfc+xml" rel="alternate">
+    <link href="#copyright" rel="license">
+    <style type="text/css">
+/* fonts */
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans'); /* Sans-serif */
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif'); /* Serif (print) */
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono'); /* Monospace */
+
+@viewport {
+  zoom: 1.0;
+  width: extend-to-zoom;
+}
+@-ms-viewport {
+  width: extend-to-zoom;
+  zoom: 1.0;
+}
+/* general and mobile first */
+html {
+}
+body {
+  max-width: 90%;
+  margin: 1.5em auto;
+  color: #222;
+  background-color: #fff;
+  font-size: 14px;
+  font-family: 'Noto Sans', Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+.ears {
+  display: none;
+}
+
+/* headings */
+#title, h1, h2, h3, h4, h5, h6 {
+  margin: 1em 0 0.5em;
+  font-weight: bold;
+  line-height: 1.3;
+}
+#title {
+  clear: both;
+  border-bottom: 1px solid #ddd;
+  margin: 0 0 0.5em 0;
+  padding: 1em 0 0.5em;
+}
+.filename
+{
+    font-size: 20px;
+    color: darkgray;
+}
+.author {
+  padding-bottom: 4px;
+}
+h1 {
+  font-size: 26px;
+  margin: 1em 0;
+  color: blueviolet;
+}
+h2
+{
+    font-size: 22px;
+    margin-top: -20px; /* provide offset for in-page anchors */
+    padding-top: 33px;
+    color: blueviolet;
+}
+h3
+{
+    font-size: 18px;
+    margin-top: -36px; /* provide offset for in-page anchors */
+    padding-top: 42px;
+    color: blueviolet;
+}
+h4
+{
+    font-size: 16px;
+    margin-top: -36px; /* provide offset for in-page anchors */
+    padding-top: 42px;
+    color: blueviolet;
+}
+h5, h6 {
+  font-size: 14px;
+}
+/* Styling for title RFC Number */
+h1#rfcnum {
+    clear: both;
+    margin: 0 0 -1em;
+    padding: 1em 0 0 0;
+}
+#n-copyright-notice {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+}
+/* general structure */
+p {
+  padding: 0;
+  margin: 0 0 1em 0;
+  text-align: left;
+}
+div, span {
+  position: relative;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 1em 1em 0;
+  margin-bottom: 1.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+.alignCenter.art-text {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 1em 1em 0;
+  margin-bottom: 1.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 1em 2em;
+}
+ol ol, ul ul, ol ul, ul ol {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+ul.compact, .ulCompact,
+ol.compact, .olCompact {
+  line-height: 100%;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+  font-weight: bold;
+}
+    dl.nohang > dt
+    {
+        float: none;
+        font-weight: bold;
+    }
+dl > dd {
+  margin-bottom: .8em;
+  min-height: 1.3em;
+}
+dl.compact > dd, dlCompact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+
+/* links */
+a {
+  text-decoration: none;
+}
+a[href] {
+  color: #3E8EDE;
+}
+a[href]:hover {
+  background-color: #f2f2f2;
+}
+figcaption a[href],
+a[href].selfRef {
+  color: blueviolet;
+}
+/* XXX probably not this:
+a.selfRef:hover {
+  background-color: transparent;
+  cursor: default;
+} */
+
+/* Figures */
+tt, code, pre, code {
+  background-color: #f9f9f9;
+  font-family: 'Roboto Mono', monospace;
+}
+pre {
+  border: 1px solid #eee;
+  margin: 0;
+  padding: 1em;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption {
+  font-style: italic;
+  margin: 0 0 1em 0;
+}
+@media screen {
+  pre {
+    overflow-x: auto;
+    max-width: 100%;
+    max-width: calc(100% - 22px);
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 1.2em 2em;
+}
+blockquote {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  border: 1px solid #eee;
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5em 0.75em;
+}
+th {
+  text-align: left;
+  background-color: #e9e9e9;
+}
+tr:nth-child(2n+1) > td {
+  background-color: #f5f5f5;
+}
+table caption {
+  font-style: italic;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+table p {
+  /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
+     be allowed within tables more generally, it would be far better to select on a class. */
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  color: #777;
+  text-decoration: none;
+  visibility: hidden;
+  user-select: none;
+  -ms-user-select: none;
+  -o-user-select:none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+@media screen {
+  aside:hover > a.pilcrow,
+  p:hover > a.pilcrow,
+  blockquote:hover > a.pilcrow,
+  div:hover > a.pilcrow,
+  li:hover > a.pilcrow,
+  pre:hover > a.pilcrow {
+    visibility: visible;
+  }
+  a.pilcrow:hover {
+    background-color: transparent;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+}
+.bcp14 {
+  font-variant: small-caps;
+}
+
+.role {
+  font-variant: all-small-caps;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: 0.9em;
+}
+#identifiers dt {
+  width: 3em;
+  clear: left;
+}
+#identifiers dd {
+  float: left;
+  margin-bottom: 0;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc  {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+nav.toc ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+nav.toc li {
+  line-height: 1.3em;
+  margin: 0.75em 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+/* references */
+.reference dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 7em;
+}
+.reference dd {
+  margin-left: 8em;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.reference .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+.index ul {
+  margin: 0 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+.index ul ul {
+  margin: 0;
+}
+.index li {
+  margin: 0;
+  text-indent: -2em;
+  padding-left: 2em;
+  padding-bottom: 5px;
+}
+.indexIndex {
+  margin: 0.5em 0 1em;
+}
+.index a {
+  font-weight: 700;
+}
+/* make the index two-column on all but the smallest screens */
+@media (min-width: 600px) {
+  .index ul {
+    -moz-column-count: 2;
+    -moz-column-gap: 20px;
+  }
+  .index ul ul {
+    -moz-column-count: 1;
+    -moz-column-gap: 0;
+  }
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  font-family: "Noto Sans",Arial,Helvetica,sans-serif;
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+
+/* temporary notes */
+.rfcEditorRemove::before {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  padding: 0.2em;
+  content: "The RFC Editor will remove this note";
+  color: #b76427;
+  background-color: rgba(249, 232, 105, 0.3);
+}
+.rfcEditorRemove {
+  position: relative;
+  padding-top: 1.8em;
+  background-color: rgba(249, 232, 105, 0.3);
+  border-radius: 3px;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 1023px) {
+  body {
+    padding-top: 2em;
+  }
+  #title {
+    padding: 1em 0;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    margin-top: -18px;  /* provide offset for in-page anchors */
+    padding-top: 38px;
+  }
+  #identifiers dd {
+    max-width: 60%;
+  }
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    background-color: inherit;
+    border-bottom: 1px solid #ccc;
+  }
+  #toc h2 {
+    margin: -1px 0 0 0;
+    padding: 4px 0 4px 6px;
+    padding-right: 1em;
+    min-width: 190px;
+    font-size: 1.1em;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 6px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 1024px) {
+  body {
+    max-width: 724px;
+    margin: 42px auto;
+    padding-left: 1.5em;
+    padding-right: 29em;
+  }
+  #toc {
+    position: fixed;
+    top: 42px;
+    right: 42px;
+    width: 25%;
+    margin: 0;
+    padding: 0 1em;
+    z-index: 1;
+  }
+  #toc h2 {
+    border-top: none;
+    border-bottom: 1px solid #ddd;
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 0;
+    overflow: auto;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    font-family: 'Noto Serif', "Times New Roman", Times, serif;
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre {
+    page-break-inside: avoid;
+  }
+  figure {
+    overflow: scroll;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  h2+*, h3+*, h4+*, h5+*, h6+* {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+.ears thead .left {
+  string-set: ears-top-left content();
+}
+
+.ears thead .center {
+  string-set: ears-top-center content();
+}
+
+.ears thead .right {
+  string-set: ears-top-right content();
+}
+
+.ears tfoot .left {
+  string-set: ears-bottom-left content();
+}
+
+.ears tfoot .center {
+  string-set: ears-bottom-center content();
+}
+
+.ears tfoot .right {
+  string-set: ears-bottom-right content();
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+  @top-left {
+    content: 'Internet-Draft';
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-left {
+    content: string(ears-top-left);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-center {
+    content: string(ears-top-center);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-right {
+    content: string(ears-top-right);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @bottom-left {
+    content: string(ears-bottom-left);
+    vertical-align: top;
+    border-top: solid 1px #ccc;
+  }
+  @bottom-center {
+    content: string(ears-bottom-center);
+    vertical-align: top;
+    border-top: solid 1px #ccc;
+  }
+  @bottom-right {
+      content: '[Page ' counter(page) ']';
+      vertical-align: top;
+      border-top: solid 1px #ccc;
+  }
+}
+    </style>
+    <link href="rfc-local.css" rel="stylesheet" type="text/css">
+    <link href="https://dx.doi.org/10.17487/rfc" rel="alternate">
+    <link href="urn:issn:2070-1721" rel="alternate">
+  </head>
+  <body>
+    <table class="ears">
+      <thead>
+        <tr>
+          <td class="left">Internet-Draft</td>
+          <td class="center">Title</td>
+          <td class="right">October 2022</td>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <td class="left"></td>
+          <td class="center">Expires April 24, 2023</td>
+          <td class="right">[Page]</td>
+        </tr>
+      </tfoot>
+    </table>
+    <script src="https://www.rfc-editor.org/js/metadata.min.js">
+    </script>
+
+    <div id="external-metadata" class="document-information">
+    </div>
+    <div id="internal-metadata" class="document-information">
+      <dl id="identifiers">
+        <dt class="label-stream">Stream:</dt>
+        <dd class="stream">Internet Engineering Task Force</dd>
+        <dt class="label-rfc">RFC:</dt>
+        <dd class="rfc">
+          <a href="https://www.rfc-editor.org/rfc/rfc" class="eref"/>
+        </dd>
+        <dt class="label-category">Category:</dt>
+        <dd class="category"/>
+        <dt>Published:</dt>
+        <dd>
+          <time class="published" datetime="2022-10">October 2022</time>
+        </dd>
+        <dt class="label-issn">ISSN:</dt>
+        <dd class="issn">2070-1721</dd>
+      </dl>
+    </div>
+    <h1 id="rfcnum">RFC</h1>
+    <h1 id="title">
+      Title
+    </h1>
+    <section id="abstract">
+      <h3>
+        <a class="selfRef" href="#abstract">Abstract</a>
+      </h3>
+      <p id="s-abstract-1">Examples of links<a class="pilcrow" href="#s-abstract-1">&para;</a></p>
+      <p id="s-abstract-2"><a class="xref" href="#RFC822"></a><a class="pilcrow" href="#s-abstract-2">&para;</a></p>
+      <p id="s-abstract-3"><a class="pilcrow" href="#s-abstract-3">&para;</a></p>
+    </section>
+    
+    <section id="n-status-of-this-memo">
+      <h3 id="bp-1">
+        <a class="selfRef" href="#bp-1"></a>
+        <a class="selfRef" href="#n-status-of-this-memo">Status of This Memo</a>
+      </h3>
+      <p id="bp-1-1"><a class="pilcrow" href="#bp-1-1">&para;</a></p>
+      <p id="bp-1-2">This document is a product of the Internet Engineering Task Force (IETF). It has been approved for publication by the Internet Engineering Steering Group (IESG).Further information on (BCPs or Internet Standards) is available in Section 2 of RFC 7841.<a class="pilcrow" href="#bp-1-2">&para;</a></p>
+      <p id="bp-1-3">Information about the current status of this document, any errata, and how to provide feedback on it may be obtained at <a class="eref" href="https://www.rfc-editor.org/info/rfc">https://www.rfc-editor.org/info/rfc</a>.<a class="pilcrow" href="#bp-1-3">&para;</a></p>
+    </section>
+    
+    <section id="n-copyright-notice">
+      <h3 id="bp-2">
+        <a class="selfRef" href="#bp-2"></a>
+        <a class="selfRef" href="#n-copyright-notice">Copyright Notice</a>
+      </h3>
+    </section>
+    
+    <section id="toc">
+      <h3>
+        <a class="selfRef" href="#toc">Table of Contents</a>
+      </h3>
+      <nav class="toc">
+        <ul class="toc">
+          <li class="toc">
+            <a href="#s-1">1.</a><a href="#fred">Test </a>
+          </li>
+          <li class="toc">
+            <a href="#s-2">2.</a><a href="#moreFred">Test More </a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-2_1">2.1.</a><a href="#n-threshold-decryption">Threshold Decryption</a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-2_1_1">2.1.1.</a><a href="#n-key-splitting">Key Splitting</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-2_1_2">2.1.2.</a><a href="#n-decryption">Decryption</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="toc">
+                <a href="#s-2_2">2.2.</a><a href="#n-threshold-key-generation">Threshold Key Generation</a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-2_2_1">2.2.1.</a><a href="#n-device-provisioning">Device Provisioning</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-2_2_2">2.2.2.</a><a href="#n-key-rollover">Key Rollover</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-2_2_3">2.2.3.</a><a href="#n-host-activation">Host Activation</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-2_2_4">2.2.4.</a><a href="#n-separation-of-duties">Separation of Duties</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="toc">
+                <a href="#s-2_3">2.3.</a><a href="#n-side-channel-resistance">Side Channel Resistance</a>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-3">3.</a><a href="#n-application-to-elliptic-curves">Application to Elliptic Curves</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-3_1">3.1.</a><a href="#n-implementation-for-ed25519-and-ed448">Implementation for Ed25519 and Ed448</a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-3_1_1">3.1.1.</a><a href="#n-ed25519">Ed25519</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-3_1_2">3.1.2.</a><a href="#n-ed448">Ed448</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="toc">
+                <a href="#s-3_2">3.2.</a><a href="#n-implementation-for-x25519-and-x448">Implementation for X25519 and X448</a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-3_2_1">3.2.1.</a><a href="#n-point-encoding">Point Encoding</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-3_2_2">3.2.2.</a><a href="#n-x25519-point-encoding">X25519 Point Encoding</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-3_2_3">3.2.3.</a><a href="#n-x448-point-encoding">X448 Point Encoding</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-3_2_4">3.2.4.</a><a href="#n-point-addition">Point Addition</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+<a href="#n-references">References</a>
+            <ul class="toc">
+              <li class="toc">
+<a href="#n-normative">Normative References</a>
+              </li>
+              <li class="toc">
+<a href="#n-informative">Informative References</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="toc">
+          <li class="toc">
+            <a href="#"></a><a href="#n-authors">Authors' Addresses</a>
+          </li>
+        </ul>
+      </nav>
+    </section>
+    
+    <section id="fred">
+      <h3 id="s-1">
+        <a class="selfRef" href="#s-1">1.</a>
+        <a class="selfRef" href="#fred">Test </a>
+      </h3>
+      <p id="s-1-1">This is a test of the testy test . It references <a class="xref" href="#moreFred">moreFred</a>. It also has an external anchor to <a class="eref" href="http://example.com/"></a><a class="pilcrow" href="#s-1-1">&para;</a></p>
+    </section>
+    
+    <section id="moreFred">
+      <h3 id="s-2">
+        <a class="selfRef" href="#s-2">2.</a>
+        <a class="selfRef" href="#moreFred">Test More </a>
+      </h3>
+      <p id="s-2-1">This references <a class="xref" href="#fred">fred</a> and defines the term more It also has an external anchor to <a class="eref" href="http://example.com/"></a><a class="pilcrow" href="#s-2-1">&para;</a></p>
+      <p id="s-2-2"><a class="pilcrow" href="#s-2-2">&para;</a></p>
+      <p id="s-2-3"><a class="pilcrow" href="#s-2-3">&para;</a></p>
+      <ul id="s-2-4-">
+        <li id="s-2-4">r [.] S = S<sup>r</sup> mod p<a class="pilcrow" href="#s-2-4">&para;</a></li>
+        <li id="s-2-5">o = p-1<a class="pilcrow" href="#s-2-5">&para;</a></li>
+        <li id="s-2-6"><i>A </i>[x] <i>B</i> = <i>A </i>[.] <i>B</i> = <i>AB </i>mod <i>p</i>.<a class="pilcrow" href="#s-2-6">&para;</a></li>
+      </ul>
+      <p id="s-2-7"><i>Proof:</i><a class="pilcrow" href="#s-2-7">&para;</a></p>
+      <p id="s-2-8">Let z = x + y<a class="pilcrow" href="#s-2-8">&para;</a></p>
+      <p id="s-2-9">By definition, X = e<sup>x</sup> mod p, Y = e<sup>y</sup> mod p, and Z = e<sup>z </sup>mod p.<a class="pilcrow" href="#s-2-9">&para;</a></p>
+      <p id="s-2-10">Therefore, <a class="pilcrow" href="#s-2-10">&para;</a></p>
+      <dl id="s-2-11-" class="nohang">
+        <dt id="s-2-11">Z = e<sup>z</sup> mod p <a class="pilcrow" href="#s-2-11">&para;</a></dt>
+        <dd id="null">= e<sup>x+y</sup> mod p <a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">= (e<sup>x</sup>e<sup>y</sup>) mod p <a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">= e<sup>x </sup>mod p.e<sup>y</sup> mod p <a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">= X.Y<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-2-12">Moreover, A = e<sup>a</sup> mod p,<a class="pilcrow" href="#s-2-12">&para;</a></p>
+      <p id="s-2-13">Therefore,<a class="pilcrow" href="#s-2-13">&para;</a></p>
+      <dl id="s-2-14-" class="nohang">
+        <dt id="s-2-14">(A<sup>x</sup> mod p).(A<sup>y</sup> mod p) <a class="pilcrow" href="#s-2-14">&para;</a></dt>
+        <dd id="null">= (A<sup>x</sup>A<sup>y</sup>) mod p) <a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">= (A<sup>x+y</sup>) mod p) <a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">= A<sup>z</sup> mod p<a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">= e<sup>az</sup> mod p <a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">= (e<sup>z</sup>)<sup>a</sup> mod p <a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">= Z<sup>a</sup> mod p<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-2-15">Since e<sup>o</sup> mod p = 1, the same result holds for z = (x + y) mod o since e<sup>x+y+no</sup> = e<sup>x+y</sup>.e<sup>no</sup> = e<sup>x+y</sup>.1 = e<sup>x+y</sup>.<a class="pilcrow" href="#s-2-15">&para;</a></p>
+    </section>
+    
+    <section id="n-threshold-decryption">
+      <h4 id="s-2_1">
+        <a class="selfRef" href="#s-2_1">2.1.</a>
+        <a class="selfRef" href="#n-threshold-decryption">Threshold Decryption</a>
+      </h4>
+      <p id="s-2_1-1">Threshold decryption allows  a decryption key to be divided into two or more parts, allowing these roles to be assigned to different parties. This capability can be employed within a machine to divide use of a private key between an implementation running in the user mode and a process running in a privileged mode that is bound to the machine. Alternatively, threshold cryptography can be employed to <a class="pilcrow" href="#s-2_1-1">&para;</a></p>
+      <p id="s-2_1-2">The key combination law and result combination law provide a basis for threshold decryption. <a class="pilcrow" href="#s-2_1-2">&para;</a></p>
+    </section>
+    
+    <section id="n-key-splitting">
+      <h5 id="s-2_1_1">
+        <a class="selfRef" href="#s-2_1_1">2.1.1.</a>
+        <a class="selfRef" href="#n-key-splitting">Key Splitting</a>
+      </h5>
+      <p id="s-2_1_1-1">We begin by creating a base key pair { X, x }. The public component X is used to perform encryption operations by means of a key agreement against an ephemeral key in the usual fashion. The private component x may be used for decryption in the normal fashion or to provide the source material for a key splitting operation.<a class="pilcrow" href="#s-2_1_1-1">&para;</a></p>
+      <p id="s-2_1_1-2">To split the base key into n shares { S<sub>1</sub>, s<sub>1</sub> }, { S<sub>2</sub>, s<sub>2</sub> }, … { S<sub>n</sub>, s<sub>n</sub> }, we begin by generating the first n-1 private keys in the normal fashion. It is not necessary to generate the corresponding public keys as these are not required.<a class="pilcrow" href="#s-2_1_1-2">&para;</a></p>
+      <p id="s-2_1_1-3">The private key of the final key share s<sub>n</sub> is given by:<a class="pilcrow" href="#s-2_1_1-3">&para;</a></p>
+      <p id="s-2_1_1-4"><i>s<sub>n</sub> = (x - s1 - s2 - … - sn-1) mod o</i><a class="pilcrow" href="#s-2_1_1-4">&para;</a></p>
+      <p id="s-2_1_1-5">Thus, the base private key x is equal to the sum of the private key shares modulo the group order.<a class="pilcrow" href="#s-2_1_1-5">&para;</a></p>
+    </section>
+    
+    <section id="n-decryption">
+      <h5 id="s-2_1_2">
+        <a class="selfRef" href="#s-2_1_2">2.1.2.</a>
+        <a class="selfRef" href="#n-decryption">Decryption</a>
+      </h5>
+      <p id="s-2_1_2-1">To encrypt a document, we first generate an ephemeral key pair { Y, y }. The key agreement value e<sup>xy</sup> is calculated from the base public key X = e<sup>x</sup> and the ephemeral private key y. A key derivation function is then used to obtain the session key to be used to encrypt the document under a symmetric cipher.<a class="pilcrow" href="#s-2_1_2-1">&para;</a></p>
+      <p id="s-2_1_2-2">To decrypt a document using the threshold key shares, each key share holder first performs a Diffie Hellman operation using their private key on the ephemeral public key. The key shares are then combined using the result combination law to obtain the key exchange value from which the session key is recovered.<a class="pilcrow" href="#s-2_1_2-2">&para;</a></p>
+      <p id="s-2_1_2-3">The key contribution c<sub>i</sub> for the holder of the i<sup>th</sup> key share is calculated as:<a class="pilcrow" href="#s-2_1_2-3">&para;</a></p>
+      <p id="s-2_1_2-4">c<sub>i</sub> = Y<sup>si</sup><a class="pilcrow" href="#s-2_1_2-4">&para;</a></p>
+      <p id="s-2_1_2-5">The key agreement value is thus<a class="pilcrow" href="#s-2_1_2-5">&para;</a></p>
+      <p id="s-2_1_2-6">A = c<sub>1</sub> . c<sub>2</sub> . … . c<sub>n</sub><a class="pilcrow" href="#s-2_1_2-6">&para;</a></p>
+      <p id="s-2_1_2-7">This value is equal to the encryption key agreement value according to the group law.<a class="pilcrow" href="#s-2_1_2-7">&para;</a></p>
+    </section>
+    
+    <section id="n-threshold-key-generation">
+      <h4 id="s-2_2">
+        <a class="selfRef" href="#s-2_2">2.2.</a>
+        <a class="selfRef" href="#n-threshold-key-generation">Threshold Key Generation</a>
+      </h4>
+      <p id="s-2_2-1">The key combination law allows an aggregate private key to be derived from private key contributions provided by two or more parties such that the corresponding aggregate public key may be derived from the public keys corresponding to the contributions. The resulting key generation mechanism is thus, auditable and interoperable.<a class="pilcrow" href="#s-2_2-1">&para;</a></p>
+    </section>
+    
+    <section id="n-device-provisioning">
+      <h5 id="s-2_2_1">
+        <a class="selfRef" href="#s-2_2_1">2.2.1.</a>
+        <a class="selfRef" href="#n-device-provisioning">Device Provisioning</a>
+      </h5>
+      <p id="s-2_2_1-1">Auditable Threshold Key Generation provides a simple and efficient means of securely provisioning keys to devices. This is encountered in the IoT space as a concern in 'onboarding' and in the provisioning of unique keys for use with cryptographic applications (e.g. SSH, S/MIME, OpenPGP, etc.).<a class="pilcrow" href="#s-2_2_1-1">&para;</a></p>
+      <p id="s-2_2_1-2">Consider the case in which Alice purchases an IoT connected Device D which requires a unique device key pair <i>{ X , x }</i> for its operation. The process of provisioning (aka 'onboarding') is performed using an administration device. Traditional key pair generation gives us three options:<a class="pilcrow" href="#s-2_2_1-2">&para;</a></p>
+      <ul id="s-2_2_1-3-">
+        <li id="s-2_2_1-3">Generate and install a key pair during manufacture.<a class="pilcrow" href="#s-2_2_1-3">&para;</a></li>
+        <li id="s-2_2_1-4">Generate a new key pair during device provisioning.<a class="pilcrow" href="#s-2_2_1-4">&para;</a></li>
+        <li id="s-2_2_1-5">Generate a key pair on the administration device and transfer it to the device being provisioned. <a class="pilcrow" href="#s-2_2_1-5">&para;</a></li>
+      </ul>
+      <p id="s-2_2_1-6">The first approach has the obvious disadvantage that the manufacturer has knowledge of the private key. This represents a liability for both the user and the manufacturer. Less obvious is the fact that the second approach doesn't actually provide a solution unless the process of generating keys on the device is auditable. The third approach is auditable with respect to the device being provisioned but not with respect to the administration device being used for provisioning. If that device were to be compromised, so could every device it was used to provision.<a class="pilcrow" href="#s-2_2_1-6">&para;</a></p>
+      <p id="s-2_2_1-7">Threshold key generation allows the administration device and the joining device being provisioned to jointly provision a key pair as follows:<a class="pilcrow" href="#s-2_2_1-7">&para;</a></p>
+      <ul id="s-2_2_1-8-">
+        <li id="s-2_2_1-8">The joining device has public, private key pair<i> { D, d }</i>.<a class="pilcrow" href="#s-2_2_1-8">&para;</a></li>
+        <li id="s-2_2_1-9">A provisioning request is made for the device which includes the joining device public key <i>D</i>.<a class="pilcrow" href="#s-2_2_1-9">&para;</a></li>
+        <li id="s-2_2_1-10">The administration device generates a key pair contribution <i>{ A, a }</i>. <a class="pilcrow" href="#s-2_2_1-10">&para;</a></li>
+        <li id="s-2_2_1-11">The administration device private key is transmitted to the Device by means of a secure channel.<a class="pilcrow" href="#s-2_2_1-11">&para;</a></li>
+        <li id="s-2_2_1-12">The joining device calculates the aggregate key pair <i>{ A [x] D, a+d }</i>. <a class="pilcrow" href="#s-2_2_1-12">&para;</a></li>
+        <li id="s-2_2_1-13">The administration device authorizes the joining device to participate in the local network using the public key <i>A [x] D</i>.<a class="pilcrow" href="#s-2_2_1-13">&para;</a></li>
+      </ul>
+      <p id="s-2_2_1-14">The Device key pair <span class="bcp14">MAY</span> be installed during manufacture or generated during provisioning or be derived from a combination of both using threshold key generation recursively. The provisioning request <span class="bcp14">MAY</span> be originated by the device or be generated by a purchasing system.<a class="pilcrow" href="#s-2_2_1-14">&para;</a></p>
+      <p id="s-2_2_1-15">Note that the provisioning protocol does not require either party to authenticate the aggregate key pair. The protocol provides security by ensuring that both parties obtain the correct results if and only if the values each communicated to the other were correct.<a class="pilcrow" href="#s-2_2_1-15">&para;</a></p>
+      <p id="s-2_2_1-16">Out of band authentication of the joining device public key <i>D</i> is sufficient to prevent Man-in-the-Middle attack. This may be achieved by means of a QR code printed on the device itself that discloses or provides a means of obtaining <i>D.</i><a class="pilcrow" href="#s-2_2_1-16">&para;</a></p>
+    </section>
+    
+    <section id="n-key-rollover">
+      <h5 id="s-2_2_2">
+        <a class="selfRef" href="#s-2_2_2">2.2.2.</a>
+        <a class="selfRef" href="#n-key-rollover">Key Rollover</a>
+      </h5>
+      <p id="s-2_2_2-1">Traditional key rollover protocols in PKIX and other PKIs following the Kohnfelder model, require a multi-step interaction between the key holder and the Certificate Authority.<a class="pilcrow" href="#s-2_2_2-1">&para;</a></p>
+      <p id="s-2_2_2-2">Threshold key generation allows a Certificate Authority to implement key rollover with a single communication:<a class="pilcrow" href="#s-2_2_2-2">&para;</a></p>
+      <p id="s-2_2_2-3">Consider the case in which the service host has a base key pair { B , b }. A CA that has knowledge of the Host public key B may generate a certificate for the time period <i>t</i> with a fresh key as follows:<a class="pilcrow" href="#s-2_2_2-3">&para;</a></p>
+      <ul id="s-2_2_2-4-">
+        <li id="s-2_2_2-4">Generate a key pair contribution { A<sub>t</sub>, a<sub>t</sub> }. <a class="pilcrow" href="#s-2_2_2-4">&para;</a></li>
+        <li id="s-2_2_2-5">Generate and sign an end entity certificate C<sub>t</sub> for the key B [x] A<sub>t</sub>.<a class="pilcrow" href="#s-2_2_2-5">&para;</a></li>
+        <li id="s-2_2_2-6">Transmit C<sub>t</sub>, a<sub>t</sub> to the host by means of a secure channel<a class="pilcrow" href="#s-2_2_2-6">&para;</a></li>
+      </ul>
+      
+      <section id="n-host-activation">
+        <h5 id="s-2_2_3">
+          <a class="selfRef" href="#s-2_2_3">2.2.3.</a>
+          <a class="selfRef" href="#n-host-activation">Host Activation</a>
+        </h5>
+      </section>
+      <p id="s-2_2_3-1">Modern Internet service architectures frequently make use of short lived, ephemeral hosts running on virtualized machines. Provisioning cryptographic material in such environments is a significant challenge and especially so when the underlying hardware is a shared resource.<a class="pilcrow" href="#s-2_2_3-1">&para;</a></p>
+      <p id="s-2_2_3-2">The key rollover approach described above provides a means of provisioning short lived credentials to ephemeral hosts that potentially avoids the need to build sensitive keys into the service image or configuration.<a class="pilcrow" href="#s-2_2_3-2">&para;</a></p>
+    </section>
+    
+    <section id="n-separation-of-duties">
+      <h5 id="s-2_2_4">
+        <a class="selfRef" href="#s-2_2_4">2.2.4.</a>
+        <a class="selfRef" href="#n-separation-of-duties">Separation of Duties</a>
+      </h5>
+      <p id="s-2_2_4-1">Threshold key generation provides a means of separating administration of cryptographic keys between individuals. This allows two or more administrators to control access to a private key without having the ability to use it themselves. This approach is of particular utility when used in combination with threshold decryption. Alice and Bob can be granted the ability to create key contributions allowing a user to decrypt information without having the ability to decrypt themselves.<a class="pilcrow" href="#s-2_2_4-1">&para;</a></p>
+    </section>
+    
+    <section id="n-side-channel-resistance">
+      <h4 id="s-2_3">
+        <a class="selfRef" href="#s-2_3">2.3.</a>
+        <a class="selfRef" href="#n-side-channel-resistance">Side Channel Resistance</a>
+      </h4>
+      <p id="s-2_3-1">Side-channel attacks, present a major concern in the implementation of public key cryptosystems. Of particular concern are the timing attacks identified by Paul Kocher <a class="xref" href="#Kocher96">[Kocher96]</a> and related attacks in the power and emissions ranges. Performing repeated observations of the use of the same private key material provides an attacker with considerably greater opportunity to extract the private key material.<a class="pilcrow" href="#s-2_3-1">&para;</a></p>
+      <p id="s-2_3-2">A simple but effective means of defeating such attacks is to split the private key value into two or more random shares for every private key operation and use the result combination law to recover the result. <a class="pilcrow" href="#s-2_3-2">&para;</a></p>
+      <p id="s-2_3-3">The implementation of this approach is identical to that for Threshold Decryption except that instead of giving the key shares to different parties, they are kept by the party performing the private key operation.<a class="pilcrow" href="#s-2_3-3">&para;</a></p>
+      <p id="s-2_3-4">While this approach doubles the number of private key operations required, the operations <span class="bcp14">MAY</span> be performed in parallel. Thus avoiding impact on the user experience.<a class="pilcrow" href="#s-2_3-4">&para;</a></p>
+    </section>
+    
+    <section id="n-application-to-elliptic-curves">
+      <h3 id="s-3">
+        <a class="selfRef" href="#s-3">3.</a>
+        <a class="selfRef" href="#n-application-to-elliptic-curves">Application to Elliptic Curves</a>
+      </h3>
+      <p id="s-3-1">For elliptic curve cryptosystems, the operators [x] and [.] are point addition.<a class="pilcrow" href="#s-3-1">&para;</a></p>
+      <p id="s-3-2">Implementing a robust Key Co-Generation for the Elliptic Curve Cryptography schemes described in <a class="xref" href="#RFC7748">[RFC7748]</a> and <a class="xref" href="#RFC8032">[RFC8032]</a> requires some additional considerations to be addressed.<a class="pilcrow" href="#s-3-2">&para;</a></p>
+      <ul id="s-3-3-">
+        <li id="s-3-3">The secret scalar used in the EdDSA algorithm is calculated from the private key using a digest function. It is therefore necessary to specify the Key Co-Generation mechanism by reference to operations on the secret scalar values rather than operations on the private keys.<a class="pilcrow" href="#s-3-3">&para;</a></li>
+        <li id="s-3-4">The Montgomery Ladder traditionally used to perform X25519 and X448 point multiplication does not require implementation of a function to add two arbitrary points. While the steps required to create such a function are fully constrained by <a class="xref" href="#RFC7748">[RFC7748]</a>, the means of performing point addition is not.<a class="pilcrow" href="#s-3-4">&para;</a></li>
+      </ul>
+      
+      <section id="n-implementation-for-ed25519-and-ed448">
+        <h4 id="s-3_1">
+          <a class="selfRef" href="#s-3_1">3.1.</a>
+          <a class="selfRef" href="#n-implementation-for-ed25519-and-ed448">Implementation for Ed25519 and Ed448</a>
+        </h4>
+      </section>
+      <p id="s-3_1-1"><a class="xref" href="#RFC8032">[RFC8032]</a> provides all the cryptographic operations required to perform threshold operations and corresponding public keys. <a class="pilcrow" href="#s-3_1-1">&para;</a></p>
+      <p id="s-3_1-2">The secret scalars used in <a class="xref" href="#RFC8032">[RFC8032]</a> private key operations are derived from a private key value using a cryptographic digest function. This encoding allows the inputs to a private key combination to be described but not the output. Contrawise, the encoding allows the inputs to a private key splitting operation to be described but not the output<a class="pilcrow" href="#s-3_1-2">&para;</a></p>
+      <p id="s-3_1-3">It is therefore necessary to provide an alternative representation for the Ed25519 and Ed448 private keys. Moreover, the signature algorithm requires both a secret scalar and a prefix value as inputs.<a class="pilcrow" href="#s-3_1-3">&para;</a></p>
+      <p id="s-3_1-4">Since threshold signatures are out of scope for this document and <a class="xref" href="#RFC8032">[RFC8032]</a> does not specify a key agreement mechanism, it suffices to specify the data formats required to encode private key values generated by means of threshold key generation.<a class="pilcrow" href="#s-3_1-4">&para;</a></p>
+    </section>
+    
+    <section id="n-ed25519">
+      <h5 id="s-3_1_1">
+        <a class="selfRef" href="#s-3_1_1">3.1.1.</a>
+        <a class="selfRef" href="#n-ed25519">Ed25519</a>
+      </h5>
+      <p id="s-3_1_1-1">Let the inputs to the threshold key generation scheme be a set of 32 byte private key values <i>P<sub>1</sub>, P2 … Pn. For each private key value i in turn:</i><a class="pilcrow" href="#s-3_1_1-1">&para;</a></p>
+      <ol id="s-3_1_1-2-">
+        <li id="s-3_1_1-2">Hash the 32-byte private key using SHA-512, storing the digest in a 64-octet large buffer, denoted<i> h<sub>i</sub></i>. Let n<sub>i</sub> be the first 32 octets of h<sub>i</sub> and m<sub>i</sub> be the remaining 32 octets of h<sub>i</sub>.<a class="pilcrow" href="#s-3_1_1-2">&para;</a></li>
+        <li id="s-3_1_1-3">Prune n<sub>i</sub>: The lowest three bits of the first octet are cleared, the highest bit of the last octet is cleared, and the second highest bit of the last octet is set.<a class="pilcrow" href="#s-3_1_1-3">&para;</a></li>
+        <li id="s-3_1_1-4">Interpret the buffer as the little-endian integer, forming a secret scalar s<sub>i</sub>.<a class="pilcrow" href="#s-3_1_1-4">&para;</a></li>
+      </ol>
+      <p id="s-3_1_1-5">The private key values are calculated as follows:<a class="pilcrow" href="#s-3_1_1-5">&para;</a></p>
+      <p id="s-3_1_1-6">The aggregate secret scalar value <i>s<sub>a</sub> = s1 + s2 + … sn mod L, where L is the order of the curve.</i><a class="pilcrow" href="#s-3_1_1-6">&para;</a></p>
+      <p id="s-3_1_1-7">The aggregate prefix value is calculated by either<a class="pilcrow" href="#s-3_1_1-7">&para;</a></p>
+      <ul id="s-3_1_1-8-">
+        <li id="s-3_1_1-8">Some function TBS on the values m<sub>1</sub>, m<sub>2</sub>,  … m<sub>n</sub>, or<a class="pilcrow" href="#s-3_1_1-8">&para;</a></li>
+        <li id="s-3_1_1-9">Taking the SHA256 digest of s<sub>a</sub>.<a class="pilcrow" href="#s-3_1_1-9">&para;</a></li>
+      </ul>
+      <p id="s-3_1_1-10">The second approach is the simplest and the most robust. It does however mean that the prefix is a function of the secret scalar rather than both being functions of the same seed. <a class="pilcrow" href="#s-3_1_1-10">&para;</a></p>
+    </section>
+    
+    <section id="n-ed448">
+      <h5 id="s-3_1_2">
+        <a class="selfRef" href="#s-3_1_2">3.1.2.</a>
+        <a class="selfRef" href="#n-ed448">Ed448</a>
+      </h5>
+      <p id="s-3_1_2-1">Let the inputs to the threshold key generation scheme be a set of 57 byte private key values <i>P<sub>1</sub>, P2 … Pn. For each private key value i in turn:</i><a class="pilcrow" href="#s-3_1_2-1">&para;</a></p>
+      <ol id="s-3_1_2-2-">
+        <li id="s-3_1_2-2">Hash the 57-byte private key using SHAKE256(x, 114), storing the digest in a 114-octet large buffer, denoted<i> h<sub>i</sub></i>. Let n<sub>i</sub> be the first 57 octets of h<sub>i</sub> and m<sub>i</sub> be the remaining 57 octets of h<sub>i</sub>.<a class="pilcrow" href="#s-3_1_2-2">&para;</a></li>
+        <li id="s-3_1_2-3">Prune n<sub>i</sub>: The two least significant bits of the first octet are cleared, all eight bits the last octet are cleared, and the highest bit of the second to last octet is set.<a class="pilcrow" href="#s-3_1_2-3">&para;</a></li>
+        <li id="s-3_1_2-4">Interpret the buffer as the little-endian integer, forming a secret scalar s<sub>i</sub>.<a class="pilcrow" href="#s-3_1_2-4">&para;</a></li>
+      </ol>
+      <p id="s-3_1_2-5">The private key values are calculated as follows:<a class="pilcrow" href="#s-3_1_2-5">&para;</a></p>
+      <p id="s-3_1_2-6">The aggregate secret scalar value <i>s<sub>a</sub> = s1 + s2 + … sn mod L, where L is the order of the curve.</i><a class="pilcrow" href="#s-3_1_2-6">&para;</a></p>
+      <p id="s-3_1_2-7">The aggregate prefix value is calculated by either<a class="pilcrow" href="#s-3_1_2-7">&para;</a></p>
+      <ul id="s-3_1_2-8-">
+        <li id="s-3_1_2-8">Some function TBS on the values m<sub>1</sub>, m<sub>2</sub>,  … m<sub>n</sub>, or<a class="pilcrow" href="#s-3_1_2-8">&para;</a></li>
+        <li id="s-3_1_2-9">Taking the SHAKE256(x, 57) digest of s<sub>a</sub>.<a class="pilcrow" href="#s-3_1_2-9">&para;</a></li>
+      </ul>
+      <p id="s-3_1_2-10">The second approach is the simplest and the most robust. It does however mean that the prefix is a function of the secret scalar rather than both being functions of the same seed. <a class="pilcrow" href="#s-3_1_2-10">&para;</a></p>
+    </section>
+    
+    <section id="n-implementation-for-x25519-and-x448">
+      <h4 id="s-3_2">
+        <a class="selfRef" href="#s-3_2">3.2.</a>
+        <a class="selfRef" href="#n-implementation-for-x25519-and-x448">Implementation for X25519 and X448</a>
+      </h4>
+      <p id="s-3_2-1"><a class="xref" href="#RFC7748">[RFC7748]</a> defines all the cryptographic operations required to perform threshold key generation and threshold decryption but does not describe how to implement them.<a class="pilcrow" href="#s-3_2-1">&para;</a></p>
+      <p id="s-3_2-2">The Montgomery curve described in <a class="xref" href="#RFC7748">[RFC7748]</a> allows for efficient scalar multiplication using arithmetic operations on a single coordinate. Point addition requires both coordinate values. It is thus necessary to provide an extended representation for point encoding and provide an algorithm for recovering both coordinates from a scalar multiplication operation and an algorithm for point addition.<a class="pilcrow" href="#s-3_2-2">&para;</a></p>
+      <p id="s-3_2-3">The notation of <a class="xref" href="#RFC7748">[RFC7748]</a> is followed using {u, v} to represent the coordinates on the Montgomery curve and {x, y} for coordinates on the corresponding Edwards curve.<a class="pilcrow" href="#s-3_2-3">&para;</a></p>
+    </section>
+    
+    <section id="n-point-encoding">
+      <h5 id="s-3_2_1">
+        <a class="selfRef" href="#s-3_2_1">3.2.1.</a>
+        <a class="selfRef" href="#n-point-encoding">Point Encoding</a>
+      </h5>
+      <p id="s-3_2_1-1">The relationship between the u and v coordinates is specified by the Montgomery Curve formula itself:<a class="pilcrow" href="#s-3_2_1-1">&para;</a></p>
+      <p id="s-3_2_1-2"><i>v<sup>2</sup></i> = <i>u<sup>3</sup> + Au2 + u</i><a class="pilcrow" href="#s-3_2_1-2">&para;</a></p>
+      <p id="s-3_2_1-3">An algorithm for extracting a square root of a number in a finite field is specified in <a class="xref" href="#RFC8032">.</a><a class="pilcrow" href="#s-3_2_1-3">&para;</a></p>
+      <p id="s-3_2_1-4">Since <i>v<sup>2</sup></i> has a positive (<i>v</i>) and a negative solution (<i>-v</i>), it follows that <i>v<sup>2</sup></i> mod p will have the solutions <i>v</i>, <i>p-v</i>. Furthermore, since <i>p</i> is odd, if <i>v</i> is odd, <i>p-v</i> must be even and vice versa. It is thus sufficient to record whether <i>v</i> is odd or even to enable recovery of the <i>v</i> coordinate from <i>u</i>.<a class="pilcrow" href="#s-3_2_1-4">&para;</a></p>
+    </section>
+    
+    <section id="n-x25519-point-encoding">
+      <h5 id="s-3_2_2">
+        <a class="selfRef" href="#s-3_2_2">3.2.2.</a>
+        <a class="selfRef" href="#n-x25519-point-encoding">X25519 Point Encoding</a>
+      </h5>
+      <p id="s-3_2_2-1">The extended point encoding allowing the v coordinate to be recovered is as given in <a class="xref" href="#draft-ietf-lwig-curve-representations">[draft-ietf-lwig-curve-representations]</a><a class="pilcrow" href="#s-3_2_2-1">&para;</a></p>
+      <p id="s-3_2_2-2">[TBS]<a class="pilcrow" href="#s-3_2_2-2">&para;</a></p>
+    </section>
+    
+    <section id="n-x448-point-encoding">
+      <h5 id="s-3_2_3">
+        <a class="selfRef" href="#s-3_2_3">3.2.3.</a>
+        <a class="selfRef" href="#n-x448-point-encoding">X448 Point Encoding</a>
+      </h5>
+      <p id="s-3_2_3-1">The extended point encoding allowing the v coordinate to be recovered is as given in <a class="xref" href="#draft-ietf-lwig-curve-representations">[draft-ietf-lwig-curve-representations]</a><a class="pilcrow" href="#s-3_2_3-1">&para;</a></p>
+      <p id="s-3_2_3-2">[TBS]<a class="pilcrow" href="#s-3_2_3-2">&para;</a></p>
+    </section>
+    
+    <section id="n-point-addition">
+      <h5 id="s-3_2_4">
+        <a class="selfRef" href="#s-3_2_4">3.2.4.</a>
+        <a class="selfRef" href="#n-point-addition">Point Addition</a>
+      </h5>
+      <p id="s-3_2_4-1">The point addition formula for the Montgomery curve is defined as follows:<a class="pilcrow" href="#s-3_2_4-1">&para;</a></p>
+      <p id="s-3_2_4-2">Let P<sub>1</sub> = {u<sub>1</sub>, v<sub>1</sub>}, P<sub>2</sub> = {u<sub>2</sub>,  v<sub>2</sub>}, P<sub>3</sub> = {u<sub>3</sub>, v<sub>3</sub>} = P<sub>1</sub> + P<sub>2</sub> <a class="pilcrow" href="#s-3_2_4-2">&para;</a></p>
+      <p id="s-3_2_4-3">By definition: <a class="pilcrow" href="#s-3_2_4-3">&para;</a></p>
+      <p id="s-3_2_4-4">u<sub>3</sub> = B(v<sub>2</sub> - v<sub>1</sub>)<sup>2</sup> / (u<sub>2</sub> - u<sub>1</sub>)<sup>2</sup> - A - u<sub>1</sub> - u<sub>2</sub><a class="pilcrow" href="#s-3_2_4-4">&para;</a></p>
+      <p id="s-3_2_4-5">    = B((u<sub>2</sub>v<sub>1</sub> - u<sub>1</sub>v<sub>2</sub>)<sup>2</sup> ) / u<sub>1</sub>u<sub>2</sub> (u<sub>2</sub> - u<sub>1</sub>)<sup>2</sup><a class="pilcrow" href="#s-3_2_4-5">&para;</a></p>
+      <p id="s-3_2_4-6">v<sub>3</sub> = ((2u<sub>1</sub> + u<sub>2</sub> + A)(v<sub>2</sub> - v<sub>1</sub>) / (u<sub>2</sub> - u<sub>1</sub>)) - B (v<sub>2</sub> - v<sub>1</sub>)<sup>3</sup> / (u<sub>2</sub> -u<sub>1</sub>)<sup>3</sup> - v<sub>1</sub><a class="pilcrow" href="#s-3_2_4-6">&para;</a></p>
+      <p id="s-3_2_4-7">For curves X25519 and X448, B = 1 and so:<a class="pilcrow" href="#s-3_2_4-7">&para;</a></p>
+      <p id="s-3_2_4-8">u<sub>3</sub> = ((v<sub>2</sub> - v<sub>1</sub>).(u<sub>2</sub> - u<sub>1</sub>)<sup>-1</sup>)<sup>2</sup> - A - u<sub>1</sub> - u<sub>2</sub><a class="pilcrow" href="#s-3_2_4-8">&para;</a></p>
+      <p id="s-3_2_4-9">v<sub>3</sub> = ((2u<sub>1</sub> + u<sub>2</sub> + A)(v<sub>2</sub> - v<sub>1</sub>).(u<sub>2</sub> - u<sub>1</sub>)<sup>-1</sup>) - ((v<sub>2</sub> - v<sub>1</sub>).(u<sub>2</sub> -u<sub>1</sub>)<sup>-1</sup>)<sup>3</sup> - v<sub>1</sub><a class="pilcrow" href="#s-3_2_4-9">&para;</a></p>
+      <p id="s-3_2_4-10">This may be implemented using the following code:<a class="pilcrow" href="#s-3_2_4-10">&para;</a></p>
+      <p id="s-3_2_4-11"><a class="pilcrow" href="#s-3_2_4-11">&para;</a></p>
+    </section>
+    
+    <section id="n-references">
+      <h2>
+        <a class="selfRef" href="#n-references">References</a>
+      </h2>
+      <section id="n-normative">
+        <h3>
+          <a class="selfRef" href="#n-normative">Normative References</a>
+        </h3>
+        <dl class="reference">
+          <dt id="RFC822">[RFC822]</dt>
+          <dd>
+            <span class="refAuthor">D. Crocker</span>
+            "<span class="refTitle">STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">STD</span>
+              <span class="refSeriesValue">11</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">822</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC0822</span>
+            </span>
+            <time class="refDate" datetime="1982-08">August 1982</time>
+          </dd>
+          <dt id="RFC7748">[RFC7748]</dt>
+          <dd>
+            <span class="refAuthor">A. Langley</span>
+            <span>and</span>
+            <span class="refAuthor">M. Hamburg</span>
+            <span>and</span>
+            <span class="refAuthor">S. Turner</span>
+            "<span class="refTitle">Elliptic Curves for Security</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">7748</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC7748</span>
+            </span>
+            <time class="refDate" datetime="2016-01">January 2016</time>
+          </dd>
+          <dt id="RFC8032">[RFC8032]</dt>
+          <dd>
+            <span class="refAuthor">S. Josefsson</span>
+            <span>and</span>
+            <span class="refAuthor">I. Liusvaara</span>
+            "<span class="refTitle">Edwards-Curve Digital Signature Algorithm (EdDSA)</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">8032</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC8032</span>
+            </span>
+            <time class="refDate" datetime="2017-01">January 2017</time>
+          </dd>
+          <dt id="draft-ietf-lwig-curve-representations">[draft-ietf-lwig-curve-representations]</dt>
+          <dd>
+            <span class="refAuthor">Rene Struik</span>
+            "<span class="refTitle">Alternative Elliptic Curve Representations</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">Internet-Draft</span>
+              <span class="refSeriesValue">draft-ietf-lwig-curve-representations-23</span>
+            </span>
+            <time class="refDate" datetime="2022-01-21">21 January 2022</time>
+          </dd>
+        </dl>
+      </section>
+      
+      <section id="n-informative">
+        <h3>
+          <a class="selfRef" href="#n-informative">Informative References</a>
+        </h3>
+        <dl class="reference">
+          <dt id="Kocher96">[Kocher96]</dt>
+          <dd>
+            "<span class="refTitle">[Reference Not Found!]</span>"
+            <time class="refDate" datetime=""></time>
+          </dd>
+        </dl>
+      </section>
+      
+    </section>
+    
+    <section id="n-authors">
+      <h2>
+        <a class="selfRef" href="#n-authors">Authors' Addresses</a>
+      </h2>
+      <hr class="addr"/>
+    </section>
+    
+    <div class="docInfo">
+      <span class="prepared">
+        Prepared: 
+        <time datetime="2022-10-21">2022-10-21</time>
+      </span>
+      <span class="rendered">
+        Rendered: 
+        <time datetime="2022-10-21">2022-10-21</time>
+      </span>
+    </div>
+    
+    <script src="xml2rfc.js" type="text/javascript"></script>
+  </body>
+</html>

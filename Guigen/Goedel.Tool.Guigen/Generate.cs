@@ -31,30 +31,6 @@ public partial class Generate : global::Goedel.Registry.Script {
 	
 
 	//
-	// GeneratePs1
-	//
-	public void GeneratePs1 (Guigen Guigen) {
-		 Guigen._InitChildren();
-		foreach  (_Choice Item in Guigen.Top) {
-			switch (Item._Tag ()) {
-				case GuigenType.Application: {
-				  Application application = (Application) Item; 
-				_Output.Write ("\n{0}", _Indent);
-				foreach  (var tagValue in application.DictionaryIconsByFile) {
-					 var tag = tagValue.Key;
-					_Output.Write ("$source = $args[0]\n{0}", _Indent);
-					_Output.Write ("$target = $args[1]\n{0}", _Indent);
-					_Output.Write ("\n{0}", _Indent);
-					_Output.Write ("copy $source\\{1}  $target\\{2}\n{0}", _Indent, tag, tag);
-					}
-			break; }
-				}
-			}
-		_Output.Write ("\n{0}", _Indent);
-		}
-	
-
-	//
 	// GenerateCS
 	//
 	public void GenerateCS (Guigen Guigen) {
@@ -98,183 +74,225 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("#endregion\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("#pragma warning disable IDE0161 // Convert to file-scoped namespace\n{0}", _Indent);
+		_Output.Write ("using Goedel.Guigen;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
-		foreach  (_Choice Item in Guigen.Top) {
-			switch (Item._Tag ()) {
-				case GuigenType.Application: {
-				  Application application = (Application) Item; 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("namespace {1} {{\n{0}", _Indent, application.Namespace);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("	///<summary></summary> \n{0}", _Indent);
-				_Output.Write ("	public partial class {1} : GuiApplication {{\n{0}", _Indent, application.Id);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				foreach  (var tagValue in application.DictionaryMenuEntries) {
-					 var tag = tagValue.Key;
-					 var menuEntry = tagValue.Value;
-					_Output.Write ("		// Menu Item {1}\n{0}", _Indent, tag);
-					_Output.Write ("	public GuiMenuEntry Action_{1} = new (\"{2}\", \"{3}\", \"{4}\", \"{5}\" );\n{0}", _Indent, tag, menuEntry.Id, menuEntry.Prompt, menuEntry.Icon?.File, menuEntry.Text?.Prompt);
+		_Output.Write ("namespace {1};\n{0}", _Indent, Guigen.Class.Namespace);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("/// <summary>\n{0}", _Indent);
+		foreach  (var text in Guigen.Class.Description) {
+			_Output.Write ("/// {1}\n{0}", _Indent, text);
+			}
+		_Output.Write ("/// </summary>\n{0}", _Indent);
+		_Output.Write ("public partial class {1} : Gui {{\n{0}", _Indent, Guigen.Class.Name);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("	///<inheritdoc/>\n{0}", _Indent);
+		_Output.Write ("	public override List<GuiIcon> Icons => icons;\n{0}", _Indent);
+		_Output.Write ("	readonly List<GuiIcon> icons = new () {{ ", _Indent);
+		 var separator = new Separator (",");
+		foreach  (var icon in Guigen.Icons)  {
+			_Output.Write ("{1} \n{0}", _Indent, separator);
+			_Output.Write ("		new GuiIcon (\"{1}\") ", _Indent, icon.Key);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("		}};\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("	///<inheritdoc/>\n{0}", _Indent);
+		_Output.Write ("	public override List<GuiSection> Sections => sections;\n{0}", _Indent);
+		_Output.Write ("	readonly List<GuiSection> sections = new () {{ ", _Indent);
+		 separator.Reset ();
+		foreach  (var section in Guigen.Sections)  {
+			_Output.Write ("{1} \n{0}", _Indent, separator);
+			_Output.Write ("		{1}", _Indent, section.RecordId);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("		}};\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("	///<inheritdoc/>\n{0}", _Indent);
+		_Output.Write ("	public override List<GuiAction> Actions => actions;\n{0}", _Indent);
+		_Output.Write ("	readonly List<GuiAction> actions = new () {{ ", _Indent);
+		 separator.Reset ();
+		foreach  (var action in Guigen.Actions)  {
+			_Output.Write ("{1} \n{0}", _Indent, separator);
+			_Output.Write ("		{1}", _Indent, action.RecordId);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("		}};\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("	///<inheritdoc/>\n{0}", _Indent);
+		_Output.Write ("	public override List<GuiDialog> Dialogs => dialogs;\n{0}", _Indent);
+		_Output.Write ("	readonly List<GuiDialog> dialogs = new () {{ ", _Indent);
+		 separator.Reset ();
+		foreach  (var dialog in Guigen.Dialogs)  {
+			_Output.Write ("{1} \n{0}", _Indent, separator);
+			_Output.Write ("		{1}", _Indent, dialog.RecordId);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("		}};\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("	// Sections\n{0}", _Indent);
+		foreach  (var section in Guigen.Sections)  {
+			_Output.Write ("	static readonly GuiSection {1} = new (\n{0}", _Indent, section.RecordId);
+			_Output.Write ("			\"{1}\", \"{2}\", \"{3}\", {4}, new List<ISectionEntry>() {{ ", _Indent, section.Id, section.Prompt, section.Icon, section.Primary.If("true","false"));
+			 separator.Reset ();
+			foreach  (var entry in section.Entries) {
+				if (  (entry.Active) ) {
+					_Output.Write ("{1} \n{0}", _Indent, separator);
+					GenerateEntry (entry);
 					}
-				_Output.Write ("\n{0}", _Indent);
-				foreach  (var tagValue in application.DictionaryIcons) {
-					 var tag = tagValue.Key;
-					 var icon = tagValue.Value;
-					_Output.Write ("	public GuiIcon Icon_{1} = new (\"{2}\", \"{3}\");\n{0}", _Indent, tag, icon.Id, icon.File);
-					_Output.Write ("		// Icon Entry {1}\n{0}", _Indent, tag);
-					}
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("		///<summary>Environment declarations</summary> \n{0}", _Indent);
-				_Output.Write ("		public static List <GuiEnvironment> Environments = new () {{", _Indent);
-				
-				 var separator = new Separator (",");
-				foreach  (var environment in application.Environments) {
-					_Output.Write ("{1}\n{0}", _Indent, separator);
-					_Output.Write ("			new (\"{1}\", \"{2}\") {{\n{0}", _Indent, environment.Id, environment.Icon?.File);
-					_Output.Write ("				Menus = new () {{", _Indent);
-					 var separator2 = new Separator (",");
-					foreach  (var menu in environment.Menus) {
-						_Output.Write ("{1}\n{0}", _Indent, separator2);
-						_Output.Write ("					new () {{\n{0}", _Indent);
-						_Output.Write ("						Entries = new () {{", _Indent);
-						 MakeMenuEntries(menu.Entries);
-						_Output.Write ("							}}\n{0}", _Indent);
-						_Output.Write ("						}}", _Indent);
-						}
-					_Output.Write ("\n{0}", _Indent);
-					_Output.Write ("					}},\n{0}", _Indent);
-					_Output.Write ("				Stores = new () {{", _Indent);
-					 separator2.Reset();
-					foreach  (var store in environment.Stores) {
-						_Output.Write ("{1}\n{0}", _Indent, separator2);
-						switch (store._Tag ()) {
-							case GuigenType.Catalog: {
-							  Catalog catalog = (Catalog) store; 
-							_Output.Write ("					new () {{\n{0}", _Indent);
-							_Output.Write ("						Mode = GuiTableMode.Catalog,", _Indent);
-							
-							 MakeStoreEntries(catalog);
-							_Output.Write ("						}}", _Indent);
-							break; }
-							case GuigenType.Spool: {
-							  Spool spool = (Spool) store; 
-							_Output.Write ("					new () {{\n{0}", _Indent);
-							_Output.Write ("						Mode = GuiTableMode.Spool,", _Indent);
-							
-							 MakeStoreEntries(spool);
-							_Output.Write ("						}}", _Indent);
-						break; }
-							}
-						}
-					_Output.Write ("\n{0}", _Indent);
-					_Output.Write ("					}}\n{0}", _Indent);
-					_Output.Write ("				}}", _Indent);
-					}
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("			}};\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("		///<summary>Structure declarations</summary> \n{0}", _Indent);
-				_Output.Write ("		public static List <GuiStructure> Structures = new () {{", _Indent);
-				
-				 separator.Reset();
-				foreach  (var structure in application.Structures) {
-					_Output.Write ("{1}\n{0}", _Indent, separator);
-					_Output.Write ("			new (typeof({1}), \"{2}\")", _Indent, structure.Id, structure.Icon?.File);
-					}
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("			}};\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("		///<summary>Icon declarations</summary> \n{0}", _Indent);
-				_Output.Write ("		public static List <GuiIcon> Icons = new () {{", _Indent);
-				
-				 separator.Reset();
-				foreach  (var icon in application.Icons) {
-					_Output.Write ("{1}\n{0}", _Indent, separator);
-					_Output.Write ("			new (\"{1}\", \"{2}\")", _Indent, icon.Id, icon.File);
-					}
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("			}};\n{0}", _Indent);
-				_Output.Write ("		}}\n{0}", _Indent);
-				_Output.Write ("	}}\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-			break; }
 				}
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("			}}) {{\n{0}", _Indent);
+			_Output.Write ("		}};\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			}
+		_Output.Write ("	\n{0}", _Indent);
+		_Output.Write ("	// Actions\n{0}", _Indent);
+		foreach  (var action in Guigen.Actions)  {
+			_Output.Write ("	static readonly GuiAction {1} = new (\n{0}", _Indent, action.RecordId);
+			_Output.Write ("			\"{1}\", \"{2}\", \"{3}\", new List<IActionEntry>() {{", _Indent, action.Id, action.Prompt, action.Icon);
+			 separator.Reset ();
+			foreach  (var entry in action.Entries) {
+				_Output.Write ("{1} \n{0}", _Indent, separator);
+				GenerateEntry (entry);
+				}
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("			}}) {{\n{0}", _Indent);
+			_Output.Write ("		}};\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("	// Dialogs\n{0}", _Indent);
+		foreach  (var dialog in Guigen.Dialogs)  {
+			_Output.Write ("	static readonly GuiDialog {1} = new (\n{0}", _Indent, dialog.RecordId);
+			_Output.Write ("			\"{1}\", new List<IDialogEntry>() {{", _Indent, dialog.Id);
+			 separator.Reset ();
+			foreach  (var entry in dialog.Entries) {
+				_Output.Write ("{1} \n{0}", _Indent, separator);
+				GenerateEntry (entry);
+				}
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("			}}) {{\n{0}", _Indent);
+			_Output.Write ("		}};\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			}
+		_Output.Write ("	\n{0}", _Indent);
+		_Output.Write ("	}}\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
 
 	//
-	// MakeMenuEntries
+	// GenerateEntry
 	//
-	public void MakeMenuEntries (List<MenuEntry> menuEntries) {
-		 var separator = new Separator (",");
-		foreach  (var menuEntry in menuEntries) {
-			_Output.Write ("{1}\n{0}", _Indent, separator);
-			_Output.Write ("							new (\"{1}\", \"{2}\", \"{3}\", \"{4}\" )", _Indent, menuEntry.Id, menuEntry.Prompt, menuEntry.Icon?.File, menuEntry.Text?.Prompt);
+	public void GenerateEntry (_Choice entry) {
+		switch (entry._Tag ()) {
+			case GuigenType.Chooser: {
+			  Chooser chooser = (Chooser) entry; 
+			
+			GenerateChooser (chooser);
+			break; }
+			case GuigenType.Button: {
+			  Button button = (Button) entry; 
+			
+			GenerateButton (button);
+			break; }
+			case GuigenType.Dialog: {
+			  Dialog dialog = (Dialog) entry; 
+			
+			GenerateDialog (dialog);
+			break; }
+			case GuigenType.Text: {
+			  Text text = (Text) entry; 
+			
+			GenerateText (text);
+			break; }
+			case GuigenType.Color: {
+			  Color color = (Color) entry; 
+			
+			GenerateColor (color);
+			break; }
+			case GuigenType.Size: {
+			  Size size = (Size) entry; 
+			
+			GenerateSize (size);
+			break; }
+			case GuigenType.Decimal: {
+			  Decimal decimalv = (Decimal) entry; 
+			
+			GenerateDecimal (decimalv);
+			break; }
+			case GuigenType.Icon: {
+			  Icon icon = (Icon) entry; 
+			
+			GenerateIcon (icon);
+		break; }
 			}
 		}
 	
 
 	//
-	// MakeMenuEntries2
+	// GenerateChooser
 	//
-	public void MakeMenuEntries2 (List<MenuEntry> menuEntries) {
-		 var separator = new Separator (",");
-		foreach  (var menuEntry in menuEntries) {
-			_Output.Write ("{1}\n{0}", _Indent, separator);
-			_Output.Write ("									new (\"{1}\", \"{2}\", \"{3}\", \"{4}\" )", _Indent, menuEntry.Id, menuEntry.Prompt, menuEntry.Icon?.File, menuEntry.Text?.Prompt);
-			}
+	public void GenerateChooser (Chooser chooser) {
+		_Output.Write ("			// Chooser ", _Indent);
 		}
 	
 
 	//
-	// MakeStoreEntries
+	// GenerateButton
 	//
-	public void MakeStoreEntries (IHaveActions store) {
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("						Defaults = new () {{", _Indent);
-		 var separator = new Separator (",");
-		foreach  (var defaultEntry in store.Defaults) {
-			_Output.Write ("{1}\n{0}", _Indent, separator);
-			_Output.Write ("							new () {{\n{0}", _Indent);
-			_Output.Write ("								Entries = new () {{", _Indent);
-			 MakeMenuEntries2(defaultEntry.Entries);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("									}}\n{0}", _Indent);
-			_Output.Write ("								}}", _Indent);
-			}
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("							}},\n{0}", _Indent);
-		_Output.Write ("						Selectors = new () {{", _Indent);
-		 separator.Reset();
-		foreach  (var selector in store.Selectors) {
-			_Output.Write ("{1}\n{0}", _Indent, separator);
-			_Output.Write ("							new () {{\n{0}", _Indent);
-			_Output.Write ("								Entries = new () {{", _Indent);
-			 MakeMenuEntries2(selector.Entries);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("									}}\n{0}", _Indent);
-			_Output.Write ("								}}", _Indent);
-			}
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("							}},\n{0}", _Indent);
-		_Output.Write ("						Actions = new () {{", _Indent);
-		 separator.Reset();
-		foreach  (var action in store.Actions) {
-			_Output.Write ("{1}\n{0}", _Indent, separator);
-			_Output.Write ("							new () {{\n{0}", _Indent);
-			_Output.Write ("								Entries = new () {{", _Indent);
-			 MakeMenuEntries2(action.Entries);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("									}}\n{0}", _Indent);
-			_Output.Write ("								}}", _Indent);
-			}
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("							}}\n{0}", _Indent);
+	public void GenerateButton (Button button) {
+		_Output.Write ("			// Button ", _Indent);
+		}
+	
+
+	//
+	// GenerateDialog
+	//
+	public void GenerateDialog (Dialog dialog) {
+		_Output.Write ("			// Dialog ", _Indent);
+		}
+	
+
+	//
+	// GenerateText
+	//
+	public void GenerateText (Text text) {
+		_Output.Write ("			// Text ", _Indent);
+		}
+	
+
+	//
+	// GenerateColor
+	//
+	public void GenerateColor (Color color) {
+		_Output.Write ("			// Color ", _Indent);
+		}
+	
+
+	//
+	// GenerateSize
+	//
+	public void GenerateSize (Size size) {
+		_Output.Write ("			// Text ", _Indent);
+		}
+	
+
+	//
+	// GenerateDecimal
+	//
+	public void GenerateDecimal (Decimal decimalv) {
+		_Output.Write ("			// Decimal ", _Indent);
+		}
+	
+
+	//
+	// GenerateIcon
+	//
+	public void GenerateIcon (Icon icon) {
+		_Output.Write ("			// Icon ", _Indent);
 		}
 
 	}

@@ -1,10 +1,5 @@
 # PATH=/etc/bind/named.conf.local
 
-zone "example.com" {
-    type master;
-    file "/etc/bind/zones/db.example.com";
-};
-
 zone "hallambaker.com" {
     type master;
     file "/etc/bind/zones/db.hallambaker.com";

@@ -334,7 +334,7 @@ public partial class Document {
         }
 
 
-    public void NumberTextBlocks(string NumericID, ref List<TextBlock> TextBlocks) {
+    public void NumberTextBlocks(string NumericID, string sectionNumber, ref List<TextBlock> TextBlocks) {
 
         // ToDo: keep the blocks but reset the list with a new one with explicit 
         //    nesting of list items.
@@ -347,6 +347,8 @@ public partial class Document {
                     Index++;
                     string IS = Index.ToString();
                     Text.GeneratedID = NumericID + "-" + IS;
+                    Text.NumericID = IS;
+                    Text.SectionId = sectionNumber;
                     }
 
                 if (Text as Figure != null) {
@@ -354,6 +356,12 @@ public partial class Document {
                     TableOfFigures.Add(Text as Figure);
                     Figure.NumericID = TableOfFigures.Count.ToString();
                     Figure.GeneratedID = Figure.AnchorID ?? "n-" + GetAnchor(Figure.Caption);
+                    }
+                if (Text.AnchorID != null) {
+                    var target = new XRefTarget() {
+                        TextBlock = Text
+                        };
+                    XRefDictionary.AddSafe(Text.AnchorID, target);
                     }
                 }
             }
@@ -376,58 +384,67 @@ public partial class Document {
     /// <summary>
     /// Number a section
     /// </summary>
-    /// <param name="Section">The section to number</param>
-    /// <param name="Number">The number relative to its peers</param>
-    /// <param name="Level">The depth (for cutting the TOC)</param>
-    /// <param name="NumericIDPrefix">Prefix for the numeric ID</param>
+    /// <param name="section">The section to number</param>
+    /// <param name="number">The number relative to its peers</param>
+    /// <param name="level">The depth (for cutting the TOC)</param>
+    /// <param name="numericIDPrefix">Prefix for the numeric ID</param>
     /// <param name="TextID">The text representation of Number</param>
-    /// <param name="TextSuffix">Suffix to put after number for display</param>
+    /// <param name="textSuffix">Suffix to put after number for display</param>
 
-    /// <param name="TextPrefix">Prefix to put in front of user for display</param>
-    /// <param name="Numeric">If true the number is turned into a numeric section ID</param>
+    /// <param name="textPrefix">Prefix to put in front of user for display</param>
+    /// <param name="numeric">If true the number is turned into a numeric section ID</param>
     public void NumberSection(
-            Section Section,
-        int Number,
-        int Level,
-        string NumericIDPrefix,
-        string TextSuffix,
-        string TextNumber = "",
-        string TextPrefix = "",
-        bool Numeric = true) {
+            Section section,
+        int number,
+        int level,
+        string numericIDPrefix,
+        string textSuffix,
+        string textNumber = "",
+        string textPrefix = "",
+        bool numeric = true) {
 
-        Section.Level = Level;
-        var NumberAsText = Numeric ? Number.ToString() : "" + ('A' + Number);
-        TextNumber = TextNumber + NumberAsText + TextSuffix;
+        section.Level = level;
+        var numberAsText = numeric ? number.ToString() : "" + ('A' + number);
+        textNumber = textNumber + numberAsText + textSuffix;
 
-        Section.Number = TextSuffix != null ? TextPrefix + TextNumber : "";
+        section.Number = textSuffix != null ? textPrefix + textNumber : "";
 
-        Section.SetableID ??= "n-" + GetAnchor(Section.Heading);      // For H1, H2, H3, etc.
+        section.SetableID ??= "n-" + GetAnchor(section.Heading);      // For H1, H2, H3, etc.
 
-        Section.SetableID = UniqueifyID(Section.SetableID);
+        section.SetableID = UniqueifyID(section.SetableID);
 
 
 
-        Section.GeneratedID = NumericIDPrefix + NumberAsText;                      // For the toc ref and sub paras
+        section.GeneratedID = numericIDPrefix + numberAsText;                      // For the toc ref and sub paras
 
         //if (Section.GeneratedID == null) {
         //    Section.GeneratedID = NumericIDPrefix;
         //    }
 
+        // Do this before we number subsections or else the figure numbers will turn out weird.
+        NumberTextBlocks(section.GeneratedID, textNumber, ref section.TextBlocks);
 
-        int Index = 1;
-        foreach (Section S in Section.Subsections) {
-            string IS = Index.ToString();
-            NumberSection(S, Index, Level + 1,
-            Section.GeneratedID + "_", ".", TextNumber: TextNumber);
-            Index++;
+        int index = 1;
+        foreach (Section s in section.Subsections) {
+            string IS = index.ToString();
+            NumberSection(s, index, level + 1,
+            section.GeneratedID + "_", ".", textNumber: textNumber);
+            index++;
             }
 
-        NumberTextBlocks(Section.GeneratedID, ref Section.TextBlocks);
+
+
+        if (section.SetableID != null) {
+            var target = new XRefTarget() {
+                Section = section
+                };
+            XRefDictionary.AddSafe(section.SetableID, target);
+            }
         }
 
 
     public void NumberSections() {
-        NumberTextBlocks("s-abstract", ref Abstract);
+        NumberTextBlocks("s-abstract", "Abstract", ref Abstract);
         //NumberTextBlocks("s-note", ref Note);
 
         int Index = 1;
@@ -445,7 +462,7 @@ public partial class Document {
             }
         Index = 0;
         foreach (Section S in Back) {
-            NumberSection(S, Index, 1, "a-", ":", TextPrefix: "Appendix ", Numeric: false);
+            NumberSection(S, Index, 1, "a-", ":", textPrefix: "Appendix ", numeric: false);
             Index++;
             }
         }
@@ -622,6 +639,7 @@ public abstract class TextBlock {
         set => anchorID = value;
         }
 
+    public string SectionId = "tbs";
     public string NumericID = "tbs";
 
     public string Align;

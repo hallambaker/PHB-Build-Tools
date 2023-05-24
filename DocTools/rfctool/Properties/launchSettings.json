@@ -4,6 +4,16 @@
       "commandName": "Project",
       "commandLineArgs": "..\\Word\\hallambaker-mesh-2-udf.docx   /cache=bib.xml  /auto",
       "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Outputs\\Documents\\Publish"
+    },
+    "test2": {
+      "commandName": "Project",
+      "commandLineArgs": "test2.docx /html test2.html",
+      "workingDirectory": "Test"
+    },
+    "test2xml": {
+      "commandName": "Project",
+      "commandLineArgs": "test2.docx /xml test2.html",
+      "workingDirectory": "Test"
     }
   }
 }
