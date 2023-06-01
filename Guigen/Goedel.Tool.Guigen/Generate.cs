@@ -76,15 +76,66 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("#endregion\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("using Goedel.Guigen;\n{0}", _Indent);
+		_Output.Write ("using Goedel.Utilities;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("namespace {1};\n{0}", _Indent, Guigen.Class.Namespace);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		foreach  (var action in Guigen.Actions)  {
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("/// <summary>\n{0}", _Indent);
+			_Output.Write ("/// Callback parameters for action {1} \n{0}", _Indent, action.Id.Label);
+			_Output.Write ("/// </summary>\n{0}", _Indent);
+			_Output.Write ("public partial class {1} : _{2} {{\n{0}", _Indent, action.Id.Label, action.Id.Label);
+			_Output.Write ("    }}\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("/// <summary>\n{0}", _Indent);
+			_Output.Write ("/// Callback parameters for action {1} \n{0}", _Indent, action.Id.Label);
+			_Output.Write ("/// </summary>\n{0}", _Indent);
+			_Output.Write ("public partial class _{1} : IBindable {{\n{0}", _Indent, action.Id.Label);
+			_Output.Write ("\n{0}", _Indent);
+			DeclareFields (action);
+			_Output.Write ("\n{0}", _Indent);
+			CreateBindings (action);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    public virtual bool Validate() => true;\n{0}", _Indent);
+			_Output.Write ("    }}\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("/// <summary>\n{0}", _Indent);
 		foreach  (var text in Guigen.Class.Description) {
 			_Output.Write ("/// {1}\n{0}", _Indent, text);
 			}
 		_Output.Write ("/// </summary>\n{0}", _Indent);
-		_Output.Write ("public partial class {1} : Gui {{\n{0}", _Indent, Guigen.Class.Name);
+		_Output.Write ("public partial class {1} :  _{2} {{\n{0}", _Indent, Guigen.Class.Name, Guigen.Class.Name);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    \n{0}", _Indent);
+		_Output.Write ("    }}\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("/// <summary>\n{0}", _Indent);
+		foreach  (var text in Guigen.Class.Description) {
+			_Output.Write ("/// {1}\n{0}", _Indent, text);
+			}
+		_Output.Write ("/// </summary>\n{0}", _Indent);
+		_Output.Write ("public class _{1} : Gui {{\n{0}", _Indent, Guigen.Class.Name);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    ///<inheritdoc/> \n{0}", _Indent);
+		_Output.Write ("    public override List<GuiDialog> Dialogs {{ get; }}\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    ///<inheritdoc/> \n{0}", _Indent);
+		_Output.Write ("    public override List<GuiSection> Sections {{ get; }}\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    ///<inheritdoc/> \n{0}", _Indent);
+		_Output.Write ("    public override List<GuiAction> Actions {{ get; }}\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	///<inheritdoc/>\n{0}", _Indent);
@@ -98,43 +149,29 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("		}};\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("	///<inheritdoc/>\n{0}", _Indent);
-		_Output.Write ("	public override List<GuiSection> Sections => sections;\n{0}", _Indent);
-		_Output.Write ("	readonly List<GuiSection> sections = new () {{ ", _Indent);
-		 separator.Reset ();
-		foreach  (var section in Guigen.Sections)  {
-			_Output.Write ("{1} \n{0}", _Indent, separator);
-			_Output.Write ("		{1}", _Indent, section.RecordId);
-			}
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("		}};\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("	///<inheritdoc/>\n{0}", _Indent);
-		_Output.Write ("	public override List<GuiAction> Actions => actions;\n{0}", _Indent);
-		_Output.Write ("	readonly List<GuiAction> actions = new () {{ ", _Indent);
-		 separator.Reset ();
-		foreach  (var action in Guigen.Actions)  {
-			_Output.Write ("{1} \n{0}", _Indent, separator);
-			_Output.Write ("		{1}", _Indent, action.RecordId);
-			}
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("		}};\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("	///<inheritdoc/>\n{0}", _Indent);
-		_Output.Write ("	public override List<GuiDialog> Dialogs => dialogs;\n{0}", _Indent);
-		_Output.Write ("	readonly List<GuiDialog> dialogs = new () {{ ", _Indent);
-		 separator.Reset ();
-		foreach  (var dialog in Guigen.Dialogs)  {
-			_Output.Write ("{1} \n{0}", _Indent, separator);
-			_Output.Write ("		{1}", _Indent, dialog.RecordId);
-			}
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("		}};\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	// Sections\n{0}", _Indent);
 		foreach  (var section in Guigen.Sections)  {
-			_Output.Write ("	static readonly GuiSection {1} = new (\n{0}", _Indent, section.RecordId);
-			_Output.Write ("			{1}, {2}, {3}, {4}, new List<ISectionEntry>() {{ ", _Indent, section.QuotedId, section.Prompt.Quoted(), section.Icon.Quoted(), section.Primary.If("true","false"));
+			_Output.Write ("	public GuiSection {1} {{ get; }} = new ({2}, {3}, {4}, {5});\n{0}", _Indent, section.RecordId, section.QuotedId, section.Prompt.Quoted(), section.Icon.Quoted(), section.Primary.If("true","false"));
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("	\n{0}", _Indent);
+		_Output.Write ("	// Actions\n{0}", _Indent);
+		foreach  (var action in Guigen.Actions)  {
+			_Output.Write ("	public GuiAction {1} {{ get; }} = new ({2}, {3}, {4}, () => new {5}());\n{0}", _Indent, action.RecordId, action.QuotedId, action.Prompt.Quoted(), action.Icon.Quoted(), action.Id.Label);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("	// Dialogs\n{0}", _Indent);
+		foreach  (var dialog in Guigen.Dialogs)  {
+			_Output.Write ("	public GuiDialog {1} {{ get; }} = new ({2});\n{0}", _Indent, dialog.RecordId, dialog.QuotedId);
+			}
+		_Output.Write ("	\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    public _{1} () {{\n{0}", _Indent, Guigen.Class.Name);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		foreach  (var section in Guigen.Sections)  {
+			_Output.Write ("	    {1}.Entries =  new List<ISectionEntry>() {{ ", _Indent, section.RecordId);
 			 separator.Reset ();
 			foreach  (var entry in section.Entries) {
 				if (  (entry.Active) ) {
@@ -142,45 +179,125 @@ public partial class Generate : global::Goedel.Registry.Script {
 					GenerateEntry (entry);
 					}
 				}
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("			}}) {{\n{0}", _Indent);
-			_Output.Write ("		}};\n{0}", _Indent);
+			_Output.Write ("		    \n{0}", _Indent);
+			_Output.Write ("            }};\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			}
-		_Output.Write ("	\n{0}", _Indent);
-		_Output.Write ("	// Actions\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("        Sections = new List<GuiSection> () {{ ", _Indent);
+		 separator.Reset ();
+		foreach  (var section in Guigen.Sections)  {
+			_Output.Write ("{1} \n{0}", _Indent, separator);
+			_Output.Write ("		    {1}", _Indent, section.RecordId);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("            }};\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
 		foreach  (var action in Guigen.Actions)  {
-			_Output.Write ("	static readonly GuiAction {1} = new (\n{0}", _Indent, action.RecordId);
-			_Output.Write ("			{1}, {2}, {3}, new List<IActionEntry>() {{", _Indent, action.QuotedId, action.Prompt.Quoted(), action.Icon.Quoted());
+			_Output.Write ("    {1}.Callback = {2};\n{0}", _Indent, action.RecordId, action.Id.Label);
+			_Output.Write ("	{1}.Entries = new List<IActionEntry>() {{", _Indent, action.RecordId);
 			 separator.Reset ();
 			foreach  (var entry in action.Entries) {
 				_Output.Write ("{1} \n{0}", _Indent, separator);
 				GenerateEntry (entry);
 				}
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("			}}) {{\n{0}", _Indent);
-			_Output.Write ("		}};\n{0}", _Indent);
+			_Output.Write ("		    }};\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			}
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("	// Dialogs\n{0}", _Indent);
+		_Output.Write ("    Actions = new List<GuiAction>() {{ ", _Indent);
+		 separator.Reset ();
+		foreach  (var action in Guigen.Actions)  {
+			_Output.Write ("{1} \n{0}", _Indent, separator);
+			_Output.Write ("		    {1}", _Indent, action.RecordId);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("		    }};\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
 		foreach  (var dialog in Guigen.Dialogs)  {
-			_Output.Write ("	static readonly GuiDialog {1} = new (\n{0}", _Indent, dialog.RecordId);
-			_Output.Write ("			{1}, new List<IDialogEntry>() {{", _Indent, dialog.QuotedId);
+			_Output.Write ("	{1}.Entries = new List<IDialogEntry>() {{", _Indent, dialog.RecordId);
 			 separator.Reset ();
 			foreach  (var entry in dialog.Entries) {
 				_Output.Write ("{1} \n{0}", _Indent, separator);
 				GenerateEntry (entry);
 				}
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("			}}) {{\n{0}", _Indent);
-			_Output.Write ("		}};\n{0}", _Indent);
+			_Output.Write ("			\n{0}", _Indent);
+			_Output.Write ("		    }};\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			}
-		_Output.Write ("	\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("        Dialogs = new List<GuiDialog>() {{ ", _Indent);
+		 separator.Reset ();
+		foreach  (var dialog in Guigen.Dialogs)  {
+			_Output.Write ("{1} \n{0}", _Indent, separator);
+			_Output.Write ("		    {1}", _Indent, dialog.RecordId);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("		    }};\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("        }}\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		foreach  (var action in Guigen.Actions)  {
+			_Output.Write ("    /// <summary>\n{0}", _Indent);
+			_Output.Write ("    /// GUI action\n{0}", _Indent);
+			_Output.Write ("    /// </summary>\n{0}", _Indent);
+			_Output.Write ("    public virtual void {1} (object data) => NotYetImplemented ();\n{0}", _Indent, action.Id.Label);
+			_Output.Write ("\n{0}", _Indent);
+			}
+		_Output.Write ("    \n{0}", _Indent);
+		_Output.Write ("    \n{0}", _Indent);
+		_Output.Write ("    /// <summary>\n{0}", _Indent);
+		_Output.Write ("    /// Default action\n{0}", _Indent);
+		_Output.Write ("    /// </summary>    \n{0}", _Indent);
+		_Output.Write ("    void NotYetImplemented () {{\n{0}", _Indent);
+		_Output.Write ("        }}\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	}}\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		}
+	
+
+	//
+	// DeclareFields
+	//
+	public void DeclareFields (IEntries parent) {
+		foreach  (var entry in parent.AllEntries) {
+			switch (entry._Tag ()) {
+				case GuigenType.Text: {
+				  Text text = (Text) entry; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("        ///<summary></summary> \n{0}", _Indent);
+				_Output.Write ("        public string {1} {{get; set;}} \n{0}", _Indent, text.Id.Label);
+			break; }
+				}
+			}
+		}
+	
+
+	//
+	// CreateBindings
+	//
+	public void CreateBindings (IEntries parent) {
+		 var separator = new Separator (",");
+		 var index = 0;
+		_Output.Write ("    public GuiBinding Binding => new GuiBinding (new GuiBoundProperty[] {{ ", _Indent);
+		foreach  (var entry in parent.AllEntries) {
+			switch (entry._Tag ()) {
+				case GuigenType.Text: {
+				  Text text = (Text) entry; 
+				
+				 text.Index = index++;
+				_Output.Write ("{1} \n{0}", _Indent, separator);
+				_Output.Write ("            new GuiBoundPropertyString (() => {1}, (string value) => {2} = value)", _Indent, text.Id.Label, text.Id.Label);
+			break; }
+				}
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("            }});\n{0}", _Indent);
 		}
 	
 
@@ -246,7 +363,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 			GenerateEntry (entry);
 			}
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("				}}) ", _Indent);
+		_Output.Write ("			}}) ", _Indent);
 		_Indent = _Indent.Remove (0,1);
 		}
 	
@@ -264,7 +381,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 			GenerateEntry (entry);
 			}
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("				}}) ", _Indent);
+		_Output.Write ("		    }}) ", _Indent);
 		_Indent = _Indent.Remove (0,1);
 		}
 	
@@ -273,7 +390,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	// GenerateButton
 	//
 	public void GenerateButton (Button field) {
-		_Output.Write ("			new GuiButton ({1})", _Indent, field.QuotedId);
+		_Output.Write ("			new GuiButton ({1}, {2})", _Indent, field.QuotedId, field.Target);
 		}
 	
 
@@ -281,7 +398,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	// GenerateText
 	//
 	public void GenerateText (Text field) {
-		_Output.Write ("			new GuiText ({1}, {2})", _Indent, field.QuotedId, field.Prompt.Quoted());
+		_Output.Write ("			new GuiText ({1}, {2}, {3})", _Indent, field.QuotedId, field.Prompt.Quoted(), field.Index);
 		}
 	
 
@@ -321,7 +438,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	// GenerateResx
 	//
 	public void GenerateResx (Guigen Guigen) {
-		_Output.Write ("?xml version=\"1.0\" encoding=\"utf-8\"?>\n{0}", _Indent);
+		_Output.Write ("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n{0}", _Indent);
 		_Output.Write ("<root>\n{0}", _Indent);
 		_Output.Write ("  <!-- \n{0}", _Indent);
 		_Output.Write ("    Microsoft ResX Schema \n{0}", _Indent);

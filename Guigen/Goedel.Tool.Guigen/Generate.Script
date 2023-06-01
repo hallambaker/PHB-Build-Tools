@@ -31,15 +31,66 @@
 ##endregion
 
 using Goedel.Guigen;
+using Goedel.Utilities;
 
 namespace #{Guigen.Class.Namespace};
+
+
+
+#foreach (var action in Guigen.Actions) 
+
+/// <summary>
+/// Callback parameters for action #{action.Id.Label} 
+/// </summary>
+public partial class #{action.Id.Label} : _#{action.Id.Label} {
+    }
+
+
+/// <summary>
+/// Callback parameters for action #{action.Id.Label} 
+/// </summary>
+public partial class _#{action.Id.Label} : IBindable {
+
+#call DeclareFields action
+
+#call CreateBindings action
+
+    public virtual bool Validate() => true;
+    }
+
+#end foreach
+
+
 
 /// <summary>
 #foreach (var text in Guigen.Class.Description)
 /// #{text}
 #end foreach
 /// </summary>
-public partial class #{Guigen.Class.Name} : Gui {
+public partial class #{Guigen.Class.Name} :  _#{Guigen.Class.Name} {
+
+
+
+    
+    }
+
+
+/// <summary>
+#foreach (var text in Guigen.Class.Description)
+/// #{text}
+#end foreach
+/// </summary>
+public class _#{Guigen.Class.Name} : Gui {
+
+
+    ///<inheritdoc/> 
+    public override List<GuiDialog> Dialogs { get; }
+
+    ///<inheritdoc/> 
+    public override List<GuiSection> Sections { get; }
+
+    ///<inheritdoc/> 
+    public override List<GuiAction> Actions { get; }
 
 
 	///<inheritdoc/>
@@ -53,43 +104,29 @@ public partial class #{Guigen.Class.Name} : Gui {
 
 		};
 
-	///<inheritdoc/>
-	public override List<GuiSection> Sections => sections;
-	readonly List<GuiSection> sections = new () { #!
-#% separator.Reset ();
-#foreach (var section in Guigen.Sections) 
-#{separator} 
-		#{section.RecordId}#!
-#end foreach
-
-		};
-
-	///<inheritdoc/>
-	public override List<GuiAction> Actions => actions;
-	readonly List<GuiAction> actions = new () { #!
-#% separator.Reset ();
-#foreach (var action in Guigen.Actions) 
-#{separator} 
-		#{action.RecordId}#!
-#end foreach
-
-		};
-
-	///<inheritdoc/>
-	public override List<GuiDialog> Dialogs => dialogs;
-	readonly List<GuiDialog> dialogs = new () { #!
-#% separator.Reset ();
-#foreach (var dialog in Guigen.Dialogs) 
-#{separator} 
-		#{dialog.RecordId}#!
-#end foreach
-
-		};
 
 	// Sections
 #foreach (var section in Guigen.Sections) 
-	static readonly GuiSection #{section.RecordId} = new (
-			#{section.QuotedId}, #{section.Prompt.Quoted()}, #{section.Icon.Quoted()}, #{section.Primary.If("true","false")}, new List<ISectionEntry>() { #!
+	public GuiSection #{section.RecordId} { get; } = new (#{section.QuotedId}, #{section.Prompt.Quoted()}, #{section.Icon.Quoted()}, #{section.Primary.If("true","false")});
+#end foreach
+
+	
+	// Actions
+#foreach (var action in Guigen.Actions) 
+	public GuiAction #{action.RecordId} { get; } = new (#{action.QuotedId}, #{action.Prompt.Quoted()}, #{action.Icon.Quoted()}, () => new #{action.Id.Label}());
+#end foreach	
+
+	// Dialogs
+#foreach (var dialog in Guigen.Dialogs) 
+	public GuiDialog #{dialog.RecordId} { get; } = new (#{dialog.QuotedId});
+#end foreach	
+	
+
+    public _#{Guigen.Class.Name} () {
+
+
+#foreach (var section in Guigen.Sections) 
+	    #{section.RecordId}.Entries =  new List<ISectionEntry>() { #!
 #% separator.Reset ();
 #foreach (var entry in section.Entries)
 #if (entry.Active)
@@ -97,47 +134,114 @@ public partial class #{Guigen.Class.Name} : Gui {
 #call GenerateEntry entry
 #end if 
 #end foreach
+		    
+            };
 
-			}) {
-		};
+#end foreach
 
-#end foreach	
-	
-	// Actions
+        Sections = new List<GuiSection> () { #!
+#% separator.Reset ();
+#foreach (var section in Guigen.Sections) 
+#{separator} 
+		    #{section.RecordId}#!
+#end foreach
+
+            };
+
 #foreach (var action in Guigen.Actions) 
-	static readonly GuiAction #{action.RecordId} = new (
-			#{action.QuotedId}, #{action.Prompt.Quoted()}, #{action.Icon.Quoted()}, new List<IActionEntry>() {#!
+    #{action.RecordId}.Callback = #{action.Id.Label};
+	#{action.RecordId}.Entries = new List<IActionEntry>() {#!
 #% separator.Reset ();
 #foreach (var entry in action.Entries)
 #{separator} 
 #call GenerateEntry entry
 #end foreach
 
-			}) {
-		};
+		    };
 
-#end foreach	
+#end foreach
 
-	// Dialogs
+    Actions = new List<GuiAction>() { #!
+#% separator.Reset ();
+#foreach (var action in Guigen.Actions) 
+#{separator} 
+		    #{action.RecordId}#!
+#end foreach
+
+		    };
+
+
 #foreach (var dialog in Guigen.Dialogs) 
-	static readonly GuiDialog #{dialog.RecordId} = new (
-			#{dialog.QuotedId}, new List<IDialogEntry>() {#!
+	#{dialog.RecordId}.Entries = new List<IDialogEntry>() {#!
 #% separator.Reset ();
 #foreach (var entry in dialog.Entries)
 #{separator} 
 #call GenerateEntry entry
 #end foreach
+			
+		    };
 
-			}) {
-		};
+#end foreach
 
-#end foreach	
-	
+        Dialogs = new List<GuiDialog>() { #!
+#% separator.Reset ();
+#foreach (var dialog in Guigen.Dialogs) 
+#{separator} 
+		    #{dialog.RecordId}#!
+#end foreach
+
+		    };
+
+        }
+
+#foreach (var action in Guigen.Actions) 
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual void #{action.Id.Label} (object data) => NotYetImplemented ();
+
+#end foreach
+    
+    
+    /// <summary>
+    /// Default action
+    /// </summary>    
+    void NotYetImplemented () {
+        }
+
 	}
+
 
 
 #end method
 
+
+#method DeclareFields IEntries parent
+#foreach (var entry in parent.AllEntries)
+#switchcast GuigenType entry
+#casecast Text text
+
+        ///<summary></summary> 
+        public string #{text.Id.Label} {get; set;} 
+#end switchcast
+#end foreach
+#end method
+
+#method CreateBindings IEntries parent
+#% var separator = new Separator (",");
+#% var index = 0;
+    public GuiBinding Binding => new GuiBinding (new GuiBoundProperty[] { #!
+#foreach (var entry in parent.AllEntries)
+#switchcast GuigenType entry
+#casecast Text text
+#% text.Index = index++;
+#{separator} 
+            new GuiBoundPropertyString (() => #{text.Id.Label}, (string value) => #{text.Id.Label} = value)#!
+#end switchcast
+#end foreach
+
+            });
+#end method
 
 #method GenerateEntry _Choice entry
 #switchcast GuigenType entry
@@ -170,7 +274,7 @@ public partial class #{Guigen.Class.Name} : Gui {
 #call GenerateEntry entry
 #end foreach
 
-				}) #!
+			}) #!
 #outdent
 #end method
 
@@ -184,17 +288,17 @@ public partial class #{Guigen.Class.Name} : Gui {
 #call GenerateEntry entry
 #end foreach
 
-				}) #!
+		    }) #!
 #outdent
 #end method
 
 
 #method GenerateButton Button field
-			new GuiButton (#{field.QuotedId})#!
+			new GuiButton (#{field.QuotedId}, #{field.Target})#!
 #end method
 
 #method GenerateText Text field
-			new GuiText (#{field.QuotedId}, #{field.Prompt.Quoted()})#!
+			new GuiText (#{field.QuotedId}, #{field.Prompt.Quoted()}, #{field.Index})#!
 #end method
 
 #method GenerateColor Color field
@@ -212,6 +316,10 @@ public partial class #{Guigen.Class.Name} : Gui {
 #method GenerateIcon Icon field
 			new GuiIcon (#{field.QuotedId}, #{field.Prompt.Quoted()})#!
 #end method
+
+
+
+
 
 #method GenerateResx Guigen Guigen
 <?xml version="1.0" encoding="utf-8"?>

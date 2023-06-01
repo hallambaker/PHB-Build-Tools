@@ -5,10 +5,16 @@ using Goedel.Registry;
 namespace Goedel.Tool.Guigen;
 
 
+public interface IEntries {
+
+    List<_Choice> AllEntries {get; }
+    }
+
+
 public partial class Guigen {
 
     public Dictionary<string, Prompt> Prompts = new();
-    public Dictionary<string, string> Icons = new();
+    public SortedDictionary<string, string> Icons = new();
 
     public List<Section> Sections = new();
     public List<Action> Actions = new();
@@ -17,6 +23,8 @@ public partial class Guigen {
     public Class Class { get; set; } = null;
 
     public void AddIcon(string icon) {
+        icon = icon.ToLower();
+
         if (!Icons.ContainsKey(icon)) {
             Icons.Add(icon, icon); 
             }
@@ -47,6 +55,11 @@ public partial record Prompt(string Key, string Text) {
 
 public partial class _Choice {
     public virtual bool Active => true;
+
+    public virtual string RecordId { get; }
+
+
+    public int Index { get; set; } = -1;
     }
 
 
@@ -60,7 +73,7 @@ public partial class Section {
 
     public bool Primary { get; set; } = false;
 
-    public string RecordId => "Section" + Id.Label;
+    public override string RecordId => "Section" + Id.Label;
     public string QuotedId => Id.Label.Quoted();
 
     public override void Init(_Choice parent) {
@@ -83,9 +96,11 @@ public partial class Primary {
 
 
 
-public partial class Action {
+public partial class Action : IEntries {
 
-    public string RecordId => "Action" + Id.Label;
+
+    public List<_Choice> AllEntries => Entries;
+    public override string RecordId => "Action" + Id.Label;
     public string QuotedId => Id.Label.Quoted();
 
     public override void Init(_Choice parent) {
@@ -98,7 +113,7 @@ public partial class Action {
 
 public partial class Dialog {
 
-    public string RecordId => "Dialog" + Id.Label;
+    public override string RecordId => "Dialog" + Id.Label;
     public string QuotedId => Id.Label.Quoted();
 
     public override void Init(_Choice parent) {
@@ -121,6 +136,9 @@ public partial class Chooser {
 
 public partial class Button {
     public string QuotedId => Id.Label.Quoted();
+
+    public _Choice TargetObject => Id.ID.Object;
+    public string Target => TargetObject.RecordId;
 
     public override void Init(_Choice parent) {
         base.Init(parent);
