@@ -35,6 +35,9 @@ Class Goedel.Tool.Guigen Guigen
 			Primary
 			Button
 			Dialog
+			Text
+			Decimal
+
 
 	TopType Action
 		Id			ID SectionT
@@ -47,6 +50,7 @@ Class Goedel.Tool.Guigen Guigen
 			Size
 			Decimal
 			Context
+			Return
 
 	TopType Dialog
 		Id			ID SectionT
@@ -59,8 +63,33 @@ Class Goedel.Tool.Guigen Guigen
 			Icon
 
 
+
+	TopType Binding
+		Id			ID SectionT
+		Entries List Choice
+			Chooser
+			Text
+			Color
+			Size
+			Decimal
+			Icon
+
+
+
+
+	TopType Result
+		Id			ID ResultT
+		Prompt		String	
+		Entries List Choice
+			Text
+			Decimal
+
 	Type Button
 		Id			REF SectionT
+
+	Type Return
+		Id			REF ResultT
+
 
 	Type Chooser
 		Id			ID SectionT
@@ -69,34 +98,50 @@ Class Goedel.Tool.Guigen Guigen
 		Type		Token TypeT 
 		Entries List Choice
 			Button
-		
-			
+			Readonly
+			View
+			Text
+
+	Type View 
+		Id			REF SectionT
 
 	Type Primary
 
 	Type Context
 		Id			Token SectionT		
 		Prompt		String
+		Entries List Choice
+			Readonly
 
 	Type Text
 		Id			Token SectionT
 		Prompt		String
+		Entries List Choice
+			Readonly
 
 	Type Color
 		Id			Token SectionT
 		Prompt		String
+		Entries List Choice
+			Readonly
 
 	Type Size
 		Id			Token SectionT
 		Prompt		String
+		Entries List Choice
+			Readonly
 
 	Type Decimal
 		Id			Token SectionT
 		Prompt		String
+		Entries List Choice
+			Readonly
 
 	Type Icon
 		Id			Token SectionT
 		Prompt		String
+		Entries List Choice
+			Readonly
 
-
+	Type Readonly
 

@@ -48,6 +48,8 @@ using Goedel.Utilities;
 //       Class
 //       Section
 //       Action
+//       Binding
+//       Result
 //   TypeType
 //       MITLicense
 //       BSD2License
@@ -59,12 +61,16 @@ using Goedel.Utilities;
 //       Primary
 //       Button
 //       Dialog
+//       Decimal
 //       Color
 //       Size
-//       Decimal
 //       Context
+//       Return
+//       Readonly
+//       View
 //   IdType
 //       SectionT
+//       ResultT
 //   NamespaceType
 //       Goedel.Tool.Guigen
 //   ClassType
@@ -103,8 +109,12 @@ namespace Goedel.Tool.Guigen {
         Section,
         Action,
         Dialog,
+        Binding,
+        Result,
         Button,
+        Return,
         Chooser,
+        View,
         Primary,
         Context,
         Text,
@@ -112,6 +122,7 @@ namespace Goedel.Tool.Guigen {
         Size,
         Decimal,
         Icon,
+        Readonly,
 
         _Label,
         _Bottom
@@ -437,6 +448,72 @@ namespace Goedel.Tool.Guigen {
 			}
 		}
 
+    public partial class Binding : _Choice {
+        public ID<_Choice>				Id; 
+        public List <_Choice>           Entries = new List<_Choice> ();
+
+        public override GuigenType _Tag () =>GuigenType.Binding;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Binding");
+				}
+
+	        Output.WriteId ("Id", Id.ToString()); 
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("Binding");
+				}			
+			}
+		}
+
+    public partial class Result : _Choice {
+        public ID<_Choice>				Id; 
+		public string					Prompt;
+        public List <_Choice>           Entries = new List<_Choice> ();
+
+        public override GuigenType _Tag () =>GuigenType.Result;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Result");
+				}
+
+	        Output.WriteId ("Id", Id.ToString()); 
+			Output.WriteAttribute ("Prompt", Prompt);
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("Result");
+				}			
+			}
+		}
+
     public partial class Button : _Choice {
         public REF<_Choice>				Id;
 
@@ -456,6 +533,29 @@ namespace Goedel.Tool.Guigen {
 	        Output.WriteId ("Id", Id.ToString());
 			if (tag) {
 				Output.EndElement ("Button");
+				}			
+			}
+		}
+
+    public partial class Return : _Choice {
+        public REF<_Choice>				Id;
+
+        public override GuigenType _Tag () =>GuigenType.Return;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Return");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			if (tag) {
+				Output.EndElement ("Return");
 				}			
 			}
 		}
@@ -498,6 +598,29 @@ namespace Goedel.Tool.Guigen {
 			}
 		}
 
+    public partial class View : _Choice {
+        public REF<_Choice>				Id;
+
+        public override GuigenType _Tag () =>GuigenType.View;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("View");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			if (tag) {
+				Output.EndElement ("View");
+				}			
+			}
+		}
+
     public partial class Primary : _Choice {
 
         public override GuigenType _Tag () =>GuigenType.Primary;
@@ -522,12 +645,16 @@ namespace Goedel.Tool.Guigen {
     public partial class Context : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
+        public List <_Choice>           Entries = new List<_Choice> ();
 
         public override GuigenType _Tag () =>GuigenType.Context;
 
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
 			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -538,6 +665,11 @@ namespace Goedel.Tool.Guigen {
 
 	        Output.WriteId ("Id", Id.ToString());
 			Output.WriteAttribute ("Prompt", Prompt);
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Context");
 				}			
@@ -547,12 +679,16 @@ namespace Goedel.Tool.Guigen {
     public partial class Text : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
+        public List <_Choice>           Entries = new List<_Choice> ();
 
         public override GuigenType _Tag () =>GuigenType.Text;
 
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
 			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -563,6 +699,11 @@ namespace Goedel.Tool.Guigen {
 
 	        Output.WriteId ("Id", Id.ToString());
 			Output.WriteAttribute ("Prompt", Prompt);
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Text");
 				}			
@@ -572,12 +713,16 @@ namespace Goedel.Tool.Guigen {
     public partial class Color : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
+        public List <_Choice>           Entries = new List<_Choice> ();
 
         public override GuigenType _Tag () =>GuigenType.Color;
 
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
 			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -588,6 +733,11 @@ namespace Goedel.Tool.Guigen {
 
 	        Output.WriteId ("Id", Id.ToString());
 			Output.WriteAttribute ("Prompt", Prompt);
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Color");
 				}			
@@ -597,12 +747,16 @@ namespace Goedel.Tool.Guigen {
     public partial class Size : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
+        public List <_Choice>           Entries = new List<_Choice> ();
 
         public override GuigenType _Tag () =>GuigenType.Size;
 
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
 			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -613,6 +767,11 @@ namespace Goedel.Tool.Guigen {
 
 	        Output.WriteId ("Id", Id.ToString());
 			Output.WriteAttribute ("Prompt", Prompt);
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Size");
 				}			
@@ -622,12 +781,16 @@ namespace Goedel.Tool.Guigen {
     public partial class Decimal : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
+        public List <_Choice>           Entries = new List<_Choice> ();
 
         public override GuigenType _Tag () =>GuigenType.Decimal;
 
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
 			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -638,6 +801,11 @@ namespace Goedel.Tool.Guigen {
 
 	        Output.WriteId ("Id", Id.ToString());
 			Output.WriteAttribute ("Prompt", Prompt);
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Decimal");
 				}			
@@ -647,12 +815,16 @@ namespace Goedel.Tool.Guigen {
     public partial class Icon : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
+        public List <_Choice>           Entries = new List<_Choice> ();
 
         public override GuigenType _Tag () =>GuigenType.Icon;
 
 
 		public override void _InitChildren (_Choice Parent) {
 			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
 			}
 
 		public override void Serialize (StructureWriter Output, bool tag) {
@@ -663,8 +835,34 @@ namespace Goedel.Tool.Guigen {
 
 	        Output.WriteId ("Id", Id.ToString());
 			Output.WriteAttribute ("Prompt", Prompt);
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Icon");
+				}			
+			}
+		}
+
+    public partial class Readonly : _Choice {
+
+        public override GuigenType _Tag () =>GuigenType.Readonly;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Readonly");
+				}
+
+			if (tag) {
+				Output.EndElement ("Readonly");
 				}			
 			}
 		}
@@ -715,33 +913,51 @@ namespace Goedel.Tool.Guigen {
 		Dialog_Start,
 		Dialog__Id,				
 		Dialog__Entries,				
+		Binding_Start,
+		Binding__Id,				
+		Binding__Entries,				
+		Result_Start,
+		Result__Id,				
+		Result__Prompt,				
+		Result__Entries,				
 		Button_Start,
 		Button__Id,				
+		Return_Start,
+		Return__Id,				
 		Chooser_Start,
 		Chooser__Id,				
 		Chooser__Prompt,				
 		Chooser__Icon,				
 		Chooser__Type,				
 		Chooser__Entries,				
+		View_Start,
+		View__Id,				
 		Primary_Start,
 		Context_Start,
 		Context__Id,				
 		Context__Prompt,				
+		Context__Entries,				
 		Text_Start,
 		Text__Id,				
 		Text__Prompt,				
+		Text__Entries,				
 		Color_Start,
 		Color__Id,				
 		Color__Prompt,				
+		Color__Entries,				
 		Size_Start,
 		Size__Id,				
 		Size__Prompt,				
+		Size__Entries,				
 		Decimal_Start,
 		Decimal__Id,				
 		Decimal__Prompt,				
+		Decimal__Entries,				
 		Icon_Start,
 		Icon__Id,				
 		Icon__Prompt,				
+		Icon__Entries,				
+		Readonly_Start,
         }
 
 
@@ -797,6 +1013,7 @@ namespace Goedel.Tool.Guigen {
             StartOfEntry = true;
 
 			TYPE__SectionT = Registry.TYPE ("SectionT"); 
+			TYPE__ResultT = Registry.TYPE ("ResultT"); 
 			TYPE__TypeT = Registry.TYPE ("TypeT"); 
 
 
@@ -806,6 +1023,7 @@ namespace Goedel.Tool.Guigen {
 
 
         public TYPE<Goedel.Tool.Guigen._Choice> TYPE__SectionT ;
+        public TYPE<Goedel.Tool.Guigen._Choice> TYPE__ResultT ;
         public TYPE<Goedel.Tool.Guigen._Choice> TYPE__TypeT ;
 
         private Goedel.Tool.Guigen._Choice New_Choice(string Label) {
@@ -822,8 +1040,12 @@ namespace Goedel.Tool.Guigen {
                 case "Section": return NewSection();
                 case "Action": return NewAction();
                 case "Dialog": return NewDialog();
+                case "Binding": return NewBinding();
+                case "Result": return NewResult();
                 case "Button": return NewButton();
+                case "Return": return NewReturn();
                 case "Chooser": return NewChooser();
+                case "View": return NewView();
                 case "Primary": return NewPrimary();
                 case "Context": return NewContext();
                 case "Text": return NewText();
@@ -831,6 +1053,7 @@ namespace Goedel.Tool.Guigen {
                 case "Size": return NewSize();
                 case "Decimal": return NewDecimal();
                 case "Icon": return NewIcon();
+                case "Readonly": return NewReadonly();
 
 				}
 
@@ -927,6 +1150,22 @@ namespace Goedel.Tool.Guigen {
             }
 
 
+        private Goedel.Tool.Guigen.Binding NewBinding() {
+            Goedel.Tool.Guigen.Binding result = new Goedel.Tool.Guigen.Binding();
+            Push (result);
+            State = StateCode.Binding_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Guigen.Result NewResult() {
+            Goedel.Tool.Guigen.Result result = new Goedel.Tool.Guigen.Result();
+            Push (result);
+            State = StateCode.Result_Start;
+            return result;
+            }
+
+
         private Goedel.Tool.Guigen.Button NewButton() {
             Goedel.Tool.Guigen.Button result = new Goedel.Tool.Guigen.Button();
             Push (result);
@@ -935,10 +1174,26 @@ namespace Goedel.Tool.Guigen {
             }
 
 
+        private Goedel.Tool.Guigen.Return NewReturn() {
+            Goedel.Tool.Guigen.Return result = new Goedel.Tool.Guigen.Return();
+            Push (result);
+            State = StateCode.Return_Start;
+            return result;
+            }
+
+
         private Goedel.Tool.Guigen.Chooser NewChooser() {
             Goedel.Tool.Guigen.Chooser result = new Goedel.Tool.Guigen.Chooser();
             Push (result);
             State = StateCode.Chooser_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Guigen.View NewView() {
+            Goedel.Tool.Guigen.View result = new Goedel.Tool.Guigen.View();
+            Push (result);
+            State = StateCode.View_Start;
             return result;
             }
 
@@ -999,6 +1254,14 @@ namespace Goedel.Tool.Guigen {
             }
 
 
+        private Goedel.Tool.Guigen.Readonly NewReadonly() {
+            Goedel.Tool.Guigen.Readonly result = new Goedel.Tool.Guigen.Readonly();
+            Push (result);
+            State = StateCode.Readonly_Start;
+            return result;
+            }
+
+
         static Goedel.Tool.Guigen.GuigenType _Reserved(string Label) {
             switch (Label) {
 
@@ -1013,8 +1276,12 @@ namespace Goedel.Tool.Guigen {
                 case "Section": return Goedel.Tool.Guigen.GuigenType.Section;
                 case "Action": return Goedel.Tool.Guigen.GuigenType.Action;
                 case "Dialog": return Goedel.Tool.Guigen.GuigenType.Dialog;
+                case "Binding": return Goedel.Tool.Guigen.GuigenType.Binding;
+                case "Result": return Goedel.Tool.Guigen.GuigenType.Result;
                 case "Button": return Goedel.Tool.Guigen.GuigenType.Button;
+                case "Return": return Goedel.Tool.Guigen.GuigenType.Return;
                 case "Chooser": return Goedel.Tool.Guigen.GuigenType.Chooser;
+                case "View": return Goedel.Tool.Guigen.GuigenType.View;
                 case "Primary": return Goedel.Tool.Guigen.GuigenType.Primary;
                 case "Context": return Goedel.Tool.Guigen.GuigenType.Context;
                 case "Text": return Goedel.Tool.Guigen.GuigenType.Text;
@@ -1022,6 +1289,7 @@ namespace Goedel.Tool.Guigen {
                 case "Size": return Goedel.Tool.Guigen.GuigenType.Size;
                 case "Decimal": return Goedel.Tool.Guigen.GuigenType.Decimal;
                 case "Icon": return Goedel.Tool.Guigen.GuigenType.Icon;
+                case "Readonly": return Goedel.Tool.Guigen.GuigenType.Readonly;
 
                 }
             return Goedel.Tool.Guigen.GuigenType._Bottom;
@@ -1102,7 +1370,9 @@ namespace Goedel.Tool.Guigen {
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Class) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Section) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Action) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Dialog)) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Dialog) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Binding) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Result)) {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
@@ -1303,11 +1573,13 @@ namespace Goedel.Tool.Guigen {
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Chooser) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Primary) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Button) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Dialog) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Dialog) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Text) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Decimal) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Chooser Primary Button Dialog ]");
+								throw new Expected ("Parser Error Expected [Chooser Primary Button Dialog Text Decimal ]");
 								}
 							}
                         break;
@@ -1367,11 +1639,12 @@ namespace Goedel.Tool.Guigen {
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Color) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Size) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Decimal) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Context) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Context) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Return) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Context ]");
+								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Context Return ]");
 								}
 							}
                         break;
@@ -1423,6 +1696,103 @@ namespace Goedel.Tool.Guigen {
                         break;
 
 
+                    case StateCode.Binding_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.Binding Current_Cast = (Goedel.Tool.Guigen.Binding)Current;
+                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__SectionT, Current_Cast);
+                            State = StateCode.Binding__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Binding__Id:
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Binding__Entries;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.Binding__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Guigen.Binding Current_Cast = (Goedel.Tool.Guigen.Binding)Current;
+                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Chooser) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Text) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Color) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Size) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Decimal) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Icon) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Icon ]");
+								}
+							}
+                        break;
+
+
+                    case StateCode.Result_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.Result Current_Cast = (Goedel.Tool.Guigen.Result)Current;
+                            Current_Cast.Id = Registry.ID(Position, Text, TYPE__ResultT, Current_Cast);
+                            State = StateCode.Result__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Result__Id:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Guigen.Result Current_Cast = (Goedel.Tool.Guigen.Result)Current;
+                            Current_Cast.Prompt = Text;
+                            State = StateCode.Result__Prompt;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Result__Prompt:
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Result__Entries;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.Result__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Guigen.Result Current_Cast = (Goedel.Tool.Guigen.Result)Current;
+                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Text) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Decimal) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [Text Decimal ]");
+								}
+							}
+                        break;
+
+
                     case StateCode.Button_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Guigen.Button Current_Cast = (Goedel.Tool.Guigen.Button)Current;
@@ -1433,6 +1803,19 @@ namespace Goedel.Tool.Guigen {
                         throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Button__Id:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Return_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.Return Current_Cast = (Goedel.Tool.Guigen.Return)Current;
+                            Current_Cast.Id = Registry.REF(Position, Text, TYPE__ResultT, Current_Cast);
+                            State = StateCode.Return__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Return__Id:
                         Pop ();
                         Represent = true; 
                         break;
@@ -1494,16 +1877,32 @@ namespace Goedel.Tool.Guigen {
 							Goedel.Tool.Guigen.Chooser Current_Cast = (Goedel.Tool.Guigen.Chooser)Current;
                             Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
                             if ( false |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Button) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Button) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Readonly) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.View) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Text) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Button ]");
+								throw new Expected ("Parser Error Expected [Button Readonly View Text ]");
 								}
 							}
                         break;
 
 
+                    case StateCode.View_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.View Current_Cast = (Goedel.Tool.Guigen.View)Current;
+                            Current_Cast.Id = Registry.REF(Position, Text, TYPE__SectionT, Current_Cast);
+                            State = StateCode.View__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.View__Id:
+                        Pop ();
+                        Represent = true; 
+                        break;
                     case StateCode.Primary_Start:
                         Pop ();
                         Represent = true; 
@@ -1527,9 +1926,37 @@ namespace Goedel.Tool.Guigen {
                         throw new Expected("Expected String");
 
                     case StateCode.Context__Prompt:
-                        Pop ();
-                        Represent = true; 
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Context__Entries;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
                         break;
+                    case StateCode.Context__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Guigen.Context Current_Cast = (Goedel.Tool.Guigen.Context)Current;
+                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Readonly) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [Readonly ]");
+								}
+							}
+                        break;
+
+
                     case StateCode.Text_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Guigen.Text Current_Cast = (Goedel.Tool.Guigen.Text)Current;
@@ -1549,9 +1976,37 @@ namespace Goedel.Tool.Guigen {
                         throw new Expected("Expected String");
 
                     case StateCode.Text__Prompt:
-                        Pop ();
-                        Represent = true; 
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Text__Entries;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
                         break;
+                    case StateCode.Text__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Guigen.Text Current_Cast = (Goedel.Tool.Guigen.Text)Current;
+                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Readonly) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [Readonly ]");
+								}
+							}
+                        break;
+
+
                     case StateCode.Color_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Guigen.Color Current_Cast = (Goedel.Tool.Guigen.Color)Current;
@@ -1571,9 +2026,37 @@ namespace Goedel.Tool.Guigen {
                         throw new Expected("Expected String");
 
                     case StateCode.Color__Prompt:
-                        Pop ();
-                        Represent = true; 
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Color__Entries;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
                         break;
+                    case StateCode.Color__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Guigen.Color Current_Cast = (Goedel.Tool.Guigen.Color)Current;
+                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Readonly) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [Readonly ]");
+								}
+							}
+                        break;
+
+
                     case StateCode.Size_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Guigen.Size Current_Cast = (Goedel.Tool.Guigen.Size)Current;
@@ -1593,9 +2076,37 @@ namespace Goedel.Tool.Guigen {
                         throw new Expected("Expected String");
 
                     case StateCode.Size__Prompt:
-                        Pop ();
-                        Represent = true; 
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Size__Entries;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
                         break;
+                    case StateCode.Size__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Guigen.Size Current_Cast = (Goedel.Tool.Guigen.Size)Current;
+                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Readonly) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [Readonly ]");
+								}
+							}
+                        break;
+
+
                     case StateCode.Decimal_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Guigen.Decimal Current_Cast = (Goedel.Tool.Guigen.Decimal)Current;
@@ -1615,9 +2126,37 @@ namespace Goedel.Tool.Guigen {
                         throw new Expected("Expected String");
 
                     case StateCode.Decimal__Prompt:
-                        Pop ();
-                        Represent = true; 
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Decimal__Entries;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
                         break;
+                    case StateCode.Decimal__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Guigen.Decimal Current_Cast = (Goedel.Tool.Guigen.Decimal)Current;
+                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Readonly) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [Readonly ]");
+								}
+							}
+                        break;
+
+
                     case StateCode.Icon_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Guigen.Icon Current_Cast = (Goedel.Tool.Guigen.Icon)Current;
@@ -1637,6 +2176,38 @@ namespace Goedel.Tool.Guigen {
                         throw new Expected("Expected String");
 
                     case StateCode.Icon__Prompt:
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Icon__Entries;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.Icon__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Guigen.Icon Current_Cast = (Goedel.Tool.Guigen.Icon)Current;
+                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Readonly) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [Readonly ]");
+								}
+							}
+                        break;
+
+
+                    case StateCode.Readonly_Start:
                         Pop ();
                         Represent = true; 
                         break;
