@@ -34,11 +34,11 @@ using Goedel.Utilities;
 //       Description
 //       Using
 //       Extern
-//       Enumeration
 //       Success
 //       Warning
 //       Error
 //       Inherits
+//       Enumeration
 //       Status
 //       Abstract
 //       External
@@ -69,6 +69,7 @@ using Goedel.Utilities;
 //       LengthFixed
 //       Quoted
 //       Constraint
+//       Enumerated
 //       TaggedType
 //       Tagged
 //       Require
@@ -181,6 +182,7 @@ namespace Goedel.Tool.ProtoGen {
         Funct,
         TStruct,
         Struct,
+        Enumerated,
         Enum,
         Select,
         TaggedType,
@@ -1184,6 +1186,27 @@ namespace Goedel.Tool.ProtoGen {
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Struct");
+				}			
+			}
+		}
+
+    public partial class Enumerated : _Choice {
+
+        public override ProtoStructType _Tag () =>ProtoStructType.Enumerated;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Enumerated");
+				}
+
+			if (tag) {
+				Output.EndElement ("Enumerated");
 				}			
 			}
 		}
@@ -2337,6 +2360,7 @@ namespace Goedel.Tool.ProtoGen {
 		Struct__Type,				
 		Struct__Id,				
 		Struct__Options,				
+		Enumerated_Start,
 		Enum_Start,
 		Enum__Type,				
 		Enum__Id,				
@@ -2577,6 +2601,7 @@ namespace Goedel.Tool.ProtoGen {
                 case "Funct": return NewFunct();
                 case "TStruct": return NewTStruct();
                 case "Struct": return NewStruct();
+                case "Enumerated": return NewEnumerated();
                 case "Enum": return NewEnum();
                 case "Select": return NewSelect();
                 case "TaggedType": return NewTaggedType();
@@ -2875,6 +2900,14 @@ namespace Goedel.Tool.ProtoGen {
             Goedel.Tool.ProtoGen.Struct result = new Goedel.Tool.ProtoGen.Struct();
             Push (result);
             State = StateCode.Struct_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.ProtoGen.Enumerated NewEnumerated() {
+            Goedel.Tool.ProtoGen.Enumerated result = new Goedel.Tool.ProtoGen.Enumerated();
+            Push (result);
+            State = StateCode.Enumerated_Start;
             return result;
             }
 
@@ -3218,6 +3251,7 @@ namespace Goedel.Tool.ProtoGen {
                 case "Funct": return Goedel.Tool.ProtoGen.ProtoStructType.Funct;
                 case "TStruct": return Goedel.Tool.ProtoGen.ProtoStructType.TStruct;
                 case "Struct": return Goedel.Tool.ProtoGen.ProtoStructType.Struct;
+                case "Enumerated": return Goedel.Tool.ProtoGen.ProtoStructType.Enumerated;
                 case "Enum": return Goedel.Tool.ProtoGen.ProtoStructType.Enum;
                 case "Select": return Goedel.Tool.ProtoGen.ProtoStructType.Select;
                 case "TaggedType": return Goedel.Tool.ProtoGen.ProtoStructType.TaggedType;
@@ -3411,15 +3445,15 @@ namespace Goedel.Tool.ProtoGen {
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Using) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Extern) |
-									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Enumeration) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Success) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Warning) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Error) |
-									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Inherits) ) {
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Inherits) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Enumeration) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Section Service Transaction Message Structure Description Using Extern Enumeration Success Warning Error Inherits ]");
+								throw new Expected ("Parser Error Expected [Section Service Transaction Message Structure Description Using Extern Success Warning Error Inherits Enumeration ]");
 								}
 							}
                         break;
@@ -4473,11 +4507,12 @@ namespace Goedel.Tool.ProtoGen {
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.LengthBits) |
-									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) ) {
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Enumerated) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description LengthBits Tag ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Description LengthBits Tag Enumerated ]");
 								}
 							}
                         break;
@@ -4527,16 +4562,21 @@ namespace Goedel.Tool.ProtoGen {
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.LengthBits) |
-									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) ) {
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Enumerated) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description LengthBits Tag ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Description LengthBits Tag Enumerated ]");
 								}
 							}
                         break;
 
 
+                    case StateCode.Enumerated_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
                     case StateCode.Enum_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.ProtoGen.Enum Current_Cast = (Goedel.Tool.ProtoGen.Enum)Current;

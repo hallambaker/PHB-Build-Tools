@@ -397,6 +397,29 @@ public partial class Generate : global::Goedel.Registry.Script {
 				case ProtoStructType.Multiple: { 
 				
 				 result = true;
+				break; }
+				case ProtoStructType.Enumerated: { 
+				
+				 result = true;
+			break; }
+				}
+			}
+		 return result;
+		 }
+	
+	
+
+	//
+	//  
+	//
+
+		 public bool IsEnumerated  (List<_Choice> Entries) {
+		 bool result = false;
+		foreach  (_Choice Entry in Entries) {
+			switch (Entry._Tag ()) {
+				case ProtoStructType.Enumerated: { 
+				
+				 result = true;
 			break; }
 				}
 			}
@@ -475,9 +498,11 @@ public partial class Generate : global::Goedel.Registry.Script {
 	//
 
 		 public void MakeClass  (ID<_Choice> Id, List<_Choice> Entries, bool Param) {
+		 var isAbstract = false;
 		 var Inherits = HasInherits (Entries);
 		 DescriptionListC (Entries, 1);
 		if (  (IsAbstract (Entries)) ) {
+			 isAbstract = true;
 			_Output.Write ("abstract ", _Indent);
 			}
 		 var TTT = Param ? "<T>" : "";
@@ -488,37 +513,45 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		DeclareMembers ((Entries));
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
-		_Output.Write ("	public override void Setter(\n{0}", _Indent);
-		_Output.Write ("			string tag, TokenValue value) {{ \n{0}", _Indent);
-		_Output.Write ("		switch (tag) {{\n{0}", _Indent);
-		DeclareMembersSetter ((Entries));
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("			default: {{\n{0}", _Indent);
-		_Output.Write ("				base.Setter(tag, value);\n{0}", _Indent);
-		_Output.Write ("				break;\n{0}", _Indent);
-		_Output.Write ("				}}\n{0}", _Indent);
-		_Output.Write ("			}}\n{0}", _Indent);
-		_Output.Write ("		}}\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
-		_Output.Write ("    public override TokenValue Getter(\n{0}", _Indent);
-		_Output.Write ("            string tag) {{\n{0}", _Indent);
-		_Output.Write ("        switch (tag) {{\n{0}", _Indent);
-		DeclareMembersGetter ((Entries));
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("            default: {{\n{0}", _Indent);
-		_Output.Write ("                return base.Getter(tag);\n{0}", _Indent);
-		_Output.Write ("                }}\n{0}", _Indent);
-		_Output.Write ("            }}\n{0}", _Indent);
-		_Output.Write ("        }}\n{0}", _Indent);
+		if (  (false) ) {
+			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+			_Output.Write ("	public override void Setter(\n{0}", _Indent);
+			_Output.Write ("			string tag, TokenValue value) {{ \n{0}", _Indent);
+			_Output.Write ("		switch (tag) {{\n{0}", _Indent);
+			DeclareMembersSetter ((Entries));
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("			default: {{\n{0}", _Indent);
+			_Output.Write ("				base.Setter(tag, value);\n{0}", _Indent);
+			_Output.Write ("				break;\n{0}", _Indent);
+			_Output.Write ("				}}\n{0}", _Indent);
+			_Output.Write ("			}}\n{0}", _Indent);
+			_Output.Write ("		}}\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+			_Output.Write ("    public override TokenValue Getter(\n{0}", _Indent);
+			_Output.Write ("            string tag) {{\n{0}", _Indent);
+			_Output.Write ("        switch (tag) {{\n{0}", _Indent);
+			DeclareMembersGetter ((Entries));
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("            default: {{\n{0}", _Indent);
+			_Output.Write ("                return base.Getter(tag);\n{0}", _Indent);
+			_Output.Write ("                }}\n{0}", _Indent);
+			_Output.Write ("            }}\n{0}", _Indent);
+			_Output.Write ("        }}\n{0}", _Indent);
+			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    ///<summary>Implement IBinding</summary> \n{0}", _Indent);
-		_Output.Write ("	public override Binding Binding => _binding;\n{0}", _Indent);
+		_Output.Write ("	public override Binding _Binding => _binding;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	///<summary>Binding</summary> \n{0}", _Indent);
-		_Output.Write ("	static protected new Binding _binding = new Binding (_StaticProperties, {1});\n{0}", _Indent, (Inherits != null).If(Inherits + "._binding", "null"));
+		_Output.Write ("	static protected new Binding _binding = new (\n{0}", _Indent);
+		_Output.Write ("			_StaticProperties, __Tag,", _Indent);
+		if (  isAbstract ) {
+			_Output.Write ("null, ", _Indent);
+			} else {
+			_Output.Write ("() => new {1}(), ", _Indent, Id);
+			}
+		_Output.Write ("{1});\n{0}", _Indent, (Inherits != null).If(Inherits + "._binding", "null"));
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    ///<summary>Dictionary describing the serializable properties.</summary> \n{0}", _Indent);
 		_Output.Write ("    public readonly static new Dictionary<string, Property> _StaticProperties = new() {{\n{0}", _Indent);
@@ -694,8 +727,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 				case ProtoStructType.Struct: {
 				  Struct Param = (Struct) Entry; 
 				_Output.Write ("{1}\n{0}", _Indent, separator);
-				_Output.Write ("			{{ \"{1}\", new {2}<{3}> (\"{4}\", \n{0}", _Indent, Tag, Entry.PropertyName, Param.BaseType, Tag);
-				_Output.Write ("					(IBinding data, {1} value) => {{(data as {2}).{3} = value;}}, (IBinding data) => (data as {4}).{5},\n{0}", _Indent, Entry.TypeCS, Id, Entry.ID, Id, Entry.ID);
+				
+				//			{ "#{Tag}", new #{Entry.PropertyName}<#{Param.BaseType}> ("#{Tag}", 
+				_Output.Write ("			{{ \"{1}\", new {2} (\"{3}\", \n{0}", _Indent, Tag, Entry.PropertyName, Tag);
+				_Output.Write ("					(IBinding data, object? value) => {{(data as {1}).{2} = value as {3};}}, (IBinding data) => (data as {4}).{5},\n{0}", _Indent, Id, Entry.ID, Param.TypeCSCons, Id, Entry.ID);
 				_Output.Write ("					false, ()=>new  {1}(), ()=>new {2}())}} ", _Indent, Param.TypeCSCons, Param.BaseType);
 				
 				//			{ "#{Tag}", new #{Entry.PropertyName} ( typeof(TokenValue#{list}Struct), #{Entry.Multiple.ToString().ToLower()},
@@ -705,8 +740,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 				case ProtoStructType.TStruct: {
 				  TStruct Param = (TStruct) Entry; 
 				_Output.Write ("{1}\n{0}", _Indent, separator);
-				_Output.Write ("			{{ \"{1}\", new {2}<{3}> (\"{4}\", \n{0}", _Indent, Tag, Entry.PropertyName, Param.BaseType, Tag);
-				_Output.Write ("					(IBinding data, {1} value) => {{(data as {2}).{3} = value;}}, (IBinding data) => (data as {4}).{5},\n{0}", _Indent, Entry.TypeCS, Id, Entry.ID, Id, Entry.ID);
+				_Output.Write ("			{{ \"{1}\", new {2} (\"{3}\", \n{0}", _Indent, Tag, Entry.PropertyName, Tag);
+				_Output.Write ("					(IBinding data, object? value) => {{(data as {1}).{2} = value as {3};}}, (IBinding data) => (data as {4}).{5},\n{0}", _Indent, Id, Entry.ID, Param.TypeCSCons, Id, Entry.ID);
 				_Output.Write ("					true", _Indent);
 				if (  Entry.Multiple ) {
 					_Output.Write (", ()=>new {1}())}} ", _Indent, Param.TypeCSCons);
@@ -779,8 +814,12 @@ public partial class Generate : global::Goedel.Registry.Script {
 			 GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
 			    out var Nullable, out var Tag);
 			if (  (Token != null) ) {
+				 bool Enumerated = IsEnumerated (Options);
 				 bool Multiple = IsMultiple (Options);
-				if (  Multiple ) {
+				if (  Enumerated ) {
+					_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
+					_Output.Write ("	public virtual IEnumerable<{1}>				{2}  {{get; set;}}\n{0}", _Indent, Type, Token);
+					} else if (  Multiple) {
 					_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
 					_Output.Write ("	public virtual List<{1}>				{2}  {{get; set;}}\n{0}", _Indent, Type, Token);
 					} else {

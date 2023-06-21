@@ -20,6 +20,11 @@
       "commandLineArgs": "ContainerEntry.pschema  /cs ContainerEntry.cs",
       "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Libraries\\Goedel.Cryptography.Dare"
     },
+    "Results": {
+      "commandName": "Project",
+      "commandLineArgs": "Results.protogen  /cs Results.cs",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Mesh\\Goedel.Mesh.Shell"
+    },
     "MeshSchema": {
       "commandName": "Project",
       "commandLineArgs": "SchemaMesh.protocol  /cs  SchemaMesh.cs",

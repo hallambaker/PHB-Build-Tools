@@ -10,6 +10,7 @@ namespace Goedel.Tool.ProtoGen {
         public string Default = null;
         public string DefaultC => Default == null ? "NULL" : "\"" + Default + "\"";
         public bool Multiple = false;
+        public bool Enumerated = false;
         public bool Required = false;
 
         public string RequiredC => Required ? "TRUE" : "FALSE";
@@ -142,6 +143,10 @@ namespace Goedel.Tool.ProtoGen {
                         }
                     }
                 if (Entry.GetType() == typeof(Multiple)) {
+                    Multiple = true;
+                    }
+                if (Entry.GetType() == typeof(Enumerated)) {
+                    Enumerated = true;
                     Multiple = true;
                     }
                 if (Entry.GetType() == typeof(Required)) {

@@ -14,12 +14,11 @@
             Description
 			Using
 			Extern
-			Enumeration
 			Success
 			Warning
 			Error
 			Inherits
-
+            Enumeration
 
 	Type Using									// Pull in external namespace
 		Id			Token NamespaceType			// The namspace being used
@@ -248,6 +247,7 @@
             Description
 			LengthBits
 			Tag
+			Enumerated
 
     Type Struct
         Type	REF StructureT
@@ -258,6 +258,9 @@
             Description
 			LengthBits
 			Tag
+			Enumerated
+
+    Type Enumerated
 
     Type Enum
         Type	REF EnumerationType
