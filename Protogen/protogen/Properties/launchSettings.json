@@ -20,6 +20,11 @@
       "commandLineArgs": "ContainerEntry.pschema  /cs ContainerEntry.cs",
       "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Libraries\\Goedel.Cryptography.Dare"
     },
+    "JoseSchema": {
+      "commandName": "Project",
+      "commandLineArgs": "JoseSchema.protocol  /cs JoseSchema.cs",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Libraries\\Goedel.Cryptography.Jose"
+    },
     "Results": {
       "commandName": "Project",
       "commandLineArgs": "Results.protogen  /cs Results.cs",

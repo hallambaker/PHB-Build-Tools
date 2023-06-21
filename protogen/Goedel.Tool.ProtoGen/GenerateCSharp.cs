@@ -730,30 +730,25 @@ public partial class Generate : global::Goedel.Registry.Script {
 				
 				//			{ "#{Tag}", new #{Entry.PropertyName}<#{Param.BaseType}> ("#{Tag}", 
 				_Output.Write ("			{{ \"{1}\", new {2} (\"{3}\", \n{0}", _Indent, Tag, Entry.PropertyName, Tag);
-				_Output.Write ("					(IBinding data, object? value) => {{(data as {1}).{2} = value as {3};}}, (IBinding data) => (data as {4}).{5},\n{0}", _Indent, Id, Entry.ID, Param.TypeCSCons, Id, Entry.ID);
+				_Output.Write ("					(IBinding data, object? value) => {{(data as {1}).{2} = value as {3};}}, (IBinding data) => (data as {4}).{5},\n{0}", _Indent, Id, Token, Param.TypeCSCons, Id, Token);
 				_Output.Write ("					false, ()=>new  {1}(), ()=>new {2}())}} ", _Indent, Param.TypeCSCons, Param.BaseType);
-				
-				//			{ "#{Tag}", new #{Entry.PropertyName} ( typeof(TokenValue#{list}Struct), #{Entry.Multiple.ToString().ToLower()},
-				
-				//					false, ()=>new #{eType}(), ()=>new #{Type}())} #!
 				break; }
 				case ProtoStructType.TStruct: {
 				  TStruct Param = (TStruct) Entry; 
 				_Output.Write ("{1}\n{0}", _Indent, separator);
 				_Output.Write ("			{{ \"{1}\", new {2} (\"{3}\", \n{0}", _Indent, Tag, Entry.PropertyName, Tag);
-				_Output.Write ("					(IBinding data, object? value) => {{(data as {1}).{2} = value as {3};}}, (IBinding data) => (data as {4}).{5},\n{0}", _Indent, Id, Entry.ID, Param.TypeCSCons, Id, Entry.ID);
+				_Output.Write ("					(IBinding data, object? value) => {{(data as {1}).{2} = value as {3};}}, (IBinding data) => (data as {4}).{5},\n{0}", _Indent, Id, Token, Param.TypeCSCons, Id, Token);
 				_Output.Write ("					true", _Indent);
 				if (  Entry.Multiple ) {
-					_Output.Write (", ()=>new {1}())}} ", _Indent, Param.TypeCSCons);
-					} else {
-					_Output.Write (")}} ", _Indent);
+					_Output.Write (", ()=>new {1}()\n{0}", _Indent, Param.TypeCSCons);
 					}
+				_Output.Write (")}} ", _Indent);
 				
 				 break; } default : {
 				if (  (Token != null) ) {
 					_Output.Write ("{1}\n{0}", _Indent, separator);
 					_Output.Write ("			{{ \"{1}\", new {2} (\"{3}\", \n{0}", _Indent, Tag, Entry.PropertyName, Tag);
-					_Output.Write ("					(IBinding data, {1} value) => {{(data as {2}).{3} = value;}}, (IBinding data) => (data as {4}).{5} )}}", _Indent, Entry.TypeCS, Id, Entry.ID, Id, Entry.ID);
+					_Output.Write ("					(IBinding data, {1} value) => {{(data as {2}).{3} = value;}}, (IBinding data) => (data as {4}).{5} )}}", _Indent, Entry.TypeCS, Id, Token, Id, Token);
 					}
 			break; }
 				}
@@ -821,21 +816,11 @@ public partial class Generate : global::Goedel.Registry.Script {
 					_Output.Write ("	public virtual IEnumerable<{1}>				{2}  {{get; set;}}\n{0}", _Indent, Type, Token);
 					} else if (  Multiple) {
 					_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
-					_Output.Write ("	public virtual List<{1}>				{2}  {{get; set;}}\n{0}", _Indent, Type, Token);
+					_Output.Write ("	public virtual {1}					{2}  {{get; set;}}\n{0}", _Indent, Entry.TypeCS, Token);
 					} else {
-					//  if !Nullable
-					if (  false.True() ) {
-						_Output.Write ("	bool								__{1} = false;\n{0}", _Indent, Token);
-						_Output.Write ("	private {1}						_{2};\n{0}", _Indent, Type, Token);
-						_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
-						_Output.Write ("	public virtual {1}						{2} {{\n{0}", _Indent, Type, Token);
-						_Output.Write ("		get => _{1};\n{0}", _Indent, Token);
-						_Output.Write ("		set {{_{1} = value; __{2} = true; }}\n{0}", _Indent, Token, Token);
-						_Output.Write ("		}}\n{0}", _Indent);
-						} else {
-						_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
-						_Output.Write ("	public virtual {1}						{2}  {{get; set;}}\n{0}", _Indent, Type, Token);
-						}
+					_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
+					_Output.Write ("	public virtual {1}						{2}  {{get; set;}}\n{0}", _Indent, Entry.TypeCS, Token);
+					_Output.Write ("\n{0}", _Indent);
 					}
 				}
 			}

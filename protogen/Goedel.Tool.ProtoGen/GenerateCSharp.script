@@ -604,25 +604,22 @@ new #{Id}();
 #{separator}
 #!			{ "#{Tag}", new #{Entry.PropertyName}<#{Param.BaseType}> ("#{Tag}", 
 			{ "#{Tag}", new #{Entry.PropertyName} ("#{Tag}", 
-					(IBinding data, object? value) => {(data as #{Id}).#{Entry.ID} = value as #{Param.TypeCSCons};}, (IBinding data) => (data as #{Id}).#{Entry.ID},
+					(IBinding data, object? value) => {(data as #{Id}).#{Token} = value as #{Param.TypeCSCons};}, (IBinding data) => (data as #{Id}).#{Token},
 					false, ()=>new  #{Param.TypeCSCons}(), ()=>new #{Param.BaseType}())} #!
-#!			{ "#{Tag}", new #{Entry.PropertyName} ( typeof(TokenValue#{list}Struct), #{Entry.Multiple.ToString().ToLower()},
-#!					false, ()=>new #{eType}(), ()=>new #{Type}())} #!
 #casecast TStruct Param
 #{separator}
 			{ "#{Tag}", new #{Entry.PropertyName} ("#{Tag}", 
-					(IBinding data, object? value) => {(data as #{Id}).#{Entry.ID} = value as #{Param.TypeCSCons};}, (IBinding data) => (data as #{Id}).#{Entry.ID},
+					(IBinding data, object? value) => {(data as #{Id}).#{Token} = value as #{Param.TypeCSCons};}, (IBinding data) => (data as #{Id}).#{Token},
 					true#!
 #if Entry.Multiple
-, ()=>new #{Param.TypeCSCons}())} #!
-#else
-)} #!
+, ()=>new #{Param.TypeCSCons}()
 #end if
+)} #!
 #% break; } default : {
 #if (Token != null)
 #{separator}
 			{ "#{Tag}", new #{Entry.PropertyName} ("#{Tag}", 
-					(IBinding data, #{Entry.TypeCS} value) => {(data as #{Id}).#{Entry.ID} = value;}, (IBinding data) => (data as #{Id}).#{Entry.ID} )}#!
+					(IBinding data, #{Entry.TypeCS} value) => {(data as #{Id}).#{Token} = value;}, (IBinding data) => (data as #{Id}).#{Token} )}#!
 #end if
 #end switchcast
 #end foreach
@@ -682,21 +679,11 @@ new #{Id}();
 	public virtual IEnumerable<#{Type}>				#{Token}  {get; set;}
 #elseif Multiple
 #{CommentSummary(8,Entry.Description)}
-	public virtual List<#{Type}>				#{Token}  {get; set;}
+	public virtual #{Entry.TypeCS}					#{Token}  {get; set;}
 #else
-#!  if !Nullable
-#if false.True()
-	bool								__#{Token} = false;
-	private #{Type}						_#{Token};
 #{CommentSummary(8,Entry.Description)}
-	public virtual #{Type}						#{Token} {
-		get => _#{Token};
-		set {_#{Token} = value; __#{Token} = true; }
-		}
-#else 
-#{CommentSummary(8,Entry.Description)}
-	public virtual #{Type}						#{Token}  {get; set;}
-#end if
+	public virtual #{Entry.TypeCS}						#{Token}  {get; set;}
+
 #end if
 #end if
 #end foreach
