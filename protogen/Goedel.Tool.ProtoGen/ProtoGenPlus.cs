@@ -32,6 +32,10 @@ namespace Goedel.Tool.ProtoGen {
         public int CountChildren = 0;
         public int LengthBits = 32;
 
+
+        public virtual string PropertyName => "Property";
+        public virtual string TypeCS => "";
+
         public virtual void Normalize() {
             }
 
@@ -255,6 +259,10 @@ namespace Goedel.Tool.ProtoGen {
         }
 
     public partial class Boolean {
+
+        public override string PropertyName => Multiple ? "PropertyListBoolean" : "PropertyBoolean";
+        public override string TypeCS => Multiple ? "List<bool>?" : "bool?";
+
         public override void Normalize() {
             if (Normalized) {
                 return;
@@ -269,6 +277,11 @@ namespace Goedel.Tool.ProtoGen {
         }
 
     public partial class Integer {
+
+        public override string PropertyName => LengthBits > 32 ? (Multiple ? "PropertyListInteger64" : "PropertyInteger64") :
+            (Multiple ? "PropertyListInteger32" : "PropertyInteger32");
+        public override string TypeCS => LengthBits > 32 ? (Multiple ? "List<long>?" : "long?") :
+                    (Multiple ? "List<int>?" : "int?");
         public override void Normalize() {
             if (Normalized) {
                 return;
@@ -296,6 +309,8 @@ namespace Goedel.Tool.ProtoGen {
             }
         }
     public partial class Float {
+        public override string PropertyName => Multiple ? "PropertyListReal64" : "PropertyReal64";
+        public override string TypeCS => Multiple ? "List<double>?" : "double?";
         public override void Normalize() {
             if (Normalized) {
                 return;
@@ -308,6 +323,8 @@ namespace Goedel.Tool.ProtoGen {
             }
         }
     public partial class Binary {
+        public override string PropertyName => Multiple ? "PropertyListBinary" : "PropertyBinary";
+        public override string TypeCS => Multiple ? "List<byte[]>?" : "byte[]?";
         public override void Normalize() {
             if (Normalized) {
                 return;
@@ -350,6 +367,9 @@ namespace Goedel.Tool.ProtoGen {
             }
         }
     public partial class String {
+
+        public override string PropertyName => Multiple ? "PropertyListString" : "PropertyString";
+        public override string TypeCS => Multiple ? "List<string>?" : "string?";
         public override void Normalize() {
             if (Normalized) {
                 return;
@@ -361,7 +381,10 @@ namespace Goedel.Tool.ProtoGen {
             TypeJ = "String";
             ByValue = false;
             Normalized = true;
-            }
+
+
+
+        }
         }
     public partial class URI {
         public override void Normalize() {
@@ -378,6 +401,8 @@ namespace Goedel.Tool.ProtoGen {
             }
         }
     public partial class DateTime {
+        public override string PropertyName => Multiple ? "PropertyListDateTime" : "PropertyDateTime";
+        public override string TypeCS => Multiple ? "List<DateTime>?" : "DateTime?";
         public override void Normalize() {
             if (Normalized) {
                 return;
@@ -392,6 +417,14 @@ namespace Goedel.Tool.ProtoGen {
             }
         }
     public partial class Struct {
+
+        public override string PropertyName => Multiple ? "PropertyListStruct" : "PropertyStruct";
+
+        public string BaseType => Type.Label;
+        public override string TypeCS => Multiple ? $"List<{BaseType}>?" : $"{BaseType}?";
+        public  string TypeCSCons => Multiple ? $"List<{BaseType}>" : $"{BaseType}";
+
+
         public override void Normalize() {
             if (Normalized) {
                 return;
@@ -403,6 +436,14 @@ namespace Goedel.Tool.ProtoGen {
             }
         }
     public partial class TStruct {
+
+        public override string PropertyName => Multiple ? "PropertyListStruct" : "PropertyStruct";
+
+        public string BaseType => Type.Label;
+        public override string TypeCS => Multiple ? $"List<{BaseType}>?" : $"{BaseType}?";
+        public string TypeCSCons => Multiple ? $"List<{BaseType}>" : $"{BaseType}";
+
+
         public override void Normalize() {
             if (Normalized) {
                 return;

@@ -418,10 +418,15 @@ public partial class #{Id}#{TTT} : #{Inherits} {
             }
         }
 
+    ///<summary>Implement IBinding</summary> 
+	public override Binding Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new Binding (_StaticProperties, #{(Inherits != null).If(Inherits + "._binding", "null")});
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-#call DeclareProperties (Entries)
+#% DeclareProperties (Id, Entries);
 
         };
 
@@ -561,7 +566,7 @@ new #{Id}();
 
 
 #block DeclareProperties
-#% public void DeclareProperties  (List<_Choice> Entries) {
+#% public void DeclareProperties  (ID<_Choice> Id, List<_Choice> Entries) {
 #% var separator = new Separator (",");
 #foreach (_Choice Entry in Entries)
 #% GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
@@ -572,20 +577,26 @@ new #{Id}();
 #switchcast ProtoStructType Entry
 #casecast Struct Param
 #{separator}
-			{ "#{Tag}", new Property ( typeof(TokenValue#{list}Struct), #{Entry.Multiple.ToString().ToLower()},
-					()=>new #{eType}(), ()=>new #{Type}(), false)} #!
+			{ "#{Tag}", new #{Entry.PropertyName}<#{Param.BaseType}> ("#{Tag}", 
+					(IBinding data, #{Entry.TypeCS} value) => {(data as #{Id}).#{Entry.ID} = value;}, (IBinding data) => (data as #{Id}).#{Entry.ID},
+					false, ()=>new  #{Param.TypeCSCons}(), ()=>new #{Param.BaseType}())} #!
+#!			{ "#{Tag}", new #{Entry.PropertyName} ( typeof(TokenValue#{list}Struct), #{Entry.Multiple.ToString().ToLower()},
+#!					false, ()=>new #{eType}(), ()=>new #{Type}())} #!
 #casecast TStruct Param
 #{separator}
-			{ "#{Tag}", new Property ( typeof(TokenValue#{list}Struct), #{Entry.Multiple.ToString().ToLower()},
+			{ "#{Tag}", new #{Entry.PropertyName}<#{Param.BaseType}> ("#{Tag}", 
+					(IBinding data, #{Entry.TypeCS} value) => {(data as #{Id}).#{Entry.ID} = value;}, (IBinding data) => (data as #{Id}).#{Entry.ID},
+					true#!
 #if Entry.Multiple
-					()=>new #{eType}(), null, true)} #!
+, ()=>new #{Param.TypeCSCons}())} #!
 #else
-					null, null, true)} #!
+)} #!
 #end if
 #% break; } default : {
 #if (Token != null)
 #{separator}
-			{ "#{Tag}", new Property (typeof(TokenValue#{list}#{TType}), #{Entry.Multiple.ToString().ToLower()})} #!
+			{ "#{Tag}", new #{Entry.PropertyName} ("#{Tag}", 
+					(IBinding data, #{Entry.TypeCS} value) => {(data as #{Id}).#{Entry.ID} = value;}, (IBinding data) => (data as #{Id}).#{Entry.ID} )}#!
 #end if
 #end switchcast
 #end foreach

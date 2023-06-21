@@ -19,6 +19,11 @@
       "commandName": "Project",
       "commandLineArgs": "ContainerEntry.pschema  /cs ContainerEntry.cs",
       "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Libraries\\Goedel.Cryptography.Dare"
+    },
+    "MeshSchema": {
+      "commandName": "Project",
+      "commandLineArgs": "SchemaMesh.protocol  /cs  SchemaMesh.cs",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Mesh\\Goedel.Mesh"
     }
   }
 }

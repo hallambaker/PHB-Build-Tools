@@ -514,10 +514,15 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("            }}\n{0}", _Indent);
 		_Output.Write ("        }}\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    ///<summary>Implement IBinding</summary> \n{0}", _Indent);
+		_Output.Write ("	public override Binding Binding => _binding;\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("	///<summary>Binding</summary> \n{0}", _Indent);
+		_Output.Write ("	static protected new Binding _binding = new Binding (_StaticProperties, {1});\n{0}", _Indent, (Inherits != null).If(Inherits + "._binding", "null"));
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    ///<summary>Dictionary describing the serializable properties.</summary> \n{0}", _Indent);
 		_Output.Write ("    public readonly static new Dictionary<string, Property> _StaticProperties = new() {{\n{0}", _Indent);
-		DeclareProperties ((Entries));
+		 DeclareProperties (Id, Entries);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("        }};\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
@@ -677,7 +682,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	//  DeclareProperties
 	//
 
-		 public void DeclareProperties  (List<_Choice> Entries) {
+		 public void DeclareProperties  (ID<_Choice> Id, List<_Choice> Entries) {
 		 var separator = new Separator (",");
 		foreach  (_Choice Entry in Entries) {
 			 GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
@@ -689,23 +694,31 @@ public partial class Generate : global::Goedel.Registry.Script {
 				case ProtoStructType.Struct: {
 				  Struct Param = (Struct) Entry; 
 				_Output.Write ("{1}\n{0}", _Indent, separator);
-				_Output.Write ("			{{ \"{1}\", new Property ( typeof(TokenValue{2}Struct), {3},\n{0}", _Indent, Tag, list, Entry.Multiple.ToString().ToLower());
-				_Output.Write ("					()=>new {1}(), ()=>new {2}(), false)}} ", _Indent, eType, Type);
+				_Output.Write ("			{{ \"{1}\", new {2}<{3}> (\"{4}\", \n{0}", _Indent, Tag, Entry.PropertyName, Param.BaseType, Tag);
+				_Output.Write ("					(IBinding data, {1} value) => {{(data as {2}).{3} = value;}}, (IBinding data) => (data as {4}).{5},\n{0}", _Indent, Entry.TypeCS, Id, Entry.ID, Id, Entry.ID);
+				_Output.Write ("					false, ()=>new  {1}(), ()=>new {2}())}} ", _Indent, Param.TypeCSCons, Param.BaseType);
+				
+				//			{ "#{Tag}", new #{Entry.PropertyName} ( typeof(TokenValue#{list}Struct), #{Entry.Multiple.ToString().ToLower()},
+				
+				//					false, ()=>new #{eType}(), ()=>new #{Type}())} #!
 				break; }
 				case ProtoStructType.TStruct: {
 				  TStruct Param = (TStruct) Entry; 
 				_Output.Write ("{1}\n{0}", _Indent, separator);
-				_Output.Write ("			{{ \"{1}\", new Property ( typeof(TokenValue{2}Struct), {3},\n{0}", _Indent, Tag, list, Entry.Multiple.ToString().ToLower());
+				_Output.Write ("			{{ \"{1}\", new {2}<{3}> (\"{4}\", \n{0}", _Indent, Tag, Entry.PropertyName, Param.BaseType, Tag);
+				_Output.Write ("					(IBinding data, {1} value) => {{(data as {2}).{3} = value;}}, (IBinding data) => (data as {4}).{5},\n{0}", _Indent, Entry.TypeCS, Id, Entry.ID, Id, Entry.ID);
+				_Output.Write ("					true", _Indent);
 				if (  Entry.Multiple ) {
-					_Output.Write ("					()=>new {1}(), null, true)}} ", _Indent, eType);
+					_Output.Write (", ()=>new {1}())}} ", _Indent, Param.TypeCSCons);
 					} else {
-					_Output.Write ("					null, null, true)}} ", _Indent);
+					_Output.Write (")}} ", _Indent);
 					}
 				
 				 break; } default : {
 				if (  (Token != null) ) {
 					_Output.Write ("{1}\n{0}", _Indent, separator);
-					_Output.Write ("			{{ \"{1}\", new Property (typeof(TokenValue{2}{3}), {4})}} ", _Indent, Tag, list, TType, Entry.Multiple.ToString().ToLower());
+					_Output.Write ("			{{ \"{1}\", new {2} (\"{3}\", \n{0}", _Indent, Tag, Entry.PropertyName, Tag);
+					_Output.Write ("					(IBinding data, {1} value) => {{(data as {2}).{3} = value;}}, (IBinding data) => (data as {4}).{5} )}}", _Indent, Entry.TypeCS, Id, Entry.ID, Id, Entry.ID);
 					}
 			break; }
 				}
