@@ -241,7 +241,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("            }};\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		foreach  (var action in Guigen.Actions)  {
-			_Output.Write ("        {1}.Callback = (x) => ({2} (x as {3}) as IResult);\n{0}", _Indent, action.RecordId, action.Id.Label, action.Id.Label);
+			_Output.Write ("        {1}.Callback = (x, mode) => {2} (x as {3}, mode) ;\n{0}", _Indent, action.RecordId, action.Id.Label, action.Id.Label);
 			_Output.Write ("	    {1}.Entries = new () {{", _Indent, action.RecordId);
 			 separator.Reset ();
 			foreach  (var entry in action.Entries) {
@@ -290,7 +290,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("    /// <summary>\n{0}", _Indent);
 			_Output.Write ("    /// GUI action\n{0}", _Indent);
 			_Output.Write ("    /// </summary>\n{0}", _Indent);
-			_Output.Write ("    public virtual IResult {1} ({2} data) => throw new NYI();\n{0}", _Indent, action.Id.Label, action.Id.Label);
+			_Output.Write ("    public virtual Task<IResult> {1} ({2} data, ActionMode mode = ActionMode.Execute) \n{0}", _Indent, action.Id.Label, action.Id.Label);
+			_Output.Write ("                => throw new NYI();\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			}
 		_Output.Write ("    \n{0}", _Indent);
@@ -332,11 +333,11 @@ public partial class Generate : global::Goedel.Registry.Script {
 			if (  entry.BindingType != null ) {
 				 entry.Index = index++;
 				_Output.Write ("{1} \n{0}", _Indent, separator);
-				_Output.Write ("            new {1} ((IBindable data) => (data as {2}).{3}, ", _Indent, entry.BindingType, parent.IdLabelBase, entry.IdLabel);
+				_Output.Write ("            new {1} ((object data) => (data as {2}).{3}, ", _Indent, entry.BindingType, parent.IdLabelBase, entry.IdLabel);
 				if (  (entry.Readonly) ) {
 					_Output.Write ("null", _Indent);
 					} else {
-					_Output.Write ("(IBindable data,{1} value) => (data as {2}).{3} = value", _Indent, entry.BackerType, parent.IdLabelBase, entry.IdLabel);
+					_Output.Write ("(object data,{1} value) => (data as {2}).{3} = value", _Indent, entry.BackerType, parent.IdLabelBase, entry.IdLabel);
 					}
 				_Output.Write (")", _Indent);
 				}
@@ -409,8 +410,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Indent = _Indent + "\t";
 		 separator.Reset ();
 		foreach  (var entry in chooser.Entries) {
-			_Output.Write ("{1} \n{0}", _Indent, separator);
-			GenerateEntry (entry);
+			if (  (entry.Active) ) {
+				_Output.Write ("{1} \n{0}", _Indent, separator);
+				GenerateEntry (entry);
+				}
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("			}}) ", _Indent);

@@ -196,7 +196,7 @@ public class _#{Guigen.Class.Name} : Gui {
             };
 
 #foreach (var action in Guigen.Actions) 
-        #{action.RecordId}.Callback = (x) => (#{action.Id.Label} (x as #{action.Id.Label}) as IResult);
+        #{action.RecordId}.Callback = (x, mode) => #{action.Id.Label} (x as #{action.Id.Label}, mode) ;
 	    #{action.RecordId}.Entries = new () {#!
 #% separator.Reset ();
 #foreach (var entry in action.Entries)
@@ -245,7 +245,8 @@ public class _#{Guigen.Class.Name} : Gui {
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual IResult #{action.Id.Label} (#{action.Id.Label} data) => throw new NYI();
+    public virtual Task<IResult> #{action.Id.Label} (#{action.Id.Label} data, ActionMode mode = ActionMode.Execute) 
+                => throw new NYI();
 
 #end foreach
     
@@ -280,11 +281,11 @@ public class _#{Guigen.Class.Name} : Gui {
 #if entry.BindingType != null
 #% entry.Index = index++;
 #{separator} 
-            new #{entry.BindingType} ((IBindable data) => (data as #{parent.IdLabelBase}).#{entry.IdLabel}, #!
+            new #{entry.BindingType} ((object data) => (data as #{parent.IdLabelBase}).#{entry.IdLabel}, #!
 #if (entry.Readonly)
 null#!
 #else
-(IBindable data,#{entry.BackerType} value) => (data as #{parent.IdLabelBase}).#{entry.IdLabel} = value#!
+(object data,#{entry.BackerType} value) => (data as #{parent.IdLabelBase}).#{entry.IdLabel} = value#!
 #end if
 )#!
 #end if
@@ -322,8 +323,10 @@ null#!
 #indent
 #% separator.Reset ();
 #foreach (var entry in chooser.Entries)
+#if (entry.Active)
 #{separator} 
 #call GenerateEntry entry
+#end if
 #end foreach
 
 			}) #!

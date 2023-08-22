@@ -236,12 +236,21 @@ public partial class #{Service.Id}Client : Goedel.Protocol.JpcClientInterface {
 #switchcast ProtoStructType Entry2
 #casecast Transaction Transaction
     /// <summary>
-	/// Implement the transaction
+	/// Implement the transaction #{Transaction.Id}.
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public virtual #{Transaction.Response} #{Transaction.Id} (#{Transaction.Request} request) =>
-			JpcSession.Post("#{Transaction.Id}", request) as #{Transaction.Response};
+    public #{Transaction.Response} #{Transaction.Id} (#{Transaction.Request} request) =>
+			#{Transaction.Id}Async (request).Sync();
+#!			JpcSession.Post("#{Transaction.Id}", request) as #{Transaction.Response};
+
+    /// <summary>
+	/// Implement the transaction #{Transaction.Id} asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<#{Transaction.Response}> #{Transaction.Id}Async (#{Transaction.Request} request) =>
+			await JpcSession.PostAsync("#{Transaction.Id}", request) as #{Transaction.Response};
 
 #end switchcast
 #end foreach
@@ -267,8 +276,8 @@ public partial class #{Service.Id}Direct: #{Service.Id}Client {
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
-    public override #{Transaction.Response} #{Transaction.Id} (#{Transaction.Request} request) =>
-			Service.#{Transaction.Id} (request, JpcSession);
+    public override Task<#{Transaction.Response}> #{Transaction.Id}Async (#{Transaction.Request} request) =>
+			Task.FromResult(Service.#{Transaction.Id} (request, JpcSession));
 
 #end switchcast
 #end foreach

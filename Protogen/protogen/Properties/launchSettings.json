@@ -8,32 +8,32 @@
     "TestExample": {
       "commandName": "Project",
       "commandLineArgs": "TestExample.protocol  /cs  TestExample.cs",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Testing\\Goedel.Protocol.Test-xunit"
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Testing\\Goedel.Protocol.Test-xunit"
     },
     "ProtocolSchema": {
       "commandName": "Project",
       "commandLineArgs": "ProtocolSchema.protocol  /cs  ProtocolSchema.cs",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Mesh\\Goedel.Mesh"
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Mesh\\Goedel.Mesh"
     },
     "ContainerSchema": {
       "commandName": "Project",
       "commandLineArgs": "ContainerEntry.pschema  /cs ContainerEntry.cs",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Libraries\\Goedel.Cryptography.Dare"
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Libraries\\Goedel.Cryptography.Dare"
     },
     "JoseSchema": {
       "commandName": "Project",
       "commandLineArgs": "JoseSchema.protocol  /cs JoseSchema.cs",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Libraries\\Goedel.Cryptography.Jose"
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Libraries\\Goedel.Cryptography.Jose"
     },
     "Results": {
       "commandName": "Project",
       "commandLineArgs": "Results.protogen  /cs Results.cs",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Mesh\\Goedel.Mesh.Shell"
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Mesh\\Goedel.Mesh.Shell"
     },
     "MeshSchema": {
       "commandName": "Project",
       "commandLineArgs": "SchemaMesh.protocol  /cs  SchemaMesh.cs",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Mesh\\Goedel.Mesh"
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Mesh\\Goedel.Mesh"
     }
   }
 }

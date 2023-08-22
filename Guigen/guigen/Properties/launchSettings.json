@@ -3,7 +3,7 @@
     "MauiMesh": {
       "commandName": "Project",
       "commandLineArgs": "Sketch.guigen /cs=Sketch.cs /resx=Resources\\Sketch.resx",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Applications\\Everything"
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Applications\\Everything"
     }
   }
 }

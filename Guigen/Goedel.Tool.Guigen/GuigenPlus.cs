@@ -138,6 +138,15 @@ public partial class Primary {
     public override bool Active => false;
     }
 
+public partial class Filter {
+    public override bool Active => false;
+    }
+
+public partial class Readonly {
+    public override bool Active => false;
+    }
+
+
 
 
 public partial class Action : IEntries {

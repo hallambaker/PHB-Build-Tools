@@ -284,12 +284,22 @@ public partial class Generate : global::Goedel.Registry.Script {
 								case ProtoStructType.Transaction: {
 								  Transaction Transaction = (Transaction) Entry2; 
 								_Output.Write ("    /// <summary>\n{0}", _Indent);
-								_Output.Write ("	/// Implement the transaction\n{0}", _Indent);
+								_Output.Write ("	/// Implement the transaction {1}.\n{0}", _Indent, Transaction.Id);
 								_Output.Write ("    /// </summary>		\n{0}", _Indent);
 								_Output.Write ("    /// <param name=\"request\">The request object.</param>\n{0}", _Indent);
 								_Output.Write ("	/// <returns>The response object</returns>\n{0}", _Indent);
-								_Output.Write ("    public virtual {1} {2} ({3} request) =>\n{0}", _Indent, Transaction.Response, Transaction.Id, Transaction.Request);
-								_Output.Write ("			JpcSession.Post(\"{1}\", request) as {2};\n{0}", _Indent, Transaction.Id, Transaction.Response);
+								_Output.Write ("    public {1} {2} ({3} request) =>\n{0}", _Indent, Transaction.Response, Transaction.Id, Transaction.Request);
+								_Output.Write ("			{1}Async (request).Sync();\n{0}", _Indent, Transaction.Id);
+								
+								//			JpcSession.Post("#{Transaction.Id}", request) as #{Transaction.Response};
+								_Output.Write ("\n{0}", _Indent);
+								_Output.Write ("    /// <summary>\n{0}", _Indent);
+								_Output.Write ("	/// Implement the transaction {1} asynchronously.\n{0}", _Indent, Transaction.Id);
+								_Output.Write ("    /// </summary>		\n{0}", _Indent);
+								_Output.Write ("    /// <param name=\"request\">The request object.</param>\n{0}", _Indent);
+								_Output.Write ("	/// <returns>The response object</returns>\n{0}", _Indent);
+								_Output.Write ("    public virtual async Task<{1}> {2}Async ({3} request) =>\n{0}", _Indent, Transaction.Response, Transaction.Id, Transaction.Request);
+								_Output.Write ("			await JpcSession.PostAsync(\"{1}\", request) as {2};\n{0}", _Indent, Transaction.Id, Transaction.Response);
 								_Output.Write ("\n{0}", _Indent);
 							break; }
 								}
@@ -317,8 +327,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 								_Output.Write ("    /// </summary>		\n{0}", _Indent);
 								_Output.Write ("    /// <param name=\"request\">The request object.</param>\n{0}", _Indent);
 								_Output.Write ("	/// <returns>The response object</returns>\n{0}", _Indent);
-								_Output.Write ("    public override {1} {2} ({3} request) =>\n{0}", _Indent, Transaction.Response, Transaction.Id, Transaction.Request);
-								_Output.Write ("			Service.{1} (request, JpcSession);\n{0}", _Indent, Transaction.Id);
+								_Output.Write ("    public override Task<{1}> {2}Async ({3} request) =>\n{0}", _Indent, Transaction.Response, Transaction.Id, Transaction.Request);
+								_Output.Write ("			Task.FromResult(Service.{1} (request, JpcSession));\n{0}", _Indent, Transaction.Id);
 								_Output.Write ("\n{0}", _Indent);
 							break; }
 								}

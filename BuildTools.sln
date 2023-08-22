@@ -165,7 +165,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Cryptography", "..\m
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Templates", "Templates\", "{84E94FDE-DA58-48F7-9BD3-B1059E050CA4}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_52618"
 		Debug.AspNetCompiler.PhysicalPath = "Templates\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52618\"
@@ -186,7 +186,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Templates", "Templates\", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Version", "Version\Version\Version.csproj", "{B64E5D26-9800-4F69-829C-429FCBA0BDBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exceptional2", "Exceptional\Exceptional2\Exceptional2.csproj", "{76971080-6696-45BD-A4ED-456747D07A89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exceptional2", "Exceptional\Exceptional2\Exceptional2.csproj", "{76971080-6696-45BD-A4ED-456747D07A89}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Documentation\Web.csproj", "{D47CF3AE-58F9-4B93-B6A2-297040049ADE}"
 EndProject
