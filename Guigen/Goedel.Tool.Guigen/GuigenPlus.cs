@@ -15,9 +15,17 @@ public interface IEntries {
     string IdLabelBase { get; }
     }
 
+public interface IField {
+
+    List<_Choice> GetEntries { get; }
+
+    string IdLabel { get; }
+    }
 
 public partial class Guigen {
+    public const string DefaultState = "Default";
 
+    public Dictionary<string, string> States = new() { { DefaultState , DefaultState }  } ;
     public Dictionary<string, Prompt> Prompts = new();
     public SortedDictionary<string, string> Icons = new();
 
@@ -25,6 +33,7 @@ public partial class Guigen {
     public List<Action> Actions = new();
     public List<Dialog> Dialogs = new();
     public List<Binding> Bindings = new();
+    public List<Result> Results = new();
 
     public Class Class { get; set; } = null;
 
@@ -35,6 +44,12 @@ public partial class Guigen {
             Icons.Add(icon, icon); 
             }
 
+        }
+
+    public void AddState(string state) {
+        if (!States.ContainsKey(state)) {
+            States.Add(state, state);
+            }
         }
 
     public void AddPrompt(ID<_Choice> id, string text) => AddPrompt(id.Label, text);
@@ -98,6 +113,9 @@ public partial class Class {
     }
 
 public partial class Section : IEntries {
+
+    public string State { get; set; } = Guigen.DefaultState;
+
     public List<_Choice> AllEntries => Entries;
     public bool Primary { get; set; } = false;
 
@@ -113,6 +131,10 @@ public partial class Section : IEntries {
         foreach (var child in Entries) {
             if (child is Primary) {
                 Primary = true;
+                }
+            if (child is Condition condition) {
+                State = condition.Id.Label;
+                _Base.AddState(State);
                 }
             }
         }
@@ -134,6 +156,24 @@ public partial class Binding : IEntries {
         }
     }
 
+
+public partial class Result : IEntries {
+    public override bool Active => false;
+
+    public List<_Choice> AllEntries => Entries;
+
+    public override string RecordId => "Result" + Id.Label;
+    public string QuotedId => Id.Label.Quoted();
+    public override string IdLabel => Id.Label;
+
+    public override string IdLabelBase => IdLabel;
+    public override void Init(_Choice parent) {
+
+        base.Init(parent);
+        _Base.Results.Add(this);
+        }
+    }
+
 public partial class Primary {
     public override bool Active => false;
     }
@@ -146,8 +186,9 @@ public partial class Readonly {
     public override bool Active => false;
     }
 
-
-
+public partial class Return {
+    public override bool Active => false;
+    }
 
 public partial class Action : IEntries {
 
@@ -210,8 +251,11 @@ public partial class Button {
         }
     }
 
-public partial class Text {
+public partial class Text : IField {
     public string QuotedId => Id.Label.Quoted();
+
+    public List<_Choice> GetEntries => Entries;
+
     public override string IdLabel => Id.Label;
     public override string BackerType => "string";
 
@@ -282,4 +326,9 @@ public partial class View {
     public override void Init(_Choice parent) {
         base.Init(parent);
         }
+    }
+
+public partial class Condition {
+
+    public override bool Active => false;
     }

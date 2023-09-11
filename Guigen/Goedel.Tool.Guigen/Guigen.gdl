@@ -37,7 +37,15 @@ Class Goedel.Tool.Guigen Guigen
 			Dialog
 			Text
 			Decimal
+			Condition
+			Return
 
+	TopType Result
+		Id			ID SectionT
+		Entries List Choice
+			Text
+			Decimal
+			Icon
 
 	TopType Action
 		Id			ID SectionT
@@ -51,6 +59,7 @@ Class Goedel.Tool.Guigen Guigen
 			Decimal
 			Context
 			Return
+			
 
 	TopType Dialog
 		Id			ID SectionT
@@ -78,16 +87,15 @@ Class Goedel.Tool.Guigen Guigen
 			Integer
 
 
+	Type Error
+		Id			Token MessageT
+		Message		String
+		Condition	Text		
 
 
-	TopType Result
-		Id			ID ResultT
-		Prompt		String	
-		Entries List Choice
-			Text
-			Decimal
 
-
+	Type Condition
+		Id			Token SectionT
 
 	Type Type
 		Id			Token SectionT
@@ -128,47 +136,56 @@ Class Goedel.Tool.Guigen Guigen
 		Prompt		String
 		Entries List Choice
 			Readonly
+			Error
 
 	Type Text
 		Id			Token SectionT
 		Prompt		String
 		Entries List Choice
 			Readonly
+			Error
 
 	Type Color
 		Id			Token SectionT
 		Prompt		String
 		Entries List Choice
 			Readonly
+			Error
 
 	Type Size
 		Id			Token SectionT
 		Prompt		String
 		Entries List Choice
 			Readonly
+			Error
 
 	Type Decimal
 		Id			Token SectionT
 		Prompt		String
 		Entries List Choice
 			Readonly
+			Error
 
 	Type DateTime
 		Id			Token SectionT
 		Prompt		String
 		Entries List Choice
 			Readonly
+			Error
 
 	Type Integer
 		Id			Token SectionT
 		Prompt		String
 		Entries List Choice
 			Readonly
+			Error
+
 	Type Icon
 		Id			Token SectionT
 		Prompt		String
 		Entries List Choice
 			Readonly
+			Error
 
 	Type Readonly
 

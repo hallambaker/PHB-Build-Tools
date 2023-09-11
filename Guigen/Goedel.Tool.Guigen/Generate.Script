@@ -51,7 +51,7 @@ public partial class _#{section.Id.Label} : IBindable {
 #call DeclareFields section
 
     public GuiBinding Binding => BaseBinding;
-    public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] {#!
+    public static GuiBinding BaseBinding = #!
 #call CreateBindings section
 
     }
@@ -74,7 +74,7 @@ public partial class _#{dialog.Id.Label} : IBindable {
 #call DeclareFields dialog
 
     public GuiBinding Binding => BaseBinding;
-    public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] {#!
+    public static GuiBinding BaseBinding = #!
 #call CreateBindings dialog
 
     }
@@ -99,10 +99,63 @@ public partial class _#{action.Id.Label} : IParameter {
 #call DeclareFields action
 
     public GuiBinding Binding => BaseBinding;
-    public static GuiBinding BaseBinding = new GuiBinding (new GuiBoundProperty[] {#!
+    public static GuiBinding BaseBinding = #!
 #call CreateBindings action
 
-    public virtual bool Validate() => true;
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+#foreach (var entry in action.Entries)
+#if (entry is IField field) 
+#foreach (var fieldEntry in field.GetEntries)
+#if (fieldEntry is Error error) 
+        // error on #{field.IdLabel}
+        if (#!
+#foreach (var t in error.Condition)
+#{t}
+#end foreach
+            ) {
+            result ??=new GuiResultInvalid(this);
+            result.SetError (nameof(#{field.IdLabel}), "#{error.Message}", "#{error.Id}");
+            }
+
+#end if
+#end foreach
+#end if
+#end foreach
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+    }
+
+#end foreach
+
+
+#foreach (var result in Guigen.Results) 
+
+/// <summary>
+/// Return parameters for result #{result.Id.Label} 
+/// </summary>
+public partial record #{result.Id.Label} : _#{result.Id.Label} {
+    }
+
+
+/// <summary>
+/// Callback parameters for result #{result.Id.Label} 
+/// </summary>
+public partial record _#{result.Id.Label} : IResult {
+
+    public virtual ReturnResult ReturnResult { get; init; }
+
+#call DeclareFields result
+
+    public GuiBinding Binding => BaseBinding;
+    public static GuiBinding BaseBinding = #!
+#call CreateBindings result
+
     }
 
 #end foreach
@@ -128,7 +181,11 @@ public partial class #{Guigen.Class.Name} :  _#{Guigen.Class.Name} {
 #end foreach
 /// </summary>
 public class _#{Guigen.Class.Name} : Gui {
+#foreach (var entry in Guigen.States)
 
+    ///<summary></summary> 
+    public virtual bool State#{entry.Value} => true;
+#end foreach
 
     ///<inheritdoc/> 
     public override List<GuiDialog> Dialogs { get; }
@@ -138,6 +195,9 @@ public class _#{Guigen.Class.Name} : Gui {
 
     ///<inheritdoc/> 
     public override List<GuiAction> Actions { get; }
+
+    ///<inheritdoc/> 
+    public override List<GuiResult> Results { get; }
 
 
 	///<inheritdoc/>
@@ -167,12 +227,19 @@ public class _#{Guigen.Class.Name} : Gui {
 #foreach (var dialog in Guigen.Dialogs) 
 	public GuiDialog #{dialog.RecordId} { get; } = new (#{dialog.QuotedId});
 #end foreach	
+
+	// Dialogs
+#foreach (var result in Guigen.Results) 
+	public GuiResult #{result.RecordId} { get; } = new ();
+#end foreach	
 	
 
     public _#{Guigen.Class.Name} () {
 
 
 #foreach (var section in Guigen.Sections) 
+	    #{section.RecordId}.Gui = this;
+	    #{section.RecordId}.Active = () => State#{section.State};
 	    #{section.RecordId}.Entries =  new () { #!
 #% separator.Reset ();
 #foreach (var entry in section.Entries)
@@ -200,8 +267,10 @@ public class _#{Guigen.Class.Name} : Gui {
 	    #{action.RecordId}.Entries = new () {#!
 #% separator.Reset ();
 #foreach (var entry in action.Entries)
+#if (entry.Active)
 #{separator} 
 #call GenerateEntry entry
+#end if
 #end foreach
 
 		    };
@@ -239,6 +308,28 @@ public class _#{Guigen.Class.Name} : Gui {
 
 		    };
 
+#foreach (var result in Guigen.Results) 
+	    #{result.RecordId}.Entries = new () {#!
+#% separator.Reset ();
+#foreach (var entry in result.Entries)
+#{separator} 
+#call GenerateEntry entry
+#end foreach
+			
+		    };
+
+#end foreach
+
+
+        Results = new List<GuiResult>() { #!
+#% separator.Reset ();
+#foreach (var result in Guigen.Results) 
+#{separator} 
+		    #{result.RecordId}#!
+#end foreach
+
+		    };
+
         }
 
 #foreach (var action in Guigen.Actions) 
@@ -252,7 +343,7 @@ public class _#{Guigen.Class.Name} : Gui {
     
 #foreach (var binding in Guigen.Bindings)  
     /// <summary> </summary>
-    public static GuiBinding #{binding.RecordId} = new GuiBinding (new GuiBoundProperty[] {#!
+    public static GuiBinding #{binding.RecordId} = #!
 #call CreateBindings binding
 #end foreach
 
@@ -268,13 +359,16 @@ public class _#{Guigen.Class.Name} : Gui {
 #foreach (var entry in parent.AllEntries)
 #if entry.BindingType != null
         ///<summary>#{entry.Summary}</summary> 
-        public virtual #{entry.BackerType} #{entry.IdLabel} { get;#{entry.Readonly.If("", " set;") }} 
+    public virtual #{entry.BackerType} #{entry.IdLabel} { get;#{entry.Readonly.If("", " set;") }} 
 
 #end if
 #end foreach
 #end method
 
 #method CreateBindings IEntries parent
+new GuiBinding (
+        (object test) => test is #{parent.IdLabelBase},
+        new GuiBoundProperty[] {#!
 #% var separator = new Separator (",");
 #% var index = 0;
 #foreach (var entry in parent.AllEntries)
@@ -287,7 +381,7 @@ null#!
 #else
 (object data,#{entry.BackerType} value) => (data as #{parent.IdLabelBase}).#{entry.IdLabel} = value#!
 #end if
-)#!
+, "#{entry.IdLabel}")#!
 #end if
 #end foreach
 
