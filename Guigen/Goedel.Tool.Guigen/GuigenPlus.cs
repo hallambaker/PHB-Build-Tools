@@ -19,6 +19,8 @@ public interface IField {
 
     List<_Choice> GetEntries { get; }
 
+    int Index { get; set; }
+
     string IdLabel { get; }
     }
 
@@ -96,7 +98,10 @@ public partial class _Choice {
                     Readonly = true;
                     break;
                     }
-
+                case Goedel.Tool.Guigen.Error error: {
+                    _Base.AddPrompt(error.Id, error.Message);
+                    break;
+                    }
 
                 }
 

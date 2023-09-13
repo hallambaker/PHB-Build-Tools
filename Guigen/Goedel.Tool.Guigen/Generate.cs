@@ -162,15 +162,13 @@ public partial class Generate : global::Goedel.Registry.Script {
 								}
 							_Output.Write ("            ) {{\n{0}", _Indent);
 							_Output.Write ("            result ??=new GuiResultInvalid(this);\n{0}", _Indent);
-							_Output.Write ("            result.SetError (nameof({1}), \"{2}\", \"{3}\");\n{0}", _Indent, field.IdLabel, error.Message, error.Id);
+							_Output.Write ("            result.SetError ({1}, \"{2}\", \"{3}\");\n{0}", _Indent, field.Index, error.Message, error.Id);
 							_Output.Write ("            }}\n{0}", _Indent);
 							_Output.Write ("\n{0}", _Indent);
 							}
 						}
 					}
 				}
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        return (result as IResult) ?? NullResult.Valid;\n{0}", _Indent);
 			_Output.Write ("        }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

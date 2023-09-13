@@ -117,7 +117,7 @@ public partial class _#{action.Id.Label} : IParameter {
 #end foreach
             ) {
             result ??=new GuiResultInvalid(this);
-            result.SetError (nameof(#{field.IdLabel}), "#{error.Message}", "#{error.Id}");
+            result.SetError (#{field.Index}, "#{error.Message}", "#{error.Id}");
             }
 
 #end if
