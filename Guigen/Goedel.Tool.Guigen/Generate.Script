@@ -32,10 +32,11 @@
 
 using Goedel.Guigen;
 using Goedel.Utilities;
+##pragma warning disable IDE1006 // Naming Styles
 
 namespace #{Guigen.Class.Namespace};
 
-
+##region // Sections
 #foreach (var section in Guigen.Sections) 
 /// <summary>
 /// Callback parameters for section #{section.Id.Label} 
@@ -49,16 +50,18 @@ public partial class #{section.Id.Label} : _#{section.Id.Label} {
 public partial class _#{section.Id.Label} : IBindable {
 
 #call DeclareFields section
-
+    ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
-    public static GuiBinding BaseBinding = #!
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = #!
 #call CreateBindings section
 
     }
 
 #end foreach
-
-
+##endregion
+##region // Dialogs
 #foreach (var dialog in Guigen.Dialogs) 
 /// <summary>
 /// Callback parameters for dialog #{dialog.Id.Label} 
@@ -72,15 +75,18 @@ public partial class #{dialog.Id.Label} : _#{dialog.Id.Label} {
 public partial class _#{dialog.Id.Label} : IBindable {
 
 #call DeclareFields dialog
-
+    ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
-    public static GuiBinding BaseBinding = #!
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding { get; }  = #!
 #call CreateBindings dialog
 
     }
 
 #end foreach
-
+##endregion
+##region // Actions
 
 #foreach (var action in Guigen.Actions) 
 
@@ -98,8 +104,11 @@ public partial class _#{action.Id.Label} : IParameter {
 
 #call DeclareFields action
 
+    ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
-    public static GuiBinding BaseBinding = #!
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = #!
 #call CreateBindings action
 
     ///<summary>Validation</summary> 
@@ -132,7 +141,8 @@ public partial class _#{action.Id.Label} : IParameter {
     }
 
 #end foreach
-
+##endregion
+##region // Results
 
 #foreach (var result in Guigen.Results) 
 
@@ -148,19 +158,24 @@ public partial record #{result.Id.Label} : _#{result.Id.Label} {
 /// </summary>
 public partial record _#{result.Id.Label} : IResult {
 
+    ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; }
 
 #call DeclareFields result
 
+    ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
-    public static GuiBinding BaseBinding = #!
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding { get; } = #!
 #call CreateBindings result
 
     }
 
 #end foreach
 
-
+##endregion
+##region // Gui classes
 
 /// <summary>
 #foreach (var text in Guigen.Class.Description)
@@ -214,26 +229,32 @@ public class _#{Guigen.Class.Name} : Gui {
 
 	// Sections
 #foreach (var section in Guigen.Sections) 
+    ///<summary>Section #{section.RecordId}.</summary> 
 	public GuiSection #{section.RecordId} { get; } = new (#{section.QuotedId}, #{section.Prompt.Quoted()}, #{section.Icon.Quoted()}, #{section.Primary.If("true","false")});
 #end foreach
 
 	
 	// Actions
 #foreach (var action in Guigen.Actions) 
+    ///<summary>Action #{action.RecordId}.</summary> 
 	public GuiAction #{action.RecordId} { get; } = new (#{action.QuotedId}, #{action.Prompt.Quoted()}, #{action.Icon.Quoted()}, () => new #{action.Id.Label}());
 #end foreach	
 
 	// Dialogs
 #foreach (var dialog in Guigen.Dialogs) 
+    ///<summary>Dialog #{dialog.RecordId}.</summary> 
 	public GuiDialog #{dialog.RecordId} { get; } = new (#{dialog.QuotedId});
 #end foreach	
 
 	// Dialogs
 #foreach (var result in Guigen.Results) 
+    ///<summary>Result #{result.RecordId}.</summary> 
 	public GuiResult #{result.RecordId} { get; } = new ();
 #end foreach	
 	
-
+    /// <summary>
+    /// Default constructor returning an instance.
+    /// </summary>
     public _#{Guigen.Class.Name} () {
 
 
@@ -343,22 +364,21 @@ public class _#{Guigen.Class.Name} : Gui {
     
 #foreach (var binding in Guigen.Bindings)  
     /// <summary> </summary>
-    public static GuiBinding #{binding.RecordId} = #!
+    public static GuiBinding #{binding.RecordId}  { get; } = #!
 #call CreateBindings binding
 #end foreach
 
 
 	}
 
-
-
+##endregion
 #end method
 
 
 #method DeclareFields IEntries parent
 #foreach (var entry in parent.AllEntries)
 #if entry.BindingType != null
-        ///<summary>#{entry.Summary}</summary> 
+    ///<summary>#{entry.Summary}</summary> 
     public virtual #{entry.BackerType} #{entry.IdLabel} { get;#{entry.Readonly.If("", " set;") }} 
 
 #end if
@@ -366,8 +386,17 @@ public class _#{Guigen.Class.Name} : Gui {
 #end method
 
 #method CreateBindings IEntries parent
-new GuiBinding (
+#% var empty = true;
+#foreach (var entry in parent.AllEntries)
+#if entry.BindingType != null
+#% empty = false;
+#end if
+#end foreach
+new (
         (object test) => test is #{parent.IdLabelBase},
+#if empty
+        Array.Empty<GuiBoundProperty>()#!
+#else
         new GuiBoundProperty[] {#!
 #% var separator = new Separator (",");
 #% var index = 0;
@@ -385,7 +414,10 @@ null#!
 #end if
 #end foreach
 
-            });
+
+            }#!
+#end if
+);
 #end method
 
 #method GenerateEntry _Choice entry
