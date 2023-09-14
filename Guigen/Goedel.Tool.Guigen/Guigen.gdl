@@ -87,14 +87,14 @@ Class Goedel.Tool.Guigen Guigen
 			Integer
 
 
-	TopType Exception
+	TopType Fail
 		Id			Token MessageT
 		Message		String
 		Entries List Choice
-			Value
+			Exception
 			Default
 
-	Type Value
+	Type Exception
 		Id			Token MessageT
 
 	Type Default

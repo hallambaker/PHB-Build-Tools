@@ -204,7 +204,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("public partial record _{1} : IResult {{\n{0}", _Indent, result.Id.Label);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    ///<summary>The return result.</summary> \n{0}", _Indent);
-			_Output.Write ("    public virtual ReturnResult ReturnResult {{ get; init; }}\n{0}", _Indent);
+			_Output.Write ("    public virtual ReturnResult ReturnResult {{ get; init; }} = ReturnResult.Completed;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			DeclareFields (result);
 			_Output.Write ("\n{0}", _Indent);
@@ -218,6 +218,48 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("    }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("#endregion\n{0}", _Indent);
+		_Output.Write ("#region // Failure Results\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		foreach  (var result in Guigen.Fails)  {
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("/// <summary>\n{0}", _Indent);
+			_Output.Write ("/// Return parameters for failure result {1} \n{0}", _Indent, result.Id.Label);
+			_Output.Write ("/// </summary>\n{0}", _Indent);
+			_Output.Write ("public partial record {1} : _{2} {{\n{0}", _Indent, result.Id.Label, result.Id.Label);
+			_Output.Write ("    }}\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("/// <summary>\n{0}", _Indent);
+			_Output.Write ("/// Callback parameters for failure result {1} \n{0}", _Indent, result.Id.Label);
+			_Output.Write ("/// </summary>\n{0}", _Indent);
+			_Output.Write ("public partial record _{1} : IFail {{\n{0}", _Indent, result.Id.Label);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+			_Output.Write ("    public string Message => \"{1}\";\n{0}", _Indent, result.Message);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+			_Output.Write ("    public ResourceId ResourceId => resourceId;\n{0}", _Indent);
+			_Output.Write ("    static readonly ResourceId resourceId = new (\"result.Id.Label\");\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    ///<summary>The return result.</summary> \n{0}", _Indent);
+			_Output.Write ("    public virtual ReturnResult ReturnResult {{ get; init; }} = ReturnResult.Error;\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+			_Output.Write ("    public GuiBinding Binding => BaseBinding;\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    ///<summary>The binding for the data type.</summary> \n{0}", _Indent);
+			_Output.Write ("    public static GuiBinding BaseBinding  {{ get; }} = new (\n{0}", _Indent);
+			_Output.Write ("        null, Array.Empty<GuiBoundProperty>());\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    }}\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			}
+		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("#endregion\n{0}", _Indent);
 		_Output.Write ("#region // Gui classes\n{0}", _Indent);
@@ -297,6 +339,18 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("	public GuiResult {1} {{ get; }} = new ();\n{0}", _Indent, result.RecordId);
 			}
 		_Output.Write ("	\n{0}", _Indent);
+		_Output.Write ("    ///<summary>Dictionary resolving exception name to factory method.</summary> \n{0}", _Indent);
+		_Output.Write ("    public Dictionary<string, Func<IResult>> ExceptionDirectory =\n{0}", _Indent);
+		_Output.Write ("        new() {{\n{0}", _Indent);
+		foreach  (var result in Guigen.Fails)  {
+			foreach  (var entry in result.Entries)  {
+				if (  (entry is Exception exception) ) {
+					_Output.Write ("                {{ typeof({1}).FullName, () => new {2}() }}\n{0}", _Indent, exception.Id, result.Id);
+					}
+				}
+			}
+		_Output.Write ("            }};\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    /// <summary>\n{0}", _Indent);
 		_Output.Write ("    /// Default constructor returning an instance.\n{0}", _Indent);
 		_Output.Write ("    /// </summary>\n{0}", _Indent);

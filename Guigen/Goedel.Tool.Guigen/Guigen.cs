@@ -50,7 +50,7 @@ using Goedel.Utilities;
 //       Result
 //       Action
 //       Binding
-//       Exception
+//       Fail
 //   TypeType
 //       MITLicense
 //       BSD2License
@@ -71,7 +71,7 @@ using Goedel.Utilities;
 //       Type
 //       DateTime
 //       Integer
-//       Value
+//       Exception
 //       Default
 //       Error
 //       Readonly
@@ -121,8 +121,8 @@ namespace Goedel.Tool.Guigen {
         Action,
         Dialog,
         Binding,
+        Fail,
         Exception,
-        Value,
         Default,
         Error,
         Condition,
@@ -531,12 +531,12 @@ namespace Goedel.Tool.Guigen {
 			}
 		}
 
-    public partial class Exception : _Choice {
+    public partial class Fail : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Message;
         public List <_Choice>           Entries = new List<_Choice> ();
 
-        public override GuigenType _Tag () =>GuigenType.Exception;
+        public override GuigenType _Tag () =>GuigenType.Fail;
 
 
 		public override void _InitChildren (_Choice Parent) {
@@ -549,7 +549,7 @@ namespace Goedel.Tool.Guigen {
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
-				Output.StartElement ("Exception");
+				Output.StartElement ("Fail");
 				}
 
 	        Output.WriteId ("Id", Id.ToString());
@@ -560,15 +560,15 @@ namespace Goedel.Tool.Guigen {
 				}
 			Output.EndList ("");
 			if (tag) {
-				Output.EndElement ("Exception");
+				Output.EndElement ("Fail");
 				}			
 			}
 		}
 
-    public partial class Value : _Choice {
+    public partial class Exception : _Choice {
         public TOKEN<_Choice>			Id;
 
-        public override GuigenType _Tag () =>GuigenType.Value;
+        public override GuigenType _Tag () =>GuigenType.Exception;
 
 
 		public override void _InitChildren (_Choice Parent) {
@@ -578,12 +578,12 @@ namespace Goedel.Tool.Guigen {
 		public override void Serialize (StructureWriter Output, bool tag) {
 
 			if (tag) {
-				Output.StartElement ("Value");
+				Output.StartElement ("Exception");
 				}
 
 	        Output.WriteId ("Id", Id.ToString());
 			if (tag) {
-				Output.EndElement ("Value");
+				Output.EndElement ("Exception");
 				}			
 			}
 		}
@@ -1193,12 +1193,12 @@ namespace Goedel.Tool.Guigen {
 		Binding_Start,
 		Binding__Id,				
 		Binding__Entries,				
+		Fail_Start,
+		Fail__Id,				
+		Fail__Message,				
+		Fail__Entries,				
 		Exception_Start,
 		Exception__Id,				
-		Exception__Message,				
-		Exception__Entries,				
-		Value_Start,
-		Value__Id,				
 		Default_Start,
 		Error_Start,
 		Error__Id,				
@@ -1345,8 +1345,8 @@ namespace Goedel.Tool.Guigen {
                 case "Action": return NewAction();
                 case "Dialog": return NewDialog();
                 case "Binding": return NewBinding();
+                case "Fail": return NewFail();
                 case "Exception": return NewException();
-                case "Value": return NewValue();
                 case "Default": return NewDefault();
                 case "Error": return NewError();
                 case "Condition": return NewCondition();
@@ -1478,18 +1478,18 @@ namespace Goedel.Tool.Guigen {
             }
 
 
-        private Goedel.Tool.Guigen.Exception NewException() {
-            Goedel.Tool.Guigen.Exception result = new Goedel.Tool.Guigen.Exception();
+        private Goedel.Tool.Guigen.Fail NewFail() {
+            Goedel.Tool.Guigen.Fail result = new Goedel.Tool.Guigen.Fail();
             Push (result);
-            State = StateCode.Exception_Start;
+            State = StateCode.Fail_Start;
             return result;
             }
 
 
-        private Goedel.Tool.Guigen.Value NewValue() {
-            Goedel.Tool.Guigen.Value result = new Goedel.Tool.Guigen.Value();
+        private Goedel.Tool.Guigen.Exception NewException() {
+            Goedel.Tool.Guigen.Exception result = new Goedel.Tool.Guigen.Exception();
             Push (result);
-            State = StateCode.Value_Start;
+            State = StateCode.Exception_Start;
             return result;
             }
 
@@ -1662,8 +1662,8 @@ namespace Goedel.Tool.Guigen {
                 case "Action": return Goedel.Tool.Guigen.GuigenType.Action;
                 case "Dialog": return Goedel.Tool.Guigen.GuigenType.Dialog;
                 case "Binding": return Goedel.Tool.Guigen.GuigenType.Binding;
+                case "Fail": return Goedel.Tool.Guigen.GuigenType.Fail;
                 case "Exception": return Goedel.Tool.Guigen.GuigenType.Exception;
-                case "Value": return Goedel.Tool.Guigen.GuigenType.Value;
                 case "Default": return Goedel.Tool.Guigen.GuigenType.Default;
                 case "Error": return Goedel.Tool.Guigen.GuigenType.Error;
                 case "Condition": return Goedel.Tool.Guigen.GuigenType.Condition;
@@ -1766,7 +1766,7 @@ namespace Goedel.Tool.Guigen {
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Action) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Dialog) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Binding) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Exception)) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Fail)) {
                                 Top.Add(New_Choice(Text));
                                 }
                             else {
@@ -2184,6 +2184,57 @@ namespace Goedel.Tool.Guigen {
                         break;
 
 
+                    case StateCode.Fail_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.Fail Current_Cast = (Goedel.Tool.Guigen.Fail)Current;
+                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__MessageT, Current_Cast);
+                            State = StateCode.Fail__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Fail__Id:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Guigen.Fail Current_Cast = (Goedel.Tool.Guigen.Fail)Current;
+                            Current_Cast.Message = Text;
+                            State = StateCode.Fail__Message;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Fail__Message:
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Fail__Entries;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.Fail__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Guigen.Fail Current_Cast = (Goedel.Tool.Guigen.Fail)Current;
+                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Exception) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Default) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [Exception Default ]");
+								}
+							}
+                        break;
+
+
                     case StateCode.Exception_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Guigen.Exception Current_Cast = (Goedel.Tool.Guigen.Exception)Current;
@@ -2194,57 +2245,6 @@ namespace Goedel.Tool.Guigen {
                         throw new Expected("Expected LABEL or LITERAL");
 
                     case StateCode.Exception__Id:
-                        if (Token == TokenType.STRING) {
-                            Goedel.Tool.Guigen.Exception Current_Cast = (Goedel.Tool.Guigen.Exception)Current;
-                            Current_Cast.Message = Text;
-                            State = StateCode.Exception__Message;
-                            break;
-                            }
-                        throw new Expected("Expected String");
-
-                    case StateCode.Exception__Message:
-
-                        if (Token == TokenType.BEGIN) {
-                            State = StateCode.Exception__Entries;
-                            }
-                        else {
-							Pop ();
-                            Represent = true;
-                            }
-                        break;
-                    case StateCode.Exception__Entries: 
-                        if (Token == TokenType.END) {
-                            Pop();
-                            break;
-                            }
-
-						// Parser transition for LIST $$$$$
-
-                        else if (Token == TokenType.LABEL) {
-							Goedel.Tool.Guigen.Exception Current_Cast = (Goedel.Tool.Guigen.Exception)Current;
-                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
-                            if ( false |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Value) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Default) ) {
-                                Current_Cast.Entries.Add (New_Choice(Text));
-                                }
-                            else {
-								throw new Expected ("Parser Error Expected [Value Default ]");
-								}
-							}
-                        break;
-
-
-                    case StateCode.Value_Start:
-                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
-                            Goedel.Tool.Guigen.Value Current_Cast = (Goedel.Tool.Guigen.Value)Current;
-                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__MessageT, Current_Cast);
-                            State = StateCode.Value__Id;
-                            break;
-                            }
-                        throw new Expected("Expected LABEL or LITERAL");
-
-                    case StateCode.Value__Id:
                         Pop ();
                         Represent = true; 
                         break;

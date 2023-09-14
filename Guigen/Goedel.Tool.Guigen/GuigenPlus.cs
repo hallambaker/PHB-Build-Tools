@@ -36,6 +36,7 @@ public partial class Guigen {
     public List<Dialog> Dialogs = new();
     public List<Binding> Bindings = new();
     public List<Result> Results = new();
+    public List<Fail> Fails = new();
 
     public Class Class { get; set; } = null;
 
@@ -178,6 +179,27 @@ public partial class Result : IEntries {
         _Base.Results.Add(this);
         }
     }
+
+
+public partial class Fail : IEntries {
+    public override bool Active => false;
+
+    public List<_Choice> AllEntries => Entries;
+
+    public override string RecordId => "Fail" + Id.Label;
+    public string QuotedId => Id.Label.Quoted();
+    public override string IdLabel => Id.Label;
+
+    public override string IdLabelBase => IdLabel;
+    public override void Init(_Choice parent) {
+
+        base.Init(parent);
+        _Base.Fails.Add(this);
+        _Base.AddPrompt(Id, Message);
+        }
+    }
+
+
 
 public partial class Primary {
     public override bool Active => false;

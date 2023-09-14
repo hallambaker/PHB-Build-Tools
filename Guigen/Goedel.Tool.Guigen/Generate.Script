@@ -159,7 +159,7 @@ public partial record #{result.Id.Label} : _#{result.Id.Label} {
 public partial record _#{result.Id.Label} : IResult {
 
     ///<summary>The return result.</summary> 
-    public virtual ReturnResult ReturnResult { get; init; }
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Completed;
 
 #call DeclareFields result
 
@@ -173,6 +173,48 @@ public partial record _#{result.Id.Label} : IResult {
     }
 
 #end foreach
+
+
+##endregion
+##region // Failure Results
+
+#foreach (var result in Guigen.Fails) 
+
+/// <summary>
+/// Return parameters for failure result #{result.Id.Label} 
+/// </summary>
+public partial record #{result.Id.Label} : _#{result.Id.Label} {
+    }
+
+
+/// <summary>
+/// Callback parameters for failure result #{result.Id.Label} 
+/// </summary>
+public partial record _#{result.Id.Label} : IFail {
+
+    ///<inheritdoc/>
+    public string Message => "#{result.Message}";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("result.Id.Label");
+
+    ///<summary>The return result.</summary> 
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
+
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = new (
+        null, Array.Empty<GuiBoundProperty>());
+
+    }
+
+
+
+#end foreach
+
 
 ##endregion
 ##region // Gui classes
@@ -252,6 +294,18 @@ public class _#{Guigen.Class.Name} : Gui {
 	public GuiResult #{result.RecordId} { get; } = new ();
 #end foreach	
 	
+    ///<summary>Dictionary resolving exception name to factory method.</summary> 
+    public Dictionary<string, Func<IResult>> ExceptionDirectory =
+        new() {
+#foreach (var result in Guigen.Fails) 
+#foreach (var entry in result.Entries) 
+#if (entry is Exception exception)
+                { typeof(#{exception.Id}).FullName, () => new #{result.Id}() }
+#end if
+#end foreach
+#end foreach
+            };
+
     /// <summary>
     /// Default constructor returning an instance.
     /// </summary>
