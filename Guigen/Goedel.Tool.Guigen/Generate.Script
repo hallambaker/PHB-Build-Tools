@@ -197,7 +197,7 @@ public partial record _#{result.Id.Label} : IFail {
 
     ///<inheritdoc/>
     public ResourceId ResourceId => resourceId;
-    static readonly ResourceId resourceId = new ("result.Id.Label");
+    static readonly ResourceId resourceId = new ("#{result.Id.Label}");
 
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;

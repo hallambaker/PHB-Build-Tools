@@ -242,7 +242,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
 			_Output.Write ("    public ResourceId ResourceId => resourceId;\n{0}", _Indent);
-			_Output.Write ("    static readonly ResourceId resourceId = new (\"result.Id.Label\");\n{0}", _Indent);
+			_Output.Write ("    static readonly ResourceId resourceId = new (\"{1}\");\n{0}", _Indent, result.Id.Label);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    ///<summary>The return result.</summary> \n{0}", _Indent);
 			_Output.Write ("    public virtual ReturnResult ReturnResult {{ get; init; }} = ReturnResult.Error;\n{0}", _Indent);
