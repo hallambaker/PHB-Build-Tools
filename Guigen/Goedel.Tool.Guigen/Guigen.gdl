@@ -40,12 +40,6 @@ Class Goedel.Tool.Guigen Guigen
 			Condition
 			Return
 
-	TopType Result
-		Id			ID SectionT
-		Entries List Choice
-			Text
-			Decimal
-			Icon
 
 	TopType Action
 		Id			ID SectionT
@@ -86,6 +80,15 @@ Class Goedel.Tool.Guigen Guigen
 			DateTime
 			Integer
 
+	TopType Result
+		Id			ID SectionT
+		Message		String
+		Entries List Choice
+			Text
+			Decimal
+			Icon
+			Hidden
+
 
 	TopType Fail
 		Id			Token MessageT
@@ -93,6 +96,8 @@ Class Goedel.Tool.Guigen Guigen
 		Entries List Choice
 			Exception
 			Default
+			Hidden
+			Text
 
 	Type Exception
 		Id			Token MessageT
@@ -149,6 +154,10 @@ Class Goedel.Tool.Guigen Guigen
 		Entries List Choice
 			Readonly
 			Error
+
+	Type Hidden
+		Id			Token SectionT
+		Entries List Choice
 
 	Type Text
 		Id			Token SectionT

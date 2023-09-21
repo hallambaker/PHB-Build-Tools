@@ -50,11 +50,6 @@ public partial class #{section.Id.Label} : _#{section.Id.Label} {
 public partial class _#{section.Id.Label} : IBindable {
 
 #call DeclareFields section
-    ///<inheritdoc/>
-    public GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = #!
 #call CreateBindings section
 
     }
@@ -75,11 +70,6 @@ public partial class #{dialog.Id.Label} : _#{dialog.Id.Label} {
 public partial class _#{dialog.Id.Label} : IBindable {
 
 #call DeclareFields dialog
-    ///<inheritdoc/>
-    public GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding { get; }  = #!
 #call CreateBindings dialog
 
     }
@@ -103,12 +93,6 @@ public partial class #{action.Id.Label} : _#{action.Id.Label} {
 public partial class _#{action.Id.Label} : IParameter {
 
 #call DeclareFields action
-
-    ///<inheritdoc/>
-    public GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = #!
 #call CreateBindings action
 
     ///<summary>Validation</summary> 
@@ -158,18 +142,21 @@ public partial record #{result.Id.Label} : _#{result.Id.Label} {
 /// </summary>
 public partial record _#{result.Id.Label} : IResult {
 
+    ///<inheritdoc/>
+    public string Message => "#{result.Message}";
+
+    ///<inheritdoc/>
+    public ResourceId ResourceId => resourceId;
+    static readonly ResourceId resourceId = new ("#{result.Id.Label}");
+
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Completed;
 
 #call DeclareFields result
-
-    ///<inheritdoc/>
-    public GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding { get; } = #!
 #call CreateBindings result
-
+#call DeclareResultGetValues result
+#!call DeclareResultSlots result
+#!call DeclareResultBinding result
     }
 
 #end foreach
@@ -202,12 +189,11 @@ public partial record _#{result.Id.Label} : IFail {
     ///<summary>The return result.</summary> 
     public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Error;
 
-    ///<inheritdoc/>
-    public GuiBinding Binding => BaseBinding;
-
-    ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = new (
-        null, Array.Empty<GuiBoundProperty>());
+#call DeclareFields result
+#call CreateBindings result
+#call DeclareResultGetValues result
+#!call DeclareResultSlots result
+#!call DeclareResultBinding result
 
     }
 
@@ -366,8 +352,10 @@ public class _#{Guigen.Class.Name} : Gui {
 	    #{dialog.RecordId}.Entries = new () {#!
 #% separator.Reset ();
 #foreach (var entry in dialog.Entries)
+#if (entry.Active)
 #{separator} 
 #call GenerateEntry entry
+#end if
 #end foreach
 			
 		    };
@@ -387,8 +375,10 @@ public class _#{Guigen.Class.Name} : Gui {
 	    #{result.RecordId}.Entries = new () {#!
 #% separator.Reset ();
 #foreach (var entry in result.Entries)
+#if (entry.Active)
 #{separator} 
 #call GenerateEntry entry
+#end if
 #end foreach
 			
 		    };
@@ -419,7 +409,7 @@ public class _#{Guigen.Class.Name} : Gui {
 #foreach (var binding in Guigen.Bindings)  
     /// <summary> </summary>
     public static GuiBinding #{binding.RecordId}  { get; } = #!
-#call CreateBindings binding
+#call CreateBindingInner binding
 #end foreach
 
 
@@ -428,10 +418,33 @@ public class _#{Guigen.Class.Name} : Gui {
 ##endregion
 #end method
 
+#method DeclareResultGetValues IEntries parent
+
+    ///<inheritdoc/>
+    public object[] GetValues() => #!
+#% var separator = new Separator ("new [] { ", ",");
+#foreach (var entry in parent.AllEntries)
+#switchcast GuigenType entry
+#casecast Text text
+#{separator}
+        #{entry.IdLabel}#!
+#casecast Hidden hidden
+#{separator}
+        #{entry.IdLabel}#!
+#end switchcast
+#end foreach
+#if (separator.IsFirst)
+Array.Empty<object>();
+#else
+};#!
+#end if
+
+#end method
+
 
 #method DeclareFields IEntries parent
 #foreach (var entry in parent.AllEntries)
-#if entry.BindingType != null
+#if entry.BackerType != null
     ///<summary>#{entry.Summary}</summary> 
     public virtual #{entry.BackerType} #{entry.IdLabel} { get;#{entry.Readonly.If("", " set;") }} 
 
@@ -440,6 +453,15 @@ public class _#{Guigen.Class.Name} : Gui {
 #end method
 
 #method CreateBindings IEntries parent
+    ///<inheritdoc/>
+    public GuiBinding Binding => BaseBinding;
+
+    ///<summary>The binding for the data type.</summary> 
+    public static GuiBinding BaseBinding  { get; } = #!
+#call CreateBindingInner parent
+#end method
+
+#method CreateBindingInner IEntries parent
 #% var empty = true;
 #foreach (var entry in parent.AllEntries)
 #if entry.BindingType != null

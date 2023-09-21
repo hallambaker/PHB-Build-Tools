@@ -95,11 +95,6 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("public partial class _{1} : IBindable {{\n{0}", _Indent, section.Id.Label);
 			_Output.Write ("\n{0}", _Indent);
 			DeclareFields (section);
-			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
-			_Output.Write ("    public GuiBinding Binding => BaseBinding;\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("    ///<summary>The binding for the data type.</summary> \n{0}", _Indent);
-			_Output.Write ("    public static GuiBinding BaseBinding  {{ get; }} = ", _Indent);
 			CreateBindings (section);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    }}\n{0}", _Indent);
@@ -120,11 +115,6 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("public partial class _{1} : IBindable {{\n{0}", _Indent, dialog.Id.Label);
 			_Output.Write ("\n{0}", _Indent);
 			DeclareFields (dialog);
-			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
-			_Output.Write ("    public GuiBinding Binding => BaseBinding;\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("    ///<summary>The binding for the data type.</summary> \n{0}", _Indent);
-			_Output.Write ("    public static GuiBinding BaseBinding {{ get; }}  = ", _Indent);
 			CreateBindings (dialog);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    }}\n{0}", _Indent);
@@ -148,12 +138,6 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("public partial class _{1} : IParameter {{\n{0}", _Indent, action.Id.Label);
 			_Output.Write ("\n{0}", _Indent);
 			DeclareFields (action);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
-			_Output.Write ("    public GuiBinding Binding => BaseBinding;\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("    ///<summary>The binding for the data type.</summary> \n{0}", _Indent);
-			_Output.Write ("    public static GuiBinding BaseBinding  {{ get; }} = ", _Indent);
 			CreateBindings (action);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    ///<summary>Validation</summary> \n{0}", _Indent);
@@ -203,18 +187,19 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("/// </summary>\n{0}", _Indent);
 			_Output.Write ("public partial record _{1} : IResult {{\n{0}", _Indent, result.Id.Label);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+			_Output.Write ("    public string Message => \"{1}\";\n{0}", _Indent, result.Message);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+			_Output.Write ("    public ResourceId ResourceId => resourceId;\n{0}", _Indent);
+			_Output.Write ("    static readonly ResourceId resourceId = new (\"{1}\");\n{0}", _Indent, result.Id.Label);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    ///<summary>The return result.</summary> \n{0}", _Indent);
 			_Output.Write ("    public virtual ReturnResult ReturnResult {{ get; init; }} = ReturnResult.Completed;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			DeclareFields (result);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
-			_Output.Write ("    public GuiBinding Binding => BaseBinding;\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("    ///<summary>The binding for the data type.</summary> \n{0}", _Indent);
-			_Output.Write ("    public static GuiBinding BaseBinding {{ get; }} = ", _Indent);
 			CreateBindings (result);
-			_Output.Write ("\n{0}", _Indent);
+			DeclareResultGetValues (result);
 			_Output.Write ("    }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			}
@@ -247,12 +232,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("    ///<summary>The return result.</summary> \n{0}", _Indent);
 			_Output.Write ("    public virtual ReturnResult ReturnResult {{ get; init; }} = ReturnResult.Error;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
-			_Output.Write ("    public GuiBinding Binding => BaseBinding;\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("    ///<summary>The binding for the data type.</summary> \n{0}", _Indent);
-			_Output.Write ("    public static GuiBinding BaseBinding  {{ get; }} = new (\n{0}", _Indent);
-			_Output.Write ("        null, Array.Empty<GuiBoundProperty>());\n{0}", _Indent);
+			DeclareFields (result);
+			CreateBindings (result);
+			DeclareResultGetValues (result);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -411,8 +393,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("	    {1}.Entries = new () {{", _Indent, dialog.RecordId);
 			 separator.Reset ();
 			foreach  (var entry in dialog.Entries) {
-				_Output.Write ("{1} \n{0}", _Indent, separator);
-				GenerateEntry (entry);
+				if (  (entry.Active) ) {
+					_Output.Write ("{1} \n{0}", _Indent, separator);
+					GenerateEntry (entry);
+					}
 				}
 			_Output.Write ("			\n{0}", _Indent);
 			_Output.Write ("		    }};\n{0}", _Indent);
@@ -432,8 +416,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("	    {1}.Entries = new () {{", _Indent, result.RecordId);
 			 separator.Reset ();
 			foreach  (var entry in result.Entries) {
-				_Output.Write ("{1} \n{0}", _Indent, separator);
-				GenerateEntry (entry);
+				if (  (entry.Active) ) {
+					_Output.Write ("{1} \n{0}", _Indent, separator);
+					GenerateEntry (entry);
+					}
 				}
 			_Output.Write ("			\n{0}", _Indent);
 			_Output.Write ("		    }};\n{0}", _Indent);
@@ -464,7 +450,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 		foreach  (var binding in Guigen.Bindings)   {
 			_Output.Write ("    /// <summary> </summary>\n{0}", _Indent);
 			_Output.Write ("    public static GuiBinding {1}  {{ get; }} = ", _Indent, binding.RecordId);
-			CreateBindings (binding);
+			CreateBindingInner (binding);
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
@@ -475,11 +461,42 @@ public partial class Generate : global::Goedel.Registry.Script {
 	
 
 	//
+	// DeclareResultGetValues
+	//
+	public void DeclareResultGetValues (IEntries parent) {
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+		_Output.Write ("    public object[] GetValues() => ", _Indent);
+		 var separator = new Separator ("new [] { ", ",");
+		foreach  (var entry in parent.AllEntries) {
+			switch (entry._Tag ()) {
+				case GuigenType.Text: {
+				  Text text = (Text) entry; 
+				_Output.Write ("{1}\n{0}", _Indent, separator);
+				_Output.Write ("        {1}", _Indent, entry.IdLabel);
+				break; }
+				case GuigenType.Hidden: {
+				  Hidden hidden = (Hidden) entry; 
+				_Output.Write ("{1}\n{0}", _Indent, separator);
+				_Output.Write ("        {1}", _Indent, entry.IdLabel);
+			break; }
+				}
+			}
+		if (  (separator.IsFirst) ) {
+			_Output.Write ("Array.Empty<object>();\n{0}", _Indent);
+			} else {
+			_Output.Write ("}};", _Indent);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		}
+	
+
+	//
 	// DeclareFields
 	//
 	public void DeclareFields (IEntries parent) {
 		foreach  (var entry in parent.AllEntries) {
-			if (  entry.BindingType != null ) {
+			if (  entry.BackerType != null ) {
 				_Output.Write ("    ///<summary>{1}</summary> \n{0}", _Indent, entry.Summary);
 				_Output.Write ("    public virtual {1} {2} {{ get;{3}}} \n{0}", _Indent, entry.BackerType, entry.IdLabel, entry.Readonly.If("", " set;") );
 				_Output.Write ("\n{0}", _Indent);
@@ -492,6 +509,19 @@ public partial class Generate : global::Goedel.Registry.Script {
 	// CreateBindings
 	//
 	public void CreateBindings (IEntries parent) {
+		_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+		_Output.Write ("    public GuiBinding Binding => BaseBinding;\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    ///<summary>The binding for the data type.</summary> \n{0}", _Indent);
+		_Output.Write ("    public static GuiBinding BaseBinding  {{ get; }} = ", _Indent);
+		CreateBindingInner (parent);
+		}
+	
+
+	//
+	// CreateBindingInner
+	//
+	public void CreateBindingInner (IEntries parent) {
 		 var empty = true;
 		foreach  (var entry in parent.AllEntries) {
 			if (  entry.BindingType != null ) {

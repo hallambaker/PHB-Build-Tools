@@ -82,12 +82,12 @@ public partial class _Choice {
 
     public virtual string RecordId { get; }
 
-    public bool Readonly { get; set; } = false;
+    public virtual bool Readonly { get; set; } = false;
     public int Index { get; set; } = -1;
 
     public string Summary { get; set; } = "";
 
-    public virtual string BackerType => throw new NYI();
+    public virtual string BackerType => null;
     public virtual string BindingType => null;
 
     public virtual string IdLabel => throw new NYI();
@@ -358,4 +358,15 @@ public partial class View {
 public partial class Condition {
 
     public override bool Active => false;
+    }
+
+public partial class Hidden {
+    public override string BackerType => "string";
+    public override string IdLabel => Id.Label;
+    public override bool Active => false;
+
+
+    public override void Init(_Choice parent) {
+        //Readonly = true;
+        }
     }
