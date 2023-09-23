@@ -582,6 +582,11 @@ public partial class Generate : global::Goedel.Registry.Script {
 			
 			GenerateText (text);
 			break; }
+			case GuigenType.Integer: {
+			  Integer integer = (Integer) entry; 
+			
+			GenerateInteger (integer);
+			break; }
 			case GuigenType.Color: {
 			  Color color = (Color) entry; 
 			
@@ -662,6 +667,14 @@ public partial class Generate : global::Goedel.Registry.Script {
 	//
 	public void GenerateText (Text field) {
 		_Output.Write ("			new GuiText ({1}, {2}, {3})", _Indent, field.QuotedId, field.Prompt.Quoted(), field.Index);
+		}
+	
+
+	//
+	// GenerateInteger
+	//
+	public void GenerateInteger (Integer field) {
+		_Output.Write ("			new GuiInteger ({1}, {2}, {3})", _Indent, field.QuotedId, field.Prompt.Quoted(), field.Index);
 		}
 	
 

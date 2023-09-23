@@ -321,7 +321,7 @@ public partial class Size {
 public partial class Decimal {
     public string QuotedId => Id.Label.Quoted();
     public override string IdLabel => Id.Label;
-    public override string BackerType => "double";
+    public override string BackerType => "decimal?";
 
     public override string BindingType => "GuiBoundPropertyDecimal";
     public override void Init(_Choice parent) {
@@ -330,6 +330,21 @@ public partial class Decimal {
         SetEntries(Entries);
         }
     }
+
+public partial class Integer {
+    public string QuotedId => Id.Label.Quoted();
+    public override string IdLabel => Id.Label;
+    public override string BackerType => "int?";
+
+    public override string BindingType => "GuiBoundPropertyInteger";
+    public override void Init(_Choice parent) {
+        base.Init(parent);
+        _Base.AddPrompt(Id, Prompt);
+        SetEntries(Entries);
+        }
+    }
+
+
 public partial class Icon {
     public string QuotedId => Id.Label.Quoted();
     public override string IdLabel => Id.Label;
@@ -359,7 +374,10 @@ public partial class Condition {
 
     public override bool Active => false;
     }
+public partial class Description {
 
+    public override bool Active => false;
+    }
 public partial class Hidden {
     public override string BackerType => "string";
     public override string IdLabel => Id.Label;

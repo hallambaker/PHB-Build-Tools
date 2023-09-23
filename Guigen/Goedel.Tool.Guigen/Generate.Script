@@ -506,6 +506,8 @@ null#!
 #call GenerateDialog dialog
 #casecast Text text
 #call GenerateText text
+#casecast Integer integer
+#call GenerateInteger integer
 #casecast Color color
 #call GenerateColor color
 #casecast Size size
@@ -556,6 +558,10 @@ null#!
 
 #method GenerateText Text field
 			new GuiText (#{field.QuotedId}, #{field.Prompt.Quoted()}, #{field.Index})#!
+#end method
+
+#method GenerateInteger Integer field
+			new GuiInteger (#{field.QuotedId}, #{field.Prompt.Quoted()}, #{field.Index})#!
 #end method
 
 #method GenerateColor Color field

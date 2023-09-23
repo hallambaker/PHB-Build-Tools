@@ -63,6 +63,7 @@ using Goedel.Utilities;
 //       Button
 //       Dialog
 //       Decimal
+//       Integer
 //       Condition
 //       Return
 //       Color
@@ -70,7 +71,6 @@ using Goedel.Utilities;
 //       Context
 //       Type
 //       DateTime
-//       Integer
 //       Hidden
 //       Exception
 //       Default
@@ -78,6 +78,7 @@ using Goedel.Utilities;
 //       Readonly
 //       View
 //       Filter
+//       Range
 //   IdType
 //       SectionT
 //       ResultT
@@ -98,6 +99,8 @@ using Goedel.Utilities;
 //       Icon
 //       Entries
 //       Message
+//       Max
+//       Min
 //   TokenType
 //       TypeT
 //       MessageT
@@ -123,6 +126,7 @@ namespace Goedel.Tool.Guigen {
         Binding,
         Result,
         Fail,
+        Description,
         Exception,
         Default,
         Error,
@@ -144,6 +148,7 @@ namespace Goedel.Tool.Guigen {
         Integer,
         Icon,
         Readonly,
+        Range,
 
         _Label,
         _Bottom
@@ -565,6 +570,31 @@ namespace Goedel.Tool.Guigen {
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Fail");
+				}			
+			}
+		}
+
+    public partial class Description : _Choice {
+		public List <System.String>			Text = new List <System.String> (); 
+
+        public override GuigenType _Tag () =>GuigenType.Description;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Description");
+				}
+
+			foreach (string _s in Text) {
+				Output.WriteAttribute ("Text",_s);
+				}
+			if (tag) {
+				Output.EndElement ("Description");
 				}			
 			}
 		}
@@ -1177,6 +1207,31 @@ namespace Goedel.Tool.Guigen {
 			}
 		}
 
+    public partial class Range : _Choice {
+		public int						Max;
+		public int						Min;
+
+        public override GuigenType _Tag () =>GuigenType.Range;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Range");
+				}
+
+			Output.WriteAttribute ("Max", Max);
+			Output.WriteAttribute ("Min", Min);
+			if (tag) {
+				Output.EndElement ("Range");
+				}			
+			}
+		}
+
     class _Label : _Choice {
         public REF<_Choice>            Label;
 
@@ -1234,6 +1289,8 @@ namespace Goedel.Tool.Guigen {
 		Fail__Id,				
 		Fail__Message,				
 		Fail__Entries,				
+		Description_Start,
+		Description__Text,				
 		Exception_Start,
 		Exception__Id,				
 		Default_Start,
@@ -1299,6 +1356,9 @@ namespace Goedel.Tool.Guigen {
 		Icon__Prompt,				
 		Icon__Entries,				
 		Readonly_Start,
+		Range_Start,
+		Range__Max,				
+		Range__Min,				
         }
 
 
@@ -1386,6 +1446,7 @@ namespace Goedel.Tool.Guigen {
                 case "Binding": return NewBinding();
                 case "Result": return NewResult();
                 case "Fail": return NewFail();
+                case "Description": return NewDescription();
                 case "Exception": return NewException();
                 case "Default": return NewDefault();
                 case "Error": return NewError();
@@ -1407,6 +1468,7 @@ namespace Goedel.Tool.Guigen {
                 case "Integer": return NewInteger();
                 case "Icon": return NewIcon();
                 case "Readonly": return NewReadonly();
+                case "Range": return NewRange();
 
 				}
 
@@ -1523,6 +1585,14 @@ namespace Goedel.Tool.Guigen {
             Goedel.Tool.Guigen.Fail result = new Goedel.Tool.Guigen.Fail();
             Push (result);
             State = StateCode.Fail_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Guigen.Description NewDescription() {
+            Goedel.Tool.Guigen.Description result = new Goedel.Tool.Guigen.Description();
+            Push (result);
+            State = StateCode.Description_Start;
             return result;
             }
 
@@ -1695,6 +1765,14 @@ namespace Goedel.Tool.Guigen {
             }
 
 
+        private Goedel.Tool.Guigen.Range NewRange() {
+            Goedel.Tool.Guigen.Range result = new Goedel.Tool.Guigen.Range();
+            Push (result);
+            State = StateCode.Range_Start;
+            return result;
+            }
+
+
         static Goedel.Tool.Guigen.GuigenType _Reserved(string Label) {
             switch (Label) {
 
@@ -1712,6 +1790,7 @@ namespace Goedel.Tool.Guigen {
                 case "Binding": return Goedel.Tool.Guigen.GuigenType.Binding;
                 case "Result": return Goedel.Tool.Guigen.GuigenType.Result;
                 case "Fail": return Goedel.Tool.Guigen.GuigenType.Fail;
+                case "Description": return Goedel.Tool.Guigen.GuigenType.Description;
                 case "Exception": return Goedel.Tool.Guigen.GuigenType.Exception;
                 case "Default": return Goedel.Tool.Guigen.GuigenType.Default;
                 case "Error": return Goedel.Tool.Guigen.GuigenType.Error;
@@ -1733,6 +1812,7 @@ namespace Goedel.Tool.Guigen {
                 case "Integer": return Goedel.Tool.Guigen.GuigenType.Integer;
                 case "Icon": return Goedel.Tool.Guigen.GuigenType.Icon;
                 case "Readonly": return Goedel.Tool.Guigen.GuigenType.Readonly;
+                case "Range": return Goedel.Tool.Guigen.GuigenType.Range;
 
                 }
             return Goedel.Tool.Guigen.GuigenType._Bottom;
@@ -2020,12 +2100,14 @@ namespace Goedel.Tool.Guigen {
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Dialog) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Text) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Decimal) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Integer) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Condition) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Return) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Return) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Description) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Chooser Primary Button Dialog Text Decimal Condition Return ]");
+								throw new Expected ("Parser Error Expected [Chooser Primary Button Dialog Text Decimal Integer Condition Return Description ]");
 								}
 							}
                         break;
@@ -2085,12 +2167,14 @@ namespace Goedel.Tool.Guigen {
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Color) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Size) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Decimal) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Integer) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Context) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Return) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Return) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Description) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Context Return ]");
+								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Integer Context Return Description ]");
 								}
 							}
                         break;
@@ -2132,11 +2216,13 @@ namespace Goedel.Tool.Guigen {
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Color) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Size) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Decimal) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Icon) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Integer) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Icon) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Description) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Icon ]");
+								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Integer Icon Description ]");
 								}
 							}
                         break;
@@ -2181,11 +2267,12 @@ namespace Goedel.Tool.Guigen {
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Icon) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Type) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.DateTime) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Integer) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Integer) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Description) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Icon Type DateTime Integer ]");
+								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Icon Type DateTime Integer Description ]");
 								}
 							}
                         break;
@@ -2233,12 +2320,14 @@ namespace Goedel.Tool.Guigen {
                             if ( false |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Text) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Decimal) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Integer) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Icon) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Hidden) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Hidden) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Description) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Text Decimal Icon Hidden ]");
+								throw new Expected ("Parser Error Expected [Text Decimal Integer Icon Hidden Description ]");
 								}
 							}
                         break;
@@ -2286,15 +2375,40 @@ namespace Goedel.Tool.Guigen {
                             if ( false |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Exception) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Default) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Integer) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Hidden) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Text) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Text) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Description) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Exception Default Hidden Text ]");
+								throw new Expected ("Parser Error Expected [Exception Default Integer Hidden Text Description ]");
 								}
 							}
                         break;
+
+
+                    case StateCode.Description_Start:
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Description__Text;
+                            break;
+                            }
+                        else {
+                            Pop();
+                            Represent = true;
+                            break;
+                            }
+                    case StateCode.Description__Text:
+                       if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+                       else if (Token == TokenType.TEXT) {
+                            Goedel.Tool.Guigen.Description Current_Cast = (Goedel.Tool.Guigen.Description)Current;
+                            Current_Cast.Text.Add (Text);
+                            break;							
+                            }
+                       throw new Expected("Expected Text");
 
 
                     case StateCode.Exception_Start:
@@ -2636,11 +2750,12 @@ namespace Goedel.Tool.Guigen {
                         else if (Token == TokenType.LABEL) {
 							Goedel.Tool.Guigen.Hidden Current_Cast = (Goedel.Tool.Guigen.Hidden)Current;
                             Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
-                            if ( false ) {
+                            if ( false |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Description) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected []");
+								throw new Expected ("Parser Error Expected [Description ]");
 								}
 							}
                         break;
@@ -2942,11 +3057,12 @@ namespace Goedel.Tool.Guigen {
                             Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
                             if ( false |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Readonly) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Error) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Error) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Range) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Readonly Error ]");
+								throw new Expected ("Parser Error Expected [Readonly Error Range ]");
 								}
 							}
                         break;
@@ -3004,6 +3120,28 @@ namespace Goedel.Tool.Guigen {
 
 
                     case StateCode.Readonly_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Range_Start:
+                        if (Token == TokenType.INTEGER) {
+                            Goedel.Tool.Guigen.Range Current_Cast = (Goedel.Tool.Guigen.Range)Current;
+                            Current_Cast.Max = Convert.ToInt32(Text);
+                            State = StateCode.Range__Max;
+                            break;
+                            }
+                        throw new Expected("Expected Integer");
+
+                    case StateCode.Range__Max:
+                        if (Token == TokenType.INTEGER) {
+                            Goedel.Tool.Guigen.Range Current_Cast = (Goedel.Tool.Guigen.Range)Current;
+                            Current_Cast.Min = Convert.ToInt32(Text);
+                            State = StateCode.Range__Min;
+                            break;
+                            }
+                        throw new Expected("Expected Integer");
+
+                    case StateCode.Range__Min:
                         Pop ();
                         Represent = true; 
                         break;

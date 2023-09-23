@@ -37,8 +37,10 @@ Class Goedel.Tool.Guigen Guigen
 			Dialog
 			Text
 			Decimal
+			Integer
 			Condition
 			Return
+			Description
 
 
 	TopType Action
@@ -51,9 +53,10 @@ Class Goedel.Tool.Guigen Guigen
 			Color
 			Size
 			Decimal
+			Integer
 			Context
 			Return
-			
+			Description
 
 	TopType Dialog
 		Id			ID SectionT
@@ -63,8 +66,9 @@ Class Goedel.Tool.Guigen Guigen
 			Color
 			Size
 			Decimal
+			Integer
 			Icon
-
+			Description
 
 
 	TopType Binding
@@ -79,6 +83,7 @@ Class Goedel.Tool.Guigen Guigen
 			Type
 			DateTime
 			Integer
+			Description
 
 	TopType Result
 		Id			ID SectionT
@@ -86,9 +91,10 @@ Class Goedel.Tool.Guigen Guigen
 		Entries List Choice
 			Text
 			Decimal
+			Integer
 			Icon
 			Hidden
-
+			Description
 
 	TopType Fail
 		Id			Token MessageT
@@ -96,8 +102,13 @@ Class Goedel.Tool.Guigen Guigen
 		Entries List Choice
 			Exception
 			Default
+			Integer
 			Hidden
 			Text
+			Description
+
+	Type Description
+		Text		Text
 
 	Type Exception
 		Id			Token MessageT
@@ -158,6 +169,7 @@ Class Goedel.Tool.Guigen Guigen
 	Type Hidden
 		Id			Token SectionT
 		Entries List Choice
+			Description
 
 	Type Text
 		Id			Token SectionT
@@ -200,6 +212,7 @@ Class Goedel.Tool.Guigen Guigen
 		Entries List Choice
 			Readonly
 			Error
+			Range
 
 	Type Icon
 		Id			Token SectionT
@@ -210,3 +223,6 @@ Class Goedel.Tool.Guigen Guigen
 
 	Type Readonly
 
+	Type Range
+		Max			Integer
+		Min			Integer
