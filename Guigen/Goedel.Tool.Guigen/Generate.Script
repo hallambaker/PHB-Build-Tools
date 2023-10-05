@@ -67,10 +67,11 @@ public partial class #{dialog.Id.Label} : _#{dialog.Id.Label} {
 /// <summary>
 /// Callback parameters for section #{dialog.Id.Label} 
 /// </summary>
-public partial class _#{dialog.Id.Label} : IBindable {
+public partial class _#{dialog.Id.Label} : IParameter {
 
 #call DeclareFields dialog
 #call CreateBindings dialog
+#call MakeIParameterMethods dialog
 
     }
 
@@ -94,34 +95,8 @@ public partial class _#{action.Id.Label} : IParameter {
 
 #call DeclareFields action
 #call CreateBindings action
+#call MakeIParameterMethods action
 
-    ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
-        GuiResultInvalid result = null;
-
-#foreach (var entry in action.Entries)
-#if (entry is IField field) 
-#foreach (var fieldEntry in field.GetEntries)
-#if (fieldEntry is Error error) 
-        // error on #{field.IdLabel}
-        if (#!
-#foreach (var t in error.Condition)
-#{t}
-#end foreach
-            ) {
-            result ??=new GuiResultInvalid(this);
-            result.SetError (#{field.Index}, "#{error.Message}", "#{error.Id}");
-            }
-
-#end if
-#end foreach
-#end if
-#end foreach
-        return (result as IResult) ?? NullResult.Valid;
-        }
-
-    ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
     }
 
 #end foreach
@@ -255,26 +230,27 @@ public class _#{Guigen.Class.Name} : Gui {
 		};
 
 
-	// Sections
+##region // Sections
 #foreach (var section in Guigen.Sections) 
     ///<summary>Section #{section.RecordId}.</summary> 
 	public GuiSection #{section.RecordId} { get; } = new (#{section.QuotedId}, #{section.Prompt.Quoted()}, #{section.Icon.Quoted()}, #{section.Primary.If("true","false")});
 #end foreach
-
-	
-	// Actions
+##endregion
+##region // Actions
 #foreach (var action in Guigen.Actions) 
     ///<summary>Action #{action.RecordId}.</summary> 
 	public GuiAction #{action.RecordId} { get; } = new (#{action.QuotedId}, #{action.Prompt.Quoted()}, #{action.Icon.Quoted()}, () => new #{action.Id.Label}());
 #end foreach	
 
-	// Dialogs
+##endregion
+##region // Dialogs
 #foreach (var dialog in Guigen.Dialogs) 
     ///<summary>Dialog #{dialog.RecordId}.</summary> 
-	public GuiDialog #{dialog.RecordId} { get; } = new (#{dialog.QuotedId});
+	public GuiDialog #{dialog.RecordId} { get; } = new (#{dialog.QuotedId}, #{dialog.Prompt.Quoted()}, #{dialog.Icon.Quoted()}, () => new #{dialog.Id.Label}());
 #end foreach	
 
-	// Dialogs
+##endregion
+##region // Results
 #foreach (var result in Guigen.Results) 
     ///<summary>Result #{result.RecordId}.</summary> 
 	public GuiResult #{result.RecordId} { get; } = new ();
@@ -291,7 +267,8 @@ public class _#{Guigen.Class.Name} : Gui {
 #end foreach
 #end foreach
             };
-
+##endregion
+##region // Constructors
     /// <summary>
     /// Default constructor returning an instance.
     /// </summary>
@@ -314,6 +291,8 @@ public class _#{Guigen.Class.Name} : Gui {
 
 #end foreach
 
+##endregion
+##region // Initialize Sections
         Sections = new List<GuiSection> () { #!
 #% separator.Reset ();
 #foreach (var section in Guigen.Sections) 
@@ -323,6 +302,8 @@ public class _#{Guigen.Class.Name} : Gui {
 
             };
 
+##endregion
+##region // Initialize Actions
 #foreach (var action in Guigen.Actions) 
         #{action.RecordId}.Callback = (x, mode) => #{action.Id.Label} (x as #{action.Id.Label}, mode) ;
 	    #{action.RecordId}.Entries = new () {#!
@@ -347,7 +328,8 @@ public class _#{Guigen.Class.Name} : Gui {
 
 		    };
 
-
+##endregion
+##region // Initialize Dialogs
 #foreach (var dialog in Guigen.Dialogs) 
 	    #{dialog.RecordId}.Entries = new () {#!
 #% separator.Reset ();
@@ -371,6 +353,8 @@ public class _#{Guigen.Class.Name} : Gui {
 
 		    };
 
+##endregion
+##region // Initialize Results
 #foreach (var result in Guigen.Results) 
 	    #{result.RecordId}.Entries = new () {#!
 #% separator.Reset ();
@@ -397,6 +381,8 @@ public class _#{Guigen.Class.Name} : Gui {
 
         }
 
+##endregion
+##region // Initialize Actions
 #foreach (var action in Guigen.Actions) 
     /// <summary>
     /// GUI action
@@ -405,17 +391,51 @@ public class _#{Guigen.Class.Name} : Gui {
                 => throw new NYI();
 
 #end foreach
-    
+ 
+##endregion
+##region // Initialize Bindings
 #foreach (var binding in Guigen.Bindings)  
     /// <summary> </summary>
     public static GuiBinding #{binding.RecordId}  { get; } = #!
 #call CreateBindingInner binding
 #end foreach
 
-
+##endregion
 	}
 
 ##endregion
+#end method
+
+
+#method MakeIParameterMethods IEntries action
+    ///<summary>Validation</summary> 
+    public virtual IResult Validate() {
+        GuiResultInvalid result = null;
+
+#foreach (var entry in action.AllEntries)
+#if (entry is IField field) 
+#foreach (var fieldEntry in field.GetEntries)
+#if (fieldEntry is Error error) 
+        // error on #{field.IdLabel}
+        if (#!
+#foreach (var t in error.Condition)
+#{t}
+#end foreach
+            ) {
+            result ??=new GuiResultInvalid(this);
+            result.SetError (#{field.Index}, "#{error.Message}", "#{error.Id}");
+            }
+
+#end if
+#end foreach
+#end if
+#end foreach
+        return (result as IResult) ?? NullResult.Valid;
+        }
+
+    ///<summary>Initialization.</summary> 
+    public virtual IResult Initialize() => NullResult.Initialized;
+
 #end method
 
 #method DeclareResultGetValues IEntries parent
@@ -582,7 +602,7 @@ null#!
 
 
 #method GenerateView View view
-			new GuiView (#{view.RecordId})#!
+			new #{view.Backer} (#{view.RecordId})#!
 #end method
 
 

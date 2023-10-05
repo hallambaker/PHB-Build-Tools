@@ -243,6 +243,8 @@ public partial class Dialog : IEntries {
 
     public override void Init(_Choice parent) {
         base.Init(parent);
+        _Base.AddIcon(Icon);
+        _Base.AddPrompt(Id, Prompt);
         _Base.Dialogs.Add(this);
         }
     }
@@ -255,7 +257,7 @@ public partial class Chooser {
 
 
     public override string BindingType => "GuiBoundPropertyChooser";
-    public override string RecordId => "Binding" + Type.Label;
+    public override string RecordId => "Binding" + Id.Label;
     public override void Init(_Choice parent) {
         base.Init(parent);
         _Base.AddPrompt(Id, Prompt);
@@ -355,7 +357,7 @@ public partial class Icon {
     public override void Init(_Choice parent) {
         base.Init(parent);
         _Base.AddPrompt(Id, Prompt);
-        SetEntries(Entries);
+        _Base.AddIcon(File);
         }
     }
 
@@ -364,7 +366,10 @@ public partial class View {
     public string QuotedId => Id.Label.Quoted();
     public override string IdLabel => Id.Label;
 
-    public override string RecordId => "Binding" + Id.Label;
+    public override string RecordId => Id.Definition.RecordId;
+
+    public string Backer => (Id.Definition is Dialog) ? "GuiViewDialog" : "GuiViewBinding";
+
     public override void Init(_Choice parent) {
         base.Init(parent);
         }

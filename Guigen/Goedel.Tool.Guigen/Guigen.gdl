@@ -34,13 +34,15 @@ Class Goedel.Tool.Guigen Guigen
 			Chooser
 			Primary
 			Button
-			Dialog
 			Text
 			Decimal
 			Integer
 			Condition
 			Return
 			Description
+			Section
+			Color
+			Size
 
 
 	TopType Action
@@ -60,6 +62,8 @@ Class Goedel.Tool.Guigen Guigen
 
 	TopType Dialog
 		Id			ID SectionT
+		Prompt		String		
+		Icon		String	
 		Entries List Choice
 			Chooser
 			Text
@@ -69,6 +73,7 @@ Class Goedel.Tool.Guigen Guigen
 			Integer
 			Icon
 			Description
+			Condition
 
 
 	TopType Binding
@@ -107,6 +112,17 @@ Class Goedel.Tool.Guigen Guigen
 			Text
 			Description
 
+	TopType Group
+		Id			Token GroupT
+		Entries List Choice
+			Icon
+
+	Type Icon
+		Id			Token SectionT
+		Prompt		String
+		File		String	
+
+
 	Type Description
 		Text		Text
 
@@ -120,7 +136,9 @@ Class Goedel.Tool.Guigen Guigen
 		Message		String
 		Condition	Text		
 
-
+	Type Emoji
+		Id			Token MessageT
+		Icon		String	
 
 	Type Condition
 		Id			Token SectionT
@@ -140,13 +158,14 @@ Class Goedel.Tool.Guigen Guigen
 		Id			ID SectionT
 		Prompt		String		
 		Icon		String				
-		Type		Token TypeT 
+		//Type		Token TypeT 
 		Entries List Choice
 			Button
 			Readonly
 			View
 			Text
 			Filter
+			Primary
 
 	Type Filter
 		Id			Token SectionT		
@@ -177,6 +196,7 @@ Class Goedel.Tool.Guigen Guigen
 		Entries List Choice
 			Readonly
 			Error
+			Primary
 
 	Type Color
 		Id			Token SectionT
@@ -214,12 +234,7 @@ Class Goedel.Tool.Guigen Guigen
 			Error
 			Range
 
-	Type Icon
-		Id			Token SectionT
-		Prompt		String
-		Entries List Choice
-			Readonly
-			Error
+
 
 	Type Readonly
 
