@@ -62,12 +62,16 @@ public partial class _#{section.Id.Label} : IBindable {
 /// Callback parameters for dialog #{dialog.Id.Label} 
 /// </summary>
 public partial class #{dialog.Id.Label} : _#{dialog.Id.Label} {
+    /// <summary>Type check verification.</summary>
+    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
 /// Callback parameters for section #{dialog.Id.Label} 
 /// </summary>
 public partial class _#{dialog.Id.Label} : IParameter {
+
+    public object Bound { get; set; }
 
 #call DeclareFields dialog
 #call CreateBindings dialog
@@ -232,12 +236,14 @@ public class _#{Guigen.Class.Name} : Gui {
 
 ##region // Sections
 #foreach (var section in Guigen.Sections) 
+
     ///<summary>Section #{section.RecordId}.</summary> 
 	public GuiSection #{section.RecordId} { get; } = new (#{section.QuotedId}, #{section.Prompt.Quoted()}, #{section.Icon.Quoted()}, #{section.Primary.If("true","false")});
 #end foreach
 ##endregion
 ##region // Actions
 #foreach (var action in Guigen.Actions) 
+
     ///<summary>Action #{action.RecordId}.</summary> 
 	public GuiAction #{action.RecordId} { get; } = new (#{action.QuotedId}, #{action.Prompt.Quoted()}, #{action.Icon.Quoted()}, () => new #{action.Id.Label}());
 #end foreach	
@@ -245,13 +251,17 @@ public class _#{Guigen.Class.Name} : Gui {
 ##endregion
 ##region // Dialogs
 #foreach (var dialog in Guigen.Dialogs) 
+
     ///<summary>Dialog #{dialog.RecordId}.</summary> 
-	public GuiDialog #{dialog.RecordId} { get; } = new (#{dialog.QuotedId}, #{dialog.Prompt.Quoted()}, #{dialog.Icon.Quoted()}, () => new #{dialog.Id.Label}());
+	public GuiDialog #{dialog.RecordId} { get; } = new (#{dialog.QuotedId}, #{dialog.Prompt.Quoted()}, #{dialog.Icon.Quoted()}, () => new #{dialog.Id.Label}()) {
+                IsBoundType = (object data) => data is #{dialog.Id.Label}
+                };
 #end foreach	
 
 ##endregion
 ##region // Results
 #foreach (var result in Guigen.Results) 
+
     ///<summary>Result #{result.RecordId}.</summary> 
 	public GuiResult #{result.RecordId} { get; } = new ();
 #end foreach	
@@ -341,7 +351,10 @@ public class _#{Guigen.Class.Name} : Gui {
 #end foreach
 			
 		    };
-
+        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
+        //#{dialog.Id.Label}.GetDialog = (object _) => #{dialog.RecordId};
+        #{dialog.Id.Label}.IsBacker = (object data) => #{dialog.RecordId}.IsBacker(data);
+        //#{dialog.Id.Label}.IsBoundType = (object data) => data is #{dialog.Id.Label};
 #end foreach
 
         Dialogs = new List<GuiDialog>() { #!

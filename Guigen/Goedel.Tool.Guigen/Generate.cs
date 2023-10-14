@@ -107,6 +107,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("/// Callback parameters for dialog {1} \n{0}", _Indent, dialog.Id.Label);
 			_Output.Write ("/// </summary>\n{0}", _Indent);
 			_Output.Write ("public partial class {1} : _{2} {{\n{0}", _Indent, dialog.Id.Label, dialog.Id.Label);
+			_Output.Write ("    /// <summary>Type check verification.</summary>\n{0}", _Indent);
+			_Output.Write ("    public static Func<object, bool> IsBacker {{ get; set; }} = (object _) => false;\n{0}", _Indent);
 			_Output.Write ("    }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("/// <summary>\n{0}", _Indent);
@@ -114,11 +116,11 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("/// </summary>\n{0}", _Indent);
 			_Output.Write ("public partial class _{1} : IParameter {{\n{0}", _Indent, dialog.Id.Label);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    public object Bound {{ get; set; }}\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			DeclareFields (dialog);
 			CreateBindings (dialog);
 			MakeIParameterMethods (dialog);
-			_Output.Write ("    //public virtual IResult Validate() => null;\n{0}", _Indent);
-			_Output.Write ("    //public virtual IResult Initialize() => null;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -289,7 +291,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("#region // Dialogs\n{0}", _Indent);
 		foreach  (var dialog in Guigen.Dialogs)  {
 			_Output.Write ("    ///<summary>Dialog {1}.</summary> \n{0}", _Indent, dialog.RecordId);
-			_Output.Write ("	public GuiDialog {1} {{ get; }} = new ({2}, {3}, {4}, () => new {5}());\n{0}", _Indent, dialog.RecordId, dialog.QuotedId, dialog.Prompt.Quoted(), dialog.Icon.Quoted(), dialog.Id.Label);
+			_Output.Write ("	public GuiDialog {1} {{ get; }} = new ({2}, {3}, {4}, () => new {5}()) {{\n{0}", _Indent, dialog.RecordId, dialog.QuotedId, dialog.Prompt.Quoted(), dialog.Icon.Quoted(), dialog.Id.Label);
+			_Output.Write ("                IsBoundType = (object data) => data is {1}\n{0}", _Indent, dialog.Id.Label);
+			_Output.Write ("                }};\n{0}", _Indent);
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("#endregion\n{0}", _Indent);
@@ -384,7 +388,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 				}
 			_Output.Write ("			\n{0}", _Indent);
 			_Output.Write ("		    }};\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);\n{0}", _Indent);
+			_Output.Write ("        //{1}.GetDialog = (object _) => {2};\n{0}", _Indent, dialog.Id.Label, dialog.RecordId);
+			_Output.Write ("        {1}.IsBacker = (object data) => {2}.IsBacker(data);\n{0}", _Indent, dialog.Id.Label, dialog.RecordId);
+			_Output.Write ("        //{1}.IsBoundType = (object data) => data is {2};\n{0}", _Indent, dialog.Id.Label, dialog.Id.Label);
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("        Dialogs = new List<GuiDialog>() {{ ", _Indent);
