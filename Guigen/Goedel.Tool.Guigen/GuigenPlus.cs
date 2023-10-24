@@ -9,10 +9,17 @@ namespace Goedel.Tool.Guigen;
 public interface IEntries {
 
     List<_Choice> AllEntries {get; }
-
+    List<_Choice> InheritedEntries { get; }
     string IdLabel { get; }
 
     string IdLabelBase { get; }
+
+    TOKEN<_Choice> Inherit { get; set; }
+
+    public bool IsSubclass { get; }
+
+    public string IfSubclassNew { get; }
+    public string IfSubclassOverride { get; }
     }
 
 public interface IField {
@@ -82,6 +89,8 @@ public partial class _Choice {
 
     public virtual string RecordId { get; }
 
+
+
     public virtual bool Readonly { get; set; } = false;
     public int Index { get; set; } = -1;
 
@@ -90,8 +99,14 @@ public partial class _Choice {
     public virtual string BackerType => null;
     public virtual string BindingType => null;
 
-    public virtual string IdLabel => throw new NYI();
+    public virtual TOKEN<_Choice> Inherit { get; set; } = null;
+    public bool IsSubclass => Inherit is not null;
+    public virtual string? IdLabel => throw new NYI();
     public virtual string IdLabelBase => "_" + IdLabel;
+
+    public string IfSubclassNew => IsSubclass ? "new" : "";
+    public string IfSubclassOverride => IsSubclass ? "override" : "virtual";
+
     public void SetEntries(List<_Choice> entries) {
         foreach (var entry in entries) {
             switch (entry) {
@@ -103,10 +118,30 @@ public partial class _Choice {
                     _Base.AddPrompt(error.Id, error.Message);
                     break;
                     }
-
+                case Inherit inherit: {
+                    Inherit = inherit.Id;
+                    break;
+                    }
                 }
 
             }
+
+        }
+
+    public void AddEntries(List<_Choice> source, List<_Choice> target) {
+
+        foreach (var entry in source) {
+            if (entry is Inherit inherit) {
+                if (inherit.Id.Definition is Dialog dialog) {
+                    AddEntries(dialog.Entries, target);
+                    }
+
+                }
+            else {
+                target.Add(entry);
+                }
+            }
+
 
         }
     }
@@ -123,6 +158,7 @@ public partial class Section : IEntries {
     public string State { get; set; } = Guigen.DefaultState;
 
     public List<_Choice> AllEntries => Entries;
+    public virtual List<_Choice> InheritedEntries => Entries;
     public bool Primary { get; set; } = false;
 
     public override string RecordId => "Section" + Id.Label;
@@ -142,6 +178,7 @@ public partial class Section : IEntries {
                 State = condition.Id.Label;
                 _Base.AddState(State);
                 }
+
             }
         }
     }
@@ -149,6 +186,7 @@ public partial class Section : IEntries {
 
 public partial class Binding : IEntries {
     public List<_Choice> AllEntries => Entries;
+    public virtual List<_Choice> InheritedEntries => Entries;
 
     public override string RecordId => "Binding" + Id.Label;
     public string QuotedId => Id.Label.Quoted();
@@ -167,6 +205,7 @@ public partial class Result : IEntries {
     public override bool Active => false;
 
     public List<_Choice> AllEntries => Entries;
+    public virtual List<_Choice> InheritedEntries => Entries;
 
     public override string RecordId => "Result" + Id.Label;
     public string QuotedId => Id.Label.Quoted();
@@ -185,6 +224,7 @@ public partial class Fail : IEntries {
     public override bool Active => false;
 
     public List<_Choice> AllEntries => Entries;
+    public virtual List<_Choice> InheritedEntries => Entries;
 
     public override string RecordId => "Fail" + Id.Label;
     public string QuotedId => Id.Label.Quoted();
@@ -223,6 +263,7 @@ public partial class Action : IEntries {
 
 
     public List<_Choice> AllEntries => Entries;
+    public virtual List<_Choice> InheritedEntries => Entries;
     public override string RecordId => "Action" + Id.Label;
     public string QuotedId => Id.Label.Quoted();
     public override string IdLabel => Id.Label;
@@ -236,6 +277,7 @@ public partial class Action : IEntries {
 
 public partial class Dialog : IEntries {
     public List<_Choice> AllEntries => Entries;
+    public virtual List<_Choice> InheritedEntries { get; }  = new();
 
     public override string RecordId => "Dialog" + Id.Label;
     public string QuotedId => Id.Label.Quoted();
@@ -246,8 +288,17 @@ public partial class Dialog : IEntries {
         _Base.AddIcon(Icon);
         _Base.AddPrompt(Id, Prompt);
         _Base.Dialogs.Add(this);
+        SetEntries(Entries);
+
+        AddEntries(Entries, InheritedEntries);
+
         }
+
+
+
     }
+
+
 
 
 public partial class Chooser {
@@ -392,4 +443,9 @@ public partial class Hidden {
     public override void Init(_Choice parent) {
         //Readonly = true;
         }
+    }
+
+public partial class Inherit {
+
+    public override bool Active => false;
     }

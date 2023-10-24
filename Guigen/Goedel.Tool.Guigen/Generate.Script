@@ -63,15 +63,18 @@ public partial class _#{section.Id.Label} : IBindable {
 /// </summary>
 public partial class #{dialog.Id.Label} : _#{dialog.Id.Label} {
     /// <summary>Type check verification.</summary>
-    public static Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    public static #{dialog.IfSubclassNew} Func<object, bool> IsBacker { get; set; } = (object _) => false;
     }
 
 /// <summary>
 /// Callback parameters for section #{dialog.Id.Label} 
 /// </summary>
-public partial class _#{dialog.Id.Label} : IParameter {
+public partial class _#{dialog.Id.Label} : #{dialog.Inherit?.Label ?? "IParameter"} {
 
+#if (!dialog.IsSubclass)
     public object Bound { get; set; }
+
+#end if
 
 #call DeclareFields dialog
 #call CreateBindings dialog
@@ -223,6 +226,7 @@ public class _#{Guigen.Class.Name} : Gui {
 
 
 	///<inheritdoc/>
+
 	public override List<GuiImage> Icons => icons;
 	readonly List<GuiImage> icons = new () { #!
 #% var separator = new Separator (",");
@@ -268,11 +272,13 @@ public class _#{Guigen.Class.Name} : Gui {
 	
     ///<summary>Dictionary resolving exception name to factory method.</summary> 
     public Dictionary<string, Func<IResult>> ExceptionDirectory =
-        new() {
+        new() {#!
+#% separator.Reset ();
 #foreach (var result in Guigen.Fails) 
-#foreach (var entry in result.Entries) 
+#foreach (var entry in result.InheritedEntries) 
 #if (entry is Exception exception)
-                { typeof(#{exception.Id}).FullName, () => new #{result.Id}() }
+#{separator} 
+                { typeof(#{exception.Id}).FullName, () => new #{result.Id}() } #!
 #end if
 #end foreach
 #end foreach
@@ -290,7 +296,7 @@ public class _#{Guigen.Class.Name} : Gui {
 	    #{section.RecordId}.Active = () => State#{section.State};
 	    #{section.RecordId}.Entries =  new () { #!
 #% separator.Reset ();
-#foreach (var entry in section.Entries)
+#foreach (var entry in section.InheritedEntries)
 #if (entry.Active)
 #{separator} 
 #call GenerateEntry entry
@@ -318,7 +324,7 @@ public class _#{Guigen.Class.Name} : Gui {
         #{action.RecordId}.Callback = (x, mode) => #{action.Id.Label} (x as #{action.Id.Label}, mode) ;
 	    #{action.RecordId}.Entries = new () {#!
 #% separator.Reset ();
-#foreach (var entry in action.Entries)
+#foreach (var entry in action.InheritedEntries)
 #if (entry.Active)
 #{separator} 
 #call GenerateEntry entry
@@ -343,7 +349,7 @@ public class _#{Guigen.Class.Name} : Gui {
 #foreach (var dialog in Guigen.Dialogs) 
 	    #{dialog.RecordId}.Entries = new () {#!
 #% separator.Reset ();
-#foreach (var entry in dialog.Entries)
+#foreach (var entry in dialog.InheritedEntries)
 #if (entry.Active)
 #{separator} 
 #call GenerateEntry entry
@@ -351,10 +357,8 @@ public class _#{Guigen.Class.Name} : Gui {
 #end foreach
 			
 		    };
-        //DialogBoundContactPerson.IsBacker = (object data) => BoundContactPerson.IsBacker(data);
-        //#{dialog.Id.Label}.GetDialog = (object _) => #{dialog.RecordId};
+
         #{dialog.Id.Label}.IsBacker = (object data) => #{dialog.RecordId}.IsBacker(data);
-        //#{dialog.Id.Label}.IsBoundType = (object data) => data is #{dialog.Id.Label};
 #end foreach
 
         Dialogs = new List<GuiDialog>() { #!
@@ -422,7 +426,7 @@ public class _#{Guigen.Class.Name} : Gui {
 
 #method MakeIParameterMethods IEntries action
     ///<summary>Validation</summary> 
-    public virtual IResult Validate() {
+    public #{action.IfSubclassOverride} IResult Validate() {
         GuiResultInvalid result = null;
 
 #foreach (var entry in action.AllEntries)
@@ -447,7 +451,7 @@ public class _#{Guigen.Class.Name} : Gui {
         }
 
     ///<summary>Initialization.</summary> 
-    public virtual IResult Initialize() => NullResult.Initialized;
+    public #{action.IfSubclassOverride} IResult Initialize() => NullResult.Initialized;
 
 #end method
 
@@ -486,17 +490,19 @@ Array.Empty<object>();
 #end method
 
 #method CreateBindings IEntries parent
+#if (!parent.IsSubclass)
     ///<inheritdoc/>
     public GuiBinding Binding => BaseBinding;
 
+#end if
     ///<summary>The binding for the data type.</summary> 
-    public static GuiBinding BaseBinding  { get; } = #!
+    public static #{parent.IfSubclassNew} GuiBinding BaseBinding  { get; } = #!
 #call CreateBindingInner parent
 #end method
 
 #method CreateBindingInner IEntries parent
 #% var empty = true;
-#foreach (var entry in parent.AllEntries)
+#foreach (var entry in parent.InheritedEntries)
 #if entry.BindingType != null
 #% empty = false;
 #end if
@@ -509,7 +515,7 @@ new (
         new GuiBoundProperty[] {#!
 #% var separator = new Separator (",");
 #% var index = 0;
-#foreach (var entry in parent.AllEntries)
+#foreach (var entry in parent.InheritedEntries)
 #if entry.BindingType != null
 #% entry.Index = index++;
 #{separator} 

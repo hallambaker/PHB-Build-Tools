@@ -59,6 +59,7 @@ Class Goedel.Tool.Guigen Guigen
 			Context
 			Return
 			Description
+			TextArea
 
 	TopType Dialog
 		Id			ID SectionT
@@ -74,6 +75,9 @@ Class Goedel.Tool.Guigen Guigen
 			Icon
 			Description
 			Condition
+			Button
+			Inherit
+			TextArea
 
 
 	TopType Binding
@@ -153,6 +157,8 @@ Class Goedel.Tool.Guigen Guigen
 	Type Return
 		Id			REF ResultT
 
+	Type Inherit
+		Id			Token SectionT
 
 	Type Chooser
 		Id			ID SectionT
@@ -197,6 +203,14 @@ Class Goedel.Tool.Guigen Guigen
 			Readonly
 			Error
 			Primary
+
+	Type TextArea
+		Id			Token SectionT
+		Prompt		String
+		Entries List Choice
+			Readonly
+			Error
+
 
 	Type Color
 		Id			Token SectionT
