@@ -549,11 +549,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 	// CreateBindings
 	//
 	public void CreateBindings (IEntries parent) {
-		if (  (!parent.IsSubclass) ) {
-			_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
-			_Output.Write ("    public GuiBinding Binding => BaseBinding;\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
+		_Output.Write ("    public {1} GuiBinding Binding => BaseBinding;\n{0}", _Indent, parent.IfSubclassOverride);
+		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    ///<summary>The binding for the data type.</summary> \n{0}", _Indent);
 		_Output.Write ("    public static {1} GuiBinding BaseBinding  {{ get; }} = ", _Indent, parent.IfSubclassNew);
 		CreateBindingInner (parent);

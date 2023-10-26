@@ -490,11 +490,10 @@ Array.Empty<object>();
 #end method
 
 #method CreateBindings IEntries parent
-#if (!parent.IsSubclass)
-    ///<inheritdoc/>
-    public GuiBinding Binding => BaseBinding;
 
-#end if
+    ///<inheritdoc/>
+    public #{parent.IfSubclassOverride} GuiBinding Binding => BaseBinding;
+
     ///<summary>The binding for the data type.</summary> 
     public static #{parent.IfSubclassNew} GuiBinding BaseBinding  { get; } = #!
 #call CreateBindingInner parent
