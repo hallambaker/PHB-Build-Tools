@@ -470,7 +470,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	//
 	public void MakeIParameterMethods (IEntries action) {
 		_Output.Write ("    ///<summary>Validation</summary> \n{0}", _Indent);
-		_Output.Write ("    public {1} IResult Validate() {{\n{0}", _Indent, action.IfSubclassOverride);
+		_Output.Write ("    public {1} IResult Validate(Gui gui) {{\n{0}", _Indent, action.IfSubclassOverride);
 		_Output.Write ("        GuiResultInvalid result = null;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		foreach  (var entry in action.AllEntries) {
@@ -495,7 +495,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("        }}\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    ///<summary>Initialization.</summary> \n{0}", _Indent);
-		_Output.Write ("    public {1} IResult Initialize() => NullResult.Initialized;\n{0}", _Indent, action.IfSubclassOverride);
+		_Output.Write ("    public {1} IResult Initialize(Gui gui) => NullResult.Initialized;\n{0}", _Indent, action.IfSubclassOverride);
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
@@ -623,10 +623,20 @@ public partial class Generate : global::Goedel.Registry.Script {
 			
 			GenerateText (text);
 			break; }
+			case GuigenType.TextArea: {
+			  TextArea text = (TextArea) entry; 
+			
+			GenerateTextArea (text);
+			break; }
 			case GuigenType.Integer: {
 			  Integer integer = (Integer) entry; 
 			
 			GenerateInteger (integer);
+			break; }
+			case GuigenType.QRScan: {
+			  QRScan qrscan = (QRScan) entry; 
+			
+			GenerateQRScan (qrscan);
 			break; }
 			case GuigenType.Color: {
 			  Color color = (Color) entry; 
@@ -712,10 +722,26 @@ public partial class Generate : global::Goedel.Registry.Script {
 	
 
 	//
+	// GenerateTextArea
+	//
+	public void GenerateTextArea (TextArea field) {
+		_Output.Write ("			new GuiTextArea ({1}, {2}, {3})", _Indent, field.QuotedId, field.Prompt.Quoted(), field.Index);
+		}
+	
+
+	//
 	// GenerateInteger
 	//
 	public void GenerateInteger (Integer field) {
 		_Output.Write ("			new GuiInteger ({1}, {2}, {3})", _Indent, field.QuotedId, field.Prompt.Quoted(), field.Index);
+		}
+	
+
+	//
+	// GenerateQRScan
+	//
+	public void GenerateQRScan (QRScan field) {
+		_Output.Write ("			new GuiQRScan ({1}, {2}, {3})", _Indent, field.QuotedId, field.Prompt.Quoted(), field.Index);
 		}
 	
 

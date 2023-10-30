@@ -43,6 +43,7 @@ Class Goedel.Tool.Guigen Guigen
 			Section
 			Color
 			Size
+			QRScan
 
 
 	TopType Action
@@ -60,6 +61,7 @@ Class Goedel.Tool.Guigen Guigen
 			Return
 			Description
 			TextArea
+			QRScan
 
 	TopType Dialog
 		Id			ID SectionT
@@ -78,6 +80,7 @@ Class Goedel.Tool.Guigen Guigen
 			Button
 			Inherit
 			TextArea
+			QRScan
 
 
 	TopType Binding
@@ -248,10 +251,16 @@ Class Goedel.Tool.Guigen Guigen
 			Error
 			Range
 
-
-
 	Type Readonly
 
 	Type Range
 		Max			Integer
 		Min			Integer
+
+
+	Type QRScan
+		Id			Token SectionT		
+		Prompt		String
+		Entries List Choice
+			Readonly
+			Error

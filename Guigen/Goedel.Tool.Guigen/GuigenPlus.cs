@@ -347,6 +347,25 @@ public partial class Text : IField {
         SetEntries(Entries);
         }
     }
+
+public partial class TextArea : IField {
+    public string QuotedId => Id.Label.Quoted();
+
+    public List<_Choice> GetEntries => Entries;
+
+    public override string IdLabel => Id.Label;
+    public override string BackerType => "string";
+
+    public override string BindingType => "GuiBoundTextArea";
+
+    public override void Init(_Choice parent) {
+        base.Init(parent);
+        _Base.AddPrompt(Id, Prompt);
+        SetEntries(Entries);
+        }
+    }
+
+
 public partial class Color {
     public string QuotedId => Id.Label.Quoted();
     public override string IdLabel => Id.Label;
@@ -396,6 +415,21 @@ public partial class Integer {
         SetEntries(Entries);
         }
     }
+
+
+public partial class QRScan {
+    public string QuotedId => Id.Label.Quoted();
+    public override string IdLabel => Id.Label;
+    public override string BackerType => "GuiQR?";
+
+    public override string BindingType => "GuiBoundPropertyQRScan";
+    public override void Init(_Choice parent) {
+        base.Init(parent);
+        _Base.AddPrompt(Id, Prompt);
+        SetEntries(Entries);
+        }
+    }
+
 
 
 public partial class Icon {

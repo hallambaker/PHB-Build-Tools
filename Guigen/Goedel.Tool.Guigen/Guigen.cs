@@ -69,6 +69,7 @@ using Goedel.Utilities;
 //       Return
 //       Color
 //       Size
+//       QRScan
 //       Context
 //       TextArea
 //       Inherit
@@ -159,6 +160,7 @@ namespace Goedel.Tool.Guigen {
         Integer,
         Readonly,
         Range,
+        QRScan,
 
         _Label,
         _Bottom
@@ -1351,6 +1353,40 @@ namespace Goedel.Tool.Guigen {
 			}
 		}
 
+    public partial class QRScan : _Choice {
+        public TOKEN<_Choice>			Id;
+		public string					Prompt;
+        public List <_Choice>           Entries = new List<_Choice> ();
+
+        public override GuigenType _Tag () =>GuigenType.QRScan;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("QRScan");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			Output.WriteAttribute ("Prompt", Prompt);
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("QRScan");
+				}			
+			}
+		}
+
     class _Label : _Choice {
         public REF<_Choice>            Label;
 
@@ -1491,6 +1527,10 @@ namespace Goedel.Tool.Guigen {
 		Range_Start,
 		Range__Max,				
 		Range__Min,				
+		QRScan_Start,
+		QRScan__Id,				
+		QRScan__Prompt,				
+		QRScan__Entries,				
         }
 
 
@@ -1607,6 +1647,7 @@ namespace Goedel.Tool.Guigen {
                 case "Integer": return NewInteger();
                 case "Readonly": return NewReadonly();
                 case "Range": return NewRange();
+                case "QRScan": return NewQRScan();
 
 				}
 
@@ -1943,6 +1984,14 @@ namespace Goedel.Tool.Guigen {
             }
 
 
+        private Goedel.Tool.Guigen.QRScan NewQRScan() {
+            Goedel.Tool.Guigen.QRScan result = new Goedel.Tool.Guigen.QRScan();
+            Push (result);
+            State = StateCode.QRScan_Start;
+            return result;
+            }
+
+
         static Goedel.Tool.Guigen.GuigenType _Reserved(string Label) {
             switch (Label) {
 
@@ -1987,6 +2036,7 @@ namespace Goedel.Tool.Guigen {
                 case "Integer": return Goedel.Tool.Guigen.GuigenType.Integer;
                 case "Readonly": return Goedel.Tool.Guigen.GuigenType.Readonly;
                 case "Range": return Goedel.Tool.Guigen.GuigenType.Range;
+                case "QRScan": return Goedel.Tool.Guigen.GuigenType.QRScan;
 
                 }
             return Goedel.Tool.Guigen.GuigenType._Bottom;
@@ -2280,11 +2330,12 @@ namespace Goedel.Tool.Guigen {
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Description) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Section) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Color) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.Size) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Size) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.QRScan) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Chooser Primary Button Text Decimal Integer Condition Return Description Section Color Size ]");
+								throw new Expected ("Parser Error Expected [Chooser Primary Button Text Decimal Integer Condition Return Description Section Color Size QRScan ]");
 								}
 							}
                         break;
@@ -2348,11 +2399,12 @@ namespace Goedel.Tool.Guigen {
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Context) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Return) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Description) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.TextArea) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.TextArea) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.QRScan) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Integer Context Return Description TextArea ]");
+								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Integer Context Return Description TextArea QRScan ]");
 								}
 							}
                         break;
@@ -2418,11 +2470,12 @@ namespace Goedel.Tool.Guigen {
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Condition) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Button) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Inherit) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.TextArea) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.TextArea) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.QRScan) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Integer Icon Description Condition Button Inherit TextArea ]");
+								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Integer Icon Description Condition Button Inherit TextArea QRScan ]");
 								}
 							}
                         break;
@@ -3445,6 +3498,57 @@ namespace Goedel.Tool.Guigen {
                         Pop ();
                         Represent = true; 
                         break;
+                    case StateCode.QRScan_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Guigen.QRScan Current_Cast = (Goedel.Tool.Guigen.QRScan)Current;
+                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__SectionT, Current_Cast);
+                            State = StateCode.QRScan__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.QRScan__Id:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Guigen.QRScan Current_Cast = (Goedel.Tool.Guigen.QRScan)Current;
+                            Current_Cast.Prompt = Text;
+                            State = StateCode.QRScan__Prompt;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.QRScan__Prompt:
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.QRScan__Entries;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.QRScan__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Guigen.QRScan Current_Cast = (Goedel.Tool.Guigen.QRScan)Current;
+                            Goedel.Tool.Guigen.GuigenType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Readonly) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Error) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [Readonly Error ]");
+								}
+							}
+                        break;
+
+
 
                     default: {
                         throw new UnreachableCode();

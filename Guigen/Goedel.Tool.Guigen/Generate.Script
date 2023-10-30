@@ -426,7 +426,7 @@ public class _#{Guigen.Class.Name} : Gui {
 
 #method MakeIParameterMethods IEntries action
     ///<summary>Validation</summary> 
-    public #{action.IfSubclassOverride} IResult Validate() {
+    public #{action.IfSubclassOverride} IResult Validate(Gui gui) {
         GuiResultInvalid result = null;
 
 #foreach (var entry in action.AllEntries)
@@ -451,7 +451,7 @@ public class _#{Guigen.Class.Name} : Gui {
         }
 
     ///<summary>Initialization.</summary> 
-    public #{action.IfSubclassOverride} IResult Initialize() => NullResult.Initialized;
+    public #{action.IfSubclassOverride} IResult Initialize(Gui gui) => NullResult.Initialized;
 
 #end method
 
@@ -544,8 +544,12 @@ null#!
 #call GenerateDialog dialog
 #casecast Text text
 #call GenerateText text
+#casecast TextArea text
+#call GenerateTextArea text
 #casecast Integer integer
 #call GenerateInteger integer
+#casecast QRScan qrscan
+#call GenerateQRScan qrscan
 #casecast Color color
 #call GenerateColor color
 #casecast Size size
@@ -598,8 +602,16 @@ null#!
 			new GuiText (#{field.QuotedId}, #{field.Prompt.Quoted()}, #{field.Index})#!
 #end method
 
+#method GenerateTextArea TextArea field
+			new GuiTextArea (#{field.QuotedId}, #{field.Prompt.Quoted()}, #{field.Index})#!
+#end method
+
 #method GenerateInteger Integer field
 			new GuiInteger (#{field.QuotedId}, #{field.Prompt.Quoted()}, #{field.Index})#!
+#end method
+
+#method GenerateQRScan QRScan field
+			new GuiQRScan (#{field.QuotedId}, #{field.Prompt.Quoted()}, #{field.Index})#!
 #end method
 
 #method GenerateColor Color field
