@@ -453,6 +453,10 @@ public class _#{Guigen.Class.Name} : Gui {
     ///<summary>Initialization.</summary> 
     public #{action.IfSubclassOverride} IResult Initialize(Gui gui) => NullResult.Initialized;
 
+
+    ///<summary>Teardown.</summary> 
+    public #{action.IfSubclassOverride} IResult TearDown(Gui gui) => NullResult.Teardown;
+
 #end method
 
 #method DeclareResultGetValues IEntries parent

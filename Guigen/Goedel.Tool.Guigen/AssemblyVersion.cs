@@ -1,4 +1,4 @@
 // These values are automatically generated from version.version
-[assembly: System.Reflection.AssemblyVersionAttribute("0.0.0.635")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("0.0.0.635")]
+[assembly: System.Reflection.AssemblyVersionAttribute("0.0.0.637")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("0.0.0.637")]
 

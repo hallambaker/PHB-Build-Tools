@@ -497,6 +497,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("    ///<summary>Initialization.</summary> \n{0}", _Indent);
 		_Output.Write ("    public {1} IResult Initialize(Gui gui) => NullResult.Initialized;\n{0}", _Indent, action.IfSubclassOverride);
 		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    ///<summary>Teardown.</summary> \n{0}", _Indent);
+		_Output.Write ("    public {1} IResult TearDown(Gui gui) => NullResult.Teardown;\n{0}", _Indent, action.IfSubclassOverride);
+		_Output.Write ("\n{0}", _Indent);
 		}
 	
 
