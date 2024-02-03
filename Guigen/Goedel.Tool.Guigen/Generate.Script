@@ -108,6 +108,30 @@ public partial class _#{action.Id.Label} : IParameter {
 
 #end foreach
 ##endregion
+##region // Selections
+
+#foreach (var action in Guigen.Selections) 
+
+/// <summary>
+/// Callback parameters for action #{action.Id.Label} 
+/// </summary>
+public partial class #{action.Id.Label} : _#{action.Id.Label} {
+    }
+
+
+/// <summary>
+/// Callback parameters for action #{action.Id.Label} 
+/// </summary>
+public partial class _#{action.Id.Label} : IParameter {
+
+#call DeclareFields action
+#call CreateBindings action
+#call MakeIParameterMethods action
+
+    }
+
+#end foreach
+##endregion
 ##region // Results
 
 #foreach (var result in Guigen.Results) 
@@ -222,6 +246,9 @@ public class _#{Guigen.Class.Name} : Gui {
     public override List<GuiAction> Actions { get; }
 
     ///<inheritdoc/> 
+    public override List<GuiAction> Selections { get; }
+
+    ///<inheritdoc/> 
     public override List<GuiResult> Results { get; }
 
 
@@ -250,6 +277,14 @@ public class _#{Guigen.Class.Name} : Gui {
 
     ///<summary>Action #{action.RecordId}.</summary> 
 	public GuiAction #{action.RecordId} { get; } = new (#{action.QuotedId}, #{action.Prompt.Quoted()}, #{action.Icon.Quoted()}, () => new #{action.Id.Label}());
+#end foreach	
+
+##endregion
+##region // Actions
+#foreach (var action in Guigen.Selections) 
+
+    ///<summary>Selection #{action.RecordId}.</summary> 
+	public GuiAction #{action.RecordId} { get; } = new (#{action.QuotedId}, #{action.Prompt.Quoted()}, #{action.Icon.Quoted()}, () => new #{action.Id.Label}(), IsSelect:true);
 #end foreach	
 
 ##endregion
@@ -321,7 +356,7 @@ public class _#{Guigen.Class.Name} : Gui {
 ##endregion
 ##region // Initialize Actions
 #foreach (var action in Guigen.Actions) 
-        #{action.RecordId}.Callback = (x, mode) => #{action.Id.Label} (x as #{action.Id.Label}, mode) ;
+        #{action.RecordId}.Callback = (x) => #{action.Id.Label} (x as #{action.Id.Label}) ;
 	    #{action.RecordId}.Entries = new () {#!
 #% separator.Reset ();
 #foreach (var entry in action.InheritedEntries)
@@ -345,6 +380,34 @@ public class _#{Guigen.Class.Name} : Gui {
 		    };
 
 ##endregion
+
+##region // Initialize Selections
+#foreach (var action in Guigen.Selections) 
+        #{action.RecordId}.Callback = (x) => #{action.Id.Label} (x as #{action.DispatchType}) ;
+	    #{action.RecordId}.Entries = new () {#!
+#% separator.Reset ();
+#foreach (var entry in action.InheritedEntries)
+#if (entry.Active)
+#{separator} 
+#call GenerateEntry entry
+#end if
+#end foreach
+
+		    };
+
+#end foreach
+
+        Selections = new List<GuiAction>() { #!
+#% separator.Reset ();
+#foreach (var action in Guigen.Selections) 
+#{separator} 
+		    #{action.RecordId}#!
+#end foreach
+
+		    };
+
+##endregion
+
 ##region // Initialize Dialogs
 #foreach (var dialog in Guigen.Dialogs) 
 	    #{dialog.RecordId}.Entries = new () {#!
@@ -404,11 +467,18 @@ public class _#{Guigen.Class.Name} : Gui {
     /// <summary>
     /// GUI action
     /// </summary>
-    public virtual Task<IResult> #{action.Id.Label} (#{action.Id.Label} data, ActionMode mode = ActionMode.Execute) 
+    public virtual Task<IResult> #{action.Id.Label} (#{action.Id.Label} data) 
                 => throw new NYI();
 
 #end foreach
- 
+#foreach (var action in Guigen.Selections) 
+    /// <summary>
+    /// GUI action
+    /// </summary>
+    public virtual Task<IResult> #{action.Id.Label} (#{action.DispatchType} data) 
+                => throw new NYI();
+
+#end foreach
 ##endregion
 ##region // Initialize Bindings
 #foreach (var binding in Guigen.Bindings)  
@@ -542,12 +612,18 @@ null#!
 #switchcast GuigenType entry
 #casecast Chooser chooser
 #call GenerateChooser chooser
+#casecast List list
+#call GenerateList list
+#casecast Selection selection
+#call GenerateSelection selection
 #casecast Button button
 #call GenerateButton button
 #casecast Dialog dialog
 #call GenerateDialog dialog
 #casecast Text text
 #call GenerateText text
+#casecast Boolean boolean
+#call GenerateBoolean boolean
 #casecast TextArea text
 #call GenerateTextArea text
 #casecast Integer integer
@@ -565,6 +641,23 @@ null#!
 #casecast View view
 #call GenerateView view
 #end switchcast
+#end method
+
+
+#method GenerateList List list
+#% var separator = new Separator (",");
+			new GuiList (#{list.QuotedId}, #{list.Prompt.Quoted()}, #{list.Icon.Quoted()}, #{list.DialogType}, #{list.Index}, new () {#!
+#indent
+#% separator.Reset ();
+#foreach (var entry in list.Entries)
+#if (entry.Active)
+#{separator} 
+#call GenerateEntry entry
+#end if
+#end foreach
+
+			}) #!
+#outdent
 #end method
 
 #method GenerateChooser Chooser chooser
@@ -598,12 +691,20 @@ null#!
 #end method
 
 
+#method GenerateSelection Selection field
+			new GuiButton (#{field.QuotedId}, #{field.Target})#!
+#end method
+
 #method GenerateButton Button field
 			new GuiButton (#{field.QuotedId}, #{field.Target})#!
 #end method
 
 #method GenerateText Text field
 			new GuiText (#{field.QuotedId}, #{field.Prompt.Quoted()}, #{field.Index})#!
+#end method
+
+#method GenerateBoolean Boolean field
+			new GuiBoolean (#{field.QuotedId}, #{field.Prompt.Quoted()}, #{field.Index})#!
 #end method
 
 #method GenerateTextArea TextArea field

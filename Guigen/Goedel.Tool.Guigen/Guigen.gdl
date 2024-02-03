@@ -63,6 +63,7 @@ Class Goedel.Tool.Guigen Guigen
 			TextArea
 			QRScan
 
+
 	TopType Dialog
 		Id			ID SectionT
 		Prompt		String		
@@ -81,7 +82,9 @@ Class Goedel.Tool.Guigen Guigen
 			Inherit
 			TextArea
 			QRScan
-
+			List
+			Selection
+			Boolean
 
 	TopType Binding
 		Id			ID SectionT
@@ -157,11 +160,29 @@ Class Goedel.Tool.Guigen Guigen
 	Type Button
 		Id			REF SectionT
 
+	Type Selection
+		Id			REF SectionT
+		Prompt		String		
+		Icon		String
+		Entries List Choice
+			Description
+
 	Type Return
 		Id			REF ResultT
 
 	Type Inherit
 		Id			Token SectionT
+
+	Type List
+		Id			ID SectionT
+		Type		Token TypeT 
+		Prompt		String		
+		Icon		String				
+		Entries List Choice
+			Readonly
+			Button
+
+
 
 	Type Chooser
 		Id			ID SectionT
@@ -198,6 +219,14 @@ Class Goedel.Tool.Guigen Guigen
 		Id			Token SectionT
 		Entries List Choice
 			Description
+
+	Type Boolean
+		Id			Token SectionT
+		Prompt		String
+		Entries List Choice
+			Readonly
+			Error
+
 
 	Type Text
 		Id			Token SectionT

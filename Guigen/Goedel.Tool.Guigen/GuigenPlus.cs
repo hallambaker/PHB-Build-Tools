@@ -40,6 +40,7 @@ public partial class Guigen {
 
     public List<Section> Sections = new();
     public List<Action> Actions = new();
+    public List<Selection> Selections = new();
     public List<Dialog> Dialogs = new();
     public List<Binding> Bindings = new();
     public List<Result> Results = new();
@@ -257,6 +258,28 @@ public partial class Return {
     public override bool Active => false;
     }
 
+public partial class Selection : IEntries {
+
+    public List<_Choice> AllEntries => Entries;
+    public virtual List<_Choice> InheritedEntries => Entries;
+    public override string RecordId => "Selection" + Id.Label;
+    public string QuotedId => Id.Label.Quoted();
+    public override string IdLabel => Id.Label;
+
+    public string Target => RecordId;
+
+    public string DispatchType => _Parent.IdLabel;
+
+    public override void Init(_Choice parent) {
+        base.Init(parent);
+        _Base.Selections.Add(this);
+        _Base.AddIcon(Icon);
+        _Base.AddPrompt(Id, Prompt);
+        }
+
+    }
+
+
 public partial class Action : IEntries {
 
 
@@ -299,6 +322,21 @@ public partial class Dialog : IEntries {
     }
 
 
+public partial class List {
+    public string QuotedId => Id.Label.Quoted();
+    public override string IdLabel => Id.Label;
+    public override string BackerType => "ISelectCollection";
+    public string DialogType => "Dialog"+Type.Label;
+
+    public override string BindingType => "GuiBoundPropertyList";
+    public override string RecordId => "Binding" + Id.Label;
+    public override void Init(_Choice parent) {
+        base.Init(parent);
+        _Base.AddPrompt(Id, Prompt);
+        SetEntries(Entries);
+        }
+    }
+
 
 
 public partial class Chooser {
@@ -330,6 +368,25 @@ public partial class Button {
         base.Init(parent);
         }
     }
+
+
+public partial class Boolean : IField {
+    public string QuotedId => Id.Label.Quoted();
+
+    public List<_Choice> GetEntries => Entries;
+
+    public override string IdLabel => Id.Label;
+    public override string BackerType => "bool";
+
+    public override string BindingType => "GuiBoundPropertyBoolean";
+
+    public override void Init(_Choice parent) {
+        base.Init(parent);
+        _Base.AddPrompt(Id, Prompt);
+        SetEntries(Entries);
+        }
+    }
+
 
 public partial class Text : IField {
     public string QuotedId => Id.Label.Quoted();
@@ -437,6 +494,8 @@ public partial class Icon {
     public override string IdLabel => Id.Label;
 
     public override string BackerType => "IFieldIcon";
+
+    public override bool Readonly { get; set; } = true;
 
     public override string BindingType => "GuiBoundPropertyIcon";
     public override void Init(_Choice parent) {
