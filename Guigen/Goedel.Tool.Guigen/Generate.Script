@@ -62,8 +62,8 @@ public partial class _#{section.Id.Label} : IBindable {
 /// Callback parameters for dialog #{dialog.Id.Label} 
 /// </summary>
 public partial class #{dialog.Id.Label} : _#{dialog.Id.Label} {
-    /// <summary>Type check verification.</summary>
-    public static #{dialog.IfSubclassNew} Func<object, bool> IsBacker { get; set; } = (object _) => false;
+    // <summary>Type check verification.</summary>
+    // public static #{dialog.IfSubclassNew} Func<object, bool> IsBacker { get; set; } = (object _) => false; 
     }
 
 /// <summary>
@@ -269,14 +269,16 @@ public class _#{Guigen.Class.Name} : Gui {
 #foreach (var section in Guigen.Sections) 
 
     ///<summary>Section #{section.RecordId}.</summary> 
-	public GuiSection #{section.RecordId} { get; } = new (#{section.QuotedId}, #{section.Prompt.Quoted()}, #{section.Icon.Quoted()}, #{section.Primary.If("true","false")});
+	public GuiSection #{section.RecordId} { get; } = new (
+        #{section.QuotedId}, #{section.Prompt.Quoted()}, #{section.Icon.Quoted()}, _#{section.IdLabel}.BaseBinding, #{section.Primary.If("true","false")});
 #end foreach
 ##endregion
 ##region // Actions
 #foreach (var action in Guigen.Actions) 
 
     ///<summary>Action #{action.RecordId}.</summary> 
-	public GuiAction #{action.RecordId} { get; } = new (#{action.QuotedId}, #{action.Prompt.Quoted()}, #{action.Icon.Quoted()}, () => new #{action.Id.Label}());
+	public GuiAction #{action.RecordId} { get; } = new (
+        #{action.QuotedId}, #{action.Prompt.Quoted()}, #{action.Icon.Quoted()}, _#{action.IdLabel}.BaseBinding, () => new #{action.Id.Label}());
 #end foreach	
 
 ##endregion
@@ -284,7 +286,8 @@ public class _#{Guigen.Class.Name} : Gui {
 #foreach (var action in Guigen.Selections) 
 
     ///<summary>Selection #{action.RecordId}.</summary> 
-	public GuiAction #{action.RecordId} { get; } = new (#{action.QuotedId}, #{action.Prompt.Quoted()}, #{action.Icon.Quoted()}, () => new #{action.Id.Label}(), IsSelect:true);
+	public GuiAction #{action.RecordId} { get; } = new (
+        #{action.QuotedId}, #{action.Prompt.Quoted()}, #{action.Icon.Quoted()}, _#{action.IdLabel}.BaseBinding, () => new #{action.Id.Label}(), IsSelect:true);
 #end foreach	
 
 ##endregion
@@ -292,7 +295,8 @@ public class _#{Guigen.Class.Name} : Gui {
 #foreach (var dialog in Guigen.Dialogs) 
 
     ///<summary>Dialog #{dialog.RecordId}.</summary> 
-	public GuiDialog #{dialog.RecordId} { get; } = new (#{dialog.QuotedId}, #{dialog.Prompt.Quoted()}, #{dialog.Icon.Quoted()}, () => new #{dialog.Id.Label}()) {
+	public GuiDialog #{dialog.RecordId} { get; } = new (
+        #{dialog.QuotedId}, #{dialog.Prompt.Quoted()}, #{dialog.Icon.Quoted()}, _#{dialog.IdLabel}.BaseBinding, () => new #{dialog.Id.Label}()) {
                 IsBoundType = (object data) => data is #{dialog.Id.Label}
                 };
 #end foreach	
@@ -421,7 +425,7 @@ public class _#{Guigen.Class.Name} : Gui {
 			
 		    };
 
-        #{dialog.Id.Label}.IsBacker = (object data) => #{dialog.RecordId}.IsBacker(data);
+        //#{dialog.Id.Label}.IsBacker = (object data) => #{dialog.RecordId}.IsBacker(data);
 #end foreach
 
         Dialogs = new List<GuiDialog>() { #!
@@ -478,13 +482,6 @@ public class _#{Guigen.Class.Name} : Gui {
     public virtual Task<IResult> #{action.Id.Label} (#{action.DispatchType} data) 
                 => throw new NYI();
 
-#end foreach
-##endregion
-##region // Initialize Bindings
-#foreach (var binding in Guigen.Bindings)  
-    /// <summary> </summary>
-    public static GuiBinding #{binding.RecordId}  { get; } = #!
-#call CreateBindingInner binding
 #end foreach
 
 ##endregion
@@ -582,6 +579,7 @@ Array.Empty<object>();
 #end foreach
 new (
         (object test) => test is #{parent.IdLabelBase},
+        () => new #{parent.IdLabel}(),
 #if empty
         Array.Empty<GuiBoundProperty>()#!
 #else
@@ -590,15 +588,29 @@ new (
 #% var index = 0;
 #foreach (var entry in parent.InheritedEntries)
 #if entry.BindingType != null
-#% entry.Index = index++;
 #{separator} 
-            new #{entry.BindingType} ((object data) => (data as #{parent.IdLabelBase}).#{entry.IdLabel}, #!
-#if (entry.Readonly)
-null#!
-#else
-(object data,#{entry.BackerType} value) => (data as #{parent.IdLabelBase}).#{entry.IdLabel} = value#!
+            new #{entry.BindingType} ("#{entry.IdLabel}"#!
+#if entry.PromptQuoted != null
+, #{entry.PromptQuoted}#!
 #end if
-, "#{entry.IdLabel}")#!
+#if entry.BackerType != null
+#% entry.Index = index++;
+, (object data) => (data as #{parent.IdLabelBase}).#{entry.IdLabel} #!
+#if (entry.Readonly)
+, null#!
+#else
+, (object data,#{entry.BackerType} value) => (data as #{parent.IdLabelBase}).#{entry.IdLabel} = value#!
+#end if
+#else
+#end if
+#if entry.Width != null
+, Width: #{entry.Width}
+#end if
+#if entry is List
+#% var list = entry as List;
+, _#{list.Type.Label}.BaseBinding#!
+#end if
+)#!
 #end if
 #end foreach
 
@@ -638,8 +650,6 @@ null#!
 #call GenerateDecimal decimalv
 #casecast Icon icon
 #call GenerateIcon icon
-#casecast View view
-#call GenerateView view
 #end switchcast
 #end method
 
@@ -700,7 +710,7 @@ null#!
 #end method
 
 #method GenerateText Text field
-			new GuiText (#{field.QuotedId}, #{field.Prompt.Quoted()}, #{field.Index})#!
+			new GuiText (#{field.QuotedId}, #{field.Prompt.Quoted()}, #{field.Index}, #{field.Width.ValueOrNull()})#!
 #end method
 
 #method GenerateBoolean Boolean field
@@ -733,11 +743,6 @@ null#!
 
 #method GenerateIcon Icon field
 			new GuiIcon (#{field.QuotedId}, #{field.Prompt.Quoted()})#!
-#end method
-
-
-#method GenerateView View view
-			new #{view.Backer} (#{view.RecordId})#!
 #end method
 
 

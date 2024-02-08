@@ -107,8 +107,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("/// Callback parameters for dialog {1} \n{0}", _Indent, dialog.Id.Label);
 			_Output.Write ("/// </summary>\n{0}", _Indent);
 			_Output.Write ("public partial class {1} : _{2} {{\n{0}", _Indent, dialog.Id.Label, dialog.Id.Label);
-			_Output.Write ("    /// <summary>Type check verification.</summary>\n{0}", _Indent);
-			_Output.Write ("    public static {1} Func<object, bool> IsBacker {{ get; set; }} = (object _) => false;\n{0}", _Indent, dialog.IfSubclassNew);
+			_Output.Write ("    // <summary>Type check verification.</summary>\n{0}", _Indent);
+			_Output.Write ("    // public static {1} Func<object, bool> IsBacker {{ get; set; }} = (object _) => false; \n{0}", _Indent, dialog.IfSubclassNew);
 			_Output.Write ("    }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("/// <summary>\n{0}", _Indent);
@@ -310,14 +310,16 @@ public partial class Generate : global::Goedel.Registry.Script {
 		foreach  (var section in Guigen.Sections)  {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    ///<summary>Section {1}.</summary> \n{0}", _Indent, section.RecordId);
-			_Output.Write ("	public GuiSection {1} {{ get; }} = new ({2}, {3}, {4}, {5});\n{0}", _Indent, section.RecordId, section.QuotedId, section.Prompt.Quoted(), section.Icon.Quoted(), section.Primary.If("true","false"));
+			_Output.Write ("	public GuiSection {1} {{ get; }} = new (\n{0}", _Indent, section.RecordId);
+			_Output.Write ("        {1}, {2}, {3}, _{4}.BaseBinding, {5});\n{0}", _Indent, section.QuotedId, section.Prompt.Quoted(), section.Icon.Quoted(), section.IdLabel, section.Primary.If("true","false"));
 			}
 		_Output.Write ("#endregion\n{0}", _Indent);
 		_Output.Write ("#region // Actions\n{0}", _Indent);
 		foreach  (var action in Guigen.Actions)  {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    ///<summary>Action {1}.</summary> \n{0}", _Indent, action.RecordId);
-			_Output.Write ("	public GuiAction {1} {{ get; }} = new ({2}, {3}, {4}, () => new {5}());\n{0}", _Indent, action.RecordId, action.QuotedId, action.Prompt.Quoted(), action.Icon.Quoted(), action.Id.Label);
+			_Output.Write ("	public GuiAction {1} {{ get; }} = new (\n{0}", _Indent, action.RecordId);
+			_Output.Write ("        {1}, {2}, {3}, _{4}.BaseBinding, () => new {5}());\n{0}", _Indent, action.QuotedId, action.Prompt.Quoted(), action.Icon.Quoted(), action.IdLabel, action.Id.Label);
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("#endregion\n{0}", _Indent);
@@ -325,7 +327,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 		foreach  (var action in Guigen.Selections)  {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    ///<summary>Selection {1}.</summary> \n{0}", _Indent, action.RecordId);
-			_Output.Write ("	public GuiAction {1} {{ get; }} = new ({2}, {3}, {4}, () => new {5}(), IsSelect:true);\n{0}", _Indent, action.RecordId, action.QuotedId, action.Prompt.Quoted(), action.Icon.Quoted(), action.Id.Label);
+			_Output.Write ("	public GuiAction {1} {{ get; }} = new (\n{0}", _Indent, action.RecordId);
+			_Output.Write ("        {1}, {2}, {3}, _{4}.BaseBinding, () => new {5}(), IsSelect:true);\n{0}", _Indent, action.QuotedId, action.Prompt.Quoted(), action.Icon.Quoted(), action.IdLabel, action.Id.Label);
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("#endregion\n{0}", _Indent);
@@ -333,7 +336,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 		foreach  (var dialog in Guigen.Dialogs)  {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    ///<summary>Dialog {1}.</summary> \n{0}", _Indent, dialog.RecordId);
-			_Output.Write ("	public GuiDialog {1} {{ get; }} = new ({2}, {3}, {4}, () => new {5}()) {{\n{0}", _Indent, dialog.RecordId, dialog.QuotedId, dialog.Prompt.Quoted(), dialog.Icon.Quoted(), dialog.Id.Label);
+			_Output.Write ("	public GuiDialog {1} {{ get; }} = new (\n{0}", _Indent, dialog.RecordId);
+			_Output.Write ("        {1}, {2}, {3}, _{4}.BaseBinding, () => new {5}()) {{\n{0}", _Indent, dialog.QuotedId, dialog.Prompt.Quoted(), dialog.Icon.Quoted(), dialog.IdLabel, dialog.Id.Label);
 			_Output.Write ("                IsBoundType = (object data) => data is {1}\n{0}", _Indent, dialog.Id.Label);
 			_Output.Write ("                }};\n{0}", _Indent);
 			}
@@ -462,7 +466,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("			\n{0}", _Indent);
 			_Output.Write ("		    }};\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("        {1}.IsBacker = (object data) => {2}.IsBacker(data);\n{0}", _Indent, dialog.Id.Label, dialog.RecordId);
+			_Output.Write ("        //{1}.IsBacker = (object data) => {2}.IsBacker(data);\n{0}", _Indent, dialog.Id.Label, dialog.RecordId);
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("        Dialogs = new List<GuiDialog>() {{ ", _Indent);
@@ -519,13 +523,6 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("    public virtual Task<IResult> {1} ({2} data) \n{0}", _Indent, action.Id.Label, action.DispatchType);
 			_Output.Write ("                => throw new NYI();\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			}
-		_Output.Write ("#endregion\n{0}", _Indent);
-		_Output.Write ("#region // Initialize Bindings\n{0}", _Indent);
-		foreach  (var binding in Guigen.Bindings)   {
-			_Output.Write ("    /// <summary> </summary>\n{0}", _Indent);
-			_Output.Write ("    public static GuiBinding {1}  {{ get; }} = ", _Indent, binding.RecordId);
-			CreateBindingInner (binding);
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("#endregion\n{0}", _Indent);
@@ -645,6 +642,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		_Output.Write ("new (\n{0}", _Indent);
 		_Output.Write ("        (object test) => test is {1},\n{0}", _Indent, parent.IdLabelBase);
+		_Output.Write ("        () => new {1}(),\n{0}", _Indent, parent.IdLabel);
 		if (  empty ) {
 			_Output.Write ("        Array.Empty<GuiBoundProperty>()", _Indent);
 			} else {
@@ -653,15 +651,29 @@ public partial class Generate : global::Goedel.Registry.Script {
 			 var index = 0;
 			foreach  (var entry in parent.InheritedEntries) {
 				if (  entry.BindingType != null ) {
-					 entry.Index = index++;
 					_Output.Write ("{1} \n{0}", _Indent, separator);
-					_Output.Write ("            new {1} ((object data) => (data as {2}).{3}, ", _Indent, entry.BindingType, parent.IdLabelBase, entry.IdLabel);
-					if (  (entry.Readonly) ) {
-						_Output.Write ("null", _Indent);
-						} else {
-						_Output.Write ("(object data,{1} value) => (data as {2}).{3} = value", _Indent, entry.BackerType, parent.IdLabelBase, entry.IdLabel);
+					_Output.Write ("            new {1} (\"{2}\"", _Indent, entry.BindingType, entry.IdLabel);
+					if (  entry.PromptQuoted != null ) {
+						_Output.Write (", {1}", _Indent, entry.PromptQuoted);
 						}
-					_Output.Write (", \"{1}\")", _Indent, entry.IdLabel);
+					if (  entry.BackerType != null ) {
+						 entry.Index = index++;
+						_Output.Write (", (object data) => (data as {1}).{2} ", _Indent, parent.IdLabelBase, entry.IdLabel);
+						if (  (entry.Readonly) ) {
+							_Output.Write (", null", _Indent);
+							} else {
+							_Output.Write (", (object data,{1} value) => (data as {2}).{3} = value", _Indent, entry.BackerType, parent.IdLabelBase, entry.IdLabel);
+							}
+						} else {
+						}
+					if (  entry.Width != null ) {
+						_Output.Write (", Width: {1}\n{0}", _Indent, entry.Width);
+						}
+					if (  entry is List ) {
+						 var list = entry as List;
+						_Output.Write (", _{1}.BaseBinding\n{0}", _Indent, list.Type.Label);
+						}
+					_Output.Write (")", _Indent);
 					}
 				}
 			_Output.Write ("\n{0}", _Indent);
@@ -746,11 +758,6 @@ public partial class Generate : global::Goedel.Registry.Script {
 			  Icon icon = (Icon) entry; 
 			
 			GenerateIcon (icon);
-			break; }
-			case GuigenType.View: {
-			  View view = (View) entry; 
-			
-			GenerateView (view);
 		break; }
 			}
 		}
@@ -834,7 +841,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	// GenerateText
 	//
 	public void GenerateText (Text field) {
-		_Output.Write ("			new GuiText ({1}, {2}, {3})", _Indent, field.QuotedId, field.Prompt.Quoted(), field.Index);
+		_Output.Write ("			new GuiText ({1}, {2}, {3}, {4})", _Indent, field.QuotedId, field.Prompt.Quoted(), field.Index, field.Width.ValueOrNull());
 		}
 	
 
@@ -899,14 +906,6 @@ public partial class Generate : global::Goedel.Registry.Script {
 	//
 	public void GenerateIcon (Icon field) {
 		_Output.Write ("			new GuiIcon ({1}, {2})", _Indent, field.QuotedId, field.Prompt.Quoted());
-		}
-	
-
-	//
-	// GenerateView
-	//
-	public void GenerateView (View view) {
-		_Output.Write ("			new {1} ({2})", _Indent, view.Backer, view.RecordId);
 		}
 	
 

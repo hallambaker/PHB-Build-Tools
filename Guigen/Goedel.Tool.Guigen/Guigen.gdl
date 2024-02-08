@@ -69,7 +69,10 @@ Class Goedel.Tool.Guigen Guigen
 		Prompt		String		
 		Icon		String	
 		Entries List Choice
+			Button
 			Chooser
+			List
+			Boolean
 			Text
 			Color
 			Size
@@ -78,27 +81,13 @@ Class Goedel.Tool.Guigen Guigen
 			Icon
 			Description
 			Condition
-			Button
+			
 			Inherit
 			TextArea
 			QRScan
-			List
-			Selection
-			Boolean
 
-	TopType Binding
-		Id			ID SectionT
-		Entries List Choice
-			Chooser
-			Text
-			Color
-			Size
-			Decimal
-			Icon
-			Type
-			DateTime
-			Integer
-			Description
+			Selection
+
 
 	TopType Result
 		Id			ID SectionT
@@ -182,17 +171,13 @@ Class Goedel.Tool.Guigen Guigen
 			Readonly
 			Button
 
-
-
 	Type Chooser
 		Id			ID SectionT
 		Prompt		String		
 		Icon		String				
-		//Type		Token TypeT 
 		Entries List Choice
 			Button
 			Readonly
-			View
 			Text
 			Filter
 			Primary
@@ -203,8 +188,7 @@ Class Goedel.Tool.Guigen Guigen
 		Entries List Choice
 			Readonly
 
-	Type View 
-		Id			REF SectionT
+
 
 	Type Primary
 
@@ -235,6 +219,7 @@ Class Goedel.Tool.Guigen Guigen
 			Readonly
 			Error
 			Primary
+			Width
 
 	Type TextArea
 		Id			Token SectionT
@@ -285,7 +270,9 @@ Class Goedel.Tool.Guigen Guigen
 	Type Range
 		Max			Integer
 		Min			Integer
-
+	
+	Type Width
+		Request		Integer
 
 	Type QRScan
 		Id			Token SectionT		
