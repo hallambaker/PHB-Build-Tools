@@ -93,6 +93,10 @@ public partial class _Choice {
 
 
     public virtual bool Readonly { get; set; } = false;
+
+
+    public virtual bool NoSetter => Readonly;
+
     public int Index { get; set; } = -1;
 
     public string Summary { get; set; } = "";
@@ -272,7 +276,11 @@ public partial class Selection : IEntries {
 
     public List<_Choice> AllEntries => Entries;
     public virtual List<_Choice> InheritedEntries => Entries;
+
+    public override string BindingType => "GuiBoundPropertySelection";
     public override string RecordId => "Selection" + Id.Label;
+
+    public override string PromptQuoted => Prompt.Quoted();
     public string QuotedId => Id.Label.Quoted();
     public override string IdLabel => Id.Label;
 
@@ -338,8 +346,7 @@ public partial class Button {
     public string QuotedId => Id.Label.Quoted();
     public override string IdLabel => Id.Label;
 
-
-    //public override string BindingType => "GuiBoundPropertyButton";
+    public override string BindingType => "GuiBoundPropertyButton";
     public _Choice TargetObject => Id.ID.Object;
     public string Target => TargetObject.RecordId;
 
@@ -357,7 +364,7 @@ public partial class Chooser {
     public override string PromptQuoted => Prompt.Quoted();
 
     public override string BackerType => "ISelectCollection";
-
+    public override bool NoSetter => true;
     public override string BindingType => "GuiBoundPropertyChooser";
     public override string RecordId => "Binding" + Id.Label;
     public override void Init(_Choice parent) {

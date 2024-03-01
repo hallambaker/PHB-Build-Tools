@@ -156,7 +156,7 @@ public partial record _#{result.Id.Label} : IResult {
     static readonly ResourceId resourceId = new ("#{result.Id.Label}");
 
     ///<summary>The return result.</summary> 
-    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Completed;
+    public virtual ReturnResult ReturnResult { get; init; } = ReturnResult.Report;
 
 #call DeclareFields result
 #call CreateBindings result
@@ -243,10 +243,10 @@ public class _#{Guigen.Class.Name} : Gui {
     public override List<GuiSection> Sections { get; }
 
     ///<inheritdoc/> 
-    public override List<GuiAction> Actions { get; }
+    public override Dictionary<string, GuiAction>Actions { get; }
 
     ///<inheritdoc/> 
-    public override List<GuiAction> Selections { get; }
+    public override Dictionary<string, GuiAction> Selections { get; }
 
     ///<inheritdoc/> 
     public override List<GuiResult> Results { get; }
@@ -306,7 +306,7 @@ public class _#{Guigen.Class.Name} : Gui {
 #foreach (var result in Guigen.Results) 
 
     ///<summary>Result #{result.RecordId}.</summary> 
-	public GuiResult #{result.RecordId} { get; } = new ();
+	public GuiResult #{result.RecordId} { get; } = new (_#{result.IdLabel}.BaseBinding);
 #end foreach	
 	
     ///<summary>Dictionary resolving exception name to factory method.</summary> 
@@ -333,17 +333,8 @@ public class _#{Guigen.Class.Name} : Gui {
 #foreach (var section in Guigen.Sections) 
 	    #{section.RecordId}.Gui = this;
 	    #{section.RecordId}.Active = () => State#{section.State};
-	    #{section.RecordId}.Entries =  new () { #!
-#% separator.Reset ();
-#foreach (var entry in section.InheritedEntries)
-#if (entry.Active)
-#{separator} 
-#call GenerateEntry entry
-#end if 
-#end foreach
-		    
-            };
-
+	    #{section.RecordId}.Entries = #!
+#call GenerateEntries section.Entries
 #end foreach
 
 ##endregion
@@ -361,24 +352,14 @@ public class _#{Guigen.Class.Name} : Gui {
 ##region // Initialize Actions
 #foreach (var action in Guigen.Actions) 
         #{action.RecordId}.Callback = (x) => #{action.Id.Label} (x as #{action.Id.Label}) ;
-	    #{action.RecordId}.Entries = new () {#!
-#% separator.Reset ();
-#foreach (var entry in action.InheritedEntries)
-#if (entry.Active)
-#{separator} 
-#call GenerateEntry entry
-#end if
-#end foreach
-
-		    };
 
 #end foreach
 
-        Actions = new List<GuiAction>() { #!
+        Actions = new Dictionary<string,GuiAction>() { #!
 #% separator.Reset ();
 #foreach (var action in Guigen.Actions) 
 #{separator} 
-		    #{action.RecordId}#!
+		    {#{action.QuotedId}, #{action.RecordId}}#!
 #end foreach
 
 		    };
@@ -388,44 +369,24 @@ public class _#{Guigen.Class.Name} : Gui {
 ##region // Initialize Selections
 #foreach (var action in Guigen.Selections) 
         #{action.RecordId}.Callback = (x) => #{action.Id.Label} (x as #{action.DispatchType}) ;
-	    #{action.RecordId}.Entries = new () {#!
-#% separator.Reset ();
-#foreach (var entry in action.InheritedEntries)
-#if (entry.Active)
-#{separator} 
-#call GenerateEntry entry
-#end if
-#end foreach
-
-		    };
 
 #end foreach
 
-        Selections = new List<GuiAction>() { #!
+        Selections = new Dictionary<string,GuiAction>() { #!
 #% separator.Reset ();
 #foreach (var action in Guigen.Selections) 
 #{separator} 
-		    #{action.RecordId}#!
+		    {#{action.QuotedId}, #{action.RecordId}}#!
 #end foreach
 
 		    };
 
 ##endregion
-
 ##region // Initialize Dialogs
-#foreach (var dialog in Guigen.Dialogs) 
-	    #{dialog.RecordId}.Entries = new () {#!
-#% separator.Reset ();
-#foreach (var entry in dialog.InheritedEntries)
-#if (entry.Active)
-#{separator} 
-#call GenerateEntry entry
-#end if
-#end foreach
-			
-		    };
 
-        //#{dialog.Id.Label}.IsBacker = (object data) => #{dialog.RecordId}.IsBacker(data);
+#foreach (var dialog in Guigen.Dialogs) 
+	    #{dialog.RecordId}.Entries = #!
+#call GenerateEntries dialog.Entries
 #end foreach
 
         Dialogs = new List<GuiDialog>() { #!
@@ -439,20 +400,6 @@ public class _#{Guigen.Class.Name} : Gui {
 
 ##endregion
 ##region // Initialize Results
-#foreach (var result in Guigen.Results) 
-	    #{result.RecordId}.Entries = new () {#!
-#% separator.Reset ();
-#foreach (var entry in result.Entries)
-#if (entry.Active)
-#{separator} 
-#call GenerateEntry entry
-#end if
-#end foreach
-			
-		    };
-
-#end foreach
-
 
         Results = new List<GuiResult>() { #!
 #% separator.Reset ();
@@ -596,7 +543,7 @@ new (
 #if entry.BackerType != null
 #% entry.Index = index++;
 , (object data) => (data as #{parent.IdLabelBase}).#{entry.IdLabel} #!
-#if (entry.Readonly)
+#if (entry.NoSetter)
 , null#!
 #else
 , (object data,#{entry.BackerType} value) => (data as #{parent.IdLabelBase}).#{entry.IdLabel} = value#!
@@ -604,7 +551,7 @@ new (
 #else
 #end if
 #if entry.Width != null
-, Width: #{entry.Width}
+, Width: #{entry.Width}#!
 #end if
 #if entry is List
 #% var list = entry as List;
@@ -620,7 +567,22 @@ new (
 );
 #end method
 
-#method GenerateEntry _Choice entry
+#method GenerateEntries List<_Choice> entries
+[#!
+#% var separator = new Separator (",");
+#foreach (var entry in entries) 
+#switchcast GuigenType entry
+#casecast Button button
+#{separator}
+#call GenerateButton button
+#end switchcast
+#end foreach
+];
+
+#end method
+
+
+#method GenerateEntry_OLD_DELETE _Choice entry
 #switchcast GuigenType entry
 #casecast Chooser chooser
 #call GenerateChooser chooser
@@ -662,7 +624,7 @@ new (
 #foreach (var entry in list.Entries)
 #if (entry.Active)
 #{separator} 
-#call GenerateEntry entry
+#!call GenerateEntry entry
 #end if
 #end foreach
 
@@ -678,7 +640,7 @@ new (
 #foreach (var entry in chooser.Entries)
 #if (entry.Active)
 #{separator} 
-#call GenerateEntry entry
+#!call GenerateEntry entry
 #end if
 #end foreach
 
@@ -693,7 +655,7 @@ new (
 #% separator.Reset ();
 #foreach (var entry in dialog.Entries)
 #{separator} 
-#call GenerateEntry entry
+#!call GenerateEntry entry
 #end foreach
 
 		    }) #!
