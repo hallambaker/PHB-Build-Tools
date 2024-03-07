@@ -72,7 +72,7 @@ public partial class #{dialog.Id.Label} : _#{dialog.Id.Label} {
 public partial class _#{dialog.Id.Label} : #{dialog.Inherit?.Label ?? "IParameter"} {
 
 #if (!dialog.IsSubclass)
-    public object Bound { get; set; }
+    public object? Bound { get; set; }
 
 #end if
 
@@ -317,7 +317,7 @@ public class _#{Guigen.Class.Name} : Gui {
 #foreach (var entry in result.InheritedEntries) 
 #if (entry is Exception exception)
 #{separator} 
-                { typeof(#{exception.Id}).FullName, () => new #{result.Id}() } #!
+                { typeof(#{exception.Id})?.FullName!, () => new #{result.Id}() } #!
 #end if
 #end foreach
 #end foreach
@@ -351,7 +351,12 @@ public class _#{Guigen.Class.Name} : Gui {
 ##endregion
 ##region // Initialize Actions
 #foreach (var action in Guigen.Actions) 
-        #{action.RecordId}.Callback = (x) => #{action.Id.Label} (x as #{action.Id.Label}) ;
+        #{action.RecordId}.Callback = (x) => {
+            if (x is #{action.Id.Label} xx) {
+                return #{action.Id.Label} (xx); 
+                }
+            throw new NYI();
+            } ;
 
 #end foreach
 
@@ -368,7 +373,12 @@ public class _#{Guigen.Class.Name} : Gui {
 
 ##region // Initialize Selections
 #foreach (var action in Guigen.Selections) 
-        #{action.RecordId}.Callback = (x) => #{action.Id.Label} (x as #{action.DispatchType}) ;
+        #{action.RecordId}.Callback = (x) => {
+            if (x is #{action.DispatchType} xx) {
+                return #{action.Id.Label} (xx); 
+                }
+            throw new NYI();
+            } ;
 
 #end foreach
 
@@ -441,7 +451,7 @@ public class _#{Guigen.Class.Name} : Gui {
 #method MakeIParameterMethods IEntries action
     ///<summary>Validation</summary> 
     public #{action.IfSubclassOverride} IResult Validate(Gui gui) {
-        GuiResultInvalid result = null;
+        GuiResultInvalid? result = null;
 
 #foreach (var entry in action.AllEntries)
 #if (entry is IField field) 
@@ -476,7 +486,7 @@ public class _#{Guigen.Class.Name} : Gui {
 #method DeclareResultGetValues IEntries parent
 
     ///<inheritdoc/>
-    public object[] GetValues() => #!
+    public object?[] GetValues() => #!
 #% var separator = new Separator ("new [] { ", ",");
 #foreach (var entry in parent.AllEntries)
 #switchcast GuigenType entry
@@ -530,7 +540,7 @@ new (
 #if empty
         Array.Empty<GuiBoundProperty>()#!
 #else
-        new GuiBoundProperty[] {#!
+        [#!
 #% var separator = new Separator (",");
 #% var index = 0;
 #foreach (var entry in parent.InheritedEntries)
@@ -542,11 +552,13 @@ new (
 #end if
 #if entry.BackerType != null
 #% entry.Index = index++;
-, (object data) => (data as #{parent.IdLabelBase}).#{entry.IdLabel} #!
+, (object data) => (data as #{parent.IdLabelBase})?.#{entry.IdLabel} #!
 #if (entry.NoSetter)
 , null#!
 #else
-, (object data,#{entry.BackerType} value) => (data as #{parent.IdLabelBase}).#{entry.IdLabel} = value#!
+, 
+                (object data,#{entry.BackerType} value) => #!
+{ if (data is #{parent.IdLabelBase} datad) { datad.#{entry.IdLabel} = value; }}#!
 #end if
 #else
 #end if
@@ -561,8 +573,7 @@ new (
 #end if
 #end foreach
 
-
-            }#!
+            ]#!
 #end if
 );
 #end method

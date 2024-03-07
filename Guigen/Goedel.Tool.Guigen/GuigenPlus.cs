@@ -363,7 +363,7 @@ public partial class Chooser {
     public override string IdLabel => Id.Label;
     public override string PromptQuoted => Prompt.Quoted();
 
-    public override string BackerType => "ISelectCollection";
+    public override string BackerType => "ISelectCollection?";
     public override bool NoSetter => true;
     public override string BindingType => "GuiBoundPropertyChooser";
     public override string RecordId => "Binding" + Id.Label;
@@ -380,7 +380,7 @@ public partial class Chooser {
 public partial class List {
     public string QuotedId => Id.Label.Quoted();
     public override string IdLabel => Id.Label;
-    public override string BackerType => "ISelectCollection";
+    public override string BackerType => "ISelectCollection?";
     public string DialogType => "Dialog" + Type.Label;
     public override string PromptQuoted => Prompt.Quoted();
 
@@ -399,7 +399,7 @@ public partial class Boolean : IField {
     public List<_Choice> GetEntries => Entries;
 
     public override string IdLabel => Id.Label;
-    public override string BackerType => "bool";
+    public override string BackerType => "bool?";
 
     public override string PromptQuoted => Prompt.Quoted();
 
@@ -419,7 +419,7 @@ public partial class Text : IField {
     public List<_Choice> GetEntries => Entries;
 
     public override string IdLabel => Id.Label;
-    public override string BackerType => "string";
+    public override string BackerType => "string?";
 
     public override string PromptQuoted => Prompt.Quoted();
     public override string BindingType => "GuiBoundPropertyString";
@@ -437,7 +437,7 @@ public partial class TextArea : IField {
     public List<_Choice> GetEntries => Entries;
 
     public override string IdLabel => Id.Label;
-    public override string BackerType => "string";
+    public override string BackerType => "string?";
 
     public override string PromptQuoted => Prompt.Quoted();
     public override string BindingType => "GuiBoundTextArea";
@@ -452,7 +452,7 @@ public partial class TextArea : IField {
 public partial class Color {
     public string QuotedId => Id.Label.Quoted();
     public override string IdLabel => Id.Label;
-    public override string BackerType => "IFieldColor";
+    public override string BackerType => "IFieldColor?";
 
     public override string PromptQuoted => Prompt.Quoted();
     public override string BindingType => "GuiBoundPropertyColor";
@@ -465,7 +465,7 @@ public partial class Color {
 public partial class Size {
     public string QuotedId => Id.Label.Quoted();
     public override string IdLabel => Id.Label;
-    public override string BackerType => "IFieldSize";
+    public override string BackerType => "IFieldSize?";
     public override string PromptQuoted => Prompt.Quoted();
 
     public override string BindingType => "GuiBoundPropertySize";
@@ -523,7 +523,7 @@ public partial class Icon {
     public string QuotedId => Id.Label.Quoted();
     public override string IdLabel => Id.Label;
 
-    public override string BackerType => "IFieldIcon";
+    public override string BackerType => "IFieldIcon?";
 
     public override bool Readonly { get; set; } = true;
     public override string PromptQuoted => Prompt.Quoted();
@@ -551,7 +551,7 @@ public partial class Description {
     public override bool Active => false;
     }
 public partial class Hidden {
-    public override string BackerType => "string";
+    public override string BackerType => "string?";
     public override string IdLabel => Id.Label;
     public override bool Active => false;
 
