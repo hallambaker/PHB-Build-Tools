@@ -582,7 +582,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("    public {1} GuiBinding Binding => BaseBinding;\n{0}", _Indent, parent.IfSubclassOverride);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    ///<summary>The binding for the data type.</summary> \n{0}", _Indent);
-		_Output.Write ("    public static {1} GuiBinding BaseBinding  {{ get; }} = ", _Indent, parent.IfSubclassNew);
+		_Output.Write ("    public static {1} {2} BaseBinding  {{ get; }} = ", _Indent, parent.IfSubclassNew, parent.BindingTypeII);
 		CreateBindingInner (parent);
 		}
 	
@@ -614,7 +614,6 @@ public partial class Generate : global::Goedel.Registry.Script {
 						_Output.Write (", {1}", _Indent, entry.PromptQuoted);
 						}
 					if (  entry.BackerType != null ) {
-						 entry.Index = index++;
 						_Output.Write (", (object data) => (data as {1})?.{2} ", _Indent, parent.IdLabelBase, entry.IdLabel);
 						if (  (entry.NoSetter) ) {
 							_Output.Write (", null", _Indent);
@@ -632,11 +631,15 @@ public partial class Generate : global::Goedel.Registry.Script {
 						 var list = entry as List;
 						_Output.Write (", _{1}.BaseBinding", _Indent, list.Type.Label);
 						}
-					_Output.Write (")", _Indent);
+					_Output.Write (")  /* {1} */ ", _Indent, index);
+					 entry.Index = index++;
 					}
 				}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("            ]", _Indent);
+			}
+		if (  (parent.BindingChild != null) ) {
+			_Output.Write (", {1}\n{0}", _Indent, parent.BindingChild.Index);
 			}
 		_Output.Write (");\n{0}", _Indent);
 		}

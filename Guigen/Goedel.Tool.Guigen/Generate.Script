@@ -523,7 +523,7 @@ Array.Empty<object>();
     public #{parent.IfSubclassOverride} GuiBinding Binding => BaseBinding;
 
     ///<summary>The binding for the data type.</summary> 
-    public static #{parent.IfSubclassNew} GuiBinding BaseBinding  { get; } = #!
+    public static #{parent.IfSubclassNew} #{parent.BindingTypeII} BaseBinding  { get; } = #!
 #call CreateBindingInner parent
 #end method
 
@@ -551,7 +551,6 @@ new (
 , #{entry.PromptQuoted}#!
 #end if
 #if entry.BackerType != null
-#% entry.Index = index++;
 , (object data) => (data as #{parent.IdLabelBase})?.#{entry.IdLabel} #!
 #if (entry.NoSetter)
 , null#!
@@ -569,11 +568,15 @@ new (
 #% var list = entry as List;
 , _#{list.Type.Label}.BaseBinding#!
 #end if
-)#!
+)  /* #{index} */ #!
+#% entry.Index = index++;
 #end if
 #end foreach
 
             ]#!
+#end if
+#if (parent.BindingChild != null)
+, #{parent.BindingChild.Index}
 #end if
 );
 #end method

@@ -20,6 +20,11 @@ public interface IEntries {
 
     public string IfSubclassNew { get; }
     public string IfSubclassOverride { get; }
+
+    public string BindingTypeII { get;  }
+
+    public _Choice? BindingChild { get; }
+    public int Index { get; set; }
     }
 
 public interface IField {
@@ -104,6 +109,9 @@ public partial class _Choice {
     public virtual string BackerType => null;
     public virtual string BindingType => null;
 
+    public virtual string BindingTypeII { get; set; } = "GuiBindingSingle";
+
+    public _Choice? BindingChild { get; set; } = null;
 
     public virtual TOKEN<_Choice> Inherit { get; set; } = null;
     public bool IsSubclass => Inherit is not null;
@@ -135,6 +143,16 @@ public partial class _Choice {
                     }
                 case Width width: {
                     Width = width.Request.ToString();
+                    break;
+                    }
+                case Chooser: {
+                    BindingTypeII = "GuiBindingMultiple";
+                    BindingChild = entry;
+                    break;
+                    }
+                case QRScan: {
+                    BindingTypeII = "GuiBindingQr";
+                    BindingChild = entry;
                     break;
                     }
                 }
@@ -182,6 +200,7 @@ public partial class Section : IEntries {
     public override void Init(_Choice parent) {
 
         base.Init(parent);
+        SetEntries(Entries);
         _Base.Sections.Add(this);
         _Base.AddIcon(Icon);
         _Base.AddPrompt(Id, Prompt);
@@ -307,6 +326,7 @@ public partial class Action : IEntries {
     public override string IdLabel => Id.Label;
     public override void Init(_Choice parent) {
         base.Init(parent);
+        SetEntries(Entries);
         _Base.Actions.Add(this);
         _Base.AddIcon(Icon);
         _Base.AddPrompt(Id, Prompt);
