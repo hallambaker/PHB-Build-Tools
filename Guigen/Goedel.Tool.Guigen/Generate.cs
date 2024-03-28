@@ -311,7 +311,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    ///<summary>Section {1}.</summary> \n{0}", _Indent, section.RecordId);
 			_Output.Write ("	public GuiSection {1} {{ get; }} = new (\n{0}", _Indent, section.RecordId);
-			_Output.Write ("        {1}, {2}, {3}, _{4}.BaseBinding, {5});\n{0}", _Indent, section.QuotedId, section.Prompt.Quoted(), section.Icon.Quoted(), section.IdLabel, section.Primary.If("true","false"));
+			_Output.Write ("        {1}, {2}, {3}, \n{0}", _Indent, section.QuotedId, section.Prompt.Quoted(), section.Icon.Quoted());
+			_Output.Write ("        _{1}.BaseBinding, {2});\n{0}", _Indent, section.IdLabel, section.Primary.If("true","false"));
 			}
 		_Output.Write ("#endregion\n{0}", _Indent);
 		_Output.Write ("#region // Actions\n{0}", _Indent);
@@ -319,7 +320,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    ///<summary>Action {1}.</summary> \n{0}", _Indent, action.RecordId);
 			_Output.Write ("	public GuiAction {1} {{ get; }} = new (\n{0}", _Indent, action.RecordId);
-			_Output.Write ("        {1}, {2}, {3}, _{4}.BaseBinding, () => new {5}());\n{0}", _Indent, action.QuotedId, action.Prompt.Quoted(), action.Icon.Quoted(), action.IdLabel, action.Id.Label);
+			_Output.Write ("        {1}, {2}, {3}, \n{0}", _Indent, action.QuotedId, action.Prompt.Quoted(), action.Icon.Quoted());
+			_Output.Write ("        _{1}.BaseBinding, () => new {2}(),\n{0}", _Indent, action.IdLabel, action.Id.Label);
+			_Output.Write ("        IsConfirmation: {1});\n{0}", _Indent, action.IsConfirmation.If("true","false"));
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("#endregion\n{0}", _Indent);

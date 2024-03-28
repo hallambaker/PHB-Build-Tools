@@ -270,7 +270,8 @@ public class _#{Guigen.Class.Name} : Gui {
 
     ///<summary>Section #{section.RecordId}.</summary> 
 	public GuiSection #{section.RecordId} { get; } = new (
-        #{section.QuotedId}, #{section.Prompt.Quoted()}, #{section.Icon.Quoted()}, _#{section.IdLabel}.BaseBinding, #{section.Primary.If("true","false")});
+        #{section.QuotedId}, #{section.Prompt.Quoted()}, #{section.Icon.Quoted()}, 
+        _#{section.IdLabel}.BaseBinding, #{section.Primary.If("true","false")});
 #end foreach
 ##endregion
 ##region // Actions
@@ -278,7 +279,9 @@ public class _#{Guigen.Class.Name} : Gui {
 
     ///<summary>Action #{action.RecordId}.</summary> 
 	public GuiAction #{action.RecordId} { get; } = new (
-        #{action.QuotedId}, #{action.Prompt.Quoted()}, #{action.Icon.Quoted()}, _#{action.IdLabel}.BaseBinding, () => new #{action.Id.Label}());
+        #{action.QuotedId}, #{action.Prompt.Quoted()}, #{action.Icon.Quoted()}, 
+        _#{action.IdLabel}.BaseBinding, () => new #{action.Id.Label}(),
+        IsConfirmation: #{action.IsConfirmation.If("true","false")});
 #end foreach	
 
 ##endregion

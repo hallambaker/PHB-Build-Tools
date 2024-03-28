@@ -71,6 +71,7 @@ using Goedel.Utilities;
 //       QRScan
 //       Context
 //       TextArea
+//       Confirmation
 //       List
 //       Boolean
 //       Inherit
@@ -137,6 +138,7 @@ namespace Goedel.Tool.Guigen {
         Fail,
         Group,
         Icon,
+        Confirmation,
         Description,
         Exception,
         Default,
@@ -618,6 +620,27 @@ namespace Goedel.Tool.Guigen {
 			Output.WriteAttribute ("File", File);
 			if (tag) {
 				Output.EndElement ("Icon");
+				}			
+			}
+		}
+
+    public partial class Confirmation : _Choice {
+
+        public override GuigenType _Tag () =>GuigenType.Confirmation;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Confirmation");
+				}
+
+			if (tag) {
+				Output.EndElement ("Confirmation");
 				}			
 			}
 		}
@@ -1531,6 +1554,7 @@ namespace Goedel.Tool.Guigen {
 		Icon__Id,				
 		Icon__Prompt,				
 		Icon__File,				
+		Confirmation_Start,
 		Description_Start,
 		Description__Text,				
 		Exception_Start,
@@ -1714,6 +1738,7 @@ namespace Goedel.Tool.Guigen {
                 case "Fail": return NewFail();
                 case "Group": return NewGroup();
                 case "Icon": return NewIcon();
+                case "Confirmation": return NewConfirmation();
                 case "Description": return NewDescription();
                 case "Exception": return NewException();
                 case "Default": return NewDefault();
@@ -1867,6 +1892,14 @@ namespace Goedel.Tool.Guigen {
             Goedel.Tool.Guigen.Icon result = new Goedel.Tool.Guigen.Icon();
             Push (result);
             State = StateCode.Icon_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Guigen.Confirmation NewConfirmation() {
+            Goedel.Tool.Guigen.Confirmation result = new Goedel.Tool.Guigen.Confirmation();
+            Push (result);
+            State = StateCode.Confirmation_Start;
             return result;
             }
 
@@ -2121,6 +2154,7 @@ namespace Goedel.Tool.Guigen {
                 case "Fail": return Goedel.Tool.Guigen.GuigenType.Fail;
                 case "Group": return Goedel.Tool.Guigen.GuigenType.Group;
                 case "Icon": return Goedel.Tool.Guigen.GuigenType.Icon;
+                case "Confirmation": return Goedel.Tool.Guigen.GuigenType.Confirmation;
                 case "Description": return Goedel.Tool.Guigen.GuigenType.Description;
                 case "Exception": return Goedel.Tool.Guigen.GuigenType.Exception;
                 case "Default": return Goedel.Tool.Guigen.GuigenType.Default;
@@ -2512,11 +2546,12 @@ namespace Goedel.Tool.Guigen {
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Return) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.Description) |
 									(LabelType == Goedel.Tool.Guigen.GuigenType.TextArea) |
-									(LabelType == Goedel.Tool.Guigen.GuigenType.QRScan) ) {
+									(LabelType == Goedel.Tool.Guigen.GuigenType.QRScan) |
+									(LabelType == Goedel.Tool.Guigen.GuigenType.Confirmation) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Integer Context Return Description TextArea QRScan ]");
+								throw new Expected ("Parser Error Expected [Chooser Text Color Size Decimal Integer Context Return Description TextArea QRScan Confirmation ]");
 								}
 							}
                         break;
@@ -2775,6 +2810,10 @@ namespace Goedel.Tool.Guigen {
                         throw new Expected("Expected String");
 
                     case StateCode.Icon__File:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Confirmation_Start:
                         Pop ();
                         Represent = true; 
                         break;

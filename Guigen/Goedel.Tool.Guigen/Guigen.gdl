@@ -62,6 +62,7 @@ Class Goedel.Tool.Guigen Guigen
 			Description
 			TextArea
 			QRScan
+			Confirmation
 
 
 	TopType Dialog
@@ -121,6 +122,7 @@ Class Goedel.Tool.Guigen Guigen
 		Prompt		String
 		File		String	
 
+	Type Confirmation
 
 	Type Description
 		Text		Text

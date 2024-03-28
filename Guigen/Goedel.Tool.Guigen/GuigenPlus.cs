@@ -124,7 +124,7 @@ public partial class _Choice {
     public string IfSubclassOverride => IsSubclass ? "override" : "virtual";
 
     public virtual string PromptQuoted => null;
-
+    public bool IsConfirmation = false;
 
     public void SetEntries(List<_Choice> entries) {
         foreach (var entry in entries) {
@@ -141,6 +141,34 @@ public partial class _Choice {
                     Inherit = inherit.Id;
                     break;
                     }
+                case Confirmation: {
+                    IsConfirmation = true;
+                    break;
+                    }
+                case Text: {
+                    IsConfirmation = true;
+                    break;
+                    }
+                case Color: {
+                    IsConfirmation = true;
+                    break;
+                    }
+                case Size: {
+                    IsConfirmation = true;
+                    break;
+                    }
+                case Decimal: {
+                    IsConfirmation = true;
+                    break;
+                    }
+                case Integer: {
+                    IsConfirmation = true;
+                    break;
+                    }
+                case TextArea: {
+                    IsConfirmation = true;
+                    break;
+                    }
                 case Width width: {
                     Width = width.Request.ToString();
                     break;
@@ -148,11 +176,13 @@ public partial class _Choice {
                 case Chooser: {
                     BindingTypeII = "GuiBindingMultiple";
                     BindingChild = entry;
+                    IsConfirmation = true;
                     break;
                     }
                 case QRScan: {
                     BindingTypeII = "GuiBindingQr";
                     BindingChild = entry;
+                    IsConfirmation = true;
                     break;
                     }
                 }
