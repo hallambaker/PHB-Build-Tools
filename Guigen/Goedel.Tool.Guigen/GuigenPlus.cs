@@ -430,7 +430,7 @@ public partial class Chooser {
 public partial class List {
     public string QuotedId => Id.Label.Quoted();
     public override string IdLabel => Id.Label;
-    public override string BackerType => "ISelectCollection?";
+    public override string BackerType => "ISelectList?";
     public string DialogType => "Dialog" + Type.Label;
     public override string PromptQuoted => Prompt.Quoted();
 
