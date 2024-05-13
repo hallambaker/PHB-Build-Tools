@@ -82,11 +82,11 @@ Class Goedel.Tool.Guigen Guigen
 			Icon
 			Description
 			Condition
-			
+			DataActions
 			Inherit
 			TextArea
 			QRScan
-
+			Context
 			Selection
 
 
@@ -121,6 +121,10 @@ Class Goedel.Tool.Guigen Guigen
 		Id			Token SectionT
 		Prompt		String
 		File		String	
+
+	Type DataActions
+		Id			Token SectionT
+		Prompt		String
 
 	Type Confirmation
 
@@ -158,6 +162,13 @@ Class Goedel.Tool.Guigen Guigen
 		Entries List Choice
 			Description
 
+	Type Context
+		Id			Token SectionT
+		Type			REF TypeT
+		Entries List Choice
+			Description
+
+
 	Type Return
 		Id			REF ResultT
 
@@ -194,12 +205,12 @@ Class Goedel.Tool.Guigen Guigen
 
 	Type Primary
 
-	Type Context
-		Id			Token SectionT		
-		Prompt		String
-		Entries List Choice
-			Readonly
-			Error
+	//Type Context
+	//	Id			Token SectionT		
+	//	Prompt		String
+	//	Entries List Choice
+	//		Readonly
+	//		Error
 
 	Type Hidden
 		Id			Token SectionT

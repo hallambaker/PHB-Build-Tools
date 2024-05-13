@@ -126,6 +126,8 @@ public partial class _Choice {
     public virtual string PromptQuoted => null;
     public bool IsConfirmation = false;
 
+    public Context? Context = null;
+
     public void SetEntries(List<_Choice> entries) {
         foreach (var entry in entries) {
             switch (entry) {
@@ -567,6 +569,19 @@ public partial class QRScan {
         }
     }
 
+public partial class Context {
+
+    public string QuotedId => Id.Label.Quoted();
+    public override string IdLabel => Id.Label;
+    public override string BackerType => Type.Label;
+
+    public override void Init(_Choice parent) {
+        parent.Context = this;
+        }
+
+
+    }
+
 
 
 public partial class Icon {
@@ -584,9 +599,24 @@ public partial class Icon {
         _Base.AddPrompt(Id, Prompt);
         _Base.AddIcon(File);
         }
+
     }
 
+public partial class DataActions {
+    public string QuotedId => Id.Label.Quoted();
+    public override string IdLabel => Id.Label;
 
+    public override string BackerType => "IDataActions?";
+
+    public override bool Readonly { get; set; } = true;
+    public override string PromptQuoted => Prompt.Quoted();
+
+    public override string BindingType => "GuiBoundPropertyDataActions";
+    public override void Init(_Choice parent) {
+        base.Init(parent);
+        _Base.AddPrompt(Id, Prompt);
+        }
+    }
 
 #endregion
 

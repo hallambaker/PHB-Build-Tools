@@ -292,6 +292,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("    ///<inheritdoc/> \n{0}", _Indent);
 		_Output.Write ("    public override List<GuiResult> Results {{ get; }}\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    ///<inheritdoc/> \n{0}", _Indent);
+		_Output.Write ("   public override IEnumerable<GuiDataAction>? GetDataActions(IDataActions data) => null;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	///<inheritdoc/>\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
@@ -322,7 +324,11 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write ("	public GuiAction {1} {{ get; }} = new (\n{0}", _Indent, action.RecordId);
 			_Output.Write ("        {1}, {2}, {3}, \n{0}", _Indent, action.QuotedId, action.Prompt.Quoted(), action.Icon.Quoted());
 			_Output.Write ("        _{1}.BaseBinding, () => new {2}(),\n{0}", _Indent, action.IdLabel, action.Id.Label);
-			_Output.Write ("        IsConfirmation: {1});\n{0}", _Indent, action.IsConfirmation.If("true","false"));
+			_Output.Write ("        IsConfirmation: {1}", _Indent, action.IsConfirmation.If("true","false"));
+			if (  (action.Context != null) ) {
+				_Output.Write (", setContext: (object data, IBindable value) => {{ if (data is {1} datad) {{datad.{2}=(value as {3})!;}}}}", _Indent, action.IdLabel, action.Context.IdLabel, action.Context.Type);
+				}
+			_Output.Write (");\n{0}", _Indent);
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("#endregion\n{0}", _Indent);

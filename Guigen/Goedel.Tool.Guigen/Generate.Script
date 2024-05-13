@@ -251,6 +251,8 @@ public class _#{Guigen.Class.Name} : Gui {
     ///<inheritdoc/> 
     public override List<GuiResult> Results { get; }
 
+    ///<inheritdoc/> 
+   public override IEnumerable<GuiDataAction>? GetDataActions(IDataActions data) => null;
 
 	///<inheritdoc/>
 
@@ -281,7 +283,11 @@ public class _#{Guigen.Class.Name} : Gui {
 	public GuiAction #{action.RecordId} { get; } = new (
         #{action.QuotedId}, #{action.Prompt.Quoted()}, #{action.Icon.Quoted()}, 
         _#{action.IdLabel}.BaseBinding, () => new #{action.Id.Label}(),
-        IsConfirmation: #{action.IsConfirmation.If("true","false")});
+        IsConfirmation: #{action.IsConfirmation.If("true","false")}#!
+#if (action.Context != null)
+, setContext: (object data, IBindable value) => { if (data is #{action.IdLabel} datad) {datad.#{action.Context.IdLabel}=(value as #{action.Context.Type})!;}}#!
+#end if
+);
 #end foreach	
 
 ##endregion
