@@ -4,6 +4,11 @@
       "commandName": "Project",
       "commandLineArgs": "CommandsetKey.script CommandsetKey.cs",
       "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Documentation\\MakeSiteDocs\\Web"
+    },
+    "page": {
+      "commandName": "Project",
+      "commandLineArgs": "ServerPages.script ServerPages.cs",
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Repository\\Annotate"
     }
   }
 }

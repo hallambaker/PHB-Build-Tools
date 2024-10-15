@@ -179,6 +179,9 @@ public class Script {
     //public void _{1}({3} {4}) { 
     //";
 
+    const string PageText =
+        "\n\n{3}//\n{3}// {0}\n{3}//\n{3}public static void {0} (TextWriter _Output, {1} {2}) {{\n{3}{3}string _Indent  = \"\";";
+
     const string MethodText =
         "\n\n{3}//\n{3}// {0}\n{3}//\n{3}public void {0} ({1} {2}) {{";
 
@@ -242,11 +245,13 @@ public class Script {
             new ScriptCommand ("prefix",    PrefixText,              "}",   1,      0,      1,      3),
             new ScriptCommand ("class",     ClassText,           "\n\t}",   2,      1,      1,      6),
             new ScriptCommand ("pclass",    PClassText,          "\n\t}",   2,      1,      1,      6),
-            new ScriptCommand ("xclass",    XClassText,          "\t\t}",   2,      1,      1,      6),
+            new ScriptCommand ("xclass",    XClassText,          "\t}",   2,      1,      1,      6),
 
             new ScriptCommand ("file",      FileText,             "\n\t\t\t}",  4,      2,      2,      1),
             new ScriptCommand ("xfile",     XFileText,            "\t\t\t}",  5,      2,      2,      1),
             new ScriptCommand ("zfile",     ZFileText,            "\t\t\t}",  4,      2,      2,      1),
+
+            new ScriptCommand ("page",    PageText,             "\t}",      3,      2,      1,      1),
 
             new ScriptCommand ("method",    MethodText,             "\t}",  3,      2,      1,      1),
             new ScriptCommand ("method2",   Method2Text,            "\t}",  5,      2,      1,      1),

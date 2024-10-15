@@ -4,7 +4,7 @@
 	  <AssemblyName>rfctool</AssemblyName>
 	  <Product>RFCTool</Product>
 	  <Description>Generates RFC format documentation from OOXML or Markdown source.</Description>
-	  <Copyright>© 2015-2021</Copyright>
+	  <Copyright>© 2015-2024</Copyright>
 	  <Title>RFCTool</Title>
   </PropertyGroup>
 

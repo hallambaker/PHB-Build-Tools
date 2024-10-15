@@ -25,7 +25,7 @@ namespace Goedel.Document.RFC {
                 "ipr", Prep(document.Ipr),
                 "number", Prep(document.Number),
                 "obsoletes", Prep(document.Obsoletes),
-                "prepTime", document.PrepTime.ToRFC3339(),
+                //"prepTime", document.PrepTime.ToRFC3339(), - no longer required
                 "scripts", Prep(document.Scripts),
                 "sortRefs", Prep(document.SortRefs),
                 "submissionType", Prep(document.SubmissionType??document.Stream),
@@ -53,7 +53,7 @@ namespace Goedel.Document.RFC {
 
             WriteValueTag("title", document.Title, "abbrev", document.TitleAbrrev);
 
-            WriteEmptyTagNL("seriesInfo", null, "name", document.SeriesInfo.Name,
+            WriteEmptyTagNL("seriesInfo", null, "name", document.FullDocName,
                  "value", document.SeriesInfo.Value, "stream", document.SeriesInfo.Stream);
             if (document.SeriesInfo.DOI != null) {
                 WriteEmptyTag("seriesInfo", null, "name", "DOI", document.SeriesInfo.DOI);
