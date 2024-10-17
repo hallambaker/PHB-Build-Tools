@@ -8,4 +8,7 @@ public interface IAnnotation {
     List<string> References { get; set; }
     string Semantic { get; set; }
     string Text { get; set; }
+
+    bool Written { get; set; }
+
     }

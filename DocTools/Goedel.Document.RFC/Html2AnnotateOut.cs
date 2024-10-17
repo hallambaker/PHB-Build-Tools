@@ -13,6 +13,8 @@ public class Annotation : IAnnotation {
 
     public string Text { get; set; }
 
+    public bool Written { get; set; } = false;
+
 
     public List<string> References { get; set; }
 
@@ -104,7 +106,7 @@ public class Html2AnnotateOut : Html2RFCOut {
         Start("body");
 
 
-        WriteElement("h1", "Annotated Document", "id", "idnum");
+        //WriteElement("h1", "Annotated Document", "id", "idnum");
 
         WriteBody(Document);
 
@@ -127,9 +129,6 @@ public class Html2AnnotateOut : Html2RFCOut {
             Start("div", "class", "emptyrow");
             }
         Start("div", "class", "column");
-
-
-
         }
 
     ///<inheritdoc/>
@@ -146,9 +145,10 @@ public class Html2AnnotateOut : Html2RFCOut {
                 WriteElement("p", $"<span class=\"palimpsestUser\">[{annotation.User}]</span> " +
                     $"<span class=\"palimpsestSemantic\">{annotation.Semantic}</span>: " +
                     $"{annotation.Text}");
+
+                annotation.Written = true;
                 }
             }
-
 
         End();
         End();
