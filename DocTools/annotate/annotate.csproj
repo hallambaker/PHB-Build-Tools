@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
+  <PropertyGroup>
+	  <AssemblyName>annotate</AssemblyName>
+
+    <Product>Annotate</Product>
+    <Description>Produces an annotated document.</Description>
+	  <Copyright>© 2015-2024</Copyright>
+    <Title>Annotate</Title>
+
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.7.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Goedel.Document.Markdown\Goedel.Document.Markdown.csproj" />
+    <ProjectReference Include="..\Goedel.Document.OpenXML\Goedel.Document.OpenXML.csproj" />
+    <ProjectReference Include="..\Goedel.Document.RFCConvert\Goedel.Document.RFCConvert.csproj" />
+    <ProjectReference Include="..\Goedel.Document.RFC\Goedel.Document.RFC.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+    <ProjectReference Include="..\Goedel.Document.RFCSVG\Goedel.Document.RFCSVG.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Main.cs">
+      <DependentUpon>Main.command</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Main.command">
+      <LastGenOutput>Main.cs</LastGenOutput>
+      <Generator>CommandCS</Generator>
+    </None>
+  </ItemGroup>
+
+
+</Project>

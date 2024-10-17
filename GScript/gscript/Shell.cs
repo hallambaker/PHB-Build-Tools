@@ -36,6 +36,9 @@ namespace GoedelShell {
     //        }
     //    }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class GoedelShell {
 
         private string DefaultFile (NewFile Entry, string Default) {

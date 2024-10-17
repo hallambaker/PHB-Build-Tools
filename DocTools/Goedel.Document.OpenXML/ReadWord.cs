@@ -24,7 +24,7 @@ namespace Goedel.Document.OpenXML {
             GM.ParseRegistry.Register(".docx", ParseRegistryEntry);
             }
 
-        public static GM.Document Parse(string FileName, GM.TagCatalog TagCatalog) {
+        public static GM.MarkdownDocument Parse(string FileName, GM.TagCatalog TagCatalog) {
 
             var Parser = new BlockParseWord(FileName, TagCatalog);
 
@@ -32,7 +32,7 @@ namespace Goedel.Document.OpenXML {
             return Parser.Document;
             }
 
-        public static GM.Document Parse(byte[] Data, GM.TagCatalog TagCatalog)
+        public static GM.MarkdownDocument Parse(byte[] Data, GM.TagCatalog TagCatalog)
             {
 
             var Parser = new BlockParseWord(Data, TagCatalog);
@@ -42,9 +42,9 @@ namespace Goedel.Document.OpenXML {
             }
 
         public static bool Include(string FileName, GM.TagCatalog TagCatalog,
-                        GM.Document Document) => true;
+                        GM.MarkdownDocument Document) => true;
         public static bool Img(string FileName, GM.TagCatalog TagCatalog,
-                        GM.Document Document) => true;
+                        GM.MarkdownDocument Document) => true;
 
 
         GM.CatalogEntry CatalogEntryDefault;
@@ -83,7 +83,7 @@ namespace Goedel.Document.OpenXML {
 
             // Here process document styles to catalog dictionary
             CompileDictionary(SourceMain);
-            Document = new GM.Document();
+            Document = new GM.MarkdownDocument();
 
             foreach (var Child in SourceBody.ChildElements) {
                 ParseChild(Child);

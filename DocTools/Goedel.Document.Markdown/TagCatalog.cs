@@ -193,7 +193,7 @@ namespace Goedel.Document.Markdown {
 
     public class TagCatalog {
 
-        public delegate Document DocumentProcessDelegate(DocumentSet Parent, 
+        public delegate MarkdownDocument DocumentProcessDelegate(DocumentSet Parent, 
                     FileInfo FileInfo, TagCatalog TagCatalog);
         public delegate void ProcessDelegate(string InPath, string OutPath);
 

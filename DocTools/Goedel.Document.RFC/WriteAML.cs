@@ -14,7 +14,7 @@ namespace Goedel.Document.RFC {
         /// </summary>
         /// <param name="OutputFile">Output</param>
         /// <param name="Document">Document to write</param>
-        public static void WriteAML(string OutputFile, Document Document) {
+        public static void WriteAML(string OutputFile, BlockDocument Document) {
             using TextWriter TextWriter = new StreamWriter(OutputFile, false, Encoding.UTF8);
             WriteAML(TextWriter, Document);
             }
@@ -24,7 +24,7 @@ namespace Goedel.Document.RFC {
         /// </summary>
         /// <param name="TextWriter">The output stream to write to</param>
         /// <param name="Document">The document to write</param>
-        public static void WriteAML(TextWriter TextWriter, Document Document) {
+        public static void WriteAML(TextWriter TextWriter, BlockDocument Document) {
             // Format document to place line numbers
             WriteAML WriteAML = new(TextWriter);
             WriteAML.Write(Document);
@@ -35,7 +35,7 @@ namespace Goedel.Document.RFC {
     public class WriteAML {
         TextWriter TextWriter;
         XMLTextWriterPlus XMLOutput;
-        Document Document;
+        BlockDocument Document;
 
 
 
@@ -51,7 +51,7 @@ namespace Goedel.Document.RFC {
         string xmlns = "http://ddue.schemas.microsoft.com/authoring/2003/5";
         string xmlns_xlink = "http://www.w3.org/1999/xlink";
 
-        public void Write (Document Document) {
+        public void Write (BlockDocument Document) {
 
 
 

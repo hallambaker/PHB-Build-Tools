@@ -131,7 +131,7 @@ namespace Goedel.Document.RFC {
 
         const string DraftStatus4 = "This Internet-Draft will expire on {0}";
 
-        public static void Set (Document document) {
+        public static void Set (BlockDocument document) {
             bool haveCopyright = false;
             bool havestatus = false;
 
@@ -208,7 +208,7 @@ namespace Goedel.Document.RFC {
 
             }
 
-        public static List<string> StatusOfThisDocument(Document document) {
+        public static List<string> StatusOfThisDocument(BlockDocument document) {
             var Result = new List<string>();
 
 
@@ -244,7 +244,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        public static List<string> Copyright (Document document) {
+        public static List<string> Copyright (BlockDocument document) {
 
             if (document.Ipr == null) {
                 return new List<string>();

@@ -8,43 +8,54 @@ using Goedel.Document.RFCSVG;
 
 namespace Goedel.Document.RFC;
 
-public class XRefTarget {
-    public string Text => GetText();
-    public Section Section;
-    public TextBlock TextBlock;
+/// <summary>
+/// A document in internal representation.
+/// </summary>
+public partial class BlockDocument {
 
-    public string GetText() {
-        if (Section != null) {
-            return "Section " + Section.Number;
-            }
-        return TextBlock?.AnchorText ?? "TBS";
-        }
+    ///<summary>The source document (if markdown)</summary> 
+    public GM.MarkdownDocument Source = null;
 
-
-    }
-
-public partial class Document {
-    public GM.Document Source = null;
-
+    ///<summary>The time the document was processed.</summary> 
     public DateTime PrepTime = DateTime.Now;
+
+    ///<summary>Dictionary mapping cross reference strings to targets.</summary> 
     public Dictionary<string, XRefTarget> XRefDictionary = new();
 
+    ///<summary>Set of assigned identifiers.</summary> 
     public SortedSet<string> AssignedIDs = new();
-
-    // serious issue with Category/Status and SubmissionType/Stream
-    // These seem to overlap.
 
 
     // Attributes from tag <RFC>
+
+
+    ///<summary>RFC attribute, the RFC number</summary> 
     public string Number;
+
+    ///<summary>RFC attribute, the document replaced by this one </summary> 
     public string Obsoletes;
+
+    ///<summary>RFC attribute, the document updated by this one</summary> 
     public string Updates;
+
+    ///<summary>RFC attribute, the category.</summary> 
     public string Category;
+
+    ///<summary>RFC attribute, the consensus value.</summary> 
     public string Consensus;
+
+    ///<summary>RFC attribute, the series number</summary> 
     public string SeriesNumber;
+
+    ///<summary>RFC attribute, the IPR identifier</summary> 
     public string Ipr;
+
+    ///<summary>RFC attribute, the IPR description</summary> 
     public string IprExtract;
+    ///<summary>RFC attribute, the submission type</summary> 
     public string SubmissionType; // see seriesinfo
+
+    ///<summary>RFC attribute, the document name</summary> 
     public string Docname = "";
 
     // I see no reason at all to allow these to be varied. The TOC is
@@ -114,7 +125,7 @@ public partial class Document {
             }
         }
     public bool IsConsensus => Consensus == "yes" | Consensus == "true";
-    public bool IsDraft => Series == "Internet-Draft";
+    public bool IsDraft => Series == "Internet-Draft" | Series == "draft";
 
     public SeriesInfo SeriesInfo;
     public string Stream => SeriesInfo?.Stream ?? "ietf";
@@ -154,14 +165,14 @@ public partial class Document {
         return String.Format(Format, Day, Month, Year);
         }
 
-    public Document() {
+    public BlockDocument() {
         DateTime now = DateTime.Now;
         Year = now.Year.ToString();
         Month = Months[now.Month];
         Day = now.Day.ToString();
         }
 
-    public Document(string InputFile, string Format)
+    public BlockDocument(string InputFile, string Format)
         : this() {
 
         if (Format == null || (Format.ToLower() == "html" | Format.ToLower() == "html2rfc")) {
@@ -444,25 +455,25 @@ public partial class Document {
 
 
     public void NumberSections() {
-        NumberTextBlocks("s-abstract", "Abstract", ref Abstract);
+        NumberTextBlocks("section-abstract", "Abstract", ref Abstract);
         //NumberTextBlocks("s-note", ref Note);
 
         int Index = 1;
 
         foreach (Section S in Boilerplate) {
-            NumberSection(S, Index, 1, "bp-", null);
+            NumberSection(S, Index, 1, "section-boilerplate-", null);
             Index++;
             }
 
         Index = 1;
 
         foreach (Section S in Middle) {
-            NumberSection(S, Index, 1, "s-", ".");
+            NumberSection(S, Index, 1, "section-", ".");
             Index++;
             }
-        Index = 0;
+        //Index = 0;
         foreach (Section S in Back) {
-            NumberSection(S, Index, 1, "a-", ":", textPrefix: "Appendix ", numeric: false);
+            NumberSection(S, Index, 1, "section-", ":", textPrefix: "Appendix ", numeric: false);
             Index++;
             }
         }
@@ -471,7 +482,7 @@ public partial class Document {
     string GetAnchor(string Text) => Text == null ? "undefined" : Clean(Text);
 
 
-    string Clean(string text) {
+    static string Clean(string text) {
         var builder = new StringBuilder();
         text = text.ToLower();
         foreach (var c in text) {
@@ -592,46 +603,17 @@ public class Section {
 
     }
 
-/// <summary>Text Block Types</summary>
-public enum BlockType {
-    /// <summary>Formatted paragraph</summary>
-    Paragraph,
-    /// <summary>Verbatim paragraph</summary>
-    Verbatim,
-    /// <summary>Numbered list</summary>
-    Ordered,
-    /// <summary>Bullet List</summary>
-    Symbol,
-    /// <summary>Definitions</summary>
-    Definitions,
-    /// <summary>Defined Term</summary>
-    Term,
-    /// <summary>Definition</summary>
-    Data,
-    /// <summary>Table</summary>
-    Table,
-    /// <summary>Table Row</summary>
-    TableRow,
-    /// <summary>Table Data</summary>
-    TableData,
-    /// <summary>Reference</summary>
-    Reference,
-    /// <summary>Author</summary>
-    Author,
-    /// <summary>Figure</summary
-    Figure,
-    /// <summary>Artwork</summary
-    Artwork,
-    /// <summary>BlockQuote</summary
-    BlockQuote,
-    /// <summary>BlocSourceCodekQuote</summary
-    SourceCode,
-    /// <summary>Null type</summary
-    Null
-    }
-
+/// <summary>
+/// Text block class, parent for all text blocks
+/// </summary>
 public abstract class TextBlock {
+    ///<summary>The block type</summary> 
+    public abstract BlockType BlockType { get; }
+
+    ///<summary>The anchor text.</summary> 
     public string AnchorText => GeneratedID;
+
+    ///<summary>Generated identifier.</summary> 
     public string GeneratedID;  // The id used in <p>, <h2>, <h3>, etc.
     string anchorID;
     public string AnchorID {
@@ -651,15 +633,19 @@ public abstract class TextBlock {
     public int Line, Position;
     public int Page;
 
-    public abstract BlockType BlockType { get; }
+
 
     public List<GM.TextSegment> Irefs;
 
     public List<GM.TextSegment> BlockName;
     }
 
-
+/// <summary>
+/// Text block containing a figure.
+/// </summary>
 public class Figure : TextBlock {
+
+    ///<inheritdoc/>
     public override BlockType BlockType => BlockType.Figure;
     public override string SectionText => "Figure " + NumericID;
     public string FigureID => "f-" + NumericID;
@@ -691,7 +677,7 @@ public class Figure : TextBlock {
         }
 
     public void SaveContent(TextWriter output) {
-        SvgDocument.Save(output);
+        SvgDocument?.Save(output);
         }
 
     }

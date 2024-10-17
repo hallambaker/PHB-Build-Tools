@@ -1,79 +1,159 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using Goedel.Document.Markdown;
+using Goedel.IO;
 using Goedel.Registry;
 using Goedel.Utilities;
-using Goedel.IO;
-using Goedel.Document.RFC;
-using Goedel.Document.Markdown;
+
+using System.Text;
 
 namespace Goedel.Document.RFC;
 
+
+/// <summary>
+/// Write the document out in HTML format.
+/// </summary>
 public partial class Html2RFCOut : XMLTextWriter {
+
+    #region // Properties
+
+    ///<summary>Strict output mode, obey the requirements of RFC-I rather than making it look good.</summary> 
     public bool Strict = false;
 
-    TextWriter textWriter;
+    ///<summary>Paragraph marker</summary> 
+    public const string Pilcrow = "&para;"; // "¶"
 
-    public string Pilcrow = "&para;"; // "¶"
-    public string Sect = "&sect;"; // "¶"
+    ///<summary>Section marker</summary> 
+    public const string Sect = "&sect;"; // "¶"
 
-    readonly string[] attributesLinkLicense = new string[] {
-            "href", "https://trustee.ietf.org/trust-legal-provisions.html", "rel", "license" };
+    ///<summary>Attributes used to express the license.</summary> 
+    readonly string[] attributesLinkLicense = [
+            "href", "https://trustee.ietf.org/trust-legal-provisions.html", "rel", "license" ];
 
-    readonly string[] stylesheets = {
-            //"https://rfc-format.github.io/draft-iab-rfc-css-bis/xml2rfc.css",  // ToDo: - final stylesheet
+    ///<summary>The style sheets</summary> 
+    readonly string[] stylesheets = [
             "rfc-local.css"
-            };
+            ];
 
-    public string MainStylesheet = "xml2rfc.css";
+    ///<summary>The principal stylesheet.</summary> 
+    public virtual string MainStylesheet => "xml2rfc.css";
 
-    // ToDo: Should incorporate the stylesheet and linked SVGs into the output as one file.
+    public virtual bool Annotate => false;
 
-    DateTime Prepared = DateTime.UtcNow;
-    DateTime Rendered = DateTime.UtcNow;
-    Document Document;
+    bool Divisions => true;
 
+    string SpanMarker => Divisions ? "div" : "span";
+
+    protected TextWriter textWriter;
+    protected DateTime Prepared = DateTime.UtcNow;
+    protected DateTime Rendered = DateTime.UtcNow;
+    protected BlockDocument Document { get; set; }
+
+
+    protected ListLevel ListLevel { get; set; }
+
+    #endregion
+    #region // Constructors
     /// <summary>
     /// Constructor, this is a subclass of XMLTextWriter
     /// </summary>
-    /// <param name="TextWriter"></param>
-    public Html2RFCOut(TextWriter TextWriter) : base(TextWriter, false) {
-        this.textWriter = TextWriter;
-        TextWriter.NewLine = "\n";
-        TextWriter.WriteLine("<!DOCTYPE html>");
+    /// <param name="textWriter"></param>
+    public Html2RFCOut(TextWriter textWriter) : base(textWriter, false) {
+        this.textWriter = textWriter;
+        textWriter.NewLine = "\n";
+        textWriter.WriteLine("<!DOCTYPE html>");
         }
 
 
+    #endregion
     #region // Document
 
-    public void Write(Document Document) {
-        this.Document = Document;
+    public virtual void Write(BlockDocument document) {
+        this.Document = document;
         ListLevel = new ListLevel() { OpenListItem = OpenListItem, CloseListItem = CloseListItem };
-
 
         Start("html");
         Start("head");
+        WriteHead(document);
+        End();
+        Start("body");
+
+        WriteBody(document);
+
+        End();
+        End();
+        }
+
+    public virtual void WriteBody(BlockDocument document) {
+
+
+
+        //WriteEars();
+
+        StartBlock("identifiers", true);
+
+
+        if (!document.IsDraft) {
+            Start("script", "src", RFCEditorBoilerplate.StatusScriptURL);
+            End();
+            }
+
+        WriteIdentifiers(document);
+
+        EndBlock();
+
+        StartBlock("title", true);
+        WriteElement("h1", document.Title.Trim(), "id", "title");
+        EndBlock();
+
+
+
+
+        WriteAbstract(document);
+        WriteSections(document.Boilerplate, 0, true);
+        if (document.TocInclude) {
+            WriteToc(document);
+            }
+
+        WriteSections(document.Middle, 0);
+        WriteReferences(document.Catalog);
+
+        WriteSections(document.Back, 0);
+
+
+        WriteAuthors(document.AuthorSectionTitle, document.Authors);
+        WriteColophon();
+
+
+
+        }
+
+    public virtual void StartBlock(string anchor, bool isSection = false) {
+        }
+
+    public virtual void EndBlock() {
+        }
+
+    public virtual void WriteHead(BlockDocument document) {
+
         WriteElementEmpty("meta", "charset", "utf-8");
         WriteElementEmpty("meta", "content", "Common,Latin", "name", "scripts");
         WriteElementEmpty("meta", "content", "initial-scale=1.0", "name", "viewport");
 
-        WriteElement("title", Document.TitleFull);
+        WriteElement("title", document.TitleFull);
 
-        foreach (var Author in Document.Authors) {
+        foreach (var Author in document.Authors) {
             WriteElementEmpty("meta", "name", "author", "content", Author.Name.Trim());
             }
 
         // ToDo: Description
-        if (Document.Abstract.Count > 0) {
+        if (document.Abstract.Count > 0) {
             var DescriptionBuilder = new StringBuilder();
-            foreach (var TextBlock in Document.Abstract) {
+            foreach (var TextBlock in document.Abstract) {
                 switch (TextBlock) {
                     case P P: {
-                            DescriptionBuilder.Append(P.Text);
-                            DescriptionBuilder.Append(" ");
-                            break;
-                            }
+                        DescriptionBuilder.Append(P.Text);
+                        DescriptionBuilder.Append(" ");
+                        break;
+                        }
                     }
                 }
             WriteElementEmpty("meta", "name", "description", "content", DescriptionBuilder.ToString());
@@ -81,95 +161,49 @@ public partial class Html2RFCOut : XMLTextWriter {
 
         WriteElementEmpty("meta", "content", "rfctool 2.0", "name", "generator");
 
-        if (Document.Keywords != null && Document.Keywords.Count > 0) {
-            foreach (var Keyword in Document.Keywords) {
+        if (document.Keywords != null && document.Keywords.Count > 0) {
+            foreach (var Keyword in document.Keywords) {
                 WriteElementEmpty("meta", "content", Keyword.Trim(), "name", "keyword");
                 }
             }
 
-        if (!Document.IsDraft) {
-            WriteElementEmpty("meta", "content", Document.SeriesInfo.Value, "name", "rfc.number");
-            WriteElementEmpty("link", "href", $"rfc{Document.SeriesInfo.Value}.xml",
+        if (!document.IsDraft) {
+            WriteElementEmpty("meta", "content", document.SeriesInfo.Value, "name", "rfc.number");
+            WriteElementEmpty("link", "href", $"rfc{document.SeriesInfo.Value}.xml",
                 "type", "application/rfc+xml", "rel", "alternate");
             }
 
         WriteElementEmpty("link", "href", "#copyright", "rel", "license");
 
-        // ToDo: include style of user's choice.
-        WriteStyle(MainStylesheet);
+        if (MainStylesheet is not null) {
+            WriteStyle(MainStylesheet);
+            }
 
         foreach (var Stylesheet in stylesheets) {
             WriteElementEmpty("link", "href", Stylesheet, "rel", "stylesheet", "type", "text/css");
             }
 
 
-        if (!Document.IsDraft) {
+        if (!document.IsDraft) {
             WriteElementEmpty("link", "href",
-                "https://dx.doi.org/10.17487/rfc" + Document.SeriesInfo.Value, "rel", "alternate");
+                "https://dx.doi.org/10.17487/rfc" + document.SeriesInfo.Value, "rel", "alternate");
             }
         WriteElementEmpty("link", "href", "urn:issn:2070-1721", "rel", "alternate");
 
         // ToDo: Create meta link to previous version.
 
         if (!Strict) {
-            if (Document.EmbedSVG == 0) {
+            if (document.EmbedSVG == 0) {
                 XMLEmbed.FaviconBase64("favicon.png", textWriter);
                 }
             else {
                 WriteElementEmpty("link", "href", "favicon.png", "rel", "icon");
                 }
             }
-        End();
 
-        Start("body");
-
-        WriteEars();
-
-
-        if (!Document.IsDraft) {
-            Start("script", "src", RFCEditorBoilerplate.StatusScriptURL);
-            End();
-            }
-
-
-        WriteIdentifiers(Document);
-
-
-        if (!Document.IsDraft) {
-            WriteElement("h1", Document.FullDocName, "id", "rfcnum");
-            }
-
-        Start("h1", "id", "title");
-        Write(Document.Title.Trim());
-
-
-        if (Document.IsDraft) {
-            WriteElement("h1", Document.FullDocName, "id", "idnum");
-            }
-
-        //foreach (var SeriesInfo in Document.SeriesInfos) {
-        //    WriteElement("br");
-        //    WriteElement("span", SeriesInfo.FullDocName, "id", SeriesInfo.Stream + "-file", "class", "filename");
-        //    }
-        End();
-
-        WriteAbstract(Document);
-        WriteSections(Document.Boilerplate, 0, true);
-        if (Document.TocInclude) {
-            WriteToc(Document);
-            }
-
-        WriteSections(Document.Middle, 0);
-        WriteReferences(Document.Catalog);
-
-        WriteSections(Document.Back, 0);
-
-
-        WriteAuthors(Document.AuthorSectionTitle, Document.Authors);
-        WriteColophon();
-
-        End();
         }
+
+
 
 
     void WriteEars() {
@@ -195,23 +229,34 @@ public partial class Html2RFCOut : XMLTextWriter {
     #region // Utitlies to make various paragraph blocks
 
     //Tagging and bagging paragraph blocks
-    void StartSection(Section Section) {
-        Start("section", "id", Section.SetableID);
-        if (Section.GeneratedID != null) {
-            Start(HeadTag(Section.Level), "id", Section.GeneratedID);
-            WriteElement("a", Section.Number, "class", "selfRef", "href", "#" + Section.GeneratedID);
+    void StartSection(Section section) {
+        Start("section", "id", section.SetableID);
+
+        StartBlock(section.SetableID, true);
+        if (section.GeneratedID != null) {
+            Start(HeadTag(section.Level), "id", section.GeneratedID);
+            WriteElement("a", section.Number, "class", "selfRef", "href", "#" + section.GeneratedID);
             }
         else {
-            Start(HeadTag(Section.Level));
+            Start(HeadTag(section.Level));
             }
-        WriteElement("a", Section.Heading, "class", "selfRef", "href", "#" + Section.SetableID);
+        WriteElement("a", section.Heading, "class", "selfRef", "href", "#" + section.SetableID);
+
+
         End();
+
+        EndBlock();
         }
     //Level, Section.Number + " " + Section.Heading, Section.ID, Section.SectionID
 
     //Tagging and bagging paragraph blocks
     void StartSection(int Level, string Heading, string SectionId, string Numbered = null) {
+
+
+
         Start("section", "id", SectionId);
+
+        StartBlock(SectionId, true);
         if (Numbered != null) {
             Start(HeadTag(Level), "id", Numbered);
             }
@@ -220,6 +265,8 @@ public partial class Html2RFCOut : XMLTextWriter {
             }
         WriteElement("a", Heading, "class", "selfRef", "href", "#" + SectionId);
         End();
+
+        EndBlock();
         }
 
     void EndSection() {
@@ -231,9 +278,9 @@ public partial class Html2RFCOut : XMLTextWriter {
     public void WriteParagraph(P P) => WriteBlock(P, "p");
 
 
-    void WritePRE(List<TextSegment> Segments) {
+    void WritePRE(List<TextSegment> segments) {
         using var wrapWriter = new WrapWriter(textWriter);
-        foreach (var Segment in Segments) {
+        foreach (var Segment in segments) {
             switch (Segment) {
                 case TextSegmentText TextSegmentText:
                     wrapWriter.Write(TextSegmentText.Text);
@@ -252,6 +299,50 @@ public partial class Html2RFCOut : XMLTextWriter {
 
     #endregion
     #region // Tables
+
+    void ExtractText(TableData data) {
+        if (data?.Text is not null) {
+            return;
+            }
+
+        data.Text = "TBS";
+        }
+
+
+    void WriteTableData(string tag, TableData data) {
+
+        if (data.Blocks is null || data.Blocks.Count ==0) {
+            WriteElement(tag, data.Text);
+            return;
+            }
+        if (data.Blocks.Count == 1) {
+            WriteTableBlock(tag, data.Blocks[0]);
+            return;
+            }
+
+        foreach (var block in data.Blocks) {
+            Start(tag, true, false, "id", block.GeneratedID);
+            switch (block) {
+                case P p: {
+                    WriteTableBlock("p", block);
+                    break;
+                    }
+                }
+            End();
+            }
+
+        }
+
+    void WriteTableBlock(string tag, TextBlock block) {
+        switch (block) {
+            case P p: {
+                WriteBlock(p, tag);
+                break;
+                }
+            }
+        }
+
+
     public void WriteTable(Table table) {
         if (table.Body.Count == 0) {
             return; // no rows so suppress outpout
@@ -261,7 +352,11 @@ public partial class Html2RFCOut : XMLTextWriter {
         foreach (var HeadRow in table.Head) {
             Start("tr");
             foreach (var data in HeadRow.Data) {
-                WriteElement("th", data.Text);
+
+                WriteTableData ("th", data);
+
+                //ExtractText(data);
+                //WriteElement("th", data.Text);
                 }
             End();
             }
@@ -271,7 +366,10 @@ public partial class Html2RFCOut : XMLTextWriter {
             foreach (var bodyrow in body) {
                 Start("tr");
                 foreach (var data in bodyrow.Data) {
-                    WriteElement("td", data.Text);
+
+                    WriteTableData("td", data);
+                    //ExtractText(data);
+                    //WriteElement("td", data.Text);
                     }
                 End();
                 }
@@ -283,15 +381,21 @@ public partial class Html2RFCOut : XMLTextWriter {
     #endregion
     #region // Abstract
     // Replacements for the automatic sections
-    public void WriteAbstract(Document Document) {
+    public void WriteAbstract(BlockDocument document) {
+
+
         StartSection(1, "Abstract", "abstract");
 
-        foreach (var TextBlock in Document.Abstract) {
+
+
+        foreach (var TextBlock in document.Abstract) {
             switch (TextBlock) {
                 case P P: {
-                        WriteParagraph(P);
-                        break;
-                        }
+                    StartBlock(P.AnchorText);
+                    WriteParagraph(P);
+                    EndBlock();
+                    break;
+                    }
                 }
             }
 
@@ -299,7 +403,7 @@ public partial class Html2RFCOut : XMLTextWriter {
         }
     #endregion
     #region // Toc
-    public void WriteToc(Document Document) {
+    public void WriteToc(BlockDocument Document) {
         StartSection(1, "Table of Contents", "toc");
 
         Start("nav", "class", "toc");
@@ -364,12 +468,12 @@ public partial class Html2RFCOut : XMLTextWriter {
         }
     #endregion
     #region // Status
-    public void WriteStatus(Document Document) {
+    public void WriteStatus(BlockDocument Document) {
         StartSection(1, "Status of this Memo", "n-status-of-this-memo");
         EndSection();
         }
 
-    public void WriteCopyright(Document Document) {
+    public void WriteCopyright(BlockDocument Document) {
         StartSection(1, "Copyright Notice", "n-copyright-notice");
         EndSection();
         }
@@ -389,11 +493,23 @@ public partial class Html2RFCOut : XMLTextWriter {
         }
 
 
-    public void WriteIdentifiers(Document Document) {
+    public void StartDiv(params string[] Attributes) {
+        if (Divisions) {
+            Start("div", Attributes);
+            }
+        }
+
+    public void EndDiv(bool enable) {
+        if (Divisions) {
+            End();
+            }
+        }
+
+    public void WriteIdentifiers(BlockDocument Document) {
         EndLine();
-        Start("div", "id", "external-metadata", "class", "document-information");
-        End(); // external-metadata
-        Start("div", "id", "internal-metadata", "class", "document-information");
+        StartDiv("id", "external-metadata", "class", "document-information");
+        EndDiv(Divisions); // external-metadata
+        StartDiv("id", "internal-metadata", "class", "document-information");
 
         Start("dl", "id", "identifiers");
 
@@ -478,12 +594,12 @@ public partial class Html2RFCOut : XMLTextWriter {
             WriteElement("dt", Document.Authors.Count > 0 ? "Authors:" : "Author");
             Start("dd", "class", "authors");
             foreach (var Author in Document.Authors) {
-                Start("div", "class", "author");
+                Start(SpanMarker, "class", "author");
                 if (Author.Name != null) {
-                    WriteInlineElement("div", Author.Name.Trim(), "class", "author-name");
+                    WriteInlineElement(SpanMarker, Author.Name.Trim(), "class", "author-name");
                     }
                 if (Author.Organization != null) {
-                    WriteInlineElement("div", Author.Organization.Trim(), "class", "org");
+                    WriteInlineElement(SpanMarker, Author.Organization.Trim(), "class", "org");
                     }
                 End();
                 }
@@ -492,7 +608,7 @@ public partial class Html2RFCOut : XMLTextWriter {
 
 
         End(); // identifiers
-        End(); // internal-metadata
+        EndDiv(Divisions); // internal-metadata
 
         }
 
@@ -518,10 +634,8 @@ public partial class Html2RFCOut : XMLTextWriter {
     #endregion
 
     #region // List
-    // -----------------------
 
-    ListLevel ListLevel;
-    void OpenListItem(BlockType ListItem) {
+    protected void OpenListItem(BlockType ListItem) {
         switch (ListItem) {
             case BlockType.Definitions:
             case BlockType.Term:
@@ -534,7 +648,7 @@ public partial class Html2RFCOut : XMLTextWriter {
             }
         }
 
-    void CloseListItem(BlockType ListItem) {
+    protected void CloseListItem(BlockType ListItem) {
         switch (ListItem) {
             case BlockType.Definitions:
             case BlockType.Term:
@@ -546,7 +660,7 @@ public partial class Html2RFCOut : XMLTextWriter {
 
     string WrapNull(string Text) => Text ?? "";
 
-    void ListItem(LI li) {
+    protected void ListItem(LI li) {
         ListLevel.SetListLevel(li.Level - 1, li.Type, li.GeneratedID);
 
         switch (li.Type) {
@@ -641,31 +755,46 @@ public partial class Html2RFCOut : XMLTextWriter {
 
                     switch (TextBlock) {
                         case LI LI: {
-                                ListItem(LI);
-                                break;
-                                }
+                            //StartBlock(TextBlock.AnchorText);
+                            ListItem(LI);
+                            //EndBlock();
+                            break;
+                            }
                         default: {
-                                ListLast();
-                                switch (TextBlock) {
-                                    case PRE PRE: {
-                                            WritePre(PRE);
-                                            break;
-                                            }
-                                    case P P: {
-                                            WriteParagraph(P);
-                                            break;
-                                            }
-                                    case Table Table: {
-                                            WriteTable(Table);
-                                            break;
-                                            }
-                                    case Figure Figure: {
-                                            WriteFigure(Figure);
-                                            break;
-                                            }
+                            ListLast();
+                            switch (TextBlock) {
+                                case PRE PRE: {
+                                    StartBlock(TextBlock.AnchorText);
+                                    WritePre(PRE);
+                                    EndBlock();
+                                    break;
                                     }
-                                break;
+                                case P P: {
+                                    StartBlock(TextBlock.AnchorText);
+                                    WriteParagraph(P);
+
+                                    EndBlock();
+                                    break;
+
+                                    }
+                                case Table Table: {
+                                    StartBlock(TextBlock.AnchorText);
+                                    WriteTable(Table);
+
+                                    EndBlock();
+                                    break;
+
+                                    }
+                                case Figure Figure: {
+                                    StartBlock(TextBlock.AnchorText);
+                                    WriteFigure(Figure);
+                                    EndBlock();
+                                    break;
+                                    }
+
                                 }
+                            break;
+                            }
 
                         }
                     }
@@ -703,7 +832,7 @@ public partial class Html2RFCOut : XMLTextWriter {
         Figure.SaveContent(textWriter);
 
         WriteFigureCaption(Figure);
-
+        End();
         End();
         }
 
@@ -884,29 +1013,29 @@ public partial class Html2RFCOut : XMLTextWriter {
         foreach (var Author in Authors) {
             Start("address", "class", "vcard");
 
-            Start("div", "class", "nameRole");
+            Start(SpanMarker, "class", "nameRole");
             WriteElementIfTrim("span", Author.Name, "class", "fn");
             // ToDo: process non existent Editor role here.
             End();
 
-            WriteElementIfTrim("div", Author.Organization, "class", "org");
+            WriteElementIfTrim(SpanMarker, Author.Organization, "class", "org");
             //ToDo: ascii/nonAscii organizations.
 
             if (NotNull(Author.Street, Author.City, Author.Code, Author.Country)) {
-                Start("div", "class", "adr");
+                Start(SpanMarker, "class", "adr");
                 WriteElementIfTrim("div", Author.Street, "class", "street-address");
                 if (NotNull(Author.City, Author.Code)) {
-                    Start("div", "class", "city-region-code");
+                    Start(SpanMarker, "class", "city-region-code");
                     WriteElementIfTrim("span", Author.City, "class", "city");
                     //ToDo: WriteElementIf("span", Author.Region, "class", "region");
                     WriteElementIfTrim("span", Author.Code, "class", "postal-code");
                     End();
                     }
-                WriteElementIfTrim("div", Author.Country, "class", "country-name");
+                WriteElementIfTrim(SpanMarker, Author.Country, "class", "country-name");
                 End();
                 }
             if (NotNull(Author.Phone, Author.Email, Author.URI)) {
-                Start("div");
+                Start(SpanMarker);
                 WriteContact("Email:", Author.Email, "email", "mailto:");
                 WriteContact("Phone:", Author.Phone, "tel", "tel:", "VOICE");
                 WriteContact("URI:", Author.URI, "url");

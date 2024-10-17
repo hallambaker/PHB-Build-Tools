@@ -214,7 +214,7 @@ public class Catalog {
             }
         }
 
-    public void ResolveAll(Source Source, Document Document) {
+    public void ResolveAll(Source Source, BlockDocument Document) {
         foreach (Citation Citation in Citations) {
             if (!Citation.Resolved) {
                 Source.Resolve(Citation, Document);
@@ -232,7 +232,7 @@ public class Catalog {
             }
         }
 
-    public void ResolveAll(Document Document) {
+    public void ResolveAll(BlockDocument Document) {
         foreach (Citation Citation in Citations) {
             Reference Reference = FindReference(Citation.Label);
             if (Reference != null) {
@@ -359,7 +359,7 @@ public class Source {
         try {
             var Uri = String.Format(Catalog.DraftURI, DocName.Substring(6));
             string Result = WebClient.DownloadString(Uri);
-            var Document = new Document();
+            var Document = new BlockDocument();
             new NewParse(Result, Document);
             var References = Document?.Catalog?.References;
             if (References == null | References.Count < 1) {
@@ -377,7 +377,7 @@ public class Source {
         }
 
 
-    public void Resolve(Citation Citation, Document Document) {
+    public void Resolve(Citation Citation, BlockDocument Document) {
         if (Citation.Resolved) {
             return;
             }

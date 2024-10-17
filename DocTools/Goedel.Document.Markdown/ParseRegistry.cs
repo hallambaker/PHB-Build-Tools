@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Goedel.Document.Markdown {
 
-    public delegate Document ParseDelegate(string FileName, TagCatalog TagCatalog);
-    public delegate bool IncludeDelegate(string FileName, TagCatalog TagCatalog, Document Document);
+    public delegate MarkdownDocument ParseDelegate(string FileName, TagCatalog TagCatalog);
+    public delegate bool IncludeDelegate(string FileName, TagCatalog TagCatalog, MarkdownDocument Document);
 
 
     public class ParseRegistryEntry {
@@ -32,7 +32,7 @@ namespace Goedel.Document.Markdown {
             }
 
 
-        public static bool Include (string FileName, TagCatalog TagCatalog, Document Document) {
+        public static bool Include (string FileName, TagCatalog TagCatalog, MarkdownDocument Document) {
             var Entry = GetEntry(FileName);
             if (Entry == null) {
                 return false;
@@ -43,7 +43,7 @@ namespace Goedel.Document.Markdown {
             return true;
             }
 
-        public static Document Parse(string FileName, TagCatalog TagCatalog) {
+        public static MarkdownDocument Parse(string FileName, TagCatalog TagCatalog) {
             var Entry = GetEntry(FileName);
             if (Entry == null) {
                 return null;

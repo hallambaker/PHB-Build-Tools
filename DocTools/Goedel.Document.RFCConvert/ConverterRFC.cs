@@ -9,8 +9,8 @@ using Goedel.Utilities;
 
 namespace MakeRFC {
     public class ConverterRFC {
-        GM.Document source;
-        Goedel.Document.RFC.Document target;
+        GM.MarkdownDocument source;
+        Goedel.Document.RFC.BlockDocument target;
 
         enum BlockState {
             Title,
@@ -21,10 +21,10 @@ namespace MakeRFC {
         BlockState state = BlockState.Title;
 
         // Convenience routine as a static function
-        public static ConverterRFC Convert(GM.Document source, Goedel.Document.RFC.Document target) => new(source, target);
+        public static ConverterRFC Convert(GM.MarkdownDocument source, Goedel.Document.RFC.BlockDocument target) => new(source, target);
 
         // Create a converter
-        public ConverterRFC(GM.Document Source, Goedel.Document.RFC.Document target) {
+        public ConverterRFC(GM.MarkdownDocument Source, Goedel.Document.RFC.BlockDocument target) {
             this.source = Source;
             this.target = target;
             target.Source = Source;

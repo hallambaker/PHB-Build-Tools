@@ -14,7 +14,7 @@ namespace Goedel.Document.RFC {
         /// </summary>
         /// <param name="OutputFile">Output</param>
         /// <param name="Document">Document to write</param>
-        public static void WriteMD(string OutputFile, Document Document) {
+        public static void WriteMD(string OutputFile, BlockDocument Document) {
             using var TextWriter = new StreamWriter(OutputFile, false, Encoding.UTF8);
             WriteMD(TextWriter, Document);
             }
@@ -24,7 +24,7 @@ namespace Goedel.Document.RFC {
         /// </summary>
         /// <param name="TextWriter">Output</param>
         /// <param name="Document">Document to write</param>
-        public static void WriteMD(TextWriter TextWriter, Document Document) {
+        public static void WriteMD(TextWriter TextWriter, BlockDocument Document) {
             var Writer = new WriteMD(TextWriter);
             Writer.Write(Document);
             }
@@ -218,7 +218,7 @@ namespace Goedel.Document.RFC {
         ListLevel ListLevel;
 
         // Write out the document
-        public void Write(Document Document) {
+        public void Write(BlockDocument Document) {
             ListLevel = new ListLevel() { OpenListItem = OpenListItem, CloseListItem = CloseListItem };
 
             TextWriter.Write("// This file was converted using RFCTool");

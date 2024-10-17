@@ -58,7 +58,7 @@ class Program {
 
     static void TestNew(TagCatalog TagCatalog) {
 
-        var Document = new Document("Test.md");
+        var Document = new MarkdownDocument("Test.md");
         var BlockParser = new BlockParserMarkDown() {
             TagCatalog = TagCatalog,
             Document = Document
@@ -76,7 +76,7 @@ class Program {
         }
 
 
-    static void Dump(Document Document) {
+    static void Dump(MarkdownDocument Document) {
         Console.WriteLine("META DATA");
 
         foreach (var Index in Document.MetaData) {

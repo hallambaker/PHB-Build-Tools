@@ -1,0 +1,324 @@
+﻿Class Goedel.MarkLib TagDefinitions
+	
+	Block figure
+	Block include
+	Block pre
+		Flag plaintext
+		XML "pre" ""
+		
+	Meta bibliography
+	Meta bibsource
+	Meta style
+
+	Item img
+		Remark
+			|Image
+		XML "img" "src"
+			Default "class" "img-fluid"
+
+
+	Block fig
+		Markup "<figure class=\"figure\"><img class=\"img-fluid\" src=\"{0}\"/><figcaption class=\"figure-caption\">"  
+		"<figure class=\"figure\"><img class=\"img-fluid\" src=\"{0}\"/><figcaption class=\"figure-caption\">" "</figcaption></figure>"
+
+	Block figm
+		Markup "<figure class=\"figure\"><img width=\"75%\" class=\"img-fluid\" src=\"{0}\"/><figcaption class=\"figure-caption\">"  
+		"<figure class=\"figure\"><img width=\"75%\" class=\"img-fluid\" src=\"{0}\"/><figcaption class=\"figure-caption\">" "</figcaption></figure>"
+
+
+
+	Block p
+		Level 0
+		XML "p" "id"
+
+	Block h1
+		Level 1
+		XML "h1" "id"
+	Block h2
+		Level 2
+		XML "h2" "id"
+	Block h3
+		Level 3
+		XML "h3" "id"
+	Block h4
+		Level 4
+		XML "h4" "id"
+	Block h5
+		Level 5
+		XML "h5" "id"
+	Block h6
+		Level 6
+		XML "h6" "id"
+
+
+	Layout ul
+		XML "ul" "class"
+		Wrap li
+		Wrap ul
+		Wrap ol
+
+	Layout ol
+		XML "ol" "class"
+		Wrap ul
+		Wrap ol
+
+	Layout dl
+		Stack leftmain
+		Stack rightmain
+		Stack sidebar
+		Wrap dd
+		Wrap dt
+		XML "dl" "class"
+
+
+	Layout xl
+		Stack leftmain
+		Stack rightmain
+		Stack sidebar
+		Wrap x8
+		Wrap x6
+		Wrap x4
+		Wrap x3
+		Wrap x2
+		Markup "<div class=\"bd-featurette\"> <div class=\"row\">" "<div class=\"bd-featurette\"> <div class=\"row\">" "</div> </div>"
+
+	Layout x8
+		Stack xl
+		XML "div" "class"
+			Default "class" "col-sm-8 mb-3"
+
+	Layout x6
+		Stack xl
+		XML "div" "class"
+			Default "class" "col-sm-6 mb-3"
+
+	Layout x4
+		Stack xl
+		XML "div" "class"
+			Default "class" "col-sm-4 mb-3"
+
+	Layout x3
+		Stack xl
+		XML "div" "class"
+			Default "class" "col-sm-3 mb-3"
+
+	Layout x2
+		Stack xl
+		XML "div" "class"
+			Default "class" "col-sm-2 mb-3"
+
+
+
+	Block li
+		Stack ul
+		XML "li" "class"
+
+	Block nli
+		Stack ol
+		XML "li" "class"
+
+	Block dt
+		Stack dl
+		XML "dt" "class"
+
+	Block dd
+		Stack dl
+		XML "dd" "class"
+
+
+	Annotation a
+		Remark 
+			|Text anchor
+		XML "a" "href"
+
+	Annotation b
+		Remark 
+			|Bold font
+		XML "b" "class"
+
+	Annotation i
+		Remark 
+			|Italic font
+		XML "i" "class"
+
+	Annotation u
+		Remark 
+			|Underline
+		XML "u" "class"
+
+	Annotation sup
+		Remark 
+			|Underline
+		XML "sup" "class"
+
+	Annotation sub
+		Remark 
+			|Underline
+		XML "sub" "class"
+		 
+	Annotation s
+		Remark 
+			|Strikethrough
+		XML "s" "class"
+
+	Annotation x
+		Remark
+			|Code (monospaced) font
+		XML "code" "class"
+
+	Annotation d
+		Remark
+			|Definition of a term
+		XML "d" "class"
+
+
+	Annotation span
+		XML "span" "class"
+
+
+	Item cite
+		Remark
+			|Citation of an external resource
+		XML "b" "class"
+
+	Item icon
+		String name
+		Markup "<i class=\"fa fa-{0}\"></i>" "<i class=\"fa fa-{0}\"></i>" ""
+
+	Item ref
+		Remark
+			|Reference to an external resource
+		XML "b" "class"
+
+	Meta layout 
+		Flag master 
+		Flag navigator 
+		Flag toc 
+		Flag tof 
+		Flag tor 
+		Flag tod  
+
+	Layout row
+		Stack leftmain
+		Stack rightmain
+		Markup "<div class=\"row\">" "<div class=\"row\">" "</div>"
+
+	Layout col
+		Stack leftmain
+		Stack rightmain
+		Stack sidebar
+		Stack row
+		Integer count
+		Markup "<div class=\"span1\">" "<div class=\"col-md-{0}\">" "</div>"
+
+
+	Layout terminal
+		Stack leftmain
+		Stack rightmain
+		Stack sidebar
+		XML "div" "class"
+			Default "class" "terminal"
+
+	Layout terminal2
+		Stack leftmain
+		Stack rightmain
+		Stack sidebar
+		XML "div" "class"
+			Default "class" "terminal2"
+
+	Layout div
+		XML "div" "class"
+
+
+	Layout titlebanner
+		Any
+		Markup "<div class=\"bs-docs-header\">" "<div class=\"bs-docs-header\">" "</div>"
+
+	Layout leftmain
+		Any
+		Markup "<div class=\"col-md-9\">" "<div class=\"col-md-9\">" "</div>"
+
+	Layout rightmain
+		Any
+		Markup "<div class=\"col-md-9 push-md-3\">" "<div class=\"col-md-9 push-md-3\">" "</div>"
+
+
+	Layout sidebar
+		Any
+		Markup "<div class=\"col-md-3 pull-md-9\">" "<div class=\"col-md-3 pull-md-9\">" "</div>"
+
+	Block cmd
+		XML "pre" "class"
+			Default "class" "command-prompt"		
+	Block result
+		XML "pre" "class"
+			Default "class" "command-prompt"		
+
+	Meta title
+
+
+	Format Default
+
+		Entry Header
+            |<meta charset="utf-8">
+			|<!-- Bootstrap -->
+			|<meta name="viewport" content="width=device-width, initial-scale=1">
+            |<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+			|<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css" crossorigin="anonymous"/>
+			|<link rel="stylesheet" href="/assets/css/main1.css"/>
+			|<!-- Favicons -->
+			|<link rel="apple-touch-icon" href="/assets/img/Brand180.png"/>
+			|<link rel="icon" href="/assets/img/Brand180.png"/>
+			|<!-- Font Awesome -->
+			|<link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
+
+
+		Entry Trailer
+            |<script src="/assets/jquery/jquery-ui.min.js"></script>
+			|<script src="/assets/bootstrap/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+
+		Entry NavStart
+            |<nav class="navbar navbar-default">
+            |  <div class="container-fluid">
+
+		Entry NavEnd
+            |  </div>
+            |</nav>
+
+		Entry NavRoot
+            |    <div class="navbar-header">
+			|        <img src="/assets/img/brand/icon.svg" width="30" height="30" alt=""> {1}</a>
+            |        <a class="navbar-brand" href="{0}">{1}</a>
+            |    </div>"
+
+		Entry NavParent
+            |    <div class="navbar-header">
+            |        <a class="navbar-brand" href="{0}">{1}</a>
+            |    </div>
+
+
+		Entry NavEntryStart
+            |    <div>
+            |      <ul class="nav navbar-nav">
+
+
+		Entry NavEntryEnd
+            |      </ul>
+            |    </div>
+
+		Entry NavEntry
+            |    <li class="nav-item"><a class="nav-link" href="{0}">{1}</a></li>
+
+		Entry NavEntryActive
+			|    <li class="nav-item active"><a class="nav-link active" href=".">{1}</a></li>
+
+		Entry ParagraphsStart
+            |<div class="container">
+            |<div class="row">
+
+		Entry ParagraphsEnd
+            |</div>
+            |</div>
+
+

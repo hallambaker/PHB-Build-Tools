@@ -22,7 +22,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        public void WriteHeader (Document Document) {
+        public void WriteHeader (BlockDocument Document) {
             MakeMetaParagraph("title", Document.Title);
             MakeMetaParagraph("abbrev", Document.TitleAbrrev);
             foreach (var Series in Document.SeriesInfos) {

@@ -16,7 +16,7 @@ namespace Goedel.Document.Markdown {
         public DocumentSet Root;
         public DocumentSet Parent;
 
-        public List<Document> Documents = new();
+        public List<MarkdownDocument> Documents = new();
         public List<DocumentSet> Directories = new();
 
         public List<Resource> Resources = new();
@@ -57,7 +57,7 @@ namespace Goedel.Document.Markdown {
                 string Extension = Path.GetExtension(FileInfo.Name).ToLower();
 
                 if (Extension == ".md") {
-                    var Document = new Document(this, FileInfo, TagCatalog);
+                    var Document = new MarkdownDocument(this, FileInfo, TagCatalog);
 
                     if (Document.IsIndex & (Document.ShortTitle != null)) {
                         Name = Document.ShortTitle;
@@ -67,7 +67,7 @@ namespace Goedel.Document.Markdown {
 
                 else {
                     //Only processing Markdown right now.
-                    Document Document = null;
+                    MarkdownDocument Document = null;
 
                     if (TagCatalog.DocumentProcess != null) {
                         Document = TagCatalog.DocumentProcess(this, FileInfo, TagCatalog);
@@ -417,7 +417,7 @@ namespace Goedel.Document.Markdown {
     /// <summary>
     /// A Document Resource.
     /// </summary>
-    public partial class Document : Resource  {
+    public partial class MarkdownDocument : Resource  {
 
         public Dictionary<string, List<Meta>> MetaData = new();
         public List<Heading> Headings;
@@ -434,10 +434,10 @@ namespace Goedel.Document.Markdown {
         public bool IsIndex = false;
 
 
-        public Document() {
+        public MarkdownDocument() {
             }
 
-        public Document(string file) {
+        public MarkdownDocument(string file) {
             Name = file;
             Link = System.IO.Path.GetFileNameWithoutExtension(Name) + ".html";
 
@@ -445,25 +445,25 @@ namespace Goedel.Document.Markdown {
             Parse(Reader);
             }
 
-        public Document(FileInfo FileInfo) :
+        public MarkdownDocument(FileInfo FileInfo) :
             base(FileInfo) {
             }
 
-        public Document(DocumentSet Parent, FileInfo FileInfo) :
+        public MarkdownDocument(DocumentSet Parent, FileInfo FileInfo) :
             base(Parent, FileInfo) {
             }
 
 
-        public Document(FileInfo FileInfo, TagCatalog TagCatalog) :
+        public MarkdownDocument(FileInfo FileInfo, TagCatalog TagCatalog) :
             base(FileInfo) => Init(FileInfo, TagCatalog);
 
-        public Document(Stream Stream, TagCatalog TagCatalog)
+        public MarkdownDocument(Stream Stream, TagCatalog TagCatalog)
             : base() {
             using var Reader = new LexReader(Stream);
             Init(Reader, TagCatalog);
             }
 
-        public Document(DocumentSet Parent, FileInfo FileInfo, TagCatalog TagCatalog) : 
+        public MarkdownDocument(DocumentSet Parent, FileInfo FileInfo, TagCatalog TagCatalog) : 
                     base (Parent, FileInfo) {
 
             Link = System.IO.Path.GetFileNameWithoutExtension(Name) + ".html";

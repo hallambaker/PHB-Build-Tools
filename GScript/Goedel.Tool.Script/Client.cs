@@ -182,16 +182,60 @@ public class Script {
     const string PageText =
         "\n\n{3}//\n{3}// {0}\n{3}//\n{3}public static void {0} (TextWriter _Output, {1} {2}) {{\n{3}{3}string _Indent  = \"\";";
 
-    const string MethodText =
-        "\n\n{3}//\n{3}// {0}\n{3}//\n{3}public void {0} ({1} {2}) {{";
+    const string Method0Text = """
 
-    const string Method2Text =
-        "\n\n{5}//\n{5}// {0}\n{5}//\n{5}public void {0} ({1} {2}, {3} {4}) {{";
-    const string Method3Text =
-        "\n\n{7}//\n{7}// {0}\n{7}//\n{7}public void {0} ({1} {2}, {3} {4}, {5} {6}) {{";
+                {1}/// <summary>	
+                {1}/// {0}
+                {1}/// </summary>
+                {1}public void {0} () {{
+                """;
 
-    const string MethodnText =
-        "\n\n{1}//\n{1}// {0}\n{1}//\n";
+    const string MethodText = """
+
+                {3}/// <summary>	
+                {3}/// {0}
+                {3}/// </summary>
+                {3}/// <param name="options"></param>
+                {3}public void {0} ({1} {2}) {{
+                """;
+
+    const string Method2Text = """
+
+                {5}/// <summary>	
+                {5}/// {0}
+                {5}/// </summary>
+                {5}/// <param name="options"></param>
+                {5]/// <param name="options"></param>
+                {5}public void {0} ({1} {2}, {3} {4}) {{
+                """;
+    const string Method3Text = """
+
+                {7}/// <summary>	
+                {7}/// {0}
+                {7}/// </summary>
+                {7}/// <param name="options"></param>
+                {7}/// <param name="options"></param>
+                {7}/// <param name="options"></param>
+                {7}public void {0} ({1} {2}, {3} {4}, {5} {6}) {{
+                """;
+    
+    const string MethodnText = """
+
+            {1}/// <summary>	
+            {1}/// {0}
+            {1}/// </summary>
+            """;
+    
+    //const string MethodText =
+    //    "\n\n{3}//\n{3}// {0}\n{3}//\n{3}public void {0} ({1} {2}) {{";
+
+    //const string Method2Text =
+    //    "\n\n{5}//\n{5}// {0}\n{5}//\n{5}public void {0} ({1} {2}, {3} {4}) {{";
+    //const string Method3Text =
+    //    "\n\n{7}//\n{7}// {0}\n{7}//\n{7}public void {0} ({1} {2}, {3} {4}, {5} {6}) {{";
+
+    //const string MethodnText =
+    //    "\n\n{1}//\n{1}// {0}\n{1}//\n";
 
     const string CommentText = "//{0}";
 
@@ -253,6 +297,7 @@ public class Script {
 
             new ScriptCommand ("page",    PageText,             "\t}",      3,      2,      1,      1),
 
+            new ScriptCommand ("method0",   Method0Text,             "\t}",  1,      2,      1,      1),
             new ScriptCommand ("method",    MethodText,             "\t}",  3,      2,      1,      1),
             new ScriptCommand ("method2",   Method2Text,            "\t}",  5,      2,      1,      1),
             new ScriptCommand ("method3",   Method3Text,            "\t}",  7,      2,      1,      1),

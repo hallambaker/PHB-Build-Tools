@@ -236,20 +236,20 @@ namespace Goedel.Document.RFC {
 
 
         public TextReader TextReader;
-        Document Document;
+        BlockDocument Document;
         XmlReader XmlReader;
 
         Element XMLRoot;
         Element Root = new();
 
-        public static void Parse (string File, Document Document) {
+        public static void Parse (string File, BlockDocument Document) {
             using FileReader FileReader = new(File);
             Parse(FileReader, Document);
             }
 
-        public static void Parse(TextReader TextReader, Document Document) => new NewParse(TextReader, Document);
+        public static void Parse(TextReader TextReader, BlockDocument Document) => new NewParse(TextReader, Document);
 
-        public NewParse (TextReader FileReader, Document Document) {
+        public NewParse (TextReader FileReader, BlockDocument Document) {
             this.TextReader = FileReader;
             this.Document = Document;
 
@@ -270,7 +270,7 @@ namespace Goedel.Document.RFC {
             }
 
 
-        public NewParse (String Reference, Document Document) {
+        public NewParse (String Reference, BlockDocument Document) {
             StringReader StringReader = new(Reference);
             this.Document = Document;
 
@@ -278,7 +278,7 @@ namespace Goedel.Document.RFC {
             }
             
 
-        public NewParse (Processing Processing, Document Document) {
+        public NewParse (Processing Processing, BlockDocument Document) {
 
             using FileReader BibFileReader = new(Processing.File);
             this.Document = Document;

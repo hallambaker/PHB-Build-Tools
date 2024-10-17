@@ -8,20 +8,23 @@ using Goedel.Utilities;
 
 namespace Goedel.Document.RFC;
 
+/// <summary>
+/// Parse input in RFC 77991 (XML2RFCv3) format and render as a series of blocks.
+/// </summary>
 public class Rfc7991Parse {
 
-    Goedel.Document.RFC.Document Document;
+    Goedel.Document.RFC.BlockDocument Document;
     TextReader TextReader;
 
-    public static void Parse(string File, Goedel.Document.RFC.Document Document) {
+    public static void Parse(string File, Goedel.Document.RFC.BlockDocument Document) {
         using FileReader FileReader = new(File);
         Parse(FileReader, Document);
         }
 
-    public static void Parse(TextReader TextReader, Goedel.Document.RFC.Document Document) => new Rfc7991Parse(TextReader, Document);
+    public static void Parse(TextReader TextReader, Goedel.Document.RFC.BlockDocument Document) => new Rfc7991Parse(TextReader, Document);
 
 
-    public Rfc7991Parse(TextReader TextReader, Goedel.Document.RFC.Document Document) {
+    public Rfc7991Parse(TextReader TextReader, Goedel.Document.RFC.BlockDocument Document) {
         this.TextReader = TextReader;
         this.Document = Document;
 
@@ -601,12 +604,14 @@ public class Rfc7991Parse {
         }
 
     void AddTextBlocks(TextBlockSequenceBuilder builder, object[] Items, ItemsChoiceTextRun[] Tags) {
-
+        if (Items == null) {
+            return;
+            }
 
         var index = 0;
         foreach (var item in Items) {
             if (item is string s) {
-                Console.WriteLine($"{item}");
+                //Console.WriteLine($"{item}");
                 builder.AddText(s);
                 }
             else {

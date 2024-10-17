@@ -12,8 +12,8 @@ namespace Goedel.Document.RFC {
         public Xml2RFCOut(TextWriter TextWriter) => this.textWriter = TextWriter;
         #region // Document
 
-        Document document;
-        public void Write(Document document) {
+        BlockDocument document;
+        public void Write(BlockDocument document) {
             textWriter.WriteLine("<?xml version='1.0' encoding='utf-8'?>");
 
             WriteStartTag("rfc",
@@ -48,7 +48,7 @@ namespace Goedel.Document.RFC {
             WriteEndTagNL("rfc");
             }
 
-        void MakeFront(Document document) {
+        void MakeFront(BlockDocument document) {
             WriteStartTagNL("front");
 
             WriteValueTag("title", document.Title, "abbrev", document.TitleAbrrev);
@@ -82,12 +82,12 @@ namespace Goedel.Document.RFC {
             WriteEndTagNL("front");
             }
 
-        void MakeMiddle(Document document) {
+        void MakeMiddle(BlockDocument document) {
             WriteStartTagNL("middle");
             WriteSections(document.Middle);
             WriteEndTagNL("middle");
             }
-        void MakeBack(Document document) {
+        void MakeBack(BlockDocument document) {
             WriteStartTagNL("back");
 
             if (document.Catalog.Normative.Count > 0) {

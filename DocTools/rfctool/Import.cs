@@ -26,7 +26,7 @@ namespace MakeRFC {
         public Import(GM.TagCatalog TagCatalog) => this.TagCatalog = TagCatalog;
 
 
-        public void MDParse(string File, Goedel.Document.RFC.Document Target) {
+        public void MDParse(string File, Goedel.Document.RFC.BlockDocument Target) {
             //var FileInfo = new FileInfo(File);
 
             //// Here we put in the call to parse using the MarkDown  parser...
@@ -40,7 +40,7 @@ namespace MakeRFC {
             ConverterRFC.Convert(Source, Target);
             }
 
-        public void WordParse(string File, Goedel.Document.RFC.Document Target) {
+        public void WordParse(string File, Goedel.Document.RFC.BlockDocument Target) {
             //ReadWord.Create(File, Target);
 
             //// Here we put in the call to parse using the Word parser...

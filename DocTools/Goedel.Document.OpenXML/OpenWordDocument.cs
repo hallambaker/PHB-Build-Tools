@@ -8,7 +8,7 @@ using Goedel.Document.Markdown;
 
 namespace Goedel.Document.OpenXML {
 
-    class OpenWordDocument : Goedel.Document.Markdown.Document {
+    class OpenWordDocument : Goedel.Document.Markdown.MarkdownDocument {
 
         /// <summary>
         /// Construct a reader for a complete file.
@@ -25,7 +25,7 @@ namespace Goedel.Document.OpenXML {
         /// <param name="TagCatalog"></param>
         /// <param name="Document"></param>
         public OpenWordDocument(string FileName, TagCatalog TagCatalog,
-                    Goedel.Document.Markdown.Document Document) => Parse(FileName, TagCatalog, Document);
+                    Goedel.Document.Markdown.MarkdownDocument Document) => Parse(FileName, TagCatalog, Document);
 
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Goedel.Document.OpenXML {
         /// <param name="TagCatalog"></param>
         /// <param name="Document"></param>
         public static void Parse (string FileName, TagCatalog TagCatalog,
-                    Goedel.Document.Markdown.Document Document) {
+                    Goedel.Document.Markdown.MarkdownDocument Document) {
 
 
 

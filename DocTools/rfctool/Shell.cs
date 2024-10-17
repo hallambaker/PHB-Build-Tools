@@ -53,7 +53,7 @@ namespace MakeRFC {
                 Format = "." + Options.InputFormat.Text;
                 }
 
-            var Document = new Document();
+            var Document = new BlockDocument();
 
             // Add in any cache specified on the command line
             if (cache != null) {

@@ -11,7 +11,7 @@ using GM = Goedel.Document.Markdown;
 namespace MakeRFC {
     public class NewTemplate {
 
-        public static Document Fill(string ID) {
+        public static BlockDocument Fill(string ID) {
             // Use the built in tag catalog
             var TagCatalog = BridgeLib.Configure.GetTagCatalog(null);
 
@@ -22,10 +22,10 @@ namespace MakeRFC {
             var Stream = Configure.StreamFromString(Expanded);
 
             // Parse the expanded document to a MarkDown parse tree
-            var Source = new GM.Document(Stream, TagCatalog);
+            var Source = new GM.MarkdownDocument(Stream, TagCatalog);
 
             // Create an RFC document from the Markdown parse tree
-            var Document = new Document();
+            var Document = new BlockDocument();
             ConverterRFC.Convert(Source, Document);
             return Document;
             }

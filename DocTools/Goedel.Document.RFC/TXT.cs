@@ -57,7 +57,7 @@ public partial class Writers {
     /// </summary>
     /// <param name="OutputFile">The output file to write to</param>
     /// <param name="Document">The document to write</param>
-    public static void WriteTXT(string OutputFile, Document Document) {
+    public static void WriteTXT(string OutputFile, BlockDocument Document) {
         // Format document to place line numbers
         WriteTXT WriteTXT = new();
         WriteTXT.Write(Document);
@@ -72,7 +72,7 @@ public partial class Writers {
     /// </summary>
     /// <param name="TextWriter">The output stream to write to</param>
     /// <param name="Document">The document to write</param>
-    public static void WriteTXT(TextWriter TextWriter, Document Document) {
+    public static void WriteTXT(TextWriter TextWriter, BlockDocument Document) {
         // Format document to place line numbers
         WriteTXT WriteTXT = new();
         WriteTXT.Write(Document);
@@ -567,7 +567,7 @@ public class WriteTXT {
             }
         }
 
-    public void Write(Document Document) {
+    public void Write(BlockDocument Document) {
 
         PageWriter.FooterLeft = Document.FirstAuthor;
         if (Document.IsDraft) {

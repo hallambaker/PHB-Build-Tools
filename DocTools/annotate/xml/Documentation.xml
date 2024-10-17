@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>bootmaker</name>
+    </assembly>
+    <members>
+        <member name="T:Shell.Bootmaker.Shell">
+            <summary>
+            The shall class
+            </summary>
+        </member>
+        <member name="M:Shell.Bootmaker.Shell.Site(Shell.Bootmaker.Site)">
+            <summary>
+            Process a whole site
+            </summary>
+            <param name="Options">Command line options</param>
+        </member>
+        <member name="M:Shell.Bootmaker.Shell.SingleFile(Shell.Bootmaker.SingleFile)">
+            <summary>
+            Process a file
+            </summary>
+            <param name="Options">Command line options</param>
+        </member>
+        <member name="P:Shell.Bootmaker.CommandLineInterpreter.Entries">
+            <summary>The command entries</summary>
+        </member>
+        <member name="P:Shell.Bootmaker.CommandLineInterpreter.DefaultCommand">
+            <summary>The default command.</summary>
+        </member>
+        <member name="P:Shell.Bootmaker.CommandLineInterpreter.Description">
+            <summary>Description of the comman</summary>
+        </member>
+        <member name="M:Shell.Bootmaker.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">
+            <summary>
+            Describe the application invoked by the command.
+            </summary>
+            <param name="Dispatch">The command description.</param>
+            <param name="args">The set of arguments.</param>
+            <param name="index">The first unparsed argument.</param>
+        </member>
+        <member name="P:Shell.Bootmaker._Site.InputDir">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Shell.Bootmaker._Site.OutputDir">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Shell.Bootmaker._Site.Tag">
+            <summary>Field accessor for option [tags]</summary>
+        </member>
+        <member name="P:Shell.Bootmaker._SingleFile.InputFile">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Shell.Bootmaker._SingleFile.OutputFile">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+    </members>
+</doc>

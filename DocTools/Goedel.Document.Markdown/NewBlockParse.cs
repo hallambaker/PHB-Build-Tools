@@ -33,7 +33,7 @@ public partial class BlockParserMarkDown : BlockParser {
     /// <param name="FileName"></param>
     /// <param name="TagCatalog"></param>
     /// <returns></returns>
-    public static Document Parse(string FileName, TagCatalog TagCatalog) {
+    public static MarkdownDocument Parse(string FileName, TagCatalog TagCatalog) {
         var TextReader = new StreamReader(FileName);
         return Parse(TextReader, TagCatalog);
         }
@@ -44,10 +44,10 @@ public partial class BlockParserMarkDown : BlockParser {
     /// <param name="TextReader"></param>
     /// <param name="TagCatalog"></param>
     /// <returns></returns>
-    public static Document Parse(TextReader TextReader, TagCatalog TagCatalog) {
+    public static MarkdownDocument Parse(TextReader TextReader, TagCatalog TagCatalog) {
 
         var Reader = new LexReader(TextReader);
-        var Document = new Document();
+        var Document = new MarkdownDocument();
 
         Document.Parse(Reader);
         var BlockParser = new BlockParserMarkDown() {
@@ -68,7 +68,7 @@ public partial class BlockParserMarkDown : BlockParser {
     /// <param name="Document"></param>
     /// <returns></returns>
     public static bool Include(string FileName, TagCatalog TagCatalog,
-                    Document Document) {
+                    MarkdownDocument Document) {
         CatalogEntry CatalogEntryTable = TagCatalog.Find("table");
         CatalogEntry CatalogEntryTableRow = TagCatalog.Find("tablerow");
         CatalogEntry CatalogEntryTableCell = TagCatalog.Find("tablecell");
@@ -81,7 +81,7 @@ public partial class BlockParserMarkDown : BlockParser {
 
         var Reader = new LexReader(FilePath.OpenTextReader());
 
-        var Included = new Document();
+        var Included = new MarkdownDocument();
         Included.Parse(Reader);
 
         var BlockParser = new BlockParserMarkDown() {

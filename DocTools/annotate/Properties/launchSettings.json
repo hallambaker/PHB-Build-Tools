@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "udf": {
+      "commandName": "Project",
+      "commandLineArgs": "Publish/draft-hallambaker-mesh-udf-19.xml Annotated/draft-hallambaker-mesh-udf-19.html",
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Outputs\\Documents"
+    }
+  }
+}

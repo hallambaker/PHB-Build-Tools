@@ -34,7 +34,7 @@ namespace Goedel.Document.OpenXML {
         const string StyleID_li = "li";
         const string StyleID_ni = "ni";
 
-        Goedel.Document.RFC.Document Source;
+        Goedel.Document.RFC.BlockDocument Source;
 
         private void DumpNumber (StyleParagraphProperties st1) {
             if (st1 == null) {
@@ -53,7 +53,7 @@ namespace Goedel.Document.OpenXML {
 
 
 
-        private MakeWord (string Filename, Goedel.Document.RFC.Document Source) {
+        private MakeWord (string Filename, Goedel.Document.RFC.BlockDocument Source) {
             this.Source = Source;
 
             //ReadTest();
@@ -65,7 +65,7 @@ namespace Goedel.Document.OpenXML {
             Generate();
             }
 
-        public static MakeWord FromHTML2RFC(string Filename, Goedel.Document.RFC.Document Source) => new(Filename, Source);
+        public static MakeWord FromHTML2RFC(string Filename, Goedel.Document.RFC.BlockDocument Source) => new(Filename, Source);
 
 
         private void Generate () {

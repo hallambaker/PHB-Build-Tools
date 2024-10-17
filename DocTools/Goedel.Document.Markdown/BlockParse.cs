@@ -9,7 +9,7 @@ using Goedel.IO;
 namespace Goedel.Document.Markdown;
 
 public abstract class BlockParser {
-    public Document Document;
+    public MarkdownDocument Document;
     public TagCatalog TagCatalog;
     protected CatalogEntry CurrentCatalogEntry = null;
     protected List<TagValue> CurrentAttributes = null;

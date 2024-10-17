@@ -17,7 +17,7 @@ using Goedel.FSR;
 
 namespace Goedel.Document.Markdown {
 
-    public partial class Document {
+    public partial class MarkdownDocument {
 
         public void Parse(LexReader Reader) => Parse(Reader, Paragraphs);
 

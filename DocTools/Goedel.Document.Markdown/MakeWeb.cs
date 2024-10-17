@@ -192,7 +192,7 @@ namespace Goedel.Document.Markdown {
                 }
             }
 
-        public void MakeHTML(Document Document, string TargetDir) {
+        public void MakeHTML(MarkdownDocument Document, string TargetDir) {
             string TargetFile = TargetDir + @"\" + Document.Link;
 
             Console.WriteLine("Make file in {0}", TargetFile);
@@ -411,7 +411,7 @@ namespace Goedel.Document.Markdown {
         public string[] NavEntryActive = {};
         public string[] NavEntryEnd = {};
 
-        public void MakeNav (HTMLWriter HTMLWriter, Document Document) {
+        public void MakeNav (HTMLWriter HTMLWriter, MarkdownDocument Document) {
 
             Console.WriteLine();
             Console.WriteLine("Make Navigator {0}", Document.Name);
