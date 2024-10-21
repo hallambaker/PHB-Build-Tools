@@ -11,7 +11,7 @@
             <param name="FileInfo">The FileInfo handle of the file to read.</param>
             <param name="TagCatalog">The tag catalog to interpret style entries.</param>
         </member>
-        <member name="M:Goedel.Document.OpenXML.OpenWordDocument.#ctor(System.String,Goedel.Document.Markdown.TagCatalog,Goedel.Document.Markdown.Document)">
+        <member name="M:Goedel.Document.OpenXML.OpenWordDocument.#ctor(System.String,Goedel.Document.Markdown.TagCatalog,Goedel.Document.Markdown.MarkdownDocument)">
             <summary>
             Construct a reader for a partial file
             </summary>
@@ -19,7 +19,7 @@
             <param name="TagCatalog"></param>
             <param name="Document"></param>
         </member>
-        <member name="M:Goedel.Document.OpenXML.OpenWordDocument.Parse(System.String,Goedel.Document.Markdown.TagCatalog,Goedel.Document.Markdown.Document)">
+        <member name="M:Goedel.Document.OpenXML.OpenWordDocument.Parse(System.String,Goedel.Document.Markdown.TagCatalog,Goedel.Document.Markdown.MarkdownDocument)">
             <summary>
             The actual parse routine. Reads out the Word file block by block,
             creating entries in Paragraphs and the metadata registries.

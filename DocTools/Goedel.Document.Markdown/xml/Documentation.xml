@@ -24,7 +24,7 @@
             </summary>
             <param name="CatalogEntry"></param>
         </member>
-        <member name="T:Goedel.Document.Markdown.Document">
+        <member name="T:Goedel.Document.Markdown.MarkdownDocument">
             <summary>
             A Document Resource.
             </summary>
@@ -458,7 +458,7 @@
             <param name="TagCatalog"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Document.Markdown.BlockParserMarkDown.Include(System.String,Goedel.Document.Markdown.TagCatalog,Goedel.Document.Markdown.Document)">
+        <member name="M:Goedel.Document.Markdown.BlockParserMarkDown.Include(System.String,Goedel.Document.Markdown.TagCatalog,Goedel.Document.Markdown.MarkdownDocument)">
             <summary>
             Static method for parsing included file.
             </summary>

@@ -71,35 +71,134 @@
             Register the default set of citation libraries.
             </summary>
         </member>
-        <member name="T:Goedel.Document.RFC.RFCEditorBoilerplate">
+        <member name="T:Goedel.Document.RFC.BlockDocument">
             <summary>
-            Generate boilerplate and ipr statements. This should eventually be
-            replaced by a configuration file that can be read during processing.
+            A document in internal representation.
             </summary>
         </member>
-        <member name="M:Goedel.Document.RFC.Document.MakeAutomatics">
+        <member name="F:Goedel.Document.RFC.BlockDocument.Source">
+            <summary>The source document (if markdown)</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockDocument.PrepTime">
+            <summary>The time the document was processed.</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockDocument.XRefDictionary">
+            <summary>Dictionary mapping cross reference strings to targets.</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockDocument.AssignedIDs">
+            <summary>Set of assigned identifiers.</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockDocument.Number">
+            <summary>RFC attribute, the RFC number</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockDocument.Obsoletes">
+            <summary>RFC attribute, the document replaced by this one </summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockDocument.Updates">
+            <summary>RFC attribute, the document updated by this one</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockDocument.Category">
+            <summary>RFC attribute, the category.</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockDocument.Consensus">
+            <summary>RFC attribute, the consensus value.</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockDocument.SeriesNumber">
+            <summary>RFC attribute, the series number</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockDocument.Ipr">
+            <summary>RFC attribute, the IPR identifier</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockDocument.IprExtract">
+            <summary>RFC attribute, the IPR description</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockDocument.SubmissionType">
+            <summary>RFC attribute, the submission type</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.BlockDocument.Docname">
+            <summary>RFC attribute, the document name</summary> 
+        </member>
+        <member name="M:Goedel.Document.RFC.BlockDocument.MakeAutomatics">
             <summary>
             Perform all automated expansions of data to inline, etc. sections.
             </summary>
         </member>
-        <member name="M:Goedel.Document.RFC.Document.ParseSeriesInfos">
+        <member name="M:Goedel.Document.RFC.BlockDocument.ParseSeriesInfos">
             <summary>
             Convert information from the various locations successive schema versions put 
             it to a canonical form.
             </summary>
         </member>
-        <member name="M:Goedel.Document.RFC.Document.NumberSection(Goedel.Document.RFC.Section,System.Int32,System.Int32,System.String,System.String,System.String,System.String,System.Boolean)">
+        <member name="M:Goedel.Document.RFC.BlockDocument.NumberSection(Goedel.Document.RFC.Section,System.Int32,System.Int32,System.String,System.String,System.String,System.String,System.Boolean)">
             <summary>
             Number a section
             </summary>
-            <param name="Section">The section to number</param>
-            <param name="Number">The number relative to its peers</param>
-            <param name="Level">The depth (for cutting the TOC)</param>
-            <param name="NumericIDPrefix">Prefix for the numeric ID</param>
+            <param name="section">The section to number</param>
+            <param name="number">The number relative to its peers</param>
+            <param name="level">The depth (for cutting the TOC)</param>
+            <param name="numericIDPrefix">Prefix for the numeric ID</param>
             <param name="TextID">The text representation of Number</param>
-            <param name="TextSuffix">Suffix to put after number for display</param>
-            <param name="TextPrefix">Prefix to put in front of user for display</param>
-            <param name="Numeric">If true the number is turned into a numeric section ID</param>
+            <param name="textSuffix">Suffix to put after number for display</param>
+            <param name="textPrefix">Prefix to put in front of user for display</param>
+            <param name="numeric">If true the number is turned into a numeric section ID</param>
+        </member>
+        <member name="T:Goedel.Document.RFC.TextBlock">
+            <summary>
+            Text block class, parent for all text blocks
+            </summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.TextBlock.BlockType">
+            <summary>The block type</summary> 
+        </member>
+        <member name="P:Goedel.Document.RFC.TextBlock.AnchorText">
+            <summary>The anchor text.</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.TextBlock.GeneratedID">
+            <summary>Generated identifier.</summary> 
+        </member>
+        <member name="T:Goedel.Document.RFC.Figure">
+            <summary>
+            Text block containing a figure.
+            </summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.Figure.BlockType">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Document.RFC.SeriesInfo.Name">
+            <summary>The name of the series. Valid values are "RFC",
+            "Internet-Draft", and "W3c".</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.SeriesInfo.Value">
+            <summary>identifier in series 822 or dreaft-hallambaker-fred-00</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.SeriesInfo.Status">
+            <summary>The status of this document.  The currently known values are
+            "standard", "informational", "experimental", "bcp", "fyi", and
+            "full-standard".  The RFC Series Editor may change this list in the
+            future.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.SeriesInfo.Stream">
+            <summary>   The stream (as described in [RFC7841]) that originated the document.
+            Valid values are "IETF", "IAB", "IRTF", "independent".
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.SeriesInfo.DOI">
+            <summary>The DOI identifier</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.SeriesInfo.STD">
+            <summary>The STD identifier</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.SeriesInfo.ExplicitVersion">
+            <summary>The document version if explicitly specified.</summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.SeriesInfo.Version">
+            <summary>The explicitly specified version.</summary>
+        </member>
+        <member name="T:Goedel.Document.RFC.TextBlockSequenceBuilder">
+            <summary>
+            This text builder should probably be attached to the XML parser since that
+            is what it is specialized to.
+            </summary>
         </member>
         <member name="T:Goedel.Document.RFC.BlockType">
             <summary>Text Block Types</summary>
@@ -145,40 +244,10 @@
         <!-- Badly formed XML comment ignored for member "F:Goedel.Document.RFC.BlockType.BlockQuote" -->
         <!-- Badly formed XML comment ignored for member "F:Goedel.Document.RFC.BlockType.SourceCode" -->
         <!-- Badly formed XML comment ignored for member "F:Goedel.Document.RFC.BlockType.Null" -->
-        <member name="F:Goedel.Document.RFC.SeriesInfo.Name">
-            <summary>The name of the series. Valid values are "RFC",
-            "Internet-Draft", and "W3c".</summary>
-        </member>
-        <member name="F:Goedel.Document.RFC.SeriesInfo.Value">
-            <summary>identifier in series 822 or dreaft-hallambaker-fred-00</summary>
-        </member>
-        <member name="F:Goedel.Document.RFC.SeriesInfo.Status">
-            <summary>The status of this document.  The currently known values are
-            "standard", "informational", "experimental", "bcp", "fyi", and
-            "full-standard".  The RFC Series Editor may change this list in the
-            future.</summary>
-        </member>
-        <member name="F:Goedel.Document.RFC.SeriesInfo.Stream">
-            <summary>   The stream (as described in [RFC7841]) that originated the document.
-            Valid values are "IETF", "IAB", "IRTF", "independent".
-            </summary>
-        </member>
-        <member name="F:Goedel.Document.RFC.SeriesInfo.DOI">
-            <summary>The DOI identifier</summary>
-        </member>
-        <member name="F:Goedel.Document.RFC.SeriesInfo.STD">
-            <summary>The STD identifier</summary>
-        </member>
-        <member name="F:Goedel.Document.RFC.SeriesInfo.ExplicitVersion">
-            <summary>The document version if explicitly specified.</summary>
-        </member>
-        <member name="F:Goedel.Document.RFC.SeriesInfo.Version">
-            <summary>The explicitly specified version.</summary>
-        </member>
-        <member name="T:Goedel.Document.RFC.TextBlockSequenceBuilder">
+        <member name="T:Goedel.Document.RFC.RFCEditorBoilerplate">
             <summary>
-            This text builder should probably be attached to the XML parser since that
-            is what it is specialized to.
+            Generate boilerplate and ipr statements. This should eventually be
+            replaced by a configuration file that can be read during processing.
             </summary>
         </member>
         <member name="T:Goedel.Document.RFC.HTMLParse">
@@ -377,67 +446,112 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
-        <member name="M:Goedel.Document.RFC.Writers.WriteHTML(System.String,Goedel.Document.RFC.Document)">
+        <member name="M:Goedel.Document.RFC.Writers.WriteHTML(System.String,Goedel.Document.RFC.BlockDocument)">
             <summary>
             Write RFC Document out in HTML to file.
             </summary>
-            <param name="OutputFile">Output</param>
-            <param name="Document">Document to write</param>
+            <param name="outputFile">Output</param>
+            <param name="document">Document to write</param>
         </member>
-        <member name="M:Goedel.Document.RFC.Writers.WriteHTML(System.IO.TextWriter,Goedel.Document.RFC.Document)">
+        <member name="M:Goedel.Document.RFC.Writers.WriteHTML(System.IO.TextWriter,Goedel.Document.RFC.BlockDocument)">
             <summary>
             Write RFC Document out in HTML to text writer.
             </summary>
-            <param name="TextWriter">Output</param>
-            <param name="Document">Document to write</param>
+            <param name="textWriter">Output</param>
+            <param name="document">Document to write</param>
         </member>
-        <member name="M:Goedel.Document.RFC.Writers.WriteMD(System.String,Goedel.Document.RFC.Document)">
+        <member name="M:Goedel.Document.RFC.Writers.WriteHTMLAnnotated(System.IO.TextWriter,Goedel.Document.RFC.BlockDocument)">
+            <summary>
+            Write RFC Document out in HTML to text writer.
+            </summary>
+            <param name="textWriter">Output</param>
+            <param name="document">Document to write</param>
+        </member>
+        <member name="M:Goedel.Document.RFC.Writers.WriteMD(System.String,Goedel.Document.RFC.BlockDocument)">
             <summary>
             Write RFC Document out in Markdown Format to file.
             </summary>
             <param name="OutputFile">Output</param>
             <param name="Document">Document to write</param>
         </member>
-        <member name="M:Goedel.Document.RFC.Writers.WriteMD(System.IO.TextWriter,Goedel.Document.RFC.Document)">
+        <member name="M:Goedel.Document.RFC.Writers.WriteMD(System.IO.TextWriter,Goedel.Document.RFC.BlockDocument)">
             <summary>
             Write RFC Document out in Markdown Format to text writer.
             </summary>
             <param name="TextWriter">Output</param>
             <param name="Document">Document to write</param>
         </member>
-        <member name="M:Goedel.Document.RFC.Writers.WriteTXT(System.String,Goedel.Document.RFC.Document)">
+        <member name="M:Goedel.Document.RFC.Writers.WriteTXT(System.String,Goedel.Document.RFC.BlockDocument)">
             <summary>
             Write document to specified output stream
             </summary>
             <param name="OutputFile">The output file to write to</param>
             <param name="Document">The document to write</param>
         </member>
-        <member name="M:Goedel.Document.RFC.Writers.WriteTXT(System.IO.TextWriter,Goedel.Document.RFC.Document)">
+        <member name="M:Goedel.Document.RFC.Writers.WriteTXT(System.IO.TextWriter,Goedel.Document.RFC.BlockDocument)">
             <summary>
             Write document to specified output stream
             </summary>
             <param name="TextWriter">The output stream to write to</param>
             <param name="Document">The document to write</param>
         </member>
-        <member name="M:Goedel.Document.RFC.Writers.WriteAML(System.String,Goedel.Document.RFC.Document)">
+        <member name="M:Goedel.Document.RFC.Writers.WriteAML(System.String,Goedel.Document.RFC.BlockDocument)">
             <summary>
             Write RFC Document out in MAML to file.
             </summary>
             <param name="OutputFile">Output</param>
             <param name="Document">Document to write</param>
         </member>
-        <member name="M:Goedel.Document.RFC.Writers.WriteAML(System.IO.TextWriter,Goedel.Document.RFC.Document)">
+        <member name="M:Goedel.Document.RFC.Writers.WriteAML(System.IO.TextWriter,Goedel.Document.RFC.BlockDocument)">
             <summary>
             Write document to specified output stream
             </summary>
             <param name="TextWriter">The output stream to write to</param>
             <param name="Document">The document to write</param>
         </member>
-        <member name="M:Goedel.Document.RFC.Html2RFCOut.#ctor(System.IO.TextWriter)">
+        <member name="M:Goedel.Document.RFC.Html2AnnotateOut.#ctor(System.IO.TextWriter)">
             <summary>
             Constructor, this is a subclass of XMLTextWriter
             </summary>
             <param name="TextWriter"></param>
+        </member>
+        <member name="M:Goedel.Document.RFC.Html2AnnotateOut.Write(Goedel.Document.RFC.BlockDocument)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Document.RFC.Html2AnnotateOut.StartBlock(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Document.RFC.Html2AnnotateOut.EndBlock">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Document.RFC.Html2RFCOut">
+            <summary>
+            Write the document out in HTML format.
+            </summary>
+        </member>
+        <member name="F:Goedel.Document.RFC.Html2RFCOut.Strict">
+            <summary>Strict output mode, obey the requirements of RFC-I rather than making it look good.</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.Html2RFCOut.Pilcrow">
+            <summary>Paragraph marker</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.Html2RFCOut.Sect">
+            <summary>Section marker</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.Html2RFCOut.attributesLinkLicense">
+            <summary>Attributes used to express the license.</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.Html2RFCOut.stylesheets">
+            <summary>The style sheets</summary> 
+        </member>
+        <member name="P:Goedel.Document.RFC.Html2RFCOut.MainStylesheet">
+            <summary>The principal stylesheet.</summary> 
+        </member>
+        <member name="M:Goedel.Document.RFC.Html2RFCOut.#ctor(System.IO.TextWriter)">
+            <summary>
+            Constructor, this is a subclass of XMLTextWriter
+            </summary>
+            <param name="textWriter"></param>
         </member>
         <member name="T:Goedel.Document.RFC.IndentWriter">
             <summary>
@@ -1675,6 +1789,11 @@
         <member name="F:Goedel.Document.RFC.rfcIndexInclude.false">
             <remarks/>
         </member>
+        <member name="T:Goedel.Document.RFC.Rfc7991Parse">
+            <summary>
+            Parse input in RFC 77991 (XML2RFCv3) format and render as a series of blocks.
+            </summary>
+        </member>
         <member name="T:Goedel.Document.RFC.XMLTextWriterAML">
             <summary>
             XML Writer customized to output the open and close tags used in the AML format.
@@ -1772,6 +1891,26 @@
             <summary>
             Close a block of TextBlock output
             </summary>
+        </member>
+        <member name="T:Goedel.Document.RFC.XRefTarget">
+            <summary>
+            Target of a cross reference.
+            </summary>
+        </member>
+        <member name="P:Goedel.Document.RFC.XRefTarget.Text">
+            <summary>The text.</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.XRefTarget.Section">
+            <summary>The section referenced.</summary> 
+        </member>
+        <member name="F:Goedel.Document.RFC.XRefTarget.TextBlock">
+            <summary>The text block referenced.</summary> 
+        </member>
+        <member name="M:Goedel.Document.RFC.XRefTarget.GetText">
+            <summary>
+            Return the text corresponding to the target/
+            </summary>
+            <returns>The cross reference link text..</returns>
         </member>
     </members>
 </doc>
