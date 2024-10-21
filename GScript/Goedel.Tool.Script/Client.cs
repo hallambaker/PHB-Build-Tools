@@ -205,7 +205,7 @@ public class Script {
                 {5}/// {0}
                 {5}/// </summary>
                 {5}/// <param name="options"></param>
-                {5)/// <param name="options"></param>
+                {5}/// <param name="options"></param>
                 {5}public void {0} ({1} {2}, {3} {4}) {{
                 """;
     const string Method3Text = """
