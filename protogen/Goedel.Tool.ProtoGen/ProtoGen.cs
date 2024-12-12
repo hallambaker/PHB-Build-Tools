@@ -39,6 +39,9 @@ using Goedel.Utilities;
 //       Error
 //       Inherits
 //       Enumeration
+//       CamelCase
+//       PascalCase
+//       SnakeCase
 //       Status
 //       Abstract
 //       External
@@ -151,6 +154,9 @@ namespace Goedel.Tool.ProtoGen {
         _Top,
 
         Protocol,
+        CamelCase,
+        PascalCase,
+        SnakeCase,
         Using,
         Extern,
         Section,
@@ -287,6 +293,69 @@ namespace Goedel.Tool.ProtoGen {
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Protocol");
+				}			
+			}
+		}
+
+    public partial class CamelCase : _Choice {
+
+        public override ProtoStructType _Tag () =>ProtoStructType.CamelCase;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("CamelCase");
+				}
+
+			if (tag) {
+				Output.EndElement ("CamelCase");
+				}			
+			}
+		}
+
+    public partial class PascalCase : _Choice {
+
+        public override ProtoStructType _Tag () =>ProtoStructType.PascalCase;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("PascalCase");
+				}
+
+			if (tag) {
+				Output.EndElement ("PascalCase");
+				}			
+			}
+		}
+
+    public partial class SnakeCase : _Choice {
+
+        public override ProtoStructType _Tag () =>ProtoStructType.SnakeCase;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("SnakeCase");
+				}
+
+			if (tag) {
+				Output.EndElement ("SnakeCase");
 				}			
 			}
 		}
@@ -2270,6 +2339,9 @@ namespace Goedel.Tool.ProtoGen {
 		Protocol__Id,				
 		Protocol__Prefix,				
 		Protocol__Entries,				
+		CamelCase_Start,
+		PascalCase_Start,
+		SnakeCase_Start,
 		Using_Start,
 		Using__Id,				
 		Extern_Start,
@@ -2570,6 +2642,9 @@ namespace Goedel.Tool.ProtoGen {
             switch (Label) {
 
                 case "Protocol": return NewProtocol();
+                case "CamelCase": return NewCamelCase();
+                case "PascalCase": return NewPascalCase();
+                case "SnakeCase": return NewSnakeCase();
                 case "Using": return NewUsing();
                 case "Extern": return NewExtern();
                 case "Section": return NewSection();
@@ -2652,6 +2727,30 @@ namespace Goedel.Tool.ProtoGen {
             Goedel.Tool.ProtoGen.Protocol result = new Goedel.Tool.ProtoGen.Protocol();
             Push (result);
             State = StateCode.Protocol_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.ProtoGen.CamelCase NewCamelCase() {
+            Goedel.Tool.ProtoGen.CamelCase result = new Goedel.Tool.ProtoGen.CamelCase();
+            Push (result);
+            State = StateCode.CamelCase_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.ProtoGen.PascalCase NewPascalCase() {
+            Goedel.Tool.ProtoGen.PascalCase result = new Goedel.Tool.ProtoGen.PascalCase();
+            Push (result);
+            State = StateCode.PascalCase_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.ProtoGen.SnakeCase NewSnakeCase() {
+            Goedel.Tool.ProtoGen.SnakeCase result = new Goedel.Tool.ProtoGen.SnakeCase();
+            Push (result);
+            State = StateCode.SnakeCase_Start;
             return result;
             }
 
@@ -3220,6 +3319,9 @@ namespace Goedel.Tool.ProtoGen {
             switch (Label) {
 
                 case "Protocol": return Goedel.Tool.ProtoGen.ProtoStructType.Protocol;
+                case "CamelCase": return Goedel.Tool.ProtoGen.ProtoStructType.CamelCase;
+                case "PascalCase": return Goedel.Tool.ProtoGen.ProtoStructType.PascalCase;
+                case "SnakeCase": return Goedel.Tool.ProtoGen.ProtoStructType.SnakeCase;
                 case "Using": return Goedel.Tool.ProtoGen.ProtoStructType.Using;
                 case "Extern": return Goedel.Tool.ProtoGen.ProtoStructType.Extern;
                 case "Section": return Goedel.Tool.ProtoGen.ProtoStructType.Section;
@@ -3449,16 +3551,31 @@ namespace Goedel.Tool.ProtoGen {
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Warning) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Error) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Inherits) |
-									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Enumeration) ) {
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Enumeration) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.CamelCase) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.PascalCase) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.SnakeCase) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Section Service Transaction Message Structure Description Using Extern Success Warning Error Inherits Enumeration ]");
+								throw new Expected ("Parser Error Expected [Section Service Transaction Message Structure Description Using Extern Success Warning Error Inherits Enumeration CamelCase PascalCase SnakeCase ]");
 								}
 							}
                         break;
 
 
+                    case StateCode.CamelCase_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.PascalCase_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.SnakeCase_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
                     case StateCode.Using_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.ProtoGen.Using Current_Cast = (Goedel.Tool.ProtoGen.Using)Current;
@@ -3762,11 +3879,14 @@ namespace Goedel.Tool.ProtoGen {
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Format) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Decimal) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Funct) |
-									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Param) ) {
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Param) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.CamelCase) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.PascalCase) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.SnakeCase) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Description Abstract Inherits External Boolean Integer Binary Float Label Name String URI DateTime Struct TStruct Enum Status Authentication Format Decimal Funct Param ]");
+								throw new Expected ("Parser Error Expected [Description Abstract Inherits External Boolean Integer Binary Float Label Name String URI DateTime Struct TStruct Enum Status Authentication Format Decimal Funct Param CamelCase PascalCase SnakeCase ]");
 								}
 							}
                         break;
@@ -3836,11 +3956,14 @@ namespace Goedel.Tool.ProtoGen {
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Decimal) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Select) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Funct) |
-									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Param) ) {
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Param) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.CamelCase) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.PascalCase) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.SnakeCase) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Description Abstract Inherits External Boolean Integer Binary Float Label Name String URI DateTime Struct TStruct Enum Format Decimal Select Funct Param ]");
+								throw new Expected ("Parser Error Expected [Description Abstract Inherits External Boolean Integer Binary Float Label Name String URI DateTime Struct TStruct Enum Format Decimal Select Funct Param CamelCase PascalCase SnakeCase ]");
 								}
 							}
                         break;
@@ -3995,11 +4118,12 @@ namespace Goedel.Tool.ProtoGen {
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
-									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Default) ) {
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Default) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description Default ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Description Default Tag ]");
 								}
 							}
                         break;

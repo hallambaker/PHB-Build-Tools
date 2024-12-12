@@ -7,6 +7,11 @@ using Goedel.Registry;
 
 
 namespace Goedel.Tool.ProtoGen {
+
+
+    public interface IEntries {
+        public List<_Choice> _Choices { get;}
+        }
     public partial class ProtoStruct : Parser {
         bool HaveRun = false;
 
@@ -14,8 +19,13 @@ namespace Goedel.Tool.ProtoGen {
         virtual public void Complete() {
             if (!HaveRun) {
                 HaveRun = true;
+                // Set all the parents first to avoide weirdness due to inheritance
                 foreach (ProtoGen._Choice Entry in Top) {
-                    Entry.Complete();
+                    Entry.SetParent(null);
+                    }
+
+                foreach (ProtoGen._Choice Entry in Top) {
+                    Entry.Complete(null);
                     }
                 }
             }
@@ -27,39 +37,72 @@ namespace Goedel.Tool.ProtoGen {
         public _Choice          Superclass = null;
         public List<_Choice>    Subclasses = new() ;
 
-        virtual public void Complete() =>
+
+        public virtual void SetParent(_Choice parent) {
+            Parent = parent;
+
+            if (this is IEntries entries) {
+                foreach (_Choice entry in entries._Choices) {
+
+                    entry.SetParent(this);
+
+                    switch (entry) {
+                        case CamelCase: {
+                            AssignedTypeCase = TypeCase.CamelCase;
+                            break;
+                            }
+                        case PascalCase: {
+                            AssignedTypeCase = TypeCase.PascalCase;
+                            break;
+                            }
+                        case SnakeCase: {
+                            AssignedTypeCase = TypeCase.SnakeCase;
+                            break;
+                            }
+                        }
+                    }
+
+                }
+
+            }
+
+
+        virtual public void Complete(_Choice parent) {
             //Console.WriteLine ("Completing");
+            Parent = parent;
             Normalize();
+            }
 
-        static public void Complete (List<_Choice> Entries) {
+        static public void Complete(List<_Choice> Entries, _Choice parent) {
             foreach (_Choice Entry in Entries) {
-                Entry.Complete ();
+                Entry.Complete(parent);
                 }
             }
         }
 
 
-    public partial class Protocol : _Choice {
+    public partial class Protocol : IEntries {
 
+        public List<_Choice> _Choices => Entries;
 
-
-        public override void  Complete() {
+        public override void  Complete(_Choice parent) {
             //Console.WriteLine ("Completing {0}", Id.ToString());
-
+            Parent = parent;
             Normalize();
             foreach (_Choice Entry in Entries) {
-                Entry.Complete ();
+                Entry.Complete(this);
                 }
             }
         }
 
-    public partial class Transaction : _Choice {
+    public partial class Transaction : IEntries {
+        public List<_Choice> _Choices => Entries;
 
-
-        public override void Complete() =>
+        public override void Complete(_Choice parent) {
             //Console.WriteLine ("Completing Transaction {0}", Id.ToString());
-
-            Complete(Entries);
+            Parent = parent;
+            Complete(Entries, parent);
+            }
         }
 
     public partial class Class : _Choice {
@@ -67,12 +110,13 @@ namespace Goedel.Tool.ProtoGen {
         }
 
 
-    public partial class Message : _Choice {
-
-        public override void  Complete() {
+    public partial class Message : IEntries {
+        public List<_Choice> _Choices => Entries;
+        public override void  Complete(_Choice parent) {
             //Console.WriteLine ("Completing Message {0}", Id.ToString());
 
             foreach (_Choice Entry in Entries) {
+                Entry.Parent = this;
                 if (Entry._Tag() == ProtoStructType.Inherits) {
                     Inherits Inherits = (Inherits) Entry;
                     Superclass = (Message) (Inherits.Ref.ID.Object) ;
@@ -86,13 +130,14 @@ namespace Goedel.Tool.ProtoGen {
             }
         }
 
-    public partial class Structure : _Choice {
+    public partial class Structure : IEntries {
 
-
-        public override void  Complete() {
+        public List<_Choice> _Choices => Entries;
+        public override void  Complete(_Choice parent) {
             //Console.WriteLine ("Completing Structure {0}", Id.ToString());
 
             foreach (_Choice Entry in Entries) {
+                Entry.Parent = this;
                 if (Entry._Tag() == ProtoStructType.Inherits) {
                     Inherits Inherits = (Inherits) Entry;
                     Superclass =(Inherits.Ref.ID.Object) as Structure;

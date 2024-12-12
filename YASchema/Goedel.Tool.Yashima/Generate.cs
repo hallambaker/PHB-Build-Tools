@@ -30,10 +30,10 @@ namespace Goedel.Tool.Yaschema;
 public partial class Generate : global::Goedel.Registry.Script {
 
 	
-
-	//
-	// GenerateCS
-	//
+	/// <summary>	
+	/// GenerateCS
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateCS (YaschemaStruct Yaschema) {
 		 Registry.Boilerplate.License(_Output, "//  ", "MITLicense");
 		 Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
@@ -130,10 +130,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// GenersateSerializer
-	//
+	/// <summary>	
+	/// GenersateSerializer
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenersateSerializer (Packet packet) {
 		 var plaintext = packet.Plaintext;
 		 var mezzanine = packet.Mezzanine;
@@ -281,10 +281,11 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// GenerateParser
-	//
+	/// <summary>	
+	/// GenerateParser
+	/// </summary>
+	/// <param name="options"></param>
+	/// <param name="options"></param>
 	public void GenerateParser (Packet packet, bool isstatic) {
 		 var plaintext = packet.Plaintext;
 		 var mezzanine = packet.Mezzanine;
@@ -333,10 +334,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("            }}\n{0}", _Indent);
 		}
 	
-
-	//
-	// ParseMezzanine
-	//
+	/// <summary>	
+	/// ParseMezzanine
+	/// </summary>
+	/// <param name="options"></param>
 	public void ParseMezzanine (Packet packet) {
 		 var plaintext = packet.Plaintext;
 		 var mezzanine = packet.Mezzanine;
@@ -390,10 +391,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// GeneratePacket
-	//
+	/// <summary>	
+	/// GeneratePacket
+	/// </summary>
+	/// <param name="options"></param>
 	public void GeneratePacket (Packet packet) {
 		 var plaintext = packet.Plaintext;
 		 var mezzanine = packet.Mezzanine;
@@ -436,10 +437,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// GenerateMD
-	//
+	/// <summary>	
+	/// GenerateMD
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateMD (YaschemaStruct YaschemaStruct) {
 		_Output.Write ("\n{0}", _Indent);
 		}

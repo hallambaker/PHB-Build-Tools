@@ -6,7 +6,7 @@
 ;
 $TTL 600
 thresholdrise.com.      IN      SOA     dns1.thresholdrise.com. hallam.gmail.com. (
-                        2022102501       ; serial, todays date + todays serial 
+                        2024121001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -30,11 +30,11 @@ thresholdrise.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 thresholdrise.com.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 108.7.201.148 
-thresholdrise.com.    A 108.7.201.148 
-www.thresholdrise.com.    A 108.7.201.148 
-http.thresholdrise.com.    A 108.7.201.148
-https.thresholdrise.com.    A 108.7.201.148 
+; Host host1.mathmesh.com 178.62.79.124 
+thresholdrise.com.    A 178.62.79.124 
+www.thresholdrise.com.    A 178.62.79.124 
+http.thresholdrise.com.    A 178.62.79.124
+https.thresholdrise.com.    A 178.62.79.124 
 _http._tcp.thresholdrise.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.thresholdrise.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 

@@ -35,10 +35,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 	//
 	//  
 	
-
-	//
-	// GenerateCS
-	//
+	/// <summary>	
+	/// GenerateCS
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateCS (ProtoStruct ProtoStruct) {
 		 ProtoStruct.Complete ();
 		 var GenerateTime =System.DateTime.UtcNow;
@@ -376,11 +376,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	//  
-	//
-
+	/// <summary>	
+	///  
+	/// </summary>
 		 public bool IsAbstract  (List<_Choice> Entries) {
 		 bool result = false;
 		foreach  (_Choice Entry in Entries) {
@@ -395,11 +393,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	//  
-	//
-
+	/// <summary>	
+	///  
+	/// </summary>
 		 public bool IsMultiple  (List<_Choice> Entries) {
 		 bool result = false;
 		foreach  (_Choice Entry in Entries) {
@@ -418,11 +414,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	//  
-	//
-
+	/// <summary>	
+	///  
+	/// </summary>
 		 public bool IsEnumerated  (List<_Choice> Entries) {
 		 bool result = false;
 		foreach  (_Choice Entry in Entries) {
@@ -437,11 +431,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	//  
-	//
-
+	/// <summary>	
+	///  
+	/// </summary>
 		 public bool IsRequired  (List<_Choice> Entries) {
 		 bool result = false;
 		foreach  (_Choice Entry in Entries) {
@@ -456,11 +448,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	//  
-	//
-
+	/// <summary>	
+	///  
+	/// </summary>
 		 public string HasInherits  (List<_Choice> Entries) {
 		 string result = null;
 		foreach  (_Choice Entry in Entries) {
@@ -481,11 +471,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	//  
-	//
-
+	/// <summary>	
+	///  
+	/// </summary>
 		 public void MakeClass  (ID<_Choice> Id, List<_Choice> Entries) {
 		 var Inherits = HasInherits (Entries);
 		 DescriptionListC (Entries, 1);
@@ -502,11 +490,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	//  
-	//
-
+	/// <summary>	
+	///  
+	/// </summary>
 		 public void MakeClass  (ID<_Choice> Id, List<_Choice> Entries, bool Param) {
 		 var isAbstract = false;
 		 var Inherits = HasInherits (Entries);
@@ -631,11 +617,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	//  DeclareMembersSetter
-	//
-
+	/// <summary>	
+	///  DeclareMembersSetter
+	/// </summary>
 		 public void DeclareMembersSetter  (List<_Choice> Entries) {
 		foreach  (_Choice Entry in Entries) {
 			 GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
@@ -676,11 +660,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	//  DeclareMembersGetter
-	//
-
+	/// <summary>	
+	///  DeclareMembersGetter
+	/// </summary>
 		 public void DeclareMembersGetter  (List<_Choice> Entries) {
 		foreach  (_Choice Entry in Entries) {
 			 GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
@@ -720,11 +702,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	//  DeclareProperties
-	//
-
+	/// <summary>	
+	///  DeclareProperties
+	/// </summary>
 		 public void DeclareProperties  (ID<_Choice> Id, List<_Choice> Entries) {
 		 var separator = new Separator (",");
 		foreach  (_Choice Entry in Entries) {
@@ -766,11 +746,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	//  ParameterList
-	//
-
+	/// <summary>	
+	///  ParameterList
+	/// </summary>
 		 public void DeclareMetaMembers  (List<_Choice> Entries) {
 		 var separator = new Separator (",");
 		foreach  (_Choice Entry in Entries) {
@@ -809,11 +787,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	//  ParameterList
-	//
-
+	/// <summary>	
+	///  ParameterList
+	/// </summary>
 		 public void DeclareMembers  (List<_Choice> Entries) {
 		foreach  (_Choice Entry in Entries) {
 			 GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
@@ -837,11 +813,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	//  MakeSerializers
-	//
-
+	/// <summary>	
+	///  MakeSerializers
+	/// </summary>
 		 public void MakeSerializers  (ID<_Choice> Id, string STag, List<_Choice> Entries, string Inherits) {
 		if (  false.True() ) {
 			_Output.Write ("    /// <summary>\n{0}", _Indent);
@@ -1000,10 +974,11 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	// MakeSerializeEntry
-	//
+	/// <summary>	
+	/// MakeSerializeEntry
+	/// </summary>
+	/// <param name="options"></param>
+	/// <param name="options"></param>
 	public void MakeSerializeEntry (_Choice Entry, string Tag) {
 		switch (Entry._Tag ()) {
 			case ProtoStructType.Boolean: { 
@@ -1056,10 +1031,11 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// MakeSerializeArrayEntry
-	//
+	/// <summary>	
+	/// MakeSerializeArrayEntry
+	/// </summary>
+	/// <param name="options"></param>
+	/// <param name="options"></param>
 	public void MakeSerializeArrayEntry (_Choice Entry, string Tag) {
 		switch (Entry._Tag ()) {
 			case ProtoStructType.Boolean: { 
@@ -1109,11 +1085,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// 
-	//
-
+	/// <summary>	
+	/// 
+	/// </summary>
 		 void GetType (_Choice Entry, out TOKEN<_Choice> Token, out string Type, out string TType, 
 						out List<_Choice> Options, out bool Nullable, out string Tag) {
 		 Nullable = true;
@@ -1180,11 +1154,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	// 
-	//
-
+	/// <summary>	
+	/// 
+	/// </summary>
 		 void GetSerializerz (_Choice Entry, out TOKEN<_Choice> Token, out string Type,
 						out List<_Choice> Options) {
 		switch (Entry._Tag ()) {
@@ -1246,11 +1218,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	//  DeserializeCase
-	//
-
+	/// <summary>	
+	///  DeserializeCase
+	/// </summary>
 		 void DeserializeCase (ID<_Choice> Id, string Tag) {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("			case \"{1}\" : {{\n{0}", _Indent, Id);
@@ -1268,11 +1238,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 	
 	
-
-	//
-	//  MapInheritors
-	//
-
+	/// <summary>	
+	///  MapInheritors
+	/// </summary>
 		 void MapInheritors (ID<_Choice> Id, string Tag) {
 		_Output.Write ("			case \"{1}\" : {{\n{0}", _Indent, Id);
 		if (  Id.Object.IsAbstract ) {
@@ -1303,11 +1271,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 	
 	
-
-	//
-	//  DescriptionListC
-	//
-
+	/// <summary>	
+	///  DescriptionListC
+	/// </summary>
 		 public void DescriptionListC  (List<_Choice> Entries, int indent) {
 		 Indentify (indent);
 		if (  (indent > 0)  ) {
@@ -1338,4 +1304,4 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		 }
 	
-		}
+	}

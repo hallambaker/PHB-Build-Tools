@@ -6,7 +6,7 @@
 ;
 $TTL 600
 defaultdenysecurity.com.      IN      SOA     dns1.defaultdenysecurity.com. hallam.gmail.com. (
-                        2022102501       ; serial, todays date + todays serial 
+                        2024121001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -30,11 +30,11 @@ defaultdenysecurity.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.co
 defaultdenysecurity.com.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 108.7.201.148 
-defaultdenysecurity.com.    A 108.7.201.148 
-www.defaultdenysecurity.com.    A 108.7.201.148 
-http.defaultdenysecurity.com.    A 108.7.201.148
-https.defaultdenysecurity.com.    A 108.7.201.148 
+; Host host1.mathmesh.com 178.62.79.124 
+defaultdenysecurity.com.    A 178.62.79.124 
+www.defaultdenysecurity.com.    A 178.62.79.124 
+http.defaultdenysecurity.com.    A 178.62.79.124
+https.defaultdenysecurity.com.    A 178.62.79.124 
 _http._tcp.defaultdenysecurity.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.defaultdenysecurity.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 

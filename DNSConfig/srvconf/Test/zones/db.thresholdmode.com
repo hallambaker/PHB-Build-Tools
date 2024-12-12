@@ -6,7 +6,7 @@
 ;
 $TTL 600
 thresholdmode.com.      IN      SOA     dns1.thresholdmode.com. hallam.gmail.com. (
-                        2022102501       ; serial, todays date + todays serial 
+                        2024121001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -30,11 +30,11 @@ thresholdmode.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 thresholdmode.com.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 108.7.201.148 
-thresholdmode.com.    A 108.7.201.148 
-www.thresholdmode.com.    A 108.7.201.148 
-http.thresholdmode.com.    A 108.7.201.148
-https.thresholdmode.com.    A 108.7.201.148 
+; Host host1.mathmesh.com 178.62.79.124 
+thresholdmode.com.    A 178.62.79.124 
+www.thresholdmode.com.    A 178.62.79.124 
+http.thresholdmode.com.    A 178.62.79.124
+https.thresholdmode.com.    A 178.62.79.124 
 _http._tcp.thresholdmode.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.thresholdmode.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 

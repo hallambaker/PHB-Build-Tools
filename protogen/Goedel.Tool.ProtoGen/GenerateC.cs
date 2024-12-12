@@ -32,10 +32,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 	 string LibPrefix = "JSON"; 
 	 string XStructure = null;
 	
-
-	//
-	// GenerateH
-	//
+	/// <summary>	
+	/// GenerateH
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateH (ProtoStruct ProtoStruct) {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("#pragma once\n{0}", _Indent);
@@ -131,20 +131,20 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// MakeCStructure
-	//
+	/// <summary>	
+	/// MakeCStructure
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeCStructure (List<_Choice> Members) {
 		foreach  (_Choice Member in Members) {
 			MakeCStructure (Member);
 			}
 		}
 	
-
-	//
-	// MakeCStructure
-	//
+	/// <summary>	
+	/// MakeCStructure
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeCStructure (_Choice Member) {
 		if (  Member.Multiple ) {
 			_Output.Write ("	JSON_Group				{1};\n{0}", _Indent, Member.ID);
@@ -163,10 +163,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// GenerateC
-	//
+	/// <summary>	
+	/// GenerateC
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateC (ProtoStruct ProtoStruct) {
 		GenerateH (ProtoStruct);
 		_Output.Write ("\n{0}", _Indent);
@@ -365,20 +365,20 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// MakeCSerialize
-	//
+	/// <summary>	
+	/// MakeCSerialize
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeCSerialize (List<_Choice> Members) {
 		foreach  (_Choice Member in Members) {
 			MakeCSerialize (Member);
 			}
 		}
 	
-
-	//
-	// MakeCSerialize
-	//
+	/// <summary>	
+	/// MakeCSerialize
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeCSerialize (_Choice Member) {
 		 string Pointer = Member.ByValue? "" : "&";
 		 string Required = Member.Required ? "TRUE" : "FALSE";
@@ -408,10 +408,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// MakeCDeserialize
-	//
+	/// <summary>	
+	/// MakeCDeserialize
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeCDeserialize (List<_Choice> Members) {
 		 Int32 Comma = 0;
 		foreach  (_Choice Member in Members) {
@@ -420,10 +420,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// MakeCDeserialize
-	//
+	/// <summary>	
+	/// MakeCDeserialize
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeCDeserialize (_Choice Member) {
 		if (  Member.ID != null ) {
 			switch (Member._Tag ()) {
@@ -440,14 +440,14 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// MakeComma
-	//
+	/// <summary>	
+	/// MakeComma
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeComma (Object OCount) {
 		 Int32 Count = (Int32) OCount;
 		if (  Count >0 ) {
 			_Output.Write (",", _Indent);
 			}
 		}
-		}
+	}

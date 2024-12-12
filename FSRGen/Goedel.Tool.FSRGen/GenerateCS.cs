@@ -29,10 +29,10 @@ namespace Goedel.Tool.FSRGen;
 public partial class Generate : global::Goedel.Registry.Script {
 
 	
-
-	//
-	// GenerateCS
-	//
+	/// <summary>	
+	/// GenerateCS
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateCS (FSRSchema FSRSchema) {
 		 FSRSchema.Complete ();
 		 Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
@@ -211,4 +211,4 @@ public partial class Generate : global::Goedel.Registry.Script {
 				}
 			}
 		}
-		}
+	}

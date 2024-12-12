@@ -1,9 +1,14 @@
 {
   "profiles": {
-    "constant": {
+    "oauth": {
+      "commandName": "Project",
+      "commandLineArgs": "OauthConstants.constant /cs",
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Libraries\\Goedel.Cryptography.Oauth",
+    },
+    "mesh": {
       "commandName": "Project",
       "commandLineArgs": "MeshConstants.constant /cs",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Mesh\\Goedel.Mesh"
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Mesh\\Goedel.Mesh"
     }
   }
 }

@@ -34,6 +34,11 @@
       "commandName": "Project",
       "commandLineArgs": "SchemaMesh.protocol  /cs  SchemaMesh.cs",
       "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Mesh\\Goedel.Mesh"
+    },
+    "Oauth": {
+      "commandName": "Project",
+      "commandLineArgs": "OauthSchema.protocol  /cs  OauthSchema.cs",
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Libraries\\Goedel.Cryptography.Oauth"
     }
   }
 }

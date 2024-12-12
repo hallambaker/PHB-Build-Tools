@@ -29,10 +29,10 @@ namespace Goedel.Tool.Constant;
 public partial class Generate : global::Goedel.Registry.Script {
 
 	
-
-	//
-	// GenerateCS
-	//
+	/// <summary>	
+	/// GenerateCS
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateCS (Constant Constant) {
 		 Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
 		_Output.Write ("\n{0}", _Indent);

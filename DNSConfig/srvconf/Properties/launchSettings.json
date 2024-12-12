@@ -3,7 +3,7 @@
     "srvconf": {
       "commandName": "Project",
       "commandLineArgs": "PHBZones.dns /zone=PHBZones.zone",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\buildtools\\DNSConfig\\srvconf\\Test"
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\buildtools\\DNSConfig\\srvconf\\Test"
     }
   }
 }

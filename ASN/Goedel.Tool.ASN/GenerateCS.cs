@@ -30,10 +30,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 
 	 string Namespace = "Goedel.ASN";
 	
-
-	//
-	// GenerateCS
-	//
+	/// <summary>	
+	/// GenerateCS
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateCS (ASN2 ASN2) {
 		 ASN2.Complete ();
 		 Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
@@ -255,10 +255,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("#pragma warning restore IDE0022	\n{0}", _Indent);
 		}
 	
-
-	//
-	// EntryDeclaration
-	//
+	/// <summary>	
+	/// EntryDeclaration
+	/// </summary>
+	/// <param name="options"></param>
 	public void EntryDeclaration (Member Member) {
 		switch (Member.Spec._Tag ()) {
 			case ASN2Type.Choice: {
@@ -278,10 +278,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// TypeDeclaration
-	//
+	/// <summary>	
+	/// TypeDeclaration
+	/// </summary>
+	/// <param name="options"></param>
 	public void TypeDeclaration (_Choice Type) {
 		switch (Type._Tag ()) {
 			case  ASN2Type.OIDRef: {
@@ -347,27 +347,25 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// Encode
-	//
+	/// <summary>	
+	/// Encode
+	/// </summary>
+	/// <param name="options"></param>
 	public void Encode (Member Member) {
 		  Encode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
 		}
 	
-
-	//
-	// Decode
-	//
+	/// <summary>	
+	/// Decode
+	/// </summary>
+	/// <param name="options"></param>
 	public void Decode (Member Member) {
 		  Decode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
 		}
 	
-
-	//
-	// 
-	//
-
+	/// <summary>	
+	/// 
+	/// </summary>
 		  public void Encode (String Name, _Choice Spec, int Flags, int Code) {
 				Encode (Name, null, Spec, Flags, Code);
 				}
@@ -507,11 +505,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	// 
-	//
-
+	/// <summary>	
+	/// 
+	/// </summary>
 		  public void Decode (String Name, _Choice Spec, int Flags, int Code) {
 				Decode (Name, null, Spec, Flags, Code);
 				}
@@ -651,10 +647,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	// MakeChildren
-	//
+	/// <summary>	
+	/// MakeChildren
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeChildren (_Choice Element) {
 		foreach  (OID OID in Element.Children) {
 			_Output.Write ("\n{0}", _Indent);
@@ -676,10 +672,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// MakeConst
-	//
+	/// <summary>	
+	/// MakeConst
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeConst (int[] Array) {
 		 bool Comma = false;
 		foreach  (int Value in Array) {
@@ -691,10 +687,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// MakeString
-	//
+	/// <summary>	
+	/// MakeString
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeString (int[] Array) {
 		 bool Comma = false;
 		foreach  (int Value in Array) {

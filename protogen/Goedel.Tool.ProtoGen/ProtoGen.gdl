@@ -19,6 +19,14 @@
 			Error
 			Inherits
             Enumeration
+            CamelCase
+            PascalCase
+            SnakeCase
+
+    Type CamelCase
+    Type PascalCase
+    Type SnakeCase
+
 
 	Type Using									// Pull in external namespace
 		Id			Token NamespaceType			// The namspace being used
@@ -79,6 +87,10 @@
 			Decimal
 			Funct
 			Param
+            CamelCase
+            PascalCase
+            SnakeCase
+
 
     Type Authentication
         Mechanism Token AuthenticationT
@@ -108,6 +120,10 @@
 			Select
 			Funct
 			Param
+            CamelCase
+            PascalCase
+            SnakeCase
+
 
     Type Description
         Text1	Text
@@ -139,6 +155,7 @@
             Multiple
             Description
             Default
+			Tag
 
     Type Integer
         Id		Token Variable

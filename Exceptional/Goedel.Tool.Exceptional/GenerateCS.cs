@@ -31,10 +31,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 
 	 static bool DirectGeneration = true;
 	
-
-	//
-	// GenerateCS
-	//
+	/// <summary>	
+	/// GenerateCS
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateCS (Exceptions Exceptions) {
 		// Goedel.Registry.Script.Header (_Output, "//", GenerateTime);
 		// Goedel.Registry.Script.MITLicense (_Output, "//", 
@@ -45,10 +45,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 GenerateCSX (Exceptions);
 		}
 	
-
-	//
-	// GenerateCSX
-	//
+	/// <summary>	
+	/// GenerateCSX
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateCSX (Exceptions Exceptions) {
 		 Exceptions._InitChildren ();
 		_Output.Write ("\n{0}", _Indent);
@@ -136,10 +136,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// WriteEventInit
-	//
+	/// <summary>	
+	/// WriteEventInit
+	/// </summary>
+	/// <param name="options"></param>
 	public void WriteEventInit (IEvent logEvent) {
 		_Output.Write ("        _{1} = LoggerMessage.Define", _Indent, logEvent.Name);
 		if (  (!logEvent.IsEmpty) ) {
@@ -155,10 +155,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("            \"{1}\");\n{0}", _Indent, logEvent.Pattern);
 		}
 	
-
-	//
-	// WriteEvent
-	//
+	/// <summary>	
+	/// WriteEvent
+	/// </summary>
+	/// <param name="options"></param>
 	public void WriteEvent (IEvent logEvent) {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    private static readonly Action<ILogger", _Indent);
@@ -192,10 +192,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// WriteException
-	//
+	/// <summary>	
+	/// WriteException
+	/// </summary>
+	/// <param name="options"></param>
 	public void WriteException (Exception Exception) {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("/// <summary>\n{0}", _Indent);
@@ -264,10 +264,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 WriteListExceptions (Exception.Options);
 		}
 	
-
-	//
-	// WriteListExceptions
-	//
+	/// <summary>	
+	/// WriteListExceptions
+	/// </summary>
+	/// <param name="options"></param>
 	public void WriteListExceptions (List<_Choice> Exceptions) {
 		foreach  (_Choice Exception in Exceptions) {
 			if (  (Exception as Exception != null) ) {
@@ -276,20 +276,20 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// SummarizeException
-	//
+	/// <summary>	
+	/// SummarizeException
+	/// </summary>
+	/// <param name="options"></param>
 	public void SummarizeException (Exception Exception) {
 		_Output.Write (",\n{0}", _Indent);
 		_Output.Write ("			{1}.ThrowNew", _Indent, Exception.Id);
 		 SummarizeListExceptions (Exception.Options);
 		}
 	
-
-	//
-	// SummarizeListExceptions
-	//
+	/// <summary>	
+	/// SummarizeListExceptions
+	/// </summary>
+	/// <param name="options"></param>
 	public void SummarizeListExceptions (List<_Choice> Exceptions) {
 		foreach  (_Choice Exception in Exceptions) {
 			if (  (Exception as Exception != null) ) {

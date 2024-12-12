@@ -30,10 +30,10 @@ public partial class GenerateCS : global::Goedel.Registry.Script {
 
 	 DateTime GenerateTime = DateTime.UtcNow;
 	
-
-	//
-	// Generate
-	//
+	/// <summary>	
+	/// Generate
+	/// </summary>
+	/// <param name="options"></param>
 	public void Generate (ConfigItems ConfigItems) {
 		 ConfigItems.Normalize();
 		_Output.Write ("// Generated on {1}\n{0}", _Indent, GenerateTime);

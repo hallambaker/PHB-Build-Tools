@@ -6,7 +6,7 @@
 ;
 $TTL 600
 sayanythingtrump.com.      IN      SOA     dns1.sayanythingtrump.com. hallam.gmail.com. (
-                        2022102501       ; serial, todays date + todays serial 
+                        2024121001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -30,11 +30,11 @@ sayanythingtrump.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 sayanythingtrump.com.       IN      MX       1 smtp1.hallambaker.com.
 
 
-; Host host1.mathmesh.com 108.7.201.148 
-sayanythingtrump.com.    A 108.7.201.148 
-www.sayanythingtrump.com.    A 108.7.201.148 
-http.sayanythingtrump.com.    A 108.7.201.148
-https.sayanythingtrump.com.    A 108.7.201.148 
+; Host host1.mathmesh.com 178.62.79.124 
+sayanythingtrump.com.    A 178.62.79.124 
+www.sayanythingtrump.com.    A 178.62.79.124 
+http.sayanythingtrump.com.    A 178.62.79.124
+https.sayanythingtrump.com.    A 178.62.79.124 
 _http._tcp.sayanythingtrump.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.sayanythingtrump.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 

@@ -1,10 +1,11 @@
 ﻿// First DNS service listed is the default
 
-Machine Home             "108.7.201.148"
+Machine Home				"178.62.79.124"
+Machine Develop				"108.7.201.148"
 
-Machine Voodoo             "192.168.1.21"
-Machine CloudFloating    "139.59.200.120"
-Machine CloudDroplet	 "178.62.79.124"
+Machine Voodoo				"192.168.1.21"
+Machine CloudFloating		"139.59.200.120"
+Machine CloudDroplet		"178.62.79.124"
 
 
 DNS Default "hallam.gmail.com"
@@ -20,6 +21,25 @@ DNS Default "hallam.gmail.com"
 	Authoritative dns1 CloudDroplet
 	Authoritative dns2 CloudFloating
 	MX smtp1.hallambaker.com 1
+
+Site mplace2
+	Domain mplace2.com
+	Domain mplace2.social
+	Web www.mplace2.com "mplace2/"
+		Host host1.mathmesh.com
+
+
+Site mplace2app
+	Domain mplace2.app
+		Address host1.mplace2app.com Home
+		Service "mmm"
+			TXT "TLS=require"
+			Host host1.cryptomesh.org
+				Port 15098
+				Priority 1
+				Weight 100
+	Web www.mplace2.app "mplace2/"
+		Host host1.mplace2app.com
 
 
 // The domain we are using for our DNS hosts.

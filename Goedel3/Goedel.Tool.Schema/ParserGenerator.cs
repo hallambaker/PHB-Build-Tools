@@ -30,10 +30,10 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 
 	 Goedel Goedel;
 	
-
-	//
-	// GenerateCS
-	//
+	/// <summary>	
+	/// GenerateCS
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateCS (Goedel GoedelIn) {
 		 Goedel = GoedelIn;
 		 // Boilerplate.Header (_Output, "//  ", GenerateTime);
@@ -98,10 +98,10 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// GenerateClass
-	//
+	/// <summary>	
+	/// GenerateClass
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateClass (Class Class) {
 		 TYPE<_Choice> IdTYPE = Goedel.Registry.FindType ("IdType");
 		 TYPE<_Choice> TokenTYPE = Goedel.Registry.FindType ("TokenType");
@@ -834,10 +834,10 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 		_Output.Write ("#pragma warning restore IDE0022	\n{0}", _Indent);
 		}
 	
-
-	//
-	// DeclareEntry
-	//
+	/// <summary>	
+	/// DeclareEntry
+	/// </summary>
+	/// <param name="options"></param>
 	public void DeclareEntry (Entry Entry) {
 		switch (Entry.Type._Tag ()) {
 			case GoedelType._Label: {
@@ -937,10 +937,10 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// SerializeEntry
-	//
+	/// <summary>	
+	/// SerializeEntry
+	/// </summary>
+	/// <param name="options"></param>
 	public void SerializeEntry (Entry Entry) {
 		switch (Entry.Type._Tag ()) {
 			case GoedelType._Label: { 

@@ -29,10 +29,10 @@ namespace Goedel.Tool.FSRGen;
 public partial class Generate : global::Goedel.Registry.Script {
 
 	
-
-	//
-	// GenerateH
-	//
+	/// <summary>	
+	/// GenerateH
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateH (FSRSchema FSRSchema) {
 		 FSRSchema.Complete ();
 		_Output.Write ("\n{0}", _Indent);
@@ -125,10 +125,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// GenerateRaw
-	//
+	/// <summary>	
+	/// GenerateRaw
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateRaw (FSR FSR) {
 		_Output.Write ("static {1} {2}_Transitions [{3}_State__Count][{4}]   =   {{\n{0}", _Indent, FSR.StateType, FSR.Id, FSR.Id, FSR.MaxChar);
 		for  (int i = 0; i < FSR.States.Count; i++)  {
@@ -150,4 +150,4 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		_Output.Write ("	}};\n{0}", _Indent);
 		}
-		}
+	}

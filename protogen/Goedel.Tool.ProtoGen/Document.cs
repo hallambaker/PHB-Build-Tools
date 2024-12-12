@@ -44,10 +44,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 	 string [,] Sections; 
 	 bool AddComments = true;
 	
-
-	//
-	// GenerateRFC2XML
-	//
+	/// <summary>	
+	/// GenerateRFC2XML
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateRFC2XML (ProtoStruct ProtoStruct) {
 		 ProtoStruct.Complete ();
 		  StartP = "<t>"; EndP = "</t>";
@@ -61,10 +61,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		GenerateBody (ProtoStruct);
 		}
 	
-
-	//
-	// GenerateHTML
-	//
+	/// <summary>	
+	/// GenerateHTML
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateHTML (ProtoStruct ProtoStruct) {
 		 ProtoStruct.Complete ();
 		  StartP = "<p>"; EndP = "</p>";
@@ -87,10 +87,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("</html> -->\n{0}", _Indent);
 		}
 	
-
-	//
-	// GenerateMD
-	//
+	/// <summary>	
+	/// GenerateMD
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateMD (ProtoStruct ProtoStruct) {
 		 ProtoStruct.Complete ();
 		  StartP = ""; EndP = "\n";
@@ -168,10 +168,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// SectionHeading
-	//
+	/// <summary>	
+	/// SectionHeading
+	/// </summary>
+	/// <param name="options"></param>
 	public void SectionHeading (Section Section) {
 		 var Level = Section.Level;
 		 StartSection (Level, Section.Title);
@@ -180,44 +180,45 @@ public partial class Generate : global::Goedel.Registry.Script {
 		EndSection (Level);
 		}
 	
-
-	//
-	// StartSection
-	//
+	/// <summary>	
+	/// StartSection
+	/// </summary>
+	/// <param name="options"></param>
+	/// <param name="options"></param>
 	public void StartSection (int Level, string Title) {
 		StartSection (Level);
 		_Output.Write ("{1}", _Indent, Title);
 		MidSection (Level);
 		}
 	
-
-	//
-	// StartSection
-	//
+	/// <summary>	
+	/// StartSection
+	/// </summary>
+	/// <param name="options"></param>
 	public void StartSection (int Level) {
 		_Output.Write ("{1}", _Indent, Sections[Level-1,0]);
 		}
 	
-
-	//
-	// MidSection
-	//
+	/// <summary>	
+	/// MidSection
+	/// </summary>
+	/// <param name="options"></param>
 	public void MidSection (int Level) {
 		_Output.Write ("{1}", _Indent, Sections[Level-1,1]);
 		}
 	
-
-	//
-	// EndSection
-	//
+	/// <summary>	
+	/// EndSection
+	/// </summary>
+	/// <param name="options"></param>
 	public void EndSection (int Level) {
 		_Output.Write ("{1}", _Indent, Sections[Level-1,2]);
 		}
 	
-
-	//
-	// MakeService
-	//
+	/// <summary>	
+	/// MakeService
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeService (Service Service) {
 		_Output.Write ("{1}SRV Prefix{2}{3}{4}\n{0}", _Indent, StartParam, MidParam, Service.Discovery, EndParam);
 		_Output.Write ("{1}HTTP Well Known Service Prefix{2}/.well-known/{3}{4}\n{0}", _Indent, StartParam, MidParam, Service.WellKnown, EndParam);
@@ -226,10 +227,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		DescriptionList (Service.Entries);
 		}
 	
-
-	//
-	// MakeMessage
-	//
+	/// <summary>	
+	/// MakeMessage
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeMessage (Message Message) {
 		StartSection (3);
 		_Output.Write ("Message: {1}", _Indent, Message.Id);
@@ -239,10 +240,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		EndSection (3);
 		}
 	
-
-	//
-	// MakeStructure
-	//
+	/// <summary>	
+	/// MakeStructure
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeStructure (Structure Structure) {
 		StartSection (3);
 		_Output.Write ("Structure: {1}\n{0}", _Indent, Structure.Id);
@@ -251,10 +252,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		EndSection (3);
 		}
 	
-
-	//
-	// MakeTransaction
-	//
+	/// <summary>	
+	/// MakeTransaction
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeTransaction (Transaction Transaction) {
 		StartSection (2);
 		_Output.Write ("Transaction: {1}\n{0}", _Indent, Transaction.Id);
@@ -268,37 +269,37 @@ public partial class Generate : global::Goedel.Registry.Script {
 		EndSection (2);
 		}
 	
-
-	//
-	// MakeSuccess
-	//
+	/// <summary>	
+	/// MakeSuccess
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeSuccess (Success Success) {
 		_Output.Write ("[{1}] {2}\n{0}", _Indent, Success.Code, Success.Id);
 		DescriptionListDD (Success.Entries);
 		}
 	
-
-	//
-	// MakeWarning
-	//
+	/// <summary>	
+	/// MakeWarning
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeWarning (Warning Warning) {
 		_Output.Write ("[{1}] {2}\n{0}", _Indent, Warning.Code, Warning.Id);
 		DescriptionListDD (Warning.Entries);
 		}
 	
-
-	//
-	// MakeError
-	//
+	/// <summary>	
+	/// MakeError
+	/// </summary>
+	/// <param name="options"></param>
 	public void MakeError (Error Error) {
 		_Output.Write ("[{1}] {2}\n{0}", _Indent, Error.Code, Error.Id);
 		DescriptionListDD (Error.Entries);
 		}
 	
-
-	//
-	// Comment
-	//
+	/// <summary>	
+	/// Comment
+	/// </summary>
+	/// <param name="options"></param>
 	public void Comment (string Text) {
 		if (  (AddComments) ) {
 			_Output.Write ("<!-- {1} -->\n{0}", _Indent, Text);
@@ -306,10 +307,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	// GenerateBody
-	//
+	/// <summary>	
+	/// GenerateBody
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateBody (ProtoStruct ProtoStruct) {
 		foreach  (var Item in ProtoStruct.Top) {
 			 Item.Normalize ();
@@ -379,11 +380,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	//  DescriptionListSkip
-	//
-
+	/// <summary>	
+	///  DescriptionListSkip
+	/// </summary>
 		 public void DescriptionListSkip  (List<_Choice> Entries) {
 		 bool Skip = true;
 		foreach  (_Choice Entry in Entries) {
@@ -408,11 +407,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	//  DescriptionList
-	//
-
+	/// <summary>	
+	///  DescriptionList
+	/// </summary>
 		 public void DescriptionList  (List<_Choice> Entries) {
 		foreach  (var Entry in Entries) {
 			Description (Entry);
@@ -420,10 +417,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	// Description
-	//
+	/// <summary>	
+	/// Description
+	/// </summary>
+	/// <param name="options"></param>
 	public void Description (_Choice TEntry) {
 		switch (TEntry._Tag ()) {
 			case ProtoStructType.Description: {
@@ -437,11 +434,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	//  DescriptionListDD
-	//
-
+	/// <summary>	
+	///  DescriptionListDD
+	/// </summary>
 		 public void DescriptionListDD  (List<_Choice> Entries) {
 		foreach  (var Entry in Entries) {
 			DescriptionDD (Entry);
@@ -449,10 +444,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	// DescriptionDD
-	//
+	/// <summary>	
+	/// DescriptionDD
+	/// </summary>
+	/// <param name="options"></param>
 	public void DescriptionDD (_Choice TEntry) {
 		switch (TEntry._Tag ()) {
 			case ProtoStructType.Description: {
@@ -466,11 +461,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	//  Indentify
-	//
-
+	/// <summary>	
+	///  Indentify
+	/// </summary>
 		 public void Indentify (int indent) {
 		for  (int i=0; i<indent; i++) {
 			_Output.Write ("	", _Indent);
@@ -478,10 +471,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	// TMessage
-	//
+	/// <summary>	
+	/// TMessage
+	/// </summary>
+	/// <param name="options"></param>
 	public void TMessage (_Choice TEntry) {
 		switch (TEntry._Tag ()) {
 			case ProtoStructType.Request: {
@@ -495,11 +488,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 			}
 		}
 	
-
-	//
-	//  ParameterList
-	//
-
+	/// <summary>	
+	///  ParameterList
+	/// </summary>
 		 public void ParameterList  (List<_Choice> Entries) {
 		 bool NullList = true;
 		foreach  (_Choice Entry in Entries) {
@@ -582,11 +573,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		 }
 	
 	
-
-	//
-	//  OptionList
-	//
-
+	/// <summary>	
+	///  OptionList
+	/// </summary>
 		 public void OptionList  (List<_Choice> Entries) {
 		 bool PRequired = false, PMultiple = false;
 		foreach  (_Choice Entry in Entries) {
@@ -622,4 +611,4 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("{1}", _Indent, EndParamBlock);
 		 }
 	
-		}
+	}

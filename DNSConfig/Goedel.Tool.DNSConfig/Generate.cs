@@ -29,10 +29,10 @@ namespace Goedel.Tool.DNSConfig;
 public partial class Generate : global::Goedel.Registry.Script {
 
 	
-
-	//
-	// GenerateZone
-	//
+	/// <summary>	
+	/// GenerateZone
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateZone (DNSConfig DNSConfig) {
 		 DNSConfig.Init();
 		_Output.Write ("\n{0}", _Indent);
@@ -46,10 +46,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// GenerateOptions
-	//
+	/// <summary>	
+	/// GenerateOptions
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateOptions (DNSConfig DNSConfig) {
 		_Output.Write ("# PATH=/etc/bind/named.conf.options \n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
@@ -68,10 +68,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// GenerateLocal
-	//
+	/// <summary>	
+	/// GenerateLocal
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateLocal (DNSConfig DNSConfig) {
 		_Output.Write ("# PATH=/etc/bind/named.conf.local\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
@@ -85,10 +85,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// GenerateDomain
-	//
+	/// <summary>	
+	/// GenerateDomain
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateDomain (Domain Domain) {
 		 var DNS = Domain.DNS;
 		 var Web = Domain.Web;
@@ -158,10 +158,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
-
-	//
-	// GenerateAdressRecords
-	//
+	/// <summary>	
+	/// GenerateAdressRecords
+	/// </summary>
+	/// <param name="options"></param>
 	public void GenerateAdressRecords (DNSConfig DNSConfig) {
 		foreach  (var Machine in DNSConfig.Machines) {
 			_Output.Write ("# Machine {1} {2}\n{0}", _Indent, Machine.Id, Machine.Data);

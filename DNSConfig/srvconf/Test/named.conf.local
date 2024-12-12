@@ -1,5 +1,20 @@
 # PATH=/etc/bind/named.conf.local
 
+zone "mplace2.com" {
+    type master;
+    file "/etc/bind/zones/db.mplace2.com";
+};
+
+zone "mplace2.social" {
+    type master;
+    file "/etc/bind/zones/db.mplace2.social";
+};
+
+zone "mplace2.app" {
+    type master;
+    file "/etc/bind/zones/db.mplace2.app";
+};
+
 zone "hallambaker.com" {
     type master;
     file "/etc/bind/zones/db.hallambaker.com";
