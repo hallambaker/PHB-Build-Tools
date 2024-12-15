@@ -1,10 +1,4 @@
-﻿using System;
-using System.Xml;
-using System.Xml.Schema;
-using System.IO;
-using System.Collections.Generic;
-using Goedel.Utilities;
-using Goedel.IO;
+﻿
 namespace Goedel.Document.RFCSVG;
 
 //class Program {

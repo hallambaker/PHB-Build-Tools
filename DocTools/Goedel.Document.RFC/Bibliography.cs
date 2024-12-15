@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.IO;
 using System.Text;
+using Goedel.IO;
 
 namespace Goedel.Document.RFC;  
 
@@ -349,16 +350,16 @@ public class Source {
             }
         }
 
-#pragma warning disable IDE0044 // Add readonly modifier
-    static WebClient WebClient = new();
-#pragma warning restore IDE0044 // Add readonly modifier
+//#pragma warning disable IDE0044 // Add readonly modifier
+//    //static WebClient WebClient = new();
+//#pragma warning restore IDE0044 // Add readonly modifier
 
 
 
     public static string GetDraftVersion (string DocName) {
         try {
             var Uri = String.Format(Catalog.DraftURI, DocName.Substring(6));
-            string Result = WebClient.DownloadString(Uri);
+            string Result = UriClient.DownloadString(Uri);
             var Document = new BlockDocument();
             new NewParse(Result, Document);
             var References = Document?.Catalog?.References;
@@ -392,7 +393,7 @@ public class Source {
         try {
             Document.Catalog.ForceReferenceID = Citation.Label;
 
-            string Result = WebClient.DownloadString(Uri);
+            string Result = UriClient.DownloadString(Uri);
             Citation.Result = StripDeclaration(Result);
             Citation.Resolved = Result != null;
             Citation.Uri = Uri;

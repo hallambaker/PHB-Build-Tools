@@ -273,7 +273,6 @@ public enum TypeCase {
 
 public partial class Protocol {
 
-    public TypeCase AssignedTypeCase = TypeCase.Direct;
     public override TypeCase TypeCase => AssignedTypeCase;
 
     public List<Structure> Structures { get; set; } = [];

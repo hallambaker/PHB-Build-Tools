@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using Goedel.FSR;
-using Goedel.IO;
+﻿using Goedel.FSR;
 
 namespace Goedel.Document.Markdown;
 

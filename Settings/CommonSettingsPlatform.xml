@@ -2,7 +2,7 @@
 	<Import Project="$(SolutionDir)Settings\Version.xml" />
 	<Import Project="$(SolutionDir)Settings\Nuget.xml" />
 	<PropertyGroup>
-		<TargetFrameworks>net8.0-windows;net8.0</TargetFrameworks>
+		<TargetFrameworks>net9.0-windows;net9.0</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
 		<Company>Threshold Secrets LLC.</Company>

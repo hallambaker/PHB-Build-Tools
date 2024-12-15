@@ -1,6 +1,5 @@
-// Script Syntax Version:  1.0
-
-//  © 2015-2021 by Threshold Secrets LLC.
+﻿#region // Copyright - MIT License
+//  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -19,25 +18,26 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-//  
-//  
-using System;
-using System.IO;
-using System.Collections.Generic;
-using Goedel.Registry;
-namespace Goedel.Tool.Version;
-public partial class Generate : global::Goedel.Registry.Script {
+#endregion
 
-	
-	/// <summary>	
-	/// GenerateCS
-	/// </summary>
-	/// <param name="options"></param>
-	public void GenerateCS (VersionInfo Version) {
-		_Output.Write ("// These values are automatically generated from version.version\n{0}", _Indent);
-		_Output.Write ("[assembly: System.Reflection.AssemblyVersionAttribute(\"{1}\")]\n{0}", _Indent, Version.Assembly);
-		_Output.Write ("[assembly: System.Reflection.AssemblyFileVersionAttribute(\"{1}\")]\n{0}", _Indent, Version.File);
-		_Output.Write ("\n{0}", _Indent);
-		}
+global using Goedel.Utilities;
+global using System.Text;
+global using Goedel.Document.Markdown;
 
-	}
+
+#if !(_Github_)
+[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
+#endif
+
+namespace Goedel.Document.RFC;
+
+/// <summary>
+/// Parse IETF RFC Documents.
+/// </summary>
+
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
+    }
+
+
+
