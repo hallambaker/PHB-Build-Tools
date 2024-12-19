@@ -195,7 +195,7 @@ public class Script {
                 {3}/// <summary>	
                 {3}/// {0}
                 {3}/// </summary>
-                {3}/// <param name="options"></param>
+                {3}/// <param name="{2}"></param>
                 {3}public void {0} ({1} {2}) {{
                 """;
 
@@ -204,8 +204,8 @@ public class Script {
                 {5}/// <summary>	
                 {5}/// {0}
                 {5}/// </summary>
-                {5}/// <param name="options"></param>
-                {5}/// <param name="options"></param>
+                {5}/// <param name="{2}"></param>
+                {5}/// <param name="{4}"></param>
                 {5}public void {0} ({1} {2}, {3} {4}) {{
                 """;
     const string Method3Text = """
@@ -213,9 +213,9 @@ public class Script {
                 {7}/// <summary>	
                 {7}/// {0}
                 {7}/// </summary>
-                {7}/// <param name="options"></param>
-                {7}/// <param name="options"></param>
-                {7}/// <param name="options"></param>
+                {7}/// <param name="{2}"></param>
+                {7}/// <param name="{4}"></param>
+                {7}/// <param name="{6}"></param>
                 {7}public void {0} ({1} {2}, {3} {4}, {5} {6}) {{
                 """;
     

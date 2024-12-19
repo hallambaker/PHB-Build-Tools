@@ -9,6 +9,11 @@
       "commandName": "Project",
       "commandLineArgs": "ServerPages.script ServerPages.cs",
       "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Repository\\Annotate"
+    },
+    "DNSConfig": {
+      "commandName": "Project",
+      "commandLineArgs": "DnsConfig.script DnsConfig.cs",
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Mesh\\Goedel.Mesh.ServiceAdmin"
     }
   }
 }
