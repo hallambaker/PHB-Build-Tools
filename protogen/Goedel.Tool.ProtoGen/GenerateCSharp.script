@@ -450,7 +450,10 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 
 	///<summary>Binding</summary> 
 	static protected new Binding _binding = new (
-			_StaticProperties, __Tag,#!
+			new() {
+#% DeclareProperties (Id, Entries);
+
+        }, __Tag,#!
 #if isAbstract
 null, #!
 #else
@@ -459,10 +462,7 @@ null, #!
 #{(Inherits != null).If(Inherits + "._binding", "null")});
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-#% DeclareProperties (Id, Entries);
-
-        };
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 #if (Inherits == null) 
 	///<summary>Dictionary describing the serializable properties.</summary> 

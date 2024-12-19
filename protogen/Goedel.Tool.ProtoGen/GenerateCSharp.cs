@@ -541,7 +541,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	///<summary>Binding</summary> \n{0}", _Indent);
 		_Output.Write ("	static protected new Binding _binding = new (\n{0}", _Indent);
-		_Output.Write ("			_StaticProperties, __Tag,", _Indent);
+		_Output.Write ("			new() {{\n{0}", _Indent);
+		 DeclareProperties (Id, Entries);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("        }}, __Tag,", _Indent);
 		if (  isAbstract ) {
 			_Output.Write ("null, ", _Indent);
 			} else {
@@ -550,10 +553,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("{1});\n{0}", _Indent, (Inherits != null).If(Inherits + "._binding", "null"));
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    ///<summary>Dictionary describing the serializable properties.</summary> \n{0}", _Indent);
-		_Output.Write ("    public readonly static new Dictionary<string, Property> _StaticProperties = new() {{\n{0}", _Indent);
-		 DeclareProperties (Id, Entries);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("        }};\n{0}", _Indent);
+		_Output.Write ("    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		if (  (Inherits == null)  ) {
 			_Output.Write ("	///<summary>Dictionary describing the serializable properties.</summary> \n{0}", _Indent);
