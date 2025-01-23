@@ -32,7 +32,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateCS
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="FSRSchema"></param>
 	public void GenerateCS (FSRSchema FSRSchema) {
 		 FSRSchema.Complete ();
 		 Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);

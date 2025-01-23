@@ -82,7 +82,14 @@ namespace Goedel.Tool.DNSConfig {
         public DNS DNS;
         public Web Web;
         public bool IsPrimary;
+
+        public bool IsWildcard => Wildcard.Count > 0;
+
+
         public override void Init (_Choice Parent) {
+
+            
+
 
             }
 

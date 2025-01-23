@@ -6,7 +6,7 @@
 ;
 $TTL 600
 cyberishard.com.      IN      SOA     dns1.cyberishard.com. hallam.gmail.com. (
-                        2024121001       ; serial, todays date + todays serial 
+                        2025012301       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -26,8 +26,13 @@ cyberishard.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 
 ; Hardcoded A records
 
-; For now, forward all mail to a forwarder on the authoritative
-cyberishard.com.       IN      MX       1 smtp1.hallambaker.com.
+
+
+; default mail
+cyberishard.com.       IN      MX       10 mx01.ionos.com.
+cyberishard.com.       IN      MX       10 mx00.ionos.com.
+cyberishard.com. TXT "v=spf1 redirect=_spf.google.com"
+
 
 
 ; Host host1.mathmesh.com 178.62.79.124 
@@ -38,5 +43,7 @@ https.cyberishard.com.    A 178.62.79.124
 _http._tcp.cyberishard.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.cyberishard.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 
+
+; handles
 
 

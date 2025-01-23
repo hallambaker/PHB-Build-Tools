@@ -6,7 +6,7 @@
 ;
 $TTL 600
 mplace2.app.      IN      SOA     dns1.mplace2.app. hallam.gmail.com. (
-                        2024121001       ; serial, todays date + todays serial 
+                        2025012301       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -26,15 +26,21 @@ mplace2.app.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 
 ; Hardcoded A records
 host1.mplace2app.com.    A 178.62.79.124
-
 host1.mplace2app.com.        IN      TXT    "v=spf1 Home ?all"  
 
-; For now, forward all mail to a forwarder on the authoritative
-mplace2.app.       IN      MX       1 smtp1.hallambaker.com.
+
+
+; default mail
+mplace2.app.       IN      MX       10 mx01.ionos.com.
+mplace2.app.       IN      MX       10 mx00.ionos.com.
+mplace2.app. TXT "v=spf1 redirect=_spf.google.com"
+
 
 
 ; Host host1.mplace2app.com 178.62.79.124 
 mplace2.app.    A 178.62.79.124 
+; is wildcard
+*.mplace2.app.    A 178.62.79.124 
 www.mplace2.app.    A 178.62.79.124 
 http.mplace2.app.    A 178.62.79.124
 https.mplace2.app.    A 178.62.79.124 
@@ -44,5 +50,7 @@ _https._tcp.mplace2.app.   IN   SRV 1 1 443 host1.mplace2app.com.
 ; Service records for mmm
 mmm.mplace2.app.    A 192.168.1.21 
 _mmm._tcp.mplace2.app. SRV 1 100 15098 host1.cryptomesh.org.
+
+; handles
 
 

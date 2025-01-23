@@ -71,6 +71,7 @@ using Goedel.Utilities;
 //       CAA
 //       Authoritative
 //       MX
+//       SPF
 //       Time
 //       Host
 //       Tag
@@ -82,7 +83,8 @@ using Goedel.Utilities;
 //       Address
 //       SMTP
 //       Email
-//       SPF
+//       Wildcard
+//       Handle
 //       Root
 //       Name
 //       TXT
@@ -110,6 +112,8 @@ namespace Goedel.Tool.DNSConfig {
         MX,
         Site,
         Domain,
+        Wildcard,
+        Handle,
         Address,
         SMTP,
         Email,
@@ -191,6 +195,7 @@ namespace Goedel.Tool.DNSConfig {
 		public List<CAA>  CAA = new  List <CAA> ();
 		public List<Authoritative>  Authoritative = new  List <Authoritative> ();
 		public List<MX>  MX = new  List <MX> ();
+		public List<SPF>  SPF = new  List <SPF> ();
 
         public override DNSConfigType _Tag () =>DNSConfigType.DNS;
 
@@ -226,6 +231,9 @@ namespace Goedel.Tool.DNSConfig {
 				_e.Serialize (Output, true);
 				}
 			foreach (MX _e in MX) {
+				_e.Serialize (Output, true);
+				}
+			foreach (SPF _e in SPF) {
 				_e.Serialize (Output, true);
 				}
 			Output.EndList ("");
@@ -463,6 +471,8 @@ namespace Goedel.Tool.DNSConfig {
 		public List<Address>  Address = new  List <Address> ();
 		public List<SMTP>  SMTP = new  List <SMTP> ();
 		public Email  Email = new  Email();
+		public List<Wildcard>  Wildcard = new  List <Wildcard> ();
+		public List<Handle>  Handle = new  List <Handle> ();
 
         public override DNSConfigType _Tag () =>DNSConfigType.Domain;
 
@@ -490,9 +500,61 @@ namespace Goedel.Tool.DNSConfig {
 				}
 		// public Email  Email = new  Email();
 			Email.Serialize (Output, true);
+			foreach (Wildcard _e in Wildcard) {
+				_e.Serialize (Output, true);
+				}
+			foreach (Handle _e in Handle) {
+				_e.Serialize (Output, true);
+				}
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Domain");
+				}			
+			}
+		}
+
+    public partial class Wildcard : _Choice {
+
+        public override DNSConfigType _Tag () =>DNSConfigType.Wildcard;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Wildcard");
+				}
+
+			if (tag) {
+				Output.EndElement ("Wildcard");
+				}			
+			}
+		}
+
+    public partial class Handle : _Choice {
+        public REF<_Choice>				Id;
+		public string					Value;
+
+        public override DNSConfigType _Tag () =>DNSConfigType.Handle;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Handle");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			Output.WriteAttribute ("Value", Value);
+			if (tag) {
+				Output.EndElement ("Handle");
 				}			
 			}
 		}
@@ -846,6 +908,10 @@ namespace Goedel.Tool.DNSConfig {
 		Domain_Start,
 		Domain__Id,				
 		Domain__Options,				
+		Wildcard_Start,
+		Handle_Start,
+		Handle__Id,				
+		Handle__Value,				
 		Address_Start,
 		Address__Id,				
 		Address__Data,				
@@ -960,6 +1026,8 @@ namespace Goedel.Tool.DNSConfig {
                 case "MX": return NewMX();
                 case "Site": return NewSite();
                 case "Domain": return NewDomain();
+                case "Wildcard": return NewWildcard();
+                case "Handle": return NewHandle();
                 case "Address": return NewAddress();
                 case "SMTP": return NewSMTP();
                 case "Email": return NewEmail();
@@ -1075,6 +1143,22 @@ namespace Goedel.Tool.DNSConfig {
             }
 
 
+        private Goedel.Tool.DNSConfig.Wildcard NewWildcard() {
+            Goedel.Tool.DNSConfig.Wildcard result = new Goedel.Tool.DNSConfig.Wildcard();
+            Push (result);
+            State = StateCode.Wildcard_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.DNSConfig.Handle NewHandle() {
+            Goedel.Tool.DNSConfig.Handle result = new Goedel.Tool.DNSConfig.Handle();
+            Push (result);
+            State = StateCode.Handle_Start;
+            return result;
+            }
+
+
         private Goedel.Tool.DNSConfig.Address NewAddress() {
             Goedel.Tool.DNSConfig.Address result = new Goedel.Tool.DNSConfig.Address();
             Push (result);
@@ -1178,6 +1262,8 @@ namespace Goedel.Tool.DNSConfig {
                 case "MX": return Goedel.Tool.DNSConfig.DNSConfigType.MX;
                 case "Site": return Goedel.Tool.DNSConfig.DNSConfigType.Site;
                 case "Domain": return Goedel.Tool.DNSConfig.DNSConfigType.Domain;
+                case "Wildcard": return Goedel.Tool.DNSConfig.DNSConfigType.Wildcard;
+                case "Handle": return Goedel.Tool.DNSConfig.DNSConfigType.Handle;
                 case "Address": return Goedel.Tool.DNSConfig.DNSConfigType.Address;
                 case "SMTP": return Goedel.Tool.DNSConfig.DNSConfigType.SMTP;
                 case "Email": return Goedel.Tool.DNSConfig.DNSConfigType.Email;
@@ -1395,8 +1481,14 @@ namespace Goedel.Tool.DNSConfig {
 									Current_Cast.MX.Add (NewMX ());
 									break;
 									}
+								case Goedel.Tool.DNSConfig.DNSConfigType.SPF : {
+
+									// SPF  SPF
+									Current_Cast.SPF.Add (NewSPF ());
+									break;
+									}
 								default : {
-									throw new Expected("Parser Error Expected [Refresh Retry Expire TTL Slave CAA Authoritative MX ]");
+									throw new Expected("Parser Error Expected [Refresh Retry Expire TTL Slave CAA Authoritative MX SPF ]");
 									}
 								}
 							}
@@ -1634,13 +1726,51 @@ namespace Goedel.Tool.DNSConfig {
 									Current_Cast.Email = NewEmail ();
 									break;
 									}
+								case Goedel.Tool.DNSConfig.DNSConfigType.Wildcard : {
+
+									// Wildcard  Wildcard
+									Current_Cast.Wildcard.Add (NewWildcard ());
+									break;
+									}
+								case Goedel.Tool.DNSConfig.DNSConfigType.Handle : {
+
+									// Handle  Handle
+									Current_Cast.Handle.Add (NewHandle ());
+									break;
+									}
 								default : {
-									throw new Expected("Parser Error Expected [Service Address SMTP Email ]");
+									throw new Expected("Parser Error Expected [Service Address SMTP Email Wildcard Handle ]");
 									}
 								}
 							}
                         break;
 
+                    case StateCode.Wildcard_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Handle_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.DNSConfig.Handle Current_Cast = (Goedel.Tool.DNSConfig.Handle)Current;
+                            Current_Cast.Id = Registry.REF(Position, Text, TYPE__AddressT, Current_Cast);
+                            State = StateCode.Handle__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Handle__Id:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.DNSConfig.Handle Current_Cast = (Goedel.Tool.DNSConfig.Handle)Current;
+                            Current_Cast.Value = Text;
+                            State = StateCode.Handle__Value;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Handle__Value:
+                        Pop ();
+                        Represent = true; 
+                        break;
                     case StateCode.Address_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.DNSConfig.Address Current_Cast = (Goedel.Tool.DNSConfig.Address)Current;

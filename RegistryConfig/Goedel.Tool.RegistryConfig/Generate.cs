@@ -33,7 +33,7 @@ public partial class GenerateCS : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// Generate
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="ConfigItems"></param>
 	public void Generate (ConfigItems ConfigItems) {
 		 ConfigItems.Normalize();
 		_Output.Write ("// Generated on {1}\n{0}", _Indent, GenerateTime);

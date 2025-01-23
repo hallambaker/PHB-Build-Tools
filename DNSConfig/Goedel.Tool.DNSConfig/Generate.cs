@@ -32,7 +32,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateZone
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="DNSConfig"></param>
 	public void GenerateZone (DNSConfig DNSConfig) {
 		 DNSConfig.Init();
 		_Output.Write ("\n{0}", _Indent);
@@ -49,7 +49,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateOptions
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="DNSConfig"></param>
 	public void GenerateOptions (DNSConfig DNSConfig) {
 		_Output.Write ("# PATH=/etc/bind/named.conf.options \n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
@@ -71,7 +71,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateLocal
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="DNSConfig"></param>
 	public void GenerateLocal (DNSConfig DNSConfig) {
 		_Output.Write ("# PATH=/etc/bind/named.conf.local\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
@@ -88,7 +88,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateDomain
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Domain"></param>
 	public void GenerateDomain (Domain Domain) {
 		 var DNS = Domain.DNS;
 		 var Web = Domain.Web;
@@ -120,22 +120,41 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("; Hardcoded A records\n{0}", _Indent);
 		foreach  (var Address in Domain.Address) {
 			_Output.Write ("{1}\n{0}", _Indent, Domain.MakeAddress(Address.Machine, Address.Id));
-			_Output.Write ("\n{0}", _Indent);
 			if (  (Address.SMTP != null)  ) {
 				_Output.Write ("{1}.        IN      TXT    \"v=spf1 {2} ?all\"  \n{0}", _Indent, Address.Id, Address.Data);
 				}
 			}
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("; For now, forward all mail to a forwarder on the authoritative\n{0}", _Indent);
-		foreach  (var MX in DNS.MX) {
-			_Output.Write ("{1}.       IN      MX       {2} {3}.\n{0}", _Indent, Domain.Id, MX.Priority, MX.Id);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		if (  (Domain.Email.MX.Count >0) ) {
+			_Output.Write ("; explicit mail\n{0}", _Indent);
+			foreach  (var MX in Domain.Email.MX) {
+				_Output.Write ("{1}.       IN      MX       {2} {3}.\n{0}", _Indent, Domain.Id, MX.Priority, MX.Id);
+				}
+			foreach  (var SPF in Domain.Email.SPF) {
+				_Output.Write ("{1}. TXT \"{2}\"\n{0}", _Indent, Domain.Id, SPF.Value);
+				}
+			} else {
+			_Output.Write ("; default mail\n{0}", _Indent);
+			foreach  (var MX in DNS.MX) {
+				_Output.Write ("{1}.       IN      MX       {2} {3}.\n{0}", _Indent, Domain.Id, MX.Priority, MX.Id);
+				}
+			foreach  (var SPF in DNS.SPF) {
+				_Output.Write ("{1}. TXT \"{2}\"\n{0}", _Indent, Domain.Id, SPF.Value);
+				}
 			}
+		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		if (  (Domain.Web != null) ) {
 			_Output.Write ("\n{0}", _Indent);
 			foreach  (var Host in Domain.Web.Host) {
 				_Output.Write ("; Host {1} {2} \n{0}", _Indent, Host.Name, Host.IP);
 				_Output.Write ("{1} \n{0}", _Indent, Domain.MakeAddress(Host.Machine, Domain.Id));
+				if (  Domain.IsWildcard ) {
+					_Output.Write ("; is wildcard\n{0}", _Indent);
+					_Output.Write ("*.{1} \n{0}", _Indent, Domain.MakeAddress(Host.Machine, Domain.Id));
+					}
 				_Output.Write ("{1} \n{0}", _Indent, Domain.MakeAddress(Host.Machine, "www", Domain.Id));
 				_Output.Write ("{1}\n{0}", _Indent, Domain.MakeAddress(Host.Machine, "http", Domain.Id));
 				_Output.Write ("{1} \n{0}", _Indent, Domain.MakeAddress(Host.Machine, "https", Domain.Id));
@@ -155,13 +174,18 @@ public partial class Generate : global::Goedel.Registry.Script {
 				}
 			}
 		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("; handles\n{0}", _Indent);
+		foreach  (var Handle in Domain.Handle) {
+			_Output.Write ("_atproto.{1}. IN TXT \"{2}\"\n{0}", _Indent, Handle.Id, Handle.Value);
+			}
+		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
 	/// <summary>	
 	/// GenerateAdressRecords
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="DNSConfig"></param>
 	public void GenerateAdressRecords (DNSConfig DNSConfig) {
 		foreach  (var Machine in DNSConfig.Machines) {
 			_Output.Write ("# Machine {1} {2}\n{0}", _Indent, Machine.Id, Machine.Data);

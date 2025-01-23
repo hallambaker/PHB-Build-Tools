@@ -5,14 +5,17 @@ www.mplace2.com.    A 178.62.79.124
 http.mplace2.com.    A 178.62.79.124
 https.mplace2.com.    A 178.62.79.124
 mplace2.social.    A 178.62.79.124
+mplace2.social.    A 178.62.79.124
 www.mplace2.social.    A 178.62.79.124
 http.mplace2.social.    A 178.62.79.124
 https.mplace2.social.    A 178.62.79.124
 host1.mplace2app.com.    A 178.62.79.124
 mplace2.app.    A 178.62.79.124
+mplace2.app.    A 178.62.79.124
 www.mplace2.app.    A 178.62.79.124
 http.mplace2.app.    A 178.62.79.124
 https.mplace2.app.    A 178.62.79.124
+hallambaker.com.    A 178.62.79.124
 hallambaker.com.    A 178.62.79.124
 www.hallambaker.com.    A 178.62.79.124
 http.hallambaker.com.    A 178.62.79.124
@@ -198,7 +201,6 @@ dns1.mplace2.com.    A 178.62.79.124
 dns1.mplace2.social.    A 178.62.79.124
 dns1.mplace2.app.    A 178.62.79.124
 dns1.hallambaker.com.    A 178.62.79.124
-smtp1.hallambaker.com.    A 178.62.79.124
 dns1.defaultdenysecurity.com.    A 178.62.79.124
 dns1.thresholded.com.    A 178.62.79.124
 dns1.thresholdkey.com.    A 178.62.79.124

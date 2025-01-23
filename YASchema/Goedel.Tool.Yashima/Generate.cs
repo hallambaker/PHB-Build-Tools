@@ -33,7 +33,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateCS
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Yaschema"></param>
 	public void GenerateCS (YaschemaStruct Yaschema) {
 		 Registry.Boilerplate.License(_Output, "//  ", "MITLicense");
 		 Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
@@ -133,7 +133,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenersateSerializer
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="packet"></param>
 	public void GenersateSerializer (Packet packet) {
 		 var plaintext = packet.Plaintext;
 		 var mezzanine = packet.Mezzanine;
@@ -284,8 +284,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateParser
 	/// </summary>
-	/// <param name="options"></param>
-	/// <param name="options"></param>
+	/// <param name="packet"></param>
+	/// <param name="isstatic"></param>
 	public void GenerateParser (Packet packet, bool isstatic) {
 		 var plaintext = packet.Plaintext;
 		 var mezzanine = packet.Mezzanine;
@@ -337,7 +337,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// ParseMezzanine
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="packet"></param>
 	public void ParseMezzanine (Packet packet) {
 		 var plaintext = packet.Plaintext;
 		 var mezzanine = packet.Mezzanine;
@@ -394,7 +394,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GeneratePacket
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="packet"></param>
 	public void GeneratePacket (Packet packet) {
 		 var plaintext = packet.Plaintext;
 		 var mezzanine = packet.Mezzanine;
@@ -440,7 +440,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateMD
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="YaschemaStruct"></param>
 	public void GenerateMD (YaschemaStruct YaschemaStruct) {
 		_Output.Write ("\n{0}", _Indent);
 		}

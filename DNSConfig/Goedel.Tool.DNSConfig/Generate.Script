@@ -78,16 +78,32 @@ $TTL #{DNS.TTL.DefaultedTime}
 ; Hardcoded A records
 #foreach (var Address in Domain.Address)
 #{Domain.MakeAddress(Address.Machine, Address.Id)}
-
 #if (Address.SMTP != null) 
 #{Address.Id}.        IN      TXT    "v=spf1 #{Address.Data} ?all"  
 #end if
 #end foreach
 
-; For now, forward all mail to a forwarder on the authoritative
+#!; For now, forward all mail to a forwarder on the authoritative
+
+
+#if (Domain.Email.MX.Count >0)
+; explicit mail
+#foreach (var MX in Domain.Email.MX)
+#{Domain.Id}.       IN      MX       #{MX.Priority} #{MX.Id}.
+#end foreach
+#foreach (var SPF in Domain.Email.SPF)
+#{Domain.Id}. TXT "#{SPF.Value}"
+#end foreach
+#else
+; default mail
 #foreach (var MX in DNS.MX)
 #{Domain.Id}.       IN      MX       #{MX.Priority} #{MX.Id}.
 #end foreach
+#foreach (var SPF in DNS.SPF)
+#{Domain.Id}. TXT "#{SPF.Value}"
+#end foreach
+#end if
+
 
 #if (Domain.Web != null)
 # Web redirect to #{Domain.Web.Id} (is in host directory #{Domain.Web.Root})
@@ -95,6 +111,10 @@ $TTL #{DNS.TTL.DefaultedTime}
 #foreach (var Host in Domain.Web.Host)
 ; Host #{Host.Name} #{Host.IP} 
 #{Domain.MakeAddress(Host.Machine, Domain.Id)} 
+#if Domain.IsWildcard
+; is wildcard
+*.#{Domain.MakeAddress(Host.Machine, Domain.Id)} 
+#end if
 #{Domain.MakeAddress(Host.Machine, "www", Domain.Id)} 
 #{Domain.MakeAddress(Host.Machine, "http", Domain.Id)}
 #{Domain.MakeAddress(Host.Machine, "https", Domain.Id)} 
@@ -114,6 +134,15 @@ _#{Service.Name}._tcp.#{Domain.Id}. TXT "#{TXT.Text}"
 #end foreach
 #end foreach
 
+; handles
+#foreach (var Handle in Domain.Handle)
+_atproto.#{Handle.Id}. IN TXT "#{Handle.Value}"
+#end foreach
+
+#!; spf 
+#!#foreach (var SPF in Domain.SPF)
+#!#{Domain.Id}. TXT #{SPF.Value}"
+#!#end foreach
 
 #end method
 

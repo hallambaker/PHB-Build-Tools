@@ -18,6 +18,7 @@ Class Goedel.Tool.DNSConfig DNSConfig
 			CAA CAA Multiple
 			Authoritative Authoritative Multiple
 			MX MX Multiple
+			SPF SPF Multiple
 
 	Type Authoritative
 		Id				ID AddressT
@@ -54,7 +55,15 @@ Class Goedel.Tool.DNSConfig DNSConfig
 			Address Address Multiple
 			SMTP SMTP Multiple
 			Email Email Single
+			Wildcard Wildcard Multiple
+			Handle Handle Multiple
 
+	Type Wildcard
+	
+	Type Handle
+		Id				REF AddressT
+		Value			String
+		
 	Type Address
 		Id				ID AddressT
 		Data			REF IPT

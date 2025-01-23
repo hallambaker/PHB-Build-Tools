@@ -32,7 +32,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateCS
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Domainer"></param>
 	public void GenerateCS (Domainer Domainer) {
 		_Output.Write ("using System.Net;\n{0}", _Indent);
 		_Output.Write ("using System.Collections.Generic;\n{0}", _Indent);

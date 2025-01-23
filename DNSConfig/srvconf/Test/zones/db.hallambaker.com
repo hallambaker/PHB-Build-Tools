@@ -6,7 +6,7 @@
 ;
 $TTL 600
 hallambaker.com.      IN      SOA     dns1.hallambaker.com. hallam.gmail.com. (
-                        2024121001       ; serial, todays date + todays serial 
+                        2025012301       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -25,21 +25,28 @@ hallambaker.com.    IN     CAA 0 issuewild  ";"
 hallambaker.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 
 ; Hardcoded A records
-smtp1.hallambaker.com.    A 178.62.79.124
 
-smtp1.hallambaker.com.        IN      TXT    "v=spf1 CloudDroplet ?all"  
 
-; For now, forward all mail to a forwarder on the authoritative
-hallambaker.com.       IN      MX       1 smtp1.hallambaker.com.
+
+; explicit mail
+hallambaker.com.       IN      MX       10 mx01.ionos.com.
+hallambaker.com.       IN      MX       10 mx00.ionos.com.
+hallambaker.com. TXT "v=spf1 redirect=_spf.google.com"
+
 
 
 ; Host host1.mathmesh.com 178.62.79.124 
 hallambaker.com.    A 178.62.79.124 
+; is wildcard
+*.hallambaker.com.    A 178.62.79.124 
 www.hallambaker.com.    A 178.62.79.124 
 http.hallambaker.com.    A 178.62.79.124
 https.hallambaker.com.    A 178.62.79.124 
 _http._tcp.hallambaker.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.hallambaker.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 
+
+; handles
+_atproto.phill.hallambaker.com. IN TXT "did=did:plc:k647x4n6h3jm347u3t5cm6ki"
 
 

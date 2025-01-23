@@ -48,7 +48,7 @@ public partial class GenerateCS : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// Generate
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="CommandParseIn"></param>
 	public void Generate (CommandParse CommandParseIn) {
 		// Goedel.Registry.Boilerplate.Header (_Output, "//  ", CommandParseIn.Options.Started);
 		// Goedel.Registry.Script.MITLicense (_Output, "//", 
@@ -59,7 +59,7 @@ public partial class GenerateCS : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateX
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="CommandParseIn"></param>
 	public void GenerateX (CommandParse CommandParseIn) {
 		 CommandParse = CommandParseIn;
 		 CommandParse.Init();
@@ -109,7 +109,7 @@ public partial class GenerateCS : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateCommandSet
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="CommandSet"></param>
 	public void GenerateCommandSet (CommandSet CommandSet) {
 		 Separator.IsFirst = true;
 		_Output.Write ("	public static DescribeCommandSet DescribeCommandSet_{1} => new  () {{\n{0}", _Indent, CommandSet.Id);
@@ -135,7 +135,7 @@ public partial class GenerateCS : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateClass
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Class"></param>
 	public void GenerateClass (Class Class) {
 		_Output.Write ("namespace {1};\n{0}", _Indent, Class.Namespace);
 		_Output.Write ("\n{0}", _Indent);
@@ -435,8 +435,8 @@ public partial class GenerateCS : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// CommandHandler
 	/// </summary>
-	/// <param name="options"></param>
-	/// <param name="options"></param>
+	/// <param name="Command"></param>
+	/// <param name="Class"></param>
 	public void CommandHandler (Command Command, Class Class) {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	public static void Handle_{1} (\n{0}", _Indent, Command.Id);
@@ -457,7 +457,7 @@ public partial class GenerateCS : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// CommandMethod
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Command"></param>
 	public void CommandMethod (Command Command) {
 		 bool DefaultOutput = true;
 		 string Lazy = null;
@@ -561,7 +561,7 @@ public partial class GenerateCS : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// CommandSetMethod
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="CommandSet"></param>
 	public void CommandSetMethod (CommandSet CommandSet) {
 		foreach  (var Inner in CommandSet.Entries) {
 			switch (Inner._Tag ()) {
@@ -582,8 +582,8 @@ public partial class GenerateCS : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// CommandSetHandler
 	/// </summary>
-	/// <param name="options"></param>
-	/// <param name="options"></param>
+	/// <param name="CommandSet"></param>
+	/// <param name="Class"></param>
 	public void CommandSetHandler (CommandSet CommandSet, Class Class) {
 		foreach  (var Inner in CommandSet.Entries) {
 			switch (Inner._Tag ()) {
@@ -604,7 +604,7 @@ public partial class GenerateCS : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// CommandSetOptionClass
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="CommandSet"></param>
 	public void CommandSetOptionClass (CommandSet CommandSet) {
 		foreach  (var Inner in CommandSet.Entries) {
 			switch (Inner._Tag ()) {
@@ -625,7 +625,7 @@ public partial class GenerateCS : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// CommandOptionClass
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Command"></param>
 	public void CommandOptionClass (Command Command) {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("public class _{1} : {2} ", _Indent, Command.Id, NameDispatchType);

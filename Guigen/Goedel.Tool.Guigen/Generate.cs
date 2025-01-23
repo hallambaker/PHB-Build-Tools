@@ -33,7 +33,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateCS
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Guigen"></param>
 	public void GenerateCS (Guigen Guigen) {
 		 Guigen._InitChildren();
 		_Output.Write ("#region // Copyright \n{0}", _Indent);
@@ -500,7 +500,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeIParameterMethods
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="action"></param>
 	public void MakeIParameterMethods (IEntries action) {
 		_Output.Write ("    ///<summary>Validation</summary> \n{0}", _Indent);
 		_Output.Write ("    public {1} IResult Validate(Gui gui) {{\n{0}", _Indent, action.IfSubclassOverride);
@@ -539,7 +539,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DeclareResultGetValues
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="parent"></param>
 	public void DeclareResultGetValues (IEntries parent) {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
@@ -570,7 +570,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// DeclareFields
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="parent"></param>
 	public void DeclareFields (IEntries parent) {
 		foreach  (var entry in parent.AllEntries) {
 			if (  entry.BackerType != null ) {
@@ -584,7 +584,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// CreateBindings
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="parent"></param>
 	public void CreateBindings (IEntries parent) {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    ///<inheritdoc/>\n{0}", _Indent);
@@ -598,7 +598,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// CreateBindingInner
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="parent"></param>
 	public void CreateBindingInner (IEntries parent) {
 		 var empty = true;
 		foreach  (var entry in parent.InheritedEntries) {
@@ -656,7 +656,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateEntries
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="entries"></param>
 	public void GenerateEntries (List<_Choice> entries) {
 		_Output.Write ("[", _Indent);
 		 var separator = new Separator (",");
@@ -677,7 +677,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateEntry_OLD_DELETE
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="entry"></param>
 	public void GenerateEntry_OLD_DELETE (_Choice entry) {
 		switch (entry._Tag ()) {
 			case GuigenType.Chooser: {
@@ -756,7 +756,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateList
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="list"></param>
 	public void GenerateList (List list) {
 		 var separator = new Separator (",");
 		_Output.Write ("			new GuiList ({1}, {2}, {3}, {4}, {5}, new () {{", _Indent, list.QuotedId, list.Prompt.Quoted(), list.Icon.Quoted(), list.DialogType, list.Index);
@@ -775,7 +775,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateChooser
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="chooser"></param>
 	public void GenerateChooser (Chooser chooser) {
 		 var separator = new Separator (",");
 		_Output.Write ("			new GuiChooser ({1}, {2}, {3}, {4}, new () {{", _Indent, chooser.QuotedId, chooser.Prompt.Quoted(), chooser.Icon.Quoted(), chooser.Index);
@@ -794,7 +794,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateDialog
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="dialog"></param>
 	public void GenerateDialog (Dialog dialog) {
 		 var separator = new Separator (",");
 		_Output.Write ("			new GuiDialog ({1}, new () {{", _Indent, dialog.QuotedId);
@@ -811,7 +811,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateSelection
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="field"></param>
 	public void GenerateSelection (Selection field) {
 		_Output.Write ("			new GuiButton ({1}, {2})", _Indent, field.QuotedId, field.Target);
 		}
@@ -819,7 +819,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateButton
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="field"></param>
 	public void GenerateButton (Button field) {
 		_Output.Write ("			new GuiButton ({1}, {2})", _Indent, field.QuotedId, field.Target);
 		}
@@ -827,7 +827,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateText
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="field"></param>
 	public void GenerateText (Text field) {
 		_Output.Write ("			new GuiText ({1}, {2}, {3}, {4})", _Indent, field.QuotedId, field.Prompt.Quoted(), field.Index, field.Width.ValueOrNull());
 		}
@@ -835,7 +835,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateBoolean
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="field"></param>
 	public void GenerateBoolean (Boolean field) {
 		_Output.Write ("			new GuiBoolean ({1}, {2}, {3})", _Indent, field.QuotedId, field.Prompt.Quoted(), field.Index);
 		}
@@ -843,7 +843,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateTextArea
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="field"></param>
 	public void GenerateTextArea (TextArea field) {
 		_Output.Write ("			new GuiTextArea ({1}, {2}, {3})", _Indent, field.QuotedId, field.Prompt.Quoted(), field.Index);
 		}
@@ -851,7 +851,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateInteger
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="field"></param>
 	public void GenerateInteger (Integer field) {
 		_Output.Write ("			new GuiInteger ({1}, {2}, {3})", _Indent, field.QuotedId, field.Prompt.Quoted(), field.Index);
 		}
@@ -859,7 +859,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateQRScan
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="field"></param>
 	public void GenerateQRScan (QRScan field) {
 		_Output.Write ("			new GuiQRScan ({1}, {2}, {3})", _Indent, field.QuotedId, field.Prompt.Quoted(), field.Index);
 		}
@@ -867,7 +867,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateColor
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="field"></param>
 	public void GenerateColor (Color field) {
 		_Output.Write ("			new GuiColor ({1}, {2})", _Indent, field.QuotedId, field.Prompt.Quoted());
 		}
@@ -875,7 +875,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateSize
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="field"></param>
 	public void GenerateSize (Size field) {
 		_Output.Write ("			new GuiSize ({1}, {2})", _Indent, field.QuotedId, field.Prompt.Quoted());
 		}
@@ -883,7 +883,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateDecimal
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="field"></param>
 	public void GenerateDecimal (Decimal field) {
 		_Output.Write ("			new GuiDecimal ({1}, {2})", _Indent, field.QuotedId, field.Prompt.Quoted());
 		}
@@ -891,7 +891,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateIcon
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="field"></param>
 	public void GenerateIcon (Icon field) {
 		_Output.Write ("			new GuiIcon ({1}, {2})", _Indent, field.QuotedId, field.Prompt.Quoted());
 		}
@@ -899,7 +899,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateResx
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Guigen"></param>
 	public void GenerateResx (Guigen Guigen) {
 		_Output.Write ("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n{0}", _Indent);
 		_Output.Write ("<root>\n{0}", _Indent);

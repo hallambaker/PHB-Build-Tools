@@ -6,7 +6,7 @@
 ;
 $TTL 600
 thresholdmode.com.      IN      SOA     dns1.thresholdmode.com. hallam.gmail.com. (
-                        2024121001       ; serial, todays date + todays serial 
+                        2025012301       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -26,8 +26,13 @@ thresholdmode.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 
 ; Hardcoded A records
 
-; For now, forward all mail to a forwarder on the authoritative
-thresholdmode.com.       IN      MX       1 smtp1.hallambaker.com.
+
+
+; default mail
+thresholdmode.com.       IN      MX       10 mx01.ionos.com.
+thresholdmode.com.       IN      MX       10 mx00.ionos.com.
+thresholdmode.com. TXT "v=spf1 redirect=_spf.google.com"
+
 
 
 ; Host host1.mathmesh.com 178.62.79.124 
@@ -38,5 +43,7 @@ https.thresholdmode.com.    A 178.62.79.124
 _http._tcp.thresholdmode.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.thresholdmode.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 
+
+; handles
 
 

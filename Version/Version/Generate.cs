@@ -32,7 +32,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateCS
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Version"></param>
 	public void GenerateCS (VersionInfo Version) {
 		_Output.Write ("// These values are automatically generated from version.version\n{0}", _Indent);
 		_Output.Write ("[assembly: System.Reflection.AssemblyVersionAttribute(\"{1}\")]\n{0}", _Indent, Version.Assembly);

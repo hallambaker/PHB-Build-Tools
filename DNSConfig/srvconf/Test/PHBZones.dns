@@ -20,17 +20,24 @@ DNS Default "hallam.gmail.com"
 	CAA "iodef" "mailto:hostmaster@hallambaker.com"
 	Authoritative dns1 CloudDroplet
 	Authoritative dns2 CloudFloating
-	MX smtp1.hallambaker.com 1
+	MX mx01.ionos.com 10
+	MX mx00.ionos.com 10
+	SPF "v=spf1 redirect=_spf.google.com"
 
 Site mplace2
 	Domain mplace2.com
 	Domain mplace2.social
+		Wildcard
+		Handle mplace2.social "did=did:plc:h3naowafzc3b7sr4htrdkz3c"
+		Handle meta.mplace2.social "did=did:plc:pw45zujtlzlqsx7gzxxitvsu"
 	Web www.mplace2.com "mplace2/"
 		Host host1.mathmesh.com
-
+	Web www.mplace2.social "mplace2/"
+		Host host1.mathmesh.com
 
 Site mplace2app
 	Domain mplace2.app
+		Wildcard
 		Address host1.mplace2app.com Home
 		Service "mmm"
 			TXT "TLS=require"
@@ -45,15 +52,16 @@ Site mplace2app
 // The domain we are using for our DNS hosts.
 Site hallambaker
 	Domain hallambaker.com
-		Address smtp1.hallambaker.com CloudDroplet
-			SMTP
+		Wildcard
 		Email
 			MX mx01.ionos.com 10
 			MX mx00.ionos.com 10
-			SPF "v=spf1 ip4:178.62.79.124 ip4:139.59.200.120 ?all"
+			// SPF "v=spf1 ip4:178.62.79.124 ip4:139.59.200.120 ?all"
+			// SPF "v=spf1 include:_spf-us.ionos.com ~all"
+			SPF "v=spf1 redirect=_spf.google.com"
+		Handle phill.hallambaker.com "did=did:plc:k647x4n6h3jm347u3t5cm6ki"
 
 	Domain defaultdenysecurity.com
-
 	Domain thresholded.com
 	Domain thresholdkey.com
 	Domain thresholdrise.com
@@ -67,6 +75,8 @@ Site hallambaker
 	Domain cyberishard.com
 
 	Web www.hallambaker.com "hallambaker/"
+		Host host1.mathmesh.com
+	Web phill.hallambaker.com "hallambaker/"
 		Host host1.mathmesh.com
 
 // At present, the domain mathmesh.com is being serviced by the 

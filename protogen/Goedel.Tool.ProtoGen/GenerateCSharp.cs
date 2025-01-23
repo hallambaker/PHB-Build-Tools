@@ -38,7 +38,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateCS
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="ProtoStruct"></param>
 	public void GenerateCS (ProtoStruct ProtoStruct) {
 		 ProtoStruct.Complete ();
 		 var GenerateTime =System.DateTime.UtcNow;
@@ -977,8 +977,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeSerializeEntry
 	/// </summary>
-	/// <param name="options"></param>
-	/// <param name="options"></param>
+	/// <param name="Entry"></param>
+	/// <param name="Tag"></param>
 	public void MakeSerializeEntry (_Choice Entry, string Tag) {
 		switch (Entry._Tag ()) {
 			case ProtoStructType.Boolean: { 
@@ -1034,8 +1034,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeSerializeArrayEntry
 	/// </summary>
-	/// <param name="options"></param>
-	/// <param name="options"></param>
+	/// <param name="Entry"></param>
+	/// <param name="Tag"></param>
 	public void MakeSerializeArrayEntry (_Choice Entry, string Tag) {
 		switch (Entry._Tag ()) {
 			case ProtoStructType.Boolean: { 

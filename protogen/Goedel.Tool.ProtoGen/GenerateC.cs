@@ -35,7 +35,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateH
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="ProtoStruct"></param>
 	public void GenerateH (ProtoStruct ProtoStruct) {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("#pragma once\n{0}", _Indent);
@@ -134,7 +134,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeCStructure
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Members"></param>
 	public void MakeCStructure (List<_Choice> Members) {
 		foreach  (_Choice Member in Members) {
 			MakeCStructure (Member);
@@ -144,7 +144,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeCStructure
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Member"></param>
 	public void MakeCStructure (_Choice Member) {
 		if (  Member.Multiple ) {
 			_Output.Write ("	JSON_Group				{1};\n{0}", _Indent, Member.ID);
@@ -166,7 +166,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateC
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="ProtoStruct"></param>
 	public void GenerateC (ProtoStruct ProtoStruct) {
 		GenerateH (ProtoStruct);
 		_Output.Write ("\n{0}", _Indent);
@@ -368,7 +368,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeCSerialize
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Members"></param>
 	public void MakeCSerialize (List<_Choice> Members) {
 		foreach  (_Choice Member in Members) {
 			MakeCSerialize (Member);
@@ -378,7 +378,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeCSerialize
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Member"></param>
 	public void MakeCSerialize (_Choice Member) {
 		 string Pointer = Member.ByValue? "" : "&";
 		 string Required = Member.Required ? "TRUE" : "FALSE";
@@ -411,7 +411,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeCDeserialize
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Members"></param>
 	public void MakeCDeserialize (List<_Choice> Members) {
 		 Int32 Comma = 0;
 		foreach  (_Choice Member in Members) {
@@ -423,7 +423,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeCDeserialize
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Member"></param>
 	public void MakeCDeserialize (_Choice Member) {
 		if (  Member.ID != null ) {
 			switch (Member._Tag ()) {
@@ -443,7 +443,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeComma
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="OCount"></param>
 	public void MakeComma (Object OCount) {
 		 Int32 Count = (Int32) OCount;
 		if (  Count >0 ) {

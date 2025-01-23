@@ -32,7 +32,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateH
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="FSRSchema"></param>
 	public void GenerateH (FSRSchema FSRSchema) {
 		 FSRSchema.Complete ();
 		_Output.Write ("\n{0}", _Indent);
@@ -128,7 +128,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateRaw
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="FSR"></param>
 	public void GenerateRaw (FSR FSR) {
 		_Output.Write ("static {1} {2}_Transitions [{3}_State__Count][{4}]   =   {{\n{0}", _Indent, FSR.StateType, FSR.Id, FSR.Id, FSR.MaxChar);
 		for  (int i = 0; i < FSR.States.Count; i++)  {

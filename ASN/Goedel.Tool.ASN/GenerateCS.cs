@@ -33,7 +33,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateCS
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="ASN2"></param>
 	public void GenerateCS (ASN2 ASN2) {
 		 ASN2.Complete ();
 		 Registry.Boilerplate.Header(_Output, "//  ", DateTime.Now);
@@ -258,7 +258,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// EntryDeclaration
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Member"></param>
 	public void EntryDeclaration (Member Member) {
 		switch (Member.Spec._Tag ()) {
 			case ASN2Type.Choice: {
@@ -281,7 +281,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// TypeDeclaration
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Type"></param>
 	public void TypeDeclaration (_Choice Type) {
 		switch (Type._Tag ()) {
 			case  ASN2Type.OIDRef: {
@@ -350,7 +350,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// Encode
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Member"></param>
 	public void Encode (Member Member) {
 		  Encode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
 		}
@@ -358,7 +358,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// Decode
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Member"></param>
 	public void Decode (Member Member) {
 		  Decode (Member.Name.ToString(), Member.Default, Member.Spec, Member.Flags, Member.Code);
 		}
@@ -650,7 +650,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeChildren
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Element"></param>
 	public void MakeChildren (_Choice Element) {
 		foreach  (OID OID in Element.Children) {
 			_Output.Write ("\n{0}", _Indent);
@@ -675,7 +675,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeConst
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Array"></param>
 	public void MakeConst (int[] Array) {
 		 bool Comma = false;
 		foreach  (int Value in Array) {
@@ -690,7 +690,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// MakeString
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Array"></param>
 	public void MakeString (int[] Array) {
 		 bool Comma = false;
 		foreach  (int Value in Array) {

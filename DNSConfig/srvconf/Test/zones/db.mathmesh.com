@@ -6,7 +6,7 @@
 ;
 $TTL 600
 mathmesh.com.      IN      SOA     dns1.mathmesh.com. hallam.gmail.com. (
-                        2024121001       ; serial, todays date + todays serial 
+                        2025012301       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -26,11 +26,15 @@ mathmesh.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 
 ; Hardcoded A records
 host1.mathmesh.com.    A 178.62.79.124
-
 host1.mathmesh.com.        IN      TXT    "v=spf1 Home ?all"  
 
-; For now, forward all mail to a forwarder on the authoritative
-mathmesh.com.       IN      MX       1 smtp1.hallambaker.com.
+
+
+; default mail
+mathmesh.com.       IN      MX       10 mx01.ionos.com.
+mathmesh.com.       IN      MX       10 mx00.ionos.com.
+mathmesh.com. TXT "v=spf1 redirect=_spf.google.com"
+
 
 
 ; Host host1.mathmesh.com 178.62.79.124 
@@ -41,5 +45,7 @@ https.mathmesh.com.    A 178.62.79.124
 _http._tcp.mathmesh.com.  IN    SRV 1 1 80 host1.mathmesh.com.
 _https._tcp.mathmesh.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 
+
+; handles
 
 

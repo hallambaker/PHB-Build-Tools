@@ -36,7 +36,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// Preamble
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="VSFile"></param>
 	public void Preamble (VSFile VSFile) {
 		_Output.Write ("# This file is generated automatically from the Visual Studio Project\n{0}", _Indent);
 		_Output.Write ("# File. If you make changes to this file and do not update the project\n{0}", _Indent);
@@ -134,7 +134,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateVSMakefile
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Project"></param>
 	public void GenerateVSMakefile (VSProject Project) {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("# Supplemental Makefile for Visual Studios Projects\n{0}", _Indent);
@@ -223,7 +223,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateMakefile
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Solution"></param>
 	public void GenerateMakefile (VSSolution Solution) {
 		_Output.Write ("#\n{0}", _Indent);
 		_Output.Write ("# Makefile for Visual Studio Solution ..\n{0}", _Indent);
@@ -309,7 +309,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// GenerateMakefile
 	/// </summary>
-	/// <param name="options"></param>
+	/// <param name="Project"></param>
 	public void GenerateMakefile (VSProject Project) {
 		_Output.Write ("#\n{0}", _Indent);
 		_Output.Write ("# Makefile for Visual Studio Project {1}\n{0}", _Indent, Project.AssemblyName);
@@ -515,9 +515,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	/// PHBTool
 	/// </summary>
-	/// <param name="options"></param>
-	/// <param name="options"></param>
-	/// <param name="options"></param>
+	/// <param name="Tag"></param>
+	/// <param name="Tool"></param>
+	/// <param name="Flag"></param>
 	public void PHBTool (string Tag, string Tool, string Flag) {
 		_Output.Write ("export Custom_{1}		?= {2}\n{0}", _Indent, Tag, Tool);
 		_Output.Write ("export Custom_{1}_FLAG	?= {2}\n{0}", _Indent, Tag, Flag);
