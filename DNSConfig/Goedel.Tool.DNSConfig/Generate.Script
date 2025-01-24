@@ -84,8 +84,6 @@ $TTL #{DNS.TTL.DefaultedTime}
 #end foreach
 
 #!; For now, forward all mail to a forwarder on the authoritative
-
-
 #if (Domain.Email.MX.Count >0)
 ; explicit mail
 #foreach (var MX in Domain.Email.MX)
@@ -137,13 +135,12 @@ _#{Service.Name}._tcp.#{Domain.Id}. TXT "#{TXT.Text}"
 ; handles
 #foreach (var Handle in Domain.Handle)
 _atproto.#{Handle.Id}. IN TXT "#{Handle.Value}"
+#if Handle.Id.ToString() != Domain.Id.ToString()
+#foreach (var Host in Domain.Web.Host)
+#{Domain.MakeAddress(Host.Machine, Handle.Id.ToString())} 
 #end foreach
-
-#!; spf 
-#!#foreach (var SPF in Domain.SPF)
-#!#{Domain.Id}. TXT #{SPF.Value}"
-#!#end foreach
-
+#end if
+#end foreach
 #end method
 
 #method GenerateAdressRecords DNSConfig DNSConfig

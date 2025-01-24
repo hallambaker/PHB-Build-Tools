@@ -6,7 +6,7 @@
 ;
 $TTL 600
 hallambaker.com.      IN      SOA     dns1.hallambaker.com. hallam.gmail.com. (
-                        2025012301       ; serial, todays date + todays serial 
+                        2025012401       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -25,8 +25,6 @@ hallambaker.com.    IN     CAA 0 issuewild  ";"
 hallambaker.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 
 ; Hardcoded A records
-
-
 
 ; explicit mail
 hallambaker.com.       IN      MX       10 mx01.ionos.com.
@@ -48,5 +46,4 @@ _https._tcp.hallambaker.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 
 ; handles
 _atproto.phill.hallambaker.com. IN TXT "did=did:plc:k647x4n6h3jm347u3t5cm6ki"
-
-
+phill.hallambaker.com.    A 178.62.79.124 

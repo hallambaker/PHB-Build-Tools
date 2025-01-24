@@ -6,7 +6,7 @@
 ;
 $TTL 600
 cryptomesh.org.      IN      SOA     dns1.cryptomesh.org. hallam.gmail.com. (
-                        2025012301       ; serial, todays date + todays serial 
+                        2025012401       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -27,8 +27,6 @@ cryptomesh.org.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 ; Hardcoded A records
 host1.cryptomesh.org.    A 192.168.1.21
 host1.cryptomesh.org.        IN      TXT    "v=spf1 Voodoo ?all"  
-
-
 
 ; default mail
 cryptomesh.org.       IN      MX       10 mx01.ionos.com.
@@ -59,5 +57,3 @@ confirm.cryptomesh.org.    A 192.168.1.21
 _confirm._tcp.cryptomesh.org. SRV 1 100 80 host1.cryptomesh.org.
 
 ; handles
-
-

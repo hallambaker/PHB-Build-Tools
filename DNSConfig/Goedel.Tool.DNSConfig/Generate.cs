@@ -125,8 +125,6 @@ public partial class Generate : global::Goedel.Registry.Script {
 				}
 			}
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
 		if (  (Domain.Email.MX.Count >0) ) {
 			_Output.Write ("; explicit mail\n{0}", _Indent);
 			foreach  (var MX in Domain.Email.MX) {
@@ -177,9 +175,12 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("; handles\n{0}", _Indent);
 		foreach  (var Handle in Domain.Handle) {
 			_Output.Write ("_atproto.{1}. IN TXT \"{2}\"\n{0}", _Indent, Handle.Id, Handle.Value);
+			if (  Handle.Id.ToString() != Domain.Id.ToString() ) {
+				foreach  (var Host in Domain.Web.Host) {
+					_Output.Write ("{1} \n{0}", _Indent, Domain.MakeAddress(Host.Machine, Handle.Id.ToString()));
+					}
+				}
 			}
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
 		}
 	
 	/// <summary>	

@@ -6,7 +6,7 @@
 ;
 $TTL 600
 mplace2.social.      IN      SOA     dns1.mplace2.social. hallam.gmail.com. (
-                        2025012301       ; serial, todays date + todays serial 
+                        2025012401       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -25,8 +25,6 @@ mplace2.social.    IN     CAA 0 issuewild  ";"
 mplace2.social.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 
 ; Hardcoded A records
-
-
 
 ; default mail
 mplace2.social.       IN      MX       10 mx01.ionos.com.
@@ -49,5 +47,4 @@ _https._tcp.mplace2.social.   IN   SRV 1 1 443 host1.mathmesh.com.
 ; handles
 _atproto.mplace2.social. IN TXT "did=did:plc:h3naowafzc3b7sr4htrdkz3c"
 _atproto.meta.mplace2.social. IN TXT "did=did:plc:pw45zujtlzlqsx7gzxxitvsu"
-
-
+meta.mplace2.social.    A 178.62.79.124 

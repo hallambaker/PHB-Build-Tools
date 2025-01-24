@@ -6,7 +6,7 @@
 ;
 $TTL 600
 letsauthenticate.org.      IN      SOA     dns1.letsauthenticate.org. hallam.gmail.com. (
-                        2025012301       ; serial, todays date + todays serial 
+                        2025012401       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -26,8 +26,6 @@ letsauthenticate.org.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 
 ; Hardcoded A records
 
-
-
 ; default mail
 letsauthenticate.org.       IN      MX       10 mx01.ionos.com.
 letsauthenticate.org.       IN      MX       10 mx00.ionos.com.
@@ -45,5 +43,3 @@ _https._tcp.letsauthenticate.org.   IN   SRV 1 1 443 host1.mathmesh.com.
 
 
 ; handles
-
-

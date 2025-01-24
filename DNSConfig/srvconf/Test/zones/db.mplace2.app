@@ -6,7 +6,7 @@
 ;
 $TTL 600
 mplace2.app.      IN      SOA     dns1.mplace2.app. hallam.gmail.com. (
-                        2025012301       ; serial, todays date + todays serial 
+                        2025012401       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -27,8 +27,6 @@ mplace2.app.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 ; Hardcoded A records
 host1.mplace2app.com.    A 178.62.79.124
 host1.mplace2app.com.        IN      TXT    "v=spf1 Home ?all"  
-
-
 
 ; default mail
 mplace2.app.       IN      MX       10 mx01.ionos.com.
@@ -52,5 +50,3 @@ mmm.mplace2.app.    A 192.168.1.21
 _mmm._tcp.mplace2.app. SRV 1 100 15098 host1.cryptomesh.org.
 
 ; handles
-
-

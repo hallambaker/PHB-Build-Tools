@@ -6,7 +6,7 @@
 ;
 $TTL 600
 thresholdmode.com.      IN      SOA     dns1.thresholdmode.com. hallam.gmail.com. (
-                        2025012301       ; serial, todays date + todays serial 
+                        2025012401       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -26,8 +26,6 @@ thresholdmode.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 
 ; Hardcoded A records
 
-
-
 ; default mail
 thresholdmode.com.       IN      MX       10 mx01.ionos.com.
 thresholdmode.com.       IN      MX       10 mx00.ionos.com.
@@ -45,5 +43,3 @@ _https._tcp.thresholdmode.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 
 
 ; handles
-
-
