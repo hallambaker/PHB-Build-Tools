@@ -12,6 +12,7 @@
 		<!--<DocumentationFile>xml\Documentation.xml</DocumentationFile>-->
 		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
 		<UseSharedCompilation>false</UseSharedCompilation>
+		<DefineConstants>_Github_</DefineConstants>
 	</PropertyGroup>
 
 

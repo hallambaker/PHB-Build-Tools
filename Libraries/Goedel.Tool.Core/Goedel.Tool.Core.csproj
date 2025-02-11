@@ -4,6 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Configurations>Debug;Release;Yaschema</Configurations>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+	  <DefineConstants>_Github_</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

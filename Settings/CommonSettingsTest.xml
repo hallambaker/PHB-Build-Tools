@@ -9,6 +9,7 @@
 		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
     <IsPackable>false</IsPackable>
     <UseSharedCompilation>false</UseSharedCompilation>
+		<DefineConstants>_Github_</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

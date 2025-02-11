@@ -10,6 +10,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<!--<DocumentationFile>xml\Documentation.xml</DocumentationFile>-->
 		<UseSharedCompilation>false</UseSharedCompilation>
+		<DefineConstants>_Github_</DefineConstants>
 	</PropertyGroup>
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">

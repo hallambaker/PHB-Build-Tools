@@ -6,7 +6,7 @@
 ;
 $TTL 600
 mplace2.app.      IN      SOA     dns1.mplace2.app. hallam.gmail.com. (
-                        2025012401       ; serial, todays date + todays serial 
+                        2025013001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -46,7 +46,7 @@ _http._tcp.mplace2.app.  IN    SRV 1 1 80 host1.mplace2app.com.
 _https._tcp.mplace2.app.   IN   SRV 1 1 443 host1.mplace2app.com.
 
 ; Service records for mmm
-mmm.mplace2.app.    A 192.168.1.21 
+mmm.mplace2.app.    A 178.62.79.124 
 _mmm._tcp.mplace2.app. SRV 1 100 15098 host1.cryptomesh.org.
 
 ; handles

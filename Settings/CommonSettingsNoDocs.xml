@@ -7,6 +7,7 @@
 		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
 		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
 		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
+		<DefineConstants>_Github_</DefineConstants>
     <UseSharedCompilation>false</UseSharedCompilation>
 	</PropertyGroup>
 	

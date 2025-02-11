@@ -16,6 +16,7 @@ mplace2.app.    A 178.62.79.124
 www.mplace2.app.    A 178.62.79.124
 http.mplace2.app.    A 178.62.79.124
 https.mplace2.app.    A 178.62.79.124
+mmm.mplace2.app.    A 178.62.79.124
 hallambaker.com.    A 178.62.79.124
 hallambaker.com.    A 178.62.79.124
 www.hallambaker.com.    A 178.62.79.124
@@ -68,13 +69,20 @@ http.cyberishard.com.    A 178.62.79.124
 https.cyberishard.com.    A 178.62.79.124
 host1.mathmesh.com.    A 178.62.79.124
 mathmesh.com.    A 178.62.79.124
+mathmesh.com.    A 178.62.79.124
 www.mathmesh.com.    A 178.62.79.124
 http.mathmesh.com.    A 178.62.79.124
 https.mathmesh.com.    A 178.62.79.124
+host1.cryptomesh.org.    A 178.62.79.124
+cryptomesh.org.    A 178.62.79.124
 cryptomesh.org.    A 178.62.79.124
 www.cryptomesh.org.    A 178.62.79.124
 http.cryptomesh.org.    A 178.62.79.124
 https.cryptomesh.org.    A 178.62.79.124
+mmm.cryptomesh.org.    A 178.62.79.124
+account.cryptomesh.org.    A 178.62.79.124
+recrypt.cryptomesh.org.    A 178.62.79.124
+confirm.cryptomesh.org.    A 178.62.79.124
 mathmesh.net.    A 178.62.79.124
 www.mathmesh.net.    A 178.62.79.124
 http.mathmesh.net.    A 178.62.79.124
@@ -151,12 +159,6 @@ https.sayanythingtrump.org.    A 178.62.79.124
 
 # Machine Voodoo 192.168.1.21
 
-mmm.mplace2.app.    A 192.168.1.21
-host1.cryptomesh.org.    A 192.168.1.21
-mmm.cryptomesh.org.    A 192.168.1.21
-account.cryptomesh.org.    A 192.168.1.21
-recrypt.cryptomesh.org.    A 192.168.1.21
-confirm.cryptomesh.org.    A 192.168.1.21
 
 
 # Machine CloudFloating 139.59.200.120

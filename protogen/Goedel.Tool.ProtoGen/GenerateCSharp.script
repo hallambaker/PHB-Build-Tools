@@ -72,7 +72,13 @@ public abstract partial class #{Protocol.Prefix} #{Protocol.ThisInherits} {
 
 		};
 
-    [ModuleInitializer]
+    // [ModuleInitializer]
+	
+	public static bool _Initialized => true;
+
+	static #{CurrentPrefix}() {
+		_Initialize();
+		}
 
     internal static void _Initialize() => AddDictionary(ref _tagDictionary);
 

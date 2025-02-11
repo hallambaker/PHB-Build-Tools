@@ -109,7 +109,13 @@ public partial class Generate : global::Goedel.Registry.Script {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("		}};\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("    [ModuleInitializer]\n{0}", _Indent);
+				_Output.Write ("    // [ModuleInitializer]\n{0}", _Indent);
+				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("	public static bool _Initialized => true;\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("	static {1}() {{\n{0}", _Indent, CurrentPrefix);
+				_Output.Write ("		_Initialize();\n{0}", _Indent);
+				_Output.Write ("		}}\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("    internal static void _Initialize() => AddDictionary(ref _tagDictionary);\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

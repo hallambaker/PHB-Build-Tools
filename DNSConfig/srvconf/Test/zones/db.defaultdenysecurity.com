@@ -6,7 +6,7 @@
 ;
 $TTL 600
 defaultdenysecurity.com.      IN      SOA     dns1.defaultdenysecurity.com. hallam.gmail.com. (
-                        2025012401       ; serial, todays date + todays serial 
+                        2025013001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds

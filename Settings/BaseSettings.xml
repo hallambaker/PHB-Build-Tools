@@ -8,6 +8,7 @@
 		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
     <IsPackable>false</IsPackable>
     <RootNamespace>Goedel.XUnit</RootNamespace>
+		<DefineConstants>_Github_</DefineConstants>
   </PropertyGroup>
 
 

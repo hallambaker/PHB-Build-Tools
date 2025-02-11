@@ -6,7 +6,7 @@
 ;
 $TTL 600
 mathmesh.net.      IN      SOA     dns1.mathmesh.net. hallam.gmail.com. (
-                        2025012401       ; serial, todays date + todays serial 
+                        2025013001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds

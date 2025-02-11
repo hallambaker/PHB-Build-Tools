@@ -12,6 +12,7 @@
 		<UseSharedCompilation>false</UseSharedCompilation>
 		<TargetFramework>net8.0-windows</TargetFramework>
 		<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+		<DefineConstants>_Github_</DefineConstants>
 	</PropertyGroup>
 
 

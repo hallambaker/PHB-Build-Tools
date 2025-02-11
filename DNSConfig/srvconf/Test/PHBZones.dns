@@ -83,10 +83,12 @@ Site hallambaker
 // dynamic DNS provider. Will switch to using own dynamic in due course.
 Site mathmesh
 	Domain mathmesh.com
+		Wildcard
 		Address host1.mathmesh.com Home
 		
 	Domain cryptomesh.org
-		Address host1.cryptomesh.org Voodoo
+		Wildcard
+		Address host1.cryptomesh.org Home
 		Service "mmm"
 			TXT "TLS=require"
 			Host host1.cryptomesh.org

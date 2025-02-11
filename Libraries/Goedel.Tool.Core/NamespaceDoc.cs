@@ -1,4 +1,3 @@
-﻿#if !(__MonoCS__)
+﻿#if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
-

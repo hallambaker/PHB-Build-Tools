@@ -6,7 +6,7 @@
 ;
 $TTL 600
 mathmesh.com.      IN      SOA     dns1.mathmesh.com. hallam.gmail.com. (
-                        2025012401       ; serial, todays date + todays serial 
+                        2025013001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -37,6 +37,8 @@ mathmesh.com. TXT "v=spf1 redirect=_spf.google.com"
 
 ; Host host1.mathmesh.com 178.62.79.124 
 mathmesh.com.    A 178.62.79.124 
+; is wildcard
+*.mathmesh.com.    A 178.62.79.124 
 www.mathmesh.com.    A 178.62.79.124 
 http.mathmesh.com.    A 178.62.79.124
 https.mathmesh.com.    A 178.62.79.124 

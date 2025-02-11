@@ -14,6 +14,7 @@
 		<UseSharedCompilation>false</UseSharedCompilation>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<DefineConstants>_Github_</DefineConstants>
 	</PropertyGroup>
 
 	<!-- The platform specific items -->
