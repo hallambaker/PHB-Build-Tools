@@ -39,6 +39,11 @@
       "commandName": "Project",
       "commandLineArgs": "OauthSchema.protocol  /cs  OauthSchema.cs",
       "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Libraries\\Goedel.Cryptography.Oauth"
+    },
+    "Contact": {
+      "commandName": "Project",
+      "commandLineArgs": "ContactSchema.protocol  /cs  ContactSchema.cs",
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Libraries\\Goedel.Contacts.Oauth"
     }
   }
 }

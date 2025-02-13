@@ -67,6 +67,7 @@ using Goedel.Utilities;
 //       Tag
 //       Required
 //       Multiple
+//       Dictionary
 //       Default
 //       LengthBits
 //       LengthFixed
@@ -196,6 +197,7 @@ namespace Goedel.Tool.ProtoGen {
         Tagged,
         Required,
         Multiple,
+        Dictionary,
         Quoted,
         Require,
         Class,
@@ -1481,6 +1483,27 @@ namespace Goedel.Tool.ProtoGen {
 			}
 		}
 
+    public partial class Dictionary : _Choice {
+
+        public override ProtoStructType _Tag () =>ProtoStructType.Dictionary;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Dictionary");
+				}
+
+			if (tag) {
+				Output.EndElement ("Dictionary");
+				}			
+			}
+		}
+
     public partial class Quoted : _Choice {
 
         public override ProtoStructType _Tag () =>ProtoStructType.Quoted;
@@ -2453,6 +2476,7 @@ namespace Goedel.Tool.ProtoGen {
 		Tagged__Options,				
 		Required_Start,
 		Multiple_Start,
+		Dictionary_Start,
 		Quoted_Start,
 		Require_Start,
 		Require__Id,				
@@ -2684,6 +2708,7 @@ namespace Goedel.Tool.ProtoGen {
                 case "Tagged": return NewTagged();
                 case "Required": return NewRequired();
                 case "Multiple": return NewMultiple();
+                case "Dictionary": return NewDictionary();
                 case "Quoted": return NewQuoted();
                 case "Require": return NewRequire();
                 case "Class": return NewClass();
@@ -3067,6 +3092,14 @@ namespace Goedel.Tool.ProtoGen {
             }
 
 
+        private Goedel.Tool.ProtoGen.Dictionary NewDictionary() {
+            Goedel.Tool.ProtoGen.Dictionary result = new Goedel.Tool.ProtoGen.Dictionary();
+            Push (result);
+            State = StateCode.Dictionary_Start;
+            return result;
+            }
+
+
         private Goedel.Tool.ProtoGen.Quoted NewQuoted() {
             Goedel.Tool.ProtoGen.Quoted result = new Goedel.Tool.ProtoGen.Quoted();
             Push (result);
@@ -3361,6 +3394,7 @@ namespace Goedel.Tool.ProtoGen {
                 case "Tagged": return Goedel.Tool.ProtoGen.ProtoStructType.Tagged;
                 case "Required": return Goedel.Tool.ProtoGen.ProtoStructType.Required;
                 case "Multiple": return Goedel.Tool.ProtoGen.ProtoStructType.Multiple;
+                case "Dictionary": return Goedel.Tool.ProtoGen.ProtoStructType.Dictionary;
                 case "Quoted": return Goedel.Tool.ProtoGen.ProtoStructType.Quoted;
                 case "Require": return Goedel.Tool.ProtoGen.ProtoStructType.Require;
                 case "Class": return Goedel.Tool.ProtoGen.ProtoStructType.Class;
@@ -4117,13 +4151,14 @@ namespace Goedel.Tool.ProtoGen {
                             if ( false |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Dictionary) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Default) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description Default Tag ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description Default Tag ]");
 								}
 							}
                         break;
@@ -4162,6 +4197,7 @@ namespace Goedel.Tool.ProtoGen {
                             if ( false |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Dictionary) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Default) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.LengthBits) |
@@ -4169,7 +4205,7 @@ namespace Goedel.Tool.ProtoGen {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description Default LengthBits Tag ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description Default LengthBits Tag ]");
 								}
 							}
                         break;
@@ -4208,13 +4244,14 @@ namespace Goedel.Tool.ProtoGen {
                             if ( false |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Dictionary) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Default) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description Default Tag ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description Default Tag ]");
 								}
 							}
                         break;
@@ -4253,13 +4290,14 @@ namespace Goedel.Tool.ProtoGen {
                             if ( false |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Dictionary) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Default) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description Default Tag ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description Default Tag ]");
 								}
 							}
                         break;
@@ -4298,6 +4336,7 @@ namespace Goedel.Tool.ProtoGen {
                             if ( false |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Dictionary) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Default) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.LengthBits) |
@@ -4306,7 +4345,7 @@ namespace Goedel.Tool.ProtoGen {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description Default LengthBits LengthFixed Tag ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description Default LengthBits LengthFixed Tag ]");
 								}
 							}
                         break;
@@ -4345,13 +4384,14 @@ namespace Goedel.Tool.ProtoGen {
                             if ( false |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Dictionary) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Default) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description Default Tag ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description Default Tag ]");
 								}
 							}
                         break;
@@ -4390,13 +4430,14 @@ namespace Goedel.Tool.ProtoGen {
                             if ( false |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Dictionary) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Default) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description Default Tag ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description Default Tag ]");
 								}
 							}
                         break;
@@ -4435,6 +4476,7 @@ namespace Goedel.Tool.ProtoGen {
                             if ( false |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Dictionary) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Default) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Quoted) |
@@ -4443,7 +4485,7 @@ namespace Goedel.Tool.ProtoGen {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description Default Quoted Constraint Tag ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description Default Quoted Constraint Tag ]");
 								}
 							}
                         break;
@@ -4495,13 +4537,14 @@ namespace Goedel.Tool.ProtoGen {
                             if ( false |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Dictionary) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Default) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description Default Tag ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description Default Tag ]");
 								}
 							}
                         break;
@@ -4540,13 +4583,14 @@ namespace Goedel.Tool.ProtoGen {
                             if ( false |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Dictionary) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Default) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description Default Tag ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description Default Tag ]");
 								}
 							}
                         break;
@@ -4629,6 +4673,7 @@ namespace Goedel.Tool.ProtoGen {
                             if ( false |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Dictionary) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.LengthBits) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) |
@@ -4636,7 +4681,7 @@ namespace Goedel.Tool.ProtoGen {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description LengthBits Tag Enumerated ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description LengthBits Tag Enumerated ]");
 								}
 							}
                         break;
@@ -4684,6 +4729,7 @@ namespace Goedel.Tool.ProtoGen {
                             if ( false |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Dictionary) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.LengthBits) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) |
@@ -4691,7 +4737,7 @@ namespace Goedel.Tool.ProtoGen {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description LengthBits Tag Enumerated ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description LengthBits Tag Enumerated ]");
 								}
 							}
                         break;
@@ -4743,12 +4789,13 @@ namespace Goedel.Tool.ProtoGen {
                             if ( false |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Dictionary) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description Tag ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description Tag ]");
 								}
 							}
                         break;
@@ -4907,11 +4954,12 @@ namespace Goedel.Tool.ProtoGen {
                             if ( false |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Dictionary) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Description ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description ]");
 								}
 							}
                         break;
@@ -4922,6 +4970,10 @@ namespace Goedel.Tool.ProtoGen {
                         Represent = true; 
                         break;
                     case StateCode.Multiple_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Dictionary_Start:
                         Pop ();
                         Represent = true; 
                         break;

@@ -153,6 +153,7 @@
         Options	List Choice
             Required
             Multiple
+            Dictionary
             Description
             Default
 			Tag
@@ -162,6 +163,7 @@
         Options	List Choice
             Required
             Multiple
+            Dictionary
             Description
             Default
 			LengthBits
@@ -172,6 +174,7 @@
         Options	List Choice
             Required
             Multiple
+            Dictionary
             Description
 			Default
 			Tag
@@ -181,6 +184,7 @@
         Options	List Choice
             Required
             Multiple
+            Dictionary
             Description
 			Default
 			Tag
@@ -190,6 +194,7 @@
         Options	List Choice
             Required
             Multiple
+            Dictionary
             Description
             Default
 			LengthBits
@@ -201,6 +206,7 @@
         Options	List Choice
             Required
             Multiple
+            Dictionary
             Description
             Default
 			Tag
@@ -210,6 +216,7 @@
         Options	List Choice
             Required
             Multiple
+            Dictionary
             Description
             Default
 			Tag
@@ -219,6 +226,7 @@
         Options	List Choice
             Required
             Multiple
+            Dictionary
             Description
             Default
 			Quoted
@@ -234,6 +242,7 @@
         Options	List Choice
             Required
             Multiple
+            Dictionary
             Description
             Default
 			Tag
@@ -243,6 +252,7 @@
         Options	List Choice
             Required
             Multiple
+            Dictionary
             Description
             Default
 			Tag
@@ -261,6 +271,7 @@
         Options	List Choice
             Required
             Multiple
+            Dictionary
             Description
 			LengthBits
 			Tag
@@ -272,6 +283,7 @@
         Options	List Choice
             Required
             Multiple
+            Dictionary
             Description
 			LengthBits
 			Tag
@@ -285,6 +297,7 @@
         Options	List Choice
             Required
             Multiple
+            Dictionary
             Description
 			Tag
 
@@ -310,10 +323,12 @@
         Options	List Choice
             Required
             Multiple
+            Dictionary
             Description
 
     Type Required
     Type Multiple
+    Type Dictionary
 	Type Quoted
 
     Type Require

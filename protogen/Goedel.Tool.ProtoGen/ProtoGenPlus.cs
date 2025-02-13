@@ -15,6 +15,8 @@ public partial class _Choice {
     public string Default = null;
     public string DefaultC => Default == null ? "NULL" : "\"" + Default + "\"";
     public bool Multiple = false;
+    public bool Dictionary = false;
+
     public bool Enumerated = false;
     public bool Required = false;
 
@@ -37,6 +39,15 @@ public partial class _Choice {
 
     public int CountChildren = 0;
     public int LengthBits = 32;
+
+
+    public string VaryCS(string type) =>
+            Multiple ? $"List<{type}>?" : Multiple ? $"List<{type}>?" : $"{type}?";
+    //Dictionary ? $"Dictionary<string,{type}>?" : Multiple ? $"List<{type}>?" : $"{type}?";
+    public string VaryProperty(string type) =>
+            Dictionary ? $"PropertyList{type}" : Multiple ? $"PropertyList{type}" : $"Property{type}";
+
+    //Dictionary? $"PropertyDictionary{type}" : Multiple? $"PropertyList{type}" : $"Property{type}";
 
 
     public virtual string PropertyName => "Property";
@@ -192,6 +203,10 @@ public partial class _Choice {
                     }
                 case Multiple multiple: {
                     Multiple = true;
+                    break;
+                    }
+                case Dictionary multiple: {
+                    Dictionary = true;
                     break;
                     }
                 case Enumerated enumerated: {
@@ -410,8 +425,18 @@ public partial class Structure {
 
 public partial class Boolean {
 
-    public override string PropertyName => Multiple ? "PropertyListBoolean" : "PropertyBoolean";
-    public override string TypeCS => Multiple ? "List<bool>?" : "bool?";
+    public override string PropertyName => VaryProperty("Boolean");
+
+    public override string TypeCS => VaryCS("bool");
+
+
+    //public override string PropertyName => 
+    //            Vary( "PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean");
+    //public override string TypeCS => 
+    //            Vary("List<bool>?" , "bool?", "Dictionary<string,bool>?");
+    
+    
+    ////Multiple ? "List<bool>?" : "bool?";
 
     public override void Normalize() {
 
@@ -429,10 +454,23 @@ public partial class Boolean {
 
 public partial class Integer {
 
-    public override string PropertyName => LengthBits > 32 ? (Multiple ? "PropertyListInteger64" : "PropertyInteger64") :
-        (Multiple ? "PropertyListInteger32" : "PropertyInteger32");
-    public override string TypeCS => LengthBits > 32 ? (Multiple ? "List<long>?" : "long?") :
-                (Multiple ? "List<int>?" : "int?");
+    public override string PropertyName => LengthBits > 32 ? VaryProperty("Integer64") : VaryProperty("Integer32");
+
+    public override string TypeCS => LengthBits > 32 ? VaryCS("long") : VaryCS("int");
+
+
+    //public override string PropertyName => LengthBits > 32 ? 
+    //    Vary("PropertyListInteger64", "PropertyInteger64", "PropertyDictionaryInteger64") :
+    //    Vary("PropertyListInteger32", "PropertyInteger32", "PropertyDictionaryInteger32");
+
+    ////(Multiple ? "PropertyListInteger64" : "PropertyInteger64") :
+    ////    (Multiple ? "PropertyListInteger32" : "PropertyInteger32");
+    //public override string TypeCS => LengthBits > 32 ? 
+    //    Vary("List<long>?" , "long?", "PropertyDictionaryBoolean") :
+    //    Vary("List<int>?" , "int?", "PropertyDictionaryBoolean"); 
+    
+    ////(Multiple ? "List<long>?" : "long?") :
+    ////            (Multiple ? "List<int>?" : "int?");
     public override void Normalize() {
 
         if (Normalized) {
@@ -461,8 +499,18 @@ public partial class Decimal {
         }
     }
 public partial class Float {
-    public override string PropertyName => Multiple ? "PropertyListReal64" : "PropertyReal64";
-    public override string TypeCS => Multiple ? "List<double>?" : "double?";
+
+    public override string PropertyName => VaryProperty("Real64");
+
+    public override string TypeCS => VaryCS("double");
+
+    //public override string PropertyName =>
+    //    Vary("PropertyListReal64", "PropertyReal64", "PropertyDictionaryReal64");
+    ////Multiple ? "PropertyListReal64" : "PropertyReal64";
+    //public override string TypeCS =>
+    //    Vary("List<double>?", "double?", "Dictionary<string,double>");
+
+    ////Multiple ? "List<double>?" : "double?";
     public override void Normalize() {
 
         if (Normalized) {
@@ -476,8 +524,10 @@ public partial class Float {
         }
     }
 public partial class Binary {
-    public override string PropertyName => Multiple ? "PropertyListBinary" : "PropertyBinary";
-    public override string TypeCS => Multiple ? "List<byte[]>?" : "byte[]?";
+    public override string PropertyName => VaryProperty("Binary");
+
+    public override string TypeCS => VaryCS("byte[]");
+
     public override void Normalize() {
 
         if (Normalized) {
@@ -524,8 +574,22 @@ public partial class Name {
     }
 public partial class String {
 
-    public override string PropertyName => Multiple ? "PropertyListString" : "PropertyString";
-    public override string TypeCS => Multiple ? "List<string>?" : "string?";
+    public override string PropertyName => VaryProperty("String");
+
+    public override string TypeCS => VaryCS("string");
+
+
+    //public override string PropertyName => 
+    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean"); 
+    
+    
+    
+    //Multiple ? "PropertyListString" : "PropertyString";
+    //public override string TypeCS => 
+    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean"); 
+    
+    
+    //Multiple ? "List<string>?" : "string?";
     public override void Normalize() {
 
         if (Normalized) {
@@ -559,8 +623,23 @@ public partial class URI {
         }
     }
 public partial class DateTime {
-    public override string PropertyName => Multiple ? "PropertyListDateTime" : "PropertyDateTime";
-    public override string TypeCS => Multiple ? "List<DateTime>?" : "DateTime?";
+
+    public override string PropertyName => VaryProperty("DateTime");
+
+    public override string TypeCS => VaryCS("DateTime");
+
+
+
+
+    //public override string PropertyName =>
+    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean"); 
+    
+    
+    //Multiple ? "PropertyListDateTime" : "PropertyDateTime";
+    //public override string TypeCS =>
+    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean"); 
+    
+    //Multiple ? "List<DateTime>?" : "DateTime?";
     public override void Normalize() {
 
         if (Normalized) {
@@ -577,11 +656,28 @@ public partial class DateTime {
     }
 public partial class Struct {
 
-    public override string PropertyName => Multiple ? "PropertyListStruct" : "PropertyStruct";
 
     public string BaseType => Type.Label;
-    public override string TypeCS => Multiple ? $"List<{BaseType}>?" : $"{BaseType}?";
-    public  string TypeCSCons => Multiple ? $"List<{BaseType}>" : $"{BaseType}";
+    public override string PropertyName => VaryProperty("Struct");
+
+    public override string TypeCS => VaryCS(BaseType);
+    public string TypeCSCons => TypeCS;
+
+    //public override string PropertyName => 
+    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean"); 
+
+
+    //Multiple ? "PropertyListStruct" : "PropertyStruct";
+
+    //public string BaseType => Type.Label;
+    //public override string TypeCS =>
+    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean");
+
+    //Multiple ? $"List<{BaseType}>?" : $"{BaseType}?";
+    //public  string TypeCSCons =>
+    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean");
+
+    //Multiple ? $"List<{BaseType}>" : $"{BaseType}";
 
 
     public override void Normalize() {
@@ -597,11 +693,30 @@ public partial class Struct {
     }
 public partial class TStruct {
 
-    public override string PropertyName => Multiple ? "PropertyListStruct" : "PropertyStruct";
-
     public string BaseType => Type.Label;
-    public override string TypeCS => Multiple ? $"List<{BaseType}>?" : $"{BaseType}?";
-    public string TypeCSCons => Multiple ? $"List<{BaseType}>" : $"{BaseType}";
+    public override string PropertyName => VaryProperty("Struct");
+
+    public override string TypeCS => VaryCS(BaseType);
+    public string TypeCSCons => TypeCS;
+
+
+    //public override string PropertyName =>
+    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean");
+
+
+    //Multiple ? "PropertyListStruct" : "PropertyStruct";
+
+    //public string BaseType => Type.Label;
+    //public override string TypeCS =>
+    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean");
+
+
+    //Multiple ? $"List<{BaseType}>?" : $"{BaseType}?";
+    //public string TypeCSCons =>
+    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean");
+
+
+    //Multiple ? $"List<{BaseType}>" : $"{BaseType}";
 
 
     public override void Normalize() {
