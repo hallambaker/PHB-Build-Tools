@@ -42,10 +42,10 @@ public partial class _Choice {
 
 
     public string VaryCS(string type) =>
-            Multiple ? $"List<{type}>?" : Multiple ? $"List<{type}>?" : $"{type}?";
+            Dictionary ? $"Dictionary<string,{type}>" : Multiple ? $"List<{type}>" : $"{type}";
     //Dictionary ? $"Dictionary<string,{type}>?" : Multiple ? $"List<{type}>?" : $"{type}?";
     public string VaryProperty(string type) =>
-            Dictionary ? $"PropertyList{type}" : Multiple ? $"PropertyList{type}" : $"Property{type}";
+            Dictionary ? $"PropertyDictionary{type}" : Multiple ? $"PropertyList{type}" : $"Property{type}";
 
     //Dictionary? $"PropertyDictionary{type}" : Multiple? $"PropertyList{type}" : $"Property{type}";
 
@@ -230,47 +230,9 @@ public partial class _Choice {
                     ID = tag.Text;
                     break;
                     }
-                //case CamelCase : {
-                //    AssignedTypeCase = TypeCase.CamelCase;
-                //    break;
-                //    }
-                //case PascalCase : {
-                //    AssignedTypeCase = TypeCase.PascalCase;
-                //    break;
-                //    }
-                //case SnakeCase : {
-                //    AssignedTypeCase = TypeCase.SnakeCase;
-                //    break;
-                //    }
+
                 }
 
-
-
-            //if (entry.GetType() == typeof(Description)) {
-            //    foreach (var Text in (entry as Description).Text1) {
-            //        Description.Add(Text);
-            //        }
-            //    }
-            //if (entry.GetType() == typeof(Multiple)) {
-
-            //    }
-            //if (entry.GetType() == typeof(Enumerated)) {
-            //    Enumerated = true;
-            //    Multiple = true;
-            //    }
-            //if (entry.GetType() == typeof(Required)) {
-            //    Required = true;
-            //    }
-            //if (entry.GetType() == typeof(LengthBits)) {
-            //    LengthBits = ((LengthBits)entry).Bits;
-            //    }
-            //if (entry.GetType() == typeof(Default)) {
-            //    Default = ((Default)entry).Default;
-            //    }
-            //if (entry.GetType() == typeof(Tag)) {
-            //    var Tag = entry as Tag;
-            //    ID = Tag.Text;
-            //    }
 
             }
         }

@@ -43,7 +43,12 @@
     "Contact": {
       "commandName": "Project",
       "commandLineArgs": "ContactSchema.protocol  /cs  ContactSchema.cs",
-      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Libraries\\Goedel.Contacts.Oauth"
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Libraries\\Goedel.Contacts"
+    },
+    "Calendar": {
+      "commandName": "Project",
+      "commandLineArgs": "CalendarSchema.protocol  /cs  CalendarSchema.cs",
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Libraries\\Goedel.Contacts"
     }
   }
 }

@@ -109,8 +109,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("		}};\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("    // [ModuleInitializer]\n{0}", _Indent);
-				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("	///<summary>Variable used to force static initialization</summary> \n{0}", _Indent);
 				_Output.Write ("	public static bool _Initialized => true;\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("	static {1}() {{\n{0}", _Indent, CurrentPrefix);
@@ -723,8 +722,6 @@ public partial class Generate : global::Goedel.Registry.Script {
 				case ProtoStructType.Struct: {
 				  Struct Param = (Struct) Entry; 
 				_Output.Write ("{1}\n{0}", _Indent, separator);
-				
-				//			{ "#{Tag}", new #{Entry.PropertyName}<#{Param.BaseType}> ("#{Tag}", 
 				_Output.Write ("			{{ \"{1}\", new {2} (\"{3}\", \n{0}", _Indent, Tag, Entry.PropertyName, Tag);
 				_Output.Write ("					(IBinding data, object? value) => {{(data as {1}).{2} = value as {3};}}, (IBinding data) => (data as {4}).{5},\n{0}", _Indent, Id, Token, Param.TypeCSCons, Id, Token);
 				_Output.Write ("					false, ()=>new  {1}(), ()=>new {2}())}} ", _Indent, Param.TypeCSCons, Param.BaseType);
@@ -744,7 +741,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 				if (  (Token != null) ) {
 					_Output.Write ("{1}\n{0}", _Indent, separator);
 					_Output.Write ("			{{ \"{1}\", new {2} (\"{3}\", \n{0}", _Indent, Tag, Entry.PropertyName, Tag);
-					_Output.Write ("					(IBinding data, {1} value) => {{(data as {2}).{3} = value;}}, (IBinding data) => (data as {4}).{5} )}}", _Indent, Entry.TypeCS, Id, Token, Id, Token);
+					_Output.Write ("					(IBinding data, {1}? value) => {{(data as {2}).{3} = value;}}, (IBinding data) => (data as {4}).{5} )}}", _Indent, Entry.TypeCS, Id, Token, Id, Token);
 					}
 			break; }
 				}
@@ -808,10 +805,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 					_Output.Write ("	public virtual IEnumerable<{1}>				{2}  {{get; set;}}\n{0}", _Indent, Type, Token);
 					} else if (  Multiple) {
 					_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
-					_Output.Write ("	public virtual {1}					{2}  {{get; set;}}\n{0}", _Indent, Entry.TypeCS, Token);
+					_Output.Write ("	public virtual {1}?					{2}  {{get; set;}}\n{0}", _Indent, Entry.TypeCS, Token);
 					} else {
 					_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
-					_Output.Write ("	public virtual {1}						{2}  {{get; set;}}\n{0}", _Indent, Entry.TypeCS, Token);
+					_Output.Write ("	public virtual {1}?					{2}  {{get; set;}}\n{0}", _Indent, Entry.TypeCS, Token);
 					_Output.Write ("\n{0}", _Indent);
 					}
 				}

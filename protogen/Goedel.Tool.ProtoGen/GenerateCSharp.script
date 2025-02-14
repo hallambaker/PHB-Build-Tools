@@ -72,8 +72,7 @@ public abstract partial class #{Protocol.Prefix} #{Protocol.ThisInherits} {
 
 		};
 
-    // [ModuleInitializer]
-	
+	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
 	static #{CurrentPrefix}() {
@@ -617,7 +616,6 @@ new #{Id}();
 #switchcast ProtoStructType Entry
 #casecast Struct Param
 #{separator}
-#!			{ "#{Tag}", new #{Entry.PropertyName}<#{Param.BaseType}> ("#{Tag}", 
 			{ "#{Tag}", new #{Entry.PropertyName} ("#{Tag}", 
 					(IBinding data, object? value) => {(data as #{Id}).#{Token} = value as #{Param.TypeCSCons};}, (IBinding data) => (data as #{Id}).#{Token},
 					false, ()=>new  #{Param.TypeCSCons}(), ()=>new #{Param.BaseType}())} #!
@@ -634,7 +632,7 @@ new #{Id}();
 #if (Token != null)
 #{separator}
 			{ "#{Tag}", new #{Entry.PropertyName} ("#{Tag}", 
-					(IBinding data, #{Entry.TypeCS} value) => {(data as #{Id}).#{Token} = value;}, (IBinding data) => (data as #{Id}).#{Token} )}#!
+					(IBinding data, #{Entry.TypeCS}? value) => {(data as #{Id}).#{Token} = value;}, (IBinding data) => (data as #{Id}).#{Token} )}#!
 #end if
 #end switchcast
 #end foreach
@@ -694,10 +692,10 @@ new #{Id}();
 	public virtual IEnumerable<#{Type}>				#{Token}  {get; set;}
 #elseif Multiple
 #{CommentSummary(8,Entry.Description)}
-	public virtual #{Entry.TypeCS}					#{Token}  {get; set;}
+	public virtual #{Entry.TypeCS}?					#{Token}  {get; set;}
 #else
 #{CommentSummary(8,Entry.Description)}
-	public virtual #{Entry.TypeCS}						#{Token}  {get; set;}
+	public virtual #{Entry.TypeCS}?					#{Token}  {get; set;}
 
 #end if
 #end if
