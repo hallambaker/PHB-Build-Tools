@@ -423,32 +423,6 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 #end if
 #call DeclareMembers (Entries)
 
-#if (false)
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-#call DeclareMembersSetter (Entries)
-
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-#call DeclareMembersGetter (Entries)
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-#end if
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -532,76 +506,6 @@ new #{Id}();
 #end block 
 
 
-#block DeclareMembersSetter
-#% public void DeclareMembersSetter  (List<_Choice> Entries) {
-#foreach (_Choice Entry in Entries)
-#% GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
-#%    out var Nullable, out var Tag);
-#% var list = Entry.Multiple ? "List" : "" ;
-#% var eType =  Entry.Multiple ? $"List<{Type}>" : Type ;
-#switchcast ProtoStructType Entry
-#casecast Struct Param
-			case "#{Tag}" : {
-				if (value is TokenValue#{list}StructObject vvalue) {
-					#{Token} = vvalue.Value as #{eType};
-					}
-				break;
-				}
-#casecast TStruct Param
-			case "#{Tag}" : {
-				if (value is TokenValue#{list}StructObject vvalue) {
-					#{Token} = vvalue.Value as #{eType};
-					}
-				break;
-				}
-#% break; } default : {
-#if (Token != null)
-			case "#{Tag}" : {
-				if (value is TokenValue#{list}#{TType} vvalue) {
-					#{Token} = vvalue.Value;
-					}
-				break;
-				}
-#end if
-#end switchcast
-#end foreach
-#% }
-#end block 
-
-#block DeclareMembersGetter
-#% public void DeclareMembersGetter  (List<_Choice> Entries) {
-#foreach (_Choice Entry in Entries)
-#% GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
-#%    out var Nullable, out var Tag);
-#% var list = Entry.Multiple ? "List" : "" ;
-#% var eType =  Entry.Multiple ? $"List<{Type}>" : Type ;
-#switchcast ProtoStructType Entry
-#casecast Struct Param
-			case "#{Tag}" : {
-#if Entry.Multiple
-				return new TokenValueListStruct<#{Type}> (#{Token});
-#else
-				return new TokenValueStruct<#{Type}> (#{Token});
-#end if
-				}
-#casecast TStruct Param
-			case "#{Tag}" : {
-#if Entry.Multiple
-				return new TokenValueListStruct<#{Type}> (#{Token});
-#else
-				return new TokenValueStruct<#{Type}> (#{Token});
-#end if
-				}
-#% break; } default : {
-#if (Token != null)
-			case "#{Tag}" : {
-				return new TokenValue#{list}#{TType} (#{Token});
-				}
-#end if
-#end switchcast
-#end foreach
-#% }
-#end block 
 
 
 #block DeclareProperties
@@ -618,7 +522,14 @@ new #{Id}();
 #{separator}
 			{ "#{Tag}", new #{Entry.PropertyName} ("#{Tag}", 
 					(IBinding data, object? value) => {(data as #{Id}).#{Token} = value as #{Param.TypeCSCons};}, (IBinding data) => (data as #{Id}).#{Token},
-					false, ()=>new  #{Param.TypeCSCons}(), ()=>new #{Param.BaseType}())} #!
+					false, ()=>new  #{Param.TypeCSCons}(), ()=>new #{Param.BaseType}()#!
+#if Entry.Dictionary
+,
+					(IBinding data) => (data as #{Id}).#{Token}.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as #{Param.TypeCSCons}).Add (key as string,value as #{Param.BaseType});}#!
+#end if
+)}#!
 #casecast TStruct Param
 #{separator}
 			{ "#{Tag}", new #{Entry.PropertyName} ("#{Tag}", 
@@ -639,6 +550,7 @@ new #{Id}();
 #% }
 #end block
 
+#!                    (IBinding data) => (data as SpeakToAs).Pronouns.GetEnumerable())} 
 
 
 
