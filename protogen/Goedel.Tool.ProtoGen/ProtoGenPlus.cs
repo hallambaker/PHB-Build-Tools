@@ -19,10 +19,11 @@ public partial class _Choice {
 
     public bool Enumerated = false;
     public bool Required = false;
+    public bool TypeTag = false;
 
     public string RequiredC => Required ? "TRUE" : "FALSE";
 
-    public string ID = null;
+    public string ID { get; set; }  = null;
 
     public string TypeC = null;
     public string TypeJ = null;
@@ -218,6 +219,10 @@ public partial class _Choice {
                     Required = true;
                     break;
                     }
+                case TypeTag typetag: {
+                    TypeTag = true;
+                    break;
+                    }
                 case LengthBits lengthBits: {
                     LengthBits = lengthBits.Bits;
                     break;
@@ -301,7 +306,24 @@ public partial class Protocol {
 
     }
 
-public partial class Message {
+
+public interface IStructure {
+    public ID<_Choice> IId { get; }
+    public List<_Choice> IEntries { get; }
+
+
+    public bool IParameterized { get; }
+
+    public string ID { get; }
+    }
+
+public partial class Message : IStructure {
+    public ID<_Choice> IId => Id;
+    public List<_Choice> IEntries => Entries;
+
+    public bool IParameterized => Parameterized;
+
+
     public List<_Choice> AllEntries = null;
     public List<_Choice> AllEntriesUnsorted = null;
 
@@ -340,7 +362,11 @@ public partial class Message {
         }
     }
 
-public partial class Structure {
+public partial class Structure : IStructure {
+    public ID<_Choice> IId => Id;
+    public List<_Choice> IEntries => Entries;
+    public bool IParameterized => Parameterized;
+
     public bool IsMessage = false;
     public List<_Choice> AllEntries = null;
     public List<_Choice> AllEntriesUnsorted = null;
@@ -356,22 +382,27 @@ public partial class Structure {
         AllEntriesUnsorted = InheritEntriesUnsorted(this, Entries);
 
         foreach (_Choice entry in AllEntries) {
-            //switch (entry) {
-            //    case CamelCase: {
-            //        AssignedTypeCase = TypeCase.CamelCase;
-            //        break;
-            //        }
-            //    case PascalCase: {
-            //        AssignedTypeCase = TypeCase.PascalCase;
-            //        break;
+            switch (entry) {
+                case Tag tag: {
+                    ID = tag.Text;
+                    break;
+                    }
 
-            //        }
-            //    case SnakeCase: {
-            //        AssignedTypeCase = TypeCase.SnakeCase;
-            //        break;
+                //case CamelCase: {
+                //    AssignedTypeCase = TypeCase.CamelCase;
+                //    break;
+                //    }
+                //case PascalCase: {
+                //    AssignedTypeCase = TypeCase.PascalCase;
+                //    break;
 
-            //        }
-            //    }
+                //    }
+                //case SnakeCase: {
+                //    AssignedTypeCase = TypeCase.SnakeCase;
+                //    break;
+
+                //    }
+                }
             if (entry.TypeC != null) {
                 CountChildren++;
                 }
@@ -536,9 +567,9 @@ public partial class Name {
     }
 public partial class String {
 
-    public override string PropertyName => VaryProperty("String");
+    public override string PropertyName => TypeTag? "PropertyStringTag" : VaryProperty("String");
 
-    public override string TypeCS => VaryCS("string");
+    public override string TypeCS => TypeTag ? "string" : VaryCS("string");
 
 
     //public override string PropertyName => 

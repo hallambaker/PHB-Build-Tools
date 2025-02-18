@@ -353,7 +353,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 						case ProtoStructType.Message: {
 						  Message Message = (Message) Entry; 
 						
-						 MakeClass (Message.Id, Message.Entries, Message.Parameterized);
+						 MakeClass (Message);
 						
 						 var Inherits = HasInherits  (Message.Entries);
 						
@@ -364,7 +364,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 						case ProtoStructType.Structure: {
 						  Structure Structure = (Structure) Entry; 
 						
-						 MakeClass (Structure.Id, Structure.Entries, Structure.Parameterized);
+						 MakeClass (Structure);
 						
 						 var Inherits = HasInherits  (Structure.Entries);
 						
@@ -498,7 +498,11 @@ public partial class Generate : global::Goedel.Registry.Script {
 	/// <summary>	
 	///  
 	/// </summary>
-		 public void MakeClass  (ID<_Choice> Id, List<_Choice> Entries, bool Param) {
+		 public void MakeClass  (IStructure structure) {
+		 ID<_Choice> Id = structure.IId;
+		 List<_Choice> Entries = structure.IEntries;
+		 bool Param = structure.IParameterized;
+		_Output.Write ("\n{0}", _Indent);
 		 var isAbstract = false;
 		 var Inherits = HasInherits (Entries);
 		 DescriptionListC (Entries, 1);
@@ -576,7 +580,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("	/// <summary>\n{0}", _Indent);
 		_Output.Write ("    /// Tag identifying this class\n{0}", _Indent);
 		_Output.Write ("    /// </summary>\n{0}", _Indent);
-		_Output.Write ("	public new const string __Tag = \"{1}\";\n{0}", _Indent, Id);
+		_Output.Write ("	public new const string __Tag = \"{1}\";\n{0}", _Indent, structure.ID);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	/// <summary>\n{0}", _Indent);
 		if (  (IsAbstract (Entries)) ) {

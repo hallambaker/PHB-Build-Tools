@@ -298,13 +298,13 @@ public partial class #{Service.Id}Direct: #{Service.Id}Client {
 #foreach (_Choice Entry in Protocol.Entries)
 #switchcast ProtoStructType Entry
 #casecast Message Message
-#% MakeClass (Message.Id, Message.Entries, Message.Parameterized);
+#% MakeClass (Message);
 #% var Inherits = HasInherits  (Message.Entries);
 #% MakeSerializers (Message.Id, Message.ID, Message.Entries, Inherits);
 	}
 
 #casecast Structure Structure
-#% MakeClass (Structure.Id, Structure.Entries, Structure.Parameterized);
+#% MakeClass (Structure);
 #% var Inherits = HasInherits  (Structure.Entries);
 #% MakeSerializers (Structure.Id, Structure.ID, Structure.Entries, Inherits);
 	}
@@ -406,7 +406,11 @@ public partial class #{Id} : #{Inherits} {
 
 
 #block 
-#% public void MakeClass  (ID<_Choice> Id, List<_Choice> Entries, bool Param) {
+#% public void MakeClass  (IStructure structure) {
+#% ID<_Choice> Id = structure.IId;
+#% List<_Choice> Entries = structure.IEntries;
+#% bool Param = structure.IParameterized;
+
 #% var isAbstract = false;
 #% var Inherits = HasInherits (Entries);
 #!#% string Override;
@@ -485,7 +489,7 @@ null, #!
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "#{Id}";
+	public new const string __Tag = "#{structure.ID}";
 
 	/// <summary>
 #if (IsAbstract (Entries))

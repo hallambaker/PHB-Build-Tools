@@ -62,9 +62,9 @@ using Goedel.Utilities;
 //       Decimal
 //       Funct
 //       Param
+//       Tag
 //       Select
 //       ABNF
-//       Tag
 //       Required
 //       Multiple
 //       Dictionary
@@ -73,6 +73,7 @@ using Goedel.Utilities;
 //       LengthFixed
 //       Quoted
 //       Constraint
+//       TypeTag
 //       Enumerated
 //       TaggedType
 //       Tagged
@@ -182,6 +183,7 @@ namespace Goedel.Tool.ProtoGen {
         Label,
         Name,
         String,
+        TypeTag,
         Constraint,
         URI,
         DateTime,
@@ -1054,6 +1056,27 @@ namespace Goedel.Tool.ProtoGen {
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("String");
+				}			
+			}
+		}
+
+    public partial class TypeTag : _Choice {
+
+        public override ProtoStructType _Tag () =>ProtoStructType.TypeTag;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("TypeTag");
+				}
+
+			if (tag) {
+				Output.EndElement ("TypeTag");
 				}			
 			}
 		}
@@ -2434,6 +2457,7 @@ namespace Goedel.Tool.ProtoGen {
 		String_Start,
 		String__Id,				
 		String__Options,				
+		TypeTag_Start,
 		Constraint_Start,
 		Constraint__Id,				
 		URI_Start,
@@ -2693,6 +2717,7 @@ namespace Goedel.Tool.ProtoGen {
                 case "Label": return NewLabel();
                 case "Name": return NewName();
                 case "String": return NewString();
+                case "TypeTag": return NewTypeTag();
                 case "Constraint": return NewConstraint();
                 case "URI": return NewURI();
                 case "DateTime": return NewDateTime();
@@ -2968,6 +2993,14 @@ namespace Goedel.Tool.ProtoGen {
             Goedel.Tool.ProtoGen.String result = new Goedel.Tool.ProtoGen.String();
             Push (result);
             State = StateCode.String_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.ProtoGen.TypeTag NewTypeTag() {
+            Goedel.Tool.ProtoGen.TypeTag result = new Goedel.Tool.ProtoGen.TypeTag();
+            Push (result);
+            State = StateCode.TypeTag_Start;
             return result;
             }
 
@@ -3379,6 +3412,7 @@ namespace Goedel.Tool.ProtoGen {
                 case "Label": return Goedel.Tool.ProtoGen.ProtoStructType.Label;
                 case "Name": return Goedel.Tool.ProtoGen.ProtoStructType.Name;
                 case "String": return Goedel.Tool.ProtoGen.ProtoStructType.String;
+                case "TypeTag": return Goedel.Tool.ProtoGen.ProtoStructType.TypeTag;
                 case "Constraint": return Goedel.Tool.ProtoGen.ProtoStructType.Constraint;
                 case "URI": return Goedel.Tool.ProtoGen.ProtoStructType.URI;
                 case "DateTime": return Goedel.Tool.ProtoGen.ProtoStructType.DateTime;
@@ -3976,6 +4010,7 @@ namespace Goedel.Tool.ProtoGen {
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.External) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Boolean) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Integer) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Binary) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Float) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Label) |
@@ -3997,7 +4032,7 @@ namespace Goedel.Tool.ProtoGen {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Description Abstract Inherits External Boolean Integer Binary Float Label Name String URI DateTime Struct TStruct Enum Format Decimal Select Funct Param CamelCase PascalCase SnakeCase ]");
+								throw new Expected ("Parser Error Expected [Description Abstract Inherits External Boolean Integer Tag Binary Float Label Name String URI DateTime Struct TStruct Enum Format Decimal Select Funct Param CamelCase PascalCase SnakeCase ]");
 								}
 							}
                         break;
@@ -4481,16 +4516,21 @@ namespace Goedel.Tool.ProtoGen {
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Default) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Quoted) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Constraint) |
-									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) ) {
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.TypeTag) ) {
                                 Current_Cast.Options.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description Default Quoted Constraint Tag ]");
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description Default Quoted Constraint Tag TypeTag ]");
 								}
 							}
                         break;
 
 
+                    case StateCode.TypeTag_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
                     case StateCode.Constraint_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.ProtoGen.Constraint Current_Cast = (Goedel.Tool.ProtoGen.Constraint)Current;
