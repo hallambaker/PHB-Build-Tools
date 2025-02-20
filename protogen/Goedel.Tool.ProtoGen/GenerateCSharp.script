@@ -67,7 +67,7 @@ public abstract partial class #{Protocol.Prefix} #{Protocol.ThisInherits} {
 #% Separator.IsFirst = true;
 #foreach (_Choice Entry in Protocol.Structures)
 #{Separator}
-	    {"#{Entry.ID}", #{Entry.ID}._Factory}#!
+	    {"#{Entry.ID}", #{Entry.XID ?? Entry.ID}._Factory}#!
 #end foreach
 
 		};
@@ -453,7 +453,7 @@ null, #!
 #else
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, #{Inherits}._StaticAllProperties);
+			Combine(#{Inherits}._binding, _binding);
 #end if
 
 

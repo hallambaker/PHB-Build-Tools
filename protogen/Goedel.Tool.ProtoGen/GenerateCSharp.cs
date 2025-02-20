@@ -104,7 +104,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 				 Separator.IsFirst = true;
 				foreach  (_Choice Entry in Protocol.Structures) {
 					_Output.Write ("{1}\n{0}", _Indent, Separator);
-					_Output.Write ("	    {{\"{1}\", {2}._Factory}}", _Indent, Entry.ID, Entry.ID);
+					_Output.Write ("	    {{\"{1}\", {2}._Factory}}", _Indent, Entry.ID, Entry.XID ?? Entry.ID);
 					}
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("		}};\n{0}", _Indent);
@@ -544,7 +544,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 			} else {
 			_Output.Write ("	///<summary>Dictionary describing the serializable properties.</summary> \n{0}", _Indent);
 			_Output.Write ("	public readonly static new Dictionary<string, Property> _StaticAllProperties =\n{0}", _Indent);
-			_Output.Write ("			Combine(_StaticProperties, {1}._StaticAllProperties);\n{0}", _Indent, Inherits);
+			_Output.Write ("			Combine({1}._binding, _binding);\n{0}", _Indent, Inherits);
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);

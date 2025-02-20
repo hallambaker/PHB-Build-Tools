@@ -24,6 +24,7 @@ public partial class _Choice {
     public string RequiredC => Required ? "TRUE" : "FALSE";
 
     public string ID { get; set; }  = null;
+    public string XID { get; set; } = null;
 
     public string TypeC = null;
     public string TypeJ = null;
@@ -153,6 +154,7 @@ public partial class _Choice {
 
     public void SetOptions(List<_Choice> Options) {
 
+
         switch (TypeCase) {
             case TypeCase.CamelCase: {
                 var first = char.ToLowerInvariant(ID[0]);
@@ -232,6 +234,7 @@ public partial class _Choice {
                     break;
                     }
                 case Tag tag: {
+                    XID = ID;
                     ID = tag.Text;
                     break;
                     }
@@ -384,6 +387,7 @@ public partial class Structure : IStructure {
         foreach (_Choice entry in AllEntries) {
             switch (entry) {
                 case Tag tag: {
+                    XID = ID;
                     ID = tag.Text;
                     break;
                     }
