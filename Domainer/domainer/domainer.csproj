@@ -1,19 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
+
   <PropertyGroup>
 	  <AssemblyName>domainer</AssemblyName>
 	  <Product>Domainer</Product>
 	  <Description>Generates Serialization/Deserialization stubs for DNS records.</Description>
 	  <Copyright>© 2015-2021</Copyright>
 	  <Title>Domainer</Title>
-
+	  <OutputType>Exe</OutputType>
   </PropertyGroup>
 
-
+  <Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Tool.Domainer\Goedel.Tool.Domainer.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
   </ItemGroup>
 
 </Project>

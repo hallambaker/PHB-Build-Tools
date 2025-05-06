@@ -1,16 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
+
   <PropertyGroup>
 	  <AssemblyName>registryconfig</AssemblyName>
 	  <Product>Registry Config</Product>
 	  <Description>Generates Windows registry configuration classes.</Description>
 	  <Copyright>© 2015-2021</Copyright>
 	  <Title>Registry Config</Title>
+	  <OutputType>Exe</OutputType>
   </PropertyGroup>
 
+  <Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Tool.RegistryConfig\Goedel.Tool.RegistryConfig.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

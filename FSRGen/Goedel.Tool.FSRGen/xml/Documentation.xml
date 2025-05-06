@@ -4,5 +4,23 @@
         <name>Goedel.Tool.FSRGen</name>
     </assembly>
     <members>
+        <member name="M:Goedel.Tool.FSRGen.Generate.GenerateH(Goedel.Tool.FSRGen.FSRSchema)">
+            <summary>	
+            GenerateH
+            </summary>
+            <param name="FSRSchema"></param>
+        </member>
+        <member name="M:Goedel.Tool.FSRGen.Generate.GenerateRaw(Goedel.Tool.FSRGen.FSR)">
+            <summary>	
+            GenerateRaw
+            </summary>
+            <param name="FSR"></param>
+        </member>
+        <member name="M:Goedel.Tool.FSRGen.Generate.GenerateCS(Goedel.Tool.FSRGen.FSRSchema)">
+            <summary>	
+            GenerateCS
+            </summary>
+            <param name="FSRSchema"></param>
+        </member>
     </members>
 </doc>

@@ -6,9 +6,8 @@
     <Product>Goedel.Tool.Domainer</Product>
     <Description>DNS wireline and zone file parser library.</Description>
   </PropertyGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

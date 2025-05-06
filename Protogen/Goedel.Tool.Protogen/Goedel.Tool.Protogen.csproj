@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+
   <PropertyGroup>
     <RootNamespace>Goedel.Tool.Protogen</RootNamespace>
     <Title>Goedel.Tool.Protogen</Title>
@@ -7,8 +7,12 @@
     <Description>Protocol Generator DSL.</Description>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+
+
+	<ItemGroup>
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,11 +1,161 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Goedel.Tool.Domainer</name>
+        <name>Goedel.Tool.Guigen</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Tool.Domainer.Conversion">
-            <summary> </summary>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateCS(Goedel.Tool.Guigen.Guigen)">
+            <summary>	
+            GenerateCS
+            </summary>
+            <param name="Guigen"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.MakeIParameterMethods(Goedel.Tool.Guigen.IEntries)">
+            <summary>	
+            MakeIParameterMethods
+            </summary>
+            <param name="action"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.DeclareResultGetValues(Goedel.Tool.Guigen.IEntries)">
+            <summary>	
+            DeclareResultGetValues
+            </summary>
+            <param name="parent"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.DeclareFields(Goedel.Tool.Guigen.IEntries)">
+            <summary>	
+            DeclareFields
+            </summary>
+            <param name="parent"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.CreateBindings(Goedel.Tool.Guigen.IEntries)">
+            <summary>	
+            CreateBindings
+            </summary>
+            <param name="parent"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.CreateBindingInner(Goedel.Tool.Guigen.IEntries)">
+            <summary>	
+            CreateBindingInner
+            </summary>
+            <param name="parent"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateEntries(System.Collections.Generic.List{Goedel.Tool.Guigen._Choice})">
+            <summary>	
+            GenerateEntries
+            </summary>
+            <param name="entries"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateEntry_OLD_DELETE(Goedel.Tool.Guigen._Choice)">
+            <summary>	
+            GenerateEntry_OLD_DELETE
+            </summary>
+            <param name="entry"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateList(Goedel.Tool.Guigen.List)">
+            <summary>	
+            GenerateList
+            </summary>
+            <param name="list"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateChooser(Goedel.Tool.Guigen.Chooser)">
+            <summary>	
+            GenerateChooser
+            </summary>
+            <param name="chooser"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateDialog(Goedel.Tool.Guigen.Dialog)">
+            <summary>	
+            GenerateDialog
+            </summary>
+            <param name="dialog"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateSelection(Goedel.Tool.Guigen.Selection)">
+            <summary>	
+            GenerateSelection
+            </summary>
+            <param name="field"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateButton(Goedel.Tool.Guigen.Button)">
+            <summary>	
+            GenerateButton
+            </summary>
+            <param name="field"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateText(Goedel.Tool.Guigen.Text)">
+            <summary>	
+            GenerateText
+            </summary>
+            <param name="field"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateBoolean(Goedel.Tool.Guigen.Boolean)">
+            <summary>	
+            GenerateBoolean
+            </summary>
+            <param name="field"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateTextArea(Goedel.Tool.Guigen.TextArea)">
+            <summary>	
+            GenerateTextArea
+            </summary>
+            <param name="field"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateInteger(Goedel.Tool.Guigen.Integer)">
+            <summary>	
+            GenerateInteger
+            </summary>
+            <param name="field"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateQRScan(Goedel.Tool.Guigen.QRScan)">
+            <summary>	
+            GenerateQRScan
+            </summary>
+            <param name="field"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateColor(Goedel.Tool.Guigen.Color)">
+            <summary>	
+            GenerateColor
+            </summary>
+            <param name="field"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateSize(Goedel.Tool.Guigen.Size)">
+            <summary>	
+            GenerateSize
+            </summary>
+            <param name="field"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateDecimal(Goedel.Tool.Guigen.Decimal)">
+            <summary>	
+            GenerateDecimal
+            </summary>
+            <param name="field"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateIcon(Goedel.Tool.Guigen.Icon)">
+            <summary>	
+            GenerateIcon
+            </summary>
+            <param name="field"></param>
+        </member>
+        <member name="M:Goedel.Tool.Guigen.Generate.GenerateResx(Goedel.Tool.Guigen.Guigen)">
+            <summary>	
+            GenerateResx
+            </summary>
+            <param name="Guigen"></param>
+        </member>
+        <member name="T:Goedel.Tool.Guigen.Button">
+            <summary>
+            Button offers an action to the user.
+            </summary>
+        </member>
+        <member name="T:Goedel.Tool.Guigen.List">
+            <summary>
+            List presents a short list of items usually 0-5
+            </summary>
+        </member>
+        <member name="T:Goedel.Tool.Guigen.Chooser">
+            <summary>
+            Chooser selects one item from a list box of many entries.
+            </summary>
         </member>
     </members>
 </doc>

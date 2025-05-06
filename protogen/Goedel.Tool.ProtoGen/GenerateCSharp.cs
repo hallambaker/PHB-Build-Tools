@@ -52,6 +52,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("using System.Collections.Generic;\n{0}", _Indent);
 		_Output.Write ("using System.Runtime.CompilerServices;\n{0}", _Indent);
 		_Output.Write ("using System.Text;\n{0}", _Indent);
+		_Output.Write ("using System.Text.Json;\n{0}", _Indent);
+		_Output.Write ("using System.Text.Json.Serialization;\n{0}", _Indent);
 		_Output.Write ("using Goedel.Protocol;\n{0}", _Indent);
 		_Output.Write ("using Goedel.Utilities;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
@@ -109,6 +111,24 @@ public partial class Generate : global::Goedel.Registry.Script {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("		}};\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("	/// <summary>\n{0}", _Indent);
+				_Output.Write ("    /// Dictionary mapping types to bindings\n{0}", _Indent);
+				_Output.Write ("    /// </summary>\n{0}", _Indent);
+				_Output.Write ("	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;\n{0}", _Indent);
+				_Output.Write ("	static Dictionary<System.Type, Binding> _bindingDictionary = \n{0}", _Indent);
+				_Output.Write ("			new () {{\n{0}", _Indent);
+				
+				 Separator.IsFirst = true;
+				foreach  (_Choice Entry in Protocol.Structures) {
+					_Output.Write ("{1}\n{0}", _Indent, Separator);
+					_Output.Write ("	    {{typeof({1}), {2}._binding}}", _Indent, Entry.XID ?? Entry.ID, Entry.XID ?? Entry.ID);
+					}
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("		}};\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("	///<summary>Variable used to force static initialization</summary> \n{0}", _Indent);
 				_Output.Write ("	public static bool _Initialized => true;\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -116,7 +136,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 				_Output.Write ("		_Initialize();\n{0}", _Indent);
 				_Output.Write ("		}}\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("    internal static void _Initialize() => AddDictionary(ref _tagDictionary);\n{0}", _Indent);
+				_Output.Write ("    internal static void _Initialize() {{\n{0}", _Indent);
+				_Output.Write ("		AddDictionary(ref _tagDictionary);\n{0}", _Indent);
+				_Output.Write ("		AddDictionary(ref _bindingDictionary);\n{0}", _Indent);
+				_Output.Write ("		}}\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("	/// <summary>\n{0}", _Indent);
@@ -523,17 +546,21 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("	public override Binding _Binding => _binding;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	///<summary>Binding</summary> \n{0}", _Indent);
-		_Output.Write ("	static protected new Binding _binding = new (\n{0}", _Indent);
+		_Output.Write ("	public static readonly new Binding<{1}> _binding = new (\n{0}", _Indent, Id);
 		_Output.Write ("			new() {{\n{0}", _Indent);
 		 DeclareProperties (Id, Entries);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("        }}, __Tag,", _Indent);
 		if (  isAbstract ) {
-			_Output.Write ("null, ", _Indent);
+			_Output.Write ("null, null, null,", _Indent);
 			} else {
-			_Output.Write ("() => new {1}(), ", _Indent, Id);
+			_Output.Write ("() => new {1}(), () => new List<{2}>(), () => new Dictionary<string,{3}>(),", _Indent, Id, Id, Id);
 			}
-		_Output.Write ("{1});\n{0}", _Indent, (Inherits != null).If(Inherits + "._binding", "null"));
+		_Output.Write ("{1}", _Indent, (Inherits != null).If(Inherits + "._binding", "null"));
+		if (  (structure.TypeTag) ) {
+			_Output.Write (", TypeTag:\"{1}\" ", _Indent, structure.TypeElement);
+			}
+		_Output.Write (");\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    ///<summary>Dictionary describing the serializable properties.</summary> \n{0}", _Indent);
 		_Output.Write ("    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;\n{0}", _Indent);
@@ -615,7 +642,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 				case ProtoStructType.Struct: {
 				  Struct Param = (Struct) Entry; 
 				_Output.Write ("{1}\n{0}", _Indent, separator);
-				_Output.Write ("			{{ \"{1}\", new {2} (\"{3}\", \n{0}", _Indent, Tag, Entry.PropertyName, Tag);
+				_Output.Write ("			{{ \"{1}\", new {2} (\"{3}\", typeof ({4}),\n{0}", _Indent, Tag, Entry.PropertyName, Tag, Param.Type.Label);
 				_Output.Write ("					(IBinding data, object? value) => {{(data as {1}).{2} = value as {3};}}, (IBinding data) => (data as {4}).{5},\n{0}", _Indent, Id, Token, Param.TypeCSCons, Id, Token);
 				_Output.Write ("					false, ()=>new  {1}(), ()=>new {2}()", _Indent, Param.TypeCSCons, Param.BaseType);
 				if (  Entry.Dictionary ) {
@@ -629,7 +656,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 				case ProtoStructType.TStruct: {
 				  TStruct Param = (TStruct) Entry; 
 				_Output.Write ("{1}\n{0}", _Indent, separator);
-				_Output.Write ("			{{ \"{1}\", new {2} (\"{3}\", \n{0}", _Indent, Tag, Entry.PropertyName, Tag);
+				_Output.Write ("			{{ \"{1}\", new {2} (\"{3}\", typeof ({4}), \n{0}", _Indent, Tag, Entry.PropertyName, Tag, Param.Type.Label);
 				_Output.Write ("					(IBinding data, object? value) => {{(data as {1}).{2} = value as {3};}}, (IBinding data) => (data as {4}).{5},\n{0}", _Indent, Id, Token, Param.TypeCSCons, Id, Token);
 				_Output.Write ("					true", _Indent);
 				if (  Entry.Multiple ) {
@@ -703,12 +730,15 @@ public partial class Generate : global::Goedel.Registry.Script {
 				 bool Multiple = IsMultiple (Options);
 				if (  Enumerated ) {
 					_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
+					_Output.Write ("	[JsonPropertyName(\"{1}\")]\n{0}", _Indent, Entry.ID);
 					_Output.Write ("	public virtual IEnumerable<{1}>				{2}  {{get; set;}}\n{0}", _Indent, Type, Token);
 					} else if (  Multiple) {
 					_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
+					_Output.Write ("	[JsonPropertyName(\"{1}\")]\n{0}", _Indent, Entry.ID);
 					_Output.Write ("	public virtual {1}?					{2}  {{get; set;}}\n{0}", _Indent, Entry.TypeCS, Token);
 					} else {
 					_Output.Write ("{1}\n{0}", _Indent, CommentSummary(8,Entry.Description));
+					_Output.Write ("	[JsonPropertyName(\"{1}\")]\n{0}", _Indent, Entry.ID);
 					_Output.Write ("	public virtual {1}?					{2}  {{get; set;}}\n{0}", _Indent, Entry.TypeCS, Token);
 					_Output.Write ("\n{0}", _Indent);
 					}

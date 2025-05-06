@@ -1,17 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+
   <PropertyGroup>
     <RootNamespace>Goedel.Tool.Makey</RootNamespace>
     <Title>Goedel.Tool.Makey</Title>
     <Product>Goedel.Tool.Makey</Product>
     <Description>Makefile manager DSL.</Description>
   </PropertyGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
-  </ItemGroup>
+	</ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <Compile Update="Exceptions.cs">
       <DependentUpon>Exceptions.exceptional</DependentUpon>
       <DesignTime>True</DesignTime>

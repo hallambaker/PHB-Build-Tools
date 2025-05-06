@@ -4,5 +4,11 @@
         <name>Goedel.Tool.Constant</name>
     </assembly>
     <members>
+        <member name="M:Goedel.Tool.Constant.Generate.GenerateCS(Goedel.Tool.Constant.Constant)">
+            <summary>	
+            GenerateCS
+            </summary>
+            <param name="Constant"></param>
+        </member>
     </members>
 </doc>

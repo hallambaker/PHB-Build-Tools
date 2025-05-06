@@ -76,5 +76,29 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
+        <member name="M:GoedelSchema.GenerateParser.GenerateCS(GoedelSchema.Goedel)">
+            <summary>	
+            GenerateCS
+            </summary>
+            <param name="GoedelIn"></param>
+        </member>
+        <member name="M:GoedelSchema.GenerateParser.GenerateClass(GoedelSchema.Class)">
+            <summary>	
+            GenerateClass
+            </summary>
+            <param name="Class"></param>
+        </member>
+        <member name="M:GoedelSchema.GenerateParser.DeclareEntry(GoedelSchema.Entry)">
+            <summary>	
+            DeclareEntry
+            </summary>
+            <param name="Entry"></param>
+        </member>
+        <member name="M:GoedelSchema.GenerateParser.SerializeEntry(GoedelSchema.Entry)">
+            <summary>	
+            SerializeEntry
+            </summary>
+            <param name="Entry"></param>
+        </member>
     </members>
 </doc>

@@ -1,40 +1,40 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
-  <PropertyGroup>
-    <RootNamespace>Goedel.ASN</RootNamespace>
-    <Title>Goedel.ASN</Title>
-    <Product>Goedel.ASN</Product>
-    <Description>ASN1 parsing library.</Description>
-  </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.ASN\Goedel.ASN.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
-  </ItemGroup>
+	<PropertyGroup>
+		<RootNamespace>Goedel.ASN</RootNamespace>
+		<Title>Goedel.ASN</Title>
+		<Product>Goedel.ASN</Product>
+		<Description>ASN1 parsing library.</Description>
+	</PropertyGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.ASN\Goedel.ASN.csproj" />
+		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Asn2.cs">
-      <DependentUpon>Asn2.gdl</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="GenerateCS.cs">
-      <DependentUpon>GenerateCS.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Asn2.cs">
+			<DependentUpon>Asn2.gdl</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="GenerateCS.cs">
+			<DependentUpon>GenerateCS.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Asn2.gdl">
-      <LastGenOutput>Asn2.cs</LastGenOutput>
-      <Generator>goedel3</Generator>
-    </None>
-    <None Update="GenerateCS.script">
-      <LastGenOutput>GenerateCS.cs</LastGenOutput>
-      <Generator>GScript</Generator>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Asn2.gdl">
+			<LastGenOutput>Asn2.cs</LastGenOutput>
+			<Generator>goedel3</Generator>
+		</None>
+		<None Update="GenerateCS.script">
+			<LastGenOutput>GenerateCS.cs</LastGenOutput>
+			<Generator>GScript</Generator>
+		</None>
+	</ItemGroup>
 
 
 

@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+
   <PropertyGroup>
     <RootNamespace>Goedel.Tool.Constant</RootNamespace>
     <Title>Goedel.Tool.Constant</Title>
     <Product>Goedel.Tool.Constant</Product>
     <Description>Generates source code and documentation for code constants.</Description>
   </PropertyGroup>
-
-
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
-  </ItemGroup>
-
+	
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+	</ItemGroup>
+	
   <ItemGroup>
     <Compile Update="ConstantSchema.cs">
       <DependentUpon>ConstantSchema.gdl</DependentUpon>

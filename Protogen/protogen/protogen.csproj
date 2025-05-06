@@ -1,24 +1,34 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
+
   <PropertyGroup>
 	  <AssemblyName>protogen</AssemblyName>
 	  <Product>Protogen</Product>
 	  <Description>Generates JSON Web protocol service and client classes.</Description>
 	  <Copyright>© 2015-2021</Copyright>
 	  <Title>Protocol</Title>
+	  <OutputType>Exe</OutputType>
   </PropertyGroup>
 
+  <Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Tool.Protogen\Goedel.Tool.Protogen.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Protogen.command">
-      <Generator></Generator>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Protogen.cs">
+			<DependentUpon>Protogen.command</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
 
+	<ItemGroup>
+		<None Update="Protogen.command">
+			<LastGenOutput>Protogen.cs</LastGenOutput>
+			<Generator>CommandCS</Generator>
+		</None>
+	</ItemGroup>
 
-
+	
+	
 </Project>

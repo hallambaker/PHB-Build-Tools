@@ -4,6 +4,311 @@
         <name>Goedel.Tool.Protogen</name>
     </assembly>
     <members>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.GenerateRFC2XML(Goedel.Tool.ProtoGen.ProtoStruct)">
+            <summary>	
+            GenerateRFC2XML
+            </summary>
+            <param name="ProtoStruct"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.GenerateHTML(Goedel.Tool.ProtoGen.ProtoStruct)">
+            <summary>	
+            GenerateHTML
+            </summary>
+            <param name="ProtoStruct"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.GenerateMD(Goedel.Tool.ProtoGen.ProtoStruct)">
+            <summary>	
+            GenerateMD
+            </summary>
+            <param name="ProtoStruct"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.SectionHeading(Goedel.Tool.ProtoGen.Section)">
+            <summary>	
+            SectionHeading
+            </summary>
+            <param name="Section"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.StartSection(System.Int32,System.String)">
+            <summary>	
+            StartSection
+            </summary>
+            <param name="Level"></param>
+            <param name="Title"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.StartSection(System.Int32)">
+            <summary>	
+            StartSection
+            </summary>
+            <param name="Level"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MidSection(System.Int32)">
+            <summary>	
+            MidSection
+            </summary>
+            <param name="Level"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.EndSection(System.Int32)">
+            <summary>	
+            EndSection
+            </summary>
+            <param name="Level"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeService(Goedel.Tool.ProtoGen.Service)">
+            <summary>	
+            MakeService
+            </summary>
+            <param name="Service"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeMessage(Goedel.Tool.ProtoGen.Message)">
+            <summary>	
+            MakeMessage
+            </summary>
+            <param name="Message"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeStructure(Goedel.Tool.ProtoGen.Structure)">
+            <summary>	
+            MakeStructure
+            </summary>
+            <param name="Structure"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeTransaction(Goedel.Tool.ProtoGen.Transaction)">
+            <summary>	
+            MakeTransaction
+            </summary>
+            <param name="Transaction"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeSuccess(Goedel.Tool.ProtoGen.Success)">
+            <summary>	
+            MakeSuccess
+            </summary>
+            <param name="Success"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeWarning(Goedel.Tool.ProtoGen.Warning)">
+            <summary>	
+            MakeWarning
+            </summary>
+            <param name="Warning"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeError(Goedel.Tool.ProtoGen.Error)">
+            <summary>	
+            MakeError
+            </summary>
+            <param name="Error"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.Comment(System.String)">
+            <summary>	
+            Comment
+            </summary>
+            <param name="Text"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.GenerateBody(Goedel.Tool.ProtoGen.ProtoStruct)">
+            <summary>	
+            GenerateBody
+            </summary>
+            <param name="ProtoStruct"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.DescriptionListSkip(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+             DescriptionListSkip
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.DescriptionList(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+             DescriptionList
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.Description(Goedel.Tool.ProtoGen._Choice)">
+            <summary>	
+            Description
+            </summary>
+            <param name="TEntry"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.DescriptionListDD(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+             DescriptionListDD
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.DescriptionDD(Goedel.Tool.ProtoGen._Choice)">
+            <summary>	
+            DescriptionDD
+            </summary>
+            <param name="TEntry"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.Indentify(System.Int32)">
+            <summary>	
+             Indentify
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.TMessage(Goedel.Tool.ProtoGen._Choice)">
+            <summary>	
+            TMessage
+            </summary>
+            <param name="TEntry"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.ParameterList(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+             ParameterList
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.OptionList(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+             OptionList
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.GenerateH(Goedel.Tool.ProtoGen.ProtoStruct)">
+            <summary>	
+            GenerateH
+            </summary>
+            <param name="ProtoStruct"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeCStructure(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+            MakeCStructure
+            </summary>
+            <param name="Members"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeCStructure(Goedel.Tool.ProtoGen._Choice)">
+            <summary>	
+            MakeCStructure
+            </summary>
+            <param name="Member"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.GenerateC(Goedel.Tool.ProtoGen.ProtoStruct)">
+            <summary>	
+            GenerateC
+            </summary>
+            <param name="ProtoStruct"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeCSerialize(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+            MakeCSerialize
+            </summary>
+            <param name="Members"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeCSerialize(Goedel.Tool.ProtoGen._Choice)">
+            <summary>	
+            MakeCSerialize
+            </summary>
+            <param name="Member"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeCDeserialize(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+            MakeCDeserialize
+            </summary>
+            <param name="Members"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeCDeserialize(Goedel.Tool.ProtoGen._Choice)">
+            <summary>	
+            MakeCDeserialize
+            </summary>
+            <param name="Member"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeComma(System.Object)">
+            <summary>	
+            MakeComma
+            </summary>
+            <param name="OCount"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.GenerateCS(Goedel.Tool.ProtoGen.ProtoStruct)">
+            <summary>	
+            GenerateCS
+            </summary>
+            <param name="ProtoStruct"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.IsAbstract(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+             
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.IsMultiple(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+             
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.IsEnumerated(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+             
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.IsRequired(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+             
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.HasInherits(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+             
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeClass(Goedel.Registry.ID{Goedel.Tool.ProtoGen._Choice},System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+             
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeClass(Goedel.Tool.ProtoGen.IStructure)">
+            <summary>	
+             
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.DeclareProperties(Goedel.Registry.ID{Goedel.Tool.ProtoGen._Choice},System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+             DeclareProperties
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.DeclareMetaMembers(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+             ParameterList
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.DeclareMembers(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+            <summary>	
+             ParameterList
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeSerializers(Goedel.Registry.ID{Goedel.Tool.ProtoGen._Choice},System.String,System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice},System.String)">
+            <summary>	
+             MakeSerializers
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeSerializeEntry(Goedel.Tool.ProtoGen._Choice,System.String)">
+            <summary>	
+            MakeSerializeEntry
+            </summary>
+            <param name="Entry"></param>
+            <param name="Tag"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeSerializeArrayEntry(Goedel.Tool.ProtoGen._Choice,System.String)">
+            <summary>	
+            MakeSerializeArrayEntry
+            </summary>
+            <param name="Entry"></param>
+            <param name="Tag"></param>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.GetType(Goedel.Tool.ProtoGen._Choice,Goedel.Registry.TOKEN{Goedel.Tool.ProtoGen._Choice}@,System.String@,System.String@,System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice}@,System.Boolean@,System.String@)">
+            <summary>	
+            
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.GetSerializerz(Goedel.Tool.ProtoGen._Choice,Goedel.Registry.TOKEN{Goedel.Tool.ProtoGen._Choice}@,System.String@,System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice}@)">
+            <summary>	
+            
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.DeserializeCase(Goedel.Registry.ID{Goedel.Tool.ProtoGen._Choice},System.String)">
+            <summary>	
+             DeserializeCase
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MapInheritors(Goedel.Registry.ID{Goedel.Tool.ProtoGen._Choice},System.String)">
+            <summary>	
+             MapInheritors
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ProtoGen.Generate.DescriptionListC(System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice},System.Int32)">
+            <summary>	
+             DescriptionListC
+            </summary>
+        </member>
         <member name="T:Goedel.Tool.ProtoGen.UndefinedReference">
             <summary>
             The input could not be parsed

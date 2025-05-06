@@ -1,13 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <Product>command Echo</Product>
     <Description>Echos the command entered on the command line.</Description>
     <Title>Echos the command entered on the command line</Title>
+	  <OutputType>Exe</OutputType>
   </PropertyGroup>
 
+  <Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+    <ProjectReference Include="..\Goedel.Tool.Command\Goedel.Tool.Command.csproj" />
   </ItemGroup>
 
   <ItemGroup>

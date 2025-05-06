@@ -4,6 +4,12 @@
         <name>Goedel.Tool.RegistryConfig</name>
     </assembly>
     <members>
+        <member name="M:Goedel.Tool.RegistryConfig.GenerateCS.Generate(Goedel.Tool.RegistryConfig.ConfigItems)">
+            <summary>	
+            Generate
+            </summary>
+            <param name="ConfigItems"></param>
+        </member>
         <member name="P:Goedel.Tool.RegistryConfig.Field.RegistryType">
             <summary>
             

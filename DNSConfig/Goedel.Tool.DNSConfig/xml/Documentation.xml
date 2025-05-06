@@ -4,5 +4,35 @@
         <name>Goedel.Tool.DNSConfig</name>
     </assembly>
     <members>
+        <member name="M:Goedel.Tool.DNSConfig.Generate.GenerateZone(Goedel.Tool.DNSConfig.DNSConfig)">
+            <summary>	
+            GenerateZone
+            </summary>
+            <param name="DNSConfig"></param>
+        </member>
+        <member name="M:Goedel.Tool.DNSConfig.Generate.GenerateOptions(Goedel.Tool.DNSConfig.DNSConfig)">
+            <summary>	
+            GenerateOptions
+            </summary>
+            <param name="DNSConfig"></param>
+        </member>
+        <member name="M:Goedel.Tool.DNSConfig.Generate.GenerateLocal(Goedel.Tool.DNSConfig.DNSConfig)">
+            <summary>	
+            GenerateLocal
+            </summary>
+            <param name="DNSConfig"></param>
+        </member>
+        <member name="M:Goedel.Tool.DNSConfig.Generate.GenerateDomain(Goedel.Tool.DNSConfig.Domain)">
+            <summary>	
+            GenerateDomain
+            </summary>
+            <param name="Domain"></param>
+        </member>
+        <member name="M:Goedel.Tool.DNSConfig.Generate.GenerateAdressRecords(Goedel.Tool.DNSConfig.DNSConfig)">
+            <summary>	
+            GenerateAdressRecords
+            </summary>
+            <param name="DNSConfig"></param>
+        </member>
     </members>
 </doc>

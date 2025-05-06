@@ -46,6 +46,11 @@
         <member name="P:GoedelShell._Wrap.Lazy">
             <summary>Field accessor for option [lazy]</summary>
         </member>
+        <member name="T:GoedelShell.GoedelShell">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Goedel.Tool.Script.DoWrap">
             <summary>
             Class with static methods to turn a file into a C# constant string.

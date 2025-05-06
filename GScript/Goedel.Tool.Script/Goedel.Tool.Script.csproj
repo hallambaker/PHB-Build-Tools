@@ -1,20 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+
   <PropertyGroup>
     <RootNamespace>Goedel.Tool.Script</RootNamespace>
     <Title>Goedel.Tool.Script</Title>
     <Product>Goedel.Tool.Script</Product>
     <Description>Goedel Script DSL.</Description>
   </PropertyGroup>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="VSPreBuild" />
-  </Target>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="VSPostBuild" />
-  </Target>
-
+	
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	
   <ItemGroup>
+	  <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
     <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
     <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>

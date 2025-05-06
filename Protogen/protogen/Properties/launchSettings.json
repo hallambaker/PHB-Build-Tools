@@ -8,7 +8,7 @@
     "TestExample": {
       "commandName": "Project",
       "commandLineArgs": "TestExample.protocol  /cs  TestExample.cs",
-      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Testing\\Goedel.Protocol.Test-xunit"
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Testing\\Test.Protocol"
     },
     "ProtocolSchema": {
       "commandName": "Project",
@@ -49,6 +49,12 @@
       "commandName": "Project",
       "commandLineArgs": "CalendarSchema.protocol  /cs  CalendarSchema.cs",
       "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Libraries\\Goedel.Contacts"
+    },
+    "Device": {
+      "commandName": "Project",
+      "commandLineArgs": "DeviceSchema.protocol  /cs  DeviceSchema.cs",
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Libraries\\Goedel.Contacts"
     }
+
   }
 }

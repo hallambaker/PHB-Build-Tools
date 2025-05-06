@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
+
   <PropertyGroup>
 
     <AssemblyName>commandparse</AssemblyName>
@@ -7,8 +7,10 @@
     <Description>Generates command parser/dispatcher from description</Description>
 	  <Copyright>© 2015-2021</Copyright>
     <Title>RFCTool</Title>
-
+	  <OutputType>Exe</OutputType>
   </PropertyGroup>
+
+  <Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
   <ItemGroup>
     <Content Include="Default.htm" />
@@ -16,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
     <ProjectReference Include="..\Goedel.Tool.Command\Goedel.Tool.Command.csproj" />
   </ItemGroup>
 

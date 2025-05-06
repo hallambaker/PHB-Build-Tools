@@ -19,7 +19,8 @@ public partial class _Choice {
 
     public bool Enumerated = false;
     public bool Required = false;
-    public bool TypeTag = false;
+    public bool TypeTag { get; set; } = false;
+    public string? TypeElement { get; set; } = null;
 
     public string RequiredC => Required ? "TRUE" : "FALSE";
 
@@ -223,6 +224,10 @@ public partial class _Choice {
                     }
                 case TypeTag typetag: {
                     TypeTag = true;
+                    TypeElement ??= ID;
+
+                    Parent.TypeTag = true;
+                    Parent.TypeElement ??= ID;
                     break;
                     }
                 case LengthBits lengthBits: {
@@ -318,6 +323,9 @@ public interface IStructure {
     public bool IParameterized { get; }
 
     public string ID { get; }
+
+    public bool TypeTag { get; }
+    public string TypeElement { get; }
     }
 
 public partial class Message : IStructure {
@@ -374,7 +382,8 @@ public partial class Structure : IStructure {
     public List<_Choice> AllEntries = null;
     public List<_Choice> AllEntriesUnsorted = null;
     public override void Normalize() {
-
+        if (Id.ToString() == "Jwks") {
+            }
 
         if (Normalized) {
             return;
@@ -387,7 +396,7 @@ public partial class Structure : IStructure {
         foreach (_Choice entry in AllEntries) {
             switch (entry) {
                 case Tag tag: {
-                    XID = ID;
+                    XID = Id.ToString();
                     ID = tag.Text;
                     break;
                     }

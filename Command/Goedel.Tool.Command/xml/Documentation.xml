@@ -86,5 +86,67 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
+        <member name="M:Goedel.Tool.Command.GenerateCS.Generate(Goedel.Tool.Command.CommandParse)">
+            <summary>	
+            Generate
+            </summary>
+            <param name="CommandParseIn"></param>
+        </member>
+        <member name="M:Goedel.Tool.Command.GenerateCS.GenerateX(Goedel.Tool.Command.CommandParse)">
+            <summary>	
+            GenerateX
+            </summary>
+            <param name="CommandParseIn"></param>
+        </member>
+        <member name="M:Goedel.Tool.Command.GenerateCS.GenerateCommandSet(Goedel.Tool.Command.CommandSet)">
+            <summary>	
+            GenerateCommandSet
+            </summary>
+            <param name="CommandSet"></param>
+        </member>
+        <member name="M:Goedel.Tool.Command.GenerateCS.GenerateClass(Goedel.Tool.Command.Class)">
+            <summary>	
+            GenerateClass
+            </summary>
+            <param name="Class"></param>
+        </member>
+        <member name="M:Goedel.Tool.Command.GenerateCS.CommandHandler(Goedel.Tool.Command.Command,Goedel.Tool.Command.Class)">
+            <summary>	
+            CommandHandler
+            </summary>
+            <param name="Command"></param>
+            <param name="Class"></param>
+        </member>
+        <member name="M:Goedel.Tool.Command.GenerateCS.CommandMethod(Goedel.Tool.Command.Command)">
+            <summary>	
+            CommandMethod
+            </summary>
+            <param name="Command"></param>
+        </member>
+        <member name="M:Goedel.Tool.Command.GenerateCS.CommandSetMethod(Goedel.Tool.Command.CommandSet)">
+            <summary>	
+            CommandSetMethod
+            </summary>
+            <param name="CommandSet"></param>
+        </member>
+        <member name="M:Goedel.Tool.Command.GenerateCS.CommandSetHandler(Goedel.Tool.Command.CommandSet,Goedel.Tool.Command.Class)">
+            <summary>	
+            CommandSetHandler
+            </summary>
+            <param name="CommandSet"></param>
+            <param name="Class"></param>
+        </member>
+        <member name="M:Goedel.Tool.Command.GenerateCS.CommandSetOptionClass(Goedel.Tool.Command.CommandSet)">
+            <summary>	
+            CommandSetOptionClass
+            </summary>
+            <param name="CommandSet"></param>
+        </member>
+        <member name="M:Goedel.Tool.Command.GenerateCS.CommandOptionClass(Goedel.Tool.Command.Command)">
+            <summary>	
+            CommandOptionClass
+            </summary>
+            <param name="Command"></param>
+        </member>
     </members>
 </doc>

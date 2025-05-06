@@ -11,5 +11,53 @@
             </summary>
             <param name="Parent"></param>
         </member>
+        <member name="M:Goedel.Tool.Exceptional.Generate.GenerateCS(Goedel.Tool.Exceptional.Exceptions)">
+            <summary>	
+            GenerateCS
+            </summary>
+            <param name="Exceptions"></param>
+        </member>
+        <member name="M:Goedel.Tool.Exceptional.Generate.GenerateCSX(Goedel.Tool.Exceptional.Exceptions)">
+            <summary>	
+            GenerateCSX
+            </summary>
+            <param name="Exceptions"></param>
+        </member>
+        <member name="M:Goedel.Tool.Exceptional.Generate.WriteEventInit(Goedel.Tool.Exceptional.IEvent)">
+            <summary>	
+            WriteEventInit
+            </summary>
+            <param name="logEvent"></param>
+        </member>
+        <member name="M:Goedel.Tool.Exceptional.Generate.WriteEvent(Goedel.Tool.Exceptional.IEvent)">
+            <summary>	
+            WriteEvent
+            </summary>
+            <param name="logEvent"></param>
+        </member>
+        <member name="M:Goedel.Tool.Exceptional.Generate.WriteException(Goedel.Tool.Exceptional.Exception)">
+            <summary>	
+            WriteException
+            </summary>
+            <param name="Exception"></param>
+        </member>
+        <member name="M:Goedel.Tool.Exceptional.Generate.WriteListExceptions(System.Collections.Generic.List{Goedel.Tool.Exceptional._Choice})">
+            <summary>	
+            WriteListExceptions
+            </summary>
+            <param name="Exceptions"></param>
+        </member>
+        <member name="M:Goedel.Tool.Exceptional.Generate.SummarizeException(Goedel.Tool.Exceptional.Exception)">
+            <summary>	
+            SummarizeException
+            </summary>
+            <param name="Exception"></param>
+        </member>
+        <member name="M:Goedel.Tool.Exceptional.Generate.SummarizeListExceptions(System.Collections.Generic.List{Goedel.Tool.Exceptional._Choice})">
+            <summary>	
+            SummarizeListExceptions
+            </summary>
+            <param name="Exceptions"></param>
+        </member>
     </members>
 </doc>

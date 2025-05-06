@@ -14,7 +14,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
-		<ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
 		<ProjectReference Include="..\Goedel.Tool.Exceptional\Goedel.Tool.Exceptional.csproj" />
 	</ItemGroup>
 

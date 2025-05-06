@@ -1,16 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
+
   <PropertyGroup>
 	  <AssemblyName>srvconf</AssemblyName>
 	  <Product>Internet service configuration</Product>
 	  <Description>Generates DNS service configuration files from description.</Description>
 	  <Copyright>© 2015-2021</Copyright>
 	  <Title>Internet service configuration</Title>
+	  <OutputType>Exe</OutputType>
   </PropertyGroup>
 
+  <Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Tool.DNSConfig\Goedel.Tool.DNSConfig.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

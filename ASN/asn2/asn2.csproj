@@ -1,16 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
+
 	<PropertyGroup>
 		<AssemblyName>asn2</AssemblyName>
 		<Product>RFCTool</Product>
 		<Description>Generates RFC format documentation from OOXML or Markdown source.</Description>
 		<Copyright>© 2015-2021</Copyright>
 		<Title>RFCTool</Title>
+		<OutputType>Exe</OutputType>
 	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.ASN\Goedel.ASN.csproj" />
-		<ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
 		<ProjectReference Include="..\Goedel.Tool.ASN\Goedel.Tool.ASN.csproj" />
 	</ItemGroup>
 

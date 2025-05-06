@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+
   <PropertyGroup>
     <RootNamespace>Goedel.Tool.Yaschema</RootNamespace>
     <Title>Goedel.Tool.Yaschema</Title>
     <Product>Goedel.Tool.Yaschema</Product>
     <Description>DSL for RUD packet handshake config.</Description>
   </PropertyGroup>
-
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+	  <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

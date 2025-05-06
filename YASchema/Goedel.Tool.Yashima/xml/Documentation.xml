@@ -4,6 +4,43 @@
         <name>Goedel.Tool.Yaschema</name>
     </assembly>
     <members>
+        <member name="M:Goedel.Tool.Yaschema.Generate.GenerateCS(Goedel.Tool.Yaschema.YaschemaStruct)">
+            <summary>	
+            GenerateCS
+            </summary>
+            <param name="Yaschema"></param>
+        </member>
+        <member name="M:Goedel.Tool.Yaschema.Generate.GenersateSerializer(Goedel.Tool.Yaschema.Packet)">
+            <summary>	
+            GenersateSerializer
+            </summary>
+            <param name="packet"></param>
+        </member>
+        <member name="M:Goedel.Tool.Yaschema.Generate.GenerateParser(Goedel.Tool.Yaschema.Packet,System.Boolean)">
+            <summary>	
+            GenerateParser
+            </summary>
+            <param name="packet"></param>
+            <param name="isstatic"></param>
+        </member>
+        <member name="M:Goedel.Tool.Yaschema.Generate.ParseMezzanine(Goedel.Tool.Yaschema.Packet)">
+            <summary>	
+            ParseMezzanine
+            </summary>
+            <param name="packet"></param>
+        </member>
+        <member name="M:Goedel.Tool.Yaschema.Generate.GeneratePacket(Goedel.Tool.Yaschema.Packet)">
+            <summary>	
+            GeneratePacket
+            </summary>
+            <param name="packet"></param>
+        </member>
+        <member name="M:Goedel.Tool.Yaschema.Generate.GenerateMD(Goedel.Tool.Yaschema.YaschemaStruct)">
+            <summary>	
+            GenerateMD
+            </summary>
+            <param name="YaschemaStruct"></param>
+        </member>
         <member name="T:Goedel.Tool.Yaschema.YaschemaStruct">
             <summary>
             

@@ -14,5 +14,63 @@
             
             </summary>
         </member>
+        <member name="M:Goedel.Tool.ASN.Generate.GenerateCS(Goedel.Tool.ASN.ASN2)">
+            <summary>	
+            GenerateCS
+            </summary>
+            <param name="ASN2"></param>
+        </member>
+        <member name="M:Goedel.Tool.ASN.Generate.EntryDeclaration(Goedel.Tool.ASN.Member)">
+            <summary>	
+            EntryDeclaration
+            </summary>
+            <param name="Member"></param>
+        </member>
+        <member name="M:Goedel.Tool.ASN.Generate.TypeDeclaration(Goedel.Tool.ASN._Choice)">
+            <summary>	
+            TypeDeclaration
+            </summary>
+            <param name="Type"></param>
+        </member>
+        <member name="M:Goedel.Tool.ASN.Generate.Encode(Goedel.Tool.ASN.Member)">
+            <summary>	
+            Encode
+            </summary>
+            <param name="Member"></param>
+        </member>
+        <member name="M:Goedel.Tool.ASN.Generate.Decode(Goedel.Tool.ASN.Member)">
+            <summary>	
+            Decode
+            </summary>
+            <param name="Member"></param>
+        </member>
+        <member name="M:Goedel.Tool.ASN.Generate.Encode(System.String,Goedel.Tool.ASN._Choice,System.Int32,System.Int32)">
+            <summary>	
+            
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ASN.Generate.Decode(System.String,Goedel.Tool.ASN._Choice,System.Int32,System.Int32)">
+            <summary>	
+            
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.ASN.Generate.MakeChildren(Goedel.Tool.ASN._Choice)">
+            <summary>	
+            MakeChildren
+            </summary>
+            <param name="Element"></param>
+        </member>
+        <member name="M:Goedel.Tool.ASN.Generate.MakeConst(System.Int32[])">
+            <summary>	
+            MakeConst
+            </summary>
+            <param name="Array"></param>
+        </member>
+        <member name="M:Goedel.Tool.ASN.Generate.MakeString(System.Int32[])">
+            <summary>	
+            MakeString
+            </summary>
+            <param name="Array"></param>
+        </member>
     </members>
 </doc>

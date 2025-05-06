@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
+
   <PropertyGroup>
 	  <AssemblyName>yashema</AssemblyName>
 	  <Product>DSL for building RUD</Product>
 	  <Description>DSL specifically designed to build RUD packet (de)serialization.</Description>
 	  <Copyright>© 2015-2021</Copyright>
 	  <Title>DSL for building RUD</Title>
+	  <OutputType>Exe</OutputType>
   </PropertyGroup>
 
-
+  <Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
     <ProjectReference Include="..\Goedel.Tool.Yashima\Goedel.Tool.Yaschema.csproj" />
   </ItemGroup>
 

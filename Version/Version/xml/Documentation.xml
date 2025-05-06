@@ -35,5 +35,11 @@
         <member name="P:Goedel.Tool.Version._Version.OutputFile">
             <summary>Field accessor for parameter []</summary>
         </member>
+        <member name="M:Goedel.Tool.Version.Generate.GenerateCS(Goedel.Tool.Version.VersionInfo)">
+            <summary>	
+            GenerateCS
+            </summary>
+            <param name="Version"></param>
+        </member>
     </members>
 </doc>

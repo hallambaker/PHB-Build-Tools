@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+
   <PropertyGroup>
     <RootNamespace>Goedel.Tool.Command</RootNamespace>
     <Title>Goedel.Tool.Command</Title>
@@ -7,10 +7,14 @@
     <Description>Command Line parsing and dispatch library.</Description>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
-  </ItemGroup>
-  
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+
+	</ItemGroup>
+	
+	
   <ItemGroup>
     <Compile Update="Command.cs">
       <DependentUpon>Command.gdl</DependentUpon>

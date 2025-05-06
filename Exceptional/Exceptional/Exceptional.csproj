@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
+
 	<PropertyGroup>
 
 		<AssemblyName>exceptional</AssemblyName>
@@ -7,12 +7,12 @@
 		<Description>Generates Exception classes and documentation support.</Description>
 		<Copyright>© 2015-2022</Copyright>
 		<Title>Exceptional</Title>
-
+		<OutputType>Exe</OutputType>
 	</PropertyGroup>
 
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
-		<ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
 		<ProjectReference Include="..\Goedel.Tool.Exceptional\Goedel.Tool.Exceptional.csproj" />
 	</ItemGroup>
 

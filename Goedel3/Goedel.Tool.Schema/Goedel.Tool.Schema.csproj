@@ -1,18 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+
   <PropertyGroup>
     <RootNamespace>Goedel.Tool.Schema</RootNamespace>
     <Title>Goedel.Tool.Schema</Title>
     <Product>Goedel.Tool.Schema</Product>
     <Description>Goedel Schema DSL.</Description>
   </PropertyGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.IO\Goedel.IO.csproj" />
-    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
-    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
-  </ItemGroup>
+	  <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
 
+  </ItemGroup>
   <ItemGroup>
     <Compile Update="Exceptions.cs">
       <DependentUpon>Exceptions.exceptional</DependentUpon>

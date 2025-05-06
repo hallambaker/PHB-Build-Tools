@@ -1,17 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
+
   <PropertyGroup>
 	  <AssemblyName>constant</AssemblyName>
 	  <Product>Constant</Product>
 	  <Description>Manages constant declarations in source and documentation.</Description>
 	  <Copyright>© 2015-2021</Copyright>
 	  <Title>Constant</Title>
+	  <OutputType>Exe</OutputType>
   </PropertyGroup>
 
-
-
+  <Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
     <ProjectReference Include="..\Goedel.Tool.Constant\Goedel.Tool.Constant.csproj" />
   </ItemGroup>
 

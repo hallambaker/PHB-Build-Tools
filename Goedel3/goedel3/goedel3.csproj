@@ -1,13 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettingsApplication.xml" />
+
   <PropertyGroup>
 	  <AssemblyName>goedel3</AssemblyName>
 	  <Product>Goedel 3</Product>
 	  <Description>Goedel 3 code meta-synthesizer schema tool.</Description>
 	  <Copyright>© 2015-2021</Copyright>
 	  <Title>Goedel 3</Title>
+	  <OutputType>Exe</OutputType>
   </PropertyGroup>
 
+  <Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
   <ItemGroup>
     <Content Include="Bugs.htm" />
   </ItemGroup>

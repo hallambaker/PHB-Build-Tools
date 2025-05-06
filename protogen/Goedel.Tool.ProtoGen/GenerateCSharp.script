@@ -22,6 +22,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -72,6 +74,23 @@ public abstract partial class #{Protocol.Prefix} #{Protocol.ThisInherits} {
 
 		};
 
+
+	/// <summary>
+    /// Dictionary mapping types to bindings
+    /// </summary>
+	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
+	static Dictionary<System.Type, Binding> _bindingDictionary = 
+			new () {
+#% Separator.IsFirst = true;
+#foreach (_Choice Entry in Protocol.Structures)
+#{Separator}
+	    {typeof(#{Entry.XID ?? Entry.ID}), #{Entry.XID ?? Entry.ID}._binding}#!
+#end foreach
+
+		};
+
+
+
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -79,7 +98,10 @@ public abstract partial class #{Protocol.Prefix} #{Protocol.ThisInherits} {
 		_Initialize();
 		}
 
-    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+    internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
+		AddDictionary(ref _bindingDictionary);
+		}
 
 
 	/// <summary>
@@ -432,17 +454,21 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<#{Id}> _binding = new (
 			new() {
 #% DeclareProperties (Id, Entries);
 
         }, __Tag,#!
 #if isAbstract
-null, #!
+null, null, null,#!
 #else
-() => new #{Id}(), #!
+() => new #{Id}(), () => new List<#{Id}>(), () => new Dictionary<string,#{Id}>(),#!
 #end if
-#{(Inherits != null).If(Inherits + "._binding", "null")});
+#{(Inherits != null).If(Inherits + "._binding", "null")}#!
+#if (structure.TypeTag)
+, TypeTag:"#{structure.TypeElement}" #!
+#end if
+);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -524,7 +550,7 @@ new #{Id}();
 #switchcast ProtoStructType Entry
 #casecast Struct Param
 #{separator}
-			{ "#{Tag}", new #{Entry.PropertyName} ("#{Tag}", 
+			{ "#{Tag}", new #{Entry.PropertyName} ("#{Tag}", typeof (#{Param.Type.Label}),
 					(IBinding data, object? value) => {(data as #{Id}).#{Token} = value as #{Param.TypeCSCons};}, (IBinding data) => (data as #{Id}).#{Token},
 					false, ()=>new  #{Param.TypeCSCons}(), ()=>new #{Param.BaseType}()#!
 #if Entry.Dictionary
@@ -536,7 +562,7 @@ new #{Id}();
 )}#!
 #casecast TStruct Param
 #{separator}
-			{ "#{Tag}", new #{Entry.PropertyName} ("#{Tag}", 
+			{ "#{Tag}", new #{Entry.PropertyName} ("#{Tag}", typeof (#{Param.Type.Label}), 
 					(IBinding data, object? value) => {(data as #{Id}).#{Token} = value as #{Param.TypeCSCons};}, (IBinding data) => (data as #{Id}).#{Token},
 					true#!
 #if Entry.Multiple
@@ -605,12 +631,15 @@ new #{Id}();
 #% bool Multiple = IsMultiple (Options);
 #if Enumerated
 #{CommentSummary(8,Entry.Description)}
+	[JsonPropertyName("#{Entry.ID}")]
 	public virtual IEnumerable<#{Type}>				#{Token}  {get; set;}
 #elseif Multiple
 #{CommentSummary(8,Entry.Description)}
+	[JsonPropertyName("#{Entry.ID}")]
 	public virtual #{Entry.TypeCS}?					#{Token}  {get; set;}
 #else
 #{CommentSummary(8,Entry.Description)}
+	[JsonPropertyName("#{Entry.ID}")]
 	public virtual #{Entry.TypeCS}?					#{Token}  {get; set;}
 
 #end if

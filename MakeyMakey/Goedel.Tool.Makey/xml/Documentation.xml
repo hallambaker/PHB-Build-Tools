@@ -176,6 +176,38 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
+        <member name="M:Goedel.Tool.Makey.Generate.Preamble(Goedel.Tool.Makey.VSFile)">
+            <summary>	
+            Preamble
+            </summary>
+            <param name="VSFile"></param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Generate.GenerateVSMakefile(Goedel.Tool.Makey.VSProject)">
+            <summary>	
+            GenerateVSMakefile
+            </summary>
+            <param name="Project"></param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Generate.GenerateMakefile(Goedel.Tool.Makey.VSSolution)">
+            <summary>	
+            GenerateMakefile
+            </summary>
+            <param name="Solution"></param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Generate.GenerateMakefile(Goedel.Tool.Makey.VSProject)">
+            <summary>	
+            GenerateMakefile
+            </summary>
+            <param name="Project"></param>
+        </member>
+        <member name="M:Goedel.Tool.Makey.Generate.PHBTool(System.String,System.String,System.String)">
+            <summary>	
+            PHBTool
+            </summary>
+            <param name="Tag"></param>
+            <param name="Tool"></param>
+            <param name="Flag"></param>
+        </member>
         <member name="P:Goedel.Tool.Makey.NoneType.Include">
             <remarks/>
         </member>
