@@ -240,14 +240,14 @@
              
             </summary>
         </member>
-        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeClass(Goedel.Registry.ID{Goedel.Tool.ProtoGen._Choice},System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
+        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeClass(Goedel.Tool.ProtoGen.IStructure)">
             <summary>	
              
             </summary>
         </member>
-        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeClass(Goedel.Tool.ProtoGen.IStructure)">
+        <member name="M:Goedel.Tool.ProtoGen.Generate.DeclarePropertyEntries(Goedel.Registry.ID{Goedel.Tool.ProtoGen._Choice},System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
             <summary>	
-             
+             DeclarePropertyEntries
             </summary>
         </member>
         <member name="M:Goedel.Tool.ProtoGen.Generate.DeclareProperties(Goedel.Registry.ID{Goedel.Tool.ProtoGen._Choice},System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice})">
@@ -265,38 +265,9 @@
              ParameterList
             </summary>
         </member>
-        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeSerializers(Goedel.Registry.ID{Goedel.Tool.ProtoGen._Choice},System.String,System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice},System.String)">
-            <summary>	
-             MakeSerializers
-            </summary>
-        </member>
-        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeSerializeEntry(Goedel.Tool.ProtoGen._Choice,System.String)">
-            <summary>	
-            MakeSerializeEntry
-            </summary>
-            <param name="Entry"></param>
-            <param name="Tag"></param>
-        </member>
-        <member name="M:Goedel.Tool.ProtoGen.Generate.MakeSerializeArrayEntry(Goedel.Tool.ProtoGen._Choice,System.String)">
-            <summary>	
-            MakeSerializeArrayEntry
-            </summary>
-            <param name="Entry"></param>
-            <param name="Tag"></param>
-        </member>
         <member name="M:Goedel.Tool.ProtoGen.Generate.GetType(Goedel.Tool.ProtoGen._Choice,Goedel.Registry.TOKEN{Goedel.Tool.ProtoGen._Choice}@,System.String@,System.String@,System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice}@,System.Boolean@,System.String@)">
             <summary>	
             
-            </summary>
-        </member>
-        <member name="M:Goedel.Tool.ProtoGen.Generate.GetSerializerz(Goedel.Tool.ProtoGen._Choice,Goedel.Registry.TOKEN{Goedel.Tool.ProtoGen._Choice}@,System.String@,System.Collections.Generic.List{Goedel.Tool.ProtoGen._Choice}@)">
-            <summary>	
-            
-            </summary>
-        </member>
-        <member name="M:Goedel.Tool.ProtoGen.Generate.DeserializeCase(Goedel.Registry.ID{Goedel.Tool.ProtoGen._Choice},System.String)">
-            <summary>	
-             DeserializeCase
             </summary>
         </member>
         <member name="M:Goedel.Tool.ProtoGen.Generate.MapInheritors(Goedel.Registry.ID{Goedel.Tool.ProtoGen._Choice},System.String)">
@@ -381,6 +352,11 @@
         <member name="M:Goedel.Tool.ProtoGen.EventExtensions.#cctor">
             <summary>
             Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="T:Goedel.Tool.ProtoGen.NamespaceDoc">
+            <summary>
+            Support library for Web Services and Clients generated using the PROTOGEN tool.
             </summary>
         </member>
     </members>

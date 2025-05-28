@@ -61,6 +61,21 @@ public abstract partial class #{Protocol.Prefix} #{Protocol.ThisInherits} {
 	public new const string __Tag = "#{Protocol.Prefix}";
 
 	/// <summary>
+    /// Dictionary mapping tags to factory methods
+    /// </summary>
+	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
+	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
+			new () {
+#% Separator.IsFirst = true;
+#foreach (_Choice Entry in Protocol.Structures)
+#{Separator}
+	    {"#{Entry.ID}", #{Entry.XID ?? Entry.ID}._Factory}#!
+#end foreach
+
+		};
+
+
+	/// <summary>
     /// Dictionary mapping types to bindings
     /// </summary>
 	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
@@ -74,6 +89,8 @@ public abstract partial class #{Protocol.Prefix} #{Protocol.ThisInherits} {
 
 		};
 
+
+
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -82,8 +99,18 @@ public abstract partial class #{Protocol.Prefix} #{Protocol.ThisInherits} {
 		}
 
     internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
+
+
+	/// <summary>
+    /// Construct an instance from the specified tagged JsonReader stream.
+    /// </summary>
+    /// <param name="jsonReader">Input stream</param>
+    /// <param name="result">The created object</param>
+    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
+		result = jsonReader.ReadTaggedObject(_TagDictionary);
 
 	}
 
@@ -117,15 +144,15 @@ public abstract partial class #{Service.Id} : Goedel.Protocol.JpcInterface {
 	public override string GetDiscovery => Discovery;
 
 	///<inheritdoc/>
-	public override Dictionary<string, Type>  GetTagDictionary => _TagDictionary;
+	public override Dictionary<string, JsonFactoryDelegate>  GetTagDictionary() => _TagDictionary;
 		
-	static Dictionary<string, Type> _TagDictionary = new () {#!
+	static Dictionary<string, JsonFactoryDelegate> _TagDictionary = new () {#!
 #% var separator = new Separator (",");
 #foreach (_Choice Entry2 in Protocol.Entries)
 #switchcast ProtoStructType Entry2
 #casecast Transaction Transaction
 #{separator.ToString()}
-				{"#{Transaction.Id}", typeof(#{Transaction.Request})}#!
+				{"#{Transaction.Id}", #{Transaction.Request}._Factory}#!
 #end switchcast
 #end foreach
 
@@ -295,13 +322,13 @@ public partial class #{Service.Id}Direct: #{Service.Id}Client {
 #casecast Message Message
 #% MakeClass (Message);
 #% var Inherits = HasInherits  (Message.Entries);
-#! MakeSerializers (Message.Id, Message.ID, Message.Entries, Inherits);
+#% MakeSerializers (Message.Id, Message.ID, Message.Entries, Inherits);
 	}
 
 #casecast Structure Structure
 #% MakeClass (Structure);
 #% var Inherits = HasInherits  (Structure.Entries);
-#! MakeSerializers (Structure.Id, Structure.ID, Structure.Entries, Inherits);
+#% MakeSerializers (Structure.Id, Structure.ID, Structure.Entries, Inherits);
 	}
 
 #end switchcast
@@ -381,6 +408,24 @@ public partial class #{Service.Id}Direct: #{Service.Id}Client {
 #% }
 #end block 
 
+#block 
+#% public void MakeClass  (ID<_Choice> Id, List<_Choice> Entries) {
+#% var Inherits = HasInherits (Entries);
+#!#% string Override;
+#% DescriptionListC (Entries, 1);
+#if (IsAbstract (Entries))
+abstract #!
+#end if
+#if (Inherits == null) 
+public partial class #{Id} : #{CurrentPrefix} {
+#else 
+public partial class #{Id} : #{Inherits} {
+#end if
+#call DeclareMembers (Entries)
+
+#% }
+#end block 
+
 
 #block 
 #% public void MakeClass  (IStructure structure) {
@@ -404,35 +449,62 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 #end if
 #call DeclareMembers (Entries)
 
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [#!
-#% DeclareProperties (Id, Entries);
-
-		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<#{Id}> _binding = new (
-			new() {#!
-#% DeclarePropertyEntries (Id, Entries);
-}, __Tag,
-		#!
+			new() {
+#% DeclareProperties (Id, Entries);
+
+        }, __Tag,#!
 #if isAbstract
-null, null, null, #!
+null, null, null,#!
 #else
-() => new #{Id}(), () => [], () => [], #!
+() => new #{Id}(), () => new List<#{Id}>(), () => new Dictionary<string,#{Id}>(),#!
 #end if
 #{(Inherits != null).If(Inherits + "._binding", "null")}#!
 #if (structure.TypeTag)
-, 
-		TypeTag:"#{structure.TypeElement}" #!
+, TypeTag:"#{structure.TypeElement}" #!
 #end if
 );
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+#if (Inherits == null) 
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+#else
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(#{Inherits}._binding, _binding);
+#end if
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+#if false
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {#!
+#call DeclareMetaMembers (Entries)
+
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+#end if		
 
 
 	/// <summary>
@@ -463,20 +535,8 @@ new #{Id}();
 #% }
 #end block 
 
-#block DeclarePropertyEntries
-#% public void DeclarePropertyEntries  (ID<_Choice> Id, List<_Choice> Entries) {
-#% var separator = new Separator (",");
-#% var i =0;
-#foreach (_Choice Entry in Entries)
-#% GetType (Entry, out var Token, out var Type, out var TType, out var Options, 
-#%    out var Nullable, out var Tag);
-#if (Token != null)
-#{separator}
-			{ "#{Tag}", _properties [#{i++}]}#!
-#end if
-#end foreach
-#% }
-#end block
+
+
 
 #block DeclareProperties
 #% public void DeclareProperties  (ID<_Choice> Id, List<_Choice> Entries) {
@@ -490,9 +550,8 @@ new #{Id}();
 #switchcast ProtoStructType Entry
 #casecast Struct Param
 #{separator}
-		new #{Entry.PropertyName} ("#{Tag}", typeof (#{Param.Type.Label}),
-					(IBinding data, object? value) => {(data as #{Id}).#{Token} = value as #{Param.TypeCSCons};}, 
-					(IBinding data) => (data as #{Id}).#{Token},
+			{ "#{Tag}", new #{Entry.PropertyName} ("#{Tag}", typeof (#{Param.Type.Label}),
+					(IBinding data, object? value) => {(data as #{Id}).#{Token} = value as #{Param.TypeCSCons};}, (IBinding data) => (data as #{Id}).#{Token},
 					false, ()=>new  #{Param.TypeCSCons}(), ()=>new #{Param.BaseType}()#!
 #if Entry.Dictionary
 ,
@@ -500,38 +559,28 @@ new #{Id}();
 					(object dictionary, object key, object value) =>
 						 {(dictionary as #{Param.TypeCSCons}).Add (key as string,value as #{Param.BaseType});}#!
 #end if
-)#!
+)}#!
 #casecast TStruct Param
 #{separator}
-		new #{Entry.PropertyName} ("#{Tag}", typeof (#{Param.Type.Label}), 
-					(IBinding data, object? value) => {(data as #{Id}).#{Token} = value as #{Param.TypeCSCons};}, 
-					(IBinding data) => (data as #{Id}).#{Token},
+			{ "#{Tag}", new #{Entry.PropertyName} ("#{Tag}", typeof (#{Param.Type.Label}), 
+					(IBinding data, object? value) => {(data as #{Id}).#{Token} = value as #{Param.TypeCSCons};}, (IBinding data) => (data as #{Id}).#{Token},
 					true#!
 #if Entry.Multiple
 , ()=>new #{Param.TypeCSCons}()
 #end if
-) #!
-#casecast GStruct Param
-#{separator}
-		new #{Entry.PropertyName} ("#{Tag}", /*typeof (#{Param.Type.Label}<>),*/typeof (#{Param.GType.Label}),
-					(IBinding data, object? value) => {(data as #{Id}).#{Param.MainFieldName} = value as #{Param.TypeCSCons};},
-					(IBinding data) => (data as #{Id}).#{Param.MainFieldName},
-					/*(IBinding data, object? value) => {(data as #{Id}).#{Param.SubFieldName} = value as #{Param.SubTypeCS};},
-					(IBinding data) => (data as #{Id}).#{Param.SubFieldName},*/
-					()=>new  #{Param.TypeCSCons}(), ()=>new #{Param.BaseType}()#!
-)#!
+)} #!
 #% break; } default : {
 #if (Token != null)
 #{separator}
-		new #{Entry.PropertyName} ("#{Tag}", 
-					(IBinding data, #{Entry.TypeCS}? value) => {(data as #{Id}).#{Token} = value;}, 
-					(IBinding data) => (data as #{Id}).#{Token} )#!
+			{ "#{Tag}", new #{Entry.PropertyName} ("#{Tag}", 
+					(IBinding data, #{Entry.TypeCS}? value) => {(data as #{Id}).#{Token} = value;}, (IBinding data) => (data as #{Id}).#{Token} )}#!
 #end if
 #end switchcast
 #end foreach
 #% }
 #end block
 
+#!                    (IBinding data) => (data as SpeakToAs).Pronouns.GetEnumerable())} 
 
 
 
@@ -580,32 +629,262 @@ new #{Id}();
 #if (Token != null)
 #% bool Enumerated = IsEnumerated (Options);
 #% bool Multiple = IsMultiple (Options);
-#if (Entry is GStruct generic)
+#if Enumerated
+#{CommentSummary(8,Entry.Description)}
 	[JsonPropertyName("#{Entry.ID}")]
-	public virtual #{generic.TypeCS}?					#{generic.MainFieldName}  {get; set;} 
-
-	/// <summary>
-	/// Wrapped property
-    /// </summary>
-	public virtual #{generic.SubTypeCS}?				#{generic.SubFieldName}  => #{generic.MainFieldName}.Decode();
-#elseif Enumerated
-#{CommentSummary(4,Entry.Description)}
-	[JsonPropertyName("#{Entry.ID}")]
-	public virtual IEnumerable<#{Type}>				#{Token}  {get; set;} 
+	public virtual IEnumerable<#{Type}>				#{Token}  {get; set;}
 #elseif Multiple
-#{CommentSummary(4,Entry.Description)}
+#{CommentSummary(8,Entry.Description)}
 	[JsonPropertyName("#{Entry.ID}")]
 	public virtual #{Entry.TypeCS}?					#{Token}  {get; set;}
 #else
-#{CommentSummary(4,Entry.Description)}
+#{CommentSummary(8,Entry.Description)}
 	[JsonPropertyName("#{Entry.ID}")]
-	public virtual #{Entry.TypeCS}?					#{Token}  {get; set;} //
+	public virtual #{Entry.TypeCS}?					#{Token}  {get; set;}
 
 #end if
 #end if
 #end foreach
 #% }
 #end block
+
+#block MakeSerializers
+#% public void MakeSerializers  (ID<_Choice> Id, string STag, List<_Choice> Entries, string Inherits) {
+#!% string IsOverride = (Id.Object.Superclass == null) ? "virtual " : "virtual ";
+#if false.True()
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+#if (Inherits != null)
+		((#{Inherits})this).SerializeX(_writer, false, ref _first);
+#end if
+#foreach (_Choice Entry in Entries)
+#% GetType (Entry, out var Token, out var Type, out var TType, 
+#%      out var Options, out var Nullable, out var Tag);
+#if (Token != null)
+#% bool Multiple = IsMultiple (Options);
+#if Multiple
+		if (#{Token} != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("#{Tag}", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in #{Token}) {
+				_writer.WriteArraySeparator (ref _firstarray);
+#% MakeSerializeArrayEntry (Entry, "_index");
+				}
+			_writer.WriteArrayEnd ();
+			}
+#else
+#if Nullable
+		if (#{Token} != null) {
+#else
+		if (#{Token} != null) {
+#!		if (__#{Token}){
+#end if
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("#{Tag}", 1);
+#% MakeSerializeEntry (Entry, Token.ToString());
+			}
+#end if
+#if Multiple
+
+#end if
+#end if
+#end foreach
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+#end if
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new #{Id} FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as #{Id};
+			}
+#if (!IsAbstract (Entries))
+		var Result = new #{Id} ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+#else
+		throw new CannotCreateAbstract();
+#end if
+		}
+
+#if false.True()
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+#foreach (_Choice entry in Entries)
+#% GetType(entry, out var token, out var type, out var ttype, 
+#%    out var options, out var nullable, out var tag);
+#if (token != null)
+#% bool Multiple = IsMultiple (options);
+			case "#{tag}" : {
+#if Multiple
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				#{token} = new List <#{type}> ();
+				while (_Going) {
+#if entry._Tag () == ProtoStructType.Struct
+					// an untagged structure.
+					var _Item = new  #{type} ();
+					_Item.Deserialize (jsonReader);
+					// var _Item = new #{type} (jsonReader);
+#elseif entry._Tag () == ProtoStructType.TStruct
+					var _Item = #{type}.FromJson (jsonReader, true); // a tagged structure
+#else
+					#{type} _Item = jsonReader.Read#{ttype} ();
+#end if
+					#{token}.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
+#else
+#if entry._Tag () == ProtoStructType.Struct
+				// An untagged structure
+				#{token} = new #{type} ();
+				#{token}.Deserialize (jsonReader);
+ 
+#elseif entry._Tag () == ProtoStructType.TStruct
+				#{token} = #{type}.FromJson (jsonReader, true) ;  // A tagged structure
+#else
+				#{token} = jsonReader.Read#{ttype} ();
+#end if
+#end if
+				break;
+				}
+#end if
+#end foreach
+			default : {
+#if (Inherits != null)
+				base.DeserializeToken(jsonReader, tag);
+#end if
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+#end if
+
+#% }
+#end block
+
+#method2 MakeSerializeEntry _Choice Entry string Tag
+#switchcast ProtoStructType Entry
+#casecast Boolean null
+				_writer.WriteBoolean (#{Tag});
+#casecast Integer null
+#if Entry.LengthBits >32
+				_writer.WriteInteger64 (#{Tag});
+#else
+				_writer.WriteInteger32 (#{Tag});
+#end if
+#casecast Binary null
+				_writer.WriteBinary (#{Tag});
+#casecast Struct null
+				#{Tag}.Serialize (_writer, false);
+#casecast TStruct null
+				// expand this to a tagged structure
+				//#{Tag}.Serialize (_writer, false);
+				{
+					_writer.WriteObjectStart();
+					_writer.WriteToken(#{Tag}._Tag, 1);
+					bool firstinner = true;
+					#{Tag}.Serialize (_writer, true, ref firstinner);
+					_writer.WriteObjectEnd();
+					}
+#casecast Label null
+				_writer.WriteString (#{Tag});
+#casecast Name null
+				_writer.WriteString (#{Tag});
+#casecast String null
+				_writer.WriteString (#{Tag});
+#casecast URI null
+				_writer.WriteString (#{Tag});
+#casecast DateTime null
+				_writer.WriteDateTime (#{Tag});
+#%							break; }
+#% default : {
+
+#end switchcast
+#end method2
+
+#method2 MakeSerializeArrayEntry _Choice Entry string Tag
+#switchcast ProtoStructType Entry
+#casecast Boolean null
+				_writer.WriteBoolean (#{Tag});
+#casecast Integer null
+				_writer.WriteInteger32 (#{Tag});
+#casecast Binary null
+				_writer.WriteBinary (#{Tag});
+#casecast Struct null
+				// This is an untagged structure. Cannot inherit.
+                //_writer.WriteObjectStart();
+                //_writer.WriteToken(#{Tag}._Tag, 1);
+				bool firstinner = true;
+				#{Tag}.Serialize (_writer, true, ref firstinner);
+                //_writer.WriteObjectEnd();
+#casecast TStruct null
+                _writer.WriteObjectStart();
+                _writer.WriteToken(#{Tag}._Tag, 1);
+				bool firstinner = true;
+				#{Tag}.Serialize (_writer, true, ref firstinner);
+                _writer.WriteObjectEnd();
+#casecast Label null
+				_writer.WriteString (#{Tag});
+#casecast Name null
+				_writer.WriteString (#{Tag});
+#casecast String null
+				_writer.WriteString (#{Tag});
+#casecast URI null
+				_writer.WriteString (#{Tag});
+#casecast DateTime null
+				_writer.WriteDateTime (#{Tag});
+#%							break; }
+#% default : {
+
+#end switchcast
+#end method2
+
 
 #block
 #% void GetType (_Choice Entry, out TOKEN<_Choice> Token, out string Type, out string TType, 
@@ -618,10 +897,6 @@ new #{Id}();
 #% Tag = Param.ID ; Token = Param.Id; Options = Param.Options;  Nullable = false;
 #% Type = Param.LengthBits>32 ? "long?": "int?";
 #% TType = Param.LengthBits>32 ? "Integer64": "Integer32";
-#casecast Float Param
-#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options;  Nullable = false;
-#% Type = Param.LengthBits>32 ? "double?": "float?";
-#% TType = Param.LengthBits>32 ? "Real64": "Real32";
 #casecast Binary Param
 #% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = "byte[]";TType = "Binary";
 #casecast Label Param
@@ -638,14 +913,31 @@ new #{Id}();
 #% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = Param.Type.ToString(); TType = Type;
 #casecast TStruct Param
 #% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = Param.Type.ToString(); TType = Type;
-#casecast GStruct Param
-#% Tag = Param.ID ; Token = Param.Id; Options = Param.Options; Type = Param.Type.ToString(); TType = Type;
 #% break; } default : {
 #% Tag = null ; Token = null; Options = null; Type = null; TType = null;
 #end switchcast
 #% }
 #end block
 
+
+
+#block DeserializeCase
+#% void DeserializeCase (ID<_Choice> Id, string Tag) {
+
+			case "#{Id}" : {
+#if Id.Object.IsAbstract
+				Out = null;
+				throw new Exception ("Can't create abstract type");
+#else
+				// Out = #{Id}.Factory ();
+				Out = new #{Id} ();
+				Out.Deserialize (jsonReader);
+				break;
+#end if
+				}
+
+#%	}
+#end block
 
 #block MapInheritors
 #% void MapInheritors (ID<_Choice> Id, string Tag) {

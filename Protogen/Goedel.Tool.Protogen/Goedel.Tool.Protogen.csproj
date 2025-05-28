@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>Goedel.Tool.Protogen</RootNamespace>
@@ -9,9 +9,11 @@
 
 
 	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
-
-
+	<PropertyGroup>
+		<NoWarn>$(NoWarn);CS1591</NoWarn>
+	</PropertyGroup>
 	<ItemGroup>
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
     <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
   </ItemGroup>
 
@@ -56,6 +58,7 @@
       <LastGenOutput>GenerateC.cs</LastGenOutput>
       <Generator>GScript</Generator>
     </None>
+
     <None Update="GenerateCSharp.script">
       <LastGenOutput>GenerateCSharp.cs</LastGenOutput>
       <Generator>GScript</Generator>

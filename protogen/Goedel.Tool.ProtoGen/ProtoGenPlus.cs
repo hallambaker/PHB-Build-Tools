@@ -522,7 +522,7 @@ public partial class Float {
         if (Normalized) {
             return;
             }
-
+        ID = Id.ToString();
         SetOptions(Options);
         TypeC = "double";
         TypeJ = "Real64";
@@ -669,23 +669,6 @@ public partial class Struct {
     public override string TypeCS => VaryCS(BaseType);
     public string TypeCSCons => TypeCS;
 
-    //public override string PropertyName => 
-    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean"); 
-
-
-    //Multiple ? "PropertyListStruct" : "PropertyStruct";
-
-    //public string BaseType => Type.Label;
-    //public override string TypeCS =>
-    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean");
-
-    //Multiple ? $"List<{BaseType}>?" : $"{BaseType}?";
-    //public  string TypeCSCons =>
-    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean");
-
-    //Multiple ? $"List<{BaseType}>" : $"{BaseType}";
-
-
     public override void Normalize() {
 
         if (Normalized) {
@@ -705,25 +688,32 @@ public partial class TStruct {
     public override string TypeCS => VaryCS(BaseType);
     public string TypeCSCons => TypeCS;
 
+    public override void Normalize() {
 
-    //public override string PropertyName =>
-    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean");
+        if (Normalized) {
+            return;
+            }
 
+        ID = Id.ToString();
+        SetOptions(Options);
+        Normalized = true;
+        }
+    }
 
-    //Multiple ? "PropertyListStruct" : "PropertyStruct";
+public partial class GStruct {
 
-    //public string BaseType => Type.Label;
-    //public override string TypeCS =>
-    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean");
+    public string BaseType => $"{GType.Label}<{Type.Label}>";
 
+    public string MainFieldName => $"{GType.Label}{Id.Label}";
 
-    //Multiple ? $"List<{BaseType}>?" : $"{BaseType}?";
-    //public string TypeCSCons =>
-    //    Vary("PropertyListBoolean", "PropertyBoolean", "PropertyDictionaryBoolean");
+    public string SubFieldName => $"{Id.Label}";
 
+    public override string PropertyName => VaryProperty("GStruct");
 
-    //Multiple ? $"List<{BaseType}>" : $"{BaseType}";
+    public override string TypeCS => VaryCS(BaseType);
+    public string SubTypeCS => VaryCS(Type.Label);
 
+    public string TypeCSCons => TypeCS;
 
     public override void Normalize() {
 
@@ -736,6 +726,8 @@ public partial class TStruct {
         Normalized = true;
         }
     }
+
+
 
 public partial class Tagged {
     public override void Normalize() {

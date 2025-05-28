@@ -62,8 +62,10 @@ using Goedel.Utilities;
 //       Decimal
 //       Funct
 //       Param
+//       GStruct
 //       Tag
 //       Select
+//       Generic
 //       ABNF
 //       Required
 //       Multiple
@@ -130,6 +132,7 @@ using Goedel.Utilities;
 //       Options
 //       Outer
 //       Inner
+//       GType
 //       Type
 //       Code
 //       Value
@@ -170,6 +173,7 @@ namespace Goedel.Tool.ProtoGen {
         Description,
         ABNF,
         Abstract,
+        Generic,
         Inherits,
         Request,
         Response,
@@ -189,6 +193,7 @@ namespace Goedel.Tool.ProtoGen {
         DateTime,
         Param,
         Funct,
+        GStruct,
         TStruct,
         Struct,
         Enumerated,
@@ -685,6 +690,27 @@ namespace Goedel.Tool.ProtoGen {
 
 			if (tag) {
 				Output.EndElement ("Abstract");
+				}			
+			}
+		}
+
+    public partial class Generic : _Choice {
+
+        public override ProtoStructType _Tag () =>ProtoStructType.Generic;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Generic");
+				}
+
+			if (tag) {
+				Output.EndElement ("Generic");
 				}			
 			}
 		}
@@ -1212,6 +1238,42 @@ namespace Goedel.Tool.ProtoGen {
 	        Output.WriteId ("Inner", Inner.ToString());
 			if (tag) {
 				Output.EndElement ("Funct");
+				}			
+			}
+		}
+
+    public partial class GStruct : _Choice {
+        public REF<_Choice>				GType;
+        public REF<_Choice>				Type;
+        public TOKEN<_Choice>			Id;
+        public List <_Choice>           Options = new List<_Choice> ();
+
+        public override ProtoStructType _Tag () =>ProtoStructType.GStruct;
+
+
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Options) {
+				Sub._InitChildren (this);
+				}
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("GStruct");
+				}
+
+	        Output.WriteId ("GType", GType.ToString());
+	        Output.WriteId ("Type", Type.ToString());
+	        Output.WriteId ("Id", Id.ToString());
+			Output.StartList ("");
+			foreach (_Choice _e in Options) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("GStruct");
 				}			
 			}
 		}
@@ -2423,6 +2485,7 @@ namespace Goedel.Tool.ProtoGen {
 		ABNF_Start,
 		ABNF__Text1,				
 		Abstract_Start,
+		Generic_Start,
 		Inherits_Start,
 		Inherits__Ref,				
 		Request_Start,
@@ -2471,6 +2534,11 @@ namespace Goedel.Tool.ProtoGen {
 		Funct_Start,
 		Funct__Outer,				
 		Funct__Inner,				
+		GStruct_Start,
+		GStruct__GType,				
+		GStruct__Type,				
+		GStruct__Id,				
+		GStruct__Options,				
 		TStruct_Start,
 		TStruct__Type,				
 		TStruct__Id,				
@@ -2704,6 +2772,7 @@ namespace Goedel.Tool.ProtoGen {
                 case "Description": return NewDescription();
                 case "ABNF": return NewABNF();
                 case "Abstract": return NewAbstract();
+                case "Generic": return NewGeneric();
                 case "Inherits": return NewInherits();
                 case "Request": return NewRequest();
                 case "Response": return NewResponse();
@@ -2723,6 +2792,7 @@ namespace Goedel.Tool.ProtoGen {
                 case "DateTime": return NewDateTime();
                 case "Param": return NewParam();
                 case "Funct": return NewFunct();
+                case "GStruct": return NewGStruct();
                 case "TStruct": return NewTStruct();
                 case "Struct": return NewStruct();
                 case "Enumerated": return NewEnumerated();
@@ -2893,6 +2963,14 @@ namespace Goedel.Tool.ProtoGen {
             }
 
 
+        private Goedel.Tool.ProtoGen.Generic NewGeneric() {
+            Goedel.Tool.ProtoGen.Generic result = new Goedel.Tool.ProtoGen.Generic();
+            Push (result);
+            State = StateCode.Generic_Start;
+            return result;
+            }
+
+
         private Goedel.Tool.ProtoGen.Inherits NewInherits() {
             Goedel.Tool.ProtoGen.Inherits result = new Goedel.Tool.ProtoGen.Inherits();
             Push (result);
@@ -3041,6 +3119,14 @@ namespace Goedel.Tool.ProtoGen {
             Goedel.Tool.ProtoGen.Funct result = new Goedel.Tool.ProtoGen.Funct();
             Push (result);
             State = StateCode.Funct_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.ProtoGen.GStruct NewGStruct() {
+            Goedel.Tool.ProtoGen.GStruct result = new Goedel.Tool.ProtoGen.GStruct();
+            Push (result);
+            State = StateCode.GStruct_Start;
             return result;
             }
 
@@ -3399,6 +3485,7 @@ namespace Goedel.Tool.ProtoGen {
                 case "Description": return Goedel.Tool.ProtoGen.ProtoStructType.Description;
                 case "ABNF": return Goedel.Tool.ProtoGen.ProtoStructType.ABNF;
                 case "Abstract": return Goedel.Tool.ProtoGen.ProtoStructType.Abstract;
+                case "Generic": return Goedel.Tool.ProtoGen.ProtoStructType.Generic;
                 case "Inherits": return Goedel.Tool.ProtoGen.ProtoStructType.Inherits;
                 case "Request": return Goedel.Tool.ProtoGen.ProtoStructType.Request;
                 case "Response": return Goedel.Tool.ProtoGen.ProtoStructType.Response;
@@ -3418,6 +3505,7 @@ namespace Goedel.Tool.ProtoGen {
                 case "DateTime": return Goedel.Tool.ProtoGen.ProtoStructType.DateTime;
                 case "Param": return Goedel.Tool.ProtoGen.ProtoStructType.Param;
                 case "Funct": return Goedel.Tool.ProtoGen.ProtoStructType.Funct;
+                case "GStruct": return Goedel.Tool.ProtoGen.ProtoStructType.GStruct;
                 case "TStruct": return Goedel.Tool.ProtoGen.ProtoStructType.TStruct;
                 case "Struct": return Goedel.Tool.ProtoGen.ProtoStructType.Struct;
                 case "Enumerated": return Goedel.Tool.ProtoGen.ProtoStructType.Enumerated;
@@ -3950,11 +4038,12 @@ namespace Goedel.Tool.ProtoGen {
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Param) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.CamelCase) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.PascalCase) |
-									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.SnakeCase) ) {
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.SnakeCase) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.GStruct) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Description Abstract Inherits External Boolean Integer Binary Float Label Name String URI DateTime Struct TStruct Enum Status Authentication Format Decimal Funct Param CamelCase PascalCase SnakeCase ]");
+								throw new Expected ("Parser Error Expected [Description Abstract Inherits External Boolean Integer Binary Float Label Name String URI DateTime Struct TStruct Enum Status Authentication Format Decimal Funct Param CamelCase PascalCase SnakeCase GStruct ]");
 								}
 							}
                         break;
@@ -4028,11 +4117,14 @@ namespace Goedel.Tool.ProtoGen {
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Param) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.CamelCase) |
 									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.PascalCase) |
-									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.SnakeCase) ) {
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.SnakeCase) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Section) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.GStruct) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Generic) ) {
                                 Current_Cast.Entries.Add (New_Choice(Text));
                                 }
                             else {
-								throw new Expected ("Parser Error Expected [Description Abstract Inherits External Boolean Integer Tag Binary Float Label Name String URI DateTime Struct TStruct Enum Format Decimal Select Funct Param CamelCase PascalCase SnakeCase ]");
+								throw new Expected ("Parser Error Expected [Description Abstract Inherits External Boolean Integer Tag Binary Float Label Name String URI DateTime Struct TStruct Enum Format Decimal Select Funct Param CamelCase PascalCase SnakeCase Section GStruct Generic ]");
 								}
 							}
                         break;
@@ -4085,6 +4177,10 @@ namespace Goedel.Tool.ProtoGen {
 
 
                     case StateCode.Abstract_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Generic_Start:
                         Pop ();
                         Represent = true; 
                         break;
@@ -4671,6 +4767,69 @@ namespace Goedel.Tool.ProtoGen {
                         Pop ();
                         Represent = true; 
                         break;
+                    case StateCode.GStruct_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.ProtoGen.GStruct Current_Cast = (Goedel.Tool.ProtoGen.GStruct)Current;
+                            Current_Cast.GType = Registry.REF(Position, Text, TYPE__StructureT, Current_Cast);
+                            State = StateCode.GStruct__GType;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.GStruct__GType:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.ProtoGen.GStruct Current_Cast = (Goedel.Tool.ProtoGen.GStruct)Current;
+                            Current_Cast.Type = Registry.REF(Position, Text, TYPE__StructureT, Current_Cast);
+                            State = StateCode.GStruct__Type;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.GStruct__Type:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.ProtoGen.GStruct Current_Cast = (Goedel.Tool.ProtoGen.GStruct)Current;
+                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__Variable, Current_Cast);
+                            State = StateCode.GStruct__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.GStruct__Id:
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.GStruct__Options;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.GStruct__Options: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.ProtoGen.GStruct Current_Cast = (Goedel.Tool.ProtoGen.GStruct)Current;
+                            Goedel.Tool.ProtoGen.ProtoStructType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Required) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Multiple) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Dictionary) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Description) |
+									(LabelType == Goedel.Tool.ProtoGen.ProtoStructType.Tag) ) {
+                                Current_Cast.Options.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [Required Multiple Dictionary Description Tag ]");
+								}
+							}
+                        break;
+
+
                     case StateCode.TStruct_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.ProtoGen.TStruct Current_Cast = (Goedel.Tool.ProtoGen.TStruct)Current;

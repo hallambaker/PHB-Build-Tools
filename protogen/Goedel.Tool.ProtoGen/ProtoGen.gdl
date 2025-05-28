@@ -90,6 +90,7 @@
             CamelCase
             PascalCase
             SnakeCase
+            GStruct
 
 
     Type Authentication
@@ -124,7 +125,9 @@
             CamelCase
             PascalCase
             SnakeCase
-
+            Section
+            GStruct
+            Generic
 
     Type Description
         Text1	Text
@@ -133,6 +136,7 @@
 
     Type Abstract
 
+    Type Generic
     Type Inherits
         Ref		REF MessageT
 
@@ -266,6 +270,18 @@
 	Type Funct
         Outer	REF StructureT
         Inner	REF StructureT
+
+    Type GStruct
+        GType	REF StructureT
+        Type	REF StructureT
+        Id		Token Variable
+        Options	List Choice
+            Required
+            Multiple
+            Dictionary
+            Description
+			Tag
+
 
     Type TStruct
         Type	REF StructureT
