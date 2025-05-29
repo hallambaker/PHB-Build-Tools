@@ -721,7 +721,7 @@ public partial class GStruct {
             return;
             }
 
-        ID = Id.ToString();
+        ID = MainFieldName;
         SetOptions(Options);
         Normalized = true;
         }
