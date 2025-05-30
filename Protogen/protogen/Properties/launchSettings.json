@@ -15,6 +15,11 @@
       "commandLineArgs": "ProtocolSchema.protocol  /cs  ProtocolSchema.cs",
       "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Mesh\\Goedel.Mesh"
     },
+    "DareSchema": {
+      "commandName": "Project",
+      "commandLineArgs": "DareSchema.protocol  /cs DareSchema.cs",
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Libraries\\Goedel.Cryptography.Dare"
+    },
     "ContainerSchema": {
       "commandName": "Project",
       "commandLineArgs": "ContainerEntry.pschema  /cs ContainerEntry.cs",

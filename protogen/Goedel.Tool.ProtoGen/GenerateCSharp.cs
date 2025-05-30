@@ -522,7 +522,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 			_Output.Write (", \n{0}", _Indent);
 			_Output.Write ("		TypeTag:\"{1}\" ", _Indent, structure.TypeElement);
 			}
-		_Output.Write (");\n{0}", _Indent);
+		_Output.Write (", Generic: {1});\n{0}", _Indent, structure.Generic.ToString().ToLower());
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	/// <summary>\n{0}", _Indent);

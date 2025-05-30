@@ -432,7 +432,7 @@ null, null, null, #!
 , 
 		TypeTag:"#{structure.TypeElement}" #!
 #end if
-);
+, Generic: #{structure.Generic.ToString().ToLower()});
 
 
 	/// <summary>

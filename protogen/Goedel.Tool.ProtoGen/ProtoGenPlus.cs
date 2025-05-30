@@ -16,7 +16,7 @@ public partial class _Choice {
     public string DefaultC => Default == null ? "NULL" : "\"" + Default + "\"";
     public bool Multiple = false;
     public bool Dictionary = false;
-
+    public bool Generic { get; set; } = false;
     public bool Enumerated = false;
     public bool Required = false;
     public bool TypeTag { get; set; } = false;
@@ -205,6 +205,10 @@ public partial class _Choice {
                         }
                     break;
                     }
+                case Generic generic: {
+                    Generic = true;
+                    break;
+                    }
                 case Multiple multiple: {
                     Multiple = true;
                     break;
@@ -324,6 +328,7 @@ public interface IStructure {
 
     public string ID { get; }
 
+    public bool Generic { get; }
     public bool TypeTag { get; }
     public string TypeElement { get; }
     }
@@ -401,10 +406,10 @@ public partial class Structure : IStructure {
                     break;
                     }
 
-                //case CamelCase: {
-                //    AssignedTypeCase = TypeCase.CamelCase;
-                //    break;
-                //    }
+                case Generic generic: {
+                    Generic = true;
+                    break;
+                    }
                 //case PascalCase: {
                 //    AssignedTypeCase = TypeCase.PascalCase;
                 //    break;
