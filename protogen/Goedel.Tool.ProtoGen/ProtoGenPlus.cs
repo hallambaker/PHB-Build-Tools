@@ -405,7 +405,6 @@ public partial class Structure : IStructure {
                     ID = tag.Text;
                     break;
                     }
-
                 case Generic generic: {
                     Generic = true;
                     break;
