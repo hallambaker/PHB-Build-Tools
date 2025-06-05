@@ -618,6 +618,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 				_Output.Write ("					/*(IBinding data, object? value) => {{(data as {1}).{2} = value as {3};}},\n{0}", _Indent, Id, Param.SubFieldName, Param.SubTypeCS);
 				_Output.Write ("					(IBinding data) => (data as {1}).{2},*/\n{0}", _Indent, Id, Param.SubFieldName);
 				_Output.Write ("					()=>new  {1}(), ()=>new {2}()", _Indent, Param.TypeCSCons, Param.BaseType);
+				if (  Entry.Multiple ) {
+					_Output.Write (",\n{0}", _Indent);
+					_Output.Write ("					(object list,object item)=>(list as {1}).Add (item as {2})\n{0}", _Indent, Param.TypeCSCons, Param.BaseType);
+					}
 				_Output.Write (")", _Indent);
 				
 				 break; } default : {

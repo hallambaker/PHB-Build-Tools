@@ -519,6 +519,10 @@ new #{Id}();
 					/*(IBinding data, object? value) => {(data as #{Id}).#{Param.SubFieldName} = value as #{Param.SubTypeCS};},
 					(IBinding data) => (data as #{Id}).#{Param.SubFieldName},*/
 					()=>new  #{Param.TypeCSCons}(), ()=>new #{Param.BaseType}()#!
+#if Entry.Multiple
+,
+					(object list,object item)=>(list as #{Param.TypeCSCons}).Add (item as #{Param.BaseType})
+#end if
 )#!
 #% break; } default : {
 #if (Token != null)
