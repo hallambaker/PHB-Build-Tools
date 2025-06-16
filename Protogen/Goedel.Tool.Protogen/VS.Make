@@ -18,6 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Goedel.Protocol.dll\
     Goedel.Tool.Core.dll
 
 ToolTargets = \
@@ -50,7 +51,6 @@ postbuildRecurse :
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
-	version version.version AssemblyVersion.cs
 	
 
 postbuild : postbuildRecurse

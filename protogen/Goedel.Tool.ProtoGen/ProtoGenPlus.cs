@@ -19,8 +19,10 @@ public partial class _Choice {
     public bool Generic { get; set; } = false;
     public bool Enumerated = false;
     public bool Required = false;
-    public bool TypeTag { get; set; } = false;
-    public string? TypeElement { get; set; } = null;
+    public bool TypeTag => TypeElement != null;
+    public string? ThisTypeElement { get; set; } = null;
+
+    public virtual string TypeElement => ThisTypeElement ?? Superclass?.TypeElement;
 
     public string RequiredC => Required ? "TRUE" : "FALSE";
 
@@ -198,6 +200,9 @@ public partial class _Choice {
         foreach (_Choice entry in Options) {
             entry.Normalize();
 
+
+
+
             switch (entry) {
                 case Description description: {
                     foreach (var Text in description.Text1) {
@@ -227,11 +232,8 @@ public partial class _Choice {
                     break;
                     }
                 case TypeTag typetag: {
-                    TypeTag = true;
-                    TypeElement ??= ID;
-
-                    Parent.TypeTag = true;
-                    Parent.TypeElement ??= ID;
+                    ThisTypeElement ??= ID;
+                    Parent.ThisTypeElement ??= ID;
                     break;
                     }
                 case LengthBits lengthBits: {
@@ -330,7 +332,7 @@ public interface IStructure {
 
     public bool Generic { get; }
     public bool TypeTag { get; }
-    public string TypeElement { get; }
+    public string TypeElement { get; } 
     }
 
 public partial class Message : IStructure {
@@ -387,14 +389,17 @@ public partial class Structure : IStructure {
     public List<_Choice> AllEntries = null;
     public List<_Choice> AllEntriesUnsorted = null;
     public override void Normalize() {
-        if (Id.ToString() == "Jwks") {
-            }
+
+
 
         if (Normalized) {
             return;
             }
 
         ID = Id.ToString ();
+        if (ID == "JsonWebKeySet") {
+            }
+
         AllEntries = InheritEntries(Entries);
         AllEntriesUnsorted = InheritEntriesUnsorted(this, Entries);
 
