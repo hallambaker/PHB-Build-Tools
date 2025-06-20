@@ -423,7 +423,7 @@ public partial class #{Id}#{TTT} : #{Inherits} {
 }, __Tag,
 		#!
 #if isAbstract
-null, null, null, #!
+null, () => [], () => [], #!
 #else
 () => new #{Id}(), () => [], () => [], #!
 #end if

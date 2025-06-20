@@ -513,7 +513,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("}}, __Tag,\n{0}", _Indent);
 		_Output.Write ("		", _Indent);
 		if (  isAbstract ) {
-			_Output.Write ("null, null, null, ", _Indent);
+			_Output.Write ("null, () => [], () => [], ", _Indent);
 			} else {
 			_Output.Write ("() => new {1}(), () => [], () => [], ", _Indent, Id);
 			}
