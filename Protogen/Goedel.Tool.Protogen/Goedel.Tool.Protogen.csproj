@@ -13,8 +13,11 @@
 		<NoWarn>$(NoWarn);CS1591</NoWarn>
 	</PropertyGroup>
 	<ItemGroup>
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Command\Goedel.Command.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.FSR\Goedel.FSR.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.IO\Goedel.IO.csproj" />
     <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
-    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
   </ItemGroup>
 
   <ItemGroup>

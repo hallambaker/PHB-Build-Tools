@@ -4,12 +4,32 @@ using System.Linq;
 using System.Text;
 
 namespace Goedel.Tool.Domainer;
+
+
+
+
 public abstract partial class _Choice {
     public virtual string TypeCS => null;
     public virtual string IdLabel => null;
     public virtual string Tag => null;
     public virtual string Buffer => null;
     }
+
+public interface DnsRecord {
+    string IdLabel { get; }
+
+    int TypeCode { get; }
+    }
+
+public partial class RR : DnsRecord {
+    public override string IdLabel => Id.Label;
+    public int TypeCode => Code;
+    }
+public partial class Q : DnsRecord {
+    public override string IdLabel => Id.Label;
+    public int TypeCode => Code;
+    }
+
 public partial class IPv4 : _Choice {
     public override string TypeCS => "IPAddress";
     public override string IdLabel => Id.Label;

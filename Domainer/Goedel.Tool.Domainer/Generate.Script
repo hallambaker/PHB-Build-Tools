@@ -9,21 +9,33 @@ namespace Goedel.Discovery {
 
     /// <summary>DNS management interface class.</summary>	
 	public partial class DNS {
-		// Dictionary of Type names to codes
-		//
-		// if (DictionaryType.ContainsKey("RR") {
-		//    int value = dictionary["RR"];
-		//    }
-		static Dictionary <string, ushort> DictionaryType = new Dictionary <string, ushort> () {
+
+		/// <summary>Dictionary of Type codes to descriptions</summary>	
+		public static Dictionary <DNSTypeCode, DnsRecordDefinition> DictionaryTypeCode = new () {
+#% var sep = new Separator (",");
 #foreach (_Choice Toplevel in Domainer.Top)
 #switchcast DomainerType Toplevel
 #casecast RR RR
-			{"#{RR.Id}", #{RR.Code}},
+#{sep}
+			{DNSTypeCode.#{RR.IdLabel}, new(DNSTypeCode.#{RR.IdLabel}, "#{RR.IdLabel}", DNSRecord_#{RR.IdLabel}.Decode, #DNSRecord_#{RR.IdLabel}.Parse)}#!
 #casecast Q Q
-			{"#{Q.Id}", #{Q.Code}},
+#{sep}
+			{DNSTypeCode.#{Q.IdLabel}, new(DNSTypeCode.#{Q.IdLabel}, "#{Q.IdLabel}", null, null)}#!
 #end switchcast
 #end foreach
-			{"*", 255} // End of list * = ALL
+
+			};
+
+
+
+		/// <summary>Dictionary of Type names to codes</summary>	
+		public static Dictionary <string, DNSTypeCode> DictionaryType = new () {
+#foreach (_Choice Toplevel in Domainer.Top)
+#if (Toplevel is DnsRecord RR) 
+			{"#{RR.IdLabel}", DNSTypeCode.#{RR.IdLabel}},
+#end if
+#end foreach
+			{"*", DNSTypeCode.ANY} // End of list * = ALL
 			} ;
 
 		static Dictionary <ushort, string> DictionaryCode = new Dictionary <ushort, string> () {
@@ -71,68 +83,17 @@ namespace Goedel.Discovery {
 		#{IG.Id} = #{IG.Code},  // Deprecated, NOT IMPLEMENTED
 #end switchcast
 #end foreach
-		/// Unknown record type.
-		Unknown = 0
+        /// <summary>Unknownrecord type.</summary>
+        Unknown = 0,
+        /// <summary>Synonym for ALL</summary>
+        ANY = ALL
 		}
 
 	// All resource record classes are descended from DNSRR
 
 	public abstract partial  class DNSRecord {
 
-		/// <summary>The type code</summary>
-		public virtual DNSTypeCode			Code => (0);
-
-		/// <summary>The type text</summary>		
-		public virtual string	Label => ("Unknown");
 		
-		/// <summary>Description</summary>
-		public virtual string	Description=> ("Record is not defined");
-		
-		/// <summary>Decode record or query from buffer</summary>	
-        /// <param name="Index">Input data</param>
-        /// <returns>Parsed record.</returns>
-        public static DNSRecord Decode(DNSBufferIndex Index) {
-			DNSRecord			DNSRecord;
-			
-			Domain				Domain;
-			DNSTypeCode			RType;
-			DNSClass			RClass;
-			uint				TTL;
-			int				RDLength;
-
-            Domain = Index.ReadDomain ();
-            RType = (DNSTypeCode)Index.ReadInt16 ();
-            RClass = (DNSClass)Index.ReadInt16 ();
-            TTL = Index.ReadInt32 ();
-			RDLength = Index.ReadInt16 ();
-			int NextRecord = Index.Pointer + RDLength;
-
-            //Index.ReadL16Data (out RData);
-
-			switch ((int) RType) {
-#foreach (_Choice Toplevel in Domainer.Top)
-#switchcast DomainerType Toplevel
-#casecast RR RR
-				case (#{RR.Code}) : {
-					DNSRecord = DNSRecord_#{RR.Id}.Decode (Index, RDLength);
-					break;
-					}
-#end switchcast
-#end foreach
-				default : {
-					DNSRecord = DNSRecord_Unknown.Decode (Index, RDLength) ;
-					break;
-					}
-				}
-			DNSRecord.Domain = Domain;
-			DNSRecord.RType = RType;
-			DNSRecord.RClass = RClass;
-			DNSRecord.TTL = TTL;
-			Index.Pointer = NextRecord;
-
-            return DNSRecord;
-            }				
-
 		/// <summary>Dispatch parser to parse text representation of specific DNS record</summary>
         /// <param name="Tag">Record tag</param>
         /// <param name="Parse">Parser</param>

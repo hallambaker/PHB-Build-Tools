@@ -2,7 +2,8 @@
   "profiles": {
     "domainer": {
       "commandName": "Project",
-      "commandLineArgs": "aaaa"
+      "commandLineArgs": "Domainer.domainer  /cs  Domainer.cs",
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Libraries\\Goedel.Discovery"
     }
   }
 }

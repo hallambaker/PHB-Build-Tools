@@ -1,4 +1,19 @@
-﻿Copyright "2012-2016" "Default Deny Security Inc." MITLicense
+﻿// This needs to be rejiggered to remove the Object stuff, just a terrible idea.
+//
+// To declare an exception with parameters, a Console entry with a format field is
+// declared
+//
+// 		Exception MeshServiceNotSupported
+//			Console "The {0} service is not supported"
+//
+// The parameter {0} MUST be filled when the exception is thrown, e.g. 
+//
+//      throw new MeshServiceNotSupported("EarlDispatch");
+//      EarlDispatch.AssertNotNull(MeshServiceNotSupported.Throw, "EarlDispatch");
+//
+
+
+Copyright "2012-2016" "Default Deny Security Inc." MITLicense
 
 Class Goedel.Tool.Exceptional Exceptions
     TopType Namespace

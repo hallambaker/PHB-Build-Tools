@@ -7,7 +7,11 @@
     <Description>DNS wireline and zone file parser library.</Description>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Command\Goedel.Command.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.FSR\Goedel.FSR.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.IO\Goedel.IO.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>

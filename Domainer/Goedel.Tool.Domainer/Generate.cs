@@ -40,25 +40,37 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    /// <summary>DNS management interface class.</summary>	\n{0}", _Indent);
 		_Output.Write ("	public partial class DNS {{\n{0}", _Indent);
-		_Output.Write ("		// Dictionary of Type names to codes\n{0}", _Indent);
-		_Output.Write ("		//\n{0}", _Indent);
-		_Output.Write ("		// if (DictionaryType.ContainsKey(\"RR\") {{\n{0}", _Indent);
-		_Output.Write ("		//    int value = dictionary[\"RR\"];\n{0}", _Indent);
-		_Output.Write ("		//    }}\n{0}", _Indent);
-		_Output.Write ("		static Dictionary <string, ushort> DictionaryType = new Dictionary <string, ushort> () {{\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("		/// <summary>Dictionary of Type codes to descriptions</summary>	\n{0}", _Indent);
+		_Output.Write ("		public static Dictionary <DNSTypeCode, DnsRecordDefinition> DictionaryTypeCode = new () {{\n{0}", _Indent);
+		 var sep = new Separator (",");
 		foreach  (_Choice Toplevel in Domainer.Top) {
 			switch (Toplevel._Tag ()) {
 				case DomainerType.RR: {
 				  RR RR = (RR) Toplevel; 
-				_Output.Write ("			{{\"{1}\", {2}}},\n{0}", _Indent, RR.Id, RR.Code);
+				_Output.Write ("{1}\n{0}", _Indent, sep);
+				_Output.Write ("			{{DNSTypeCode.{1}, new(DNSTypeCode.{2}, \"{3}\", DNSRecord_{4}.Decode, DNSRecord_{5}.Parse)}}", _Indent, RR.IdLabel, RR.IdLabel, RR.IdLabel, RR.IdLabel, RR.IdLabel);
 				break; }
 				case DomainerType.Q: {
 				  Q Q = (Q) Toplevel; 
-				_Output.Write ("			{{\"{1}\", {2}}},\n{0}", _Indent, Q.Id, Q.Code);
+				_Output.Write ("{1}\n{0}", _Indent, sep);
+				_Output.Write ("			{{DNSTypeCode.{1}, new(DNSTypeCode.{2}, \"{3}\", null, null)}}", _Indent, Q.IdLabel, Q.IdLabel, Q.IdLabel);
 			break; }
 				}
 			}
-		_Output.Write ("			{{\"*\", 255}} // End of list * = ALL\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("			}};\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("		/// <summary>Dictionary of Type names to codes</summary>	\n{0}", _Indent);
+		_Output.Write ("		public static Dictionary <string, DNSTypeCode> DictionaryType = new () {{\n{0}", _Indent);
+		foreach  (_Choice Toplevel in Domainer.Top) {
+			if (  (Toplevel is DnsRecord RR)  ) {
+				_Output.Write ("			{{\"{1}\", DNSTypeCode.{2}}},\n{0}", _Indent, RR.IdLabel, RR.IdLabel);
+				}
+			}
+		_Output.Write ("			{{\"*\", DNSTypeCode.ANY}} // End of list * = ALL\n{0}", _Indent);
 		_Output.Write ("			}} ;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("		static Dictionary <ushort, string> DictionaryCode = new Dictionary <ushort, string> () {{\n{0}", _Indent);
@@ -116,70 +128,17 @@ public partial class Generate : global::Goedel.Registry.Script {
 			break; }
 				}
 			}
-		_Output.Write ("		/// Unknown record type.\n{0}", _Indent);
-		_Output.Write ("		Unknown = 0\n{0}", _Indent);
+		_Output.Write ("        /// <summary>Unknownrecord type.</summary>\n{0}", _Indent);
+		_Output.Write ("        Unknown = 0,\n{0}", _Indent);
+		_Output.Write ("        /// <summary>Synonym for ALL</summary>\n{0}", _Indent);
+		_Output.Write ("        ANY = ALL\n{0}", _Indent);
 		_Output.Write ("		}}\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	// All resource record classes are descended from DNSRR\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	public abstract partial  class DNSRecord {{\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("		/// <summary>The type code</summary>\n{0}", _Indent);
-		_Output.Write ("		public virtual DNSTypeCode			Code => (0);\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("		/// <summary>The type text</summary>		\n{0}", _Indent);
-		_Output.Write ("		public virtual string	Label => (\"Unknown\");\n{0}", _Indent);
 		_Output.Write ("		\n{0}", _Indent);
-		_Output.Write ("		/// <summary>Description</summary>\n{0}", _Indent);
-		_Output.Write ("		public virtual string	Description=> (\"Record is not defined\");\n{0}", _Indent);
-		_Output.Write ("		\n{0}", _Indent);
-		_Output.Write ("		/// <summary>Decode record or query from buffer</summary>	\n{0}", _Indent);
-		_Output.Write ("        /// <param name=\"Index\">Input data</param>\n{0}", _Indent);
-		_Output.Write ("        /// <returns>Parsed record.</returns>\n{0}", _Indent);
-		_Output.Write ("        public static DNSRecord Decode(DNSBufferIndex Index) {{\n{0}", _Indent);
-		_Output.Write ("			DNSRecord			DNSRecord;\n{0}", _Indent);
-		_Output.Write ("			\n{0}", _Indent);
-		_Output.Write ("			Domain				Domain;\n{0}", _Indent);
-		_Output.Write ("			DNSTypeCode			RType;\n{0}", _Indent);
-		_Output.Write ("			DNSClass			RClass;\n{0}", _Indent);
-		_Output.Write ("			uint				TTL;\n{0}", _Indent);
-		_Output.Write ("			int				RDLength;\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("            Domain = Index.ReadDomain ();\n{0}", _Indent);
-		_Output.Write ("            RType = (DNSTypeCode)Index.ReadInt16 ();\n{0}", _Indent);
-		_Output.Write ("            RClass = (DNSClass)Index.ReadInt16 ();\n{0}", _Indent);
-		_Output.Write ("            TTL = Index.ReadInt32 ();\n{0}", _Indent);
-		_Output.Write ("			RDLength = Index.ReadInt16 ();\n{0}", _Indent);
-		_Output.Write ("			int NextRecord = Index.Pointer + RDLength;\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("            //Index.ReadL16Data (out RData);\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("			switch ((int) RType) {{\n{0}", _Indent);
-		foreach  (_Choice Toplevel in Domainer.Top) {
-			switch (Toplevel._Tag ()) {
-				case DomainerType.RR: {
-				  RR RR = (RR) Toplevel; 
-				_Output.Write ("				case ({1}) : {{\n{0}", _Indent, RR.Code);
-				_Output.Write ("					DNSRecord = DNSRecord_{1}.Decode (Index, RDLength);\n{0}", _Indent, RR.Id);
-				_Output.Write ("					break;\n{0}", _Indent);
-				_Output.Write ("					}}\n{0}", _Indent);
-			break; }
-				}
-			}
-		_Output.Write ("				default : {{\n{0}", _Indent);
-		_Output.Write ("					DNSRecord = DNSRecord_Unknown.Decode (Index, RDLength) ;\n{0}", _Indent);
-		_Output.Write ("					break;\n{0}", _Indent);
-		_Output.Write ("					}}\n{0}", _Indent);
-		_Output.Write ("				}}\n{0}", _Indent);
-		_Output.Write ("			DNSRecord.Domain = Domain;\n{0}", _Indent);
-		_Output.Write ("			DNSRecord.RType = RType;\n{0}", _Indent);
-		_Output.Write ("			DNSRecord.RClass = RClass;\n{0}", _Indent);
-		_Output.Write ("			DNSRecord.TTL = TTL;\n{0}", _Indent);
-		_Output.Write ("			Index.Pointer = NextRecord;\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("            return DNSRecord;\n{0}", _Indent);
-		_Output.Write ("            }}				\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("		/// <summary>Dispatch parser to parse text representation of specific DNS record</summary>\n{0}", _Indent);
 		_Output.Write ("        /// <param name=\"Tag\">Record tag</param>\n{0}", _Indent);
 		_Output.Write ("        /// <param name=\"Parse\">Parser</param>\n{0}", _Indent);
