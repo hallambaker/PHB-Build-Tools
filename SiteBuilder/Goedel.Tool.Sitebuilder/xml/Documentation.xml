@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Tool.Sitebuilder</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Tool.Sitebuilder.Internal">
+            <summary>
+            An internal assertion check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Tool.Sitebuilder.Internal.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Tool.Sitebuilder.Internal.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Tool.Sitebuilder.Internal.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Tool.Sitebuilder.Internal._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Tool.Sitebuilder.Internal.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Tool.Sitebuilder.Invalid">
+            <summary>
+            An internal assertion check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Tool.Sitebuilder.Invalid.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Tool.Sitebuilder.Invalid.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Tool.Sitebuilder.Invalid.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Tool.Sitebuilder.Invalid._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Tool.Sitebuilder.Invalid.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Tool.Sitebuilder.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.Sitebuilder.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="P:Goedel.Tool.Sitebuilder._Choice.Description">
+            <summary>Description text.</summary>
+        </member>
+        <member name="P:Goedel.Tool.Sitebuilder._Choice.Prompt">
+            <summary>Description text.</summary>
+        </member>
+        <member name="P:Goedel.Tool.Sitebuilder._Choice.Include">
+            <summary>If true, include this field in serialization.</summary>
+        </member>
+        <member name="P:Goedel.Tool.Sitebuilder._Choice.IsRange">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Tool.Sitebuilder._Choice.ReadOnly">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Tool.Sitebuilder._Choice.Attribute">
+            <summary></summary>
+        </member>
+        <member name="T:Goedel.Tool.Sitebuilder.GenerateBacking">
+            <summary>
+            Generate the backing data for the GUI.
+            </summary>
+        </member>
+        <member name="M:Goedel.Tool.Sitebuilder.GenerateBacking.CreateFrame(Goedel.Sitebuilder.FrameSet)">
+            <summary>	
+            CreateFrame
+            </summary>
+            <param name="frameset"></param>
+        </member>
+        <member name="M:Goedel.Tool.Sitebuilder.GenerateBacking.MakeBacking(Goedel.Sitebuilder.IBacked)">
+            <summary>	
+            MakeBacking
+            </summary>
+            <param name="backed"></param>
+        </member>
+        <member name="M:Goedel.Tool.Sitebuilder.GenerateBacking.RenderFields(Goedel.Sitebuilder.IBacked,System.Collections.Generic.List{Goedel.Sitebuilder.IFrameField},System.Boolean)">
+            <summary>	
+            RenderFields
+            </summary>
+            <param name="backed"></param>
+            <param name="fields"></param>
+            <param name="parent=false=false"></param>
+        </member>
+        <member name="M:Goedel.Tool.Sitebuilder.GenerateBacking.RenderField(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.IFrameField,Goedel.Registry.Separator)">
+            <summary>	
+            RenderField
+            </summary>
+            <param name="backed"></param>
+            <param name="entry"></param>
+            <param name="comma"></param>
+        </member>
+        <member name="M:Goedel.Tool.Sitebuilder.GenerateBacking.GetDefaultPresentation(System.Collections.Generic.List{Goedel.Sitebuilder.IFrameField})">
+            <summary>
+            Return the first presentation from the list of fields 
+            <paramref name="fields"/> or null if none is found.
+            </summary>
+            <param name="fields">The list of fields to scan.</param>
+            <returns>The first presentation if found, otherwise null.</returns>
+        </member>
+        <member name="T:Goedel.Html.NamespaceDoc">
+            <summary>
+            Desctiption of the 
+            </summary>
+        </member>
+    </members>
+</doc>

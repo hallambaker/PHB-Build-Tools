@@ -18,8 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Tool.RegistryConfig.dll\
-    Goedel.Tool.Core.dll
+    Goedel.Tool.RegistryConfig.dll
 
 ToolTargets = \
 	Shell.cs
@@ -41,5 +40,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget registryconfig.dll
+	powershell publishtarget registryconfig.exe $(LinkFiles) 
 

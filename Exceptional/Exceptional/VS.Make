@@ -19,7 +19,6 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.Registry.dll\
-    Goedel.Tool.Core.dll\
     Goedel.Tool.Exceptional.dll
 
 ToolTargets = \
@@ -42,5 +41,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget exceptional.dll
+	powershell publishtarget exceptional.exe $(LinkFiles) 
 

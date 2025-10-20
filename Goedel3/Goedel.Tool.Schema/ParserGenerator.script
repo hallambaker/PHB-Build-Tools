@@ -70,7 +70,7 @@ using Goedel.Utilities;
 #end foreach
 #end foreach
 
-##pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
+##pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059, IDE0161, CS1591, CS8618
 namespace #{Class.Namespace} {
 
 
@@ -97,12 +97,12 @@ namespace #{Class.Namespace} {
     public abstract partial class _Choice {
         abstract public #{Class.Name}Type _Tag ();
 
-        public _Choice _Parent;
-        public #{Class.Name} _Base;
+        public _Choice? _Parent;
+        public #{Class.Name}? _Base;
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
 
-    	public virtual void Init (_Choice parent) {
+    	public virtual void Init (_Choice? parent) {
             _Parent = parent;
             _Base ??= parent?._Base;
 			}
@@ -110,9 +110,9 @@ namespace #{Class.Namespace} {
         
 
 		bool _Initialized = false;
-		public virtual void _InitChildren (_Choice parent) {
+		public virtual void _InitChildren (_Choice? parent) {
 			Init (parent);
-            _Base = parent._Base;
+            _Base = parent?._Base;
 			if (_Initialized) {
 				return;
 				}
@@ -142,7 +142,7 @@ namespace #{Class.Namespace} {
         public override #{Class.Name}Type _Tag () =>#{Class.Name}Type.#{ID};
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 #foreach (Entry Entry in Entries)
 #switchcast GoedelType Entry.Type
@@ -179,7 +179,7 @@ namespace #{Class.Namespace} {
 #end foreach
 
     class _Label : _Choice {
-        public REF<_Choice>            Label;
+        public REF<_Choice>?            Label;
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
@@ -187,7 +187,7 @@ namespace #{Class.Namespace} {
 
         public override #{Class.Name}Type _Tag () => #{Class.Name}Type._Label;
 
-		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label?.ToString()??"");
         }
 
 
@@ -222,14 +222,12 @@ namespace #{Class.Namespace} {
         }
 
     public partial class #{Class.Name} : Goedel.Registry.Parser{
-        public List <#{Class.Namespace}._Choice>        Top;
+        public List <#{Class.Namespace}._Choice>        Top = [];
         public Registry	<#{Class.Namespace}._Choice>	Registry;
-
         public bool StartOfEntry {get;  private set;}
-
-        StateCode								State;
+        StateCode								State = StateCode._Start;
         #{Class.Namespace}._Choice				Current;
-        List <_StackItem>						Stack;
+        readonly List <_StackItem>						Stack = [];
 
 
         public static #{Class.Name} Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -239,7 +237,7 @@ namespace #{Class.Namespace} {
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
-                Lexer Schema = new Lexer(File);
+                Lexer Schema = new (File);
                 Schema.Process(infile, Result);
                 }
             Result.Init ();
@@ -261,10 +259,7 @@ namespace #{Class.Namespace} {
 			}
 
         public #{Class.Name}() {
-            Top = new List<#{Class.Namespace}._Choice> () ;
             Registry = new Registry <#{Class.Namespace}._Choice> ();
-            State = StateCode._Start;
-            Stack = new List <_StackItem> ();
             StartOfEntry = true;
 
 #! Seems to be a bug here, IDs are only created if there is a reference to a type
@@ -325,7 +320,7 @@ namespace #{Class.Namespace} {
 #end if
 
         private #{Class.Namespace}.#{ID} New#{ID}() {
-            #{Class.Namespace}.#{ID} result = new #{Class.Namespace}.#{ID}();
+            #{Class.Namespace}.#{ID} result = new ();
             Push (result);
             State = StateCode.#{ID}_Start;
             return result;
@@ -367,7 +362,7 @@ namespace #{Class.Namespace} {
 
 
         void Push (#{Class.Namespace}._Choice Token) {
-            _StackItem Item = new _StackItem () {
+            _StackItem Item = new  () {
 					State = State,
 					Token = Current
 					};
@@ -382,7 +377,7 @@ namespace #{Class.Namespace} {
         void Pop () {
 			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
-            _StackItem Item = Stack[Stack.Count -1];
+            _StackItem Item = Stack[^1];
             State = Item.State;
             Current = Item.Token;
 
@@ -537,8 +532,6 @@ namespace #{Class.Namespace} {
 #switch (List.Type._Tag())
 #case GoedelType._Label
 #% _Label LLabel = (_Label) List.Type;
-
-						/// Label
                         else {
                             #{Class.Namespace}.#{ID} Current_Cast = (#{Class.Namespace}.#{ID})Current;
                             Current_Cast.#{Entry.Name}.Add (New#{LLabel.Label} ());
@@ -753,9 +746,9 @@ namespace #{Class.Namespace} {
 #foreach (OptionEntry OEntry in Options.Entries)
 #switchcast GoedelType OEntry.Occurs
 #casecast Single null
-		public #{OEntry.Type}  #{OEntry.Name} = new  #{OEntry.Type}();
+		public #{OEntry.Type}  #{OEntry.Name} = new ();
 #casecast Multiple null
-		public List<#{OEntry.Type}>  #{OEntry.Name} = new  List <#{OEntry.Type}> ();
+		public List<#{OEntry.Type}>  #{OEntry.Name} = [];
 #end switchcast
 #end foreach
 #casecast List List
@@ -783,7 +776,7 @@ namespace #{Class.Namespace} {
 #case GoedelType.Boolean
 #% Type = "bool";
 #end switch
-        public List <#{Type}>           #{Entry.Name} = new List<#{Type}> ();
+        public List <#{Type}>           #{Entry.Name} = [];
 #casecast Choice null
         public _Choice					#{Entry.Name};
 #casecast ChoiceREF null
@@ -797,7 +790,7 @@ namespace #{Class.Namespace} {
 #casecast String null
 		public string					#{Entry.Name};
 #casecast Text null
-		public List <System.String>			#{Entry.Name} = new List <System.String> (); 
+		public List <System.String>			#{Entry.Name} = []; 
 #casecast Integer null
 		public int						#{Entry.Name};
 #casecast Boolean null
@@ -814,7 +807,6 @@ namespace #{Class.Namespace} {
 #foreach (OptionEntry OEntry in Options.Entries)
 #switchcast GoedelType OEntry.Occurs
 #casecast Single null
-		// public #{OEntry.Type}  #{OEntry.Name} = new  #{OEntry.Type}();
 			#{OEntry.Name}.Serialize (Output, true);
 #casecast Multiple null
 			foreach (#{OEntry.Type} _e in #{OEntry.Name}) {

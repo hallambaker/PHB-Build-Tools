@@ -57,6 +57,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("using Goedel.Protocol;\n{0}", _Indent);
 		_Output.Write ("using Goedel.Utilities;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.\n{0}", _Indent);
 		_Output.Write ("#pragma warning disable IDE0079\n{0}", _Indent);
 		_Output.Write ("#pragma warning disable IDE1006\n{0}", _Indent);
 		_Output.Write ("#pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries\n{0}", _Indent);
@@ -586,12 +587,12 @@ public partial class Generate : global::Goedel.Registry.Script {
 				  Struct Param = (Struct) Entry; 
 				_Output.Write ("{1}\n{0}", _Indent, separator);
 				_Output.Write ("		new {1} (\"{2}\", typeof ({3}),\n{0}", _Indent, Entry.PropertyName, Tag, Param.Type.Label);
-				_Output.Write ("					(IBinding data, object? value) => {{(data as {1}).{2} = value as {3};}}, \n{0}", _Indent, Id, Token, Param.TypeCSCons);
-				_Output.Write ("					(IBinding data) => (data as {1}).{2},\n{0}", _Indent, Id, Token);
+				_Output.Write ("					(data, value) => {{(data as {1}).{2} = value as {3};}}, \n{0}", _Indent, Id, Token, Param.TypeCSCons);
+				_Output.Write ("					data => (data as {1}).{2},\n{0}", _Indent, Id, Token);
 				_Output.Write ("					false, ()=>new  {1}(), ()=>new {2}()", _Indent, Param.TypeCSCons, Param.BaseType);
 				if (  Entry.Dictionary ) {
 					_Output.Write (",\n{0}", _Indent);
-					_Output.Write ("					(IBinding data) => (data as {1}).{2}.GetEnumerable(),\n{0}", _Indent, Id, Token);
+					_Output.Write ("					data => (data as {1}).{2}.GetEnumerable(),\n{0}", _Indent, Id, Token);
 					_Output.Write ("					(object dictionary, object key, object value) =>\n{0}", _Indent);
 					_Output.Write ("						 {{(dictionary as {1}).Add (key as string,value as {2});}}", _Indent, Param.TypeCSCons, Param.BaseType);
 					}
@@ -601,8 +602,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 				  TStruct Param = (TStruct) Entry; 
 				_Output.Write ("{1}\n{0}", _Indent, separator);
 				_Output.Write ("		new {1} (\"{2}\", typeof ({3}), \n{0}", _Indent, Entry.PropertyName, Tag, Param.Type.Label);
-				_Output.Write ("					(IBinding data, object? value) => {{(data as {1}).{2} = value as {3};}}, \n{0}", _Indent, Id, Token, Param.TypeCSCons);
-				_Output.Write ("					(IBinding data) => (data as {1}).{2},\n{0}", _Indent, Id, Token);
+				_Output.Write ("					(data, value) => {{(data as {1}).{2} = value as {3};}}, \n{0}", _Indent, Id, Token, Param.TypeCSCons);
+				_Output.Write ("					data => (data as {1}).{2},\n{0}", _Indent, Id, Token);
 				_Output.Write ("					true", _Indent);
 				if (  Entry.Multiple ) {
 					_Output.Write (", ()=>new {1}()\n{0}", _Indent, Param.TypeCSCons);
@@ -612,15 +613,13 @@ public partial class Generate : global::Goedel.Registry.Script {
 				case ProtoStructType.GStruct: {
 				  GStruct Param = (GStruct) Entry; 
 				_Output.Write ("{1}\n{0}", _Indent, separator);
-				_Output.Write ("		new {1} (\"{2}\", /*typeof ({3}<>),*/typeof ({4}),\n{0}", _Indent, Entry.PropertyName, Tag, Param.Type.Label, Param.GType.Label);
-				_Output.Write ("					(IBinding data, object? value) => {{(data as {1}).{2} = value as {3};}},\n{0}", _Indent, Id, Param.MainFieldName, Param.TypeCSCons);
-				_Output.Write ("					(IBinding data) => (data as {1}).{2},\n{0}", _Indent, Id, Param.MainFieldName);
-				_Output.Write ("					/*(IBinding data, object? value) => {{(data as {1}).{2} = value as {3};}},\n{0}", _Indent, Id, Param.SubFieldName, Param.SubTypeCS);
-				_Output.Write ("					(IBinding data) => (data as {1}).{2},*/\n{0}", _Indent, Id, Param.SubFieldName);
+				_Output.Write ("		new {1} (\"{2}\", typeof ({3}),\n{0}", _Indent, Entry.PropertyName, Tag, Param.GType.Label);
+				_Output.Write ("					(data, value) => {{(data as {1}).{2} = value as {3};}},\n{0}", _Indent, Id, Param.MainFieldName, Param.TypeCSCons);
+				_Output.Write ("					data => (data as {1}).{2},\n{0}", _Indent, Id, Param.MainFieldName);
 				_Output.Write ("					()=>new  {1}(), ()=>new {2}()", _Indent, Param.TypeCSCons, Param.BaseType);
 				if (  Entry.Multiple ) {
 					_Output.Write (",\n{0}", _Indent);
-					_Output.Write ("					(object list,object item)=>(list as {1}).Add (item as {2})\n{0}", _Indent, Param.TypeCSCons, Param.BaseType);
+					_Output.Write ("					(list,item)=>(list as {1}).Add (item as {2})\n{0}", _Indent, Param.TypeCSCons, Param.BaseType);
 					}
 				_Output.Write (")", _Indent);
 				
@@ -628,8 +627,8 @@ public partial class Generate : global::Goedel.Registry.Script {
 				if (  (Token != null) ) {
 					_Output.Write ("{1}\n{0}", _Indent, separator);
 					_Output.Write ("		new {1} (\"{2}\", \n{0}", _Indent, Entry.PropertyName, Tag);
-					_Output.Write ("					(IBinding data, {1}? value) => {{(data as {2}).{3} = value;}}, \n{0}", _Indent, Entry.TypeCS, Id, Token);
-					_Output.Write ("					(IBinding data) => (data as {1}).{2} )", _Indent, Id, Token);
+					_Output.Write ("					(data, value) => {{(data as {1}).{2} = value;}}, \n{0}", _Indent, Id, Token);
+					_Output.Write ("					data => (data as {1}).{2} )", _Indent, Id, Token);
 					}
 			break; }
 				}
@@ -689,6 +688,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 				 bool Enumerated = IsEnumerated (Options);
 				 bool Multiple = IsMultiple (Options);
 				if (  (Entry is GStruct generic) ) {
+					_Output.Write ("	/// <summary>\n{0}", _Indent);
+					_Output.Write ("	/// Wrapped property\n{0}", _Indent);
+					_Output.Write ("    /// </summary>\n{0}", _Indent);
 					_Output.Write ("	[JsonPropertyName(\"{1}\")]\n{0}", _Indent, Entry.ID);
 					_Output.Write ("	public virtual {1}?					{2}  {{get; set;}} \n{0}", _Indent, generic.TypeCS, generic.MainFieldName);
 					_Output.Write ("\n{0}", _Indent);

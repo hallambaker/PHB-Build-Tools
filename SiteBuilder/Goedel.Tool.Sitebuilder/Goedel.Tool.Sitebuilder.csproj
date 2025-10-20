@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Product>Goedel.Html</Product>
+		<Description>Build MPlace2 Chrome</Description>
+		<Copyright>© 2025</Copyright>
+		<Title>Goedel.Tool.Sitebuilder</Title>
+	</PropertyGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
+		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\Goedel.Sitebuilder\Goedel.Sitebuilder.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="FrameData.cs">
+			<DependentUpon>FrameData.gdl</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="FramePages.cs">
+		  <DependentUpon>FramePages.script</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="FrameData.gdl">
+			<LastGenOutput>FrameData.cs</LastGenOutput>
+			<Generator>Goedel3</Generator>
+		</None>
+		<None Update="Exceptions.exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>exceptional</Generator>
+		</None>
+		<None Update="FramePages.script">
+		  <LastGenOutput>FramePages.cs</LastGenOutput>
+		  <Generator>gscript</Generator>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Properties\" />
+	</ItemGroup>
+</Project>

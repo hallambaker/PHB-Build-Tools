@@ -93,7 +93,7 @@ using Goedel.Utilities;
 //       Text
 //   TokenType
 
-#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059, IDE0161, CS1591, CS8618
 namespace Goedel.Tool.DNSConfig {
 
 
@@ -134,12 +134,12 @@ namespace Goedel.Tool.DNSConfig {
     public abstract partial class _Choice {
         abstract public DNSConfigType _Tag ();
 
-        public _Choice _Parent;
-        public DNSConfig _Base;
+        public _Choice? _Parent;
+        public DNSConfig? _Base;
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
 
-    	public virtual void Init (_Choice parent) {
+    	public virtual void Init (_Choice? parent) {
             _Parent = parent;
             _Base ??= parent?._Base;
 			}
@@ -147,9 +147,9 @@ namespace Goedel.Tool.DNSConfig {
         
 
 		bool _Initialized = false;
-		public virtual void _InitChildren (_Choice parent) {
+		public virtual void _InitChildren (_Choice? parent) {
 			Init (parent);
-            _Base = parent._Base;
+            _Base = parent?._Base;
 			if (_Initialized) {
 				return;
 				}
@@ -166,7 +166,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.Machine;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -187,20 +187,20 @@ namespace Goedel.Tool.DNSConfig {
     public partial class DNS : _Choice {
         public ID<_Choice>				Id; 
 		public string					Contact;
-		public Refresh  Refresh = new  Refresh();
-		public Retry  Retry = new  Retry();
-		public Expire  Expire = new  Expire();
-		public TTL  TTL = new  TTL();
-		public List<Slave>  Slave = new  List <Slave> ();
-		public List<CAA>  CAA = new  List <CAA> ();
-		public List<Authoritative>  Authoritative = new  List <Authoritative> ();
-		public List<MX>  MX = new  List <MX> ();
-		public List<SPF>  SPF = new  List <SPF> ();
+		public Refresh  Refresh = new ();
+		public Retry  Retry = new ();
+		public Expire  Expire = new ();
+		public TTL  TTL = new ();
+		public List<Slave>  Slave = [];
+		public List<CAA>  CAA = [];
+		public List<Authoritative>  Authoritative = [];
+		public List<MX>  MX = [];
+		public List<SPF>  SPF = [];
 
         public override DNSConfigType _Tag () =>DNSConfigType.DNS;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -213,13 +213,9 @@ namespace Goedel.Tool.DNSConfig {
 	        Output.WriteId ("Id", Id.ToString()); 
 			Output.WriteAttribute ("Contact", Contact);
 			Output.StartList ("");
-		// public Refresh  Refresh = new  Refresh();
 			Refresh.Serialize (Output, true);
-		// public Retry  Retry = new  Retry();
 			Retry.Serialize (Output, true);
-		// public Expire  Expire = new  Expire();
 			Expire.Serialize (Output, true);
-		// public TTL  TTL = new  TTL();
 			TTL.Serialize (Output, true);
 			foreach (Slave _e in Slave) {
 				_e.Serialize (Output, true);
@@ -250,7 +246,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.Authoritative;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -274,7 +270,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.Refresh;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -297,7 +293,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.Retry;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -320,7 +316,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.Expire;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -343,7 +339,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.TTL;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -366,7 +362,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.Slave;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -390,7 +386,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.CAA;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -415,7 +411,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.MX;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -435,13 +431,13 @@ namespace Goedel.Tool.DNSConfig {
 
     public partial class Site : _Choice {
         public ID<_Choice>				Id; 
-		public List<Domain>  Domain = new  List <Domain> ();
-		public Web  Web = new  Web();
+		public List<Domain>  Domain = [];
+		public Web  Web = new ();
 
         public override DNSConfigType _Tag () =>DNSConfigType.Site;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -456,7 +452,6 @@ namespace Goedel.Tool.DNSConfig {
 			foreach (Domain _e in Domain) {
 				_e.Serialize (Output, true);
 				}
-		// public Web  Web = new  Web();
 			Web.Serialize (Output, true);
 			Output.EndList ("");
 			if (tag) {
@@ -467,17 +462,17 @@ namespace Goedel.Tool.DNSConfig {
 
     public partial class Domain : _Choice {
         public ID<_Choice>				Id; 
-		public List<Service>  Service = new  List <Service> ();
-		public List<Address>  Address = new  List <Address> ();
-		public List<SMTP>  SMTP = new  List <SMTP> ();
-		public Email  Email = new  Email();
-		public List<Wildcard>  Wildcard = new  List <Wildcard> ();
-		public List<Handle>  Handle = new  List <Handle> ();
+		public List<Service>  Service = [];
+		public List<Address>  Address = [];
+		public List<SMTP>  SMTP = [];
+		public Email  Email = new ();
+		public List<Wildcard>  Wildcard = [];
+		public List<Handle>  Handle = [];
 
         public override DNSConfigType _Tag () =>DNSConfigType.Domain;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -498,7 +493,6 @@ namespace Goedel.Tool.DNSConfig {
 			foreach (SMTP _e in SMTP) {
 				_e.Serialize (Output, true);
 				}
-		// public Email  Email = new  Email();
 			Email.Serialize (Output, true);
 			foreach (Wildcard _e in Wildcard) {
 				_e.Serialize (Output, true);
@@ -518,7 +512,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.Wildcard;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -541,7 +535,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.Handle;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -562,12 +556,12 @@ namespace Goedel.Tool.DNSConfig {
     public partial class Address : _Choice {
         public ID<_Choice>				Id; 
         public REF<_Choice>				Data;
-		public SMTP  SMTP = new  SMTP();
+		public SMTP  SMTP = new ();
 
         public override DNSConfigType _Tag () =>DNSConfigType.Address;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -580,7 +574,6 @@ namespace Goedel.Tool.DNSConfig {
 	        Output.WriteId ("Id", Id.ToString()); 
 	        Output.WriteId ("Data", Data.ToString());
 			Output.StartList ("");
-		// public SMTP  SMTP = new  SMTP();
 			SMTP.Serialize (Output, true);
 			Output.EndList ("");
 			if (tag) {
@@ -594,7 +587,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.SMTP;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -611,13 +604,13 @@ namespace Goedel.Tool.DNSConfig {
 		}
 
     public partial class Email : _Choice {
-		public List<MX>  MX = new  List <MX> ();
-		public List<SPF>  SPF = new  List <SPF> ();
+		public List<MX>  MX = [];
+		public List<SPF>  SPF = [];
 
         public override DNSConfigType _Tag () =>DNSConfigType.Email;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -647,7 +640,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.SPF;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -667,12 +660,12 @@ namespace Goedel.Tool.DNSConfig {
     public partial class Web : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Root;
-		public List<Host>  Host = new  List <Host> ();
+		public List<Host>  Host = [];
 
         public override DNSConfigType _Tag () =>DNSConfigType.Web;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -697,13 +690,13 @@ namespace Goedel.Tool.DNSConfig {
 
     public partial class Service : _Choice {
 		public string					Name;
-		public List<Host>  Host = new  List <Host> ();
-		public List<TXT>  TXT = new  List <TXT> ();
+		public List<Host>  Host = [];
+		public List<TXT>  TXT = [];
 
         public override DNSConfigType _Tag () =>DNSConfigType.Service;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -730,15 +723,15 @@ namespace Goedel.Tool.DNSConfig {
 
     public partial class Host : _Choice {
         public REF<_Choice>				Id;
-		public List<TXT>  TXT = new  List <TXT> ();
-		public Port  Port = new  Port();
-		public Priority  Priority = new  Priority();
-		public Weight  Weight = new  Weight();
+		public List<TXT>  TXT = [];
+		public Port  Port = new ();
+		public Priority  Priority = new ();
+		public Weight  Weight = new ();
 
         public override DNSConfigType _Tag () =>DNSConfigType.Host;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -753,11 +746,8 @@ namespace Goedel.Tool.DNSConfig {
 			foreach (TXT _e in TXT) {
 				_e.Serialize (Output, true);
 				}
-		// public Port  Port = new  Port();
 			Port.Serialize (Output, true);
-		// public Priority  Priority = new  Priority();
 			Priority.Serialize (Output, true);
-		// public Weight  Weight = new  Weight();
 			Weight.Serialize (Output, true);
 			Output.EndList ("");
 			if (tag) {
@@ -772,7 +762,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.TXT;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -795,7 +785,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.Port;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -818,7 +808,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.Priority;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -841,7 +831,7 @@ namespace Goedel.Tool.DNSConfig {
         public override DNSConfigType _Tag () =>DNSConfigType.Weight;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -859,7 +849,7 @@ namespace Goedel.Tool.DNSConfig {
 		}
 
     class _Label : _Choice {
-        public REF<_Choice>            Label;
+        public REF<_Choice>?            Label;
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
@@ -867,7 +857,7 @@ namespace Goedel.Tool.DNSConfig {
 
         public override DNSConfigType _Tag () => DNSConfigType._Label;
 
-		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label?.ToString()??"");
         }
 
 
@@ -948,14 +938,12 @@ namespace Goedel.Tool.DNSConfig {
         }
 
     public partial class DNSConfig : Goedel.Registry.Parser{
-        public List <Goedel.Tool.DNSConfig._Choice>        Top;
+        public List <Goedel.Tool.DNSConfig._Choice>        Top = [];
         public Registry	<Goedel.Tool.DNSConfig._Choice>	Registry;
-
         public bool StartOfEntry {get;  private set;}
-
-        StateCode								State;
+        StateCode								State = StateCode._Start;
         Goedel.Tool.DNSConfig._Choice				Current;
-        List <_StackItem>						Stack;
+        readonly List <_StackItem>						Stack = [];
 
 
         public static DNSConfig Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -965,7 +953,7 @@ namespace Goedel.Tool.DNSConfig {
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
-                Lexer Schema = new Lexer(File);
+                Lexer Schema = new (File);
                 Schema.Process(infile, Result);
                 }
             Result.Init ();
@@ -987,10 +975,7 @@ namespace Goedel.Tool.DNSConfig {
 			}
 
         public DNSConfig() {
-            Top = new List<Goedel.Tool.DNSConfig._Choice> () ;
             Registry = new Registry <Goedel.Tool.DNSConfig._Choice> ();
-            State = StateCode._Start;
-            Stack = new List <_StackItem> ();
             StartOfEntry = true;
 
 			TYPE__IPT = Registry.TYPE ("IPT"); 
@@ -1048,7 +1033,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Machine NewMachine() {
-            Goedel.Tool.DNSConfig.Machine result = new Goedel.Tool.DNSConfig.Machine();
+            Goedel.Tool.DNSConfig.Machine result = new ();
             Push (result);
             State = StateCode.Machine_Start;
             return result;
@@ -1056,7 +1041,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.DNS NewDNS() {
-            Goedel.Tool.DNSConfig.DNS result = new Goedel.Tool.DNSConfig.DNS();
+            Goedel.Tool.DNSConfig.DNS result = new ();
             Push (result);
             State = StateCode.DNS_Start;
             return result;
@@ -1064,7 +1049,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Authoritative NewAuthoritative() {
-            Goedel.Tool.DNSConfig.Authoritative result = new Goedel.Tool.DNSConfig.Authoritative();
+            Goedel.Tool.DNSConfig.Authoritative result = new ();
             Push (result);
             State = StateCode.Authoritative_Start;
             return result;
@@ -1072,7 +1057,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Refresh NewRefresh() {
-            Goedel.Tool.DNSConfig.Refresh result = new Goedel.Tool.DNSConfig.Refresh();
+            Goedel.Tool.DNSConfig.Refresh result = new ();
             Push (result);
             State = StateCode.Refresh_Start;
             return result;
@@ -1080,7 +1065,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Retry NewRetry() {
-            Goedel.Tool.DNSConfig.Retry result = new Goedel.Tool.DNSConfig.Retry();
+            Goedel.Tool.DNSConfig.Retry result = new ();
             Push (result);
             State = StateCode.Retry_Start;
             return result;
@@ -1088,7 +1073,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Expire NewExpire() {
-            Goedel.Tool.DNSConfig.Expire result = new Goedel.Tool.DNSConfig.Expire();
+            Goedel.Tool.DNSConfig.Expire result = new ();
             Push (result);
             State = StateCode.Expire_Start;
             return result;
@@ -1096,7 +1081,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.TTL NewTTL() {
-            Goedel.Tool.DNSConfig.TTL result = new Goedel.Tool.DNSConfig.TTL();
+            Goedel.Tool.DNSConfig.TTL result = new ();
             Push (result);
             State = StateCode.TTL_Start;
             return result;
@@ -1104,7 +1089,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Slave NewSlave() {
-            Goedel.Tool.DNSConfig.Slave result = new Goedel.Tool.DNSConfig.Slave();
+            Goedel.Tool.DNSConfig.Slave result = new ();
             Push (result);
             State = StateCode.Slave_Start;
             return result;
@@ -1112,7 +1097,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.CAA NewCAA() {
-            Goedel.Tool.DNSConfig.CAA result = new Goedel.Tool.DNSConfig.CAA();
+            Goedel.Tool.DNSConfig.CAA result = new ();
             Push (result);
             State = StateCode.CAA_Start;
             return result;
@@ -1120,7 +1105,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.MX NewMX() {
-            Goedel.Tool.DNSConfig.MX result = new Goedel.Tool.DNSConfig.MX();
+            Goedel.Tool.DNSConfig.MX result = new ();
             Push (result);
             State = StateCode.MX_Start;
             return result;
@@ -1128,7 +1113,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Site NewSite() {
-            Goedel.Tool.DNSConfig.Site result = new Goedel.Tool.DNSConfig.Site();
+            Goedel.Tool.DNSConfig.Site result = new ();
             Push (result);
             State = StateCode.Site_Start;
             return result;
@@ -1136,7 +1121,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Domain NewDomain() {
-            Goedel.Tool.DNSConfig.Domain result = new Goedel.Tool.DNSConfig.Domain();
+            Goedel.Tool.DNSConfig.Domain result = new ();
             Push (result);
             State = StateCode.Domain_Start;
             return result;
@@ -1144,7 +1129,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Wildcard NewWildcard() {
-            Goedel.Tool.DNSConfig.Wildcard result = new Goedel.Tool.DNSConfig.Wildcard();
+            Goedel.Tool.DNSConfig.Wildcard result = new ();
             Push (result);
             State = StateCode.Wildcard_Start;
             return result;
@@ -1152,7 +1137,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Handle NewHandle() {
-            Goedel.Tool.DNSConfig.Handle result = new Goedel.Tool.DNSConfig.Handle();
+            Goedel.Tool.DNSConfig.Handle result = new ();
             Push (result);
             State = StateCode.Handle_Start;
             return result;
@@ -1160,7 +1145,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Address NewAddress() {
-            Goedel.Tool.DNSConfig.Address result = new Goedel.Tool.DNSConfig.Address();
+            Goedel.Tool.DNSConfig.Address result = new ();
             Push (result);
             State = StateCode.Address_Start;
             return result;
@@ -1168,7 +1153,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.SMTP NewSMTP() {
-            Goedel.Tool.DNSConfig.SMTP result = new Goedel.Tool.DNSConfig.SMTP();
+            Goedel.Tool.DNSConfig.SMTP result = new ();
             Push (result);
             State = StateCode.SMTP_Start;
             return result;
@@ -1176,7 +1161,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Email NewEmail() {
-            Goedel.Tool.DNSConfig.Email result = new Goedel.Tool.DNSConfig.Email();
+            Goedel.Tool.DNSConfig.Email result = new ();
             Push (result);
             State = StateCode.Email_Start;
             return result;
@@ -1184,7 +1169,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.SPF NewSPF() {
-            Goedel.Tool.DNSConfig.SPF result = new Goedel.Tool.DNSConfig.SPF();
+            Goedel.Tool.DNSConfig.SPF result = new ();
             Push (result);
             State = StateCode.SPF_Start;
             return result;
@@ -1192,7 +1177,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Web NewWeb() {
-            Goedel.Tool.DNSConfig.Web result = new Goedel.Tool.DNSConfig.Web();
+            Goedel.Tool.DNSConfig.Web result = new ();
             Push (result);
             State = StateCode.Web_Start;
             return result;
@@ -1200,7 +1185,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Service NewService() {
-            Goedel.Tool.DNSConfig.Service result = new Goedel.Tool.DNSConfig.Service();
+            Goedel.Tool.DNSConfig.Service result = new ();
             Push (result);
             State = StateCode.Service_Start;
             return result;
@@ -1208,7 +1193,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Host NewHost() {
-            Goedel.Tool.DNSConfig.Host result = new Goedel.Tool.DNSConfig.Host();
+            Goedel.Tool.DNSConfig.Host result = new ();
             Push (result);
             State = StateCode.Host_Start;
             return result;
@@ -1216,7 +1201,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.TXT NewTXT() {
-            Goedel.Tool.DNSConfig.TXT result = new Goedel.Tool.DNSConfig.TXT();
+            Goedel.Tool.DNSConfig.TXT result = new ();
             Push (result);
             State = StateCode.TXT_Start;
             return result;
@@ -1224,7 +1209,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Port NewPort() {
-            Goedel.Tool.DNSConfig.Port result = new Goedel.Tool.DNSConfig.Port();
+            Goedel.Tool.DNSConfig.Port result = new ();
             Push (result);
             State = StateCode.Port_Start;
             return result;
@@ -1232,7 +1217,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Priority NewPriority() {
-            Goedel.Tool.DNSConfig.Priority result = new Goedel.Tool.DNSConfig.Priority();
+            Goedel.Tool.DNSConfig.Priority result = new ();
             Push (result);
             State = StateCode.Priority_Start;
             return result;
@@ -1240,7 +1225,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         private Goedel.Tool.DNSConfig.Weight NewWeight() {
-            Goedel.Tool.DNSConfig.Weight result = new Goedel.Tool.DNSConfig.Weight();
+            Goedel.Tool.DNSConfig.Weight result = new ();
             Push (result);
             State = StateCode.Weight_Start;
             return result;
@@ -1295,7 +1280,7 @@ namespace Goedel.Tool.DNSConfig {
 
 
         void Push (Goedel.Tool.DNSConfig._Choice Token) {
-            _StackItem Item = new _StackItem () {
+            _StackItem Item = new  () {
 					State = State,
 					Token = Current
 					};
@@ -1310,7 +1295,7 @@ namespace Goedel.Tool.DNSConfig {
         void Pop () {
 			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
-            _StackItem Item = Stack[Stack.Count -1];
+            _StackItem Item = Stack[^1];
             State = Item.State;
             Current = Item.Token;
 

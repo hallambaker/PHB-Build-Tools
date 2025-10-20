@@ -1,0 +1,13 @@
+{
+  "profiles": {
+
+    "TestExample": {
+      "commandName": "Project",
+      "commandLineArgs": "Mplace2.Frame /cs Mplace2.cs",
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\Palimpsest\\Libraries\\Mplace2"
+    }
+
+
+  }
+
+}

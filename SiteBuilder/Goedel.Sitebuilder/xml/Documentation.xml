@@ -1,0 +1,367 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Sitebuilder</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Sitebuilder.BackingType">
+            <summary>
+            Base type for extended backing types
+            </summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.BackingTypeImage">
+            <summary>
+            Image backing type, allows the file name, alt text, etc. to be specified.
+            </summary>
+            <param name="File">The file identifier.</param>
+            <param name="Alt">The alt text.</param>
+            <param name="Width">The width (if known).</param>
+            <param name="Height">The height (if known).</param>
+            <param name="Link">Optional link target</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.BackingTypeImage.#ctor(System.String,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Image backing type, allows the file name, alt text, etc. to be specified.
+            </summary>
+            <param name="File">The file identifier.</param>
+            <param name="Alt">The alt text.</param>
+            <param name="Width">The width (if known).</param>
+            <param name="Height">The height (if known).</param>
+            <param name="Link">Optional link target</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeImage.File">
+            <summary>The file identifier.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeImage.Alt">
+            <summary>The alt text.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeImage.Width">
+            <summary>The width (if known).</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeImage.Height">
+            <summary>The height (if known).</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeImage.Link">
+            <summary>Optional link target</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.BackingTypeFile">
+            <summary>
+            Backing type for uploaded file.
+            </summary>
+            <param name="Uid">The unique identifier</param>
+            <param name="OriginalFileName">Suggested file name</param>
+            <param name="Data">The raw data</param>
+            <param name="Size">The file size</param>
+            <param name="Conversions">Alternative versions of the file.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.BackingTypeFile.#ctor(System.String,System.String,System.Byte[],System.Int32,System.Collections.Generic.List{Goedel.Sitebuilder.BackingTypeImage})">
+            <summary>
+            Backing type for uploaded file.
+            </summary>
+            <param name="Uid">The unique identifier</param>
+            <param name="OriginalFileName">Suggested file name</param>
+            <param name="Data">The raw data</param>
+            <param name="Size">The file size</param>
+            <param name="Conversions">Alternative versions of the file.</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeFile.Uid">
+            <summary>The unique identifier</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeFile.OriginalFileName">
+            <summary>Suggested file name</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeFile.Data">
+            <summary>The raw data</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeFile.Size">
+            <summary>The file size</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeFile.Conversions">
+            <summary>Alternative versions of the file.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.BackingTypeLink">
+            <summary>
+            Backing type for links
+            </summary>
+            <param name="Text">The text to display.</param>
+            <param name="Link">The link target.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.BackingTypeLink.#ctor(System.String,System.String)">
+            <summary>
+            Backing type for links
+            </summary>
+            <param name="Text">The text to display.</param>
+            <param name="Link">The link target.</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeLink.Text">
+            <summary>The text to display.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeLink.Link">
+            <summary>The link target.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.Internal">
+            <summary>
+            An internal assertion check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.Internal.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.Internal.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.Internal.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.Internal._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Sitebuilder.Internal.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.NestingIncorrect">
+            <summary>
+            XML nesting incorrect.
+            </summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.NestingIncorrect.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.NestingIncorrect.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.NestingIncorrect.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.NestingIncorrect._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Sitebuilder.NestingIncorrect.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IBacked.Tag">
+            <summary>The identifier</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IBacked.Fields">
+            <summary>The fields</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSelector.Fields">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameField">
+            <summary>
+            Frame fields
+            </summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameField.Prompt">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameField.Hidden">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameField.Description">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameField.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameField.Tag">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameField.Backing">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameField.Type">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameField.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="id">The frame field identifier.</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefClass.Backing">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefList.Backing">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.Resource">
+            <summary>
+            
+            </summary>
+            <param name="Uri">The resource locator.</param>
+            <param name="Type">The icon type</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.Resource.#ctor(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="Uri">The resource locator.</param>
+            <param name="Type">The icon type</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.Resource.Uri">
+            <summary>The resource locator.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.Resource.Type">
+            <summary>The icon type</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.HtmlWriter.Open(System.String,System.String[])">
+            <summary>
+            Start an element <paramref name="tag"/> with attribute value pairs from
+            <paramref name="attributes"/>.
+            </summary>
+            <param name="tag">The tag.</param>
+            <param name="attributes">The attributes.</param>
+            <returns>The stack position.</returns>
+        </member>
+        <member name="M:Goedel.Sitebuilder.HtmlWriter.Close(System.Int32)">
+            <summary>
+            Close the immediately preceding tag. If <paramref name="position"/> is
+            specified, the value is checked against the corresponding Open.
+            </summary>
+            <param name="position">Expected stack depth.</param>
+        </member>
+        <member name="T:Goedel.Sitebuilder.IFrameField">
+            <summary>
+            Frame field interface
+            </summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IFrameField.Backing">
+            <summary>The backing type</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IFrameField.Id">
+            <summary>Identifier</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IFrameField.Tag">
+            <summary>Tag</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IFrameField.Type">
+            <summary>Type</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IFrameField.Prompt">
+            <summary>Prompt to show if used in a form.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IFrameField.Hidden">
+            <summary>If true, this is a hidden field.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IFrameField.Description">
+            <summary>Long description for use in hover text, etc.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.NamespaceDoc">
+            <summary>
+            Desctiption of the 
+            </summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.PageText">
+            <summary>
+            Text used in page generation, to be pulled from properties
+            </summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.PageText.Submit">
+            <summary>The submit label text</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.PageText.Reset">
+            <summary>The reset label text</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.PageText.Cancel">
+            <summary>The cancel label text</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.PageText.InvalidEntry">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.PageText.Required">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.PageText.English">
+            <summary>English text</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.PageWriter">
+            <summary>
+            Pagewriter adds in methods to emit FramePages and components.
+            </summary>
+            <summary>
+            Pagewriter adds in methods to emit FramePages and components.
+            </summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.PageWriter.PageText">
+            <summary>Text to use for the page.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.#ctor(Goedel.Sitebuilder.FrameSet,System.IO.TextWriter)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="frameset">The frame set context to render in.</param>
+            <param name="textWriter">The text writer to write to.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.FramePage)">
+            <summary>
+            Render page <paramref name="page"/>.
+            </summary>
+            <param name="page">The page to render.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.RenderFields(Goedel.Sitebuilder.IBacked)">
+            <summary>
+            Render the fields of <paramref name="backer"/> using the default presentation.
+            </summary>
+            <param name="backer"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,System.Collections.Generic.List{Goedel.Sitebuilder.IFrameField})">
+            <summary>
+            Render the list of fields <paramref name="fields"/> of <paramref name="backer"/>.
+            </summary>
+            <param name="backer">The data to render.</param>
+            <param name="fields">The field descriptions.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.RenderSections(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FramePresentation)">
+            <summary>
+            Render the data <paramref name="backer"/> using presentation template
+            <paramref name="presentation"/>.
+            </summary>
+            <param name="backer">The data to render.</param>
+            <param name="presentation">The presentation definition.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.RenderField(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.IFrameField)">
+            <summary>
+            Use the field specifier <paramref name="field"/> to render data from
+            <paramref name="backer"/>.
+            </summary>
+            <param name="backer">The data to render.</param>
+            <param name="field">The field to render</param>
+        </member>
+    </members>
+</doc>

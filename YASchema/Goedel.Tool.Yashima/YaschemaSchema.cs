@@ -82,7 +82,7 @@ using Goedel.Utilities;
 //       Name
 //       Label
 
-#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059, IDE0161, CS1591, CS8618
 namespace Goedel.Tool.Yaschema {
 
 
@@ -118,12 +118,12 @@ namespace Goedel.Tool.Yaschema {
     public abstract partial class _Choice {
         abstract public YaschemaStructType _Tag ();
 
-        public _Choice _Parent;
-        public YaschemaStruct _Base;
+        public _Choice? _Parent;
+        public YaschemaStruct? _Base;
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
 
-    	public virtual void Init (_Choice parent) {
+    	public virtual void Init (_Choice? parent) {
             _Parent = parent;
             _Base ??= parent?._Base;
 			}
@@ -131,9 +131,9 @@ namespace Goedel.Tool.Yaschema {
         
 
 		bool _Initialized = false;
-		public virtual void _InitChildren (_Choice parent) {
+		public virtual void _InitChildren (_Choice? parent) {
 			Init (parent);
-            _Base = parent._Base;
+            _Base = parent?._Base;
 			if (_Initialized) {
 				return;
 				}
@@ -146,12 +146,12 @@ namespace Goedel.Tool.Yaschema {
     public partial class Namespace : _Choice {
         public TOKEN<_Choice>			Id;
         public TOKEN<_Choice>			Class;
-		public List <System.String>			Text = new List <System.String> (); 
+		public List <System.String>			Text = []; 
 
         public override YaschemaStructType _Tag () =>YaschemaStructType.Namespace;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -173,12 +173,12 @@ namespace Goedel.Tool.Yaschema {
 		}
 
     public partial class Client : _Choice {
-        public List <Packet>           Entries = new List<Packet> ();
+        public List <Packet>           Entries = [];
 
         public override YaschemaStructType _Tag () =>YaschemaStructType.Client;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -203,12 +203,12 @@ namespace Goedel.Tool.Yaschema {
 		}
 
     public partial class Host : _Choice {
-        public List <Packet>           Entries = new List<Packet> ();
+        public List <Packet>           Entries = [];
 
         public override YaschemaStructType _Tag () =>YaschemaStructType.Host;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -234,12 +234,12 @@ namespace Goedel.Tool.Yaschema {
 
     public partial class Packet : _Choice {
         public ID<_Choice>				Id; 
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override YaschemaStructType _Tag () =>YaschemaStructType.Packet;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -265,12 +265,12 @@ namespace Goedel.Tool.Yaschema {
 		}
 
     public partial class Initial : _Choice {
-		public List<HostCredential>  HostCredential = new  List <HostCredential> ();
+		public List<HostCredential>  HostCredential = [];
 
         public override YaschemaStructType _Tag () =>YaschemaStructType.Initial;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -292,12 +292,12 @@ namespace Goedel.Tool.Yaschema {
 		}
 
     public partial class Respond : _Choice {
-        public List <REF<_Choice>>           To = new List<REF<_Choice>> ();
+        public List <REF<_Choice>>           To = [];
 
         public override YaschemaStructType _Tag () =>YaschemaStructType.Respond;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -319,12 +319,12 @@ namespace Goedel.Tool.Yaschema {
 		}
 
     public partial class Plaintext : _Choice {
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override YaschemaStructType _Tag () =>YaschemaStructType.Plaintext;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -349,12 +349,12 @@ namespace Goedel.Tool.Yaschema {
 		}
 
     public partial class Mezzanine : _Choice {
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override YaschemaStructType _Tag () =>YaschemaStructType.Mezzanine;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -379,12 +379,12 @@ namespace Goedel.Tool.Yaschema {
 		}
 
     public partial class Encrypted : _Choice {
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override YaschemaStructType _Tag () =>YaschemaStructType.Encrypted;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -413,7 +413,7 @@ namespace Goedel.Tool.Yaschema {
         public override YaschemaStructType _Tag () =>YaschemaStructType.Payload;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -434,7 +434,7 @@ namespace Goedel.Tool.Yaschema {
         public override YaschemaStructType _Tag () =>YaschemaStructType.ClientCredential;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -455,7 +455,7 @@ namespace Goedel.Tool.Yaschema {
         public override YaschemaStructType _Tag () =>YaschemaStructType.HostCredential;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -476,7 +476,7 @@ namespace Goedel.Tool.Yaschema {
         public override YaschemaStructType _Tag () =>YaschemaStructType.ClientEphemerals;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -497,7 +497,7 @@ namespace Goedel.Tool.Yaschema {
         public override YaschemaStructType _Tag () =>YaschemaStructType.HostEphemerals;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -518,7 +518,7 @@ namespace Goedel.Tool.Yaschema {
         public override YaschemaStructType _Tag () =>YaschemaStructType.ClientEphemeral;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -539,7 +539,7 @@ namespace Goedel.Tool.Yaschema {
         public override YaschemaStructType _Tag () =>YaschemaStructType.HostEphemeral;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -560,7 +560,7 @@ namespace Goedel.Tool.Yaschema {
         public override YaschemaStructType _Tag () =>YaschemaStructType.Challenge;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -581,7 +581,7 @@ namespace Goedel.Tool.Yaschema {
         public override YaschemaStructType _Tag () =>YaschemaStructType.Response;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -602,7 +602,7 @@ namespace Goedel.Tool.Yaschema {
         public override YaschemaStructType _Tag () =>YaschemaStructType.HostKeyID;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -623,7 +623,7 @@ namespace Goedel.Tool.Yaschema {
         public override YaschemaStructType _Tag () =>YaschemaStructType.ClientKeyID;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -640,7 +640,7 @@ namespace Goedel.Tool.Yaschema {
 		}
 
     class _Label : _Choice {
-        public REF<_Choice>            Label;
+        public REF<_Choice>?            Label;
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
@@ -648,7 +648,7 @@ namespace Goedel.Tool.Yaschema {
 
         public override YaschemaStructType _Tag () => YaschemaStructType._Label;
 
-		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label?.ToString()??"");
         }
 
 
@@ -698,14 +698,12 @@ namespace Goedel.Tool.Yaschema {
         }
 
     public partial class YaschemaStruct : Goedel.Registry.Parser{
-        public List <Goedel.Tool.Yaschema._Choice>        Top;
+        public List <Goedel.Tool.Yaschema._Choice>        Top = [];
         public Registry	<Goedel.Tool.Yaschema._Choice>	Registry;
-
         public bool StartOfEntry {get;  private set;}
-
-        StateCode								State;
+        StateCode								State = StateCode._Start;
         Goedel.Tool.Yaschema._Choice				Current;
-        List <_StackItem>						Stack;
+        readonly List <_StackItem>						Stack = [];
 
 
         public static YaschemaStruct Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -715,7 +713,7 @@ namespace Goedel.Tool.Yaschema {
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
-                Lexer Schema = new Lexer(File);
+                Lexer Schema = new (File);
                 Schema.Process(infile, Result);
                 }
             Result.Init ();
@@ -737,10 +735,7 @@ namespace Goedel.Tool.Yaschema {
 			}
 
         public YaschemaStruct() {
-            Top = new List<Goedel.Tool.Yaschema._Choice> () ;
             Registry = new Registry <Goedel.Tool.Yaschema._Choice> ();
-            State = StateCode._Start;
-            Stack = new List <_StackItem> ();
             StartOfEntry = true;
 
 			TYPE__PacketType = Registry.TYPE ("PacketType"); 
@@ -789,7 +784,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.Namespace NewNamespace() {
-            Goedel.Tool.Yaschema.Namespace result = new Goedel.Tool.Yaschema.Namespace();
+            Goedel.Tool.Yaschema.Namespace result = new ();
             Push (result);
             State = StateCode.Namespace_Start;
             return result;
@@ -797,7 +792,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.Client NewClient() {
-            Goedel.Tool.Yaschema.Client result = new Goedel.Tool.Yaschema.Client();
+            Goedel.Tool.Yaschema.Client result = new ();
             Push (result);
             State = StateCode.Client_Start;
             return result;
@@ -805,7 +800,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.Host NewHost() {
-            Goedel.Tool.Yaschema.Host result = new Goedel.Tool.Yaschema.Host();
+            Goedel.Tool.Yaschema.Host result = new ();
             Push (result);
             State = StateCode.Host_Start;
             return result;
@@ -813,7 +808,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.Packet NewPacket() {
-            Goedel.Tool.Yaschema.Packet result = new Goedel.Tool.Yaschema.Packet();
+            Goedel.Tool.Yaschema.Packet result = new ();
             Push (result);
             State = StateCode.Packet_Start;
             return result;
@@ -821,7 +816,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.Initial NewInitial() {
-            Goedel.Tool.Yaschema.Initial result = new Goedel.Tool.Yaschema.Initial();
+            Goedel.Tool.Yaschema.Initial result = new ();
             Push (result);
             State = StateCode.Initial_Start;
             return result;
@@ -829,7 +824,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.Respond NewRespond() {
-            Goedel.Tool.Yaschema.Respond result = new Goedel.Tool.Yaschema.Respond();
+            Goedel.Tool.Yaschema.Respond result = new ();
             Push (result);
             State = StateCode.Respond_Start;
             return result;
@@ -837,7 +832,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.Plaintext NewPlaintext() {
-            Goedel.Tool.Yaschema.Plaintext result = new Goedel.Tool.Yaschema.Plaintext();
+            Goedel.Tool.Yaschema.Plaintext result = new ();
             Push (result);
             State = StateCode.Plaintext_Start;
             return result;
@@ -845,7 +840,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.Mezzanine NewMezzanine() {
-            Goedel.Tool.Yaschema.Mezzanine result = new Goedel.Tool.Yaschema.Mezzanine();
+            Goedel.Tool.Yaschema.Mezzanine result = new ();
             Push (result);
             State = StateCode.Mezzanine_Start;
             return result;
@@ -853,7 +848,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.Encrypted NewEncrypted() {
-            Goedel.Tool.Yaschema.Encrypted result = new Goedel.Tool.Yaschema.Encrypted();
+            Goedel.Tool.Yaschema.Encrypted result = new ();
             Push (result);
             State = StateCode.Encrypted_Start;
             return result;
@@ -861,7 +856,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.Payload NewPayload() {
-            Goedel.Tool.Yaschema.Payload result = new Goedel.Tool.Yaschema.Payload();
+            Goedel.Tool.Yaschema.Payload result = new ();
             Push (result);
             State = StateCode.Payload_Start;
             return result;
@@ -869,7 +864,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.ClientCredential NewClientCredential() {
-            Goedel.Tool.Yaschema.ClientCredential result = new Goedel.Tool.Yaschema.ClientCredential();
+            Goedel.Tool.Yaschema.ClientCredential result = new ();
             Push (result);
             State = StateCode.ClientCredential_Start;
             return result;
@@ -877,7 +872,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.HostCredential NewHostCredential() {
-            Goedel.Tool.Yaschema.HostCredential result = new Goedel.Tool.Yaschema.HostCredential();
+            Goedel.Tool.Yaschema.HostCredential result = new ();
             Push (result);
             State = StateCode.HostCredential_Start;
             return result;
@@ -885,7 +880,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.ClientEphemerals NewClientEphemerals() {
-            Goedel.Tool.Yaschema.ClientEphemerals result = new Goedel.Tool.Yaschema.ClientEphemerals();
+            Goedel.Tool.Yaschema.ClientEphemerals result = new ();
             Push (result);
             State = StateCode.ClientEphemerals_Start;
             return result;
@@ -893,7 +888,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.HostEphemerals NewHostEphemerals() {
-            Goedel.Tool.Yaschema.HostEphemerals result = new Goedel.Tool.Yaschema.HostEphemerals();
+            Goedel.Tool.Yaschema.HostEphemerals result = new ();
             Push (result);
             State = StateCode.HostEphemerals_Start;
             return result;
@@ -901,7 +896,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.ClientEphemeral NewClientEphemeral() {
-            Goedel.Tool.Yaschema.ClientEphemeral result = new Goedel.Tool.Yaschema.ClientEphemeral();
+            Goedel.Tool.Yaschema.ClientEphemeral result = new ();
             Push (result);
             State = StateCode.ClientEphemeral_Start;
             return result;
@@ -909,7 +904,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.HostEphemeral NewHostEphemeral() {
-            Goedel.Tool.Yaschema.HostEphemeral result = new Goedel.Tool.Yaschema.HostEphemeral();
+            Goedel.Tool.Yaschema.HostEphemeral result = new ();
             Push (result);
             State = StateCode.HostEphemeral_Start;
             return result;
@@ -917,7 +912,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.Challenge NewChallenge() {
-            Goedel.Tool.Yaschema.Challenge result = new Goedel.Tool.Yaschema.Challenge();
+            Goedel.Tool.Yaschema.Challenge result = new ();
             Push (result);
             State = StateCode.Challenge_Start;
             return result;
@@ -925,7 +920,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.Response NewResponse() {
-            Goedel.Tool.Yaschema.Response result = new Goedel.Tool.Yaschema.Response();
+            Goedel.Tool.Yaschema.Response result = new ();
             Push (result);
             State = StateCode.Response_Start;
             return result;
@@ -933,7 +928,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.HostKeyID NewHostKeyID() {
-            Goedel.Tool.Yaschema.HostKeyID result = new Goedel.Tool.Yaschema.HostKeyID();
+            Goedel.Tool.Yaschema.HostKeyID result = new ();
             Push (result);
             State = StateCode.HostKeyID_Start;
             return result;
@@ -941,7 +936,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         private Goedel.Tool.Yaschema.ClientKeyID NewClientKeyID() {
-            Goedel.Tool.Yaschema.ClientKeyID result = new Goedel.Tool.Yaschema.ClientKeyID();
+            Goedel.Tool.Yaschema.ClientKeyID result = new ();
             Push (result);
             State = StateCode.ClientKeyID_Start;
             return result;
@@ -991,7 +986,7 @@ namespace Goedel.Tool.Yaschema {
 
 
         void Push (Goedel.Tool.Yaschema._Choice Token) {
-            _StackItem Item = new _StackItem () {
+            _StackItem Item = new  () {
 					State = State,
 					Token = Current
 					};
@@ -1006,7 +1001,7 @@ namespace Goedel.Tool.Yaschema {
         void Pop () {
 			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
-            _StackItem Item = Stack[Stack.Count -1];
+            _StackItem Item = Stack[^1];
             State = Item.State;
             Current = Item.Token;
 
@@ -1128,8 +1123,6 @@ namespace Goedel.Tool.Yaschema {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.Yaschema.Client Current_Cast = (Goedel.Tool.Yaschema.Client)Current;
                             Current_Cast.Entries.Add (NewPacket ());
@@ -1157,8 +1150,6 @@ namespace Goedel.Tool.Yaschema {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.Yaschema.Host Current_Cast = (Goedel.Tool.Yaschema.Host)Current;
                             Current_Cast.Entries.Add (NewPacket ());

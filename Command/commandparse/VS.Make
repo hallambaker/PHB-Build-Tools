@@ -41,5 +41,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget commandparse.dll
+	powershell publishtarget commandparse.exe $(LinkFiles) 
 

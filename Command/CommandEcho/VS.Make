@@ -18,7 +18,8 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Tool.Core.dll
+    Goedel.Tool.Core.dll\
+    Goedel.Tool.Command.dll
 
 ToolTargets = \
 	Command.cs
@@ -40,5 +41,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget CommandEcho.dll
+	powershell publishtarget CommandEcho.exe $(LinkFiles) 
 

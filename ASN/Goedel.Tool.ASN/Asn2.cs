@@ -71,7 +71,7 @@ using Goedel.Utilities;
 //   TokenType
 //       IDName
 
-#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059, IDE0161, CS1591, CS8618
 namespace Goedel.Tool.ASN {
 
 
@@ -118,12 +118,12 @@ namespace Goedel.Tool.ASN {
     public abstract partial class _Choice {
         abstract public ASN2Type _Tag ();
 
-        public _Choice _Parent;
-        public ASN2 _Base;
+        public _Choice? _Parent;
+        public ASN2? _Base;
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
 
-    	public virtual void Init (_Choice parent) {
+    	public virtual void Init (_Choice? parent) {
             _Parent = parent;
             _Base ??= parent?._Base;
 			}
@@ -131,9 +131,9 @@ namespace Goedel.Tool.ASN {
         
 
 		bool _Initialized = false;
-		public virtual void _InitChildren (_Choice parent) {
+		public virtual void _InitChildren (_Choice? parent) {
 			Init (parent);
-            _Base = parent._Base;
+            _Base = parent?._Base;
 			if (_Initialized) {
 				return;
 				}
@@ -149,7 +149,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Namespace;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -168,12 +168,12 @@ namespace Goedel.Tool.ASN {
 
     public partial class ROOT : _Choice {
         public ID<_Choice>				Name; 
-        public List <Entry>           Entries = new List<Entry> ();
+        public List <Entry>           Entries = [];
 
         public override ASN2Type _Tag () =>ASN2Type.ROOT;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -205,7 +205,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Entry;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -231,7 +231,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.OID;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -252,12 +252,12 @@ namespace Goedel.Tool.ASN {
 
     public partial class Class : _Choice {
         public ID<_Choice>				Name; 
-        public List <Member>           Entries = new List<Member> ();
+        public List <Member>           Entries = [];
 
         public override ASN2Type _Tag () =>ASN2Type.Class;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -285,12 +285,12 @@ namespace Goedel.Tool.ASN {
     public partial class Object : _Choice {
         public ID<_Choice>				Name; 
         public REF<_Choice>				OID;
-        public List <Member>           Entries = new List<Member> ();
+        public List <Member>           Entries = [];
 
         public override ASN2Type _Tag () =>ASN2Type.Object;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -319,12 +319,12 @@ namespace Goedel.Tool.ASN {
     public partial class SingularObject : _Choice {
         public ID<_Choice>				Name; 
         public REF<_Choice>				OID;
-        public List <Member>           Entries = new List<Member> ();
+        public List <Member>           Entries = [];
 
         public override ASN2Type _Tag () =>ASN2Type.SingularObject;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -353,12 +353,12 @@ namespace Goedel.Tool.ASN {
     public partial class Member : _Choice {
         public TOKEN<_Choice>			Name;
         public _Choice					Spec;
-        public List <Qualifier>           Qualifiers = new List<Qualifier> ();
+        public List <Qualifier>           Qualifiers = [];
 
         public override ASN2Type _Tag () =>ASN2Type.Member;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			Spec._InitChildren (this);
 			foreach (var Sub in Qualifiers) {
@@ -390,7 +390,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.OIDRef;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -411,7 +411,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Any;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -432,7 +432,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Bits;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -453,7 +453,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.VBits;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -474,7 +474,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Octets;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -495,7 +495,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Integer;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -516,7 +516,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.BigInteger;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -537,7 +537,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Boolean;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -558,7 +558,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Time;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -580,7 +580,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.List;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			Spec._InitChildren (this);
 			}
@@ -604,7 +604,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Set;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			Spec._InitChildren (this);
 			}
@@ -623,12 +623,12 @@ namespace Goedel.Tool.ASN {
 		}
 
     public partial class Choice : _Choice {
-        public List <Member>           Entries = new List<Member> ();
+        public List <Member>           Entries = [];
 
         public override ASN2Type _Tag () =>ASN2Type.Choice;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -657,7 +657,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.IA5String;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -678,7 +678,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.BMPString;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -699,7 +699,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.UTF8String;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -720,7 +720,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.PrintableString;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -742,7 +742,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Qualifier;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			Entry._InitChildren (this);
 			}
@@ -766,7 +766,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Code;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -788,7 +788,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Implicit;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -809,7 +809,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Explicit;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -830,7 +830,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Context;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -851,7 +851,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Optional;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -873,7 +873,7 @@ namespace Goedel.Tool.ASN {
         public override ASN2Type _Tag () =>ASN2Type.Default;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -891,7 +891,7 @@ namespace Goedel.Tool.ASN {
 		}
 
     class _Label : _Choice {
-        public REF<_Choice>            Label;
+        public REF<_Choice>?            Label;
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
@@ -899,7 +899,7 @@ namespace Goedel.Tool.ASN {
 
         public override ASN2Type _Tag () => ASN2Type._Label;
 
-		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label?.ToString()??"");
         }
 
 
@@ -973,14 +973,12 @@ namespace Goedel.Tool.ASN {
         }
 
     public partial class ASN2 : Goedel.Registry.Parser{
-        public List <Goedel.Tool.ASN._Choice>        Top;
+        public List <Goedel.Tool.ASN._Choice>        Top = [];
         public Registry	<Goedel.Tool.ASN._Choice>	Registry;
-
         public bool StartOfEntry {get;  private set;}
-
-        StateCode								State;
+        StateCode								State = StateCode._Start;
         Goedel.Tool.ASN._Choice				Current;
-        List <_StackItem>						Stack;
+        readonly List <_StackItem>						Stack = [];
 
 
         public static ASN2 Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -990,7 +988,7 @@ namespace Goedel.Tool.ASN {
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
-                Lexer Schema = new Lexer(File);
+                Lexer Schema = new (File);
                 Schema.Process(infile, Result);
                 }
             Result.Init ();
@@ -1012,10 +1010,7 @@ namespace Goedel.Tool.ASN {
 			}
 
         public ASN2() {
-            Top = new List<Goedel.Tool.ASN._Choice> () ;
             Registry = new Registry <Goedel.Tool.ASN._Choice> ();
-            State = StateCode._Start;
-            Stack = new List <_StackItem> ();
             StartOfEntry = true;
 
 			TYPE__ArcName = Registry.TYPE ("ArcName"); 
@@ -1073,7 +1068,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Namespace NewNamespace() {
-            Goedel.Tool.ASN.Namespace result = new Goedel.Tool.ASN.Namespace();
+            Goedel.Tool.ASN.Namespace result = new ();
             Push (result);
             State = StateCode.Namespace_Start;
             return result;
@@ -1081,7 +1076,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.ROOT NewROOT() {
-            Goedel.Tool.ASN.ROOT result = new Goedel.Tool.ASN.ROOT();
+            Goedel.Tool.ASN.ROOT result = new ();
             Push (result);
             State = StateCode.ROOT_Start;
             return result;
@@ -1089,7 +1084,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Entry NewEntry() {
-            Goedel.Tool.ASN.Entry result = new Goedel.Tool.ASN.Entry();
+            Goedel.Tool.ASN.Entry result = new ();
             Push (result);
             State = StateCode.Entry_Start;
             return result;
@@ -1097,7 +1092,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.OID NewOID() {
-            Goedel.Tool.ASN.OID result = new Goedel.Tool.ASN.OID();
+            Goedel.Tool.ASN.OID result = new ();
             Push (result);
             State = StateCode.OID_Start;
             return result;
@@ -1105,7 +1100,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Class NewClass() {
-            Goedel.Tool.ASN.Class result = new Goedel.Tool.ASN.Class();
+            Goedel.Tool.ASN.Class result = new ();
             Push (result);
             State = StateCode.Class_Start;
             return result;
@@ -1113,7 +1108,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Object NewObject() {
-            Goedel.Tool.ASN.Object result = new Goedel.Tool.ASN.Object();
+            Goedel.Tool.ASN.Object result = new ();
             Push (result);
             State = StateCode.Object_Start;
             return result;
@@ -1121,7 +1116,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.SingularObject NewSingularObject() {
-            Goedel.Tool.ASN.SingularObject result = new Goedel.Tool.ASN.SingularObject();
+            Goedel.Tool.ASN.SingularObject result = new ();
             Push (result);
             State = StateCode.SingularObject_Start;
             return result;
@@ -1129,7 +1124,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Member NewMember() {
-            Goedel.Tool.ASN.Member result = new Goedel.Tool.ASN.Member();
+            Goedel.Tool.ASN.Member result = new ();
             Push (result);
             State = StateCode.Member_Start;
             return result;
@@ -1137,7 +1132,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.OIDRef NewOIDRef() {
-            Goedel.Tool.ASN.OIDRef result = new Goedel.Tool.ASN.OIDRef();
+            Goedel.Tool.ASN.OIDRef result = new ();
             Push (result);
             State = StateCode.OIDRef_Start;
             return result;
@@ -1145,7 +1140,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Any NewAny() {
-            Goedel.Tool.ASN.Any result = new Goedel.Tool.ASN.Any();
+            Goedel.Tool.ASN.Any result = new ();
             Push (result);
             State = StateCode.Any_Start;
             return result;
@@ -1153,7 +1148,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Bits NewBits() {
-            Goedel.Tool.ASN.Bits result = new Goedel.Tool.ASN.Bits();
+            Goedel.Tool.ASN.Bits result = new ();
             Push (result);
             State = StateCode.Bits_Start;
             return result;
@@ -1161,7 +1156,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.VBits NewVBits() {
-            Goedel.Tool.ASN.VBits result = new Goedel.Tool.ASN.VBits();
+            Goedel.Tool.ASN.VBits result = new ();
             Push (result);
             State = StateCode.VBits_Start;
             return result;
@@ -1169,7 +1164,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Octets NewOctets() {
-            Goedel.Tool.ASN.Octets result = new Goedel.Tool.ASN.Octets();
+            Goedel.Tool.ASN.Octets result = new ();
             Push (result);
             State = StateCode.Octets_Start;
             return result;
@@ -1177,7 +1172,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Integer NewInteger() {
-            Goedel.Tool.ASN.Integer result = new Goedel.Tool.ASN.Integer();
+            Goedel.Tool.ASN.Integer result = new ();
             Push (result);
             State = StateCode.Integer_Start;
             return result;
@@ -1185,7 +1180,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.BigInteger NewBigInteger() {
-            Goedel.Tool.ASN.BigInteger result = new Goedel.Tool.ASN.BigInteger();
+            Goedel.Tool.ASN.BigInteger result = new ();
             Push (result);
             State = StateCode.BigInteger_Start;
             return result;
@@ -1193,7 +1188,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Boolean NewBoolean() {
-            Goedel.Tool.ASN.Boolean result = new Goedel.Tool.ASN.Boolean();
+            Goedel.Tool.ASN.Boolean result = new ();
             Push (result);
             State = StateCode.Boolean_Start;
             return result;
@@ -1201,7 +1196,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Time NewTime() {
-            Goedel.Tool.ASN.Time result = new Goedel.Tool.ASN.Time();
+            Goedel.Tool.ASN.Time result = new ();
             Push (result);
             State = StateCode.Time_Start;
             return result;
@@ -1209,7 +1204,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.List NewList() {
-            Goedel.Tool.ASN.List result = new Goedel.Tool.ASN.List();
+            Goedel.Tool.ASN.List result = new ();
             Push (result);
             State = StateCode.List_Start;
             return result;
@@ -1217,7 +1212,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Set NewSet() {
-            Goedel.Tool.ASN.Set result = new Goedel.Tool.ASN.Set();
+            Goedel.Tool.ASN.Set result = new ();
             Push (result);
             State = StateCode.Set_Start;
             return result;
@@ -1225,7 +1220,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Choice NewChoice() {
-            Goedel.Tool.ASN.Choice result = new Goedel.Tool.ASN.Choice();
+            Goedel.Tool.ASN.Choice result = new ();
             Push (result);
             State = StateCode.Choice_Start;
             return result;
@@ -1233,7 +1228,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.IA5String NewIA5String() {
-            Goedel.Tool.ASN.IA5String result = new Goedel.Tool.ASN.IA5String();
+            Goedel.Tool.ASN.IA5String result = new ();
             Push (result);
             State = StateCode.IA5String_Start;
             return result;
@@ -1241,7 +1236,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.BMPString NewBMPString() {
-            Goedel.Tool.ASN.BMPString result = new Goedel.Tool.ASN.BMPString();
+            Goedel.Tool.ASN.BMPString result = new ();
             Push (result);
             State = StateCode.BMPString_Start;
             return result;
@@ -1249,7 +1244,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.UTF8String NewUTF8String() {
-            Goedel.Tool.ASN.UTF8String result = new Goedel.Tool.ASN.UTF8String();
+            Goedel.Tool.ASN.UTF8String result = new ();
             Push (result);
             State = StateCode.UTF8String_Start;
             return result;
@@ -1257,7 +1252,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.PrintableString NewPrintableString() {
-            Goedel.Tool.ASN.PrintableString result = new Goedel.Tool.ASN.PrintableString();
+            Goedel.Tool.ASN.PrintableString result = new ();
             Push (result);
             State = StateCode.PrintableString_Start;
             return result;
@@ -1265,7 +1260,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Qualifier NewQualifier() {
-            Goedel.Tool.ASN.Qualifier result = new Goedel.Tool.ASN.Qualifier();
+            Goedel.Tool.ASN.Qualifier result = new ();
             Push (result);
             State = StateCode.Qualifier_Start;
             return result;
@@ -1273,7 +1268,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Code NewCode() {
-            Goedel.Tool.ASN.Code result = new Goedel.Tool.ASN.Code();
+            Goedel.Tool.ASN.Code result = new ();
             Push (result);
             State = StateCode.Code_Start;
             return result;
@@ -1281,7 +1276,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Implicit NewImplicit() {
-            Goedel.Tool.ASN.Implicit result = new Goedel.Tool.ASN.Implicit();
+            Goedel.Tool.ASN.Implicit result = new ();
             Push (result);
             State = StateCode.Implicit_Start;
             return result;
@@ -1289,7 +1284,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Explicit NewExplicit() {
-            Goedel.Tool.ASN.Explicit result = new Goedel.Tool.ASN.Explicit();
+            Goedel.Tool.ASN.Explicit result = new ();
             Push (result);
             State = StateCode.Explicit_Start;
             return result;
@@ -1297,7 +1292,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Context NewContext() {
-            Goedel.Tool.ASN.Context result = new Goedel.Tool.ASN.Context();
+            Goedel.Tool.ASN.Context result = new ();
             Push (result);
             State = StateCode.Context_Start;
             return result;
@@ -1305,7 +1300,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Optional NewOptional() {
-            Goedel.Tool.ASN.Optional result = new Goedel.Tool.ASN.Optional();
+            Goedel.Tool.ASN.Optional result = new ();
             Push (result);
             State = StateCode.Optional_Start;
             return result;
@@ -1313,7 +1308,7 @@ namespace Goedel.Tool.ASN {
 
 
         private Goedel.Tool.ASN.Default NewDefault() {
-            Goedel.Tool.ASN.Default result = new Goedel.Tool.ASN.Default();
+            Goedel.Tool.ASN.Default result = new ();
             Push (result);
             State = StateCode.Default_Start;
             return result;
@@ -1374,7 +1369,7 @@ namespace Goedel.Tool.ASN {
 
 
         void Push (Goedel.Tool.ASN._Choice Token) {
-            _StackItem Item = new _StackItem () {
+            _StackItem Item = new  () {
 					State = State,
 					Token = Current
 					};
@@ -1389,7 +1384,7 @@ namespace Goedel.Tool.ASN {
         void Pop () {
 			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
-            _StackItem Item = Stack[Stack.Count -1];
+            _StackItem Item = Stack[^1];
             State = Item.State;
             Current = Item.Token;
 
@@ -1495,8 +1490,6 @@ namespace Goedel.Tool.ASN {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.ASN.ROOT Current_Cast = (Goedel.Tool.ASN.ROOT)Current;
                             Current_Cast.Entries.Add (NewEntry ());
@@ -1586,8 +1579,6 @@ namespace Goedel.Tool.ASN {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.ASN.Class Current_Cast = (Goedel.Tool.ASN.Class)Current;
                             Current_Cast.Entries.Add (NewMember ());
@@ -1633,8 +1624,6 @@ namespace Goedel.Tool.ASN {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.ASN.Object Current_Cast = (Goedel.Tool.ASN.Object)Current;
                             Current_Cast.Entries.Add (NewMember ());
@@ -1680,8 +1669,6 @@ namespace Goedel.Tool.ASN {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.ASN.SingularObject Current_Cast = (Goedel.Tool.ASN.SingularObject)Current;
                             Current_Cast.Entries.Add (NewMember ());
@@ -1762,8 +1749,6 @@ namespace Goedel.Tool.ASN {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.ASN.Member Current_Cast = (Goedel.Tool.ASN.Member)Current;
                             Current_Cast.Qualifiers.Add (NewQualifier ());
@@ -1923,8 +1908,6 @@ namespace Goedel.Tool.ASN {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.ASN.Choice Current_Cast = (Goedel.Tool.ASN.Choice)Current;
                             Current_Cast.Entries.Add (NewMember ());

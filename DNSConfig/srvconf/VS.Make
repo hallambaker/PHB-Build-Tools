@@ -18,8 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Tool.DNSConfig.dll\
-    Goedel.Tool.Core.dll
+    Goedel.Tool.DNSConfig.dll
 
 ToolTargets = \
 	DNSConfig.cs
@@ -41,5 +40,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget srvconf.dll
+	powershell publishtarget srvconf.exe $(LinkFiles) 
 

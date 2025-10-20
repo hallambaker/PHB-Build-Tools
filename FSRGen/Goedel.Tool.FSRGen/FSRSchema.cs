@@ -57,7 +57,7 @@ using Goedel.Utilities;
 //       tAction
 //       tToken
 
-#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059, IDE0161, CS1591, CS8618
 namespace Goedel.Tool.FSRGen {
 
 
@@ -82,12 +82,12 @@ namespace Goedel.Tool.FSRGen {
     public abstract partial class _Choice {
         abstract public FSRSchemaType _Tag ();
 
-        public _Choice _Parent;
-        public FSRSchema _Base;
+        public _Choice? _Parent;
+        public FSRSchema? _Base;
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
 
-    	public virtual void Init (_Choice parent) {
+    	public virtual void Init (_Choice? parent) {
             _Parent = parent;
             _Base ??= parent?._Base;
 			}
@@ -95,9 +95,9 @@ namespace Goedel.Tool.FSRGen {
         
 
 		bool _Initialized = false;
-		public virtual void _InitChildren (_Choice parent) {
+		public virtual void _InitChildren (_Choice? parent) {
 			Init (parent);
-            _Base = parent._Base;
+            _Base = parent?._Base;
 			if (_Initialized) {
 				return;
 				}
@@ -110,12 +110,12 @@ namespace Goedel.Tool.FSRGen {
     public partial class FSR : _Choice {
         public ID<_Choice>				Id; 
         public ID<_Choice>				Prefix; 
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override FSRSchemaType _Tag () =>FSRSchemaType.FSR;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -149,7 +149,7 @@ namespace Goedel.Tool.FSRGen {
         public override FSRSchemaType _Tag () =>FSRSchemaType.Charset;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -172,12 +172,12 @@ namespace Goedel.Tool.FSRGen {
         public ID<_Choice>				Id; 
         public TOKEN<_Choice>			Action;
         public TOKEN<_Choice>			Token;
-        public List <Entry>           Entries = new List<Entry> ();
+        public List <Entry>           Entries = [];
 
         public override FSRSchemaType _Tag () =>FSRSchemaType.State;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -211,7 +211,7 @@ namespace Goedel.Tool.FSRGen {
         public override FSRSchemaType _Tag () =>FSRSchemaType.Entry;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			Is._InitChildren (this);
 			Action._InitChildren (this);
@@ -237,7 +237,7 @@ namespace Goedel.Tool.FSRGen {
         public override FSRSchemaType _Tag () =>FSRSchemaType.On;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -259,7 +259,7 @@ namespace Goedel.Tool.FSRGen {
         public override FSRSchemaType _Tag () =>FSRSchemaType.Any;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -281,7 +281,7 @@ namespace Goedel.Tool.FSRGen {
         public override FSRSchemaType _Tag () =>FSRSchemaType.Return;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -304,7 +304,7 @@ namespace Goedel.Tool.FSRGen {
         public override FSRSchemaType _Tag () =>FSRSchemaType.GoTo;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -327,7 +327,7 @@ namespace Goedel.Tool.FSRGen {
         public override FSRSchemaType _Tag () =>FSRSchemaType.Token;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -345,7 +345,7 @@ namespace Goedel.Tool.FSRGen {
 		}
 
     class _Label : _Choice {
-        public REF<_Choice>            Label;
+        public REF<_Choice>?            Label;
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
@@ -353,7 +353,7 @@ namespace Goedel.Tool.FSRGen {
 
         public override FSRSchemaType _Tag () => FSRSchemaType._Label;
 
-		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label?.ToString()??"");
         }
 
 
@@ -396,14 +396,12 @@ namespace Goedel.Tool.FSRGen {
         }
 
     public partial class FSRSchema : Goedel.Registry.Parser{
-        public List <Goedel.Tool.FSRGen._Choice>        Top;
+        public List <Goedel.Tool.FSRGen._Choice>        Top = [];
         public Registry	<Goedel.Tool.FSRGen._Choice>	Registry;
-
         public bool StartOfEntry {get;  private set;}
-
-        StateCode								State;
+        StateCode								State = StateCode._Start;
         Goedel.Tool.FSRGen._Choice				Current;
-        List <_StackItem>						Stack;
+        readonly List <_StackItem>						Stack = [];
 
 
         public static FSRSchema Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -413,7 +411,7 @@ namespace Goedel.Tool.FSRGen {
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
-                Lexer Schema = new Lexer(File);
+                Lexer Schema = new (File);
                 Schema.Process(infile, Result);
                 }
             Result.Init ();
@@ -435,10 +433,7 @@ namespace Goedel.Tool.FSRGen {
 			}
 
         public FSRSchema() {
-            Top = new List<Goedel.Tool.FSRGen._Choice> () ;
             Registry = new Registry <Goedel.Tool.FSRGen._Choice> ();
-            State = StateCode._Start;
-            Stack = new List <_StackItem> ();
             StartOfEntry = true;
 
 			TYPE__Top = Registry.TYPE ("Top"); 
@@ -482,7 +477,7 @@ namespace Goedel.Tool.FSRGen {
 
 
         private Goedel.Tool.FSRGen.FSR NewFSR() {
-            Goedel.Tool.FSRGen.FSR result = new Goedel.Tool.FSRGen.FSR();
+            Goedel.Tool.FSRGen.FSR result = new ();
             Push (result);
             State = StateCode.FSR_Start;
             return result;
@@ -490,7 +485,7 @@ namespace Goedel.Tool.FSRGen {
 
 
         private Goedel.Tool.FSRGen.Charset NewCharset() {
-            Goedel.Tool.FSRGen.Charset result = new Goedel.Tool.FSRGen.Charset();
+            Goedel.Tool.FSRGen.Charset result = new ();
             Push (result);
             State = StateCode.Charset_Start;
             return result;
@@ -498,7 +493,7 @@ namespace Goedel.Tool.FSRGen {
 
 
         private Goedel.Tool.FSRGen.State NewState() {
-            Goedel.Tool.FSRGen.State result = new Goedel.Tool.FSRGen.State();
+            Goedel.Tool.FSRGen.State result = new ();
             Push (result);
             State = StateCode.State_Start;
             return result;
@@ -506,7 +501,7 @@ namespace Goedel.Tool.FSRGen {
 
 
         private Goedel.Tool.FSRGen.Entry NewEntry() {
-            Goedel.Tool.FSRGen.Entry result = new Goedel.Tool.FSRGen.Entry();
+            Goedel.Tool.FSRGen.Entry result = new ();
             Push (result);
             State = StateCode.Entry_Start;
             return result;
@@ -514,7 +509,7 @@ namespace Goedel.Tool.FSRGen {
 
 
         private Goedel.Tool.FSRGen.On NewOn() {
-            Goedel.Tool.FSRGen.On result = new Goedel.Tool.FSRGen.On();
+            Goedel.Tool.FSRGen.On result = new ();
             Push (result);
             State = StateCode.On_Start;
             return result;
@@ -522,7 +517,7 @@ namespace Goedel.Tool.FSRGen {
 
 
         private Goedel.Tool.FSRGen.Any NewAny() {
-            Goedel.Tool.FSRGen.Any result = new Goedel.Tool.FSRGen.Any();
+            Goedel.Tool.FSRGen.Any result = new ();
             Push (result);
             State = StateCode.Any_Start;
             return result;
@@ -530,7 +525,7 @@ namespace Goedel.Tool.FSRGen {
 
 
         private Goedel.Tool.FSRGen.Return NewReturn() {
-            Goedel.Tool.FSRGen.Return result = new Goedel.Tool.FSRGen.Return();
+            Goedel.Tool.FSRGen.Return result = new ();
             Push (result);
             State = StateCode.Return_Start;
             return result;
@@ -538,7 +533,7 @@ namespace Goedel.Tool.FSRGen {
 
 
         private Goedel.Tool.FSRGen.GoTo NewGoTo() {
-            Goedel.Tool.FSRGen.GoTo result = new Goedel.Tool.FSRGen.GoTo();
+            Goedel.Tool.FSRGen.GoTo result = new ();
             Push (result);
             State = StateCode.GoTo_Start;
             return result;
@@ -546,7 +541,7 @@ namespace Goedel.Tool.FSRGen {
 
 
         private Goedel.Tool.FSRGen.Token NewToken() {
-            Goedel.Tool.FSRGen.Token result = new Goedel.Tool.FSRGen.Token();
+            Goedel.Tool.FSRGen.Token result = new ();
             Push (result);
             State = StateCode.Token_Start;
             return result;
@@ -585,7 +580,7 @@ namespace Goedel.Tool.FSRGen {
 
 
         void Push (Goedel.Tool.FSRGen._Choice Token) {
-            _StackItem Item = new _StackItem () {
+            _StackItem Item = new  () {
 					State = State,
 					Token = Current
 					};
@@ -600,7 +595,7 @@ namespace Goedel.Tool.FSRGen {
         void Pop () {
 			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
-            _StackItem Item = Stack[Stack.Count -1];
+            _StackItem Item = Stack[^1];
             State = Item.State;
             Current = Item.Token;
 
@@ -789,8 +784,6 @@ namespace Goedel.Tool.FSRGen {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.FSRGen.State Current_Cast = (Goedel.Tool.FSRGen.State)Current;
                             Current_Cast.Entries.Add (NewEntry ());

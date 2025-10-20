@@ -1,0 +1,14 @@
+﻿
+Namespace Goedel.Sitebuilder
+
+
+
+	Exception Internal
+        Console "An internal error occurred"
+		Description
+			|An internal assertion check failed.
+
+		Exception NestingIncorrect
+			Console "XML nesting incorrect."
+			Description
+				|XML nesting incorrect.

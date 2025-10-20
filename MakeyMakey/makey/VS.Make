@@ -18,8 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Tool.Makey.dll\
-    Goedel.Tool.Core.dll
+    Goedel.Tool.Makey.dll
 
 ToolTargets = \
 	Commands.cs
@@ -41,5 +40,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget makey.dll
+	powershell publishtarget makey.exe $(LinkFiles) 
 

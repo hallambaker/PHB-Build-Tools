@@ -1,0 +1,259 @@
+﻿Copyright "2025" "Threshold Secrets LLC." MITLicense
+
+Class Goedel.Tool.Sitebuilder FrameStruct
+    TopType Namespace
+        Id ID NamespaceT
+        Entries List Entry
+
+    Type Entry
+        Id ID EntryT
+        Type Choice
+            Page
+            Menu
+            Selector
+            Class
+            SubClass
+
+    Type Page
+        Title String
+        Entries List FieldItem
+
+    Type Menu
+        Entries List FieldItem
+
+    Type SubMenu
+        Title String
+        Entries List FieldItem
+
+    Type Selector
+        Entries List FieldItem
+
+    Type Class
+        TypeEntries List Struct
+
+    Type SubClass
+        Parent REF EntryT
+        TypeEntries List Struct
+
+
+    Type Struct
+        Type Choice
+            Fields
+            Description
+
+
+    Type Fields
+        Entries List Property
+
+
+
+    Type FieldItem
+        Id Token EntryT
+        Type Choice
+            Button
+            Chooser
+            Separator
+            SubMenu
+            Return
+            Is
+            Boolean
+            Integer
+            DateTime
+            String
+            Text
+            Anchor
+            RichText
+            Image
+            Avatar
+            List
+            Choice
+            Selector
+            Count
+            Presentation
+            Icon
+            File
+            Hidden 
+            Form
+            Selection
+            Container
+
+    Type Property
+        Id Token EntryT
+        Type Choice
+            Is
+            Boolean
+            Integer
+            DateTime
+            String
+            Text
+            Anchor
+            Image
+            List
+            Choice
+            Separator
+            SubMenu
+            Avatar
+            Presentation 
+            Icon
+            File
+            Hidden
+            Selection
+            Form
+            RichText
+            Container
+
+    Type Anchor
+        Properties List FieldProperty
+
+
+    Type ButtonProperty
+        Id Token EntryT
+        Type Choice
+            Boolean
+            Integer
+            String
+            Link
+    Type Container
+
+
+    Type Link
+        Uri String
+
+    Type Is
+        Parent REF EntryT
+        Properties List FieldProperty
+
+
+    Type List
+        Of REF EntryT
+        Properties List FieldProperty
+
+    Type Selection
+        Of REF EntryT
+        Properties List FieldProperty
+
+    // intrinsic types
+    Type Boolean
+        Properties List FieldProperty
+    Type Integer
+        Properties List FieldProperty
+    Type DateTime
+        Properties List FieldProperty
+    Type String
+        Properties List FieldProperty
+    Type RichText
+        Properties List FieldProperty
+    Type File
+        Properties List FieldProperty
+    Type Text
+        Properties List FieldProperty
+    Type Image
+        Properties List FieldProperty
+    Type Icon
+        Properties List FieldProperty
+    Type Avatar
+        Properties List FieldProperty
+    Type Count
+        Properties List FieldProperty
+    Type Choice
+        Choices List ChoiceEntry
+
+
+    Type ChoiceEntry
+        Type Choice
+            Description
+            Choices
+
+    Type Choices
+        Items List ChoiceOption    
+
+    Type ChoiceOption
+        Tag REF EntryT
+        Text String   
+
+
+    // Display fields
+    Type Separator
+        Properties List FieldProperty
+
+
+    Type Return
+        To REF EntryT
+        Properties List FieldProperty
+
+
+    Type Button
+        Action REF EntryT
+        Title String
+        Entries List ButtonProperty
+
+    Type Chooser
+        Entries List ChooserOption
+
+    Type ChooserOption
+        Action Token EntryT
+        Title String
+
+    Type Presentation 
+        Id Token Uid
+        Sections List Section
+
+    Type Form
+        Id Token EntryT
+        Properties List FieldProperty
+
+    Type Section
+        Id Token EntryT
+        Entries List FieldItem
+
+    Type SectionEntry
+        Type Choice
+            From
+            Field
+
+    Type From
+        Id Token EntryT
+        Type Choice
+            From
+            Field
+
+    Type Field
+        Id Token EntryT
+
+
+    Type FieldProperty
+        Type Choice
+            Exclude
+            Description
+            ReadOnly
+            Range
+            Compact
+            Local
+            UTC
+            Comment
+            Post
+            Rich
+            Hidden
+            Prompt
+            Display
+
+    Type Display
+        Id Token EntryT
+
+
+    Type Description
+        Text String
+
+    Type Prompt
+        Text String
+
+    Type Exclude
+    Type ReadOnly
+    Type Range
+    Type Compact
+    Type Local
+    Type UTC
+    Type Comment
+    Type Post
+    Type Rich
+    Type Hidden

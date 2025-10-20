@@ -1,0 +1,414 @@
+﻿#script 1.0
+#license MITLicense
+#pclass Goedel.Tool.Sitebuilder GenerateBacking
+#% string structure = "partial class";
+
+
+#method CreateFrame FrameSet frameset
+#% var comma = new Registry.Separator (",");
+#% var className = "MyClass";
+
+namespace #{frameset.Namespace};
+
+/// <summary>
+/// Annotated backing classes for data driven GUI.
+/// </summary>
+public partial class #{className} : FrameSet{
+#foreach (var backer in frameset.Pages) 
+
+	///<summary>#{backer.Id}</summary>
+	public #{backer.Id} #{backer.Id} {get;} = new();
+#end foreach
+
+#foreach (var backer in frameset.Menus) 
+
+	///<summary>#{backer.Id}</summary>
+	public #{backer.Id} #{backer.Id} {get;} = new();
+#end foreach
+
+#foreach (var backer in frameset.Selectors) 
+
+	 ///<summary>#{backer.Id}</summary>
+	 public #{backer.Id} #{backer.Id} {get;} = new();
+#end foreach
+
+#foreach (var backer in frameset.Classes) 
+
+	 ///<summary>#{backer.Id}</summary>
+	 public #{backer.Id} #{backer.Id} {get;} = new();
+#end foreach
+
+	/// <summary>
+	/// Constructor, return a new instance.
+	/// </summary>
+	public #{className} () {
+
+#% comma.Reset();
+		Pages = [ #!
+#foreach (var backer in frameset.Pages) 
+#{comma}
+			#{backer.Id}#!
+#end foreach
+
+			];
+
+#% comma.Reset();
+		Menus = [ #!
+#foreach (var backer in frameset.Menus) 
+#{comma}
+			#{backer.Id}#!
+#end foreach
+
+			];
+
+#% comma.Reset();
+		Selectors = [ #!
+#foreach (var backer in frameset.Selectors) 
+#{comma}
+			#{backer.Id}#!
+#end foreach
+
+			];
+
+#% comma.Reset();
+		Classes = [ #!
+#foreach (var backer in frameset.Classes) 
+#{comma}
+			#{backer.Id}#!
+#end foreach
+
+			];
+
+			
+		foreach (var backed in Pages) {
+			ResolveReferences (backed); 
+			}
+		foreach (var backed in Menus) {
+			ResolveReferences (backed); 
+			}
+		foreach (var backed in Selectors) {
+			ResolveReferences (backed); 
+			}
+		foreach (var backed in Classes) {
+			ResolveReferences (backed); 
+			}
+		}
+
+
+	}
+
+
+
+// Pages
+#foreach (var backer in frameset.Pages) 
+/// <summary>
+/// Backing class for #{backer.Id}
+/// </summary>
+public #{structure} #{backer.Id} : #{backer.Type} {
+
+	/// <summary>
+	/// Constructor, returns a new instance
+	/// </summary>
+	public #{backer.Id} () : base ("#{backer.Id}", "#{backer.Title}", _Fields) {
+		Container = #{backer.Container.QuotedOrNull()};
+		}
+#% MakeBacking (backer);
+	}
+#end foreach
+
+// Menus 
+#foreach (var backer in frameset.Menus) 
+/// <summary>
+/// Backing class for #{backer.Id}
+/// </summary>
+public #{structure} #{backer.Id} : #{backer.Type} {
+
+	/// <summary>
+	/// Constructor, returns a new instance
+	/// </summary>
+	public #{backer.Id} () : base ("#{backer.Id}", _Fields) {
+		}
+#% MakeBacking (backer);
+	}
+#end foreach
+
+// Classes 
+#foreach (var backer in frameset.Selectors) 
+/// <summary>
+/// Backing class for #{backer.Id}
+/// </summary>
+public #{structure} #{backer.Id} : #{backer.Type} {
+
+	/// <summary>
+	/// Constructor, returns a new instance
+	/// </summary>
+	public #{backer.Id} () : base ("#{backer.Id}", _Fields) {
+		}
+#% MakeBacking (backer);
+	}
+#end foreach
+
+
+
+// Classes 
+#foreach (var backer in frameset.Classes) 
+/// <summary>
+/// Backing class for #{backer.Id}
+/// </summary>
+public #{structure} #{backer.Id} (string Id="#{backer.Id}") : #{backer.ParentId ?? backer.Type} (Id) {
+
+    /// <inheritdoc/>
+    public override List<IFrameField> Fields { get; set; } = _Fields;
+
+#% var defaultPresentation = GetDefaultPresentation(backer.Fields);
+#if (defaultPresentation is not null)
+    /// <inheritdoc/>
+    public override FramePresentation Presentation => #{defaultPresentation.Id};
+#end if
+
+#% MakeBacking (backer);
+	}
+#end foreach
+
+#foreach (var fclass in frameset.Classes) 
+#!% MakeBacking (fclass);
+#end foreach
+
+#end method 
+
+
+
+
+#method MakeBacking IBacked backed
+#% var comma = new Registry.Separator (",");
+#foreach (var entry in backed.Fields) 
+#if (entry.Backing != null) 
+
+    /// <summary>Field #{entry.Id}</summary>
+	public #{entry.Backing}? #{entry.Id} {get; set;}
+#elseif (entry is FrameAvatar avatar) 
+
+	///<summary>Avatar #{avatar.Id}</summary>
+	public string? #{avatar.Id} {get; set;}
+#elseif (entry is FrameRefClass refClass) 
+
+	///<summary>class #{refClass.Backing}, #{refClass.Id}</summary>
+	public #{refClass.Backing}? #{refClass.Id} {get; set;}
+#elseif (entry is FrameRefList refList) 
+
+	///<summary>List #{refList.Id}</summary>
+	public #{refList.Backing}? #{refList.Id} {get; set;}
+#elseif (entry is FrameRefForm refForm) 
+
+	///<summary>List #{refForm.Id}</summary>
+	public #{refForm.Backing}? #{refForm.Id} {get; set;}
+#end if
+#end foreach
+
+#foreach (var entry in backed.Fields) 
+#if (entry is FramePresentation presentation) 
+#% var storeId = presentation.Id.Uniqueify();
+
+	/// <summary>
+	/// Presentation style #{presentation.Id}
+	/// </summary>
+	public static FramePresentation #{presentation.Id} => #{storeId} ?? new FramePresentation ("#{presentation.Id}") {
+		GetUid = (IBacked data) => (data as #{backed.Id})?.#{presentation.UidField},
+		Sections = [#!
+#% comma.Reset();
+#foreach (var section in presentation.Sections)
+#{comma}
+			new FrameSection ("#{section.Id}") {
+				Fields = [#!
+#% var save = Indent (12);
+#% RenderFields (backed, section.Fields);
+#% RestoreIndent (save);
+
+					]
+				}#!
+#end foreach
+
+			]
+		}.CacheValue(out #{storeId})!;
+	static FramePresentation? #{storeId};
+#end if
+#end foreach
+
+	static readonly List<IFrameField> _Fields = [#!
+#% RenderFields(backed, backed.Fields, true);
+
+		];
+
+
+
+    /// <inheritdoc/>
+	public override Goedel.Protocol.Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Goedel.Protocol.Property[] _properties = [
+		// Only inclue the serialized items here
+#% var dictionary = new Dictionary<string,int>();
+#% var index = 0;
+#% comma.Reset();
+#foreach (var entry in backed.Fields) 
+#if entry is Goedel.Protocol.Property property
+#% dictionary.Add (property.Tag, index++);
+#% RenderField (backed, entry, comma);
+#end if
+#end foreach
+		];
+
+    /// <inheritdoc/>
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static readonly Binding<#{backed.Id}> _binding = new (
+			new() {
+
+			// Only inclue the serialized items here#!
+#% comma.Reset();
+#foreach (var entry in backed.Fields) 
+#if entry is Goedel.Protocol.Property property
+#if (dictionary.TryGetValue (property.Tag, out var i))
+#{comma}
+			{"#{property.Tag}", _properties[#{i}]}#!
+#end if
+#end if
+#end foreach
+
+			}, "#{backed.Tag}",
+		() => new #{backed.Tag}(), () => [], () => [], null, Generic: false);
+
+
+#end method 
+
+
+#method3 RenderFields IBacked backed List<IFrameField> fields bool parent=false
+#% var comma = new Registry.Separator (",");
+#if (parent && backed.Parent is not null) 
+#{comma}#!
+#% RenderFields(backed.Parent, backed.Parent.Fields);
+#end if
+#foreach (var entry in fields) 
+#% RenderField (backed, entry, comma);
+#end foreach 
+#end method3
+
+
+#method3 RenderField IBacked backed IFrameField entry Registry.Separator comma
+#% var id = entry.Id.Replace (".", "?.");
+#% var sid = entry.Id.Replace (".", "!.");
+#% switch (entry) {
+#% case FrameButtonParsed button: {
+#% var comma2 = new Registry.Separator (",");
+#{comma}
+		new FrameButton ("#{entry.Id}", "#{button.Label}", "#{button.Action}") {#!
+#if (button.Active is not null) 
+#% var bid = button.Active.Replace (".", "?.");
+#{comma2}
+			GetActive = (IBinding data) => (data as #{backed.Id})?.#{bid}#!
+#end if
+#if (button.Integer is not null) 
+#% var bid = button.Integer.Replace (".", "?.");
+#{comma2}
+			GetInteger = (IBinding data) => (data as #{backed.Id})?.#{bid}#!
+#end if
+#if (button.Text is not null) 
+#% var bid = button.Text.Replace (".", "?.");
+#{comma2}
+			GetText = (IBinding data) => (data as #{backed.Id})?.#{bid}#!
+#end if
+
+			}#!
+#% break; }
+#% case FrameRefMenu reference: {
+#{comma}
+		new FrameRefMenu ("#{entry.Id}","#{reference.Reference}")#!
+#% break; }
+#% case FrameAvatar avatar: {
+#{comma}
+		new FrameAvatar ("#{entry.Id}"){
+			Prompt = #{entry.Prompt.QuotedOrNull()},
+			Get = (IBinding data) => (data as #{backed.Id})?.#{id} }#!
+#% break; }
+#% case FrameRefClass reference: {
+#{comma}
+		new FrameRefClass<#{reference.Backing}> ("#{entry.Id}","#{reference.Reference}"){
+#if reference.PresentationId is not null
+			Presentation = #{reference.PresentationId},
+#end if 
+			Get = (IBacked data) => (data as #{backed.Id})?.#{id} ,
+			Set = (IBacked data, IBacked? value) => {(data as #{backed.Id})!.#{sid} = value as #{reference.Reference}; }}#!
+#% break; }
+#% case FrameRefList reference: {
+#{comma}
+		new FrameRefList<#{reference.Reference}> ("#{entry.Id}","#{reference.Reference}"){
+#if reference.PresentationId is not null
+			Presentation = #{reference.PresentationId},
+#end if 
+			Get = (IBacked data) => (data as #{backed.Id})?.#{id} ,
+			Set = (IBacked data, Object? value) => {(data as #{backed.Id})!.#{sid} = value as List<#{reference.Reference}>; }}#!
+#% break; }
+#% case FrameRefForm reference: {
+#{comma}
+		new FrameRefForm<#{reference.Reference}> ("#{entry.Id}","#{reference.Reference}"){
+#if reference.PresentationId is not null
+			Presentation = #{reference.PresentationId},
+#end if 
+			Get = (IBacked data) => (data as #{backed.Id})?.#{id} ,
+			Set = (IBacked data, IBacked? value) => {(data as #{backed.Id})!.#{sid} = value as #{reference.Reference}; }}#!
+#% break; }
+#% case FrameRef : {
+#{comma}
+		new FrameRef ("#{entry.Id}")#!
+#% break; }
+#% case FrameSeparator : {
+#{comma}
+		new FrameSeparator ("#{entry.Id}")#!
+#% break; }
+#% case FrameIcon : {
+#{comma}
+		new FrameIcon ("#{entry.Id}")#!
+#% break; }
+#% case FramePresentation presentation: {
+#{comma}
+		#{presentation.Id}#!
+#% break; }
+#% case FrameSubmenu submenu: {
+#{comma}
+		new FrameSubmenu ("#{submenu.Id}", "#{submenu.Label}") {
+			Fields = [#!
+#% var save = Indent (8);
+#% RenderFields (backed, submenu.Fields);
+#% RestoreIndent (save);
+
+				]
+			}#!
+#% break; }
+#% default: {
+#if entry.Backing != null
+#{comma}
+		new #{entry.Type} ("#{entry.Tag}",
+			(IBinding data, #{entry.Backing}? value) => {(data as #{backed.Id})!.#{sid} = value; },
+			(IBinding data) => (data as #{backed.Id})?.#{id}) {#!
+#% var comma3 = new Registry.Separator (",");
+#if entry.Prompt is not null
+#{comma3}
+				Prompt = "#{entry.Prompt}"#!
+#end if
+#if entry.Hidden
+#{comma3}
+				Hidden = true#!
+#end if
+#if entry.Description is not null
+#{comma3}
+				Description = "#{entry.Description}"#!
+#end if
+
+				}#!
+#end if
+#% break; }
+#% }
+#end method3
+
+#end pclass

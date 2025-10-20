@@ -69,7 +69,7 @@ using Goedel.Utilities;
 //       PType
 //       CaseType
 
-#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059, IDE0161, CS1591, CS8618
 namespace Goedel.Tool.Command {
 
 
@@ -106,12 +106,12 @@ namespace Goedel.Tool.Command {
     public abstract partial class _Choice {
         abstract public CommandParseType _Tag ();
 
-        public _Choice _Parent;
-        public CommandParse _Base;
+        public _Choice? _Parent;
+        public CommandParse? _Base;
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
 
-    	public virtual void Init (_Choice parent) {
+    	public virtual void Init (_Choice? parent) {
             _Parent = parent;
             _Base ??= parent?._Base;
 			}
@@ -119,9 +119,9 @@ namespace Goedel.Tool.Command {
         
 
 		bool _Initialized = false;
-		public virtual void _InitChildren (_Choice parent) {
+		public virtual void _InitChildren (_Choice? parent) {
 			Init (parent);
-            _Base = parent._Base;
+            _Base = parent?._Base;
 			if (_Initialized) {
 				return;
 				}
@@ -134,12 +134,12 @@ namespace Goedel.Tool.Command {
     public partial class Class : _Choice {
         public TOKEN<_Choice>			Namespace;
         public ID<_Choice>				Id; 
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override CommandParseType _Tag () =>CommandParseType.Class;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -170,7 +170,7 @@ namespace Goedel.Tool.Command {
         public override CommandParseType _Tag () =>CommandParseType.Library;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -189,12 +189,12 @@ namespace Goedel.Tool.Command {
     public partial class CommandSet : _Choice {
         public ID<_Choice>				Id; 
 		public string					Tag;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override CommandParseType _Tag () =>CommandParseType.CommandSet;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -223,12 +223,12 @@ namespace Goedel.Tool.Command {
     public partial class Command : _Choice {
         public ID<_Choice>				Id; 
 		public string					Tag;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override CommandParseType _Tag () =>CommandParseType.Command;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -260,7 +260,7 @@ namespace Goedel.Tool.Command {
         public override CommandParseType _Tag () =>CommandParseType.Return;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -282,7 +282,7 @@ namespace Goedel.Tool.Command {
         public override CommandParseType _Tag () =>CommandParseType.DefaultCommand;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -304,7 +304,7 @@ namespace Goedel.Tool.Command {
         public override CommandParseType _Tag () =>CommandParseType.Brief;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -325,12 +325,12 @@ namespace Goedel.Tool.Command {
         public TOKEN<_Choice>			Name;
 		public string					Text;
         public REF<_Choice>				Type;
-        public List <_Choice>           Modifier = new List<_Choice> ();
+        public List <_Choice>           Modifier = [];
 
         public override CommandParseType _Tag () =>CommandParseType.Parameter;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Modifier) {
 				Sub._InitChildren (this);
@@ -361,12 +361,12 @@ namespace Goedel.Tool.Command {
         public TOKEN<_Choice>			Namespace;
         public TOKEN<_Choice>			Class;
 		public string					Extension;
-        public List <_Choice>           Modifier = new List<_Choice> ();
+        public List <_Choice>           Modifier = [];
 
         public override CommandParseType _Tag () =>CommandParseType.Parser;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Modifier) {
 				Sub._InitChildren (this);
@@ -397,12 +397,12 @@ namespace Goedel.Tool.Command {
         public TOKEN<_Choice>			Name;
 		public string					Command;
         public REF<_Choice>				Type;
-        public List <_Choice>           Modifier = new List<_Choice> ();
+        public List <_Choice>           Modifier = [];
 
         public override CommandParseType _Tag () =>CommandParseType.Option;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Modifier) {
 				Sub._InitChildren (this);
@@ -434,12 +434,12 @@ namespace Goedel.Tool.Command {
         public TOKEN<_Choice>			Class;
         public TOKEN<_Choice>			Id;
 		public string					Extension;
-        public List <_Choice>           Modifier = new List<_Choice> ();
+        public List <_Choice>           Modifier = [];
 
         public override CommandParseType _Tag () =>CommandParseType.Script;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Modifier) {
 				Sub._InitChildren (this);
@@ -473,7 +473,7 @@ namespace Goedel.Tool.Command {
         public override CommandParseType _Tag () =>CommandParseType.Include;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -492,12 +492,12 @@ namespace Goedel.Tool.Command {
 
     public partial class OptionSet : _Choice {
         public ID<_Choice>				Id; 
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override CommandParseType _Tag () =>CommandParseType.OptionSet;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -525,12 +525,12 @@ namespace Goedel.Tool.Command {
     public partial class Enumerate : _Choice {
         public TOKEN<_Choice>			Name;
 		public string					Command;
-        public List <_Choice>           Modifier = new List<_Choice> ();
+        public List <_Choice>           Modifier = [];
 
         public override CommandParseType _Tag () =>CommandParseType.Enumerate;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Modifier) {
 				Sub._InitChildren (this);
@@ -559,12 +559,12 @@ namespace Goedel.Tool.Command {
     public partial class Case : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Tag;
-        public List <_Choice>           Modifier = new List<_Choice> ();
+        public List <_Choice>           Modifier = [];
 
         public override CommandParseType _Tag () =>CommandParseType.Case;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Modifier) {
 				Sub._InitChildren (this);
@@ -597,7 +597,7 @@ namespace Goedel.Tool.Command {
         public override CommandParseType _Tag () =>CommandParseType.Type;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -621,7 +621,7 @@ namespace Goedel.Tool.Command {
         public override CommandParseType _Tag () =>CommandParseType.Default;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -640,12 +640,12 @@ namespace Goedel.Tool.Command {
 
     public partial class About : _Choice {
 		public string					Tag;
-        public List <_Choice>           Modifier = new List<_Choice> ();
+        public List <_Choice>           Modifier = [];
 
         public override CommandParseType _Tag () =>CommandParseType.About;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Modifier) {
 				Sub._InitChildren (this);
@@ -672,12 +672,12 @@ namespace Goedel.Tool.Command {
 
     public partial class Help : _Choice {
 		public string					Tag;
-        public List <_Choice>           Modifier = new List<_Choice> ();
+        public List <_Choice>           Modifier = [];
 
         public override CommandParseType _Tag () =>CommandParseType.Help;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Modifier) {
 				Sub._InitChildren (this);
@@ -705,12 +705,12 @@ namespace Goedel.Tool.Command {
     public partial class Lazy : _Choice {
         public TOKEN<_Choice>			Name;
 		public string					Tag;
-        public List <_Choice>           Modifier = new List<_Choice> ();
+        public List <_Choice>           Modifier = [];
 
         public override CommandParseType _Tag () =>CommandParseType.Lazy;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Modifier) {
 				Sub._InitChildren (this);
@@ -738,12 +738,12 @@ namespace Goedel.Tool.Command {
 
     public partial class Generator : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Modifier = new List<_Choice> ();
+        public List <_Choice>           Modifier = [];
 
         public override CommandParseType _Tag () =>CommandParseType.Generator;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Modifier) {
 				Sub._InitChildren (this);
@@ -769,7 +769,7 @@ namespace Goedel.Tool.Command {
 		}
 
     class _Label : _Choice {
-        public REF<_Choice>            Label;
+        public REF<_Choice>?            Label;
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
@@ -777,7 +777,7 @@ namespace Goedel.Tool.Command {
 
         public override CommandParseType _Tag () => CommandParseType._Label;
 
-		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label?.ToString()??"");
         }
 
 
@@ -865,14 +865,12 @@ namespace Goedel.Tool.Command {
         }
 
     public partial class CommandParse : Goedel.Registry.Parser{
-        public List <Goedel.Tool.Command._Choice>        Top;
+        public List <Goedel.Tool.Command._Choice>        Top = [];
         public Registry	<Goedel.Tool.Command._Choice>	Registry;
-
         public bool StartOfEntry {get;  private set;}
-
-        StateCode								State;
+        StateCode								State = StateCode._Start;
         Goedel.Tool.Command._Choice				Current;
-        List <_StackItem>						Stack;
+        readonly List <_StackItem>						Stack = [];
 
 
         public static CommandParse Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -882,7 +880,7 @@ namespace Goedel.Tool.Command {
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
-                Lexer Schema = new Lexer(File);
+                Lexer Schema = new (File);
                 Schema.Process(infile, Result);
                 }
             Result.Init ();
@@ -904,10 +902,7 @@ namespace Goedel.Tool.Command {
 			}
 
         public CommandParse() {
-            Top = new List<Goedel.Tool.Command._Choice> () ;
             Registry = new Registry <Goedel.Tool.Command._Choice> ();
-            State = StateCode._Start;
-            Stack = new List <_StackItem> ();
             StartOfEntry = true;
 
 			TYPE__CommandType = Registry.TYPE ("CommandType"); 
@@ -965,7 +960,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Class NewClass() {
-            Goedel.Tool.Command.Class result = new Goedel.Tool.Command.Class();
+            Goedel.Tool.Command.Class result = new ();
             Push (result);
             State = StateCode.Class_Start;
             return result;
@@ -973,7 +968,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Library NewLibrary() {
-            Goedel.Tool.Command.Library result = new Goedel.Tool.Command.Library();
+            Goedel.Tool.Command.Library result = new ();
             Push (result);
             State = StateCode.Library_Start;
             return result;
@@ -981,7 +976,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.CommandSet NewCommandSet() {
-            Goedel.Tool.Command.CommandSet result = new Goedel.Tool.Command.CommandSet();
+            Goedel.Tool.Command.CommandSet result = new ();
             Push (result);
             State = StateCode.CommandSet_Start;
             return result;
@@ -989,7 +984,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Command NewCommand() {
-            Goedel.Tool.Command.Command result = new Goedel.Tool.Command.Command();
+            Goedel.Tool.Command.Command result = new ();
             Push (result);
             State = StateCode.Command_Start;
             return result;
@@ -997,7 +992,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Return NewReturn() {
-            Goedel.Tool.Command.Return result = new Goedel.Tool.Command.Return();
+            Goedel.Tool.Command.Return result = new ();
             Push (result);
             State = StateCode.Return_Start;
             return result;
@@ -1005,7 +1000,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.DefaultCommand NewDefaultCommand() {
-            Goedel.Tool.Command.DefaultCommand result = new Goedel.Tool.Command.DefaultCommand();
+            Goedel.Tool.Command.DefaultCommand result = new ();
             Push (result);
             State = StateCode.DefaultCommand_Start;
             return result;
@@ -1013,7 +1008,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Brief NewBrief() {
-            Goedel.Tool.Command.Brief result = new Goedel.Tool.Command.Brief();
+            Goedel.Tool.Command.Brief result = new ();
             Push (result);
             State = StateCode.Brief_Start;
             return result;
@@ -1021,7 +1016,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Parameter NewParameter() {
-            Goedel.Tool.Command.Parameter result = new Goedel.Tool.Command.Parameter();
+            Goedel.Tool.Command.Parameter result = new ();
             Push (result);
             State = StateCode.Parameter_Start;
             return result;
@@ -1029,7 +1024,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Parser NewParser() {
-            Goedel.Tool.Command.Parser result = new Goedel.Tool.Command.Parser();
+            Goedel.Tool.Command.Parser result = new ();
             Push (result);
             State = StateCode.Parser_Start;
             return result;
@@ -1037,7 +1032,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Option NewOption() {
-            Goedel.Tool.Command.Option result = new Goedel.Tool.Command.Option();
+            Goedel.Tool.Command.Option result = new ();
             Push (result);
             State = StateCode.Option_Start;
             return result;
@@ -1045,7 +1040,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Script NewScript() {
-            Goedel.Tool.Command.Script result = new Goedel.Tool.Command.Script();
+            Goedel.Tool.Command.Script result = new ();
             Push (result);
             State = StateCode.Script_Start;
             return result;
@@ -1053,7 +1048,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Include NewInclude() {
-            Goedel.Tool.Command.Include result = new Goedel.Tool.Command.Include();
+            Goedel.Tool.Command.Include result = new ();
             Push (result);
             State = StateCode.Include_Start;
             return result;
@@ -1061,7 +1056,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.OptionSet NewOptionSet() {
-            Goedel.Tool.Command.OptionSet result = new Goedel.Tool.Command.OptionSet();
+            Goedel.Tool.Command.OptionSet result = new ();
             Push (result);
             State = StateCode.OptionSet_Start;
             return result;
@@ -1069,7 +1064,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Enumerate NewEnumerate() {
-            Goedel.Tool.Command.Enumerate result = new Goedel.Tool.Command.Enumerate();
+            Goedel.Tool.Command.Enumerate result = new ();
             Push (result);
             State = StateCode.Enumerate_Start;
             return result;
@@ -1077,7 +1072,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Case NewCase() {
-            Goedel.Tool.Command.Case result = new Goedel.Tool.Command.Case();
+            Goedel.Tool.Command.Case result = new ();
             Push (result);
             State = StateCode.Case_Start;
             return result;
@@ -1085,7 +1080,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Type NewType() {
-            Goedel.Tool.Command.Type result = new Goedel.Tool.Command.Type();
+            Goedel.Tool.Command.Type result = new ();
             Push (result);
             State = StateCode.Type_Start;
             return result;
@@ -1093,7 +1088,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Default NewDefault() {
-            Goedel.Tool.Command.Default result = new Goedel.Tool.Command.Default();
+            Goedel.Tool.Command.Default result = new ();
             Push (result);
             State = StateCode.Default_Start;
             return result;
@@ -1101,7 +1096,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.About NewAbout() {
-            Goedel.Tool.Command.About result = new Goedel.Tool.Command.About();
+            Goedel.Tool.Command.About result = new ();
             Push (result);
             State = StateCode.About_Start;
             return result;
@@ -1109,7 +1104,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Help NewHelp() {
-            Goedel.Tool.Command.Help result = new Goedel.Tool.Command.Help();
+            Goedel.Tool.Command.Help result = new ();
             Push (result);
             State = StateCode.Help_Start;
             return result;
@@ -1117,7 +1112,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Lazy NewLazy() {
-            Goedel.Tool.Command.Lazy result = new Goedel.Tool.Command.Lazy();
+            Goedel.Tool.Command.Lazy result = new ();
             Push (result);
             State = StateCode.Lazy_Start;
             return result;
@@ -1125,7 +1120,7 @@ namespace Goedel.Tool.Command {
 
 
         private Goedel.Tool.Command.Generator NewGenerator() {
-            Goedel.Tool.Command.Generator result = new Goedel.Tool.Command.Generator();
+            Goedel.Tool.Command.Generator result = new ();
             Push (result);
             State = StateCode.Generator_Start;
             return result;
@@ -1176,7 +1171,7 @@ namespace Goedel.Tool.Command {
 
 
         void Push (Goedel.Tool.Command._Choice Token) {
-            _StackItem Item = new _StackItem () {
+            _StackItem Item = new  () {
 					State = State,
 					Token = Current
 					};
@@ -1191,7 +1186,7 @@ namespace Goedel.Tool.Command {
         void Pop () {
 			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
-            _StackItem Item = Stack[Stack.Count -1];
+            _StackItem Item = Stack[^1];
             State = Item.State;
             Current = Item.Token;
 

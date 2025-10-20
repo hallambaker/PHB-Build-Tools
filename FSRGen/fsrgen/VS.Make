@@ -18,8 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Tool.FSRGen.dll\
-    Goedel.Tool.Core.dll
+    Goedel.Tool.FSRGen.dll
 
 ToolTargets = \
 	FSRGen.cs
@@ -41,5 +40,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget fsrgen.dll
+	powershell publishtarget fsrgen.exe $(LinkFiles) 
 

@@ -117,7 +117,7 @@ using Goedel.Utilities;
 //       MessageT
 //       GroupT
 
-#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059, IDE0161, CS1591, CS8618
 namespace Goedel.Tool.Guigen {
 
 
@@ -179,12 +179,12 @@ namespace Goedel.Tool.Guigen {
     public abstract partial class _Choice {
         abstract public GuigenType _Tag ();
 
-        public _Choice _Parent;
-        public Guigen _Base;
+        public _Choice? _Parent;
+        public Guigen? _Base;
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
 
-    	public virtual void Init (_Choice parent) {
+    	public virtual void Init (_Choice? parent) {
             _Parent = parent;
             _Base ??= parent?._Base;
 			}
@@ -192,9 +192,9 @@ namespace Goedel.Tool.Guigen {
         
 
 		bool _Initialized = false;
-		public virtual void _InitChildren (_Choice parent) {
+		public virtual void _InitChildren (_Choice? parent) {
 			Init (parent);
-            _Base = parent._Base;
+            _Base = parent?._Base;
 			if (_Initialized) {
 				return;
 				}
@@ -212,7 +212,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Copyright;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			License._InitChildren (this);
 			}
@@ -237,7 +237,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.MITLicense;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -258,7 +258,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.BSD2License;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -279,7 +279,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.BSD3License;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -300,7 +300,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.ISCLicense;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -321,7 +321,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Apache2License;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -338,12 +338,12 @@ namespace Goedel.Tool.Guigen {
 		}
 
     public partial class OtherLicense : _Choice {
-		public List <System.String>			Text = new List <System.String> (); 
+		public List <System.String>			Text = []; 
 
         public override GuigenType _Tag () =>GuigenType.OtherLicense;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -365,12 +365,12 @@ namespace Goedel.Tool.Guigen {
     public partial class Class : _Choice {
         public TOKEN<_Choice>			Namespace;
         public TOKEN<_Choice>			Name;
-		public List <System.String>			Description = new List <System.String> (); 
+		public List <System.String>			Description = []; 
 
         public override GuigenType _Tag () =>GuigenType.Class;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -395,12 +395,12 @@ namespace Goedel.Tool.Guigen {
         public ID<_Choice>				Id; 
 		public string					Prompt;
 		public string					Icon;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Section;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -431,12 +431,12 @@ namespace Goedel.Tool.Guigen {
         public ID<_Choice>				Id; 
 		public string					Prompt;
 		public string					Icon;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Action;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -467,12 +467,12 @@ namespace Goedel.Tool.Guigen {
         public ID<_Choice>				Id; 
 		public string					Prompt;
 		public string					Icon;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Dialog;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -502,12 +502,12 @@ namespace Goedel.Tool.Guigen {
     public partial class Result : _Choice {
         public ID<_Choice>				Id; 
 		public string					Message;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Result;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -536,12 +536,12 @@ namespace Goedel.Tool.Guigen {
     public partial class Fail : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Message;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Fail;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -569,12 +569,12 @@ namespace Goedel.Tool.Guigen {
 
     public partial class Group : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Group;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -607,7 +607,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Icon;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -633,7 +633,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.DataActions;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -656,7 +656,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Confirmation;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -673,12 +673,12 @@ namespace Goedel.Tool.Guigen {
 		}
 
     public partial class Description : _Choice {
-		public List <System.String>			Text = new List <System.String> (); 
+		public List <System.String>			Text = []; 
 
         public override GuigenType _Tag () =>GuigenType.Description;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -703,7 +703,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Exception;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -725,7 +725,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Default;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -744,12 +744,12 @@ namespace Goedel.Tool.Guigen {
     public partial class Error : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Message;
-		public List <System.String>			Condition = new List <System.String> (); 
+		public List <System.String>			Condition = []; 
 
         public override GuigenType _Tag () =>GuigenType.Error;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -777,7 +777,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Emoji;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -801,7 +801,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Condition;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -825,7 +825,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Type;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -849,7 +849,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Button;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -870,12 +870,12 @@ namespace Goedel.Tool.Guigen {
         public REF<_Choice>				Id;
 		public string					Prompt;
 		public string					Icon;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Selection;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -905,12 +905,12 @@ namespace Goedel.Tool.Guigen {
     public partial class Context : _Choice {
         public TOKEN<_Choice>			Id;
         public REF<_Choice>				Type;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Context;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -942,7 +942,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Return;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -965,7 +965,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Inherit;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -987,12 +987,12 @@ namespace Goedel.Tool.Guigen {
         public TOKEN<_Choice>			Type;
 		public string					Prompt;
 		public string					Icon;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.List;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1024,12 +1024,12 @@ namespace Goedel.Tool.Guigen {
         public ID<_Choice>				Id; 
 		public string					Prompt;
 		public string					Icon;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Chooser;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1059,12 +1059,12 @@ namespace Goedel.Tool.Guigen {
     public partial class Filter : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Filter;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1095,7 +1095,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Primary;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1113,12 +1113,12 @@ namespace Goedel.Tool.Guigen {
 
     public partial class Hidden : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Hidden;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1146,12 +1146,12 @@ namespace Goedel.Tool.Guigen {
     public partial class Boolean : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Boolean;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1180,12 +1180,12 @@ namespace Goedel.Tool.Guigen {
     public partial class Text : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Text;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1214,12 +1214,12 @@ namespace Goedel.Tool.Guigen {
     public partial class TextArea : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.TextArea;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1248,12 +1248,12 @@ namespace Goedel.Tool.Guigen {
     public partial class Color : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Color;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1282,12 +1282,12 @@ namespace Goedel.Tool.Guigen {
     public partial class Size : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Size;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1316,12 +1316,12 @@ namespace Goedel.Tool.Guigen {
     public partial class Decimal : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Decimal;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1350,12 +1350,12 @@ namespace Goedel.Tool.Guigen {
     public partial class DateTime : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.DateTime;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1384,12 +1384,12 @@ namespace Goedel.Tool.Guigen {
     public partial class Integer : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.Integer;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1420,7 +1420,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Readonly;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1443,7 +1443,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Range;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1467,7 +1467,7 @@ namespace Goedel.Tool.Guigen {
         public override GuigenType _Tag () =>GuigenType.Width;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1487,12 +1487,12 @@ namespace Goedel.Tool.Guigen {
     public partial class QRScan : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Prompt;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override GuigenType _Tag () =>GuigenType.QRScan;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1519,7 +1519,7 @@ namespace Goedel.Tool.Guigen {
 		}
 
     class _Label : _Choice {
-        public REF<_Choice>            Label;
+        public REF<_Choice>?            Label;
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
@@ -1527,7 +1527,7 @@ namespace Goedel.Tool.Guigen {
 
         public override GuigenType _Tag () => GuigenType._Label;
 
-		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label?.ToString()??"");
         }
 
 
@@ -1687,14 +1687,12 @@ namespace Goedel.Tool.Guigen {
         }
 
     public partial class Guigen : Goedel.Registry.Parser{
-        public List <Goedel.Tool.Guigen._Choice>        Top;
+        public List <Goedel.Tool.Guigen._Choice>        Top = [];
         public Registry	<Goedel.Tool.Guigen._Choice>	Registry;
-
         public bool StartOfEntry {get;  private set;}
-
-        StateCode								State;
+        StateCode								State = StateCode._Start;
         Goedel.Tool.Guigen._Choice				Current;
-        List <_StackItem>						Stack;
+        readonly List <_StackItem>						Stack = [];
 
 
         public static Guigen Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -1704,7 +1702,7 @@ namespace Goedel.Tool.Guigen {
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
-                Lexer Schema = new Lexer(File);
+                Lexer Schema = new (File);
                 Schema.Process(infile, Result);
                 }
             Result.Init ();
@@ -1726,10 +1724,7 @@ namespace Goedel.Tool.Guigen {
 			}
 
         public Guigen() {
-            Top = new List<Goedel.Tool.Guigen._Choice> () ;
             Registry = new Registry <Goedel.Tool.Guigen._Choice> ();
-            State = StateCode._Start;
-            Stack = new List <_StackItem> ();
             StartOfEntry = true;
 
 			TYPE__SectionT = Registry.TYPE ("SectionT"); 
@@ -1808,7 +1803,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Copyright NewCopyright() {
-            Goedel.Tool.Guigen.Copyright result = new Goedel.Tool.Guigen.Copyright();
+            Goedel.Tool.Guigen.Copyright result = new ();
             Push (result);
             State = StateCode.Copyright_Start;
             return result;
@@ -1816,7 +1811,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.MITLicense NewMITLicense() {
-            Goedel.Tool.Guigen.MITLicense result = new Goedel.Tool.Guigen.MITLicense();
+            Goedel.Tool.Guigen.MITLicense result = new ();
             Push (result);
             State = StateCode.MITLicense_Start;
             return result;
@@ -1824,7 +1819,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.BSD2License NewBSD2License() {
-            Goedel.Tool.Guigen.BSD2License result = new Goedel.Tool.Guigen.BSD2License();
+            Goedel.Tool.Guigen.BSD2License result = new ();
             Push (result);
             State = StateCode.BSD2License_Start;
             return result;
@@ -1832,7 +1827,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.BSD3License NewBSD3License() {
-            Goedel.Tool.Guigen.BSD3License result = new Goedel.Tool.Guigen.BSD3License();
+            Goedel.Tool.Guigen.BSD3License result = new ();
             Push (result);
             State = StateCode.BSD3License_Start;
             return result;
@@ -1840,7 +1835,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.ISCLicense NewISCLicense() {
-            Goedel.Tool.Guigen.ISCLicense result = new Goedel.Tool.Guigen.ISCLicense();
+            Goedel.Tool.Guigen.ISCLicense result = new ();
             Push (result);
             State = StateCode.ISCLicense_Start;
             return result;
@@ -1848,7 +1843,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Apache2License NewApache2License() {
-            Goedel.Tool.Guigen.Apache2License result = new Goedel.Tool.Guigen.Apache2License();
+            Goedel.Tool.Guigen.Apache2License result = new ();
             Push (result);
             State = StateCode.Apache2License_Start;
             return result;
@@ -1856,7 +1851,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.OtherLicense NewOtherLicense() {
-            Goedel.Tool.Guigen.OtherLicense result = new Goedel.Tool.Guigen.OtherLicense();
+            Goedel.Tool.Guigen.OtherLicense result = new ();
             Push (result);
             State = StateCode.OtherLicense_Start;
             return result;
@@ -1864,7 +1859,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Class NewClass() {
-            Goedel.Tool.Guigen.Class result = new Goedel.Tool.Guigen.Class();
+            Goedel.Tool.Guigen.Class result = new ();
             Push (result);
             State = StateCode.Class_Start;
             return result;
@@ -1872,7 +1867,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Section NewSection() {
-            Goedel.Tool.Guigen.Section result = new Goedel.Tool.Guigen.Section();
+            Goedel.Tool.Guigen.Section result = new ();
             Push (result);
             State = StateCode.Section_Start;
             return result;
@@ -1880,7 +1875,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Action NewAction() {
-            Goedel.Tool.Guigen.Action result = new Goedel.Tool.Guigen.Action();
+            Goedel.Tool.Guigen.Action result = new ();
             Push (result);
             State = StateCode.Action_Start;
             return result;
@@ -1888,7 +1883,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Dialog NewDialog() {
-            Goedel.Tool.Guigen.Dialog result = new Goedel.Tool.Guigen.Dialog();
+            Goedel.Tool.Guigen.Dialog result = new ();
             Push (result);
             State = StateCode.Dialog_Start;
             return result;
@@ -1896,7 +1891,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Result NewResult() {
-            Goedel.Tool.Guigen.Result result = new Goedel.Tool.Guigen.Result();
+            Goedel.Tool.Guigen.Result result = new ();
             Push (result);
             State = StateCode.Result_Start;
             return result;
@@ -1904,7 +1899,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Fail NewFail() {
-            Goedel.Tool.Guigen.Fail result = new Goedel.Tool.Guigen.Fail();
+            Goedel.Tool.Guigen.Fail result = new ();
             Push (result);
             State = StateCode.Fail_Start;
             return result;
@@ -1912,7 +1907,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Group NewGroup() {
-            Goedel.Tool.Guigen.Group result = new Goedel.Tool.Guigen.Group();
+            Goedel.Tool.Guigen.Group result = new ();
             Push (result);
             State = StateCode.Group_Start;
             return result;
@@ -1920,7 +1915,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Icon NewIcon() {
-            Goedel.Tool.Guigen.Icon result = new Goedel.Tool.Guigen.Icon();
+            Goedel.Tool.Guigen.Icon result = new ();
             Push (result);
             State = StateCode.Icon_Start;
             return result;
@@ -1928,7 +1923,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.DataActions NewDataActions() {
-            Goedel.Tool.Guigen.DataActions result = new Goedel.Tool.Guigen.DataActions();
+            Goedel.Tool.Guigen.DataActions result = new ();
             Push (result);
             State = StateCode.DataActions_Start;
             return result;
@@ -1936,7 +1931,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Confirmation NewConfirmation() {
-            Goedel.Tool.Guigen.Confirmation result = new Goedel.Tool.Guigen.Confirmation();
+            Goedel.Tool.Guigen.Confirmation result = new ();
             Push (result);
             State = StateCode.Confirmation_Start;
             return result;
@@ -1944,7 +1939,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Description NewDescription() {
-            Goedel.Tool.Guigen.Description result = new Goedel.Tool.Guigen.Description();
+            Goedel.Tool.Guigen.Description result = new ();
             Push (result);
             State = StateCode.Description_Start;
             return result;
@@ -1952,7 +1947,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Exception NewException() {
-            Goedel.Tool.Guigen.Exception result = new Goedel.Tool.Guigen.Exception();
+            Goedel.Tool.Guigen.Exception result = new ();
             Push (result);
             State = StateCode.Exception_Start;
             return result;
@@ -1960,7 +1955,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Default NewDefault() {
-            Goedel.Tool.Guigen.Default result = new Goedel.Tool.Guigen.Default();
+            Goedel.Tool.Guigen.Default result = new ();
             Push (result);
             State = StateCode.Default_Start;
             return result;
@@ -1968,7 +1963,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Error NewError() {
-            Goedel.Tool.Guigen.Error result = new Goedel.Tool.Guigen.Error();
+            Goedel.Tool.Guigen.Error result = new ();
             Push (result);
             State = StateCode.Error_Start;
             return result;
@@ -1976,7 +1971,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Emoji NewEmoji() {
-            Goedel.Tool.Guigen.Emoji result = new Goedel.Tool.Guigen.Emoji();
+            Goedel.Tool.Guigen.Emoji result = new ();
             Push (result);
             State = StateCode.Emoji_Start;
             return result;
@@ -1984,7 +1979,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Condition NewCondition() {
-            Goedel.Tool.Guigen.Condition result = new Goedel.Tool.Guigen.Condition();
+            Goedel.Tool.Guigen.Condition result = new ();
             Push (result);
             State = StateCode.Condition_Start;
             return result;
@@ -1992,7 +1987,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Type NewType() {
-            Goedel.Tool.Guigen.Type result = new Goedel.Tool.Guigen.Type();
+            Goedel.Tool.Guigen.Type result = new ();
             Push (result);
             State = StateCode.Type_Start;
             return result;
@@ -2000,7 +1995,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Button NewButton() {
-            Goedel.Tool.Guigen.Button result = new Goedel.Tool.Guigen.Button();
+            Goedel.Tool.Guigen.Button result = new ();
             Push (result);
             State = StateCode.Button_Start;
             return result;
@@ -2008,7 +2003,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Selection NewSelection() {
-            Goedel.Tool.Guigen.Selection result = new Goedel.Tool.Guigen.Selection();
+            Goedel.Tool.Guigen.Selection result = new ();
             Push (result);
             State = StateCode.Selection_Start;
             return result;
@@ -2016,7 +2011,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Context NewContext() {
-            Goedel.Tool.Guigen.Context result = new Goedel.Tool.Guigen.Context();
+            Goedel.Tool.Guigen.Context result = new ();
             Push (result);
             State = StateCode.Context_Start;
             return result;
@@ -2024,7 +2019,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Return NewReturn() {
-            Goedel.Tool.Guigen.Return result = new Goedel.Tool.Guigen.Return();
+            Goedel.Tool.Guigen.Return result = new ();
             Push (result);
             State = StateCode.Return_Start;
             return result;
@@ -2032,7 +2027,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Inherit NewInherit() {
-            Goedel.Tool.Guigen.Inherit result = new Goedel.Tool.Guigen.Inherit();
+            Goedel.Tool.Guigen.Inherit result = new ();
             Push (result);
             State = StateCode.Inherit_Start;
             return result;
@@ -2040,7 +2035,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.List NewList() {
-            Goedel.Tool.Guigen.List result = new Goedel.Tool.Guigen.List();
+            Goedel.Tool.Guigen.List result = new ();
             Push (result);
             State = StateCode.List_Start;
             return result;
@@ -2048,7 +2043,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Chooser NewChooser() {
-            Goedel.Tool.Guigen.Chooser result = new Goedel.Tool.Guigen.Chooser();
+            Goedel.Tool.Guigen.Chooser result = new ();
             Push (result);
             State = StateCode.Chooser_Start;
             return result;
@@ -2056,7 +2051,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Filter NewFilter() {
-            Goedel.Tool.Guigen.Filter result = new Goedel.Tool.Guigen.Filter();
+            Goedel.Tool.Guigen.Filter result = new ();
             Push (result);
             State = StateCode.Filter_Start;
             return result;
@@ -2064,7 +2059,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Primary NewPrimary() {
-            Goedel.Tool.Guigen.Primary result = new Goedel.Tool.Guigen.Primary();
+            Goedel.Tool.Guigen.Primary result = new ();
             Push (result);
             State = StateCode.Primary_Start;
             return result;
@@ -2072,7 +2067,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Hidden NewHidden() {
-            Goedel.Tool.Guigen.Hidden result = new Goedel.Tool.Guigen.Hidden();
+            Goedel.Tool.Guigen.Hidden result = new ();
             Push (result);
             State = StateCode.Hidden_Start;
             return result;
@@ -2080,7 +2075,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Boolean NewBoolean() {
-            Goedel.Tool.Guigen.Boolean result = new Goedel.Tool.Guigen.Boolean();
+            Goedel.Tool.Guigen.Boolean result = new ();
             Push (result);
             State = StateCode.Boolean_Start;
             return result;
@@ -2088,7 +2083,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Text NewText() {
-            Goedel.Tool.Guigen.Text result = new Goedel.Tool.Guigen.Text();
+            Goedel.Tool.Guigen.Text result = new ();
             Push (result);
             State = StateCode.Text_Start;
             return result;
@@ -2096,7 +2091,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.TextArea NewTextArea() {
-            Goedel.Tool.Guigen.TextArea result = new Goedel.Tool.Guigen.TextArea();
+            Goedel.Tool.Guigen.TextArea result = new ();
             Push (result);
             State = StateCode.TextArea_Start;
             return result;
@@ -2104,7 +2099,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Color NewColor() {
-            Goedel.Tool.Guigen.Color result = new Goedel.Tool.Guigen.Color();
+            Goedel.Tool.Guigen.Color result = new ();
             Push (result);
             State = StateCode.Color_Start;
             return result;
@@ -2112,7 +2107,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Size NewSize() {
-            Goedel.Tool.Guigen.Size result = new Goedel.Tool.Guigen.Size();
+            Goedel.Tool.Guigen.Size result = new ();
             Push (result);
             State = StateCode.Size_Start;
             return result;
@@ -2120,7 +2115,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Decimal NewDecimal() {
-            Goedel.Tool.Guigen.Decimal result = new Goedel.Tool.Guigen.Decimal();
+            Goedel.Tool.Guigen.Decimal result = new ();
             Push (result);
             State = StateCode.Decimal_Start;
             return result;
@@ -2128,7 +2123,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.DateTime NewDateTime() {
-            Goedel.Tool.Guigen.DateTime result = new Goedel.Tool.Guigen.DateTime();
+            Goedel.Tool.Guigen.DateTime result = new ();
             Push (result);
             State = StateCode.DateTime_Start;
             return result;
@@ -2136,7 +2131,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Integer NewInteger() {
-            Goedel.Tool.Guigen.Integer result = new Goedel.Tool.Guigen.Integer();
+            Goedel.Tool.Guigen.Integer result = new ();
             Push (result);
             State = StateCode.Integer_Start;
             return result;
@@ -2144,7 +2139,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Readonly NewReadonly() {
-            Goedel.Tool.Guigen.Readonly result = new Goedel.Tool.Guigen.Readonly();
+            Goedel.Tool.Guigen.Readonly result = new ();
             Push (result);
             State = StateCode.Readonly_Start;
             return result;
@@ -2152,7 +2147,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Range NewRange() {
-            Goedel.Tool.Guigen.Range result = new Goedel.Tool.Guigen.Range();
+            Goedel.Tool.Guigen.Range result = new ();
             Push (result);
             State = StateCode.Range_Start;
             return result;
@@ -2160,7 +2155,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.Width NewWidth() {
-            Goedel.Tool.Guigen.Width result = new Goedel.Tool.Guigen.Width();
+            Goedel.Tool.Guigen.Width result = new ();
             Push (result);
             State = StateCode.Width_Start;
             return result;
@@ -2168,7 +2163,7 @@ namespace Goedel.Tool.Guigen {
 
 
         private Goedel.Tool.Guigen.QRScan NewQRScan() {
-            Goedel.Tool.Guigen.QRScan result = new Goedel.Tool.Guigen.QRScan();
+            Goedel.Tool.Guigen.QRScan result = new ();
             Push (result);
             State = StateCode.QRScan_Start;
             return result;
@@ -2244,7 +2239,7 @@ namespace Goedel.Tool.Guigen {
 
 
         void Push (Goedel.Tool.Guigen._Choice Token) {
-            _StackItem Item = new _StackItem () {
+            _StackItem Item = new  () {
 					State = State,
 					Token = Current
 					};
@@ -2259,7 +2254,7 @@ namespace Goedel.Tool.Guigen {
         void Pop () {
 			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
-            _StackItem Item = Stack[Stack.Count -1];
+            _StackItem Item = Stack[^1];
             State = Item.State;
             Current = Item.Token;
 

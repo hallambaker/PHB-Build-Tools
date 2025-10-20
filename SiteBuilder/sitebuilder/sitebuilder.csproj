@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <AssemblyName>sitebuilder</AssemblyName>
+	  <Product>sitebuilder</Product>
+	  <Description>Generates JSON Web protocol service and client classes.</Description>
+	  <Copyright>© 2025</Copyright>
+	  <Title>Protocol</Title>
+	  <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+    <ProjectReference Include="..\Goedel.Tool.Sitebuilder\Goedel.Tool.Sitebuilder.csproj" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="sitebuilder.cs">
+			<DependentUpon>sitebuilder.command</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="sitebuilder.command">
+			<LastGenOutput>sitebuilder.cs</LastGenOutput>
+			<Generator>CommandCS</Generator>
+		</None>
+	</ItemGroup>
+
+	
+	
+</Project>

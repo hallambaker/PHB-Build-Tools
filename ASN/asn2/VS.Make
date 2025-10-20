@@ -42,5 +42,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget asn2.dll
+	powershell publishtarget asn2.exe $(LinkFiles) 
 

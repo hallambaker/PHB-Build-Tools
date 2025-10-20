@@ -120,7 +120,7 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 				}
 			}
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059\n{0}", _Indent);
+		_Output.Write ("#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059, IDE0161, CS1591, CS8618\n{0}", _Indent);
 		_Output.Write ("namespace {1} {{\n{0}", _Indent, Class.Namespace);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
@@ -147,12 +147,12 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 		_Output.Write ("    public abstract partial class _Choice {{\n{0}", _Indent);
 		_Output.Write ("        abstract public {1}Type _Tag ();\n{0}", _Indent, Class.Name);
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("        public _Choice _Parent;\n{0}", _Indent);
-		_Output.Write ("        public {1} _Base;\n{0}", _Indent, Class.Name);
+		_Output.Write ("        public _Choice? _Parent;\n{0}", _Indent);
+		_Output.Write ("        public {1}? _Base;\n{0}", _Indent, Class.Name);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("		public abstract void Serialize (StructureWriter Output, bool tag);\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("    	public virtual void Init (_Choice parent) {{\n{0}", _Indent);
+		_Output.Write ("    	public virtual void Init (_Choice? parent) {{\n{0}", _Indent);
 		_Output.Write ("            _Parent = parent;\n{0}", _Indent);
 		_Output.Write ("            _Base ??= parent?._Base;\n{0}", _Indent);
 		_Output.Write ("			}}\n{0}", _Indent);
@@ -160,9 +160,9 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 		_Output.Write ("        \n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("		bool _Initialized = false;\n{0}", _Indent);
-		_Output.Write ("		public virtual void _InitChildren (_Choice parent) {{\n{0}", _Indent);
+		_Output.Write ("		public virtual void _InitChildren (_Choice? parent) {{\n{0}", _Indent);
 		_Output.Write ("			Init (parent);\n{0}", _Indent);
-		_Output.Write ("            _Base = parent._Base;\n{0}", _Indent);
+		_Output.Write ("            _Base = parent?._Base;\n{0}", _Indent);
 		_Output.Write ("			if (_Initialized) {{\n{0}", _Indent);
 		_Output.Write ("				return;\n{0}", _Indent);
 		_Output.Write ("				}}\n{0}", _Indent);
@@ -192,7 +192,7 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 			_Output.Write ("        public override {1}Type _Tag () =>{2}Type.{3};\n{0}", _Indent, Class.Name, Class.Name, ID);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("		public override void _InitChildren (_Choice Parent) {{\n{0}", _Indent);
+			_Output.Write ("		public override void _InitChildren (_Choice? Parent) {{\n{0}", _Indent);
 			_Output.Write ("			Init (Parent);\n{0}", _Indent);
 			foreach  (Entry Entry in Entries) {
 				switch (Entry.Type._Tag ()) {
@@ -234,7 +234,7 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    class _Label : _Choice {{\n{0}", _Indent);
-		_Output.Write ("        public REF<_Choice>            Label;\n{0}", _Indent);
+		_Output.Write ("        public REF<_Choice>?            Label;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("		// This method is never called. It exists only to prevent a warning when a\n{0}", _Indent);
 		_Output.Write ("		// Schema does not contain a ChoiceREF element.\n{0}", _Indent);
@@ -242,7 +242,7 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("        public override {1}Type _Tag () => {2}Type._Label;\n{0}", _Indent, Class.Name, Class.Name);
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId (\"ID\", Label.ToString());\n{0}", _Indent);
+		_Output.Write ("		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId (\"ID\", Label?.ToString()??\"\");\n{0}", _Indent);
 		_Output.Write ("        }}\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
@@ -277,14 +277,12 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 		_Output.Write ("        }}\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("    public partial class {1} : Goedel.Registry.Parser{{\n{0}", _Indent, Class.Name);
-		_Output.Write ("        public List <{1}._Choice>        Top;\n{0}", _Indent, Class.Namespace);
+		_Output.Write ("        public List <{1}._Choice>        Top = [];\n{0}", _Indent, Class.Namespace);
 		_Output.Write ("        public Registry	<{1}._Choice>	Registry;\n{0}", _Indent, Class.Namespace);
-		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("        public bool StartOfEntry {{get;  private set;}}\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("        StateCode								State;\n{0}", _Indent);
+		_Output.Write ("        StateCode								State = StateCode._Start;\n{0}", _Indent);
 		_Output.Write ("        {1}._Choice				Current;\n{0}", _Indent, Class.Namespace);
-		_Output.Write ("        List <_StackItem>						Stack;\n{0}", _Indent);
+		_Output.Write ("        readonly List <_StackItem>						Stack = [];\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("        public static {1} Parse(string File, Goedel.Registry.Dispatch Options) {{\n{0}", _Indent, Class.Name);
@@ -294,7 +292,7 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("            using (Stream infile =\n{0}", _Indent);
 		_Output.Write ("                        new FileStream(File, FileMode.Open, FileAccess.Read)) {{\n{0}", _Indent);
-		_Output.Write ("                Lexer Schema = new Lexer(File);\n{0}", _Indent);
+		_Output.Write ("                Lexer Schema = new (File);\n{0}", _Indent);
 		_Output.Write ("                Schema.Process(infile, Result);\n{0}", _Indent);
 		_Output.Write ("                }}\n{0}", _Indent);
 		_Output.Write ("            Result.Init ();\n{0}", _Indent);
@@ -316,10 +314,7 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 		_Output.Write ("			}}\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("        public {1}() {{\n{0}", _Indent, Class.Name);
-		_Output.Write ("            Top = new List<{1}._Choice> () ;\n{0}", _Indent, Class.Namespace);
 		_Output.Write ("            Registry = new Registry <{1}._Choice> ();\n{0}", _Indent, Class.Namespace);
-		_Output.Write ("            State = StateCode._Start;\n{0}", _Indent);
-		_Output.Write ("            Stack = new List <_StackItem> ();\n{0}", _Indent);
 		_Output.Write ("            StartOfEntry = true;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		// Seems to be a bug here, IDs are only created if there is a reference to a type
@@ -378,7 +373,7 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 				}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("        private {1}.{2} New{3}() {{\n{0}", _Indent, Class.Namespace, ID, ID);
-			_Output.Write ("            {1}.{2} result = new {3}.{4}();\n{0}", _Indent, Class.Namespace, ID, Class.Namespace, ID);
+			_Output.Write ("            {1}.{2} result = new ();\n{0}", _Indent, Class.Namespace, ID);
 			_Output.Write ("            Push (result);\n{0}", _Indent);
 			_Output.Write ("            State = StateCode.{1}_Start;\n{0}", _Indent, ID);
 			_Output.Write ("            return result;\n{0}", _Indent);
@@ -420,7 +415,7 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("        void Push ({1}._Choice Token) {{\n{0}", _Indent, Class.Namespace);
-		_Output.Write ("            _StackItem Item = new _StackItem () {{\n{0}", _Indent);
+		_Output.Write ("            _StackItem Item = new  () {{\n{0}", _Indent);
 		_Output.Write ("					State = State,\n{0}", _Indent);
 		_Output.Write ("					Token = Current\n{0}", _Indent);
 		_Output.Write ("					}};\n{0}", _Indent);
@@ -435,7 +430,7 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 		_Output.Write ("        void Pop () {{\n{0}", _Indent);
 		_Output.Write ("			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("            _StackItem Item = Stack[Stack.Count -1];\n{0}", _Indent);
+		_Output.Write ("            _StackItem Item = Stack[^1];\n{0}", _Indent);
 		_Output.Write ("            State = Item.State;\n{0}", _Indent);
 		_Output.Write ("            Current = Item.Token;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
@@ -599,8 +594,6 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 						case  GoedelType._Label: {
 						
 						 _Label LLabel = (_Label) List.Type;
-						_Output.Write ("\n{0}", _Indent);
-						_Output.Write ("						/// Label\n{0}", _Indent);
 						_Output.Write ("                        else {{\n{0}", _Indent);
 						_Output.Write ("                            {1}.{2} Current_Cast = ({3}.{4})Current;\n{0}", _Indent, Class.Namespace, ID, Class.Namespace, ID);
 						_Output.Write ("                            Current_Cast.{1}.Add (New{2} ());\n{0}", _Indent, Entry.Name, LLabel.Label);
@@ -849,10 +842,10 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 			foreach  (OptionEntry OEntry in Options.Entries) {
 				switch (OEntry.Occurs._Tag ()) {
 					case GoedelType.Single: { 
-					_Output.Write ("		public {1}  {2} = new  {3}();\n{0}", _Indent, OEntry.Type, OEntry.Name, OEntry.Type);
+					_Output.Write ("		public {1}  {2} = new ();\n{0}", _Indent, OEntry.Type, OEntry.Name);
 					break; }
 					case GoedelType.Multiple: { 
-					_Output.Write ("		public List<{1}>  {2} = new  List <{3}> ();\n{0}", _Indent, OEntry.Type, OEntry.Name, OEntry.Type);
+					_Output.Write ("		public List<{1}>  {2} = [];\n{0}", _Indent, OEntry.Type, OEntry.Name);
 				break; }
 					}
 				}
@@ -905,7 +898,7 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 				 Type = "bool";
 			break; }
 				}
-			_Output.Write ("        public List <{1}>           {2} = new List<{3}> ();\n{0}", _Indent, Type, Entry.Name, Type);
+			_Output.Write ("        public List <{1}>           {2} = [];\n{0}", _Indent, Type, Entry.Name);
 			break; }
 			case GoedelType.Choice: { 
 			_Output.Write ("        public _Choice					{1};\n{0}", _Indent, Entry.Name);
@@ -926,7 +919,7 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 			_Output.Write ("		public string					{1};\n{0}", _Indent, Entry.Name);
 			break; }
 			case GoedelType.Text: { 
-			_Output.Write ("		public List <System.String>			{1} = new List <System.String> (); \n{0}", _Indent, Entry.Name);
+			_Output.Write ("		public List <System.String>			{1} = []; \n{0}", _Indent, Entry.Name);
 			break; }
 			case GoedelType.Integer: { 
 			_Output.Write ("		public int						{1};\n{0}", _Indent, Entry.Name);
@@ -951,7 +944,6 @@ public partial class GenerateParser : global::Goedel.Registry.Script {
 			foreach  (OptionEntry OEntry in Options.Entries) {
 				switch (OEntry.Occurs._Tag ()) {
 					case GoedelType.Single: { 
-					_Output.Write ("		// public {1}  {2} = new  {3}();\n{0}", _Indent, OEntry.Type, OEntry.Name, OEntry.Type);
 					_Output.Write ("			{1}.Serialize (Output, true);\n{0}", _Indent, OEntry.Name);
 					break; }
 					case GoedelType.Multiple: { 

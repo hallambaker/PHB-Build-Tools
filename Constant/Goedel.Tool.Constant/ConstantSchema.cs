@@ -87,7 +87,7 @@ using Goedel.Utilities;
 //       Name
 //       Label
 
-#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059, IDE0161, CS1591, CS8618
 namespace Goedel.Tool.Constant {
 
 
@@ -122,12 +122,12 @@ namespace Goedel.Tool.Constant {
     public abstract partial class _Choice {
         abstract public ConstantType _Tag ();
 
-        public _Choice _Parent;
-        public Constant _Base;
+        public _Choice? _Parent;
+        public Constant? _Base;
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
 
-    	public virtual void Init (_Choice parent) {
+    	public virtual void Init (_Choice? parent) {
             _Parent = parent;
             _Base ??= parent?._Base;
 			}
@@ -135,9 +135,9 @@ namespace Goedel.Tool.Constant {
         
 
 		bool _Initialized = false;
-		public virtual void _InitChildren (_Choice parent) {
+		public virtual void _InitChildren (_Choice? parent) {
 			Init (parent);
-            _Base = parent._Base;
+            _Base = parent?._Base;
 			if (_Initialized) {
 				return;
 				}
@@ -150,12 +150,12 @@ namespace Goedel.Tool.Constant {
     public partial class Namespace : _Choice {
         public TOKEN<_Choice>			Id;
         public TOKEN<_Choice>			Class;
-		public List <System.String>			Text = new List <System.String> (); 
+		public List <System.String>			Text = []; 
 
         public override ConstantType _Tag () =>ConstantType.Namespace;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -178,12 +178,12 @@ namespace Goedel.Tool.Constant {
 
     public partial class File : _Choice {
         public ID<_Choice>				Id; 
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ConstantType _Tag () =>ConstantType.File;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -211,12 +211,12 @@ namespace Goedel.Tool.Constant {
     public partial class IANA : _Choice {
         public REF<_Choice>				Id;
 		public string					Title;
-		public Description  Description = new  Description();
+		public Description  Description = new ();
 
         public override ConstantType _Tag () =>ConstantType.IANA;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -229,7 +229,6 @@ namespace Goedel.Tool.Constant {
 	        Output.WriteId ("Id", Id.ToString());
 			Output.WriteAttribute ("Title", Title);
 			Output.StartList ("");
-		// public Description  Description = new  Description();
 			Description.Serialize (Output, true);
 			Output.EndList ("");
 			if (tag) {
@@ -241,12 +240,12 @@ namespace Goedel.Tool.Constant {
     public partial class Code : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Title;
-		public Description  Description = new  Description();
+		public Description  Description = new ();
 
         public override ConstantType _Tag () =>ConstantType.Code;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -259,7 +258,6 @@ namespace Goedel.Tool.Constant {
 	        Output.WriteId ("Id", Id.ToString());
 			Output.WriteAttribute ("Title", Title);
 			Output.StartList ("");
-		// public Description  Description = new  Description();
 			Description.Serialize (Output, true);
 			Output.EndList ("");
 			if (tag) {
@@ -271,12 +269,12 @@ namespace Goedel.Tool.Constant {
     public partial class String : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Value;
-		public Description  Description = new  Description();
+		public Description  Description = new ();
 
         public override ConstantType _Tag () =>ConstantType.String;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -289,7 +287,6 @@ namespace Goedel.Tool.Constant {
 	        Output.WriteId ("Id", Id.ToString());
 			Output.WriteAttribute ("Value", Value);
 			Output.StartList ("");
-		// public Description  Description = new  Description();
 			Description.Serialize (Output, true);
 			Output.EndList ("");
 			if (tag) {
@@ -301,13 +298,13 @@ namespace Goedel.Tool.Constant {
     public partial class Parameters : _Choice {
         public ID<_Choice>				Id; 
 		public string					Title;
-		public List<Integer>  Integer = new  List <Integer> ();
-		public List<Tag>  Tag = new  List <Tag> ();
+		public List<Integer>  Integer = [];
+		public List<Tag>  Tag = [];
 
         public override ConstantType _Tag () =>ConstantType.Parameters;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -336,15 +333,15 @@ namespace Goedel.Tool.Constant {
     public partial class Enum : _Choice {
         public ID<_Choice>				Id; 
 		public string					Title;
-		public List<Code>  Code = new  List <Code> ();
-		public List<UDF>  UDF = new  List <UDF> ();
-		public List<Integer>  Integer = new  List <Integer> ();
-		public List<Tag>  Tag = new  List <Tag> ();
+		public List<Code>  Code = [];
+		public List<UDF>  UDF = [];
+		public List<Integer>  Integer = [];
+		public List<Tag>  Tag = [];
 
         public override ConstantType _Tag () =>ConstantType.Enum;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -379,12 +376,12 @@ namespace Goedel.Tool.Constant {
     public partial class Tag : _Choice {
         public ID<_Choice>				Id; 
 		public string					Value;
-		public Description  Description = new  Description();
+		public Description  Description = new ();
 
         public override ConstantType _Tag () =>ConstantType.Tag;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -397,7 +394,6 @@ namespace Goedel.Tool.Constant {
 	        Output.WriteId ("Id", Id.ToString()); 
 			Output.WriteAttribute ("Value", Value);
 			Output.StartList ("");
-		// public Description  Description = new  Description();
 			Description.Serialize (Output, true);
 			Output.EndList ("");
 			if (tag) {
@@ -409,14 +405,14 @@ namespace Goedel.Tool.Constant {
     public partial class UDF : _Choice {
 		public int						Value;
         public TOKEN<_Choice>			Class;
-		public Algorithm  Algorithm = new  Algorithm();
-		public Compress  Compress = new  Compress();
-		public Note  Note = new  Note();
+		public Algorithm  Algorithm = new ();
+		public Compress  Compress = new ();
+		public Note  Note = new ();
 
         public override ConstantType _Tag () =>ConstantType.UDF;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -429,11 +425,8 @@ namespace Goedel.Tool.Constant {
 			Output.WriteAttribute ("Value", Value);
 	        Output.WriteId ("Class", Class.ToString());
 			Output.StartList ("");
-		// public Algorithm  Algorithm = new  Algorithm();
 			Algorithm.Serialize (Output, true);
-		// public Compress  Compress = new  Compress();
 			Compress.Serialize (Output, true);
-		// public Note  Note = new  Note();
 			Note.Serialize (Output, true);
 			Output.EndList ("");
 			if (tag) {
@@ -448,7 +441,7 @@ namespace Goedel.Tool.Constant {
         public override ConstantType _Tag () =>ConstantType.Note;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -471,7 +464,7 @@ namespace Goedel.Tool.Constant {
         public override ConstantType _Tag () =>ConstantType.Algorithm;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -494,7 +487,7 @@ namespace Goedel.Tool.Constant {
         public override ConstantType _Tag () =>ConstantType.Compress;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -515,13 +508,13 @@ namespace Goedel.Tool.Constant {
         public TOKEN<_Choice>			Id;
 		public int						Value;
 		public string					Title;
-		public Description  Description = new  Description();
-		public Reserve  Reserve = new  Reserve();
+		public Description  Description = new ();
+		public Reserve  Reserve = new ();
 
         public override ConstantType _Tag () =>ConstantType.Integer;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -535,9 +528,7 @@ namespace Goedel.Tool.Constant {
 			Output.WriteAttribute ("Value", Value);
 			Output.WriteAttribute ("Title", Title);
 			Output.StartList ("");
-		// public Description  Description = new  Description();
 			Description.Serialize (Output, true);
-		// public Reserve  Reserve = new  Reserve();
 			Reserve.Serialize (Output, true);
 			Output.EndList ("");
 			if (tag) {
@@ -552,7 +543,7 @@ namespace Goedel.Tool.Constant {
         public override ConstantType _Tag () =>ConstantType.Reserve;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -574,14 +565,14 @@ namespace Goedel.Tool.Constant {
 		public string					Title;
 		public string					Type;
         public TOKEN<_Choice>			Return;
-		public List<Parameter>  Parameter = new  List <Parameter> ();
-		public Description  Description = new  Description();
-		public List<Formula>  Formula = new  List <Formula> ();
+		public List<Parameter>  Parameter = [];
+		public Description  Description = new ();
+		public List<Formula>  Formula = [];
 
         public override ConstantType _Tag () =>ConstantType.Function;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -599,7 +590,6 @@ namespace Goedel.Tool.Constant {
 			foreach (Parameter _e in Parameter) {
 				_e.Serialize (Output, true);
 				}
-		// public Description  Description = new  Description();
 			Description.Serialize (Output, true);
 			foreach (Formula _e in Formula) {
 				_e.Serialize (Output, true);
@@ -612,12 +602,12 @@ namespace Goedel.Tool.Constant {
 		}
 
     public partial class Description : _Choice {
-		public List <System.String>			Text = new List <System.String> (); 
+		public List <System.String>			Text = []; 
 
         public override ConstantType _Tag () =>ConstantType.Description;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -640,12 +630,12 @@ namespace Goedel.Tool.Constant {
         public TOKEN<_Choice>			Id;
         public TOKEN<_Choice>			Type;
 		public string					Title;
-		public Conv  Convert = new  Conv();
+		public Conv  Convert = new ();
 
         public override ConstantType _Tag () =>ConstantType.Parameter;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -659,7 +649,6 @@ namespace Goedel.Tool.Constant {
 	        Output.WriteId ("Type", Type.ToString());
 			Output.WriteAttribute ("Title", Title);
 			Output.StartList ("");
-		// public Conv  Convert = new  Conv();
 			Convert.Serialize (Output, true);
 			Output.EndList ("");
 			if (tag) {
@@ -674,7 +663,7 @@ namespace Goedel.Tool.Constant {
         public override ConstantType _Tag () =>ConstantType.Conv;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -694,12 +683,12 @@ namespace Goedel.Tool.Constant {
     public partial class Formula : _Choice {
         public TOKEN<_Choice>			Id;
 		public string					Type;
-		public List <System.String>			Text = new List <System.String> (); 
+		public List <System.String>			Text = []; 
 
         public override ConstantType _Tag () =>ConstantType.Formula;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -721,7 +710,7 @@ namespace Goedel.Tool.Constant {
 		}
 
     class _Label : _Choice {
-        public REF<_Choice>            Label;
+        public REF<_Choice>?            Label;
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
@@ -729,7 +718,7 @@ namespace Goedel.Tool.Constant {
 
         public override ConstantType _Tag () => ConstantType._Label;
 
-		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label?.ToString()??"");
         }
 
 
@@ -814,14 +803,12 @@ namespace Goedel.Tool.Constant {
         }
 
     public partial class Constant : Goedel.Registry.Parser{
-        public List <Goedel.Tool.Constant._Choice>        Top;
+        public List <Goedel.Tool.Constant._Choice>        Top = [];
         public Registry	<Goedel.Tool.Constant._Choice>	Registry;
-
         public bool StartOfEntry {get;  private set;}
-
-        StateCode								State;
+        StateCode								State = StateCode._Start;
         Goedel.Tool.Constant._Choice				Current;
-        List <_StackItem>						Stack;
+        readonly List <_StackItem>						Stack = [];
 
 
         public static Constant Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -831,7 +818,7 @@ namespace Goedel.Tool.Constant {
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
-                Lexer Schema = new Lexer(File);
+                Lexer Schema = new (File);
                 Schema.Process(infile, Result);
                 }
             Result.Init ();
@@ -853,10 +840,7 @@ namespace Goedel.Tool.Constant {
 			}
 
         public Constant() {
-            Top = new List<Goedel.Tool.Constant._Choice> () ;
             Registry = new Registry <Goedel.Tool.Constant._Choice> ();
-            State = StateCode._Start;
-            Stack = new List <_StackItem> ();
             StartOfEntry = true;
 
 			TYPE__Filename = Registry.TYPE ("Filename"); 
@@ -904,7 +888,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.Namespace NewNamespace() {
-            Goedel.Tool.Constant.Namespace result = new Goedel.Tool.Constant.Namespace();
+            Goedel.Tool.Constant.Namespace result = new ();
             Push (result);
             State = StateCode.Namespace_Start;
             return result;
@@ -912,7 +896,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.File NewFile() {
-            Goedel.Tool.Constant.File result = new Goedel.Tool.Constant.File();
+            Goedel.Tool.Constant.File result = new ();
             Push (result);
             State = StateCode.File_Start;
             return result;
@@ -920,7 +904,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.IANA NewIANA() {
-            Goedel.Tool.Constant.IANA result = new Goedel.Tool.Constant.IANA();
+            Goedel.Tool.Constant.IANA result = new ();
             Push (result);
             State = StateCode.IANA_Start;
             return result;
@@ -928,7 +912,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.Code NewCode() {
-            Goedel.Tool.Constant.Code result = new Goedel.Tool.Constant.Code();
+            Goedel.Tool.Constant.Code result = new ();
             Push (result);
             State = StateCode.Code_Start;
             return result;
@@ -936,7 +920,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.String NewString() {
-            Goedel.Tool.Constant.String result = new Goedel.Tool.Constant.String();
+            Goedel.Tool.Constant.String result = new ();
             Push (result);
             State = StateCode.String_Start;
             return result;
@@ -944,7 +928,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.Parameters NewParameters() {
-            Goedel.Tool.Constant.Parameters result = new Goedel.Tool.Constant.Parameters();
+            Goedel.Tool.Constant.Parameters result = new ();
             Push (result);
             State = StateCode.Parameters_Start;
             return result;
@@ -952,7 +936,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.Enum NewEnum() {
-            Goedel.Tool.Constant.Enum result = new Goedel.Tool.Constant.Enum();
+            Goedel.Tool.Constant.Enum result = new ();
             Push (result);
             State = StateCode.Enum_Start;
             return result;
@@ -960,7 +944,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.Tag NewTag() {
-            Goedel.Tool.Constant.Tag result = new Goedel.Tool.Constant.Tag();
+            Goedel.Tool.Constant.Tag result = new ();
             Push (result);
             State = StateCode.Tag_Start;
             return result;
@@ -968,7 +952,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.UDF NewUDF() {
-            Goedel.Tool.Constant.UDF result = new Goedel.Tool.Constant.UDF();
+            Goedel.Tool.Constant.UDF result = new ();
             Push (result);
             State = StateCode.UDF_Start;
             return result;
@@ -976,7 +960,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.Note NewNote() {
-            Goedel.Tool.Constant.Note result = new Goedel.Tool.Constant.Note();
+            Goedel.Tool.Constant.Note result = new ();
             Push (result);
             State = StateCode.Note_Start;
             return result;
@@ -984,7 +968,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.Algorithm NewAlgorithm() {
-            Goedel.Tool.Constant.Algorithm result = new Goedel.Tool.Constant.Algorithm();
+            Goedel.Tool.Constant.Algorithm result = new ();
             Push (result);
             State = StateCode.Algorithm_Start;
             return result;
@@ -992,7 +976,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.Compress NewCompress() {
-            Goedel.Tool.Constant.Compress result = new Goedel.Tool.Constant.Compress();
+            Goedel.Tool.Constant.Compress result = new ();
             Push (result);
             State = StateCode.Compress_Start;
             return result;
@@ -1000,7 +984,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.Integer NewInteger() {
-            Goedel.Tool.Constant.Integer result = new Goedel.Tool.Constant.Integer();
+            Goedel.Tool.Constant.Integer result = new ();
             Push (result);
             State = StateCode.Integer_Start;
             return result;
@@ -1008,7 +992,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.Reserve NewReserve() {
-            Goedel.Tool.Constant.Reserve result = new Goedel.Tool.Constant.Reserve();
+            Goedel.Tool.Constant.Reserve result = new ();
             Push (result);
             State = StateCode.Reserve_Start;
             return result;
@@ -1016,7 +1000,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.Function NewFunction() {
-            Goedel.Tool.Constant.Function result = new Goedel.Tool.Constant.Function();
+            Goedel.Tool.Constant.Function result = new ();
             Push (result);
             State = StateCode.Function_Start;
             return result;
@@ -1024,7 +1008,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.Description NewDescription() {
-            Goedel.Tool.Constant.Description result = new Goedel.Tool.Constant.Description();
+            Goedel.Tool.Constant.Description result = new ();
             Push (result);
             State = StateCode.Description_Start;
             return result;
@@ -1032,7 +1016,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.Parameter NewParameter() {
-            Goedel.Tool.Constant.Parameter result = new Goedel.Tool.Constant.Parameter();
+            Goedel.Tool.Constant.Parameter result = new ();
             Push (result);
             State = StateCode.Parameter_Start;
             return result;
@@ -1040,7 +1024,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.Conv NewConv() {
-            Goedel.Tool.Constant.Conv result = new Goedel.Tool.Constant.Conv();
+            Goedel.Tool.Constant.Conv result = new ();
             Push (result);
             State = StateCode.Conv_Start;
             return result;
@@ -1048,7 +1032,7 @@ namespace Goedel.Tool.Constant {
 
 
         private Goedel.Tool.Constant.Formula NewFormula() {
-            Goedel.Tool.Constant.Formula result = new Goedel.Tool.Constant.Formula();
+            Goedel.Tool.Constant.Formula result = new ();
             Push (result);
             State = StateCode.Formula_Start;
             return result;
@@ -1097,7 +1081,7 @@ namespace Goedel.Tool.Constant {
 
 
         void Push (Goedel.Tool.Constant._Choice Token) {
-            _StackItem Item = new _StackItem () {
+            _StackItem Item = new  () {
 					State = State,
 					Token = Current
 					};
@@ -1112,7 +1096,7 @@ namespace Goedel.Tool.Constant {
         void Pop () {
 			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
-            _StackItem Item = Stack[Stack.Count -1];
+            _StackItem Item = Stack[^1];
             State = Item.State;
             Current = Item.Token;
 

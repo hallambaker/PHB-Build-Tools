@@ -4,6 +4,12 @@
       "commandName": "Project",
       "commandLineArgs": "YaschemaSchema.gdl  /cs  YaschemaSchema.cs",
       "workingDirectory": "C:\\Users\\hallam\\Work\\buildtools\\YASchema\\Goedel.Tool.Yashima"
+    },
+    "html": {
+      "commandName": "Project",
+      "commandLineArgs": "FrameData.gdl  /cs  FrameData.cs",
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\Palimpsest\\Libraries\\Goedel.Html"
     }
+
   }
 }

@@ -151,7 +151,7 @@ using Goedel.Utilities;
 //       StatusT
 //       CaseType
 
-#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059, IDE0161, CS1591, CS8618
 namespace Goedel.Tool.ProtoGen {
 
 
@@ -245,12 +245,12 @@ namespace Goedel.Tool.ProtoGen {
     public abstract partial class _Choice {
         abstract public ProtoStructType _Tag ();
 
-        public _Choice _Parent;
-        public ProtoStruct _Base;
+        public _Choice? _Parent;
+        public ProtoStruct? _Base;
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
 
-    	public virtual void Init (_Choice parent) {
+    	public virtual void Init (_Choice? parent) {
             _Parent = parent;
             _Base ??= parent?._Base;
 			}
@@ -258,9 +258,9 @@ namespace Goedel.Tool.ProtoGen {
         
 
 		bool _Initialized = false;
-		public virtual void _InitChildren (_Choice parent) {
+		public virtual void _InitChildren (_Choice? parent) {
 			Init (parent);
-            _Base = parent._Base;
+            _Base = parent?._Base;
 			if (_Initialized) {
 				return;
 				}
@@ -274,12 +274,12 @@ namespace Goedel.Tool.ProtoGen {
         public TOKEN<_Choice>			Namespace;
         public ID<_Choice>				Id; 
         public TOKEN<_Choice>			Prefix;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Protocol;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -311,7 +311,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.CamelCase;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -332,7 +332,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.PascalCase;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -353,7 +353,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.SnakeCase;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -375,7 +375,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Using;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -394,12 +394,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Extern : _Choice {
         public ID<_Choice>				Id; 
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Extern;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -427,12 +427,12 @@ namespace Goedel.Tool.ProtoGen {
     public partial class Section : _Choice {
 		public int						Level;
 		public string					Title;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Section;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -464,12 +464,12 @@ namespace Goedel.Tool.ProtoGen {
 		public string					WellKnown;
         public REF<_Choice>				Request;
         public REF<_Choice>				Response;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Service;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -503,12 +503,12 @@ namespace Goedel.Tool.ProtoGen {
         public ID<_Choice>				Id; 
         public REF<_Choice>				Request;
         public REF<_Choice>				Response;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Transaction;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -538,12 +538,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Message : _Choice {
         public ID<_Choice>				Id; 
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Message;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -574,7 +574,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Authentication;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -593,12 +593,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Structure : _Choice {
         public ID<_Choice>				Id; 
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Structure;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -624,12 +624,12 @@ namespace Goedel.Tool.ProtoGen {
 		}
 
     public partial class Description : _Choice {
-		public List <System.String>			Text1 = new List <System.String> (); 
+		public List <System.String>			Text1 = []; 
 
         public override ProtoStructType _Tag () =>ProtoStructType.Description;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -649,12 +649,12 @@ namespace Goedel.Tool.ProtoGen {
 		}
 
     public partial class ABNF : _Choice {
-		public List <System.String>			Text1 = new List <System.String> (); 
+		public List <System.String>			Text1 = []; 
 
         public override ProtoStructType _Tag () =>ProtoStructType.ABNF;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -678,7 +678,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Abstract;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -699,7 +699,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Generic;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -721,7 +721,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Inherits;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -744,7 +744,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Request;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -767,7 +767,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Response;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -790,7 +790,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.External;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -813,7 +813,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Tag;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -832,12 +832,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Boolean : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Boolean;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -864,12 +864,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Integer : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Integer;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -896,12 +896,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Decimal : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Decimal;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -928,12 +928,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Float : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Float;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -960,12 +960,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Binary : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Binary;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -992,12 +992,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Label : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Label;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -1024,12 +1024,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Name : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Name;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -1056,12 +1056,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class String : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.String;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -1091,7 +1091,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.TypeTag;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1113,7 +1113,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Constraint;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1132,12 +1132,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class URI : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.URI;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -1164,12 +1164,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class DateTime : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.DateTime;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -1200,7 +1200,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Param;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1224,7 +1224,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Funct;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1246,12 +1246,12 @@ namespace Goedel.Tool.ProtoGen {
         public REF<_Choice>				GType;
         public REF<_Choice>				Type;
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.GStruct;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -1281,12 +1281,12 @@ namespace Goedel.Tool.ProtoGen {
     public partial class TStruct : _Choice {
         public REF<_Choice>				Type;
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.TStruct;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -1315,12 +1315,12 @@ namespace Goedel.Tool.ProtoGen {
     public partial class Struct : _Choice {
         public REF<_Choice>				Type;
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Struct;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -1351,7 +1351,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Enumerated;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1370,12 +1370,12 @@ namespace Goedel.Tool.ProtoGen {
     public partial class Enum : _Choice {
         public REF<_Choice>				Type;
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Enum;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -1404,12 +1404,12 @@ namespace Goedel.Tool.ProtoGen {
     public partial class Select : _Choice {
         public TOKEN<_Choice>			Tag;
         public TOKEN<_Choice>			Id;
-        public List <TaggedType>           Entries = new List<TaggedType> ();
+        public List <TaggedType>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Select;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1442,7 +1442,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.TaggedType;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1462,12 +1462,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Format : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Format;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -1495,12 +1495,12 @@ namespace Goedel.Tool.ProtoGen {
     public partial class Tagged : _Choice {
         public REF<_Choice>				Type;
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Tagged;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -1531,7 +1531,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Required;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1552,7 +1552,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Multiple;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1573,7 +1573,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Dictionary;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1594,7 +1594,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Quoted;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1616,7 +1616,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Require;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1635,12 +1635,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Class : _Choice {
         public ID<_Choice>				Id; 
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Class;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1668,12 +1668,12 @@ namespace Goedel.Tool.ProtoGen {
     public partial class Command : _Choice {
         public ID<_Choice>				Id; 
 		public string					Tag;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Command;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1705,7 +1705,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Brief;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1730,7 +1730,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Parameter;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1751,12 +1751,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Status : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Status;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1784,12 +1784,12 @@ namespace Goedel.Tool.ProtoGen {
     public partial class Success : _Choice {
         public TOKEN<_Choice>			Id;
 		public int						Code;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Success;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1818,12 +1818,12 @@ namespace Goedel.Tool.ProtoGen {
     public partial class Error : _Choice {
         public TOKEN<_Choice>			Id;
 		public int						Code;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Error;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1852,12 +1852,12 @@ namespace Goedel.Tool.ProtoGen {
     public partial class Warning : _Choice {
         public TOKEN<_Choice>			Id;
 		public int						Code;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Warning;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -1891,7 +1891,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Option;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1916,7 +1916,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Include;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1935,12 +1935,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class OptionSet : _Choice {
         public ID<_Choice>				Id; 
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.OptionSet;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -1967,12 +1967,12 @@ namespace Goedel.Tool.ProtoGen {
 
     public partial class Enumerate : _Choice {
         public ID<_Choice>				Id; 
-        public List <Case>           Entries = new List<Case> ();
+        public List <Case>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Enumerate;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -2004,7 +2004,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Case;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -2029,7 +2029,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Type;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -2053,7 +2053,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Default;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -2076,7 +2076,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Maximum;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -2099,7 +2099,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Minimum;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -2122,7 +2122,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.LengthBits;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -2145,7 +2145,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.LengthFixed;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -2165,12 +2165,12 @@ namespace Goedel.Tool.ProtoGen {
     public partial class Enumeration : _Choice {
         public ID<_Choice>				Name; 
 		public int						Maximum;
-        public List <EnumerationEntry>           Entries = new List<EnumerationEntry> ();
+        public List <EnumerationEntry>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.Enumeration;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -2203,7 +2203,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.EnumerationEntry;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -2228,7 +2228,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Mapping;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			Id._InitChildren (this);
 			MappingType._InitChildren (this);
@@ -2253,7 +2253,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Root;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -2276,7 +2276,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Language;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			For._InitChildren (this);
 			}
@@ -2295,12 +2295,12 @@ namespace Goedel.Tool.ProtoGen {
 		}
 
     public partial class C : _Choice {
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.C;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -2325,12 +2325,12 @@ namespace Goedel.Tool.ProtoGen {
 		}
 
     public partial class CS : _Choice {
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override ProtoStructType _Tag () =>ProtoStructType.CS;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -2359,7 +2359,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Stubs;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -2381,7 +2381,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Prefix;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -2405,7 +2405,7 @@ namespace Goedel.Tool.ProtoGen {
         public override ProtoStructType _Tag () =>ProtoStructType.Binding;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			Type._InitChildren (this);
 			}
@@ -2425,7 +2425,7 @@ namespace Goedel.Tool.ProtoGen {
 		}
 
     class _Label : _Choice {
-        public REF<_Choice>            Label;
+        public REF<_Choice>?            Label;
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
@@ -2433,7 +2433,7 @@ namespace Goedel.Tool.ProtoGen {
 
         public override ProtoStructType _Tag () => ProtoStructType._Label;
 
-		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label?.ToString()??"");
         }
 
 
@@ -2661,14 +2661,12 @@ namespace Goedel.Tool.ProtoGen {
         }
 
     public partial class ProtoStruct : Goedel.Registry.Parser{
-        public List <Goedel.Tool.ProtoGen._Choice>        Top;
+        public List <Goedel.Tool.ProtoGen._Choice>        Top = [];
         public Registry	<Goedel.Tool.ProtoGen._Choice>	Registry;
-
         public bool StartOfEntry {get;  private set;}
-
-        StateCode								State;
+        StateCode								State = StateCode._Start;
         Goedel.Tool.ProtoGen._Choice				Current;
-        List <_StackItem>						Stack;
+        readonly List <_StackItem>						Stack = [];
 
 
         public static ProtoStruct Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -2678,7 +2676,7 @@ namespace Goedel.Tool.ProtoGen {
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
-                Lexer Schema = new Lexer(File);
+                Lexer Schema = new (File);
                 Schema.Process(infile, Result);
                 }
             Result.Init ();
@@ -2700,10 +2698,7 @@ namespace Goedel.Tool.ProtoGen {
 			}
 
         public ProtoStruct() {
-            Top = new List<Goedel.Tool.ProtoGen._Choice> () ;
             Registry = new Registry <Goedel.Tool.ProtoGen._Choice> ();
-            State = StateCode._Start;
-            Stack = new List <_StackItem> ();
             StartOfEntry = true;
 
 			TYPE__Top = Registry.TYPE ("Top"); 
@@ -2844,7 +2839,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Protocol NewProtocol() {
-            Goedel.Tool.ProtoGen.Protocol result = new Goedel.Tool.ProtoGen.Protocol();
+            Goedel.Tool.ProtoGen.Protocol result = new ();
             Push (result);
             State = StateCode.Protocol_Start;
             return result;
@@ -2852,7 +2847,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.CamelCase NewCamelCase() {
-            Goedel.Tool.ProtoGen.CamelCase result = new Goedel.Tool.ProtoGen.CamelCase();
+            Goedel.Tool.ProtoGen.CamelCase result = new ();
             Push (result);
             State = StateCode.CamelCase_Start;
             return result;
@@ -2860,7 +2855,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.PascalCase NewPascalCase() {
-            Goedel.Tool.ProtoGen.PascalCase result = new Goedel.Tool.ProtoGen.PascalCase();
+            Goedel.Tool.ProtoGen.PascalCase result = new ();
             Push (result);
             State = StateCode.PascalCase_Start;
             return result;
@@ -2868,7 +2863,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.SnakeCase NewSnakeCase() {
-            Goedel.Tool.ProtoGen.SnakeCase result = new Goedel.Tool.ProtoGen.SnakeCase();
+            Goedel.Tool.ProtoGen.SnakeCase result = new ();
             Push (result);
             State = StateCode.SnakeCase_Start;
             return result;
@@ -2876,7 +2871,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Using NewUsing() {
-            Goedel.Tool.ProtoGen.Using result = new Goedel.Tool.ProtoGen.Using();
+            Goedel.Tool.ProtoGen.Using result = new ();
             Push (result);
             State = StateCode.Using_Start;
             return result;
@@ -2884,7 +2879,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Extern NewExtern() {
-            Goedel.Tool.ProtoGen.Extern result = new Goedel.Tool.ProtoGen.Extern();
+            Goedel.Tool.ProtoGen.Extern result = new ();
             Push (result);
             State = StateCode.Extern_Start;
             return result;
@@ -2892,7 +2887,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Section NewSection() {
-            Goedel.Tool.ProtoGen.Section result = new Goedel.Tool.ProtoGen.Section();
+            Goedel.Tool.ProtoGen.Section result = new ();
             Push (result);
             State = StateCode.Section_Start;
             return result;
@@ -2900,7 +2895,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Service NewService() {
-            Goedel.Tool.ProtoGen.Service result = new Goedel.Tool.ProtoGen.Service();
+            Goedel.Tool.ProtoGen.Service result = new ();
             Push (result);
             State = StateCode.Service_Start;
             return result;
@@ -2908,7 +2903,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Transaction NewTransaction() {
-            Goedel.Tool.ProtoGen.Transaction result = new Goedel.Tool.ProtoGen.Transaction();
+            Goedel.Tool.ProtoGen.Transaction result = new ();
             Push (result);
             State = StateCode.Transaction_Start;
             return result;
@@ -2916,7 +2911,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Message NewMessage() {
-            Goedel.Tool.ProtoGen.Message result = new Goedel.Tool.ProtoGen.Message();
+            Goedel.Tool.ProtoGen.Message result = new ();
             Push (result);
             State = StateCode.Message_Start;
             return result;
@@ -2924,7 +2919,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Authentication NewAuthentication() {
-            Goedel.Tool.ProtoGen.Authentication result = new Goedel.Tool.ProtoGen.Authentication();
+            Goedel.Tool.ProtoGen.Authentication result = new ();
             Push (result);
             State = StateCode.Authentication_Start;
             return result;
@@ -2932,7 +2927,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Structure NewStructure() {
-            Goedel.Tool.ProtoGen.Structure result = new Goedel.Tool.ProtoGen.Structure();
+            Goedel.Tool.ProtoGen.Structure result = new ();
             Push (result);
             State = StateCode.Structure_Start;
             return result;
@@ -2940,7 +2935,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Description NewDescription() {
-            Goedel.Tool.ProtoGen.Description result = new Goedel.Tool.ProtoGen.Description();
+            Goedel.Tool.ProtoGen.Description result = new ();
             Push (result);
             State = StateCode.Description_Start;
             return result;
@@ -2948,7 +2943,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.ABNF NewABNF() {
-            Goedel.Tool.ProtoGen.ABNF result = new Goedel.Tool.ProtoGen.ABNF();
+            Goedel.Tool.ProtoGen.ABNF result = new ();
             Push (result);
             State = StateCode.ABNF_Start;
             return result;
@@ -2956,7 +2951,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Abstract NewAbstract() {
-            Goedel.Tool.ProtoGen.Abstract result = new Goedel.Tool.ProtoGen.Abstract();
+            Goedel.Tool.ProtoGen.Abstract result = new ();
             Push (result);
             State = StateCode.Abstract_Start;
             return result;
@@ -2964,7 +2959,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Generic NewGeneric() {
-            Goedel.Tool.ProtoGen.Generic result = new Goedel.Tool.ProtoGen.Generic();
+            Goedel.Tool.ProtoGen.Generic result = new ();
             Push (result);
             State = StateCode.Generic_Start;
             return result;
@@ -2972,7 +2967,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Inherits NewInherits() {
-            Goedel.Tool.ProtoGen.Inherits result = new Goedel.Tool.ProtoGen.Inherits();
+            Goedel.Tool.ProtoGen.Inherits result = new ();
             Push (result);
             State = StateCode.Inherits_Start;
             return result;
@@ -2980,7 +2975,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Request NewRequest() {
-            Goedel.Tool.ProtoGen.Request result = new Goedel.Tool.ProtoGen.Request();
+            Goedel.Tool.ProtoGen.Request result = new ();
             Push (result);
             State = StateCode.Request_Start;
             return result;
@@ -2988,7 +2983,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Response NewResponse() {
-            Goedel.Tool.ProtoGen.Response result = new Goedel.Tool.ProtoGen.Response();
+            Goedel.Tool.ProtoGen.Response result = new ();
             Push (result);
             State = StateCode.Response_Start;
             return result;
@@ -2996,7 +2991,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.External NewExternal() {
-            Goedel.Tool.ProtoGen.External result = new Goedel.Tool.ProtoGen.External();
+            Goedel.Tool.ProtoGen.External result = new ();
             Push (result);
             State = StateCode.External_Start;
             return result;
@@ -3004,7 +2999,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Tag NewTag() {
-            Goedel.Tool.ProtoGen.Tag result = new Goedel.Tool.ProtoGen.Tag();
+            Goedel.Tool.ProtoGen.Tag result = new ();
             Push (result);
             State = StateCode.Tag_Start;
             return result;
@@ -3012,7 +3007,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Boolean NewBoolean() {
-            Goedel.Tool.ProtoGen.Boolean result = new Goedel.Tool.ProtoGen.Boolean();
+            Goedel.Tool.ProtoGen.Boolean result = new ();
             Push (result);
             State = StateCode.Boolean_Start;
             return result;
@@ -3020,7 +3015,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Integer NewInteger() {
-            Goedel.Tool.ProtoGen.Integer result = new Goedel.Tool.ProtoGen.Integer();
+            Goedel.Tool.ProtoGen.Integer result = new ();
             Push (result);
             State = StateCode.Integer_Start;
             return result;
@@ -3028,7 +3023,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Decimal NewDecimal() {
-            Goedel.Tool.ProtoGen.Decimal result = new Goedel.Tool.ProtoGen.Decimal();
+            Goedel.Tool.ProtoGen.Decimal result = new ();
             Push (result);
             State = StateCode.Decimal_Start;
             return result;
@@ -3036,7 +3031,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Float NewFloat() {
-            Goedel.Tool.ProtoGen.Float result = new Goedel.Tool.ProtoGen.Float();
+            Goedel.Tool.ProtoGen.Float result = new ();
             Push (result);
             State = StateCode.Float_Start;
             return result;
@@ -3044,7 +3039,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Binary NewBinary() {
-            Goedel.Tool.ProtoGen.Binary result = new Goedel.Tool.ProtoGen.Binary();
+            Goedel.Tool.ProtoGen.Binary result = new ();
             Push (result);
             State = StateCode.Binary_Start;
             return result;
@@ -3052,7 +3047,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Label NewLabel() {
-            Goedel.Tool.ProtoGen.Label result = new Goedel.Tool.ProtoGen.Label();
+            Goedel.Tool.ProtoGen.Label result = new ();
             Push (result);
             State = StateCode.Label_Start;
             return result;
@@ -3060,7 +3055,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Name NewName() {
-            Goedel.Tool.ProtoGen.Name result = new Goedel.Tool.ProtoGen.Name();
+            Goedel.Tool.ProtoGen.Name result = new ();
             Push (result);
             State = StateCode.Name_Start;
             return result;
@@ -3068,7 +3063,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.String NewString() {
-            Goedel.Tool.ProtoGen.String result = new Goedel.Tool.ProtoGen.String();
+            Goedel.Tool.ProtoGen.String result = new ();
             Push (result);
             State = StateCode.String_Start;
             return result;
@@ -3076,7 +3071,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.TypeTag NewTypeTag() {
-            Goedel.Tool.ProtoGen.TypeTag result = new Goedel.Tool.ProtoGen.TypeTag();
+            Goedel.Tool.ProtoGen.TypeTag result = new ();
             Push (result);
             State = StateCode.TypeTag_Start;
             return result;
@@ -3084,7 +3079,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Constraint NewConstraint() {
-            Goedel.Tool.ProtoGen.Constraint result = new Goedel.Tool.ProtoGen.Constraint();
+            Goedel.Tool.ProtoGen.Constraint result = new ();
             Push (result);
             State = StateCode.Constraint_Start;
             return result;
@@ -3092,7 +3087,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.URI NewURI() {
-            Goedel.Tool.ProtoGen.URI result = new Goedel.Tool.ProtoGen.URI();
+            Goedel.Tool.ProtoGen.URI result = new ();
             Push (result);
             State = StateCode.URI_Start;
             return result;
@@ -3100,7 +3095,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.DateTime NewDateTime() {
-            Goedel.Tool.ProtoGen.DateTime result = new Goedel.Tool.ProtoGen.DateTime();
+            Goedel.Tool.ProtoGen.DateTime result = new ();
             Push (result);
             State = StateCode.DateTime_Start;
             return result;
@@ -3108,7 +3103,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Param NewParam() {
-            Goedel.Tool.ProtoGen.Param result = new Goedel.Tool.ProtoGen.Param();
+            Goedel.Tool.ProtoGen.Param result = new ();
             Push (result);
             State = StateCode.Param_Start;
             return result;
@@ -3116,7 +3111,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Funct NewFunct() {
-            Goedel.Tool.ProtoGen.Funct result = new Goedel.Tool.ProtoGen.Funct();
+            Goedel.Tool.ProtoGen.Funct result = new ();
             Push (result);
             State = StateCode.Funct_Start;
             return result;
@@ -3124,7 +3119,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.GStruct NewGStruct() {
-            Goedel.Tool.ProtoGen.GStruct result = new Goedel.Tool.ProtoGen.GStruct();
+            Goedel.Tool.ProtoGen.GStruct result = new ();
             Push (result);
             State = StateCode.GStruct_Start;
             return result;
@@ -3132,7 +3127,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.TStruct NewTStruct() {
-            Goedel.Tool.ProtoGen.TStruct result = new Goedel.Tool.ProtoGen.TStruct();
+            Goedel.Tool.ProtoGen.TStruct result = new ();
             Push (result);
             State = StateCode.TStruct_Start;
             return result;
@@ -3140,7 +3135,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Struct NewStruct() {
-            Goedel.Tool.ProtoGen.Struct result = new Goedel.Tool.ProtoGen.Struct();
+            Goedel.Tool.ProtoGen.Struct result = new ();
             Push (result);
             State = StateCode.Struct_Start;
             return result;
@@ -3148,7 +3143,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Enumerated NewEnumerated() {
-            Goedel.Tool.ProtoGen.Enumerated result = new Goedel.Tool.ProtoGen.Enumerated();
+            Goedel.Tool.ProtoGen.Enumerated result = new ();
             Push (result);
             State = StateCode.Enumerated_Start;
             return result;
@@ -3156,7 +3151,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Enum NewEnum() {
-            Goedel.Tool.ProtoGen.Enum result = new Goedel.Tool.ProtoGen.Enum();
+            Goedel.Tool.ProtoGen.Enum result = new ();
             Push (result);
             State = StateCode.Enum_Start;
             return result;
@@ -3164,7 +3159,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Select NewSelect() {
-            Goedel.Tool.ProtoGen.Select result = new Goedel.Tool.ProtoGen.Select();
+            Goedel.Tool.ProtoGen.Select result = new ();
             Push (result);
             State = StateCode.Select_Start;
             return result;
@@ -3172,7 +3167,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.TaggedType NewTaggedType() {
-            Goedel.Tool.ProtoGen.TaggedType result = new Goedel.Tool.ProtoGen.TaggedType();
+            Goedel.Tool.ProtoGen.TaggedType result = new ();
             Push (result);
             State = StateCode.TaggedType_Start;
             return result;
@@ -3180,7 +3175,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Format NewFormat() {
-            Goedel.Tool.ProtoGen.Format result = new Goedel.Tool.ProtoGen.Format();
+            Goedel.Tool.ProtoGen.Format result = new ();
             Push (result);
             State = StateCode.Format_Start;
             return result;
@@ -3188,7 +3183,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Tagged NewTagged() {
-            Goedel.Tool.ProtoGen.Tagged result = new Goedel.Tool.ProtoGen.Tagged();
+            Goedel.Tool.ProtoGen.Tagged result = new ();
             Push (result);
             State = StateCode.Tagged_Start;
             return result;
@@ -3196,7 +3191,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Required NewRequired() {
-            Goedel.Tool.ProtoGen.Required result = new Goedel.Tool.ProtoGen.Required();
+            Goedel.Tool.ProtoGen.Required result = new ();
             Push (result);
             State = StateCode.Required_Start;
             return result;
@@ -3204,7 +3199,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Multiple NewMultiple() {
-            Goedel.Tool.ProtoGen.Multiple result = new Goedel.Tool.ProtoGen.Multiple();
+            Goedel.Tool.ProtoGen.Multiple result = new ();
             Push (result);
             State = StateCode.Multiple_Start;
             return result;
@@ -3212,7 +3207,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Dictionary NewDictionary() {
-            Goedel.Tool.ProtoGen.Dictionary result = new Goedel.Tool.ProtoGen.Dictionary();
+            Goedel.Tool.ProtoGen.Dictionary result = new ();
             Push (result);
             State = StateCode.Dictionary_Start;
             return result;
@@ -3220,7 +3215,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Quoted NewQuoted() {
-            Goedel.Tool.ProtoGen.Quoted result = new Goedel.Tool.ProtoGen.Quoted();
+            Goedel.Tool.ProtoGen.Quoted result = new ();
             Push (result);
             State = StateCode.Quoted_Start;
             return result;
@@ -3228,7 +3223,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Require NewRequire() {
-            Goedel.Tool.ProtoGen.Require result = new Goedel.Tool.ProtoGen.Require();
+            Goedel.Tool.ProtoGen.Require result = new ();
             Push (result);
             State = StateCode.Require_Start;
             return result;
@@ -3236,7 +3231,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Class NewClass() {
-            Goedel.Tool.ProtoGen.Class result = new Goedel.Tool.ProtoGen.Class();
+            Goedel.Tool.ProtoGen.Class result = new ();
             Push (result);
             State = StateCode.Class_Start;
             return result;
@@ -3244,7 +3239,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Command NewCommand() {
-            Goedel.Tool.ProtoGen.Command result = new Goedel.Tool.ProtoGen.Command();
+            Goedel.Tool.ProtoGen.Command result = new ();
             Push (result);
             State = StateCode.Command_Start;
             return result;
@@ -3252,7 +3247,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Brief NewBrief() {
-            Goedel.Tool.ProtoGen.Brief result = new Goedel.Tool.ProtoGen.Brief();
+            Goedel.Tool.ProtoGen.Brief result = new ();
             Push (result);
             State = StateCode.Brief_Start;
             return result;
@@ -3260,7 +3255,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Parameter NewParameter() {
-            Goedel.Tool.ProtoGen.Parameter result = new Goedel.Tool.ProtoGen.Parameter();
+            Goedel.Tool.ProtoGen.Parameter result = new ();
             Push (result);
             State = StateCode.Parameter_Start;
             return result;
@@ -3268,7 +3263,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Status NewStatus() {
-            Goedel.Tool.ProtoGen.Status result = new Goedel.Tool.ProtoGen.Status();
+            Goedel.Tool.ProtoGen.Status result = new ();
             Push (result);
             State = StateCode.Status_Start;
             return result;
@@ -3276,7 +3271,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Success NewSuccess() {
-            Goedel.Tool.ProtoGen.Success result = new Goedel.Tool.ProtoGen.Success();
+            Goedel.Tool.ProtoGen.Success result = new ();
             Push (result);
             State = StateCode.Success_Start;
             return result;
@@ -3284,7 +3279,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Error NewError() {
-            Goedel.Tool.ProtoGen.Error result = new Goedel.Tool.ProtoGen.Error();
+            Goedel.Tool.ProtoGen.Error result = new ();
             Push (result);
             State = StateCode.Error_Start;
             return result;
@@ -3292,7 +3287,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Warning NewWarning() {
-            Goedel.Tool.ProtoGen.Warning result = new Goedel.Tool.ProtoGen.Warning();
+            Goedel.Tool.ProtoGen.Warning result = new ();
             Push (result);
             State = StateCode.Warning_Start;
             return result;
@@ -3300,7 +3295,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Option NewOption() {
-            Goedel.Tool.ProtoGen.Option result = new Goedel.Tool.ProtoGen.Option();
+            Goedel.Tool.ProtoGen.Option result = new ();
             Push (result);
             State = StateCode.Option_Start;
             return result;
@@ -3308,7 +3303,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Include NewInclude() {
-            Goedel.Tool.ProtoGen.Include result = new Goedel.Tool.ProtoGen.Include();
+            Goedel.Tool.ProtoGen.Include result = new ();
             Push (result);
             State = StateCode.Include_Start;
             return result;
@@ -3316,7 +3311,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.OptionSet NewOptionSet() {
-            Goedel.Tool.ProtoGen.OptionSet result = new Goedel.Tool.ProtoGen.OptionSet();
+            Goedel.Tool.ProtoGen.OptionSet result = new ();
             Push (result);
             State = StateCode.OptionSet_Start;
             return result;
@@ -3324,7 +3319,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Enumerate NewEnumerate() {
-            Goedel.Tool.ProtoGen.Enumerate result = new Goedel.Tool.ProtoGen.Enumerate();
+            Goedel.Tool.ProtoGen.Enumerate result = new ();
             Push (result);
             State = StateCode.Enumerate_Start;
             return result;
@@ -3332,7 +3327,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Case NewCase() {
-            Goedel.Tool.ProtoGen.Case result = new Goedel.Tool.ProtoGen.Case();
+            Goedel.Tool.ProtoGen.Case result = new ();
             Push (result);
             State = StateCode.Case_Start;
             return result;
@@ -3340,7 +3335,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Type NewType() {
-            Goedel.Tool.ProtoGen.Type result = new Goedel.Tool.ProtoGen.Type();
+            Goedel.Tool.ProtoGen.Type result = new ();
             Push (result);
             State = StateCode.Type_Start;
             return result;
@@ -3348,7 +3343,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Default NewDefault() {
-            Goedel.Tool.ProtoGen.Default result = new Goedel.Tool.ProtoGen.Default();
+            Goedel.Tool.ProtoGen.Default result = new ();
             Push (result);
             State = StateCode.Default_Start;
             return result;
@@ -3356,7 +3351,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Maximum NewMaximum() {
-            Goedel.Tool.ProtoGen.Maximum result = new Goedel.Tool.ProtoGen.Maximum();
+            Goedel.Tool.ProtoGen.Maximum result = new ();
             Push (result);
             State = StateCode.Maximum_Start;
             return result;
@@ -3364,7 +3359,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Minimum NewMinimum() {
-            Goedel.Tool.ProtoGen.Minimum result = new Goedel.Tool.ProtoGen.Minimum();
+            Goedel.Tool.ProtoGen.Minimum result = new ();
             Push (result);
             State = StateCode.Minimum_Start;
             return result;
@@ -3372,7 +3367,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.LengthBits NewLengthBits() {
-            Goedel.Tool.ProtoGen.LengthBits result = new Goedel.Tool.ProtoGen.LengthBits();
+            Goedel.Tool.ProtoGen.LengthBits result = new ();
             Push (result);
             State = StateCode.LengthBits_Start;
             return result;
@@ -3380,7 +3375,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.LengthFixed NewLengthFixed() {
-            Goedel.Tool.ProtoGen.LengthFixed result = new Goedel.Tool.ProtoGen.LengthFixed();
+            Goedel.Tool.ProtoGen.LengthFixed result = new ();
             Push (result);
             State = StateCode.LengthFixed_Start;
             return result;
@@ -3388,7 +3383,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Enumeration NewEnumeration() {
-            Goedel.Tool.ProtoGen.Enumeration result = new Goedel.Tool.ProtoGen.Enumeration();
+            Goedel.Tool.ProtoGen.Enumeration result = new ();
             Push (result);
             State = StateCode.Enumeration_Start;
             return result;
@@ -3396,7 +3391,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.EnumerationEntry NewEnumerationEntry() {
-            Goedel.Tool.ProtoGen.EnumerationEntry result = new Goedel.Tool.ProtoGen.EnumerationEntry();
+            Goedel.Tool.ProtoGen.EnumerationEntry result = new ();
             Push (result);
             State = StateCode.EnumerationEntry_Start;
             return result;
@@ -3404,7 +3399,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Mapping NewMapping() {
-            Goedel.Tool.ProtoGen.Mapping result = new Goedel.Tool.ProtoGen.Mapping();
+            Goedel.Tool.ProtoGen.Mapping result = new ();
             Push (result);
             State = StateCode.Mapping_Start;
             return result;
@@ -3412,7 +3407,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Root NewRoot() {
-            Goedel.Tool.ProtoGen.Root result = new Goedel.Tool.ProtoGen.Root();
+            Goedel.Tool.ProtoGen.Root result = new ();
             Push (result);
             State = StateCode.Root_Start;
             return result;
@@ -3420,7 +3415,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Language NewLanguage() {
-            Goedel.Tool.ProtoGen.Language result = new Goedel.Tool.ProtoGen.Language();
+            Goedel.Tool.ProtoGen.Language result = new ();
             Push (result);
             State = StateCode.Language_Start;
             return result;
@@ -3428,7 +3423,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.C NewC() {
-            Goedel.Tool.ProtoGen.C result = new Goedel.Tool.ProtoGen.C();
+            Goedel.Tool.ProtoGen.C result = new ();
             Push (result);
             State = StateCode.C_Start;
             return result;
@@ -3436,7 +3431,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.CS NewCS() {
-            Goedel.Tool.ProtoGen.CS result = new Goedel.Tool.ProtoGen.CS();
+            Goedel.Tool.ProtoGen.CS result = new ();
             Push (result);
             State = StateCode.CS_Start;
             return result;
@@ -3444,7 +3439,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Stubs NewStubs() {
-            Goedel.Tool.ProtoGen.Stubs result = new Goedel.Tool.ProtoGen.Stubs();
+            Goedel.Tool.ProtoGen.Stubs result = new ();
             Push (result);
             State = StateCode.Stubs_Start;
             return result;
@@ -3452,7 +3447,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Prefix NewPrefix() {
-            Goedel.Tool.ProtoGen.Prefix result = new Goedel.Tool.ProtoGen.Prefix();
+            Goedel.Tool.ProtoGen.Prefix result = new ();
             Push (result);
             State = StateCode.Prefix_Start;
             return result;
@@ -3460,7 +3455,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         private Goedel.Tool.ProtoGen.Binding NewBinding() {
-            Goedel.Tool.ProtoGen.Binding result = new Goedel.Tool.ProtoGen.Binding();
+            Goedel.Tool.ProtoGen.Binding result = new ();
             Push (result);
             State = StateCode.Binding_Start;
             return result;
@@ -3568,7 +3563,7 @@ namespace Goedel.Tool.ProtoGen {
 
 
         void Push (Goedel.Tool.ProtoGen._Choice Token) {
-            _StackItem Item = new _StackItem () {
+            _StackItem Item = new  () {
 					State = State,
 					Token = Current
 					};
@@ -3583,7 +3578,7 @@ namespace Goedel.Tool.ProtoGen {
         void Pop () {
 			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
-            _StackItem Item = Stack[Stack.Count -1];
+            _StackItem Item = Stack[^1];
             State = Item.State;
             Current = Item.Token;
 
@@ -5036,8 +5031,6 @@ namespace Goedel.Tool.ProtoGen {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.ProtoGen.Select Current_Cast = (Goedel.Tool.ProtoGen.Select)Current;
                             Current_Cast.Entries.Add (NewTaggedType ());
@@ -5639,8 +5632,6 @@ namespace Goedel.Tool.ProtoGen {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.ProtoGen.Enumerate Current_Cast = (Goedel.Tool.ProtoGen.Enumerate)Current;
                             Current_Cast.Entries.Add (NewCase ());
@@ -5795,8 +5786,6 @@ namespace Goedel.Tool.ProtoGen {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.ProtoGen.Enumeration Current_Cast = (Goedel.Tool.ProtoGen.Enumeration)Current;
                             Current_Cast.Entries.Add (NewEnumerationEntry ());

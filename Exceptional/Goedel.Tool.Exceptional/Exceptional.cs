@@ -81,7 +81,7 @@ using Goedel.Utilities;
 //       TypeType
 //       IdType
 
-#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059, IDE0161, CS1591, CS8618
 namespace Goedel.Tool.Exceptional {
 
 
@@ -112,12 +112,12 @@ namespace Goedel.Tool.Exceptional {
     public abstract partial class _Choice {
         abstract public ExceptionsType _Tag ();
 
-        public _Choice _Parent;
-        public Exceptions _Base;
+        public _Choice? _Parent;
+        public Exceptions? _Base;
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
 
-    	public virtual void Init (_Choice parent) {
+    	public virtual void Init (_Choice? parent) {
             _Parent = parent;
             _Base ??= parent?._Base;
 			}
@@ -125,9 +125,9 @@ namespace Goedel.Tool.Exceptional {
         
 
 		bool _Initialized = false;
-		public virtual void _InitChildren (_Choice parent) {
+		public virtual void _InitChildren (_Choice? parent) {
 			Init (parent);
-            _Base = parent._Base;
+            _Base = parent?._Base;
 			if (_Initialized) {
 				return;
 				}
@@ -139,12 +139,12 @@ namespace Goedel.Tool.Exceptional {
 
     public partial class Namespace : _Choice {
         public ID<_Choice>				Id; 
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ExceptionsType _Tag () =>ExceptionsType.Namespace;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -175,7 +175,7 @@ namespace Goedel.Tool.Exceptional {
         public override ExceptionsType _Tag () =>ExceptionsType.Using;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -194,12 +194,12 @@ namespace Goedel.Tool.Exceptional {
 
     public partial class Exception : _Choice {
         public ID<_Choice>				Id; 
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ExceptionsType _Tag () =>ExceptionsType.Exception;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Options) {
 				Sub._InitChildren (this);
@@ -228,12 +228,12 @@ namespace Goedel.Tool.Exceptional {
 		public int						Code;
         public ID<_Choice>				Id; 
 		public string					Text;
-        public List <TypedParameter>           Parameters = new List<TypedParameter> ();
+        public List <TypedParameter>           Parameters = [];
 
         public override ExceptionsType _Tag () =>ExceptionsType.Trace;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Parameters) {
 				Sub._InitChildren (this);
@@ -264,12 +264,12 @@ namespace Goedel.Tool.Exceptional {
 		public int						Code;
         public ID<_Choice>				Id; 
 		public string					Text;
-        public List <TypedParameter>           Parameters = new List<TypedParameter> ();
+        public List <TypedParameter>           Parameters = [];
 
         public override ExceptionsType _Tag () =>ExceptionsType.Debug;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Parameters) {
 				Sub._InitChildren (this);
@@ -300,12 +300,12 @@ namespace Goedel.Tool.Exceptional {
 		public int						Code;
         public ID<_Choice>				Id; 
 		public string					Text;
-        public List <TypedParameter>           Parameters = new List<TypedParameter> ();
+        public List <TypedParameter>           Parameters = [];
 
         public override ExceptionsType _Tag () =>ExceptionsType.Information;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Parameters) {
 				Sub._InitChildren (this);
@@ -336,12 +336,12 @@ namespace Goedel.Tool.Exceptional {
 		public int						Code;
         public ID<_Choice>				Id; 
 		public string					Text;
-        public List <TypedParameter>           Parameters = new List<TypedParameter> ();
+        public List <TypedParameter>           Parameters = [];
 
         public override ExceptionsType _Tag () =>ExceptionsType.Warning;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Parameters) {
 				Sub._InitChildren (this);
@@ -372,12 +372,12 @@ namespace Goedel.Tool.Exceptional {
 		public int						Code;
         public ID<_Choice>				Id; 
 		public string					Text;
-        public List <TypedParameter>           Parameters = new List<TypedParameter> ();
+        public List <TypedParameter>           Parameters = [];
 
         public override ExceptionsType _Tag () =>ExceptionsType.Error;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Parameters) {
 				Sub._InitChildren (this);
@@ -408,12 +408,12 @@ namespace Goedel.Tool.Exceptional {
 		public int						Code;
         public ID<_Choice>				Id; 
 		public string					Text;
-        public List <TypedParameter>           Parameters = new List<TypedParameter> ();
+        public List <TypedParameter>           Parameters = [];
 
         public override ExceptionsType _Tag () =>ExceptionsType.Critical;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Parameters) {
 				Sub._InitChildren (this);
@@ -448,7 +448,7 @@ namespace Goedel.Tool.Exceptional {
         public override ExceptionsType _Tag () =>ExceptionsType.TypedParameter;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -470,12 +470,12 @@ namespace Goedel.Tool.Exceptional {
     public partial class Object : _Choice {
         public TOKEN<_Choice>			Type;
 		public string					Text;
-        public List <Parameter>           Parameters = new List<Parameter> ();
+        public List <Parameter>           Parameters = [];
 
         public override ExceptionsType _Tag () =>ExceptionsType.Object;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Parameters) {
 				Sub._InitChildren (this);
@@ -507,7 +507,7 @@ namespace Goedel.Tool.Exceptional {
         public override ExceptionsType _Tag () =>ExceptionsType.Parameter;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -530,7 +530,7 @@ namespace Goedel.Tool.Exceptional {
         public override ExceptionsType _Tag () =>ExceptionsType.Console;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -548,12 +548,12 @@ namespace Goedel.Tool.Exceptional {
 		}
 
     public partial class Description : _Choice {
-		public List <System.String>			Text = new List <System.String> (); 
+		public List <System.String>			Text = []; 
 
         public override ExceptionsType _Tag () =>ExceptionsType.Description;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -577,7 +577,7 @@ namespace Goedel.Tool.Exceptional {
         public override ExceptionsType _Tag () =>ExceptionsType.Abstract;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -594,7 +594,7 @@ namespace Goedel.Tool.Exceptional {
 		}
 
     class _Label : _Choice {
-        public REF<_Choice>            Label;
+        public REF<_Choice>?            Label;
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
@@ -602,7 +602,7 @@ namespace Goedel.Tool.Exceptional {
 
         public override ExceptionsType _Tag () => ExceptionsType._Label;
 
-		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label?.ToString()??"");
         }
 
 
@@ -673,14 +673,12 @@ namespace Goedel.Tool.Exceptional {
         }
 
     public partial class Exceptions : Goedel.Registry.Parser{
-        public List <Goedel.Tool.Exceptional._Choice>        Top;
+        public List <Goedel.Tool.Exceptional._Choice>        Top = [];
         public Registry	<Goedel.Tool.Exceptional._Choice>	Registry;
-
         public bool StartOfEntry {get;  private set;}
-
-        StateCode								State;
+        StateCode								State = StateCode._Start;
         Goedel.Tool.Exceptional._Choice				Current;
-        List <_StackItem>						Stack;
+        readonly List <_StackItem>						Stack = [];
 
 
         public static Exceptions Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -690,7 +688,7 @@ namespace Goedel.Tool.Exceptional {
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
-                Lexer Schema = new Lexer(File);
+                Lexer Schema = new (File);
                 Schema.Process(infile, Result);
                 }
             Result.Init ();
@@ -712,10 +710,7 @@ namespace Goedel.Tool.Exceptional {
 			}
 
         public Exceptions() {
-            Top = new List<Goedel.Tool.Exceptional._Choice> () ;
             Registry = new Registry <Goedel.Tool.Exceptional._Choice> ();
-            State = StateCode._Start;
-            Stack = new List <_StackItem> ();
             StartOfEntry = true;
 
 			TYPE__NamespaceT = Registry.TYPE ("NamespaceT"); 
@@ -763,7 +758,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         private Goedel.Tool.Exceptional.Namespace NewNamespace() {
-            Goedel.Tool.Exceptional.Namespace result = new Goedel.Tool.Exceptional.Namespace();
+            Goedel.Tool.Exceptional.Namespace result = new ();
             Push (result);
             State = StateCode.Namespace_Start;
             return result;
@@ -771,7 +766,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         private Goedel.Tool.Exceptional.Using NewUsing() {
-            Goedel.Tool.Exceptional.Using result = new Goedel.Tool.Exceptional.Using();
+            Goedel.Tool.Exceptional.Using result = new ();
             Push (result);
             State = StateCode.Using_Start;
             return result;
@@ -779,7 +774,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         private Goedel.Tool.Exceptional.Exception NewException() {
-            Goedel.Tool.Exceptional.Exception result = new Goedel.Tool.Exceptional.Exception();
+            Goedel.Tool.Exceptional.Exception result = new ();
             Push (result);
             State = StateCode.Exception_Start;
             return result;
@@ -787,7 +782,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         private Goedel.Tool.Exceptional.Trace NewTrace() {
-            Goedel.Tool.Exceptional.Trace result = new Goedel.Tool.Exceptional.Trace();
+            Goedel.Tool.Exceptional.Trace result = new ();
             Push (result);
             State = StateCode.Trace_Start;
             return result;
@@ -795,7 +790,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         private Goedel.Tool.Exceptional.Debug NewDebug() {
-            Goedel.Tool.Exceptional.Debug result = new Goedel.Tool.Exceptional.Debug();
+            Goedel.Tool.Exceptional.Debug result = new ();
             Push (result);
             State = StateCode.Debug_Start;
             return result;
@@ -803,7 +798,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         private Goedel.Tool.Exceptional.Information NewInformation() {
-            Goedel.Tool.Exceptional.Information result = new Goedel.Tool.Exceptional.Information();
+            Goedel.Tool.Exceptional.Information result = new ();
             Push (result);
             State = StateCode.Information_Start;
             return result;
@@ -811,7 +806,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         private Goedel.Tool.Exceptional.Warning NewWarning() {
-            Goedel.Tool.Exceptional.Warning result = new Goedel.Tool.Exceptional.Warning();
+            Goedel.Tool.Exceptional.Warning result = new ();
             Push (result);
             State = StateCode.Warning_Start;
             return result;
@@ -819,7 +814,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         private Goedel.Tool.Exceptional.Error NewError() {
-            Goedel.Tool.Exceptional.Error result = new Goedel.Tool.Exceptional.Error();
+            Goedel.Tool.Exceptional.Error result = new ();
             Push (result);
             State = StateCode.Error_Start;
             return result;
@@ -827,7 +822,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         private Goedel.Tool.Exceptional.Critical NewCritical() {
-            Goedel.Tool.Exceptional.Critical result = new Goedel.Tool.Exceptional.Critical();
+            Goedel.Tool.Exceptional.Critical result = new ();
             Push (result);
             State = StateCode.Critical_Start;
             return result;
@@ -835,7 +830,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         private Goedel.Tool.Exceptional.TypedParameter NewTypedParameter() {
-            Goedel.Tool.Exceptional.TypedParameter result = new Goedel.Tool.Exceptional.TypedParameter();
+            Goedel.Tool.Exceptional.TypedParameter result = new ();
             Push (result);
             State = StateCode.TypedParameter_Start;
             return result;
@@ -843,7 +838,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         private Goedel.Tool.Exceptional.Object NewObject() {
-            Goedel.Tool.Exceptional.Object result = new Goedel.Tool.Exceptional.Object();
+            Goedel.Tool.Exceptional.Object result = new ();
             Push (result);
             State = StateCode.Object_Start;
             return result;
@@ -851,7 +846,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         private Goedel.Tool.Exceptional.Parameter NewParameter() {
-            Goedel.Tool.Exceptional.Parameter result = new Goedel.Tool.Exceptional.Parameter();
+            Goedel.Tool.Exceptional.Parameter result = new ();
             Push (result);
             State = StateCode.Parameter_Start;
             return result;
@@ -859,7 +854,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         private Goedel.Tool.Exceptional.Console NewConsole() {
-            Goedel.Tool.Exceptional.Console result = new Goedel.Tool.Exceptional.Console();
+            Goedel.Tool.Exceptional.Console result = new ();
             Push (result);
             State = StateCode.Console_Start;
             return result;
@@ -867,7 +862,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         private Goedel.Tool.Exceptional.Description NewDescription() {
-            Goedel.Tool.Exceptional.Description result = new Goedel.Tool.Exceptional.Description();
+            Goedel.Tool.Exceptional.Description result = new ();
             Push (result);
             State = StateCode.Description_Start;
             return result;
@@ -875,7 +870,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         private Goedel.Tool.Exceptional.Abstract NewAbstract() {
-            Goedel.Tool.Exceptional.Abstract result = new Goedel.Tool.Exceptional.Abstract();
+            Goedel.Tool.Exceptional.Abstract result = new ();
             Push (result);
             State = StateCode.Abstract_Start;
             return result;
@@ -920,7 +915,7 @@ namespace Goedel.Tool.Exceptional {
 
 
         void Push (Goedel.Tool.Exceptional._Choice Token) {
-            _StackItem Item = new _StackItem () {
+            _StackItem Item = new  () {
 					State = State,
 					Token = Current
 					};
@@ -935,7 +930,7 @@ namespace Goedel.Tool.Exceptional {
         void Pop () {
 			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
-            _StackItem Item = Stack[Stack.Count -1];
+            _StackItem Item = Stack[^1];
             State = Item.State;
             Current = Item.Token;
 
@@ -1147,8 +1142,6 @@ namespace Goedel.Tool.Exceptional {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.Exceptional.Trace Current_Cast = (Goedel.Tool.Exceptional.Trace)Current;
                             Current_Cast.Parameters.Add (NewTypedParameter ());
@@ -1203,8 +1196,6 @@ namespace Goedel.Tool.Exceptional {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.Exceptional.Debug Current_Cast = (Goedel.Tool.Exceptional.Debug)Current;
                             Current_Cast.Parameters.Add (NewTypedParameter ());
@@ -1259,8 +1250,6 @@ namespace Goedel.Tool.Exceptional {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.Exceptional.Information Current_Cast = (Goedel.Tool.Exceptional.Information)Current;
                             Current_Cast.Parameters.Add (NewTypedParameter ());
@@ -1315,8 +1304,6 @@ namespace Goedel.Tool.Exceptional {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.Exceptional.Warning Current_Cast = (Goedel.Tool.Exceptional.Warning)Current;
                             Current_Cast.Parameters.Add (NewTypedParameter ());
@@ -1371,8 +1358,6 @@ namespace Goedel.Tool.Exceptional {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.Exceptional.Error Current_Cast = (Goedel.Tool.Exceptional.Error)Current;
                             Current_Cast.Parameters.Add (NewTypedParameter ());
@@ -1427,8 +1412,6 @@ namespace Goedel.Tool.Exceptional {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.Exceptional.Critical Current_Cast = (Goedel.Tool.Exceptional.Critical)Current;
                             Current_Cast.Parameters.Add (NewTypedParameter ());
@@ -1505,8 +1488,6 @@ namespace Goedel.Tool.Exceptional {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.Exceptional.Object Current_Cast = (Goedel.Tool.Exceptional.Object)Current;
                             Current_Cast.Parameters.Add (NewParameter ());

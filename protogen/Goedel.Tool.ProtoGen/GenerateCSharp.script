@@ -27,6 +27,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+##pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 ##pragma warning disable IDE0079
 ##pragma warning disable IDE1006
 ##pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -491,12 +492,12 @@ new #{Id}();
 #casecast Struct Param
 #{separator}
 		new #{Entry.PropertyName} ("#{Tag}", typeof (#{Param.Type.Label}),
-					(IBinding data, object? value) => {(data as #{Id}).#{Token} = value as #{Param.TypeCSCons};}, 
-					(IBinding data) => (data as #{Id}).#{Token},
+					(data, value) => {(data as #{Id}).#{Token} = value as #{Param.TypeCSCons};}, 
+					data => (data as #{Id}).#{Token},
 					false, ()=>new  #{Param.TypeCSCons}(), ()=>new #{Param.BaseType}()#!
 #if Entry.Dictionary
 ,
-					(IBinding data) => (data as #{Id}).#{Token}.GetEnumerable(),
+					data => (data as #{Id}).#{Token}.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as #{Param.TypeCSCons}).Add (key as string,value as #{Param.BaseType});}#!
 #end if
@@ -504,8 +505,8 @@ new #{Id}();
 #casecast TStruct Param
 #{separator}
 		new #{Entry.PropertyName} ("#{Tag}", typeof (#{Param.Type.Label}), 
-					(IBinding data, object? value) => {(data as #{Id}).#{Token} = value as #{Param.TypeCSCons};}, 
-					(IBinding data) => (data as #{Id}).#{Token},
+					(data, value) => {(data as #{Id}).#{Token} = value as #{Param.TypeCSCons};}, 
+					data => (data as #{Id}).#{Token},
 					true#!
 #if Entry.Multiple
 , ()=>new #{Param.TypeCSCons}()
@@ -513,23 +514,21 @@ new #{Id}();
 ) #!
 #casecast GStruct Param
 #{separator}
-		new #{Entry.PropertyName} ("#{Tag}", /*typeof (#{Param.Type.Label}<>),*/typeof (#{Param.GType.Label}),
-					(IBinding data, object? value) => {(data as #{Id}).#{Param.MainFieldName} = value as #{Param.TypeCSCons};},
-					(IBinding data) => (data as #{Id}).#{Param.MainFieldName},
-					/*(IBinding data, object? value) => {(data as #{Id}).#{Param.SubFieldName} = value as #{Param.SubTypeCS};},
-					(IBinding data) => (data as #{Id}).#{Param.SubFieldName},*/
+		new #{Entry.PropertyName} ("#{Tag}", typeof (#{Param.GType.Label}),
+					(data, value) => {(data as #{Id}).#{Param.MainFieldName} = value as #{Param.TypeCSCons};},
+					data => (data as #{Id}).#{Param.MainFieldName},
 					()=>new  #{Param.TypeCSCons}(), ()=>new #{Param.BaseType}()#!
 #if Entry.Multiple
 ,
-					(object list,object item)=>(list as #{Param.TypeCSCons}).Add (item as #{Param.BaseType})
+					(list,item)=>(list as #{Param.TypeCSCons}).Add (item as #{Param.BaseType})
 #end if
 )#!
 #% break; } default : {
 #if (Token != null)
 #{separator}
 		new #{Entry.PropertyName} ("#{Tag}", 
-					(IBinding data, #{Entry.TypeCS}? value) => {(data as #{Id}).#{Token} = value;}, 
-					(IBinding data) => (data as #{Id}).#{Token} )#!
+					(data, value) => {(data as #{Id}).#{Token} = value;}, 
+					data => (data as #{Id}).#{Token} )#!
 #end if
 #end switchcast
 #end foreach
@@ -585,6 +584,9 @@ new #{Id}();
 #% bool Enumerated = IsEnumerated (Options);
 #% bool Multiple = IsMultiple (Options);
 #if (Entry is GStruct generic)
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("#{Entry.ID}")]
 	public virtual #{generic.TypeCS}?					#{generic.MainFieldName}  {get; set;} 
 

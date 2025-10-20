@@ -46,7 +46,7 @@ using Goedel.Utilities;
 //   TokenType
 //       ClassType
 
-#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059, IDE0161, CS1591, CS8618
 namespace Goedel.Tool.RegistryConfig {
 
 
@@ -68,12 +68,12 @@ namespace Goedel.Tool.RegistryConfig {
     public abstract partial class _Choice {
         abstract public ConfigItemsType _Tag ();
 
-        public _Choice _Parent;
-        public ConfigItems _Base;
+        public _Choice? _Parent;
+        public ConfigItems? _Base;
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
 
-    	public virtual void Init (_Choice parent) {
+    	public virtual void Init (_Choice? parent) {
             _Parent = parent;
             _Base ??= parent?._Base;
 			}
@@ -81,9 +81,9 @@ namespace Goedel.Tool.RegistryConfig {
         
 
 		bool _Initialized = false;
-		public virtual void _InitChildren (_Choice parent) {
+		public virtual void _InitChildren (_Choice? parent) {
 			Init (parent);
-            _Base = parent._Base;
+            _Base = parent?._Base;
 			if (_Initialized) {
 				return;
 				}
@@ -96,12 +96,12 @@ namespace Goedel.Tool.RegistryConfig {
     public partial class Class : _Choice {
         public TOKEN<_Choice>			Namespace;
         public ID<_Choice>				Id; 
-        public List <Field>           Fields = new List<Field> ();
+        public List <Field>           Fields = [];
 
         public override ConfigItemsType _Tag () =>ConfigItemsType.Class;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Fields) {
 				Sub._InitChildren (this);
@@ -130,12 +130,12 @@ namespace Goedel.Tool.RegistryConfig {
     public partial class Field : _Choice {
         public ID<_Choice>				Id; 
         public _Choice					Type;
-        public List <_Choice>           Options = new List<_Choice> ();
+        public List <_Choice>           Options = [];
 
         public override ConfigItemsType _Tag () =>ConfigItemsType.Field;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			Type._InitChildren (this);
 			foreach (var Sub in Options) {
@@ -168,7 +168,7 @@ namespace Goedel.Tool.RegistryConfig {
         public override ConfigItemsType _Tag () =>ConfigItemsType.AltID;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -190,7 +190,7 @@ namespace Goedel.Tool.RegistryConfig {
         public override ConfigItemsType _Tag () =>ConfigItemsType.String;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -211,7 +211,7 @@ namespace Goedel.Tool.RegistryConfig {
         public override ConfigItemsType _Tag () =>ConfigItemsType.Int;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -232,7 +232,7 @@ namespace Goedel.Tool.RegistryConfig {
         public override ConfigItemsType _Tag () =>ConfigItemsType.Binary;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -249,7 +249,7 @@ namespace Goedel.Tool.RegistryConfig {
 		}
 
     class _Label : _Choice {
-        public REF<_Choice>            Label;
+        public REF<_Choice>?            Label;
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
@@ -257,7 +257,7 @@ namespace Goedel.Tool.RegistryConfig {
 
         public override ConfigItemsType _Tag () => ConfigItemsType._Label;
 
-		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label?.ToString()??"");
         }
 
 
@@ -288,14 +288,12 @@ namespace Goedel.Tool.RegistryConfig {
         }
 
     public partial class ConfigItems : Goedel.Registry.Parser{
-        public List <Goedel.Tool.RegistryConfig._Choice>        Top;
+        public List <Goedel.Tool.RegistryConfig._Choice>        Top = [];
         public Registry	<Goedel.Tool.RegistryConfig._Choice>	Registry;
-
         public bool StartOfEntry {get;  private set;}
-
-        StateCode								State;
+        StateCode								State = StateCode._Start;
         Goedel.Tool.RegistryConfig._Choice				Current;
-        List <_StackItem>						Stack;
+        readonly List <_StackItem>						Stack = [];
 
 
         public static ConfigItems Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -305,7 +303,7 @@ namespace Goedel.Tool.RegistryConfig {
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
-                Lexer Schema = new Lexer(File);
+                Lexer Schema = new (File);
                 Schema.Process(infile, Result);
                 }
             Result.Init ();
@@ -327,10 +325,7 @@ namespace Goedel.Tool.RegistryConfig {
 			}
 
         public ConfigItems() {
-            Top = new List<Goedel.Tool.RegistryConfig._Choice> () ;
             Registry = new Registry <Goedel.Tool.RegistryConfig._Choice> ();
-            State = StateCode._Start;
-            Stack = new List <_StackItem> ();
             StartOfEntry = true;
 
 			TYPE__FieldType = Registry.TYPE ("FieldType"); 
@@ -363,7 +358,7 @@ namespace Goedel.Tool.RegistryConfig {
 
 
         private Goedel.Tool.RegistryConfig.Class NewClass() {
-            Goedel.Tool.RegistryConfig.Class result = new Goedel.Tool.RegistryConfig.Class();
+            Goedel.Tool.RegistryConfig.Class result = new ();
             Push (result);
             State = StateCode.Class_Start;
             return result;
@@ -371,7 +366,7 @@ namespace Goedel.Tool.RegistryConfig {
 
 
         private Goedel.Tool.RegistryConfig.Field NewField() {
-            Goedel.Tool.RegistryConfig.Field result = new Goedel.Tool.RegistryConfig.Field();
+            Goedel.Tool.RegistryConfig.Field result = new ();
             Push (result);
             State = StateCode.Field_Start;
             return result;
@@ -379,7 +374,7 @@ namespace Goedel.Tool.RegistryConfig {
 
 
         private Goedel.Tool.RegistryConfig.AltID NewAltID() {
-            Goedel.Tool.RegistryConfig.AltID result = new Goedel.Tool.RegistryConfig.AltID();
+            Goedel.Tool.RegistryConfig.AltID result = new ();
             Push (result);
             State = StateCode.AltID_Start;
             return result;
@@ -387,7 +382,7 @@ namespace Goedel.Tool.RegistryConfig {
 
 
         private Goedel.Tool.RegistryConfig.String NewString() {
-            Goedel.Tool.RegistryConfig.String result = new Goedel.Tool.RegistryConfig.String();
+            Goedel.Tool.RegistryConfig.String result = new ();
             Push (result);
             State = StateCode.String_Start;
             return result;
@@ -395,7 +390,7 @@ namespace Goedel.Tool.RegistryConfig {
 
 
         private Goedel.Tool.RegistryConfig.Int NewInt() {
-            Goedel.Tool.RegistryConfig.Int result = new Goedel.Tool.RegistryConfig.Int();
+            Goedel.Tool.RegistryConfig.Int result = new ();
             Push (result);
             State = StateCode.Int_Start;
             return result;
@@ -403,7 +398,7 @@ namespace Goedel.Tool.RegistryConfig {
 
 
         private Goedel.Tool.RegistryConfig.Binary NewBinary() {
-            Goedel.Tool.RegistryConfig.Binary result = new Goedel.Tool.RegistryConfig.Binary();
+            Goedel.Tool.RegistryConfig.Binary result = new ();
             Push (result);
             State = StateCode.Binary_Start;
             return result;
@@ -439,7 +434,7 @@ namespace Goedel.Tool.RegistryConfig {
 
 
         void Push (Goedel.Tool.RegistryConfig._Choice Token) {
-            _StackItem Item = new _StackItem () {
+            _StackItem Item = new  () {
 					State = State,
 					Token = Current
 					};
@@ -454,7 +449,7 @@ namespace Goedel.Tool.RegistryConfig {
         void Pop () {
 			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
-            _StackItem Item = Stack[Stack.Count -1];
+            _StackItem Item = Stack[^1];
             State = Item.State;
             Current = Item.Token;
 
@@ -551,8 +546,6 @@ namespace Goedel.Tool.RegistryConfig {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.RegistryConfig.Class Current_Cast = (Goedel.Tool.RegistryConfig.Class)Current;
                             Current_Cast.Fields.Add (NewField ());

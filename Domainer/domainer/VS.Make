@@ -18,8 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Tool.Domainer.dll\
-    Goedel.Tool.Core.dll
+    Goedel.Tool.Domainer.dll
 
 ToolTargets = 
 
@@ -37,5 +36,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget domainer.dll
+	powershell publishtarget domainer.exe $(LinkFiles) 
 

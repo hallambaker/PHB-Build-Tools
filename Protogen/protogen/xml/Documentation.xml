@@ -4,13 +4,13 @@
         <name>protogen</name>
     </assembly>
     <members>
-        <member name="F:ProtoGenShell.CommandLineInterpreter.Entries">
+        <member name="P:ProtoGenShell.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
-        <member name="F:ProtoGenShell.CommandLineInterpreter.DefaultCommand">
+        <member name="P:ProtoGenShell.CommandLineInterpreter.DefaultCommand">
             <summary>The default command.</summary>
         </member>
-        <member name="F:ProtoGenShell.CommandLineInterpreter.Description">
+        <member name="P:ProtoGenShell.CommandLineInterpreter.Description">
             <summary>Description of the comman</summary>
         </member>
         <member name="M:ProtoGenShell.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">

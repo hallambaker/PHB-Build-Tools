@@ -106,7 +106,7 @@ using Goedel.Utilities;
 //       VarT
 //       ReasonT
 
-#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059, IDE0161, CS1591, CS8618
 namespace Goedel.Tool.Domainer {
 
 
@@ -159,12 +159,12 @@ namespace Goedel.Tool.Domainer {
     public abstract partial class _Choice {
         abstract public DomainerType _Tag ();
 
-        public _Choice _Parent;
-        public Domainer _Base;
+        public _Choice? _Parent;
+        public Domainer? _Base;
 
 		public abstract void Serialize (StructureWriter Output, bool tag);
 
-    	public virtual void Init (_Choice parent) {
+    	public virtual void Init (_Choice? parent) {
             _Parent = parent;
             _Base ??= parent?._Base;
 			}
@@ -172,9 +172,9 @@ namespace Goedel.Tool.Domainer {
         
 
 		bool _Initialized = false;
-		public virtual void _InitChildren (_Choice parent) {
+		public virtual void _InitChildren (_Choice? parent) {
 			Init (parent);
-            _Base = parent._Base;
+            _Base = parent?._Base;
 			if (_Initialized) {
 				return;
 				}
@@ -186,12 +186,12 @@ namespace Goedel.Tool.Domainer {
 
     public partial class Group : _Choice {
         public ID<_Choice>				Id; 
-        public List <REF<_Choice>>           Members = new List<REF<_Choice>> ();
+        public List <REF<_Choice>>           Members = [];
 
         public override DomainerType _Tag () =>DomainerType.Group;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -218,12 +218,12 @@ namespace Goedel.Tool.Domainer {
 		public int						Code;
 		public string					Description;
 		public string					Reference;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override DomainerType _Tag () =>DomainerType.RR;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -256,7 +256,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Obsolete;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -277,7 +277,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Pseudo;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -298,7 +298,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Experimental;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -320,7 +320,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.IPv4;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -343,7 +343,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.IPv6;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -366,7 +366,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Domain;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -389,7 +389,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Mail;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -412,7 +412,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.NodeID;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -435,7 +435,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Byte;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -458,7 +458,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Int16;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -481,7 +481,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Int32;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -504,7 +504,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Time32;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -527,7 +527,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Time48;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -550,7 +550,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.String;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -573,7 +573,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.OptionalString;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -596,7 +596,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Strings;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -619,7 +619,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.StringX;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -642,7 +642,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Binary;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -665,7 +665,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Binary8;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -688,7 +688,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Binary16;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -712,7 +712,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.LBinary;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -737,7 +737,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.LByte;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -762,7 +762,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.LInt16;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -786,7 +786,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Hex;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -809,7 +809,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Hex8;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -832,7 +832,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Hex16;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -854,7 +854,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Null;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -876,7 +876,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.OptionList;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -900,7 +900,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Gateway;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -920,12 +920,12 @@ namespace Goedel.Tool.Domainer {
 
     public partial class List : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <_Choice>           Entries = new List<_Choice> ();
+        public List <_Choice>           Entries = [];
 
         public override DomainerType _Tag () =>DomainerType.List;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -952,12 +952,12 @@ namespace Goedel.Tool.Domainer {
 
     public partial class Alt : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <AltEntry>           Entries = new List<AltEntry> ();
+        public List <AltEntry>           Entries = [];
 
         public override DomainerType _Tag () =>DomainerType.Alt;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
@@ -989,7 +989,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.AltEntry;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			Choices._InitChildren (this);
 			}
@@ -1017,7 +1017,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.Q;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1046,7 +1046,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.IG;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1074,7 +1074,7 @@ namespace Goedel.Tool.Domainer {
         public override DomainerType _Tag () =>DomainerType.NA;
 
 
-		public override void _InitChildren (_Choice Parent) {
+		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
 			}
 
@@ -1094,7 +1094,7 @@ namespace Goedel.Tool.Domainer {
 		}
 
     class _Label : _Choice {
-        public REF<_Choice>            Label;
+        public REF<_Choice>?            Label;
 
 		// This method is never called. It exists only to prevent a warning when a
 		// Schema does not contain a ChoiceREF element.
@@ -1102,7 +1102,7 @@ namespace Goedel.Tool.Domainer {
 
         public override DomainerType _Tag () => DomainerType._Label;
 
-		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label?.ToString()??"");
         }
 
 
@@ -1210,14 +1210,12 @@ namespace Goedel.Tool.Domainer {
         }
 
     public partial class Domainer : Goedel.Registry.Parser{
-        public List <Goedel.Tool.Domainer._Choice>        Top;
+        public List <Goedel.Tool.Domainer._Choice>        Top = [];
         public Registry	<Goedel.Tool.Domainer._Choice>	Registry;
-
         public bool StartOfEntry {get;  private set;}
-
-        StateCode								State;
+        StateCode								State = StateCode._Start;
         Goedel.Tool.Domainer._Choice				Current;
-        List <_StackItem>						Stack;
+        readonly List <_StackItem>						Stack = [];
 
 
         public static Domainer Parse(string File, Goedel.Registry.Dispatch Options) {
@@ -1227,7 +1225,7 @@ namespace Goedel.Tool.Domainer {
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
-                Lexer Schema = new Lexer(File);
+                Lexer Schema = new (File);
                 Schema.Process(infile, Result);
                 }
             Result.Init ();
@@ -1249,10 +1247,7 @@ namespace Goedel.Tool.Domainer {
 			}
 
         public Domainer() {
-            Top = new List<Goedel.Tool.Domainer._Choice> () ;
             Registry = new Registry <Goedel.Tool.Domainer._Choice> ();
-            State = StateCode._Start;
-            Stack = new List <_StackItem> ();
             StartOfEntry = true;
 
 			TYPE__GroupT = Registry.TYPE ("GroupT"); 
@@ -1320,7 +1315,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Group NewGroup() {
-            Goedel.Tool.Domainer.Group result = new Goedel.Tool.Domainer.Group();
+            Goedel.Tool.Domainer.Group result = new ();
             Push (result);
             State = StateCode.Group_Start;
             return result;
@@ -1328,7 +1323,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.RR NewRR() {
-            Goedel.Tool.Domainer.RR result = new Goedel.Tool.Domainer.RR();
+            Goedel.Tool.Domainer.RR result = new ();
             Push (result);
             State = StateCode.RR_Start;
             return result;
@@ -1336,7 +1331,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Obsolete NewObsolete() {
-            Goedel.Tool.Domainer.Obsolete result = new Goedel.Tool.Domainer.Obsolete();
+            Goedel.Tool.Domainer.Obsolete result = new ();
             Push (result);
             State = StateCode.Obsolete_Start;
             return result;
@@ -1344,7 +1339,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Pseudo NewPseudo() {
-            Goedel.Tool.Domainer.Pseudo result = new Goedel.Tool.Domainer.Pseudo();
+            Goedel.Tool.Domainer.Pseudo result = new ();
             Push (result);
             State = StateCode.Pseudo_Start;
             return result;
@@ -1352,7 +1347,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Experimental NewExperimental() {
-            Goedel.Tool.Domainer.Experimental result = new Goedel.Tool.Domainer.Experimental();
+            Goedel.Tool.Domainer.Experimental result = new ();
             Push (result);
             State = StateCode.Experimental_Start;
             return result;
@@ -1360,7 +1355,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.IPv4 NewIPv4() {
-            Goedel.Tool.Domainer.IPv4 result = new Goedel.Tool.Domainer.IPv4();
+            Goedel.Tool.Domainer.IPv4 result = new ();
             Push (result);
             State = StateCode.IPv4_Start;
             return result;
@@ -1368,7 +1363,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.IPv6 NewIPv6() {
-            Goedel.Tool.Domainer.IPv6 result = new Goedel.Tool.Domainer.IPv6();
+            Goedel.Tool.Domainer.IPv6 result = new ();
             Push (result);
             State = StateCode.IPv6_Start;
             return result;
@@ -1376,7 +1371,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Domain NewDomain() {
-            Goedel.Tool.Domainer.Domain result = new Goedel.Tool.Domainer.Domain();
+            Goedel.Tool.Domainer.Domain result = new ();
             Push (result);
             State = StateCode.Domain_Start;
             return result;
@@ -1384,7 +1379,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Mail NewMail() {
-            Goedel.Tool.Domainer.Mail result = new Goedel.Tool.Domainer.Mail();
+            Goedel.Tool.Domainer.Mail result = new ();
             Push (result);
             State = StateCode.Mail_Start;
             return result;
@@ -1392,7 +1387,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.NodeID NewNodeID() {
-            Goedel.Tool.Domainer.NodeID result = new Goedel.Tool.Domainer.NodeID();
+            Goedel.Tool.Domainer.NodeID result = new ();
             Push (result);
             State = StateCode.NodeID_Start;
             return result;
@@ -1400,7 +1395,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Byte NewByte() {
-            Goedel.Tool.Domainer.Byte result = new Goedel.Tool.Domainer.Byte();
+            Goedel.Tool.Domainer.Byte result = new ();
             Push (result);
             State = StateCode.Byte_Start;
             return result;
@@ -1408,7 +1403,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Int16 NewInt16() {
-            Goedel.Tool.Domainer.Int16 result = new Goedel.Tool.Domainer.Int16();
+            Goedel.Tool.Domainer.Int16 result = new ();
             Push (result);
             State = StateCode.Int16_Start;
             return result;
@@ -1416,7 +1411,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Int32 NewInt32() {
-            Goedel.Tool.Domainer.Int32 result = new Goedel.Tool.Domainer.Int32();
+            Goedel.Tool.Domainer.Int32 result = new ();
             Push (result);
             State = StateCode.Int32_Start;
             return result;
@@ -1424,7 +1419,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Time32 NewTime32() {
-            Goedel.Tool.Domainer.Time32 result = new Goedel.Tool.Domainer.Time32();
+            Goedel.Tool.Domainer.Time32 result = new ();
             Push (result);
             State = StateCode.Time32_Start;
             return result;
@@ -1432,7 +1427,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Time48 NewTime48() {
-            Goedel.Tool.Domainer.Time48 result = new Goedel.Tool.Domainer.Time48();
+            Goedel.Tool.Domainer.Time48 result = new ();
             Push (result);
             State = StateCode.Time48_Start;
             return result;
@@ -1440,7 +1435,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.String NewString() {
-            Goedel.Tool.Domainer.String result = new Goedel.Tool.Domainer.String();
+            Goedel.Tool.Domainer.String result = new ();
             Push (result);
             State = StateCode.String_Start;
             return result;
@@ -1448,7 +1443,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.OptionalString NewOptionalString() {
-            Goedel.Tool.Domainer.OptionalString result = new Goedel.Tool.Domainer.OptionalString();
+            Goedel.Tool.Domainer.OptionalString result = new ();
             Push (result);
             State = StateCode.OptionalString_Start;
             return result;
@@ -1456,7 +1451,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Strings NewStrings() {
-            Goedel.Tool.Domainer.Strings result = new Goedel.Tool.Domainer.Strings();
+            Goedel.Tool.Domainer.Strings result = new ();
             Push (result);
             State = StateCode.Strings_Start;
             return result;
@@ -1464,7 +1459,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.StringX NewStringX() {
-            Goedel.Tool.Domainer.StringX result = new Goedel.Tool.Domainer.StringX();
+            Goedel.Tool.Domainer.StringX result = new ();
             Push (result);
             State = StateCode.StringX_Start;
             return result;
@@ -1472,7 +1467,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Binary NewBinary() {
-            Goedel.Tool.Domainer.Binary result = new Goedel.Tool.Domainer.Binary();
+            Goedel.Tool.Domainer.Binary result = new ();
             Push (result);
             State = StateCode.Binary_Start;
             return result;
@@ -1480,7 +1475,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Binary8 NewBinary8() {
-            Goedel.Tool.Domainer.Binary8 result = new Goedel.Tool.Domainer.Binary8();
+            Goedel.Tool.Domainer.Binary8 result = new ();
             Push (result);
             State = StateCode.Binary8_Start;
             return result;
@@ -1488,7 +1483,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Binary16 NewBinary16() {
-            Goedel.Tool.Domainer.Binary16 result = new Goedel.Tool.Domainer.Binary16();
+            Goedel.Tool.Domainer.Binary16 result = new ();
             Push (result);
             State = StateCode.Binary16_Start;
             return result;
@@ -1496,7 +1491,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.LBinary NewLBinary() {
-            Goedel.Tool.Domainer.LBinary result = new Goedel.Tool.Domainer.LBinary();
+            Goedel.Tool.Domainer.LBinary result = new ();
             Push (result);
             State = StateCode.LBinary_Start;
             return result;
@@ -1504,7 +1499,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.LByte NewLByte() {
-            Goedel.Tool.Domainer.LByte result = new Goedel.Tool.Domainer.LByte();
+            Goedel.Tool.Domainer.LByte result = new ();
             Push (result);
             State = StateCode.LByte_Start;
             return result;
@@ -1512,7 +1507,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.LInt16 NewLInt16() {
-            Goedel.Tool.Domainer.LInt16 result = new Goedel.Tool.Domainer.LInt16();
+            Goedel.Tool.Domainer.LInt16 result = new ();
             Push (result);
             State = StateCode.LInt16_Start;
             return result;
@@ -1520,7 +1515,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Hex NewHex() {
-            Goedel.Tool.Domainer.Hex result = new Goedel.Tool.Domainer.Hex();
+            Goedel.Tool.Domainer.Hex result = new ();
             Push (result);
             State = StateCode.Hex_Start;
             return result;
@@ -1528,7 +1523,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Hex8 NewHex8() {
-            Goedel.Tool.Domainer.Hex8 result = new Goedel.Tool.Domainer.Hex8();
+            Goedel.Tool.Domainer.Hex8 result = new ();
             Push (result);
             State = StateCode.Hex8_Start;
             return result;
@@ -1536,7 +1531,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Hex16 NewHex16() {
-            Goedel.Tool.Domainer.Hex16 result = new Goedel.Tool.Domainer.Hex16();
+            Goedel.Tool.Domainer.Hex16 result = new ();
             Push (result);
             State = StateCode.Hex16_Start;
             return result;
@@ -1544,7 +1539,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Null NewNull() {
-            Goedel.Tool.Domainer.Null result = new Goedel.Tool.Domainer.Null();
+            Goedel.Tool.Domainer.Null result = new ();
             Push (result);
             State = StateCode.Null_Start;
             return result;
@@ -1552,7 +1547,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.OptionList NewOptionList() {
-            Goedel.Tool.Domainer.OptionList result = new Goedel.Tool.Domainer.OptionList();
+            Goedel.Tool.Domainer.OptionList result = new ();
             Push (result);
             State = StateCode.OptionList_Start;
             return result;
@@ -1560,7 +1555,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Gateway NewGateway() {
-            Goedel.Tool.Domainer.Gateway result = new Goedel.Tool.Domainer.Gateway();
+            Goedel.Tool.Domainer.Gateway result = new ();
             Push (result);
             State = StateCode.Gateway_Start;
             return result;
@@ -1568,7 +1563,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.List NewList() {
-            Goedel.Tool.Domainer.List result = new Goedel.Tool.Domainer.List();
+            Goedel.Tool.Domainer.List result = new ();
             Push (result);
             State = StateCode.List_Start;
             return result;
@@ -1576,7 +1571,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Alt NewAlt() {
-            Goedel.Tool.Domainer.Alt result = new Goedel.Tool.Domainer.Alt();
+            Goedel.Tool.Domainer.Alt result = new ();
             Push (result);
             State = StateCode.Alt_Start;
             return result;
@@ -1584,7 +1579,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.AltEntry NewAltEntry() {
-            Goedel.Tool.Domainer.AltEntry result = new Goedel.Tool.Domainer.AltEntry();
+            Goedel.Tool.Domainer.AltEntry result = new ();
             Push (result);
             State = StateCode.AltEntry_Start;
             return result;
@@ -1592,7 +1587,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.Q NewQ() {
-            Goedel.Tool.Domainer.Q result = new Goedel.Tool.Domainer.Q();
+            Goedel.Tool.Domainer.Q result = new ();
             Push (result);
             State = StateCode.Q_Start;
             return result;
@@ -1600,7 +1595,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.IG NewIG() {
-            Goedel.Tool.Domainer.IG result = new Goedel.Tool.Domainer.IG();
+            Goedel.Tool.Domainer.IG result = new ();
             Push (result);
             State = StateCode.IG_Start;
             return result;
@@ -1608,7 +1603,7 @@ namespace Goedel.Tool.Domainer {
 
 
         private Goedel.Tool.Domainer.NA NewNA() {
-            Goedel.Tool.Domainer.NA result = new Goedel.Tool.Domainer.NA();
+            Goedel.Tool.Domainer.NA result = new ();
             Push (result);
             State = StateCode.NA_Start;
             return result;
@@ -1675,7 +1670,7 @@ namespace Goedel.Tool.Domainer {
 
 
         void Push (Goedel.Tool.Domainer._Choice Token) {
-            _StackItem Item = new _StackItem () {
+            _StackItem Item = new  () {
 					State = State,
 					Token = Current
 					};
@@ -1690,7 +1685,7 @@ namespace Goedel.Tool.Domainer {
         void Pop () {
 			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
-            _StackItem Item = Stack[Stack.Count -1];
+            _StackItem Item = Stack[^1];
             State = Item.State;
             Current = Item.Token;
 
@@ -2348,8 +2343,6 @@ namespace Goedel.Tool.Domainer {
 
 						// Parser transition for LIST $$$$$
 
-
-						/// Label
                         else {
                             Goedel.Tool.Domainer.Alt Current_Cast = (Goedel.Tool.Domainer.Alt)Current;
                             Current_Cast.Entries.Add (NewAltEntry ());
