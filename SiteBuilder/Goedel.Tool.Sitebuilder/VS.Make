@@ -22,9 +22,7 @@ LinkFiles = \
     Goedel.Registry.dll\
     Goedel.Utilities.dll
 
-ToolTargets = 
-
-fake = \
+ToolTargets = \
 	FrameData.cs\
 	Exceptions.cs\
 	FramePages.cs

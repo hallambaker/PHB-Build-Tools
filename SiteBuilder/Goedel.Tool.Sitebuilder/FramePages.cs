@@ -153,6 +153,19 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 			_Output.Write ("/// </summary>\n{0}", _Indent);
 			_Output.Write ("public {1} {2} : {3} {{\n{0}", _Indent, structure, backer.Id, backer.Type);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("	// Implement factory method returning a menu bound to a specific page.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    /// <inheritdoc/>\n{0}", _Indent);
+			_Output.Write ("    public override FramePage Page {{ \n{0}", _Indent);
+			_Output.Write ("            get => page ?? FrameSet.Page;\n{0}", _Indent);
+			_Output.Write ("            init {{ page = value; }} }}\n{0}", _Indent);
+			_Output.Write ("    FramePage? page = null;\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("    /// <inheritdoc/>\n{0}", _Indent);
+			_Output.Write ("    public override FrameMenu Create(FramePage page) => new MainNav() {{\n{0}", _Indent);
+			_Output.Write ("        Page = page\n{0}", _Indent);
+			_Output.Write ("        }};\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("	/// <summary>\n{0}", _Indent);
 			_Output.Write ("	/// Constructor, returns a new instance\n{0}", _Indent);
 			_Output.Write ("	/// </summary>\n{0}", _Indent);
@@ -185,10 +198,16 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 			_Output.Write ("/// <summary>\n{0}", _Indent);
 			_Output.Write ("/// Backing class for {1}\n{0}", _Indent, backer.Id);
 			_Output.Write ("/// </summary>\n{0}", _Indent);
-			_Output.Write ("public {1} {2} (string Id=\"{3}\") : {4} (Id) {{\n{0}", _Indent, structure, backer.Id, backer.Id, backer.ParentId ?? backer.Type);
+			_Output.Write ("public {1} {2} (string Id) : {3} (Id) {{\n{0}", _Indent, structure, backer.Id, backer.ParentId ?? backer.Type);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    /// <inheritdoc/>\n{0}", _Indent);
 			_Output.Write ("    public override List<IFrameField> Fields {{ get; set; }} = _Fields;\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("	/// <summary>\n{0}", _Indent);
+			_Output.Write ("	/// Paramaterless constructor enabling use of new().\n{0}", _Indent);
+			_Output.Write ("	/// </summary>\n{0}", _Indent);
+			_Output.Write ("	public {1}() : this(\"{2}\") {{ \n{0}", _Indent, backer.Id, backer.Id);
+			_Output.Write ("		}}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			 var defaultPresentation = GetDefaultPresentation(backer.Fields);
 			if (  (defaultPresentation is not null) ) {
@@ -357,6 +376,14 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 			 var bid = button.Text.Replace (".", "?.");
 			_Output.Write ("{1}\n{0}", _Indent, comma2);
 			_Output.Write ("			GetText = (IBinding data) => (data as {1})?.{2}", _Indent, backed.Id, bid);
+			}
+		if (  (button.Description is not null)  ) {
+			_Output.Write ("{1}\n{0}", _Indent, comma2);
+			_Output.Write ("			Description = \"{1}\"", _Indent, button.Description);
+			}
+		if (  (button.ButtonAction != ButtonAction.Link)  ) {
+			_Output.Write ("{1}\n{0}", _Indent, comma2);
+			_Output.Write ("			ButtonAction = ButtonAction.{1}", _Indent, button.ButtonAction);
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("			}}", _Indent);

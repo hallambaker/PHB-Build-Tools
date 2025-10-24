@@ -123,6 +123,19 @@ public #{structure} #{backer.Id} : #{backer.Type} {
 /// </summary>
 public #{structure} #{backer.Id} : #{backer.Type} {
 
+	// Implement factory method returning a menu bound to a specific page.
+
+    /// <inheritdoc/>
+    public override FramePage Page { 
+            get => page ?? FrameSet.Page;
+            init { page = value; } }
+    FramePage? page = null;
+
+    /// <inheritdoc/>
+    public override FrameMenu Create(FramePage page) => new MainNav() {
+        Page = page
+        };
+
 	/// <summary>
 	/// Constructor, returns a new instance
 	/// </summary>
@@ -155,10 +168,16 @@ public #{structure} #{backer.Id} : #{backer.Type} {
 /// <summary>
 /// Backing class for #{backer.Id}
 /// </summary>
-public #{structure} #{backer.Id} (string Id="#{backer.Id}") : #{backer.ParentId ?? backer.Type} (Id) {
+public #{structure} #{backer.Id} (string Id) : #{backer.ParentId ?? backer.Type} (Id) {
 
     /// <inheritdoc/>
     public override List<IFrameField> Fields { get; set; } = _Fields;
+
+	/// <summary>
+	/// Paramaterless constructor enabling use of new().
+	/// </summary>
+	public #{backer.Id}() : this("#{backer.Id}") { 
+		}
 
 #% var defaultPresentation = GetDefaultPresentation(backer.Fields);
 #if (defaultPresentation is not null)
@@ -317,6 +336,14 @@ public #{structure} #{backer.Id} (string Id="#{backer.Id}") : #{backer.ParentId 
 #% var bid = button.Text.Replace (".", "?.");
 #{comma2}
 			GetText = (IBinding data) => (data as #{backed.Id})?.#{bid}#!
+#end if
+#if (button.Description is not null) 
+#{comma2}
+			Description = "#{button.Description}"#!
+#end if
+#if (button.ButtonAction != ButtonAction.Link) 
+#{comma2}
+			ButtonAction = ButtonAction.#{button.ButtonAction}#!
 #end if
 
 			}#!

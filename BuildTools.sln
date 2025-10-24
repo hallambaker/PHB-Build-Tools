@@ -191,7 +191,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Guigen", "..\mmm\Lib
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Tool.Core", "..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj", "{A9CCB3EE-BFD1-ED92-E779-681F54C5464C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sitebuilder", "Sitebuilder", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tool Sitebuilder", "Tool Sitebuilder", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sitebuilder", "SiteBuilder\sitebuilder\sitebuilder.csproj", "{1CB0F172-5EA0-6B78-73A5-49B300B44575}"
 EndProject

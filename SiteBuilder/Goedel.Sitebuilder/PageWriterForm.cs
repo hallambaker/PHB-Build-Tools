@@ -1,19 +1,29 @@
-﻿using Goedel.Registry;
+﻿using Goedel.Protocol.Web;
+using Goedel.Registry;
 
 namespace Goedel.Sitebuilder;
+
+
 
 /// <summary>
 /// Pagewriter adds in methods to emit FramePages and components.
 /// </summary>
 public partial class PageWriter : HtmlWriter {
-
+    public static bool DebugForm = false;
 
     public void Render(
             IBacked backer,
             FrameRefForm item) {
 
         // create the form 
-        OpenClass("form", item.Tag, "action", "https://httpbin.org/post", "method", "post");
+        if (DebugForm) {
+            OpenClass("form", item.Tag, "action", "https://httpbin.org/post", "method", "post");
+            }
+        else {
+            OpenClass("form", item.Tag, "action", $"/{FramePage.PathStem}?{item.Tag}", "method",
+                "post", "enctype", "multipart/form-data");
+            }
+        //Element("input", "type", "hidden", "id", "-Form", "name", item.Tag, "value", item.Tag!);
 
         var value = item.Get(backer);
         foreach (var field in item.Class.Fields) {

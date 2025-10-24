@@ -4,10 +4,24 @@ using Goedel.Protocol;
 
 namespace Goedel.Sitebuilder;
 
+public  interface IPageContext {
+    }
 
 
 public class FrameSet {
     public FramePage Page { get; set; }
+
+    ///<summary>Directory to store persisted data to.</summary>
+    public string Directory { get; set; }
+
+    ///<summary>Directory where the resource files are stored.</summary>
+    public string ResourceFiles { get; set; }
+
+
+    public IPersistPlace PersistPlace { get; set; }
+
+
+
     public List<Resource> Resources { get; set; } = null;
     public List<Resource> EndResources { get; set; } = null;
 
@@ -18,11 +32,19 @@ public class FrameSet {
     public virtual List<FrameClass> Classes { get; init; } = [];
 
 
+    public Dictionary<string, FramePage> PageDirectory { get; } = [];
 
 
-    //public Dictionary<string, FrameField> Dictionary { get; } = [];
-
+    /// <summary>
+    /// Resolve id references to field identifiers and compile the places
+    /// directory.
+    /// </summary>
+    /// <param name="entry">The entry to resolve.</param>
     public void ResolveReferences(IBacked entry) {
+        if (entry is FramePage page) {
+            PageDirectory.Add(page.PathStem, page);
+            }
+
         entry.FrameSet = this;
         foreach (var field in entry.Fields) {
             switch (field) {
@@ -92,12 +114,19 @@ public class FrameBacker {
     }
 
 
+public interface IPersistPlace {
+    }
+
 public class FramePage: FrameBacker, IBacked {
 
+
+    public string Anchor => $"/{PathStem}";
 
     public virtual string PathStem => Id;
 
     public int PathParameters { get; set; } = 0;
+
+
 
 
     public List<Resource> Resources { get; set; } = null;
@@ -122,13 +151,55 @@ public class FramePage: FrameBacker, IBacked {
         Fields = fields;
         Title = title;
         }
+
+
+    /// <summary>
+    /// Request page produced from this template from the request context 
+    /// <paramref name="context"/>.
+    /// </summary>
+    /// <param name="persistPlace"></param>
+    /// <returns></returns>
+    /// <param name="context"></param>
+    public virtual FramePage GetPage(
+                IPersistPlace persistPlace, IPageContext context) => this;
+
+
+    ///// <summary>
+    ///// Request page produced from this template from the request context 
+    ///// <paramref name="context"/>.
+    ///// </summary>
+    ///// <param name="persistPlace">Persistence context.</param>
+    ///// <param name="context">Request context.</param>
+    ///// <returns></returns>
+    //public virtual FramePage GetPage(
+    //        IPersistPlace persistPlace,
+    //            IPageContext context) => this;
+
+    /// <summary>
+    /// Request page produced from this template from the request context 
+    /// <paramref name="context"/>.
+    /// </summary>
+    /// <param name="persistPlace">Persistence context.</param>
+    /// <param name="context">Request context.</param>
+    /// <returns></returns>
+    public virtual FramePage PostPage(
+            IPersistPlace persistPlace,
+                IPageContext context) => this;
+
+
     }
 
 public class FrameMenu : FrameBacker, IBacked {
+
+    public virtual FramePage Page { get; init; }
+
     public FrameSet FrameSet { get; set; }
     public virtual List<IFrameField> Fields { get; init; }
 
     public string Type => "FrameMenu";
+
+    public virtual FrameMenu Create (FramePage page) => throw new NotImplementedException();
+
 
     public FrameClass? Parent { get; init; } = null;
 
@@ -220,10 +291,33 @@ public enum ButtonVisibility {
     None
     }
 
+public enum ButtonAction {
+    Null,
+    Link,
+    Method
+    
+    }
+
 public record FrameButton(
                 string Id,
                 string Label,
-                string Action) : FrameField (Id) {
+                string Action,
+
+                 ButtonAction ButtonAction= ButtonAction.Link) : FrameField (Id) {
+
+    public string? ActionType => ButtonAction switch {
+        ButtonAction.Link => "href",
+        ButtonAction.Method => "onclick",
+        _ => null
+        };
+
+    public string ActionValue => ButtonAction switch {
+        ButtonAction.Link => "/" + Action,
+        ButtonAction.Method => $"{Action} ()",
+        _ => null
+        };
+
+
 
     public override string Type => "FrameButton";
 
@@ -238,7 +332,8 @@ public record FrameButtonParsed(
                 string Action,
                 string? Active,
                 string? Integer,
-                string? Text) : FrameButton(Id, Label, Action) {
+                string? Text,
+                ButtonAction ButtonAction) : FrameButton(Id, Label, Action, ButtonAction) {
 
 
     }
@@ -294,6 +389,9 @@ public record FrameRefForm(
 
     public override string Type => "FrameRefClass";
 
+    public string? Action => $"/{Id}";
+
+
     public FrameClass Class { get; set; }
     public string? PresentationId { get; set; }
 
@@ -302,14 +400,18 @@ public record FrameRefForm(
     public Action<IBacked, IBacked?> Set { get; init; }
     public Func<IBacked, IBacked?> Get { get; init; }
 
+
+    public virtual FrameClass Factory() => null;
     }
 
 public record FrameRefForm<T>(
                     string Id,
-                    string Reference) : FrameRefForm(Id, Reference) where T : FrameClass {
+                    string Reference) : FrameRefForm(Id, Reference) where T : FrameClass, new() {
 
     public override string Type => "FrameRefClass";
 
+    /// <inheritdoc/>
+    public override FrameClass Factory() => new T();
     }
 
 
@@ -416,18 +518,6 @@ public record FrameString(
     public virtual string Type => "FrameString";
     }
 
-public record FrameAnchor(
-            string Id,
-            Action<IBinding, BackingTypeLink?>? Set = null,
-            Func<IBinding, BackingTypeLink?>? Get = null) : IFrameField {
-
-    public string Tag { get; init; } = Id;
-    public string Type => "FrameAnchor";
-    public string Backing => "BackingTypeLink";
-    public string Prompt { get; set; }
-    public bool Hidden { get; set; } = false;
-    public string Description { get; set; }
-    }
 
 
 public record FrameText(
@@ -444,6 +534,26 @@ public record FrameRichText(
             Func<IBinding, string?>? Get = null) : FrameString(Id, Set, Get) {
     public override string Type => "FrameRichText";
     }
+
+
+public record FrameAnchor(
+            string Id,
+            Action<IBinding, BackingTypeLink?>? Set = null,
+            Func<IBinding, BackingTypeLink?>? Get = null) : IFrameField {
+
+    public string Tag { get; init; } = Id;
+    public string Type => "FrameAnchor";
+    public string Backing => "BackingTypeLink";
+    public string Prompt { get; set; }
+    public bool Hidden { get; set; } = false;
+    public string Description { get; set; }
+    }
+
+
+
+//public record FrameResource<T>) {
+//    }(
+ 
 
 
 public record FrameImage(

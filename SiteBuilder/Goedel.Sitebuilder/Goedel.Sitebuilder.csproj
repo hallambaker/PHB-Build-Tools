@@ -8,6 +8,7 @@
 	</PropertyGroup>
 	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Protocol.Web\Goedel.Protocol.Web.csproj" />
 		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
 		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
 		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />

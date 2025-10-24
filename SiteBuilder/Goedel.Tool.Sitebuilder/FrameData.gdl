@@ -113,7 +113,12 @@ Class Goedel.Tool.Sitebuilder FrameStruct
             Integer
             String
             Link
+            Action
+            Description
+
+
     Type Container
+    Type Action
 
 
     Type Link

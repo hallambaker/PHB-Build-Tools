@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 global using Goedel.Protocol;
+global using Goedel.Protocol.Web;
 global using Goedel.Registry;
 
 

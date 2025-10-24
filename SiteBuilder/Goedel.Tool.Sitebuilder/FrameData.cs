@@ -85,6 +85,7 @@ using Goedel.Utilities;
 //       FieldProperty
 //       ButtonProperty
 //       Link
+//       Action
 //       ChoiceEntry
 //       ChoiceOption
 //       ChooserOption
@@ -124,7 +125,6 @@ using Goedel.Utilities;
 //       Items
 //       Tag
 //       To
-//       Action
 //       Sections
 //   TokenType
 //       Uid
@@ -151,6 +151,7 @@ namespace Goedel.Tool.Sitebuilder {
         Anchor,
         ButtonProperty,
         Container,
+        Action,
         Link,
         Is,
         List,
@@ -652,6 +653,27 @@ namespace Goedel.Tool.Sitebuilder {
 
 			if (tag) {
 				Output.EndElement ("Container");
+				}			
+			}
+		}
+
+    public partial class Action : _Choice {
+
+        public override FrameStructType _Tag () =>FrameStructType.Action;
+
+
+		public override void _InitChildren (_Choice? Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Action");
+				}
+
+			if (tag) {
+				Output.EndElement ("Action");
 				}			
 			}
 		}
@@ -1892,6 +1914,7 @@ namespace Goedel.Tool.Sitebuilder {
 		ButtonProperty__Id,				
 		ButtonProperty__Type,				
 		Container_Start,
+		Action_Start,
 		Link_Start,
 		Link__Uri,				
 		Is_Start,
@@ -2063,6 +2086,7 @@ namespace Goedel.Tool.Sitebuilder {
                 case "Anchor": return NewAnchor();
                 case "ButtonProperty": return NewButtonProperty();
                 case "Container": return NewContainer();
+                case "Action": return NewAction();
                 case "Link": return NewLink();
                 case "Is": return NewIs();
                 case "List": return NewList();
@@ -2231,6 +2255,14 @@ namespace Goedel.Tool.Sitebuilder {
             Goedel.Tool.Sitebuilder.Container result = new ();
             Push (result);
             State = StateCode.Container_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Sitebuilder.Action NewAction() {
+            Goedel.Tool.Sitebuilder.Action result = new ();
+            Push (result);
+            State = StateCode.Action_Start;
             return result;
             }
 
@@ -2605,6 +2637,7 @@ namespace Goedel.Tool.Sitebuilder {
                 case "Anchor": return Goedel.Tool.Sitebuilder.FrameStructType.Anchor;
                 case "ButtonProperty": return Goedel.Tool.Sitebuilder.FrameStructType.ButtonProperty;
                 case "Container": return Goedel.Tool.Sitebuilder.FrameStructType.Container;
+                case "Action": return Goedel.Tool.Sitebuilder.FrameStructType.Action;
                 case "Link": return Goedel.Tool.Sitebuilder.FrameStructType.Link;
                 case "Is": return Goedel.Tool.Sitebuilder.FrameStructType.Is;
                 case "List": return Goedel.Tool.Sitebuilder.FrameStructType.List;
@@ -3206,17 +3239,19 @@ namespace Goedel.Tool.Sitebuilder {
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Boolean) |
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Integer) |
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.String) |
-									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Link) ) {
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Link) |
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Action) |
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Description) ) {
                                 State = StateCode.ButtonProperty__Type;
                                 Current_Cast.Type = New_Choice(Text);
                                 }
                             else {
-                               throw new Expected ("Parser Error Expected [Boolean Integer String Link ]");
+                               throw new Expected ("Parser Error Expected [Boolean Integer String Link Action Description ]");
                                 }
                             break;
                             }
                         else { 
-						    throw new Expected("Parser Error Expected [Boolean Integer String Link ]");
+						    throw new Expected("Parser Error Expected [Boolean Integer String Link Action Description ]");
                             }
 
                     case StateCode.ButtonProperty__Type:
@@ -3224,6 +3259,10 @@ namespace Goedel.Tool.Sitebuilder {
                         Represent = true; 
                         break;
                     case StateCode.Container_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Action_Start:
                         Pop ();
                         Represent = true; 
                         break;

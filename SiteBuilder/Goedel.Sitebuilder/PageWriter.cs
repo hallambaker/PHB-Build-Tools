@@ -12,7 +12,9 @@ public partial class PageWriter : HtmlWriter {
     ///<summary>Text to use for the page.</summary>
     public PageText PageText { get; set;} = PageText.English;
 
-    FrameSet FrameSet { get; }
+    FramePage FramePage { get; }
+
+    FrameSet FrameSet =>  FramePage.FrameSet;
 
     /// <summary>
     /// Constructor.
@@ -20,45 +22,44 @@ public partial class PageWriter : HtmlWriter {
     /// <param name="frameset">The frame set context to render in.</param>
     /// <param name="textWriter">The text writer to write to.</param>
     public PageWriter(
-            FrameSet frameset,
+            FramePage page,
             TextWriter textWriter
             ) : base(textWriter) {
-        FrameSet = frameset;
+        FramePage = page;
         }
 
     /// <summary>
-    /// Render page <paramref name="page"/>.
+    /// Render page.
     /// </summary>
-    /// <param name="page">The page to render.</param>
-    public void Render(FramePage page) {
+    public void Render() {
 
-        page.StartRender = System.DateTime.Now;
-        var title = page.PageTitle ?? page.Title;
+        FramePage.StartRender = System.DateTime.Now;
+        var title = FramePage.PageTitle ?? FramePage.Title;
 
         // Basics, title and favicon
-        Head(title, page.FaviCon);
+        Head(title, FramePage.FaviCon);
 
         // Stylesheets and scripts with usual defaults
-        Reources(page.FrameSet.Resources);
-        Reources(page.Resources);
+        Reources(FramePage.FrameSet.Resources);
+        Reources(FramePage.Resources);
 
         Body();
 
-        if (page.Container is not null) {
-            Open("div", "class", page.Container);
+        if (FramePage.Container is not null) {
+            Open("div", "class", FramePage.Container);
             }
         else {
-            Open("div", "class", page.Tag);
+            Open("div", "class", FramePage.Tag);
             }
 
         Text(title, "div", "class", "Title");
 
-        RenderFields(page);
+        RenderFields(FramePage);
         Close();
 
 
-        Reources(page.FrameSet.EndResources);
-        Reources(page.EndResources);
+        Reources(FramePage.FrameSet.EndResources);
+        Reources(FramePage.EndResources);
         Finish();
         }
 
@@ -190,7 +191,11 @@ public partial class PageWriter : HtmlWriter {
 
 
     public void Render(IBacked backer, FrameRefMenu fieldRefMenu) {
-        var menu = fieldRefMenu.Menu;
+
+        //var menu = fieldRefMenu.Menu;
+
+        // Construct the localized menu from the frame.
+        var menu = fieldRefMenu.Menu.Create(FramePage);
         var start = OpenClass("div", fieldRefMenu.Tag);
 
         foreach (var field in menu.Fields) {
@@ -238,7 +243,9 @@ public partial class PageWriter : HtmlWriter {
         var start = Open("div", "class", buttonType + button.Tag);
 
         if (!disabled) {
-            Open("a", "class", "ButtonAnchor", "href", button.Action + ".html");
+
+
+            Open("a", "class", "ButtonAnchor", button.ActionType,  button.ActionValue, "title", button.Description);
             }
         else {
             Open("div", "class", "ButtonDummyAnchor");

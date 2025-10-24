@@ -173,11 +173,42 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.Directory">
+            <summary>Directory to store persisted data to.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.ResourceFiles">
+            <summary>Directory where the resource files are stored.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameSet.ResolveReferences(Goedel.Sitebuilder.IBacked)">
+            <summary>
+            Resolve id references to field identifiers and compile the places
+            directory.
+            </summary>
+            <param name="entry">The entry to resolve.</param>
+        </member>
         <member name="P:Goedel.Sitebuilder.IBacked.Tag">
             <summary>The identifier</summary>
         </member>
         <member name="P:Goedel.Sitebuilder.IBacked.Fields">
             <summary>The fields</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FramePage.GetPage(Goedel.Sitebuilder.IPersistPlace,Goedel.Sitebuilder.IPageContext)">
+            <summary>
+            Request page produced from this template from the request context 
+            <paramref name="context"/>.
+            </summary>
+            <param name="persistPlace"></param>
+            <returns></returns>
+            <param name="context"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FramePage.PostPage(Goedel.Sitebuilder.IPersistPlace,Goedel.Sitebuilder.IPageContext)">
+            <summary>
+            Request page produced from this template from the request context 
+            <paramref name="context"/>.
+            </summary>
+            <param name="persistPlace">Persistence context.</param>
+            <param name="context">Request context.</param>
+            <returns></returns>
         </member>
         <member name="P:Goedel.Sitebuilder.FrameSelector.Fields">
             <inheritdoc/>
@@ -215,6 +246,9 @@
             <param name="id">The frame field identifier.</param>
         </member>
         <member name="P:Goedel.Sitebuilder.FrameRefClass.Backing">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRefForm`1.Factory">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Sitebuilder.FrameRefList.Backing">
@@ -321,18 +355,17 @@
         <member name="P:Goedel.Sitebuilder.PageWriter.PageText">
             <summary>Text to use for the page.</summary>
         </member>
-        <member name="M:Goedel.Sitebuilder.PageWriter.#ctor(Goedel.Sitebuilder.FrameSet,System.IO.TextWriter)">
+        <member name="M:Goedel.Sitebuilder.PageWriter.#ctor(Goedel.Sitebuilder.FramePage,System.IO.TextWriter)">
             <summary>
             Constructor.
             </summary>
             <param name="frameset">The frame set context to render in.</param>
             <param name="textWriter">The text writer to write to.</param>
         </member>
-        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.FramePage)">
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render">
             <summary>
-            Render page <paramref name="page"/>.
+            Render page.
             </summary>
-            <param name="page">The page to render.</param>
         </member>
         <member name="M:Goedel.Sitebuilder.PageWriter.RenderFields(Goedel.Sitebuilder.IBacked)">
             <summary>

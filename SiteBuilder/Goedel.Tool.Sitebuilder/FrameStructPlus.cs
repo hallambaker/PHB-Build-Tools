@@ -195,9 +195,12 @@ public partial class Namespace {
         }
 
     static FrameButtonParsed GetFrameButton(string label, Button button) {
+        string? action = button.Action.Label;
         string? active = null;
         string? integer = null;
         string? text = null;
+        string? description = null;
+        ButtonAction buttonAction = ButtonAction.Link;
 
         foreach (var entry in button.Entries) {
             switch (entry.Type) {
@@ -213,14 +216,31 @@ public partial class Namespace {
                     text = entry.Id.Label;
                     break;
                     }
+                case Sitebuilder.Description desc : {
+                    description = desc.Text;
+                    break;
+                    }
+                case Sitebuilder.Action: {
+                    buttonAction = ButtonAction.Method ;
+                    break;
+                    }
 
+                case Sitebuilder.Link link: {
+                    buttonAction = ButtonAction.Link;
+                    action = link.Uri;
+                    break;
+                    }
                 }
             
             }
 
-        return new FrameButtonParsed(label, button.Title, button.Action.Label,
-            active, integer, text);
+        var result = new FrameButtonParsed(label, button.Title, action,
+            active, integer, text, buttonAction) {
+            Description = description
+            };
 
+
+        return result;
         }
 
 
