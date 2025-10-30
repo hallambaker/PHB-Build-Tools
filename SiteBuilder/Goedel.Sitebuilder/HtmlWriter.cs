@@ -194,6 +194,15 @@ public class HtmlWriter {
         TextWriter.WriteLine($"</{tag}>");
         }
 
+    public void TextVerbatim(string text, string tag, params string[]? attributes) {
+        StartElement(tag);
+        WriteAttributes(attributes);
+        TextWriter.Write(">");
+        Text(text);
+        TextWriter.WriteLine($"</{tag}>");
+        }
+
+
     public void TextClass(string text, string classId, string tag, params string[]? attributes) {
         var classAttr = EnclosingClass(classId);
 
@@ -205,8 +214,14 @@ public class HtmlWriter {
         TextWriter.WriteLine($"</{tag}>");
         }
 
+    /// <summary>
+    /// Write the specified textg to the stream as an escaped HTML string.
+    /// </summary>
+    /// <param name="text">The textg to write.</param>
     public void Text(string text) {
-        TextWriter.Write(text);
+
+
+        TextWriter.Write(HttpUtility.HtmlEncode( text));
         }
 
 

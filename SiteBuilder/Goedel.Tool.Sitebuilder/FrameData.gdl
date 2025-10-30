@@ -76,6 +76,7 @@ Class Goedel.Tool.Sitebuilder FrameStruct
             Form
             Selection
             Container
+            Description
 
     Type Property
         Id Token EntryT
@@ -205,7 +206,7 @@ Class Goedel.Tool.Sitebuilder FrameStruct
 
     Type Form
         Id Token EntryT
-        Properties List FieldProperty
+        Entries List FieldItem
 
     Type Section
         Id Token EntryT
@@ -241,6 +242,11 @@ Class Goedel.Tool.Sitebuilder FrameStruct
             Hidden
             Prompt
             Display
+            
+            FileType
+
+
+
 
     Type Display
         Id Token EntryT
@@ -262,3 +268,7 @@ Class Goedel.Tool.Sitebuilder FrameStruct
     Type Post
     Type Rich
     Type Hidden
+
+
+    Type FileType
+        Id Token EntryT

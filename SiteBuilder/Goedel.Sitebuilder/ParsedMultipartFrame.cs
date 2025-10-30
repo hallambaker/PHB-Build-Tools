@@ -43,123 +43,67 @@ public partial class ParsedMultipartFrame : ParsedMultipart {
             if (!GetHeaders(fieldData)) {
                 return false;
                 }
-
-
-
-            var property = GetField(formData, fieldData.Name);
-
-            switch (property) {
-                case FrameString frameString: {
-                    if (!GetContent(out var content)) {
-                        return false;
-                        }
-                    var text = content.ToUTF8();
-
-                    frameString.Set(formData, text);
-                    break;
-                    }
-                case FrameInteger frameInteger: {
-                    if (!GetContent(out var content)) {
-                        return false;
-                        }
-                    var text = content.ToUTF8();
-                    var integer = Int32.Parse(text);
-
-                    frameInteger.Set(formData, integer);
-                    break;
-                    }
-                case FrameBoolean frameBoolean: {
-                    if (!GetContent(out var content)) {
-                        return false;
-                        }
-                    var text = content.ToUTF8();
-                    break;
-                    }
-                case FrameImage frameImage: {
-                    if (!GetContent(out var content)) {
-                        return false;
-                        }
-
-                    break;
-                    }
-
-                default: {
-                    if (!GetContent(out var content)) {
-                        return false;
-                        }
-                    break;
+            if (fieldData.Name is null) {
+                if (!GetContent(out var content)) {
+                    return false;
                     }
                 }
+            else if (!formData._Binding.AllProperties.TryGetValue(fieldData.Name, out var property)) {
+                if (!GetContent(out var content)) {
+                    return false;
+                    }
+                }
+            else {
+                switch (property) {
+                    case FrameString frameString: {
+                        if (!GetContent(out var content)) {
+                            return false;
+                            }
+                        var text = content.ToUTF8();
 
+                        frameString.Set(formData, text);
+                        break;
+                        }
+                    case FrameInteger frameInteger: {
+                        if (!GetContent(out var content)) {
+                            return false;
+                            }
+                        var text = content.ToUTF8();
+                        var integer = Int32.Parse(text);
 
+                        frameInteger.Set(formData, integer);
+                        break;
+                        }
+                    case FrameBoolean frameBoolean: {
+                        if (!GetContent(out var content)) {
+                            return false;
+                            }
+                        var text = content.ToUTF8();
+                        break;
+                        }
+                    case FrameImage frameImage: {
+                        if (!GetContent(out var content)) {
+                            return false;
+                            }
 
-            //var item = formData.GetFormItem(fieldData.Name);
-            //switch (item?.FormEntryType) {
-            //    case FormEntryType.String: {
-            //        if (!GetContent(out var content)) {
-            //            return false;
-            //            }
-            //        var text = content.ToUTF8();
-            //        item.Setter(formData, text);
-            //        break;
-            //        }
-            //    case FormEntryType.Boolean: {
-            //        if (!GetContent(out var content)) {
-            //            return false;
-            //            }
-            //        var text = content.ToUTF8();
-            //        item.Setter(formData, text);
-            //        break;
-            //        }
-            //    case FormEntryType.File: {
-            //        if (!GetContent(out var content)) {
-            //            return false;
-            //            }
-            //        var file = new FileField(null,
-            //                fieldData?.Filename, fieldData?.ContentType, content);
-            //        item.Setter(formData, file);
-            //        break;
-            //        }
-            //    case FormEntryType.Binary: {
-            //        if (!GetContent(out var content)) {
-            //            return false;
-            //            }
-            //        item.Setter(formData, content!);
-            //        break;
-            //        }
-            //    default: {
-            //        // Ignore the data
-            //        if (!GetContent(out var content)) {
-            //            return false;
-            //            }
-            //        break;
-            //        }
-            //    }
+                        break;
+                        }
 
+                    default: {
+                        if (!GetContent(out var content)) {
+                            return false;
+                            }
+                        break;
+                        }
+                    }
+                }
 
             if (!CheckContentEnd()) {
                 return false;
                 }
-
-
-            //Console.WriteLine($"{fieldData.Name}: {fieldData.Filename} {fieldData.ContentType}");
             }
 
         return true;
-        }
-
-
-    Property? GetField(IBinding data, string id) {
-
-        foreach (var property in data._Properties) {
-            if (property.Tag == id) {
-                return property;
-                }
-
-            }
-
-
-        return null;
         }
 
 

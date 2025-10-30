@@ -26,7 +26,7 @@ public partial class PageWriter : HtmlWriter {
         //Element("input", "type", "hidden", "id", "-Form", "name", item.Tag, "value", item.Tag!);
 
         var value = item.Get(backer);
-        foreach (var field in item.Class.Fields) {
+        foreach (var field in item.Fields) {
             RenderFormField(value, field);
             }
 
@@ -34,7 +34,6 @@ public partial class PageWriter : HtmlWriter {
         Element("input", "type", "reset", "value", PageText.Reset);
 
         Close();
-
         }
 
 
@@ -44,90 +43,71 @@ public partial class PageWriter : HtmlWriter {
             IFrameField field) {
 
 
-
-        //OpenClass("div", id);
+        var id = NormalizeId(field.Tag);
+        OpenClass("div", id);
         switch (field) {
             case FrameString item: {
-                RenderForm(backer, item);
+                RenderForm(backer, item, id);
                 break;
                 }
-            case FrameImage item: {
-                RenderForm(backer, item);
-                break;
-                }
-            case FrameAvatar item: {
-                RenderForm(backer, item);
+            case FrameFile item: {
+                RenderForm(backer, item, id);
                 break;
                 }
             default: {
                 break;
                 }
-
             }
-        //Close();
+
+        if (Reactions is not null) {
+            foreach (var reaction in Reactions) {
+                if (reaction.Id == field.Tag) {
+                    Text(reaction.Text, "p", "class", "InputError");
+                    }
+                }
+            }
+
+        Close();
         }
 
 
     public void RenderForm(
-                    IBacked? backer,
-            FrameImage item) {
+                IBacked? backer,
+                FrameFile item,
+                string id) {
 
-        string? value = null;
+        BackingTypeFile? value = null;
 
-        var id = NormalizeId(item.Tag);
+
         if (backer is not null) {
             value = item.Get(backer);
             }
 
-        OpenClass("div", item.Tag);
+
         if (item.Hidden) {
-            Element("input", "type", "hidden", "id", id, "name", item.Tag, "value", value!);
+            //Element("input", "type", "hidden", "id", id, "name", item.Tag, "value", value!);
             }
         else {
             Text(item.Prompt, "label", "class", "InputLabel", "for", id);
             Element("input", "class", "InputForm", "type", "file", "id", id, "name", item.Tag);
             }
 
-        Close();
 
-        }
-    public void RenderForm(
-                    IBacked? backer,
-            FrameAvatar item) {
-
-        string? value = null;
-
-        var id = NormalizeId(item.Tag);
-        if (backer is not null) {
-            value = item.Get(backer);
-            }
-
-        OpenClass("div", item.Tag);
-        if (item.Hidden) {
-            Element("input", "type", "hidden", "id", id, "name", item.Tag, "value", value!);
-            }
-        else {
-            Text(item.Prompt, "label", "class", "InputLabel", "for", id);
-            Element("input", "class", "InputForm", "type", "file", "id", id, "name", item.Tag);
-            }
-
-        Close();
 
         }
 
 
-
     public void RenderForm(
-                    IBacked? backer,
-            FrameString item) {
+                        IBacked? backer,
+                FrameString item,
+                string id) {
 
-        var id = NormalizeId(item.Tag);
         string? value=null;
         if (backer is not null) {
             value = item.Get(backer);
             }
 
-        OpenClass("div", item.Tag);
+
 
         if (!item.Hidden) {
             Text(item.Prompt, "label", "class", "InputLabel", "for", id);
@@ -165,7 +145,6 @@ public partial class PageWriter : HtmlWriter {
                 }
             }
 
-        Close();
 
         }
 

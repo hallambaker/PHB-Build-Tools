@@ -38,7 +38,15 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 		 var comma = new Registry.Separator (",");
 		 var className = "MyClass";
 		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("#pragma warning disable IDE0028 // Simplify collection initialization\n{0}", _Indent);
 		_Output.Write ("namespace {1};\n{0}", _Indent, frameset.Namespace);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("public partial class FramePage : Goedel.Sitebuilder.FramePage {{\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    public FramePage(string id, string title, List<IFrameField> fields) : base(id, title, fields) {{\n{0}", _Indent);
+		_Output.Write ("        }}\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("    }}\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("/// <summary>\n{0}", _Indent);
 		_Output.Write ("/// Annotated backing classes for data driven GUI.\n{0}", _Indent);
@@ -156,13 +164,13 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 			_Output.Write ("	// Implement factory method returning a menu bound to a specific page.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    /// <inheritdoc/>\n{0}", _Indent);
-			_Output.Write ("    public override FramePage Page {{ \n{0}", _Indent);
+			_Output.Write ("    public override Goedel.Sitebuilder.FramePage Page {{ \n{0}", _Indent);
 			_Output.Write ("            get => page ?? FrameSet.Page;\n{0}", _Indent);
 			_Output.Write ("            init {{ page = value; }} }}\n{0}", _Indent);
-			_Output.Write ("    FramePage? page = null;\n{0}", _Indent);
+			_Output.Write ("    Goedel.Sitebuilder.FramePage? page = null;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    /// <inheritdoc/>\n{0}", _Indent);
-			_Output.Write ("    public override FrameMenu Create(FramePage page) => new MainNav() {{\n{0}", _Indent);
+			_Output.Write ("    public override {1} Create(Goedel.Sitebuilder.FramePage page) => new {2}() {{\n{0}", _Indent, backer.Id, backer.Id);
 			_Output.Write ("        Page = page\n{0}", _Indent);
 			_Output.Write ("        }};\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -219,9 +227,6 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 			_Output.Write ("	}}\n{0}", _Indent);
 			}
 		_Output.Write ("\n{0}", _Indent);
-		foreach  (var fclass in frameset.Classes)  {
-			}
-		_Output.Write ("\n{0}", _Indent);
 		}
 	
 	/// <summary>	
@@ -229,6 +234,7 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 	/// </summary>
 	/// <param name="backed"></param>
 	public void MakeBacking (IBacked backed) {
+		 var parentName = backed.Parent is null ? "null" : $"{backed.Parent.Id}._binding";
 		 var comma = new Registry.Separator (",");
 		foreach  (var entry in backed.Fields)  {
 			if (  (entry.Backing != null)  ) {
@@ -262,7 +268,7 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 				_Output.Write ("	/// Presentation style {1}\n{0}", _Indent, presentation.Id);
 				_Output.Write ("	/// </summary>\n{0}", _Indent);
 				_Output.Write ("	public static FramePresentation {1} => {2} ?? new FramePresentation (\"{3}\") {{\n{0}", _Indent, presentation.Id, storeId, presentation.Id);
-				_Output.Write ("		GetUid = (IBacked data) => (data as {1})?.{2},\n{0}", _Indent, backed.Id, presentation.UidField);
+				_Output.Write ("		GetUid = (data) => (data as {1})?.{2},\n{0}", _Indent, backed.Id, presentation.UidField);
 				_Output.Write ("		Sections = [", _Indent);
 				 comma.Reset();
 				foreach  (var section in presentation.Sections) {
@@ -270,7 +276,7 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 					_Output.Write ("			new FrameSection (\"{1}\") {{\n{0}", _Indent, section.Id);
 					_Output.Write ("				Fields = [", _Indent);
 					 var save = Indent (12);
-					 RenderFields (backed, section.Fields);
+					 RenderFields (backed.Id, section.Fields);
 					 RestoreIndent (save);
 					_Output.Write ("\n{0}", _Indent);
 					_Output.Write ("					]\n{0}", _Indent);
@@ -284,7 +290,7 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	static readonly List<IFrameField> _Fields = [", _Indent);
-		 RenderFields(backed, backed.Fields, true);
+		 RenderAllFields(backed, backed.Fields, true);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("		];\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
@@ -302,7 +308,7 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 		foreach  (var entry in backed.Fields)  {
 			if (  entry is Goedel.Protocol.Property property ) {
 				 dictionary.Add (property.Tag, index++);
-				 RenderField (backed, entry, comma);
+				 RenderField (backed.Id, entry, comma);
 				}
 			}
 		_Output.Write ("		];\n{0}", _Indent);
@@ -311,7 +317,7 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 		_Output.Write ("	public override Binding _Binding => _binding;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	///<summary>Binding</summary> \n{0}", _Indent);
-		_Output.Write ("	static readonly Binding<{1}> _binding = new (\n{0}", _Indent, backed.Id);
+		_Output.Write ("	protected static readonly Binding<{1}> _binding = new (\n{0}", _Indent, backed.Id);
 		_Output.Write ("			new() {{\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("			// Only inclue the serialized items here", _Indent);
@@ -326,25 +332,38 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 			}
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("			}}, \"{1}\",\n{0}", _Indent, backed.Tag);
-		_Output.Write ("		() => new {1}(), () => [], () => [], null, Generic: false);\n{0}", _Indent, backed.Tag);
+		_Output.Write ("		() => new {1}(), () => [], () => [], Parent: {2}, Generic: false);\n{0}", _Indent, backed.Tag, parentName);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		}
 	
 	/// <summary>	
-	/// RenderFields
+	/// RenderAllFields
 	/// </summary>
 	/// <param name="backed"></param>
 	/// <param name="fields"></param>
 	/// <param name="parent=false"></param>
-	public void RenderFields (IBacked backed, List<IFrameField> fields, bool parent=false) {
+	public void RenderAllFields (IBacked backed, List<IFrameField> fields, bool parent=false) {
 		 var comma = new Registry.Separator (",");
 		if (  (parent && backed.Parent is not null)  ) {
 			_Output.Write ("{1}", _Indent, comma);
-			 RenderFields(backed.Parent, backed.Parent.Fields);
+			 RenderAllFields(backed.Parent, backed.Parent.Fields);
 			}
 		foreach  (var entry in fields)  {
-			 RenderField (backed, entry, comma);
+			 RenderField (backed.Id, entry, comma);
+			}
+		}
+	
+	/// <summary>	
+	/// RenderFields
+	/// </summary>
+	/// <param name="backedId"></param>
+	/// <param name="fields"></param>
+	/// <param name="parent=false"></param>
+	public void RenderFields (string backedId, List<IFrameField> fields, bool parent=false) {
+		 var comma = new Registry.Separator (",");
+		foreach  (var entry in fields)  {
+			 RenderField (backedId, entry, comma);
 			}
 		}
 	
@@ -354,7 +373,7 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 	/// <param name="backed"></param>
 	/// <param name="entry"></param>
 	/// <param name="comma"></param>
-	public void RenderField (IBacked backed, IFrameField entry, Registry.Separator comma) {
+	public void RenderField (string backed, IFrameField entry, Registry.Separator comma) {
 		 var id = entry.Id.Replace (".", "?.");
 		 var sid = entry.Id.Replace (".", "!.");
 		 switch (entry) {
@@ -365,17 +384,17 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 		if (  (button.Active is not null)  ) {
 			 var bid = button.Active.Replace (".", "?.");
 			_Output.Write ("{1}\n{0}", _Indent, comma2);
-			_Output.Write ("			GetActive = (IBinding data) => (data as {1})?.{2}", _Indent, backed.Id, bid);
+			_Output.Write ("			GetActive = (data) => (data as {1})?.{2}", _Indent, backed, bid);
 			}
 		if (  (button.Integer is not null)  ) {
 			 var bid = button.Integer.Replace (".", "?.");
 			_Output.Write ("{1}\n{0}", _Indent, comma2);
-			_Output.Write ("			GetInteger = (IBinding data) => (data as {1})?.{2}", _Indent, backed.Id, bid);
+			_Output.Write ("			GetInteger = (data) => (data as {1})?.{2}", _Indent, backed, bid);
 			}
 		if (  (button.Text is not null)  ) {
 			 var bid = button.Text.Replace (".", "?.");
 			_Output.Write ("{1}\n{0}", _Indent, comma2);
-			_Output.Write ("			GetText = (IBinding data) => (data as {1})?.{2}", _Indent, backed.Id, bid);
+			_Output.Write ("			GetText = (data) => (data as {1})?.{2}", _Indent, backed, bid);
 			}
 		if (  (button.Description is not null)  ) {
 			_Output.Write ("{1}\n{0}", _Indent, comma2);
@@ -396,7 +415,16 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 		_Output.Write ("{1}\n{0}", _Indent, comma);
 		_Output.Write ("		new FrameAvatar (\"{1}\"){{\n{0}", _Indent, entry.Id);
 		_Output.Write ("			Prompt = {1},\n{0}", _Indent, entry.Prompt.QuotedOrNull());
-		_Output.Write ("			Get = (IBinding data) => (data as {1})?.{2} }}", _Indent, backed.Id, id);
+		_Output.Write ("			Get = (data) => (data as {1})?.{2} }}", _Indent, backed, id);
+		 break; }
+		 case FrameFile file: {
+		_Output.Write ("{1}\n{0}", _Indent, comma);
+		_Output.Write ("		new FrameFile (\"{1}\"){{\n{0}", _Indent, entry.Id);
+		_Output.Write ("			FileType = {1},\n{0}", _Indent, file.FileType.QuotedOrNull());
+		_Output.Write ("			Prompt = {1},\n{0}", _Indent, entry.Prompt.QuotedOrNull());
+		_Output.Write ("			Description = {1},\n{0}", _Indent, entry.Description.QuotedOrNull());
+		_Output.Write ("			Get = (data) => (data as {1})?.{2} ,\n{0}", _Indent, backed, id);
+		_Output.Write ("			Set = (data, value) => {{(data as {1})!.{2} = value as {3}; }}}}", _Indent, backed, sid, file.Backing);
 		 break; }
 		 case FrameRefClass reference: {
 		_Output.Write ("{1}\n{0}", _Indent, comma);
@@ -404,8 +432,8 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 		if (  reference.PresentationId is not null ) {
 			_Output.Write ("			Presentation = {1},\n{0}", _Indent, reference.PresentationId);
 			}
-		_Output.Write ("			Get = (IBacked data) => (data as {1})?.{2} ,\n{0}", _Indent, backed.Id, id);
-		_Output.Write ("			Set = (IBacked data, IBacked? value) => {{(data as {1})!.{2} = value as {3}; }}}}", _Indent, backed.Id, sid, reference.Reference);
+		_Output.Write ("			Get = (data) => (data as {1})?.{2} ,\n{0}", _Indent, backed, id);
+		_Output.Write ("			Set = (data, value) => {{(data as {1})!.{2} = value as {3}; }}}}", _Indent, backed, sid, reference.Reference);
 		 break; }
 		 case FrameRefList reference: {
 		_Output.Write ("{1}\n{0}", _Indent, comma);
@@ -413,17 +441,23 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 		if (  reference.PresentationId is not null ) {
 			_Output.Write ("			Presentation = {1},\n{0}", _Indent, reference.PresentationId);
 			}
-		_Output.Write ("			Get = (IBacked data) => (data as {1})?.{2} ,\n{0}", _Indent, backed.Id, id);
-		_Output.Write ("			Set = (IBacked data, Object? value) => {{(data as {1})!.{2} = value as List<{3}>; }}}}", _Indent, backed.Id, sid, reference.Reference);
+		_Output.Write ("			Get = (data) => (data as {1})?.{2} ,\n{0}", _Indent, backed, id);
+		_Output.Write ("			Set = (data, value) => {{(data as {1})!.{2} = value as List<{3}>; }}}}", _Indent, backed, sid, reference.Reference);
 		 break; }
 		 case FrameRefForm reference: {
+		 var comma2 = new Registry.Separator(",");
 		_Output.Write ("{1}\n{0}", _Indent, comma);
-		_Output.Write ("		new FrameRefForm<{1}> (\"{2}\",\"{3}\"){{\n{0}", _Indent, reference.Reference, entry.Id, reference.Reference);
+		_Output.Write ("		new FrameRefForm<{1}> (\"{2}\",\"{3}\", [", _Indent, reference.Reference, entry.Id, reference.Reference);
+		foreach  (var formentry in reference.Fields) {
+			 RenderField (reference.Reference, formentry, comma2);
+			}
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("				]){{\n{0}", _Indent);
 		if (  reference.PresentationId is not null ) {
 			_Output.Write ("			Presentation = {1},\n{0}", _Indent, reference.PresentationId);
 			}
-		_Output.Write ("			Get = (IBacked data) => (data as {1})?.{2} ,\n{0}", _Indent, backed.Id, id);
-		_Output.Write ("			Set = (IBacked data, IBacked? value) => {{(data as {1})!.{2} = value as {3}; }}}}", _Indent, backed.Id, sid, reference.Reference);
+		_Output.Write ("			Get = (data) => (data as {1})?.{2} ,\n{0}", _Indent, backed, id);
+		_Output.Write ("			Set = (data, value) => {{(data as {1})!.{2} = value as {3}; }}}}", _Indent, backed, sid, reference.Reference);
 		 break; }
 		 case FrameRef : {
 		_Output.Write ("{1}\n{0}", _Indent, comma);
@@ -456,8 +490,8 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 		if (  entry.Backing != null ) {
 			_Output.Write ("{1}\n{0}", _Indent, comma);
 			_Output.Write ("		new {1} (\"{2}\",\n{0}", _Indent, entry.Type, entry.Tag);
-			_Output.Write ("			(IBinding data, {1}? value) => {{(data as {2})!.{3} = value; }},\n{0}", _Indent, entry.Backing, backed.Id, sid);
-			_Output.Write ("			(IBinding data) => (data as {1})?.{2}) {{", _Indent, backed.Id, id);
+			_Output.Write ("			(data, value) => {{(data as {1})!.{2} = value; }},\n{0}", _Indent, backed, sid);
+			_Output.Write ("			(data) => (data as {1})?.{2}) {{", _Indent, backed, id);
 			 var comma3 = new Registry.Separator (",");
 			if (  entry.Prompt is not null ) {
 				_Output.Write ("{1}\n{0}", _Indent, comma3);

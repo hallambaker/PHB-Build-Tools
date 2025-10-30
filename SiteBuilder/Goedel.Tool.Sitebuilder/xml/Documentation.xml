@@ -113,15 +113,23 @@
             </summary>
             <param name="backed"></param>
         </member>
-        <member name="M:Goedel.Tool.Sitebuilder.GenerateBacking.RenderFields(Goedel.Sitebuilder.IBacked,System.Collections.Generic.List{Goedel.Sitebuilder.IFrameField},System.Boolean)">
+        <member name="M:Goedel.Tool.Sitebuilder.GenerateBacking.RenderAllFields(Goedel.Sitebuilder.IBacked,System.Collections.Generic.List{Goedel.Sitebuilder.IFrameField},System.Boolean)">
             <summary>	
-            RenderFields
+            RenderAllFields
             </summary>
             <param name="backed"></param>
             <param name="fields"></param>
             <param name="parent=false=false"></param>
         </member>
-        <member name="M:Goedel.Tool.Sitebuilder.GenerateBacking.RenderField(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.IFrameField,Goedel.Registry.Separator)">
+        <member name="M:Goedel.Tool.Sitebuilder.GenerateBacking.RenderFields(System.String,System.Collections.Generic.List{Goedel.Sitebuilder.IFrameField},System.Boolean)">
+            <summary>	
+            RenderFields
+            </summary>
+            <param name="backedId"></param>
+            <param name="fields"></param>
+            <param name="parent=false=false"></param>
+        </member>
+        <member name="M:Goedel.Tool.Sitebuilder.GenerateBacking.RenderField(System.String,Goedel.Sitebuilder.IFrameField,Goedel.Registry.Separator)">
             <summary>	
             RenderField
             </summary>

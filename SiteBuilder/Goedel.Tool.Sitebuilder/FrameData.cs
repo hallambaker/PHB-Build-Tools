@@ -104,6 +104,7 @@ using Goedel.Utilities;
 //       Rich
 //       Prompt
 //       Display
+//       FileType
 //   IdType
 //       NamespaceT
 //       EntryT
@@ -196,6 +197,7 @@ namespace Goedel.Tool.Sitebuilder {
         Post,
         Rich,
         Hidden,
+        FileType,
 
         _Label,
         _Bottom
@@ -1421,14 +1423,14 @@ namespace Goedel.Tool.Sitebuilder {
 
     public partial class Form : _Choice {
         public TOKEN<_Choice>			Id;
-        public List <FieldProperty>           Properties = [];
+        public List <FieldItem>           Entries = [];
 
         public override FrameStructType _Tag () =>FrameStructType.Form;
 
 
 		public override void _InitChildren (_Choice? Parent) {
 			Init (Parent);
-			foreach (var Sub in Properties) {
+			foreach (var Sub in Entries) {
 				Sub._InitChildren (this);
 				}
 			}
@@ -1441,7 +1443,7 @@ namespace Goedel.Tool.Sitebuilder {
 
 	        Output.WriteId ("Id", Id.ToString());
 			Output.StartList ("");
-			foreach (FieldProperty _e in Properties) {
+			foreach (FieldItem _e in Entries) {
 				_e.Serialize (Output, true);
 				}
 			Output.EndList ("");
@@ -1859,6 +1861,29 @@ namespace Goedel.Tool.Sitebuilder {
 			}
 		}
 
+    public partial class FileType : _Choice {
+        public TOKEN<_Choice>			Id;
+
+        public override FrameStructType _Tag () =>FrameStructType.FileType;
+
+
+		public override void _InitChildren (_Choice? Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("FileType");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			if (tag) {
+				Output.EndElement ("FileType");
+				}			
+			}
+		}
+
     class _Label : _Choice {
         public REF<_Choice>?            Label;
 
@@ -1976,7 +2001,7 @@ namespace Goedel.Tool.Sitebuilder {
 		Presentation__Sections,				
 		Form_Start,
 		Form__Id,				
-		Form__Properties,				
+		Form__Entries,				
 		Section_Start,
 		Section__Id,				
 		Section__Entries,				
@@ -2005,6 +2030,8 @@ namespace Goedel.Tool.Sitebuilder {
 		Post_Start,
 		Rich_Start,
 		Hidden_Start,
+		FileType_Start,
+		FileType__Id,				
         }
 
 
@@ -2131,6 +2158,7 @@ namespace Goedel.Tool.Sitebuilder {
                 case "Post": return NewPost();
                 case "Rich": return NewRich();
                 case "Hidden": return NewHidden();
+                case "FileType": return NewFileType();
 
 				}
 
@@ -2619,6 +2647,14 @@ namespace Goedel.Tool.Sitebuilder {
             }
 
 
+        private Goedel.Tool.Sitebuilder.FileType NewFileType() {
+            Goedel.Tool.Sitebuilder.FileType result = new ();
+            Push (result);
+            State = StateCode.FileType_Start;
+            return result;
+            }
+
+
         static Goedel.Tool.Sitebuilder.FrameStructType _Reserved(string Label) {
             switch (Label) {
 
@@ -2682,6 +2718,7 @@ namespace Goedel.Tool.Sitebuilder {
                 case "Post": return Goedel.Tool.Sitebuilder.FrameStructType.Post;
                 case "Rich": return Goedel.Tool.Sitebuilder.FrameStructType.Rich;
                 case "Hidden": return Goedel.Tool.Sitebuilder.FrameStructType.Hidden;
+                case "FileType": return Goedel.Tool.Sitebuilder.FrameStructType.FileType;
 
                 }
             return Goedel.Tool.Sitebuilder.FrameStructType._Bottom;
@@ -3127,17 +3164,18 @@ namespace Goedel.Tool.Sitebuilder {
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Hidden) |
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Form) |
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Selection) |
-									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Container) ) {
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Container) |
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Description) ) {
                                 State = StateCode.FieldItem__Type;
                                 Current_Cast.Type = New_Choice(Text);
                                 }
                             else {
-                               throw new Expected ("Parser Error Expected [Button Chooser Separator SubMenu Return Is Boolean Integer DateTime String Text Anchor RichText Image Avatar List Choice Selector Count Presentation Icon File Hidden Form Selection Container ]");
+                               throw new Expected ("Parser Error Expected [Button Chooser Separator SubMenu Return Is Boolean Integer DateTime String Text Anchor RichText Image Avatar List Choice Selector Count Presentation Icon File Hidden Form Selection Container Description ]");
                                 }
                             break;
                             }
                         else { 
-						    throw new Expected("Parser Error Expected [Button Chooser Separator SubMenu Return Is Boolean Integer DateTime String Text Anchor RichText Image Avatar List Choice Selector Count Presentation Icon File Hidden Form Selection Container ]");
+						    throw new Expected("Parser Error Expected [Button Chooser Separator SubMenu Return Is Boolean Integer DateTime String Text Anchor RichText Image Avatar List Choice Selector Count Presentation Icon File Hidden Form Selection Container Description ]");
                             }
 
                     case StateCode.FieldItem__Type:
@@ -3988,14 +4026,14 @@ namespace Goedel.Tool.Sitebuilder {
                     case StateCode.Form__Id:
 
                         if (Token == TokenType.BEGIN) {
-                            State = StateCode.Form__Properties;
+                            State = StateCode.Form__Entries;
                             }
                         else {
 							Pop ();
                             Represent = true;
                             }
                         break;
-                    case StateCode.Form__Properties: 
+                    case StateCode.Form__Entries: 
                         if (Token == TokenType.END) {
                             Pop();
                             break;
@@ -4005,7 +4043,7 @@ namespace Goedel.Tool.Sitebuilder {
 
                         else {
                             Goedel.Tool.Sitebuilder.Form Current_Cast = (Goedel.Tool.Sitebuilder.Form)Current;
-                            Current_Cast.Properties.Add (NewFieldProperty ());
+                            Current_Cast.Entries.Add (NewFieldItem ());
                             Represent = true;
                             }
 
@@ -4133,17 +4171,18 @@ namespace Goedel.Tool.Sitebuilder {
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Rich) |
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Hidden) |
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Prompt) |
-									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Display) ) {
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Display) |
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.FileType) ) {
                                 State = StateCode.FieldProperty__Type;
                                 Current_Cast.Type = New_Choice(Text);
                                 }
                             else {
-                               throw new Expected ("Parser Error Expected [Exclude Description ReadOnly Range Compact Local UTC Comment Post Rich Hidden Prompt Display ]");
+                               throw new Expected ("Parser Error Expected [Exclude Description ReadOnly Range Compact Local UTC Comment Post Rich Hidden Prompt Display FileType ]");
                                 }
                             break;
                             }
                         else { 
-						    throw new Expected("Parser Error Expected [Exclude Description ReadOnly Range Compact Local UTC Comment Post Rich Hidden Prompt Display ]");
+						    throw new Expected("Parser Error Expected [Exclude Description ReadOnly Range Compact Local UTC Comment Post Rich Hidden Prompt Display FileType ]");
                             }
 
                     case StateCode.FieldProperty__Type:
@@ -4226,6 +4265,19 @@ namespace Goedel.Tool.Sitebuilder {
                         Represent = true; 
                         break;
                     case StateCode.Hidden_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.FileType_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Sitebuilder.FileType Current_Cast = (Goedel.Tool.Sitebuilder.FileType)Current;
+                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__EntryT, Current_Cast);
+                            State = StateCode.FileType__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.FileType__Id:
                         Pop ();
                         Represent = true; 
                         break;

@@ -1,6 +1,7 @@
 ﻿using Goedel.Cryptography.Nist;
 using Goedel.Discovery;
 using Goedel.Registry;
+using Goedel.Sitebuilder;
 
 using System.Reflection.Emit;
 
@@ -145,7 +146,7 @@ public partial class Namespace {
 
     public List<IFrameField> CollectProperties (FrameSet frameset, List<Property> entries) {
         var result = new List<IFrameField>();
-        foreach (var entry in entries) {
+        foreach (var entry in entries.IfEnumerable()) {
             Collect(frameset, result, entry);
             }
         return result;
@@ -169,7 +170,7 @@ public partial class Namespace {
             //    break;
             //    }
             case IReference reference: {
-                result.Add(GetRef(label, reference));
+                result.Add(GetRef(frameset, label, reference));
                 break;
                 }
             case Separator: {
@@ -186,6 +187,10 @@ public partial class Namespace {
                 }
             case Presentation presentation: {
                 result.Add(GetPresentation(frameset, label, presentation));
+                break;
+                }
+            case File file: {
+                result.Add(GetFile(label, file));
                 break;
                 }
             default: {
@@ -286,9 +291,9 @@ public partial class Namespace {
         };
 
 
-    public static FrameRef? GetRef(
-                string id,
-                IReference reference) {
+    public FrameRef? GetRef(
+                FrameSet frameset,
+                string id, IReference reference) {
 
         if (reference.Reference.Definition is not Entry entry) {
             return new FrameRef(id);
@@ -306,8 +311,11 @@ public partial class Namespace {
                             PresentationId = reference.Display
                             };
                         }
-                    case Form: {
-                        return new FrameRefForm(id, entry.Id.Label) {
+                    case Form form: {
+                        var fields = CollectFields(frameset, form.Entries);
+
+
+                        return new FrameRefForm(id, entry.Id.Label, fields) {
                             PresentationId = reference.Display
                             };
                         }
@@ -324,6 +332,20 @@ public partial class Namespace {
 
 
         }
+
+    public static FrameFile GetFile(
+                string id,
+                File file) {
+
+        return new FrameFile(id) {
+            FileType = file.FileType?.Label,
+            Prompt = file.Prompt,
+            Description = file.Description
+            };
+
+
+        }
+
     public static FrameChooser GetChooser(
                 string id,
                 Chooser chooser) {
@@ -491,6 +513,8 @@ public partial class _Choice {
     public Attribute Attribute { get; set; } = Attribute.Default;
 
 
+    public TOKEN<_Choice> FileType { get; set; } = null;
+
     }
 
 public partial class Namespace {
@@ -640,5 +664,12 @@ public partial class Rich {
 
     public override void Init(_Choice? parent) {
         parent.Attribute = Attribute.Rich;
+        }
+    }
+
+public partial class FileType {
+
+    public override void Init(_Choice? parent) {
+        parent._Parent.FileType = Id;
         }
     }

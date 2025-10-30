@@ -9,41 +9,6 @@
             Base type for extended backing types
             </summary>
         </member>
-        <member name="T:Goedel.Sitebuilder.BackingTypeImage">
-            <summary>
-            Image backing type, allows the file name, alt text, etc. to be specified.
-            </summary>
-            <param name="File">The file identifier.</param>
-            <param name="Alt">The alt text.</param>
-            <param name="Width">The width (if known).</param>
-            <param name="Height">The height (if known).</param>
-            <param name="Link">Optional link target</param>
-        </member>
-        <member name="M:Goedel.Sitebuilder.BackingTypeImage.#ctor(System.String,System.String,System.Int32,System.Int32,System.String)">
-            <summary>
-            Image backing type, allows the file name, alt text, etc. to be specified.
-            </summary>
-            <param name="File">The file identifier.</param>
-            <param name="Alt">The alt text.</param>
-            <param name="Width">The width (if known).</param>
-            <param name="Height">The height (if known).</param>
-            <param name="Link">Optional link target</param>
-        </member>
-        <member name="P:Goedel.Sitebuilder.BackingTypeImage.File">
-            <summary>The file identifier.</summary>
-        </member>
-        <member name="P:Goedel.Sitebuilder.BackingTypeImage.Alt">
-            <summary>The alt text.</summary>
-        </member>
-        <member name="P:Goedel.Sitebuilder.BackingTypeImage.Width">
-            <summary>The width (if known).</summary>
-        </member>
-        <member name="P:Goedel.Sitebuilder.BackingTypeImage.Height">
-            <summary>The height (if known).</summary>
-        </member>
-        <member name="P:Goedel.Sitebuilder.BackingTypeImage.Link">
-            <summary>Optional link target</summary>
-        </member>
         <member name="T:Goedel.Sitebuilder.BackingTypeFile">
             <summary>
             Backing type for uploaded file.
@@ -78,6 +43,41 @@
         </member>
         <member name="P:Goedel.Sitebuilder.BackingTypeFile.Conversions">
             <summary>Alternative versions of the file.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.BackingTypeImage">
+            <summary>
+            Image backing type, allows the file name, alt text, etc. to be specified.
+            </summary>
+            <param name="File">The file identifier.</param>
+            <param name="Alt">The alt text.</param>
+            <param name="Width">The width (if known).</param>
+            <param name="Height">The height (if known).</param>
+            <param name="Link">Optional link target</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.BackingTypeImage.#ctor(System.String,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Image backing type, allows the file name, alt text, etc. to be specified.
+            </summary>
+            <param name="File">The file identifier.</param>
+            <param name="Alt">The alt text.</param>
+            <param name="Width">The width (if known).</param>
+            <param name="Height">The height (if known).</param>
+            <param name="Link">Optional link target</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeImage.File">
+            <summary>The file identifier.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeImage.Alt">
+            <summary>The alt text.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeImage.Width">
+            <summary>The width (if known).</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeImage.Height">
+            <summary>The height (if known).</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeImage.Link">
+            <summary>Optional link target</summary>
         </member>
         <member name="T:Goedel.Sitebuilder.BackingTypeLink">
             <summary>
@@ -192,7 +192,16 @@
         <member name="P:Goedel.Sitebuilder.IBacked.Fields">
             <summary>The fields</summary>
         </member>
-        <member name="M:Goedel.Sitebuilder.FramePage.GetPage(Goedel.Sitebuilder.IPersistPlace,Goedel.Sitebuilder.IPageContext)">
+        <member name="P:Goedel.Sitebuilder.IPersistSite.ServerCookieManager">
+            <summary>State management interface to keep us logged in.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IPersistSite.OauthClient">
+            <summary>The Oauth Client</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IPersistSite.FrameSet">
+            <summary>The frame defintions being serviced.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FramePage.GetPage(Goedel.Sitebuilder.IPersistSite,Goedel.Sitebuilder.IPageContext)">
             <summary>
             Request page produced from this template from the request context 
             <paramref name="context"/>.
@@ -200,15 +209,6 @@
             <param name="persistPlace"></param>
             <returns></returns>
             <param name="context"></param>
-        </member>
-        <member name="M:Goedel.Sitebuilder.FramePage.PostPage(Goedel.Sitebuilder.IPersistPlace,Goedel.Sitebuilder.IPageContext)">
-            <summary>
-            Request page produced from this template from the request context 
-            <paramref name="context"/>.
-            </summary>
-            <param name="persistPlace">Persistence context.</param>
-            <param name="context">Request context.</param>
-            <returns></returns>
         </member>
         <member name="P:Goedel.Sitebuilder.FrameSelector.Fields">
             <inheritdoc/>
@@ -289,6 +289,12 @@
             specified, the value is checked against the corresponding Open.
             </summary>
             <param name="position">Expected stack depth.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.HtmlWriter.Text(System.String)">
+            <summary>
+            Write the specified textg to the stream as an escaped HTML string.
+            </summary>
+            <param name="text">The textg to write.</param>
         </member>
         <member name="T:Goedel.Sitebuilder.IFrameField">
             <summary>
@@ -395,6 +401,15 @@
             </summary>
             <param name="backer">The data to render.</param>
             <param name="field">The field to render</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.ServerCookieManager.GetCookie(System.String,System.Int32)">
+            <summary>
+            Return a cookie encrypted under the current server secret containing the encypted 
+            <paramref name="identifier"/> with lifetime <paramref name="lifetime"/>/
+            </summary>
+            <param name="identifier">The identifier to bind to the cookie.</param>
+            <param name="lifetime">The validity interval in hours.</param>
+            <returns></returns>
         </member>
     </members>
 </doc>

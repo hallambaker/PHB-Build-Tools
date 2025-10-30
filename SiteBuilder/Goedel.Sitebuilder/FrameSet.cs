@@ -1,12 +1,18 @@
-﻿using Goedel.Registry;
-
+﻿using Goedel.Discovery;
 using Goedel.Protocol;
+using Goedel.Registry;
 
 namespace Goedel.Sitebuilder;
 
 public  interface IPageContext {
     }
 
+
+
+public record FormReaction(
+            string Id,
+            string Text) {
+    }
 
 public class FrameSet {
     public FramePage Page { get; set; }
@@ -18,7 +24,7 @@ public class FrameSet {
     public string ResourceFiles { get; set; }
 
 
-    public IPersistPlace PersistPlace { get; set; }
+    public IPersistSite PersistPlace { get; set; }
 
 
 
@@ -33,6 +39,7 @@ public class FrameSet {
 
 
     public Dictionary<string, FramePage> PageDirectory { get; } = [];
+
 
 
     /// <summary>
@@ -114,12 +121,22 @@ public class FrameBacker {
     }
 
 
-public interface IPersistPlace {
+public interface IPersistSite {
+
+    ///<summary>State management interface to keep us logged in.</summary>
+    ServerCookieManager ServerCookieManager { get; set; }
+
+    ///<summary>The Oauth Client</summary>
+    OauthClient OauthClient { get; set; }
+
+    ///<summary>The frame defintions being serviced.</summary>
+    FrameSet FrameSet { get; set; }
+
     }
 
 public class FramePage: FrameBacker, IBacked {
 
-
+    public IPageContext Context { get; set; } = null;
     public string Anchor => $"/{PathStem}";
 
     public virtual string PathStem => Id;
@@ -161,31 +178,7 @@ public class FramePage: FrameBacker, IBacked {
     /// <returns></returns>
     /// <param name="context"></param>
     public virtual FramePage GetPage(
-                IPersistPlace persistPlace, IPageContext context) => this;
-
-
-    ///// <summary>
-    ///// Request page produced from this template from the request context 
-    ///// <paramref name="context"/>.
-    ///// </summary>
-    ///// <param name="persistPlace">Persistence context.</param>
-    ///// <param name="context">Request context.</param>
-    ///// <returns></returns>
-    //public virtual FramePage GetPage(
-    //        IPersistPlace persistPlace,
-    //            IPageContext context) => this;
-
-    /// <summary>
-    /// Request page produced from this template from the request context 
-    /// <paramref name="context"/>.
-    /// </summary>
-    /// <param name="persistPlace">Persistence context.</param>
-    /// <param name="context">Request context.</param>
-    /// <returns></returns>
-    public virtual FramePage PostPage(
-            IPersistPlace persistPlace,
-                IPageContext context) => this;
-
+                IPersistSite persistPlace, IPageContext context) => this;
 
     }
 
@@ -222,9 +215,17 @@ public class FrameSelector : FrameBacker, IBacked {
     }
 
 
+public record CallbackResult(
+            HttpStatusCode Code,
+            List<FormReaction>? Reactions,
+            string? Redirect
+            ) {
+    }
+
+
 public class FrameClass : FrameBacker, IBacked {
 
-    public static string DefaultAvatar = "Resources/Icons/AvatarDefault.svg";
+    public const string DefaultAvatar = "Resources/Icons/AvatarDefault.svg";
 
     public FrameSet FrameSet { get; set; }
     public string Type => "FrameClass";
@@ -239,6 +240,20 @@ public class FrameClass : FrameBacker, IBacked {
 
     public virtual string? GetAvatar => DefaultAvatar;
 
+
+
+    public virtual Task<CallbackResult> Callback(
+                IPersistSite persistPlace) {
+
+        return Task.FromResult (new CallbackResult(HttpStatusCode.OK, null, null));
+        }
+
+    //public virtual HttpStatusCode Commit(
+    //            IPersistPlace persistPlace,
+    //            out string? redirect) {
+    //    redirect = null;
+    //    return HttpStatusCode.OK;
+    //    }
 
     public FrameClass(string id) : base(id) {
         }
@@ -384,7 +399,8 @@ public record FrameRefClass<T>(
 
 public record FrameRefForm(
                     string Id,
-                    string Reference) : FrameRef(Id) {
+                    string Reference,
+                    List<IFrameField> Fields) : FrameRef(Id) {
     public override string Backing => Reference;
 
     public override string Type => "FrameRefClass";
@@ -401,12 +417,13 @@ public record FrameRefForm(
     public Func<IBacked, IBacked?> Get { get; init; }
 
 
-    public virtual FrameClass Factory() => null;
+    public virtual FrameClass Factory() => null; 
     }
 
 public record FrameRefForm<T>(
                     string Id,
-                    string Reference) : FrameRefForm(Id, Reference) where T : FrameClass, new() {
+                    string Reference,
+                    List<IFrameField> Fields ) : FrameRefForm(Id, Reference, Fields) where T : FrameClass, new() {
 
     public override string Type => "FrameRefClass";
 
@@ -624,5 +641,27 @@ public record FrameSubmenu(
     }
 public record FrameIcon(string Id) : FrameField(Id) {
     public override string Type => "FrameIcon";
+
+    }
+
+
+public record FrameFile(string Id) : Property(Id, false), IFrameField{
+
+    public string FileType { get; set; }
+
+    public string Prompt { get; set; }
+    public bool Hidden { get; set; } = false;
+    public string Description { get; set; }
+    public string Backing => "BackingTypeFile";
+    public virtual string Type => "FrameFile";
+
+    public Action<IBacked, BackingTypeFile?> Set { get; init; }
+    public Func<IBacked, BackingTypeFile?> Get { get; init; }
+
+
+    public override bool IsNull(IBinding data) {
+        throw new NotImplementedException();
+        }
+
 
     }

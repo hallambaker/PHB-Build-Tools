@@ -12,6 +12,9 @@ public partial class PageWriter : HtmlWriter {
     ///<summary>Text to use for the page.</summary>
     public PageText PageText { get; set;} = PageText.English;
 
+
+    public List<FormReaction>? Reactions { get; set; } = null;
+
     FramePage FramePage { get; }
 
     FrameSet FrameSet =>  FramePage.FrameSet;
@@ -110,8 +113,7 @@ public partial class PageWriter : HtmlWriter {
             IBacked backer,
             IFrameField field) {
 
-        var id = NormalizeId(field.Tag);
-        //OpenClass("div", id);
+
         switch (field) {
             case FrameButton item: {
                 Render(item, backer);
@@ -186,7 +188,7 @@ public partial class PageWriter : HtmlWriter {
                 }
 
             }
-        //Close();
+
         }
 
 
@@ -202,7 +204,7 @@ public partial class PageWriter : HtmlWriter {
 
             switch (field) {
                 case FrameButton item: {
-                    Render(item, fieldRefMenu.Menu);
+                    Render(item, menu);
                     break;
                     }
                 }
@@ -227,12 +229,12 @@ public partial class PageWriter : HtmlWriter {
                     return;
                     }
                 case ButtonVisibility.Active: {
-                    icon = icon + "Active";
+                    icon += "Active";
                     disabled = true;
                     break;
                     }
                 case ButtonVisibility.Disabled: {
-                    icon = icon + "Disabled";
+                    icon += "Disabled";
                     disabled = true;
                     break;
                     }
@@ -449,6 +451,8 @@ public partial class PageWriter : HtmlWriter {
             Close();
             }
         }
+
+
     public void Render(
                 IBacked backer,
                 FrameString item) {
