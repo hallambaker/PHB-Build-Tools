@@ -18,9 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.IO.dll\
-    Goedel.Registry.dll\
-    Goedel.Utilities.dll
+    Goedel.Tool.Core.dll
 
 ToolTargets = \
 	Exceptions.cs\
@@ -40,7 +38,6 @@ postbuildRecurse :
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
-	version version.version AssemblyVersion.cs
 	
 
 postbuild : postbuildRecurse

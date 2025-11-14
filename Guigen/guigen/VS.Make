@@ -18,13 +18,14 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Tool.Domainer.dll\
-    Goedel.Tool.Core.dll
+    Goedel.Tool.Guigen.dll
 
 ToolTargets = \
 	Guigen.cs
 Guigen.cs : Guigen.command 
 	commandparse Guigen.command  /cs  Guigen.cs
+
+
 
 prebuildRecurse : 
 
@@ -33,12 +34,11 @@ postbuildRecurse :
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
-	version version.version AssemblyVersion.cs
 	
 
 postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget domainer.dll
+	powershell publishtarget guigen.dll
 

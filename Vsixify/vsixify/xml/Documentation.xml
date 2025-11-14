@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>fsrgen</name>
+    </assembly>
+    <members>
+        <member name="P:Goedel.VSIXBuildShell.CommandLineInterpreter.Entries">
+            <summary>The command entries</summary>
+        </member>
+        <member name="P:Goedel.VSIXBuildShell.CommandLineInterpreter.DefaultCommand">
+            <summary>The default command.</summary>
+        </member>
+        <member name="P:Goedel.VSIXBuildShell.CommandLineInterpreter.Description">
+            <summary>Description of the comman</summary>
+        </member>
+        <member name="M:Goedel.VSIXBuildShell.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">
+            <summary>
+            Describe the application invoked by the command.
+            </summary>
+            <param name="Dispatch">The command description.</param>
+            <param name="args">The set of arguments.</param>
+            <param name="index">The first unparsed argument.</param>
+        </member>
+        <member name="P:Goedel.VSIXBuildShell._Generate.Lazy">
+            <summary>Field accessor for parameter [lazy]</summary>
+        </member>
+        <member name="P:Goedel.VSIXBuildShell._Generate.VSIXBuild">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.VSIXBuildShell._Generate.GenerateCS">
+            <summary>Field accessor for option [cs]</summary>
+        </member>
+    </members>
+</doc>

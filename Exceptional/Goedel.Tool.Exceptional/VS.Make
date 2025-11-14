@@ -21,16 +21,15 @@ LinkFiles = \
     Goedel.Tool.Core.dll
 
 ToolTargets = \
-	GenerateCS.cs\
-	Exceptional.cs
-
-
+	Exceptional.cs\
+	GenerateCS.cs
+Exceptional.cs : Exceptional.gdl 
+	goedel3 Exceptional.gdl  /cs  Exceptional.cs
 
 GenerateCS.cs : GenerateCS.script 
 	gscript GenerateCS.script  GenerateCS.cs
 
-Exceptional.cs : Exceptional.gdl 
-	goedel3 Exceptional.gdl  /cs  Exceptional.cs
+
 
 prebuildRecurse : 
 
@@ -39,7 +38,6 @@ postbuildRecurse :
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
-	version version.version AssemblyVersion.cs
 	
 
 postbuild : postbuildRecurse

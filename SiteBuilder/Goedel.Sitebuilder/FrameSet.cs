@@ -218,7 +218,8 @@ public class FrameSelector : FrameBacker, IBacked {
 public record CallbackResult(
             HttpStatusCode Code,
             List<FormReaction>? Reactions,
-            string? Redirect
+            string? Redirect,
+            List<Cookie> Cookies = null
             ) {
     }
 

@@ -18,7 +18,11 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Tool.Core.dll
+    Goedel.Command.dll\
+    Goedel.FSR.dll\
+    Goedel.IO.dll\
+    Goedel.Registry.dll\
+    Goedel.Utilities.dll
 
 ToolTargets = \
 	Domainer.cs\
@@ -38,7 +42,6 @@ postbuildRecurse :
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
-	version version.version AssemblyVersion.cs
 	
 
 postbuild : postbuildRecurse

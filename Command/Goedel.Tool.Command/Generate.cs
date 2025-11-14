@@ -693,7 +693,7 @@ public partial class GenerateCS : global::Goedel.Registry.Script {
 					_Output.Write ("			new DescribeEntryParameter () {{\n{0}", _Indent);
 					}
 				_Output.Write ("				Identifier = \"{1}\", \n{0}", _Indent, EntryItem.ID);
-				_Output.Write ("				Default = {1}, // null if null\n{0}", _Indent, EntryItem.Default.QuotedNull());
+				_Output.Write ("				Default = {1}, // null if null\n{0}", _Indent, EntryItem.Default.QuotedOrNull());
 				_Output.Write ("				Brief = {1},\n{0}", _Indent, EntryItem.Brief.Quoted());
 				_Output.Write ("				Index = {1},\n{0}", _Indent, EntryItem.Index);
 				_Output.Write ("				Key = \"{1}\"\n{0}", _Indent, EntryItem.Tag.ToLower());

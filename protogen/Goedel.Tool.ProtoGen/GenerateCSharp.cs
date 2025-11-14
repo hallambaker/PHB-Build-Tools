@@ -57,9 +57,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("using Goedel.Protocol;\n{0}", _Indent);
 		_Output.Write ("using Goedel.Utilities;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("#pragma warning disable IDE0079 // Don't warn about unnecessary suppressions\n{0}", _Indent);
 		_Output.Write ("#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.\n{0}", _Indent);
-		_Output.Write ("#pragma warning disable IDE0079\n{0}", _Indent);
-		_Output.Write ("#pragma warning disable IDE1006\n{0}", _Indent);
+		_Output.Write ("#pragma warning disable IDE1006 // Ignore naming rule violations\n{0}", _Indent);
 		_Output.Write ("#pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		foreach  (var Item in ProtoStruct.Top) {

@@ -20,7 +20,8 @@ MSBuildThisFileDirectory =
 LinkFiles = \
     Goedel.Protocol.dll\
     Goedel.Registry.dll\
-    Goedel.Utilities.dll
+    Goedel.Utilities.dll\
+    Goedel.Sitebuilder.dll
 
 ToolTargets = \
 	FrameData.cs\
@@ -50,5 +51,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Html.exe $(LinkFiles) 
+	powershell publishtarget Goedel.Tool.Sitebuilder.dll
 

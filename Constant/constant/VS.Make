@@ -18,7 +18,6 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Tool.Core.dll\
     Goedel.Tool.Constant.dll
 
 ToolTargets = \
@@ -35,12 +34,11 @@ postbuildRecurse :
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
-	version version.version AssemblyVersion.cs
 	
 
 postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget constant.dll
+	powershell publishtarget constant.exe $(LinkFiles) 
 

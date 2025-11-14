@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Goedel.Tool.FSR</RootNamespace>
+    <Title>Goedel.Tool.FSR</Title>
+    <Product>Goedel.Tool.FSR</Product>
+    <Description>Finite State Recognizer DSL.</Description>
+  </PropertyGroup>
+
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	
+	
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Tool.Core\Goedel.Tool.Core.csproj" />
+
+	</ItemGroup>
+  <ItemGroup>
+    <Compile Update="GenerateCS.cs">
+      <DependentUpon>GenerateCS.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="VSIXBuild.cs">
+      <DependentUpon>VSIXBuild.gdl</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="GenerateCS.script">
+      <LastGenOutput>GenerateCS.cs</LastGenOutput>
+      <Generator>GScript</Generator>
+    </None>
+    <None Update="VSIXBuild.gdl">
+      <LastGenOutput>VSIXBuild.cs</LastGenOutput>
+      <Generator>goedel3</Generator>
+    </None>
+  </ItemGroup>
+
+</Project>

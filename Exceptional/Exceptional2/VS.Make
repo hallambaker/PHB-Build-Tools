@@ -19,8 +19,7 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.Registry.dll\
-    Goedel.Tool.Exceptional.dll\
-    Goedel.Tool.Core.dll
+    Goedel.Tool.Exceptional.dll
 
 ToolTargets = \
 	Exceptional.cs
@@ -36,12 +35,11 @@ postbuildRecurse :
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
-	version version.version AssemblyVersion.cs
 	
 
 postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget exceptional.exe $(LinkFiles) 
+	powershell publishtarget exceptional.dll
 

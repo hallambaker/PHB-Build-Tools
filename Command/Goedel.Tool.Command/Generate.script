@@ -559,7 +559,7 @@ public class _#{Command.Id} : #{NameDispatchType} #!
 			new DescribeEntryParameter () {
 #end if
 				Identifier = "#{EntryItem.ID}", 
-				Default = #{EntryItem.Default.QuotedNull()}, // null if null
+				Default = #{EntryItem.Default.QuotedOrNull()}, // null if null
 				Brief = #{EntryItem.Brief.Quoted()},
 				Index = #{EntryItem.Index},
 				Key = "#{EntryItem.Tag.ToLower()}"

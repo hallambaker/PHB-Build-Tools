@@ -18,15 +18,19 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Goedel.Cryptography.Oauth.dll\
+    Goedel.Cryptography.dll\
+    Goedel.Protocol.Web.dll\
     Goedel.Protocol.dll\
     Goedel.Registry.dll\
     Goedel.Utilities.dll
 
 ToolTargets = \
 	Exceptions.cs
-
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
+
+
 
 prebuildRecurse : 
 
@@ -41,5 +45,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Html.exe $(LinkFiles) 
+	powershell publishtarget Goedel.Sitebuilder.dll
 

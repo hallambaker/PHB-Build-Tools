@@ -18,10 +18,15 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Tool.Protogen.dll\
-    Goedel.Tool.Core.dll
+    Goedel.Tool.Core.dll\
+    Goedel.Tool.Sitebuilder.dll
 
-ToolTargets =
+ToolTargets = \
+	sitebuilder.cs
+sitebuilder.cs : sitebuilder.command 
+	commandparse sitebuilder.command  /cs  sitebuilder.cs
+
+
 
 prebuildRecurse : 
 
@@ -36,5 +41,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget protogen.dll
+	powershell publishtarget sitebuilder.exe $(LinkFiles) 
 

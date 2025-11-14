@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Tool.Vsixify</name>
+    </assembly>
+    <members>
+        <member name="M:Goedel.Tool.VSIXBuild.Generate.GenerateCS(Goedel.Tool.VSIXBuild.VSIXBuild)">
+            <summary>	
+            GenerateCS
+            </summary>
+            <param name="VSIXBuild"></param>
+        </member>
+        <member name="M:Goedel.Tool.VSIXBuild.Generate.MakeGenerator(Goedel.Tool.VSIXBuild.Member)">
+            <summary>	
+            MakeGenerator
+            </summary>
+            <param name="Extension"></param>
+        </member>
+    </members>
+</doc>

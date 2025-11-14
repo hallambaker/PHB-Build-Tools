@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "fsrgen": {
+      "commandName": "Project",
+      "commandLineArgs": "HostsReader.fsm  /cs  HostsReader.cs",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Libraries\\Goedel.Cryptography.KeyFile"
+    }
+  }
+}

@@ -23,7 +23,6 @@ LinkFiles = \
 ToolTargets = \
 	Guigen.cs\
 	Generate.cs
-
 Guigen.cs : Guigen.gdl 
 	goedel3 Guigen.gdl  /cs  Guigen.cs
 
@@ -39,9 +38,11 @@ postbuildRecurse :
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
-	version version.version AssemblyVersion.cs
 	
 
 postbuild : postbuildRecurse
 
+
+postbuildwindows : 
+	powershell publishtarget Goedel.Tool.Guigen.dll
 
