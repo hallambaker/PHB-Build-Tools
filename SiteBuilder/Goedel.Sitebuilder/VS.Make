@@ -26,9 +26,13 @@ LinkFiles = \
     Goedel.Utilities.dll
 
 ToolTargets = \
-	Exceptions.cs
+	Exceptions.cs\
+	SitebuilderConstants.cs
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
+
+SitebuilderConstants.cs : SitebuilderConstants.constant 
+	constant SitebuilderConstants.constant  /cs  SitebuilderConstants.cs
 
 
 

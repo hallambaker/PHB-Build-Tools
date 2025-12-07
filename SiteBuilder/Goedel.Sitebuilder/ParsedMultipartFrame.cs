@@ -88,6 +88,17 @@ public partial class ParsedMultipartFrame : ParsedMultipart {
 
                         break;
                         }
+                    case FrameFile frameFile: {
+                        if (!GetContent(out var content)) {
+                            return false;
+                            }
+
+
+                        var backing = new BackingTypeFile(fieldData.Filename, fieldData.ContentType, content);
+                        frameFile.Set(formData, backing);
+
+                        break;
+                        }
 
                     default: {
                         if (!GetContent(out var content)) {

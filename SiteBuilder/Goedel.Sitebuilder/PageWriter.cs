@@ -474,17 +474,15 @@ public partial class PageWriter : HtmlWriter {
             Close();
             }
         }
+
+
     public void Render(
                 IBacked backer,
                 FrameImage item) {
         var value = item.Get(backer);
         if (value is not null) {
-            var file = "Images/" + value;
-
-
-            //OpenClass("div", item.Id);
+            var file = SitebuilderConstants.Repository + value;
             ElementClass("img", item.Tag, "src", file, "alt", "");
-            //Close();
             }
         }
 
@@ -493,10 +491,8 @@ public partial class PageWriter : HtmlWriter {
                 FrameAvatar item) {
         var value = item.Get(backer);
         if (value is not null) {
-            var file = "Images/" + value;
-            //OpenClass("div", item.Id);
+            var file = SitebuilderConstants.Repository + value;
             ElementClass("img", item.Tag, "src", file, "alt", "");
-            //Close();
             }
         }
     public void Render(

@@ -19,7 +19,7 @@
             <param name="Size">The file size</param>
             <param name="Conversions">Alternative versions of the file.</param>
         </member>
-        <member name="M:Goedel.Sitebuilder.BackingTypeFile.#ctor(System.String,System.String,System.Byte[],System.Int32,System.Collections.Generic.List{Goedel.Sitebuilder.BackingTypeImage})">
+        <member name="M:Goedel.Sitebuilder.BackingTypeFile.#ctor(System.String,System.String,System.Byte[])">
             <summary>
             Backing type for uploaded file.
             </summary>
@@ -29,20 +29,11 @@
             <param name="Size">The file size</param>
             <param name="Conversions">Alternative versions of the file.</param>
         </member>
-        <member name="P:Goedel.Sitebuilder.BackingTypeFile.Uid">
-            <summary>The unique identifier</summary>
-        </member>
         <member name="P:Goedel.Sitebuilder.BackingTypeFile.OriginalFileName">
             <summary>Suggested file name</summary>
         </member>
         <member name="P:Goedel.Sitebuilder.BackingTypeFile.Data">
             <summary>The raw data</summary>
-        </member>
-        <member name="P:Goedel.Sitebuilder.BackingTypeFile.Size">
-            <summary>The file size</summary>
-        </member>
-        <member name="P:Goedel.Sitebuilder.BackingTypeFile.Conversions">
-            <summary>Alternative versions of the file.</summary>
         </member>
         <member name="T:Goedel.Sitebuilder.BackingTypeImage">
             <summary>
@@ -410,6 +401,15 @@
             <param name="identifier">The identifier to bind to the cookie.</param>
             <param name="lifetime">The validity interval in hours.</param>
             <returns></returns>
+        </member>
+        <member name="T:Goedel.Sitebuilder.SitebuilderConstants">
+            <summary>
+            Constants specified in hallambaker-mesh-schema
+            </summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.SitebuilderConstants.Repository">
+            <summary>
+            </summary>
         </member>
     </members>
 </doc>

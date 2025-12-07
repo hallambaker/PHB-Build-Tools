@@ -18,11 +18,11 @@ public class FrameSet {
     public FramePage Page { get; set; }
 
     ///<summary>Directory to store persisted data to.</summary>
-    public string Directory { get; set; }
+    public string Directory { get; init; }
 
     ///<summary>Directory where the resource files are stored.</summary>
-    public string ResourceFiles { get; set; }
-
+    public string ResourceFiles { get; init; }
+    public string RepositoryFiles { get; init; }
 
     public IPersistSite PersistPlace { get; set; }
 
@@ -242,9 +242,8 @@ public class FrameClass : FrameBacker, IBacked {
     public virtual string? GetAvatar => DefaultAvatar;
 
 
-
     public virtual Task<CallbackResult> Callback(
-                IPersistSite persistPlace) {
+                IPageContext persistPlace) {
 
         return Task.FromResult (new CallbackResult(HttpStatusCode.OK, null, null));
         }
@@ -656,8 +655,8 @@ public record FrameFile(string Id) : Property(Id, false), IFrameField{
     public string Backing => "BackingTypeFile";
     public virtual string Type => "FrameFile";
 
-    public Action<IBacked, BackingTypeFile?> Set { get; init; }
-    public Func<IBacked, BackingTypeFile?> Get { get; init; }
+    public Action<IBinding, BackingTypeFile?> Set { get; init; }
+    public Func<IBinding, BackingTypeFile?> Get { get; init; }
 
 
     public override bool IsNull(IBinding data) {

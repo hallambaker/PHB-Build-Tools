@@ -21,12 +21,21 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="SitebuilderConstants.cs">
+			<DependentUpon>SitebuilderConstants.constant</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Update="Exceptions.exceptional">
 			<LastGenOutput>Exceptions.cs</LastGenOutput>
 			<Generator>exceptional</Generator>
+		</None>
+		<None Update="SitebuilderConstants.constant">
+		  <LastGenOutput>SitebuilderConstants.cs</LastGenOutput>
+		  <Generator>Constant</Generator>
 		</None>
 	</ItemGroup>
 

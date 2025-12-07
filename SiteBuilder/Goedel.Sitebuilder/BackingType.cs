@@ -17,12 +17,16 @@ public record BackingType {
 /// <param name="Size">The file size</param>
 /// <param name="Conversions">Alternative versions of the file.</param>
 public record BackingTypeFile(
-            string Uid,
+            //string Uid,
             string OriginalFileName,
-            byte[] Data,
-            int Size,
-            List<BackingTypeImage> Conversions
+            string ContentType,
+            byte[] Data
+            //int Size,
+            //List<BackingTypeImage> Conversions
             ) : BackingType() {
+
+
+
     }
 
 

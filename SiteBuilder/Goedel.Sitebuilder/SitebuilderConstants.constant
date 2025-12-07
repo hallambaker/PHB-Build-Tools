@@ -1,0 +1,6 @@
+﻿Namespace Goedel.Sitebuilder SitebuilderConstants
+	|Constants specified in hallambaker-mesh-schema
+
+
+File PagePrefixes
+	String Repository "Repo/"
