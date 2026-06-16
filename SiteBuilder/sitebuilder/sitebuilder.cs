@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 10/20/2025 6:18:05 PM
+//  This file was automatically generated at 3/11/2026 4:34:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -9,7 +9,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.26100.0
+//  Build Platform: Win32NT 10.0.26200.0
 //  
 //  
 using System;
@@ -245,37 +245,37 @@ public class _SitebuilderShell : global::Goedel.Command.DispatchShell {
 
 		inputfile = Options.FrameStruct.Text;
 
-		Goedel.Tool.Sitebuilder.FrameStruct Parse = new() {
+        Goedel.Tool.Sitebuilder.FrameStruct Parse = new () {
 			};
-
-
+        
+			
 		using (Stream infile =
-						  new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
-			Lexer Schema = new Lexer(inputfile);
-			Schema.Process(infile, Parse);
-			}
+                    new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
+            Lexer Schema = new Lexer(inputfile);
+            Schema.Process(infile, Parse);
+            }
 		Parse.Init();
 
 
 		// Script output of type CreateFrame cs
 		if (Options.CreateFrame.Text != null) {
 			string outputfile = Options.CreateFrame.Text; // Automatically defaults
-			if (Options.Lazy.Value & FileTools.UpToDate(inputfile, outputfile)) {
+			if (Options.Lazy.Value & FileTools.UpToDate (inputfile, outputfile)) {
 				return;
 				}
-			using Stream outputStream =
-						new FileStream(outputfile, FileMode.Create, FileAccess.Write);
-			using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
+            using Stream outputStream =
+                        new FileStream(outputfile, FileMode.Create, FileAccess.Write);
+            using TextWriter OutputWriter = new StreamWriter(outputStream, Encoding.UTF8);
 
-			Goedel.Tool.Sitebuilder.GenerateBacking Script = new() {
-				_Output = OutputWriter
+			Goedel.Tool.Sitebuilder.GenerateBacking Script = new () { 
+				_Output= OutputWriter 
 				};
-			Script.CreateFrame(Parse);
+			Script.CreateFrame (Parse);
 			}
 		}
 
 
-	} // class _SitebuilderShell
+    } // class _SitebuilderShell
 
 public partial class SitebuilderShell : _SitebuilderShell {
     } // class SitebuilderShell

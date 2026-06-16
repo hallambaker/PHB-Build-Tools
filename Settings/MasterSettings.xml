@@ -9,6 +9,7 @@
 		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
 		<UseSharedCompilation>false</UseSharedCompilation>	
 		<DefineConstants>_Github_</DefineConstants>
+		<Nullable>annotations</Nullable>
 	</PropertyGroup>
 
 	<!-- Create a documentation file unless Documents is false -->

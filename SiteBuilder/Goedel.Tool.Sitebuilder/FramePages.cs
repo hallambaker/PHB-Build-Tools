@@ -274,6 +274,9 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 				foreach  (var section in presentation.Sections) {
 					_Output.Write ("{1}\n{0}", _Indent, comma);
 					_Output.Write ("			new FrameSection (\"{1}\") {{\n{0}", _Indent, section.Id);
+					if (  (section.AnchorField is not null) ) {
+						_Output.Write ("				GetAnchor = (data) => (data as {1})?.{2},\n{0}", _Indent, backed.Id, section.AnchorField);
+						}
 					_Output.Write ("				Fields = [", _Indent);
 					 var save = Indent (12);
 					 RenderFields (backed.Id, section.Fields);
@@ -386,6 +389,11 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 			_Output.Write ("{1}\n{0}", _Indent, comma2);
 			_Output.Write ("			GetActive = (data) => (data as {1})?.{2}", _Indent, backed, bid);
 			}
+		if (  (button.Anchor is not null)  ) {
+			 var bid = button.Anchor.Replace (".", "?.");
+			_Output.Write ("{1}\n{0}", _Indent, comma2);
+			_Output.Write ("			GetAnchor = (data) => (data as {1})?.{2}", _Indent, backed, bid);
+			}
 		if (  (button.Integer is not null)  ) {
 			 var bid = button.Integer.Replace (".", "?.");
 			_Output.Write ("{1}\n{0}", _Indent, comma2);
@@ -395,6 +403,11 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 			 var bid = button.Text.Replace (".", "?.");
 			_Output.Write ("{1}\n{0}", _Indent, comma2);
 			_Output.Write ("			GetText = (data) => (data as {1})?.{2}", _Indent, backed, bid);
+			}
+		if (  (button.Customized is not null)  ) {
+			 var bid = button.Customized.Replace (".", "?.");
+			_Output.Write ("{1}\n{0}", _Indent, comma2);
+			_Output.Write ("			GetCustomized = (data, visibility) => (data as {1})?.{2}(visibility)", _Indent, backed, bid);
 			}
 		if (  (button.Description is not null)  ) {
 			_Output.Write ("{1}\n{0}", _Indent, comma2);

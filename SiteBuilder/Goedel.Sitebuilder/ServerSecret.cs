@@ -24,7 +24,10 @@
 namespace Goedel.Sitebuilder;
 
 
-
+/// <summary>
+/// Cookie manager, encrypts and authenticates strings of data under a shared secret 
+/// that can be rotated as needed.
+/// </summary>
 public record ServerCookieManager {
 
     ServerSecret[] ServerSecrets { get; } 
@@ -40,10 +43,10 @@ public record ServerCookieManager {
 
     int prefixLength => 1 + nonceLength + tagLength;
 
-    public ServerCookieManager () {
+    public ServerCookieManager (string seed=null) {
 
         ServerSecrets = new ServerSecret[Lifetime];
-        Latest = new();
+        Latest = new(seed:seed);
         ServerSecrets[0] = Latest;
         }
 
@@ -196,8 +199,9 @@ public record ServerSecret {
 
     public byte[] Secret { get; }
 
-    public ServerSecret(int expiryHours = 24) {
-        Secret = Platform.GetRandomBits(128);
+    public ServerSecret(int expiryHours = 24, string seed=null) {
+        Secret = seed == null ? Platform.GetRandomBits(128) :
+            Shake128.HashData(seed.ToBytes(), 16);
         Expire = DateTime.Now.AddHours(expiryHours+1);
         }
 

@@ -6,7 +6,7 @@
 ;
 $TTL 600
 dunningkrugerrand.com.      IN      SOA     dns1.dunningkrugerrand.com. hallam.gmail.com. (
-                        2025013001       ; serial, todays date + todays serial 
+                        2026061001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -14,12 +14,11 @@ dunningkrugerrand.com.      IN      SOA     dns1.dunningkrugerrand.com. hallam.g
 
 ; Additional name servers
 dunningkrugerrand.com.     IN      NS      dns1.dunningkrugerrand.com.
-dns1.dunningkrugerrand.com.    A 178.62.79.124 
+dns1.dunningkrugerrand.com.    A 96.237.102.35 
 dunningkrugerrand.com.     IN      NS      dns2.dunningkrugerrand.com.
-dns2.dunningkrugerrand.com.    A 139.59.200.120 
+dns2.dunningkrugerrand.com.    A 96.237.102.36 
 
 
-dunningkrugerrand.com.    IN     CAA 0 issue "comodoca.com"
 dunningkrugerrand.com.    IN     CAA 0 issue "letsencrypt.org"
 dunningkrugerrand.com.    IN     CAA 0 issuewild  ";"
 dunningkrugerrand.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
@@ -33,13 +32,13 @@ dunningkrugerrand.com. TXT "v=spf1 redirect=_spf.google.com"
 
 
 
-; Host host1.mathmesh.com 178.62.79.124 
-dunningkrugerrand.com.    A 178.62.79.124 
-www.dunningkrugerrand.com.    A 178.62.79.124 
-http.dunningkrugerrand.com.    A 178.62.79.124
-https.dunningkrugerrand.com.    A 178.62.79.124 
-_http._tcp.dunningkrugerrand.com.  IN    SRV 1 1 80 host1.mathmesh.com.
-_https._tcp.dunningkrugerrand.com.   IN   SRV 1 1 443 host1.mathmesh.com.
+; Host host1.cryptomesh.org 96.237.102.35 
+dunningkrugerrand.com.    A 96.237.102.35 
+www.dunningkrugerrand.com.    A 96.237.102.35 
+http.dunningkrugerrand.com.    A 96.237.102.35
+https.dunningkrugerrand.com.    A 96.237.102.35 
+_http._tcp.dunningkrugerrand.com.  IN    SRV 1 1 80 host1.cryptomesh.org.
+_https._tcp.dunningkrugerrand.com.   IN   SRV 1 1 443 host1.cryptomesh.org.
 
 
 ; handles

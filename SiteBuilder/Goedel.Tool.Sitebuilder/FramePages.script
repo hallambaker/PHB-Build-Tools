@@ -243,6 +243,9 @@ public #{structure} #{backer.Id} (string Id) : #{backer.ParentId ?? backer.Type}
 #foreach (var section in presentation.Sections)
 #{comma}
 			new FrameSection ("#{section.Id}") {
+#if (section.AnchorField is not null)
+				GetAnchor = (data) => (data as #{backed.Id})?.#{section.AnchorField},
+#end if
 				Fields = [#!
 #% var save = Indent (12);
 #% RenderFields (backed.Id, section.Fields);
@@ -339,6 +342,11 @@ public #{structure} #{backer.Id} (string Id) : #{backer.ParentId ?? backer.Type}
 #{comma2}
 			GetActive = (data) => (data as #{backed})?.#{bid}#!
 #end if
+#if (button.Anchor is not null) 
+#% var bid = button.Anchor.Replace (".", "?.");
+#{comma2}
+			GetAnchor = (data) => (data as #{backed})?.#{bid}#!
+#end if
 #if (button.Integer is not null) 
 #% var bid = button.Integer.Replace (".", "?.");
 #{comma2}
@@ -348,6 +356,11 @@ public #{structure} #{backer.Id} (string Id) : #{backer.ParentId ?? backer.Type}
 #% var bid = button.Text.Replace (".", "?.");
 #{comma2}
 			GetText = (data) => (data as #{backed})?.#{bid}#!
+#end if
+#if (button.Customized is not null) 
+#% var bid = button.Customized.Replace (".", "?.");
+#{comma2}
+			GetCustomized = (data, visibility) => (data as #{backed})?.#{bid}(visibility)#!
 #end if
 #if (button.Description is not null) 
 #{comma2}

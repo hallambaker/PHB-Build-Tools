@@ -11,6 +11,7 @@ using static System.Net.Mime.MediaTypeNames;
 namespace Goedel.Sitebuilder;
 
 
+
 /// <summary>
 /// 
 /// </summary>
@@ -222,6 +223,17 @@ public class HtmlWriter {
 
 
         TextWriter.Write(HttpUtility.HtmlEncode( text));
+        }
+
+
+    /// <summary>
+    /// Write the specified textg to the stream as an escaped HTML string.
+    /// </summary>
+    /// <param name="text">The textg to write.</param>
+    public void TextVerbatim(string text) {
+
+
+        TextWriter.Write(text);
         }
 
 

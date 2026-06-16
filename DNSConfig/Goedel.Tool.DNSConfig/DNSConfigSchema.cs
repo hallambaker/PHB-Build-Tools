@@ -72,11 +72,13 @@ using Goedel.Utilities;
 //       Authoritative
 //       MX
 //       SPF
+//       Secondary
 //       Time
 //       Host
 //       Tag
 //       Value
 //       Priority
+//       IP
 //       Domain
 //       Web
 //       Service
@@ -85,6 +87,7 @@ using Goedel.Utilities;
 //       Email
 //       Wildcard
 //       Handle
+//       Internal
 //       Root
 //       Name
 //       TXT
@@ -110,6 +113,7 @@ namespace Goedel.Tool.DNSConfig {
         Slave,
         CAA,
         MX,
+        Secondary,
         Site,
         Domain,
         Wildcard,
@@ -125,6 +129,7 @@ namespace Goedel.Tool.DNSConfig {
         Port,
         Priority,
         Weight,
+        Internal,
 
         _Label,
         _Bottom
@@ -196,6 +201,7 @@ namespace Goedel.Tool.DNSConfig {
 		public List<Authoritative>  Authoritative = [];
 		public List<MX>  MX = [];
 		public List<SPF>  SPF = [];
+		public List<Secondary>  Secondary = [];
 
         public override DNSConfigType _Tag () =>DNSConfigType.DNS;
 
@@ -230,6 +236,9 @@ namespace Goedel.Tool.DNSConfig {
 				_e.Serialize (Output, true);
 				}
 			foreach (SPF _e in SPF) {
+				_e.Serialize (Output, true);
+				}
+			foreach (Secondary _e in Secondary) {
 				_e.Serialize (Output, true);
 				}
 			Output.EndList ("");
@@ -429,6 +438,29 @@ namespace Goedel.Tool.DNSConfig {
 			}
 		}
 
+    public partial class Secondary : _Choice {
+		public string					IP;
+
+        public override DNSConfigType _Tag () =>DNSConfigType.Secondary;
+
+
+		public override void _InitChildren (_Choice? Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Secondary");
+				}
+
+			Output.WriteAttribute ("IP", IP);
+			if (tag) {
+				Output.EndElement ("Secondary");
+				}			
+			}
+		}
+
     public partial class Site : _Choice {
         public ID<_Choice>				Id; 
 		public List<Domain>  Domain = [];
@@ -468,6 +500,7 @@ namespace Goedel.Tool.DNSConfig {
 		public Email  Email = new ();
 		public List<Wildcard>  Wildcard = [];
 		public List<Handle>  Handle = [];
+		public List<Internal>  Internal = [];
 
         public override DNSConfigType _Tag () =>DNSConfigType.Domain;
 
@@ -498,6 +531,9 @@ namespace Goedel.Tool.DNSConfig {
 				_e.Serialize (Output, true);
 				}
 			foreach (Handle _e in Handle) {
+				_e.Serialize (Output, true);
+				}
+			foreach (Internal _e in Internal) {
 				_e.Serialize (Output, true);
 				}
 			Output.EndList ("");
@@ -557,6 +593,7 @@ namespace Goedel.Tool.DNSConfig {
         public ID<_Choice>				Id; 
         public REF<_Choice>				Data;
 		public SMTP  SMTP = new ();
+		public Internal  Internal = new ();
 
         public override DNSConfigType _Tag () =>DNSConfigType.Address;
 
@@ -575,6 +612,7 @@ namespace Goedel.Tool.DNSConfig {
 	        Output.WriteId ("Data", Data.ToString());
 			Output.StartList ("");
 			SMTP.Serialize (Output, true);
+			Internal.Serialize (Output, true);
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Address");
@@ -661,6 +699,7 @@ namespace Goedel.Tool.DNSConfig {
         public TOKEN<_Choice>			Id;
 		public string					Root;
 		public List<Host>  Host = [];
+		public List<Internal>  Internal = [];
 
         public override DNSConfigType _Tag () =>DNSConfigType.Web;
 
@@ -681,6 +720,9 @@ namespace Goedel.Tool.DNSConfig {
 			foreach (Host _e in Host) {
 				_e.Serialize (Output, true);
 				}
+			foreach (Internal _e in Internal) {
+				_e.Serialize (Output, true);
+				}
 			Output.EndList ("");
 			if (tag) {
 				Output.EndElement ("Web");
@@ -692,6 +734,7 @@ namespace Goedel.Tool.DNSConfig {
 		public string					Name;
 		public List<Host>  Host = [];
 		public List<TXT>  TXT = [];
+		public List<Internal>  Internal = [];
 
         public override DNSConfigType _Tag () =>DNSConfigType.Service;
 
@@ -712,6 +755,9 @@ namespace Goedel.Tool.DNSConfig {
 				_e.Serialize (Output, true);
 				}
 			foreach (TXT _e in TXT) {
+				_e.Serialize (Output, true);
+				}
+			foreach (Internal _e in Internal) {
 				_e.Serialize (Output, true);
 				}
 			Output.EndList ("");
@@ -848,6 +894,29 @@ namespace Goedel.Tool.DNSConfig {
 			}
 		}
 
+    public partial class Internal : _Choice {
+		public string					Value;
+
+        public override DNSConfigType _Tag () =>DNSConfigType.Internal;
+
+
+		public override void _InitChildren (_Choice? Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Internal");
+				}
+
+			Output.WriteAttribute ("Value", Value);
+			if (tag) {
+				Output.EndElement ("Internal");
+				}			
+			}
+		}
+
     class _Label : _Choice {
         public REF<_Choice>?            Label;
 
@@ -892,6 +961,8 @@ namespace Goedel.Tool.DNSConfig {
 		MX_Start,
 		MX__Id,				
 		MX__Priority,				
+		Secondary_Start,
+		Secondary__IP,				
 		Site_Start,
 		Site__Id,				
 		Site__Options,				
@@ -929,6 +1000,8 @@ namespace Goedel.Tool.DNSConfig {
 		Priority__Value,				
 		Weight_Start,
 		Weight__Value,				
+		Internal_Start,
+		Internal__Value,				
         }
 
 
@@ -1009,6 +1082,7 @@ namespace Goedel.Tool.DNSConfig {
                 case "Slave": return NewSlave();
                 case "CAA": return NewCAA();
                 case "MX": return NewMX();
+                case "Secondary": return NewSecondary();
                 case "Site": return NewSite();
                 case "Domain": return NewDomain();
                 case "Wildcard": return NewWildcard();
@@ -1024,6 +1098,7 @@ namespace Goedel.Tool.DNSConfig {
                 case "Port": return NewPort();
                 case "Priority": return NewPriority();
                 case "Weight": return NewWeight();
+                case "Internal": return NewInternal();
 
 				}
 
@@ -1108,6 +1183,14 @@ namespace Goedel.Tool.DNSConfig {
             Goedel.Tool.DNSConfig.MX result = new ();
             Push (result);
             State = StateCode.MX_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.DNSConfig.Secondary NewSecondary() {
+            Goedel.Tool.DNSConfig.Secondary result = new ();
+            Push (result);
+            State = StateCode.Secondary_Start;
             return result;
             }
 
@@ -1232,6 +1315,14 @@ namespace Goedel.Tool.DNSConfig {
             }
 
 
+        private Goedel.Tool.DNSConfig.Internal NewInternal() {
+            Goedel.Tool.DNSConfig.Internal result = new ();
+            Push (result);
+            State = StateCode.Internal_Start;
+            return result;
+            }
+
+
         static Goedel.Tool.DNSConfig.DNSConfigType _Reserved(string Label) {
             switch (Label) {
 
@@ -1245,6 +1336,7 @@ namespace Goedel.Tool.DNSConfig {
                 case "Slave": return Goedel.Tool.DNSConfig.DNSConfigType.Slave;
                 case "CAA": return Goedel.Tool.DNSConfig.DNSConfigType.CAA;
                 case "MX": return Goedel.Tool.DNSConfig.DNSConfigType.MX;
+                case "Secondary": return Goedel.Tool.DNSConfig.DNSConfigType.Secondary;
                 case "Site": return Goedel.Tool.DNSConfig.DNSConfigType.Site;
                 case "Domain": return Goedel.Tool.DNSConfig.DNSConfigType.Domain;
                 case "Wildcard": return Goedel.Tool.DNSConfig.DNSConfigType.Wildcard;
@@ -1260,6 +1352,7 @@ namespace Goedel.Tool.DNSConfig {
                 case "Port": return Goedel.Tool.DNSConfig.DNSConfigType.Port;
                 case "Priority": return Goedel.Tool.DNSConfig.DNSConfigType.Priority;
                 case "Weight": return Goedel.Tool.DNSConfig.DNSConfigType.Weight;
+                case "Internal": return Goedel.Tool.DNSConfig.DNSConfigType.Internal;
 
                 }
             return Goedel.Tool.DNSConfig.DNSConfigType._Bottom;
@@ -1472,8 +1565,14 @@ namespace Goedel.Tool.DNSConfig {
 									Current_Cast.SPF.Add (NewSPF ());
 									break;
 									}
+								case Goedel.Tool.DNSConfig.DNSConfigType.Secondary : {
+
+									// Secondary  Secondary
+									Current_Cast.Secondary.Add (NewSecondary ());
+									break;
+									}
 								default : {
-									throw new Expected("Parser Error Expected [Refresh Retry Expire TTL Slave CAA Authoritative MX SPF ]");
+									throw new Expected("Parser Error Expected [Refresh Retry Expire TTL Slave CAA Authoritative MX SPF Secondary ]");
 									}
 								}
 							}
@@ -1610,6 +1709,19 @@ namespace Goedel.Tool.DNSConfig {
                         Pop ();
                         Represent = true; 
                         break;
+                    case StateCode.Secondary_Start:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.DNSConfig.Secondary Current_Cast = (Goedel.Tool.DNSConfig.Secondary)Current;
+                            Current_Cast.IP = Text;
+                            State = StateCode.Secondary__IP;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Secondary__IP:
+                        Pop ();
+                        Represent = true; 
+                        break;
                     case StateCode.Site_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.DNSConfig.Site Current_Cast = (Goedel.Tool.DNSConfig.Site)Current;
@@ -1723,8 +1835,14 @@ namespace Goedel.Tool.DNSConfig {
 									Current_Cast.Handle.Add (NewHandle ());
 									break;
 									}
+								case Goedel.Tool.DNSConfig.DNSConfigType.Internal : {
+
+									// Internal  Internal
+									Current_Cast.Internal.Add (NewInternal ());
+									break;
+									}
 								default : {
-									throw new Expected("Parser Error Expected [Service Address SMTP Email Wildcard Handle ]");
+									throw new Expected("Parser Error Expected [Service Address SMTP Email Wildcard Handle Internal ]");
 									}
 								}
 							}
@@ -1800,8 +1918,14 @@ namespace Goedel.Tool.DNSConfig {
 									Current_Cast.SMTP = NewSMTP ();
 									break;
 									}
+								case Goedel.Tool.DNSConfig.DNSConfigType.Internal : {
+
+									// Internal  Internal
+									Current_Cast.Internal = NewInternal ();
+									break;
+									}
 								default : {
-									throw new Expected("Parser Error Expected [SMTP ]");
+									throw new Expected("Parser Error Expected [SMTP Internal ]");
 									}
 								}
 							}
@@ -1907,8 +2031,14 @@ namespace Goedel.Tool.DNSConfig {
 									Current_Cast.Host.Add (NewHost ());
 									break;
 									}
+								case Goedel.Tool.DNSConfig.DNSConfigType.Internal : {
+
+									// Internal  Internal
+									Current_Cast.Internal.Add (NewInternal ());
+									break;
+									}
 								default : {
-									throw new Expected("Parser Error Expected [Host ]");
+									throw new Expected("Parser Error Expected [Host Internal ]");
 									}
 								}
 							}
@@ -1955,8 +2085,14 @@ namespace Goedel.Tool.DNSConfig {
 									Current_Cast.TXT.Add (NewTXT ());
 									break;
 									}
+								case Goedel.Tool.DNSConfig.DNSConfigType.Internal : {
+
+									// Internal  Internal
+									Current_Cast.Internal.Add (NewInternal ());
+									break;
+									}
 								default : {
-									throw new Expected("Parser Error Expected [Host TXT ]");
+									throw new Expected("Parser Error Expected [Host TXT Internal ]");
 									}
 								}
 							}
@@ -2071,6 +2207,19 @@ namespace Goedel.Tool.DNSConfig {
                         throw new Expected("Expected Integer");
 
                     case StateCode.Weight__Value:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Internal_Start:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.DNSConfig.Internal Current_Cast = (Goedel.Tool.DNSConfig.Internal)Current;
+                            Current_Cast.Value = Text;
+                            State = StateCode.Internal__Value;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Internal__Value:
                         Pop ();
                         Represent = true; 
                         break;

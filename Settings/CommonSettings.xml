@@ -11,6 +11,7 @@
 		<!--<DocumentationFile>xml\Documentation.xml</DocumentationFile>-->
 		<UseSharedCompilation>false</UseSharedCompilation>
 		<DefineConstants>_Github_</DefineConstants>
+		<Nullable>annotations</Nullable>
 	</PropertyGroup>
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">

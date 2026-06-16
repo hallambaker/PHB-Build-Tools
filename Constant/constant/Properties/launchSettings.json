@@ -1,9 +1,14 @@
 {
   "profiles": {
+    "Places": {
+      "commandName": "Project",
+      "commandLineArgs": "PlacesConstants.constant /cs",
+      "workingDirectory": "C:\\Users\\hallam\\code\\Palimpsest\\Libraries\\Mplace2"
+    },
     "oauth": {
       "commandName": "Project",
       "commandLineArgs": "OauthConstants.constant /cs",
-      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Libraries\\Goedel.Cryptography.Oauth",
+      "workingDirectory": "C:\\Users\\hallam\\source\\repos\\mmm\\Libraries\\Goedel.Cryptography.Oauth"
     },
     "mesh": {
       "commandName": "Project",

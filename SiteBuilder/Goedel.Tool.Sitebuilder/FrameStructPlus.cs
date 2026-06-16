@@ -204,7 +204,9 @@ public partial class Namespace {
         string? active = null;
         string? integer = null;
         string? text = null;
+        string? anchor = null;
         string? description = null;
+        string? customized = null;
         ButtonAction buttonAction = ButtonAction.Link;
 
         foreach (var entry in button.Entries) {
@@ -219,6 +221,14 @@ public partial class Namespace {
                     }
                 case String : {
                     text = entry.Id.Label;
+                    break;
+                    }
+                case Anchor: {
+                    anchor = entry.Id.Label;
+                    break;
+                    }
+                case Customized: {
+                    customized = entry.Id.Label;
                     break;
                     }
                 case Sitebuilder.Description desc : {
@@ -240,7 +250,7 @@ public partial class Namespace {
             }
 
         var result = new FrameButtonParsed(label, button.Title, action,
-            active, integer, text, buttonAction) {
+            active, integer, text, anchor, customized, buttonAction) {
             Description = description
             };
 
@@ -265,12 +275,19 @@ public partial class Namespace {
 
         var sections = new List<FrameSection> ();
         foreach (var section in presentation.Sections) {
+            string anchorField = null;
             var fields = new List<IFrameField>();
             foreach (var entry in section.Entries) {
                 Collect(frameset, fields, entry);
+
+
+                if (entry.Type is Anchor anchor) {
+                    anchorField = entry.Id.Label;
+                    }
                 }
 
             sections.Add(new FrameSection(section.Id.Label) {
+                AnchorField = anchorField,
                 Fields = fields
                 });
             }
@@ -369,7 +386,7 @@ public partial class Namespace {
             DateTime => new FrameDateTime(id),
             String => new FrameString(id),
             Text => new FrameText(id),
-            Anchor => new FrameAnchor(id),
+            //Anchor => new FrameAnchor(id),
             RichText => new FrameRichText(id),
             Image => new FrameImage(id),
             Icon => new FrameIcon(id),
@@ -419,7 +436,10 @@ public partial class DateTime : IIntrinsic {
 public partial class String : IIntrinsic {
     }
 
-public partial class Anchor : IIntrinsic {
+
+public partial class Customized {
+    }
+public partial class Anchor  {
     }
 public partial class Text : IIntrinsic {
     }

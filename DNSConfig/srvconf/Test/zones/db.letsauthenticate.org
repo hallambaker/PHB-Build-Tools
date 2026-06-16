@@ -6,7 +6,7 @@
 ;
 $TTL 600
 letsauthenticate.org.      IN      SOA     dns1.letsauthenticate.org. hallam.gmail.com. (
-                        2025013001       ; serial, todays date + todays serial 
+                        2026061001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -14,12 +14,11 @@ letsauthenticate.org.      IN      SOA     dns1.letsauthenticate.org. hallam.gma
 
 ; Additional name servers
 letsauthenticate.org.     IN      NS      dns1.letsauthenticate.org.
-dns1.letsauthenticate.org.    A 178.62.79.124 
+dns1.letsauthenticate.org.    A 96.237.102.35 
 letsauthenticate.org.     IN      NS      dns2.letsauthenticate.org.
-dns2.letsauthenticate.org.    A 139.59.200.120 
+dns2.letsauthenticate.org.    A 96.237.102.36 
 
 
-letsauthenticate.org.    IN     CAA 0 issue "comodoca.com"
 letsauthenticate.org.    IN     CAA 0 issue "letsencrypt.org"
 letsauthenticate.org.    IN     CAA 0 issuewild  ";"
 letsauthenticate.org.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
@@ -33,13 +32,13 @@ letsauthenticate.org. TXT "v=spf1 redirect=_spf.google.com"
 
 
 
-; Host host1.mathmesh.com 178.62.79.124 
-letsauthenticate.org.    A 178.62.79.124 
-www.letsauthenticate.org.    A 178.62.79.124 
-http.letsauthenticate.org.    A 178.62.79.124
-https.letsauthenticate.org.    A 178.62.79.124 
-_http._tcp.letsauthenticate.org.  IN    SRV 1 1 80 host1.mathmesh.com.
-_https._tcp.letsauthenticate.org.   IN   SRV 1 1 443 host1.mathmesh.com.
+; Host host1.cryptomesh.org 96.237.102.35 
+letsauthenticate.org.    A 96.237.102.35 
+www.letsauthenticate.org.    A 96.237.102.35 
+http.letsauthenticate.org.    A 96.237.102.35
+https.letsauthenticate.org.    A 96.237.102.35 
+_http._tcp.letsauthenticate.org.  IN    SRV 1 1 80 host1.cryptomesh.org.
+_https._tcp.letsauthenticate.org.   IN   SRV 1 1 443 host1.cryptomesh.org.
 
 
 ; handles

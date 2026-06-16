@@ -6,7 +6,7 @@
 ;
 $TTL 600
 fussbook.com.      IN      SOA     dns1.fussbook.com. hallam.gmail.com. (
-                        2025013001       ; serial, todays date + todays serial 
+                        2026061001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -14,12 +14,11 @@ fussbook.com.      IN      SOA     dns1.fussbook.com. hallam.gmail.com. (
 
 ; Additional name servers
 fussbook.com.     IN      NS      dns1.fussbook.com.
-dns1.fussbook.com.    A 178.62.79.124 
+dns1.fussbook.com.    A 96.237.102.35 
 fussbook.com.     IN      NS      dns2.fussbook.com.
-dns2.fussbook.com.    A 139.59.200.120 
+dns2.fussbook.com.    A 96.237.102.36 
 
 
-fussbook.com.    IN     CAA 0 issue "comodoca.com"
 fussbook.com.    IN     CAA 0 issue "letsencrypt.org"
 fussbook.com.    IN     CAA 0 issuewild  ";"
 fussbook.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
@@ -33,13 +32,6 @@ fussbook.com. TXT "v=spf1 redirect=_spf.google.com"
 
 
 
-; Host host1.mathmesh.com 178.62.79.124 
-fussbook.com.    A 178.62.79.124 
-www.fussbook.com.    A 178.62.79.124 
-http.fussbook.com.    A 178.62.79.124
-https.fussbook.com.    A 178.62.79.124 
-_http._tcp.fussbook.com.  IN    SRV 1 1 80 host1.mathmesh.com.
-_https._tcp.fussbook.com.   IN   SRV 1 1 443 host1.mathmesh.com.
 
 
 ; handles

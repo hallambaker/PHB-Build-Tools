@@ -86,6 +86,7 @@ using Goedel.Utilities;
 //       ButtonProperty
 //       Link
 //       Action
+//       Customized
 //       ChoiceEntry
 //       ChoiceOption
 //       ChooserOption
@@ -151,6 +152,7 @@ namespace Goedel.Tool.Sitebuilder {
         Property,
         Anchor,
         ButtonProperty,
+        Customized,
         Container,
         Action,
         Link,
@@ -634,6 +636,27 @@ namespace Goedel.Tool.Sitebuilder {
 	        Type.Serialize (Output, true);
 			if (tag) {
 				Output.EndElement ("ButtonProperty");
+				}			
+			}
+		}
+
+    public partial class Customized : _Choice {
+
+        public override FrameStructType _Tag () =>FrameStructType.Customized;
+
+
+		public override void _InitChildren (_Choice? Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Customized");
+				}
+
+			if (tag) {
+				Output.EndElement ("Customized");
 				}			
 			}
 		}
@@ -1938,6 +1961,7 @@ namespace Goedel.Tool.Sitebuilder {
 		ButtonProperty_Start,
 		ButtonProperty__Id,				
 		ButtonProperty__Type,				
+		Customized_Start,
 		Container_Start,
 		Action_Start,
 		Link_Start,
@@ -2112,6 +2136,7 @@ namespace Goedel.Tool.Sitebuilder {
                 case "Property": return NewProperty();
                 case "Anchor": return NewAnchor();
                 case "ButtonProperty": return NewButtonProperty();
+                case "Customized": return NewCustomized();
                 case "Container": return NewContainer();
                 case "Action": return NewAction();
                 case "Link": return NewLink();
@@ -2275,6 +2300,14 @@ namespace Goedel.Tool.Sitebuilder {
             Goedel.Tool.Sitebuilder.ButtonProperty result = new ();
             Push (result);
             State = StateCode.ButtonProperty_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Sitebuilder.Customized NewCustomized() {
+            Goedel.Tool.Sitebuilder.Customized result = new ();
+            Push (result);
+            State = StateCode.Customized_Start;
             return result;
             }
 
@@ -2672,6 +2705,7 @@ namespace Goedel.Tool.Sitebuilder {
                 case "Property": return Goedel.Tool.Sitebuilder.FrameStructType.Property;
                 case "Anchor": return Goedel.Tool.Sitebuilder.FrameStructType.Anchor;
                 case "ButtonProperty": return Goedel.Tool.Sitebuilder.FrameStructType.ButtonProperty;
+                case "Customized": return Goedel.Tool.Sitebuilder.FrameStructType.Customized;
                 case "Container": return Goedel.Tool.Sitebuilder.FrameStructType.Container;
                 case "Action": return Goedel.Tool.Sitebuilder.FrameStructType.Action;
                 case "Link": return Goedel.Tool.Sitebuilder.FrameStructType.Link;
@@ -3279,20 +3313,26 @@ namespace Goedel.Tool.Sitebuilder {
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.String) |
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Link) |
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Action) |
-									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Description) ) {
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Description) |
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Anchor) |
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Customized) ) {
                                 State = StateCode.ButtonProperty__Type;
                                 Current_Cast.Type = New_Choice(Text);
                                 }
                             else {
-                               throw new Expected ("Parser Error Expected [Boolean Integer String Link Action Description ]");
+                               throw new Expected ("Parser Error Expected [Boolean Integer String Link Action Description Anchor Customized ]");
                                 }
                             break;
                             }
                         else { 
-						    throw new Expected("Parser Error Expected [Boolean Integer String Link Action Description ]");
+						    throw new Expected("Parser Error Expected [Boolean Integer String Link Action Description Anchor Customized ]");
                             }
 
                     case StateCode.ButtonProperty__Type:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Customized_Start:
                         Pop ();
                         Represent = true; 
                         break;

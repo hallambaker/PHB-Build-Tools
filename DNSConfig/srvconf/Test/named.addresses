@@ -1,239 +1,159 @@
-# Machine Home 178.62.79.124
+# Machine Gateway 96.237.102.34
 
-mplace2.com.    A 178.62.79.124
-www.mplace2.com.    A 178.62.79.124
-http.mplace2.com.    A 178.62.79.124
-https.mplace2.com.    A 178.62.79.124
-mplace2.social.    A 178.62.79.124
-mplace2.social.    A 178.62.79.124
-www.mplace2.social.    A 178.62.79.124
-http.mplace2.social.    A 178.62.79.124
-https.mplace2.social.    A 178.62.79.124
-meta.mplace2.social.    A 178.62.79.124
-host1.mplace2app.com.    A 178.62.79.124
-mplace2.app.    A 178.62.79.124
-mplace2.app.    A 178.62.79.124
-www.mplace2.app.    A 178.62.79.124
-http.mplace2.app.    A 178.62.79.124
-https.mplace2.app.    A 178.62.79.124
-mmm.mplace2.app.    A 178.62.79.124
-hallambaker.com.    A 178.62.79.124
-hallambaker.com.    A 178.62.79.124
-www.hallambaker.com.    A 178.62.79.124
-http.hallambaker.com.    A 178.62.79.124
-https.hallambaker.com.    A 178.62.79.124
-phill.hallambaker.com.    A 178.62.79.124
-defaultdenysecurity.com.    A 178.62.79.124
-www.defaultdenysecurity.com.    A 178.62.79.124
-http.defaultdenysecurity.com.    A 178.62.79.124
-https.defaultdenysecurity.com.    A 178.62.79.124
-thresholded.com.    A 178.62.79.124
-www.thresholded.com.    A 178.62.79.124
-http.thresholded.com.    A 178.62.79.124
-https.thresholded.com.    A 178.62.79.124
-thresholdkey.com.    A 178.62.79.124
-www.thresholdkey.com.    A 178.62.79.124
-http.thresholdkey.com.    A 178.62.79.124
-https.thresholdkey.com.    A 178.62.79.124
-thresholdrise.com.    A 178.62.79.124
-www.thresholdrise.com.    A 178.62.79.124
-http.thresholdrise.com.    A 178.62.79.124
-https.thresholdrise.com.    A 178.62.79.124
-thresholdmode.com.    A 178.62.79.124
-www.thresholdmode.com.    A 178.62.79.124
-http.thresholdmode.com.    A 178.62.79.124
-https.thresholdmode.com.    A 178.62.79.124
-thresholdsecret.com.    A 178.62.79.124
-www.thresholdsecret.com.    A 178.62.79.124
-http.thresholdsecret.com.    A 178.62.79.124
-https.thresholdsecret.com.    A 178.62.79.124
-thresholdsecrets.com.    A 178.62.79.124
-www.thresholdsecrets.com.    A 178.62.79.124
-http.thresholdsecrets.com.    A 178.62.79.124
-https.thresholdsecrets.com.    A 178.62.79.124
-thresholdshare.com.    A 178.62.79.124
-www.thresholdshare.com.    A 178.62.79.124
-http.thresholdshare.com.    A 178.62.79.124
-https.thresholdshare.com.    A 178.62.79.124
-dotcrimemanifesto.com.    A 178.62.79.124
-www.dotcrimemanifesto.com.    A 178.62.79.124
-http.dotcrimemanifesto.com.    A 178.62.79.124
-https.dotcrimemanifesto.com.    A 178.62.79.124
-quantumofstupid.com.    A 178.62.79.124
-www.quantumofstupid.com.    A 178.62.79.124
-http.quantumofstupid.com.    A 178.62.79.124
-https.quantumofstupid.com.    A 178.62.79.124
-cyberishard.com.    A 178.62.79.124
-www.cyberishard.com.    A 178.62.79.124
-http.cyberishard.com.    A 178.62.79.124
-https.cyberishard.com.    A 178.62.79.124
-host1.mathmesh.com.    A 178.62.79.124
-mathmesh.com.    A 178.62.79.124
-mathmesh.com.    A 178.62.79.124
-www.mathmesh.com.    A 178.62.79.124
-http.mathmesh.com.    A 178.62.79.124
-https.mathmesh.com.    A 178.62.79.124
-host1.cryptomesh.org.    A 178.62.79.124
-cryptomesh.org.    A 178.62.79.124
-cryptomesh.org.    A 178.62.79.124
-www.cryptomesh.org.    A 178.62.79.124
-http.cryptomesh.org.    A 178.62.79.124
-https.cryptomesh.org.    A 178.62.79.124
-mmm.cryptomesh.org.    A 178.62.79.124
-account.cryptomesh.org.    A 178.62.79.124
-recrypt.cryptomesh.org.    A 178.62.79.124
-confirm.cryptomesh.org.    A 178.62.79.124
-mathmesh.net.    A 178.62.79.124
-www.mathmesh.net.    A 178.62.79.124
-http.mathmesh.net.    A 178.62.79.124
-https.mathmesh.net.    A 178.62.79.124
-prismproof.com.    A 178.62.79.124
-www.prismproof.com.    A 178.62.79.124
-http.prismproof.com.    A 178.62.79.124
-https.prismproof.com.    A 178.62.79.124
-prismproof.org.    A 178.62.79.124
-www.prismproof.org.    A 178.62.79.124
-http.prismproof.org.    A 178.62.79.124
-https.prismproof.org.    A 178.62.79.124
-bitkitten.org.    A 178.62.79.124
-www.bitkitten.org.    A 178.62.79.124
-http.bitkitten.org.    A 178.62.79.124
-https.bitkitten.org.    A 178.62.79.124
-dunningkrugerrand.com.    A 178.62.79.124
-www.dunningkrugerrand.com.    A 178.62.79.124
-http.dunningkrugerrand.com.    A 178.62.79.124
-https.dunningkrugerrand.com.    A 178.62.79.124
-letsauthenticate.com.    A 178.62.79.124
-www.letsauthenticate.com.    A 178.62.79.124
-http.letsauthenticate.com.    A 178.62.79.124
-https.letsauthenticate.com.    A 178.62.79.124
-letsauthenticate.org.    A 178.62.79.124
-www.letsauthenticate.org.    A 178.62.79.124
-http.letsauthenticate.org.    A 178.62.79.124
-https.letsauthenticate.org.    A 178.62.79.124
-phbooth.com.    A 178.62.79.124
-www.phbooth.com.    A 178.62.79.124
-http.phbooth.com.    A 178.62.79.124
-https.phbooth.com.    A 178.62.79.124
-skurnick.com.    A 178.62.79.124
-www.skurnick.com.    A 178.62.79.124
-http.skurnick.com.    A 178.62.79.124
-https.skurnick.com.    A 178.62.79.124
-fluxator.org.    A 178.62.79.124
-www.fluxator.org.    A 178.62.79.124
-http.fluxator.org.    A 178.62.79.124
-https.fluxator.org.    A 178.62.79.124
-fussbook.com.    A 178.62.79.124
-www.fussbook.com.    A 178.62.79.124
-http.fussbook.com.    A 178.62.79.124
-https.fussbook.com.    A 178.62.79.124
-internet64.net.    A 178.62.79.124
-www.internet64.net.    A 178.62.79.124
-http.internet64.net.    A 178.62.79.124
-https.internet64.net.    A 178.62.79.124
-internet64.org.    A 178.62.79.124
-www.internet64.org.    A 178.62.79.124
-http.internet64.org.    A 178.62.79.124
-https.internet64.org.    A 178.62.79.124
-nudeler.com.    A 178.62.79.124
-www.nudeler.com.    A 178.62.79.124
-http.nudeler.com.    A 178.62.79.124
-https.nudeler.com.    A 178.62.79.124
-nudeller.com.    A 178.62.79.124
-www.nudeller.com.    A 178.62.79.124
-http.nudeller.com.    A 178.62.79.124
-https.nudeller.com.    A 178.62.79.124
-sayanythingtrump.com.    A 178.62.79.124
-www.sayanythingtrump.com.    A 178.62.79.124
-http.sayanythingtrump.com.    A 178.62.79.124
-https.sayanythingtrump.com.    A 178.62.79.124
-sayanythingtrump.org.    A 178.62.79.124
-www.sayanythingtrump.org.    A 178.62.79.124
-http.sayanythingtrump.org.    A 178.62.79.124
-https.sayanythingtrump.org.    A 178.62.79.124
+ui.hallambaker.com.    A 96.237.102.34
+minecraft.hallambaker.com.    A 96.237.102.34
 
 
-# Machine Develop 108.7.201.148
+# Machine Home 96.237.102.35
+
+mplace2.com.    A 96.237.102.35
+www.mplace2.com.    A 96.237.102.35
+http.mplace2.com.    A 96.237.102.35
+https.mplace2.com.    A 96.237.102.35
+mplace2.social.    A 96.237.102.35
+mplace2.social.    A 96.237.102.35
+www.mplace2.social.    A 96.237.102.35
+http.mplace2.social.    A 96.237.102.35
+https.mplace2.social.    A 96.237.102.35
+meta.mplace2.social.    A 96.237.102.35
+host1.mplace2app.com.    A 96.237.102.35
+mplace2.app.    A 96.237.102.35
+mplace2.app.    A 96.237.102.35
+www.mplace2.app.    A 96.237.102.35
+http.mplace2.app.    A 96.237.102.35
+https.mplace2.app.    A 96.237.102.35
+mmm.mplace2.app.    A 96.237.102.35
+hallambaker.com.    A 96.237.102.35
+hallambaker.com.    A 96.237.102.35
+www.hallambaker.com.    A 96.237.102.35
+http.hallambaker.com.    A 96.237.102.35
+https.hallambaker.com.    A 96.237.102.35
+phill.hallambaker.com.    A 96.237.102.35
+defaultdenysecurity.com.    A 96.237.102.35
+www.defaultdenysecurity.com.    A 96.237.102.35
+http.defaultdenysecurity.com.    A 96.237.102.35
+https.defaultdenysecurity.com.    A 96.237.102.35
+thresholdsecret.com.    A 96.237.102.35
+www.thresholdsecret.com.    A 96.237.102.35
+http.thresholdsecret.com.    A 96.237.102.35
+https.thresholdsecret.com.    A 96.237.102.35
+thresholdsecrets.com.    A 96.237.102.35
+www.thresholdsecrets.com.    A 96.237.102.35
+http.thresholdsecrets.com.    A 96.237.102.35
+https.thresholdsecrets.com.    A 96.237.102.35
+host1.mathmesh.org.    A 96.237.102.35
+mathmesh.com.    A 96.237.102.35
+mathmesh.com.    A 96.237.102.35
+www.mathmesh.com.    A 96.237.102.35
+http.mathmesh.com.    A 96.237.102.35
+https.mathmesh.com.    A 96.237.102.35
+host1.cryptomesh.org.    A 96.237.102.35
+cryptomesh.org.    A 96.237.102.35
+cryptomesh.org.    A 96.237.102.35
+www.cryptomesh.org.    A 96.237.102.35
+http.cryptomesh.org.    A 96.237.102.35
+https.cryptomesh.org.    A 96.237.102.35
+mmm.cryptomesh.org.    A 96.237.102.35
+account.cryptomesh.org.    A 96.237.102.35
+recrypt.cryptomesh.org.    A 96.237.102.35
+confirm.cryptomesh.org.    A 96.237.102.35
+mathmesh.net.    A 96.237.102.35
+www.mathmesh.net.    A 96.237.102.35
+http.mathmesh.net.    A 96.237.102.35
+https.mathmesh.net.    A 96.237.102.35
+bitkitten.org.    A 96.237.102.35
+www.bitkitten.org.    A 96.237.102.35
+http.bitkitten.org.    A 96.237.102.35
+https.bitkitten.org.    A 96.237.102.35
+dunningkrugerrand.com.    A 96.237.102.35
+www.dunningkrugerrand.com.    A 96.237.102.35
+http.dunningkrugerrand.com.    A 96.237.102.35
+https.dunningkrugerrand.com.    A 96.237.102.35
+letsauthenticate.com.    A 96.237.102.35
+www.letsauthenticate.com.    A 96.237.102.35
+http.letsauthenticate.com.    A 96.237.102.35
+https.letsauthenticate.com.    A 96.237.102.35
+letsauthenticate.org.    A 96.237.102.35
+www.letsauthenticate.org.    A 96.237.102.35
+http.letsauthenticate.org.    A 96.237.102.35
+https.letsauthenticate.org.    A 96.237.102.35
+skurnick.com.    A 96.237.102.35
+www.skurnick.com.    A 96.237.102.35
+http.skurnick.com.    A 96.237.102.35
+https.skurnick.com.    A 96.237.102.35
 
 
+# Machine Proxy 96.237.102.35
 
-# Machine Voodoo 192.168.1.21
-
-
-
-# Machine CloudFloating 139.59.200.120
-
-dns2.mplace2.com.    A 139.59.200.120
-dns2.mplace2.social.    A 139.59.200.120
-dns2.mplace2.app.    A 139.59.200.120
-dns2.hallambaker.com.    A 139.59.200.120
-dns2.defaultdenysecurity.com.    A 139.59.200.120
-dns2.thresholded.com.    A 139.59.200.120
-dns2.thresholdkey.com.    A 139.59.200.120
-dns2.thresholdrise.com.    A 139.59.200.120
-dns2.thresholdmode.com.    A 139.59.200.120
-dns2.thresholdsecret.com.    A 139.59.200.120
-dns2.thresholdsecrets.com.    A 139.59.200.120
-dns2.thresholdshare.com.    A 139.59.200.120
-dns2.dotcrimemanifesto.com.    A 139.59.200.120
-dns2.quantumofstupid.com.    A 139.59.200.120
-dns2.cyberishard.com.    A 139.59.200.120
-dns2.mathmesh.com.    A 139.59.200.120
-dns2.cryptomesh.org.    A 139.59.200.120
-dns2.mathmesh.net.    A 139.59.200.120
-dns2.prismproof.com.    A 139.59.200.120
-dns2.prismproof.org.    A 139.59.200.120
-dns2.bitkitten.org.    A 139.59.200.120
-dns2.dunningkrugerrand.com.    A 139.59.200.120
-dns2.letsauthenticate.com.    A 139.59.200.120
-dns2.letsauthenticate.org.    A 139.59.200.120
-dns2.phbooth.com.    A 139.59.200.120
-dns2.skurnick.com.    A 139.59.200.120
-dns2.fluxator.org.    A 139.59.200.120
-dns2.fussbook.com.    A 139.59.200.120
-dns2.internet64.net.    A 139.59.200.120
-dns2.internet64.org.    A 139.59.200.120
-dns2.nudeler.com.    A 139.59.200.120
-dns2.nudeller.com.    A 139.59.200.120
-dns2.sayanythingtrump.com.    A 139.59.200.120
-dns2.sayanythingtrump.org.    A 139.59.200.120
+homeserver.hallambaker.com.    A 96.237.102.35
+jellyfin.hallambaker.com.    A 96.237.102.35
 
 
-# Machine CloudDroplet 178.62.79.124
+# Machine DNS1 96.237.102.35
 
-dns1.mplace2.com.    A 178.62.79.124
-dns1.mplace2.social.    A 178.62.79.124
-dns1.mplace2.app.    A 178.62.79.124
-dns1.hallambaker.com.    A 178.62.79.124
-dns1.defaultdenysecurity.com.    A 178.62.79.124
-dns1.thresholded.com.    A 178.62.79.124
-dns1.thresholdkey.com.    A 178.62.79.124
-dns1.thresholdrise.com.    A 178.62.79.124
-dns1.thresholdmode.com.    A 178.62.79.124
-dns1.thresholdsecret.com.    A 178.62.79.124
-dns1.thresholdsecrets.com.    A 178.62.79.124
-dns1.thresholdshare.com.    A 178.62.79.124
-dns1.dotcrimemanifesto.com.    A 178.62.79.124
-dns1.quantumofstupid.com.    A 178.62.79.124
-dns1.cyberishard.com.    A 178.62.79.124
-dns1.mathmesh.com.    A 178.62.79.124
-dns1.cryptomesh.org.    A 178.62.79.124
-dns1.mathmesh.net.    A 178.62.79.124
-dns1.prismproof.com.    A 178.62.79.124
-dns1.prismproof.org.    A 178.62.79.124
-dns1.bitkitten.org.    A 178.62.79.124
-dns1.dunningkrugerrand.com.    A 178.62.79.124
-dns1.letsauthenticate.com.    A 178.62.79.124
-dns1.letsauthenticate.org.    A 178.62.79.124
-dns1.phbooth.com.    A 178.62.79.124
-dns1.skurnick.com.    A 178.62.79.124
-dns1.fluxator.org.    A 178.62.79.124
-dns1.fussbook.com.    A 178.62.79.124
-dns1.internet64.net.    A 178.62.79.124
-dns1.internet64.org.    A 178.62.79.124
-dns1.nudeler.com.    A 178.62.79.124
-dns1.nudeller.com.    A 178.62.79.124
-dns1.sayanythingtrump.com.    A 178.62.79.124
-dns1.sayanythingtrump.org.    A 178.62.79.124
+dns1.mplace2.com.    A 96.237.102.35
+dns1.mplace2.social.    A 96.237.102.35
+dns1.mplace2.app.    A 96.237.102.35
+dns1.example.com.    A 96.237.102.35
+dns1.hallambaker.com.    A 96.237.102.35
+dns1.defaultdenysecurity.com.    A 96.237.102.35
+dns1.thresholdsecret.com.    A 96.237.102.35
+dns1.thresholdsecrets.com.    A 96.237.102.35
+dns1.mathmesh.com.    A 96.237.102.35
+dns1.cryptomesh.org.    A 96.237.102.35
+dns1.mathmesh.net.    A 96.237.102.35
+dns1.bitkitten.org.    A 96.237.102.35
+dns1.dunningkrugerrand.com.    A 96.237.102.35
+dns1.letsauthenticate.com.    A 96.237.102.35
+dns1.letsauthenticate.org.    A 96.237.102.35
+dns1.skurnick.com.    A 96.237.102.35
+dns1.fussbook.com.    A 96.237.102.35
+
+
+# Machine DNS2 96.237.102.36
+
+dns2.mplace2.com.    A 96.237.102.36
+dns2.mplace2.social.    A 96.237.102.36
+dns2.mplace2.app.    A 96.237.102.36
+dns2.example.com.    A 96.237.102.36
+dns2.hallambaker.com.    A 96.237.102.36
+dns2.defaultdenysecurity.com.    A 96.237.102.36
+dns2.thresholdsecret.com.    A 96.237.102.36
+dns2.thresholdsecrets.com.    A 96.237.102.36
+dns2.mathmesh.com.    A 96.237.102.36
+dns2.cryptomesh.org.    A 96.237.102.36
+dns2.mathmesh.net.    A 96.237.102.36
+dns2.bitkitten.org.    A 96.237.102.36
+dns2.dunningkrugerrand.com.    A 96.237.102.36
+dns2.letsauthenticate.com.    A 96.237.102.36
+dns2.letsauthenticate.org.    A 96.237.102.36
+dns2.skurnick.com.    A 96.237.102.36
+dns2.fussbook.com.    A 96.237.102.36
+
+
+# Machine PROD1 96.237.102.35
+
+prod1.hallambaker.com.    A 96.237.102.35
+
+
+# Machine PROD2 96.237.102.36
+
+prod2.hallambaker.com.    A 96.237.102.36
+
+
+# Machine DEV1 96.237.102.37
+
+host1.example.com.    A 96.237.102.37
+example.com.    A 96.237.102.37
+www.example.com.    A 96.237.102.37
+http.example.com.    A 96.237.102.37
+https.example.com.    A 96.237.102.37
+dev1.hallambaker.com.    A 96.237.102.37
+
+
+# Machine DEV2 96.237.102.38
+
+host2.example.com.    A 96.237.102.38
+dev2.hallambaker.com.    A 96.237.102.38
 
 

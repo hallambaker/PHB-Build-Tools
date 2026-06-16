@@ -1,12 +1,17 @@
 ﻿// First DNS service listed is the default
 
-Machine Home				"178.62.79.124"
-Machine Develop				"108.7.201.148"
+Machine Gateway				"96.237.102.34"
+Machine Home				"96.237.102.35"
+Machine Proxy				"96.237.102.35" // Move to .38 when network is split.
 
-Machine Voodoo				"192.168.1.21"
-Machine CloudFloating		"139.59.200.120"
-Machine CloudDroplet		"178.62.79.124"
+Machine DNS1		"96.237.102.35"
+Machine DNS2		"96.237.102.36"
 
+Machine PROD1		"96.237.102.35"
+Machine PROD2		"96.237.102.36"
+
+Machine DEV1		"96.237.102.37"
+Machine DEV2		"96.237.102.38"
 
 DNS Default "hallam.gmail.com"
 	// Do NOT specify Serial, this is calculated according to RFC1912
@@ -14,15 +19,16 @@ DNS Default "hallam.gmail.com"
 	Retry 1800
 	Expire 3600000
 	TTL 600
-	CAA	"issue" "comodoca.com"
 	CAA "issue" "letsencrypt.org"
 	CAA "issuewild " ";"
 	CAA "iodef" "mailto:hostmaster@hallambaker.com"
-	Authoritative dns1 CloudDroplet
-	Authoritative dns2 CloudFloating
+	Authoritative dns1 DNS1
+	Authoritative dns2 DNS2
 	MX mx01.ionos.com 10
 	MX mx00.ionos.com 10
 	SPF "v=spf1 redirect=_spf.google.com"
+	Secondary "10.0.0.5"
+	Secondary "10.0.0.6"
 
 Site mplace2
 	Domain mplace2.com
@@ -31,9 +37,11 @@ Site mplace2
 		Handle mplace2.social "did=did:plc:h3naowafzc3b7sr4htrdkz3c"
 		Handle meta.mplace2.social "did=did:plc:pw45zujtlzlqsx7gzxxitvsu"
 	Web www.mplace2.com "mplace2/"
-		Host host1.mathmesh.com
+		Host host1.cryptomesh.org
+		Internal "10.0.0.15" 
 	Web www.mplace2.social "mplace2/"
-		Host host1.mathmesh.com
+		Host host1.cryptomesh.org
+		Internal "10.0.0.15" 
 
 Site mplace2app
 	Domain mplace2.app
@@ -46,45 +54,57 @@ Site mplace2app
 				Priority 1
 				Weight 100
 	Web www.mplace2.app "mplace2/"
-		Host host1.mplace2app.com
+		Host host1.cryptomesh.org
+
+Site example
+	Domain example.com
+		Address host1.example.com DEV1
+		Address host2.example.com DEV2
+	Web www.example.com "example/"
+		Host dev1.hallambaker.com
 
 
 // The domain we are using for our DNS hosts.
 Site hallambaker
 	Domain hallambaker.com
+		Address ui.hallambaker.com Gateway
+			Internal "10.0.0.1" 
+		Address minecraft.hallambaker.com Gateway
+			Internal "10.0.0.14" 
+		Address homeserver.hallambaker.com Proxy
+			Internal "10.0.0.61" 
+		Address jellyfin.hallambaker.com Proxy
+			Internal "10.0.0.10" 
+		Address prod1.hallambaker.com PROD1
+		Address prod2.hallambaker.com PROD2
+		Address dev1.hallambaker.com DEV1
+		Address dev2.hallambaker.com DEV2
 		Wildcard
 		Email
 			MX mx01.ionos.com 10
 			MX mx00.ionos.com 10
-			// SPF "v=spf1 ip4:178.62.79.124 ip4:139.59.200.120 ?all"
-			// SPF "v=spf1 include:_spf-us.ionos.com ~all"
 			SPF "v=spf1 redirect=_spf.google.com"
 		Handle phill.hallambaker.com "did=did:plc:k647x4n6h3jm347u3t5cm6ki"
 
 	Domain defaultdenysecurity.com
-	Domain thresholded.com
-	Domain thresholdkey.com
-	Domain thresholdrise.com
-	Domain thresholdmode.com
 	Domain thresholdsecret.com
 	Domain thresholdsecrets.com
-	Domain thresholdshare.com
 
-	Domain dotcrimemanifesto.com
-	Domain quantumofstupid.com
-	Domain cyberishard.com
+	//Web giga.hallambaker.com "hallambaker/"
+	//	Host host1.cryptomesh.org
 
 	Web www.hallambaker.com "hallambaker/"
-		Host host1.mathmesh.com
+		Host host1.cryptomesh.org
 	Web phill.hallambaker.com "hallambaker/"
-		Host host1.mathmesh.com
+		Host host1.cryptomesh.org
+
 
 // At present, the domain mathmesh.com is being serviced by the 
 // dynamic DNS provider. Will switch to using own dynamic in due course.
 Site mathmesh
 	Domain mathmesh.com
 		Wildcard
-		Address host1.mathmesh.com Home
+		Address host1.mathmesh.org Home
 		
 	Domain cryptomesh.org
 		Wildcard
@@ -114,42 +134,29 @@ Site mathmesh
 				Priority 1
 				Weight 100
 	Domain mathmesh.net
-	Domain prismproof.com
-	Domain prismproof.org
 	Web www.mathmesh.com "mathmesh/"
-		Host host1.mathmesh.com
+		Host host1.cryptomesh.org
 
 Site bitkitten
 	Domain bitkitten.org
 	Domain dunningkrugerrand.com
 	Web www.bitkitten.org "bitkitten"
-		Host host1.mathmesh.com
+		Host host1.cryptomesh.org
 
 Site letsauthenticate
 	Domain letsauthenticate.com
 	Domain letsauthenticate.org
 	Web www.letsauthenticate.com "letsauthenticate/"
-		Host host1.mathmesh.com
+		Host host1.cryptomesh.org
 
-Site phbooth
-	Domain phbooth.com
-	Web www.phbooth.com "phbooth/"
-		Host host1.mathmesh.com
+
 
 Site skurnick
 	Domain skurnick.com
 	Web www.skurnick.com "skurnick/"
-		Host host1.mathmesh.com
+		Host host1.cryptomesh.org
 
 Site parked
-	Domain fluxator.org
 	Domain fussbook.com
-	Domain internet64.net
-	Domain internet64.org
-	Domain nudeler.com
-	Domain nudeller.com
-	Domain sayanythingtrump.com
-	Domain sayanythingtrump.org
-	Web fluxator.org "parked/"
-		Host host1.mathmesh.com
+
 

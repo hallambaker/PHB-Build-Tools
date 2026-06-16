@@ -55,7 +55,7 @@ public partial class PageWriter : HtmlWriter {
             Open("div", "class", FramePage.Tag);
             }
 
-        Text(title, "div", "class", "Title");
+        Text(title, "div", "class", "Heading");
 
         RenderFields(FramePage);
         Close();
@@ -97,7 +97,17 @@ public partial class PageWriter : HtmlWriter {
         foreach (var section in presentation.Sections) {
 
             Open("section", "class", section.Id);
+
+            if (section.GetAnchor != null) {
+                var anchor = section.GetAnchor(backer);
+                Open("a", "class", "sectionLink", "href", anchor);
+                }
+
             Render(backer, section.Fields);
+            if (section.GetAnchor != null) {
+                Close();
+                }
+
             Close();
             }
 
@@ -111,10 +121,10 @@ public partial class PageWriter : HtmlWriter {
     /// <param name="field">The field to render</param>
     public void RenderField(
             IBacked backer,
-            IFrameField field) {
 
+        IFrameField field) {
 
-        switch (field) {
+            switch (field) {
             case FrameButton item: {
                 Render(item, backer);
                 break;
@@ -148,6 +158,10 @@ public partial class PageWriter : HtmlWriter {
                 break;
                 }
             case FrameDateTime item: {
+                Render(backer, item);
+                break;
+                }
+            case FrameRichText item: {
                 Render(backer, item);
                 break;
                 }
@@ -198,6 +212,7 @@ public partial class PageWriter : HtmlWriter {
 
         // Construct the localized menu from the frame.
         var menu = fieldRefMenu.Menu.Create(FramePage);
+        menu.FrameSet = backer.FrameSet;
         var start = OpenClass("div", fieldRefMenu.Tag);
 
         foreach (var field in menu.Fields) {
@@ -221,39 +236,64 @@ public partial class PageWriter : HtmlWriter {
 
         var disabled = false;
 
-        var icon = button.Tag;
-        if (button.GetActive is not null) {
+        string icon = "";
+
+        if (button.GetCustomized is not null) {
+            if (button.GetActive is not null) {
+                var active = button.GetActive(backer) ?? ButtonVisibility.Available;
+                if (active == ButtonVisibility.None) {
+                    return;
+                    }
+                icon = button.GetCustomized(backer, active);
+                }
+            else {
+                icon = button.GetCustomized(backer, ButtonVisibility.Available);
+                }
+            }
+
+        else if (button.GetActive is not null) {
+            
             var active = button.GetActive(backer);
             switch (active) {
                 case ButtonVisibility.None: {
                     return;
                     }
                 case ButtonVisibility.Active: {
-                    icon += "Active";
+                    icon = FrameSet.IconPath(button.Tag +"Active");
                     disabled = true;
                     break;
                     }
                 case ButtonVisibility.Disabled: {
-                    icon += "Disabled";
+                    icon = FrameSet.IconPath(button.Tag +"Disabled") ;
                     disabled = true;
+                    break;
+                    }
+                default: {
+                    icon = FrameSet.IconPath(button.Tag );
                     break;
                     }
                 }
             }
+        else {
+            icon = FrameSet.IconPath(button.Tag);
+            }
+
 
         var buttonType = disabled ? "ButtonDummy " : "Button ";
         var start = Open("div", "class", buttonType + button.Tag);
 
         if (!disabled) {
-
-
-            Open("a", "class", "ButtonAnchor", button.ActionType,  button.ActionValue, "title", button.Description);
+            var anchor = button.ActionValue;
+            if (button.GetAnchor != null) {
+                anchor = button.ActionValue + button.GetAnchor(backer);
+                }
+            Open("a", "class", "ButtonAnchor", button.ActionType, anchor, "title", button.Description);
             }
         else {
             Open("div", "class", "ButtonDummyAnchor");
             }
 
-        ElementClass("img", "ButtonIcon", "src", FrameSet.IconPath(icon), "alt", button.Label);
+        ElementClass("img", "ButtonIcon", "src", icon, "alt", button.Label);
         TextClass(button.Label, "ButtonText", "div");
 
         if (button.GetText is not null) {
@@ -464,6 +504,19 @@ public partial class PageWriter : HtmlWriter {
             Close();
             }
         }
+
+    public void Render(
+            IBacked backer,
+            FrameRichText item) {
+        var value = item.Get(backer);
+        if (value is not null) {
+            OpenClass("div", item.Tag);
+            TextVerbatim(value);
+            Close();
+            }
+        }
+
+
     public void Render(
                 IBacked backer,
                 FrameText item) {
@@ -491,8 +544,8 @@ public partial class PageWriter : HtmlWriter {
                 FrameAvatar item) {
         var value = item.Get(backer);
         if (value is not null) {
-            var file = SitebuilderConstants.Repository + value;
-            ElementClass("img", item.Tag, "src", file, "alt", "");
+            //var file = SitebuilderConstants.Repository + value;
+            ElementClass("img", item.Tag, "src", value, "alt", "");
             }
         }
     public void Render(

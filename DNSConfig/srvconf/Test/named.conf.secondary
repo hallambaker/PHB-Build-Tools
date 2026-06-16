@@ -1,88 +1,105 @@
-# PATH=/etc/bind/named.conf.local
+# PATH=/etc/bind/named.conf.Secondary
+# Configuration to be used on a secondary server.
 
 zone "mplace2.com" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.mplace2.com";
+    primaries { 10.0.0.4; };
 };
 
 zone "mplace2.social" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.mplace2.social";
+    primaries { 10.0.0.4; };
 };
 
 zone "mplace2.app" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.mplace2.app";
+    primaries { 10.0.0.4; };
 };
 
 zone "example.com" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.example.com";
+    primaries { 10.0.0.4; };
 };
 
 zone "hallambaker.com" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.hallambaker.com";
+    primaries { 10.0.0.4; };
 };
 
 zone "defaultdenysecurity.com" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.defaultdenysecurity.com";
+    primaries { 10.0.0.4; };
 };
 
 zone "thresholdsecret.com" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.thresholdsecret.com";
+    primaries { 10.0.0.4; };
 };
 
 zone "thresholdsecrets.com" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.thresholdsecrets.com";
+    primaries { 10.0.0.4; };
 };
 
 zone "mathmesh.com" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.mathmesh.com";
+    primaries { 10.0.0.4; };
 };
 
 zone "cryptomesh.org" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.cryptomesh.org";
+    primaries { 10.0.0.4; };
 };
 
 zone "mathmesh.net" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.mathmesh.net";
+    primaries { 10.0.0.4; };
 };
 
 zone "bitkitten.org" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.bitkitten.org";
+    primaries { 10.0.0.4; };
 };
 
 zone "dunningkrugerrand.com" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.dunningkrugerrand.com";
+    primaries { 10.0.0.4; };
 };
 
 zone "letsauthenticate.com" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.letsauthenticate.com";
+    primaries { 10.0.0.4; };
 };
 
 zone "letsauthenticate.org" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.letsauthenticate.org";
+    primaries { 10.0.0.4; };
 };
 
 zone "skurnick.com" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.skurnick.com";
+    primaries { 10.0.0.4; };
 };
 
 zone "fussbook.com" {
-    type primary;
+    type secondary;
     file "/etc/bind/zones/db.fussbook.com";
+    primaries { 10.0.0.4; };
 };
-
 

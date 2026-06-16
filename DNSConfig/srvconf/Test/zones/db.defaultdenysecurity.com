@@ -6,7 +6,7 @@
 ;
 $TTL 600
 defaultdenysecurity.com.      IN      SOA     dns1.defaultdenysecurity.com. hallam.gmail.com. (
-                        2025013001       ; serial, todays date + todays serial 
+                        2026061001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -14,12 +14,11 @@ defaultdenysecurity.com.      IN      SOA     dns1.defaultdenysecurity.com. hall
 
 ; Additional name servers
 defaultdenysecurity.com.     IN      NS      dns1.defaultdenysecurity.com.
-dns1.defaultdenysecurity.com.    A 178.62.79.124 
+dns1.defaultdenysecurity.com.    A 96.237.102.35 
 defaultdenysecurity.com.     IN      NS      dns2.defaultdenysecurity.com.
-dns2.defaultdenysecurity.com.    A 139.59.200.120 
+dns2.defaultdenysecurity.com.    A 96.237.102.36 
 
 
-defaultdenysecurity.com.    IN     CAA 0 issue "comodoca.com"
 defaultdenysecurity.com.    IN     CAA 0 issue "letsencrypt.org"
 defaultdenysecurity.com.    IN     CAA 0 issuewild  ";"
 defaultdenysecurity.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
@@ -33,13 +32,13 @@ defaultdenysecurity.com. TXT "v=spf1 redirect=_spf.google.com"
 
 
 
-; Host host1.mathmesh.com 178.62.79.124 
-defaultdenysecurity.com.    A 178.62.79.124 
-www.defaultdenysecurity.com.    A 178.62.79.124 
-http.defaultdenysecurity.com.    A 178.62.79.124
-https.defaultdenysecurity.com.    A 178.62.79.124 
-_http._tcp.defaultdenysecurity.com.  IN    SRV 1 1 80 host1.mathmesh.com.
-_https._tcp.defaultdenysecurity.com.   IN   SRV 1 1 443 host1.mathmesh.com.
+; Host host1.cryptomesh.org 96.237.102.35 
+defaultdenysecurity.com.    A 96.237.102.35 
+www.defaultdenysecurity.com.    A 96.237.102.35 
+http.defaultdenysecurity.com.    A 96.237.102.35
+https.defaultdenysecurity.com.    A 96.237.102.35 
+_http._tcp.defaultdenysecurity.com.  IN    SRV 1 1 80 host1.cryptomesh.org.
+_https._tcp.defaultdenysecurity.com.   IN   SRV 1 1 443 host1.cryptomesh.org.
 
 
 ; handles

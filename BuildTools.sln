@@ -181,6 +181,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Settings", "Settings", "{37
 		Settings\CommonSettingsPlatform.xml = Settings\CommonSettingsPlatform.xml
 		Settings\CommonSettingsTest.xml = Settings\CommonSettingsTest.xml
 		Settings\CommonSettingsWindows.xml = Settings\CommonSettingsWindows.xml
+		Settings\MasterSettings.xml = Settings\MasterSettings.xml
 		Settings\Nuget.xml = Settings\Nuget.xml
 		Settings\Version.xml = Settings\Version.xml
 	EndProjectSection

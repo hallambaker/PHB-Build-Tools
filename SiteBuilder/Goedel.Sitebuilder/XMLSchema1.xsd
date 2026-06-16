@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="XMLSchema1"
+    targetNamespace="http://tempuri.org/XMLSchema1.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/XMLSchema1.xsd"
+    xmlns:mstns="http://tempuri.org/XMLSchema1.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+	<xs:element name="h1"></xs:element>
+	<xs:element name="h2"></xs:element>
+	<xs:element name="h3"></xs:element>
+	<xs:element name="h4"></xs:element>
+
+	<xs:element name="p"></xs:element>
+
+
+	<xs:element name="i"></xs:element>
+	<xs:element name="b"></xs:element>
+	<xs:element name="sup"></xs:element>
+	<xs:element name="sub"></xs:element>
+
+	
+</xs:schema>

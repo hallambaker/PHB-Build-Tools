@@ -6,7 +6,7 @@
 ;
 $TTL 600
 skurnick.com.      IN      SOA     dns1.skurnick.com. hallam.gmail.com. (
-                        2025013001       ; serial, todays date + todays serial 
+                        2026061001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -14,12 +14,11 @@ skurnick.com.      IN      SOA     dns1.skurnick.com. hallam.gmail.com. (
 
 ; Additional name servers
 skurnick.com.     IN      NS      dns1.skurnick.com.
-dns1.skurnick.com.    A 178.62.79.124 
+dns1.skurnick.com.    A 96.237.102.35 
 skurnick.com.     IN      NS      dns2.skurnick.com.
-dns2.skurnick.com.    A 139.59.200.120 
+dns2.skurnick.com.    A 96.237.102.36 
 
 
-skurnick.com.    IN     CAA 0 issue "comodoca.com"
 skurnick.com.    IN     CAA 0 issue "letsencrypt.org"
 skurnick.com.    IN     CAA 0 issuewild  ";"
 skurnick.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
@@ -33,13 +32,13 @@ skurnick.com. TXT "v=spf1 redirect=_spf.google.com"
 
 
 
-; Host host1.mathmesh.com 178.62.79.124 
-skurnick.com.    A 178.62.79.124 
-www.skurnick.com.    A 178.62.79.124 
-http.skurnick.com.    A 178.62.79.124
-https.skurnick.com.    A 178.62.79.124 
-_http._tcp.skurnick.com.  IN    SRV 1 1 80 host1.mathmesh.com.
-_https._tcp.skurnick.com.   IN   SRV 1 1 443 host1.mathmesh.com.
+; Host host1.cryptomesh.org 96.237.102.35 
+skurnick.com.    A 96.237.102.35 
+www.skurnick.com.    A 96.237.102.35 
+http.skurnick.com.    A 96.237.102.35
+https.skurnick.com.    A 96.237.102.35 
+_http._tcp.skurnick.com.  IN    SRV 1 1 80 host1.cryptomesh.org.
+_https._tcp.skurnick.com.   IN   SRV 1 1 443 host1.cryptomesh.org.
 
 
 ; handles

@@ -6,7 +6,7 @@
 ;
 $TTL 600
 thresholdsecret.com.      IN      SOA     dns1.thresholdsecret.com. hallam.gmail.com. (
-                        2025013001       ; serial, todays date + todays serial 
+                        2026061001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -14,12 +14,11 @@ thresholdsecret.com.      IN      SOA     dns1.thresholdsecret.com. hallam.gmail
 
 ; Additional name servers
 thresholdsecret.com.     IN      NS      dns1.thresholdsecret.com.
-dns1.thresholdsecret.com.    A 178.62.79.124 
+dns1.thresholdsecret.com.    A 96.237.102.35 
 thresholdsecret.com.     IN      NS      dns2.thresholdsecret.com.
-dns2.thresholdsecret.com.    A 139.59.200.120 
+dns2.thresholdsecret.com.    A 96.237.102.36 
 
 
-thresholdsecret.com.    IN     CAA 0 issue "comodoca.com"
 thresholdsecret.com.    IN     CAA 0 issue "letsencrypt.org"
 thresholdsecret.com.    IN     CAA 0 issuewild  ";"
 thresholdsecret.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
@@ -33,13 +32,13 @@ thresholdsecret.com. TXT "v=spf1 redirect=_spf.google.com"
 
 
 
-; Host host1.mathmesh.com 178.62.79.124 
-thresholdsecret.com.    A 178.62.79.124 
-www.thresholdsecret.com.    A 178.62.79.124 
-http.thresholdsecret.com.    A 178.62.79.124
-https.thresholdsecret.com.    A 178.62.79.124 
-_http._tcp.thresholdsecret.com.  IN    SRV 1 1 80 host1.mathmesh.com.
-_https._tcp.thresholdsecret.com.   IN   SRV 1 1 443 host1.mathmesh.com.
+; Host host1.cryptomesh.org 96.237.102.35 
+thresholdsecret.com.    A 96.237.102.35 
+www.thresholdsecret.com.    A 96.237.102.35 
+http.thresholdsecret.com.    A 96.237.102.35
+https.thresholdsecret.com.    A 96.237.102.35 
+_http._tcp.thresholdsecret.com.  IN    SRV 1 1 80 host1.cryptomesh.org.
+_https._tcp.thresholdsecret.com.   IN   SRV 1 1 443 host1.cryptomesh.org.
 
 
 ; handles

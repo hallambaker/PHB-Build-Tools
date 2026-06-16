@@ -19,12 +19,26 @@ public class FrameSet {
 
     ///<summary>Directory to store persisted data to.</summary>
     public string Directory { get; init; }
+    ///<summary>Directory to store per member data to.</summary>
+    public string Members { get; init; }
+    public string Logs { get; init; }
 
     ///<summary>Directory where the resource files are stored.</summary>
     public string ResourceFiles { get; init; }
     public string RepositoryFiles { get; init; }
 
+
+    public List<string> Administrators { get; init; }
+
+    public string DefaultSite { get; init; }
+
+
+
     public IPersistSite PersistPlace { get; set; }
+
+    public string RandomSeed { get; init; } = "";
+
+    public string PrivateKeys { get; init; }
 
 
 
@@ -39,6 +53,8 @@ public class FrameSet {
 
 
     public Dictionary<string, FramePage> PageDirectory { get; } = [];
+
+
 
 
 
@@ -81,7 +97,11 @@ public class FrameSet {
         return default;
         }
 
-    public virtual string IconPath(string id) => $"Resources/Icons/{id}.svg";
+    public virtual string IconPath(string id) => $"/Resources/Icons/{id}.svg";
+
+
+    public virtual string MemberPath(string id) => $"/Resources/Members/{id}.svg";
+
 
     }
 
@@ -117,20 +137,6 @@ public class FrameBacker {
     public virtual Protocol.Property[] _Properties => throw new NotImplementedException();
 
     public virtual Binding _Binding => throw new NotImplementedException();
-
-    }
-
-
-public interface IPersistSite {
-
-    ///<summary>State management interface to keep us logged in.</summary>
-    ServerCookieManager ServerCookieManager { get; set; }
-
-    ///<summary>The Oauth Client</summary>
-    OauthClient OauthClient { get; set; }
-
-    ///<summary>The frame defintions being serviced.</summary>
-    FrameSet FrameSet { get; set; }
 
     }
 
@@ -221,6 +227,12 @@ public record CallbackResult(
             string? Redirect,
             List<Cookie> Cookies = null
             ) {
+
+    public static CallbackResult CreatedRedirect(string path) => new CallbackResult(
+        HttpStatusCode.Created, null, path);
+
+
+
     }
 
 
@@ -239,13 +251,13 @@ public class FrameClass : FrameBacker, IBacked {
 
     public string? ParentId { get; init; } = null;
 
-    public virtual string? GetAvatar => DefaultAvatar;
+    //public virtual string? GetAvatar => DefaultAvatar;
 
 
     public virtual Task<CallbackResult> Callback(
                 IPageContext persistPlace) {
 
-        return Task.FromResult (new CallbackResult(HttpStatusCode.OK, null, null));
+        return Task.FromResult(new CallbackResult(HttpStatusCode.OK, null, null));
         }
 
     //public virtual HttpStatusCode Commit(
@@ -257,7 +269,10 @@ public class FrameClass : FrameBacker, IBacked {
 
     public FrameClass(string id) : base(id) {
         }
+
+
     }
+
 
 
 
@@ -299,10 +314,19 @@ public abstract record FrameField : IFrameField {
         }
     }
 
+/// <summary>Button visibility states.</summary>
 public enum ButtonVisibility {
+    /// <summary>The button is visible and can be selected.</summary>
     Available,
+    /// <summary>The button is visible and is active but cannot be selected 
+    /// because it is already active.</summary>
     Active,
+    /// <summary>The button is visible in a chosen state and can be selected 
+    /// to unchoose it.</summary>
+    Checked,
+    /// <summary>The button is visible in a chosen state and can be unchosen.</summary>
     Disabled,
+    /// <summary>The button is not visible</summary>
     None
     }
 
@@ -339,6 +363,10 @@ public record FrameButton(
     public Func<IBinding, ButtonVisibility?> GetActive { get; init; }
     public Func<IBinding, int?> GetInteger { get; init; }
     public Func<IBinding, string?> GetText { get; init; }
+
+    public Func<IBinding, string?> GetAnchor { get; init; }
+
+    public Func<IBinding, ButtonVisibility, string?> GetCustomized { get; init; }
     }
 
 public record FrameButtonParsed(
@@ -348,6 +376,8 @@ public record FrameButtonParsed(
                 string? Active,
                 string? Integer,
                 string? Text,
+                string? Anchor,
+                string? Customized,
                 ButtonAction ButtonAction) : FrameButton(Id, Label, Action, ButtonAction) {
 
 
@@ -628,6 +658,12 @@ public record FramePresentation(string Id) : FrameField(Id) {
 
 
 public record FrameSection(string Id) {
+
+    public string AnchorField { get; init; }
+
+    public virtual Func<IBacked, string?>? GetAnchor { get; init; } = null;
+
+
     public virtual List<IFrameField> Fields { get; init; }
 
     }

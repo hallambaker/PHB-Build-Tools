@@ -48,6 +48,14 @@ namespace Goedel.Shell.DNSConfig {
                 Script.GenerateLocal(Parse);
                 }
 
+            using (var OutputWriter = "named.conf.secondary".OpenTextWriterNew()) {
+                var Script = new Goedel.Tool.DNSConfig.Generate() {
+                    _Output = OutputWriter
+                    };
+                Script.GenerateLocalSecondary(Parse);
+                }
+
+
             foreach (var Domain in Parse.Domains) {
                 var FileName = "zones/db." + Domain.Id.Label;
 

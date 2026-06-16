@@ -167,6 +167,9 @@
         <member name="P:Goedel.Sitebuilder.FrameSet.Directory">
             <summary>Directory to store persisted data to.</summary>
         </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.Members">
+            <summary>Directory to store per member data to.</summary>
+        </member>
         <member name="P:Goedel.Sitebuilder.FrameSet.ResourceFiles">
             <summary>Directory where the resource files are stored.</summary>
         </member>
@@ -182,15 +185,6 @@
         </member>
         <member name="P:Goedel.Sitebuilder.IBacked.Fields">
             <summary>The fields</summary>
-        </member>
-        <member name="P:Goedel.Sitebuilder.IPersistSite.ServerCookieManager">
-            <summary>State management interface to keep us logged in.</summary>
-        </member>
-        <member name="P:Goedel.Sitebuilder.IPersistSite.OauthClient">
-            <summary>The Oauth Client</summary>
-        </member>
-        <member name="P:Goedel.Sitebuilder.IPersistSite.FrameSet">
-            <summary>The frame defintions being serviced.</summary>
         </member>
         <member name="M:Goedel.Sitebuilder.FramePage.GetPage(Goedel.Sitebuilder.IPersistSite,Goedel.Sitebuilder.IPageContext)">
             <summary>
@@ -235,6 +229,26 @@
             Constructor.
             </summary>
             <param name="id">The frame field identifier.</param>
+        </member>
+        <member name="T:Goedel.Sitebuilder.ButtonVisibility">
+            <summary>Button visibility states.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.ButtonVisibility.Available">
+            <summary>The button is visible and can be selected.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.ButtonVisibility.Active">
+            <summary>The button is visible and is active but cannot be selected 
+            because it is already active.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.ButtonVisibility.Checked">
+            <summary>The button is visible in a chosen state and can be selected 
+            to unchoose it.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.ButtonVisibility.Disabled">
+            <summary>The button is visible in a chosen state and can be unchosen.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.ButtonVisibility.None">
+            <summary>The button is not visible</summary>
         </member>
         <member name="P:Goedel.Sitebuilder.FrameRefClass.Backing">
             <inheritdoc/>
@@ -287,6 +301,12 @@
             </summary>
             <param name="text">The textg to write.</param>
         </member>
+        <member name="M:Goedel.Sitebuilder.HtmlWriter.TextVerbatim(System.String)">
+            <summary>
+            Write the specified textg to the stream as an escaped HTML string.
+            </summary>
+            <param name="text">The textg to write.</param>
+        </member>
         <member name="T:Goedel.Sitebuilder.IFrameField">
             <summary>
             Frame field interface
@@ -312,6 +332,15 @@
         </member>
         <member name="P:Goedel.Sitebuilder.IFrameField.Description">
             <summary>Long description for use in hover text, etc.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IPersistSite.ServerCookieManager">
+            <summary>State management interface to keep us logged in.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IPersistSite.OauthClient">
+            <summary>The Oauth Client</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IPersistSite.FrameSet">
+            <summary>The frame defintions being serviced.</summary>
         </member>
         <member name="T:Goedel.Sitebuilder.NamespaceDoc">
             <summary>
@@ -393,6 +422,15 @@
             <param name="backer">The data to render.</param>
             <param name="field">The field to render</param>
         </member>
+        <member name="T:Goedel.Sitebuilder.RichetextResult">
+            <summary>Result of performing validation.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.ServerCookieManager">
+            <summary>
+            Cookie manager, encrypts and authenticates strings of data under a shared secret 
+            that can be rotated as needed.
+            </summary>
+        </member>
         <member name="M:Goedel.Sitebuilder.ServerCookieManager.GetCookie(System.String,System.Int32)">
             <summary>
             Return a cookie encrypted under the current server secret containing the encypted 
@@ -410,6 +448,9 @@
         <member name="F:Goedel.Sitebuilder.SitebuilderConstants.Repository">
             <summary>
             </summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.SiteServiceConfiguration.ConfigurationEntry">
+            <summary>The configuration entry.</summary> 
         </member>
     </members>
 </doc>

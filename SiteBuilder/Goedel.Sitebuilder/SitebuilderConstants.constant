@@ -3,4 +3,4 @@
 
 
 File PagePrefixes
-	String Repository "Repo/"
+	String Repository "/Repo/"

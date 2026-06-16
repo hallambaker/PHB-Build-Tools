@@ -48,6 +48,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		foreach  (var item in Constant.Enums) {
 			_Output.Write ("///<summary>{1}</summary>\n{0}", _Indent, item.Title);
+			if (   item.Flag.Count > 0 ) {
+				_Output.Write ("[Flags]\n{0}", _Indent);
+				}
 			_Output.Write ("public enum {1} {{\n{0}", _Indent, item.Id.Label);
 			_Output.Write ("    ///<summary>Undefined type</summary>\n{0}", _Indent);
 			_Output.Write ("    Unknown = -1", _Indent);
@@ -56,6 +59,13 @@ public partial class Generate : global::Goedel.Registry.Script {
 					_Output.Write (",\n{0}", _Indent);
 					_Output.Write ("    ///<summary>{1}</summary>\n{0}", _Indent, entry.Title);
 					_Output.Write ("    {1} = {2}", _Indent, entry.Id.Label, entry.Value);
+					}
+				}
+			foreach  (var entry in item.Flag) {
+				if (  (entry.Reserve.End == 0) ) {
+					_Output.Write (",\n{0}", _Indent);
+					_Output.Write ("    ///<summary>{1}</summary>\n{0}", _Indent, entry.Title);
+					_Output.Write ("    {1} = 0x{2:x4}", _Indent, entry.Id.Label, 1<<(entry.Value-1));
 					}
 				}
 			foreach  (var entry in item.UDF) {
@@ -68,6 +78,7 @@ public partial class Generate : global::Goedel.Registry.Script {
 				_Output.Write ("    ///<summary>{1}</summary>\n{0}", _Indent, entry.Title);
 				_Output.Write ("    {1}", _Indent, entry.Id.Label);
 				}
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    }}\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			}
@@ -107,6 +118,10 @@ public partial class Generate : global::Goedel.Registry.Script {
 						_Output.Write ("    ///<summary>Jose enumeration tag for {1}.{2}</summary>\n{0}", _Indent, item.Id.Label, code.Id.Label);
 						_Output.Write ("    public const string  {1}{2}Tag = \"{3}\";\n{0}", _Indent, item.Id.Label, code.Id.Label, code.Id.Label);
 						}
+					foreach  (var code in item.Flag) {
+						_Output.Write ("    ///<summary>Jose enumeration tag for {1}.{2}</summary>\n{0}", _Indent, item.Id.Label, code.Id.Label);
+						_Output.Write ("    public const string  {1}{2}Tag = \"{3}\";\n{0}", _Indent, item.Id.Label, code.Id.Label, code.Id.Label);
+						}
 					foreach  (var code in item.Integer) {
 						_Output.Write ("    ///<summary>Jose enumeration tag for {1}.{2}</summary>\n{0}", _Indent, item.Id.Label, code.Id.Label);
 						_Output.Write ("    public const string  {1}{2}Tag = \"{3}\";\n{0}", _Indent, item.Id.Label, code.Id.Label, code.Id.Label);
@@ -125,6 +140,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 					foreach  (var code in item.Code) {
 						_Output.Write ("            {1}{2}Tag => {3}.{4},\n{0}", _Indent, item.Id.Label, code.Id.Label, item.Id.Label, code.Id.Label);
 						}
+					foreach  (var code in item.Flag) {
+						_Output.Write ("            {1}{2}Tag => {3}.{4},\n{0}", _Indent, item.Id.Label, code.Id.Label, item.Id.Label, code.Id.Label);
+						}
 					_Output.Write ("            _ => {1}.Unknown\n{0}", _Indent, item.Id.Label);
 					_Output.Write ("            }};\n{0}", _Indent);
 					_Output.Write ("\n{0}", _Indent);
@@ -137,6 +155,9 @@ public partial class Generate : global::Goedel.Registry.Script {
 					_Output.Write ("    public static string ToLabel (this {1} data) =>\n{0}", _Indent, item.Id.Label);
 					_Output.Write ("        data switch {{\n{0}", _Indent);
 					foreach  (var code in item.Code) {
+						_Output.Write ("            {1}.{2} => {3}{4}Tag,\n{0}", _Indent, item.Id.Label, code.Id.Label, item.Id.Label, code.Id.Label);
+						}
+					foreach  (var code in item.Flag) {
 						_Output.Write ("            {1}.{2} => {3}{4}Tag,\n{0}", _Indent, item.Id.Label, code.Id.Label, item.Id.Label, code.Id.Label);
 						}
 					_Output.Write ("            _ => null\n{0}", _Indent);

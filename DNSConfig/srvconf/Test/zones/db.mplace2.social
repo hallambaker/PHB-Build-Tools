@@ -6,7 +6,7 @@
 ;
 $TTL 600
 mplace2.social.      IN      SOA     dns1.mplace2.social. hallam.gmail.com. (
-                        2025013001       ; serial, todays date + todays serial 
+                        2026061001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -14,12 +14,11 @@ mplace2.social.      IN      SOA     dns1.mplace2.social. hallam.gmail.com. (
 
 ; Additional name servers
 mplace2.social.     IN      NS      dns1.mplace2.social.
-dns1.mplace2.social.    A 178.62.79.124 
+dns1.mplace2.social.    A 96.237.102.35 
 mplace2.social.     IN      NS      dns2.mplace2.social.
-dns2.mplace2.social.    A 139.59.200.120 
+dns2.mplace2.social.    A 96.237.102.36 
 
 
-mplace2.social.    IN     CAA 0 issue "comodoca.com"
 mplace2.social.    IN     CAA 0 issue "letsencrypt.org"
 mplace2.social.    IN     CAA 0 issuewild  ";"
 mplace2.social.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
@@ -33,18 +32,18 @@ mplace2.social. TXT "v=spf1 redirect=_spf.google.com"
 
 
 
-; Host host1.mathmesh.com 178.62.79.124 
-mplace2.social.    A 178.62.79.124 
+; Host host1.cryptomesh.org 96.237.102.35 
+mplace2.social.    A 96.237.102.35 
 ; is wildcard
-*.mplace2.social.    A 178.62.79.124 
-www.mplace2.social.    A 178.62.79.124 
-http.mplace2.social.    A 178.62.79.124
-https.mplace2.social.    A 178.62.79.124 
-_http._tcp.mplace2.social.  IN    SRV 1 1 80 host1.mathmesh.com.
-_https._tcp.mplace2.social.   IN   SRV 1 1 443 host1.mathmesh.com.
+*.mplace2.social.    A 96.237.102.35 
+www.mplace2.social.    A 96.237.102.35 
+http.mplace2.social.    A 96.237.102.35
+https.mplace2.social.    A 96.237.102.35 
+_http._tcp.mplace2.social.  IN    SRV 1 1 80 host1.cryptomesh.org.
+_https._tcp.mplace2.social.   IN   SRV 1 1 443 host1.cryptomesh.org.
 
 
 ; handles
 _atproto.mplace2.social. IN TXT "did=did:plc:h3naowafzc3b7sr4htrdkz3c"
 _atproto.meta.mplace2.social. IN TXT "did=did:plc:pw45zujtlzlqsx7gzxxitvsu"
-meta.mplace2.social.    A 178.62.79.124 
+meta.mplace2.social.    A 96.237.102.35 

@@ -22,6 +22,12 @@
             </summary>
             <param name="DNSConfig"></param>
         </member>
+        <member name="M:Goedel.Tool.DNSConfig.Generate.GenerateLocalSecondary(Goedel.Tool.DNSConfig.DNSConfig)">
+            <summary>	
+            GenerateLocalSecondary
+            </summary>
+            <param name="DNSConfig"></param>
+        </member>
         <member name="M:Goedel.Tool.DNSConfig.Generate.GenerateDomain(Goedel.Tool.DNSConfig.Domain)">
             <summary>	
             GenerateDomain

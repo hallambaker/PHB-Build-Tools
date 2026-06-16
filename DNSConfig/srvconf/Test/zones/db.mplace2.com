@@ -6,7 +6,7 @@
 ;
 $TTL 600
 mplace2.com.      IN      SOA     dns1.mplace2.com. hallam.gmail.com. (
-                        2025013001       ; serial, todays date + todays serial 
+                        2026061001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -14,12 +14,11 @@ mplace2.com.      IN      SOA     dns1.mplace2.com. hallam.gmail.com. (
 
 ; Additional name servers
 mplace2.com.     IN      NS      dns1.mplace2.com.
-dns1.mplace2.com.    A 178.62.79.124 
+dns1.mplace2.com.    A 96.237.102.35 
 mplace2.com.     IN      NS      dns2.mplace2.com.
-dns2.mplace2.com.    A 139.59.200.120 
+dns2.mplace2.com.    A 96.237.102.36 
 
 
-mplace2.com.    IN     CAA 0 issue "comodoca.com"
 mplace2.com.    IN     CAA 0 issue "letsencrypt.org"
 mplace2.com.    IN     CAA 0 issuewild  ";"
 mplace2.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
@@ -33,13 +32,13 @@ mplace2.com. TXT "v=spf1 redirect=_spf.google.com"
 
 
 
-; Host host1.mathmesh.com 178.62.79.124 
-mplace2.com.    A 178.62.79.124 
-www.mplace2.com.    A 178.62.79.124 
-http.mplace2.com.    A 178.62.79.124
-https.mplace2.com.    A 178.62.79.124 
-_http._tcp.mplace2.com.  IN    SRV 1 1 80 host1.mathmesh.com.
-_https._tcp.mplace2.com.   IN   SRV 1 1 443 host1.mathmesh.com.
+; Host host1.cryptomesh.org 96.237.102.35 
+mplace2.com.    A 96.237.102.35 
+www.mplace2.com.    A 96.237.102.35 
+http.mplace2.com.    A 96.237.102.35
+https.mplace2.com.    A 96.237.102.35 
+_http._tcp.mplace2.com.  IN    SRV 1 1 80 host1.cryptomesh.org.
+_https._tcp.mplace2.com.   IN   SRV 1 1 443 host1.cryptomesh.org.
 
 
 ; handles

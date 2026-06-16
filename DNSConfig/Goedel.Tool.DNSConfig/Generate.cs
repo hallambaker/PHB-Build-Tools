@@ -77,12 +77,30 @@ public partial class Generate : global::Goedel.Registry.Script {
 		_Output.Write ("\n{0}", _Indent);
 		foreach  (var Domain in DNSConfig.Domains)  {
 			_Output.Write ("zone \"{1}\" {{\n{0}", _Indent, Domain.Id);
-			_Output.Write ("    type master;\n{0}", _Indent);
+			_Output.Write ("    type primary;\n{0}", _Indent);
 			_Output.Write ("    file \"/etc/bind/zones/db.{1}\";\n{0}", _Indent, Domain.Id);
 			_Output.Write ("}};\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			}
 		_Output.Write ("\n{0}", _Indent);
+		}
+	
+	/// <summary>	
+	/// GenerateLocalSecondary
+	/// </summary>
+	/// <param name="DNSConfig"></param>
+	public void GenerateLocalSecondary (DNSConfig DNSConfig) {
+		_Output.Write ("# PATH=/etc/bind/named.conf.Secondary\n{0}", _Indent);
+		_Output.Write ("# Configuration to be used on a secondary server.\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		foreach  (var Domain in DNSConfig.Domains)  {
+			_Output.Write ("zone \"{1}\" {{\n{0}", _Indent, Domain.Id);
+			_Output.Write ("    type secondary;\n{0}", _Indent);
+			_Output.Write ("    file \"/etc/bind/zones/db.{1}\";\n{0}", _Indent, Domain.Id);
+			_Output.Write ("    primaries {{ 10.0.0.4; }};\n{0}", _Indent);
+			_Output.Write ("}};\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			}
 		}
 	
 	/// <summary>	

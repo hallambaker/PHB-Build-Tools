@@ -116,7 +116,11 @@ Class Goedel.Tool.Sitebuilder FrameStruct
             Link
             Action
             Description
+            Anchor
+            Customized
 
+
+    Type Customized
 
     Type Container
     Type Action

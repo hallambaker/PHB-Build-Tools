@@ -6,7 +6,7 @@
 ;
 $TTL 600
 cryptomesh.org.      IN      SOA     dns1.cryptomesh.org. hallam.gmail.com. (
-                        2025013001       ; serial, todays date + todays serial 
+                        2026061001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -14,18 +14,17 @@ cryptomesh.org.      IN      SOA     dns1.cryptomesh.org. hallam.gmail.com. (
 
 ; Additional name servers
 cryptomesh.org.     IN      NS      dns1.cryptomesh.org.
-dns1.cryptomesh.org.    A 178.62.79.124 
+dns1.cryptomesh.org.    A 96.237.102.35 
 cryptomesh.org.     IN      NS      dns2.cryptomesh.org.
-dns2.cryptomesh.org.    A 139.59.200.120 
+dns2.cryptomesh.org.    A 96.237.102.36 
 
 
-cryptomesh.org.    IN     CAA 0 issue "comodoca.com"
 cryptomesh.org.    IN     CAA 0 issue "letsencrypt.org"
 cryptomesh.org.    IN     CAA 0 issuewild  ";"
 cryptomesh.org.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 
 ; Hardcoded A records
-host1.cryptomesh.org.    A 178.62.79.124
+host1.cryptomesh.org.    A 96.237.102.35
 host1.cryptomesh.org.        IN      TXT    "v=spf1 Home ?all"  
 
 ; default mail
@@ -35,27 +34,27 @@ cryptomesh.org. TXT "v=spf1 redirect=_spf.google.com"
 
 
 
-; Host host1.mathmesh.com 178.62.79.124 
-cryptomesh.org.    A 178.62.79.124 
+; Host host1.cryptomesh.org 96.237.102.35 
+cryptomesh.org.    A 96.237.102.35 
 ; is wildcard
-*.cryptomesh.org.    A 178.62.79.124 
-www.cryptomesh.org.    A 178.62.79.124 
-http.cryptomesh.org.    A 178.62.79.124
-https.cryptomesh.org.    A 178.62.79.124 
-_http._tcp.cryptomesh.org.  IN    SRV 1 1 80 host1.mathmesh.com.
-_https._tcp.cryptomesh.org.   IN   SRV 1 1 443 host1.mathmesh.com.
+*.cryptomesh.org.    A 96.237.102.35 
+www.cryptomesh.org.    A 96.237.102.35 
+http.cryptomesh.org.    A 96.237.102.35
+https.cryptomesh.org.    A 96.237.102.35 
+_http._tcp.cryptomesh.org.  IN    SRV 1 1 80 host1.cryptomesh.org.
+_https._tcp.cryptomesh.org.   IN   SRV 1 1 443 host1.cryptomesh.org.
 
 ; Service records for mmm
-mmm.cryptomesh.org.    A 178.62.79.124 
+mmm.cryptomesh.org.    A 96.237.102.35 
 _mmm._tcp.cryptomesh.org. SRV 1 100 80 host1.cryptomesh.org.
 ; Service records for account
-account.cryptomesh.org.    A 178.62.79.124 
+account.cryptomesh.org.    A 96.237.102.35 
 _account._tcp.cryptomesh.org. SRV 1 100 80 host1.cryptomesh.org.
 ; Service records for recrypt
-recrypt.cryptomesh.org.    A 178.62.79.124 
+recrypt.cryptomesh.org.    A 96.237.102.35 
 _recrypt._tcp.cryptomesh.org. SRV 1 100 80 host1.cryptomesh.org.
 ; Service records for confirm
-confirm.cryptomesh.org.    A 178.62.79.124 
+confirm.cryptomesh.org.    A 96.237.102.35 
 _confirm._tcp.cryptomesh.org. SRV 1 100 80 host1.cryptomesh.org.
 
 ; handles

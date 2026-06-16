@@ -38,12 +38,26 @@ options {
 
 #foreach (var Domain in DNSConfig.Domains) 
 zone "#{Domain.Id}" {
-    type master;
+    type primary;
     file "/etc/bind/zones/db.#{Domain.Id}";
 };
 
 #end foreach
 
+#end method
+
+#method GenerateLocalSecondary DNSConfig DNSConfig
+## PATH=/etc/bind/named.conf.Secondary
+## Configuration to be used on a secondary server.
+
+#foreach (var Domain in DNSConfig.Domains) 
+zone "#{Domain.Id}" {
+    type secondary;
+    file "/etc/bind/zones/db.#{Domain.Id}";
+    primaries { 10.0.0.4; };
+};
+
+#end foreach
 #end method
 
 

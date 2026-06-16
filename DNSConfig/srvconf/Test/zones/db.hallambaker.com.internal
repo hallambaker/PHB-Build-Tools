@@ -6,7 +6,7 @@
 ;
 $TTL 600
 hallambaker.com.      IN      SOA     dns1.hallambaker.com. hallam.gmail.com. (
-                        2026061001       ; serial, todays date + todays serial 
+                        2026060201       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -14,12 +14,10 @@ hallambaker.com.      IN      SOA     dns1.hallambaker.com. hallam.gmail.com. (
 
 ; Additional name servers
 hallambaker.com.     IN      NS      dns1.hallambaker.com.
-dns1.hallambaker.com.    A 96.237.102.35 
-hallambaker.com.     IN      NS      dns2.hallambaker.com.
-dns2.hallambaker.com.    A 96.237.102.36 
+dns1.hallambaker.com.    A 10.0.0.4
 
 
-q2.hallambaker.com.    A 10.0.0.4
+qqq.hallambaker.com.    A 10.0.0.4
 
 
 hallambaker.com.    IN     CAA 0 issue "letsencrypt.org"
@@ -27,13 +25,13 @@ hallambaker.com.    IN     CAA 0 issuewild  ";"
 hallambaker.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 
 ; Hardcoded A records
-ui.hallambaker.com.    A 96.237.102.34
+ui.hallambaker.com.    A 10.0.0.1
 ui.hallambaker.com.        IN      TXT    "v=spf1 Gateway ?all"  
-minecraft.hallambaker.com.    A 96.237.102.34
+minecraft.hallambaker.com.    A 10.0.0.14
 minecraft.hallambaker.com.        IN      TXT    "v=spf1 Gateway ?all"  
-homeserver.hallambaker.com.    A 96.237.102.35
-homeserver.hallambaker.com.        IN      TXT    "v=spf1 Proxy ?all"  
-jellyfin.hallambaker.com.    A 96.237.102.35
+homeassistant.hallambaker.com.    A 10.0.0.16
+homeassistant.hallambaker.com.        IN      TXT    "v=spf1 Proxy ?all"  
+jellyfin.hallambaker.com.    A 10.0.0.10
 jellyfin.hallambaker.com.        IN      TXT    "v=spf1 Proxy ?all"  
 prod1.hallambaker.com.    A 96.237.102.35
 prod1.hallambaker.com.        IN      TXT    "v=spf1 PROD1 ?all"  
@@ -52,14 +50,14 @@ hallambaker.com. TXT "v=spf1 redirect=_spf.google.com"
 
 
 ; Host host1.cryptomesh.org 96.237.102.35 
-hallambaker.com.    A 96.237.102.35 
+hallambaker.com.    A 10.0.0.12
 ; is wildcard
-*.hallambaker.com.    A 96.237.102.35 
-www.hallambaker.com.    A 96.237.102.35 
-http.hallambaker.com.    A 96.237.102.35
-https.hallambaker.com.    A 96.237.102.35 
-_http._tcp.hallambaker.com.  IN    SRV 1 1 80 host1.cryptomesh.org.
-_https._tcp.hallambaker.com.   IN   SRV 1 1 443 host1.cryptomesh.org.
+*.hallambaker.com.    A 10.0.0.12
+www.hallambaker.com.    A 10.0.0.12
+http.hallambaker.com.    A 10.0.0.12
+https.hallambaker.com.    A 10.0.0.12
+_http._tcp.hallambaker.com.  IN    SRV 1 1 80 hallambaker.com.
+_https._tcp.hallambaker.com.   IN   SRV 1 1 443 hallambaker.com.
 
 
 ; handles

@@ -72,6 +72,7 @@ using Goedel.Utilities;
 //       Integer
 //       Tag
 //       UDF
+//       Flag
 //       Algorithm
 //       Compress
 //       Note
@@ -106,6 +107,7 @@ namespace Goedel.Tool.Constant {
         Note,
         Algorithm,
         Compress,
+        Flag,
         Integer,
         Reserve,
         Function,
@@ -337,6 +339,7 @@ namespace Goedel.Tool.Constant {
 		public List<UDF>  UDF = [];
 		public List<Integer>  Integer = [];
 		public List<Tag>  Tag = [];
+		public List<Flag>  Flag = [];
 
         public override ConstantType _Tag () =>ConstantType.Enum;
 
@@ -364,6 +367,9 @@ namespace Goedel.Tool.Constant {
 				_e.Serialize (Output, true);
 				}
 			foreach (Tag _e in Tag) {
+				_e.Serialize (Output, true);
+				}
+			foreach (Flag _e in Flag) {
 				_e.Serialize (Output, true);
 				}
 			Output.EndList ("");
@@ -500,6 +506,39 @@ namespace Goedel.Tool.Constant {
 			Output.WriteAttribute ("Bits", Bits);
 			if (tag) {
 				Output.EndElement ("Compress");
+				}			
+			}
+		}
+
+    public partial class Flag : _Choice {
+        public TOKEN<_Choice>			Id;
+		public int						Value;
+		public string					Title;
+		public Description  Description = new ();
+		public Reserve  Reserve = new ();
+
+        public override ConstantType _Tag () =>ConstantType.Flag;
+
+
+		public override void _InitChildren (_Choice? Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Flag");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			Output.WriteAttribute ("Value", Value);
+			Output.WriteAttribute ("Title", Title);
+			Output.StartList ("");
+			Description.Serialize (Output, true);
+			Reserve.Serialize (Output, true);
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("Flag");
 				}			
 			}
 		}
@@ -768,6 +807,11 @@ namespace Goedel.Tool.Constant {
 		Algorithm__Id,				
 		Compress_Start,
 		Compress__Bits,				
+		Flag_Start,
+		Flag__Id,				
+		Flag__Value,				
+		Flag__Title,				
+		Flag__Options,				
 		Integer_Start,
 		Integer__Id,				
 		Integer__Value,				
@@ -872,6 +916,7 @@ namespace Goedel.Tool.Constant {
                 case "Note": return NewNote();
                 case "Algorithm": return NewAlgorithm();
                 case "Compress": return NewCompress();
+                case "Flag": return NewFlag();
                 case "Integer": return NewInteger();
                 case "Reserve": return NewReserve();
                 case "Function": return NewFunction();
@@ -983,6 +1028,14 @@ namespace Goedel.Tool.Constant {
             }
 
 
+        private Goedel.Tool.Constant.Flag NewFlag() {
+            Goedel.Tool.Constant.Flag result = new ();
+            Push (result);
+            State = StateCode.Flag_Start;
+            return result;
+            }
+
+
         private Goedel.Tool.Constant.Integer NewInteger() {
             Goedel.Tool.Constant.Integer result = new ();
             Push (result);
@@ -1054,6 +1107,7 @@ namespace Goedel.Tool.Constant {
                 case "Note": return Goedel.Tool.Constant.ConstantType.Note;
                 case "Algorithm": return Goedel.Tool.Constant.ConstantType.Algorithm;
                 case "Compress": return Goedel.Tool.Constant.ConstantType.Compress;
+                case "Flag": return Goedel.Tool.Constant.ConstantType.Flag;
                 case "Integer": return Goedel.Tool.Constant.ConstantType.Integer;
                 case "Reserve": return Goedel.Tool.Constant.ConstantType.Reserve;
                 case "Function": return Goedel.Tool.Constant.ConstantType.Function;
@@ -1517,8 +1571,14 @@ namespace Goedel.Tool.Constant {
 									Current_Cast.Tag.Add (NewTag ());
 									break;
 									}
+								case Goedel.Tool.Constant.ConstantType.Flag : {
+
+									// Flag  Flag
+									Current_Cast.Flag.Add (NewFlag ());
+									break;
+									}
 								default : {
-									throw new Expected("Parser Error Expected [Code UDF Integer Tag ]");
+									throw new Expected("Parser Error Expected [Code UDF Integer Tag Flag ]");
 									}
 								}
 							}
@@ -1677,6 +1737,72 @@ namespace Goedel.Tool.Constant {
                         Pop ();
                         Represent = true; 
                         break;
+                    case StateCode.Flag_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.Constant.Flag Current_Cast = (Goedel.Tool.Constant.Flag)Current;
+                            Current_Cast.Id = Registry.TOKEN(Position, Text, TYPE__Label, Current_Cast);
+                            State = StateCode.Flag__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Flag__Id:
+                        if (Token == TokenType.INTEGER) {
+                            Goedel.Tool.Constant.Flag Current_Cast = (Goedel.Tool.Constant.Flag)Current;
+                            Current_Cast.Value = Convert.ToInt32(Text);
+                            State = StateCode.Flag__Value;
+                            break;
+                            }
+                        throw new Expected("Expected Integer");
+
+                    case StateCode.Flag__Value:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Constant.Flag Current_Cast = (Goedel.Tool.Constant.Flag)Current;
+                            Current_Cast.Title = Text;
+                            State = StateCode.Flag__Title;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Flag__Title:
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Flag__Options;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.Flag__Options: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for OPTIONS $$$$$
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Constant.Flag Current_Cast = (Goedel.Tool.Constant.Flag)Current;
+                            Goedel.Tool.Constant.ConstantType LabelType = _Reserved (Text);
+							switch (LabelType) {
+								case Goedel.Tool.Constant.ConstantType.Description : {
+
+									// Description  Description
+									Current_Cast.Description = NewDescription ();
+									break;
+									}
+								case Goedel.Tool.Constant.ConstantType.Reserve : {
+
+									// Reserve  Reserve
+									Current_Cast.Reserve = NewReserve ();
+									break;
+									}
+								default : {
+									throw new Expected("Parser Error Expected [Description Reserve ]");
+									}
+								}
+							}
+                        break;
+
                     case StateCode.Integer_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Constant.Integer Current_Cast = (Goedel.Tool.Constant.Integer)Current;

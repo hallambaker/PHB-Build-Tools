@@ -17,6 +17,9 @@ namespace #{Constant.NameSpaceName} ;
 
 #foreach (var item in Constant.Enums)
 ///<summary>#{item.Title}</summary>
+#if  item.Flag.Count > 0
+[Flags]
+#end if 
 public enum #{item.Id.Label} {
     ///<summary>Undefined type</summary>
     Unknown = -1#!
@@ -25,6 +28,13 @@ public enum #{item.Id.Label} {
 ,
     ///<summary>#{entry.Title}</summary>
     #{entry.Id.Label} = #{entry.Value}#!
+#end if
+#end foreach
+#foreach (var entry in item.Flag)
+#if (entry.Reserve.End == 0)
+,
+    ///<summary>#{entry.Title}</summary>
+    #{entry.Id.Label} = 0x#{1<<(entry.Value-1):x4}#!
 #end if
 #end foreach
 #foreach (var entry in item.UDF)
@@ -37,6 +47,7 @@ public enum #{item.Id.Label} {
     ///<summary>#{entry.Title}</summary>
     #{entry.Id.Label}#!
 #end foreach
+
     }
 
 #end foreach
@@ -71,6 +82,10 @@ public static partial class #{Constant.Class} {
     ///<summary>Jose enumeration tag for #{item.Id.Label}.#{code.Id.Label}</summary>
     public const string  #{item.Id.Label}#{code.Id.Label}Tag = "#{code.Id.Label}";
 #end foreach
+#foreach (var code in item.Flag)
+    ///<summary>Jose enumeration tag for #{item.Id.Label}.#{code.Id.Label}</summary>
+    public const string  #{item.Id.Label}#{code.Id.Label}Tag = "#{code.Id.Label}";
+#end foreach
 #foreach (var code in item.Integer)
     ///<summary>Jose enumeration tag for #{item.Id.Label}.#{code.Id.Label}</summary>
     public const string  #{item.Id.Label}#{code.Id.Label}Tag = "#{code.Id.Label}";
@@ -89,6 +104,9 @@ public static partial class #{Constant.Class} {
 #foreach (var code in item.Code)
             #{item.Id.Label}#{code.Id.Label}Tag => #{item.Id.Label}.#{code.Id.Label},
 #end foreach
+#foreach (var code in item.Flag)
+            #{item.Id.Label}#{code.Id.Label}Tag => #{item.Id.Label}.#{code.Id.Label},
+#end foreach
             _ => #{item.Id.Label}.Unknown
             };
 
@@ -101,6 +119,9 @@ public static partial class #{Constant.Class} {
     public static string ToLabel (this #{item.Id.Label} data) =>
         data switch {
 #foreach (var code in item.Code)
+            #{item.Id.Label}.#{code.Id.Label} => #{item.Id.Label}#{code.Id.Label}Tag,
+#end foreach
+#foreach (var code in item.Flag)
             #{item.Id.Label}.#{code.Id.Label} => #{item.Id.Label}#{code.Id.Label}Tag,
 #end foreach
             _ => null

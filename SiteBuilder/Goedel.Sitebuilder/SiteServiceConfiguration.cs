@@ -19,34 +19,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-global using System.Collections.Generic;
-global using System.IO;
-global using System.Net;
 //global using Goedel.Mesh;
 //global using Goedel.Mesh.Client;
 
-global using System.Security.Cryptography;
-global using System.Text.Json;
-global using System.Web;
-
-global using Goedel.Cryptography;
-global using Goedel.Cryptography.Algorithms;
-global using Goedel.Cryptography.Jose;
-global using Goedel.Cryptography.Oauth;
-global using Goedel.Protocol;
-global using Goedel.Protocol.Web;
-global using Goedel.Registry;
-global using Goedel.Utilities;
+using Goedel.Protocol.Service;
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
 
 namespace Goedel.Sitebuilder;
-/// <summary>
-/// Desctiption of the 
-/// </summary>
 
-[System.Runtime.CompilerServices.CompilerGenerated]
-class NamespaceDoc {
+
+
+
+
+
+public class SiteServiceConfiguration : ServiceConfiguration {
+
+    public string DefaultSiteName { get; set; }
+    public List<string> AdministratorHandles { get; set; }
+
+
+    ///<summary>The configuration entry.</summary> 
+    public static readonly ConfigurationEntry ConfigurationEntry =
+        new("SiteService", typeof(SiteServiceConfiguration));
+
+    public override ConfigurationEntry GetConfigurationEntry() => ConfigurationEntry;
     }

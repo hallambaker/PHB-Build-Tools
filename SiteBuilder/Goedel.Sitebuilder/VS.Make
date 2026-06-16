@@ -20,6 +20,7 @@ MSBuildThisFileDirectory =
 LinkFiles = \
     Goedel.Cryptography.Oauth.dll\
     Goedel.Cryptography.dll\
+    Goedel.Protocol.Service.dll\
     Goedel.Protocol.Web.dll\
     Goedel.Protocol.dll\
     Goedel.Registry.dll\

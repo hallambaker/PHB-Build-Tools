@@ -6,7 +6,7 @@
 ;
 $TTL 600
 mathmesh.net.      IN      SOA     dns1.mathmesh.net. hallam.gmail.com. (
-                        2025013001       ; serial, todays date + todays serial 
+                        2026061001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -14,12 +14,11 @@ mathmesh.net.      IN      SOA     dns1.mathmesh.net. hallam.gmail.com. (
 
 ; Additional name servers
 mathmesh.net.     IN      NS      dns1.mathmesh.net.
-dns1.mathmesh.net.    A 178.62.79.124 
+dns1.mathmesh.net.    A 96.237.102.35 
 mathmesh.net.     IN      NS      dns2.mathmesh.net.
-dns2.mathmesh.net.    A 139.59.200.120 
+dns2.mathmesh.net.    A 96.237.102.36 
 
 
-mathmesh.net.    IN     CAA 0 issue "comodoca.com"
 mathmesh.net.    IN     CAA 0 issue "letsencrypt.org"
 mathmesh.net.    IN     CAA 0 issuewild  ";"
 mathmesh.net.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
@@ -33,13 +32,13 @@ mathmesh.net. TXT "v=spf1 redirect=_spf.google.com"
 
 
 
-; Host host1.mathmesh.com 178.62.79.124 
-mathmesh.net.    A 178.62.79.124 
-www.mathmesh.net.    A 178.62.79.124 
-http.mathmesh.net.    A 178.62.79.124
-https.mathmesh.net.    A 178.62.79.124 
-_http._tcp.mathmesh.net.  IN    SRV 1 1 80 host1.mathmesh.com.
-_https._tcp.mathmesh.net.   IN   SRV 1 1 443 host1.mathmesh.com.
+; Host host1.cryptomesh.org 96.237.102.35 
+mathmesh.net.    A 96.237.102.35 
+www.mathmesh.net.    A 96.237.102.35 
+http.mathmesh.net.    A 96.237.102.35
+https.mathmesh.net.    A 96.237.102.35 
+_http._tcp.mathmesh.net.  IN    SRV 1 1 80 host1.cryptomesh.org.
+_https._tcp.mathmesh.net.   IN   SRV 1 1 443 host1.cryptomesh.org.
 
 
 ; handles

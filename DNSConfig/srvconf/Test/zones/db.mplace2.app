@@ -6,7 +6,7 @@
 ;
 $TTL 600
 mplace2.app.      IN      SOA     dns1.mplace2.app. hallam.gmail.com. (
-                        2025013001       ; serial, todays date + todays serial 
+                        2026061001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -14,18 +14,17 @@ mplace2.app.      IN      SOA     dns1.mplace2.app. hallam.gmail.com. (
 
 ; Additional name servers
 mplace2.app.     IN      NS      dns1.mplace2.app.
-dns1.mplace2.app.    A 178.62.79.124 
+dns1.mplace2.app.    A 96.237.102.35 
 mplace2.app.     IN      NS      dns2.mplace2.app.
-dns2.mplace2.app.    A 139.59.200.120 
+dns2.mplace2.app.    A 96.237.102.36 
 
 
-mplace2.app.    IN     CAA 0 issue "comodoca.com"
 mplace2.app.    IN     CAA 0 issue "letsencrypt.org"
 mplace2.app.    IN     CAA 0 issuewild  ";"
 mplace2.app.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 
 ; Hardcoded A records
-host1.mplace2app.com.    A 178.62.79.124
+host1.mplace2app.com.    A 96.237.102.35
 host1.mplace2app.com.        IN      TXT    "v=spf1 Home ?all"  
 
 ; default mail
@@ -35,18 +34,18 @@ mplace2.app. TXT "v=spf1 redirect=_spf.google.com"
 
 
 
-; Host host1.mplace2app.com 178.62.79.124 
-mplace2.app.    A 178.62.79.124 
+; Host host1.cryptomesh.org 96.237.102.35 
+mplace2.app.    A 96.237.102.35 
 ; is wildcard
-*.mplace2.app.    A 178.62.79.124 
-www.mplace2.app.    A 178.62.79.124 
-http.mplace2.app.    A 178.62.79.124
-https.mplace2.app.    A 178.62.79.124 
-_http._tcp.mplace2.app.  IN    SRV 1 1 80 host1.mplace2app.com.
-_https._tcp.mplace2.app.   IN   SRV 1 1 443 host1.mplace2app.com.
+*.mplace2.app.    A 96.237.102.35 
+www.mplace2.app.    A 96.237.102.35 
+http.mplace2.app.    A 96.237.102.35
+https.mplace2.app.    A 96.237.102.35 
+_http._tcp.mplace2.app.  IN    SRV 1 1 80 host1.cryptomesh.org.
+_https._tcp.mplace2.app.   IN   SRV 1 1 443 host1.cryptomesh.org.
 
 ; Service records for mmm
-mmm.mplace2.app.    A 178.62.79.124 
+mmm.mplace2.app.    A 96.237.102.35 
 _mmm._tcp.mplace2.app. SRV 1 100 15098 host1.cryptomesh.org.
 
 ; handles

@@ -6,7 +6,7 @@
 ;
 $TTL 600
 mathmesh.com.      IN      SOA     dns1.mathmesh.com. hallam.gmail.com. (
-                        2025013001       ; serial, todays date + todays serial 
+                        2026061001       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds
@@ -14,19 +14,18 @@ mathmesh.com.      IN      SOA     dns1.mathmesh.com. hallam.gmail.com. (
 
 ; Additional name servers
 mathmesh.com.     IN      NS      dns1.mathmesh.com.
-dns1.mathmesh.com.    A 178.62.79.124 
+dns1.mathmesh.com.    A 96.237.102.35 
 mathmesh.com.     IN      NS      dns2.mathmesh.com.
-dns2.mathmesh.com.    A 139.59.200.120 
+dns2.mathmesh.com.    A 96.237.102.36 
 
 
-mathmesh.com.    IN     CAA 0 issue "comodoca.com"
 mathmesh.com.    IN     CAA 0 issue "letsencrypt.org"
 mathmesh.com.    IN     CAA 0 issuewild  ";"
 mathmesh.com.    IN     CAA 0 iodef "mailto:hostmaster@hallambaker.com"
 
 ; Hardcoded A records
-host1.mathmesh.com.    A 178.62.79.124
-host1.mathmesh.com.        IN      TXT    "v=spf1 Home ?all"  
+host1.mathmesh.org.    A 96.237.102.35
+host1.mathmesh.org.        IN      TXT    "v=spf1 Home ?all"  
 
 ; default mail
 mathmesh.com.       IN      MX       10 mx01.ionos.com.
@@ -35,15 +34,15 @@ mathmesh.com. TXT "v=spf1 redirect=_spf.google.com"
 
 
 
-; Host host1.mathmesh.com 178.62.79.124 
-mathmesh.com.    A 178.62.79.124 
+; Host host1.cryptomesh.org 96.237.102.35 
+mathmesh.com.    A 96.237.102.35 
 ; is wildcard
-*.mathmesh.com.    A 178.62.79.124 
-www.mathmesh.com.    A 178.62.79.124 
-http.mathmesh.com.    A 178.62.79.124
-https.mathmesh.com.    A 178.62.79.124 
-_http._tcp.mathmesh.com.  IN    SRV 1 1 80 host1.mathmesh.com.
-_https._tcp.mathmesh.com.   IN   SRV 1 1 443 host1.mathmesh.com.
+*.mathmesh.com.    A 96.237.102.35 
+www.mathmesh.com.    A 96.237.102.35 
+http.mathmesh.com.    A 96.237.102.35
+https.mathmesh.com.    A 96.237.102.35 
+_http._tcp.mathmesh.com.  IN    SRV 1 1 80 host1.cryptomesh.org.
+_https._tcp.mathmesh.com.   IN   SRV 1 1 443 host1.cryptomesh.org.
 
 
 ; handles

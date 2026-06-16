@@ -50,6 +50,7 @@ Class Goedel.Tool.Constant Constant
 			UDF			UDF Multiple
 			Integer		Integer Multiple
 			Tag			Tag Multiple
+			Flag		Flag Multiple
 
 	Type Tag
 		Id				ID Label
@@ -70,7 +71,15 @@ Class Goedel.Tool.Constant Constant
 		Id				Token Label
 
 	Type Compress
-		Bits			Integer			
+		Bits			Integer		
+		
+	Type Flag
+		Id				Token Label
+		Value			Integer
+		Title			String
+		Options			Options
+			Description	Description Single
+			Reserve		Reserve Single
 
 	Type Integer
 		Id				Token Label
