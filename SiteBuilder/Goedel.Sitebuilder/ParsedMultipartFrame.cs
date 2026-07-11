@@ -1,5 +1,6 @@
 ﻿namespace Goedel.Sitebuilder;
 
+/// <summary>Parse result from a frame submission.</summary>
 public partial class ParsedMultipartFrame : ParsedMultipart {
 
     const byte dash = (byte)'-';
@@ -12,9 +13,15 @@ public partial class ParsedMultipartFrame : ParsedMultipart {
 
     bool complete = false;
 
+
     ParsedMultipartFrame(Stream data) : base(data) {
         }
 
+    /// <summary>Bind data from <paramref name="stream"/> to the
+    /// value <paramref name="data"/></summary>
+    /// <param name="data">The target to receive the result.</param>
+    /// <param name="stream">The stream to parse.</param>
+    /// <returns>True if successful, otherwise, false.</returns>
     public static bool Bind(IBinding data, Stream stream) {
 
         var result = new ParsedMultipartFrame(stream);

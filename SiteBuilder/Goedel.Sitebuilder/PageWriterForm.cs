@@ -9,24 +9,30 @@ namespace Goedel.Sitebuilder;
 /// Pagewriter adds in methods to emit FramePages and components.
 /// </summary>
 public partial class PageWriter : HtmlWriter {
+
+    /// <summary>Debug flag.</summary>
     public static bool DebugForm = false;
 
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
     public void Render(
             IBacked backer,
-            FrameRefForm item) {
+            FrameRefForm description) {
 
         // create the form 
         if (DebugForm) {
-            OpenClass("form", item.Tag, "action", "https://httpbin.org/post", "method", "post");
+            OpenClass("form", description.Tag, "action", "https://httpbin.org/post", "method", "post");
             }
         else {
-            OpenClass("form", item.Tag, "action", $"/{FramePage.PathStem}?{item.Tag}", "method",
+            OpenClass("form", description.Tag, "action", $"/{FramePage.PathStem}?{description.Tag}", "method",
                 "post", "enctype", "multipart/form-data");
             }
         //Element("input", "type", "hidden", "id", "-Form", "name", item.Tag, "value", item.Tag!);
 
-        var value = item.Get(backer);
-        foreach (var field in item.Fields) {
+        var value = description.Get(backer);
+        foreach (var field in description.Fields) {
             RenderFormField(value, field);
             }
 
@@ -36,16 +42,19 @@ public partial class PageWriter : HtmlWriter {
         Close();
         }
 
-
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
     public void RenderFormField(
 
             IBacked? backer,
-            IFrameField field) {
+            IFrameField description) {
 
 
-        var id = NormalizeId(field.Tag);
+        var id = NormalizeId(description.Tag);
         OpenClass("div", id);
-        switch (field) {
+        switch (description) {
             case FrameString item: {
                 RenderForm(backer, item, id);
                 break;
@@ -61,7 +70,7 @@ public partial class PageWriter : HtmlWriter {
 
         if (Reactions is not null) {
             foreach (var reaction in Reactions) {
-                if (reaction.Id == field.Tag) {
+                if (reaction.Id == description.Tag) {
                     Text(reaction.Text, "p", "class", "InputError");
                     }
                 }
@@ -70,63 +79,71 @@ public partial class PageWriter : HtmlWriter {
         Close();
         }
 
-
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
+    /// <param name="id">Identifier of the form element.</param>
     public void RenderForm(
                 IBacked? backer,
-                FrameFile item,
+                FrameFile description,
                 string id) {
 
         BackingTypeFile? value = null;
 
 
         if (backer is not null) {
-            value = item.Get(backer);
+            value = description.Get(backer);
             }
 
 
-        if (item.Hidden) {
+        if (description.Hidden) {
             //Element("input", "type", "hidden", "id", id, "name", item.Tag, "value", value!);
             }
         else {
-            Text(item.Prompt, "label", "class", "InputLabel", "for", id);
-            Element("input", "class", "InputForm", "type", "file", "id", id, "name", item.Tag);
+            Text(description.Prompt, "label", "class", "InputLabel", "for", id);
+            Element("input", "class", "InputForm", "type", "file", "id", id, "name", description.Tag);
             }
 
 
 
         }
 
-
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
+    /// <param name="id">Identifier of the form element.</param>
     public void RenderForm(
                         IBacked? backer,
-                FrameString item,
+                FrameString description,
                 string id) {
 
         string? value=null;
         if (backer is not null) {
-            value = item.Get(backer);
+            value = description.Get(backer);
             }
 
 
 
-        if (!item.Hidden) {
-            Text(item.Prompt, "label", "class", "InputLabel", "for", id);
+        if (!description.Hidden) {
+            Text(description.Prompt, "label", "class", "InputLabel", "for", id);
             }
 
 
-        switch (item) {
+        switch (description) {
             case FrameText: {
-                if (item.Hidden) {
-                    Element("input", "type", "hidden", "id", id, "name", item.Tag, "value", value!);
+                if (description.Hidden) {
+                    Element("input", "type", "hidden", "id", id, "name", description.Tag, "value", value!);
                     }
                 else {
-                    Text("", "textarea", "class", "InputForm", "id", id, "name", item.Tag, "value", value!);
+                    Text("", "textarea", "class", "InputForm", "id", id, "name", description.Tag, "value", value!);
                     }
                 break;
                 }
             case FrameRichText: {
-                if (item.Hidden) {
-                    Element("input", "type", "hidden", "id", id, "name", item.Tag, "value", value!);
+                if (description.Hidden) {
+                    Element("input", "type", "hidden", "id", id, "name", description.Tag, "value", value!);
                     }
                 else {
                     Text("", "div", "class", "InputForm", "id", "richtext");
@@ -134,11 +151,11 @@ public partial class PageWriter : HtmlWriter {
                 break;
                 }
             default: {
-                if (item.Hidden) {
-                    Element("input", "type", "hidden", "id", id, "name", item.Tag, "value", value!);
+                if (description.Hidden) {
+                    Element("input", "type", "hidden", "id", id, "name", description.Tag, "value", value!);
                     }
                 else {
-                    Element("input", "class", "InputForm", "type", "text", "id", item.Tag, "name", item.Tag, "value", value!);
+                    Element("input", "class", "InputForm", "type", "text", "id", description.Tag, "name", description.Tag, "value", value!);
                     }
 
                 break;

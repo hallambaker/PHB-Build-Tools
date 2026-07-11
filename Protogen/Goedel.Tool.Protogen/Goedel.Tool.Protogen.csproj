@@ -10,7 +10,7 @@
 
 	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 	<PropertyGroup>
-		<NoWarn>$(NoWarn);CS1591</NoWarn>
+		<NoWarn>$(NoWarn);CS1591;CS8632</NoWarn>
 	</PropertyGroup>
 	<ItemGroup>
     <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Command\Goedel.Command.csproj" />

@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 3/17/2026 2:55:57 PM
+//  This file was automatically generated at 7/11/2026 2:07:25 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -32,7 +32,7 @@ public static partial class SitebuilderConstants {
 
     ///<summary>
     ///</summary>
-    public const string Repository = "Repo/";
+    public const string Repository = "/Repo/";
 
     }
 

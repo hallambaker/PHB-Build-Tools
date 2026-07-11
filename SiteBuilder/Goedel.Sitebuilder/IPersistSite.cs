@@ -1,5 +1,6 @@
 ﻿namespace Goedel.Sitebuilder;
 
+/// <summary>Interface describing sites.</summary>
 public interface IPersistSite {
 
     ///<summary>State management interface to keep us logged in.</summary>

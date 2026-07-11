@@ -21,44 +21,44 @@
 	<Choose>
 		<When Condition=" '$(BuildPlatform)' == 'windows' ">
 			<PropertyGroup>
-				<TargetFramework>net9.0-windows</TargetFramework>
+				<TargetFramework>net10.0-windows</TargetFramework>
 				<DefineConstants>$(DefineConstants);USE_PLATFORM_WINDOWS</DefineConstants>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(BuildPlatform)' == 'linux' ">
 			<PropertyGroup>
-				<TargetFramework>net9.0</TargetFramework>
+				<TargetFramework>net10.0</TargetFramework>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(BuildPlatform)' == 'macos' ">
 			<PropertyGroup>
-				<TargetFramework>net9.0-macos</TargetFramework>
+				<TargetFramework>net10.0-macos</TargetFramework>
 				<RuntimeIdentifiers>osx-x64;osx-arm64</RuntimeIdentifiers>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(BuildPlatform)' == 'android' ">
 			<PropertyGroup>
-				<TargetFramework>net9.0-android</TargetFramework>
+				<TargetFramework>net10.0-android</TargetFramework>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(BuildPlatform)' == 'ios' ">
 			<PropertyGroup>
-				<TargetFramework>net9.0-ios</TargetFramework>
+				<TargetFramework>net10.0-ios</TargetFramework>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(BuildPlatform)' == 'tizen' ">
 			<PropertyGroup>
-				<TargetFramework>net9.0-tizen</TargetFramework>
+				<TargetFramework>net10.0-tizen</TargetFramework>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(BuildPlatform)' == 'tvos' ">
 			<PropertyGroup>
-				<TargetFramework>net9.0-tvos</TargetFramework>
+				<TargetFramework>net10.0-tvos</TargetFramework>
 			</PropertyGroup>
 		</When>
 		<Otherwise>
 			<PropertyGroup>
-				<TargetFramework>net9.0</TargetFramework>
+				<TargetFramework>net10.0</TargetFramework>
 			</PropertyGroup>
 		</Otherwise>
 	</Choose>

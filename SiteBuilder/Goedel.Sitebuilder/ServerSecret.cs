@@ -21,6 +21,9 @@
 #endregion
 
 
+using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
+
 namespace Goedel.Sitebuilder;
 
 
@@ -36,12 +39,15 @@ public record ServerCookieManager {
     int Lifetime { get; } = 24;
 
 
-    int nonceLength = 96/8;
+    const int NonceLength = 96/8;
 
-    int tagLength = 128/8;
+    const int TagLength = 128/8;
 
 
-    int prefixLength => 1 + nonceLength + tagLength;
+    int PrefixLength => 1 + NonceLength + TagLength;
+
+    /// <summary>Instance returning a new cookie manager.</summary>
+    /// <param name="seed">Optional seed value, if empty, a random seed is generated.</param>
 
     public ServerCookieManager (string seed=null) {
 
@@ -81,7 +87,7 @@ public record ServerCookieManager {
         writer.Write(idArray, 0, idArray.Length);
 
         var buffer = writer.ToArray ();
-        var nonce = SHAKE128.Process(buffer, 96);
+        var nonce = Shake128.HashData(buffer, 12);
 
 
         // get the current secret, we need to acquire the lock for this
@@ -90,21 +96,21 @@ public record ServerCookieManager {
             secret = Latest.Secret;
             }
 
-        var provider = new AesGcm(secret, tagLength);
+        var provider = new AesGcm(secret, TagLength);
 
-        var length = buffer.Length + nonceLength + tagLength + 1;
+        var length = buffer.Length + NonceLength + TagLength + 1;
 
         var result = new byte[length];
         result[0] = (byte)CurrentSlot;
-        Array.Copy (nonce, 0, result, 1, nonceLength);
+        Array.Copy (nonce, 0, result, 1, NonceLength);
 
         // perform the encryption
         var plaintextSpan = new ReadOnlySpan<byte>(buffer, 0, buffer.Length);
 
         var associatedDataSpan = new ReadOnlySpan<byte> (result, 0, 1);
-        var nonceSpan = new ReadOnlySpan<byte> (result, 1, nonceLength);
-        var tagSpan = new Span<byte>(result, 1 + nonceLength, tagLength);
-        var ciphertextSpan = new Span<byte>(result, prefixLength, buffer.Length);
+        var nonceSpan = new ReadOnlySpan<byte> (result, 1, NonceLength);
+        var tagSpan = new Span<byte>(result, 1 + NonceLength, TagLength);
+        var ciphertextSpan = new Span<byte>(result, PrefixLength, buffer.Length);
 
         provider.Encrypt (nonceSpan, plaintextSpan,  ciphertextSpan, tagSpan, associatedDataSpan);
 
@@ -113,14 +119,21 @@ public record ServerCookieManager {
         }
 
 
-
+    /// <summary>Return a <see cref="Cookie"/> value to clear cookie <paramref name="name"/>.</summary>
+    /// <param name="name">The cookie to clear.</param>
+    /// <returns>The HTTP cookie.</returns>
     public static Cookie ClearCookie(
-                string name) => new Cookie(name, "") {
+                string name) => new(name, "") {
             HttpOnly = true,
             Discard = true
             };
 
-
+    /// <summary>Return a <see cref="Cookie"/> value to set the cookie <paramref name="name"/>
+    /// to the value <paramref name="identifier"/>..</summary>
+    /// <param name="name">The cookie to clear.</param>
+    /// <param name="identifier">The cookie identifier.</param>
+    /// <param name="lifetime">Cookie lifetime.</param>
+    /// <returns>The HTTP cookie.</returns>
     public Cookie GetCookie(
                 string name,
                 string identifier, int lifetime = -1) {
@@ -135,7 +148,9 @@ public record ServerCookieManager {
         }
 
 
-
+    /// <summary>Parse the cookie data <paramref name="cookie"/>.</summary>
+    /// <param name="cookie">The cookie binary data.</param>
+    /// <returns>The parsed value.</returns>
     public string ParseCookie(byte[] cookie) {
         ServerSecret? secret = null;
         var index = cookie[0];
@@ -148,17 +163,17 @@ public record ServerCookieManager {
         // NYI: need to extend this to check for expired secret.
         secret.AssertNotNull(NYI.Throw);
 
-        var provider = new AesGcm(secret.Secret, tagLength);
+        var provider = new AesGcm(secret.Secret, TagLength);
 
-        var resultLength = cookie.Length - prefixLength;
+        var resultLength = cookie.Length - PrefixLength;
         var result = new byte [resultLength];
 
         var plaintextSpan = new Span<byte>(result, 0, result.Length);
 
         var associatedDataSpan = new ReadOnlySpan<byte>(cookie, 0, 1);
-        var nonceSpan = new ReadOnlySpan<byte>(cookie, 1, nonceLength);
-        var tagSpan = new ReadOnlySpan<byte>(cookie, 1 + nonceLength, tagLength);
-        var ciphertextSpan = new Span<byte>(cookie, prefixLength, resultLength);
+        var nonceSpan = new ReadOnlySpan<byte>(cookie, 1, NonceLength);
+        var tagSpan = new ReadOnlySpan<byte>(cookie, 1 + NonceLength, TagLength);
+        var ciphertextSpan = new Span<byte>(cookie, PrefixLength, resultLength);
 
         provider.Decrypt(nonceSpan, ciphertextSpan, tagSpan, plaintextSpan, associatedDataSpan);
 
@@ -167,11 +182,16 @@ public record ServerCookieManager {
         return trimmed.ToUTF8();
         }
 
-
+    /// <summary>Try to get a cookie <paramref name="tag"/> bound to the identifier <paramref name="id"/>
+    /// in <paramref name="request"/></summary>
+    /// <param name="request">The HTTP request.</param>
+    /// <param name="tag">The tag value.</param>
+    /// <param name="id">The identifier (if found).</param>
+    /// <returns>True if found.</returns>
     public bool TryGetCookie(
                     HttpListenerRequest request, 
                     string tag,
-                    out string id) {
+                    [NotNullWhen(true)]out string id) {
         id = null;
         try {
             var cookie = request.Cookies[tag];
@@ -193,12 +213,20 @@ public record ServerCookieManager {
     }
 
 
+/// <summary>Manages a single server secret. In normal operation, the server
+/// will have multiple secrets active with the secrets being retired on a 
+/// rolling basis.</summary>
 public record ServerSecret {
 
+    /// <summary>The expiry time.</summary>
     public DateTime Expire { get; } 
 
+    /// <summary>The secret value.</summary>
     public byte[] Secret { get; }
 
+    /// <summary>Constructor.</summary>
+    /// <param name="expiryHours">Expiry of the secret in hours.</param>
+    /// <param name="seed">Optional seed value.</param>
     public ServerSecret(int expiryHours = 24, string seed=null) {
         Secret = seed == null ? Platform.GetRandomBits(128) :
             Shake128.HashData(seed.ToBytes(), 16);

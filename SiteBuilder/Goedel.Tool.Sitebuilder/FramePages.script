@@ -11,12 +11,12 @@
 ##pragma warning disable IDE0028 // Simplify collection initialization
 namespace #{frameset.Namespace};
 
-public partial class FramePage : Goedel.Sitebuilder.FramePage {
-
-    public FramePage(string id, string title, List<IFrameField> fields) : base(id, title, fields) {
-        }
-
-    }
+#!public partial class FramePage : Goedel.Sitebuilder.FramePage {
+#!
+#!    public FramePage(string id, string title, List<IFrameField> fields) : base(id, title, fields) {
+#!        }
+#!
+#!    }
 
 /// <summary>
 /// Annotated backing classes for data driven GUI.
@@ -140,7 +140,7 @@ public #{structure} #{backer.Id} : #{backer.Type} {
     Goedel.Sitebuilder.FramePage? page = null;
 
     /// <inheritdoc/>
-    public override #{backer.Id} Create(Goedel.Sitebuilder.FramePage page) => new #{backer.Id}() {
+    public override #{backer.Id} Create(Goedel.Sitebuilder.FramePage page) => new () {
         Page = page
         };
 
@@ -236,7 +236,7 @@ public #{structure} #{backer.Id} (string Id) : #{backer.ParentId ?? backer.Type}
 	/// <summary>
 	/// Presentation style #{presentation.Id}
 	/// </summary>
-	public static FramePresentation #{presentation.Id} => #{storeId} ?? new FramePresentation ("#{presentation.Id}") {
+	public static FramePresentation #{presentation.Id} => field ?? new FramePresentation ("#{presentation.Id}") {
 		GetUid = (data) => (data as #{backed.Id})?.#{presentation.UidField},
 		Sections = [#!
 #% comma.Reset();
@@ -256,8 +256,8 @@ public #{structure} #{backer.Id} (string Id) : #{backer.ParentId ?? backer.Type}
 #end foreach
 
 			]
-		}.CacheValue(out #{storeId})!;
-	static FramePresentation? #{storeId};
+		}.CacheValue(out field)!;
+#!	//static FramePresentation? #{storeId};
 #end if
 #end foreach
 
@@ -289,7 +289,7 @@ public #{structure} #{backer.Id} (string Id) : #{backer.ParentId ?? backer.Type}
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	protected static readonly Binding<#{backed.Id}> _binding = new (
+	protected static readonly new Binding<#{backed.Id}> _binding = new (
 			new() {
 
 			// Only inclue the serialized items here#!

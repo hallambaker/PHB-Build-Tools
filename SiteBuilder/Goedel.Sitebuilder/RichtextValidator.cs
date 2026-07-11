@@ -6,20 +6,29 @@ namespace Goedel.Sitebuilder;
 /// <summary>Result of performing validation.</summary>
 public enum RichetextResult {
 
+    /// <summary>Value is valid.</summary>
     Valid,
 
+    /// <summary>Value was invalid.</summary>
     Invalid,
 
+    /// <summary>Value was empty.</summary>
     Empty
-
     }
 
 
+/// <summary>Markup description</summary>
 public record TextMarkup {
 
+    /// <summary>Block text definitions.</summary>
     public Dictionary<string, TextBlock> Block = [];
+
+    /// <summary>Decoration definitions.</summary>
     public Dictionary<string, TextDecoration> Decoration = [];
 
+    /// <summary>Constructor, return a new instance.</summary>
+    /// <param name="blocks">Block text definitions.</param>
+    /// <param name="decorations">Decoration definitions.</param>
     public TextMarkup(
         List<TextBlock> blocks,
         List<TextDecoration> decorations) {
@@ -33,31 +42,41 @@ public record TextMarkup {
         }
     }
 
+/// <summary>Describes a text block</summary>
+/// <param name="Tag">The tag</param>
+/// <param name="Attributes">The permitted attributes.</param>
+/// <param name="Children">Permitted child blocks.</param>
 public record TextBlock(
     string Tag,
     List<TextBlock> Children = null,
     List<string> Attributes = null) {
     }
 
-
+/// <summary>Describes a text decoration.</summary>
+/// <param name="Tag">The tag</param>
+/// <param name="Attributes">The permitted attributes.</param>
 public record TextDecoration(
     string Tag,
     List<string> Attributes = null) {
     }
 
 
-
+/// <summary>Rich text validation parser.</summary>
 public class RichtextValidator {
 
-
+    /// <summary>If true, the output is blank.</summary>
     public bool IsBlank = true;
 
+    /// <summary>List of images in the item.</summary>
     public List<string> Images = [];
 
+    /// <summary>The schema. to validate against.</summary>
     static TextMarkup PostMarkup { get; }
 
+    /// <summary>The reader.</summary>
     XmlReader XmlReader { get; }
 
+    /// <summary>Static constructor.</summary>
     static RichtextValidator() {
 
         PostMarkup = new TextMarkup(
@@ -74,21 +93,25 @@ public class RichtextValidator {
 
         }
 
+    /// <summary>Constructor returning a validator over <paramref name="text"/></summary>
+    /// <param name="text">The text to validate.</param>
     RichtextValidator (string text) : this ( XmlReader.Create (text)) { 
-        
-        
-        
         }
 
+    /// <summary>Constructor returning a validator over data read from <paramref name="reader"/></summary>
+    /// <param name="reader">Reader to parse the text.</param>
     RichtextValidator(XmlReader reader) {
 
         XmlReader = reader;
 
         }
 
+    /// <summary>Validate the input.</summary>
+    /// <param name="textMarkup">The schema to validate against (optional, defaults to 
+    /// the default schema).</param>
+    /// <returns>The validation result.</returns>
     public RichetextResult Validate(TextMarkup? textMarkup = null) {
         textMarkup ??= PostMarkup;
-
 
         int state = 0;
         TextBlock? block = null;
@@ -171,8 +194,8 @@ public class RichtextValidator {
         return RichetextResult.Valid;
         }
 
-
-    private TextBlock Contains(TextBlock parent, string tag) {
+    
+    private static TextBlock Contains(TextBlock parent, string tag) {
         if (parent.Children is null) {
             return null;
             }
@@ -188,7 +211,9 @@ public class RichtextValidator {
         return null;
         }
 
-
+    /// <summary>Validate the document <paramref name="text"/></summary>
+    /// <param name="text">The document to validate.</param>
+    /// <returns>The validation result.</returns>
     public static RichetextResult Validate(string text) {
 
         //var textreader = new StringReader(text);
@@ -196,11 +221,11 @@ public class RichtextValidator {
         //    ConformanceLevel = ConformanceLevel.Fragment
         //    };
 
-        NameTable nt = new NameTable();
-        XmlNamespaceManager nsmgr = new XmlNamespaceManager(nt);
+        NameTable nt = new();
+        XmlNamespaceManager nsmgr = new(nt);
 
         //Create the XmlParserContext.
-        XmlParserContext context = new XmlParserContext(null, nsmgr, null, XmlSpace.None);
+        XmlParserContext context = new(null, nsmgr, null, XmlSpace.None);
 
 
 

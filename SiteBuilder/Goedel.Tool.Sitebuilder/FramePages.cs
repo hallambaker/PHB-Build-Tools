@@ -41,12 +41,11 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 		_Output.Write ("#pragma warning disable IDE0028 // Simplify collection initialization\n{0}", _Indent);
 		_Output.Write ("namespace {1};\n{0}", _Indent, frameset.Namespace);
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("public partial class FramePage : Goedel.Sitebuilder.FramePage {{\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("    public FramePage(string id, string title, List<IFrameField> fields) : base(id, title, fields) {{\n{0}", _Indent);
-		_Output.Write ("        }}\n{0}", _Indent);
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("    }}\n{0}", _Indent);
+		//
+		//    public FramePage(string id, string title, List<IFrameField> fields) : base(id, title, fields) {
+		//        }
+		//
+		//    }
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("/// <summary>\n{0}", _Indent);
 		_Output.Write ("/// Annotated backing classes for data driven GUI.\n{0}", _Indent);
@@ -170,7 +169,7 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 			_Output.Write ("    Goedel.Sitebuilder.FramePage? page = null;\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("    /// <inheritdoc/>\n{0}", _Indent);
-			_Output.Write ("    public override {1} Create(Goedel.Sitebuilder.FramePage page) => new {2}() {{\n{0}", _Indent, backer.Id, backer.Id);
+			_Output.Write ("    public override {1} Create(Goedel.Sitebuilder.FramePage page) => new () {{\n{0}", _Indent, backer.Id);
 			_Output.Write ("        Page = page\n{0}", _Indent);
 			_Output.Write ("        }};\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -267,7 +266,7 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 				_Output.Write ("	/// <summary>\n{0}", _Indent);
 				_Output.Write ("	/// Presentation style {1}\n{0}", _Indent, presentation.Id);
 				_Output.Write ("	/// </summary>\n{0}", _Indent);
-				_Output.Write ("	public static FramePresentation {1} => {2} ?? new FramePresentation (\"{3}\") {{\n{0}", _Indent, presentation.Id, storeId, presentation.Id);
+				_Output.Write ("	public static FramePresentation {1} => field ?? new FramePresentation (\"{2}\") {{\n{0}", _Indent, presentation.Id, presentation.Id);
 				_Output.Write ("		GetUid = (data) => (data as {1})?.{2},\n{0}", _Indent, backed.Id, presentation.UidField);
 				_Output.Write ("		Sections = [", _Indent);
 				 comma.Reset();
@@ -287,8 +286,8 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 					}
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("			]\n{0}", _Indent);
-				_Output.Write ("		}}.CacheValue(out {1})!;\n{0}", _Indent, storeId);
-				_Output.Write ("	static FramePresentation? {1};\n{0}", _Indent, storeId);
+				_Output.Write ("		}}.CacheValue(out field)!;\n{0}", _Indent);
+				//	//static FramePresentation? #{storeId};
 				}
 			}
 		_Output.Write ("\n{0}", _Indent);
@@ -320,7 +319,7 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 		_Output.Write ("	public override Binding _Binding => _binding;\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("	///<summary>Binding</summary> \n{0}", _Indent);
-		_Output.Write ("	protected static readonly Binding<{1}> _binding = new (\n{0}", _Indent, backed.Id);
+		_Output.Write ("	protected static readonly new Binding<{1}> _binding = new (\n{0}", _Indent, backed.Id);
 		_Output.Write ("			new() {{\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("			// Only inclue the serialized items here", _Indent);

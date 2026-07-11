@@ -12,7 +12,7 @@ public partial class PageWriter : HtmlWriter {
     ///<summary>Text to use for the page.</summary>
     public PageText PageText { get; set;} = PageText.English;
 
-
+    /// <summary>Reactions to be added to elements of a form.</summary>
     public List<FormReaction>? Reactions { get; set; } = null;
 
     FramePage FramePage { get; }
@@ -22,7 +22,7 @@ public partial class PageWriter : HtmlWriter {
     /// <summary>
     /// Constructor.
     /// </summary>
-    /// <param name="frameset">The frame set context to render in.</param>
+    /// <param name="page">The frame context to render in.</param>
     /// <param name="textWriter">The text writer to write to.</param>
     public PageWriter(
             FramePage page,
@@ -114,23 +114,23 @@ public partial class PageWriter : HtmlWriter {
         }
 
     /// <summary>
-    /// Use the field specifier <paramref name="field"/> to render data from
+    /// Use the field specifier <paramref name="description"/> to render data from
     /// <paramref name="backer"/>.
     /// </summary>
     /// <param name="backer">The data to render.</param>
-    /// <param name="field">The field to render</param>
+    /// <param name="description">Describes how to render the data.</param>
     public void RenderField(
             IBacked backer,
 
-        IFrameField field) {
+        IFrameField description) {
 
-            switch (field) {
+            switch (description) {
             case FrameButton item: {
                 Render(item, backer);
                 break;
                 }
             case FrameRefMenu item: {
-                Render(backer, item);
+                Render(item, backer);
                 break;
                 }
             case FrameRefClass item: {
@@ -205,15 +205,18 @@ public partial class PageWriter : HtmlWriter {
 
         }
 
-
-    public void Render(IBacked backer, FrameRefMenu fieldRefMenu) {
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
+    public void Render(FrameRefMenu description, IBacked backer) {
 
         //var menu = fieldRefMenu.Menu;
 
         // Construct the localized menu from the frame.
-        var menu = fieldRefMenu.Menu.Create(FramePage);
+        var menu = description.Menu.Create(FramePage);
         menu.FrameSet = backer.FrameSet;
-        var start = OpenClass("div", fieldRefMenu.Tag);
+        var start = OpenClass("div", description.Tag);
 
         foreach (var field in menu.Fields) {
 
@@ -230,80 +233,83 @@ public partial class PageWriter : HtmlWriter {
         Close(start);
         }
 
-
-    public void Render(FrameButton button, IBacked backer) {
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
+    public void Render(FrameButton description, IBacked backer) {
 
 
         var disabled = false;
 
         string icon = "";
 
-        if (button.GetCustomized is not null) {
-            if (button.GetActive is not null) {
-                var active = button.GetActive(backer) ?? ButtonVisibility.Available;
+        if (description.GetCustomized is not null) {
+            if (description.GetActive is not null) {
+                var active = description.GetActive(backer) ?? ButtonVisibility.Available;
                 if (active == ButtonVisibility.None) {
                     return;
                     }
-                icon = button.GetCustomized(backer, active);
+                icon = description.GetCustomized(backer, active);
                 }
             else {
-                icon = button.GetCustomized(backer, ButtonVisibility.Available);
+                icon = description.GetCustomized(backer, ButtonVisibility.Available);
                 }
             }
 
-        else if (button.GetActive is not null) {
+        else if (description.GetActive is not null) {
             
-            var active = button.GetActive(backer);
+            var active = description.GetActive(backer);
             switch (active) {
                 case ButtonVisibility.None: {
                     return;
                     }
                 case ButtonVisibility.Active: {
-                    icon = FrameSet.IconPath(button.Tag +"Active");
+                    icon = FrameSet.IconPath(description.Tag +"Active");
                     disabled = true;
                     break;
                     }
                 case ButtonVisibility.Disabled: {
-                    icon = FrameSet.IconPath(button.Tag +"Disabled") ;
+                    icon = FrameSet.IconPath(description.Tag +"Disabled") ;
                     disabled = true;
                     break;
                     }
                 default: {
-                    icon = FrameSet.IconPath(button.Tag );
+                    icon = FrameSet.IconPath(description.Tag );
                     break;
                     }
                 }
             }
         else {
-            icon = FrameSet.IconPath(button.Tag);
+            icon = FrameSet.IconPath(description.Tag);
             }
 
 
         var buttonType = disabled ? "ButtonDummy " : "Button ";
-        var start = Open("div", "class", buttonType + button.Tag);
+        var start = Open("div", "class", buttonType + description.Tag);
 
         if (!disabled) {
-            var anchor = button.ActionValue;
-            if (button.GetAnchor != null) {
-                anchor = button.ActionValue + button.GetAnchor(backer);
+            var anchor = description.ActionValue;
+            if (description.GetAnchor != null) {
+                anchor = description.ActionValue + description.GetAnchor(backer);
                 }
-            Open("a", "class", "ButtonAnchor", button.ActionType, anchor, "title", button.Description);
+            Open("a", "class", "ButtonAnchor", description.ActionType, anchor, "title", description.Description);
             }
         else {
             Open("div", "class", "ButtonDummyAnchor");
             }
 
-        ElementClass("img", "ButtonIcon", "src", icon, "alt", button.Label);
-        TextClass(button.Label, "ButtonText", "div");
+        ElementClass("img", "ButtonIcon", "src", icon, "alt", description.Label);
+        TextClass(description.Label, "ButtonText", "div");
 
-        if (button.GetText is not null) {
-            var value = button?.GetText(backer);
+        if (description.GetText is not null) {
+            var value = description?.GetText(backer);
             if (value is not null) {
                 TextClass(value, "ButtonVar", "div");
                 }
             }
-        else if (button.GetInteger is not null) {
-            var value = button?.GetInteger(backer).ToString();
+        else if (description.GetInteger is not null) {
+            var value = description?.GetInteger(backer).ToString();
             if (value is not null) {
                 TextClass(value, "ButtonVar", "div");
                 }
@@ -313,17 +319,21 @@ public partial class PageWriter : HtmlWriter {
         Close(start);
         }
 
-    public void Render(IBacked backer, FrameSubmenu item) {
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
+    public void Render(IBacked backer, FrameSubmenu description) {
 
 
         var start = Open("div", "class", "dropdown");
 
         Open("button", "type", "button", "class", "dropdown-button");
-        ElementClass("img", "ButtonIcon", "src", FrameSet.IconPath(item.Tag), "alt", item.Label);
+        ElementClass("img", "ButtonIcon", "src", FrameSet.IconPath(description.Tag), "alt", description.Label);
         Close();
 
         Open("div", "class", "dropdown-content");
-        foreach (var field in item.Fields) {
+        foreach (var field in description.Fields) {
             if (field is FrameButton button) {
                 Open("button", "type", "button", "class", "dropdown-subbutton");
                 Element("img", "class", "ButtonIcon", "src", FrameSet.IconPath(button.Tag), "alt", button.Label);
@@ -345,31 +355,36 @@ public partial class PageWriter : HtmlWriter {
 
 
 
-
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
+    /// <param name="max">Maximum number of items to render, if -1, show all.</param>
+    /// <param name="first">First item to render</param>
     public void Render(
                 IBacked backer,
-                FrameRefList item,
+                FrameRefList description,
                 int max = -1,
                 int first = 0) {
 
 
-        var value = item.Get(backer);
+        var value = description.Get(backer);
         if (value is null) {
             return;
             }
-        Open("div", "class", item.Tag);
+        Open("div", "class", description.Tag);
 
 
-        var count = item.Count(value);
-        var id = item.Tag + "Item";
+        var count = description.Count(value);
+        var id = description.Tag + "Item";
 
         var last = max < 0 ? count : count.Minimum(max - first);
         for (var i = first; i < last; i++) {
 
-            var listItem = item.Item(value, i);
+            var listItem = description.Item(value, i);
 
-            if (item.Presentation is not null) {
-                var presentation = item.Presentation(listItem);
+            if (description.Presentation is not null) {
+                var presentation = description.Presentation(listItem);
 
 
                 if (presentation is not null) {
@@ -398,19 +413,22 @@ public partial class PageWriter : HtmlWriter {
         Close();
         }
 
-
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
     public void Render(
                 IBacked backer,
-                FrameRefClass item) {
-        var value = item.Get(backer);
+                FrameRefClass description) {
+        var value = description.Get(backer);
         if (value is not null) {
-            Open("div", "class", item.Id);
+            Open("div", "class", description.Id);
 
             // Change this to perform the extract presentation code on the thing we are about to render.
 
 
-            if (item.Presentation is not null) {
-                var presentation = item.Presentation(value);
+            if (description.Presentation is not null) {
+                var presentation = description.Presentation(value);
 
                 if (presentation is not null) {
                     Open("section", "class", presentation.Tag);
@@ -431,38 +449,56 @@ public partial class PageWriter : HtmlWriter {
 
 
 
-
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
     public void Render(
                 IBacked backer,
-                FrameChooser item) {
+                FrameChooser description) {
         }
+
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
     public void Render(
                 IBacked backer,
-                FrameBoolean item) {
-        var value = item.Get(backer);
+                FrameBoolean description) {
+        var value = description.Get(backer);
         if (value is not null) {
 
 
 
-            OpenClass("div", item.Tag);
+            OpenClass("div", description.Tag);
             Text(value.ToString());
             Close();
             }
         }
+
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
     public void Render(
                 IBacked backer,
-                FrameInteger item) {
-        var value = item.Get(backer);
+                FrameInteger description) {
+        var value = description.Get(backer);
         if (value is not null) {
-            OpenClass("div", item.Tag);
+            OpenClass("div", description.Tag);
             Text(value.ToString());
             Close();
             }
         }
+
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
     public void Render(
                 IBacked backer,
-                FrameDateTime item) {
-        var value = item.Get(backer);
+                FrameDateTime description) {
+        var value = description.Get(backer);
         if (value is not null ) {
             var interval = (backer.StartRender - (System.DateTime)value);
 
@@ -486,93 +522,122 @@ public partial class PageWriter : HtmlWriter {
                 result = (interval.Minutes).ToString() + "s";
                 }
 
-            OpenClass("div", item.Tag);
+            OpenClass("div", description.Tag);
             Text(result);
             Close();
             }
         }
 
-
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
     public void Render(
                 IBacked backer,
-                FrameString item) {
-        var value = item.Get(backer);
+                FrameString description) {
+        var value = description.Get(backer);
         if (value is not null) {
 
-            OpenClass("div", item.Tag);
+            OpenClass("div", description.Tag);
             Text(value.ToString());
             Close();
             }
         }
 
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
     public void Render(
             IBacked backer,
-            FrameRichText item) {
-        var value = item.Get(backer);
+            FrameRichText description) {
+        var value = description.Get(backer);
         if (value is not null) {
-            OpenClass("div", item.Tag);
+            OpenClass("div", description.Tag);
             TextVerbatim(value);
             Close();
             }
         }
 
-
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
     public void Render(
                 IBacked backer,
-                FrameText item) {
-        var value = item.Get(backer) ;
+                FrameText description) {
+        var value = description.Get(backer) ;
         if (value is not null) {
-            OpenClass("div", item.Tag);
+            OpenClass("div", description.Tag);
             Text(value.ToString());
             Close();
             }
         }
 
-
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
     public void Render(
                 IBacked backer,
-                FrameImage item) {
-        var value = item.Get(backer);
+                FrameImage description) {
+        var value = description.Get(backer);
         if (value is not null) {
             var file = SitebuilderConstants.Repository + value;
-            ElementClass("img", item.Tag, "src", file, "alt", "");
+            ElementClass("img", description.Tag, "src", file, "alt", "");
             }
         }
 
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
     public void Render(
                 IBacked backer,
-                FrameAvatar item) {
-        var value = item.Get(backer);
+                FrameAvatar description) {
+        var value = description.Get(backer);
         if (value is not null) {
             //var file = SitebuilderConstants.Repository + value;
-            ElementClass("img", item.Tag, "src", value, "alt", "");
+            ElementClass("img", description.Tag, "src", value, "alt", "");
             }
         }
+
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
     public void Render(
             IBacked backer,
-            FrameCount item) {
-        var value = item.Get(backer);
+            FrameCount description) {
+        var value = description.Get(backer);
 
         if (value is not null) {
 
-            OpenClass("div", item.Tag);
+            OpenClass("div", description.Tag);
             Text(value.ToString());
             Close();
             }
         }
 
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
     public void Render(
             IBacked backer,
-            FrameIcon item) {
-        var value = FrameSet.IconPath(item.Tag);
-        ElementClass("img", item.Tag, "src", value);
+            FrameIcon description) {
+        var value = FrameSet.IconPath(description.Tag);
+        ElementClass("img", description.Tag, "src", value);
         }
 
-
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
     public void Render(
             IBacked backer,
-            FrameSeparator item) {
-        ElementClass("hr", item.Tag);
+            FrameSeparator description) {
+        ElementClass("hr", description.Tag);
         }
 
     string NormalizeId(string id) => id.Replace(".", "");

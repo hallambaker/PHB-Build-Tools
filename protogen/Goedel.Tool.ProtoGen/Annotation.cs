@@ -7,7 +7,7 @@ using Goedel.Protocol;
 
 // TODO: Should add a summary of each object/message into the markdown documentation output
 
-
+//#nullable enable
 namespace Goedel.Tool.ProtoGen;
 
 public class AnnotateSchema {
@@ -26,28 +26,27 @@ public class AnnotateSchema {
 
         Parse.Complete();
 
-        Protocol = Parse.Top[0] as Protocol;
+        Protocol = (Parse.Top[0] as Protocol)!;
         }
 
 
     public void DocumentProperties(
                     TextWriter output,
                 string structureName,
-                List<string> properties = null,
-                JsonObject example = null
+                List<string>? properties = null,
+                JsonObject? example = null,
+                bool extend = false
                     ) {
 
         var include = properties is null ? null : new HashSet<string>();
         if (properties is not null) {
             foreach (var property in properties) {
-                include.Add(property);
+                include?.Add(property);
                 }
             }
 
-
-
         var structure = GetStructure(Protocol, structureName);
-        DescribeStructure(Protocol, structure, example, output, include);
+        DescribeStructure(Protocol, structure, example, output, include, isSub: extend);
 
         }
 

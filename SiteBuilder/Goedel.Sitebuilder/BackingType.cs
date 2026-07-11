@@ -11,18 +11,13 @@ public record BackingType {
 /// <summary>
 /// Backing type for uploaded file.
 /// </summary>
-/// <param name="Uid">The unique identifier</param>
 /// <param name="OriginalFileName">Suggested file name</param>
 /// <param name="Data">The raw data</param>
-/// <param name="Size">The file size</param>
-/// <param name="Conversions">Alternative versions of the file.</param>
+/// <param name="ContentType">IANA media type.</param>
 public record BackingTypeFile(
-            //string Uid,
             string OriginalFileName,
             string ContentType,
             byte[] Data
-            //int Size,
-            //List<BackingTypeImage> Conversions
             ) : BackingType() {
 
 

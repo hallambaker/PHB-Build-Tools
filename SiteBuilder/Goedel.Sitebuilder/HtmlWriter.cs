@@ -13,53 +13,71 @@ namespace Goedel.Sitebuilder;
 
 
 /// <summary>
-/// 
+/// Resource entry on page.
 /// </summary>
 /// <param name="Uri">The resource locator.</param>
-/// <param name="Type">The icon type</param>
+/// <param name="Type">The resource type</param>
+/// <param name="Integrity">Optional integrity specifier.</param>
 public record Resource(
             string Uri,
             string Type,
             string? Integrity = null) {
     }
 
+/// <summary>Script entry on page.</summary>
+/// <param name="Uri">URI to load the script from</param>
+/// <param name="Type">The resource type</param>
+/// <param name="Integrity">Optional integrity specifier.</param>
 public record Script(
             string Uri,
             string Type,
             string? Integrity = null) : Resource(Uri, Type, Integrity) {
     }
 
+/// <summary>
+/// Resource entry on page.
+/// </summary>
+/// <param name="Uri">The resource locator.</param>
+/// <param name="Type">The resource type</param>
+/// <param name="Integrity">Optional integrity specifier.</param>
 public record Stylesheet(
             string Uri,
             string Type,
             string? Integrity = null) : Resource(Uri, Type, Integrity) {
     }
 
-
+/// <summary>Element</summary>
+/// <param name="Tag">Tag name</param>
+/// <param name="ClassAttribute">Attribute</param>
 public record Element(string Tag, string ClassAttribute=null) {
     }
 
-
+/// <summary>The document types</summary>
 public enum DocumentType {
+    /// <summary>XHTML document type.</summary>
     XHTML=0
     }
 
 
-
+/// <summary>Write HTML output</summary>
 public class HtmlWriter {
     
+    /// <summary>If true, indent the output for ease of reading.</summary>
     public bool Indent { get; set; } = true;
     
+    /// <summary>Output writer.</summary>
     protected TextWriter TextWriter { get; set; }
 
 
     Stack<Element> Elements = [];
 
-
+    /// <summary>Document preamble document type.</summary>
     public string[] DocumentTypes = [
         "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">"
         ];
 
+    /// <summary>Constructor, returns a new instance bound to the writer <paramref name="textWriter"/></summary>
+    /// <param name="textWriter">The output stream.</param>
     public HtmlWriter(
             TextWriter textWriter
             ) {
@@ -109,20 +127,29 @@ public class HtmlWriter {
         }
     //string NormalizeId(string id) => id.Replace(".", "");
 
-    public int OpenClassNew(string tag, string classId, params string[] attributes) {
+    ///// <summary>Start class</summary>
+    ///// <param name="tag">Tag</param>
+    ///// <param name="classId">Identifier</param>
+    ///// <param name="attributes">List of {tag, value} attributes</param>
+    ///// <returns></returns>
+    //public int OpenClassNew(string tag, string classId, params string[] attributes) {
 
 
-        StartElement(tag);
-        Elements.Push(new(tag, classId));
-        WriteAttribute("class", classId);
-        WriteAttributes(attributes);
-        TextWriter.WriteLine(">");
+    //    StartElement(tag);
+    //    Elements.Push(new(tag, classId));
+    //    WriteAttribute("class", classId);
+    //    WriteAttributes(attributes);
+    //    TextWriter.WriteLine(">");
 
-        return Elements.Count - 1;
+    //    return Elements.Count - 1;
 
-        }
+    //    }
 
-
+    /// <summary>Start class</summary>
+    /// <param name="tag">Tag</param>
+    /// <param name="classId">Identifier</param>
+    /// <param name="attributes">List of {tag, value} attributes</param>
+    /// <returns></returns>
     public int OpenClass(string tag, string classId, params string[] attributes) {
 
         var classAttr = EnclosingClass(classId);
@@ -138,7 +165,8 @@ public class HtmlWriter {
 
         }
 
-    public void CloseClass() => Close();
+    ///// <summary>Close class.</summary>
+    //public void CloseClass() => Close();
 
 
 
@@ -170,6 +198,10 @@ public class HtmlWriter {
         TextWriter.WriteLine($"</{tag.Tag}>");
         }
 
+    /// <summary>HTML element, with tag <paramref name="tag"/> and attributes <paramref name="attributes"/></summary>
+    /// <param name="tag">The tag</param>
+    /// <param name="attributes">A list of {tag, value} pairs defining attributes.</param>
+    /// <returns></returns>
     public int Element(string tag, params string[]? attributes) {
         StartElement(tag);
         WriteAttributes(attributes);
@@ -177,6 +209,13 @@ public class HtmlWriter {
         return Elements.Count - 1;
         }
 
+    /// <summary>HTML element, with tag <paramref name="tag"/> and attributes 
+    /// <paramref name="attributes"/> that declares itself to be of class
+    /// <paramref name="classId"/></summary>
+    /// <param name="tag">The tag</param>
+    /// <param name="attributes">A list of {tag, value} pairs defining attributes.</param>
+    /// <param name="classId">The value of the class attribute.</param>
+    /// <returns></returns>
     public int ElementClass(string tag, string classId, params string[]? attributes) {
         var classAttr = EnclosingClass(classId);
 
@@ -187,6 +226,11 @@ public class HtmlWriter {
         return Elements.Count - 1;
         }
 
+    /// <summary>Write a text block <paramref name="text"/> wrapped in an element
+    /// <paramref name="tag"/> with attributes <paramref name="attributes"/></summary>
+    /// <param name="text">Text to write.</param>
+    /// <param name="tag">The wrapper element class.</param>
+    /// <param name="attributes">A list of {tag, value} pairs defining attributes.</param>
     public void Text(string text, string tag, params string[]? attributes) {
         StartElement(tag);
         WriteAttributes(attributes);
@@ -195,15 +239,20 @@ public class HtmlWriter {
         TextWriter.WriteLine($"</{tag}>");
         }
 
-    public void TextVerbatim(string text, string tag, params string[]? attributes) {
-        StartElement(tag);
-        WriteAttributes(attributes);
-        TextWriter.Write(">");
-        Text(text);
-        TextWriter.WriteLine($"</{tag}>");
-        }
+    //public void TextVerbatim(string text, string tag, params string[]? attributes) {
+    //    StartElement(tag);
+    //    WriteAttributes(attributes);
+    //    TextWriter.Write(">");
+    //    Text(text);
+    //    TextWriter.WriteLine($"</{tag}>");
+    //    }
 
-
+    /// <summary>Write a text block <paramref name="text"/> wrapped in an element
+    /// <paramref name="tag"/> with attributes <paramref name="attributes"/></summary>
+    /// <param name="text">Text to write.</param>
+    /// <param name="tag">The wrapper element class.</param>
+    /// <param name="attributes">A list of {tag, value} pairs defining attributes.</param>
+    /// <param name="classId">The value of the class attribute.</param>
     public void TextClass(string text, string classId, string tag, params string[]? attributes) {
         var classAttr = EnclosingClass(classId);
 
@@ -238,6 +287,12 @@ public class HtmlWriter {
 
 
     int positionMain;
+
+    /// <summary>Write out the document head part with the document type, title, etc.</summary>
+    /// <param name="title">The document title.</param>
+    /// <param name="faviCon">Page icon.</param>
+    /// <param name="docType">The document type.</param>
+    /// <param name="language">The document language.</param>
     public void Head(
                 string title,
                 Resource faviCon,
@@ -252,15 +307,21 @@ public class HtmlWriter {
             Element("link", "rel", "icon", "type", faviCon.Type, "href", faviCon.Uri);
             }
         }
+
+    /// <summary>Begin writing the document body.</summary>
     public void Body() {
         Close(positionMain);
         positionMain = Open("body");
         }
+
+    /// <summary>Finish writing the document, append the footer.</summary>
     public void Finish() {
         Close(positionMain);
         Close(0);
         }
 
+    /// <summary>Write out the resources at the start or end of the document.</summary>
+    /// <param name="resources">The resources to write</param>
     public void Reources(List<Resource>? resources) {
         foreach (var resource in resources.IfEnumerable()) {
             switch (resource) {
@@ -276,20 +337,20 @@ public class HtmlWriter {
             }
         }
 
-    public void EndReources(List<Resource>? resources) {
-        foreach (var resource in resources.IfEnumerable()) {
-            switch (resource) {
-                case Stylesheet stylesheet: {
-                    Element("link", "rel", "stylesheet", "type", resource.Type, "href", resource.Uri);
-                    break;
-                    }
-                case Script script: {
-                    Text("", "script", "type", resource.Type, "src", resource.Uri, "integrity", resource.Integrity);
-                    break;
-                    }
-                }
-            }
-        }
+    //public void EndReources(List<Resource>? resources) {
+    //    foreach (var resource in resources.IfEnumerable()) {
+    //        switch (resource) {
+    //            case Stylesheet stylesheet: {
+    //                Element("link", "rel", "stylesheet", "type", resource.Type, "href", resource.Uri);
+    //                break;
+    //                }
+    //            case Script script: {
+    //                Text("", "script", "type", resource.Type, "src", resource.Uri, "integrity", resource.Integrity);
+    //                break;
+    //                }
+    //            }
+    //        }
+    //    }
 
 
     }

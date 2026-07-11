@@ -35,15 +35,15 @@ namespace Goedel.Sitebuilder;
 
 
 
-public class SiteServiceConfiguration : ServiceConfiguration {
+//public class SiteServiceConfiguration : ServiceConfiguration {
 
-    public string DefaultSiteName { get; set; }
-    public List<string> AdministratorHandles { get; set; }
+//    public string DefaultSiteName { get; set; }
+//    public List<string> AdministratorHandles { get; set; }
 
 
-    ///<summary>The configuration entry.</summary> 
-    public static readonly ConfigurationEntry ConfigurationEntry =
-        new("SiteService", typeof(SiteServiceConfiguration));
+//    ///<summary>The configuration entry.</summary> 
+//    public static readonly ConfigurationEntry ConfigurationEntry =
+//        new("SiteService", typeof(SiteServiceConfiguration));
 
-    public override ConfigurationEntry GetConfigurationEntry() => ConfigurationEntry;
-    }
+//    public override ConfigurationEntry GetConfigurationEntry() => ConfigurationEntry;
+//    }

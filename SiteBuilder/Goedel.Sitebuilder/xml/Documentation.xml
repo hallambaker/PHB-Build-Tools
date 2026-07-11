@@ -13,24 +13,23 @@
             <summary>
             Backing type for uploaded file.
             </summary>
-            <param name="Uid">The unique identifier</param>
             <param name="OriginalFileName">Suggested file name</param>
             <param name="Data">The raw data</param>
-            <param name="Size">The file size</param>
-            <param name="Conversions">Alternative versions of the file.</param>
+            <param name="ContentType">IANA media type.</param>
         </member>
         <member name="M:Goedel.Sitebuilder.BackingTypeFile.#ctor(System.String,System.String,System.Byte[])">
             <summary>
             Backing type for uploaded file.
             </summary>
-            <param name="Uid">The unique identifier</param>
             <param name="OriginalFileName">Suggested file name</param>
             <param name="Data">The raw data</param>
-            <param name="Size">The file size</param>
-            <param name="Conversions">Alternative versions of the file.</param>
+            <param name="ContentType">IANA media type.</param>
         </member>
         <member name="P:Goedel.Sitebuilder.BackingTypeFile.OriginalFileName">
             <summary>Suggested file name</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.BackingTypeFile.ContentType">
+            <summary>IANA media type.</summary>
         </member>
         <member name="P:Goedel.Sitebuilder.BackingTypeFile.Data">
             <summary>The raw data</summary>
@@ -89,6 +88,37 @@
         </member>
         <member name="P:Goedel.Sitebuilder.BackingTypeLink.Link">
             <summary>The link target.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.CallbackResult">
+            <summary>Record returning the result of server transaction request.</summary>
+            <param name="Code">The HTTP status.</param>
+            <param name="Reactions">The list of reactions.</param>
+            <param name="Redirect">Page to return the user to.</param>
+            <param name="Cookies">Cookies to be entered of cleared.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.CallbackResult.#ctor(System.Net.HttpStatusCode,System.Collections.Generic.List{Goedel.Sitebuilder.FormReaction},System.String,System.Collections.Generic.List{System.Net.Cookie})">
+            <summary>Record returning the result of server transaction request.</summary>
+            <param name="Code">The HTTP status.</param>
+            <param name="Reactions">The list of reactions.</param>
+            <param name="Redirect">Page to return the user to.</param>
+            <param name="Cookies">Cookies to be entered of cleared.</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.CallbackResult.Code">
+            <summary>The HTTP status.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.CallbackResult.Reactions">
+            <summary>The list of reactions.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.CallbackResult.Redirect">
+            <summary>Page to return the user to.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.CallbackResult.Cookies">
+            <summary>Cookies to be entered of cleared.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.CallbackResult.CreatedRedirect(System.String)">
+            <summary>Factory method, create a new callback result for <paramref name="path"/></summary>
+            <param name="path">Page to return the user to.</param>
+            <returns>The created instance.</returns>
         </member>
         <member name="T:Goedel.Sitebuilder.Internal">
             <summary>
@@ -164,27 +194,81 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
-        <member name="P:Goedel.Sitebuilder.FrameSet.Directory">
-            <summary>Directory to store persisted data to.</summary>
+        <member name="T:Goedel.Sitebuilder.FrameBacker">
+            <summary>Parent class for frame backer description.</summary>
+            <remarks>Constructor returning new instance <paramref name="id"/></remarks>
+            <param name="id">The unique identifier.</param>
         </member>
-        <member name="P:Goedel.Sitebuilder.FrameSet.Members">
-            <summary>Directory to store per member data to.</summary>
+        <member name="M:Goedel.Sitebuilder.FrameBacker.#ctor(System.String)">
+            <summary>Parent class for frame backer description.</summary>
+            <remarks>Constructor returning new instance <paramref name="id"/></remarks>
+            <param name="id">The unique identifier.</param>
         </member>
-        <member name="P:Goedel.Sitebuilder.FrameSet.ResourceFiles">
-            <summary>Directory where the resource files are stored.</summary>
+        <member name="P:Goedel.Sitebuilder.FrameBacker.Presentation">
+            <inheritdoc/>
         </member>
-        <member name="M:Goedel.Sitebuilder.FrameSet.ResolveReferences(Goedel.Sitebuilder.IBacked)">
-            <summary>
-            Resolve id references to field identifiers and compile the places
-            directory.
-            </summary>
-            <param name="entry">The entry to resolve.</param>
+        <member name="P:Goedel.Sitebuilder.FrameBacker.StartRender">
+            <inheritdoc/>
         </member>
-        <member name="P:Goedel.Sitebuilder.IBacked.Tag">
-            <summary>The identifier</summary>
+        <member name="P:Goedel.Sitebuilder.FrameBacker.Id">
+            <inheritdoc/>
         </member>
-        <member name="P:Goedel.Sitebuilder.IBacked.Fields">
-            <summary>The fields</summary>
+        <member name="P:Goedel.Sitebuilder.FrameBacker.Tag">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameBacker.Fields">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameBacker._Properties">
+            <summary>Array of bound properties.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameBacker._Binding">
+            <summary>The propery binding.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.FrameBacker._binding">
+            <summary>Dummy binding declaration.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FramePage">
+            <summary>Parent class for menu backer description</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FramePage.Context">
+            <summary>The page context</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FramePage.PathStem">
+            <summary>Stem of the path to display.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FramePage.Resources">
+            <summary>List of resources to be entered in the page header.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FramePage.EndResources">
+            <summary>List of resources to be entered in the page footer.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FramePage.FaviCon">
+            <summary>The favicon to show.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FramePage.PageTitle">
+            <summary>The page title</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FramePage.FrameSet">
+            <summary>The frame set to present</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FramePage.Title">
+            <summary>Page title.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FramePage.Container">
+            <summary>Container to wrap page in.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FramePage.Parent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FramePage.Type">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FramePage.#ctor(System.String,System.String,System.Collections.Generic.List{Goedel.Sitebuilder.IFrameField})">
+            <summary>Constructor, return a new instance with the specified fields.</summary>
+            <param name="id">Unique identifier</param>
+            <param name="title">Page title</param>
+            <param name="fields">The page fields</param>
         </member>
         <member name="M:Goedel.Sitebuilder.FramePage.GetPage(Goedel.Sitebuilder.IPersistSite,Goedel.Sitebuilder.IPageContext)">
             <summary>
@@ -195,13 +279,97 @@
             <returns></returns>
             <param name="context"></param>
         </member>
-        <member name="P:Goedel.Sitebuilder.FrameSelector.Fields">
+        <member name="T:Goedel.Sitebuilder.FrameMenu">
+            <summary>Backing class for a menu.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameMenu.Page">
+            <summary>The page the menu appears in.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameMenu.FrameSet">
             <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameMenu.Type">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameMenu.Create(Goedel.Sitebuilder.FramePage)">
+            <summary>Factory method, create a new instance for page <paramref name="page"/></summary>
+            <param name="page">The page in which the menu appears.</param>
+            <returns>The created instance.</returns>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameMenu.Parent">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameMenu.#ctor(System.String,System.Collections.Generic.List{Goedel.Sitebuilder.IFrameField})">
+            <summary>Constructor, return a new instance with the specified fields.</summary>
+            <param name="id">Unique identifier</param>
+            <param name="fields">The menu entries.</param>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameSelector">
+            <summary>Frame selector backer, pick an entry from a collection.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSelector.FrameSet">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSelector.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSelector.Parent">
+            <summary>The parent class</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameSelector.#ctor(System.String,System.Collections.Generic.List{Goedel.Sitebuilder.IFrameField})">
+            <summary>Constructor, return a new instance with the specified fields.</summary>
+            <param name="id">Unique identifier</param>
+            <param name="fields">The selector fields</param>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameClass">
+            <summary>Frame backing class descriptor, pick an entry from a collection.</summary>
+            <remarks>Constructor, return a new instance with the specified fields.</remarks>
+            <param name="id">Unique identifier</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameClass.#ctor(System.String)">
+            <summary>Frame backing class descriptor, pick an entry from a collection.</summary>
+            <remarks>Constructor, return a new instance with the specified fields.</remarks>
+            <param name="id">Unique identifier</param>
+        </member>
+        <member name="F:Goedel.Sitebuilder.FrameClass.DefaultAvatar">
+            <summary>Default avatar icon.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameClass.FrameSet">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameClass.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameClass.Parent">
+            <summary>The parent class (if it exists).</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameClass.ParentId">
+            <summary>Parent identifier, used by code generator.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameClass.Callback(Goedel.Sitebuilder.IPageContext)">
+            <summary>Asynchronous callback method</summary>
+            <param name="persistPlace">The page context.</param>
+            <returns>The transaction result.</returns>
+        </member>
+        <member name="T:Goedel.Sitebuilder.ButtonAction">
+            <summary>Actions bound to a form button.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.ButtonAction.Null">
+            <summary>Do nothing.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.ButtonAction.Link">
+            <summary>Activate hypoetext link.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.ButtonAction.Method">
+            <summary>Activate a method.</summary>
         </member>
         <member name="T:Goedel.Sitebuilder.FrameField">
             <summary>
             Frame fields
             </summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameField.PresentationId">
+            <summary>Identifier for use in code construction.</summary>
         </member>
         <member name="P:Goedel.Sitebuilder.FrameField.Prompt">
             <inheritdoc/>
@@ -230,6 +398,776 @@
             </summary>
             <param name="id">The frame field identifier.</param>
         </member>
+        <member name="T:Goedel.Sitebuilder.FrameButton">
+            <summary>Frame button</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Label">Label to present to the user.</param>
+            <param name="Action">Action to perform</param>
+            <param name="ButtonAction">Action type</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameButton.#ctor(System.String,System.String,System.String,Goedel.Sitebuilder.ButtonAction)">
+            <summary>Frame button</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Label">Label to present to the user.</param>
+            <param name="Action">Action to perform</param>
+            <param name="ButtonAction">Action type</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButton.Label">
+            <summary>Label to present to the user.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButton.Action">
+            <summary>Action to perform</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButton.ButtonAction">
+            <summary>Action type</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButton.ActionType">
+            <summary>Attribute to be used for given button types.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButton.ActionValue">
+            <summary>Value to be used for given button types.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButton.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButton.GetActive">
+            <summary>Function returning the visibility status of the item.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButton.GetInteger">
+            <summary>Function returning optional integer value to be displayed.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButton.GetText">
+            <summary>Function returning optional text value to be displayed.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButton.GetAnchor">
+            <summary>Function returning optional anchor value to be displayed.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButton.GetCustomized">
+            <summary>Return a customized version.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameButtonParsed">
+            <summary>Parsed version of a frame button</summary>
+            <param name="Id"></param>
+            <param name="Label"></param>
+            <param name="Action"></param>
+            <param name="Active"></param>
+            <param name="Integer"></param>
+            <param name="Text"></param>
+            <param name="Anchor"></param>
+            <param name="Customized"></param>
+            <param name="ButtonAction"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameButtonParsed.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,Goedel.Sitebuilder.ButtonAction)">
+            <summary>Parsed version of a frame button</summary>
+            <param name="Id"></param>
+            <param name="Label"></param>
+            <param name="Action"></param>
+            <param name="Active"></param>
+            <param name="Integer"></param>
+            <param name="Text"></param>
+            <param name="Anchor"></param>
+            <param name="Customized"></param>
+            <param name="ButtonAction"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButtonParsed.Active">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButtonParsed.Integer">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButtonParsed.Text">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButtonParsed.Anchor">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameButtonParsed.Customized">
+            <summary></summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameRef">
+            <summary>Frame entry with a reference value.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRef.#ctor(System.String)">
+            <summary>Frame entry with a reference value.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRef.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameRefMenu">
+            <summary>Menu frame entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Reference">The referenced menu</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRefMenu.#ctor(System.String,System.String)">
+            <summary>Menu frame entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Reference">The referenced menu</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefMenu.Reference">
+            <summary>The referenced menu</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefMenu.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefMenu.Menu">
+            <summary>The menu</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameRefClass">
+            <summary>Backing class specifier.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Reference">The referenced backing class</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRefClass.#ctor(System.String,System.String)">
+            <summary>Backing class specifier.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Reference">The referenced backing class</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefClass.Reference">
+            <summary>The referenced backing class</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefClass.Backing">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefClass.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefClass.Class">
+            <summary>The frame backing class.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefClass.Presentation">
+            <summary>Factory method mapping the presentation to an instance.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefClass.Set">
+            <summary>Setter.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefClass.Get">
+            <summary>Getter.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameRefClass`1">
+            <summary>Reference to a typed class defined elsewhere.</summary>
+            <typeparam name="T">The type of the associated backing class.</typeparam>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Reference">The referenced backing class</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRefClass`1.#ctor(System.String,System.String)">
+            <summary>Reference to a typed class defined elsewhere.</summary>
+            <typeparam name="T">The type of the associated backing class.</typeparam>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Reference">The referenced backing class</param>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameRefForm">
+            <summary>Reference to a form defined elsewhere.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Reference">The referenced form</param>
+            <param name="Fields"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRefForm.#ctor(System.String,System.String,System.Collections.Generic.List{Goedel.Sitebuilder.IFrameField})">
+            <summary>Reference to a form defined elsewhere.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Reference">The referenced form</param>
+            <param name="Fields"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefForm.Reference">
+            <summary>The referenced form</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefForm.Fields">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefForm.Backing">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefForm.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefForm.Class">
+            <summary>The frame backing class.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefForm.Presentation">
+            <summary>Factory method mapping the presentation to an instance.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefForm.Set">
+            <summary>Setter.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefForm.Get">
+            <summary>Getter.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRefForm.Factory">
+            <summary>Factory method returning a new instance.</summary>
+            <returns>A new instance.</returns>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameRefForm`1">
+            <summary>Reference to a typed form defined elsewhere</summary>
+            <typeparam name="T">The type of the associated backing class.</typeparam>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Reference">The referenced form</param>
+            <param name="Fields"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRefForm`1.#ctor(System.String,System.String,System.Collections.Generic.List{Goedel.Sitebuilder.IFrameField})">
+            <summary>Reference to a typed form defined elsewhere</summary>
+            <typeparam name="T">The type of the associated backing class.</typeparam>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Reference">The referenced form</param>
+            <param name="Fields"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefForm`1.Type">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRefForm`1.Factory">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameRefList">
+            <summary>Reference to a list.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Reference">The referenced list</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRefList.#ctor(System.String,System.String)">
+            <summary>Reference to a list.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Reference">The referenced list</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefList.Reference">
+            <summary>The referenced list</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRefList.Item(System.Object,System.Int32)">
+            <summary>Returns the nth element of a list <paramref name="x"/>. This 
+            is a workarround for the limitations of the C#10 implementation of generics.</summary>
+            <param name="x">List to return the item from.</param>
+            <param name="index">Index of the element to return.</param>
+            <returns>The item.</returns>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRefList.Count(System.Object)">
+            <summary>Count of the number of entries in the list <paramref name="x"/>.This 
+            is a workarround for the limitations of the C#10 implementation of generics.</summary>
+            <param name="x">List to return the entry count of.</param>
+            <returns>The number of entries in the list.</returns>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefList.Backing">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefList.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefList.Presentation">
+            <summary>Factory method mapping the presentation to an instance.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefList.Set">
+            <summary>Setter.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRefList.Get">
+            <summary>Getter.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameRefList`1">
+            <summary>Reference to a typed list.</summary>
+            <typeparam name="T">The type of the associated backing class.</typeparam>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Reference">The referenced list</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRefList`1.#ctor(System.String,System.String)">
+            <summary>Reference to a typed list.</summary>
+            <typeparam name="T">The type of the associated backing class.</typeparam>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Reference">The referenced list</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRefList`1.Item(System.Object,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRefList`1.Count(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameBoolean">
+            <summary>Boolean form entry, typically rendered as a checkbox.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameBoolean.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Nullable{System.Boolean}},System.Func{Goedel.Protocol.IBinding,System.Nullable{System.Boolean}})">
+            <summary>Boolean form entry, typically rendered as a checkbox.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameBoolean.Id">
+            <summary>Unique identifier within the frame.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameBoolean.Prompt">
+            <summary>Prompt to be displayed to the user.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameBoolean.Hidden">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameBoolean.Description">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameBoolean.Backing">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameBoolean.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameInteger">
+            <summary>Integer form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameInteger.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Nullable{System.Int32}},System.Func{Goedel.Protocol.IBinding,System.Nullable{System.Int32}})">
+            <summary>Integer form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameInteger.Id">
+            <summary>Unique identifier within the frame.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameInteger.Prompt">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameInteger.Hidden">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameInteger.Description">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameInteger.Backing">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameInteger.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameCount">
+            <summary>Integer form entry that is a count of a set of items.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameCount.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Nullable{System.Int32}},System.Func{Goedel.Protocol.IBinding,System.Nullable{System.Int32}})">
+            <summary>Integer form entry that is a count of a set of items.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameCount.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameDateTime">
+            <summary>Date Time form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameDateTime.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Nullable{System.DateTime}},System.Func{Goedel.Protocol.IBinding,System.Nullable{System.DateTime}})">
+            <summary>Date Time form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameDateTime.Id">
+            <summary>Unique identifier within the frame.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameDateTime.Prompt">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameDateTime.Hidden">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameDateTime.Description">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameDateTime.Backing">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameDateTime.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameString">
+            <summary>Text string form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameString.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.String},System.Func{Goedel.Protocol.IBinding,System.String})">
+            <summary>Text string form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameString.Id">
+            <summary>Unique identifier within the frame.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameString.Prompt">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameString.Hidden">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameString.Description">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameString.Backing">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameString.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameText">
+            <summary>Text string form entry covering multiple lines.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameText.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.String},System.Func{Goedel.Protocol.IBinding,System.String})">
+            <summary>Text string form entry covering multiple lines.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameText.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameRichText">
+            <summary>Rich text string form entry with usual text decorations.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameRichText.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.String},System.Func{Goedel.Protocol.IBinding,System.String})">
+            <summary>Rich text string form entry with usual text decorations.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameRichText.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameAnchor">
+            <summary>Anchor form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameAnchor.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,Goedel.Sitebuilder.BackingTypeLink},System.Func{Goedel.Protocol.IBinding,Goedel.Sitebuilder.BackingTypeLink})">
+            <summary>Anchor form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameAnchor.Id">
+            <summary>Unique identifier within the frame.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameAnchor.Set">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameAnchor.Get">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameAnchor.Tag">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameAnchor.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameAnchor.Backing">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameAnchor.Prompt">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameAnchor.Hidden">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameAnchor.Description">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameImage">
+            <summary>Image form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameImage.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.String},System.Func{Goedel.Protocol.IBinding,System.String})">
+            <summary>Image form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameImage.Id">
+            <summary>Unique identifier within the frame.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameImage.Prompt">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameImage.Hidden">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameImage.Description">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameImage.Backing">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameImage.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameAvatar">
+            <summary>Avatar form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Get"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameAvatar.#ctor(System.String,System.Func{Goedel.Protocol.IBinding,System.String})">
+            <summary>Avatar form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Get"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameAvatar.Get">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameAvatar.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameChooser">
+            <summary>Chooser form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Options"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameChooser.#ctor(System.String,System.Collections.Generic.List{Goedel.Sitebuilder.FrameChooserOption})">
+            <summary>Chooser form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Options"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameChooser.Options">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameChooser.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameChooserOption">
+            <summary>Option in a chooser form entry</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Label"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameChooserOption.#ctor(System.String,System.String)">
+            <summary>Option in a chooser form entry</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Label"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameChooserOption.Id">
+            <summary>Unique identifier within the frame.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameChooserOption.Label">
+            <summary></summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameSeparator">
+            <summary>Form separator decoration.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameSeparator.#ctor(System.String)">
+            <summary>Form separator decoration.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSeparator.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FramePresentation">
+            <summary>Presentation on a form backing type.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FramePresentation.#ctor(System.String)">
+            <summary>Presentation on a form backing type.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FramePresentation.UidField">
+            <summary>Uid field, used for code construction.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FramePresentation.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FramePresentation.GetUid">
+            <summary>Factory method returning a new instance of the element 
+            with the specified ID.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FramePresentation.Sections">
+            <summary>Sections in the presentation.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameSection">
+            <summary>Section within a form.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameSection.#ctor(System.String)">
+            <summary>Section within a form.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSection.Id">
+            <summary>Unique identifier within the frame.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSection.AnchorField">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSection.GetAnchor">
+            <summary>Factory method returning by anchor.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSection.Fields">
+            <summary>Fields in the section.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameSubmenu">
+            <summary>Submenu</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Label"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameSubmenu.#ctor(System.String,System.String)">
+            <summary>Submenu</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Label"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSubmenu.Label">
+            <summary></summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSubmenu.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSubmenu.Fields">
+            <summary>Fields in the section.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameIcon">
+            <summary>Icon</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameIcon.#ctor(System.String)">
+            <summary>Icon</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameIcon.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameFile">
+            <summary>File entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameFile.#ctor(System.String)">
+            <summary>File entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameFile.Id">
+            <summary>Unique identifier within the frame.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameFile.FileType">
+            <summary>The file type</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameFile.Prompt">
+            <summary>User prompt</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameFile.Hidden">
+            <summary>If true, entry is hidden</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameFile.Description">
+            <summary>Description of the entry</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameFile.Backing">
+            <summary>Backing type.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameFile.Type">
+            <summary>Type</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameFile.Set">
+            <summary>Setter.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameFile.Get">
+            <summary>Getter.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameFile.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Sitebuilder.IPageContext">
+            <summary>Page context.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FormReaction">
+            <summary>Text to be shown to the user to explain the reason a form failed validation.</summary>
+            <param name="Id">Entry identifier.</param>
+            <param name="Text">Text to display.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FormReaction.#ctor(System.String,System.String)">
+            <summary>Text to be shown to the user to explain the reason a form failed validation.</summary>
+            <param name="Id">Entry identifier.</param>
+            <param name="Text">Text to display.</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FormReaction.Id">
+            <summary>Entry identifier.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FormReaction.Text">
+            <summary>Text to display.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.FrameSet">
+            <summary>Describes a set of frames making up a GUI.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.Namespace">
+            <summary>The namespace to instantiate the frameset description into.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.Page">
+            <summary>The default page.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.Directory">
+            <summary>Directory to store persisted data to.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.Members">
+            <summary>Directory to store per member data to.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.Logs">
+            <summary>Directory to record logs.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.ResourceFiles">
+            <summary>Directory where the resource files are stored.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.RepositoryFiles">
+            <summary>Directory to store repository files.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.IconFiles">
+            <summary>Directory to store icons.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.RandomSeed">
+            <summary>Random seed value used to force static values for testing.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.PrivateKeys">
+            <summary>Directory of private keys.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.Resources">
+            <summary>Resources to be added to the start of every page.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.EndResources">
+            <summary>Resources to be added to the end of every page.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.Pages">
+            <summary>List of pages</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.Menus">
+            <summary>List of menus</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.Selectors">
+            <summary>List of selectors</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.Classes">
+            <summary>List of backing classes.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.PageDirectory">
+            <summary>Directory mapping prefix to page template.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameSet.ResolveReferences(Goedel.Sitebuilder.IBacked)">
+            <summary>
+            Resolve id references to field identifiers and compile the places
+            directory.
+            </summary>
+            <param name="entry">The entry to resolve.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameSet.IconPath(System.String)">
+            <summary>Maps Icon ID to the resource URI.</summary>
+            <param name="id">The icon id</param>
+            <returns>URI local path</returns>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameSet.MemberPath(System.String)">
+            <summary>Maps member ID to the Member avatar ID.</summary>
+            <param name="id">The member id</param>
+            <returns>URI local path</returns>
+        </member>
         <member name="T:Goedel.Sitebuilder.ButtonVisibility">
             <summary>Button visibility states.</summary>
         </member>
@@ -250,34 +1188,103 @@
         <member name="F:Goedel.Sitebuilder.ButtonVisibility.None">
             <summary>The button is not visible</summary>
         </member>
-        <member name="P:Goedel.Sitebuilder.FrameRefClass.Backing">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Sitebuilder.FrameRefForm`1.Factory">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Sitebuilder.FrameRefList.Backing">
-            <inheritdoc/>
-        </member>
         <member name="T:Goedel.Sitebuilder.Resource">
             <summary>
-            
+            Resource entry on page.
             </summary>
             <param name="Uri">The resource locator.</param>
-            <param name="Type">The icon type</param>
+            <param name="Type">The resource type</param>
+            <param name="Integrity">Optional integrity specifier.</param>
         </member>
         <member name="M:Goedel.Sitebuilder.Resource.#ctor(System.String,System.String,System.String)">
             <summary>
-            
+            Resource entry on page.
             </summary>
             <param name="Uri">The resource locator.</param>
-            <param name="Type">The icon type</param>
+            <param name="Type">The resource type</param>
+            <param name="Integrity">Optional integrity specifier.</param>
         </member>
         <member name="P:Goedel.Sitebuilder.Resource.Uri">
             <summary>The resource locator.</summary>
         </member>
         <member name="P:Goedel.Sitebuilder.Resource.Type">
-            <summary>The icon type</summary>
+            <summary>The resource type</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.Resource.Integrity">
+            <summary>Optional integrity specifier.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.Script">
+            <summary>Script entry on page.</summary>
+            <param name="Uri">URI to load the script from</param>
+            <param name="Type">The resource type</param>
+            <param name="Integrity">Optional integrity specifier.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.Script.#ctor(System.String,System.String,System.String)">
+            <summary>Script entry on page.</summary>
+            <param name="Uri">URI to load the script from</param>
+            <param name="Type">The resource type</param>
+            <param name="Integrity">Optional integrity specifier.</param>
+        </member>
+        <member name="T:Goedel.Sitebuilder.Stylesheet">
+            <summary>
+            Resource entry on page.
+            </summary>
+            <param name="Uri">The resource locator.</param>
+            <param name="Type">The resource type</param>
+            <param name="Integrity">Optional integrity specifier.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.Stylesheet.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Resource entry on page.
+            </summary>
+            <param name="Uri">The resource locator.</param>
+            <param name="Type">The resource type</param>
+            <param name="Integrity">Optional integrity specifier.</param>
+        </member>
+        <member name="T:Goedel.Sitebuilder.Element">
+            <summary>Element</summary>
+            <param name="Tag">Tag name</param>
+            <param name="ClassAttribute">Attribute</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.Element.#ctor(System.String,System.String)">
+            <summary>Element</summary>
+            <param name="Tag">Tag name</param>
+            <param name="ClassAttribute">Attribute</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.Element.Tag">
+            <summary>Tag name</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.Element.ClassAttribute">
+            <summary>Attribute</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.DocumentType">
+            <summary>The document types</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.DocumentType.XHTML">
+            <summary>XHTML document type.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.HtmlWriter">
+            <summary>Write HTML output</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.HtmlWriter.Indent">
+            <summary>If true, indent the output for ease of reading.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.HtmlWriter.TextWriter">
+            <summary>Output writer.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.HtmlWriter.DocumentTypes">
+            <summary>Document preamble document type.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.HtmlWriter.#ctor(System.IO.TextWriter)">
+            <summary>Constructor, returns a new instance bound to the writer <paramref name="textWriter"/></summary>
+            <param name="textWriter">The output stream.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.HtmlWriter.OpenClass(System.String,System.String,System.String[])">
+            <summary>Start class</summary>
+            <param name="tag">Tag</param>
+            <param name="classId">Identifier</param>
+            <param name="attributes">List of {tag, value} attributes</param>
+            <returns></returns>
         </member>
         <member name="M:Goedel.Sitebuilder.HtmlWriter.Open(System.String,System.String[])">
             <summary>
@@ -295,6 +1302,36 @@
             </summary>
             <param name="position">Expected stack depth.</param>
         </member>
+        <member name="M:Goedel.Sitebuilder.HtmlWriter.Element(System.String,System.String[])">
+            <summary>HTML element, with tag <paramref name="tag"/> and attributes <paramref name="attributes"/></summary>
+            <param name="tag">The tag</param>
+            <param name="attributes">A list of {tag, value} pairs defining attributes.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Sitebuilder.HtmlWriter.ElementClass(System.String,System.String,System.String[])">
+            <summary>HTML element, with tag <paramref name="tag"/> and attributes 
+            <paramref name="attributes"/> that declares itself to be of class
+            <paramref name="classId"/></summary>
+            <param name="tag">The tag</param>
+            <param name="attributes">A list of {tag, value} pairs defining attributes.</param>
+            <param name="classId">The value of the class attribute.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Sitebuilder.HtmlWriter.Text(System.String,System.String,System.String[])">
+            <summary>Write a text block <paramref name="text"/> wrapped in an element
+            <paramref name="tag"/> with attributes <paramref name="attributes"/></summary>
+            <param name="text">Text to write.</param>
+            <param name="tag">The wrapper element class.</param>
+            <param name="attributes">A list of {tag, value} pairs defining attributes.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.HtmlWriter.TextClass(System.String,System.String,System.String,System.String[])">
+            <summary>Write a text block <paramref name="text"/> wrapped in an element
+            <paramref name="tag"/> with attributes <paramref name="attributes"/></summary>
+            <param name="text">Text to write.</param>
+            <param name="tag">The wrapper element class.</param>
+            <param name="attributes">A list of {tag, value} pairs defining attributes.</param>
+            <param name="classId">The value of the class attribute.</param>
+        </member>
         <member name="M:Goedel.Sitebuilder.HtmlWriter.Text(System.String)">
             <summary>
             Write the specified textg to the stream as an escaped HTML string.
@@ -306,6 +1343,50 @@
             Write the specified textg to the stream as an escaped HTML string.
             </summary>
             <param name="text">The textg to write.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.HtmlWriter.Head(System.String,Goedel.Sitebuilder.Resource,Goedel.Sitebuilder.DocumentType,System.String)">
+            <summary>Write out the document head part with the document type, title, etc.</summary>
+            <param name="title">The document title.</param>
+            <param name="faviCon">Page icon.</param>
+            <param name="docType">The document type.</param>
+            <param name="language">The document language.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.HtmlWriter.Body">
+            <summary>Begin writing the document body.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.HtmlWriter.Finish">
+            <summary>Finish writing the document, append the footer.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.HtmlWriter.Reources(System.Collections.Generic.List{Goedel.Sitebuilder.Resource})">
+            <summary>Write out the resources at the start or end of the document.</summary>
+            <param name="resources">The resources to write</param>
+        </member>
+        <member name="T:Goedel.Sitebuilder.IBacked">
+            <summary>Interface satisfied by backing classes.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IBacked.FrameSet">
+            <summary>The set of frame resources.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IBacked.Tag">
+            <summary>The identifier</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IBacked.Id">
+            <summary>Unique identifier.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IBacked.Fields">
+            <summary>The frame fields.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IBacked.Presentation">
+            <summary>Presentation to be displayed in this context.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IBacked.Type">
+            <summary>The class type, used for deserialization.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IBacked.Parent">
+            <summary>The parent class</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.IBacked.StartRender">
+            <summary>Time rendering started.</summary>
         </member>
         <member name="T:Goedel.Sitebuilder.IFrameField">
             <summary>
@@ -332,6 +1413,9 @@
         </member>
         <member name="P:Goedel.Sitebuilder.IFrameField.Description">
             <summary>Long description for use in hover text, etc.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.IPersistSite">
+            <summary>Interface describing sites.</summary>
         </member>
         <member name="P:Goedel.Sitebuilder.IPersistSite.ServerCookieManager">
             <summary>State management interface to keep us logged in.</summary>
@@ -381,11 +1465,14 @@
         <member name="P:Goedel.Sitebuilder.PageWriter.PageText">
             <summary>Text to use for the page.</summary>
         </member>
+        <member name="P:Goedel.Sitebuilder.PageWriter.Reactions">
+            <summary>Reactions to be added to elements of a form.</summary>
+        </member>
         <member name="M:Goedel.Sitebuilder.PageWriter.#ctor(Goedel.Sitebuilder.FramePage,System.IO.TextWriter)">
             <summary>
             Constructor.
             </summary>
-            <param name="frameset">The frame set context to render in.</param>
+            <param name="page">The frame context to render in.</param>
             <param name="textWriter">The text writer to write to.</param>
         </member>
         <member name="M:Goedel.Sitebuilder.PageWriter.Render">
@@ -416,20 +1503,264 @@
         </member>
         <member name="M:Goedel.Sitebuilder.PageWriter.RenderField(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.IFrameField)">
             <summary>
-            Use the field specifier <paramref name="field"/> to render data from
+            Use the field specifier <paramref name="description"/> to render data from
             <paramref name="backer"/>.
             </summary>
             <param name="backer">The data to render.</param>
-            <param name="field">The field to render</param>
+            <param name="description">Describes how to render the data.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.FrameRefMenu,Goedel.Sitebuilder.IBacked)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.FrameButton,Goedel.Sitebuilder.IBacked)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameSubmenu)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameRefList,System.Int32,System.Int32)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+            <param name="max">Maximum number of items to render, if -1, show all.</param>
+            <param name="first">First item to render</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameRefClass)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameChooser)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameBoolean)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameInteger)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameDateTime)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameString)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameRichText)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameText)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameImage)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameAvatar)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameCount)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameIcon)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameSeparator)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="F:Goedel.Sitebuilder.PageWriter.DebugForm">
+            <summary>Debug flag.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameRefForm)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.RenderFormField(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.IFrameField)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.RenderForm(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameFile,System.String)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+            <param name="id">Identifier of the form element.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.RenderForm(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameString,System.String)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+            <param name="id">Identifier of the form element.</param>
+        </member>
+        <member name="T:Goedel.Sitebuilder.ParsedMultipartFrame">
+            <summary>Parse result from a frame submission.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.ParsedMultipartFrame.Bind(Goedel.Protocol.IBinding,System.IO.Stream)">
+            <summary>Bind data from <paramref name="stream"/> to the
+            value <paramref name="data"/></summary>
+            <param name="data">The target to receive the result.</param>
+            <param name="stream">The stream to parse.</param>
+            <returns>True if successful, otherwise, false.</returns>
         </member>
         <member name="T:Goedel.Sitebuilder.RichetextResult">
             <summary>Result of performing validation.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.RichetextResult.Valid">
+            <summary>Value is valid.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.RichetextResult.Invalid">
+            <summary>Value was invalid.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.RichetextResult.Empty">
+            <summary>Value was empty.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.TextMarkup">
+            <summary>Markup description</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.TextMarkup.Block">
+            <summary>Block text definitions.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.TextMarkup.Decoration">
+            <summary>Decoration definitions.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.TextMarkup.#ctor(System.Collections.Generic.List{Goedel.Sitebuilder.TextBlock},System.Collections.Generic.List{Goedel.Sitebuilder.TextDecoration})">
+            <summary>Constructor, return a new instance.</summary>
+            <param name="blocks">Block text definitions.</param>
+            <param name="decorations">Decoration definitions.</param>
+        </member>
+        <member name="T:Goedel.Sitebuilder.TextBlock">
+            <summary>Describes a text block</summary>
+            <param name="Tag">The tag</param>
+            <param name="Attributes">The permitted attributes.</param>
+            <param name="Children">Permitted child blocks.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.TextBlock.#ctor(System.String,System.Collections.Generic.List{Goedel.Sitebuilder.TextBlock},System.Collections.Generic.List{System.String})">
+            <summary>Describes a text block</summary>
+            <param name="Tag">The tag</param>
+            <param name="Attributes">The permitted attributes.</param>
+            <param name="Children">Permitted child blocks.</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.TextBlock.Tag">
+            <summary>The tag</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.TextBlock.Children">
+            <summary>Permitted child blocks.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.TextBlock.Attributes">
+            <summary>The permitted attributes.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.TextDecoration">
+            <summary>Describes a text decoration.</summary>
+            <param name="Tag">The tag</param>
+            <param name="Attributes">The permitted attributes.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.TextDecoration.#ctor(System.String,System.Collections.Generic.List{System.String})">
+            <summary>Describes a text decoration.</summary>
+            <param name="Tag">The tag</param>
+            <param name="Attributes">The permitted attributes.</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.TextDecoration.Tag">
+            <summary>The tag</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.TextDecoration.Attributes">
+            <summary>The permitted attributes.</summary>
+        </member>
+        <member name="T:Goedel.Sitebuilder.RichtextValidator">
+            <summary>Rich text validation parser.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.RichtextValidator.IsBlank">
+            <summary>If true, the output is blank.</summary>
+        </member>
+        <member name="F:Goedel.Sitebuilder.RichtextValidator.Images">
+            <summary>List of images in the item.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.RichtextValidator.PostMarkup">
+            <summary>The schema. to validate against.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.RichtextValidator.XmlReader">
+            <summary>The reader.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.RichtextValidator.#cctor">
+            <summary>Static constructor.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.RichtextValidator.#ctor(System.String)">
+            <summary>Constructor returning a validator over <paramref name="text"/></summary>
+            <param name="text">The text to validate.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.RichtextValidator.#ctor(System.Xml.XmlReader)">
+            <summary>Constructor returning a validator over data read from <paramref name="reader"/></summary>
+            <param name="reader">Reader to parse the text.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.RichtextValidator.Validate(Goedel.Sitebuilder.TextMarkup)">
+            <summary>Validate the input.</summary>
+            <param name="textMarkup">The schema to validate against (optional, defaults to 
+            the default schema).</param>
+            <returns>The validation result.</returns>
+        </member>
+        <member name="M:Goedel.Sitebuilder.RichtextValidator.Validate(System.String)">
+            <summary>Validate the document <paramref name="text"/></summary>
+            <param name="text">The document to validate.</param>
+            <returns>The validation result.</returns>
         </member>
         <member name="T:Goedel.Sitebuilder.ServerCookieManager">
             <summary>
             Cookie manager, encrypts and authenticates strings of data under a shared secret 
             that can be rotated as needed.
             </summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.ServerCookieManager.#ctor(System.String)">
+            <summary>Instance returning a new cookie manager.</summary>
+            <param name="seed">Optional seed value, if empty, a random seed is generated.</param>
         </member>
         <member name="M:Goedel.Sitebuilder.ServerCookieManager.GetCookie(System.String,System.Int32)">
             <summary>
@@ -440,6 +1771,48 @@
             <param name="lifetime">The validity interval in hours.</param>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Sitebuilder.ServerCookieManager.ClearCookie(System.String)">
+            <summary>Return a <see cref="T:System.Net.Cookie"/> value to clear cookie <paramref name="name"/>.</summary>
+            <param name="name">The cookie to clear.</param>
+            <returns>The HTTP cookie.</returns>
+        </member>
+        <member name="M:Goedel.Sitebuilder.ServerCookieManager.GetCookie(System.String,System.String,System.Int32)">
+            <summary>Return a <see cref="T:System.Net.Cookie"/> value to set the cookie <paramref name="name"/>
+            to the value <paramref name="identifier"/>..</summary>
+            <param name="name">The cookie to clear.</param>
+            <param name="identifier">The cookie identifier.</param>
+            <param name="lifetime">Cookie lifetime.</param>
+            <returns>The HTTP cookie.</returns>
+        </member>
+        <member name="M:Goedel.Sitebuilder.ServerCookieManager.ParseCookie(System.Byte[])">
+            <summary>Parse the cookie data <paramref name="cookie"/>.</summary>
+            <param name="cookie">The cookie binary data.</param>
+            <returns>The parsed value.</returns>
+        </member>
+        <member name="M:Goedel.Sitebuilder.ServerCookieManager.TryGetCookie(System.Net.HttpListenerRequest,System.String,System.String@)">
+            <summary>Try to get a cookie <paramref name="tag"/> bound to the identifier <paramref name="id"/>
+            in <paramref name="request"/></summary>
+            <param name="request">The HTTP request.</param>
+            <param name="tag">The tag value.</param>
+            <param name="id">The identifier (if found).</param>
+            <returns>True if found.</returns>
+        </member>
+        <member name="T:Goedel.Sitebuilder.ServerSecret">
+            <summary>Manages a single server secret. In normal operation, the server
+            will have multiple secrets active with the secrets being retired on a 
+            rolling basis.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.ServerSecret.Expire">
+            <summary>The expiry time.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.ServerSecret.Secret">
+            <summary>The secret value.</summary>
+        </member>
+        <member name="M:Goedel.Sitebuilder.ServerSecret.#ctor(System.Int32,System.String)">
+            <summary>Constructor.</summary>
+            <param name="expiryHours">Expiry of the secret in hours.</param>
+            <param name="seed">Optional seed value.</param>
+        </member>
         <member name="T:Goedel.Sitebuilder.SitebuilderConstants">
             <summary>
             Constants specified in hallambaker-mesh-schema
@@ -448,9 +1821,6 @@
         <member name="F:Goedel.Sitebuilder.SitebuilderConstants.Repository">
             <summary>
             </summary>
-        </member>
-        <member name="F:Goedel.Sitebuilder.SiteServiceConfiguration.ConfigurationEntry">
-            <summary>The configuration entry.</summary> 
         </member>
     </members>
 </doc>
