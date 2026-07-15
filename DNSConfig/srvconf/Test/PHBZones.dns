@@ -60,6 +60,10 @@ Site example
 	Domain example.com
 		Address host1.example.com DEV1
 		Address host2.example.com DEV2
+	Domain example.net
+		Address host1.example.net DEV1
+		Address host2.example.net DEV2
+		Mesh  alice.example.net "dsa=maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@@example.com"
 	Web www.example.com "example/"
 		Host dev1.hallambaker.com
 

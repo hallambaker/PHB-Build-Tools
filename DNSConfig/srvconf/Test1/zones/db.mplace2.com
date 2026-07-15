@@ -6,7 +6,7 @@
 ;
 $TTL 600
 mplace2.com.      IN      SOA     dns1.mplace2.com. hallam.gmail.com. (
-                        2026071501       ; serial, todays date + todays serial 
+                        2026071401       ; serial, todays date + todays serial 
                         3600              ; refresh, seconds
                         1800              ; retry, seconds
                         3600000              ; expire, seconds

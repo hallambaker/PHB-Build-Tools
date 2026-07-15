@@ -87,6 +87,7 @@ using Goedel.Utilities;
 //       Email
 //       Wildcard
 //       Handle
+//       Mesh
 //       Internal
 //       Root
 //       Name
@@ -117,6 +118,7 @@ namespace Goedel.Tool.DNSConfig {
         Site,
         Domain,
         Wildcard,
+        Mesh,
         Handle,
         Address,
         SMTP,
@@ -500,6 +502,7 @@ namespace Goedel.Tool.DNSConfig {
 		public Email  Email = new ();
 		public List<Wildcard>  Wildcard = [];
 		public List<Handle>  Handle = [];
+		public List<Mesh>  Mesh = [];
 		public List<Internal>  Internal = [];
 
         public override DNSConfigType _Tag () =>DNSConfigType.Domain;
@@ -533,6 +536,9 @@ namespace Goedel.Tool.DNSConfig {
 			foreach (Handle _e in Handle) {
 				_e.Serialize (Output, true);
 				}
+			foreach (Mesh _e in Mesh) {
+				_e.Serialize (Output, true);
+				}
 			foreach (Internal _e in Internal) {
 				_e.Serialize (Output, true);
 				}
@@ -560,6 +566,31 @@ namespace Goedel.Tool.DNSConfig {
 
 			if (tag) {
 				Output.EndElement ("Wildcard");
+				}			
+			}
+		}
+
+    public partial class Mesh : _Choice {
+        public REF<_Choice>				Id;
+		public string					Value;
+
+        public override DNSConfigType _Tag () =>DNSConfigType.Mesh;
+
+
+		public override void _InitChildren (_Choice? Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Mesh");
+				}
+
+	        Output.WriteId ("Id", Id.ToString());
+			Output.WriteAttribute ("Value", Value);
+			if (tag) {
+				Output.EndElement ("Mesh");
 				}			
 			}
 		}
@@ -970,6 +1001,9 @@ namespace Goedel.Tool.DNSConfig {
 		Domain__Id,				
 		Domain__Options,				
 		Wildcard_Start,
+		Mesh_Start,
+		Mesh__Id,				
+		Mesh__Value,				
 		Handle_Start,
 		Handle__Id,				
 		Handle__Value,				
@@ -1086,6 +1120,7 @@ namespace Goedel.Tool.DNSConfig {
                 case "Site": return NewSite();
                 case "Domain": return NewDomain();
                 case "Wildcard": return NewWildcard();
+                case "Mesh": return NewMesh();
                 case "Handle": return NewHandle();
                 case "Address": return NewAddress();
                 case "SMTP": return NewSMTP();
@@ -1219,6 +1254,14 @@ namespace Goedel.Tool.DNSConfig {
             }
 
 
+        private Goedel.Tool.DNSConfig.Mesh NewMesh() {
+            Goedel.Tool.DNSConfig.Mesh result = new ();
+            Push (result);
+            State = StateCode.Mesh_Start;
+            return result;
+            }
+
+
         private Goedel.Tool.DNSConfig.Handle NewHandle() {
             Goedel.Tool.DNSConfig.Handle result = new ();
             Push (result);
@@ -1340,6 +1383,7 @@ namespace Goedel.Tool.DNSConfig {
                 case "Site": return Goedel.Tool.DNSConfig.DNSConfigType.Site;
                 case "Domain": return Goedel.Tool.DNSConfig.DNSConfigType.Domain;
                 case "Wildcard": return Goedel.Tool.DNSConfig.DNSConfigType.Wildcard;
+                case "Mesh": return Goedel.Tool.DNSConfig.DNSConfigType.Mesh;
                 case "Handle": return Goedel.Tool.DNSConfig.DNSConfigType.Handle;
                 case "Address": return Goedel.Tool.DNSConfig.DNSConfigType.Address;
                 case "SMTP": return Goedel.Tool.DNSConfig.DNSConfigType.SMTP;
@@ -1835,6 +1879,12 @@ namespace Goedel.Tool.DNSConfig {
 									Current_Cast.Handle.Add (NewHandle ());
 									break;
 									}
+								case Goedel.Tool.DNSConfig.DNSConfigType.Mesh : {
+
+									// Mesh  Mesh
+									Current_Cast.Mesh.Add (NewMesh ());
+									break;
+									}
 								case Goedel.Tool.DNSConfig.DNSConfigType.Internal : {
 
 									// Internal  Internal
@@ -1842,13 +1892,35 @@ namespace Goedel.Tool.DNSConfig {
 									break;
 									}
 								default : {
-									throw new Expected("Parser Error Expected [Service Address SMTP Email Wildcard Handle Internal ]");
+									throw new Expected("Parser Error Expected [Service Address SMTP Email Wildcard Handle Mesh Internal ]");
 									}
 								}
 							}
                         break;
 
                     case StateCode.Wildcard_Start:
+                        Pop ();
+                        Represent = true; 
+                        break;
+                    case StateCode.Mesh_Start:
+                        if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
+                            Goedel.Tool.DNSConfig.Mesh Current_Cast = (Goedel.Tool.DNSConfig.Mesh)Current;
+                            Current_Cast.Id = Registry.REF(Position, Text, TYPE__AddressT, Current_Cast);
+                            State = StateCode.Mesh__Id;
+                            break;
+                            }
+                        throw new Expected("Expected LABEL or LITERAL");
+
+                    case StateCode.Mesh__Id:
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.DNSConfig.Mesh Current_Cast = (Goedel.Tool.DNSConfig.Mesh)Current;
+                            Current_Cast.Value = Text;
+                            State = StateCode.Mesh__Value;
+                            break;
+                            }
+                        throw new Expected("Expected String");
+
+                    case StateCode.Mesh__Value:
                         Pop ();
                         Represent = true; 
                         break;

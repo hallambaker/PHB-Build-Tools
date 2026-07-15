@@ -20,14 +20,9 @@ zone "example.com" {
     file "/etc/bind/zones/db.example.com";
 };
 
-zone "example.net" {
-    type primary;
-    file "/etc/bind/zones/db.example.net";
-};
-
 zone "hallambaker.com" {
     type primary;
-    file "/etc/bind/zones/db.hallambaker.com";
+    file "/etc/bind/zones/db.hallambaker.com.internal";
 };
 
 zone "defaultdenysecurity.com" {

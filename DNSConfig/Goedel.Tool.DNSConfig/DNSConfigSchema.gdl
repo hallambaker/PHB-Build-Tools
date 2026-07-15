@@ -61,10 +61,15 @@ Class Goedel.Tool.DNSConfig DNSConfig
 			Email Email Single
 			Wildcard Wildcard Multiple
 			Handle Handle Multiple
+			Mesh Mesh Multiple
 			Internal Internal Multiple
 
 	Type Wildcard
 	
+	Type Mesh
+		Id				REF AddressT
+		Value			String
+
 	Type Handle
 		Id				REF AddressT
 		Value			String

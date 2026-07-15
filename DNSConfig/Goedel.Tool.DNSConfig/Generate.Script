@@ -155,6 +155,15 @@ _atproto.#{Handle.Id}. IN TXT "#{Handle.Value}"
 #end foreach
 #end if
 #end foreach
+; mesh handles
+#foreach (var Handle in Domain.Mesh)
+_mesh.#{Handle.Id}. IN TXT "#{Handle.Value}"
+#if Handle.Id.ToString() != Domain.Id.ToString()
+#foreach (var Host in Domain.Web.Host)
+#{Domain.MakeAddress(Host.Machine, Handle.Id.ToString())} 
+#end foreach
+#end if
+#end foreach
 #end method
 
 #method GenerateAdressRecords DNSConfig DNSConfig

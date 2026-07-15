@@ -199,6 +199,15 @@ public partial class Generate : global::Goedel.Registry.Script {
 					}
 				}
 			}
+		_Output.Write ("; mesh handles\n{0}", _Indent);
+		foreach  (var Handle in Domain.Mesh) {
+			_Output.Write ("_mesh.{1}. IN TXT \"{2}\"\n{0}", _Indent, Handle.Id, Handle.Value);
+			if (  Handle.Id.ToString() != Domain.Id.ToString() ) {
+				foreach  (var Host in Domain.Web.Host) {
+					_Output.Write ("{1} \n{0}", _Indent, Domain.MakeAddress(Host.Machine, Handle.Id.ToString()));
+					}
+				}
+			}
 		}
 	
 	/// <summary>	
