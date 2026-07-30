@@ -77,6 +77,23 @@ Class Goedel.Tool.Sitebuilder FrameStruct
             Selection
             Container
             Description
+            P
+            H1
+            H2
+            LI
+            Div
+
+    Type P
+        Text Text
+
+    Type H1
+        Text Text
+
+    Type H2
+        Text Text
+
+    Type LI
+        Text Text
 
     Type Property
         Id Token EntryT
@@ -102,6 +119,10 @@ Class Goedel.Tool.Sitebuilder FrameStruct
             Form
             RichText
             Container
+            P
+            H1
+            H2
+
 
     Type Anchor
         Properties List FieldProperty
@@ -123,6 +144,10 @@ Class Goedel.Tool.Sitebuilder FrameStruct
     Type Customized
 
     Type Container
+
+    Type Div
+        Properties List FieldItem
+
     Type Action
 
 

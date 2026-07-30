@@ -48,8 +48,8 @@ public record TextMarkup {
 /// <param name="Children">Permitted child blocks.</param>
 public record TextBlock(
     string Tag,
-    List<TextBlock> Children = null,
-    List<string> Attributes = null) {
+    List<TextBlock>? Children = null,
+    List<string>? Attributes = null) {
     }
 
 /// <summary>Describes a text decoration.</summary>
@@ -57,7 +57,7 @@ public record TextBlock(
 /// <param name="Attributes">The permitted attributes.</param>
 public record TextDecoration(
     string Tag,
-    List<string> Attributes = null) {
+    List<string>? Attributes = null) {
     }
 
 
@@ -76,6 +76,13 @@ public class RichtextValidator {
     /// <summary>The reader.</summary>
     XmlReader XmlReader { get; }
 
+    /// <summary>String writer to collect text as it is canonicalized.</summary>
+    StringWriter Writer { get; } = new();
+
+    /// <summary>The canonicalized input.</summary>
+    public string Canonical => Writer.ToString();
+
+
     /// <summary>Static constructor.</summary>
     static RichtextValidator() {
 
@@ -83,12 +90,12 @@ public class RichtextValidator {
             [new ("h1"), new("h2"), new("h3"), new("p"), 
             new("ul", [new("li")]), 
             new("ol", [new("li")]),
-
+            new("pre", Attributes: ["data-language"]),
             new("blockquote")], 
             [new ("strong"), new("em"), new("sub"), new("sup"),
                 new("img", Attributes:["src"]),
                 new("a", ["href", "rel", "target"]),
-                new("pre", ["data-language"])]);
+                ]);
 
 
         }
@@ -117,74 +124,123 @@ public class RichtextValidator {
         TextBlock? block = null;
         TextBlock? inner = null;
 
+        int blocks = 0;
+        int decorations = 0;
+
         TextDecoration? decoration = null;
 
         while (XmlReader.Read()) {
+
+
+
             switch (XmlReader.NodeType) {
+
                 case XmlNodeType.Element: {
-                    //Console.WriteLine("Start Element {0}", XmlReader.Name);
+                    Console.WriteLine($"{XmlReader.Name} - {state} {blocks} {decorations} ");
                     switch (state) {
                         case 0: {
-                            if (!textMarkup.Block.TryGetValue(XmlReader.Name, out block)){
+                            if (!textMarkup.Block.TryGetValue(XmlReader.Name, out block)) {
                                 return RichetextResult.Invalid;
                                 }
                             state = 1;
+                            blocks++;
+
+                            //Writer.Write('\r');
+                            Writer.WriteLine();
+                            WriteElement(block.Attributes);
+
                             break;
                             }
                         case 1: {
                             inner = Contains(block, XmlReader.Name);
                             if (inner is not null) {
-                                state = 2;
+                                blocks++;
+
+                                //Writer.Write('\r');
+                                Writer.WriteLine();
+                                WriteElement(inner.Attributes);
+
                                 break;
                                 }
                             if (!textMarkup.Decoration.TryGetValue(XmlReader.Name, out decoration)) {
                                 return RichetextResult.Invalid;
                                 }
-                            state = 3;
+                            state = 2;
+                            decorations++;
+
+                            WriteElement(decoration.Attributes);
+                            break;
+                            }
+                        case 2: {
+                            if (!textMarkup.Decoration.TryGetValue(XmlReader.Name, out decoration)) {
+                                return RichetextResult.Invalid;
+                                }
+
+                            decorations++;
+                            WriteElement(decoration.Attributes);
                             break;
                             }
                         }
+
+                    Console.WriteLine($"   -> {XmlReader.Name} - {state} {blocks} {decorations} ");
                     break;
                     }
                 case XmlNodeType.Text: {
                     IsBlank |= !String.IsNullOrWhiteSpace(XmlReader.Value);
+
+
+                    Writer.Write(XmlReader.Value);
+
                     break;
                     }
                 case XmlNodeType.EndElement: {
+                    Console.WriteLine($"/ {XmlReader.Name} - {state} {blocks} {decorations} ");
+
                     //Console.WriteLine("End Element {0}", XmlReader.Name);
                     switch (state) {
                         case 0: {
                             return RichetextResult.Invalid;
                             }
                         case 1: {
-                            if (XmlReader.Name != block.Tag) {
-                                return RichetextResult.Invalid;
+                            blocks--;
+                            if (blocks == 0) {
+                                state = 0;
                                 }
-                            state = 0;
                             break;
                             }
                         case 2: {
-                            if (XmlReader.Name != inner.Tag) {
-                                return RichetextResult.Invalid;
+                            decorations--;
+                            if (decorations == 0) {
+                                state = 1;
                                 }
-                            state = 1;
-                            break;
                             }
-                        case 3: {
-                            if (XmlReader.Name != decoration.Tag) {
-                                return RichetextResult.Invalid;
-                                }
-                            state = 1;
-                            break;
-                            }
-                        case 4: {
-                            if (XmlReader.Name != decoration.Tag) {
-                                return RichetextResult.Invalid;
-                                }
-                            state = 2;
-                            break;
-                            }
+                        break;
                         }
+
+                    Writer.Write("</");
+                    Writer.Write(XmlReader.Name);
+
+                    // write attributes
+
+                    Writer.Write('>');
+
+                    Console.WriteLine($"  => /{XmlReader.Name} - {state} {blocks} {decorations} ");
+                    break;
+                    }
+
+                case XmlNodeType.EntityReference: {
+                    var output = XmlReader.Name switch {
+                        "nbsp" => " ",
+                        "lt" => "&lt;",
+                        "gt" => "&gt;",
+                        "amp" => "&amp;",
+                        "quot" => "\"",
+                        "apos" => "'",
+                        _ => ""
+                        };
+
+
+                    Writer.Write(output);
                     break;
                     }
                 }
@@ -193,6 +249,37 @@ public class RichtextValidator {
 
         return RichetextResult.Valid;
         }
+
+
+
+
+
+
+    private void WriteElement(List<string> attributes) {
+        Writer.Write('<');
+        Writer.Write(XmlReader.Name);
+
+        if (XmlReader.HasAttributes & attributes != null) {
+            foreach (var attribute in attributes) {
+                var value = XmlReader.GetAttribute(attribute);
+
+                if (value != null) {
+
+                    Writer.Write(' ');
+                    Writer.Write(attribute);
+                    Writer.Write(' ');
+                    Writer.Write('"');
+                    var escapedValue = HttpUtility.HtmlAttributeEncode(value);
+                    Writer.Write(escapedValue);
+                    Writer.Write('"');
+                    }
+                }
+            }
+        Writer.Write(XmlReader.IsEmptyElement ? "/>" : ">");
+
+        }
+
+
 
     
     private static TextBlock Contains(TextBlock parent, string tag) {
@@ -213,13 +300,14 @@ public class RichtextValidator {
 
     /// <summary>Validate the document <paramref name="text"/></summary>
     /// <param name="text">The document to validate.</param>
+    /// <param name="validated">The canonicalized text.</param>
     /// <returns>The validation result.</returns>
-    public static RichetextResult Validate(string text) {
+    public static bool Validate(string text, out string? validated) {
 
-        //var textreader = new StringReader(text);
-        //var settings = new XmlReaderSettings() {
-        //    ConformanceLevel = ConformanceLevel.Fragment
-        //    };
+        if (text is null) {
+            validated = null;
+            return false;
+            }
 
         NameTable nt = new();
         XmlNamespaceManager nsmgr = new(nt);
@@ -233,7 +321,12 @@ public class RichtextValidator {
 
         var validator = new RichtextValidator(reader);
 
-        return validator.Validate();
+        var result = validator.Validate();
+
+        validated = result == RichetextResult.Valid ? validator.Canonical : null;
+
+
+        return result == RichetextResult.Valid;
         }
 
     }

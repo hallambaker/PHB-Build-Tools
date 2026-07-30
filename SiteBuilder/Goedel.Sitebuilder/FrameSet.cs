@@ -31,6 +31,11 @@ public class FrameSet {
 
     ///<summary>Directory to store persisted data to.</summary>
     public string Directory { get; init; }
+
+
+    ///<summary>Default site (used for OAUTH).</summary>
+    public string DefaultSite { get; init; }
+
     ///<summary>Directory to store per member data to.</summary>
     public string Members { get; init; }
 

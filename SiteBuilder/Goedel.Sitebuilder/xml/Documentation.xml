@@ -811,6 +811,24 @@
         <member name="P:Goedel.Sitebuilder.FrameString.Type">
             <inheritdoc/>
         </member>
+        <member name="T:Goedel.Sitebuilder.FrameBlock">
+            <summary>Text string form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameBlock.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.String},System.Func{Goedel.Protocol.IBinding,System.String})">
+            <summary>Text string form entry.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+            <param name="Set"></param>
+            <param name="Get"></param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameBlock.Text">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameBlock.Type">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Sitebuilder.FrameText">
             <summary>Text string form entry covering multiple lines.</summary>
             <param name="Id">Unique identifier within the frame.</param>
@@ -990,6 +1008,38 @@
         <member name="P:Goedel.Sitebuilder.FramePresentation.Sections">
             <summary>Sections in the presentation.</summary>
         </member>
+        <member name="T:Goedel.Sitebuilder.FrameDiv">
+            <summary>Division within a document for formatting.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.FrameDiv.#ctor(System.String)">
+            <summary>Division within a document for formatting.</summary>
+            <param name="Id">Unique identifier within the frame.</param>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameDiv.Id">
+            <summary>Unique identifier within the frame.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameDiv.Fields">
+            <summary>Fields in the section.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameDiv.Backing">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameDiv.Tag">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameDiv.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameDiv.Prompt">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameDiv.Hidden">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameDiv.Description">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Sitebuilder.FrameSection">
             <summary>Section within a form.</summary>
             <param name="Id">Unique identifier within the frame.</param>
@@ -1108,6 +1158,9 @@
         </member>
         <member name="P:Goedel.Sitebuilder.FrameSet.Directory">
             <summary>Directory to store persisted data to.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.FrameSet.DefaultSite">
+            <summary>Default site (used for OAUTH).</summary>
         </member>
         <member name="P:Goedel.Sitebuilder.FrameSet.Members">
             <summary>Directory to store per member data to.</summary>
@@ -1730,6 +1783,12 @@
         <member name="P:Goedel.Sitebuilder.RichtextValidator.XmlReader">
             <summary>The reader.</summary>
         </member>
+        <member name="P:Goedel.Sitebuilder.RichtextValidator.Writer">
+            <summary>String writer to collect text as it is canonicalized.</summary>
+        </member>
+        <member name="P:Goedel.Sitebuilder.RichtextValidator.Canonical">
+            <summary>The canonicalized input.</summary>
+        </member>
         <member name="M:Goedel.Sitebuilder.RichtextValidator.#cctor">
             <summary>Static constructor.</summary>
         </member>
@@ -1747,9 +1806,10 @@
             the default schema).</param>
             <returns>The validation result.</returns>
         </member>
-        <member name="M:Goedel.Sitebuilder.RichtextValidator.Validate(System.String)">
+        <member name="M:Goedel.Sitebuilder.RichtextValidator.Validate(System.String,System.String@)">
             <summary>Validate the document <paramref name="text"/></summary>
             <param name="text">The document to validate.</param>
+            <param name="validated">The canonicalized text.</param>
             <returns>The validation result.</returns>
         </member>
         <member name="T:Goedel.Sitebuilder.ServerCookieManager">

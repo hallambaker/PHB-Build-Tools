@@ -452,6 +452,26 @@ public #{structure} #{backer.Id} (string Id) : #{backer.ParentId ?? backer.Type}
 				]
 			}#!
 #% break; }
+#% case FrameDiv div: {
+#{comma}
+		new FrameDiv ("#{entry.Id}") { Fields = [
+#% var save = Indent (8);
+#% RenderFields (backed, div.Fields);
+#% RestoreIndent (save);
+
+				]
+			}#!
+#% break; }
+#% case FrameBlock block: {
+#{comma}
+		new FrameBlock ("#{entry.Id}") {Tag = "#{block.Tag}", Text=[#!
+#% var comma6 = new Registry.Separator (",");
+#foreach (var t in block.Text)
+#{comma6}
+			#{t.Quoted()}#!
+#end foreach
+		    ]}#!
+#% break; }
 #% default: {
 #if entry.Backing != null
 #{comma}

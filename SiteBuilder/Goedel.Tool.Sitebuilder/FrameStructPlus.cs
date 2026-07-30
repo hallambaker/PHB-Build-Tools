@@ -181,6 +181,10 @@ public partial class Namespace {
                 result.Add(GetChooser(label, chooser));
                 break;
                 }
+            case Div div : {
+                result.Add(GetDiv(frameset, label, div));
+                break;
+                }
             case IIntrinsic field: {
                 result.Add(GetIntrinsic(label, field));
                 break;
@@ -198,6 +202,19 @@ public partial class Namespace {
                 }
             }
         }
+
+
+    FrameDiv GetDiv(FrameSet frameset, string label, Div div) {
+
+        var fields = CollectFields(frameset, div.Properties);
+        var result = new FrameDiv(label) { 
+            Fields = fields 
+            };
+
+        return result;
+        }
+
+
 
     static FrameButtonParsed GetFrameButton(string label, Button button) {
         string? action = button.Action.Label;
@@ -384,6 +401,10 @@ public partial class Namespace {
             Boolean => new FrameBoolean(id),
             Integer => new FrameInteger(id),
             DateTime => new FrameDateTime(id),
+            P p => new FrameBlock(id) { Tag = "p", Text = p.Text},
+            H1 h=> new FrameBlock(id) { Tag = "h1", Text = h.Text },
+            H2 h=> new FrameBlock(id) { Tag = "h2", Text = h.Text },
+            LI h => new FrameBlock(id) { Tag = "li", Text = h.Text },
             String => new FrameString(id),
             Text => new FrameText(id),
             //Anchor => new FrameAnchor(id),
@@ -435,6 +456,16 @@ public partial class DateTime : IIntrinsic {
     }
 public partial class String : IIntrinsic {
     }
+public partial class P : IIntrinsic {
+    }
+public partial class H1 : IIntrinsic {
+    }
+public partial class H2 : IIntrinsic {
+    }
+public partial class LI : IIntrinsic {
+    }
+//public partial class Block : IIntrinsic {
+//    }
 
 
 public partial class Customized {
@@ -692,4 +723,12 @@ public partial class FileType {
     public override void Init(_Choice? parent) {
         parent._Parent.FileType = Id;
         }
+    }
+
+public partial class Div {
+
+    public override void Init(_Choice? parent) {
+        parent.Include = false;
+        }
+
     }

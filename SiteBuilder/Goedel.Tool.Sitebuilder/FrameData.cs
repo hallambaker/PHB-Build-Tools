@@ -82,6 +82,11 @@ using Goedel.Utilities;
 //       Form
 //       Selection
 //       Container
+//       P
+//       H1
+//       H2
+//       LI
+//       Div
 //       FieldProperty
 //       ButtonProperty
 //       Link
@@ -149,11 +154,16 @@ namespace Goedel.Tool.Sitebuilder {
         Struct,
         Fields,
         FieldItem,
+        P,
+        H1,
+        H2,
+        LI,
         Property,
         Anchor,
         ButtonProperty,
         Customized,
         Container,
+        Div,
         Action,
         Link,
         Is,
@@ -558,6 +568,106 @@ namespace Goedel.Tool.Sitebuilder {
 			}
 		}
 
+    public partial class P : _Choice {
+		public List <System.String>			Text = []; 
+
+        public override FrameStructType _Tag () =>FrameStructType.P;
+
+
+		public override void _InitChildren (_Choice? Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("P");
+				}
+
+			foreach (string _s in Text) {
+				Output.WriteAttribute ("Text",_s);
+				}
+			if (tag) {
+				Output.EndElement ("P");
+				}			
+			}
+		}
+
+    public partial class H1 : _Choice {
+		public List <System.String>			Text = []; 
+
+        public override FrameStructType _Tag () =>FrameStructType.H1;
+
+
+		public override void _InitChildren (_Choice? Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("H1");
+				}
+
+			foreach (string _s in Text) {
+				Output.WriteAttribute ("Text",_s);
+				}
+			if (tag) {
+				Output.EndElement ("H1");
+				}			
+			}
+		}
+
+    public partial class H2 : _Choice {
+		public List <System.String>			Text = []; 
+
+        public override FrameStructType _Tag () =>FrameStructType.H2;
+
+
+		public override void _InitChildren (_Choice? Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("H2");
+				}
+
+			foreach (string _s in Text) {
+				Output.WriteAttribute ("Text",_s);
+				}
+			if (tag) {
+				Output.EndElement ("H2");
+				}			
+			}
+		}
+
+    public partial class LI : _Choice {
+		public List <System.String>			Text = []; 
+
+        public override FrameStructType _Tag () =>FrameStructType.LI;
+
+
+		public override void _InitChildren (_Choice? Parent) {
+			Init (Parent);
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("LI");
+				}
+
+			foreach (string _s in Text) {
+				Output.WriteAttribute ("Text",_s);
+				}
+			if (tag) {
+				Output.EndElement ("LI");
+				}			
+			}
+		}
+
     public partial class Property : _Choice {
         public TOKEN<_Choice>			Id;
         public _Choice					Type;
@@ -678,6 +788,36 @@ namespace Goedel.Tool.Sitebuilder {
 
 			if (tag) {
 				Output.EndElement ("Container");
+				}			
+			}
+		}
+
+    public partial class Div : _Choice {
+        public List <FieldItem>           Properties = [];
+
+        public override FrameStructType _Tag () =>FrameStructType.Div;
+
+
+		public override void _InitChildren (_Choice? Parent) {
+			Init (Parent);
+			foreach (var Sub in Properties) {
+				Sub._InitChildren (this);
+				}
+			}
+
+		public override void Serialize (StructureWriter Output, bool tag) {
+
+			if (tag) {
+				Output.StartElement ("Div");
+				}
+
+			Output.StartList ("");
+			foreach (FieldItem _e in Properties) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("Div");
 				}			
 			}
 		}
@@ -1953,6 +2093,14 @@ namespace Goedel.Tool.Sitebuilder {
 		FieldItem_Start,
 		FieldItem__Id,				
 		FieldItem__Type,				
+		P_Start,
+		P__Text,				
+		H1_Start,
+		H1__Text,				
+		H2_Start,
+		H2__Text,				
+		LI_Start,
+		LI__Text,				
 		Property_Start,
 		Property__Id,				
 		Property__Type,				
@@ -1963,6 +2111,8 @@ namespace Goedel.Tool.Sitebuilder {
 		ButtonProperty__Type,				
 		Customized_Start,
 		Container_Start,
+		Div_Start,
+		Div__Properties,				
 		Action_Start,
 		Link_Start,
 		Link__Uri,				
@@ -2133,11 +2283,16 @@ namespace Goedel.Tool.Sitebuilder {
                 case "Struct": return NewStruct();
                 case "Fields": return NewFields();
                 case "FieldItem": return NewFieldItem();
+                case "P": return NewP();
+                case "H1": return NewH1();
+                case "H2": return NewH2();
+                case "LI": return NewLI();
                 case "Property": return NewProperty();
                 case "Anchor": return NewAnchor();
                 case "ButtonProperty": return NewButtonProperty();
                 case "Customized": return NewCustomized();
                 case "Container": return NewContainer();
+                case "Div": return NewDiv();
                 case "Action": return NewAction();
                 case "Link": return NewLink();
                 case "Is": return NewIs();
@@ -2280,6 +2435,38 @@ namespace Goedel.Tool.Sitebuilder {
             }
 
 
+        private Goedel.Tool.Sitebuilder.P NewP() {
+            Goedel.Tool.Sitebuilder.P result = new ();
+            Push (result);
+            State = StateCode.P_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Sitebuilder.H1 NewH1() {
+            Goedel.Tool.Sitebuilder.H1 result = new ();
+            Push (result);
+            State = StateCode.H1_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Sitebuilder.H2 NewH2() {
+            Goedel.Tool.Sitebuilder.H2 result = new ();
+            Push (result);
+            State = StateCode.H2_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Sitebuilder.LI NewLI() {
+            Goedel.Tool.Sitebuilder.LI result = new ();
+            Push (result);
+            State = StateCode.LI_Start;
+            return result;
+            }
+
+
         private Goedel.Tool.Sitebuilder.Property NewProperty() {
             Goedel.Tool.Sitebuilder.Property result = new ();
             Push (result);
@@ -2316,6 +2503,14 @@ namespace Goedel.Tool.Sitebuilder {
             Goedel.Tool.Sitebuilder.Container result = new ();
             Push (result);
             State = StateCode.Container_Start;
+            return result;
+            }
+
+
+        private Goedel.Tool.Sitebuilder.Div NewDiv() {
+            Goedel.Tool.Sitebuilder.Div result = new ();
+            Push (result);
+            State = StateCode.Div_Start;
             return result;
             }
 
@@ -2702,11 +2897,16 @@ namespace Goedel.Tool.Sitebuilder {
                 case "Struct": return Goedel.Tool.Sitebuilder.FrameStructType.Struct;
                 case "Fields": return Goedel.Tool.Sitebuilder.FrameStructType.Fields;
                 case "FieldItem": return Goedel.Tool.Sitebuilder.FrameStructType.FieldItem;
+                case "P": return Goedel.Tool.Sitebuilder.FrameStructType.P;
+                case "H1": return Goedel.Tool.Sitebuilder.FrameStructType.H1;
+                case "H2": return Goedel.Tool.Sitebuilder.FrameStructType.H2;
+                case "LI": return Goedel.Tool.Sitebuilder.FrameStructType.LI;
                 case "Property": return Goedel.Tool.Sitebuilder.FrameStructType.Property;
                 case "Anchor": return Goedel.Tool.Sitebuilder.FrameStructType.Anchor;
                 case "ButtonProperty": return Goedel.Tool.Sitebuilder.FrameStructType.ButtonProperty;
                 case "Customized": return Goedel.Tool.Sitebuilder.FrameStructType.Customized;
                 case "Container": return Goedel.Tool.Sitebuilder.FrameStructType.Container;
+                case "Div": return Goedel.Tool.Sitebuilder.FrameStructType.Div;
                 case "Action": return Goedel.Tool.Sitebuilder.FrameStructType.Action;
                 case "Link": return Goedel.Tool.Sitebuilder.FrameStructType.Link;
                 case "Is": return Goedel.Tool.Sitebuilder.FrameStructType.Is;
@@ -3199,23 +3399,120 @@ namespace Goedel.Tool.Sitebuilder {
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Form) |
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Selection) |
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Container) |
-									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Description) ) {
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Description) |
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.P) |
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.H1) |
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.H2) |
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.LI) |
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Div) ) {
                                 State = StateCode.FieldItem__Type;
                                 Current_Cast.Type = New_Choice(Text);
                                 }
                             else {
-                               throw new Expected ("Parser Error Expected [Button Chooser Separator SubMenu Return Is Boolean Integer DateTime String Text Anchor RichText Image Avatar List Choice Selector Count Presentation Icon File Hidden Form Selection Container Description ]");
+                               throw new Expected ("Parser Error Expected [Button Chooser Separator SubMenu Return Is Boolean Integer DateTime String Text Anchor RichText Image Avatar List Choice Selector Count Presentation Icon File Hidden Form Selection Container Description P H1 H2 LI Div ]");
                                 }
                             break;
                             }
                         else { 
-						    throw new Expected("Parser Error Expected [Button Chooser Separator SubMenu Return Is Boolean Integer DateTime String Text Anchor RichText Image Avatar List Choice Selector Count Presentation Icon File Hidden Form Selection Container Description ]");
+						    throw new Expected("Parser Error Expected [Button Chooser Separator SubMenu Return Is Boolean Integer DateTime String Text Anchor RichText Image Avatar List Choice Selector Count Presentation Icon File Hidden Form Selection Container Description P H1 H2 LI Div ]");
                             }
 
                     case StateCode.FieldItem__Type:
                         Pop ();
                         Represent = true; 
                         break;
+                    case StateCode.P_Start:
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.P__Text;
+                            break;
+                            }
+                        else {
+                            Pop();
+                            Represent = true;
+                            break;
+                            }
+                    case StateCode.P__Text:
+                       if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+                       else if (Token == TokenType.TEXT) {
+                            Goedel.Tool.Sitebuilder.P Current_Cast = (Goedel.Tool.Sitebuilder.P)Current;
+                            Current_Cast.Text.Add (Text);
+                            break;							
+                            }
+                       throw new Expected("Expected Text");
+
+
+                    case StateCode.H1_Start:
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.H1__Text;
+                            break;
+                            }
+                        else {
+                            Pop();
+                            Represent = true;
+                            break;
+                            }
+                    case StateCode.H1__Text:
+                       if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+                       else if (Token == TokenType.TEXT) {
+                            Goedel.Tool.Sitebuilder.H1 Current_Cast = (Goedel.Tool.Sitebuilder.H1)Current;
+                            Current_Cast.Text.Add (Text);
+                            break;							
+                            }
+                       throw new Expected("Expected Text");
+
+
+                    case StateCode.H2_Start:
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.H2__Text;
+                            break;
+                            }
+                        else {
+                            Pop();
+                            Represent = true;
+                            break;
+                            }
+                    case StateCode.H2__Text:
+                       if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+                       else if (Token == TokenType.TEXT) {
+                            Goedel.Tool.Sitebuilder.H2 Current_Cast = (Goedel.Tool.Sitebuilder.H2)Current;
+                            Current_Cast.Text.Add (Text);
+                            break;							
+                            }
+                       throw new Expected("Expected Text");
+
+
+                    case StateCode.LI_Start:
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.LI__Text;
+                            break;
+                            }
+                        else {
+                            Pop();
+                            Represent = true;
+                            break;
+                            }
+                    case StateCode.LI__Text:
+                       if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+                       else if (Token == TokenType.TEXT) {
+                            Goedel.Tool.Sitebuilder.LI Current_Cast = (Goedel.Tool.Sitebuilder.LI)Current;
+                            Current_Cast.Text.Add (Text);
+                            break;							
+                            }
+                       throw new Expected("Expected Text");
+
+
                     case StateCode.Property_Start:
                         if ((Token == TokenType.LABEL) | (Token == TokenType.LITERAL)) {
                             Goedel.Tool.Sitebuilder.Property Current_Cast = (Goedel.Tool.Sitebuilder.Property)Current;
@@ -3250,17 +3547,20 @@ namespace Goedel.Tool.Sitebuilder {
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Selection) |
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Form) |
 									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.RichText) |
-									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Container) ) {
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.Container) |
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.P) |
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.H1) |
+									(LabelType == Goedel.Tool.Sitebuilder.FrameStructType.H2) ) {
                                 State = StateCode.Property__Type;
                                 Current_Cast.Type = New_Choice(Text);
                                 }
                             else {
-                               throw new Expected ("Parser Error Expected [Is Boolean Integer DateTime String Text Anchor Image List Choice Separator SubMenu Avatar Presentation Icon File Hidden Selection Form RichText Container ]");
+                               throw new Expected ("Parser Error Expected [Is Boolean Integer DateTime String Text Anchor Image List Choice Separator SubMenu Avatar Presentation Icon File Hidden Selection Form RichText Container P H1 H2 ]");
                                 }
                             break;
                             }
                         else { 
-						    throw new Expected("Parser Error Expected [Is Boolean Integer DateTime String Text Anchor Image List Choice Separator SubMenu Avatar Presentation Icon File Hidden Selection Form RichText Container ]");
+						    throw new Expected("Parser Error Expected [Is Boolean Integer DateTime String Text Anchor Image List Choice Separator SubMenu Avatar Presentation Icon File Hidden Selection Form RichText Container P H1 H2 ]");
                             }
 
                     case StateCode.Property__Type:
@@ -3340,6 +3640,33 @@ namespace Goedel.Tool.Sitebuilder {
                         Pop ();
                         Represent = true; 
                         break;
+                    case StateCode.Div_Start:
+
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Div__Properties;
+                            }
+                        else {
+							Pop ();
+                            Represent = true;
+                            }
+                        break;
+                    case StateCode.Div__Properties: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else {
+                            Goedel.Tool.Sitebuilder.Div Current_Cast = (Goedel.Tool.Sitebuilder.Div)Current;
+                            Current_Cast.Properties.Add (NewFieldItem ());
+                            Represent = true;
+                            }
+
+                        break;
+
+
                     case StateCode.Action_Start:
                         Pop ();
                         Represent = true; 

@@ -498,6 +498,26 @@ public partial class GenerateBacking : global::Goedel.Registry.Script {
 		_Output.Write ("				]\n{0}", _Indent);
 		_Output.Write ("			}}", _Indent);
 		 break; }
+		 case FrameDiv div: {
+		_Output.Write ("{1}\n{0}", _Indent, comma);
+		_Output.Write ("		new FrameDiv (\"{1}\") {{ Fields = [\n{0}", _Indent, entry.Id);
+		 var save = Indent (8);
+		 RenderFields (backed, div.Fields);
+		 RestoreIndent (save);
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("				]\n{0}", _Indent);
+		_Output.Write ("			}}", _Indent);
+		 break; }
+		 case FrameBlock block: {
+		_Output.Write ("{1}\n{0}", _Indent, comma);
+		_Output.Write ("		new FrameBlock (\"{1}\") {{Tag = \"{2}\", Text=[", _Indent, entry.Id, block.Tag);
+		 var comma6 = new Registry.Separator (",");
+		foreach  (var t in block.Text) {
+			_Output.Write ("{1}\n{0}", _Indent, comma6);
+			_Output.Write ("			{1}", _Indent, t.Quoted());
+			}
+		_Output.Write ("		    ]}}", _Indent);
+		 break; }
 		 default: {
 		if (  entry.Backing != null ) {
 			_Output.Write ("{1}\n{0}", _Indent, comma);

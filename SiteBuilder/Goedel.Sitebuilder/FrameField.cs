@@ -426,6 +426,26 @@ public record FrameString(
     }
 
 
+/// <summary>Text string form entry.</summary>
+/// <param name="Id">Unique identifier within the frame.</param>
+/// <param name="Set"></param>
+/// <param name="Get"></param>
+public record FrameBlock(
+            string Id,
+            Action<IBinding, string?>? Set = null,
+            Func<IBinding, string?>? Get = null) : FrameString (Id, Set, Get) {
+
+    /// <inheritdoc/>
+    public List<System.String> Text { get; set; }
+
+
+    /// <inheritdoc/>
+    public override string Type => "FrameBlock";
+    }
+
+
+
+
 /// <summary>Text string form entry covering multiple lines.</summary>
 /// <param name="Id">Unique identifier within the frame.</param>
 /// <param name="Set"></param>
@@ -574,6 +594,33 @@ public record FramePresentation(string Id) : FrameField(Id) {
     public virtual List<FrameSection> Sections { get; init; }
     }
 
+
+
+/// <summary>Division within a document for formatting.</summary>
+/// <param name="Id">Unique identifier within the frame.</param>
+public record FrameDiv(string Id) : IFrameField {
+
+    /// <summary>Fields in the section.</summary>
+    public virtual List<IFrameField> Fields { get; init; }
+
+    /// <inheritdoc/>
+    public string Backing { get; }
+
+    /// <inheritdoc/>
+    public string Tag { get; init; }
+
+    /// <inheritdoc/>
+    public string Type { get; }
+
+    /// <inheritdoc/>
+    public string Prompt { get; set; }
+
+    /// <inheritdoc/>
+    public bool Hidden { get; set; }
+
+    /// <inheritdoc/>
+    public string? Description { get; set; }
+    }
 
 
 
