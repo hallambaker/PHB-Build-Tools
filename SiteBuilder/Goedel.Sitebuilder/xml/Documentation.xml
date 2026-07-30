@@ -1562,6 +1562,18 @@
             <param name="backer">The data to render.</param>
             <param name="description">Describes how to render the data.</param>
         </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameDiv)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
+        <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.IBacked,Goedel.Sitebuilder.FrameBlock)">
+            <summary>Render the element <paramref name="backer"/> as specified by
+            <paramref name="description"/>.</summary>
+            <param name="description">The item description.</param>
+            <param name="backer">The backing instance.</param>
+        </member>
         <member name="M:Goedel.Sitebuilder.PageWriter.Render(Goedel.Sitebuilder.FrameRefMenu,Goedel.Sitebuilder.IBacked)">
             <summary>Render the element <paramref name="backer"/> as specified by
             <paramref name="description"/>.</summary>

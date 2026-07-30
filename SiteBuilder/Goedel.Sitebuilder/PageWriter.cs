@@ -169,6 +169,16 @@ public partial class PageWriter : HtmlWriter {
                 Render(backer, item);
                 break;
                 }
+
+            case FrameBlock item: {
+                Render(backer, item);
+                break;
+                }
+            case FrameDiv item: {
+                Render(backer, item);
+                break;
+                }
+
             case FrameString item: {
                 Render(backer, item);
                 break;
@@ -197,13 +207,63 @@ public partial class PageWriter : HtmlWriter {
                 Render(backer, item);
                 break;
                 }
-            default : {
+
+
+
+
+
+
+            default: {
                 break;
                 }
 
             }
 
         }
+
+
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
+    public void Render(
+                IBacked backer,
+                FrameDiv description) {
+
+        var start = OpenClass("div", description.Id);
+        //var start = OpenClass("div", "Fred");
+
+        foreach (var field in description.Fields) {
+            RenderField (backer, field);
+            }
+
+
+        Close(start);
+
+        }
+
+
+    /// <summary>Render the element <paramref name="backer"/> as specified by
+    /// <paramref name="description"/>.</summary>
+    /// <param name="description">The item description.</param>
+    /// <param name="backer">The backing instance.</param>
+    public void Render(
+                IBacked backer,
+                FrameBlock description) {
+
+        var start = Open(description.Tag, "class", description.Id);
+
+        foreach (var text in description.Text) {
+            TextWriter.Write(text);
+            TextWriter.WriteLine();
+            }
+
+
+
+
+        Close(start);
+        }
+
 
     /// <summary>Render the element <paramref name="backer"/> as specified by
     /// <paramref name="description"/>.</summary>
